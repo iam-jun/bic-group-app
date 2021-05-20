@@ -1,21 +1,21 @@
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createStore, applyMiddleware, compose } from "redux";
-import createSagaMiddleware from "redux-saga";
-import { persistStore, persistReducer } from "redux-persist";
-import AsyncStorage from "@react-native-community/async-storage";
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {createStore, applyMiddleware, compose} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import {persistStore, persistReducer} from 'redux-persist';
+import AsyncStorage from '@react-native-community/async-storage';
 // import immutableTransform from 'redux-persist-transform-immutable';
-import rootReducer from "./reducers";
-import rootSaga from "./sagas";
-import createTransform from "redux-persist/es/createTransform";
-import Flatted from "flatted";
+import rootReducer from './reducers';
+import rootSaga from './sagas';
+import createTransform from 'redux-persist/es/createTransform';
+import Flatted from 'flatted';
 
 export const transformCircular = createTransform(
   (inboundState, key) => Flatted.stringify(inboundState),
-  (outboundState, key) => Flatted.parse(outboundState)
+  (outboundState, key) => Flatted.parse(outboundState),
 );
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   // transforms: [immutableTransform()],
   transforms: [transformCircular],
   storage: AsyncStorage,
@@ -36,5 +36,5 @@ export default () => {
 
   sagaMiddleware.run(rootSaga);
 
-  return { store, persistor };
+  return {store, persistor};
 };

@@ -1,13 +1,13 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { useTheme } from "react-native-paper";
-import Text from "../../Text";
-import { spacing } from "~/theme/configs";
-import { IObject } from "~/interfaces/common";
-import { generateAvatar } from "~/utils/common";
-import Avatar from "../../Image/Avatar";
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import Text from '../../Text';
+import {spacing} from '~/theme/configs';
+import {IObject} from '~/interfaces/common';
+import {generateAvatar} from '~/utils/common';
+import Avatar from '../../Image/Avatar';
 
-const ItemUser: React.FC<IObject<any>> = ({ id, name, online, role }) => {
+const ItemUser: React.FC<IObject<any>> = ({id, name, online, role}) => {
   const theme: IObject<any> = useTheme();
 
   const styles = themeStyles(theme);
@@ -27,11 +27,11 @@ const ItemUser: React.FC<IObject<any>> = ({ id, name, online, role }) => {
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  const { colors } = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
-      flexDirection: "row",
+      flexDirection: 'row',
       padding: spacing.padding.base,
     },
     avatarView: {
@@ -46,8 +46,8 @@ const themeStyles = (theme: IObject<any>) => {
       width: 10,
       height: 10,
       borderRadius: 100,
-      backgroundColor: "green",
-      position: "absolute",
+      backgroundColor: 'green',
+      position: 'absolute',
       bottom: 4,
       right: 0,
       borderWidth: 2,

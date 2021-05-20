@@ -1,6 +1,6 @@
-import ItemUser from "./ItemUser";
+import ItemUser from './ItemUser';
 
-const items: { [key: string]: any } = {
+const items: {[key: string]: any} = {
   user: ItemUser,
 };
 
