@@ -13,7 +13,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import * as screens from './navigator';
 import {navigationSetting} from '~/configs/navigator';
 
-
 import {IStack} from '~/interfaces/navigator';
 import {IObject} from '~/interfaces/common';
 

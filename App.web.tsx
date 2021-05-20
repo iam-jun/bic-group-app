@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
 /*Store state Redux Saga */
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 
-import storeInit from "./src/store";
-import Root from "~/Root";
+import storeInit from './src/store';
+import Root from '~/Root';
 
 export default () => {
-  const { store, persistor } = storeInit();
+  const {store, persistor} = storeInit();
 
   return (
     <Provider store={store}>

@@ -1,6 +1,6 @@
-import React from "react";
-import { Text } from "~/theme/components";
-import ThemeView from "~/theme/components/ThemeView";
+import React from 'react';
+import {Text} from '~/theme/components';
+import ThemeView from '~/theme/components/ThemeView';
 
 const Home = () => {
   return (
