@@ -38,21 +38,21 @@ export const dimensionDevice = {
   height: DiviceHeight,
 };
 
-/* Used for buton size (small, medium, large) */
+/* Used for buton size width (short, medium, long, max) */
 export const sizeButton = {
-  small: {
-    width: '100%',
-    height: 32,
+  short: {
+    width: 113,
   },
   medium: {
-    width: '100%',
-    height: 38,
+    width: 158,
   },
-  large: {
-    width: '100%',
-    height: 46,
+  long: {
+    width: 217,
   },
-  height: 48,
+  max: {
+    width: '100%',
+  },
+  height: 36,
 };
 
 export default {
