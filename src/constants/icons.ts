@@ -12,4 +12,12 @@ export default {
   },
   iconSearch,
   iconBack,
+  iconEye: {
+    type: 'MaterialCommunityIcons',
+    name: 'eye-outline',
+  },
+  iconEyeOff: {
+    type: 'MaterialCommunityIcons',
+    name: 'eye-off-outline',
+  },
 };

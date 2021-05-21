@@ -9,6 +9,7 @@ import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
 import {ViewSpacing} from '~/theme/components';
+import InputPassword from '~/theme/components/Input/InputPassword';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,12 +33,10 @@ const Login = () => {
         value={username}
         onChangeText={text => setUsername(text)}
       />
-      <Input
+      <InputPassword
         testID="inputPassword"
-        label={t('auth:input_label_email')}
-        placeholder={t('auth:input_label_email')}
-        keyboardType="visible-password"
-        secureTextEntry
+        label={t('auth:input_label_password')}
+        placeholder={t('auth:input_label_password')}
         value={password}
         onChangeText={text => setPassword(text)}
       />

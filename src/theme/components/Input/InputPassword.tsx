@@ -1,24 +1,23 @@
 import React from 'react';
-import {useTheme} from 'react-native-paper';
-import {TextInput} from 'react-native-paper';
+import {TextInput, useTheme} from 'react-native-paper';
+import icons from '~/constants/icons';
 import {IObject} from '~/interfaces/common';
-import {TextInputProps} from '.';
+import Input, {TextInputProps} from '.';
+import Icon from '../Icon';
 
 const InputPassword: React.FC<TextInputProps> = ({...props}) => {
   const theme: IObject<any> = useTheme();
   const {colors} = theme;
-  const [visible, setVisible] = React.useState(false);
+  const [hidePassword, setHidePassword] = React.useState(true);
 
   return (
-    <TextInput
+    <Input
       {...props}
-      mode="outlined"
-      label="Label Name"
-      placeholder="Enter placeholder"
-      left={
+      secureTextEntry={hidePassword}
+      right={
         <TextInput.Icon
-          name={<Icon name="info" color="#ff0000" />} // where <Icon /> is any component from vector-icons or anything else
-          onPress={() => {}}
+          name={hidePassword ? 'eye' : 'eye-off'}
+          onPress={() => setHidePassword(!hidePassword)}
         />
       }
     />
