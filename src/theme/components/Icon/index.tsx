@@ -1,19 +1,14 @@
-import React from "react";
-import {
-  ActivityIndicator,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
-} from "react-native";
-import SvgIcon, { SVGIconProps } from "./SvgIcon";
-import FontIcon, { FontIconProps } from "./FontIcon";
-import { TouchableOpacity } from "react-native";
-import { StyleSheet } from "react-native";
-import { IObject } from "~/interfaces/common";
-import { useTheme } from "react-native-paper";
-import { Text } from "..";
-import { spacing } from "~/theme/configs";
-import icons from "~/constants/icons";
+import React from 'react';
+import {ActivityIndicator, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import SvgIcon, {SVGIconProps} from './SvgIcon';
+import FontIcon, {FontIconProps} from './FontIcon';
+import {TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {IObject} from '~/interfaces/common';
+import {useTheme} from 'react-native-paper';
+import {Text} from '..';
+import {spacing} from '~/theme/configs';
+import icons from '~/constants/icons';
 
 export interface IconProps extends SVGIconProps, FontIconProps {
   icon: keyof typeof icons;
@@ -46,16 +41,16 @@ const Icon: React.FC<IconProps> = ({
 
   if (!icon) return null;
 
-  const source = Object.keys(_icon).find((key) => key === "type")
+  const source = Object.keys(_icon).find(key => key === 'type')
     ? _icon
-    : { svgIcon: _icon };
+    : {svgIcon: _icon};
 
-  const IconWrapper = Object.keys(_icon).find((key) => key === "type")
+  const IconWrapper = Object.keys(_icon).find(key => key === 'type')
     ? FontIcon
     : SvgIcon;
 
   const theme: IObject<any> = useTheme();
-  const { colors } = theme;
+  const {colors} = theme;
 
   tintColor = tintColor || colors.text;
 
@@ -69,11 +64,10 @@ const Icon: React.FC<IconProps> = ({
         styles.container,
         isButton && styles.button,
         style,
-        backgroundColor && { backgroundColor },
+        backgroundColor && {backgroundColor},
         disabled && styles.disabled,
       ]}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <IconWrapper
         style={iconStyle}
         tintColor={tintColor}
@@ -87,12 +81,12 @@ const Icon: React.FC<IconProps> = ({
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const { colors } = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     button: {
       padding: 8,

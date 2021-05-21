@@ -41,7 +41,6 @@ function languageReducer(state = initState, action: any = {}) {
 function reloadApp(language: string) {
   const isRTL = i18n.dir(language) === 'rtl';
   I18nManager.forceRTL(isRTL);
-  
 }
 
 export default languageReducer;

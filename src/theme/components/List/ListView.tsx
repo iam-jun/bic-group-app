@@ -1,10 +1,10 @@
-import React from "react";
-import { FlatList, TouchableOpacity } from "react-native";
-import { spacing } from "~/theme/configs";
-import _ from "lodash";
-import items from "./items";
-import ViewSpacing from "../ViewSpacing";
-import { ActivityIndicator } from "react-native-paper";
+import React from 'react';
+import {FlatList, TouchableOpacity} from 'react-native';
+import {spacing} from '~/theme/configs';
+import _ from 'lodash';
+import items from './items';
+import ViewSpacing from '../ViewSpacing';
+import {ActivityIndicator} from 'react-native-paper';
 
 export interface IListView {
   data?: Array<any>;
@@ -17,7 +17,7 @@ export interface IListView {
 }
 
 export const itemTypes = {
-  user: "user",
+  user: 'user',
 };
 
 const ListView: React.FC<IListView> = ({
@@ -36,7 +36,7 @@ const ListView: React.FC<IListView> = ({
 
   const Component = getKeyValue(items)(type);
 
-  const _renderItem = ({ item }: { item: any }) => {
+  const _renderItem = ({item}: {item: any}) => {
     return (
       <TouchableOpacity onPress={() => onItemPress && onItemPress(item)}>
         <Component {...item} />
@@ -62,14 +62,14 @@ const ListView: React.FC<IListView> = ({
       horizontal={horizontal}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      renderItem={(item) => _renderItem(item)}
+      renderItem={item => _renderItem(item)}
       ItemSeparatorComponent={() =>
         renderItemSeparator
           ? renderItemSeparator()
           : renderDefaultItemSeparator()
       }
       keyExtractor={(item, index) =>
-        _.uniqueId(`list-${item.displayName || ""}-${index}`)
+        _.uniqueId(`list-${item.displayName || ''}-${index}`)
       }
     />
   );

@@ -5,10 +5,10 @@ export const appState = (state: IObject<any>) => state.app;
 
 export const moodsSelector = createSelector(
   appState,
-  (data) => data?.configs?.moods || [],
+  data => data?.configs?.moods || [],
 );
 
 export const themeSelector = createSelector(
   appState,
-  (data) => data?.configs?.themes || [],
+  data => data?.configs?.themes || [],
 );

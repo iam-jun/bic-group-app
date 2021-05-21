@@ -26,8 +26,9 @@ const Index: React.FC<Props> = ({
   ImageComponent,
   ...attributes
 }) => {
-  const placeholderContainerOpacity = React.useRef(new Animated.Value(1))
-    .current;
+  const placeholderContainerOpacity = React.useRef(
+    new Animated.Value(1),
+  ).current;
 
   const onLoadEnd = () => {
     const minimumWait = 100;

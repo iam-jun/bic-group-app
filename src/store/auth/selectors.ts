@@ -5,10 +5,10 @@ export const authState = (state: IObject<any>) => state.auth;
 
 export const authUserSelector = createSelector(
   authState,
-  (data) => data?.user || null,
+  data => data?.user || null,
 );
 
 export const userProfileSelector = createSelector(
   authState,
-  (data) => data?.userProfile || null,
+  data => data?.userProfile || null,
 );

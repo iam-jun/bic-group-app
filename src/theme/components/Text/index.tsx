@@ -39,7 +39,7 @@ export interface Props {
   [x: string]: any;
 }
 
-const TextElement: React.FC<Props> = (props) => {
+const TextElement: React.FC<Props> = props => {
   const {
     style,
     children,

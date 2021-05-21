@@ -18,11 +18,8 @@ const SVGIcon: React.FC<SVGIconProps> = ({
 
   if (!icon) return null;
 
-  return (
-      <SVGIcon  {...props} width={size} height={size} fill={tintColor} />
-  );
+  return <SVGIcon {...props} width={size} height={size} fill={tintColor} />;
 };
-
 
 SVGIcon.defaultProps = {
   size: 14,

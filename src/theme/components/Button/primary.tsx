@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, StyleProp, ViewStyle, TextStyle } from "react-native";
-import { useTheme, Button } from "react-native-paper";
-import { IObject } from "~/interfaces/common";
-import { colors } from "~/theme/configs";
+import React from 'react';
+import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {useTheme, Button} from 'react-native-paper';
+import {IObject} from '~/interfaces/common';
+import {colors} from '~/theme/configs';
 
 const configColors: IObject<any> = colors;
 
@@ -26,7 +26,7 @@ export interface Props {
   secondaryColor?: boolean;
   thirdColor?: boolean;
   disabledDarkMode?: boolean;
-  mode?: "text" | "outlined" | "contained";
+  mode?: 'text' | 'outlined' | 'contained';
   onPress: () => void;
   [x: string]: any;
 }
@@ -55,9 +55,9 @@ const ButtonPaper: React.FC<Props> = ({
   ...propsPaper
 }) => {
   const themeDefault: IObject<any> = useTheme();
-  const { dimension, spacing } = themeDefault;
-  const { sizeButton } = dimension;
-  const { borderRadius } = spacing;
+  const {dimension, spacing} = themeDefault;
+  const {sizeButton} = dimension;
+  const {borderRadius} = spacing;
   const configButton = small
     ? sizeButton.small
     : medium
@@ -74,11 +74,11 @@ const ButtonPaper: React.FC<Props> = ({
     : bigBoder
     ? borderRadius.big
     : borderRadius.base;
-  const modeBtn = mode ? mode : "contained";
+  const modeBtn = mode ? mode : 'contained';
   const uppercaseBtn = uppercase ? uppercase : false;
 
   const contentBtnStyle: any = {
-    flexDirection: "row-reverse",
+    flexDirection: 'row-reverse',
   };
 
   return (
@@ -87,13 +87,13 @@ const ButtonPaper: React.FC<Props> = ({
       mode={modeBtn}
       onPress={onPress}
       labelStyle={StyleSheet.flatten([
-        { fontSize: dimension.sizes.h4 },
+        {fontSize: dimension.sizes.h4},
         labelStyles,
       ])}
-      icon={({ color }) => (hasRightIcon ? <RightIcon color={color} /> : null)}
+      icon={({color}) => (hasRightIcon ? <RightIcon color={color} /> : null)}
       contentStyle={StyleSheet.flatten([
         configButton,
-        { height: sizeButton.height },
+        {height: sizeButton.height},
         secondaryColor &&
           themeDefault.dark && {
             backgroundColor: thirdColor
@@ -111,8 +111,7 @@ const ButtonPaper: React.FC<Props> = ({
         roundness: configRoundness,
         ...theme,
       }}
-      {...propsPaper}
-    >
+      {...propsPaper}>
       {title}
     </Button>
   );
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
 });
 
 ButtonPaper.defaultProps = {
-  title: "",
+  title: '',
   contentStyle: {},
   theme: {},
   small: false,
