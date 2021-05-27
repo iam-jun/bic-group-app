@@ -11,6 +11,8 @@ export const mainStack = {
 
 export const authStack = {
   login: 'Login',
+  signup: 'SignUp',
+  forgotpassword: 'ForgotPassword',
 };
 
 export const bottomTabs = {

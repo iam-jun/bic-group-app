@@ -1,6 +1,12 @@
 // flow
 import * as actions from './constants';
-import {ISignIn, IUser} from './interfaces';
+import {
+  ISignUp,
+  ISignIn,
+  IForgotPassword,
+  IForgotPasswordSubmit,
+  IUser,
+} from './interfaces';
 
 /**
  * Auth Loading
@@ -22,6 +28,58 @@ export function setAuthLoading(payload: boolean) {
 export function signIn(payload: ISignIn) {
   return {
     type: actions.SIGN_IN,
+    payload,
+  };
+}
+
+/**
+ * signInOAuth
+ * @param data
+ * @returns {{type: string, payload: string}
+ */
+
+export function signInOAuth(payload: string) {
+  return {
+    type: actions.SIGN_IN_OAUTH,
+    payload,
+  };
+}
+
+/**
+ * signUp
+ * @param data
+ * @returns {{type: string, payload: object}
+ */
+
+export function signUp(payload: ISignUp) {
+  return {
+    type: actions.SIGN_UP,
+    payload,
+  };
+}
+
+/**
+ * forgotPassword
+ * @param data
+ * @returns {{type: string, payload: object}
+ */
+
+export function forgotPassword(payload: IForgotPassword) {
+  return {
+    type: actions.FORGOT_PASSWORD,
+    payload,
+  };
+}
+
+/**
+ * forgotPassword
+ * @param data
+ * @returns {{type: string, payload: object}
+ */
+
+export function changePassword(payload: IForgotPasswordSubmit) {
+  return {
+    type: actions.CHANGE_PASSWORD,
     payload,
   };
 }
