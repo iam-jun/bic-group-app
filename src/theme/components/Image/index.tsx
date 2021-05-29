@@ -5,6 +5,8 @@ import {
   Platform,
   StyleSheet,
   View,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 
 import {IObject} from '~/interfaces/common';
@@ -13,7 +15,7 @@ export interface Props {
   placeholderStyle?: IObject<any>;
   PlaceholderContent?: IObject<any>;
   containerStyle?: IObject<any>;
-  style?: IObject<any>;
+  style?: StyleProp<ViewStyle>;
   ImageComponent?: any;
   [x: string]: any;
 }

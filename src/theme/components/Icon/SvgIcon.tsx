@@ -8,15 +8,15 @@ export interface SVGIconProps {
 }
 
 const SVGIcon: React.FC<SVGIconProps> = ({
-  icon,
+  svg,
   style,
   size,
   tintColor,
   ...props
 }) => {
-  const SVGIcon = icon;
+  const SVGIcon = svg;
 
-  if (!icon) return null;
+  if (!svg) return null;
 
   return <SVGIcon {...props} width={size} height={size} fill={tintColor} />;
 };

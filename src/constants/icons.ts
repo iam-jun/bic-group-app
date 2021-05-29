@@ -20,4 +20,16 @@ export default {
     type: 'MaterialCommunityIcons',
     name: 'eye-off-outline',
   },
+  iconClose: {
+    type: 'MaterialCommunityIcons',
+    name: 'close',
+  },
+  iconRemove: {
+    type: 'MaterialCommunityIcons',
+    name: 'close-box',
+  },
+  iconVerifiedUser: {
+    type: 'MaterialIcons',
+    name: 'verified-user',
+  },
 };

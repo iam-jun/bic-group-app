@@ -1,30 +1,25 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, TextStyle, StyleProp, ViewStyle} from 'react-native';
 import HorizontalView from '../Layout/HorizontalView';
-import TextContent from '../Text/TextContent';
-import Avatar from '../Image/oldAvatar';
-import Icon from '../Icon/Icon';
+import TextContent from '../Text/';
+import Avatar from '../Image/Avatar';
+import Icon from '../Icon';
+import {IconProps} from '../Icon';
 
 export const SPACE_BASE = 16;
 export const SPACE_TINY = 8;
 
 export interface Props {
-  style?: any;
-  infoStyle?: any;
-  avatar?: any;
-  firstLabel?: any;
-  secondLabel?: any;
-  thirdLabel?: any;
-  icon?: any;
-  firstLabelColor?: any;
-  secondLabelColor?: any;
-  thirdLabelColor?: any;
-  firstLabelSize?: any;
-  secondLabelSize?: any;
-  thirdLabelSize?: any;
-  space?: any;
-  renderCustom?: any;
-  showBackButton?: any;
+  style?: StyleProp<ViewStyle>;
+  infoStyle?: StyleProp<TextStyle>;
+  firstLabel?: string;
+  secondLabel?: string;
+  thirdLabel?: string;
+  avatar?: object;
+  icon?: IconProps;
+  space?: number;
+  renderCustom?: () => void;
+  showBackButton?: boolean;
 }
 
 const HeaderView: React.FC<Props> = ({
@@ -35,13 +30,7 @@ const HeaderView: React.FC<Props> = ({
   secondLabel,
   thirdLabel,
   icon,
-  firstLabelColor,
-  secondLabelColor,
-  thirdLabelColor,
-  firstLabelSize = 'medium',
-  secondLabelSize = 'medium',
-  thirdLabelSize = 'medium',
-  space = 4,
+  space = 2,
   renderCustom,
   showBackButton,
 }) => {
@@ -50,45 +39,32 @@ const HeaderView: React.FC<Props> = ({
       {showBackButton && (
         <Icon
           style={styles.iconBack}
-          icon="ICON_BACK"
+          icon="iconBack"
           size={18}
           onPress={() => {}}
         />
       )}
+
       <HorizontalView>
-        <Avatar
-          containerStyle={[
-            styles.avatar,
-            showBackButton && styles.avatarWithIcon,
-          ]}
-          {...avatar}
-        />
+        <Avatar size={50} {...avatar} />
 
         <View style={[styles.userInfo, infoStyle]}>
           <HorizontalView
             style={[styles.firstContainer, {marginBottom: space}]}>
-            <TextContent
-              inline={true}
-              weight="bold"
-              size={firstLabelSize}
-              numberOfLines={2}>
+            <TextContent maxBold medium>
               {firstLabel}
             </TextContent>
             {icon && <Icon style={styles.icon} {...icon} />}
           </HorizontalView>
           {secondLabel && (
-            <TextContent
-              style={{marginBottom: space}}
-              size={secondLabelSize}
-              color={secondLabelColor}>
-              {secondLabel}
-            </TextContent>
+            <>
+              <TextContent style={{marginBottom: space}} h6>
+                {secondLabel}
+              </TextContent>
+            </>
           )}
           {thirdLabel && (
-            <TextContent
-              style={{marginBottom: space}}
-              size={thirdLabelSize}
-              color={thirdLabelColor}>
+            <TextContent style={{marginBottom: space}} h6>
               {thirdLabel}
             </TextContent>
           )}

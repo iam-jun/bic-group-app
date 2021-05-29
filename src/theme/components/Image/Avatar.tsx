@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Image from './index';
+import TextContent from '../Text/';
 
 export interface Props {
   size?: number;
@@ -8,7 +9,9 @@ export interface Props {
   [x: string]: any;
 }
 
-const Avatar: React.FC<Props> = ({style, size, uri, ...props}) => {
+const Avatar: React.FC<Props> = ({style, size, user, uri, ...props}) => {
+  const [_user, setUser] = useState(user);
+
   if (typeof uri === 'string') {
     return (
       <Image
@@ -25,15 +28,27 @@ const Avatar: React.FC<Props> = ({style, size, uri, ...props}) => {
     <View
       style={[
         styles.container,
+        styles.charContainer,
         {width: size, height: size, backgroundColor: '#2185D0'},
-      ]}
-    />
+      ]}>
+      <TextContent h2 maxBold style={[styles.char]}>
+        {_user?.fullName || _user?.name || ''}
+      </TextContent>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     borderRadius: 100,
+    marginStart: 16,
+  },
+  charContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  char: {
+    textTransform: 'uppercase',
   },
 });
 

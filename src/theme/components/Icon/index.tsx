@@ -72,6 +72,7 @@ const Icon: React.FC<IconProps> = ({
         style={iconStyle}
         tintColor={tintColor}
         isButton={isButton}
+        svg={_icon}
         {...props}
         {...source}
       />

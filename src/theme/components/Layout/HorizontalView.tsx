@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 
 export interface Props {
-  style?: any;
-  children?: any;
+  style?: StyleProp<{}>;
+  children?: React.ReactNode;
 }
 
 const HorizontalView: React.FC<Props> = ({style, children, ...props}) => (

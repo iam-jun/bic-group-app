@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, StyleProp, ViewStyle} from 'react-native';
 import ImagePreviewer from '../Image/ImagePreviewer';
 
 export interface Props {
-  uri?: any;
-  style?: any;
-  type?: any;
+  uri?: string;
+  style?: StyleProp<ViewStyle>;
+  type?: string;
 }
 
 const MediaView: React.FC<Props> = ({type, uri, style, ...props}) => {

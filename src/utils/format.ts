@@ -1,6 +1,4 @@
 import moment from 'moment';
-import vi from './locale/vi';
-import en from './locale/en';
 
 export const formatNumber = (n: number) => {
   return n.toFixed(0).replace(/./g, function (c, i, a) {
@@ -22,22 +20,4 @@ export const formatDate = (
   else value = moment(value).format(format);
 
   return value;
-};
-
-const defaultLanguage = 'vi';
-
-export const renderText = (text: string): string => {
-  const control: any = defaultLanguage === 'vi' ? vi : en;
-  return control[text] || text;
-};
-
-export const formatText = (text: string, ...params): string => {
-  if (!text) return '';
-  text = renderText(text);
-  params.forEach((param, index) => {
-    if (text.includes(`{${index}}`))
-      text = text.replace(`{${index}}`, renderText(param));
-    else text = `${text} ${renderText(param)}`;
-  });
-  return text;
 };

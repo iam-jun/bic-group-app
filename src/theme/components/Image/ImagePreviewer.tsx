@@ -1,17 +1,27 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, Modal, View, Text} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  View,
+  Text,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import Icon from '../Icon/Icon';
-import Image from './Image';
+import Icon from '../Icon';
+import Image from '.';
 
 export interface Props {
+  style?: StyleProp<ViewStyle>;
   isLoading?: boolean;
-  onRemovePress?: any;
+  onRemovePress?: () => void;
 }
 
 const ImagePreviewer: React.FC<Props> = ({
   onRemovePress,
   isLoading,
+  style,
   ...props
 }) => {
   const [visible, setVisible] = useState(false);
@@ -19,12 +29,12 @@ const ImagePreviewer: React.FC<Props> = ({
   return (
     <View>
       <TouchableOpacity onPress={() => setVisible(true)}>
-        <Image {...props} isLoading={isLoading} />
+        <Image {...props} style={style} isLoading={isLoading} />
         {!isLoading && onRemovePress && (
           <Icon
             tintColor="white"
             style={[styles.iconClose, styles.iconRemove]}
-            icon="ICON_REMOVE"
+            icon="iconClose"
             onPress={() => onRemovePress()}
           />
         )}
@@ -34,7 +44,7 @@ const ImagePreviewer: React.FC<Props> = ({
           tintColor="white"
           size={30}
           style={styles.iconClose}
-          icon="ICON_REMOVE"
+          icon="iconClose"
           onPress={() => setVisible(false)}
         />
         <ImageViewer
