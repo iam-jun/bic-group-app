@@ -28,6 +28,14 @@ export default {
     type: 'MaterialCommunityIcons',
     name: 'close-box',
   },
+  iconOptions: {
+    type: 'MaterialCommunityIcons',
+    name: 'dots-horizontal',
+  },
+  iconLike: {
+    type: 'MaterialCommunityIcons',
+    name: 'thumb-up',
+  },
   iconVerifiedUser: {
     type: 'MaterialIcons',
     name: 'verified-user',

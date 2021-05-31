@@ -1,4 +1,5 @@
 import moment from 'moment';
+import {useBaseHook} from '~/hooks';
 
 export const formatNumber = (n: number) => {
   return n.toFixed(0).replace(/./g, function (c, i, a) {
@@ -20,4 +21,19 @@ export const formatDate = (
   else value = moment(value).format(format);
 
   return value;
+};
+
+export const formatText = (text_label: string, ...params: number[]): string => {
+  if (!text_label) return '';
+  const {t} = useBaseHook();
+
+  let text = t(text_label);
+  params.forEach((param, index) => {
+    if (text.includes(`{${index}}`)) {
+      text = text.replace(`{${index}}`, t(param));
+    } else {
+      text = `${text} ${t(param)}`;
+    }
+  });
+  return text;
 };
