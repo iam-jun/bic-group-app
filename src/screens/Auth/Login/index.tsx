@@ -3,11 +3,12 @@ import {Button, StyleSheet, Text} from 'react-native';
 import {useTheme, HelperText} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
+import debounce from 'lodash/debounce';
+import {useDispatch} from 'react-redux';
 
 import {useBaseHook} from '~/hooks';
 import ThemeView from '~/theme/components/ThemeView';
 import {IObject} from '~/interfaces/common';
-import {useDispatch} from 'react-redux';
 import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
@@ -22,16 +23,17 @@ const Login = () => {
   const dispatch = useDispatch();
   const {
     control,
-    handleSubmit,
     formState: {errors},
     trigger,
+    getValues,
   } = useForm();
   const theme: IObject<any> = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
-  const onSubmit = async (data: {email: string; password: string}) => {
-    const {email, password} = data;
+  const onSubmit = async () => {
+    const email = getValues('email');
+    const password = getValues('password');
     await trigger();
     if (!isEmpty(errors)) return;
     dispatch(
@@ -42,8 +44,24 @@ const Login = () => {
     );
   };
 
+  const validateEmail = debounce(async () => {
+    await trigger('email');
+  }, 50);
+
+  const validatePassword = debounce(async () => {
+    await trigger('password');
+  }, 50);
+
+  const checkBtnLogin = () => {
+    const email = getValues('email');
+    const password = getValues('password');
+    if (!isEmpty(errors) || !email || !password) return true;
+    return false;
+  };
+  const loginDisable = checkBtnLogin();
+
   return (
-    <ThemeView style={styles.container} isFullView>
+    <ThemeView testID="SignInScreen" style={styles.container} isFullView>
       <Controller
         control={control}
         render={({field: {onChange, value}}) => (
@@ -56,9 +74,7 @@ const Login = () => {
             error={errors.email}
             onChangeText={text => {
               onChange(text);
-              setTimeout(async () => {
-                await trigger('email');
-              }, 50);
+              validateEmail();
             }}
             helperType="error"
             helperContent={errors?.email?.message}
@@ -87,9 +103,7 @@ const Login = () => {
             value={value}
             onChangeText={text => {
               onChange(text);
-              setTimeout(async () => {
-                await trigger('password');
-              }, 50);
+              validatePassword();
             }}
             helperType="error"
             helperContent={errors?.password?.message}
@@ -101,17 +115,23 @@ const Login = () => {
         defaultValue=""
       />
 
-      <Text onPress={() => refNavigator.navigate(authStack.signup)}>
+      <Text
+        testID="textSignup"
+        onPress={() => refNavigator.navigate(authStack.signup)}>
         {t('auth:navigate_sign_up')}
       </Text>
-      <Text onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
+
+      <Text
+        testID="textForgotpassword"
+        onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
         {t('auth:text_forgot_password')}
       </Text>
       <ViewSpacing height={80} />
       <Button
         testID="btnLogin"
+        disabled={loginDisable}
         title={t('auth:btn_sign_in')}
-        onPress={handleSubmit(onSubmit)}
+        onPress={onSubmit}
       />
       <Button
         testID="btnLoginFB"

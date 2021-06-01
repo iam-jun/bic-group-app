@@ -1,12 +1,15 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import {rootSwitch} from '~/configs/navigator';
+import {Auth} from 'aws-amplify';
+
+import {rootSwitch, authStack} from '~/configs/navigator';
 import * as types from './constants';
 import * as IAuth from './interfaces';
 import * as refNavigator from '~/utils/refNavigator';
 import * as storage from '~/asyncStorage';
 import * as actions from './actions';
-import {Auth} from 'aws-amplify';
-import {ISignUpResult} from 'amazon-cognito-identity-js';
+import * as actionsCommon from '../common/actions';
+import {ERROR} from '~/constants/common';
+import {convertMultiLanguage} from '~/utils/language';
 
 export default function* authSaga() {
   yield takeLatest(types.SIGN_IN, signIn);
@@ -17,6 +20,8 @@ export default function* authSaga() {
   yield takeLatest(types.SIGN_OUT, signOut);
   // yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
 }
+
+const languages = convertMultiLanguage();
 
 /**
  * SignIn
@@ -32,7 +37,7 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
     yield put(actions.setUser(user));
     refNavigator.replace(rootSwitch.mainStack);
   } catch (err) {
-    console.error(err);
+    yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
 
@@ -45,9 +50,9 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
 // }
 
 function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
-  const {username, email, password, callback} = payload;
+  const {username, email, password} = payload;
   try {
-    const response: ISignUpResult = yield Auth.signUp({
+    const response: IAuth.ISignUpResponse = yield Auth.signUp({
       username: email,
       password,
       attributes: {
@@ -55,9 +60,16 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
         name: username,
       },
     });
-    callback(response);
+    if (response)
+      yield put(
+        actionsCommon.showAlert({
+          title: languages.auth.text_title_success,
+          content: languages.auth.text_sign_up_success,
+          onConfirm: () => refNavigator.navigate(authStack.login),
+        }),
+      );
   } catch (err) {
-    console.log(err);
+    yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
 
@@ -72,7 +84,7 @@ function* forgotPassword({
     yield Auth.forgotPassword(email);
     callback();
   } catch (err) {
-    console.log(err);
+    yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
 
@@ -80,14 +92,22 @@ function* forgotPasswordSubmit({
   payload,
 }: {
   type: string;
-  payload: IAuth.IForgotPasswordSubmit;
+  payload: IAuth.IForgotPasswordRequest;
 }) {
-  const {code, email, password, submitPasswordCb} = payload;
+  const {code, email, password} = payload;
   try {
     yield Auth.forgotPasswordSubmit(email, code, password);
-    submitPasswordCb();
+    yield put(
+      actionsCommon.showAlert({
+        title: languages.auth.text_title_success,
+        content: languages.auth.text_change_password_success,
+        onConfirm: () => {
+          refNavigator.navigate(authStack.login);
+        },
+      }),
+    );
   } catch (err) {
-    console.log(err);
+    yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
 
@@ -97,7 +117,7 @@ function* signOut() {
     yield Auth.signOut();
     refNavigator.replace(rootSwitch.authStack);
   } catch (err) {
-    console.log(err);
+    yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
 

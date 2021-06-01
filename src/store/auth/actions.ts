@@ -4,7 +4,7 @@ import {
   ISignUp,
   ISignIn,
   IForgotPassword,
-  IForgotPasswordSubmit,
+  IForgotPasswordRequest,
   IUser,
 } from './interfaces';
 
@@ -77,7 +77,7 @@ export function forgotPassword(payload: IForgotPassword) {
  * @returns {{type: string, payload: object}
  */
 
-export function changePassword(payload: IForgotPasswordSubmit) {
+export function changePassword(payload: IForgotPasswordRequest) {
   return {
     type: actions.CHANGE_PASSWORD,
     payload,
