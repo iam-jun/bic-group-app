@@ -36,8 +36,10 @@
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",
     "label_like": "Like",
-    "label_comment": "Comments",
-    "label_share": "Shares",
+    "label_comment": "Comment",
+    "label_share": "Share",
+    "label_comments": "Comments",
+    "label_shares": "Shares",
     "label_donate": "Contribute"
   }
 }

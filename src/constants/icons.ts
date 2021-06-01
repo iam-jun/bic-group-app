@@ -33,11 +33,23 @@ export default {
     name: 'dots-horizontal',
   },
   iconLike: {
-    type: 'MaterialCommunityIcons',
-    name: 'thumb-up',
+    type: 'AntDesign',
+    name: 'like1',
+  },
+  iconLikeOutline: {
+    type: 'AntDesign',
+    name: 'like2',
   },
   iconVerifiedUser: {
     type: 'MaterialIcons',
     name: 'verified-user',
+  },
+  iconShare: {
+    type: 'SimpleLineIcons',
+    name: 'share-alt',
+  },
+  iconComment: {
+    type: 'MaterialCommunityIcons',
+    name: 'comment-outline',
   },
 };
