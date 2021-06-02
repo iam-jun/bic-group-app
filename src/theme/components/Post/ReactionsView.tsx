@@ -6,10 +6,11 @@ import {formatText} from '~/utils/format';
 import HorizontalView from '../Layout/HorizontalView';
 import ReactionItem from '../List/items/ReactionItem';
 import TextContent from '../Text';
-
-const SPACE_BASE: number = 16;
-const LIKE_BUTTON_COLOR = '#2185D0';
-const WHITE_COLOR = 'white';
+import {
+  blue as LIKE_BUTTON_COLOR,
+  white as WHITE_COLOR,
+} from '~/theme/configs/colors';
+import {spaceBase} from '~/theme/configs/spacing';
 
 export interface Props {
   isLike?: boolean;
@@ -66,7 +67,7 @@ const ReactionsView: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
-    paddingHorizontal: SPACE_BASE,
+    paddingHorizontal: spaceBase,
     paddingBottom: 4,
     alignItems: 'center',
   },

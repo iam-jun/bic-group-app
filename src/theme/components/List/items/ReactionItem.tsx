@@ -2,8 +2,7 @@ import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import TextContent from '../../Text';
 import Icon from '../../Icon';
-
-const GRAY_COLOR = 'grey1';
+import {white as WHITE_COLOR} from '~/theme/configs/colors';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -16,7 +15,7 @@ const ReactionItem: React.FC<Props> = ({
   style,
   icon,
   value,
-  tintColor = GRAY_COLOR,
+  tintColor = WHITE_COLOR,
 }) => {
   return (
     <View style={[styles.container, style]}>
