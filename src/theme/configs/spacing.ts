@@ -27,6 +27,7 @@ export const padding = {
 // Margin
 export const margin = {
   base: 12,
+  tiny: 4,
   small: 8,
   large: 16,
   big: 26,
