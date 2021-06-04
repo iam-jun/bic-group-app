@@ -5,9 +5,7 @@ import TextContent from '../Text/';
 import Avatar from '../Image/Avatar';
 import Icon from '../Icon';
 import {IconProps} from '../Icon';
-
-export const SPACE_BASE = 16;
-export const SPACE_TINY = 8;
+import {margin, padding} from '~/theme/configs/spacing';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -77,12 +75,12 @@ const HeaderView: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: SPACE_BASE,
+    paddingTop: padding.large,
     alignItems: 'flex-start',
     flexShrink: 1,
   },
   userInfo: {
-    marginStart: SPACE_TINY,
+    marginStart: margin.small,
     flexShrink: 1,
   },
   firstContainer: {},
@@ -90,11 +88,11 @@ const styles = StyleSheet.create({
     marginStart: 4,
   },
   iconBack: {
-    marginStart: SPACE_BASE,
+    marginStart: margin.large,
     padding: 6,
   },
   avatar: {
-    marginStart: SPACE_BASE,
+    marginStart: margin.large,
   },
   avatarWithIcon: {
     marginStart: 4,

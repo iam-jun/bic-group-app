@@ -10,7 +10,7 @@ import {
   blue as LIKE_BUTTON_COLOR,
   white as WHITE_COLOR,
 } from '~/theme/configs/colors';
-import {spaceBase} from '~/theme/configs/spacing';
+import {padding} from '~/theme/configs/spacing';
 
 export interface Props {
   isLike?: boolean;
@@ -67,7 +67,7 @@ const ReactionsView: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
-    paddingHorizontal: spaceBase,
+    paddingHorizontal: padding.large,
     paddingBottom: 6,
     alignItems: 'center',
   },

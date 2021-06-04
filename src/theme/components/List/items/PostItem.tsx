@@ -10,7 +10,7 @@ import HorizontalListContent from '../HorizontalListContent';
 import ListView from '../ListView';
 import Markdown from '../../Text/Markdown';
 import {IObject} from '~/interfaces/common';
-import {spaceBase, spaceTiny} from '~/theme/configs/spacing';
+import {margin, padding} from '~/theme/configs/spacing';
 
 const PostItem: React.FC<IObject<any>> = ({
   user,
@@ -78,18 +78,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   content: {
-    marginBottom: spaceTiny,
+    marginBottom: margin.small,
     justifyContent: 'center',
-    paddingHorizontal: spaceBase,
+    paddingHorizontal: padding.large,
   },
   hashtags: {
-    marginHorizontal: spaceTiny,
-    marginVertical: spaceTiny,
+    marginHorizontal: margin.small,
+    marginVertical: margin.small,
   },
   reactions: {
-    paddingVertical: spaceTiny,
+    paddingVertical: padding.small,
     justifyContent: 'space-between',
-    paddingHorizontal: spaceBase,
+    paddingHorizontal: padding.large,
   },
   iconOptions: {
     position: 'absolute',

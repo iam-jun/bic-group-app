@@ -1,7 +1,3 @@
-export const spaceBase: number = 16;
-
-export const spaceTiny: number = 8;
-
 // Border radius
 export const borderRadius = {
   base: 16,
