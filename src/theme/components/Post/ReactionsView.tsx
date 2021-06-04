@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     paddingHorizontal: spaceBase,
-    paddingBottom: 4,
+    paddingBottom: 6,
     alignItems: 'center',
   },
   label: {

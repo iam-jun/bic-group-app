@@ -9,7 +9,14 @@ export interface Props {
   [x: string]: any;
 }
 
-const Avatar: React.FC<Props> = ({style, size, user, uri, ...props}) => {
+const Avatar: React.FC<Props> = ({
+  style,
+  size,
+  user,
+  uri,
+  numberOfChars = 1,
+  ...props
+}) => {
   const [_user, setUser] = useState(user);
 
   if (typeof uri === 'string') {
@@ -31,7 +38,7 @@ const Avatar: React.FC<Props> = ({style, size, user, uri, ...props}) => {
         styles.charContainer,
         {width: size, height: size, backgroundColor: '#2185D0'},
       ]}>
-      <TextContent h2 maxBold style={[styles.char]}>
+      <TextContent h2 maxBold style={[styles.char]} maxLength={numberOfChars}>
         {_user?.fullName || _user?.name || ''}
       </TextContent>
     </View>
@@ -49,6 +56,7 @@ const styles = StyleSheet.create({
   },
   char: {
     textTransform: 'uppercase',
+    color: 'white',
   },
 });
 

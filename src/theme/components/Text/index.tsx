@@ -4,6 +4,7 @@ import {StyleSheet, Text, TextStyle, StyleProp} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {colors} from '~/theme/configs';
+import {formatDate} from '~/utils/format';
 
 const configColors: IObject<any> = colors;
 
@@ -69,8 +70,22 @@ const TextElement: React.FC<Props> = props => {
     onPress,
     disabledDarkMode,
     reverseDarkMode,
+    format = 'll',
+    useFromNow = true,
+    maxFromDays = 3,
+    maxLength = -1,
     ...rest
   } = props;
+
+  let value = `${children}`;
+  if (!value) return null;
+  const date = formatDate(value, format, useFromNow ? maxFromDays : -1);
+  if (date) {
+    value = date;
+  } else if (maxLength > -1 && value.length > maxLength) {
+    value = `${value.substr(0, maxLength)}`;
+  }
+
   const theme: any = useTheme();
   const {fontFamily, dimension, colors} = theme;
   const {sizes, lineHeights, letterSpacing} = dimension;
@@ -154,7 +169,7 @@ const TextElement: React.FC<Props> = props => {
         maxBold && styles.maxBold,
       ])}
       {...rest}>
-      {children}
+      {value}
     </Text>
   );
 };
