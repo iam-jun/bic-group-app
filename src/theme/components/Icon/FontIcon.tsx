@@ -56,7 +56,7 @@ const FontIcon: React.FC<FontIconProps> = ({
   return (
     <Control
       {...props}
-      name={'menu'}
+      name={name}
       color={tintColor}
       style={[
         styles.icon,
