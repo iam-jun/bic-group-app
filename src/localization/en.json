@@ -28,5 +28,18 @@
     "text_change_password_success": "Change password successfully!",
     "text_resend_otp_success": "Resend OTP successfully. Please check your email!",
     "text_resend_otp_fail": "Resend OTP fail. Please try again!"
+  },
+  "post": {
+    "button_like": "Like",
+    "button_reply": "Reply",
+    "button_comment_not_verify_user": "Verify your account to comment",
+    "label_view_more_replies": "View more {0} replies",
+    "label_likes_with_me": "You and {0} others",
+    "label_like": "Like",
+    "label_comment": "Comment",
+    "label_share": "Share",
+    "label_comments": "Comments",
+    "label_shares": "Shares",
+    "label_donate": "Contribute"
   }
 }

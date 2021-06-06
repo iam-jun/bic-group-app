@@ -25,5 +25,18 @@
     "text_err_exist_email": "Email is exist!",
     "text_err_otp": "OTP is invalid!",
     "text_change_password_success": "Change password successfully!"
+  },
+  "post": {
+    "button_like": "Thích",
+    "button_reply": "Trả lời",
+    "button_comment_not_verify_user": "Xác thực tài khoản để bình luận",
+    "label_view_more_replies": "Xem thêm {0} bình luận",
+    "label_likes_with_me": "Bạn và {0} người khác",
+    "label_like": "Thích",
+    "label_comment": "Bình luận",
+    "label_share": "Chia sẻ",
+    "label_comments": "Bình luận",
+    "label_shares": "Chia sẻ",
+    "label_donate": "Đóng góp"
   }
 }

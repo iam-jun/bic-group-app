@@ -106,7 +106,7 @@ const Index: React.FC<Props> = ({
 
 const styles = {
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'black',
     position: 'relative',
   },
   placeholderContainer: {

@@ -28,8 +28,28 @@ export default {
     type: 'MaterialCommunityIcons',
     name: 'close-box',
   },
+  iconOptions: {
+    type: 'MaterialCommunityIcons',
+    name: 'dots-horizontal',
+  },
+  iconLike: {
+    type: 'AntDesign',
+    name: 'like1',
+  },
+  iconLikeOutline: {
+    type: 'AntDesign',
+    name: 'like2',
+  },
   iconVerifiedUser: {
     type: 'MaterialIcons',
     name: 'verified-user',
+  },
+  iconShare: {
+    type: 'SimpleLineIcons',
+    name: 'share-alt',
+  },
+  iconComment: {
+    type: 'MaterialCommunityIcons',
+    name: 'comment-outline',
   },
 };

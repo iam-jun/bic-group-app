@@ -46,8 +46,8 @@ const ListView: React.FC<IListView> = ({
 
   const renderDefaultItemSeparator = () => (
     <ViewSpacing
-      width={horizontal ? spacing.margin.small : 0}
-      height={!horizontal ? spacing.margin.small : 0}
+      width={horizontal ? spacing.margin.tiny : 0}
+      height={!horizontal ? spacing.margin.tiny : 0}
     />
   );
 
