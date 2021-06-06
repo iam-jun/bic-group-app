@@ -1,7 +1,7 @@
 // Border radius
 export const borderRadius = {
   base: 16,
-  small: 9,
+  small: 4,
   large: 25,
   big: 32,
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
 import ThemeView from '~/theme/components/ThemeView';
@@ -10,6 +10,7 @@ import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
 import {ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
+import Button from '~/theme/components/Button/primary';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,12 @@ const Login = () => {
         testID="btnLogin"
         title={t('auth:btn_sign_in')}
         onPress={signIn}
-      />
+        max
+        type="light"
+        largeBorder
+        mode="contained">
+        {t('auth:text_sign_in')}
+      </Button>
     </ThemeView>
   );
 };

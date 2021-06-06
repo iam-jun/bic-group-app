@@ -22,6 +22,10 @@ export const violet = '#6435C9';
 export const purple = '#A333C8';
 export const pink = '#E03997';
 export const brown = '#A5673F';
+export const primary = '#00C3DE';
+export const secondary = '#EB5757';
+export const light = '#26E8EF';
+export const defaultColor = '#BDBDBD';
 
 export default {
   dark: {
