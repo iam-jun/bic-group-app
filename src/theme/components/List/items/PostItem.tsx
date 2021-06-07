@@ -22,6 +22,8 @@ const PostItem: React.FC<IObject<any>> = ({
   locationName,
   reaction,
   reactionActions,
+  maxLength = 200,
+  showBackButton,
 }) => {
   return (
     <ThemeView style={styles.container}>
@@ -32,11 +34,12 @@ const PostItem: React.FC<IObject<any>> = ({
             firstLabel={user.fullName}
             secondLabel={updatedAt}
             thirdLabel={locationName}
+            showBackButton={showBackButton}
           />
         )}
       </View>
 
-      <Markdown style={styles.content} maxLength={200}>
+      <Markdown style={styles.content} maxLength={maxLength}>
         {content}
       </Markdown>
 
@@ -93,8 +96,8 @@ const styles = StyleSheet.create({
   },
   iconOptions: {
     position: 'absolute',
-    top: 6,
-    right: 6,
+    top: margin.large,
+    right: margin.large,
     zIndex: 99,
   },
 });
