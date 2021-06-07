@@ -16,7 +16,7 @@ import {
   Provider as PaperProvider,
   Provider as ThemeProvider,
 } from 'react-native-paper';
-import {useColorScheme} from 'react-native-appearance';
+import {useColorScheme} from 'react-native';
 import {colors, fonts, spacing, dimension, shadow} from '~/theme/configs';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
