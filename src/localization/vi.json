@@ -9,7 +9,7 @@
     "text_show_all": "Show all",
     "text_search_country_mobile": "Type Here...",
     "btn_cancel": "Cancel",
-    "btn_comfirm": "Comfirm"
+    "btn_confirm": "Confirm"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -19,6 +19,7 @@
     "input_label_email": "Email Address",
     "input_label_password": "Password",
     "input_label_username" : "User Name",
+    "input_label_code": "Code",
     "btn_sign_in": "Sign In",
     "btn_sign_up": "Sign Up",
     "btn_send": "Send",
