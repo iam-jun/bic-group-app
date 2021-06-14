@@ -15,7 +15,6 @@ const compileNodeModules = [
   'react-native-parsed-text',
   '@react-navigation/native',
   '@react-navigation/drawer',
-  'react-native-appearance',
   'redux',
   'react-redux',
   'redux-persist',
