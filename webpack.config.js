@@ -31,6 +31,10 @@ const compileNodeModules = [
   'react-native-reanimate',
   'react-native-image-picker',
   'react-native-vector-icons',
+  '@react-native-async-storage/async-storage',
+  'amazon-cognito-identity-js',
+  'aws-amplify',
+  'react-hook-form',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {

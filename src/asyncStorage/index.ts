@@ -1,7 +1,7 @@
-import {ISignIn} from './../store/auth/interfaces';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {IUser} from '~/store/auth/interfaces';
 
-export const setUser = async (user: ISignIn) => {
+export const setUser = async (user: IUser) => {
   await AsyncStorage.setItem('user', JSON.stringify(user));
 };
 
@@ -9,10 +9,10 @@ export const removeUser = async () => {
   await AsyncStorage.removeItem('user');
 };
 
-export const getUser = async (): Promise<ISignIn | undefined> => {
+export const getUser = async (): Promise<IUser | undefined> => {
   try {
     const _user = await AsyncStorage.getItem('user');
-    return JSON.parse(_user || '') as ISignIn;
+    return JSON.parse(_user || '') as IUser;
   } catch (err) {}
   return undefined;
 };
