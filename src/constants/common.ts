@@ -20,3 +20,6 @@ export const PRAY_DAILY_VERSE = 'Pray daily verse';
 export const MORNING_VERSE = 'Morning verse';
 export const EVENING_VERSE = 'Evening verse';
 export const TASK = 'Task';
+
+//Error title
+export const ERROR = 'Error!';

@@ -8,7 +8,8 @@
     "btn_try_again": "Try again",
     "text_show_all": "Show all",
     "text_search_country_mobile": "Type Here...",
-    "btn_cancel": "Cancel"
+    "btn_cancel": "Cancel",
+    "btn_confirm": "Confirm"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -17,14 +18,29 @@
     "input_label_last_name": "Last Name",
     "input_label_email": "Email Address",
     "input_label_password": "Password",
+    "input_label_username" : "User Name",
+    "input_label_code": "Code",
     "btn_sign_in": "Sign In",
     "btn_sign_up": "Sign Up",
+    "btn_send": "Send",
     "text_forgot_password": "Forgot password??",
     "text_err_login_failed": "Email or password is wrong!",
     "text_err_forgot_password": "Email is invalid!",
     "text_err_exist_email": "Email is exist!",
     "text_err_otp": "OTP is invalid!",
-    "text_change_password_success": "Change password successfully!"
+    "text_change_password_success": "Change password successfully!",
+    "text_err_password_blank": "Password is required!",
+    "text_err_password_format":"Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
+    "text_err_email_blank": "Email is required!",
+    "text_err_email_format":"Invalid email!",
+    "text_err_username_blank" : "User name is required!",
+    "text_err_code" : "Code must have 6 numbers!",
+    "text_title_success": "Successfully!",
+    "text_sign_up_success": "Please check your email to comfirm your account.",
+    "text_check_email_code": "Code is sending to your email.",
+    "text_check_email_description": "You will receive email in a few minute, please check your email and following description.",
+    "navigate_sign_in": "Go to Login",
+    "navigate_sign_up": "Create account"
   },
   "post": {
     "button_like": "Thích",

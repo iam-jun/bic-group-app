@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {I18nManager, StatusBar, Linking} from 'react-native';
+import {I18nManager, StatusBar, Linking, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 /* State Redux */
@@ -20,6 +20,7 @@ import {useColorScheme} from 'react-native-appearance';
 import {colors, fonts, spacing, dimension, shadow} from '~/theme/configs';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
+import AlertModal from './theme/components/Modal/AlertModal';
 
 export default () => {
   const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
@@ -104,6 +105,7 @@ export default () => {
       <PreferencesContext.Provider value={preferences}>
         <PaperProvider theme={themeConfig}>
           <RootNavigator />
+          <AlertModal />
         </PaperProvider>
       </PreferencesContext.Provider>
     </ThemeProvider>

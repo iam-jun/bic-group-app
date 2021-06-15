@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, StyleSheet, Text} from 'react-native';
-import {useTheme, HelperText} from 'react-native-paper';
+import {useTheme} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
@@ -14,17 +14,20 @@ import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
 import {ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
-import {AuthProvider} from '~/constants/enum/AuthProvider';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/utils/validation';
+import * as actionsCommon from '~/store/common/actions';
+import {ISignUpResponse} from '~/store/auth/interfaces';
 
-const Login = () => {
+const SignUp = (props: any) => {
   const dispatch = useDispatch();
   const {
     control,
     formState: {errors},
     trigger,
+    setError,
+    clearErrors,
     getValues,
   } = useForm();
   const theme: IObject<any> = useTheme();
@@ -32,17 +35,39 @@ const Login = () => {
   const styles = themeStyles(theme);
 
   const onSubmit = async () => {
-    const email = getValues('email');
-    const password = getValues('password');
+    const email: string = getValues('email');
+    const username: string = getValues('username');
+    const password: string = getValues('password');
     await trigger();
+
     if (!isEmpty(errors)) return;
     dispatch(
-      actions.signIn({
-        email,
+      actions.signUp({
+        username,
         password,
+        email,
       }),
     );
   };
+
+  const onUsernameChange = (
+    value: string,
+    onChange: (param: string) => void,
+  ) => {
+    onChange(value);
+    validateUsername(value);
+  };
+
+  const validateUsername = debounce(value => {
+    if (value.trim().length === 0) {
+      setError('username', {
+        type: 'required',
+        message: t('auth:text_err_username_blank'),
+      });
+    } else {
+      clearErrors('username');
+    }
+  }, 50);
 
   const validateEmail = debounce(async () => {
     await trigger('email');
@@ -52,16 +77,38 @@ const Login = () => {
     await trigger('password');
   }, 50);
 
-  const checkBtnLogin = () => {
-    const email = getValues('email');
-    const password = getValues('password');
-    if (!isEmpty(errors) || !email || !password) return true;
+  const checkDisableBtn = () => {
+    const email: string = getValues('email');
+    const username: string = getValues('username');
+    const password: string = getValues('password');
+    if (!isEmpty(errors) || !email || !username || !password) return true;
     return false;
   };
-  const loginDisable = checkBtnLogin();
+  const disableBtn = checkDisableBtn();
 
   return (
-    <ThemeView testID="SignInScreen" style={styles.container} isFullView>
+    <ThemeView testID="SignUpScreen" style={styles.container} isFullView>
+      <Controller
+        control={control}
+        render={({field: {onChange, value}}) => (
+          <Input
+            testID="inputUsername"
+            label={t('auth:input_label_username')}
+            placeholder={t('auth:input_label_username')}
+            autoCapitalize="none"
+            value={value}
+            error={errors.username}
+            onChangeText={text => onUsernameChange(text, onChange)}
+            helperType="error"
+            helperContent={errors?.username?.message}
+            helperVisible={errors.username}
+          />
+        )}
+        rules={{required: t('auth:text_err_username_blank')}}
+        name="username"
+        defaultValue=""
+      />
+
       <Controller
         control={control}
         render={({field: {onChange, value}}) => (
@@ -111,37 +158,26 @@ const Login = () => {
           />
         )}
         name="password"
-        rules={{required: t('auth:text_err_password_blank')}}
+        rules={{
+          required: t('auth:text_err_password_blank'),
+          pattern: {
+            value: validation.passwordRegex,
+            message: t('auth:text_err_password_format'),
+          },
+        }}
         defaultValue=""
       />
-
       <Text
-        testID="textSignup"
-        onPress={() => refNavigator.navigate(authStack.signup)}>
-        {t('auth:navigate_sign_up')}
-      </Text>
-
-      <Text
-        testID="textForgotpassword"
-        onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
-        {t('auth:text_forgot_password')}
+        testID="textSignin"
+        onPress={() => refNavigator.navigate(authStack.login)}>
+        {t('auth:navigate_sign_in')}
       </Text>
       <ViewSpacing height={80} />
       <Button
-        testID="btnLogin"
-        disabled={loginDisable}
-        title={t('auth:btn_sign_in')}
+        testID="btnSignUp"
+        disabled={disableBtn}
+        title={t('auth:btn_sign_up')}
         onPress={onSubmit}
-      />
-      <Button
-        testID="btnLoginFB"
-        title={t('auth:btn_sign_in_fb')}
-        onPress={() => dispatch(actions.signInOAuth(AuthProvider.FACEBOOK))}
-      />
-      <Button
-        testID="btnLoginGG"
-        title={t('auth:btn_sign_in_gg')}
-        onPress={() => dispatch(actions.signInOAuth(AuthProvider.GOOGLE))}
       />
     </ThemeView>
   );
@@ -159,4 +195,4 @@ const themeStyles = (theme: IObject<any>) => {
   });
 };
 
-export default Login;
+export default SignUp;

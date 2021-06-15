@@ -15,6 +15,16 @@ const AuthStack = () => {
         name={authStack.login}
         component={Stacks[authStack.login]}
       />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={authStack.signup}
+        component={Stacks[authStack.signup]}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={authStack.forgotpassword}
+        component={Stacks[authStack.forgotpassword]}
+      />
     </Stack.Navigator>
   );
 };
