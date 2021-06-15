@@ -1,11 +1,6 @@
-import {GET} from '~/constants/api';
-import {axios} from '~/utils/api';
-import withParams, {IParams} from '~/utils/withParams';
+import apiEndPoints from '~/constants/apiEndPoints';
+import baseApi from '~/utils/baseAPI';
 
-export const getMoods = (params?: Array<IParams>) => {
-  return axios(GET, withParams('/moods', params));
-};
-
-export const getThemes = (params?: Array<IParams>) => {
-  return axios(GET, withParams('/themes', params));
+export const getConfigs = () => {
+  return baseApi.get(apiEndPoints.configs);
 };

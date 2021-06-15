@@ -1,10 +1,7 @@
 import * as types from './constants';
 
 export const initState = {
-  configs: {
-    themes: [],
-    moods: [],
-  },
+  configs: {},
 };
 
 /**
@@ -23,8 +20,6 @@ function reducer(state = initState, action: any = {}) {
         ...state,
         configs: {
           ...configs,
-          themes: action.themes,
-          moods: action.moods,
         },
       };
     default:

@@ -9,18 +9,6 @@ import {
 } from './interfaces';
 
 /**
- * Auth Loading
- * @param data
- * @returns {{type: string, payload: boolean}
- */
-export function setAuthLoading(payload: boolean) {
-  return {
-    type: actions.LOADING,
-    payload,
-  };
-}
-
-/**
  * SignIn
  * @param data
  * @returns {{type: string, payload: object}

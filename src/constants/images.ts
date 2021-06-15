@@ -1,9 +1,5 @@
-const HomeNight = require('../../assets/images/HomeNight.png');
-const DiscoveryLogo = require('../../assets/images/img_discovery_logo.png');
-const BannerActivePlan = require('../../assets/images/BannerActivePlan.png');
+const Logo = require('../../assets/images/logo.png');
 
 export default {
-  HomeNight,
-  DiscoveryLogo,
-  BannerActivePlan,
+  Logo,
 };

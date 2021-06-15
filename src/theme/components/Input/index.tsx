@@ -6,26 +6,40 @@ import {TextInputProps as _TextInputProps} from 'react-native-paper/lib/typescri
 import {IObject} from '~/interfaces/common';
 
 export interface TextInputProps extends Partial<_TextInputProps> {
-  helperType?: 'info' | 'error';
+  helperType: 'info' | 'error';
   helperVisible?: boolean;
   helperPadding?: 'normal' | 'none';
   helperContent?: string;
   helperTestID?: string;
+  style?: StyleProp<TextStyle>;
+  secondaryBackground?: boolean;
 }
 
-const Input: React.FC<TextInputProps> = ({...props}) => {
-  const {
-    helperType = 'info',
-    helperVisible,
-    helperContent,
-    helperTestID,
-  } = props;
+const Input: React.FC<TextInputProps> = ({
+  style,
+  helperType,
+  helperVisible,
+  helperContent,
+  helperTestID,
+  secondaryBackground,
+  ...props
+}) => {
   const theme: IObject<any> = useTheme();
   const {colors} = theme;
 
   return (
     <View>
-      <TextInput {...props} />
+      <TextInput
+        style={[
+          {
+            height: 40,
+            justifyContent: 'center',
+            backgroundColor: secondaryBackground && colors.bgColorSecondary,
+          },
+          style,
+        ]}
+        {...props}
+      />
       <HelperText
         testID={helperTestID}
         type={helperType}
@@ -37,7 +51,8 @@ const Input: React.FC<TextInputProps> = ({...props}) => {
 };
 
 Input.defaultProps = {
-  mode: 'flat',
+  mode: 'outlined',
+  helperType: 'info',
 };
 
 export default Input;

@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, StyleProp, ViewStyle, TextStyle, Text} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useTheme, Button} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {colors} from '~/theme/configs';
-import {defaultColor, light, primary, secondary} from '~/theme/configs/colors';
+import Text from '../Text';
 
 const configColors: IObject<any> = colors;
 
@@ -27,7 +27,7 @@ export interface Props {
   hasRightIcon?: boolean;
   disabledShadow?: boolean;
   secondaryColor?: boolean;
-  // thirdColor?: boolean;
+  thirdColor?: boolean;
   disabledDarkMode?: boolean;
   mode?: 'text' | 'outlined' | 'contained';
   type?: 'primary' | 'secondary' | 'light';
@@ -40,7 +40,7 @@ export interface Props {
   accessibilityLabel?: string;
 }
 
-const ButtonPaper: React.FC<Props> = ({
+const PrimaryButton: React.FC<Props> = ({
   title,
   short,
   medium,
@@ -53,6 +53,8 @@ const ButtonPaper: React.FC<Props> = ({
   bigBoder,
   contentStyle,
   labelStyles,
+  secondaryColor,
+  thirdColor,
   mode,
   uppercase,
   hasRightIcon,
@@ -69,7 +71,7 @@ const ButtonPaper: React.FC<Props> = ({
   ...propsPaper
 }) => {
   const themeDefault: IObject<any> = useTheme();
-  const {dimension, spacing} = themeDefault;
+  const {dimension, spacing, colors} = themeDefault;
   const {sizeButton} = dimension;
   const {borderRadius} = spacing;
   const configButton = short
@@ -92,6 +94,9 @@ const ButtonPaper: React.FC<Props> = ({
     : borderRadius.base;
   const modeBtn = mode ? mode : 'contained';
   const uppercaseBtn = uppercase ? uppercase : false;
+
+  const {defaultColor, light, primary, secondary} = colors;
+
   const colorType =
     type === 'primary'
       ? primary
@@ -116,17 +121,16 @@ const ButtonPaper: React.FC<Props> = ({
         labelStyles,
       ])}
       dark={type ? true : false}
-      // icon={({ color }) => (hasRightIcon ? <RightIcon color={color} /> : null)}
       icon={icon}
       contentStyle={StyleSheet.flatten([
         // configButton,
         {height: sizeButton.height},
-        // secondaryColor &&
-        //   themeDefault.dark && {
-        //     backgroundColor: thirdColor
-        //       ? themeDefault.colors.white
-        //       : themeDefault.colors.background,
-        //   },
+        secondaryColor &&
+          themeDefault.dark && {
+            backgroundColor: thirdColor
+              ? themeDefault.colors.white
+              : themeDefault.colors.background,
+          },
         disabledDarkMode && {
           backgroundColor: configColors.light.colors.primary,
         },
@@ -146,7 +150,7 @@ const ButtonPaper: React.FC<Props> = ({
       color={colorType}
       disabled={disabled}
       {...propsPaper}>
-      <Text>{children}</Text>
+      <Text reverseDarkMode>{title}</Text>
     </Button>
   );
 };
@@ -166,7 +170,7 @@ const stylesBtn = (configButton: IObject<any>) =>
     btnCustom: configButton,
   });
 
-ButtonPaper.defaultProps = {
+PrimaryButton.defaultProps = {
   title: '',
   contentStyle: {},
   theme: {},
@@ -175,16 +179,15 @@ ButtonPaper.defaultProps = {
   long: false,
   max: false,
   baseBorder: false,
-  smallBorder: false,
-  largeBorder: true,
+  smallBorder: true,
+  largeBorder: false,
   bigBoder: false,
-  // hasRightIcon: false,
   disabledShadow: false,
-  // secondaryColor: false,
-  // thirdColor: false,
+  secondaryColor: false,
+  thirdColor: false,
   disabledDarkMode: false,
   style: {},
   disabled: false,
 };
 
-export default ButtonPaper;
+export default PrimaryButton;

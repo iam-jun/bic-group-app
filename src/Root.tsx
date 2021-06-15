@@ -42,7 +42,10 @@ export default () => {
   const [theme, switchTheme] = React.useState<'light' | 'dark'>(
     colorScheme === 'dark' ? 'dark' : 'light',
   );
-  const barStyle = 'dark-content';
+
+  useEffect(() => {
+    toggleTheme();
+  }, [colorScheme]);
 
   const preferences = React.useMemo(
     () => ({
@@ -98,8 +101,8 @@ export default () => {
   return (
     <ThemeProvider>
       <StatusBar
+        barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
         translucent
-        barStyle={barStyle}
         backgroundColor="transparent"
       />
       <PreferencesContext.Provider value={preferences}>
