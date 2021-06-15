@@ -52,4 +52,24 @@ export default {
     type: 'MaterialCommunityIcons',
     name: 'comment-outline',
   },
+  iconHome: {
+    type: 'MaterialCommunityIcons',
+    name: 'home-outline',
+  },
+  iconDiamond: {
+    type: 'MaterialCommunityIcons',
+    name: 'diamond-stone',
+  },
+  iconGroup: {
+    type: 'MaterialCommunityIcons',
+    name: 'account-group',
+  },
+  iconNotification: {
+    type: 'MaterialCommunityIcons',
+    name: 'bell-outline',
+  },
+  iconSearchMT: {
+    type: 'MaterialCommunityIcons',
+    name: 'magnify',
+  },
 };
