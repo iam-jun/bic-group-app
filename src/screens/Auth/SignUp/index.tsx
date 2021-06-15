@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, StyleSheet, Text} from 'react-native';
-import {useTheme, HelperText} from 'react-native-paper';
+import {Alert, Button, StyleSheet, Text} from 'react-native';
+import {HelperText, useTheme} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 
@@ -13,37 +13,90 @@ import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
 import {ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
-import {AuthProvider} from '~/constants/enum/AuthProvider';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
+import {ISignUpResult} from 'amazon-cognito-identity-js';
 import * as validation from '~/utils/validation';
 
-const Login = () => {
+const SignUp = (props: any) => {
   const dispatch = useDispatch();
   const {
     control,
-    handleSubmit,
     formState: {errors},
     trigger,
+    setError,
+    clearErrors,
+    getValues,
   } = useForm();
   const theme: IObject<any> = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
-  const onSubmit = async (data: {email: string; password: string}) => {
-    const {email, password} = data;
+  const onSubmit = async () => {
+    const email: string = getValues('email');
+    const username: string = getValues('username');
+    const password: string = getValues('password');
     await trigger();
+
     if (!isEmpty(errors)) return;
     dispatch(
-      actions.signIn({
-        email,
+      actions.signUp({
+        username,
         password,
+        email,
+        callback,
       }),
     );
+  };
+  const callback = (result: ISignUpResult) => {
+    if (result) {
+      Alert.alert(
+        t('auth:text_title_success'),
+        t('auth:text_sign_up_success'),
+        [
+          {
+            text: t('common:btn_comfirm'),
+            onPress: () => props.navigation.goBack(),
+          },
+        ],
+      );
+    }
   };
 
   return (
     <ThemeView style={styles.container} isFullView>
+      <Controller
+        control={control}
+        render={({field: {onChange, value}}) => (
+          <Input
+            testID="inputUsername"
+            label={t('auth:input_label_username')}
+            placeholder={t('auth:input_label_username')}
+            autoCapitalize="none"
+            value={value}
+            error={errors.username}
+            onChangeText={text => {
+              onChange(text);
+              setTimeout(async () => {
+                if (text.trim().length === 0) {
+                  setError('username', {
+                    type: 'required',
+                    message: t('auth:text_err_username_blank'),
+                  });
+                } else {
+                  clearErrors('username');
+                }
+              }, 50);
+            }}
+            helperType="error"
+            helperContent={errors?.username?.message}
+            helperVisible={errors.username}
+          />
+        )}
+        name="username"
+        defaultValue=""
+      />
+
       <Controller
         control={control}
         render={({field: {onChange, value}}) => (
@@ -97,31 +150,24 @@ const Login = () => {
           />
         )}
         name="password"
-        rules={{required: t('auth:text_err_password_blank')}}
+        rules={{
+          required: t('auth:text_err_password_blank'),
+          pattern: {
+            value: validation.passwordRegex,
+            message: t('auth:text_err_password_format'),
+          },
+        }}
         defaultValue=""
       />
 
-      <Text onPress={() => refNavigator.navigate(authStack.signup)}>
-        {t('auth:navigate_sign_up')}
-      </Text>
-      <Text onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
-        {t('auth:text_forgot_password')}
+      <Text onPress={() => refNavigator.navigate(authStack.login)}>
+        {t('auth:navigate_sign_in')}
       </Text>
       <ViewSpacing height={80} />
       <Button
-        testID="btnLogin"
-        title={t('auth:btn_sign_in')}
-        onPress={handleSubmit(onSubmit)}
-      />
-      <Button
-        testID="btnLoginFB"
-        title={t('auth:btn_sign_in_fb')}
-        onPress={() => dispatch(actions.signInOAuth(AuthProvider.FACEBOOK))}
-      />
-      <Button
-        testID="btnLoginGG"
-        title={t('auth:btn_sign_in_gg')}
-        onPress={() => dispatch(actions.signInOAuth(AuthProvider.GOOGLE))}
+        testID="btnSignUp"
+        title={t('auth:btn_sign_up')}
+        onPress={onSubmit}
       />
     </ThemeView>
   );
@@ -139,4 +185,4 @@ const themeStyles = (theme: IObject<any>) => {
   });
 };
 
-export default Login;
+export default SignUp;
