@@ -7,6 +7,8 @@ import Icon from '../Icon';
 import {IconProps} from '../Icon';
 import {margin, padding} from '~/theme/configs/spacing';
 import {IObject} from '~/interfaces/common';
+import * as RootNavigation from '~/utils/refNavigator';
+import {HOME} from '~/router/navigator/routes';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -40,7 +42,7 @@ const HeaderView: React.FC<Props> = ({
           style={styles.iconBack}
           icon="iconBack"
           size={18}
-          onPress={() => {}}
+          onPress={() => RootNavigation.navigate(HOME)}
         />
       )}
 
