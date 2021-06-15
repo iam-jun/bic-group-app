@@ -1,13 +1,14 @@
 import React from 'react';
-import {Alert, Button, StyleSheet, Text} from 'react-native';
-import {HelperText, useTheme} from 'react-native-paper';
+import {Button, StyleSheet, Text} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
+import debounce from 'lodash/debounce';
+import {useDispatch} from 'react-redux';
 
 import {useBaseHook} from '~/hooks';
 import ThemeView from '~/theme/components/ThemeView';
 import {IObject} from '~/interfaces/common';
-import {useDispatch} from 'react-redux';
 import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
@@ -15,8 +16,9 @@ import {ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
-import {ISignUpResult} from 'amazon-cognito-identity-js';
 import * as validation from '~/utils/validation';
+import * as actionsCommon from '~/store/common/actions';
+import {ISignUpResponse} from '~/store/auth/interfaces';
 
 const SignUp = (props: any) => {
   const dispatch = useDispatch();
@@ -44,27 +46,48 @@ const SignUp = (props: any) => {
         username,
         password,
         email,
-        callback,
       }),
     );
   };
-  const callback = (result: ISignUpResult) => {
-    if (result) {
-      Alert.alert(
-        t('auth:text_title_success'),
-        t('auth:text_sign_up_success'),
-        [
-          {
-            text: t('common:btn_comfirm'),
-            onPress: () => props.navigation.goBack(),
-          },
-        ],
-      );
-    }
+
+  const onUsernameChange = (
+    value: string,
+    onChange: (param: string) => void,
+  ) => {
+    onChange(value);
+    validateUsername(value);
   };
 
+  const validateUsername = debounce(value => {
+    if (value.trim().length === 0) {
+      setError('username', {
+        type: 'required',
+        message: t('auth:text_err_username_blank'),
+      });
+    } else {
+      clearErrors('username');
+    }
+  }, 50);
+
+  const validateEmail = debounce(async () => {
+    await trigger('email');
+  }, 50);
+
+  const validatePassword = debounce(async () => {
+    await trigger('password');
+  }, 50);
+
+  const checkDisableBtn = () => {
+    const email: string = getValues('email');
+    const username: string = getValues('username');
+    const password: string = getValues('password');
+    if (!isEmpty(errors) || !email || !username || !password) return true;
+    return false;
+  };
+  const disableBtn = checkDisableBtn();
+
   return (
-    <ThemeView style={styles.container} isFullView>
+    <ThemeView testID="SignUpScreen" style={styles.container} isFullView>
       <Controller
         control={control}
         render={({field: {onChange, value}}) => (
@@ -75,24 +98,13 @@ const SignUp = (props: any) => {
             autoCapitalize="none"
             value={value}
             error={errors.username}
-            onChangeText={text => {
-              onChange(text);
-              setTimeout(async () => {
-                if (text.trim().length === 0) {
-                  setError('username', {
-                    type: 'required',
-                    message: t('auth:text_err_username_blank'),
-                  });
-                } else {
-                  clearErrors('username');
-                }
-              }, 50);
-            }}
+            onChangeText={text => onUsernameChange(text, onChange)}
             helperType="error"
             helperContent={errors?.username?.message}
             helperVisible={errors.username}
           />
         )}
+        rules={{required: t('auth:text_err_username_blank')}}
         name="username"
         defaultValue=""
       />
@@ -109,9 +121,7 @@ const SignUp = (props: any) => {
             error={errors.email}
             onChangeText={text => {
               onChange(text);
-              setTimeout(async () => {
-                await trigger('email');
-              }, 50);
+              validateEmail();
             }}
             helperType="error"
             helperContent={errors?.email?.message}
@@ -140,9 +150,7 @@ const SignUp = (props: any) => {
             value={value}
             onChangeText={text => {
               onChange(text);
-              setTimeout(async () => {
-                await trigger('password');
-              }, 50);
+              validatePassword();
             }}
             helperType="error"
             helperContent={errors?.password?.message}
@@ -159,13 +167,15 @@ const SignUp = (props: any) => {
         }}
         defaultValue=""
       />
-
-      <Text onPress={() => refNavigator.navigate(authStack.login)}>
+      <Text
+        testID="textSignin"
+        onPress={() => refNavigator.navigate(authStack.login)}>
         {t('auth:navigate_sign_in')}
       </Text>
       <ViewSpacing height={80} />
       <Button
         testID="btnSignUp"
+        disabled={disableBtn}
         title={t('auth:btn_sign_up')}
         onPress={onSubmit}
       />

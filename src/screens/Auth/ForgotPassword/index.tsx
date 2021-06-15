@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
-import {Alert, Button, StyleSheet, Text} from 'react-native';
-import {HelperText, useTheme} from 'react-native-paper';
+import {Button, StyleSheet, Text} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
+import {useDispatch} from 'react-redux';
+import debounce from 'lodash/debounce';
 
 import {useBaseHook} from '~/hooks';
 import ThemeView from '~/theme/components/ThemeView';
 import {IObject} from '~/interfaces/common';
-import {useDispatch} from 'react-redux';
 import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
+import * as actionsCommon from '~/store/common/actions';
 import {ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
 import * as refNavigator from '~/utils/refNavigator';
@@ -37,15 +39,14 @@ const ForgotPassword = () => {
     dispatch(actions.forgotPassword({email, callback}));
   };
   const callback = () => {
-    Alert.alert(
-      t('auth:text_title_success'),
-      t('auth:text_check_email_description'),
-      [
-        {
-          text: t('common:btn_comfirm'),
-          onPress: () => setState(2),
+    dispatch(
+      actionsCommon.showAlert({
+        title: t('auth:text_title_success'),
+        content: t('auth:text_check_email_description'),
+        onConfirm: () => {
+          setState(2);
         },
-      ],
+      }),
     );
   };
 
@@ -61,27 +62,43 @@ const ForgotPassword = () => {
         code,
         email,
         password,
-        submitPasswordCb,
       }),
     );
   };
-  const submitPasswordCb = () => {
-    Alert.alert(
-      t('auth:text_title_success'),
-      t('auth:text_change_password_success'),
-      [
-        {
-          text: t('auth:btn_comfirm'),
-          onPress: () => {
-            refNavigator.navigate(authStack.login);
-          },
-        },
-      ],
-    );
+
+  const validateCode = debounce(async () => {
+    await trigger('code');
+  }, 50);
+
+  const validateEmail = debounce(async () => {
+    await trigger('email');
+  }, 50);
+
+  const validatePassword = debounce(async () => {
+    await trigger('password');
+  }, 50);
+
+  const checkBtnSendEmail = () => {
+    const email: string = getValues('email');
+    if (!isEmpty(errors) || !email) return true;
+    return false;
   };
+  const sendEmailDisable = checkBtnSendEmail();
+
+  const checkBtnChangePassword = () => {
+    const code = getValues('code');
+    const email = getValues('email');
+    const password = getValues('password');
+    if (!isEmpty(errors) || !email || !code || !password) return true;
+    return false;
+  };
+  const changePasswordDisable = checkBtnChangePassword();
 
   return (
-    <ThemeView style={styles.container} isFullView>
+    <ThemeView
+      testID="ForgotPasswordScreen"
+      style={styles.container}
+      isFullView>
       {state === 1 && (
         <>
           <Controller
@@ -96,9 +113,7 @@ const ForgotPassword = () => {
                 error={errors.email}
                 onChangeText={text => {
                   onChange(text);
-                  setTimeout(async () => {
-                    await trigger('email');
-                  }, 50);
+                  validateEmail();
                 }}
                 helperType="error"
                 helperContent={errors?.email?.message}
@@ -119,6 +134,7 @@ const ForgotPassword = () => {
           <ViewSpacing height={80} />
           <Button
             testID="btnSend"
+            disabled={sendEmailDisable}
             title={t('auth:btn_send')}
             onPress={forgotPassword}
           />
@@ -137,9 +153,7 @@ const ForgotPassword = () => {
                 value={value}
                 onChangeText={text => {
                   onChange(text.trim());
-                  setTimeout(async () => {
-                    await trigger('code');
-                  }, 50);
+                  validateCode();
                 }}
                 helperType="error"
                 helperContent={errors?.code?.message}
@@ -148,10 +162,7 @@ const ForgotPassword = () => {
             )}
             name="code"
             rules={{
-              minLength: {
-                value: 6,
-                message: t('auth:text_err_code'),
-              },
+              required: t('auth:text_err_code'),
               maxLength: {
                 value: 6,
                 message: t('auth:text_err_code'),
@@ -171,9 +182,7 @@ const ForgotPassword = () => {
                 value={value}
                 onChangeText={text => {
                   onChange(text);
-                  setTimeout(async () => {
-                    await trigger('password');
-                  }, 50);
+                  validatePassword();
                 }}
                 helperType="error"
                 helperContent={errors?.password?.message}
@@ -193,6 +202,7 @@ const ForgotPassword = () => {
 
           <Button
             testID="btnChangePassword"
+            disabled={changePasswordDisable}
             title={t('auth:btn_send')}
             onPress={changePassword}
           />
