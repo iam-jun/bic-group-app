@@ -20,9 +20,10 @@ export interface reactionActionsType {
 }
 
 export interface Props {
-  type: string;
-  reaction: reactionType;
-  isLike: boolean;
+  type?: string;
+  reaction?: reactionType;
+  isLike?: boolean;
+  [x: string]: any;
 }
 
 const ContentItem: React.FC<Props> = ({
