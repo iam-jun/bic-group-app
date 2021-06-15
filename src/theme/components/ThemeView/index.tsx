@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 export interface Props {
-  colorSecondary?: string;
+  colorSecondary?: boolean;
   isFullView?: boolean;
   style?: any;
   disabledDarkMode?: boolean;
@@ -17,6 +17,7 @@ const ThemeView: React.FC<Props> = ({
   ...restProps
 }) => {
   const theme: any = useTheme();
+
   return (
     <View
       {...restProps}

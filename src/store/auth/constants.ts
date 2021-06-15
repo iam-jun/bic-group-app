@@ -1,5 +1,3 @@
-export const LOADING = 'auth/LOADING';
-
 export const FORGOT_PASSWORD = 'auth/FORGOT_PASSWORD';
 export const CHANGE_PASSWORD = 'auth/CHANGE_PASSWORD';
 export const SIGN_IN = 'auth/SIGN_IN';

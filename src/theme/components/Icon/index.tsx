@@ -9,6 +9,7 @@ import {useTheme} from 'react-native-paper';
 import {Text} from '..';
 import {spacing} from '~/theme/configs';
 import icons from '~/constants/icons';
+import {View} from 'react-native';
 
 export interface IconProps extends SVGIconProps, FontIconProps {
   icon: keyof typeof icons;
@@ -58,8 +59,10 @@ const Icon: React.FC<IconProps> = ({
 
   if (isButton && !tintColor) tintColor = colors.white;
 
+  const Wrapper = onPress ? TouchableOpacity : View;
+
   return (
-    <TouchableOpacity
+    <Wrapper
       style={[
         styles.container,
         isButton && styles.button,
@@ -77,7 +80,7 @@ const Icon: React.FC<IconProps> = ({
         {...source}
       />
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
-    </TouchableOpacity>
+    </Wrapper>
   );
 };
 

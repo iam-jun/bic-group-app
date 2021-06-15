@@ -22,7 +22,7 @@ export interface Props {
   [x: string]: any;
 }
 
-const ButtonTransparent: React.FC<Props> = ({
+const TransparentButton: React.FC<Props> = ({
   text,
   style,
   textStyle,
@@ -44,7 +44,7 @@ const ButtonTransparent: React.FC<Props> = ({
   );
 };
 
-ButtonTransparent.defaultProps = {
+TransparentButton.defaultProps = {
   activeOpacity: 0.8,
 };
 
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ButtonTransparent;
+export default TransparentButton;

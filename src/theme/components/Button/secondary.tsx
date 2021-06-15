@@ -19,7 +19,7 @@ export interface Props {
   [x: string]: any;
 }
 
-const ButtonSecondary: React.FC<Props> = props => {
+const SecondaryButton: React.FC<Props> = props => {
   const {style, activeOpacity, onPress, ...restProps} = props;
   const theme: IObject<any> = useTheme();
   const styles = stylesButton(theme);
@@ -34,7 +34,7 @@ const ButtonSecondary: React.FC<Props> = props => {
   );
 };
 
-ButtonSecondary.defaultProps = {
+SecondaryButton.defaultProps = {
   activeOpacity: 0.8,
 };
 
@@ -52,4 +52,4 @@ const stylesButton = (theme: IObject<any>) =>
     },
   });
 
-export default ButtonSecondary;
+export default SecondaryButton;

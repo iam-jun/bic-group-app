@@ -17,11 +17,10 @@ export const authStack = {
 
 export const bottomTabs = {
   home: 'Home',
-  more: 'More',
   vip: 'Vip',
-  groups: 'Groups',
-  notification: 'Notification',
   search: 'Search',
+  groups: 'Groups',
+  chat: 'Chat',
 };
 
 export const navigationSetting = {
@@ -47,7 +46,7 @@ export const navigationSetting = {
     cardStyle: {backgroundColor: '#fff'},
   },
   configs: {
-    initialRouteName: rootSwitch.authStack,
+    initialRouteName: rootSwitch.appLoading,
   },
   stacks: [
     {
@@ -92,16 +91,6 @@ export const navigationSetting = {
 export const tabsSetting = {
   configs: {
     initialRouteName: bottomTabs.home,
-    light: {
-      tabBarBackground: 'white',
-      activeColor: '#368C8B',
-      inactiveColor: '#200E32',
-    },
-    dark: {
-      tabBarBackground: '#252D42',
-      activeColor: '#F7F7F7',
-      inactiveColor: '#a1a4b2',
-    },
   },
   tabsNavigator: [
     {
@@ -115,7 +104,7 @@ export const tabsSetting = {
       },
       screen: bottomTabs.home,
       option: {
-        tabBarIcon: 'HomeTab',
+        tabBarIcon: 'iconHome',
       },
     },
     {
@@ -124,12 +113,54 @@ export const tabsSetting = {
         en: '',
       },
       name: {
-        vi: 'Thêm nữa',
-        en: 'More',
+        vi: 'VIP',
+        en: 'VIP',
       },
-      screen: bottomTabs.more,
+      screen: bottomTabs.vip,
       option: {
-        tabBarIcon: 'MoreTab',
+        tabBarIcon: 'iconDiamond',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Tìm kiếm',
+        en: 'Search',
+      },
+      screen: bottomTabs.groups,
+      option: {
+        tabBarIcon: 'iconSearchMT',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Nhóm',
+        en: 'Group',
+      },
+      screen: bottomTabs.groups,
+      option: {
+        tabBarIcon: 'iconGroup',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Tin nhắn',
+        en: 'Message',
+      },
+      screen: bottomTabs.groups,
+      option: {
+        tabBarIcon: 'iconChat',
       },
     },
   ],

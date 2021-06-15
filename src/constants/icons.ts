@@ -72,4 +72,8 @@ export default {
     type: 'MaterialCommunityIcons',
     name: 'magnify',
   },
+  iconChat: {
+    type: 'MaterialCommunityIcons',
+    name: 'chat-outline',
+  },
 };

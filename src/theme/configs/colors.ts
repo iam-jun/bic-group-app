@@ -22,15 +22,11 @@ export const violet = '#6435C9';
 export const purple = '#A333C8';
 export const pink = '#E03997';
 export const brown = '#A5673F';
-export const primary = '#00C3DE';
-export const secondary = '#EB5757';
-export const light = '#26E8EF';
-export const defaultColor = '#BDBDBD';
 
 export default {
   dark: {
     colors: {
-      accent: '#03dac6',
+      accent: '#bd48f4',
       native: '#2A2C36',
       backdrop: 'rgba(0, 0, 0, 0.5)',
       background: '#252D42',
@@ -41,15 +37,15 @@ export default {
       onBackground: '#FFFFFF',
       onSurface: '#FFFFFF',
       placeholder: 'rgba(255, 255, 255, 0.54)',
-      primary: '#368C8B',
+      primary: '#fff',
       surface: '#1E1F28',
       text: '#FFFFFF',
       bgColor: '#252d43',
-      bgColorSecondary: grey7,
+      bgColorSecondary: '#220b3b',
       warning: yellow,
       innerButton: '#FFFFFF',
-      buttonBackground: '#246464',
-      hightLight: '#368c8b',
+      buttonBackground: '#220b3b',
+      hightLight: '#59bbc4',
       red,
       orange,
       yellow,
@@ -71,6 +67,10 @@ export default {
       grey8,
       grey9,
       black,
+      //TabBar
+      tabBarBackground: '#1E1F28',
+      activeColor: '#F7F7F7',
+      inactiveColor: grey6,
       // ViewLabel
       ViewLabel: {
         color: grey6,
@@ -86,8 +86,6 @@ export default {
       border: grey9,
       icon: '#fff',
       avatar: '#b28a5c',
-      inActive: '#A1A4B2',
-      bibleNoteColorPickerBorder: '#3B8BEA',
       platform: {
         ios: {
           primary: '#007aff',
@@ -112,7 +110,7 @@ export default {
   },
   light: {
     colors: {
-      accent: '#03dac4',
+      accent: '#bd48f4',
       native: '#E5E5E5',
       backdrop: 'rgba(0, 0, 0, 0.5)',
       background: '#f6f6f6',
@@ -123,19 +121,17 @@ export default {
       onBackground: '#252D42',
       onSurface: '#000000',
       placeholder: 'rgba(0, 0, 0, 0.54)',
-      primary: '#368C8B',
+      primary: '#220b3b',
       surface: '#ffffff',
       text: '#252D42',
       bgColor: white,
-      bgColorSecondary: grey1,
+      bgColorSecondary: '#f6f6f6',
       warning: yellow,
-      icon: '#230B34',
+      icon: '#2e1050',
       avatar: '#707f9f',
-      inActive: '#A1A4B2',
-      bibleNoteColorPickerBorder: '#3B8BEA',
       innerButton: '#368C8B',
       buttonBackground: '#EBEAEC',
-      hightLight: '#dcd9ca',
+      hightLight: '#59bbc4',
       red,
       orange,
       yellow,
@@ -148,6 +144,10 @@ export default {
       pink,
       brown,
       grey9,
+      //TabBar
+      tabBarBackground: '#fff',
+      activeColor: '#220b3b',
+      inactiveColor: '#adb5bd',
       // ViewLabel
       ViewLabel: {
         color: grey5,

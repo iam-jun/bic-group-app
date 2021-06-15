@@ -1,23 +1,26 @@
 import React from 'react';
-import {Button, StyleSheet, Text} from 'react-native';
-import {useTheme, HelperText} from 'react-native-paper';
+import {Image, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
-
 import {useBaseHook} from '~/hooks';
 import ThemeView from '~/theme/components/ThemeView';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
-import {ViewSpacing} from '~/theme/components';
+import {Container, ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
 import {AuthProvider} from '~/constants/enum/AuthProvider';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/utils/validation';
+import images from '~/constants/images';
+import PrimaryButton from '~/theme/components/Button/primary';
+import Text from '~/theme/components/Text';
+import useAuth from '~/hooks/auth';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,6 +33,7 @@ const Login = () => {
   const theme: IObject<any> = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
+  const {loading} = useAuth();
 
   const onSubmit = async () => {
     const email = getValues('email');
@@ -61,100 +65,119 @@ const Login = () => {
   const loginDisable = checkBtnLogin();
 
   return (
-    <ThemeView testID="SignInScreen" style={styles.container} isFullView>
-      <Controller
-        control={control}
-        render={({field: {onChange, value}}) => (
-          <Input
-            testID="inputEmail"
-            label={t('auth:input_label_email')}
-            placeholder={t('auth:input_label_email')}
-            autoCapitalize="none"
-            value={value}
-            error={errors.email}
-            onChangeText={text => {
-              onChange(text);
-              validateEmail();
-            }}
-            helperType="error"
-            helperContent={errors?.email?.message}
-            helperVisible={errors.email}
-          />
-        )}
-        rules={{
-          required: t('auth:text_err_email_blank'),
-          pattern: {
-            value: validation.emailRegex,
-            message: t('auth:text_err_email_format'),
-          },
-        }}
-        name="email"
-        defaultValue=""
-      />
+    <ThemeView
+      testID="SignInScreen"
+      style={styles.container}
+      isFullView
+      colorSecondary>
+      <Container>
+        <Image resizeMode="contain" style={styles.logo} source={images.Logo} />
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <Input
+              testID="inputEmail"
+              label={t('auth:input_label_email')}
+              placeholder={t('auth:input_label_email')}
+              autoCapitalize="none"
+              secondaryBackground
+              value={value}
+              error={errors.email}
+              onChangeText={text => {
+                onChange(text);
+                validateEmail();
+              }}
+              helperType="error"
+              helperContent={errors?.email?.message}
+              helperVisible={errors.email}
+            />
+          )}
+          rules={{
+            required: t('auth:text_err_email_blank'),
+            pattern: {
+              value: validation.emailRegex,
+              message: t('auth:text_err_email_format'),
+            },
+          }}
+          name="email"
+          defaultValue={__DEV__ ? 'evol@mailinator.com' : ''}
+        />
 
-      <Controller
-        control={control}
-        render={({field: {onChange, value}}) => (
-          <InputPassword
-            testID="inputPassword"
-            label={t('auth:input_label_password')}
-            placeholder={t('auth:input_label_password')}
-            error={errors.password}
-            value={value}
-            onChangeText={text => {
-              onChange(text);
-              validatePassword();
-            }}
-            helperType="error"
-            helperContent={errors?.password?.message}
-            helperVisible={errors.password}
-          />
-        )}
-        name="password"
-        rules={{required: t('auth:text_err_password_blank')}}
-        defaultValue=""
-      />
-
-      <Text
-        testID="textSignup"
-        onPress={() => refNavigator.navigate(authStack.signup)}>
-        {t('auth:navigate_sign_up')}
-      </Text>
-
-      <Text
-        testID="textForgotpassword"
-        onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
-        {t('auth:text_forgot_password')}
-      </Text>
-      <ViewSpacing height={80} />
-      <Button
-        testID="btnLogin"
-        disabled={loginDisable}
-        title={t('auth:btn_sign_in')}
-        onPress={onSubmit}
-      />
-      <Button
-        testID="btnLoginFB"
-        title={t('auth:btn_sign_in_fb')}
-        onPress={() => dispatch(actions.signInOAuth(AuthProvider.FACEBOOK))}
-      />
-      <Button
-        testID="btnLoginGG"
-        title={t('auth:btn_sign_in_gg')}
-        onPress={() => dispatch(actions.signInOAuth(AuthProvider.GOOGLE))}
-      />
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <InputPassword
+              testID="inputPassword"
+              label={t('auth:input_label_password')}
+              placeholder={t('auth:input_label_password')}
+              secondaryBackground
+              error={errors.password}
+              value={value}
+              onChangeText={text => {
+                onChange(text);
+                validatePassword();
+              }}
+              helperType="error"
+              helperContent={errors?.password?.message}
+              helperVisible={errors.password}
+            />
+          )}
+          name="password"
+          rules={{required: t('auth:text_err_password_blank')}}
+          defaultValue={__DEV__ ? 'ABCxyz123@' : ''}
+        />
+        <Text
+          testID="textSignup"
+          onPress={() => refNavigator.navigate(authStack.signup)}>
+          {t('auth:navigate_sign_up')}
+        </Text>
+        <Text
+          testID="textForgotpassword"
+          onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
+          {t('auth:text_forgot_password')}
+        </Text>
+        <ViewSpacing height={40} />
+        <PrimaryButton
+          testID="btnLogin"
+          style={styles.button}
+          disabled={loginDisable || loading}
+          title={t('auth:btn_sign_in')}
+          loading={loading}
+          onPress={onSubmit}
+        />
+        <PrimaryButton
+          testID="btnLoginFB"
+          style={styles.button}
+          title={t('auth:btn_sign_in_fb')}
+          onPress={() => dispatch(actions.signInOAuth(AuthProvider.FACEBOOK))}
+        />
+        <PrimaryButton
+          testID="btnLoginGG"
+          style={styles.button}
+          title={t('auth:btn_sign_in_gg')}
+          onPress={() => dispatch(actions.signInOAuth(AuthProvider.GOOGLE))}
+        />
+      </Container>
     </ThemeView>
   );
 };
 
 const themeStyles = (theme: IObject<any>) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       justifyContent: 'center',
       alignContent: 'center',
     },
     button: {
+      marginBottom: spacing.margin.base,
+    },
+    logo: {
+      width: '100%',
+      height: 120,
+      tintColor: colors.primary,
       marginTop: spacing.margin.big,
+      marginBottom: 40,
     },
   });
 };

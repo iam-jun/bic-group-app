@@ -18,7 +18,7 @@ export default function* authSaga() {
   yield takeLatest(types.FORGOT_PASSWORD, forgotPassword);
   yield takeLatest(types.CHANGE_PASSWORD, forgotPasswordSubmit);
   yield takeLatest(types.SIGN_OUT, signOut);
-  // yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
+  yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
 }
 
 const languages = convertMultiLanguage();
@@ -121,15 +121,20 @@ function* signOut() {
   }
 }
 
-// function* checkAuthState() {
-// try {
-//   const user: IAuth.ISignIn = yield storage.getUser();
-//   if (user) yield put(actions.signIn(user));
-// } catch (e) {
-//   console.error(e);
-// }
-// }
+function* checkAuthState() {
+  try {
+    const user: IAuth.IUser = yield storage.getUser();
+    if (user) {
+      yield put(actions.setUser(user));
+      refNavigator.replace(rootSwitch.mainStack);
+    } else {
+      refNavigator.replace(rootSwitch.authStack);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
 
-// function* federatedSignIn(payload: any) {
-//   yield Auth.federatedSignIn({provider: payload});
-// }
+function* federatedSignIn(payload: any) {
+  yield Auth.federatedSignIn({provider: payload});
+}
