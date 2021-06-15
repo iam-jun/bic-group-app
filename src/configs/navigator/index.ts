@@ -18,6 +18,10 @@ export const authStack = {
 export const bottomTabs = {
   home: 'Home',
   more: 'More',
+  vip: 'Vip',
+  groups: 'Groups',
+  notification: 'Notification',
+  search: 'Search',
 };
 
 export const navigationSetting = {

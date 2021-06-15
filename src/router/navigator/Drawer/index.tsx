@@ -3,19 +3,22 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {spacing} from '~/theme/configs';
 import Icon from '~/theme/components/Icon';
 import Home from '~/screens/Home';
+import {mainStack} from '~/configs/navigator';
+import BottomTabs from '../BottomTabs';
 
 const Drawer = createDrawerNavigator();
 
 export default () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
-      drawerType="slide"
+      initialRouteName={mainStack.bottomTabs}
+      // drawerType="slide"
       drawerPosition="left"
-      overlayColor="transparent">
+      // overlayColor="transparent"
+    >
       <Drawer.Screen
-        name="Home"
-        component={Home}
+        name="Main"
+        component={BottomTabs}
         options={({navigation}) => ({
           headerShown: true,
           headerStyle: {paddingHorizontal: spacing.padding.base},
@@ -29,6 +32,7 @@ export default () => {
           ),
         })}
       />
+      {/* <Drawer.Screen name="Home" component={Home} /> */}
     </Drawer.Navigator>
   );
 };
