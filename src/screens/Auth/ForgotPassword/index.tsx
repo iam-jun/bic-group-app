@@ -13,11 +13,12 @@ import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
 import * as actionsCommon from '~/store/common/actions';
-import {ViewSpacing} from '~/theme/components';
+import {Container, ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/utils/validation';
+import PrimaryButton from '~/theme/components/Button/primary';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -99,119 +100,121 @@ const ForgotPassword = () => {
       testID="ForgotPasswordScreen"
       style={styles.container}
       isFullView>
-      {state === 1 && (
-        <>
-          <Controller
-            control={control}
-            render={({field: {onChange, value}}) => (
-              <Input
-                testID="inputEmail"
-                label={t('auth:input_label_email')}
-                placeholder={t('auth:input_label_email')}
-                autoCapitalize="none"
-                value={value}
-                error={errors.email}
-                onChangeText={text => {
-                  onChange(text);
-                  validateEmail();
-                }}
-                helperType="error"
-                helperContent={errors?.email?.message}
-                helperVisible={errors.email}
-              />
-            )}
-            rules={{
-              required: t('auth:text_err_email_blank'),
-              pattern: {
-                value: validation.emailRegex,
-                message: t('auth:text_err_email_format'),
-              },
-            }}
-            name="email"
-            defaultValue=""
-          />
+      <Container>
+        {state === 1 && (
+          <>
+            <Controller
+              control={control}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  testID="inputEmail"
+                  label={t('auth:input_label_email')}
+                  placeholder={t('auth:input_label_email')}
+                  autoCapitalize="none"
+                  value={value}
+                  error={errors.email}
+                  onChangeText={text => {
+                    onChange(text);
+                    validateEmail();
+                  }}
+                  helperType="error"
+                  helperContent={errors?.email?.message}
+                  helperVisible={errors.email}
+                />
+              )}
+              rules={{
+                required: t('auth:text_err_email_blank'),
+                pattern: {
+                  value: validation.emailRegex,
+                  message: t('auth:text_err_email_format'),
+                },
+              }}
+              name="email"
+              defaultValue=""
+            />
 
-          <ViewSpacing height={80} />
-          <Button
-            testID="btnSend"
-            disabled={sendEmailDisable}
-            title={t('auth:btn_send')}
-            onPress={forgotPassword}
-          />
-        </>
-      )}
-      {state === 2 && (
-        <>
-          <Controller
-            control={control}
-            render={({field: {onChange, value}}) => (
-              <Input
-                testID="inputCode"
-                label={t('auth:input_label_code')}
-                placeholder={t('auth:input_label_code')}
-                error={errors.code}
-                value={value}
-                onChangeText={text => {
-                  onChange(text.trim());
-                  validateCode();
-                }}
-                helperType="error"
-                helperContent={errors?.code?.message}
-                helperVisible={errors.code}
-              />
-            )}
-            name="code"
-            rules={{
-              required: t('auth:text_err_code'),
-              maxLength: {
-                value: 6,
-                message: t('auth:text_err_code'),
-              },
-            }}
-            defaultValue=""
-          />
+            <ViewSpacing height={80} />
+            <PrimaryButton
+              testID="btnSend"
+              disabled={sendEmailDisable}
+              title={t('auth:btn_send')}
+              onPress={forgotPassword}
+            />
+          </>
+        )}
+        {state === 2 && (
+          <>
+            <Controller
+              control={control}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  testID="inputCode"
+                  label={t('auth:input_label_code')}
+                  placeholder={t('auth:input_label_code')}
+                  error={errors.code}
+                  value={value}
+                  onChangeText={text => {
+                    onChange(text.trim());
+                    validateCode();
+                  }}
+                  helperType="error"
+                  helperContent={errors?.code?.message}
+                  helperVisible={errors.code}
+                />
+              )}
+              name="code"
+              rules={{
+                required: t('auth:text_err_code'),
+                maxLength: {
+                  value: 6,
+                  message: t('auth:text_err_code'),
+                },
+              }}
+              defaultValue=""
+            />
 
-          <Controller
-            control={control}
-            render={({field: {onChange, value}}) => (
-              <InputPassword
-                testID="inputPassword"
-                label={t('auth:input_label_password')}
-                placeholder={t('auth:input_label_password')}
-                error={errors.password}
-                value={value}
-                onChangeText={text => {
-                  onChange(text);
-                  validatePassword();
-                }}
-                helperType="error"
-                helperContent={errors?.password?.message}
-                helperVisible={errors.password}
-              />
-            )}
-            name="password"
-            rules={{
-              required: t('auth:text_err_password_blank'),
-              pattern: {
-                value: validation.passwordRegex,
-                message: t('auth:text_err_password_format'),
-              },
-            }}
-            defaultValue=""
-          />
+            <Controller
+              control={control}
+              render={({field: {onChange, value}}) => (
+                <InputPassword
+                  testID="inputPassword"
+                  label={t('auth:input_label_password')}
+                  placeholder={t('auth:input_label_password')}
+                  error={errors.password}
+                  value={value}
+                  onChangeText={text => {
+                    onChange(text);
+                    validatePassword();
+                  }}
+                  helperType="error"
+                  helperContent={errors?.password?.message}
+                  helperVisible={errors.password}
+                />
+              )}
+              name="password"
+              rules={{
+                required: t('auth:text_err_password_blank'),
+                pattern: {
+                  value: validation.passwordRegex,
+                  message: t('auth:text_err_password_format'),
+                },
+              }}
+              defaultValue=""
+            />
 
-          <Button
-            testID="btnChangePassword"
-            disabled={changePasswordDisable}
-            title={t('auth:btn_send')}
-            onPress={changePassword}
-          />
-        </>
-      )}
-
-      <Text onPress={() => refNavigator.navigate(authStack.login)}>
-        {t('auth:navigate_sign_in')}
-      </Text>
+            <PrimaryButton
+              testID="btnChangePassword"
+              disabled={changePasswordDisable}
+              title={t('auth:btn_send')}
+              onPress={changePassword}
+            />
+          </>
+        )}
+        <ViewSpacing height={20} />
+        <Text onPress={() => refNavigator.navigate(authStack.login)}>
+          {t('auth:navigate_sign_in')}
+        </Text>
+      </Container>
     </ThemeView>
   );
 };

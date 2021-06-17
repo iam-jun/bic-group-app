@@ -15,6 +15,7 @@
   "auth": {
     "text_sign_in": "Sign In",
     "text_sign_up": "Sign Up",
+    "text_sign_out": "Sign Out",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
     "input_label_username" : "User Name",

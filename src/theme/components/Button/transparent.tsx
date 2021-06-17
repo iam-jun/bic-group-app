@@ -14,7 +14,7 @@ import icons from '~/constants/icons';
 import {spacing} from '~/theme/configs';
 
 export interface Props {
-  text?: string;
+  title?: string;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<ViewStyle>;
   onPress?: () => void;
@@ -23,7 +23,7 @@ export interface Props {
 }
 
 const TransparentButton: React.FC<Props> = ({
-  text,
+  title,
   style,
   textStyle,
   onPress,
@@ -37,7 +37,7 @@ const TransparentButton: React.FC<Props> = ({
     <TouchableOpacity onPress={onPress} {...restProps}>
       <View style={[styles.container, style]}>
         <Text style={[styles.text, textStyle, {color: colors.primary}]}>
-          {text}
+          {title}
         </Text>
       </View>
     </TouchableOpacity>

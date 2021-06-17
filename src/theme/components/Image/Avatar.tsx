@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Image from './index';
-import TextContent from '../Text/';
+import Text from '../Text/';
+import useAuth from '~/hooks/auth';
 
 export interface Props {
   size?: number;
@@ -13,23 +14,27 @@ const Avatar: React.FC<Props> = ({
   style,
   size,
   user,
-  uri,
+  useMyProfile,
   numberOfChars = 1,
   ...props
 }) => {
   const [_user, setUser] = useState(user);
+  const {user: myProfile} = useAuth();
 
-  if (typeof uri === 'string') {
+  React.useEffect(() => {
+    if (useMyProfile) setUser(myProfile);
+    else setUser(user);
+  }, [user, myProfile]);
+
+  if (user.avatar) {
     return (
       <Image
         {...props}
         style={[styles.container, style, {width: size, height: size}]}
-        source={{uri: uri}}
+        source={{uri: _user.avatar}}
       />
     );
   }
-
-  if (typeof uri === 'function') return uri();
 
   return (
     <View
@@ -38,9 +43,9 @@ const Avatar: React.FC<Props> = ({
         styles.charContainer,
         {width: size, height: size, backgroundColor: '#2185D0'},
       ]}>
-      <TextContent h2 maxBold style={[styles.char]} maxLength={numberOfChars}>
-        {_user?.fullName || _user?.name || ''}
-      </TextContent>
+      <Text h2 maxBold style={[styles.char]} maxLength={numberOfChars}>
+        {_user?.attributes.name || ''}
+      </Text>
     </View>
   );
 };

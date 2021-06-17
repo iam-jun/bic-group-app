@@ -6,6 +6,7 @@ import Avatar from '../Image/Avatar';
 import Icon from '../Icon';
 import {IconProps} from '../Icon';
 import {margin, padding} from '~/theme/configs/spacing';
+import {IObject} from '~/interfaces/common';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -13,7 +14,7 @@ export interface Props {
   firstLabel?: string;
   secondLabel?: string;
   thirdLabel?: string;
-  avatar?: object;
+  avatar?: IObject<any>;
   icon?: IconProps;
   space?: number;
   renderCustom?: () => void;

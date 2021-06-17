@@ -1,24 +1,24 @@
 import React from 'react';
-import {Button, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
-
 import {useBaseHook} from '~/hooks';
 import ThemeView from '~/theme/components/ThemeView';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme/configs';
 import Input from '~/theme/components/Input';
 import * as actions from '~/store/auth/actions';
-import {ViewSpacing} from '~/theme/components';
+import {Container, ViewSpacing} from '~/theme/components';
 import InputPassword from '~/theme/components/Input/InputPassword';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/utils/validation';
 import * as actionsCommon from '~/store/common/actions';
 import {ISignUpResponse} from '~/store/auth/interfaces';
+import PrimaryButton from '~/theme/components/Button/primary';
 
 const SignUp = (props: any) => {
   const dispatch = useDispatch();
@@ -88,97 +88,100 @@ const SignUp = (props: any) => {
 
   return (
     <ThemeView testID="SignUpScreen" style={styles.container} isFullView>
-      <Controller
-        control={control}
-        render={({field: {onChange, value}}) => (
-          <Input
-            testID="inputUsername"
-            label={t('auth:input_label_username')}
-            placeholder={t('auth:input_label_username')}
-            autoCapitalize="none"
-            value={value}
-            error={errors.username}
-            onChangeText={text => onUsernameChange(text, onChange)}
-            helperType="error"
-            helperContent={errors?.username?.message}
-            helperVisible={errors.username}
-          />
-        )}
-        rules={{required: t('auth:text_err_username_blank')}}
-        name="username"
-        defaultValue=""
-      />
+      <Container>
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <Input
+              testID="inputUsername"
+              label={t('auth:input_label_username')}
+              placeholder={t('auth:input_label_username')}
+              autoCapitalize="none"
+              value={value}
+              error={errors.username}
+              onChangeText={text => onUsernameChange(text, onChange)}
+              helperType="error"
+              helperContent={errors?.username?.message}
+              helperVisible={errors.username}
+            />
+          )}
+          rules={{required: t('auth:text_err_username_blank')}}
+          name="username"
+          defaultValue=""
+        />
 
-      <Controller
-        control={control}
-        render={({field: {onChange, value}}) => (
-          <Input
-            testID="inputEmail"
-            label={t('auth:input_label_email')}
-            placeholder={t('auth:input_label_email')}
-            autoCapitalize="none"
-            value={value}
-            error={errors.email}
-            onChangeText={text => {
-              onChange(text);
-              validateEmail();
-            }}
-            helperType="error"
-            helperContent={errors?.email?.message}
-            helperVisible={errors.email}
-          />
-        )}
-        rules={{
-          required: t('auth:text_err_email_blank'),
-          pattern: {
-            value: validation.emailRegex,
-            message: t('auth:text_err_email_format'),
-          },
-        }}
-        name="email"
-        defaultValue=""
-      />
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <Input
+              testID="inputEmail"
+              label={t('auth:input_label_email')}
+              placeholder={t('auth:input_label_email')}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={value}
+              error={errors.email}
+              onChangeText={text => {
+                onChange(text);
+                validateEmail();
+              }}
+              helperType="error"
+              helperContent={errors?.email?.message}
+              helperVisible={errors.email}
+            />
+          )}
+          rules={{
+            required: t('auth:text_err_email_blank'),
+            pattern: {
+              value: validation.emailRegex,
+              message: t('auth:text_err_email_format'),
+            },
+          }}
+          name="email"
+          defaultValue=""
+        />
 
-      <Controller
-        control={control}
-        render={({field: {onChange, value}}) => (
-          <InputPassword
-            testID="inputPassword"
-            label={t('auth:input_label_password')}
-            placeholder={t('auth:input_label_password')}
-            error={errors.password}
-            value={value}
-            onChangeText={text => {
-              onChange(text);
-              validatePassword();
-            }}
-            helperType="error"
-            helperContent={errors?.password?.message}
-            helperVisible={errors.password}
-          />
-        )}
-        name="password"
-        rules={{
-          required: t('auth:text_err_password_blank'),
-          pattern: {
-            value: validation.passwordRegex,
-            message: t('auth:text_err_password_format'),
-          },
-        }}
-        defaultValue=""
-      />
-      <Text
-        testID="textSignin"
-        onPress={() => refNavigator.navigate(authStack.login)}>
-        {t('auth:navigate_sign_in')}
-      </Text>
-      <ViewSpacing height={80} />
-      <Button
-        testID="btnSignUp"
-        disabled={disableBtn}
-        title={t('auth:btn_sign_up')}
-        onPress={onSubmit}
-      />
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <InputPassword
+              testID="inputPassword"
+              label={t('auth:input_label_password')}
+              placeholder={t('auth:input_label_password')}
+              error={errors.password}
+              value={value}
+              onChangeText={text => {
+                onChange(text);
+                validatePassword();
+              }}
+              helperType="error"
+              helperContent={errors?.password?.message}
+              helperVisible={errors.password}
+            />
+          )}
+          name="password"
+          rules={{
+            required: t('auth:text_err_password_blank'),
+            pattern: {
+              value: validation.passwordRegex,
+              message: t('auth:text_err_password_format'),
+            },
+          }}
+          defaultValue=""
+        />
+        <Text
+          testID="textSignin"
+          onPress={() => refNavigator.navigate(authStack.login)}>
+          {t('auth:navigate_sign_in')}
+        </Text>
+        <ViewSpacing height={80} />
+        <PrimaryButton
+          testID="btnSignUp"
+          disabled={disableBtn}
+          title={t('auth:btn_sign_up')}
+          onPress={onSubmit}
+        />
+      </Container>
     </ThemeView>
   );
 };

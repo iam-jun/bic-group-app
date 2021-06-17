@@ -22,7 +22,7 @@ import PrimaryButton from '~/theme/components/Button/primary';
 import Text from '~/theme/components/Text';
 import useAuth from '~/hooks/auth';
 
-const Login = () => {
+const SignIn = () => {
   const dispatch = useDispatch();
   const {
     control,
@@ -182,4 +182,4 @@ const themeStyles = (theme: IObject<any>) => {
   });
 };
 
-export default Login;
+export default SignIn;

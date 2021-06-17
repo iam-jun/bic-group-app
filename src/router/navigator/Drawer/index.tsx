@@ -5,6 +5,7 @@ import Icon from '~/theme/components/Icon';
 import Home from '~/screens/Home';
 import {mainStack} from '~/configs/navigator';
 import BottomTabs from '../BottomTabs';
+import DrawerComponent from '~/theme/containers/DrawerComponent';
 
 const Drawer = createDrawerNavigator();
 
@@ -12,10 +13,9 @@ export default () => {
   return (
     <Drawer.Navigator
       initialRouteName={mainStack.bottomTabs}
-      // drawerType="slide"
+      drawerType="slide"
       drawerPosition="left"
-      // overlayColor="transparent"
-    >
+      drawerContent={props => <DrawerComponent />}>
       <Drawer.Screen
         name="Main"
         component={BottomTabs}
@@ -32,7 +32,6 @@ export default () => {
           ),
         })}
       />
-      {/* <Drawer.Screen name="Home" component={Home} /> */}
     </Drawer.Navigator>
   );
 };

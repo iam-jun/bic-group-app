@@ -10,7 +10,7 @@ export const mainStack = {
 };
 
 export const authStack = {
-  login: 'Login',
+  login: 'SignIn',
   signup: 'SignUp',
   forgotpassword: 'ForgotPassword',
 };
