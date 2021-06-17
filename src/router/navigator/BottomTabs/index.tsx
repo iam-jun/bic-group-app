@@ -36,8 +36,9 @@ const BottomTabs = () => {
         inactiveTintColor: inactiveColor,
         style: {
           backgroundColor: tabBarBackground,
-          paddingBottom: theme.spacing.padding.large * 2,
-          height: theme.spacing.padding.big * 2,
+          paddingBottom: theme.spacing.padding.small,
+          // paddingBottom: theme.spacing.padding.large * 2,
+          // height: theme.spacing.padding.big * 2,
         },
       }}>
       {tabsNavigator.map((tab: IObject<any>, _i: number) => {

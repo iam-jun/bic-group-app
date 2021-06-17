@@ -9,10 +9,12 @@ import {
 import {useTheme} from 'react-native-paper';
 
 import {IObject} from '~/interfaces/common';
+import Text from '~/theme/components/Text';
 
 const width = Dimensions.get('window').width - 35;
 
 export interface Props {
+  title?: string;
   style?: StyleProp<ViewStyle>;
   activeOpacity?: number;
   onPress?: () => void;
@@ -20,7 +22,7 @@ export interface Props {
 }
 
 const SecondaryButton: React.FC<Props> = props => {
-  const {style, activeOpacity, onPress, ...restProps} = props;
+  const {title, style, activeOpacity, onPress, ...restProps} = props;
   const theme: IObject<any> = useTheme();
   const styles = stylesButton(theme);
   return (
@@ -29,7 +31,7 @@ const SecondaryButton: React.FC<Props> = props => {
       onPress={onPress}
       activeOpacity={activeOpacity}
       style={StyleSheet.flatten([styles.touch, style && style])}>
-      {props.children}
+      <Text> {title}</Text>
     </TouchableOpacity>
   );
 };
