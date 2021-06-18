@@ -1,10 +1,11 @@
 import React from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import {spacing} from '~/theme/configs';
 import _ from 'lodash';
 import items from './items';
 import ViewSpacing from '../ViewSpacing';
 import {ActivityIndicator} from 'react-native-paper';
+import Title from '../Text/Title';
 
 export interface IListView {
   data?: Array<any>;
@@ -13,6 +14,7 @@ export interface IListView {
   renderItemSeparator?: Function;
   horizontal?: boolean;
   loading?: boolean;
+  title?: React.ReactNode;
   [x: string]: any;
 }
 
@@ -27,6 +29,7 @@ const ListView: React.FC<IListView> = ({
   onItemPress,
   horizontal,
   loading,
+  title,
   ...props
 }) => {
   const getKeyValue =
@@ -56,22 +59,25 @@ const ListView: React.FC<IListView> = ({
   }
 
   return (
-    <FlatList
-      {...props}
-      data={data}
-      horizontal={horizontal}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      renderItem={item => _renderItem(item)}
-      ItemSeparatorComponent={() =>
-        renderItemSeparator
-          ? renderItemSeparator()
-          : renderDefaultItemSeparator()
-      }
-      keyExtractor={(item, index) =>
-        _.uniqueId(`list-${item.displayName || ''}-${index}`)
-      }
-    />
+    <View>
+      {title && <Title>{title}</Title>}
+      <FlatList
+        {...props}
+        data={data}
+        horizontal={horizontal}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        renderItem={item => _renderItem(item)}
+        ItemSeparatorComponent={() =>
+          renderItemSeparator
+            ? renderItemSeparator()
+            : renderDefaultItemSeparator()
+        }
+        keyExtractor={(item, index) =>
+          _.uniqueId(`list-${item.displayName || ''}-${index}`)
+        }
+      />
+    </View>
   );
 };
 

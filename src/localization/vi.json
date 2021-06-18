@@ -18,7 +18,7 @@
     "input_label_last_name": "Last Name",
     "input_label_email": "Email Address",
     "input_label_password": "Password",
-    "input_label_username" : "User Name",
+    "input_label_username": "User Name",
     "input_label_code": "Code",
     "btn_sign_in": "Sign In",
     "btn_sign_up": "Sign Up",
@@ -30,11 +30,11 @@
     "text_err_otp": "OTP is invalid!",
     "text_change_password_success": "Change password successfully!",
     "text_err_password_blank": "Password is required!",
-    "text_err_password_format":"Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
+    "text_err_password_format": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
     "text_err_email_blank": "Email is required!",
-    "text_err_email_format":"Invalid email!",
-    "text_err_username_blank" : "User name is required!",
-    "text_err_code" : "Code must have 6 numbers!",
+    "text_err_email_format": "Invalid email!",
+    "text_err_username_blank": "User name is required!",
+    "text_err_code": "Code must have 6 numbers!",
     "text_title_success": "Successfully!",
     "text_sign_up_success": "Please check your email to comfirm your account.",
     "text_check_email_code": "Code is sending to your email.",
@@ -54,5 +54,10 @@
     "label_comments": "Bình luận",
     "label_shares": "Chia sẻ",
     "label_donate": "Đóng góp"
+  },
+  "group": {
+    "title_group_tab_subscribed": "Đã tham gia",
+    "title_group_tab_discover": "Khám phá",
+    "title_group_tab_my_group": "Của tôi"
   }
 }

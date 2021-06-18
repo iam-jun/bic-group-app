@@ -15,8 +15,13 @@ export const authStack = {
   forgotpassword: 'ForgotPassword',
 };
 
-export const bottomTabs = {
+export const homeStack = {
   home: 'Home',
+  postDetail: 'PostDetail',
+};
+
+export const bottomTabs = {
+  home: homeStack,
   vip: 'Vip',
   search: 'Search',
   groups: 'Groups',
@@ -90,7 +95,7 @@ export const navigationSetting = {
 
 export const tabsSetting = {
   configs: {
-    initialRouteName: bottomTabs.home,
+    initialRouteName: bottomTabs.home.home,
   },
   tabsNavigator: [
     {
@@ -102,7 +107,7 @@ export const tabsSetting = {
         vi: 'Trang chủ',
         en: 'Home',
       },
-      screen: bottomTabs.home,
+      screen: bottomTabs.home.home,
       option: {
         tabBarIcon: 'iconHome',
       },
@@ -130,7 +135,7 @@ export const tabsSetting = {
         vi: 'Tìm kiếm',
         en: 'Search',
       },
-      screen: bottomTabs.groups,
+      screen: bottomTabs.search,
       option: {
         tabBarIcon: 'iconSearchMT',
       },
@@ -158,7 +163,7 @@ export const tabsSetting = {
         vi: 'Tin nhắn',
         en: 'Message',
       },
-      screen: bottomTabs.groups,
+      screen: bottomTabs.chat,
       option: {
         tabBarIcon: 'iconChat',
       },

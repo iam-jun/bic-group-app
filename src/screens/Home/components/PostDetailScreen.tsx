@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import ContentItem from '~/theme/components/List/items/ContentItem';
-import {useSelector} from 'react-redux';
+import {post} from './dummy-post-data';
 
+// TODO: need to use redux to get data
+// Temp: using dummy data to show post detail
 const PostDetailScreen = () => {
   const Wrapper = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
-  const {postDetail} = useSelector(state => state);
-  const {post} = postDetail;
 
   return (
     <Wrapper
