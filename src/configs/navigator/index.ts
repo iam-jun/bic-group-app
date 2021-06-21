@@ -20,11 +20,17 @@ export const homeStack = {
   postDetail: 'PostDetail',
 };
 
+export const groupTabs = {
+  subscription: 'Subscription',
+  discovery: 'Discovery',
+  myGroups: 'MyGroups',
+};
+
 export const bottomTabs = {
   home: homeStack,
   vip: 'Vip',
   search: 'Search',
-  groups: 'Groups',
+  groups: groupTabs,
   chat: 'Chat',
 };
 
@@ -147,9 +153,9 @@ export const tabsSetting = {
       },
       name: {
         vi: 'Nhóm',
-        en: 'Group',
+        en: 'Groups',
       },
-      screen: bottomTabs.groups,
+      screen: bottomTabs.groups.subscription,
       option: {
         tabBarIcon: 'iconGroup',
       },
@@ -166,6 +172,56 @@ export const tabsSetting = {
       screen: bottomTabs.chat,
       option: {
         tabBarIcon: 'iconChat',
+      },
+    },
+  ],
+};
+
+export const groupTabsSetting = {
+  configs: {
+    initialRouteName: groupTabs.subscription,
+  },
+  tabsNavigator: [
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Đã tham gia',
+        en: 'Subscription',
+      },
+      screen: groupTabs.subscription,
+      option: {
+        tabBarIcon: '',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Khám phá',
+        en: 'Discovery',
+      },
+      screen: groupTabs.discovery,
+      option: {
+        tabBarIcon: '',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Của tôi',
+        en: 'My groups',
+      },
+      screen: groupTabs.myGroups,
+      option: {
+        tabBarIcon: '',
       },
     },
   ],

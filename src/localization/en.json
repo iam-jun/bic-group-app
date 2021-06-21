@@ -23,8 +23,8 @@
     "input_label_password": "Password",
     "input_label_code": "Code",
     "btn_sign_in": "Sign In",
-    "btn_sign_in_fb":"Sign In With Facebook",
-    "btn_sign_in_gg":"Sign In With Google",
+    "btn_sign_in_fb": "Sign In With Facebook",
+    "btn_sign_in_gg": "Sign In With Google",
     "btn_sign_up": "Sign Up",
     "btn_send": "Send",
     "text_forgot_password": "Forgot password??",
@@ -60,10 +60,5 @@
     "label_comments": "Comments",
     "label_shares": "Shares",
     "label_donate": "Contribute"
-  },
-  "group": {
-    "title_group_tab_subscribed": "Subscription",
-    "title_group_tab_discover": "Discovery",
-    "title_group_tab_my_group": "My groups"
   }
 }

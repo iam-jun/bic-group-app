@@ -54,10 +54,5 @@
     "label_comments": "Bình luận",
     "label_shares": "Chia sẻ",
     "label_donate": "Đóng góp"
-  },
-  "group": {
-    "title_group_tab_subscribed": "Đã tham gia",
-    "title_group_tab_discover": "Khám phá",
-    "title_group_tab_my_group": "Của tôi"
   }
 }
