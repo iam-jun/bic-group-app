@@ -21,7 +21,8 @@ const SubscribedGroupScreen = () => {
             <ListView title="Pinned" type="group" data={pinnedGroups} />
             <Divider thick={2} space={margin.large} />
           </View>
-        )}></ScrollView>
+        )}
+      />
     </ThemeView>
   );
 };

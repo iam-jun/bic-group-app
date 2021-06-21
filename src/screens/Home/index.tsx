@@ -1,26 +1,16 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './components/HomeScreen';
 import {homeStack} from '~/configs/navigator';
-import PostDetailScreen from './components/PostDetailScreen';
+import ListView from '~/theme/components/List/ListView';
+import {data} from './dummy-data';
 
-const Stack = createStackNavigator();
+// TODO: need to use redux to get data
+// Temp: using dummy-data to render newsfeed
+const Home = ({navigation}: {navigation: any}) => {
+  const _onItemPress = () => {
+    navigation.navigate(homeStack.postDetail);
+  };
 
-const Home = () => {
-  return (
-    <Stack.Navigator initialRouteName={homeStack.home}>
-      <Stack.Screen
-        name={homeStack.home}
-        component={HomeScreen}
-        options={{header: () => null}}
-      />
-      <Stack.Screen
-        name={homeStack.postDetail}
-        component={PostDetailScreen}
-        options={{header: () => null}}
-      />
-    </Stack.Navigator>
-  );
+  return <ListView type="content" data={data} onItemPress={_onItemPress} />;
 };
 
 export default Home;

@@ -1,11 +1,12 @@
 import React from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {spacing} from '~/theme/configs';
 import _ from 'lodash';
 import items from './items';
 import ViewSpacing from '../ViewSpacing';
 import {ActivityIndicator} from 'react-native-paper';
-import Title from '../Text/Title';
+import Text from '../Text';
+import {margin} from '~/theme/configs/spacing';
 
 export interface IListView {
   data?: Array<any>;
@@ -14,7 +15,7 @@ export interface IListView {
   renderItemSeparator?: Function;
   horizontal?: boolean;
   loading?: boolean;
-  title?: React.ReactNode;
+  title?: string;
   [x: string]: any;
 }
 
@@ -60,7 +61,7 @@ const ListView: React.FC<IListView> = ({
 
   return (
     <View>
-      {title && <Title>{title}</Title>}
+      {title && <Text style={styles.title}>{title}</Text>}
       <FlatList
         {...props}
         data={data}
@@ -80,5 +81,13 @@ const ListView: React.FC<IListView> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    margin: margin.large,
+  },
+});
 
 export default ListView;
