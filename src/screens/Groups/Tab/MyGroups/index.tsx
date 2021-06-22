@@ -3,16 +3,16 @@ import {Text} from '~/theme/components';
 import {useDispatch} from 'react-redux';
 import {ThemeView} from '~/theme/components';
 
-const MyGroupScreen = props => {
+const MyGroupsScreen = () => {
   const dispatch = useDispatch();
 
   return (
-    <ThemeView testID="GroupScreen" disabledDarkMode isFullView>
+    <ThemeView testID="MyGroupsScreen" isFullView>
       <Text h1 bold>
-        ~~~ GroupScreen My Group ~~~
+        ~~~ My Groups screen ~~~
       </Text>
     </ThemeView>
   );
 };
 
-export default MyGroupScreen;
+export default MyGroupsScreen;
