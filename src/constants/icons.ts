@@ -76,4 +76,12 @@ export default {
     type: 'MaterialCommunityIcons',
     name: 'chat-outline',
   },
+  iconPin: {
+    type: 'MaterialCommunityIcons',
+    name: 'pin',
+  },
+  iconPinOutline: {
+    type: 'MaterialCommunityIcons',
+    name: 'pin-outline',
+  },
 };

@@ -15,11 +15,22 @@ export const authStack = {
   forgotpassword: 'ForgotPassword',
 };
 
-export const bottomTabs = {
+export const homeStack = {
   home: 'Home',
+  postDetail: 'PostDetail',
+};
+
+export const groupTabs = {
+  subscription: 'Subscription',
+  discovery: 'Discovery',
+  myGroups: 'MyGroups',
+};
+
+export const bottomTabs = {
+  home: homeStack,
   vip: 'Vip',
   search: 'Search',
-  groups: 'Groups',
+  groups: groupTabs,
   chat: 'Chat',
 };
 
@@ -90,7 +101,7 @@ export const navigationSetting = {
 
 export const tabsSetting = {
   configs: {
-    initialRouteName: bottomTabs.home,
+    initialRouteName: bottomTabs.home.home,
   },
   tabsNavigator: [
     {
@@ -102,7 +113,7 @@ export const tabsSetting = {
         vi: 'Trang chủ',
         en: 'Home',
       },
-      screen: bottomTabs.home,
+      screen: bottomTabs.home.home,
       option: {
         tabBarIcon: 'iconHome',
       },
@@ -130,7 +141,7 @@ export const tabsSetting = {
         vi: 'Tìm kiếm',
         en: 'Search',
       },
-      screen: bottomTabs.groups,
+      screen: bottomTabs.search,
       option: {
         tabBarIcon: 'iconSearchMT',
       },
@@ -142,9 +153,9 @@ export const tabsSetting = {
       },
       name: {
         vi: 'Nhóm',
-        en: 'Group',
+        en: 'Groups',
       },
-      screen: bottomTabs.groups,
+      screen: bottomTabs.groups.subscription,
       option: {
         tabBarIcon: 'iconGroup',
       },
@@ -158,9 +169,59 @@ export const tabsSetting = {
         vi: 'Tin nhắn',
         en: 'Message',
       },
-      screen: bottomTabs.groups,
+      screen: bottomTabs.chat,
       option: {
         tabBarIcon: 'iconChat',
+      },
+    },
+  ],
+};
+
+export const groupTabsSetting = {
+  configs: {
+    initialRouteName: groupTabs.subscription,
+  },
+  tabsNavigator: [
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Đã tham gia',
+        en: 'Subscription',
+      },
+      screen: groupTabs.subscription,
+      option: {
+        tabBarIcon: '',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Khám phá',
+        en: 'Discovery',
+      },
+      screen: groupTabs.discovery,
+      option: {
+        tabBarIcon: '',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Của tôi',
+        en: 'My groups',
+      },
+      screen: groupTabs.myGroups,
+      option: {
+        tabBarIcon: '',
       },
     },
   ],

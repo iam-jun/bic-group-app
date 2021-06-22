@@ -44,7 +44,7 @@ const Avatar: React.FC<Props> = ({
         {width: size, height: size, backgroundColor: '#2185D0'},
       ]}>
       <Text h2 maxBold style={[styles.char]} maxLength={numberOfChars}>
-        {_user?.attributes.name || ''}
+        {_user?.attributes?.name || ''}
       </Text>
     </View>
   );

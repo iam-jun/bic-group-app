@@ -1,15 +1,16 @@
 import React from 'react';
-import {Text} from '~/theme/components';
-import ThemeView from '~/theme/components/ThemeView';
+import {homeStack} from '~/configs/navigator';
+import ListView from '~/theme/components/List/ListView';
+import {data} from './dummy-data';
 
-const Home = () => {
-  return (
-    <ThemeView testID="HomeScreen" disabledDarkMode isFullView>
-      <Text h1 bold>
-        Hello ~~~~~
-      </Text>
-    </ThemeView>
-  );
+// TODO: need to use redux to get data
+// Temp: using dummy-data to render newsfeed
+const Home = ({navigation}: {navigation: any}) => {
+  const _onItemPress = () => {
+    navigation.navigate(homeStack.postDetail);
+  };
+
+  return <ListView type="content" data={data} onItemPress={_onItemPress} />;
 };
 
 export default Home;

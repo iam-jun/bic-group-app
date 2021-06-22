@@ -1,10 +1,12 @@
 import React from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {spacing} from '~/theme/configs';
 import _ from 'lodash';
 import items from './items';
 import ViewSpacing from '../ViewSpacing';
 import {ActivityIndicator} from 'react-native-paper';
+import Text from '../Text';
+import {margin} from '~/theme/configs/spacing';
 
 export interface IListView {
   data?: Array<any>;
@@ -13,6 +15,7 @@ export interface IListView {
   renderItemSeparator?: Function;
   horizontal?: boolean;
   loading?: boolean;
+  title?: string;
   [x: string]: any;
 }
 
@@ -27,6 +30,7 @@ const ListView: React.FC<IListView> = ({
   onItemPress,
   horizontal,
   loading,
+  title,
   ...props
 }) => {
   const getKeyValue =
@@ -56,23 +60,34 @@ const ListView: React.FC<IListView> = ({
   }
 
   return (
-    <FlatList
-      {...props}
-      data={data}
-      horizontal={horizontal}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      renderItem={item => _renderItem(item)}
-      ItemSeparatorComponent={() =>
-        renderItemSeparator
-          ? renderItemSeparator()
-          : renderDefaultItemSeparator()
-      }
-      keyExtractor={(item, index) =>
-        _.uniqueId(`list-${item.displayName || ''}-${index}`)
-      }
-    />
+    <View>
+      {title && <Text style={styles.title}>{title}</Text>}
+      <FlatList
+        {...props}
+        data={data}
+        horizontal={horizontal}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        renderItem={item => _renderItem(item)}
+        ItemSeparatorComponent={() =>
+          renderItemSeparator
+            ? renderItemSeparator()
+            : renderDefaultItemSeparator()
+        }
+        keyExtractor={(item, index) =>
+          _.uniqueId(`list-${item.displayName || ''}-${index}`)
+        }
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    margin: margin.large,
+  },
+});
 
 export default ListView;
