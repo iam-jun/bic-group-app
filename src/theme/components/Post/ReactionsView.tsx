@@ -5,7 +5,7 @@ import {formatText} from '~/utils/format';
 
 import HorizontalView from '../Layout/HorizontalView';
 import ReactionItem from '../List/items/ReactionItem';
-import TextContent from '../Text';
+import Text from '../Text';
 import {
   blue as LIKE_BUTTON_COLOR,
   white as WHITE_COLOR,
@@ -50,14 +50,14 @@ const ReactionsView: React.FC<Props> = ({
       )}
       <HorizontalView>
         {comment > 0 && (
-          <TextContent style={styles.label}>
+          <Text style={styles.label}>
             {`${comment} ${t('post:label_comment')}`}
-          </TextContent>
+          </Text>
         )}
         {share > 0 && (
-          <TextContent style={styles.label}>
+          <Text style={styles.label}>
             {`${share} ${t('post:label_share')}`}
-          </TextContent>
+          </Text>
         )}
       </HorizontalView>
     </HorizontalView>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, TextStyle, StyleProp, ViewStyle} from 'react-native';
 import HorizontalView from '../Layout/HorizontalView';
-import TextContent from '../Text/';
+import Text from '../Text/';
 import Avatar from '../Image/Avatar';
 import Icon from '../Icon';
 import {IconProps} from '../Icon';
@@ -52,22 +52,22 @@ const HeaderView: React.FC<Props> = ({
         <View style={[styles.userInfo, infoStyle]}>
           <HorizontalView
             style={[styles.firstContainer, {marginBottom: space}]}>
-            <TextContent maxBold medium>
+            <Text maxBold medium>
               {firstLabel}
-            </TextContent>
+            </Text>
             {icon && <Icon style={styles.icon} {...icon} />}
           </HorizontalView>
           {secondLabel && (
             <>
-              <TextContent style={{marginBottom: space}} h6>
+              <Text style={{marginBottom: space}} h6>
                 {secondLabel}
-              </TextContent>
+              </Text>
             </>
           )}
           {thirdLabel && (
-            <TextContent style={{marginBottom: space}} h6>
+            <Text style={{marginBottom: space}} h6>
               {thirdLabel}
-            </TextContent>
+            </Text>
           )}
           {renderCustom && renderCustom()}
         </View>

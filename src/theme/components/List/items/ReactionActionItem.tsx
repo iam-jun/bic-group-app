@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-import TextContent from '../../Text';
+import {StyleSheet} from 'react-native';
+import Text from '../../Text';
 import HorizontalView from '../../Layout/HorizontalView';
 import Icon from '../../Icon';
 import icons from '~/constants/icons';
@@ -41,11 +41,11 @@ const ReactionActionItem: React.FC<Props> = ({
         bold={isLike}
         style={styles.icon}
       />
-      <TextContent
+      <Text
         maxBold={isLike ? true : false}
         primary={isLike ? styles.activeButton : styles.inactiveButton}>
         {t(`post:${label}`)}
-      </TextContent>
+      </Text>
     </HorizontalView>
   );
 };
