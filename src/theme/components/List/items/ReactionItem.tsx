@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import TextContent from '../../Text';
+import Text from '../../Text';
 import Icon from '../../Icon';
 import {white as WHITE_COLOR} from '~/theme/configs/colors';
 
@@ -20,7 +20,7 @@ const ReactionItem: React.FC<Props> = ({
   return (
     <View style={[styles.container, style]}>
       <Icon {...icon} tintColor={tintColor} size={9} style={styles.icon} />
-      <TextContent>{value}</TextContent>
+      <Text>{value}</Text>
     </View>
   );
 };

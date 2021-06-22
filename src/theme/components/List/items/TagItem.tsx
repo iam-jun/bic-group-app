@@ -7,7 +7,7 @@ import {
 } from '~/theme/configs/colors';
 import Icon from '../../Icon';
 import ThemeView from '~/theme/components/ThemeView';
-import TextContent from '../../Text';
+import Text from '../../Text';
 
 export interface Props {
   name?: string;
@@ -17,9 +17,9 @@ export interface Props {
 const TagItem: React.FC<Props> = ({name, onRemovePress}) => {
   return (
     <ThemeView style={[styles.container, styles.backgroundColor]}>
-      <TextContent primary={styles.textStyle} bold>
+      <Text primary={styles.textStyle} bold>
         {name}
-      </TextContent>
+      </Text>
       {onRemovePress && (
         <Icon
           tintColor={ICON_CORLOR}

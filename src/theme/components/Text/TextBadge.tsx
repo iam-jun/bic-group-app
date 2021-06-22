@@ -1,6 +1,6 @@
 import React from 'react';
 import {blue as TINT_COLOR, white as WHITE_COLOR} from '~/theme/configs/colors';
-import TextContent from '.';
+import Text from '.';
 import ThemeView from '../ThemeView';
 
 export interface Props {
@@ -28,9 +28,9 @@ const TextBadge: React.FC<Props> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <TextContent style={{color: WHITE_COLOR}} {...props}>
+      <Text style={{color: WHITE_COLOR}} {...props}>
         {value}
-      </TextContent>
+      </Text>
     </ThemeView>
   );
 };

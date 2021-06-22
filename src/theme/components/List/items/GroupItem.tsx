@@ -6,7 +6,7 @@ import ThemeView from '../../ThemeView';
 import {margin, padding} from '~/theme/configs/spacing';
 import HorizontalView from '../../Layout/HorizontalView';
 import Icon from '../../Icon';
-import TextBadge from '../../Text/Textbadge';
+import TextBadge from '../../Text/TextBadge';
 
 export interface UserType {
   fullName: string;
