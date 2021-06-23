@@ -32,6 +32,7 @@ export const bottomTabs = {
   search: 'Search',
   groups: groupTabs,
   chat: 'Chat',
+  notification: 'Notification',
 };
 
 export const navigationSetting = {
@@ -172,6 +173,20 @@ export const tabsSetting = {
       screen: bottomTabs.chat,
       option: {
         tabBarIcon: 'iconChat',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Thông báo',
+        en: 'Notifications',
+      },
+      screen: bottomTabs.notification,
+      option: {
+        tabBarIcon: 'iconNotification',
       },
     },
   ],
