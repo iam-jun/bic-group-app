@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import HeaderView from '../../Header/HeaderView';
 import ThemeView from '../../ThemeView';
@@ -7,6 +7,8 @@ import {margin, padding} from '~/theme/configs/spacing';
 import HorizontalView from '../../Layout/HorizontalView';
 import Icon from '../../Icon';
 import TextBadge from '../../Text/TextBadge';
+import {IObject} from '~/interfaces/common';
+import {useTheme} from 'react-native-paper';
 
 export interface UserType {
   fullName: string;
@@ -27,10 +29,12 @@ const GroupItem: React.FC<Props> = ({
   newPostCount,
   isPinned,
 }) => {
+  const theme: IObject<any> = useTheme();
+  const styles = createStyles(theme);
   return (
-    <ThemeView style={styles.container}>
+    <View style={styles.container}>
       <HeaderView
-        avatar={{user, size: 40}}
+        avatar={{user, size: 'large'}}
         firstLabel={user.fullName}
         secondLabel={updatedAt}
         style={styles.header}
@@ -44,26 +48,30 @@ const GroupItem: React.FC<Props> = ({
           tintColor="grey"
         />
       </HorizontalView>
-    </ThemeView>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 4,
-    marginHorizontal: margin.large,
-    marginVertical: margin.tiny,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: 12,
-  },
-  header: {
-    paddingVertical: padding.large,
-  },
-  icon: {
-    marginHorizontal: margin.base,
-  },
-});
+const createStyles = (theme: IObject<any>) => {
+  const {colors} = theme;
+  return StyleSheet.create({
+    container: {
+      padding: 4,
+      marginHorizontal: margin.large,
+      marginVertical: margin.tiny,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderRadius: 12,
+      backgroundColor: colors.background,
+    },
+    header: {
+      paddingVertical: padding.large,
+    },
+    icon: {
+      marginHorizontal: margin.base,
+    },
+  });
+};
 
 export default GroupItem;

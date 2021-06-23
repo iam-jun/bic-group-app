@@ -6,7 +6,7 @@ import Icon from '../../Icon';
 import icons from '~/constants/icons';
 import {useBaseHook} from '~/hooks';
 import {
-  blue as ACTIVE_COLOR,
+  primary as ACTIVE_COLOR,
   grey6 as INACTIVE_COLOR,
 } from '~/theme/configs/colors';
 

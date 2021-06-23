@@ -15,6 +15,8 @@ import {useBaseHook} from '~/hooks';
 import ListView from '../ListView';
 import {dummyReplies} from '~/screens/Home/PostDetail/dummy-replies';
 import {UserType} from './GroupItem';
+import {IObject} from '~/interfaces/common';
+import {useTheme} from 'react-native-paper';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -32,17 +34,19 @@ const CommentItem: React.FC<Props> = ({
   createdAt,
 }) => {
   const {t} = useBaseHook();
+  const theme: IObject<any> = useTheme();
+  const styles = createStyles(theme);
 
   return (
     <View style={[styles.container, style]}>
       <HorizontalView>
-        <Avatar user={user} size={40} />
+        <Avatar user={user} />
         <View style={styles.content}>
           <TouchableOpacity delayLongPress={1000}>
-            <ThemeView color="gray" style={styles.header}>
+            <View style={styles.header}>
               <Text bold>{user?.fullName}</Text>
               <Text>{content}</Text>
-            </ThemeView>
+            </View>
           </TouchableOpacity>
           <HorizontalView style={styles.bottomBar}>
             <HorizontalView style={styles.commentReaction}>
@@ -71,39 +75,43 @@ const CommentItem: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginRight: 20,
-    marginVertical: margin.tiny,
-  },
-  content: {
-    flex: 1,
-    marginStart: 6,
-  },
-  header: {
-    borderRadius: 16,
-    paddingHorizontal: padding.large,
-    paddingVertical: padding.small,
-    alignSelf: 'baseline',
-    flex: 0,
-  },
-  bottomBar: {
-    width: '100%',
-    marginStart: margin.large,
-    marginTop: 2,
-  },
-  commentReaction: {
-    alignItems: 'flex-end',
-  },
-  commentReactionItem: {
-    marginEnd: margin.small,
-    fontSize: 11,
-  },
-  replies: {
-    paddingTop: padding.large,
-    marginStart: 44,
-    marginBottom: 6,
-  },
-});
+const createStyles = (theme: IObject<any>) => {
+  const {colors} = theme;
+  return StyleSheet.create({
+    container: {
+      marginVertical: margin.tiny,
+      marginHorizontal: margin.base,
+    },
+    content: {
+      flex: 1,
+      marginStart: 6,
+    },
+    header: {
+      borderRadius: 16,
+      paddingHorizontal: padding.large,
+      paddingVertical: padding.small,
+      backgroundColor: colors.background,
+      alignSelf: 'baseline',
+      flex: 0,
+    },
+    bottomBar: {
+      width: '100%',
+      marginStart: margin.large,
+      marginTop: 2,
+    },
+    commentReaction: {
+      alignItems: 'flex-end',
+    },
+    commentReactionItem: {
+      marginEnd: margin.small,
+      fontSize: 11,
+    },
+    replies: {
+      paddingTop: padding.large,
+      marginStart: 44,
+      marginBottom: 6,
+    },
+  });
+};
 
 export default CommentItem;

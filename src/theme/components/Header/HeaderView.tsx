@@ -9,13 +9,17 @@ import {margin, padding} from '~/theme/configs/spacing';
 import {IObject} from '~/interfaces/common';
 import * as RootNavigation from '~/utils/refNavigator';
 import {homeStack} from '~/configs/navigator';
+import {useTheme} from 'react-native-paper';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
-  infoStyle?: StyleProp<TextStyle>;
+  infoStyle?: StyleProp<ViewStyle>;
   firstLabel?: string;
   secondLabel?: string;
   thirdLabel?: string;
+  firstLabelStyle?: StyleProp<TextStyle>;
+  secondLabelStyle?: StyleProp<TextStyle>;
+  thirdLabelStyle?: StyleProp<TextStyle>;
   avatar?: IObject<any>;
   icon?: IconProps;
   space?: number;
@@ -30,11 +34,17 @@ const HeaderView: React.FC<Props> = ({
   firstLabel,
   secondLabel,
   thirdLabel,
+  firstLabelStyle,
+  secondLabelStyle,
+  thirdLabelStyle,
   icon,
   space = 2,
   renderCustom,
   showBackButton,
 }) => {
+  const theme = useTheme();
+  const styles = createStyles(theme);
+
   return (
     <HorizontalView style={[styles.container, style]}>
       {showBackButton && (
@@ -45,27 +55,33 @@ const HeaderView: React.FC<Props> = ({
           onPress={() => RootNavigation.navigate(homeStack.home)}
         />
       )}
-
       <HorizontalView>
-        <Avatar size={50} {...avatar} />
-
+        <Avatar
+          size="base"
+          {...avatar}
+          style={!showBackButton && styles.avatar}
+        />
         <View style={[styles.userInfo, infoStyle]}>
           <HorizontalView
             style={[styles.firstContainer, {marginBottom: space}]}>
-            <Text maxBold medium>
+            <Text style={firstLabelStyle} bold medium>
               {firstLabel}
             </Text>
             {icon && <Icon style={styles.icon} {...icon} />}
           </HorizontalView>
-          {secondLabel && (
+          {!!secondLabel && (
             <>
-              <Text style={{marginBottom: space}} h6>
+              <Text
+                style={[styles.label, secondLabelStyle, {marginBottom: space}]}
+                h6>
                 {secondLabel}
               </Text>
             </>
           )}
-          {thirdLabel && (
-            <Text style={{marginBottom: space}} h6>
+          {!!thirdLabel && (
+            <Text
+              style={[styles.label, thirdLabelStyle, {marginBottom: space}]}
+              h6>
               {thirdLabel}
             </Text>
           )}
@@ -76,30 +92,36 @@ const HeaderView: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: padding.large,
-    alignItems: 'flex-start',
-    flexShrink: 1,
-  },
-  userInfo: {
-    marginStart: margin.small,
-    flexShrink: 1,
-  },
-  firstContainer: {},
-  icon: {
-    marginStart: 4,
-  },
-  iconBack: {
-    marginStart: margin.large,
-    padding: 6,
-  },
-  avatar: {
-    marginStart: margin.large,
-  },
-  avatarWithIcon: {
-    marginStart: 4,
-  },
-});
+const createStyles = (theme: IObject<any>) => {
+  const {colors} = theme;
+  return StyleSheet.create({
+    container: {
+      paddingTop: padding.large,
+      alignItems: 'flex-start',
+      flexShrink: 1,
+    },
+    userInfo: {
+      marginStart: margin.small,
+      flexShrink: 1,
+    },
+    firstContainer: {},
+    icon: {
+      marginStart: 4,
+    },
+    iconBack: {
+      marginStart: margin.large,
+      padding: 6,
+    },
+    avatar: {
+      marginStart: margin.base,
+    },
+    avatarWithIcon: {
+      marginStart: 4,
+    },
+    label: {
+      color: colors?.ViewLabel.color,
+    },
+  });
+};
 
 export default React.memo(HeaderView);

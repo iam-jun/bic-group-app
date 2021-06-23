@@ -60,5 +60,9 @@
     "label_comments": "Comments",
     "label_shares": "Shares",
     "label_donate": "Contribute"
+  },
+  "chat":{
+    "placeholder_search": "Search...",
+    "title_members":"Members"
   }
 }

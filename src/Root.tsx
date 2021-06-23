@@ -21,8 +21,11 @@ import {colors, fonts, spacing, dimension, shadow} from '~/theme/configs';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import AlertModal from './theme/components/Modal/AlertModal';
+import {LogBox} from 'react-native';
 
 export default () => {
+  LogBox.ignoreAllLogs();
+
   const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
 
   /* Localization */
@@ -44,6 +47,7 @@ export default () => {
   );
 
   useEffect(() => {
+    console.log({colorScheme});
     toggleTheme();
   }, [colorScheme]);
 

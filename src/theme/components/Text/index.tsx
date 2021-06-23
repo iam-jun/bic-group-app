@@ -104,7 +104,9 @@ const TextElement: React.FC<Props> = props => {
         styles.text,
         reverseDarkMode && styles.reverseDarkMode,
         StyleSheet.flatten([primary, style]),
-        colorSecondary && secondary,
+        colorSecondary && {
+          color: colors.textSecondary,
+        },
         colorThird && third,
         h1 &&
           StyleSheet.flatten([

@@ -1,15 +1,20 @@
 import React from 'react';
-import {ActivityIndicator, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+  StyleSheet,
+} from 'react-native';
 import SvgIcon, {SVGIconProps} from './SvgIcon';
 import FontIcon, {FontIconProps} from './FontIcon';
-import {TouchableOpacity} from 'react-native';
-import {StyleSheet} from 'react-native';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
-import {Text} from '..';
+import Text from '~/theme/components/Text';
 import {spacing} from '~/theme/configs';
 import icons from '~/constants/icons';
-import {View} from 'react-native';
 
 export interface IconProps extends SVGIconProps, FontIconProps {
   icon: keyof typeof icons;
@@ -59,10 +64,8 @@ const Icon: React.FC<IconProps> = ({
 
   if (isButton && !tintColor) tintColor = colors.white;
 
-  const Wrapper = onPress ? TouchableOpacity : View;
-
   return (
-    <Wrapper
+    <TouchableOpacity
       style={[
         styles.container,
         isButton && styles.button,
@@ -70,6 +73,7 @@ const Icon: React.FC<IconProps> = ({
         backgroundColor && {backgroundColor},
         disabled && styles.disabled,
       ]}
+      disabled={!onPress}
       onPress={onPress}>
       <IconWrapper
         style={iconStyle}
@@ -80,7 +84,7 @@ const Icon: React.FC<IconProps> = ({
         {...source}
       />
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
-    </Wrapper>
+    </TouchableOpacity>
   );
 };
 
@@ -91,11 +95,12 @@ const createStyles = (theme: IObject<any>) => {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
+      flexDirection: 'row',
     },
     button: {
       padding: 8,
       borderRadius: 100,
-      backgroundColor: colors.accent,
+      backgroundColor: colors.icon,
     },
     disabled: {
       backgroundColor: colors.disabled,

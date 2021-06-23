@@ -1,24 +1,36 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-
+import * as React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {spacing} from '~/theme/configs';
+import Icon from '~/theme/components/Icon';
 import {mainStack} from '~/configs/navigator';
+import BottomTabs from '../BottomTabs';
+import DrawerComponent from '~/theme/containers/DrawerComponent';
 
-import Drawer from '../Drawer';
+const Drawer = createDrawerNavigator();
 
-const Stack = createStackNavigator();
-
-const MainStack = () => {
+export default () => {
   return (
-    <Stack.Navigator
+    <Drawer.Navigator
       initialRouteName={mainStack.bottomTabs}
-      headerMode="screen">
-      <Stack.Screen
-        name={mainStack.drawer}
-        component={Drawer}
-        options={{headerShown: false}}
+      drawerType="slide"
+      drawerPosition="left"
+      drawerContent={props => <DrawerComponent />}>
+      <Drawer.Screen
+        name="Main"
+        component={BottomTabs}
+        options={({navigation}) => ({
+          headerShown: true,
+          headerStyle: {paddingHorizontal: spacing.padding.base},
+          headerTitleAlign: 'left',
+          headerLeft: () => (
+            <Icon
+              size={22}
+              icon="iconMenu"
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
       />
-    </Stack.Navigator>
+    </Drawer.Navigator>
   );
 };
-
-export default MainStack;

@@ -7,7 +7,7 @@ import HorizontalView from '../Layout/HorizontalView';
 import ReactionItem from '../List/items/ReactionItem';
 import Text from '../Text';
 import {
-  blue as LIKE_BUTTON_COLOR,
+  primary as LIKE_BUTTON_COLOR,
   white as WHITE_COLOR,
 } from '~/theme/configs/colors';
 import {padding} from '~/theme/configs/spacing';

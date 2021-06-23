@@ -22,9 +22,10 @@ const DrawerComponent = () => {
   return (
     <ThemeView testID="DrawerComponent" style={styles.container} isFullView>
       <HeaderView
-        firstLabel={user.attributes.name}
-        secondLabel={user.attributes.email}
+        firstLabel={user?.name}
+        secondLabel={user?.email}
         avatar={{user}}
+        style={styles.header}
       />
 
       <TransparentButton
@@ -41,6 +42,9 @@ const themeStyles = (theme: IObject<any>) => {
     container: {
       paddingVertical: spacing.padding.big,
       justifyContent: 'space-between',
+    },
+    header: {
+      paddingHorizontal: spacing.padding.base,
     },
   });
 };

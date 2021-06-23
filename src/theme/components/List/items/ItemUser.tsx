@@ -7,7 +7,7 @@ import {IObject} from '~/interfaces/common';
 import {generateAvatar} from '~/utils/common';
 import Avatar from '../../Image/Avatar';
 
-const ItemUser: React.FC<IObject<any>> = ({id, name, online, role}) => {
+const ItemUser: React.FC<IObject<any>> = ({id, name, avatar, online, role}) => {
   const theme: IObject<any> = useTheme();
 
   const styles = themeStyles(theme);
@@ -15,11 +15,13 @@ const ItemUser: React.FC<IObject<any>> = ({id, name, online, role}) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarView}>
-        <Avatar uri={generateAvatar(name)} />
+        <Avatar user={{name, avatar}} />
         {online && <View style={styles.dot} />}
       </View>
       <View>
-        <Text bold>{name || id}</Text>
+        <Text h5 bold>
+          {name || id}
+        </Text>
         <Text>{role}</Text>
       </View>
     </View>
@@ -43,15 +45,15 @@ const themeStyles = (theme: IObject<any>) => {
       borderRadius: 100,
     },
     dot: {
-      width: 10,
-      height: 10,
+      width: 12,
+      height: 12,
       borderRadius: 100,
       backgroundColor: 'green',
       position: 'absolute',
-      bottom: 4,
-      right: 0,
+      bottom: 3,
+      right: -2,
       borderWidth: 2,
-      borderColor: colors.white,
+      borderColor: colors.bgColor,
     },
   });
 };

@@ -1,21 +1,27 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import Image from './index';
-import Text from '../Text/';
+import {StyleSheet} from 'react-native';
 import useAuth from '~/hooks/auth';
+import {Avatar as RNPAvatar} from 'react-native-paper';
 
 export interface Props {
-  size?: number;
   uri?: string | undefined | React.ReactNode;
+  size?: keyof typeof sizes;
   [x: string]: any;
 }
 
+const sizes = {
+  small: 24,
+  base: 40,
+  large: 50,
+  big: 60,
+};
+
 const Avatar: React.FC<Props> = ({
   style,
-  size,
+  size = 'base',
   user,
   useMyProfile,
-  numberOfChars = 1,
+  numberOfChars = 2,
   ...props
 }) => {
   const [_user, setUser] = useState(user);
@@ -26,47 +32,31 @@ const Avatar: React.FC<Props> = ({
     else setUser(user);
   }, [user, myProfile]);
 
-  if (user.avatar) {
+  if (_user?.avatar) {
     return (
-      <Image
+      <RNPAvatar.Image
         {...props}
-        style={[styles.container, style, {width: size, height: size}]}
+        size={sizes[size]}
         source={{uri: _user.avatar}}
       />
     );
   }
 
   return (
-    <View
-      style={[
-        styles.container,
-        styles.charContainer,
-        {width: size, height: size, backgroundColor: '#2185D0'},
-      ]}>
-      <Text h2 maxBold style={[styles.char]} maxLength={numberOfChars}>
-        {_user?.attributes?.name || ''}
-      </Text>
-    </View>
+    <RNPAvatar.Text
+      style={[styles.container, style]}
+      size={sizes[size]}
+      label={(_user?.fullName || _user?.name || '').substr(0, 2).toUpperCase()}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    borderRadius: 100,
-    marginStart: 16,
-  },
-  charContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  char: {
-    textTransform: 'uppercase',
-    color: 'white',
-  },
+  container: {},
 });
 
 Avatar.defaultProps = {
-  size: 40,
+  size: 'base',
 };
 
 export default Avatar;

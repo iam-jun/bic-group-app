@@ -1,3 +1,4 @@
+import {CognitoUser} from 'amazon-cognito-identity-js';
 import {put, takeLatest} from 'redux-saga/effects';
 import {Auth} from 'aws-amplify';
 
@@ -10,6 +11,7 @@ import * as actions from './actions';
 import * as actionsCommon from '../common/actions';
 import {ERROR} from '~/constants/common';
 import {convertMultiLanguage} from '~/utils/language';
+import {IObject} from '~/interfaces/common';
 
 export default function* authSaga() {
   yield takeLatest(types.SIGN_IN, signIn);
@@ -32,7 +34,11 @@ const languages = convertMultiLanguage();
 function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
   try {
     const {email, password} = payload;
-    const user: IAuth.IUser = yield Auth.signIn(email, password);
+    const userResponse: IObject<any> = yield Auth.signIn(email, password);
+    const user = {
+      ...userResponse,
+      ...userResponse.attributes,
+    };
     yield storage.setUser(user);
     yield put(actions.setUser(user));
     refNavigator.replace(rootSwitch.mainStack);

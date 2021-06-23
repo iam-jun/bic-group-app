@@ -1,2 +1,2 @@
-export const GET_CONFIGS = 'mood/GET_CONFIGS';
-export const SET_CONFIGS = 'mood/SET_CONFIGS';
+export const GET_CONFIGS = 'app/GET_CONFIGS';
+export const SET_CONFIGS = 'app/SET_CONFIGS';

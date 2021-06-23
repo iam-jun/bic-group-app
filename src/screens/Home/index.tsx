@@ -1,6 +1,8 @@
 import React from 'react';
 import {homeStack} from '~/configs/navigator';
+import {ViewSpacing} from '~/theme/components';
 import ListView from '~/theme/components/List/ListView';
+import {spacing} from '~/theme/configs';
 import {data} from './dummy-data';
 
 // TODO: need to use redux to get data
@@ -10,7 +12,14 @@ const Home = ({navigation}: {navigation: any}) => {
     navigation.navigate(homeStack.postDetail);
   };
 
-  return <ListView type="content" data={data} onItemPress={_onItemPress} />;
+  return (
+    <ListView
+      type="content"
+      data={data}
+      onItemPress={_onItemPress}
+      renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
+    />
+  );
 };
 
 export default Home;

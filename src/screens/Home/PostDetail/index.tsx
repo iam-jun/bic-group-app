@@ -1,34 +1,35 @@
 import React from 'react';
 import {View, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import {ThemeView} from '~/theme/components';
 import ContentItem from '~/theme/components/List/items/ContentItem';
 import ListView from '~/theme/components/List/ListView';
+import {spacing} from '~/theme/configs';
 import {commentData} from './dummy-comment-data';
 import {post} from './dummy-post-data';
 
 // TODO: need to use redux to get data
 // Temp: using dummy data to show post detail
 const PostDetailScreen = () => {
-  const Wrapper = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
-
   return (
-    <Wrapper
-      behavior="padding"
-      keyboardVerticalOffset={20}
-      style={styles.container}>
+    <ThemeView isFullView>
       <ListView
+        contentContainerStyle={styles.comment}
         type="comment"
         data={commentData}
         ListHeaderComponent={
           <ContentItem {...post} maxLength={-1} showBackButton={true} />
         }
       />
-    </Wrapper>
+    </ThemeView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  comment: {
+    paddingTop: spacing.padding.base,
   },
 });
 
