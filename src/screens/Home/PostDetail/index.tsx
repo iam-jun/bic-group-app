@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import ContentItem from '~/theme/components/List/items/ContentItem';
+import ListView from '~/theme/components/List/ListView';
+import {commentData} from './dummy-comment-data';
 import {post} from './dummy-post-data';
 
 // TODO: need to use redux to get data
@@ -13,7 +15,13 @@ const PostDetailScreen = () => {
       behavior="padding"
       keyboardVerticalOffset={20}
       style={styles.container}>
-      <ContentItem {...post} maxLength={-1} showBackButton={true} />
+      <ListView
+        type="comment"
+        data={commentData}
+        ListHeaderComponent={
+          <ContentItem {...post} maxLength={-1} showBackButton={true} />
+        }
+      />
     </Wrapper>
   );
 };
