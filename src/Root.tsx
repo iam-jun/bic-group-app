@@ -47,8 +47,7 @@ export default () => {
   );
 
   useEffect(() => {
-    console.log({colorScheme});
-    toggleTheme();
+    if (colorScheme !== theme) toggleTheme();
   }, [colorScheme]);
 
   const preferences = React.useMemo(
