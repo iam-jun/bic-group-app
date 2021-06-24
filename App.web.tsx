@@ -8,13 +8,13 @@ import storeInit from './src/store';
 import Root from '~/Root';
 
 export default () => {
-  const {store, persistor} = storeInit();
+    const {store, persistor} = storeInit();
 
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Root />
-      </PersistGate>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <Root/>
+            </PersistGate>
+        </Provider>
+    );
 };
