@@ -1,10 +1,15 @@
 import React from 'react';
-import {FlatList, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import {spacing} from '~/theme/configs';
 import _ from 'lodash';
 import items from './items';
 import ViewSpacing from '../ViewSpacing';
-import {ActivityIndicator} from 'react-native-paper';
 import Text from '../Text';
 import {margin} from '~/theme/configs/spacing';
 
@@ -50,8 +55,8 @@ const ListView: React.FC<IListView> = ({
 
   const renderDefaultItemSeparator = () => (
     <ViewSpacing
-      width={horizontal ? spacing.margin.tiny : 0}
-      height={!horizontal ? spacing.margin.tiny : 0}
+      width={horizontal ? spacing.margin.small : 0}
+      height={!horizontal ? spacing.margin.small : 0}
     />
   );
 
@@ -69,14 +74,13 @@ const ListView: React.FC<IListView> = ({
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         renderItem={item => _renderItem(item)}
+        initialNumToRender={10}
         ItemSeparatorComponent={() =>
           renderItemSeparator
             ? renderItemSeparator()
             : renderDefaultItemSeparator()
         }
-        keyExtractor={(item, index) =>
-          _.uniqueId(`list-${item.displayName || ''}-${index}`)
-        }
+        keyExtractor={(item, index) => _.uniqueId(`list-${type}-${index}`)}
       />
     </View>
   );
@@ -90,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListView;
+export default React.memo(ListView);

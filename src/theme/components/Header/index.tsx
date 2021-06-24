@@ -18,6 +18,8 @@ import Text from '~/theme/components/Text';
 import spacing, {padding} from '~/theme/configs/spacing';
 import Icon from '../Icon';
 import icons from '~/constants/icons';
+import {IObject} from '~/interfaces/common';
+import {useTheme} from 'react-native-paper';
 
 export interface Props {
   title?: string;
@@ -28,7 +30,7 @@ export interface Props {
   leftPress?: () => void;
   leftIcon?: React.ReactNode;
   rightPress?: () => void;
-  rightIcon?: React.ReactNode;
+  rightIcon?: keyof typeof icons;
   middleComponent?: React.ReactNode;
   rightComponent?: React.ReactNode;
   leftComponent?: React.ReactNode;
@@ -50,18 +52,19 @@ const Header: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
+  const theme: IObject<any> = useTheme();
 
-  // const heightSafeArea = (insets: any) => ({
-  //   height: Platform.OS === 'android' ? 78 + insets.top : 44 + insets.top,
-  // });
+  const heightSafeArea = (insets: any) => ({
+    height: Platform.OS === 'android' ? 78 + insets.top : 60 + insets.top,
+  });
   const _goBack = () => {
     navigation.goBack();
   };
-  const styles = themeStyles(title);
+  const styles = themeStyles(theme, title);
   return (
     <View
       style={StyleSheet.flatten([
-        // heightSafeArea(insets),
+        heightSafeArea(insets),
         styles.container,
         containerStyle,
         isFullView && {paddingHorizontal: padding.large},
@@ -71,7 +74,8 @@ const Header: React.FC<Props> = ({
           <Icon
             onPress={isDefault ? _goBack : leftPress}
             style={isDefault ? styles.backStyle : {}}
-            icon={icons.iconBack}
+            size={16}
+            icon="iconBack"
           />
         ) : (
           leftIcon
@@ -87,7 +91,7 @@ const Header: React.FC<Props> = ({
         middleComponent
       ) : null}
       {rightIcon ? (
-        <TouchableOpacity onPress={rightPress}>{rightIcon}</TouchableOpacity>
+        <Icon icon={rightIcon} onPress={rightPress} />
       ) : rightComponent ? (
         rightComponent
       ) : isDefault ? (
@@ -97,7 +101,7 @@ const Header: React.FC<Props> = ({
   );
 };
 
-const themeStyles = (title: string | undefined) =>
+const themeStyles = (theme: IObject<any>, title: string | undefined) =>
   StyleSheet.create({
     container: {
       display: 'flex',
@@ -105,6 +109,7 @@ const themeStyles = (title: string | undefined) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       padding: spacing.padding.small,
+      backgroundColor: theme.colors.bgColor,
     },
     backStyle: {
       paddingLeft: 0,

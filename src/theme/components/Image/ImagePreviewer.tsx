@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   Modal,
   View,
-  Text,
   StyleProp,
   ViewStyle,
 } from 'react-native';

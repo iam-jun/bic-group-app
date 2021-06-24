@@ -49,6 +49,7 @@ const StackNavigator = () => {
           if (!Object.keys(screens).includes(stack.screen)) {
             return null;
           }
+
           return (
             <Stack.Screen
               key={'screen' + stack.screen}

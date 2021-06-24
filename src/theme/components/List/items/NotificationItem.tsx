@@ -18,7 +18,7 @@ const NotificationItem: React.FC<Props> = ({user, content, createdAt}) => {
   return (
     <View style={styles.container}>
       <HorizontalView>
-        <Avatar user={user} size={55} />
+        <Avatar user={user} size="base" />
 
         <View style={styles.content}>
           <Text style={styles.text} maxLength={120}>

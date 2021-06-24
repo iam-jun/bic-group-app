@@ -8,6 +8,8 @@ import {
 import Icon from '../../Icon';
 import ThemeView from '~/theme/components/ThemeView';
 import Text from '../../Text';
+import {IObject} from '~/interfaces/common';
+import {useTheme} from 'react-native-paper';
 
 export interface Props {
   name?: string;
@@ -15,8 +17,9 @@ export interface Props {
 }
 
 const TagItem: React.FC<Props> = ({name, onRemovePress}) => {
+  const theme: IObject<any> = useTheme();
   return (
-    <ThemeView style={[styles.container, styles.backgroundColor]}>
+    <ThemeView style={[styles.container, {backgroundColor: theme.colors.tag}]}>
       <Text primary={styles.textStyle} bold>
         {name}
       </Text>
@@ -45,9 +48,6 @@ const styles = StyleSheet.create({
   textStyle: {
     color: TEXT_COLOR,
     fontSize: 10,
-  },
-  backgroundColor: {
-    backgroundColor: BACKGROUND_COLOR,
   },
 });
 

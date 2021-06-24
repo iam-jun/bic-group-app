@@ -12,7 +12,7 @@ const SubscriptionGroupScreen = () => {
   const dispatch = useDispatch();
 
   return (
-    <ThemeView testID="SubscriptionScreen" isFullView colorSecondary>
+    <ThemeView testID="SubscriptionScreen" isFullView>
       <ListView
         type="group"
         data={groups}

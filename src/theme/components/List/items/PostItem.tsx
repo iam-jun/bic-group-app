@@ -10,7 +10,7 @@ import HorizontalListContent from '../HorizontalListContent';
 import ListView from '../ListView';
 import Markdown from '../../Text/Markdown';
 import {IObject} from '~/interfaces/common';
-import {margin, padding} from '~/theme/configs/spacing';
+import {borderRadius, margin, padding} from '~/theme/configs/spacing';
 
 const PostItem: React.FC<IObject<any>> = ({
   user,
@@ -77,8 +77,7 @@ const PostItem: React.FC<IObject<any>> = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 20,
-    marginVertical: 5,
+    borderRadius: borderRadius.large,
   },
   content: {
     marginBottom: margin.small,

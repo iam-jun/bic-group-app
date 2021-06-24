@@ -9,9 +9,9 @@ export const grey6 = '#777777';
 export const grey7 = '#383838';
 export const grey8 = '#1e1e1e';
 export const grey9 = '#2C2C2C';
-export const black = '#252D42';
+export const black = '#000';
 
-export const red = '#e60023';
+export const red = '#ff5148';
 export const orange = '#F2711C';
 export const yellow = '#FBBD08';
 export const olive = '#B5CC18';
@@ -22,14 +22,16 @@ export const violet = '#6435C9';
 export const purple = '#A333C8';
 export const pink = '#E03997';
 export const brown = '#A5673F';
+export const accent = '#6600cc';
+export const primary = '#220b3b';
 
 export default {
   dark: {
     colors: {
-      accent: '#bd48f4',
+      accent: '#6600cc',
       native: '#2A2C36',
       backdrop: 'rgba(0, 0, 0, 0.5)',
-      background: '#252D42',
+      background: grey7,
       disabled: 'rgba(255, 255, 255, 0.38)',
       error: '#E84D4B',
       lightRed: '#E84D4B',
@@ -38,14 +40,16 @@ export default {
       onSurface: '#FFFFFF',
       placeholder: 'rgba(255, 255, 255, 0.54)',
       primary: '#fff',
-      surface: '#1E1F28',
+      surface: black,
       text: '#FFFFFF',
-      bgColor: '#252d43',
+      bgColor: grey8,
       bgColorSecondary: '#220b3b',
       warning: yellow,
       innerButton: '#FFFFFF',
       buttonBackground: '#220b3b',
       hightLight: '#59bbc4',
+      textSecondary: '#7fe5f0',
+      tag: grey7,
       red,
       orange,
       yellow,
@@ -68,7 +72,7 @@ export default {
       grey9,
       black,
       //TabBar
-      tabBarBackground: '#1E1F28',
+      tabBarBackground: black,
       activeColor: '#F7F7F7',
       inactiveColor: grey6,
       // ViewLabel
@@ -82,9 +86,9 @@ export default {
       searchBg: '#303337',
       listItemBg: grey8,
       success: green,
-      divider: grey6,
+      divider: grey7,
       border: grey9,
-      icon: '#fff',
+      icon: grey7,
       avatar: '#b28a5c',
       platform: {
         ios: {
@@ -110,7 +114,7 @@ export default {
   },
   light: {
     colors: {
-      accent: '#bd48f4',
+      accent: '#6600cc',
       native: '#E5E5E5',
       backdrop: 'rgba(0, 0, 0, 0.5)',
       background: '#f6f6f6',
@@ -127,11 +131,13 @@ export default {
       bgColor: white,
       bgColorSecondary: '#f6f6f6',
       warning: yellow,
-      icon: '#2e1050',
+      icon: grey3,
       avatar: '#707f9f',
       innerButton: '#368C8B',
       buttonBackground: '#EBEAEC',
       hightLight: '#59bbc4',
+      tag: grey3,
+      textSecondary: '#00b9cf',
       red,
       orange,
       yellow,

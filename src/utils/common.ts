@@ -10,3 +10,7 @@ export const generateAvatar = (name?: string, color?: string) => {
     name?.toUpperCase() || ''
   }&background=${color || '4c95ff'}&color=fff&size=128`;
 };
+
+export function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

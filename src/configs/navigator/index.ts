@@ -5,8 +5,10 @@ export const rootSwitch = {
 };
 
 export const mainStack = {
-  drawer: 'Drawer',
+  // drawer: 'Drawer',
   bottomTabs: 'BottomTabs',
+  conversation: 'Conversation',
+  conversationDetail: 'ConversationDetail',
 };
 
 export const authStack = {
@@ -97,6 +99,30 @@ export const navigationSetting = {
         animationEnabled: true,
       },
     },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      router: mainStack.conversation,
+      screen: mainStack.conversation,
+      options: {
+        headerShown: false,
+        animationEnabled: true,
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      router: mainStack.conversationDetail,
+      screen: mainStack.conversationDetail,
+      options: {
+        headerShown: false,
+        animationEnabled: true,
+      },
+    },
   ],
 };
 
@@ -168,7 +194,7 @@ export const tabsSetting = {
       },
       name: {
         vi: 'Tin nhắn',
-        en: 'Message',
+        en: 'Chat',
       },
       screen: bottomTabs.chat,
       option: {

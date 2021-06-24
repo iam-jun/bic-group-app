@@ -3,6 +3,7 @@ import app from './app/reducer';
 import common from './common/reducer';
 import language from './language/reducer';
 import auth from './auth/reducer';
+import chat from './chat/reducer';
 
 /**
  * Root reducer
@@ -13,6 +14,7 @@ const rootReducers = combineReducers({
   common,
   language,
   auth,
+  chat,
 });
 
 export default rootReducers;

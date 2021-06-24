@@ -1,5 +1,17 @@
 import iconSearch from '../../assets/icons/icon_search.svg';
 import iconBack from '../../assets/icons/icon_back.svg';
+import iconReactionAngry from '../../assets/icons/icon_reaction_angry.svg';
+import iconReactionDislike from '../../assets/icons/icon_reaction_dislike.svg';
+import iconReactionHaha from '../../assets/icons/icon_reaction_haha.svg';
+import iconReactionLike from '../../assets/icons/icon_reaction_like.svg';
+import iconReactionLove from '../../assets/icons/icon_reaction_love.svg';
+import iconReactionSad from '../../assets/icons/icon_reaction_sad.svg';
+import iconReactionShocked from '../../assets/icons/icon_reaction_shocked.svg';
+import iconReactionSmile from '../../assets/icons/icon_reaction_smile.svg';
+import iconReply from '../../assets/icons/icon_reply.svg';
+import iconCopy from '../../assets/icons/icon_copy.svg';
+import iconReport from '../../assets/icons/icon_report.svg';
+import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 
 export default {
   iconAdd: {
@@ -83,5 +95,33 @@ export default {
   iconPinOutline: {
     type: 'MaterialCommunityIcons',
     name: 'pin-outline',
+  },
+  iconImageMultiple: {
+    type: 'MaterialCommunityIcons',
+    name: 'image-multiple',
+  },
+  iconAttachment: {
+    type: 'MaterialCommunityIcons',
+    name: 'attachment',
+  },
+  iconSend: {
+    type: 'MaterialCommunityIcons',
+    name: 'send',
+  },
+  iconReactionAngry,
+  iconReactionDislike,
+  iconReactionHaha,
+  iconReactionLike,
+  iconReactionLove,
+  iconReactionSad,
+  iconReactionShocked,
+  iconReactionSmile,
+  iconArrowDown,
+  iconReply,
+  iconCopy,
+  iconReport,
+  iconUserCircle: {
+    type: 'FontAwesome',
+    name: 'user-circle-o',
   },
 };

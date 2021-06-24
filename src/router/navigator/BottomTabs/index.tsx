@@ -8,6 +8,7 @@ import * as screens from '~/router/navigator/tab';
 import {tabsSetting} from '~/configs/navigator';
 
 import {IObject} from '~/interfaces/common';
+import {spacing} from '~/theme/configs';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +37,7 @@ const BottomTabs = () => {
         inactiveTintColor: inactiveColor,
         style: {
           backgroundColor: tabBarBackground,
-          paddingBottom: theme.spacing.padding.small,
+          paddingBottom: spacing.padding.small,
           // paddingBottom: theme.spacing.padding.large * 2,
           // height: theme.spacing.padding.big * 2,
         },
