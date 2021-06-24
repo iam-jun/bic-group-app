@@ -9,6 +9,8 @@ import rootSaga from './sagas';
 import createTransform from 'redux-persist/es/createTransform';
 import Flatted from 'flatted';
 
+import ReactotronConfig from '../ReactotronConfig'
+
 export const transformCircular = createTransform(
   (inboundState, key) => Flatted.stringify(inboundState),
   (outboundState, key) => Flatted.parse(outboundState),
@@ -24,12 +26,13 @@ const persistConfig = {
 
 // const composeEnhancers = !!process.env.ENV ||process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMonitor = ReactotronConfig.createSagaMonitor()
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default () => {
-  const enhancer = compose(applyMiddleware(sagaMiddleware));
+  const enhancer = compose(applyMiddleware(sagaMiddleware), ReactotronConfig.createEnhancer());
 
   const store = createStore(persistedReducer, enhancer);
   let persistor = persistStore(store);

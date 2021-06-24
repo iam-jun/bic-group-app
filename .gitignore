@@ -57,3 +57,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# for my personal AWS development
+amplify/*
+src/aws-exports.js

@@ -55,6 +55,20 @@ const babelLoaderConfiguration = {
   },
 };
 
+const compileRNNodeModules = [
+    'react-native-gifted-chat'
+].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
+
+const rnModulesLoaderConfiguration = {
+  test: /@?.*\.(ts|js)x?$/,
+  include: [
+    ...compileRNNodeModules,
+  ],
+  use: {
+    loader: 'babel-loader',
+  },
+};
+
 const svgLoaderConfiguration = {
   test: /\.svg$/,
   use: [
@@ -100,12 +114,17 @@ module.exports = {
       tests: ['./tests'],
       '~': path.resolve(__dirname, 'src'),
     },
+    fallback: {
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+    },
   },
   module: {
     rules: [
       babelLoaderConfiguration,
       imageLoaderConfiguration,
       svgLoaderConfiguration,
+      rnModulesLoaderConfiguration,
       // TODO: Remove the below rule for .mjs, once aws-amplify supports webpack 5
       {
         test: /\.m?js/,
