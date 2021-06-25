@@ -201,10 +201,12 @@ const ForgotPassword = () => {
               name="password"
               rules={{
                 required: t('auth:text_err_password_blank'),
-                pattern: {
-                  value: validation.passwordRegex,
-                  message: t('auth:text_err_password_format'),
-                },
+                min: 8,
+                max: 20,
+                // pattern: {
+                //   value: validation.passwordRegex,
+                //   message: t('auth:text_err_password_format'),
+                // },
               }}
               defaultValue=""
             />
