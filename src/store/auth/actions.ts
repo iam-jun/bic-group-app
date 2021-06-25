@@ -103,3 +103,10 @@ export function checkAuthState() {
     type: actions.CHECK_AUTH_STATE,
   };
 }
+
+export function setLoading(payload: boolean) {
+  return {
+    type: actions.SET_LOADING,
+    payload,
+  };
+}

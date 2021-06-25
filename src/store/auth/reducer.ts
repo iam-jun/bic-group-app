@@ -14,10 +14,10 @@ export const initState = {
 function authReducer(state = initState, action: any = {}) {
   const {type} = action;
   switch (type) {
-    case actions.SIGN_IN:
+    case actions.SET_LOADING:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case actions.SET_USER:
       return {

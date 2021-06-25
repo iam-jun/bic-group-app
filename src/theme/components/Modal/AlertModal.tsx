@@ -9,6 +9,11 @@ import {borderRadius, margin, padding} from '~/theme/configs/spacing';
 import Text from '../Text/index';
 import {sizes} from '~/theme/configs/dimension';
 import ThemeView from '../ThemeView/';
+import Divider from '../Divider';
+import {convertMultiLanguage} from '~/utils/language';
+import ViewSpacing from '../ViewSpacing';
+
+const languages = convertMultiLanguage();
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -27,15 +32,17 @@ const AlertModal: React.FC<Props> = props => {
   return (
     <Modal
       visible={visible}
-      contentContainerStyle={styles.containerStyle}
+      contentContainerStyle={styles.modal}
       dismissable={dismissable}
       style={StyleSheet.flatten([style && style])}
       {...rest}>
-      <ThemeView testID="alertModal">
-        <Text style={styles.textCenter} h3>
+      <ThemeView testID="alertModal" style={styles.container}>
+        <Text style={styles.title} h4 bold>
           {title && title}
         </Text>
-        <Text style={styles.textCenter}>{content}</Text>
+        <Divider />
+        <ViewSpacing height={margin.base} />
+        <Text style={styles.content}>{content}</Text>
         <View style={styles.displayBtn}>
           {cancelBtn && (
             <Text
@@ -45,7 +52,7 @@ const AlertModal: React.FC<Props> = props => {
                 dispatch(actions.hideAlert());
                 onCancel && onCancel();
               }}>
-              Cancel
+              {languages.common.btn_cancel}
             </Text>
           )}
           <Text
@@ -55,7 +62,7 @@ const AlertModal: React.FC<Props> = props => {
               dispatch(actions.hideAlert());
               onConfirm && onConfirm();
             }}>
-            Confirm
+            {languages.common.text_ok}
           </Text>
         </View>
       </ThemeView>
@@ -65,19 +72,25 @@ const AlertModal: React.FC<Props> = props => {
 
 const themeStyles = () => {
   return StyleSheet.create({
-    containerStyle: {
-      padding: padding.small,
+    modal: {
+      marginHorizontal: margin.large,
+    },
+    container: {
       borderRadius: borderRadius.small,
-      marginHorizontal: margin.base,
     },
     displayBtn: {
       flexDirection: 'row-reverse',
     },
-    textCenter: {
+    title: {
       textAlign: 'center',
+      marginVertical: margin.base,
+    },
+    content: {
+      marginHorizontal: margin.base,
     },
     textBtn: {
       paddingRight: padding.small,
+      marginVertical: margin.base,
       fontWeight: '600',
       fontSize: sizes.h4,
     },

@@ -10,8 +10,9 @@
     "text_see_all": "See all",
     "btn_cancel": "Cancel",
     "btn_next": "Next",
-    "btn_confirm": "Confirm"
-  },
+    "btn_confirm": "Confirm",
+    "text_ok":"OK"
+    },
   "auth": {
     "text_sign_in": "Sign In",
     "text_sign_up": "Sign Up",

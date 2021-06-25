@@ -7,7 +7,7 @@ import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme/configs';
 
 export interface TextInputProps extends Partial<_TextInputProps> {
-  helperType: 'info' | 'error';
+  helperType?: 'info' | 'error';
   helperVisible?: boolean;
   helperPadding?: 'normal' | 'none';
   helperContent?: string;
@@ -54,12 +54,14 @@ const Input: React.FC<TextInputProps> = ({
         }}
         {...props}
       />
-      <HelperText
-        testID={helperTestID}
-        type={helperType}
-        visible={helperVisible}>
-        {helperContent}
-      </HelperText>
+      {helperType && (
+        <HelperText
+          testID={helperTestID}
+          type={helperType}
+          visible={helperVisible}>
+          {helperContent}
+        </HelperText>
+      )}
     </View>
   );
 };
@@ -67,6 +69,7 @@ const Input: React.FC<TextInputProps> = ({
 Input.defaultProps = {
   mode: 'outlined',
   helperType: 'info',
+  roundness: 'small',
 };
 
 export default Input;
