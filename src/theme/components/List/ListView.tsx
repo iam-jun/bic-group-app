@@ -12,6 +12,7 @@ import items from './items';
 import ViewSpacing from '../ViewSpacing';
 import Text from '../Text';
 import {margin} from '~/theme/configs/spacing';
+import loadings from '../Loading';
 
 export interface IListView {
   data?: Array<any>;
@@ -44,6 +45,7 @@ const ListView: React.FC<IListView> = ({
       obj[key];
 
   const Component = getKeyValue(items)(type);
+  const Loading = getKeyValue(loadings)(type);
 
   const _renderItem = ({item}: {item: any}) => {
     return (
@@ -61,7 +63,19 @@ const ListView: React.FC<IListView> = ({
   );
 
   if (loading) {
-    return <ActivityIndicator />;
+    return (
+      <View style={{marginTop: 8}}>
+        {Loading ? (
+          <View>
+            {Array.from(Array(10).keys()).map(item => (
+              <Loading />
+            ))}
+          </View>
+        ) : (
+          <ActivityIndicator />
+        )}
+      </View>
+    );
   }
 
   return (

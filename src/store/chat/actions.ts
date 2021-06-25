@@ -6,6 +6,10 @@ export const selectConversation = (payload: IConversation) => ({
   payload,
 });
 
+export const getMessages = () => ({
+  type: Actions.GET_MESSAGES,
+});
+
 export const setMessages = (payload: IMessage[]) => ({
   type: Actions.SET_MESSAGES,
   payload,
@@ -14,4 +18,10 @@ export const setMessages = (payload: IMessage[]) => ({
 export const sendMessage = (payload: IMessage) => ({
   type: Actions.SEND_MESSAGE,
   payload,
+});
+
+export const reactMessage = (message?: IMessage, reactionType?: string) => ({
+  type: Actions.REACT_MESSAGE,
+  message,
+  reactionType,
 });

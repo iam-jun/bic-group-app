@@ -1,11 +1,10 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {Bubble, BubbleProps} from 'react-native-gifted-chat';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/store/chat/interfaces';
-import {spacing} from '~/theme/configs';
 import {sizes} from '~/theme/configs/dimension';
 
 const ChatBubble: React.FC<BubbleProps<IMessage>> = props => {
@@ -17,20 +16,18 @@ const ChatBubble: React.FC<BubbleProps<IMessage>> = props => {
     <TouchableWithoutFeedback
       delayLongPress={200}
       onLongPress={() => onLongPress && onLongPress(props.currentMessage)}>
-      <View>
-        <Bubble
-          {...props}
-          onLongPress={() => {}}
-          textStyle={{
-            left: styles.text,
-            right: styles.text,
-          }}
-          wrapperStyle={{
-            left: styles.bubbleWrapper,
-            right: styles.bubbleWrapper,
-          }}
-        />
-      </View>
+      <Bubble
+        {...props}
+        onLongPress={() => {}}
+        textStyle={{
+          left: styles.text,
+          right: styles.text,
+        }}
+        wrapperStyle={{
+          left: styles.bubbleWrapper,
+          right: styles.bubbleWrapper,
+        }}
+      />
     </TouchableWithoutFeedback>
   );
 };
@@ -43,6 +40,10 @@ const createStyles = (theme: IObject<any>) => {
       color: colors.text,
     },
     bubbleWrapper: {
+      width: '90%',
+      flexShrink: 1,
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
       backgroundColor: 'transparent',
       marginStart: 40,
     },

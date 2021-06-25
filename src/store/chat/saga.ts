@@ -15,9 +15,14 @@ import {IObject} from '~/interfaces/common';
 
 export default function* saga() {
   yield takeLatest(types.SELECT_CONVERSATION, selectConversation);
+  yield takeLatest(types.GET_MESSAGES, getMessages);
 }
 
 function* selectConversation() {
+  yield put(actions.getMessages());
+}
+
+function* getMessages() {
   try {
     const state: IObject<any> = yield select();
     const {chat} = state;
@@ -26,7 +31,7 @@ function* selectConversation() {
     yield timeout(1000);
     yield put(actions.setMessages(messages(chat.conversation)));
   } catch (err) {
-    console.log('getConfigs', {err});
+    console.log('getMessages', {err});
   } finally {
   }
 }

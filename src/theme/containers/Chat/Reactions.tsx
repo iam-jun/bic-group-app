@@ -20,20 +20,22 @@ const Reactions: React.FC<Props> = ({data, onPress}) => {
 
   return (
     <View style={styles.container}>
-      {data.map((item: IReaction) => {
-        return (
-          <Icon
-            key={`reaction-${generateUniqueId()}-${item?.type}`}
-            onPress={() => onPress(item)}
-            isButton
-            icon={
-              reactionsIcons[item?.type as keyof typeof reactionsIcons]?.icon
-            }
-            label={`${item.count}`}
-            style={styles.icon}
-          />
-        );
-      })}
+      {data
+        .filter(item => item.count > 0)
+        .map((item: IReaction) => {
+          return (
+            <Icon
+              key={`reaction-${generateUniqueId()}-${item?.type}`}
+              onPress={() => onPress(item)}
+              isButton
+              icon={
+                reactionsIcons[item?.type as keyof typeof reactionsIcons]?.icon
+              }
+              label={`${item.count}`}
+              style={styles.icon}
+            />
+          );
+        })}
     </View>
   );
 };

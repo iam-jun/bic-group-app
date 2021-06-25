@@ -1,15 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {
   Composer,
-  ComposerProps,
   InputToolbar,
   InputToolbarProps,
   Send,
-  SendProps,
 } from 'react-native-gifted-chat';
 import {useTheme} from 'react-native-paper';
-import icons from '~/constants/icons';
 import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/store/chat/interfaces';
 import Icon from '~/theme/components/Icon';
@@ -27,35 +24,53 @@ export const ChatInput = (
   const theme: IObject<any> = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme);
+  const [actionsVisible, setActionVisible] = useState(true);
+
+  const renderActions = () =>
+    actionsVisible ? (
+      <View style={styles.actions}>
+        <Icon
+          tintColor={colors.black}
+          isButton
+          size={16}
+          icon="iconImageMultiple"
+          onPress={props.openImagePicker}
+        />
+        <Icon
+          style={styles.icon}
+          tintColor={colors.black}
+          isButton
+          size={16}
+          icon="iconAttachment"
+          onPress={props.openFilePicker}
+        />
+      </View>
+    ) : (
+      <View style={styles.actions}>
+        <Icon
+          style={styles.icon}
+          tintColor={colors.black}
+          size={16}
+          icon="iconBack"
+          onPress={() => setActionVisible(true)}
+        />
+      </View>
+    );
 
   return (
     <InputToolbar
       {...props}
       containerStyle={styles.inputToolbar}
-      renderActions={() => (
-        <View style={styles.actions}>
-          <Icon
-            fill={colors.grey4}
-            isButton
-            size={16}
-            icon="iconImageMultiple"
-            onPress={props.openImagePicker}
-          />
-          <Icon
-            style={styles.icon}
-            fill={colors.grey4}
-            isButton
-            size={16}
-            icon="iconAttachment"
-            onPress={props.openFilePicker}
-          />
-        </View>
-      )}
+      renderActions={renderActions}
       renderComposer={composerProps => (
         <View style={styles.composerWrapper}>
           <Composer
             {...composerProps}
             textInputStyle={styles.composer}
+            onTextChanged={text => {
+              composerProps.onTextChanged && composerProps.onTextChanged(text);
+              actionsVisible && setActionVisible(false);
+            }}
             textInputProps={{
               ...composerProps.textInputProps,
               // for enabling the Return key to send a message only on web
@@ -75,12 +90,7 @@ export const ChatInput = (
       renderSend={props => {
         return (
           <Send {...props} containerStyle={styles.iconSend}>
-            <Icon
-              icon="iconSend"
-              isButton
-              fill={colors.white}
-              backgroundColor={colors.accent}
-            />
+            <Icon icon="iconSend" size={20} tintColor={colors.accent} />
           </Send>
         );
       }}
@@ -96,25 +106,19 @@ const createStyles = (theme: IObject<any>) => {
       alignSelf: 'center',
     },
     icon: {
-      marginStart: spacing.margin.small,
+      marginStart: spacing.margin.base,
     },
     inputToolbar: {
-      padding: spacing.padding.small,
-      justifyContent: 'center',
+      paddingHorizontal: spacing.padding.base,
       backgroundColor: colors.bgColor,
+      borderTopColor: colors.divider,
     },
     composerWrapper: {
       flex: 1,
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginHorizontal: spacing.margin.small,
       borderRadius: spacing.borderRadius.base,
-      backgroundColor: colors.background,
     },
     composer: {
-      paddingVertical: spacing.padding.small,
-      paddingEnd: spacing.padding.small,
       fontSize: sizes.base,
       color: colors.text,
     },
@@ -122,6 +126,8 @@ const createStyles = (theme: IObject<any>) => {
       height: 34,
       alignItems: 'center',
       justifyContent: 'center',
+      marginStart: spacing.margin.base,
+      marginBottom: spacing.margin.base,
     },
   });
 };

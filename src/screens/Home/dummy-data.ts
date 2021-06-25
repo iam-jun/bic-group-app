@@ -43,10 +43,10 @@ export const data = [
   {
     id: 'xnfd7914kwsn',
     coverUrl:
-      'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.0-9/156921133_3976904865695032_111089070051332292_o.jpg?_nc_cat=105&ccb=1-3&_nc_sid=825194&_nc_ohc=yyqQ7jZS3jsAX9k1OnM&_nc_ht=scontent.fvca1-1.fna&oh=905474c18789572b6ec6574cbb44ce3d&oe=606CC497',
+      'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/198121970_2937709076504238_8644783693742115187_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=b9115d&_nc_ohc=X9ZNb9Fzr9gAX9KYTta&tn=Y4tohtL7UvYydNvj&_nc_ht=scontent.fvca1-1.fna&oh=0f5fbe2fe5de39f82560c07db0bb7362&oe=60D93959',
     media: {
       type: 'image',
-      uri: 'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.0-9/156921133_3976904865695032_111089070051332292_o.jpg?_nc_cat=105&ccb=1-3&_nc_sid=825194&_nc_ohc=yyqQ7jZS3jsAX9k1OnM&_nc_ht=scontent.fvca1-1.fna&oh=905474c18789572b6ec6574cbb44ce3d&oe=606CC497',
+      uri: 'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/198121970_2937709076504238_8644783693742115187_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=b9115d&_nc_ohc=X9ZNb9Fzr9gAX9KYTta&tn=Y4tohtL7UvYydNvj&_nc_ht=scontent.fvca1-1.fna&oh=0f5fbe2fe5de39f82560c07db0bb7362&oe=60D93959',
       isLoading: false,
       percentage: undefined,
     },

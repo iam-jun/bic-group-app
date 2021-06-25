@@ -36,6 +36,7 @@ const Avatar: React.FC<Props> = ({
     return (
       <RNPAvatar.Image
         {...props}
+        style={[styles.container, style]}
         size={sizes[size]}
         source={{uri: _user.avatar}}
       />

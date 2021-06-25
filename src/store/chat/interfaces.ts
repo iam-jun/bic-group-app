@@ -3,6 +3,7 @@ import {IUser} from '../auth/interfaces';
 export interface IReaction {
   type: string;
   count: number;
+  reacted?: boolean;
 }
 
 export type GMessage = _GMessage;
@@ -15,6 +16,7 @@ export type IAttachment = {
 };
 
 export type IMessage = _GMessage & {
+  id: string | number;
   user: IUser;
   quoted_message?: IMessage;
   reactions?: IReaction[];

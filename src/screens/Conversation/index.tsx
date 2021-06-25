@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import {GiftedChat, IMessage} from 'react-native-gifted-chat';
+import {GiftedChat} from 'react-native-gifted-chat';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
@@ -20,6 +20,10 @@ import {useDispatch} from 'react-redux';
 import * as actions from '~/store/chat/actions';
 import {useBaseHook} from '~/hooks';
 import {mainStack} from '~/configs/navigator';
+import {spacing} from '~/theme/configs';
+import {GMessage, IMessage} from '~/store/chat/interfaces';
+import {default as LoadingMessage} from '~/theme/components/Loading/Message';
+import {generateUniqueId} from '~/utils/generation';
 
 const Conversation = () => {
   // const [messages, setMessages] = useState<IMessage[]>([]);
@@ -55,6 +59,8 @@ const Conversation = () => {
   };
 
   const onReactionPress = async (type: string) => {
+    dispatch(actions.reactMessage(selectedMessage, type));
+
     messageOptionsModalRef.current?.close();
   };
 
@@ -67,16 +73,17 @@ const Conversation = () => {
     messageOptionsModalRef.current?.close();
   };
 
-  const onSend = useCallback((messages = []) => {
+  const onSend = (messages: GMessage[] = []) => {
     dispatch(
       actions.sendMessage({
         ...messages[0],
+        id: messages[0]._id,
         quoted_message: replyingMessage,
         user,
       }),
     );
     setReplyingMessage(undefined);
-  }, []);
+  };
 
   const goConversationDetail = () => {
     navigation.navigate(mainStack.conversationDetail);
@@ -91,37 +98,42 @@ const Conversation = () => {
         rightIcon="iconOptions"
         rightPress={goConversationDetail}
       />
-      <GiftedChat
-        messages={messages}
-        onSend={messages => onSend(messages)}
-        user={{
-          _id: 1,
-        }}
-        scrollToBottom={true}
-        keyboardShouldPersistTaps="handled"
-        onLongPress={showOptions}
-        renderTime={() => null}
-        renderMessage={props => <MessageContainer {...props} />}
-        messagesContainerStyle={styles.messagesContainer}
-        renderInputToolbar={props => (
-          <ChatInput
-            {...props}
-            onEnterPress={text =>
-              props.onSend && props.onSend({text: text.trim()}, true)
-            }
-            openImagePicker={_openImagePicker}
-            openFilePicker={_openFilePicker}
-          />
-        )}
-        renderChatFooter={() => {
-          return (
-            <ChatFooter
-              replyingMessage={replyingMessage}
-              onCancel={() => setReplyingMessage(undefined)}
+      {messages.loading ? (
+        Array.from(Array(20).keys()).map(() => (
+          <LoadingMessage key={generateUniqueId()} />
+        ))
+      ) : (
+        <GiftedChat
+          messages={messages.data}
+          onSend={messages => onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+          scrollToBottom={true}
+          keyboardShouldPersistTaps="handled"
+          onLongPress={showOptions}
+          renderTime={() => null}
+          renderMessage={props => <MessageContainer {...props} />}
+          renderInputToolbar={props => (
+            <ChatInput
+              {...props}
+              onEnterPress={text =>
+                props.onSend && props.onSend({text: text.trim()}, true)
+              }
+              openImagePicker={_openImagePicker}
+              openFilePicker={_openFilePicker}
             />
-          );
-        }}
-      />
+          )}
+          renderChatFooter={() => {
+            return (
+              <ChatFooter
+                replyingMessage={replyingMessage}
+                onCancel={() => setReplyingMessage(undefined)}
+              />
+            );
+          }}
+        />
+      )}
       <MessageOptionsModal
         modalRef={messageOptionsModalRef}
         onMenuPress={onMenuPress}
@@ -137,9 +149,6 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-    },
-    messagesContainer: {
-      paddingBottom: 24,
     },
   });
 };
