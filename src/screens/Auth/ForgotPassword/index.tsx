@@ -19,12 +19,15 @@ import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/utils/validation';
 import PrimaryButton from '~/theme/components/Button/primary';
+import useAuth from '~/hooks/auth';
+import TransparentButton from '~/theme/components/Button/transparent';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState(1);
   const theme: IObject<any> = useTheme();
   const {t} = useBaseHook();
+  const {loading} = useAuth();
   const styles = themeStyles(theme);
   const {
     control,
@@ -112,6 +115,7 @@ const ForgotPassword = () => {
                   placeholder={t('auth:input_label_email')}
                   autoCapitalize="none"
                   value={value}
+                  editable={!loading}
                   error={errors.email}
                   onChangeText={text => {
                     onChange(text);
@@ -136,7 +140,8 @@ const ForgotPassword = () => {
             <ViewSpacing height={80} />
             <PrimaryButton
               testID="btnSend"
-              disabled={sendEmailDisable}
+              disabled={sendEmailDisable || loading}
+              loading={loading}
               title={t('auth:btn_send')}
               onPress={forgotPassword}
             />
@@ -153,6 +158,7 @@ const ForgotPassword = () => {
                   placeholder={t('auth:input_label_code')}
                   error={errors.code}
                   value={value}
+                  editable={!loading}
                   onChangeText={text => {
                     onChange(text.trim());
                     validateCode();
@@ -182,6 +188,7 @@ const ForgotPassword = () => {
                   placeholder={t('auth:input_label_password')}
                   error={errors.password}
                   value={value}
+                  editable={!loading}
                   onChangeText={text => {
                     onChange(text);
                     validatePassword();
@@ -204,16 +211,18 @@ const ForgotPassword = () => {
 
             <PrimaryButton
               testID="btnChangePassword"
-              disabled={changePasswordDisable}
+              disabled={changePasswordDisable || loading}
+              loading={loading}
               title={t('auth:btn_send')}
               onPress={changePassword}
             />
           </>
         )}
         <ViewSpacing height={20} />
-        <Text onPress={() => refNavigator.navigate(authStack.login)}>
-          {t('auth:navigate_sign_in')}
-        </Text>
+        <TransparentButton
+          onPress={() => refNavigator.navigate(authStack.login)}
+          title={t('auth:navigate_sign_in')}
+        />
       </Container>
     </ThemeView>
   );

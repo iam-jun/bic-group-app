@@ -33,6 +33,7 @@ const languages = convertMultiLanguage();
 
 function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
   try {
+    yield put(actions.setLoading(true));
     const {email, password} = payload;
     const userResponse: IObject<any> = yield Auth.signIn(email, password);
     const user = {
@@ -41,8 +42,11 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
     };
     yield storage.setUser(user);
     yield put(actions.setUser(user));
+    yield put(actions.setLoading(false));
+
     refNavigator.replace(rootSwitch.mainStack);
   } catch (err) {
+    yield put(actions.setLoading(false));
     yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
@@ -58,6 +62,8 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
 function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
   const {username, email, password} = payload;
   try {
+    yield put(actions.setLoading(true));
+
     const response: IAuth.ISignUpResponse = yield Auth.signUp({
       username: email,
       password,
@@ -66,7 +72,9 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
         name: username,
       },
     });
-    if (response)
+    if (response) {
+      yield put(actions.setLoading(false));
+
       yield put(
         actionsCommon.showAlert({
           title: languages.auth.text_title_success,
@@ -74,7 +82,10 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
           onConfirm: () => refNavigator.navigate(authStack.login),
         }),
       );
+    }
   } catch (err) {
+    yield put(actions.setLoading(false));
+
     yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
@@ -87,9 +98,15 @@ function* forgotPassword({
 }) {
   const {email, callback} = payload;
   try {
+    yield put(actions.setLoading(true));
+
     yield Auth.forgotPassword(email);
+    yield put(actions.setLoading(false));
+
     callback();
   } catch (err) {
+    yield put(actions.setLoading(false));
+
     yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }
@@ -102,7 +119,11 @@ function* forgotPasswordSubmit({
 }) {
   const {code, email, password} = payload;
   try {
+    yield put(actions.setLoading(true));
+
     yield Auth.forgotPasswordSubmit(email, code, password);
+    yield put(actions.setLoading(false));
+
     yield put(
       actionsCommon.showAlert({
         title: languages.auth.text_title_success,
@@ -113,6 +134,8 @@ function* forgotPasswordSubmit({
       }),
     );
   } catch (err) {
+    yield put(actions.setLoading(false));
+
     yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
   }
 }

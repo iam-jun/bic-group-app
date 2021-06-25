@@ -16,8 +16,10 @@ export const messages = (conversation: IConversation) => {
 };
 
 export const generateMessage = (members?: IUser[]) => {
+  const uid = generateUniqueId();
   return {
-    _id: generateUniqueId(),
+    _id: uid,
+    id: uid,
     text: generateRandomWords(),
     user: members
       ? members[getRandomInt(0, members?.length)]

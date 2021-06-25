@@ -21,6 +21,7 @@ import images from '~/constants/images';
 import PrimaryButton from '~/theme/components/Button/primary';
 import Text from '~/theme/components/Text';
 import useAuth from '~/hooks/auth';
+import TransparentButton from '~/theme/components/Button/transparent';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ const SignIn = () => {
               placeholder={t('auth:input_label_email')}
               autoCapitalize="none"
               secondaryBackground
+              editable={!loading}
               value={value}
               error={errors.email}
               onChangeText={text => {
@@ -100,9 +102,8 @@ const SignIn = () => {
             },
           }}
           name="email"
-          defaultValue={__DEV__ ? 'evol@mailinator.com' : ''}
+          defaultValue={__DEV__ && 'evol@mailinator.com'}
         />
-
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
@@ -112,6 +113,7 @@ const SignIn = () => {
               placeholder={t('auth:input_label_password')}
               secondaryBackground
               error={errors.password}
+              editable={!loading}
               value={value}
               onChangeText={text => {
                 onChange(text);
@@ -124,19 +126,20 @@ const SignIn = () => {
           )}
           name="password"
           rules={{required: t('auth:text_err_password_blank')}}
-          defaultValue={__DEV__ ? 'ABCxyz123@' : ''}
+          defaultValue={__DEV__ && 'ABCxyz123@'}
         />
-        <Text
+        <TransparentButton
           testID="textSignup"
-          onPress={() => refNavigator.navigate(authStack.signup)}>
-          {t('auth:navigate_sign_up')}
-        </Text>
-        <Text
+          title={t('auth:navigate_sign_up')}
+          onPress={() => refNavigator.navigate(authStack.signup)}
+        />
+        <ViewSpacing height={spacing.margin.base} />
+        <TransparentButton
           testID="textForgotpassword"
-          onPress={() => refNavigator.navigate(authStack.forgotpassword)}>
-          {t('auth:text_forgot_password')}
-        </Text>
-        <ViewSpacing height={40} />
+          title={t('auth:text_forgot_password')}
+          onPress={() => refNavigator.navigate(authStack.forgotpassword)}
+        />
+        <ViewSpacing height={spacing.margin.big} />
         <PrimaryButton
           testID="btnLogin"
           style={styles.button}

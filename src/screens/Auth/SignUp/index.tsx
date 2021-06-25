@@ -19,6 +19,8 @@ import * as validation from '~/utils/validation';
 import * as actionsCommon from '~/store/common/actions';
 import {ISignUpResponse} from '~/store/auth/interfaces';
 import PrimaryButton from '~/theme/components/Button/primary';
+import TransparentButton from '~/theme/components/Button/transparent';
+import useAuth from '~/hooks/auth';
 
 const SignUp = (props: any) => {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ const SignUp = (props: any) => {
   const theme: IObject<any> = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
+  const {loading} = useAuth();
 
   const onSubmit = async () => {
     const email: string = getValues('email');
@@ -98,6 +101,7 @@ const SignUp = (props: any) => {
               placeholder={t('auth:input_label_username')}
               autoCapitalize="none"
               value={value}
+              editable={!loading}
               error={errors.username}
               onChangeText={text => onUsernameChange(text, onChange)}
               helperType="error"
@@ -120,6 +124,7 @@ const SignUp = (props: any) => {
               autoCapitalize="none"
               keyboardType="email-address"
               value={value}
+              editable={!loading}
               error={errors.email}
               onChangeText={text => {
                 onChange(text);
@@ -138,7 +143,6 @@ const SignUp = (props: any) => {
             },
           }}
           name="email"
-          defaultValue=""
         />
 
         <Controller
@@ -149,6 +153,7 @@ const SignUp = (props: any) => {
               label={t('auth:input_label_password')}
               placeholder={t('auth:input_label_password')}
               error={errors.password}
+              editable={!loading}
               value={value}
               onChangeText={text => {
                 onChange(text);
@@ -167,17 +172,18 @@ const SignUp = (props: any) => {
               message: t('auth:text_err_password_format'),
             },
           }}
-          defaultValue=""
         />
-        <Text
+        <ViewSpacing height={spacing.margin.base} />
+        <TransparentButton
           testID="textSignin"
-          onPress={() => refNavigator.navigate(authStack.login)}>
-          {t('auth:navigate_sign_in')}
-        </Text>
+          title={t('auth:navigate_sign_in')}
+          onPress={() => refNavigator.navigate(authStack.login)}
+        />
         <ViewSpacing height={80} />
         <PrimaryButton
           testID="btnSignUp"
-          disabled={disableBtn}
+          disabled={disableBtn || loading}
+          loading={loading}
           title={t('auth:btn_sign_up')}
           onPress={onSubmit}
         />
