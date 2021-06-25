@@ -1,8 +1,14 @@
+import {reactionType} from './../../theme/components/List/items/ContentItem';
 import * as types from './constants';
+import {messages} from './dummy';
+import {IMessage, IReaction} from './interfaces';
 
 export const initState = {
   conversation: {},
-  messages: [],
+  messages: {
+    loading: false,
+    data: [],
+  },
 };
 
 /**
@@ -24,21 +30,72 @@ function reducer(state = initState, action: any = {}) {
           ...action.payload,
         },
       };
+    case types.GET_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          loading: true,
+        },
+      };
     case types.SET_MESSAGES:
       return {
         ...state,
-        messages: action.payload,
+        messages: {
+          ...messages,
+          loading: false,
+          data: action.payload,
+        },
       };
     case types.SEND_MESSAGE:
       return {
         ...state,
-        messages: [
-          {
-            ...action.payload,
-            pending: true,
-          },
+        messages: {
           ...messages,
-        ],
+          data: [
+            {
+              ...action.payload,
+              pending: true,
+            },
+            ...messages.data,
+          ],
+        },
+      };
+    case types.REACT_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((message: IMessage) =>
+            message.id === action.message.id
+              ? {
+                  ...message,
+                  reactions: (message?.reactions || []).find(
+                    item => item.type === action.reactionType,
+                  )
+                    ? (message.reactions || []).map((reaction: IReaction) =>
+                        reaction.type === action.reactionType
+                          ? {
+                              ...reaction,
+                              reacted: !reaction.reacted,
+                              count: reaction.reacted // TODO: The count number should be return by API
+                                ? reaction.count - 1
+                                : reaction.count + 1,
+                            }
+                          : reaction,
+                      )
+                    : [
+                        ...(message.reactions || []),
+                        {
+                          type: action.reactionType,
+                          count: 1,
+                          reacted: true,
+                        },
+                      ],
+                }
+              : message,
+          ),
+        },
       };
     default:
       return state;

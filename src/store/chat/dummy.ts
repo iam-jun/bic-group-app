@@ -16,7 +16,6 @@ export const messages = (conversation: IConversation) => {
 };
 
 export const generateMessage = (members?: IUser[]) => {
-  const index = getRandomInt(1, members?.length);
   return {
     _id: generateUniqueId(),
     text: generateRandomWords(),

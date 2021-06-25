@@ -17,7 +17,7 @@ import {IMessage} from '~/store/chat/interfaces';
 const MessageContainer: React.FC<MessageProps<IMessage>> = props => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {currentMessage, previousMessage} = props;
+  const {currentMessage, previousMessage, nextMessage} = props;
 
   var sameUserInPrevMessage =
     isSameUser(currentMessage || ({} as IMessage), previousMessage) &&
@@ -58,6 +58,7 @@ const MessageContainer: React.FC<MessageProps<IMessage>> = props => {
           <Reactions data={reactions} onPress={() => {}} />
         )}
       </View>
+      {!nextMessage && <ViewSpacing height={spacing.margin.large} />}
     </View>
   );
 };
@@ -67,6 +68,7 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
+      paddingBottom: spacing.padding.base,
     },
     viewHeader: {
       flexDirection: 'row',
