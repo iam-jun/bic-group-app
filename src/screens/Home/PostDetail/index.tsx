@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
-import {ThemeView} from '~/theme/components';
+import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+
+import InputToolbar from '~/theme/components/Input/InputToolbar';
 import ContentItem from '~/theme/components/List/items/ContentItem';
 import ListView from '~/theme/components/List/ListView';
 import {spacing} from '~/theme/configs';
@@ -11,16 +12,20 @@ import {post} from './dummy-post-data';
 // Temp: using dummy data to show post detail
 const PostDetailScreen = () => {
   return (
-    <ThemeView isFullView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={90}
+      style={styles.container}>
       <ListView
-        contentContainerStyle={styles.comment}
+        style={styles.comment}
         type="comment"
         data={commentData}
         ListHeaderComponent={
           <ContentItem {...post} maxLength={-1} showBackButton={true} />
         }
       />
-    </ThemeView>
+      <InputToolbar />
+    </KeyboardAvoidingView>
   );
 };
 
@@ -30,6 +35,7 @@ const styles = StyleSheet.create({
   },
   comment: {
     paddingTop: spacing.padding.base,
+    marginBottom: 60,
   },
 });
 

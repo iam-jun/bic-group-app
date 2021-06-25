@@ -40,7 +40,10 @@ const CommentItem: React.FC<Props> = ({
   return (
     <View style={[styles.container, style]}>
       <HorizontalView>
-        <Avatar user={user} />
+        <Avatar
+          user={user}
+          size={replyCount && replyCount > 0 ? 'base' : 'small'}
+        />
         <View style={styles.content}>
           <TouchableOpacity delayLongPress={1000}>
             <View style={styles.header}>

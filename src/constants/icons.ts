@@ -124,4 +124,12 @@ export default {
     type: 'FontAwesome',
     name: 'user-circle-o',
   },
+  iconCamera: {
+    type: 'MaterialCommunityIcons',
+    name: 'camera',
+  },
+  iconEmoji: {
+    type: 'SimpleLineIcons',
+    name: 'emotsmile',
+  },
 };
