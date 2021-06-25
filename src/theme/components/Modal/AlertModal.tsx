@@ -5,10 +5,10 @@ import {Modal} from 'react-native-paper';
 
 import {IObject} from '~/interfaces/common';
 import * as actions from '~/store/common/actions';
-import {white} from '~/theme/configs/colors';
 import {borderRadius, margin, padding} from '~/theme/configs/spacing';
 import Text from '../Text/index';
 import {sizes} from '~/theme/configs/dimension';
+import ThemeView from '../ThemeView/';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -31,7 +31,7 @@ const AlertModal: React.FC<Props> = props => {
       dismissable={dismissable}
       style={StyleSheet.flatten([style && style])}
       {...rest}>
-      <View testID="alertModal">
+      <ThemeView testID="alertModal">
         <Text style={styles.textCenter} h3>
           {title && title}
         </Text>
@@ -58,7 +58,7 @@ const AlertModal: React.FC<Props> = props => {
             Confirm
           </Text>
         </View>
-      </View>
+      </ThemeView>
     </Modal>
   );
 };
@@ -66,7 +66,6 @@ const AlertModal: React.FC<Props> = props => {
 const themeStyles = () => {
   return StyleSheet.create({
     containerStyle: {
-      backgroundColor: white,
       padding: padding.small,
       borderRadius: borderRadius.small,
       marginHorizontal: margin.base,
