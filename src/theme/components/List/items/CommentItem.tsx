@@ -42,7 +42,7 @@ const CommentItem: React.FC<Props> = ({
       <HorizontalView>
         <Avatar
           user={user}
-          size={replyCount && replyCount > 0 ? 'base' : 'small'}
+          size={replyCount !== undefined ? 'base' : 'small'}
         />
         <View style={styles.content}>
           <TouchableOpacity delayLongPress={1000}>
@@ -71,7 +71,7 @@ const CommentItem: React.FC<Props> = ({
 
       {/* TODO: need to use another method to display replies */}
       {/* temporarily using dummy replies */}
-      {replyCount && replyCount > 0 && (
+      {!!replyCount && replyCount > 0 && (
         <ListView type="comment" data={dummyReplies} style={styles.replies} />
       )}
     </View>

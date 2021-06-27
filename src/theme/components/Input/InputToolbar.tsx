@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import Icon from '~/theme/components/Icon';
 import {spacing} from '~/theme/configs';
@@ -15,11 +16,26 @@ import {margin} from '~/theme/configs/spacing';
 import ThemeView from '../ThemeView';
 import {IObject} from '~/interfaces/common';
 
-const InputToolbar = () => {
+const openImagePicker = () => {
+  launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {});
+};
+
+const openFilePicker = () => {};
+
+export interface Props {
+  onSend?: (content: string) => void;
+}
+
+const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
 
   const [comment, setComment] = useState<string>('');
+
+  const _onSend = () => {
+    onSend && onSend(comment);
+    setComment('');
+  };
 
   return (
     <KeyboardAvoidingView
@@ -27,7 +43,7 @@ const InputToolbar = () => {
       keyboardVerticalOffset={90}
       style={styles.container}>
       <ThemeView style={styles.inputContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openImagePicker}>
           <Icon
             style={[styles.icon, {marginVertical: margin.tiny}]}
             size={25}
@@ -44,7 +60,7 @@ const InputToolbar = () => {
             value={comment}
             onChangeText={comment => setComment(comment)}
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openFilePicker}>
             <Icon style={styles.icon} size={25} icon="iconAttachment" />
           </TouchableOpacity>
           <TouchableOpacity>
@@ -53,7 +69,7 @@ const InputToolbar = () => {
         </View>
 
         {!!comment && (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={_onSend}>
             <Icon
               style={[styles.icon, {marginVertical: margin.tiny}]}
               size={25}
