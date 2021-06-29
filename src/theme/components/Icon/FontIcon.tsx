@@ -45,8 +45,6 @@ const FontIcon: React.FC<FontIconProps> = ({
   size,
   ...props
 }) => {
-  // console.log({type, name});
-
   if (!type || !name) return null;
 
   let Control = Controls[type];

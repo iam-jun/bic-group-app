@@ -36,7 +36,13 @@ function reducer(state = initState, action: any = {}) {
         ...state,
         comments: {
           ...comments,
-          data: [{...payload, pending: true}, ...comments.data],
+          data: [
+            ...comments.data,
+            {
+              ...payload,
+              pending: true,
+            },
+          ],
         },
       };
     }

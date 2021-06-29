@@ -11,7 +11,6 @@ import _ from 'lodash';
 import items from './items';
 import ViewSpacing from '../ViewSpacing';
 import Text from '../Text';
-import {margin} from '~/theme/configs/spacing';
 import loadings from '../Loading';
 import {ReactionAction} from '~/screens/Home';
 
@@ -24,6 +23,7 @@ export interface IListView {
   horizontal?: boolean;
   loading?: boolean;
   title?: string;
+  listRef?: React.Ref<FlatList>;
   [x: string]: any;
 }
 
@@ -40,6 +40,7 @@ const ListView: React.FC<IListView> = ({
   horizontal,
   loading,
   title,
+  listRef,
   ...props
 }) => {
   const getKeyValue =
@@ -71,7 +72,7 @@ const ListView: React.FC<IListView> = ({
 
   if (loading) {
     return (
-      <View style={{marginTop: 8}}>
+      <View>
         {Loading ? (
           <View>
             {Array.from(Array(10).keys()).map(item => (
@@ -90,6 +91,7 @@ const ListView: React.FC<IListView> = ({
       {title && <Text style={styles.title}>{title}</Text>}
       <FlatList
         {...props}
+        ref={listRef}
         data={data}
         horizontal={horizontal}
         showsHorizontalScrollIndicator={false}
@@ -111,8 +113,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    margin: margin.large,
+    margin: spacing.margin.large,
   },
 });
 
-export default React.memo(ListView);
+const _ListView = React.forwardRef(
+  (props: IListView, ref?: React.Ref<FlatList>) => (
+    <ListView listRef={ref} {...props} />
+  ),
+);
+
+export default React.memo(_ListView);

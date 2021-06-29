@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Platform, TextInput} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 import Icon from '~/theme/components/Icon';
-import {spacing} from '~/theme/configs';
+import {colors, spacing} from '~/theme/configs';
 import {margin} from '~/theme/configs/spacing';
 import ThemeView from '../ThemeView';
 import {IObject} from '~/interfaces/common';
+import Input from '.';
+import PrimaryButton from '../Button/primary';
+import HorizontalView from '../Layout/HorizontalView';
+import KeyboardSpacer from '../Layout/KeyboardSpacer';
+import {useBaseHook} from '~/hooks';
 
 const openImagePicker = () => {
   launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {});
@@ -31,58 +29,65 @@ export interface Props {
 const InputToolbar: React.FC<Props> = ({commentFocus, onSend, inputRef}) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
+  const [isInputFocus, setInputFocus] = React.useState(false);
+  const {t} = useBaseHook();
 
   const [comment, setComment] = useState<string>('');
 
   const _onSend = () => {
-    onSend && onSend(comment);
+    onSend && onSend(comment.trim());
     setComment('');
   };
 
+  const renderActions = () => (
+    <HorizontalView style={styles.bottom}>
+      <HorizontalView
+        style={isInputFocus ? styles.actionsBottom : styles.actions}>
+        <Icon
+          style={styles.icon}
+          size={18}
+          icon="iconCameraOutline"
+          onPress={openImagePicker}
+        />
+        <Icon
+          style={styles.icon}
+          size={18}
+          icon="iconAttachment"
+          onPress={openFilePicker}
+        />
+        <Icon style={styles.icon} size={18} icon="iconEmoji" />
+      </HorizontalView>
+      {isInputFocus && (
+        <Icon
+          style={styles.icon}
+          size={22}
+          icon={!comment ? 'iconSendOutline' : 'iconSend'}
+          disabled={!comment}
+          onPress={_onSend}
+        />
+      )}
+    </HorizontalView>
+  );
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={90}
-      style={styles.container}>
-      <ThemeView style={styles.inputContainer}>
-        <TouchableOpacity onPress={openImagePicker}>
-          <Icon
-            style={[styles.icon, {marginVertical: margin.tiny}]}
-            size={25}
-            icon="iconCamera"
-          />
-        </TouchableOpacity>
-
-        <View style={styles.textbox}>
-          <TextInput
-            ref={inputRef}
-            autoFocus={commentFocus}
-            style={styles.textinput}
-            placeholder="Write a comment..."
-            placeholderTextColor={theme.colors.text}
-            multiline
-            value={comment}
-            onChangeText={comment => setComment(comment)}
-          />
-          <TouchableOpacity onPress={openFilePicker}>
-            <Icon style={styles.icon} size={25} icon="iconAttachment" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon style={styles.icon} size={21} icon="iconEmoji" />
-          </TouchableOpacity>
-        </View>
-
-        {!!comment && (
-          <TouchableOpacity onPress={_onSend}>
-            <Icon
-              style={[styles.icon, {marginVertical: margin.tiny}]}
-              size={25}
-              icon="iconSend"
-            />
-          </TouchableOpacity>
-        )}
-      </ThemeView>
-    </KeyboardAvoidingView>
+    <ThemeView style={styles.wrapper}>
+      <HorizontalView style={styles.inputWrapper}>
+        {!isInputFocus && !comment && renderActions()}
+        <TextInput
+          style={styles.textInput}
+          placeholder={t('comment:placeholder_comment')}
+          ref={inputRef}
+          autoFocus={commentFocus}
+          multiline
+          value={comment}
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
+          onChangeText={comment => setComment(comment)}
+        />
+      </HorizontalView>
+      {(!!isInputFocus || !!comment) && renderActions()}
+      {Platform.OS === 'ios' && <KeyboardSpacer />}
+    </ThemeView>
   );
 };
 
@@ -99,42 +104,42 @@ const createStyles = (theme: IObject<any>) => {
       left: 0,
       right: 0,
       zIndex: 2,
-      alignItems: 'flex-end',
-      flex: 1,
     },
-    inputContainer: {
-      flex: 1,
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-      flexDirection: 'row',
-      paddingHorizontal: 6,
-      paddingVertical: 10,
+    wrapper: {
       shadowRadius: 2,
       shadowOffset: {
         width: 0,
         height: -3,
       },
       shadowColor: '#000000',
+      shadowOpacity: 0.1,
       elevation: 4,
+      paddingHorizontal: margin.base,
+      paddingVertical: margin.base,
+    },
+    inputWrapper: {},
+    bottom: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    actions: {
+      paddingLeft: margin.base,
+      paddingTop: margin.small,
+    },
+    actionsBottom: {
+      paddingLeft: margin.large,
+      paddingTop: margin.small,
     },
     icon: {
-      marginHorizontal: spacing.margin.tiny,
+      marginEnd: spacing.margin.base,
     },
-    textbox: {
+    textInput: {
+      borderRadius: spacing.borderRadius.large,
       backgroundColor: colors.background,
-      marginHorizontal: margin.base,
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      borderRadius: 20,
-      paddingHorizontal: 10,
-      paddingVertical: 4,
-    },
-    textinput: {
-      marginHorizontal: margin.base,
-      alignItems: 'center',
-      flex: 1,
       color: colors.text,
+      padding: spacing.padding.base,
+      flex: 1,
+      maxHeight: 200,
     },
   });
 };

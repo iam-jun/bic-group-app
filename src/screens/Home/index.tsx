@@ -6,6 +6,7 @@ import ListView from '~/theme/components/List/ListView';
 import {spacing} from '~/theme/configs';
 import {data} from './dummy-data';
 import * as actions from '~/store/comment/actions';
+import {StyleSheet} from 'react-native';
 
 // TODO: need to use redux to get data
 // Temp: using dummy-data to render newsfeed
@@ -31,6 +32,7 @@ const Home = ({navigation}: {navigation: any}) => {
 
   return (
     <ListView
+      style={styles.container}
       type="content"
       data={data}
       onItemPress={_onItemPress}
@@ -39,5 +41,11 @@ const Home = ({navigation}: {navigation: any}) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: spacing.padding.base,
+  },
+});
 
 export default Home;

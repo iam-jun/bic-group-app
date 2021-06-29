@@ -35,6 +35,7 @@ const BottomTabs = () => {
       tabBarOptions={{
         activeTintColor: activeColor,
         inactiveTintColor: inactiveColor,
+        keyboardHidesTabBar: true,
         style: {
           backgroundColor: tabBarBackground,
           paddingBottom: spacing.padding.small,

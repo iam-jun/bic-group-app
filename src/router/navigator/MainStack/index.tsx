@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {spacing} from '~/theme/configs';
-import Icon from '~/theme/components/Icon';
 import {mainStack} from '~/configs/navigator';
 import BottomTabs from '../BottomTabs';
 import DrawerComponent from '~/theme/containers/DrawerComponent';
+import HomeHeader from '~/theme/containers/HomeHeader';
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +13,7 @@ export default () => {
     <Drawer.Navigator
       initialRouteName={mainStack.bottomTabs}
       drawerType="slide"
-      drawerPosition="left"
+      drawerPosition="right"
       drawerContent={props => <DrawerComponent />}>
       <Drawer.Screen
         name="Main"
@@ -22,13 +22,8 @@ export default () => {
           headerShown: true,
           headerStyle: {paddingHorizontal: spacing.padding.base},
           headerTitleAlign: 'left',
-          headerLeft: () => (
-            <Icon
-              size={22}
-              icon="iconMenu"
-              onPress={() => navigation.toggleDrawer()}
-            />
-          ),
+
+          header: () => <HomeHeader />,
         })}
       />
     </Drawer.Navigator>

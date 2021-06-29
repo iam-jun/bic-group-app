@@ -22,7 +22,7 @@ export interface Props {
   style?: StyleProp<ViewStyle>;
   user: UserType;
   content: string;
-  replyCount?: number;
+  replyCount: number;
   createdAt?: string;
 }
 
@@ -40,10 +40,7 @@ const CommentItem: React.FC<Props> = ({
   return (
     <View style={[styles.container, style]}>
       <HorizontalView>
-        <Avatar
-          user={user}
-          size={replyCount !== undefined ? 'base' : 'small'}
-        />
+        <Avatar user={user} size={replyCount >= 0 ? 'base' : 'small'} />
         <View style={styles.content}>
           <TouchableOpacity delayLongPress={1000}>
             <View style={styles.header}>
@@ -117,4 +114,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default CommentItem;
+export default React.memo(CommentItem);
