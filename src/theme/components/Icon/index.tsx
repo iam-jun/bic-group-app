@@ -51,9 +51,9 @@ const Icon: React.FC<IconProps> = ({
     ? _icon
     : {svgIcon: _icon};
 
-  const IconWrapper = Object.keys(_icon).find(key => key === 'type')
-    ? FontIcon
-    : SvgIcon;
+  const IconWrapper = (
+    Object.keys(_icon).find(key => key === 'type') ? FontIcon : SvgIcon
+  ) as React.ElementType;
 
   const theme: IObject<any> = useTheme();
   const {colors} = theme;
@@ -62,7 +62,11 @@ const Icon: React.FC<IconProps> = ({
 
   const styles = StyleSheet.create(createStyles(theme));
 
-  if (isButton && !tintColor) tintColor = colors.white;
+  const _tintColor = disabled
+    ? isButton
+      ? colors.white
+      : colors.disabled
+    : tintColor;
 
   return (
     <TouchableOpacity
@@ -71,19 +75,23 @@ const Icon: React.FC<IconProps> = ({
         isButton && styles.button,
         style,
         backgroundColor && {backgroundColor},
-        disabled && styles.disabled,
+        disabled && isButton && styles.disabled,
       ]}
       disabled={!onPress}
       onPress={onPress}>
       <IconWrapper
         style={iconStyle}
-        tintColor={tintColor}
+        tintColor={_tintColor}
         isButton={isButton}
         svg={_icon}
         {...props}
         {...source}
       />
-      {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
+      {label && (
+        <Text style={[styles.label, {color: _tintColor}, labelStyle]}>
+          {label}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -105,6 +113,7 @@ const createStyles = (theme: IObject<any>) => {
     disabled: {
       backgroundColor: colors.disabled,
     },
+
     label: {
       marginStart: spacing.margin.small,
     },

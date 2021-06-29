@@ -101,12 +101,16 @@ export default {
     name: 'image-multiple',
   },
   iconAttachment: {
-    type: 'MaterialCommunityIcons',
+    type: 'Entypo',
     name: 'attachment',
   },
   iconSend: {
     type: 'MaterialCommunityIcons',
     name: 'send',
+  },
+  iconSendOutline: {
+    type: 'MaterialCommunityIcons',
+    name: 'send-outline',
   },
   iconReactionAngry,
   iconReactionDislike,
@@ -126,6 +130,10 @@ export default {
   },
   iconCamera: {
     type: 'MaterialCommunityIcons',
+    name: 'camera',
+  },
+  iconCameraOutline: {
+    type: 'SimpleLineIcons',
     name: 'camera',
   },
   iconEmoji: {

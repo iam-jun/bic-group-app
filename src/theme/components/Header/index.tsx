@@ -5,7 +5,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {
   StyleSheet,
-  TouchableOpacity,
   View,
   Platform,
   TextStyle,
@@ -28,7 +27,7 @@ export interface Props {
   titleStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   leftPress?: () => void;
-  leftIcon?: React.ReactNode;
+  leftIcon?: keyof typeof icons;
   rightPress?: () => void;
   rightIcon?: keyof typeof icons;
   middleComponent?: React.ReactNode;
@@ -69,17 +68,17 @@ const Header: React.FC<Props> = ({
         containerStyle,
         isFullView && {paddingHorizontal: padding.large},
       ])}>
-      {leftIcon || isDefault ? (
+      {isDefault ? (
         isDefault ? (
           <Icon
             onPress={isDefault ? _goBack : leftPress}
             style={isDefault ? styles.backStyle : {}}
-            size={16}
+            size={20}
             icon="iconBack"
           />
-        ) : (
-          leftIcon
-        )
+        ) : leftIcon ? (
+          <Icon size={20} icon={leftIcon} onPress={leftPress} />
+        ) : null
       ) : leftComponent ? (
         leftComponent
       ) : null}
@@ -91,7 +90,7 @@ const Header: React.FC<Props> = ({
         middleComponent
       ) : null}
       {rightIcon ? (
-        <Icon icon={rightIcon} onPress={rightPress} />
+        <Icon size={20} icon={rightIcon} onPress={rightPress} />
       ) : rightComponent ? (
         rightComponent
       ) : isDefault ? (
@@ -108,7 +107,8 @@ const themeStyles = (theme: IObject<any>, title: string | undefined) =>
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      padding: spacing.padding.small,
+      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.small,
       backgroundColor: theme.colors.bgColor,
     },
     backStyle: {

@@ -65,5 +65,8 @@
   "chat":{
     "placeholder_search": "Search...",
     "title_members":"Members"
+  },
+  "comment": {
+    "placeholder_comment":"Write a comment..."
   }
 }
