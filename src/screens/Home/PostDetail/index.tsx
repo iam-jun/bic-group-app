@@ -1,7 +1,13 @@
 import React from 'react';
-import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
+import Text from '~/theme/components/Text';
 import InputToolbar from '~/theme/components/Input/InputToolbar';
 import ContentItem from '~/theme/components/List/items/ContentItem';
 import ListView from '~/theme/components/List/ListView';
@@ -11,14 +17,28 @@ import * as actions from '~/store/comment/actions';
 import {IObject} from '~/interfaces/common';
 import {generateUniqueId} from '~/utils/generation';
 import useAuth from '~/hooks/auth';
+import {ReactionAction} from '..';
+import {margin} from '~/theme/configs/spacing';
+import {useBaseHook} from '~/hooks';
 
 // TODO: need to use redux to get data
 // Temp: using dummy data to show post detail
-const PostDetailScreen = () => {
+const PostDetailScreen = ({route}: {route: any}) => {
+  const {t} = useBaseHook();
+  const {commentFocus} = route.params || false;
+  const commentInputRef = React.useRef<TextInput>(null);
+
   const {user} = useAuth();
 
   const dispatch = useDispatch();
   const comments = useSelector((state: IObject<any>) => state.comment.comments);
+
+  const _onActionPress = (action: ReactionAction) => {
+    switch (action) {
+      case 'reaction-comment':
+        return commentInputRef.current?.focus();
+    }
+  };
 
   const onSendComment = (content: string) => {
     dispatch(
@@ -43,10 +63,27 @@ const PostDetailScreen = () => {
         type="comment"
         data={comments.data}
         ListHeaderComponent={
-          <ContentItem {...post} maxLength={-1} showBackButton={true} />
+          <>
+            <ContentItem
+              {...post}
+              onActionPress={_onActionPress}
+              maxLength={-1}
+              showBackButton={true}
+            />
+            <Text
+              bold
+              style={styles.prevComments}
+              onPress={() => console.log('Load previous comments...')}>
+              {t('post:view_previous_comments')}
+            </Text>
+          </>
         }
       />
-      <InputToolbar onSend={onSendComment} />
+      <InputToolbar
+        inputRef={commentInputRef}
+        commentFocus={commentFocus}
+        onSend={onSendComment}
+      />
     </KeyboardAvoidingView>
   );
 };
@@ -58,6 +95,9 @@ const styles = StyleSheet.create({
   comment: {
     paddingTop: spacing.padding.base,
     marginBottom: 60,
+  },
+  prevComments: {
+    margin: margin.large,
   },
 });
 

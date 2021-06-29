@@ -13,11 +13,13 @@ import ViewSpacing from '../ViewSpacing';
 import Text from '../Text';
 import {margin} from '~/theme/configs/spacing';
 import loadings from '../Loading';
+import {ReactionAction} from '~/screens/Home';
 
 export interface IListView {
   data?: Array<any>;
   type: string;
   onItemPress?: Function;
+  onActionPress?: Function;
   renderItemSeparator?: Function;
   horizontal?: boolean;
   loading?: boolean;
@@ -34,6 +36,7 @@ const ListView: React.FC<IListView> = ({
   type,
   renderItemSeparator,
   onItemPress,
+  onActionPress,
   horizontal,
   loading,
   title,
@@ -47,10 +50,14 @@ const ListView: React.FC<IListView> = ({
   const Component = getKeyValue(items)(type);
   const Loading = getKeyValue(loadings)(type);
 
+  const _onActionPress = (action: ReactionAction) => {
+    onActionPress && onActionPress(action);
+  };
+
   const _renderItem = ({item}: {item: any}) => {
     return (
       <TouchableOpacity onPress={() => onItemPress && onItemPress(item)}>
-        <Component {...item} />
+        <Component {...item} onActionPress={_onActionPress} />
       </TouchableOpacity>
     );
   };

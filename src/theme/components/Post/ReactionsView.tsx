@@ -51,12 +51,16 @@ const ReactionsView: React.FC<Props> = ({
       <HorizontalView>
         {comment > 0 && (
           <Text style={styles.label}>
-            {`${comment} ${t('post:label_comment')}`}
+            {`${comment} ${
+              comment === 1 ? t('post:label_comment') : t('post:label_comments')
+            }`}
           </Text>
         )}
         {share > 0 && (
           <Text style={styles.label}>
-            {`${share} ${t('post:label_share')}`}
+            {`${share} ${
+              share === 1 ? t('post:label_share') : t('post:label_shares')
+            }`}
           </Text>
         )}
       </HorizontalView>
