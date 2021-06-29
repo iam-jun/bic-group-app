@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, FlatList, View, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import InputToolbar from '~/theme/components/Input/InputToolbar';
 import ContentItem from '~/theme/components/List/items/ContentItem';
@@ -12,10 +12,16 @@ import {generateUniqueId} from '~/utils/generation';
 import useAuth from '~/hooks/auth';
 import {useTheme} from 'react-native-paper';
 import {ThemeView} from '~/theme/components';
+import {useBaseHook} from '~/hooks';
+import {ReactionAction} from '..';
 
 // TODO: need to use redux to get data
 // Temp: using dummy data to show post detail
-const PostDetailScreen = () => {
+const PostDetailScreen = ({route}: {route: any}) => {
+  const {t} = useBaseHook();
+  const {commentFocus} = route.params || false;
+  const commentInputRef = React.useRef<TextInput>(null);
+
   const {user} = useAuth();
 
   const dispatch = useDispatch();
@@ -24,6 +30,13 @@ const PostDetailScreen = () => {
   const styles = createStyles(theme);
   const scrollRef = React.createRef<ScrollView>();
   const [isCommentChanged, setCommentchanged] = useState(false);
+
+  const _onActionPress = (action: ReactionAction) => {
+    switch (action) {
+      case 'reaction-comment':
+        return commentInputRef.current?.focus();
+    }
+  };
 
   const onSendComment = (content: string) => {
     !isCommentChanged && setCommentchanged(true);
@@ -61,11 +74,20 @@ const PostDetailScreen = () => {
           data={comments.data}
           maintainVisibleContentPosition
           ListHeaderComponent={
-            <ContentItem {...post} maxLength={-1} showBackButton={true} />
+            <ContentItem
+              {...post}
+              onActionPress={_onActionPress}
+              maxLength={-1}
+              showBackButton={true}
+            />
           }
         />
       </ScrollView>
-      <InputToolbar onSend={onSendComment} />
+      <InputToolbar
+        inputRef={commentInputRef}
+        commentFocus={commentFocus}
+        onSend={onSendComment}
+      />
     </ThemeView>
   );
 };

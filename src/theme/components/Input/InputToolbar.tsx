@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Platform, TextInput} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {launchImageLibrary} from 'react-native-image-picker';
 
@@ -28,10 +21,12 @@ const openImagePicker = () => {
 const openFilePicker = () => {};
 
 export interface Props {
+  commentFocus?: boolean;
   onSend?: (content: string) => void;
+  inputRef?: React.Ref<TextInput>;
 }
 
-const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
+const InputToolbar: React.FC<Props> = ({commentFocus, onSend, inputRef}) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const [isInputFocus, setInputFocus] = React.useState(false);
@@ -48,8 +43,18 @@ const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
     <HorizontalView style={styles.bottom}>
       <HorizontalView
         style={isInputFocus ? styles.actionsBottom : styles.actions}>
-        <Icon style={styles.icon} size={18} icon="iconCameraOutline" />
-        <Icon style={styles.icon} size={18} icon="iconAttachment" />
+        <Icon
+          style={styles.icon}
+          size={18}
+          icon="iconCameraOutline"
+          onPress={openImagePicker}
+        />
+        <Icon
+          style={styles.icon}
+          size={18}
+          icon="iconAttachment"
+          onPress={openFilePicker}
+        />
         <Icon style={styles.icon} size={18} icon="iconEmoji" />
       </HorizontalView>
       {isInputFocus && (
@@ -71,6 +76,8 @@ const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
         <TextInput
           style={styles.textInput}
           placeholder={t('comment:placeholder_comment')}
+          ref={inputRef}
+          autoFocus={commentFocus}
           multiline
           value={comment}
           onFocus={() => setInputFocus(true)}
@@ -84,7 +91,9 @@ const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
   );
 };
 
-export default InputToolbar;
+export default React.forwardRef((props: Props, ref?: React.Ref<TextInput>) => (
+  <InputToolbar inputRef={ref} {...props} />
+));
 
 const createStyles = (theme: IObject<any>) => {
   const {colors} = theme;

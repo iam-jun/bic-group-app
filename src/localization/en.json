@@ -11,8 +11,8 @@
     "btn_cancel": "Cancel",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
-    "text_ok":"OK"
-    },
+    "text_ok": "OK"
+  },
   "auth": {
     "text_sign_in": "Sign In",
     "text_sign_up": "Sign Up",
@@ -60,9 +60,10 @@
     "label_share": "Share",
     "label_comments": "Comments",
     "label_shares": "Shares",
-    "label_donate": "Contribute"
+    "label_donate": "Contribute",
+    "view_previous_comments": "View previous comments..."
   },
-  "chat":{
+  "chat": {
     "placeholder_search": "Search...",
     "title_members":"Members"
   },

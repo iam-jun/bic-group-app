@@ -4,6 +4,7 @@ import {
   contentReactionLabels,
 } from '~/theme/configs/reaction';
 import PostItem from '~/theme/components/List/items/PostItem';
+import icons from '~/constants/icons';
 
 export interface reactionType {
   like: number;
@@ -13,7 +14,7 @@ export interface reactionType {
 
 export interface reactionActionsType {
   type: string;
-  icon: string;
+  icon: keyof typeof icons;
   label: string;
   value: number;
   isLike: boolean;
