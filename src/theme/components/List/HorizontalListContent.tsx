@@ -2,34 +2,29 @@ import React from 'react';
 import {TouchableOpacity, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import ThemeView from '../ThemeView';
 import ReactionActionItem from '../List/items/ReactionActionItem';
-import icons from '~/constants/icons';
-
-export interface Data {
-  icon: keyof typeof icons;
-  isLike: boolean;
-  label: string;
-  type: string;
-  value: number;
-}
+import {reactionActionsType} from './items/ContentItem';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
-  data?: Data[];
+  data: reactionActionsType[];
   type?: string;
+  onPress?: (item: reactionActionsType) => void;
 }
 
 const HorizontalListContent: React.FC<Props> = ({
   style,
   data,
   type,
+  onPress,
   ...props
 }) => {
   return (
     <ThemeView style={[styles.container, style]}>
-      {data.map((item, index: number) => (
+      {data.map((item: reactionActionsType, index: number) => (
         <TouchableOpacity
           key={`{${type}-${index}`}
-          style={[styles.itemContainer]}>
+          style={[styles.itemContainer]}
+          onPress={() => onPress && onPress(item)}>
           <ReactionActionItem {...props} {...item} index={index} />
         </TouchableOpacity>
       ))}

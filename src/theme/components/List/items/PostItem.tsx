@@ -11,6 +11,7 @@ import ListView from '../ListView';
 import Markdown from '../../Text/Markdown';
 import {IObject} from '~/interfaces/common';
 import {borderRadius, margin, padding} from '~/theme/configs/spacing';
+import {ReactionAction} from '~/screens/Home';
 
 const PostItem: React.FC<IObject<any>> = ({
   user,
@@ -24,7 +25,12 @@ const PostItem: React.FC<IObject<any>> = ({
   reactionActions,
   maxLength = 200,
   showBackButton,
+  onActionPress,
 }) => {
+  const _onActionPress = (action: ReactionAction) => {
+    onActionPress && onActionPress(action);
+  };
+
   return (
     <ThemeView style={styles.container}>
       <View>
@@ -61,6 +67,9 @@ const PostItem: React.FC<IObject<any>> = ({
           <HorizontalListContent
             style={styles.reactions}
             data={reactionActions}
+            onPress={item => {
+              _onActionPress(`reaction-${item.type}`);
+            }}
           />
         </>
       )}

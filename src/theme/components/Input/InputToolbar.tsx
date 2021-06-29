@@ -23,10 +23,12 @@ const openImagePicker = () => {
 const openFilePicker = () => {};
 
 export interface Props {
+  commentFocus?: boolean;
   onSend?: (content: string) => void;
+  inputRef?: React.Ref<TextInput>;
 }
 
-const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
+const InputToolbar: React.FC<Props> = ({commentFocus, onSend, inputRef}) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
 
@@ -53,6 +55,8 @@ const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
 
         <View style={styles.textbox}>
           <TextInput
+            ref={inputRef}
+            autoFocus={commentFocus}
             style={styles.textinput}
             placeholder="Write a comment..."
             placeholderTextColor={theme.colors.text}
@@ -82,7 +86,9 @@ const InputToolbar: React.FC<Props> = ({onSend, ...props}) => {
   );
 };
 
-export default InputToolbar;
+export default React.forwardRef((props: Props, ref?: React.Ref<TextInput>) => (
+  <InputToolbar inputRef={ref} {...props} />
+));
 
 const createStyles = (theme: IObject<any>) => {
   const {colors} = theme;
