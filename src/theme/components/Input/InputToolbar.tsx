@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, Platform, TextInput} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Platform, TextInput, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/theme/components/Icon';
 import {spacing} from '~/theme/configs';
@@ -10,11 +10,13 @@ import HorizontalView from '../Layout/HorizontalView';
 import KeyboardSpacer from '../Layout/KeyboardSpacer';
 import {useBaseHook} from '~/hooks';
 import commonActions from '~/constants/commonActions';
+import Text from '~/theme/components/Text';
 export interface Props {
   commentFocus?: boolean;
   onActionPress: (action: string) => void;
   onSend?: (content: string) => void;
   inputRef?: React.Ref<TextInput>;
+  replyingComment?: any;
 }
 
 const InputToolbar: React.FC<Props> = ({
@@ -22,6 +24,7 @@ const InputToolbar: React.FC<Props> = ({
   onSend,
   onActionPress,
   inputRef,
+  replyingComment,
 }) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
@@ -29,6 +32,10 @@ const InputToolbar: React.FC<Props> = ({
   const {t} = useBaseHook();
 
   const [comment, setComment] = useState<string>('');
+
+  useEffect(() => {
+    replyingComment && setComment(`@${replyingComment?.user.name} ${comment}`);
+  }, [replyingComment]);
 
   const _onSend = () => {
     onSend && onSend(comment.trim());
