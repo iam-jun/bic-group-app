@@ -9,6 +9,7 @@ export interface Props {
 }
 
 const MediaView: React.FC<Props> = ({type, uri, style, ...props}) => {
+  console.log('MediaView', {uri});
   return (
     <ImagePreviewer {...props} style={[styles.media, style]} source={{uri}} />
   );

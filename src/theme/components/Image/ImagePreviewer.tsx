@@ -1,19 +1,15 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  View,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, Modal, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from '../Icon';
 import Image from '.';
+import {IObject} from '~/interfaces/common';
+import {colors} from '~/theme/configs';
 
 export interface Props {
-  style?: StyleProp<ViewStyle>;
+  style?: IObject<any>;
   isLoading?: boolean;
+  source: any;
   onRemovePress?: () => void;
 }
 
@@ -21,6 +17,7 @@ const ImagePreviewer: React.FC<Props> = ({
   onRemovePress,
   isLoading,
   style,
+  source,
   ...props
 }) => {
   const [visible, setVisible] = useState(false);
@@ -28,10 +25,10 @@ const ImagePreviewer: React.FC<Props> = ({
   return (
     <View>
       <TouchableOpacity onPress={() => setVisible(true)}>
-        <Image {...props} style={style} isLoading={isLoading} />
+        <Image {...props} source={source} style={style} isLoading={isLoading} />
         {!isLoading && onRemovePress && (
           <Icon
-            tintColor="white"
+            tintColor={colors.light.colors.white}
             style={[styles.iconClose, styles.iconRemove]}
             icon="iconClose"
             onPress={() => onRemovePress()}
@@ -40,7 +37,7 @@ const ImagePreviewer: React.FC<Props> = ({
       </TouchableOpacity>
       <Modal visible={visible} transparent={true}>
         <Icon
-          tintColor="white"
+          tintColor={colors.light.colors.white}
           size={30}
           style={styles.iconClose}
           icon="iconClose"
@@ -50,7 +47,7 @@ const ImagePreviewer: React.FC<Props> = ({
           renderImage={image => <Image {...image} />}
           imageUrls={[
             {
-              url: props.source?.uri,
+              url: source?.uri,
             },
           ]}
         />

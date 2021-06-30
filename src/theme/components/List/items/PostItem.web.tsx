@@ -6,7 +6,7 @@ import MediaView from '../../Media/MediaView';
 import ReactionsView from '../../Post/ReactionsView';
 import Divider from '../../Divider';
 import Icon from '../../Icon';
-import HorizontalListContent from '../HorizontalListContent';
+import HorizontalListView from '../HorizontalListView';
 import ListView from '../ListView';
 import {IObject} from '~/interfaces/common';
 import {borderRadius, margin, padding} from '~/theme/configs/spacing';
@@ -58,7 +58,8 @@ const PostItem: React.FC<IObject<any>> = ({
         <>
           <ReactionsView isLike={isLike} {...reaction} />
           <Divider thick={1} />
-          <HorizontalListContent
+          <HorizontalListView
+            type="reactionActions"
             style={styles.reactions}
             data={reactionActions}
           />

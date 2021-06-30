@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  Animated,
-  Image as RNImage,
-  Platform,
-  StyleSheet,
-  View,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import {Animated, Platform, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import {IObject} from '~/interfaces/common';
 
@@ -15,7 +8,7 @@ export interface Props {
   placeholderStyle?: IObject<any>;
   PlaceholderContent?: IObject<any>;
   containerStyle?: IObject<any>;
-  style?: StyleProp<ViewStyle>;
+  style?: IObject<any>;
   ImageComponent?: any;
   [x: string]: any;
 }
@@ -33,13 +26,13 @@ const Index: React.FC<Props> = ({
   ).current;
 
   const onLoadEnd = () => {
-    const minimumWait = 100;
-    const staggerNonce = 200 * Math.random();
+    const minimumWait = 0;
+    const staggerNonce = 5 * Math.random();
     setTimeout(
       () =>
         Animated.timing(placeholderContainerOpacity, {
           toValue: 0,
-          duration: 350,
+          duration: 250,
           useNativeDriver: true,
         }).start(),
       minimumWait + staggerNonce,
@@ -106,7 +99,7 @@ const Index: React.FC<Props> = ({
 
 const styles = {
   container: {
-    backgroundColor: 'black',
+    backgroundColor: 'transparent',
     position: 'relative',
   },
   placeholderContainer: {
@@ -120,7 +113,7 @@ const styles = {
 };
 
 Index.defaultProps = {
-  ImageComponent: RNImage,
+  ImageComponent: FastImage,
 };
 
 export {Index};
