@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, TextInput, ScrollView} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {useDispatch, useSelector} from 'react-redux';
@@ -28,15 +28,19 @@ const CommentScreen = ({route}: {route: any}) => {
   const {commentFocus} = route.params || false;
   const {user} = useAuth();
 
+  const [replyingComment, setReplyingComment] = useState('');
+
   const onReactionPress = async (type: string) => {
     console.log('Reacted!');
     commentOptionsModalRef.current?.close();
   };
 
-  const _onActionPress = (action: string) => {
+  const _onActionPress = (action: string, item?: any) => {
     switch (action) {
       case commonActions.replyComment:
-        return commentInputRef.current?.focus();
+        setReplyingComment(item);
+        commentInputRef.current?.focus();
+        break;
 
       case commonActions.emojiCommentReact:
         return commentOptionsModalRef.current?.open();
@@ -98,6 +102,7 @@ const CommentScreen = ({route}: {route: any}) => {
         inputRef={commentInputRef}
         commentFocus={commentFocus}
         onSend={onSendReply}
+        replyingComment={replyingComment}
       />
     </ThemeView>
   );

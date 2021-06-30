@@ -58,7 +58,9 @@ const CommentItem: React.FC<Props> = ({
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => onActionPress(commonActions.replyComment)}>
+                onPress={() =>
+                  onActionPress(commonActions.replyComment, {user, content})
+                }>
                 <Text style={styles.commentReactionItem} bold>
                   {t('post:button_reply')}
                 </Text>
