@@ -2,12 +2,14 @@ import {all, put, call, takeLatest, select} from 'redux-saga/effects';
 
 import * as types from './constants';
 import * as actions from './actions';
+import {IComment} from './interfaces';
 import {timeOut} from '~/utils/common';
 
 import {commentData} from '~/screens/Home/PostDetail/dummy-comment-data';
 
 export default function* saga() {
   yield takeLatest(types.GET_COMMENTS, getComments);
+  yield takeLatest(types.SELECT_COMMENT, selectComment);
 }
 
 function* getComments() {
@@ -18,5 +20,13 @@ function* getComments() {
   } catch (err) {
     console.log('getComments', {err});
   } finally {
+  }
+}
+
+function* selectComment({payload}: {payload: IComment}) {
+  try {
+    yield put(actions.setComments([payload]));
+  } catch (err) {
+    console.log('selectComment', err);
   }
 }

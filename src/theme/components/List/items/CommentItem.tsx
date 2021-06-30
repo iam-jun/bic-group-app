@@ -17,6 +17,7 @@ import {dummyReplies} from '~/screens/Home/PostDetail/dummy-replies';
 import {UserType} from './GroupItem';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
+import commonActions from '~/constants/commonActions';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -24,6 +25,8 @@ export interface Props {
   content: string;
   replyCount: number;
   createdAt?: string;
+  onActionPress: Function;
+  showReplies?: boolean;
 }
 
 const CommentItem: React.FC<Props> = ({
@@ -32,6 +35,8 @@ const CommentItem: React.FC<Props> = ({
   content,
   replyCount,
   createdAt,
+  onActionPress,
+  showReplies,
 }) => {
   const {t} = useBaseHook();
   const theme: IObject<any> = useTheme();
@@ -51,12 +56,14 @@ const CommentItem: React.FC<Props> = ({
           <HorizontalView style={styles.bottomBar}>
             <HorizontalView style={styles.commentReaction}>
               <Text style={styles.commentReactionItem}>{createdAt}</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => onActionPress(commonActions.emojiCommentReact)}>
                 <Text style={styles.commentReactionItem} bold>
                   {t('post:button_like')}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => onActionPress(commonActions.replyComment)}>
                 <Text style={styles.commentReactionItem} bold>
                   {t('post:button_reply')}
                 </Text>
@@ -68,8 +75,20 @@ const CommentItem: React.FC<Props> = ({
 
       {/* TODO: need to use another method to display replies */}
       {/* temporarily using dummy replies */}
-      {!!replyCount && replyCount > 0 && (
-        <ListView type="comment" data={dummyReplies} style={styles.replies} />
+      {showReplies && !!replyCount && replyCount > 0 && (
+        <ListView
+          onActionPress={onActionPress}
+          type="comment"
+          data={dummyReplies}
+          style={styles.replies}
+          ListHeaderComponent={
+            <Text
+              style={{marginHorizontal: 12, marginBottom: 8}}
+              onPress={() => console.log('Load previous comments...')}>
+              {t('comment:view_previous_comments')}
+            </Text>
+          }
+        />
       )}
     </View>
   );

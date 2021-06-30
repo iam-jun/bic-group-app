@@ -60,14 +60,14 @@
     "label_share": "Share",
     "label_comments": "Comments",
     "label_shares": "Shares",
-    "label_donate": "Contribute",
-    "view_previous_comments": "View previous comments..."
+    "label_donate": "Contribute"
   },
   "chat": {
     "placeholder_search": "Search...",
-    "title_members":"Members"
+    "title_members": "Members"
   },
   "comment": {
-    "placeholder_comment":"Write a comment..."
+    "placeholder_comment": "Write a comment...",
+    "view_previous_comments": "View previous comments..."
   }
 }

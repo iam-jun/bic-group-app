@@ -14,3 +14,8 @@ export const sendComment = (payload: IComment) => ({
   type: Actions.SEND_COMMENT,
   payload,
 });
+
+export const selectComment = (payload: IComment) => ({
+  type: Actions.SELECT_COMMENT,
+  payload,
+});

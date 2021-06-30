@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {Modalize} from 'react-native-modalize';
 import InputToolbar from '~/theme/components/Input/InputToolbar';
 import ContentItem from '~/theme/components/List/items/ContentItem';
 import ListView from '~/theme/components/List/ListView';
@@ -15,10 +16,21 @@ import {ThemeView} from '~/theme/components';
 import {useBaseHook} from '~/hooks';
 import {launchImageLibrary} from 'react-native-image-picker';
 import commonActions from '~/constants/commonActions';
+import MessageOptionsModal from '~/theme/containers/Modal/MessageOptions';
+import {mainStack} from '~/configs/navigator';
+import Text from '~/theme/components/Text';
+import {margin} from '~/theme/configs/spacing';
+import {selectComment} from '~/store/comment/actions';
 
 // TODO: need to use redux to get data
 // Temp: using dummy data to show post detail
-const PostDetailScreen = ({route}: {route: any}) => {
+const PostDetailScreen = ({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) => {
   const {t} = useBaseHook();
   const {commentFocus} = route.params || false;
   const commentInputRef = React.useRef<TextInput>(null);
@@ -31,11 +43,20 @@ const PostDetailScreen = ({route}: {route: any}) => {
   const styles = createStyles(theme);
   const scrollRef = React.createRef<ScrollView>();
   const [isCommentChanged, setCommentchanged] = useState(false);
+  const commentOptionsModalRef = React.useRef<Modalize>();
 
-  const _onActionPress = (action: string) => {
+  const _onActionPress = (action: string, item?: any) => {
     switch (action) {
       case commonActions.reactionComment:
         return commentInputRef.current?.focus();
+
+      case commonActions.replyComment:
+        dispatch(selectComment(item));
+        navigation.navigate(mainStack.reply, {commentFocus: true});
+        break;
+
+      case commonActions.emojiCommentReact:
+        return commentOptionsModalRef.current?.open();
     }
   };
 
@@ -62,6 +83,11 @@ const PostDetailScreen = ({route}: {route: any}) => {
     );
   };
 
+  const onReactionPress = async (type: string) => {
+    console.log('Reacted!');
+    commentOptionsModalRef.current?.close();
+  };
+
   return (
     <ThemeView isFullView>
       <ScrollView
@@ -77,18 +103,26 @@ const PostDetailScreen = ({route}: {route: any}) => {
         }}
         contentContainerStyle={styles.container}>
         <ListView
+          onActionPress={_onActionPress}
           contentContainerStyle={styles.comment}
           type="comment"
           automaticallyAdjustContentInsets={false}
           scrollEnabled={false}
           data={comments.data}
           ListHeaderComponent={
-            <ContentItem
-              {...post}
-              onActionPress={_onActionPress}
-              maxLength={-1}
-              showBackButton={true}
-            />
+            <>
+              <ContentItem
+                {...post}
+                onActionPress={_onActionPress}
+                maxLength={-1}
+                showBackButton={true}
+              />
+              <Text
+                style={styles.prevComments}
+                onPress={() => console.log('Load previous comments...')}>
+                {t('comment:view_previous_comments')}
+              </Text>
+            </>
           }
         />
       </ScrollView>
@@ -97,6 +131,10 @@ const PostDetailScreen = ({route}: {route: any}) => {
         commentFocus={commentFocus}
         onSend={onSendComment}
         onActionPress={_onActionPress}
+      />
+      <MessageOptionsModal
+        modalRef={commentOptionsModalRef}
+        onReactionPress={onReactionPress}
       />
     </ThemeView>
   );
@@ -110,6 +148,9 @@ const createStyles = (theme: IObject<any>) => {
     },
     comment: {
       paddingVertical: spacing.padding.base,
+    },
+    prevComments: {
+      margin: margin.large,
     },
   });
 };

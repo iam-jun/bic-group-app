@@ -19,6 +19,7 @@ const Home = ({navigation}: {navigation: any}) => {
   const _onActionPress = (action: IAction) => {
     switch (action) {
       case commonActions.reactionComment:
+        dispatch(actions.getComments());
         navigation.navigate(homeStack.postDetail, {commentFocus: true});
     }
   };
