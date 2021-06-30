@@ -9,7 +9,7 @@ import AppConfig from '~/configs';
 import {IObject} from '~/interfaces/common';
 
 export default function* saga() {
-  yield takeEvery(types.GET_DATA, getData);
+  yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeEvery(types.CREATE_ITEM, createItem);
   yield takeLatest(types.UPDATE_ITEM, updateItem);
