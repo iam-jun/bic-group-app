@@ -6,12 +6,14 @@ import MediaView from '../../Media/MediaView';
 import ReactionsView from '../../Post/ReactionsView';
 import Divider from '../../Divider';
 import Icon from '../../Icon';
-import HorizontalListContent from '../HorizontalListContent';
+import HorizontalListView from '../HorizontalListView';
 import ListView from '../ListView';
 import Markdown from '../../Text/Markdown';
 import {IObject} from '~/interfaces/common';
 import {borderRadius, margin, padding} from '~/theme/configs/spacing';
-import {ReactionAction} from '~/screens/Home';
+import {IAction} from '~/constants/commonActions';
+import {IReactionAction} from './ReactionActionItem';
+import {useTheme} from 'react-native-paper';
 
 const PostItem: React.FC<IObject<any>> = ({
   user,
@@ -27,9 +29,11 @@ const PostItem: React.FC<IObject<any>> = ({
   showBackButton,
   onActionPress,
 }) => {
-  const _onActionPress = (action: ReactionAction) => {
+  const _onActionPress = (action: IAction) => {
     onActionPress && onActionPress(action);
   };
+
+  const theme: IObject<any> = useTheme();
 
   return (
     <ThemeView style={styles.container}>
@@ -64,11 +68,12 @@ const PostItem: React.FC<IObject<any>> = ({
         <>
           <ReactionsView isLike={isLike} {...reaction} />
           <Divider thick={1} />
-          <HorizontalListContent
+          <HorizontalListView
             style={styles.reactions}
             data={reactionActions}
-            onPress={item => {
-              _onActionPress(`reaction-${item.type}`);
+            type="reactionActions"
+            onItemPress={(item: IReactionAction) => {
+              _onActionPress(`reaction-${item.type}` as IAction);
             }}
           />
         </>
@@ -78,7 +83,7 @@ const PostItem: React.FC<IObject<any>> = ({
         style={styles.iconOptions}
         icon="iconOptions"
         size={18}
-        tintColor="grey"
+        tintColor={theme.colors.text}
       />
     </ThemeView>
   );

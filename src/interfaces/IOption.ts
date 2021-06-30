@@ -1,7 +1,7 @@
-import icons from '~/constants/icons';
+import icons, {IconType} from '~/constants/icons';
 
 export interface IOption {
   type: string;
   title: string;
-  icon: keyof typeof icons;
+  icon: IconType;
 }

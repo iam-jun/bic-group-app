@@ -3,32 +3,33 @@ import {StyleSheet} from 'react-native';
 import Text from '../../Text';
 import HorizontalView from '../../Layout/HorizontalView';
 import Icon from '../../Icon';
-import icons from '~/constants/icons';
+import {IconType} from '~/constants/icons';
 import {useBaseHook} from '~/hooks';
 import {
   primary as ACTIVE_COLOR,
   grey6 as INACTIVE_COLOR,
 } from '~/theme/configs/colors';
 
-export interface Props {
-  icon?: keyof typeof icons;
+export interface IReactionAction {
+  icon: IconType;
   label?: string;
   isLike?: boolean;
   inactiveColor?: string;
   activeColor?: string;
+  type: string;
 }
 
-const ReactionActionItem: React.FC<Props> = ({
+const ReactionActionItem: React.FC<IReactionAction> = ({
   icon,
   label,
   isLike,
   inactiveColor = INACTIVE_COLOR,
   activeColor = ACTIVE_COLOR,
-  ...props
+  type,
 }) => {
   const {t} = useBaseHook();
   const tintColor = isLike ? activeColor : inactiveColor;
-  if (props.type === 'like') {
+  if (type === 'like') {
     icon = isLike ? 'iconLike' : 'iconLikeOutline';
   }
 

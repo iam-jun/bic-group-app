@@ -13,7 +13,8 @@ import useAuth from '~/hooks/auth';
 import {useTheme} from 'react-native-paper';
 import {ThemeView} from '~/theme/components';
 import {useBaseHook} from '~/hooks';
-import {ReactionAction} from '..';
+import {launchImageLibrary} from 'react-native-image-picker';
+import commonActions from '~/constants/commonActions';
 
 // TODO: need to use redux to get data
 // Temp: using dummy data to show post detail
@@ -31,12 +32,21 @@ const PostDetailScreen = ({route}: {route: any}) => {
   const scrollRef = React.createRef<ScrollView>();
   const [isCommentChanged, setCommentchanged] = useState(false);
 
-  const _onActionPress = (action: ReactionAction) => {
+  const _onActionPress = (action: string) => {
     switch (action) {
-      case 'reaction-comment':
+      case commonActions.reactionComment:
         return commentInputRef.current?.focus();
     }
   };
+
+  const openImagePicker = () => {
+    launchImageLibrary(
+      {mediaType: 'photo'},
+      async ({uri, fileName, type}) => {},
+    );
+  };
+
+  const openFilePicker = () => {};
 
   const onSendComment = (content: string) => {
     !isCommentChanged && setCommentchanged(true);
@@ -72,7 +82,6 @@ const PostDetailScreen = ({route}: {route: any}) => {
           automaticallyAdjustContentInsets={false}
           scrollEnabled={false}
           data={comments.data}
-          maintainVisibleContentPosition
           ListHeaderComponent={
             <ContentItem
               {...post}
@@ -87,6 +96,7 @@ const PostDetailScreen = ({route}: {route: any}) => {
         inputRef={commentInputRef}
         commentFocus={commentFocus}
         onSend={onSendComment}
+        onActionPress={_onActionPress}
       />
     </ThemeView>
   );

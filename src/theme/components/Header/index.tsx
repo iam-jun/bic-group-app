@@ -16,7 +16,7 @@ import Text from '~/theme/components/Text';
 
 import spacing, {padding} from '~/theme/configs/spacing';
 import Icon from '../Icon';
-import icons from '~/constants/icons';
+import icons, {IconType} from '~/constants/icons';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 
@@ -27,9 +27,9 @@ export interface Props {
   titleStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   leftPress?: () => void;
-  leftIcon?: keyof typeof icons;
+  leftIcon?: IconType;
   rightPress?: () => void;
-  rightIcon?: keyof typeof icons;
+  rightIcon?: IconType;
   middleComponent?: React.ReactNode;
   rightComponent?: React.ReactNode;
   leftComponent?: React.ReactNode;

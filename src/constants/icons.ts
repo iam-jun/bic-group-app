@@ -13,7 +13,7 @@ import iconCopy from '../../assets/icons/icon_copy.svg';
 import iconReport from '../../assets/icons/icon_report.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 
-export default {
+const icons = {
   iconAdd: {
     type: 'MaterialIcons',
     name: 'add',
@@ -141,3 +141,7 @@ export default {
     name: 'emotsmile',
   },
 };
+
+export type IconType = keyof typeof icons;
+
+export default icons;

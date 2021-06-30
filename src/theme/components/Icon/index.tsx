@@ -14,10 +14,10 @@ import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import Text from '~/theme/components/Text';
 import {spacing} from '~/theme/configs';
-import icons from '~/constants/icons';
+import icons, {IconType} from '~/constants/icons';
 
 export interface IconProps extends SVGIconProps, FontIconProps {
-  icon: keyof typeof icons;
+  icon: IconType;
   style?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ViewStyle>;
   label?: string;

@@ -1,32 +1,28 @@
 import React, {useState} from 'react';
 import {StyleSheet, Platform, TextInput} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {launchImageLibrary} from 'react-native-image-picker';
-
 import Icon from '~/theme/components/Icon';
-import {colors, spacing} from '~/theme/configs';
+import {spacing} from '~/theme/configs';
 import {margin} from '~/theme/configs/spacing';
 import ThemeView from '../ThemeView';
 import {IObject} from '~/interfaces/common';
-import Input from '.';
-import PrimaryButton from '../Button/primary';
 import HorizontalView from '../Layout/HorizontalView';
 import KeyboardSpacer from '../Layout/KeyboardSpacer';
 import {useBaseHook} from '~/hooks';
-
-const openImagePicker = () => {
-  launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {});
-};
-
-const openFilePicker = () => {};
-
+import commonActions from '~/constants/commonActions';
 export interface Props {
   commentFocus?: boolean;
+  onActionPress: (action: string) => void;
   onSend?: (content: string) => void;
   inputRef?: React.Ref<TextInput>;
 }
 
-const InputToolbar: React.FC<Props> = ({commentFocus, onSend, inputRef}) => {
+const InputToolbar: React.FC<Props> = ({
+  commentFocus,
+  onSend,
+  onActionPress,
+  inputRef,
+}) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const [isInputFocus, setInputFocus] = React.useState(false);
@@ -47,13 +43,13 @@ const InputToolbar: React.FC<Props> = ({commentFocus, onSend, inputRef}) => {
           style={styles.icon}
           size={18}
           icon="iconCameraOutline"
-          onPress={openImagePicker}
+          onPress={() => onActionPress(commonActions.openCamera)}
         />
         <Icon
           style={styles.icon}
           size={18}
           icon="iconAttachment"
-          onPress={openFilePicker}
+          onPress={() => onActionPress(commonActions.openFilePicker)}
         />
         <Icon style={styles.icon} size={18} icon="iconEmoji" />
       </HorizontalView>
@@ -75,6 +71,7 @@ const InputToolbar: React.FC<Props> = ({commentFocus, onSend, inputRef}) => {
         {!isInputFocus && !comment && renderActions()}
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={theme.colors.placeholder}
           placeholder={t('comment:placeholder_comment')}
           ref={inputRef}
           autoFocus={commentFocus}

@@ -1,31 +1,37 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import ThemeView from '../ThemeView';
-import ReactionActionItem from '../List/items/ReactionActionItem';
 import {reactionActionsType} from './items/ContentItem';
+import items, {IListViewItem} from './items';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
   data: reactionActionsType[];
-  type?: string;
-  onPress?: (item: reactionActionsType) => void;
+  type: IListViewItem;
+  onItemPress?: (item: reactionActionsType, index: number) => void;
 }
 
-const HorizontalListContent: React.FC<Props> = ({
+const HorizontalListView: React.FC<Props> = ({
   style,
   data,
   type,
-  onPress,
+  onItemPress,
   ...props
 }) => {
+  const getKeyValue =
+    <T extends object, U extends keyof T>(obj: T) =>
+    (key: U) =>
+      obj[key];
+
+  const Component = getKeyValue(items)(type);
   return (
     <ThemeView style={[styles.container, style]}>
-      {data.map((item: reactionActionsType, index: number) => (
+      {data.map((item: any, index: number) => (
         <TouchableOpacity
           key={`{${type}-${index}`}
           style={[styles.itemContainer]}
-          onPress={() => onPress && onPress(item)}>
-          <ReactionActionItem {...props} {...item} index={index} />
+          onPress={() => onItemPress && onItemPress(item, index)}>
+          <Component {...props} {...item} />
         </TouchableOpacity>
       ))}
     </ThemeView>
@@ -43,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HorizontalListContent;
+export default HorizontalListView;

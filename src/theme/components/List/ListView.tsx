@@ -8,15 +8,15 @@ import {
 } from 'react-native';
 import {spacing} from '~/theme/configs';
 import _ from 'lodash';
-import items from './items';
+import items, {IListViewItem} from './items';
 import ViewSpacing from '../ViewSpacing';
 import Text from '../Text';
 import loadings from '../Loading';
-import {ReactionAction} from '~/screens/Home';
+import {IAction} from '~/constants/commonActions';
 
 export interface IListView {
   data?: Array<any>;
-  type: string;
+  type: IListViewItem;
   onItemPress?: Function;
   onActionPress?: Function;
   renderItemSeparator?: Function;
@@ -51,7 +51,7 @@ const ListView: React.FC<IListView> = ({
   const Component = getKeyValue(items)(type);
   const Loading = getKeyValue(loadings)(type);
 
-  const _onActionPress = (action: ReactionAction) => {
+  const _onActionPress = (action: IAction) => {
     onActionPress && onActionPress(action);
   };
 

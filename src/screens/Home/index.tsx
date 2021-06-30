@@ -7,13 +7,10 @@ import {spacing} from '~/theme/configs';
 import {data} from './dummy-data';
 import * as actions from '~/store/comment/actions';
 import {StyleSheet} from 'react-native';
+import commonActions, {IAction} from '~/constants/commonActions';
 
 // TODO: need to use redux to get data
 // Temp: using dummy-data to render newsfeed
-export type ReactionAction =
-  | 'reaction-like'
-  | 'reaction-comment'
-  | 'reaction-share';
 
 const Home = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
@@ -23,9 +20,9 @@ const Home = ({navigation}: {navigation: any}) => {
     navigation.navigate(homeStack.postDetail);
   };
 
-  const _onActionPress = (action: ReactionAction) => {
+  const _onActionPress = (action: IAction) => {
     switch (action) {
-      case 'reaction-comment':
+      case commonActions.reactionComment:
         navigation.navigate(homeStack.postDetail, {commentFocus: true});
     }
   };
