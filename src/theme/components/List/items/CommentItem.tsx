@@ -8,13 +8,9 @@ import {
 } from 'react-native';
 import Avatar from '../../Image/Avatar';
 import HorizontalView from '../../Layout/HorizontalView';
-import ThemeView from '../../ThemeView';
 import Text from '~/theme/components/Text';
 import {margin, padding} from '~/theme/configs/spacing';
 import {useBaseHook} from '~/hooks';
-import ListView from '../ListView';
-import {dummyReplies} from '~/screens/Home/PostDetail/dummy-replies';
-import {UserType} from './GroupItem';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import commonActions from '~/constants/commonActions';
@@ -27,7 +23,6 @@ export interface Props {
   replyCount: number;
   createdAt?: string;
   onActionPress: Function;
-  showReplies?: boolean;
 }
 
 const CommentItem: React.FC<Props> = ({
@@ -37,7 +32,6 @@ const CommentItem: React.FC<Props> = ({
   replyCount,
   createdAt,
   onActionPress,
-  showReplies,
 }) => {
   const {t} = useBaseHook();
   const theme: IObject<any> = useTheme();
@@ -45,7 +39,7 @@ const CommentItem: React.FC<Props> = ({
 
   return (
     <View style={[styles.container, style]}>
-      <HorizontalView>
+      <HorizontalView style={replyCount >= 0 ? null : styles.replies}>
         <Avatar user={user} size={replyCount >= 0 ? 'base' : 'small'} />
         <View style={styles.content}>
           <TouchableOpacity delayLongPress={1000}>
@@ -73,24 +67,6 @@ const CommentItem: React.FC<Props> = ({
           </HorizontalView>
         </View>
       </HorizontalView>
-
-      {/* TODO: need to use another method to display replies */}
-      {/* temporarily using dummy replies */}
-      {showReplies && !!replyCount && replyCount > 0 && (
-        <ListView
-          onActionPress={onActionPress}
-          type="comment"
-          data={dummyReplies}
-          style={styles.replies}
-          ListHeaderComponent={
-            <Text
-              style={{marginHorizontal: 12, marginBottom: 8}}
-              onPress={() => console.log('Load previous comments...')}>
-              {t('comment:view_previous_comments')}
-            </Text>
-          }
-        />
-      )}
     </View>
   );
 };
@@ -127,9 +103,7 @@ const createStyles = (theme: IObject<any>) => {
       fontSize: 11,
     },
     replies: {
-      paddingTop: padding.large,
       marginStart: 44,
-      marginBottom: 6,
     },
   });
 };
