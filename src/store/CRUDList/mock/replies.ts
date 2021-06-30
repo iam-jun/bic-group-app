@@ -1,115 +1,21 @@
 import {timeOut} from '~/utils/common';
+import {
+  generateRandomWords,
+  generateUniqueId,
+  getRandomInt,
+  generateRandomUser,
+} from '~/utils/generation';
 
 export const getData = async () => {
   await timeOut();
-  return {
-    page: 1,
-    pageSize: 10,
-    total: 0,
-    totalPage: 1,
-    data: [
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-      {
-        id: 'ldfu97175rhkldf',
-        content: 'hellooooooo',
-        createdAt: '2021-03-09T11:21:51.164Z',
-        updateAt: '2021-03-09T11:21:51.164Z',
-        user: {
-          id: 'jkds90278359utjglksdf',
-          fullName: 'Đoàn Quốc Hưng',
-          avatarUrl: null,
-        },
-      },
-    ],
-  };
+  const max = getRandomInt(1, 2) === 1 ? 10 : getRandomInt(3, 7);
+  return Array.from(Array(max).keys()).map(index => ({
+    id: generateUniqueId(),
+    content: generateRandomWords(),
+    createdAt: '2021-03-09T11:14:44.579Z',
+    updateAt: '2021-03-09T11:14:44.579Z',
+    user: generateRandomUser(),
+  }));
 };
 
 export const createItem = async () => {

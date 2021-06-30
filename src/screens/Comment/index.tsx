@@ -1,30 +1,28 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, TextInput, ScrollView} from 'react-native';
 import {Modalize} from 'react-native-modalize';
+import {useDispatch, useSelector} from 'react-redux';
 
 import CommentItem from '~/theme/components/List/items/CommentItem';
 import Text from '~/theme/components/Text';
-import {margin, padding} from '~/theme/configs/spacing';
-import {dummyReplies} from '../Home/PostDetail/dummy-replies';
-import ListView from '~/theme/components/List/ListView';
 import {useBaseHook} from '~/hooks';
 import {ThemeView} from '~/theme/components';
 import InputToolbar from '~/theme/components/Input/InputToolbar';
 import Header from '~/theme/components/Header';
 import MessageOptionsModal from '~/theme/containers/Modal/MessageOptions';
-import {useDispatch, useSelector} from 'react-redux';
 import {IObject} from '~/interfaces/common';
-import * as actions from '~/store/comment/actions';
 import {generateUniqueId} from '~/utils/generation';
 import useAuth from '~/hooks/auth';
 import commonActions from '~/constants/commonActions';
+import CRUDListView from '~/theme/components/List/CRUDListView';
+import listActions from '~/store/CRUDList/actions';
 
 const CommentScreen = ({route}: {route: any}) => {
   const dispatch = useDispatch();
   const comments = useSelector((state: IObject<any>) => state.comment.comments);
   const originalComment = {...comments.data[0], showReplies: true};
 
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
   const commentInputRef = React.useRef<TextInput>(null);
   const commentOptionsModalRef = React.useRef<Modalize>();
   const {commentFocus} = route.params || false;
@@ -45,7 +43,21 @@ const CommentScreen = ({route}: {route: any}) => {
     }
   };
 
-  const onSendComment = (content: string) => {};
+  const onSendReply = (content: string) => {
+    dispatch(
+      listActions.createItem('replies', {
+        id: generateUniqueId(),
+        content,
+        user,
+        createdAt: new Date().toISOString(),
+        updateAt: new Date().toISOString(),
+      }),
+    );
+  };
+
+  const loadMoreReplies = () => {
+    dispatch(listActions.mergeExtraData('replies', 'comment'));
+  };
 
   return (
     <ThemeView isFullView testID="CommentScreen">
@@ -56,7 +68,24 @@ const CommentScreen = ({route}: {route: any}) => {
         rightIcon="iconOptions"
       />
       <ScrollView>
-        <CommentItem {...originalComment} onActionPress={_onActionPress} />
+        <CRUDListView
+          listType="comment"
+          dataType="replies"
+          onActionPress={_onActionPress}
+          inverted={true}
+          ListFooterComponent={
+            <>
+              <CommentItem
+                {...originalComment}
+                onActionPress={_onActionPress}
+                loadMoreReplies={loadMoreReplies}
+              />
+              <Text style={styles.viewMore} onPress={loadMoreReplies}>
+                {t('comment:view_previous_comments')}
+              </Text>
+            </>
+          }
+        />
       </ScrollView>
 
       <MessageOptionsModal
@@ -68,7 +97,7 @@ const CommentScreen = ({route}: {route: any}) => {
         onActionPress={_onActionPress}
         inputRef={commentInputRef}
         commentFocus={commentFocus}
-        onSend={onSendComment}
+        onSend={onSendReply}
       />
     </ThemeView>
   );
@@ -76,4 +105,9 @@ const CommentScreen = ({route}: {route: any}) => {
 
 export default CommentScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  viewMore: {
+    marginStart: 56,
+    marginVertical: 12,
+  },
+});
