@@ -18,6 +18,7 @@ import {
   getRandomInt,
 } from '~/utils/generation';
 import * as actions from '~/store/chat/actions';
+import {Header} from '~/theme/components';
 
 const Chat = () => {
   const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
@@ -40,6 +41,8 @@ const Chat = () => {
 
   return (
     <ThemeView style={styles.container} testID="ChatScreen" isFullView>
+      <Header title="Chat" rightIcon="iconSettings" />
+
       <Input
         style={styles.inputSearch}
         roundness="big"

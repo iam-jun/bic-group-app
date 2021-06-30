@@ -21,6 +21,8 @@ import {mainStack} from '~/configs/navigator';
 import Text from '~/theme/components/Text';
 import {margin} from '~/theme/configs/spacing';
 import {selectComment} from '~/store/comment/actions';
+import listActions from '~/store/CRUDList/actions';
+import CRUDListView from '~/theme/components/List/CRUDListView';
 
 // TODO: need to use redux to get data
 // Temp: using dummy data to show post detail
@@ -71,8 +73,9 @@ const PostDetailScreen = ({
 
   const onSendComment = (content: string) => {
     !isCommentChanged && setCommentchanged(true);
+
     dispatch(
-      actions.sendComment({
+      listActions.createItem('comments', {
         id: generateUniqueId(),
         content,
         user,
@@ -86,6 +89,10 @@ const PostDetailScreen = ({
   const onReactionPress = async (type: string) => {
     console.log('Reacted!');
     commentOptionsModalRef.current?.close();
+  };
+
+  const loadMoreComments = () => {
+    dispatch(listActions.mergeExtraData('comments', 'comment'));
   };
 
   return (
@@ -102,14 +109,15 @@ const PostDetailScreen = ({
           isCommentChanged && scrollRef.current?.scrollToEnd({animated: true});
         }}
         contentContainerStyle={styles.container}>
-        <ListView
+        <CRUDListView
           onActionPress={_onActionPress}
           contentContainerStyle={styles.comment}
-          type="comment"
+          listType="comment"
+          dataType="comments"
+          inverted={true}
           automaticallyAdjustContentInsets={false}
           scrollEnabled={false}
-          data={comments.data}
-          ListHeaderComponent={
+          ListFooterComponent={
             <>
               <ContentItem
                 {...post}
@@ -117,9 +125,7 @@ const PostDetailScreen = ({
                 maxLength={-1}
                 showBackButton={true}
               />
-              <Text
-                style={styles.prevComments}
-                onPress={() => console.log('Load previous comments...')}>
+              <Text bold style={styles.prevComments} onPress={loadMoreComments}>
                 {t('comment:view_previous_comments')}
               </Text>
             </>

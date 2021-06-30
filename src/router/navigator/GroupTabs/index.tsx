@@ -6,6 +6,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import * as screens from './tabs';
 import {groupTabsSetting} from '~/configs/navigator';
 import {IObject} from '~/interfaces/common';
+import {View} from 'react-native';
+import {Header, ThemeView} from '~/theme/components';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -25,26 +27,29 @@ const GroupTabs = () => {
   const listScreens: IObject<any> = screens;
 
   return (
-    <TopTab.Navigator
-      initialRouteName={initialRouteName}
-      backBehavior={backBehavior}
-      tabBarOptions={{
-        activeTintColor: activeColor,
-        inactiveTintColor: inactiveColor,
-        style: {
-          backgroundColor: tabBarBackground,
-        },
-      }}>
-      {tabsNavigator.map((tab: IObject<any>, _i: number) => {
-        return (
-          <TopTab.Screen
-            key={'tabs' + tab.screen}
-            name={tab.name[lang]}
-            component={listScreens[tab.screen]}
-          />
-        );
-      })}
-    </TopTab.Navigator>
+    <ThemeView isFullView>
+      <Header title="Groups" />
+      <TopTab.Navigator
+        initialRouteName={initialRouteName}
+        backBehavior={backBehavior}
+        tabBarOptions={{
+          activeTintColor: activeColor,
+          inactiveTintColor: inactiveColor,
+          style: {
+            backgroundColor: tabBarBackground,
+          },
+        }}>
+        {tabsNavigator.map((tab: IObject<any>, _i: number) => {
+          return (
+            <TopTab.Screen
+              key={'tabs' + tab.screen}
+              name={tab.name[lang]}
+              component={listScreens[tab.screen]}
+            />
+          );
+        })}
+      </TopTab.Navigator>
+    </ThemeView>
   );
 };
 
