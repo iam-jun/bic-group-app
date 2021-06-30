@@ -9,6 +9,7 @@ export const mainStack = {
   bottomTabs: 'BottomTabs',
   conversation: 'Conversation',
   conversationDetail: 'ConversationDetail',
+  reply: 'CommentDetail',
 };
 
 export const authStack = {
@@ -118,6 +119,18 @@ export const navigationSetting = {
       },
       router: mainStack.conversationDetail,
       screen: mainStack.conversationDetail,
+      options: {
+        headerShown: false,
+        animationEnabled: true,
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      router: mainStack.reply,
+      screen: mainStack.reply,
       options: {
         headerShown: false,
         animationEnabled: true,
