@@ -140,6 +140,10 @@ const icons = {
     type: 'SimpleLineIcons',
     name: 'emotsmile',
   },
+  iconSettings: {
+    type: 'MaterialIcons',
+    name: 'settings',
+  },
 };
 
 export type IconType = keyof typeof icons;

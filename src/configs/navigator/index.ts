@@ -31,11 +31,10 @@ export const groupTabs = {
 
 export const bottomTabs = {
   home: homeStack,
-  vip: 'Vip',
-  search: 'Search',
   groups: groupTabs,
   chat: 'Chat',
   notification: 'Notification',
+  menu: 'Menu',
 };
 
 export const navigationSetting = {
@@ -150,40 +149,12 @@ export const tabsSetting = {
         en: '',
       },
       name: {
-        vi: 'Trang chủ',
-        en: 'Home',
+        vi: 'Tin mới',
+        en: 'News Feed',
       },
       screen: bottomTabs.home.home,
       option: {
         tabBarIcon: 'iconHome',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'VIP',
-        en: 'VIP',
-      },
-      screen: bottomTabs.vip,
-      option: {
-        tabBarIcon: 'iconDiamond',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Tìm kiếm',
-        en: 'Search',
-      },
-      screen: bottomTabs.search,
-      option: {
-        tabBarIcon: 'iconSearchMT',
       },
     },
     {
@@ -226,6 +197,20 @@ export const tabsSetting = {
       screen: bottomTabs.notification,
       option: {
         tabBarIcon: 'iconNotification',
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
+        vi: 'Cài đặt',
+        en: 'Menu',
+      },
+      screen: bottomTabs.menu,
+      option: {
+        tabBarIcon: 'iconMenu',
       },
     },
   ],

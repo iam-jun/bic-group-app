@@ -18,10 +18,11 @@ import {UserType} from './GroupItem';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import commonActions from '~/constants/commonActions';
+import {IUser} from '~/store/auth/interfaces';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
-  user: UserType;
+  user: IUser;
   content: string;
   replyCount: number;
   createdAt?: string;
@@ -49,7 +50,7 @@ const CommentItem: React.FC<Props> = ({
         <View style={styles.content}>
           <TouchableOpacity delayLongPress={1000}>
             <View style={styles.header}>
-              <Text bold>{user?.fullName}</Text>
+              <Text bold>{user?.name}</Text>
               <Text>{content}</Text>
             </View>
           </TouchableOpacity>

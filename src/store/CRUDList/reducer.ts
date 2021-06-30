@@ -1,3 +1,4 @@
+import CRUDlist from '~/configs/CRUDList';
 import {
   CREATE_ITEM,
   CREATE_ITEM_SUCCESS,
@@ -17,21 +18,23 @@ const listDataInitialState = {
   data: [],
   loading: false,
   refreshing: false,
+  loadingMore: false,
   extra: [],
   page: 1,
   canLoadMore: true,
   path: null,
 };
 
+const createListState = () => {
+  let list = {};
+  Object.keys(CRUDlist).forEach(key => {
+    list[key] = listDataInitialState;
+  });
+  return list;
+};
+
 const initialState = {
-  list: {
-    newsfeed: listDataInitialState,
-    comments: listDataInitialState,
-    replies: listDataInitialState,
-    postLikes: listDataInitialState,
-    myPosts: listDataInitialState,
-    myDrafts: listDataInitialState,
-  },
+  list: createListState(),
   pageSize: 10,
 };
 
@@ -54,7 +57,8 @@ const reducer = (state = initialState, action: any = {}) => {
           [dataType]: {
             ...data,
             path: action.path,
-            loading: data.data === 0 && !data.refreshing && true,
+            loading: data.data.length === 0 && !data.refreshing,
+            loadingMore: data.data.length > 0 && !data.refreshing,
           },
         },
       };
@@ -69,6 +73,7 @@ const reducer = (state = initialState, action: any = {}) => {
             canLoadMore: action.data.length === pageSize,
             page: page + 1,
             loading: false,
+            loadingMore: false,
             refreshing: false,
           },
         },
@@ -82,6 +87,7 @@ const reducer = (state = initialState, action: any = {}) => {
             ...data,
             loading: false,
             refreshing: false,
+            loadingMore: false,
           },
         },
       };
@@ -97,6 +103,7 @@ const reducer = (state = initialState, action: any = {}) => {
             page: page + 1,
             loading: false,
             refreshing: false,
+            loadingMore: false,
           },
         },
       };

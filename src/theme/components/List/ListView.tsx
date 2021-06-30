@@ -24,6 +24,7 @@ export interface IListView {
   horizontal?: boolean;
   loading?: boolean;
   refreshing?: boolean;
+  loadingMore?: boolean;
   onRefresh?: () => void;
   title?: string;
   listRef?: React.Ref<FlatList>;
@@ -42,6 +43,7 @@ const ListView: React.FC<IListView> = ({
   onActionPress,
   horizontal,
   loading,
+  loadingMore,
   refreshing,
   onRefresh,
   title,
@@ -99,6 +101,7 @@ const ListView: React.FC<IListView> = ({
           {title}
         </Text>
       )}
+      {loadingMore && <ActivityIndicator />}
       <FlatList
         {...props}
         ref={listRef}

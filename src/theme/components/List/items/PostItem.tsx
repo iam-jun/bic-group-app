@@ -42,7 +42,7 @@ const PostItem: React.FC<IObject<any>> = ({
         {user && (
           <HeaderView
             avatar={{user}}
-            firstLabel={user.name}
+            firstLabel={user.name || user.fullName}
             secondLabel={updatedAt}
             thirdLabel={locationName}
             showBackButton={showBackButton}

@@ -1,4 +1,4 @@
-const list = {
+const CRUDlist = {
   newsfeed: 'newsfeed',
   comments: 'comments',
   replies: 'replies',
@@ -8,5 +8,5 @@ const list = {
   messages: 'messages',
 };
 
-export type IListType = keyof typeof list;
-export default list;
+export type IListType = keyof typeof CRUDlist;
+export default CRUDlist;

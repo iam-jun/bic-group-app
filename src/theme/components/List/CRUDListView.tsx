@@ -26,7 +26,8 @@ const CRUDListView: React.FC<CRUDListView> = ({
   }, []);
 
   const onScrollEnd = () => {
-    dispatch(actions.mergeExtraData(dataType, listType));
+    if (props.scrollEnabled)
+      dispatch(actions.mergeExtraData(dataType, listType));
   };
 
   const onRefresh = () => {

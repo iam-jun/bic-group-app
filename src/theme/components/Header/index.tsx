@@ -54,7 +54,7 @@ const Header: React.FC<Props> = ({
   const theme: IObject<any> = useTheme();
 
   const heightSafeArea = (insets: any) => ({
-    height: Platform.OS === 'android' ? 78 + insets.top : 60 + insets.top,
+    height: Platform.OS === 'android' ? 68 + insets.top : 40 + insets.top,
   });
   const _goBack = () => {
     navigation.goBack();
@@ -104,12 +104,14 @@ const themeStyles = (theme: IObject<any>, title: string | undefined) =>
   StyleSheet.create({
     container: {
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-end',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       backgroundColor: theme.colors.bgColor,
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: 1,
     },
     backStyle: {
       paddingLeft: 0,
