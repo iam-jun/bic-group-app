@@ -54,4 +54,4 @@ const ContentItem: React.FC<Props> = ({
   );
 };
 
-export default ContentItem;
+export default React.memo(ContentItem);

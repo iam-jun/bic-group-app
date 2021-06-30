@@ -1,0 +1,13 @@
+export const GET_DATA = 'crud_list/GET_DATA';
+export const SET_DATA = 'crud_list/SET_DATA';
+export const GET_DATA_FAIL = 'crud_list/GET_DATA_FAIL';
+export const SET_EXTRA_DATA = 'crud_list/SET_EXTRA_DATA';
+export const MERGE_EXTRA_DATA = 'crud_list/MERGE_EXTRA_DATA';
+export const CREATE_ITEM = 'crud_list/CREATE_ITEM';
+export const CREATE_ITEM_SUCCESS = 'crud_list/CREATE_ITEM_SUCCESS';
+export const UPDATE_ITEM = 'crud_list/UPDATE_ITEM';
+export const UPDATE_ITEM_SUCCESS = 'crud_list/UPDATE_ITEM_SUCCESS';
+export const DELETE_ITEM = 'crud_list/DELETE_ITEM';
+export const DELETE_ITEM_SUCCESS = 'crud_list/DELETE_ITEM_SUCCESS';
+export const RESET = 'crud_list/RESET';
+export const REFRESH = 'crud_list/REFRESH';

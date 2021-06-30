@@ -9,7 +9,7 @@ import rootSaga from './sagas';
 import createTransform from 'redux-persist/es/createTransform';
 import Flatted from 'flatted';
 
-import ReactotronConfig from '../ReactotronConfig'
+import ReactotronConfig from '../ReactotronConfig';
 
 export const transformCircular = createTransform(
   (inboundState, key) => Flatted.stringify(inboundState),
@@ -21,18 +21,22 @@ const persistConfig = {
   // transforms: [immutableTransform()],
   transforms: [transformCircular],
   storage: AsyncStorage,
+  blacklist: ['auth', 'common'],
   // whitelist: ['chat', 'language'],
 };
 
 // const composeEnhancers = !!process.env.ENV ||process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
-const sagaMonitor = ReactotronConfig.createSagaMonitor()
-const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+const sagaMonitor = ReactotronConfig.createSagaMonitor();
+const sagaMiddleware = createSagaMiddleware({sagaMonitor});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default () => {
-  const enhancer = compose(applyMiddleware(sagaMiddleware), ReactotronConfig.createEnhancer());
+  const enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+    ReactotronConfig.createEnhancer(),
+  );
 
   const store = createStore(persistedReducer, enhancer);
   let persistor = persistStore(store);

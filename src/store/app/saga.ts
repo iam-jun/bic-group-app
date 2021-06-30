@@ -13,7 +13,7 @@ import {IObject} from '~/interfaces/common';
  * @returns {IterableIterator<*>}
  */
 
-function timeout(ms: number) {
+function timeOut(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -24,7 +24,7 @@ export default function* saga() {
 function* getConfigs() {
   try {
     //[FIXME] Should be removed when API ready for use
-    yield timeout(1000);
+    yield timeOut(1000);
     // const response: IObject<any> = yield call(api.getConfigs);
     // yield put(actions.setConfigs(response));
   } catch (err) {

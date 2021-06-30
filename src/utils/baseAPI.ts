@@ -3,7 +3,7 @@ import Config from 'react-native-config';
 
 const baseAPI = axios.create({
   baseURL: `${Config.BASE_API_URL}${Config.API_VERSION}`,
-  timeout: 60 * 1000, //60 seconds
+  timeOut: 60 * 1000, //60 seconds
   withCredentials: false,
 });
 
@@ -13,14 +13,14 @@ baseAPI.interceptors.request.use(
   async config => {
     /** In dev, intercepts request and logs it into console for dev */
     if (DEBUG) {
-      console.info('baseApi.interceptors.request', 'request', config);
+      console.info('baseAPI.interceptors.request', 'request', config);
     }
 
     return config;
   },
   error => {
     if (DEBUG) {
-      console.info('baseApi.interceptors.request', 'error', error);
+      console.info('baseAPI.interceptors.request', 'error', error);
     }
     return Promise.reject(error);
   },
@@ -29,14 +29,14 @@ baseAPI.interceptors.request.use(
 baseAPI.interceptors.response.use(
   response => {
     if (DEBUG) {
-      console.info('baseApi.interceptors.response', 'response', response);
+      console.info('baseAPI.interceptors.response', 'response', response);
     }
 
     return response.data;
   },
   async error => {
     if (DEBUG) {
-      console.log('baseApi.interceptors.response', 'error', error);
+      console.log('baseAPI.interceptors.response', 'error', error);
     }
 
     if (axios.isCancel(error)) {
