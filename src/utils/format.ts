@@ -37,3 +37,37 @@ export const formatText = (text_label: string, ...params: number[]): string => {
   });
   return text;
 };
+
+export const formatPhoneNumber = (text: string) => {
+  if (!text) return text;
+  const cleaned = ('' + text).replace(/\D/g, '');
+  const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    const intlCode = match[1] ? '+1 ' : '',
+      number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
+        '',
+      );
+
+    return number;
+  }
+  return text;
+};
+
+export const toNumber = (text: string, decimalFixed: number) => {
+  if (!text) return text;
+  let fixed = decimalFixed || 2;
+  let value: string | number = text;
+
+  text = text.replace(/,/g, '.');
+  if (!text.endsWith('.')) {
+    if (text.includes('.')) {
+      const decimalPath = text.split('.')[1];
+      value = parseFloat(text).toFixed(
+        decimalPath.length < fixed ? decimalPath.length : fixed,
+      );
+    } else {
+      value = Number(text);
+    }
+  }
+  return value;
+};

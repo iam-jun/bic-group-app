@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   StyleSheet,
+  RefreshControl,
 } from 'react-native';
 import {spacing} from '~/theme/configs';
 import _ from 'lodash';
@@ -22,6 +23,8 @@ export interface IListView {
   renderItemSeparator?: Function;
   horizontal?: boolean;
   loading?: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => void;
   title?: string;
   listRef?: React.Ref<FlatList>;
   [x: string]: any;
@@ -39,8 +42,11 @@ const ListView: React.FC<IListView> = ({
   onActionPress,
   horizontal,
   loading,
+  refreshing,
+  onRefresh,
   title,
   listRef,
+
   ...props
 }) => {
   const getKeyValue =
@@ -88,7 +94,11 @@ const ListView: React.FC<IListView> = ({
 
   return (
     <View>
-      {title && <Text style={styles.title}>{title}</Text>}
+      {title && (
+        <Text h2 bold style={styles.title}>
+          {title}
+        </Text>
+      )}
       <FlatList
         {...props}
         ref={listRef}
@@ -98,6 +108,11 @@ const ListView: React.FC<IListView> = ({
         showsVerticalScrollIndicator={false}
         renderItem={item => _renderItem(item)}
         initialNumToRender={10}
+        refreshControl={
+          onRefresh ? (
+            <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
+          ) : undefined
+        }
         ItemSeparatorComponent={() =>
           renderItemSeparator
             ? renderItemSeparator()
@@ -111,8 +126,6 @@ const ListView: React.FC<IListView> = ({
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
     margin: spacing.margin.large,
   },
 });

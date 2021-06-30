@@ -10,10 +10,11 @@ import HorizontalListView from '../HorizontalListView';
 import ListView from '../ListView';
 import Markdown from '../../Text/Markdown';
 import {IObject} from '~/interfaces/common';
-import {borderRadius, margin, padding} from '~/theme/configs/spacing';
+import spacing, {borderRadius, margin, padding} from '~/theme/configs/spacing';
 import {IAction} from '~/constants/commonActions';
 import {IReactionAction} from './ReactionActionItem';
 import {useTheme} from 'react-native-paper';
+import ViewSpacing from '../../ViewSpacing';
 
 const PostItem: React.FC<IObject<any>> = ({
   user,
@@ -41,13 +42,14 @@ const PostItem: React.FC<IObject<any>> = ({
         {user && (
           <HeaderView
             avatar={{user}}
-            firstLabel={user.fullName}
+            firstLabel={user.name}
             secondLabel={updatedAt}
             thirdLabel={locationName}
             showBackButton={showBackButton}
           />
         )}
       </View>
+      <ViewSpacing height={spacing.margin.base} />
 
       <Markdown style={styles.content} maxLength={maxLength}>
         {content}

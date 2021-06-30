@@ -37,7 +37,7 @@ export function generateRandomEmail(): string {
   return string + '@domain.com';
 }
 
-export function generateRandomWords() {
+export function generateRandomWords(min?: number, max?: number): string {
   const words = [
     'monitor',
     'program',
@@ -49,7 +49,7 @@ export function generateRandomWords() {
   ];
 
   let str = '';
-  const maxWords = getRandomInt(3, 50);
+  const maxWords = getRandomInt(min || 3, max || 50);
   Array.from(Array(maxWords).keys()).forEach(index => {
     str = `${str ? `${str} ` : ''}${
       words[Math.floor(Math.random() * words.length)]

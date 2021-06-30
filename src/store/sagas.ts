@@ -4,11 +4,19 @@ import commonSaga from './common/saga';
 import authSaga from './auth/saga';
 import chatSaga from './chat/saga';
 import commentSaga from './comment/saga';
+import CRUDListSaga from './CRUDList/saga';
 
 /**
  * Root saga
  * @returns {IterableIterator<AllEffect | GenericAllEffect<any> | *>}
  */
 export default function* rootSagas() {
-  yield all([appSaga(), commonSaga(), authSaga(), chatSaga(), commentSaga()]);
+  yield all([
+    appSaga(),
+    commonSaga(),
+    authSaga(),
+    chatSaga(),
+    commentSaga(),
+    CRUDListSaga(),
+  ]);
 }
