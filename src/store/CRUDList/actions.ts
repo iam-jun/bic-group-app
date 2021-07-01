@@ -1,4 +1,6 @@
 import {IObject} from '~/interfaces/common';
+import {AxiosRequestConfig} from 'axios';
+
 import {
   GET_DATA,
   SET_DATA,
@@ -14,9 +16,8 @@ import {
   REFRESH,
   GET_DATA_FAIL,
 } from './constants';
-import {AxiosRequestConfig} from 'axios';
 
-const getData = (
+export const getData = (
   dataType: string,
   listType: string,
   params?: IObject<any>,
@@ -29,42 +30,42 @@ const getData = (
   config,
 });
 
-const setData = (dataType: string, data: IObject<any>[]) => ({
+export const setData = (dataType: string, data: IObject<any>[]) => ({
   type: SET_DATA,
   dataType,
   data,
 });
 
-const getDataFail = (dataType: string) => ({
+export const getDataFail = (dataType: string) => ({
   type: GET_DATA_FAIL,
   dataType,
 });
 
-const createItem = (dataType: string, body: IObject<any>) => ({
+export const createItem = (dataType: string, body: IObject<any>) => ({
   type: CREATE_ITEM,
   dataType,
   body,
 });
 
-const createItemSuccess = (dataType: string, data: IObject<any>) => ({
+export const createItemSuccess = (dataType: string, data: IObject<any>) => ({
   type: CREATE_ITEM_SUCCESS,
   dataType,
   data,
 });
 
-const deleteItem = (dataType: string, id: string | number) => ({
+export const deleteItem = (dataType: string, id: string | number) => ({
   type: DELETE_ITEM,
   dataType,
   id,
 });
 
-const deleteItemSuccess = (dataType: string, id: string | number) => ({
+export const deleteItemSuccess = (dataType: string, id: string | number) => ({
   type: DELETE_ITEM_SUCCESS,
   dataType,
   id,
 });
 
-const updateItem = (
+export const updateItem = (
   dataType: string,
   id: string | number,
   body: IObject<any>,
@@ -75,7 +76,7 @@ const updateItem = (
   body,
 });
 
-const updateItemSuccess = (
+export const updateItemSuccess = (
   dataType: string,
   id: string,
   data: IObject<any>,
@@ -86,13 +87,13 @@ const updateItemSuccess = (
   data,
 });
 
-const setExtraData = (dataType: string, data: IObject<any>[]) => ({
+export const setExtraData = (dataType: string, data: IObject<any>[]) => ({
   type: SET_EXTRA_DATA,
   dataType,
   data,
 });
 
-const mergeExtraData = (
+export const mergeExtraData = (
   dataType: string,
   listType: string,
   params?: IObject<any>,
@@ -103,12 +104,12 @@ const mergeExtraData = (
   params,
 });
 
-const reset = (dataType: string) => ({
+export const reset = (dataType: string) => ({
   type: RESET,
   dataType,
 });
 
-const refresh = (
+export const refresh = (
   dataType: string,
   listType: string,
   params?: IObject<any>,
@@ -120,19 +121,3 @@ const refresh = (
   params,
   config,
 });
-
-export default {
-  getData,
-  setData,
-  getDataFail,
-  createItem,
-  createItemSuccess,
-  deleteItem,
-  deleteItemSuccess,
-  updateItem,
-  updateItemSuccess,
-  setExtraData,
-  mergeExtraData,
-  reset,
-  refresh,
-};

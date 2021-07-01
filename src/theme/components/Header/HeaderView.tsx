@@ -109,11 +109,11 @@ const createStyles = (theme: IObject<any>) => {
       marginStart: 4,
     },
     iconBack: {
-      marginStart: margin.large,
+      marginStart: margin.base,
       padding: 6,
     },
     avatar: {
-      marginStart: margin.base,
+      marginStart: margin.large,
     },
     avatarWithIcon: {
       marginStart: 4,

@@ -11,7 +11,8 @@
     "btn_cancel": "Cancel",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
-    "text_ok": "OK"
+    "text_ok": "OK",
+    "text_loading": "Loading..."
   },
   "auth": {
     "text_sign_in": "Sign In",

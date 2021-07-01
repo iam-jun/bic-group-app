@@ -22,6 +22,7 @@ import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import AlertModal from './theme/components/Modal/AlertModal';
 import {LogBox} from 'react-native';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 export default () => {
   LogBox.ignoreAllLogs();
@@ -102,18 +103,20 @@ export default () => {
   themeConfig.fonts = configureFonts(fontConfig);
 
   return (
-    <ThemeProvider>
-      <StatusBar
-        barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
-        translucent
-        backgroundColor="transparent"
-      />
-      <PreferencesContext.Provider value={preferences}>
-        <PaperProvider theme={themeConfig}>
-          <RootNavigator />
-          <AlertModal />
-        </PaperProvider>
-      </PreferencesContext.Provider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <StatusBar
+          barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+          translucent
+          backgroundColor="transparent"
+        />
+        <PreferencesContext.Provider value={preferences}>
+          <PaperProvider theme={themeConfig}>
+            <RootNavigator />
+            <AlertModal />
+          </PaperProvider>
+        </PreferencesContext.Provider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 };

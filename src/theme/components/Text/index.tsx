@@ -86,7 +86,7 @@ const TextElement: React.FC<Props> = props => {
     value = `${value.substr(0, maxLength)}`;
   }
 
-  const theme: any = useTheme();
+  const theme: IObject<any> = useTheme();
   const {fontFamily, dimension, colors} = theme;
   const {sizes, lineHeights, letterSpacing} = dimension;
   const styles = styleText(

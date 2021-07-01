@@ -9,6 +9,7 @@ import {tabsSetting} from '~/configs/navigator';
 
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme/configs';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +28,7 @@ const BottomTabs = () => {
   const {tabsNavigator} = tabsSetting;
 
   const listScreens: IObject<any> = screens;
+  const insets = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
@@ -38,8 +40,7 @@ const BottomTabs = () => {
         keyboardHidesTabBar: true,
         style: {
           backgroundColor: tabBarBackground,
-          paddingBottom: spacing.padding.small,
-          // paddingBottom: theme.spacing.padding.large * 2,
+          paddingBottom: insets.bottom,
           // height: theme.spacing.padding.big * 2,
         },
       }}>

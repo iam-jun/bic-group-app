@@ -101,7 +101,6 @@ const ListView: React.FC<IListView> = ({
           {title}
         </Text>
       )}
-      {loadingMore && <ActivityIndicator />}
       <FlatList
         {...props}
         ref={listRef}
@@ -123,6 +122,7 @@ const ListView: React.FC<IListView> = ({
         }
         keyExtractor={(item, index) => _.uniqueId(`list-${type}-${index}`)}
       />
+      {loadingMore && <ActivityIndicator />}
     </View>
   );
 };

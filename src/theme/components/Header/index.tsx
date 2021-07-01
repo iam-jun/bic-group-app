@@ -54,7 +54,7 @@ const Header: React.FC<Props> = ({
   const theme: IObject<any> = useTheme();
 
   const heightSafeArea = (insets: any) => ({
-    height: Platform.OS === 'android' ? 68 + insets.top : 40 + insets.top,
+    height: Platform.OS === 'android' ? 48 + insets.top : 40 + insets.top,
   });
   const _goBack = () => {
     navigation.goBack();
