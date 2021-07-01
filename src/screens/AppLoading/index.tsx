@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import ThemeView from '~/theme/components/ThemeView';
+import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme/configs';
-import images from '~/constants/images';
+import {spacing} from '~/theme';
+import images from '~/resources/images';
 import * as authActions from '~/store/auth/actions';
 
 const AppLoading = () => {
@@ -19,13 +19,13 @@ const AppLoading = () => {
   }, []);
 
   return (
-    <ThemeView
+    <ScreenWrapper
       testID="AppLoading"
       style={styles.container}
       isFullView
       colorSecondary>
       <Image resizeMode="contain" style={styles.logo} source={images.Logo} />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

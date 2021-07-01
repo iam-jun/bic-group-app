@@ -3,9 +3,9 @@ import {
   generateRandomWords,
   generateUniqueId,
   getRandomInt,
-} from '~/utils/generation';
-import {IUser} from '../auth/interfaces';
-import {IConversation} from './interfaces';
+} from '~/utils/generator';
+import {IUser} from '../../interfaces/IAuth';
+import {IConversation} from '../../interfaces/IChat';
 
 export const messages = (conversation: IConversation) => {
   return Array.from(Array(20).keys()).map(index => ({

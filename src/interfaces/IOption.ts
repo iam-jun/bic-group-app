@@ -1,4 +1,4 @@
-import icons, {IconType} from '~/constants/icons';
+import icons, {IconType} from '~/resources/icons';
 
 export interface IOption {
   type: string;

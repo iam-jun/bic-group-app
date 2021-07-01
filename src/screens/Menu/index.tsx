@@ -2,12 +2,12 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import ThemeView from '~/theme/components/ThemeView';
+import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import useAuth from '~/hooks/auth';
-import HeaderView from '~/theme/components/Header/HeaderView';
-import {spacing} from '~/theme/configs';
-import TransparentButton from '~/theme/components/Button/transparent';
+import HeaderView from '~/components/HeaderView';
+import {spacing} from '~/theme';
+import TransparentButton from '~/components/buttons/TransparentButton';
 import {useBaseHook} from '~/hooks';
 import * as authActions from '~/store/auth/actions';
 
@@ -20,7 +20,7 @@ const Menu = () => {
   const styles = themeStyles(theme);
 
   return (
-    <ThemeView testID="DrawerComponent" style={styles.container} isFullView>
+    <ScreenWrapper testID="DrawerComponent" style={styles.container} isFullView>
       <HeaderView
         firstLabel={user?.name}
         secondLabel={user?.email}
@@ -32,7 +32,7 @@ const Menu = () => {
         title={t('auth:text_sign_out')}
         onPress={() => dispatch(authActions.signOut())}
       />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

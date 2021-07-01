@@ -2,17 +2,17 @@ import React from 'react';
 import {View} from 'react-native';
 import {useDispatch} from 'react-redux';
 
-import {ThemeView} from '~/theme/components';
-import Divider from '~/theme/components/Divider';
-import ListView from '~/theme/components/List/ListView';
-import {margin} from '~/theme/configs/spacing';
+import {ScreenWrapper} from '~/components';
+import Divider from '~/components/Divider';
+import ListView from '~/components/list/ListView';
+import {margin} from '~/theme/spacing';
 import {pinnedGroups, groups} from './dummy-data';
 
 const SubscriptionGroupScreen = () => {
   const dispatch = useDispatch();
 
   return (
-    <ThemeView testID="SubscriptionScreen" isFullView>
+    <ScreenWrapper testID="SubscriptionScreen" isFullView>
       <ListView
         type="group"
         data={groups}
@@ -23,7 +23,7 @@ const SubscriptionGroupScreen = () => {
           </View>
         }
       />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

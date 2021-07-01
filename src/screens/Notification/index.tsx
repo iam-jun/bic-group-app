@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Container, Header, Text} from '~/theme/components';
-import ListView from '~/theme/components/List/ListView';
-import ThemeView from '~/theme/components/ThemeView';
-import {margin, padding} from '~/theme/configs/spacing';
+import {Container, NavigationHeader, Text} from '~/components';
+import ListView from '~/components/list/ListView';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import {margin, padding} from '~/theme/spacing';
 import {dummyNotifications} from './dummy-notifications';
 
 const Notfitication = () => {
   return (
-    <ThemeView testID="NotfiticationScreen" isFullView>
-      <Header title="Notification" rightIcon="iconSettings" />
+    <ScreenWrapper testID="NotfiticationScreen" isFullView>
+      <NavigationHeader title="Notification" rightIcon="iconSettings" />
 
       <Container>
         <ListView
@@ -18,7 +18,7 @@ const Notfitication = () => {
           data={dummyNotifications}
         />
       </Container>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

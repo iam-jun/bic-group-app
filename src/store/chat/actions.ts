@@ -1,5 +1,5 @@
 import * as Actions from './constants';
-import {IConversation, IMessage} from './interfaces';
+import {IConversation, IMessage} from '../../interfaces/IChat';
 
 export const selectConversation = (payload: IConversation) => ({
   type: Actions.SELECT_CONVERSATION,

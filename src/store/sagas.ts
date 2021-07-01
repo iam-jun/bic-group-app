@@ -1,6 +1,6 @@
 import {all} from 'redux-saga/effects';
 import appSaga from './app/saga';
-import commonSaga from './common/saga';
+import modalSaga from './modal/saga';
 import authSaga from './auth/saga';
 import chatSaga from './chat/saga';
 import commentSaga from './comment/saga';
@@ -13,7 +13,7 @@ import CRUDListSaga from './CRUDList/saga';
 export default function* rootSagas() {
   yield all([
     appSaga(),
-    commonSaga(),
+    modalSaga(),
     authSaga(),
     chatSaga(),
     commentSaga(),

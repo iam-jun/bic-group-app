@@ -1,5 +1,5 @@
 import {StyleProp, ViewStyle} from 'react-native';
-import {IUser} from '~/store/auth/interfaces';
+import {IUser} from '~/interfaces/IAuth';
 
 export default interface Props {
   style?: StyleProp<ViewStyle>;

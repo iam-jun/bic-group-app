@@ -1,14 +1,14 @@
 import React from 'react';
-import {Text} from '~/theme/components';
-import ThemeView from '~/theme/components/ThemeView';
+import {Text} from '~/components';
+import ScreenWrapper from '~/components/ScreenWrapper';
 
 const Vip = () => {
   return (
-    <ThemeView testID="VipScreen" disabledDarkMode isFullView>
+    <ScreenWrapper testID="VipScreen" disabledDarkMode isFullView>
       <Text h1 bold>
         VipScreen ~~~~~
       </Text>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

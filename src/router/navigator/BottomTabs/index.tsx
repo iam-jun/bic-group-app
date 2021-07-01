@@ -2,13 +2,13 @@ import React from 'react';
 import {useTheme} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from '~/theme/components/Icon';
+import Icon from '~/components/Icon';
 import * as screens from '~/router/navigator/tab';
 
 import {tabsSetting} from '~/configs/navigator';
 
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme/configs';
+import {spacing} from '~/theme';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();

@@ -6,19 +6,19 @@ import {useDispatch} from 'react-redux';
 import {mainStack} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
-import {IConversation} from '~/store/chat/interfaces';
-import Divider from '~/theme/components/Divider';
-import Input from '~/theme/components/Input';
-import ListView from '~/theme/components/List/ListView';
-import ThemeView from '~/theme/components/ThemeView';
-import {spacing} from '~/theme/configs';
+import {IConversation} from '~/interfaces/IChat';
+import Divider from '~/components/Divider';
+import Input from '~/components/inputs';
+import ListView from '~/components/list/ListView';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import {spacing} from '~/theme';
 import {
   generateRandomName,
   generateRandomUser,
   getRandomInt,
-} from '~/utils/generation';
+} from '~/utils/generator';
 import * as actions from '~/store/chat/actions';
-import {Header} from '~/theme/components';
+import {NavigationHeader} from '~/components';
 
 const Chat = () => {
   const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
@@ -40,8 +40,8 @@ const Chat = () => {
   };
 
   return (
-    <ThemeView style={styles.container} testID="ChatScreen" isFullView>
-      <Header title="Chat" rightIcon="iconSettings" />
+    <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
+      <NavigationHeader title="Chat" rightIcon="iconSettings" />
 
       <Input
         style={styles.inputSearch}
@@ -57,7 +57,7 @@ const Chat = () => {
         onItemPress={onChatPress}
         renderItemSeparator={() => <Divider />}
       />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

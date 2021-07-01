@@ -1,3 +1,1 @@
-export default {
-  dataMode: 'mock',
-};
+export { default as AppConfig } from './appConfig'

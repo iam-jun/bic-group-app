@@ -1,12 +1,12 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {homeStack} from '~/configs/navigator';
-import {Header, ThemeView, ViewSpacing} from '~/theme/components';
-import {spacing} from '~/theme/configs';
+import {NavigationHeader, ScreenWrapper, ViewSpacing} from '~/components';
+import {spacing} from '~/theme';
 import * as actions from '~/store/comment/actions';
 import {StyleSheet, View} from 'react-native';
 import commonActions, {IAction} from '~/constants/commonActions';
-import CRUDListView from '~/theme/components/List/CRUDListView';
+import CRUDListView from '~/components/list/CRUDListView';
 
 const Home = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Home = ({navigation}: {navigation: any}) => {
 
   return (
     <View>
-      <Header title="News Feed" rightIcon="iconSearch" />
+      <NavigationHeader title="News Feed" rightIcon="iconSearch" />
       <CRUDListView
         style={styles.container}
         listType="content"

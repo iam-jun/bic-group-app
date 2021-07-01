@@ -6,20 +6,20 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
-import ThemeView from '~/theme/components/ThemeView';
+import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme/configs';
-import Input from '~/theme/components/Input';
+import {spacing} from '~/theme';
+import Input from '~/components/inputs';
 import * as actions from '~/store/auth/actions';
-import {Container, ViewSpacing} from '~/theme/components';
-import InputPassword from '~/theme/components/Input/InputPassword';
+import {Container, ViewSpacing} from '~/components';
+import InputPassword from '~/components/inputs/InputPassword';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
-import * as validation from '~/utils/validation';
-import * as actionsCommon from '~/store/common/actions';
-import {ISignUpResponse} from '~/store/auth/interfaces';
-import PrimaryButton from '~/theme/components/Button/primary';
-import TransparentButton from '~/theme/components/Button/transparent';
+import * as validation from '~/constants/commonRegex';
+import * as actionsCommon from '~/store/modal/actions';
+import {ISignUpResponse} from '~/interfaces/IAuth';
+import PrimaryButton from '~/components/buttons/PrimaryButton';
+import TransparentButton from '~/components/buttons/TransparentButton';
 import useAuth from '~/hooks/auth';
 
 const SignUp = (props: any) => {
@@ -90,7 +90,7 @@ const SignUp = (props: any) => {
   const disableBtn = checkDisableBtn();
 
   return (
-    <ThemeView testID="SignUpScreen" style={styles.container} isFullView>
+    <ScreenWrapper testID="SignUpScreen" style={styles.container} isFullView>
       <Container>
         <Controller
           control={control}
@@ -190,7 +190,7 @@ const SignUp = (props: any) => {
           onPress={onSubmit}
         />
       </Container>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 
