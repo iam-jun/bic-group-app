@@ -5,7 +5,7 @@ import _ from 'lodash';
 import ListView from './ListView';
 import useCRUDList from '~/hooks/CRUDList';
 import {useDispatch} from 'react-redux';
-import actions from '~/store/CRUDList/actions';
+import * as actions from '~/store/CRUDList/actions';
 
 export interface CRUDListView {
   dataType: string;

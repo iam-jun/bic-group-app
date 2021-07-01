@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Avatar from '../../Image/Avatar';
 import HorizontalView from '../../Layout/HorizontalView';
 import Text from '~/theme/components/Text';
@@ -14,18 +8,9 @@ import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import commonActions from '~/constants/commonActions';
-import {IUser} from '~/store/auth/interfaces';
+import IComment from '~/interfaces/IComment';
 
-export interface Props {
-  style?: StyleProp<ViewStyle>;
-  user: IUser;
-  content: string;
-  replyCount: number;
-  createdAt?: string;
-  onActionPress: Function;
-}
-
-const CommentItem: React.FC<Props> = ({
+const CommentItem: React.FC<IComment> = ({
   style,
   user,
   content,

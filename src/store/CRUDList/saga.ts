@@ -2,7 +2,7 @@ import {AxiosRequestConfig} from 'axios';
 import {call, put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import api from './api';
 import mock from './mock';
-import actions from './actions';
+import * as actions from './actions';
 import * as types from './constants';
 import mapData from './map-data';
 import AppConfig from '~/configs';

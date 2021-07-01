@@ -1,4 +1,5 @@
 import CRUDlist from '~/configs/CRUDList';
+import {IObject} from '~/interfaces/common';
 import {
   CREATE_ITEM,
   CREATE_ITEM_SUCCESS,
@@ -27,8 +28,8 @@ const listDataInitialState = {
 
 const createListState = () => {
   let list = {};
-  Object.keys(CRUDlist).forEach(key => {
-    list[key] = listDataInitialState;
+  Object.keys(CRUDlist).forEach((key: string) => {
+    Object.assign(list, {[key]: listDataInitialState});
   });
   return list;
 };
@@ -43,7 +44,7 @@ const reducer = (state = initialState, action: any = {}) => {
   if (!dataType) return state;
 
   const {list, pageSize} = state;
-  const data = list[dataType];
+  const data: IObject<any> = list[dataType as keyof typeof list];
   console.log({action, dataType, list, data});
 
   const {page} = data;
@@ -145,7 +146,7 @@ const reducer = (state = initialState, action: any = {}) => {
           [dataType]: {
             ...data,
             data: action.data.localId
-              ? data.data.map(item =>
+              ? data.data.map((item: IObject<any>) =>
                   item.localId === action.data.localId
                     ? {
                         ...action.data,
@@ -164,7 +165,7 @@ const reducer = (state = initialState, action: any = {}) => {
           ...list,
           [dataType]: {
             ...data,
-            data: data.data.map(item =>
+            data: data.data.map((item: IObject<any>) =>
               item.id === action.body.id
                 ? {
                     ...action.body,
@@ -182,7 +183,7 @@ const reducer = (state = initialState, action: any = {}) => {
           ...list,
           [dataType]: {
             ...data,
-            data: data.data.map(item =>
+            data: data.data.map((item: IObject<any>) =>
               item.id === action.id
                 ? {
                     ...item,
@@ -201,7 +202,9 @@ const reducer = (state = initialState, action: any = {}) => {
           ...list,
           [dataType]: {
             ...data,
-            data: data.data.filter(item => item.id !== action.id),
+            data: data.data.filter(
+              (item: IObject<any>) => item.id !== action.id,
+            ),
           },
         },
       };

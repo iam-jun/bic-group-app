@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, TextInput} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Modalize} from 'react-native-modalize';
 import InputToolbar from '~/theme/components/Input/InputToolbar';
 import ContentItem from '~/theme/components/List/items/ContentItem';
@@ -10,7 +10,7 @@ import {IObject} from '~/interfaces/common';
 import {generateUniqueId} from '~/utils/generation';
 import useAuth from '~/hooks/auth';
 import {useTheme} from 'react-native-paper';
-import {ThemeView} from '~/theme/components';
+import {ThemeView, ViewSpacing} from '~/theme/components';
 import {useBaseHook} from '~/hooks';
 import {launchImageLibrary} from 'react-native-image-picker';
 import commonActions from '~/constants/commonActions';
@@ -18,12 +18,11 @@ import MessageOptionsModal from '~/theme/containers/Modal/MessageOptions';
 import {mainStack} from '~/configs/navigator';
 import Text from '~/theme/components/Text';
 import {margin} from '~/theme/configs/spacing';
-import {selectComment} from '~/store/comment/actions';
-import listActions from '~/store/CRUDList/actions';
+import * as actions from '~/store/comment/actions';
+import * as listActions from '~/store/CRUDList/actions';
 import CRUDListView from '~/theme/components/List/CRUDListView';
+import useCRUDList from '~/hooks/CRUDList';
 
-// TODO: need to use redux to get data
-// Temp: using dummy data to show post detail
 const PostDetailScreen = ({
   route,
   navigation,
@@ -38,12 +37,12 @@ const PostDetailScreen = ({
   const {user} = useAuth();
 
   const dispatch = useDispatch();
-  const comments = useSelector((state: IObject<any>) => state.comment.comments);
   const theme = useTheme();
   const styles = createStyles(theme);
   const scrollRef = React.createRef<ScrollView>();
   const [isCommentChanged, setCommentchanged] = useState(false);
   const commentOptionsModalRef = React.useRef<Modalize>();
+  const list = useCRUDList('comments');
 
   const _onActionPress = (action: string, item?: any) => {
     switch (action) {
@@ -51,7 +50,7 @@ const PostDetailScreen = ({
         return commentInputRef.current?.focus();
 
       case commonActions.replyComment:
-        dispatch(selectComment(item));
+        dispatch(actions.selectComment(item));
         navigation.navigate(mainStack.reply, {commentFocus: true});
         break;
 
@@ -95,6 +94,7 @@ const PostDetailScreen = ({
 
   return (
     <ThemeView isFullView>
+      <ViewSpacing height={spacing.margin.large} />
       <ScrollView
         ref={scrollRef}
         style={styles.container}
@@ -108,6 +108,7 @@ const PostDetailScreen = ({
         }}
         contentContainerStyle={styles.container}>
         <CRUDListView
+          style={styles.comment}
           onActionPress={_onActionPress}
           contentContainerStyle={styles.comment}
           listType="comment"
@@ -124,7 +125,9 @@ const PostDetailScreen = ({
                 showBackButton={true}
               />
               <Text bold style={styles.prevComments} onPress={loadMoreComments}>
-                {t('comment:view_previous_comments')}
+                {list.loadingMore
+                  ? t('common:text_loading')
+                  : t('comment:view_previous_comments')}
               </Text>
             </>
           }
@@ -151,7 +154,7 @@ const createStyles = (theme: IObject<any>) => {
       flexGrow: 1,
     },
     comment: {
-      paddingVertical: spacing.padding.base,
+      paddingBottom: spacing.padding.large,
     },
     prevComments: {
       margin: margin.large,
