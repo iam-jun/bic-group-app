@@ -7,7 +7,7 @@ import * as screens from './tabs';
 import {groupTabsSetting} from '~/configs/navigator';
 import {IObject} from '~/interfaces/common';
 import {View} from 'react-native';
-import {Header, ThemeView} from '~/theme/components';
+import {NavigationHeader, ScreenWrapper} from '~/components';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -27,8 +27,8 @@ const GroupTabs = () => {
   const listScreens: IObject<any> = screens;
 
   return (
-    <ThemeView isFullView>
-      <Header title="Groups" />
+    <ScreenWrapper isFullView>
+      <NavigationHeader title="Groups" />
       <TopTab.Navigator
         initialRouteName={initialRouteName}
         backBehavior={backBehavior}
@@ -49,7 +49,7 @@ const GroupTabs = () => {
           );
         })}
       </TopTab.Navigator>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

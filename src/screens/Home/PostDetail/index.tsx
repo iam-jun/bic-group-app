@@ -2,25 +2,25 @@ import React, {useState} from 'react';
 import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {Modalize} from 'react-native-modalize';
-import InputToolbar from '~/theme/components/Input/InputToolbar';
-import ContentItem from '~/theme/components/List/items/ContentItem';
-import {spacing} from '~/theme/configs';
+import InputToolbar from '~/components/inputs/InputToolbar';
+import ContentItem from '~/components/list/items/ContentItem';
+import {spacing} from '~/theme';
 import {post} from './dummy-post-data';
 import {IObject} from '~/interfaces/common';
-import {generateUniqueId} from '~/utils/generation';
+import {generateUniqueId} from '~/utils/generator';
 import useAuth from '~/hooks/auth';
 import {useTheme} from 'react-native-paper';
-import {ThemeView, ViewSpacing} from '~/theme/components';
+import {ScreenWrapper, ViewSpacing} from '~/components';
 import {useBaseHook} from '~/hooks';
 import {launchImageLibrary} from 'react-native-image-picker';
 import commonActions from '~/constants/commonActions';
-import MessageOptionsModal from '~/theme/containers/Modal/MessageOptions';
+import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
 import {mainStack} from '~/configs/navigator';
-import Text from '~/theme/components/Text';
-import {margin} from '~/theme/configs/spacing';
+import Text from '~/components/texts/Text';
+import {margin} from '~/theme/spacing';
 import * as actions from '~/store/comment/actions';
 import * as listActions from '~/store/CRUDList/actions';
-import CRUDListView from '~/theme/components/List/CRUDListView';
+import CRUDListView from '~/components/list/CRUDListView';
 import useCRUDList from '~/hooks/CRUDList';
 
 const PostDetailScreen = ({
@@ -93,7 +93,7 @@ const PostDetailScreen = ({
   };
 
   return (
-    <ThemeView isFullView>
+    <ScreenWrapper isFullView>
       <ViewSpacing height={spacing.margin.large} />
       <ScrollView
         ref={scrollRef}
@@ -143,7 +143,7 @@ const PostDetailScreen = ({
         modalRef={commentOptionsModalRef}
         onReactionPress={onReactionPress}
       />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 const createStyles = (theme: IObject<any>) => {

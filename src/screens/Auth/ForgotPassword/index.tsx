@@ -7,20 +7,20 @@ import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import {useBaseHook} from '~/hooks';
-import ThemeView from '~/theme/components/ThemeView';
+import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme/configs';
-import Input from '~/theme/components/Input';
+import {spacing} from '~/theme';
+import Input from '~/components/inputs';
 import * as actions from '~/store/auth/actions';
-import * as actionsCommon from '~/store/common/actions';
-import {Container, ViewSpacing} from '~/theme/components';
-import InputPassword from '~/theme/components/Input/InputPassword';
+import * as actionsCommon from '~/store/modal/actions';
+import {Container, ViewSpacing} from '~/components';
+import InputPassword from '~/components/inputs/InputPassword';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
-import * as validation from '~/utils/validation';
-import PrimaryButton from '~/theme/components/Button/primary';
+import * as validation from '~/constants/commonRegex';
+import PrimaryButton from '~/components/buttons/PrimaryButton';
 import useAuth from '~/hooks/auth';
-import TransparentButton from '~/theme/components/Button/transparent';
+import TransparentButton from '~/components/buttons/TransparentButton';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ const ForgotPassword = () => {
   const changePasswordDisable = checkBtnChangePassword();
 
   return (
-    <ThemeView
+    <ScreenWrapper
       testID="ForgotPasswordScreen"
       style={styles.container}
       isFullView>
@@ -226,7 +226,7 @@ const ForgotPassword = () => {
           title={t('auth:navigate_sign_in')}
         />
       </Container>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

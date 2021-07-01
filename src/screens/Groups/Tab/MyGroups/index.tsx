@@ -1,17 +1,17 @@
 import React from 'react';
-import {Text} from '~/theme/components';
+import {Text} from '~/components';
 import {useDispatch} from 'react-redux';
-import {ThemeView} from '~/theme/components';
+import {ScreenWrapper} from '~/components';
 
 const MyGroupsScreen = () => {
   const dispatch = useDispatch();
 
   return (
-    <ThemeView testID="MyGroupsScreen" isFullView>
+    <ScreenWrapper testID="MyGroupsScreen" isFullView>
       <Text h1 bold>
         ~~~ My Groups screen ~~~
       </Text>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

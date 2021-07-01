@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 /* State Redux */
 import {useSelector, useDispatch} from 'react-redux';
 import {languageSelector} from '~/store/language/selectors';
-import {fetchSetting} from '~/store/common/actions';
+import {fetchSetting} from '~/store/modal/actions';
 import {fontConfig} from '~/configs/fonts';
 
 /* Theme */
@@ -17,10 +17,10 @@ import {
   Provider as ThemeProvider,
 } from 'react-native-paper';
 import {useColorScheme} from 'react-native';
-import {colors, fonts, spacing, dimension, shadow} from '~/theme/configs';
+import {colors, fonts, spacing, dimension, shadow} from '~/theme';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
-import AlertModal from './theme/components/Modal/AlertModal';
+import AlertModal from './components/modals/AlertModal';
 import {LogBox} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 

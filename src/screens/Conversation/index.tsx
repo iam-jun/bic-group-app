@@ -4,26 +4,27 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
+
 import {options} from '~/constants/messageOptions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
 import {IOption} from '~/interfaces/IOption';
-import HeaderView from '~/theme/components/Header/HeaderView';
-import ThemeView from '~/theme/components/ThemeView';
-import ChatFooter from '~/theme/containers/Chat/ChatFooter';
-import {ChatInput} from '~/theme/containers/Chat/ChatInput';
-import MessageContainer from '~/theme/containers/Chat/MessageContainer';
-import MessageOptionsModal from '~/theme/containers/Modal/MessageOptions';
-import Header from '~/theme/components/Header';
+import HeaderView from '~/components/HeaderView';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import ChatFooter from '~/components/fragments/chat/ChatFooter';
+import {ChatInput} from '~/components/fragments/chat/ChatInput';
+import MessageContainer from '~/components/fragments/chat/MessageContainer';
+import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
+import NavigationHeader from '~/components/headers/NavigationHeader';
 import {useDispatch} from 'react-redux';
 import * as actions from '~/store/chat/actions';
 import {useBaseHook} from '~/hooks';
 import {mainStack} from '~/configs/navigator';
-import {spacing} from '~/theme/configs';
-import {GMessage, IMessage} from '~/store/chat/interfaces';
-import {default as LoadingMessage} from '~/theme/components/Loading/Message';
-import {generateUniqueId} from '~/utils/generation';
+import {spacing} from '~/theme';
+import {GMessage, IMessage} from '~/interfaces/IChat';
+import {default as LoadingMessage} from '~/components/list/loadings/Message';
+import {generateUniqueId} from '~/utils/generator';
 
 const Conversation = () => {
   // const [messages, setMessages] = useState<IMessage[]>([]);
@@ -90,8 +91,8 @@ const Conversation = () => {
   };
 
   return (
-    <ThemeView isFullView testID="MessageScreen">
-      <Header
+    <ScreenWrapper isFullView testID="MessageScreen">
+      <NavigationHeader
         isFullView
         isDefault
         title={conversation.name}
@@ -140,7 +141,7 @@ const Conversation = () => {
         onReactionPress={onReactionPress}
         onClosed={onOptionsClosed}
       />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

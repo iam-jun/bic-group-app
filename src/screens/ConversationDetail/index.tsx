@@ -2,18 +2,19 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
+
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
-import {IUser} from '~/store/auth/interfaces';
-import {Container, Header, Text, ViewSpacing} from '~/theme/components';
-import Divider from '~/theme/components/Divider';
-import Icon from '~/theme/components/Icon';
-import Avatar from '~/theme/components/Image/Avatar';
-import ListView from '~/theme/components/List/ListView';
-import ThemeView from '~/theme/components/ThemeView';
-import {spacing} from '~/theme/configs';
-import MemberOptions from '~/theme/containers/Modal/MemberOptions';
+import {IUser} from '~/interfaces/IAuth';
+import {Container, NavigationHeader, Text, ViewSpacing} from '~/components';
+import Divider from '~/components/Divider';
+import Icon from '~/components/Icon';
+import Avatar from '~/components/Avatar';
+import ListView from '~/components/list/ListView';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import {spacing} from '~/theme';
+import MemberOptions from '~/components/fragments/optionModals/MemberOptions';
 
 const ConversationDetail = () => {
   const theme: IObject<any> = useTheme();
@@ -29,7 +30,7 @@ const ConversationDetail = () => {
   };
 
   return (
-    <ThemeView testID="ConversationDetailScreen" isFullView>
+    <ScreenWrapper testID="ConversationDetailScreen" isFullView>
       <Container style={styles.container}>
         <Icon
           style={styles.iconBack}
@@ -57,7 +58,7 @@ const ConversationDetail = () => {
         />
       </Container>
       <MemberOptions modalRef={modalRef} member={selectedMember} />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import app from './app/reducer';
-import common from './common/reducer';
+import modal from './modal/reducer';
 import language from './language/reducer';
 import auth from './auth/reducer';
 import chat from './chat/reducer';
@@ -13,7 +13,7 @@ import CRUDList from './CRUDList/reducer';
  */
 const rootReducers = combineReducers({
   app,
-  common,
+  modal,
   language,
   auth,
   chat,

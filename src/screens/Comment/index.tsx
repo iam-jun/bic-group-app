@@ -3,18 +3,18 @@ import {StyleSheet, TextInput, ScrollView} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {useDispatch, useSelector} from 'react-redux';
 
-import CommentItem from '~/theme/components/List/items/CommentItem';
-import Text from '~/theme/components/Text';
+import CommentItem from '~/components/list/items/CommentItem';
+import Text from '~/components/texts/Text';
 import {useBaseHook} from '~/hooks';
-import {ThemeView} from '~/theme/components';
-import InputToolbar from '~/theme/components/Input/InputToolbar';
-import Header from '~/theme/components/Header';
-import MessageOptionsModal from '~/theme/containers/Modal/MessageOptions';
+import {ScreenWrapper} from '~/components';
+import InputToolbar from '~/components/inputs/InputToolbar';
+import NavigationHeader from '~/components/headers/NavigationHeader';
+import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
 import {IObject} from '~/interfaces/common';
-import {generateUniqueId} from '~/utils/generation';
+import {generateUniqueId} from '~/utils/generator';
 import useAuth from '~/hooks/auth';
 import commonActions from '~/constants/commonActions';
-import CRUDListView from '~/theme/components/List/CRUDListView';
+import CRUDListView from '~/components/list/CRUDListView';
 import listActions from '~/store/CRUDList/actions';
 
 const CommentScreen = ({route}: {route: any}) => {
@@ -64,8 +64,8 @@ const CommentScreen = ({route}: {route: any}) => {
   };
 
   return (
-    <ThemeView isFullView testID="CommentScreen">
-      <Header
+    <ScreenWrapper isFullView testID="CommentScreen">
+      <NavigationHeader
         isFullView
         isDefault
         title={`Reply to ${originalComment.user.name}`}
@@ -104,7 +104,7 @@ const CommentScreen = ({route}: {route: any}) => {
         onSend={onSendReply}
         replyingComment={replyingComment}
       />
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

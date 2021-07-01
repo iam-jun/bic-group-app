@@ -6,22 +6,22 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
-import ThemeView from '~/theme/components/ThemeView';
+import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme/configs';
-import Input from '~/theme/components/Input';
+import {spacing} from '~/theme';
+import Input from '~/components/inputs';
 import * as actions from '~/store/auth/actions';
-import {Container, ViewSpacing} from '~/theme/components';
-import InputPassword from '~/theme/components/Input/InputPassword';
-import {AuthProvider} from '~/constants/enum/AuthProvider';
+import {Container, ViewSpacing} from '~/components';
+import InputPassword from '~/components/inputs/InputPassword';
+import {AuthProviders} from '~/constants/authProviders';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
-import * as validation from '~/utils/validation';
-import images from '~/constants/images';
-import PrimaryButton from '~/theme/components/Button/primary';
-import Text from '~/theme/components/Text';
+import * as validation from '~/constants/commonRegex';
+import images from '~/resources/images';
+import PrimaryButton from '~/components/buttons/PrimaryButton';
+import Text from '~/components/texts/Text';
 import useAuth from '~/hooks/auth';
-import TransparentButton from '~/theme/components/Button/transparent';
+import TransparentButton from '~/components/buttons/TransparentButton';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ const SignIn = () => {
   const loginDisable = checkBtnLogin();
 
   return (
-    <ThemeView
+    <ScreenWrapper
       testID="SignInScreen"
       style={styles.container}
       isFullView
@@ -152,16 +152,16 @@ const SignIn = () => {
           testID="btnLoginFB"
           style={styles.button}
           title={t('auth:btn_sign_in_fb')}
-          onPress={() => dispatch(actions.signInOAuth(AuthProvider.FACEBOOK))}
+          onPress={() => dispatch(actions.signInOAuth(AuthProviders.FACEBOOK))}
         />
         <PrimaryButton
           testID="btnLoginGG"
           style={styles.button}
           title={t('auth:btn_sign_in_gg')}
-          onPress={() => dispatch(actions.signInOAuth(AuthProvider.GOOGLE))}
+          onPress={() => dispatch(actions.signInOAuth(AuthProviders.GOOGLE))}
         />
       </Container>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 

@@ -4,7 +4,7 @@ import {
   generateUniqueId,
   getRandomInt,
   generateRandomUser,
-} from '~/utils/generation';
+} from '~/utils/generator';
 
 export const getData = async () => {
   await timeOut();

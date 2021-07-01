@@ -1,14 +1,14 @@
 import React from 'react';
-import {Text} from '~/theme/components';
-import ThemeView from '~/theme/components/ThemeView';
+import {Text} from '~/components';
+import ScreenWrapper from '~/components/ScreenWrapper';
 
 const Search = () => {
   return (
-    <ThemeView testID="SearchScreen" disabledDarkMode isFullView>
+    <ScreenWrapper testID="SearchScreen" disabledDarkMode isFullView>
       <Text h1 bold>
         SearchScreen ~~~~~
       </Text>
-    </ThemeView>
+    </ScreenWrapper>
   );
 };
 
