@@ -2,7 +2,7 @@ import {all, put, call, takeLatest, select} from 'redux-saga/effects';
 
 import * as types from './constants';
 import * as actions from './actions';
-import {IComment} from './IComment';
+import IComment from '~/interfaces/IComment';
 import {timeOut} from '~/utils/common';
 
 export default function* saga() {
