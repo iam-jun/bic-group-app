@@ -10,6 +10,7 @@ import {IObject} from '~/interfaces/common';
 import * as RootNavigation from '~/utils/refNavigator';
 import {homeStack} from '~/configs/navigator';
 import {useTheme} from 'react-native-paper';
+import {formatDate} from '~/utils/formatData';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -74,7 +75,7 @@ const HeaderView: React.FC<Props> = ({
               <Text
                 style={[styles.label, secondLabelStyle, {marginBottom: space}]}
                 h6>
-                {secondLabel}
+                {formatDate(secondLabel, 'll', 3) || secondLabel}
               </Text>
             </>
           )}
