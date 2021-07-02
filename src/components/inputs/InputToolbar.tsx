@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Platform, TextInput} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform, StyleSheet, TextInput} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/components/Icon';
 import {spacing} from '~/theme';

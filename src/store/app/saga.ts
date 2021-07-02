@@ -1,17 +1,6 @@
-import {all, put, call, takeLatest} from 'redux-saga/effects';
+import {takeLatest} from 'redux-saga/effects';
 
 import * as types from './constants';
-import * as actions from './actions';
-import * as api from './api';
-import * as refNavigator from '~/utils/refNavigator';
-import {rootSwitch} from '~/configs/navigator';
-import {IObject} from '~/interfaces/common';
-
-/**
- * Videos
- * @param payload
- * @returns {IterableIterator<*>}
- */
 
 function timeOut(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
