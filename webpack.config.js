@@ -34,6 +34,7 @@ const compileNodeModules = [
   'amazon-cognito-identity-js',
   'aws-amplify',
   'react-hook-form',
+  'react-native-fast-image', // TODO: need check on web
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {
@@ -136,7 +137,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, './src/web/index.html'),
+      template: path.join(__dirname, 'src/web/index.html'),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({

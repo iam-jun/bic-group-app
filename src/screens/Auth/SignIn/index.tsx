@@ -13,7 +13,7 @@ import Input from '~/components/inputs';
 import * as actions from '~/store/auth/actions';
 import {Container, ViewSpacing} from '~/components';
 import InputPassword from '~/components/inputs/InputPassword';
-import {AuthProviders} from '~/constants/authProviders';
+import AuthProviders from '~/constants/authProviders';
 import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';

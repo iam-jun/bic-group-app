@@ -1,7 +1,8 @@
-import {composeWithDevTools} from 'redux-devtools-extension';
-import {createStore, applyMiddleware, compose} from 'redux';
+import ReactotronConfig from '~/ReactotronConfig';
+
+import {applyMiddleware, compose, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {persistStore, persistReducer} from 'redux-persist';
+import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import immutableTransform from 'redux-persist-transform-immutable';
 import rootReducer from './reducers';
@@ -9,7 +10,6 @@ import rootSaga from './sagas';
 import createTransform from 'redux-persist/es/createTransform';
 import Flatted from 'flatted';
 
-import ReactotronConfig from '../ReactotronConfig';
 
 export const transformCircular = createTransform(
   (inboundState, key) => Flatted.stringify(inboundState),
@@ -21,7 +21,7 @@ const persistConfig = {
   // transforms: [immutableTransform()],
   transforms: [transformCircular],
   storage: AsyncStorage,
-  blacklist: ['auth', 'common'],
+  blacklist: ['auth', 'modal'],
   // whitelist: ['chat', 'language'],
 };
 

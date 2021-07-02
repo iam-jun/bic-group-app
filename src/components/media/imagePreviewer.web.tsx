@@ -1,14 +1,5 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  View,
-  Text,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
+import {Modal, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,} from 'react-native';
 import Icon from '../Icon';
 import Image from '../Image';
 
