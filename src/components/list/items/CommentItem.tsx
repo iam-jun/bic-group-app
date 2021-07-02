@@ -9,6 +9,7 @@ import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import commonActions from '~/constants/commonActions';
 import IComment from '~/interfaces/IComment';
+import {formatDate} from '~/utils/formatData';
 
 const CommentItem: React.FC<IComment> = ({
   style,
@@ -35,7 +36,9 @@ const CommentItem: React.FC<IComment> = ({
           </TouchableOpacity>
           <HorizontalView style={styles.bottomBar}>
             <HorizontalView style={styles.commentReaction}>
-              <Text style={styles.commentReactionItem}>{createdAt}</Text>
+              <Text style={styles.commentReactionItem}>
+                {formatDate(createdAt, 'll', 3)}
+              </Text>
               <TouchableOpacity
                 onPress={() => onActionPress(commonActions.emojiCommentReact)}>
                 <Text style={styles.commentReactionItem} bold>
