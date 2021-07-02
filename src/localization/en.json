@@ -69,6 +69,7 @@
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
-    "view_previous_comments": "View previous comments..."
+    "view_previous_comments": "View previous comments...",
+    "reply_to": "Replying to"
   }
 }

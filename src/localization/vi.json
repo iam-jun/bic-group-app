@@ -53,7 +53,15 @@
     "label_share": "Chia sẻ",
     "label_comments": "Bình luận",
     "label_shares": "Chia sẻ",
-    "label_donate": "Đóng góp",
-    "view_previous_comments": "Xem thêm bình luận trước..."
+    "label_donate": "Đóng góp"
+  },
+  "chat": {
+    "placeholder_search": "Tìm kiếm...",
+    "title_members": "Thành viên"
+  },
+  "comment": {
+    "placeholder_comment": "Viết bình luận...",
+    "view_previous_comments": "Xem các bình luận trước...",
+    "reply_to": "Đang trả lời"
   }
 }
