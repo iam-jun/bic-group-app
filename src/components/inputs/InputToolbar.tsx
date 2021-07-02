@@ -10,13 +10,16 @@ import HorizontalView from '../layout/HorizontalView';
 import KeyboardSpacer from '../layout/KeyboardSpacer';
 import {useBaseHook} from '~/hooks';
 import commonActions from '~/constants/commonActions';
-import {IComment} from '~/store/comment/IComment';
+import IComment from '~/interfaces/IComment';
+import Text from '~/components/texts/Text';
+
 export interface Props {
   commentFocus?: boolean;
   onActionPress: (action: string) => void;
   onSend?: (content: string) => void;
   inputRef?: React.Ref<TextInput>;
   replyingComment?: IComment;
+  setReplyingComment?: Function;
 }
 
 const InputToolbar: React.FC<Props> = ({
@@ -25,6 +28,7 @@ const InputToolbar: React.FC<Props> = ({
   onActionPress,
   inputRef,
   replyingComment,
+  setReplyingComment,
 }) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
@@ -34,12 +38,17 @@ const InputToolbar: React.FC<Props> = ({
   const [comment, setComment] = useState<string>('');
 
   useEffect(() => {
-    replyingComment && setComment(`@${replyingComment?.user.name} ${comment}`);
+    replyingComment && setComment(`@${replyingComment?.user.name} `);
   }, [replyingComment]);
 
   const _onSend = () => {
     onSend && onSend(comment.trim());
     setComment('');
+  };
+
+  const onCancelReply = () => {
+    setComment('');
+    setReplyingComment && setReplyingComment(undefined);
   };
 
   const renderActions = () => (
@@ -74,6 +83,16 @@ const InputToolbar: React.FC<Props> = ({
 
   return (
     <ScreenWrapper style={styles.wrapper}>
+      {!!replyingComment && (
+        <HorizontalView>
+          <Text style={styles.replyText}>
+            Replying to <Text bold>{`${replyingComment.user.name}`}</Text>
+          </Text>
+          <Text style={styles.replyText} bold onPress={onCancelReply}>
+            Cancel
+          </Text>
+        </HorizontalView>
+      )}
       <HorizontalView style={styles.inputWrapper}>
         {!isInputFocus && !comment && renderActions()}
         <TextInput
@@ -144,6 +163,10 @@ const createStyles = (theme: IObject<any>) => {
       padding: spacing.padding.base,
       flex: 1,
       maxHeight: 200,
+    },
+    replyText: {
+      marginStart: margin.base,
+      marginBottom: margin.small,
     },
   });
 };

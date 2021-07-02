@@ -15,12 +15,13 @@ import {generateUniqueId} from '~/utils/generator';
 import useAuth from '~/hooks/auth';
 import commonActions from '~/constants/commonActions';
 import CRUDListView from '~/components/list/CRUDListView';
-import listActions from '~/store/CRUDList/actions';
+import * as listActions from '~/store/CRUDList/actions';
+import IComment from '~/interfaces/IComment';
 
 const CommentScreen = ({route}: {route: any}) => {
   const dispatch = useDispatch();
   const comments = useSelector((state: IObject<any>) => state.comment.comments);
-  const originalComment = {...comments.data[0], showReplies: true};
+  const originalComment = {...comments.data[0]};
 
   const {t} = useBaseHook();
   const commentInputRef = React.useRef<TextInput>(null);
@@ -28,7 +29,8 @@ const CommentScreen = ({route}: {route: any}) => {
   const {commentFocus} = route.params || false;
   const {user} = useAuth();
 
-  const [replyingComment, setReplyingComment] = useState('');
+  const [replyingComment, setReplyingComment] =
+    useState<IComment>(originalComment);
 
   const onReactionPress = async (type: string) => {
     console.log('Reacted!');
@@ -103,6 +105,7 @@ const CommentScreen = ({route}: {route: any}) => {
         commentFocus={commentFocus}
         onSend={onSendReply}
         replyingComment={replyingComment}
+        setReplyingComment={setReplyingComment}
       />
     </ScreenWrapper>
   );

@@ -1,5 +1,5 @@
 import * as Actions from './constants';
-import {IComment} from './IComment';
+import IComment from '~/interfaces/IComment';
 
 export const getComments = () => ({
   type: Actions.GET_COMMENTS,
