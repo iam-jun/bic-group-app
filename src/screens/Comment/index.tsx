@@ -17,10 +17,11 @@ import commonActions from '~/constants/commonActions';
 import CRUDListView from '~/components/list/CRUDListView';
 import * as listActions from '~/store/CRUDList/actions';
 import IComment from '~/interfaces/IComment';
+import useComment from '~/hooks/comment';
 
 const CommentScreen = ({route}: {route: any}) => {
   const dispatch = useDispatch();
-  const comments = useSelector((state: IObject<any>) => state.comment.comments);
+  const {comments} = useComment();
   const originalComment = {...comments.data[0]};
 
   const {t} = useBaseHook();
