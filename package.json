@@ -27,6 +27,8 @@
     "amazon-cognito-identity-js": "^5.0.2",
     "aws-amplify": "^4.0.2",
     "detox": "^18.13.0",
+    "graphql": "^14.0.0",
+    "graphql-request": "^3.4.0",
     "i18next": "^20.2.2",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.21",
