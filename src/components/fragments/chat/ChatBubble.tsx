@@ -14,7 +14,6 @@ const ChatBubble: React.FC<BubbleProps<IMessage>> = props => {
 
   return (
     <TouchableWithoutFeedback
-      delayLongPress={200}
       onLongPress={() => onLongPress && onLongPress(props.currentMessage)}>
       <Bubble
         {...props}

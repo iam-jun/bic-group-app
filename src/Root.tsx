@@ -22,7 +22,7 @@ import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import AlertModal from './components/modals/AlertModal';
 import {LogBox} from 'react-native';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default () => {
   LogBox.ignoreAllLogs();
