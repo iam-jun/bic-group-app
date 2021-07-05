@@ -54,6 +54,10 @@
     "title_app_language":"Ngôn ngữ",
     "title_app_theme":"Giao diện"
   },
+  "languages":{
+    "title_en":"Tiếng Anh",
+    "title_vi":"Tiếng Việt"
+  },
   "post": {
     "button_like": "Thích",
     "button_reply": "Trả lời",

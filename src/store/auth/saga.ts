@@ -1,7 +1,7 @@
 import {CognitoUser} from 'amazon-cognito-identity-js';
 import {put, takeLatest} from 'redux-saga/effects';
 import {Auth} from 'aws-amplify';
-import {request, gql, GraphQLClient} from 'graphql-request'
+import {request, gql, GraphQLClient} from 'graphql-request';
 
 import {rootSwitch, authStack} from '~/configs/navigator';
 import * as types from './constants';
@@ -32,7 +32,7 @@ const languages = convertMultiLanguage();
  * @returns {IterableIterator<*>}
  */
 
-function* signIn({payload}: { type: string; payload: IAuth.ISignIn }) {
+function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
   try {
     yield put(actions.setLoading(true));
     const {email, password} = payload;
@@ -60,7 +60,7 @@ function* signIn({payload}: { type: string; payload: IAuth.ISignIn }) {
 //   }
 // }
 
-function* signUp({payload}: { type: string; payload: IAuth.ISignUp }) {
+function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
   const {username, email, password} = payload;
   try {
     yield put(actions.setLoading(true));
@@ -92,8 +92,8 @@ function* signUp({payload}: { type: string; payload: IAuth.ISignUp }) {
 }
 
 function* forgotPassword({
-                           payload,
-                         }: {
+  payload,
+}: {
   type: string;
   payload: IAuth.IForgotPassword;
 }) {
@@ -113,8 +113,8 @@ function* forgotPassword({
 }
 
 function* forgotPasswordSubmit({
-                                 payload,
-                               }: {
+  payload,
+}: {
   type: string;
   payload: IAuth.IForgotPasswordRequest;
 }) {
@@ -153,23 +153,24 @@ function* signOut() {
 
 function* checkAuthState() {
   try {
-
-    const urlGraphQL = 'http://52.15.139.185:3000/graphql'
+    console.log('checkAuthState');
+    const urlGraphQL = 'http://52.15.139.185:3000/graphql';
     const graphQLClient = new GraphQLClient(urlGraphQL, {
       // headers: {
       //   authorization: 'Bearer MY_TOKEN',
       // },
-    })
+    });
 
     const query = gql`
-    query test {
-      ping {
-        message
+      query test {
+        ping {
+          message
+        }
       }
-    }`
+    `;
 
-    let data = yield graphQLClient.request(query)
-    console.log("test:", data)
+    let data: IObject<any> = yield graphQLClient.request(query);
+    console.log('test:', data);
 
     const user: IAuth.IUser = yield storage.getUser();
     if (user) {
@@ -179,7 +180,7 @@ function* checkAuthState() {
       refNavigator.replace(rootSwitch.authStack);
     }
   } catch (e) {
-    console.error(e);
+    console.error('checkAuthState', e);
   }
 }
 
