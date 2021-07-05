@@ -1,10 +1,9 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {I18nManager, StatusBar, Linking, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StatusBar, Platform, NativeModules} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 /* State Redux */
-import {useSelector, useDispatch} from 'react-redux';
-import {languageSelector} from '~/store/language/selectors';
+import {useDispatch} from 'react-redux';
 import {fetchSetting} from '~/store/modal/actions';
 import {fontConfig} from '~/configs/fonts';
 
@@ -22,7 +21,10 @@ import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import AlertModal from './components/modals/AlertModal';
 import {LogBox} from 'react-native';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {AppContext} from './contexts/AppContext';
+import {getLanguage, setLanguage} from './utils/localStorage';
+import {languages, AppConfig} from './configs';
 
 export default () => {
   LogBox.ignoreAllLogs();
@@ -34,12 +36,7 @@ export default () => {
 
   /*Declare redux and sagas*/
   const dispatch = useDispatch();
-  const language = useSelector(state => languageSelector(state));
-
-  /* Change language */
-  if (i18n.language !== language) {
-    i18n.changeLanguage(language);
-  }
+  // const language = useSelector(state => languageSelector(state));
 
   /* Theme Setup */
   const colorScheme = useColorScheme();
@@ -60,10 +57,39 @@ export default () => {
   );
 
   useEffect(() => {
-    setupResource();
+    setUpResource();
+    setUpLanguage();
   }, []);
 
-  const setupResource = async () => {
+  /* Change language */
+  const setUpLanguage = async () => {
+    const language = await getLanguage();
+    if (language) {
+      i18n.language !== language && i18n.changeLanguage(language);
+    } else {
+      let systemLocale =
+        Platform.OS === 'ios'
+          ? NativeModules.SettingsManager.settings.AppleLocale
+          : NativeModules.I18nManager.localeIdentifier;
+
+      if (systemLocale && systemLocale.includes('_'))
+        systemLocale = systemLocale.split('_')[0];
+      else if (systemLocale && systemLocale.includes('-'))
+        systemLocale = systemLocale.split('-')[0];
+
+      const isSupportLanguage = languages.find(item => item === systemLocale);
+
+      if (isSupportLanguage) changeLanguage(systemLocale);
+      else changeLanguage(AppConfig.defaultLanguage);
+    }
+  };
+
+  const changeLanguage = async (language: string) => {
+    i18n.changeLanguage(language);
+    setLanguage(language);
+  };
+
+  const setUpResource = async () => {
     let stateNew = {
       isUpdate: false,
       loaded: false,
@@ -112,8 +138,14 @@ export default () => {
         />
         <PreferencesContext.Provider value={preferences}>
           <PaperProvider theme={themeConfig}>
-            <RootNavigator />
-            <AlertModal />
+            <AppContext.Provider
+              value={{
+                language: i18n.language,
+                changeLanguage,
+              }}>
+              <RootNavigator />
+              <AlertModal />
+            </AppContext.Provider>
           </PaperProvider>
         </PreferencesContext.Provider>
       </ThemeProvider>

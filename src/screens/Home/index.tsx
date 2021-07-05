@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 

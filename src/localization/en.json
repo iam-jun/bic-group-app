@@ -1,6 +1,6 @@
 {
   "common": {
-    "text_update_title": "News updates",
+    "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Update",
     "text_unconnected_title": "No Internet Connection",
@@ -49,6 +49,10 @@
     "text_check_email_description": "You will receive email in a few minute, please check your email and following description.",
     "navigate_sign_in": "Go to Login",
     "navigate_sign_up": "Create account"
+  },
+  "settings": {
+    "title_app_language":"App language",
+    "title_app_theme":"App theme"
   },
   "post": {
     "button_like": "Like",

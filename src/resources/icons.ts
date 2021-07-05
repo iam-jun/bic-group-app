@@ -156,6 +156,14 @@ const icons = {
     type: 'AntDesign',
     name: 'delete',
   },
+  iconLanguage: {
+    type: 'MaterialIcons',
+    name: 'language',
+  },
+  iconTheme: {
+    type: 'MaterialCommunityIcons',
+    name: 'theme-light-dark',
+  },
 };
 
 export type IconType = keyof typeof icons;

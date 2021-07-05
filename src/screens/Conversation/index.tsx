@@ -4,24 +4,23 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
-
-import {options} from '~/constants/messageOptions';
-import useAuth from '~/hooks/auth';
-import useChat from '~/hooks/chat';
-import {IObject} from '~/interfaces/common';
-import {IOption} from '~/interfaces/IOption';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import {useDispatch} from 'react-redux';
 import ChatFooter from '~/components/fragments/chat/ChatFooter';
 import {ChatInput} from '~/components/fragments/chat/ChatInput';
 import MessageContainer from '~/components/fragments/chat/MessageContainer';
 import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
 import NavigationHeader from '~/components/headers/NavigationHeader';
-import {useDispatch} from 'react-redux';
-import * as actions from '~/store/chat/actions';
-import {useBaseHook} from '~/hooks';
-import {mainStack} from '~/configs/navigator';
-import {GMessage, IMessage} from '~/interfaces/IChat';
 import {default as LoadingMessage} from '~/components/list/loadings/Message';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import {mainStack} from '~/configs/navigator';
+import {options} from '~/constants/messageOptions';
+import {useBaseHook} from '~/hooks';
+import useAuth from '~/hooks/auth';
+import useChat from '~/hooks/chat';
+import {IObject} from '~/interfaces/common';
+import {GMessage, IMessage} from '~/interfaces/IChat';
+import {IOption} from '~/interfaces/IOption';
+import * as actions from '~/store/chat/actions';
 import {generateUniqueId} from '~/utils/generator';
 
 const Conversation = () => {

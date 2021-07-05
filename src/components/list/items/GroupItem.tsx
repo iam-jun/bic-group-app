@@ -9,21 +9,9 @@ import Icon from '../../Icon';
 import TextBadge from '../../texts/TextBadge';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
+import {IGroup} from '~/interfaces/IGroup';
 
-export interface UserType {
-  fullName: string;
-  avatarUrl: string | null;
-  type: string;
-}
-
-export interface Props {
-  user: UserType;
-  updatedAt: string;
-  newPostCount: number;
-  isPinned?: boolean;
-}
-
-const GroupItem: React.FC<Props> = ({
+const GroupItem: React.FC<IGroup> = ({
   user,
   updatedAt,
   newPostCount,
