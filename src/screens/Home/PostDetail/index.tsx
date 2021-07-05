@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {Modalize} from 'react-native-modalize';
+import {useTheme} from 'react-native-paper';
+import {Portal} from 'react-native-portalize';
+import {launchImageLibrary} from 'react-native-image-picker';
+
 import InputToolbar from '~/components/inputs/InputToolbar';
 import ContentItem from '~/components/list/items/ContentItem';
 import {spacing} from '~/theme';
@@ -9,11 +13,10 @@ import {post} from './dummy-post-data';
 import {IObject} from '~/interfaces/common';
 import {generateUniqueId} from '~/utils/generator';
 import useAuth from '~/hooks/auth';
-import {useTheme} from 'react-native-paper';
 import {ScreenWrapper, ViewSpacing} from '~/components';
 import {useBaseHook} from '~/hooks';
-import {launchImageLibrary} from 'react-native-image-picker';
 import commonActions from '~/constants/commonActions';
+import {options} from '~/constants/postOptions';
 import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
 import {mainStack} from '~/configs/navigator';
 import Text from '~/components/texts/Text';
@@ -22,6 +25,8 @@ import * as actions from '~/store/comment/actions';
 import * as listActions from '~/store/CRUDList/actions';
 import CRUDListView from '~/components/list/CRUDListView';
 import useCRUDList from '~/hooks/CRUDList';
+import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
+import {IOption} from '~/interfaces/IOption';
 
 const PostDetailScreen = ({
   route,
@@ -43,6 +48,7 @@ const PostDetailScreen = ({
   const [isCommentChanged, setCommentchanged] = useState(false);
   const commentOptionsModalRef = React.useRef<Modalize>();
   const list = useCRUDList('comments');
+  const postOptionsModalRef = React.useRef<Modalize>();
 
   const _onActionPress = (action: string, item?: any) => {
     switch (action) {
@@ -56,6 +62,9 @@ const PostDetailScreen = ({
 
       case commonActions.emojiCommentReact:
         return commentOptionsModalRef.current?.open();
+
+      case commonActions.openPostOption:
+        return postOptionsModalRef.current?.open();
     }
   };
 
@@ -90,6 +99,22 @@ const PostDetailScreen = ({
 
   const loadMoreComments = () => {
     dispatch(listActions.mergeExtraData('comments', 'comment'));
+  };
+
+  const onMenuPress = async (menu: IOption) => {
+    switch (menu.type) {
+      case options.HIDE:
+        console.log('Hide post!');
+        break;
+
+      case options.EDIT:
+        console.log('Edit post!');
+        break;
+
+      case options.DELETE:
+        console.log('Delete post!');
+        break;
+    }
   };
 
   return (
@@ -143,6 +168,12 @@ const PostDetailScreen = ({
         modalRef={commentOptionsModalRef}
         onReactionPress={onReactionPress}
       />
+      <Portal>
+        <PostOptionsModal
+          modalRef={postOptionsModalRef}
+          onMenuPress={onMenuPress}
+        />
+      </Portal>
     </ScreenWrapper>
   );
 };

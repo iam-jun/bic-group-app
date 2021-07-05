@@ -80,6 +80,10 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'bell-outline',
   },
+  iconNotificationOff: {
+    type: 'MaterialCommunityIcons',
+    name: 'bell-off-outline',
+  },
   iconSearchMT: {
     type: 'MaterialCommunityIcons',
     name: 'magnify',
@@ -143,6 +147,14 @@ const icons = {
   iconSettings: {
     type: 'MaterialIcons',
     name: 'settings',
+  },
+  iconEdit: {
+    type: 'Feather',
+    name: 'edit',
+  },
+  iconDelete: {
+    type: 'AntDesign',
+    name: 'delete',
   },
   iconLanguage: {
     type: 'MaterialIcons',

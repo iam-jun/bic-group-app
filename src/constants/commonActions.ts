@@ -6,6 +6,7 @@ const commonActions = {
   openFilePicker: 'open-file-picker',
   replyComment: 'reply-comment',
   emojiCommentReact: 'emoji-comment-react',
+  openPostOption: 'open-post-option',
 };
 
 export type IAction = keyof typeof commonActions;

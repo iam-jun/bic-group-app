@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {useTheme} from 'react-native-paper';
+
 import HeaderView from '../../HeaderView';
 import ScreenWrapper from '../../ScreenWrapper';
 import MediaView from '../../media/MediaView';
@@ -11,9 +13,8 @@ import ListView from '../ListView';
 import Markdown from '../../texts/Markdown';
 import {IObject} from '~/interfaces/common';
 import spacing, {borderRadius, margin, padding} from '~/theme/spacing';
-import {IAction} from '~/constants/commonActions';
+import commonActions, {IAction} from '~/constants/commonActions';
 import {IReactionAction} from './ReactionActionItem';
-import {useTheme} from 'react-native-paper';
 import ViewSpacing from '../../ViewSpacing';
 
 const PostItem: React.FC<IObject<any>> = ({
@@ -80,13 +81,11 @@ const PostItem: React.FC<IObject<any>> = ({
           />
         </>
       )}
-
-      <Icon
+      <TouchableOpacity
         style={styles.iconOptions}
-        icon="iconOptions"
-        size={18}
-        tintColor={theme.colors.text}
-      />
+        onPress={() => _onActionPress(commonActions.openPostOption as IAction)}>
+        <Icon icon="iconOptions" size={18} tintColor={theme.colors.text} />
+      </TouchableOpacity>
     </ScreenWrapper>
   );
 };

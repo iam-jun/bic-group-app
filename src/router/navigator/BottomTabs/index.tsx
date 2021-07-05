@@ -2,6 +2,8 @@ import React from 'react';
 import {useTheme} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Host} from 'react-native-portalize';
+
 import Icon from '~/components/Icon';
 import * as screens from '~/router/navigator/tab';
 
@@ -31,42 +33,44 @@ const BottomTabs = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <Tab.Navigator
-      initialRouteName={initialRouteName}
-      backBehavior={backBehavior}
-      tabBarOptions={{
-        activeTintColor: activeColor,
-        inactiveTintColor: inactiveColor,
-        keyboardHidesTabBar: true,
-        style: {
-          backgroundColor: tabBarBackground,
-          paddingBottom: insets.bottom,
-          // height: theme.spacing.padding.big * 2,
-        },
-      }}>
-      {tabsNavigator.map((tab: IObject<any>, _i: number) => {
-        return (
-          <Tab.Screen
-            key={'tabs' + tab.screen}
-            name={tab.name[lang]}
-            component={listScreens[tab.screen]}
-            options={{
-              tabBarIcon: ({focused, color}) => {
-                return (
-                  <Icon
-                    icon={tab.option.tabBarIcon}
-                    size={24}
-                    tintColor={color}
-                    bold={focused}
-                  />
-                );
-              },
-              title: tab.name[lang],
-            }}
-          />
-        );
-      })}
-    </Tab.Navigator>
+    <Host>
+      <Tab.Navigator
+        initialRouteName={initialRouteName}
+        backBehavior={backBehavior}
+        tabBarOptions={{
+          activeTintColor: activeColor,
+          inactiveTintColor: inactiveColor,
+          keyboardHidesTabBar: true,
+          style: {
+            backgroundColor: tabBarBackground,
+            paddingBottom: insets.bottom,
+            // height: theme.spacing.padding.big * 2,
+          },
+        }}>
+        {tabsNavigator.map((tab: IObject<any>, _i: number) => {
+          return (
+            <Tab.Screen
+              key={'tabs' + tab.screen}
+              name={tab.name[lang]}
+              component={listScreens[tab.screen]}
+              options={{
+                tabBarIcon: ({focused, color}) => {
+                  return (
+                    <Icon
+                      icon={tab.option.tabBarIcon}
+                      size={24}
+                      tintColor={color}
+                      bold={focused}
+                    />
+                  );
+                },
+                title: tab.name[lang],
+              }}
+            />
+          );
+        })}
+      </Tab.Navigator>
+    </Host>
   );
 };
 
