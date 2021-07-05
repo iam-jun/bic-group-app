@@ -77,7 +77,9 @@ export default () => {
       else if (systemLocale && systemLocale.includes('-'))
         systemLocale = systemLocale.split('-')[0];
 
-      const isSupportLanguage = languages.find(item => item === systemLocale);
+      const isSupportLanguage = languages.find(
+        item => item.code === systemLocale,
+      );
 
       if (isSupportLanguage) changeLanguage(systemLocale);
       else changeLanguage(AppConfig.defaultLanguage);

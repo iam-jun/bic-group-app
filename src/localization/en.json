@@ -54,6 +54,10 @@
     "title_app_language":"App language",
     "title_app_theme":"App theme"
   },
+  "languages":{
+    "title_en":"English",
+    "title_vi":"Vietnamese"
+  },
   "post": {
     "button_like": "Like",
     "button_reply": "Reply",

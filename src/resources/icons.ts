@@ -12,6 +12,8 @@ import iconReply from '../../assets/icons/icon_reply.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
 import iconReport from '../../assets/icons/icon_report.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
+import iconLanguageEn from '../../assets/icons/icon_language_en.svg';
+import iconLanguageVi from '../../assets/icons/icon_language_vi.svg';
 
 const icons = {
   iconAdd: {
@@ -164,6 +166,8 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'theme-light-dark',
   },
+  iconLanguageEn,
+  iconLanguageVi,
 };
 
 export type IconType = keyof typeof icons;
