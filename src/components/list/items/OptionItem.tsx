@@ -6,7 +6,7 @@ import Icon from '~/components/Icon';
 import {IOption} from '~/interfaces/IOption';
 import {spacing} from '~/theme';
 
-const ItemOption: React.FC<IOption> = ({title, icon}) => {
+const OptionItem: React.FC<IOption> = ({title, icon}) => {
   const theme: IObject<any> = useTheme();
 
   const styles = themeStyles(theme);
@@ -29,4 +29,4 @@ const themeStyles = (theme: IObject<any>) => {
   });
 };
 
-export default ItemOption;
+export default OptionItem;
