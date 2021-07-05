@@ -10,6 +10,9 @@ import {spacing} from '~/theme';
 import TransparentButton from '~/components/buttons/TransparentButton';
 import {useBaseHook} from '~/hooks';
 import * as authActions from '~/store/auth/actions';
+import ListView from '~/components/list/ListView';
+import settings from '~/constants/settings';
+import {Container, ViewSpacing} from '~/components';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -21,13 +24,16 @@ const Menu = () => {
 
   return (
     <ScreenWrapper testID="DrawerComponent" style={styles.container} isFullView>
-      <HeaderView
-        firstLabel={user?.name}
-        secondLabel={user?.email}
-        avatar={{user}}
-        style={styles.header}
-      />
-
+      <Container>
+        <HeaderView
+          firstLabel={user?.name}
+          secondLabel={user?.email}
+          avatar={{user}}
+          style={styles.header}
+        />
+        <ViewSpacing height={spacing.margin.big} />
+        <ListView type="menu" data={settings} />
+      </Container>
       <TransparentButton
         title={t('auth:text_sign_out')}
         onPress={() => dispatch(authActions.signOut())}

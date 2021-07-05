@@ -1,3 +1,4 @@
 export default {
-    dataMode: 'mock',
+  dataMode: 'mock',
+  defaultLanguage: 'en',
 };

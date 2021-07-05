@@ -144,6 +144,14 @@ const icons = {
     type: 'MaterialIcons',
     name: 'settings',
   },
+  iconLanguage: {
+    type: 'MaterialIcons',
+    name: 'language',
+  },
+  iconTheme: {
+    type: 'MaterialCommunityIcons',
+    name: 'theme-light-dark',
+  },
 };
 
 export type IconType = keyof typeof icons;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {homeStack} from '~/configs/navigator';
 import {NavigationHeader, ScreenWrapper, ViewSpacing} from '~/components';
 import {spacing} from '~/theme';
@@ -7,6 +7,7 @@ import * as actions from '~/store/comment/actions';
 import {StyleSheet, View} from 'react-native';
 import commonActions, {IAction} from '~/constants/commonActions';
 import CRUDListView from '~/components/list/CRUDListView';
+import {IObject} from '~/interfaces/common';
 
 const Home = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();

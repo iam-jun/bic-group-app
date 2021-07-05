@@ -15,6 +15,7 @@ import {useTheme} from 'react-native-paper';
 import Text from '~/components/texts/Text';
 import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
+import {useBaseHook} from '~/hooks';
 
 export interface IconProps extends SVGIconProps, FontIconProps {
   icon: IconType;
@@ -61,7 +62,7 @@ const Icon: React.FC<IconProps> = ({
   tintColor = tintColor || colors.text;
 
   const styles = StyleSheet.create(createStyles(theme));
-
+  const {t} = useBaseHook();
   const _tintColor = disabled
     ? isButton
       ? colors.white
@@ -89,7 +90,7 @@ const Icon: React.FC<IconProps> = ({
       />
       {label && (
         <Text style={[styles.label, {color: _tintColor}, labelStyle]}>
-          {label}
+          {t(label)}
         </Text>
       )}
     </TouchableOpacity>
