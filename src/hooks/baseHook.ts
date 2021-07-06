@@ -1,22 +1,17 @@
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 
-const useBaseHook = (lang = false, nav = false) => {
+const useBaseHook = () => {
   const {t, i18n} = useTranslation();
-  const navigation = useNavigation();
   let result: any = {};
-  if (!lang && !nav) {
+  try {
     result.t = t;
     result.i18n = i18n;
+
+    const navigation = useNavigation();
+
     result.navigation = navigation;
-  }
-  if (lang) {
-    result.t = t;
-    result.i18n = i18n;
-  }
-  if (nav) {
-    result.navigation = navigation;
-  }
+  } catch (e) {}
   return result;
 };
 

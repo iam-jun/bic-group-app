@@ -86,7 +86,7 @@ const InputToolbar: React.FC<Props> = ({
       {!!replyingComment && (
         <HorizontalView>
           <Text style={styles.replyText}>
-            {t('comment:reply_to')}{' '}
+            {t('comment:reply_to')}
             <Text bold>{`${replyingComment.user.name}`}</Text>
           </Text>
           <Text style={styles.replyText} bold onPress={onCancelReply}>

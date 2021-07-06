@@ -1,10 +1,8 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Modalize} from 'react-native-modalize';
-import {Portal} from 'react-native-portalize';
+import {useDispatch} from 'react-redux';
 
 import {homeStack} from '~/configs/navigator';
-import {NavigationHeader, ScreenWrapper, ViewSpacing} from '~/components';
+import {NavigationHeader, ViewSpacing} from '~/components';
 import {spacing} from '~/theme';
 import * as actions from '~/store/comment/actions';
 import {StyleSheet, View} from 'react-native';
@@ -13,10 +11,11 @@ import {options} from '~/constants/postOptions';
 import CRUDListView from '~/components/list/CRUDListView';
 import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
 import {IOption} from '~/interfaces/IOption';
+import {IOptionModal} from '~/components/modals/OptionModal';
 
 const Home = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();
-  const postOptionsModalRef = React.useRef<Modalize>();
+  const postOptionsModalRef = React.useRef<IOptionModal>();
 
   const _onItemPress = () => {
     dispatch(actions.getComments());
@@ -61,12 +60,7 @@ const Home = ({navigation}: {navigation: any}) => {
         onActionPress={_onActionPress}
         renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
       />
-      <Portal>
-        <PostOptionsModal
-          modalRef={postOptionsModalRef}
-          onMenuPress={onMenuPress}
-        />
-      </Portal>
+      <PostOptionsModal ref={postOptionsModalRef} onMenuPress={onMenuPress} />
     </View>
   );
 };

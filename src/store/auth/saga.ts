@@ -154,23 +154,23 @@ function* signOut() {
 function* checkAuthState() {
   try {
     console.log('checkAuthState');
-    const urlGraphQL = 'http://52.15.139.185:3000/graphql';
-    const graphQLClient = new GraphQLClient(urlGraphQL, {
-      // headers: {
-      //   authorization: 'Bearer MY_TOKEN',
-      // },
-    });
+    // const urlGraphQL = 'http://52.15.139.185:3000/graphql';
+    // const graphQLClient = new GraphQLClient(urlGraphQL, {
+    //   // headers: {
+    //   //   authorization: 'Bearer MY_TOKEN',
+    //   // },
+    // });
 
-    const query = gql`
-      query test {
-        ping {
-          message
-        }
-      }
-    `;
+    // const query = gql`
+    //   query test {
+    //     ping {
+    //       message
+    //     }
+    //   }
+    // `;
 
-    let data: IObject<any> = yield graphQLClient.request(query);
-    console.log('test:', data);
+    // let data: IObject<any> = yield graphQLClient.request(query);
+    // console.log('test:', data);
 
     const user: IAuth.IUser = yield storage.getUser();
     if (user) {
