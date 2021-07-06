@@ -77,8 +77,8 @@ export default () => {
       else if (systemLocale && systemLocale.includes('-'))
         systemLocale = systemLocale.split('-')[0];
 
-      const isSupportLanguage = languages.find(
-        item => item.code === systemLocale,
+      const isSupportLanguage = Object.keys(languages).find(
+        (item: string) => item === systemLocale,
       );
 
       if (isSupportLanguage) changeLanguage(systemLocale);

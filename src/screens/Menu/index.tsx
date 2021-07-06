@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import ScreenWrapper from '~/components/ScreenWrapper';
-import {IObject} from '~/interfaces/common';
+import {ILanguage, IObject, ISetting} from '~/interfaces/common';
 import useAuth from '~/hooks/auth';
 import HeaderView from '~/components/HeaderView';
 import {spacing} from '~/theme';
@@ -28,11 +28,11 @@ const Menu = () => {
   const styles = themeStyles(theme);
   const languageOptionsModalRef = React.useRef<Modalize>();
 
-  const onLanguageMenuPress = (item: any) => {
+  const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
   };
 
-  const onSettingPress = (item: any) => {
+  const onSettingPress = (item: ISetting) => {
     switch (item.type) {
       case 'language':
         return languageOptionsModalRef.current?.open();
