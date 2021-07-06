@@ -1,27 +1,27 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
 
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
 import {IUser} from '~/interfaces/IAuth';
-import {Container, NavigationHeader, Text, ViewSpacing} from '~/components';
+import {Container, Text, ViewSpacing} from '~/components';
 import Divider from '~/components/Divider';
 import Icon from '~/components/Icon';
 import Avatar from '~/components/Avatar';
 import ListView from '~/components/list/ListView';
 import ScreenWrapper from '~/components/ScreenWrapper';
 import {spacing} from '~/theme';
-import MemberOptions from '~/components/fragments/optionModals/MemberOptions';
+import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
+import memberOptions from '~/constants/memberOptions';
 
 const ConversationDetail = () => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {t, navigation} = useBaseHook();
   const {conversation} = useChat();
-  const modalRef = React.useRef<Modalize>();
+  const modalRef = React.useRef<IOptionModal>();
   const [selectedMember, setSelectedMember] = useState<IUser>();
 
   const onMemberPress = (item: IUser) => {
@@ -57,7 +57,22 @@ const ConversationDetail = () => {
           onItemPress={onMemberPress}
         />
       </Container>
-      <MemberOptions modalRef={modalRef} member={selectedMember} />
+      <OptionModal
+        ref={modalRef}
+        optionData={memberOptions}
+        headerComponent={
+          <View style={styles.top}>
+            <Avatar size="base" user={selectedMember} />
+            <ViewSpacing height={spacing.margin.base} />
+            <Text bold h4>
+              {selectedMember?.name}
+            </Text>
+            <ViewSpacing height={spacing.margin.base} />
+            <Divider />
+          </View>
+        }
+        onOptionPress={onMemberPress}
+      />
     </ScreenWrapper>
   );
 };
@@ -69,7 +84,7 @@ const createStyles = (theme: IObject<any>) => {
     },
     top: {
       alignItems: 'center',
-      paddingVertical: spacing.padding.large,
+      paddingTop: spacing.padding.large,
     },
     iconBack: {
       position: 'absolute',

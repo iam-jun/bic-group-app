@@ -13,10 +13,9 @@ import * as authActions from '~/store/auth/actions';
 import ListView from '~/components/list/ListView';
 import settings from '~/constants/settings';
 import {Container, ViewSpacing} from '~/components';
-import {Portal} from 'react-native-portalize';
-import LanguageOptionsModal from '~/components/fragments/optionModals/AppLanguageOptions';
-import {Modalize} from 'react-native-modalize';
 import {AppContext} from '~/contexts/AppContext';
+import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
+import languages from '~/constants/languages';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -26,7 +25,7 @@ const Menu = () => {
 
   const theme: IObject<any> = useTheme();
   const styles = themeStyles(theme);
-  const languageOptionsModalRef = React.useRef<Modalize>();
+  const languageOptionsModalRef = React.useRef<IOptionModal>();
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
@@ -55,13 +54,11 @@ const Menu = () => {
         title={t('auth:text_sign_out')}
         onPress={() => dispatch(authActions.signOut())}
       />
-
-      <Portal>
-        <LanguageOptionsModal
-          modalRef={languageOptionsModalRef}
-          onMenuPress={onLanguageMenuPress}
-        />
-      </Portal>
+      <OptionModal
+        ref={languageOptionsModalRef}
+        optionData={languages}
+        onOptionPress={onLanguageMenuPress}
+      />
     </ScreenWrapper>
   );
 };

@@ -133,7 +133,7 @@ const Conversation = () => {
         />
       )}
       <MessageOptionsModal
-        modalRef={messageOptionsModalRef}
+        ref={messageOptionsModalRef}
         onMenuPress={onMenuPress}
         onReactionPress={onReactionPress}
         onClosed={onOptionsClosed}

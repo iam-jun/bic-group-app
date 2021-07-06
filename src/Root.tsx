@@ -25,6 +25,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {AppContext} from './contexts/AppContext';
 import {getLanguage, setLanguage} from './utils/localStorage';
 import {languages, AppConfig} from './configs';
+import {Host} from 'react-native-portalize';
 
 export default () => {
   LogBox.ignoreAllLogs();
@@ -145,7 +146,9 @@ export default () => {
                 language: i18n.language,
                 changeLanguage,
               }}>
-              <RootNavigator />
+              <Host>
+                <RootNavigator />
+              </Host>
               <AlertModal />
             </AppContext.Provider>
           </PaperProvider>

@@ -2,6 +2,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextStyle, StyleProp} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {colors} from '~/theme';
 import {formatDate} from '~/utils/formatData';
@@ -84,6 +85,8 @@ const TextElement: React.FC<Props> = props => {
     letterSpacing,
     disabledDarkMode,
   );
+  const {t} = useBaseHook();
+
   return (
     <Text
       onPress={onPress}
@@ -158,7 +161,7 @@ const TextElement: React.FC<Props> = props => {
         maxBold && styles.maxBold,
       ])}
       {...rest}>
-      {children}
+      {typeof children === 'string' ? t(children) : children}
     </Text>
   );
 };

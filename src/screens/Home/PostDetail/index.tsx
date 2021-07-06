@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, TextInput} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
-import {Portal} from 'react-native-portalize';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 import InputToolbar from '~/components/inputs/InputToolbar';
@@ -27,6 +25,7 @@ import CRUDListView from '~/components/list/CRUDListView';
 import useCRUDList from '~/hooks/CRUDList';
 import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
 import {IOption} from '~/interfaces/IOption';
+import {IOptionModal} from '~/components/modals/OptionModal';
 
 const PostDetailScreen = ({
   route,
@@ -46,9 +45,9 @@ const PostDetailScreen = ({
   const styles = createStyles(theme);
   const scrollRef = React.createRef<ScrollView>();
   const [isCommentChanged, setCommentchanged] = useState(false);
-  const commentOptionsModalRef = React.useRef<Modalize>();
+  const commentOptionsModalRef = React.useRef<IOptionModal>();
   const list = useCRUDList('comments');
-  const postOptionsModalRef = React.useRef<Modalize>();
+  const postOptionsModalRef = React.useRef<IOptionModal>();
 
   const _onActionPress = (action: string, item?: any) => {
     switch (action) {
@@ -165,15 +164,10 @@ const PostDetailScreen = ({
         onActionPress={_onActionPress}
       />
       <MessageOptionsModal
-        modalRef={commentOptionsModalRef}
+        ref={commentOptionsModalRef}
         onReactionPress={onReactionPress}
       />
-      <Portal>
-        <PostOptionsModal
-          modalRef={postOptionsModalRef}
-          onMenuPress={onMenuPress}
-        />
-      </Portal>
+      <PostOptionsModal ref={postOptionsModalRef} onMenuPress={onMenuPress} />
     </ScreenWrapper>
   );
 };

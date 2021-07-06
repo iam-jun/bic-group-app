@@ -96,7 +96,7 @@ const CommentScreen = ({route}: {route: any}) => {
       </ScrollView>
 
       <MessageOptionsModal
-        modalRef={commentOptionsModalRef}
+        ref={commentOptionsModalRef}
         onReactionPress={onReactionPress}
       />
 
