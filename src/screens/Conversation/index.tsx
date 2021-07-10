@@ -20,7 +20,7 @@ import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
-import * as actions from '~/store/chat/actions';
+import * as actions from '~/screens/Chat/chat/actions';
 import {generateUniqueId} from '~/utils/generator';
 
 const Conversation = () => {

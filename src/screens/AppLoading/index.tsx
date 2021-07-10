@@ -6,7 +6,7 @@ import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import images from '~/resources/images';
-import * as authActions from '~/store/auth/actions';
+import * as authActions from '~/screens/Auth/redux/actions';
 
 const AppLoading = () => {
   const dispatch = useDispatch();

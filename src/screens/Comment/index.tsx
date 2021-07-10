@@ -1,21 +1,18 @@
 import React, {useState} from 'react';
 import {StyleSheet, TextInput, ScrollView} from 'react-native';
 import {Modalize} from 'react-native-modalize';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import CommentItem from '~/components/list/items/CommentItem';
+import ListView from "~/components/list/ListView"
 import Text from '~/components/texts/Text';
 import {useBaseHook} from '~/hooks';
 import {ScreenWrapper} from '~/components';
 import InputToolbar from '~/components/inputs/InputToolbar';
 import NavigationHeader from '~/components/headers/NavigationHeader';
 import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
-import {IObject} from '~/interfaces/common';
-import {generateUniqueId} from '~/utils/generator';
 import useAuth from '~/hooks/auth';
 import commonActions from '~/constants/commonActions';
-import CRUDListView from '~/components/list/CRUDListView';
-import * as listActions from '~/store/CRUDList/actions';
 import IComment from '~/interfaces/IComment';
 import useComment from '~/hooks/comment';
 
@@ -51,19 +48,19 @@ const CommentScreen = ({route}: {route: any}) => {
   };
 
   const onSendReply = (content: string) => {
-    dispatch(
-      listActions.createItem('replies', {
-        id: generateUniqueId(),
-        content,
-        user,
-        createdAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
-      }),
-    );
+    // dispatch(
+    //   listActions.createItem('replies', {
+    //     id: generateUniqueId(),
+    //     content,
+    //     user,
+    //     createdAt: new Date().toISOString(),
+    //     updateAt: new Date().toISOString(),
+    //   }),
+    // );
   };
 
   const loadMoreReplies = () => {
-    dispatch(listActions.mergeExtraData('replies', 'comment'));
+    // dispatch(listActions.mergeExtraData('replies', 'comment'));
   };
 
   return (
@@ -75,9 +72,8 @@ const CommentScreen = ({route}: {route: any}) => {
         rightIcon="iconOptions"
       />
       <ScrollView>
-        <CRUDListView
-          listType="comment"
-          dataType="replies"
+        <ListView
+          type="comment"
           onActionPress={_onActionPress}
           inverted={true}
           ListFooterComponent={

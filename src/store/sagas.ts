@@ -1,15 +1,10 @@
 import {all} from 'redux-saga/effects';
 import appSaga from './app/saga';
 import modalSaga from './modal/saga';
-import authSaga from './auth/saga';
-import chatSaga from './chat/saga';
-import commentSaga from './comment/saga';
-import CRUDListSaga from './CRUDList/saga';
+import authSaga from '../screens/Auth/redux/saga';
+import chatSaga from '../screens/Chat/chat/saga';
+import commentSaga from '../screens/Comment/redux/saga';
 
-/**
- * Root saga
- * @returns {IterableIterator<AllEffect | GenericAllEffect<any> | *>}
- */
 export default function* rootSagas() {
   yield all([
     appSaga(),
@@ -17,6 +12,5 @@ export default function* rootSagas() {
     authSaga(),
     chatSaga(),
     commentSaga(),
-    CRUDListSaga(),
   ]);
 }

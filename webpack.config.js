@@ -137,7 +137,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src/web/index.html'),
+      template: path.join(__dirname, 'src/public/index.html'),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({

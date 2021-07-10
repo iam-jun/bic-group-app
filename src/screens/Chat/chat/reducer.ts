@@ -1,7 +1,7 @@
-import {reactionType} from '../../components/list/items/ContentItem';
+import {reactionType} from '../../../components/list/items/ContentItem';
 import * as types from './constants';
 import {messages} from './dummy';
-import {IMessage, IReaction} from '../../interfaces/IChat';
+import {IMessage, IReaction} from '../../../interfaces/IChat';
 
 export const initState = {
   conversation: {},

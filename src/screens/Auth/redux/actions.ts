@@ -6,7 +6,7 @@ import {
   IForgotPassword,
   IForgotPasswordRequest,
   IUser,
-} from '../../interfaces/IAuth';
+} from '../../../interfaces/IAuth';
 
 /**
  * SignIn

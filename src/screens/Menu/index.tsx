@@ -9,7 +9,7 @@ import HeaderView from '~/components/HeaderView';
 import {spacing} from '~/theme';
 import TransparentButton from '~/components/buttons/TransparentButton';
 import {useBaseHook} from '~/hooks';
-import * as authActions from '~/store/auth/actions';
+import * as authActions from '~/screens/Auth/redux/actions';
 import ListView from '~/components/list/ListView';
 import settings from '~/constants/settings';
 import {Container, ViewSpacing} from '~/components';

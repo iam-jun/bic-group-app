@@ -6,6 +6,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import InputToolbar from '~/components/inputs/InputToolbar';
 import ContentItem from '~/components/list/items/ContentItem';
+import ListView from "~/components/list/ListView"
 import {spacing} from '~/theme';
 import {post} from './dummy-post-data';
 import {IObject} from '~/interfaces/common';
@@ -19,10 +20,7 @@ import MessageOptionsModal from '~/components/fragments/optionModals/MessageOpti
 import {mainStack} from '~/configs/navigator';
 import Text from '~/components/texts/Text';
 import {margin} from '~/theme/spacing';
-import * as actions from '~/store/comment/actions';
-import * as listActions from '~/store/CRUDList/actions';
-import CRUDListView from '~/components/list/CRUDListView';
-import useCRUDList from '~/hooks/CRUDList';
+import * as actions from '~/screens/Comment/redux/actions';
 import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
@@ -46,7 +44,6 @@ const PostDetailScreen = ({
   const scrollRef = React.createRef<ScrollView>();
   const [isCommentChanged, setCommentchanged] = useState(false);
   const commentOptionsModalRef = React.useRef<IOptionModal>();
-  const list = useCRUDList('comments');
   const postOptionsModalRef = React.useRef<IOptionModal>();
 
   const _onActionPress = (action: string, item?: any) => {
@@ -79,16 +76,16 @@ const PostDetailScreen = ({
   const onSendComment = (content: string) => {
     !isCommentChanged && setCommentchanged(true);
 
-    dispatch(
-      listActions.createItem('comments', {
-        id: generateUniqueId(),
-        content,
-        user,
-        createdAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
-        replyCount: 0,
-      }),
-    );
+    // dispatch(
+    //   listActions.createItem('comments', {
+    //     id: generateUniqueId(),
+    //     content,
+    //     user,
+    //     createdAt: new Date().toISOString(),
+    //     updateAt: new Date().toISOString(),
+    //     replyCount: 0,
+    //   }),
+    // );
   };
 
   const onReactionPress = async (type: string) => {
@@ -97,7 +94,7 @@ const PostDetailScreen = ({
   };
 
   const loadMoreComments = () => {
-    dispatch(listActions.mergeExtraData('comments', 'comment'));
+    // dispatch(listActions.mergeExtraData('comments', 'comment'));
   };
 
   const onMenuPress = async (menu: IOption) => {
@@ -131,12 +128,11 @@ const PostDetailScreen = ({
           isCommentChanged && scrollRef.current?.scrollToEnd({animated: true});
         }}
         contentContainerStyle={styles.container}>
-        <CRUDListView
+        <ListView
           style={styles.comment}
           onActionPress={_onActionPress}
           contentContainerStyle={styles.comment}
-          listType="comment"
-          dataType="comments"
+          type="comment"
           inverted={true}
           automaticallyAdjustContentInsets={false}
           scrollEnabled={false}
@@ -149,9 +145,9 @@ const PostDetailScreen = ({
                 showBackButton={true}
               />
               <Text bold style={styles.prevComments} onPress={loadMoreComments}>
-                {list.loadingMore
-                  ? t('common:text_loading')
-                  : t('comment:view_previous_comments')}
+                {/*{list.loadingMore*/}
+                {/*  ? t('common:text_loading')*/}
+                {/*  : t('comment:view_previous_comments')}*/}
               </Text>
             </>
           }
