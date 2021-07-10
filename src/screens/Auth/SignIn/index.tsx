@@ -10,7 +10,7 @@ import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import Input from '~/components/inputs';
-import * as actions from '~/store/auth/actions';
+import * as actions from '~/screens/Auth/redux/actions';
 import {Container, ViewSpacing} from '~/components';
 import InputPassword from '~/components/inputs/InputPassword';
 import AuthProviders from '~/constants/authProviders';

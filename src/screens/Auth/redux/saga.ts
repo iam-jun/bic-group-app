@@ -5,11 +5,11 @@ import {request, gql, GraphQLClient} from 'graphql-request';
 
 import {rootSwitch, authStack} from '~/configs/navigator';
 import * as types from './constants';
-import * as IAuth from '../../interfaces/IAuth';
+import * as IAuth from '../../../interfaces/IAuth';
 import * as refNavigator from '~/utils/refNavigator';
 import * as storage from '~/utils/localStorage';
 import * as actions from './actions';
-import * as actionsCommon from '../modal/actions';
+import * as actionsCommon from '../../../store/modal/actions';
 import {ERROR} from '~/constants/common';
 import {convertMultiLanguage} from '~/utils/language';
 import {IObject} from '~/interfaces/common';

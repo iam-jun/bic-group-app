@@ -1,27 +1,29 @@
-import {timeOut} from '~/utils/common';
 import {
   generateRandomUser,
   generateRandomWords,
   generateUniqueId,
   getRandomInt,
 } from '~/utils/generator';
+import {IUser} from '../../../interfaces/IAuth';
+import {IConversation} from '../../../interfaces/IChat';
 
-export const getData = async () => {
-  await timeOut();
+export const messages = (conversation: IConversation) => {
   return Array.from(Array(20).keys()).map(index => ({
-    ...generateMessage(),
+    ...generateMessage(conversation.members),
     quoted_message:
       index > 0 && getRandomInt(1, 4) === 1 ? generateMessage() : undefined,
   }));
 };
 
-const generateMessage = () => {
+export const generateMessage = (members?: IUser[]) => {
   const uid = generateUniqueId();
   return {
     _id: uid,
     id: uid,
     text: generateRandomWords(),
-    user: generateRandomUser(),
+    user: members
+      ? members[getRandomInt(0, members?.length)]
+      : generateRandomUser(),
     createdAt: new Date('2021-03-09T10:59:23.767Z'),
     reactions:
       getRandomInt(1, 4) === 1
@@ -38,19 +40,4 @@ const generateMessage = () => {
         : [],
     attachments: [],
   };
-};
-
-export const createItem = async () => {
-  await timeOut();
-  return {};
-};
-
-export const updateItem = async () => {
-  await timeOut();
-  return {};
-};
-
-export const deleteItem = async () => {
-  await timeOut();
-  return true;
 };

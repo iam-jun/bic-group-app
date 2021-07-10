@@ -1,5 +1,5 @@
 import baseAPI from '~/utils/baseAPI';
-import {ISignIn} from '../../interfaces/IAuth';
+import {ISignIn} from '../../../interfaces/IAuth';
 
 /**
  * Sign In

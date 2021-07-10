@@ -1,14 +1,14 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
+import ListView from "~/components/list/ListView"
 
 import {homeStack} from '~/configs/navigator';
 import {NavigationHeader, ViewSpacing} from '~/components';
 import {spacing} from '~/theme';
-import * as actions from '~/store/comment/actions';
+import * as actions from '~/screens/Comment/redux/actions';
 import {StyleSheet, View} from 'react-native';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {options} from '~/constants/postOptions';
-import CRUDListView from '~/components/list/CRUDListView';
 import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
@@ -52,10 +52,9 @@ const Home = ({navigation}: {navigation: any}) => {
   return (
     <View>
       <NavigationHeader title="News Feed" rightIcon="iconSearch" />
-      <CRUDListView
+      <ListView
         style={styles.container}
-        listType="content"
-        dataType="newsfeed"
+        type="content"
         onItemPress={_onItemPress}
         onActionPress={_onActionPress}
         renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}

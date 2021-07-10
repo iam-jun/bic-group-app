@@ -1,6 +1,4 @@
 import React from 'react';
-
-/*Store state Redux Saga */
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import Amplify from 'aws-amplify';

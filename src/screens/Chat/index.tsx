@@ -17,7 +17,7 @@ import {
   generateRandomUser,
   getRandomInt,
 } from '~/utils/generator';
-import * as actions from '~/store/chat/actions';
+import * as actions from '~/screens/Chat/chat/actions';
 import {NavigationHeader} from '~/components';
 
 const Chat = () => {
