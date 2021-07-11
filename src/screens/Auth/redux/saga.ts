@@ -1,4 +1,4 @@
-import {put, call, takeLatest} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 
@@ -9,8 +9,6 @@ import * as refNavigator from '~/utils/refNavigator';
 import * as storage from '~/utils/localStorage';
 import * as actions from './actions';
 import * as actionsCommon from '~/store/modal/actions';
-import {convertMultiLanguage} from '~/utils/language';
-import {IObject} from '~/interfaces/common';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {authErrors} from '~/constants/authConstants';
@@ -26,15 +24,12 @@ export default function* authSaga() {
     yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
 }
 
-const languages = convertMultiLanguage();
-
 function* signIn({payload}: { type: string; payload: IAuth.ISignIn }) {
     try {
         yield put(actions.setLoading(true));
         yield put(actions.setSigningInError(''));
         const {email, password} = payload;
         yield Auth.signIn(email, password); //handle result in useAuthHub
-        yield put(actions.setLoading(false));
     } catch (error) {
         yield put(actions.setLoading(false));
 
@@ -55,13 +50,10 @@ function* signInOAuth({payload}: {
     payload: CognitoHostedUIIdentityProvider;
 }) {
     try {
-        const userResponse: IObject<any> = yield call(federatedSignIn, payload);
-        const user = {
-            ...userResponse,
-            ...userResponse.attributes,
-        };
-        yield onSignInSuccess(user);
+        yield put(actions.setLoading(true));
+        yield Auth.federatedSignIn({provider: payload});
     } catch (e) {
+        yield put(actions.setLoading(false));
         console.log(e);
     }
 }
@@ -71,6 +63,8 @@ function* signInSuccess({payload}: { type: string; payload: IUserResponse }) {
 }
 
 function* onSignInSuccess(user: IUserResponse) {
+    yield put(actions.setLoading(false));
+
     let name = user?.attributes?.name?.length < 50
         ? user?.attributes?.name
         : user?.attributes?.email?.match?.(/^([^@]*)@/)[1];
@@ -89,19 +83,8 @@ function* onSignInSuccess(user: IUserResponse) {
 
     yield storage.setUser(userResponse);
     yield put(actions.setUser(userResponse));
-    yield put(actions.setLoading(false));
 
     refNavigator.replace(rootSwitch.mainStack);
-}
-
-function federatedSignIn(provider: CognitoHostedUIIdentityProvider) {
-    return new Promise((resolve, reject) => {
-        Auth.federatedSignIn({provider}).then(result => {
-            Auth.currentAuthenticatedUser().then(userResponse => {
-                resolve(userResponse);
-            });
-        });
-    });
 }
 
 function* signUp({payload}: { type: string; payload: IAuth.ISignUp }) {
@@ -122,8 +105,8 @@ function* signUp({payload}: { type: string; payload: IAuth.ISignUp }) {
 
             yield put(
                 actionsCommon.showAlert({
-                    title: languages.auth.text_title_success,
-                    content: languages.auth.text_sign_up_success,
+                    title: i18n.t('auth:text_title_success'),
+                    content: i18n.t('auth:text_sign_up_success'),
                     onConfirm: () => refNavigator.navigate(authStack.login),
                 }),
             );
