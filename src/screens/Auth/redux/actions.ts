@@ -1,69 +1,84 @@
-import * as actions from './constants';
+import * as types from './types';
 import {
     ISignUp,
     ISignIn,
     IForgotPassword,
     IForgotPasswordRequest,
-    IUser,
+    IUser, IUserResponse,
 } from '~/interfaces/IAuth';
+
+export function setUser(payload?: IUser) {
+    return {
+        type: types.SET_USER,
+        payload,
+    };
+}
+
+export function setLoading(payload: boolean) {
+    return {
+        type: types.SET_LOADING,
+        payload,
+    };
+}
+
+export function setSigningInError(payload: string) {
+    return {
+        type: types.SET_SIGNING_IN_ERROR,
+        payload,
+    }
+}
 
 export function signIn(payload: ISignIn) {
     return {
-        type: actions.SIGN_IN,
+        type: types.SIGN_IN,
         payload,
     };
 }
 
 export function signInOAuth(payload: string) {
     return {
-        type: actions.SIGN_IN_OAUTH,
+        type: types.SIGN_IN_OAUTH,
+        payload,
+    };
+}
+
+export function signInSuccess(payload: IUserResponse) {
+    return {
+        type: types.SIGN_IN_SUCCESS,
         payload,
     };
 }
 
 export function signUp(payload: ISignUp) {
     return {
-        type: actions.SIGN_UP,
-        payload,
-    };
-}
-
-export function forgotPassword(payload: IForgotPassword) {
-    return {
-        type: actions.FORGOT_PASSWORD,
-        payload,
-    };
-}
-
-export function changePassword(payload: IForgotPasswordRequest) {
-    return {
-        type: actions.CHANGE_PASSWORD,
+        type: types.SIGN_UP,
         payload,
     };
 }
 
 export function signOut() {
     return {
-        type: actions.SIGN_OUT,
+        type: types.SIGN_OUT,
     };
 }
 
-export function setUser(payload?: IUser) {
+export function forgotPassword(payload: IForgotPassword) {
     return {
-        type: actions.SET_USER,
+        type: types.FORGOT_PASSWORD,
         payload,
     };
 }
+
+export function changePassword(payload: IForgotPasswordRequest) {
+    return {
+        type: types.CHANGE_PASSWORD,
+        payload,
+    };
+}
+
 
 export function checkAuthState() {
     return {
-        type: actions.CHECK_AUTH_STATE,
-    };
-}
-
-export function setLoading(payload: boolean) {
-    return {
-        type: actions.SET_LOADING,
-        payload,
+        type: types.CHECK_AUTH_STATE,
     };
 }

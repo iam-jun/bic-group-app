@@ -1,57 +1,56 @@
 import {put, call, takeLatest} from 'redux-saga/effects';
 import {Auth} from 'aws-amplify';
+import i18n from 'i18next';
 
 import {authStack, rootSwitch} from '~/configs/navigator';
-import * as types from './constants';
+import * as types from './types';
 import * as IAuth from '~/interfaces/IAuth';
 import * as refNavigator from '~/utils/refNavigator';
 import * as storage from '~/utils/localStorage';
 import * as actions from './actions';
 import * as actionsCommon from '~/store/modal/actions';
-import {ERROR} from '~/constants/common';
 import {convertMultiLanguage} from '~/utils/language';
 import {IObject} from '~/interfaces/common';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {IUserResponse} from '~/interfaces/IAuth';
+import {authErrors} from '~/constants/authConstants';
 
 export default function* authSaga() {
     yield takeLatest(types.SIGN_IN, signIn);
-    yield takeLatest(types.SIGN_UP, signUp);
     yield takeLatest(types.SIGN_IN_OAUTH, signInOAuth);
+    yield takeLatest(types.SIGN_UP, signUp);
+    yield takeLatest(types.SIGN_OUT, signOut);
+    yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
     yield takeLatest(types.FORGOT_PASSWORD, forgotPassword);
     yield takeLatest(types.CHANGE_PASSWORD, forgotPasswordSubmit);
-    yield takeLatest(types.SIGN_OUT, signOut);
     yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
-    yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
 }
 
 const languages = convertMultiLanguage();
 
-/**
- * SignIn
- * @param payload
- * @returns {IterableIterator<*>}
- */
-
 function* signIn({payload}: { type: string; payload: IAuth.ISignIn }) {
     try {
         yield put(actions.setLoading(true));
+        yield put(actions.setSigningInError(''));
         const {email, password} = payload;
-        const userResponse: IObject<any> = yield Auth.signIn(email, password);
-        const user = {
-            ...userResponse,
-            ...userResponse.attributes,
-        };
-        yield onSignInSuccess(user);
-    } catch (err) {
+        yield Auth.signIn(email, password); //handle result in useAuthHub
         yield put(actions.setLoading(false));
-        yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
+    } catch (error) {
+        yield put(actions.setLoading(false));
+
+        let errorMessage;
+        switch (error?.code) {
+            case authErrors.NOT_AUTHORIZED_EXCEPTION:
+                errorMessage = i18n.t('auth:text_err_id_password_not_matched');
+                break;
+            default:
+                errorMessage = error?.message || i18n.t('auth:text_err_id_password_not_matched');
+        }
+        yield put(actions.setSigningInError(errorMessage));
     }
 }
 
-function* signInOAuth({
-                          payload,
-                      }: {
+function* signInOAuth({payload}: {
     type: string;
     payload: CognitoHostedUIIdentityProvider;
 }) {
@@ -72,8 +71,24 @@ function* signInSuccess({payload}: { type: string; payload: IUserResponse }) {
 }
 
 function* onSignInSuccess(user: IUserResponse) {
-    yield storage.setUser(user);
-    yield put(actions.setUser(user));
+    let name = user?.attributes?.name?.length < 50
+        ? user?.attributes?.name
+        : user?.attributes?.email?.match?.(/^([^@]*)@/)[1];
+
+    const userResponse: IUserResponse = {
+        username: user?.username || '',
+        signInUserSession: user?.signInUserSession || {},
+        attributes: user?.attributes || {},
+        name: name || '',
+        email: user?.attributes?.email || '',
+
+        _id: user?.username,
+        id: user?.username,
+        role: user?.username,
+    }
+
+    yield storage.setUser(userResponse);
+    yield put(actions.setUser(userResponse));
     yield put(actions.setLoading(false));
 
     refNavigator.replace(rootSwitch.mainStack);
@@ -116,7 +131,7 @@ function* signUp({payload}: { type: string; payload: IAuth.ISignUp }) {
     } catch (err) {
         yield put(actions.setLoading(false));
 
-        yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
+        yield put(actionsCommon.showAlert({title: i18n.t('common:text_error'), content: err.message}));
     }
 }
 
@@ -132,7 +147,7 @@ function* forgotPassword({payload}: {
         callback();
     } catch (err) {
         yield put(actions.setLoading(false));
-        yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
+        yield put(actionsCommon.showAlert({title: i18n.t('common:text_error'), content: err.message}));
     }
 }
 
@@ -158,7 +173,7 @@ function* signOut() {
         yield Auth.signOut();
         refNavigator.replace(rootSwitch.authStack);
     } catch (err) {
-        yield put(actionsCommon.showAlert({title: ERROR, content: err.message}));
+        yield put(actionsCommon.showAlert({title: i18n.t('common:text_error'), content: err.message}));
     }
 }
 

@@ -12,6 +12,7 @@
     "btn_next": "Next",
     "btn_confirm": "Confirm",
     "text_ok": "OK",
+    "text_error": "Lỗi",
     "text_loading": "Loading..."
   },
   "auth": {

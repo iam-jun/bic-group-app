@@ -12,6 +12,7 @@
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
     "text_ok": "OK",
+    "text_error": "Lỗi",
     "text_loading": "Đang tải ..."
   },
   "auth": {
