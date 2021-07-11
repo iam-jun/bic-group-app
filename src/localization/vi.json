@@ -79,5 +79,14 @@
     "placeholder_comment": "Để lại bình luận ...",
     "view_previous_comments": "Xem thêm bình luận...",
     "reply_to": "Trả lời "
+  },
+  "error": {
+    "alert_title": "Notice",
+    "no_internet": "No internet",
+    "http": {
+      "unknown": "Unknown http error",
+      "401": "Unauthorized",
+      "token_expired": "Token expired"
+    }
   }
 }
