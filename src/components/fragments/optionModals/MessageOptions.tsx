@@ -7,6 +7,7 @@ import messageOptions from '~/constants/messageOptions';
 import reactions from '~/constants/reactions';
 import Icon from '~/components/Icon';
 import OptionModal from '~/components/modals/OptionModal';
+import icons from '~/resources/icons';
 
 export interface Props {
   onMenuPress?: Function;
@@ -32,7 +33,10 @@ const MessageOptionsModal: React.FC<Props> = ({
           {Object.keys(reactions).map(key => (
             <Icon
               key={`reaction-${key}`}
-              icon={reactions[key as keyof typeof reactions].icon}
+              icon={
+                reactions[key as keyof typeof reactions]
+                  .icon as keyof typeof icons
+              }
               size={20}
               isButton
               onPress={() => onReactionPress && onReactionPress(key)}

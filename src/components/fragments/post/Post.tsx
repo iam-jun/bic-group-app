@@ -1,18 +1,21 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {useTheme} from 'react-native-paper';
+
 import HeaderView from '../../HeaderView';
 import ScreenWrapper from '../../ScreenWrapper';
 import MediaView from '../../media/MediaView';
 import ReactionsView from '../../posts/ReactionsView';
 import Divider from '../../Divider';
 import Icon from '../../Icon';
-import HorizontalListView from '../HorizontalListView';
-import ListView from '../ListView';
+import Markdown from '../../texts/Markdown';
 import {IObject} from '~/interfaces/common';
-import {borderRadius, margin, padding} from '~/theme/spacing';
-import Text from '../../texts/Text';
+import spacing, {borderRadius, margin, padding} from '~/theme/spacing';
+import commonActions, {IAction} from '~/constants/commonActions';
+import ViewSpacing from '../../ViewSpacing';
+import TagsView from './TagsView';
 
-const PostItem: React.FC<IObject<any>> = ({
+const Post: React.FC<IObject<any>> = ({
   user,
   updatedAt,
   content,
@@ -24,54 +27,49 @@ const PostItem: React.FC<IObject<any>> = ({
   reactionActions,
   maxLength = 200,
   showBackButton,
+  onActionPress,
 }) => {
+  const _onActionPress = (action: IAction) => {
+    onActionPress && onActionPress(action);
+  };
+
+  const theme: IObject<any> = useTheme();
+
   return (
     <ScreenWrapper style={styles.container}>
       <View>
         {user && (
           <HeaderView
             avatar={{user}}
-            firstLabel={user.name}
+            firstLabel={user.name || user.fullName}
             secondLabel={updatedAt}
             thirdLabel={locationName}
             showBackButton={showBackButton}
           />
         )}
       </View>
+      <ViewSpacing height={spacing.margin.base} />
 
-      <Text style={styles.content} maxLength={maxLength}>
+      <Markdown style={styles.content} maxLength={maxLength}>
         {content}
-      </Text>
+      </Markdown>
 
       {media && <MediaView {...media} />}
 
-      {hashtags && (
-        <ListView
-          type="tag"
-          data={hashtags}
-          style={styles.hashtags}
-          horizontal
-        />
-      )}
+      {hashtags && <TagsView style={styles.hashtags} data={hashtags} />}
 
       {reaction && (
         <>
           <ReactionsView isLike={isLike} {...reaction} />
           <Divider thick={1} />
-          <HorizontalListView
-            type="reactionActions"
-            style={styles.reactions}
-            data={reactionActions}
-          />
+          // TODO: Add reaction (like, comment, share) view here
         </>
       )}
-
-      <Icon
+      <TouchableOpacity
         style={styles.iconOptions}
-        icon="iconOptions"
-        size={18}
-        tintColor="grey"
-      />
+        onPress={() => _onActionPress(commonActions.openPostOption as IAction)}>
+        <Icon icon="iconOptions" size={18} tintColor={theme.colors.text} />
+      </TouchableOpacity>
     </ScreenWrapper>
   );
 };
@@ -102,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostItem;
+export default Post;
