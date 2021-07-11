@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   ViewStyle,
   StyleProp,
-  View,
+  View, TextStyle,
 } from 'react-native';
 import Text from '../texts/Text';
 import Icon from '../Icon';
@@ -16,7 +16,7 @@ import {spacing} from '~/theme';
 export interface Props {
   title?: string;
   style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   onPress?: () => void;
   hasRightIcon?: boolean;
   [x: string]: any;

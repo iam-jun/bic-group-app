@@ -15,7 +15,7 @@ export const mainStack = {
 export const authStack = {
   login: 'SignIn',
   signup: 'SignUp',
-  forgotpassword: 'ForgotPassword',
+  forgotPassword: 'ForgotPassword',
 };
 
 export const homeStack = {

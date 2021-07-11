@@ -22,8 +22,8 @@ const AuthStack = () => {
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name={authStack.forgotpassword}
-        component={Stacks[authStack.forgotpassword]}
+        name={authStack.forgotPassword}
+        component={Stacks[authStack.forgotPassword]}
       />
     </Stack.Navigator>
   );

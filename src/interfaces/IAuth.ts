@@ -21,6 +21,13 @@ export interface IForgotPasswordRequest {
   code: string;
   email: string;
   password: string;
+  callback: (error:ICognitoError | undefined) => void;
+}
+
+export interface ICognitoError {
+  code: string;
+  name: string;
+  message: string;
 }
 
 export interface IUser extends User {
@@ -30,6 +37,14 @@ export interface IUser extends User {
   avatarUrl?: string;
   online?: boolean;
   role: string;
+}
+
+export interface IUserResponse extends IUser {
+  username: string,
+  signInUserSession?: any,
+  attributes?: any,
+  name: string, //merge from attributes
+  email: string, //merge from attributes
 }
 
 export interface ISignUpResponse extends ISignUpResult {}
