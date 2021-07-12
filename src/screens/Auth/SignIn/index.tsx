@@ -190,12 +190,13 @@ const SignIn = () => {
 
 const themeStyles = (theme: IObject<any>) => {
     const insets = useSafeAreaInsets();
-    const {dimension, spacing} = theme;
+    const {dimension, spacing, colors} = theme;
     return StyleSheet.create({
         container: {
             flex: 1,
             paddingTop: insets.top,
             alignContent: 'center',
+            backgroundColor: colors.white,
         },
         desc: {
             marginBottom: spacing.margin.large,

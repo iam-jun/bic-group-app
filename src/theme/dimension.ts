@@ -52,7 +52,7 @@ export const sizeButton = {
   max: {
     width: '100%',
   },
-  height: 36,
+  height: 44,
 };
 
 export default {

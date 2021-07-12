@@ -75,13 +75,14 @@ const ForgotPassword = () => {
 
 const themeStyles = (theme: IObject<any>) => {
     const insets = useSafeAreaInsets();
-    const {spacing} = theme;
+    const {spacing, colors} = theme;
     return StyleSheet.create({
         container: {
             flex: 1,
             alignContent: 'center',
             paddingTop: insets.top,
             paddingBottom: insets.bottom + spacing.padding.big,
+            backgroundColor: colors.white,
         },
         imgComplete: {
             width: 305,
