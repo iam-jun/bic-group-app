@@ -14,3 +14,9 @@ export const authErrors = {
     TOO_MANY_FAILED_ATTEMPTS_EXCEPTION: "TooManyFailedAttemptsException",
     TOO_MANY_REQUESTS_EXCEPTION: "TooManyRequestsException",
 }
+
+export const forgotPasswordStages = {
+    INPUT_ID: "INPUT_ID",
+    INPUT_CODE_PW: "INPUT_CODE_PW",
+    COMPLETE: "COMPLETE",
+}

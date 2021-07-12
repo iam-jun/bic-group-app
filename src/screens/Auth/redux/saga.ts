@@ -11,7 +11,7 @@ import * as actions from './actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {IUserResponse} from '~/interfaces/IAuth';
-import {authErrors} from '~/constants/authConstants';
+import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
 
 export default function* authSaga() {
     yield takeLatest(types.SIGN_IN, signIn);
@@ -19,8 +19,8 @@ export default function* authSaga() {
     yield takeLatest(types.SIGN_UP, signUp);
     yield takeLatest(types.SIGN_OUT, signOut);
     yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
-    yield takeLatest(types.FORGOT_PASSWORD, forgotPassword);
-    yield takeLatest(types.CHANGE_PASSWORD, forgotPasswordSubmit);
+    yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest);
+    yield takeLatest(types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm);
     yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
 }
 
@@ -118,35 +118,28 @@ function* signUp({payload}: { type: string; payload: IAuth.ISignUp }) {
     }
 }
 
-function* forgotPassword({payload}: {
+function* forgotPasswordRequest({payload}: {
     type: string;
-    payload: IAuth.IForgotPassword;
+    payload: string;
 }) {
-    const {email, callback} = payload;
     try {
-        yield put(actions.setLoading(true));
-        yield Auth.forgotPassword(email);
-        yield put(actions.setLoading(false));
-        callback();
+        yield Auth.forgotPassword(payload);
+        yield put(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW));
     } catch (err) {
-        yield put(actions.setLoading(false));
-        yield put(actionsCommon.showAlert({title: i18n.t('common:text_error'), content: err.message}));
+        console.log('\x1b[36m','namanh --- forgotPasswordRequest | forgotPasswordRequest : error', err.code,'\x1b[0m')
     }
 }
 
-function* forgotPasswordSubmit({payload}: {
+function* forgotPasswordConfirm({payload}: {
     type: string;
-    payload: IAuth.IForgotPasswordRequest;
+    payload: IAuth.IForgotPasswordConfirm;
 }) {
-    const {code, email, password, callback} = payload;
+    const {code, email, password} = payload;
     try {
-        yield put(actions.setLoading(true));
         yield Auth.forgotPasswordSubmit(email, code, password);
-        yield put(actions.setLoading(false));
-        callback(undefined);
+        yield put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE));
     } catch (err) {
-        yield put(actions.setLoading(false));
-        callback(err);
+        console.log('\x1b[36m','namanh --- forgotPasswordConfirm | forgotPasswordConfirm : error', err.code,'\x1b[0m')
     }
 }
 

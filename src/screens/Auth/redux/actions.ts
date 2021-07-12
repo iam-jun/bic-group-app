@@ -2,8 +2,7 @@ import * as types from './types';
 import {
     ISignUp,
     ISignIn,
-    IForgotPassword,
-    IForgotPasswordRequest,
+    IForgotPasswordConfirm,
     IUser, IUserResponse,
 } from '~/interfaces/IAuth';
 
@@ -24,6 +23,13 @@ export function setLoading(payload: boolean) {
 export function setSigningInError(payload: string) {
     return {
         type: types.SET_SIGNING_IN_ERROR,
+        payload,
+    }
+}
+
+export function setForgotPasswordStage(payload: string) {
+    return {
+        type: types.SET_FORGOT_PASSWORD_STAGE,
         payload,
     }
 }
@@ -62,20 +68,19 @@ export function signOut() {
     };
 }
 
-export function forgotPassword(payload: IForgotPassword) {
+export function forgotPasswordRequest(payload: string) {
     return {
-        type: types.FORGOT_PASSWORD,
+        type: types.FORGOT_PASSWORD_REQUEST,
         payload,
     };
 }
 
-export function changePassword(payload: IForgotPasswordRequest) {
+export function forgotPasswordConfirm(payload: IForgotPasswordConfirm) {
     return {
-        type: types.CHANGE_PASSWORD,
+        type: types.FORGOT_PASSWORD_CONFIRM,
         payload,
     };
 }
-
 
 export function checkAuthState() {
     return {

@@ -12,16 +12,10 @@ export interface ISignUp {
   password: string;
 }
 
-export interface IForgotPassword {
-  email: string;
-  callback: () => void;
-}
-
-export interface IForgotPasswordRequest {
+export interface IForgotPasswordConfirm {
   code: string;
   email: string;
   password: string;
-  callback: (error:ICognitoError | undefined) => void;
 }
 
 export interface ICognitoError {

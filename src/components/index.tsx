@@ -4,5 +4,4 @@ export {default as NavigationHeader} from './headers/NavigationHeader';
 export {default as Text} from './texts/Text';
 export {default as SecondaryButton} from './buttons/SecondaryButton';
 export {default as Container} from './Container';
-export {default as ErrorBox} from './ErrorBox';
 export {default as ViewSpacing} from './ViewSpacing';
