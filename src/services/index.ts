@@ -1,4 +1,4 @@
-import HttpService from "~/services/HttpService"
+import HttpService from "~/services/httpService"
 
 export {
   HttpService

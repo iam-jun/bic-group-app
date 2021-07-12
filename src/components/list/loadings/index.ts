@@ -1,4 +1,4 @@
-import Chat from '~/screens/Chat';
+import Chat from './Chat';
 import Channel from './Channel';
 import Message from './Message';
 
