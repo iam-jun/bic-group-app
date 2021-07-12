@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from "react-native";
+import {StyleSheet, Platform} from "react-native";
 import {useDispatch} from "react-redux";
 import {Button, useTheme} from "react-native-paper";
 import {CognitoHostedUIIdentityProvider} from "@aws-amplify/auth/lib/types/Auth";
@@ -45,16 +45,18 @@ const SignInOAuth = () => {
                     {t('auth:btn_sign_in_gg')}
                 </Text>
             </Button>
-            <Button
-                testID="btnLoginApple"
-                uppercase={false}
-                style={[styles.button, styles.buttonApple]}
-                onPress={() => onPress(authProviders.APPLE)}
-                disabled={loading}>
-                <Text reverseDarkMode>
-                    {t('auth:btn_sign_in_apple')}
-                </Text>
-            </Button>
+            {Platform.OS !== 'android' && (
+                <Button
+                    testID="btnLoginApple"
+                    uppercase={false}
+                    style={[styles.button, styles.buttonApple]}
+                    onPress={() => onPress(authProviders.APPLE)}
+                    disabled={loading}>
+                    <Text reverseDarkMode>
+                        {t('auth:btn_sign_in_apple')}
+                    </Text>
+                </Button>
+            )}
         </Container>
     );
 }
