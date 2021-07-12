@@ -34,7 +34,7 @@ const compileNodeModules = [
   'amazon-cognito-identity-js',
   'aws-amplify',
   'react-hook-form',
-  'react-native-fast-image', // TODO: need check on web
+  'react-native-fast-image',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {
@@ -118,6 +118,7 @@ module.exports = {
     fallback: {
       crypto: require.resolve('crypto-browserify'),
       stream: require.resolve('stream-browserify'),
+      process: require.resolve('process/browser'),
     },
   },
   module: {
