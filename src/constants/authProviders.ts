@@ -1,5 +1,7 @@
+import {CognitoHostedUIIdentityProvider} from "@aws-amplify/auth/lib/types/Auth";
+
 export default {
-  EMAIL_PASSWORD: 'Email-Password',
-  FACEBOOK: 'Facebook',
-  GOOGLE: 'Google',
+  FACEBOOK: CognitoHostedUIIdentityProvider.Facebook,
+  GOOGLE: CognitoHostedUIIdentityProvider.Google,
+  APPLE: CognitoHostedUIIdentityProvider.Apple,
 }

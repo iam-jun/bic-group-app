@@ -110,6 +110,9 @@ export default {
         backgroundColor: '#1e1f28',
         headerTintColor: '#ffffff',
       },
+      facebook: '#2D88FF',
+      google: '#FF2828',
+      apple: '#FFFFFF',
     },
   },
   light: {
@@ -198,6 +201,9 @@ export default {
         backgroundColor: '#ffffff',
         headerTintColor: '#000000',
       },
+      facebook: '#2D88FF',
+      google: '#FF2828',
+      apple: '#000000',
     },
   },
 };

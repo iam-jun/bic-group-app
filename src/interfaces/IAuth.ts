@@ -12,15 +12,16 @@ export interface ISignUp {
   password: string;
 }
 
-export interface IForgotPassword {
-  email: string;
-  callback: () => void;
-}
-
-export interface IForgotPasswordRequest {
+export interface IForgotPasswordConfirm {
   code: string;
   email: string;
   password: string;
+}
+
+export interface ICognitoError {
+  code: string;
+  name: string;
+  message: string;
 }
 
 export interface IUser extends User {
@@ -30,6 +31,20 @@ export interface IUser extends User {
   avatarUrl?: string;
   online?: boolean;
   role: string;
+}
+
+export interface IUserResponse extends IUser {
+  username: string,
+  signInUserSession?: any,
+  attributes?: any,
+  name: string, //merge from attributes
+  email: string, //merge from attributes
+}
+
+export interface IForgotPasswordError {
+  errBox?: string,
+  errRequest?: string,
+  errConfirm?: string
 }
 
 export interface ISignUpResponse extends ISignUpResult {}

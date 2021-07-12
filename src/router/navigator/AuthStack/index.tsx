@@ -9,7 +9,12 @@ const Stack = createStackNavigator();
 const AuthStack = () => {
   const Stacks: IObject<any> = authStacks;
   return (
-    <Stack.Navigator headerMode="screen" initialRouteName={authStack.login}>
+    <Stack.Navigator headerMode="screen" initialRouteName={authStack.landing}>
+      <Stack.Screen
+          options={{headerShown: false}}
+          name={authStack.landing}
+          component={Stacks[authStack.landing]}
+      />
       <Stack.Screen
         options={{headerShown: false}}
         name={authStack.login}
@@ -22,8 +27,8 @@ const AuthStack = () => {
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name={authStack.forgotpassword}
-        component={Stacks[authStack.forgotpassword]}
+        name={authStack.forgotPassword}
+        component={Stacks[authStack.forgotPassword]}
       />
     </Stack.Navigator>
   );

@@ -1,245 +1,95 @@
-import React, {useState} from 'react';
-import {Button, StyleSheet, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useForm, Controller} from 'react-hook-form';
-import isEmpty from 'lodash/isEmpty';
-import {useDispatch} from 'react-redux';
-import debounce from 'lodash/debounce';
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {useBaseHook} from '~/hooks';
 import ScreenWrapper from '~/components/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme';
-import Input from '~/components/inputs';
-import * as actions from '~/screens/Auth/redux/actions';
-import * as actionsCommon from '~/store/modal/actions';
-import {Container, ViewSpacing} from '~/components';
-import InputPassword from '~/components/inputs/InputPassword';
-import * as refNavigator from '~/utils/refNavigator';
-import {authStack} from '~/configs/navigator';
-import * as validation from '~/constants/commonRegex';
+import {Container, Text, Image} from '~/components';
+import ErrorBox from "~/components/ErrorBox";
 import PrimaryButton from '~/components/buttons/PrimaryButton';
-import useAuth from '~/hooks/auth';
-import TransparentButton from '~/components/buttons/TransparentButton';
+import images from "~/resources/images";
+import {authStack} from "~/configs/navigator";
+import ForgotInputId from "~/screens/Auth/ForgotPassword/components/ForgotInputId";
+import ForgotInputCodePw from "~/screens/Auth/ForgotPassword/components/ForgotInputCodePw";
+import {forgotPasswordStages} from "~/constants/authConstants";
+import useAuth from "~/hooks/auth";
+import {useDispatch} from "react-redux";
+import * as actions from '~/screens/Auth/redux/actions';
+import {useForm} from "react-hook-form";
+import {IForgotPasswordError} from "~/interfaces/IAuth";
 
 const ForgotPassword = () => {
-  const dispatch = useDispatch();
-  const [state, setState] = useState(1);
-  const theme: IObject<any> = useTheme();
-  const {t} = useBaseHook();
-  const {loading} = useAuth();
-  const styles = themeStyles(theme);
-  const {
-    control,
-    getValues,
-    formState: {errors},
-    trigger,
-  } = useForm();
+    const dispatch = useDispatch();
+    const theme = useTheme();
+    const {t, navigation} = useBaseHook();
+    const styles = themeStyles(theme);
 
-  const forgotPassword = async () => {
-    const email = getValues('email');
-    await trigger('email');
-    if (errors.email) return;
-    dispatch(actions.forgotPassword({email, callback}));
-  };
-  const callback = () => {
-    dispatch(
-      actionsCommon.showAlert({
-        title: t('auth:text_title_success'),
-        content: t('auth:text_check_email_description'),
-        onConfirm: () => {
-          setState(2);
-        },
-      }),
+    const {forgotPasswordStage, forgotPasswordError} = useAuth();
+    const {errBox} : IForgotPasswordError = forgotPasswordError || {};
+
+    const useFormData = useForm();
+
+    useEffect(() => {
+        dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+    }, []);
+
+    const onClearErrorBox = () => {
+        dispatch(actions.setForgotPasswordError({ errBox: '' }));
+    }
+
+    const renderComplete = () => {
+        return (
+            <>
+                <Image resizeMode="contain" style={styles.imgComplete}
+                       source={images.img_auth_forgot_password_complete}/>
+                <View style={{flex: 1, justifyContent: 'space-around'}}>
+                    <View>
+                        <Text h4 bold>{t('auth:text_forgot_password_complete_title')}</Text>
+                        <Text h5>{t('auth:text_forgot_password_complete_desc')}</Text>
+                    </View>
+                    <PrimaryButton
+                        testID="btnComplete"
+                        title={t('auth:btn_sign_in')}
+                        onPress={() => navigation.navigate(authStack.login)}
+                    />
+                </View>
+            </>
+        );
+    }
+
+    return (
+        <ScreenWrapper
+            testID="ForgotPasswordScreen"
+            isFullView>
+            <Container style={styles.container}>
+                {!!errBox && <ErrorBox content={errBox} onClose={onClearErrorBox}/>}
+                {forgotPasswordStage === forgotPasswordStages.INPUT_ID && <ForgotInputId useFormData={useFormData} />}
+                {forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && <ForgotInputCodePw useFormData={useFormData} />}
+                {forgotPasswordStage === forgotPasswordStages.COMPLETE && renderComplete()}
+            </Container>
+        </ScreenWrapper>
     );
-  };
-
-  const changePassword = async () => {
-    const code = getValues('code');
-    const email = getValues('email');
-    const password = getValues('password');
-
-    await trigger();
-    if (!isEmpty(errors)) return;
-    dispatch(
-      actions.changePassword({
-        code,
-        email,
-        password,
-      }),
-    );
-  };
-
-  const validateCode = debounce(async () => {
-    await trigger('code');
-  }, 50);
-
-  const validateEmail = debounce(async () => {
-    await trigger('email');
-  }, 50);
-
-  const validatePassword = debounce(async () => {
-    await trigger('password');
-  }, 50);
-
-  const checkBtnSendEmail = () => {
-    const email: string = getValues('email');
-    if (!isEmpty(errors) || !email) return true;
-    return false;
-  };
-  const sendEmailDisable = checkBtnSendEmail();
-
-  const checkBtnChangePassword = () => {
-    const code = getValues('code');
-    const email = getValues('email');
-    const password = getValues('password');
-    if (!isEmpty(errors) || !email || !code || !password) return true;
-    return false;
-  };
-  const changePasswordDisable = checkBtnChangePassword();
-
-  return (
-    <ScreenWrapper
-      testID="ForgotPasswordScreen"
-      style={styles.container}
-      isFullView>
-      <Container>
-        {state === 1 && (
-          <>
-            <Controller
-              control={control}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  testID="inputEmail"
-                  label={t('auth:input_label_email')}
-                  placeholder={t('auth:input_label_email')}
-                  autoCapitalize="none"
-                  value={value}
-                  editable={!loading}
-                  error={errors.email}
-                  onChangeText={text => {
-                    onChange(text);
-                    validateEmail();
-                  }}
-                  helperType="error"
-                  helperContent={errors?.email?.message}
-                  helperVisible={errors.email}
-                />
-              )}
-              rules={{
-                required: t('auth:text_err_email_blank'),
-                pattern: {
-                  value: validation.emailRegex,
-                  message: t('auth:text_err_email_format'),
-                },
-              }}
-              name="email"
-              defaultValue=""
-            />
-
-            <ViewSpacing height={80} />
-            <PrimaryButton
-              testID="btnSend"
-              disabled={sendEmailDisable || loading}
-              loading={loading}
-              title={t('auth:btn_send')}
-              onPress={forgotPassword}
-            />
-          </>
-        )}
-        {state === 2 && (
-          <>
-            <Controller
-              control={control}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  testID="inputCode"
-                  label={t('auth:input_label_code')}
-                  placeholder={t('auth:input_label_code')}
-                  error={errors.code}
-                  value={value}
-                  editable={!loading}
-                  onChangeText={text => {
-                    onChange(text.trim());
-                    validateCode();
-                  }}
-                  helperType="error"
-                  helperContent={errors?.code?.message}
-                  helperVisible={errors.code}
-                />
-              )}
-              name="code"
-              rules={{
-                required: t('auth:text_err_code'),
-                maxLength: {
-                  value: 6,
-                  message: t('auth:text_err_code'),
-                },
-              }}
-              defaultValue=""
-            />
-
-            <Controller
-              control={control}
-              render={({field: {onChange, value}}) => (
-                <InputPassword
-                  testID="inputPassword"
-                  label={t('auth:input_label_password')}
-                  placeholder={t('auth:input_label_password')}
-                  error={errors.password}
-                  value={value}
-                  editable={!loading}
-                  onChangeText={text => {
-                    onChange(text);
-                    validatePassword();
-                  }}
-                  helperType="error"
-                  helperContent={errors?.password?.message}
-                  helperVisible={errors.password}
-                />
-              )}
-              name="password"
-              rules={{
-                required: t('auth:text_err_password_blank'),
-                min: 8,
-                max: 20,
-                // pattern: {
-                //   value: validation.passwordRegex,
-                //   message: t('auth:text_err_password_format'),
-                // },
-              }}
-              defaultValue=""
-            />
-
-            <PrimaryButton
-              testID="btnChangePassword"
-              disabled={changePasswordDisable || loading}
-              loading={loading}
-              title={t('auth:btn_send')}
-              onPress={changePassword}
-            />
-          </>
-        )}
-        <ViewSpacing height={20} />
-        <TransparentButton
-          onPress={() => refNavigator.navigate(authStack.login)}
-          title={t('auth:navigate_sign_in')}
-        />
-      </Container>
-    </ScreenWrapper>
-  );
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  return StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      alignContent: 'center',
-    },
-    button: {
-      marginTop: spacing.margin.big,
-    },
-  });
+    const insets = useSafeAreaInsets();
+    const {spacing, colors} = theme;
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            alignContent: 'center',
+            paddingTop: insets.top,
+            paddingBottom: insets.bottom + spacing.padding.big,
+        },
+        imgComplete: {
+            width: 305,
+            height: 240,
+            alignSelf: 'center',
+            marginVertical: spacing.margin.big,
+        },
+    });
 };
 
 export default ForgotPassword;
