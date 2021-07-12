@@ -13,6 +13,7 @@ export const mainStack = {
 };
 
 export const authStack = {
+  landing: 'Landing',
   login: 'SignIn',
   signup: 'SignUp',
   forgotPassword: 'ForgotPassword',

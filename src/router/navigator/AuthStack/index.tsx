@@ -9,7 +9,12 @@ const Stack = createStackNavigator();
 const AuthStack = () => {
   const Stacks: IObject<any> = authStacks;
   return (
-    <Stack.Navigator headerMode="screen" initialRouteName={authStack.login}>
+    <Stack.Navigator headerMode="screen" initialRouteName={authStack.landing}>
+      <Stack.Screen
+          options={{headerShown: false}}
+          name={authStack.landing}
+          component={Stacks[authStack.landing]}
+      />
       <Stack.Screen
         options={{headerShown: false}}
         name={authStack.login}

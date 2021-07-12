@@ -87,8 +87,7 @@ const SignIn = () => {
         <ScreenWrapper
             testID="SignInScreen"
             style={styles.container}
-            isFullView
-            colorSecondary>
+            isFullView>
             <Container>
                 <Image resizeMode="contain" style={styles.logo} source={images.beinLogo}/>
                 <Text h4 bold style={styles.desc}>
@@ -102,7 +101,6 @@ const SignIn = () => {
                             label={t('auth:input_label_email')}
                             placeholder={t('auth:input_label_email')}
                             autoCapitalize="none"
-                            secondaryBackground
                             editable={!loading}
                             value={value}
                             error={errors.email}
@@ -132,7 +130,6 @@ const SignIn = () => {
                             testID="inputPassword"
                             label={t('auth:input_label_password')}
                             placeholder={t('auth:input_label_password')}
-                            secondaryBackground
                             error={errors.password}
                             editable={!loading}
                             value={value}
@@ -195,8 +192,7 @@ const themeStyles = (theme: IObject<any>) => {
         container: {
             flex: 1,
             paddingTop: insets.top,
-            alignContent: 'center',
-            backgroundColor: colors.white,
+            alignContent: 'center'
         },
         desc: {
             marginBottom: spacing.margin.large,

@@ -82,7 +82,6 @@ const themeStyles = (theme: IObject<any>) => {
             alignContent: 'center',
             paddingTop: insets.top,
             paddingBottom: insets.bottom + spacing.padding.big,
-            backgroundColor: colors.white,
         },
         imgComplete: {
             width: 305,
