@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  contentReactionIcons,
-  contentReactionLabels,
-} from '~/theme/reaction';
-import PostItem from '~/components/list/items/PostItem';
+import {contentReactionIcons, contentReactionLabels} from '~/theme/reaction';
+import Post from '~/components/fragments/post/Post';
 import icons, {IconType} from '~/resources/icons';
 
 export interface reactionType {
@@ -45,7 +42,7 @@ const ContentItem: React.FC<Props> = ({
     }));
 
   return (
-    <PostItem
+    <Post
       reaction={reaction}
       isLike={isLike}
       reactionActions={reactionActions}

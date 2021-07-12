@@ -5,7 +5,7 @@ import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import {Modalize} from 'react-native-modalize';
 import ListView from '~/components/list/ListView';
-import {Text} from '..';
+import Text from '../texts/Text';
 import Divider from '../Divider';
 import {IListViewItem} from '../list/items';
 import {Portal} from 'react-native-portalize';
