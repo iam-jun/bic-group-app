@@ -51,7 +51,7 @@
     "text_err_username_blank": "Yêu cầu điền tên",
     "text_err_code": "Mã xác thực gồm 6 chữ số",
     "text_err_confirm_password_not_matched": "Mật khẩu không trùng khớp",
-    "text_err_limit_exceeded": "Tài khoản bị tạm khoá trong 2 giờ do gửi quá nhiều yêu cầu. Vui lòng thử lại sau",
+    "text_err_limit_exceeded": "Tài khoản bị tạm khoá trong 2 giờ do gửi quá nhiều yêu cầu. Vui lòng thử lại sau.",
     "text_err_wrong_code": "Điền sai mã xác thực? ",
     "text_request_new_code": "Gửi lại mã mới.",
     "text_title_success": "Thành công",

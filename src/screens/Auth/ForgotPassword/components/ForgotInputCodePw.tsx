@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text} from "~/components";
 import {Controller} from "react-hook-form";
 import Input from "~/components/inputs";
@@ -14,6 +14,8 @@ import isEmpty from "lodash/isEmpty";
 import InputPassword from "~/components/inputs/InputPassword";
 import * as actions from "~/screens/Auth/redux/actions";
 import {useDispatch} from "react-redux";
+import useAuth from "~/hooks/auth";
+import {IForgotPasswordError} from "~/interfaces/IAuth";
 
 interface Props {
     useFormData: IObject<any>,
@@ -25,7 +27,19 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
     const {t} = useBaseHook();
     const styles = themeStyles(theme);
 
-    const confirming = false; //todo update this
+    const {forgotPasswordError, forgotPasswordLoading} = useAuth();
+    const {errConfirm} : IForgotPasswordError = forgotPasswordError || {};
+
+    useEffect(() => {
+        if (errConfirm) {
+            setError("code", {
+                type: "manual",
+                message: errConfirm,
+            });
+        } else {
+            clearErrors('code');
+        }
+    }, [errConfirm]);
 
     const {
         control,
@@ -43,23 +57,31 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
         const newPassword = getValues('newPassword');
         const confirmPassword = getValues('confirmPassword');
         const passwordMatched = newPassword === confirmPassword
-        return !isEmpty(errors) || !email || !code || !newPassword || !confirmPassword || !passwordMatched || confirming;
+        return !isEmpty(errors) || !email || !code || !newPassword || !confirmPassword || !passwordMatched || forgotPasswordLoading;
     }
     const disableConfirm = checkDisableConfirm();
+
+    const checkDisableRequest = () => {
+        const email = getValues('email');
+        return forgotPasswordLoading || !email || !isEmpty(errors.email);
+    };
+    const disableRequest = checkDisableRequest();
 
     const onConfirmForgotPassword = () => {
         const email = getValues('email');
         const code = getValues('code');
         const newPassword = getValues('newPassword');
         const confirmPassword = getValues('confirmPassword');
-        if (email && code && newPassword && confirmPassword && newPassword === confirmPassword) {
+        if (email && code && newPassword && confirmPassword && newPassword === confirmPassword && !disableConfirm) {
             dispatch(actions.forgotPasswordConfirm({ email, code, password: newPassword }));
         }
     }
 
     const onRequestForgotPassword = async () => {
         const email = getValues('email');
-        if (email) {
+        if (email && !disableRequest) {
+            setValue('code', '', { shouldValidate: false });
+            clearErrors('code');
             dispatch(actions.forgotPasswordRequest(email));
         }
     }
@@ -97,7 +119,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
                             error={errors.code}
                             value={value}
                             keyboardType={'numeric'}
-                            editable={!confirming}
+                            editable={!forgotPasswordLoading}
                             onChangeText={text => {
                                 onChange(text.trim());
                                 validateCode();
@@ -131,7 +153,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
                             placeholder={t('auth:input_label_enter_new_password')}
                             error={errors.newPassword}
                             value={value}
-                            editable={!confirming}
+                            editable={!forgotPasswordLoading}
                             onChangeText={text => {
                                 onChange(text);
                                 validateNewPassword();
@@ -162,7 +184,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
                             placeholder={t('auth:input_label_confirm_new_password')}
                             error={errors.confirmPassword}
                             value={value}
-                            editable={!confirming}
+                            editable={!forgotPasswordLoading}
                             onChangeText={text => {
                                 onChange(text);
                                 validateConfirmPassword();
@@ -188,7 +210,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
             <PrimaryButton
                 testID="btnChangePassword"
                 disabled={disableConfirm}
-                loading={confirming}
+                loading={forgotPasswordLoading}
                 title={t('auth:btn_send')}
                 onPress={onConfirmForgotPassword}
             />

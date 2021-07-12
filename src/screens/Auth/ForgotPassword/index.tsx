@@ -18,21 +18,26 @@ import useAuth from "~/hooks/auth";
 import {useDispatch} from "react-redux";
 import * as actions from '~/screens/Auth/redux/actions';
 import {useForm} from "react-hook-form";
+import {IForgotPasswordError} from "~/interfaces/IAuth";
 
 const ForgotPassword = () => {
-    const [errorBox, setErrorBox] = useState('');
-
     const dispatch = useDispatch();
     const theme = useTheme();
     const {t, navigation} = useBaseHook();
     const styles = themeStyles(theme);
-    const {forgotPasswordStage} = useAuth();
+
+    const {forgotPasswordStage, forgotPasswordError} = useAuth();
+    const {errBox} : IForgotPasswordError = forgotPasswordError || {};
 
     const useFormData = useForm();
 
     useEffect(() => {
         dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
     }, []);
+
+    const onClearErrorBox = () => {
+        dispatch(actions.setForgotPasswordError({ errBox: '' }));
+    }
 
     const renderComplete = () => {
         return (
@@ -59,7 +64,7 @@ const ForgotPassword = () => {
             testID="ForgotPasswordScreen"
             isFullView>
             <Container style={styles.container}>
-                {!!errorBox && <ErrorBox content={errorBox} onClose={() => setErrorBox('')}/>}
+                {!!errBox && <ErrorBox content={errBox} onClose={onClearErrorBox}/>}
                 {forgotPasswordStage === forgotPasswordStages.INPUT_ID && <ForgotInputId useFormData={useFormData} />}
                 {forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && <ForgotInputCodePw useFormData={useFormData} />}
                 {forgotPasswordStage === forgotPasswordStages.COMPLETE && renderComplete()}

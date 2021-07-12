@@ -123,10 +123,25 @@ function* forgotPasswordRequest({payload}: {
     payload: string;
 }) {
     try {
+        yield put(actions.setForgotPasswordError({ errBox: '', errConfirm: '', errRequest: ''}));
+        yield put(actions.setForgotPasswordLoading(true));
+
         yield Auth.forgotPassword(payload);
+
+        yield put(actions.setForgotPasswordLoading(false));
         yield put(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW));
-    } catch (err) {
-        console.log('\x1b[36m','namanh --- forgotPasswordRequest | forgotPasswordRequest : error', err.code,'\x1b[0m')
+    } catch (error) {
+        let errBox = '', errRequest = '';
+        switch (error.code) {
+            case authErrors.LIMIT_EXCEEDED_EXCEPTION:
+                errBox = i18n.t('auth:text_err_limit_exceeded');
+                break;
+            default:
+                errBox = error.message;
+        }
+
+        yield put(actions.setForgotPasswordError({ errBox, errRequest, errConfirm: ''}))
+        yield put(actions.setForgotPasswordLoading(false))
     }
 }
 
@@ -136,10 +151,29 @@ function* forgotPasswordConfirm({payload}: {
 }) {
     const {code, email, password} = payload;
     try {
+        yield put(actions.setForgotPasswordError({ errBox: '', errConfirm: '', errRequest: ''}));
+        yield put(actions.setForgotPasswordLoading(true));
+
         yield Auth.forgotPasswordSubmit(email, code, password);
+
+        yield put(actions.setForgotPasswordLoading(false));
         yield put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE));
-    } catch (err) {
-        console.log('\x1b[36m','namanh --- forgotPasswordConfirm | forgotPasswordConfirm : error', err.code,'\x1b[0m')
+    } catch (error) {
+        let errBox = '', errConfirm = '';
+        switch (error.code) {
+            case authErrors.CODE_MISMATCH_EXCEPTION:
+                errConfirm = i18n.t('auth:text_err_wrong_code');
+                break;
+            case authErrors.LIMIT_EXCEEDED_EXCEPTION:
+                errBox = i18n.t('auth:text_err_limit_exceeded');
+                yield put(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+                break;
+            default:
+                errBox = error?.message || '';
+        }
+
+        yield put(actions.setForgotPasswordError({ errBox, errConfirm, errRequest: ''}));
+        yield put(actions.setForgotPasswordLoading(false))
     }
 }
 

@@ -6,6 +6,7 @@ export const initAuthState = {
     loading: false,
     signingInError: '',
     forgotPasswordStage: forgotPasswordStages.INPUT_ID,
+    forgotPasswordError: { errBox: '', errRequest: '', errConfirm: '' },
 };
 
 function authReducer(state = initAuthState, action: any = {}) {
@@ -27,10 +28,20 @@ function authReducer(state = initAuthState, action: any = {}) {
                 ...state,
                 signingInError: action.payload,
             }
+        case types.SET_FORGOT_PASSWORD_LOADING:
+            return {
+                ...state,
+                forgotPasswordLoading: action.payload,
+            }
         case types.SET_FORGOT_PASSWORD_STAGE:
             return {
                 ...state,
                 forgotPasswordStage: action.payload,
+            }
+        case types.SET_FORGOT_PASSWORD_ERROR:
+            return {
+                ...state,
+                forgotPasswordError: { ...action.payload },
             }
         default:
             return state;

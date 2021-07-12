@@ -41,4 +41,10 @@ export interface IUserResponse extends IUser {
   email: string, //merge from attributes
 }
 
+export interface IForgotPasswordError {
+  errBox?: string,
+  errRequest?: string,
+  errConfirm?: string
+}
+
 export interface ISignUpResponse extends ISignUpResult {}

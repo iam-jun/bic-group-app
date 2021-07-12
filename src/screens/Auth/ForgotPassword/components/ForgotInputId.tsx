@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Container, Image, Text} from "~/components";
 import images from "~/resources/images";
 import {Controller} from "react-hook-form";
@@ -13,6 +13,8 @@ import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import {useDispatch} from "react-redux";
 import * as actions from '~/screens/Auth/redux/actions';
+import useAuth from "~/hooks/auth";
+import {IForgotPasswordError} from "~/interfaces/IAuth";
 
 interface Props {
     useFormData: IObject<any>,
@@ -24,7 +26,8 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
     const {t} = useBaseHook();
     const styles = themeStyles(theme);
 
-    const requesting = false; //todo update this
+    const {forgotPasswordError, forgotPasswordLoading} = useAuth();
+    const {errRequest} : IForgotPasswordError = forgotPasswordError || {};
 
     const {
         control,
@@ -36,9 +39,28 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
         trigger,
     } = useFormData;
 
+    useEffect(() => {
+        if (errRequest) {
+            setError("email", {
+                type: "manual",
+                message: errRequest,
+            });
+        } else {
+            clearErrors('email');
+        }
+    }, [errRequest]);
+
+    const checkDisableRequest = () => {
+        const email = getValues('email');
+        return forgotPasswordLoading || !email || !isEmpty(errors.email);
+    };
+    const disableRequest = checkDisableRequest();
+
     const onRequestForgotPassword = () => {
         const email = getValues('email');
-        if (email) {
+        if (email && !disableRequest) {
+            setValue('code', '', { shouldValidate: false });
+            clearErrors('code');
             dispatch(actions.forgotPasswordRequest(email));
         }
     }
@@ -46,12 +68,6 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
     const validateEmail = debounce(async () => {
         await trigger('email');
     }, 50);
-
-    const checkDisableRequest = () => {
-        const email = getValues('email');
-        return requesting || !email || !isEmpty(errors.email);
-    };
-    const disableRequest = checkDisableRequest();
 
     return (
         <>
@@ -68,7 +84,7 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
                             placeholder={t('auth:input_label_email')}
                             autoCapitalize="none"
                             value={value}
-                            editable={!requesting}
+                            editable={!forgotPasswordLoading}
                             error={errors.email}
                             onChangeText={text => {
                                 onChange(text);
@@ -93,7 +109,7 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
             <PrimaryButton
                 testID="btnSend"
                 disabled={disableRequest}
-                loading={requesting}
+                loading={forgotPasswordLoading}
                 title={t('auth:btn_send')}
                 onPress={onRequestForgotPassword}
             />

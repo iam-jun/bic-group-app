@@ -3,7 +3,7 @@ import {
     ISignUp,
     ISignIn,
     IForgotPasswordConfirm,
-    IUser, IUserResponse,
+    IUser, IUserResponse, IForgotPasswordError,
 } from '~/interfaces/IAuth';
 
 export function setUser(payload?: IUser) {
@@ -27,9 +27,23 @@ export function setSigningInError(payload: string) {
     }
 }
 
+export function setForgotPasswordLoading(payload: boolean) {
+    return {
+        type: types.SET_FORGOT_PASSWORD_LOADING,
+        payload,
+    }
+}
+
 export function setForgotPasswordStage(payload: string) {
     return {
         type: types.SET_FORGOT_PASSWORD_STAGE,
+        payload,
+    }
+}
+
+export function setForgotPasswordError(payload: IForgotPasswordError) {
+    return {
+        type: types.SET_FORGOT_PASSWORD_ERROR,
         payload,
     }
 }

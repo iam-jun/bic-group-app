@@ -1,7 +1,9 @@
 export const SET_USER = 'auth/SET_USER';
 export const SET_LOADING = 'auth/SET_LOADING';
 export const SET_SIGNING_IN_ERROR = 'auth/SET_SIGNING_IN_ERROR';
+export const SET_FORGOT_PASSWORD_LOADING = 'auth/SET_FORGOT_PASSWORD_LOADING';
 export const SET_FORGOT_PASSWORD_STAGE = 'auth/SET_FORGOT_PASSWORD_STAGE';
+export const SET_FORGOT_PASSWORD_ERROR = 'auth/SET_FORGOT_PASSWORD_ERROR';
 
 export const SIGN_IN = 'auth/SIGN_IN';
 export const SIGN_IN_OAUTH = 'auth/SIGN_IN_OAUTH';
