@@ -41,7 +41,10 @@ const SignIn = () => {
     } = useForm();
 
     useEffect(() => {
-        trigger();
+        const email = getValues('email');
+        if (email) {
+            trigger();
+        }
     }, []);
 
     useEffect(() => {
