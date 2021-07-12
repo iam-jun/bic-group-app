@@ -1,59 +1,63 @@
-import { Alert } from 'react-native'
-import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
+import axios, {AxiosError, AxiosRequestConfig, CancelTokenSource} from 'axios'
 import _ from 'lodash'
+import {Alert} from 'react-native'
 import Config from "react-native-config"
-import { Api, I18n } from '../helpers'
+import i18n from 'i18next'
 
-// TODO: replace Api with Config env +
-
+import tokenService, {
+  CustomAxiosError,
+  CustomAxiosRequestConfig,
+  CustomAxiosResponse,
+  RestfulResponse,
+} from "~/services/tokenService"
 
 const commonHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 }
 
-const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
+const interceptorsRequestSuccess = (config: CustomAxiosRequestConfig) => {
   console.log(
     '%c ================ REQUEST ================',
     'background: #ffff00; color: #000',
-    config.needBaseUrl ? Config.BASE_URL + config.url : config.url,
-    config.method.toUpperCase(),
+    config.url,
+    config.method?.toUpperCase(),
     config,
   )
   return config
 }
 
-const interceptorsResponseSuccess = (response: AxiosResponse) => {
+const interceptorsResponseSuccess = (response: CustomAxiosResponse) => {
   console.log(
     '%c ================ RESPONSE SUCCESS ================',
     'background: #66ff33; color: #000',
-    response.config.needBaseUrl ? Api.BASE_URL + response.config.url : response.config.url,
-    response.config.method.toUpperCase(),
+    response.config.url,
+    response.config.method?.toUpperCase(),
     response,
   )
   return handlerResponse(response)
 }
 
-const interceptorsResponseError = async (error: AxiosError) => {
+const interceptorsResponseError = async (error: CustomAxiosError) => {
   console.log(
     '%c ================ RESPONSE ERROR ================',
     'background: red; color: #fff',
-    error.config.needBaseUrl ? Api.BASE_URL + error.config.url : error.config.url,
-    error.config.method.toUpperCase(),
+    error.config.url,
+    error.config.method?.toUpperCase(),
     error,
   )
   const newError = handlerError(error)
 
-  if (error.config && error.config.usingRetrier === true) {
-    const OAuthHandler = require('./OAuthService').default
-    return OAuthHandler.retryHandler(newError, error.config)
+  if (error.config && error.config.isHandleUnauthorized) {
+    return tokenService.retryHandler(newError, error.config)
   }
 
   return Promise.reject(newError)
 }
 
-const handlerResponse = (response: AxiosResponse) => {
-  const newResponse = { ...response }
+const handlerResponse = (response: CustomAxiosResponse) => {
+  const newResponse = {...response}
+  // @ts-ignore
   delete newResponse.config
   delete newResponse.headers
   delete newResponse.request
@@ -65,14 +69,15 @@ const handlerResponse = (response: AxiosResponse) => {
   return newResponse
 }
 
-const handlerError = (error: AxiosError) => {
+const handlerError = (error: CustomAxiosError): RestfulResponse => {
   let alertShow = false
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
     // console.log("handlerError Response", error.response)
-    const newError = { ...error.response }
+    const newError: CustomAxiosResponse = {...error.response}
     if (newError.config) {
+      // @ts-ignore
       delete newError.config
     }
     if (newError.headers) {
@@ -88,15 +93,17 @@ const handlerError = (error: AxiosError) => {
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
     // console.log("handlerError Request", error.request)
-    const newError = {
+    const newError: RestfulResponse = {
       data: {
-        message: I18n.t('Message.noInternet'),
+        // message: i18n.t('Message.noInternet'),
+        message: i18n.t("error:no_internet"),
       },
       status: error.request.status,
     }
     if (!alertShow) {
       alertShow = true
-      Alert.alert(I18n.t('Common.notice'), I18n.t('Message.noInternet'), [
+      // Alert.alert(i18n.t('Common.notice'), i18n.t('Message.noInternet'), [
+      Alert.alert(i18n.t("error:alert_title"), i18n.t("error:no_internet"), [
         {
           onPress: () => {
             alertShow = false
@@ -109,18 +116,11 @@ const handlerError = (error: AxiosError) => {
   } else {
     // Something happened in setting up the request that triggered an Error
     // console.log("handlerError Setting Up", error)
-    let newError = { data: {}, status: -600 }
-    if (!error.data) {
-      newError = { ...newError, data: { ...error } }
-    } else {
-      newError = { ...newError, ...error }
-    }
-
-    return newError
+    return {data: {...error}, status: -600}
   }
 }
 
-const getErrorMessage = (error: AxiosError) => {
+const getErrorMessage = (error: CustomAxiosError) => {
   if (error.clientMessage) {
     return error.clientMessage
   }
@@ -129,28 +129,21 @@ const getErrorMessage = (error: AxiosError) => {
 
   switch (data.status_code) {
     case 401:
-      return I18n.t('Message.401')
-    // case 422: // this case show message response from Server!
-    //   return I18n.t('Message.422')
+      return i18n.t("error:http:401")
     default:
-      return _.get(data, 'errors.message', I18n.t('Message.unknown'))
+      return _.get(data, 'errors.message', i18n.t("error:http:unknown"))
   }
 }
 
 const createRequest = async (config: AxiosRequestConfig) => {
   // set base url
-  const headers = { ...commonHeaders, ...config.headers }
-  const newConfig = { baseURL: Api.BASE_URL, ...config, headers }
-
-  // base url
-  if (newConfig.needBaseUrl === false) {
-    delete newConfig.baseURL
-  }
+  const headers = {...commonHeaders, ...config.headers}
+  const newConfig = {baseURL: Config.BASE_API_URL, ...config, headers}
 
   // create a axios instance
   const axiosInstance = axios.create()
-  axiosInstance.defaults.timeout = Api.TIME_OUT
-  axiosInstance.interceptors.request.use(interceptorsRequestSuccess, null)
+  axiosInstance.defaults.timeout = parseInt(Config.REQUEST_TIME_OUT, 10)
+  axiosInstance.interceptors.request.use(interceptorsRequestSuccess, undefined)
   axiosInstance.interceptors.response.use(interceptorsResponseSuccess, interceptorsResponseError)
 
   // return
@@ -159,13 +152,11 @@ const createRequest = async (config: AxiosRequestConfig) => {
 
 const request = async (config: AxiosRequestConfig) => {
   // Authentication
-  const OAuthHandler = require('./OAuthService').default
-  // const authen_header = OAuthHandler.authenticationHeader()
-  const commonAuthHeader = OAuthHandler.getCommonAuthHeader()
-  const headers = { ...config.headers, ...commonAuthHeader }
+  const commonAuthHeader = tokenService.getCommonAuthHeader()
+  const headers = {...config.headers, ...commonAuthHeader}
 
   // using retrier
-  const newConfig = { ...config, headers, usingRetrier: true }
+  const newConfig = {...config, headers, isHandleUnauthorized: true}
 
   // request
   return createRequest(newConfig)
@@ -178,11 +169,11 @@ const requestWithoutToken = async (config: AxiosRequestConfig) => {
 
 // Cancel request
 const CancelToken = axios.CancelToken
-const sourceCancel = () => {
+const sourceCancel = (): CancelTokenSource => {
   return CancelToken.source()
 }
 
-const cancelRequest = (source, message) => {
+const cancelRequest = (source: CancelTokenSource, message: string = "") => {
   if (source) {
     source.cancel(message)
   }
@@ -195,8 +186,10 @@ const isCancel = (error: AxiosError) => {
 export default {
   request,
   requestWithoutToken,
+
   cancelRequest,
   sourceCancel,
   isCancel,
+
   getErrorMessage,
 }
