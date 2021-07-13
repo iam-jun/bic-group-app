@@ -17,6 +17,7 @@ export const lineHeight = {
 // Padding
 export const padding = {
   base: 12,
+  tiny: 4,
   small: 8,
   large: 16,
   big: 43,

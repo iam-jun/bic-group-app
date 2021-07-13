@@ -166,6 +166,14 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'theme-light-dark',
   },
+  iconUserGroup: {
+    type: 'MaterialIcons',
+    name: 'group',
+  },
+  iconArrowRight: {
+    type: 'Ionicons',
+    name: 'chevron-forward-outline',
+  },
   iconLanguageEn,
   iconLanguageVi,
 };

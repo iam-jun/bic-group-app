@@ -22,6 +22,7 @@ export const violet = '#6435C9';
 export const purple = '#A333C8';
 export const pink = '#E03997';
 export const brown = '#A5673F';
+export const prelude = '#CBC0EC';
 export const accent = '#6600cc';
 export const primary = '#220b3b';
 
@@ -59,6 +60,7 @@ export default {
       teal,
       violet,
       purple,
+      prelude,
       pink,
       brown,
       grey1,
@@ -150,6 +152,7 @@ export default {
       teal,
       violet,
       purple,
+      prelude,
       pink,
       brown,
       grey9,
