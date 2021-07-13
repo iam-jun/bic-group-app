@@ -4,10 +4,10 @@ import {useTheme} from 'react-native-paper';
 import Text from '../../texts/Text';
 import {spacing} from '~/theme';
 import {IObject} from '~/interfaces/common';
-import {generateAvatar} from '~/utils/common';
 import Avatar from '../../Avatar';
+import {IUser} from '~/interfaces/IAuth';
 
-const ItemUser: React.FC<IObject<any>> = ({id, name, avatar, online, role}) => {
+const ItemUser: React.FC<IUser> = ({id, name, avatar, online, role}) => {
   const theme: IObject<any> = useTheme();
 
   const styles = themeStyles(theme);

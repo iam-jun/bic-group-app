@@ -1,7 +1,8 @@
 import {IMessage as _GMessage} from 'react-native-gifted-chat';
+import {ReactionType} from '~/constants/reactions';
 import {IUser} from './IAuth';
 export interface IReaction {
-  type: string;
+  type: ReactionType;
   count: number;
   reacted?: boolean;
 }

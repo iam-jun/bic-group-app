@@ -2,6 +2,7 @@ import React from 'react';
 import {default as RNMarkdown, MarkdownIt} from 'react-native-markdown-display';
 import {View, Linking, StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {IObject} from '~/interfaces/common';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -17,17 +18,18 @@ const Markdown: React.FC<Props> = ({
 }) => {
   if (!children || typeof children !== 'string') return null;
 
-  const onLinkPress = (url: string) => {
+  const onLinkPress = (url: string): boolean => {
     if (url) {
       Linking.openURL(url);
     }
+    return !!url;
   };
 
   if (maxLength > -1 && children.length > maxLength) {
     children = `${children.substr(0, maxLength)}...`;
   }
 
-  const theme: any = useTheme();
+  const theme: IObject<any> = useTheme();
   const color = theme.colors.text;
 
   return (

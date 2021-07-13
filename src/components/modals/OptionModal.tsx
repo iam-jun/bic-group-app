@@ -10,17 +10,19 @@ import Divider from '../Divider';
 import {IListViewItem} from '../list/items';
 import {Portal} from 'react-native-portalize';
 import {IHandles} from 'react-native-modalize/lib/options';
+import {IOption} from '~/interfaces/IOption';
 
 export type IOptionModal = Modalize | IHandles | undefined;
+export type IOptionModalRef =
+  | Ref<IOptionModal | undefined>
+  | MutableRefObject<IOptionModal | undefined>;
 
 export interface Props {
-  modalRef?:
-    | Ref<IOptionModal | undefined>
-    | MutableRefObject<IOptionModal | undefined>;
+  modalRef?: IOptionModalRef;
   title?: string;
   headerComponent?: React.ReactNode;
   option?: IListViewItem;
-  optionData?: IObject<any>[];
+  optionData?: IOption[];
   onOptionPress?: Function;
   [x: string]: any;
 }

@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {IObject} from '~/interfaces/common';
 export interface Props {
   colorSecondary?: boolean;
   isFullView?: boolean;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   disabledDarkMode?: boolean;
   [x: string]: any;
 }
@@ -16,7 +17,7 @@ const ScreenWrapper: React.FC<Props> = ({
   disabledDarkMode,
   ...restProps
 }) => {
-  const theme: any = useTheme();
+  const theme: IObject<any> = useTheme();
 
   return (
     <View

@@ -12,9 +12,9 @@ import {sizes} from '~/theme/dimension';
 import {spacing} from '~/theme';
 import Reactions from './Reactions';
 import QuotedMessage from './QuotedMessage';
-import {IMessage} from '~/interfaces/IChat';
+import {GMessage, IMessage} from '~/interfaces/IChat';
 
-const MessageContainer: React.FC<MessageProps<IMessage>> = props => {
+const MessageContainer: React.FC<MessageProps<GMessage>> = props => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {currentMessage, previousMessage, nextMessage} = props;

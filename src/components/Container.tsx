@@ -4,17 +4,25 @@ import {StyleSheet, View, ViewStyle, StyleProp} from 'react-native';
 import {padding} from '~/theme/spacing';
 
 export interface Props {
+  isFullView?: boolean;
   fluid?: boolean;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   [x: string]: any;
 }
 
-const Container: React.FC<Props> = ({fluid, style, children, ...rest}) => {
+const Container: React.FC<Props> = ({
+  isFullView,
+  fluid,
+  style,
+  children,
+  ...rest
+}) => {
   return (
     <View
       style={StyleSheet.flatten([
         styles.container,
+        isFullView && styles.fullView,
         fluid && styles.fluid,
         style,
       ])}
@@ -29,6 +37,9 @@ Container.defaultProps = {
 };
 
 const styles = {
+  fullView: {
+    flex: 1,
+  },
   container: {
     paddingHorizontal: padding.large,
   },

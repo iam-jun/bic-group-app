@@ -1,15 +1,15 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import ListView from "~/components/list/ListView"
+import ListView from '~/components/list/ListView';
 
 import {homeStack} from '~/configs/navigator';
 import {NavigationHeader, ViewSpacing} from '~/components';
 import {spacing} from '~/theme';
-import * as actions from '~/screens/Comment/redux/actions';
+import * as actions from '../Comment/redux/actions';
 import {StyleSheet, View} from 'react-native';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {options} from '~/constants/postOptions';
-import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
+import PostOptionsModal from '../fragments/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
 

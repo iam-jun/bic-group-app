@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, TextStyle, StyleProp, ViewStyle} from 'react-native';
 import HorizontalView from './layout/HorizontalView';
 import Text from './texts/Text';
-import Avatar from './Avatar';
+import Avatar, {AvatarProps} from './Avatar';
 import Icon from './Icon';
 import {IconProps} from './Icon';
 import {margin, padding} from '~/theme/spacing';
@@ -21,7 +21,7 @@ export interface Props {
   firstLabelStyle?: StyleProp<TextStyle>;
   secondLabelStyle?: StyleProp<TextStyle>;
   thirdLabelStyle?: StyleProp<TextStyle>;
-  avatar?: IObject<any>;
+  avatar?: AvatarProps;
   icon?: IconProps;
   space?: number;
   renderCustom?: () => void;

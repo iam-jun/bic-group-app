@@ -10,11 +10,11 @@ const Notfitication = () => {
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <NavigationHeader title="Notification" rightIcon="iconSettings" />
-
-      <Container>
+      <Container isFullView>
         <ListView
           style={styles.list}
           type="notification"
+          isFullView
           data={dummyNotifications}
         />
       </Container>
