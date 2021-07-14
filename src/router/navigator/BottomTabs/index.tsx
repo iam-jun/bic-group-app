@@ -49,7 +49,7 @@ const BottomTabs = () => {
         return (
           <Tab.Screen
             key={'tabs' + tab.screen}
-            name={tab.name[lang]}
+            name={tab.screen}
             component={listScreens[tab.screen]}
             options={{
               tabBarIcon: ({focused, color}) => {
@@ -62,7 +62,7 @@ const BottomTabs = () => {
                   />
                 );
               },
-              title: tab.name[lang],
+              title: tab.title[lang],
             }}
           />
         );

@@ -93,6 +93,9 @@ module.exports = {
   entry: {
     app: path.join(__dirname, 'index.web.js'),
   },
+  devServer: {
+    historyApiFallback: true
+  },
   output: {
     path: path.resolve(appDirectory, 'dist'),
     publicPath: '/',

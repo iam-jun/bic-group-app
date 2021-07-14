@@ -1,53 +1,87 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
+import React from 'react'
+import {useTranslation} from 'react-i18next'
 
 /*Theme*/
-import {useTheme} from 'react-native-paper';
-import {DefaultTheme, DarkTheme} from '@react-navigation/native';
+import {useTheme} from 'react-native-paper'
+import {DefaultTheme, DarkTheme} from '@react-navigation/native'
 
 /* @react-navigation v5 */
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
 
 /*import config navigation*/
-import * as screens from './navigator';
-import {navigationSetting} from '~/configs/navigator';
+import * as screens from './navigator'
+import {navigationSetting} from '~/configs/navigator'
 
-import {IStack} from '~/interfaces/navigator';
-import {IObject} from '~/interfaces/common';
+import {IStack} from '~/interfaces/navigator'
+import {IObject} from '~/interfaces/common'
 
-import {navigationRef} from '~/utils/refNavigator';
+import {navigationRef} from '~/utils/refNavigator'
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 const StackNavigator = () => {
-  const theme = useTheme();
-  const {i18n} = useTranslation();
+  const theme = useTheme()
+  const {i18n} = useTranslation()
 
-  const lang: string = i18n.language;
+  const lang: string = i18n.language
 
-  const initialRoute: string = navigationSetting.configs.initialRouteName;
-  const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
+  const initialRoute: string = navigationSetting.configs.initialRouteName
+  const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle
 
   /* StackNavigator  */
-  const StackNavigators = navigationSetting.stacks;
+  const StackNavigators = navigationSetting.stacks
 
-  const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
+  const navigationTheme = theme.dark ? DarkTheme : DefaultTheme
 
   // const containerRef = React.useRef(null);
 
-  const ref: any = navigationRef;
+  const ref: any = navigationRef
 
-  const listScreens: IObject<any> = screens;
+  const listScreens: IObject<any> = screens
+
+  const config = {
+    screens: {
+      MainStack: {
+        screens: {
+          BottomTabs: {
+            screens: {
+              home: {
+                path: 'home2',
+                screens: {
+                  home: {
+                    path: ''
+                  }
+                }
+              },
+              Chat: {
+                path: 'chat',
+                screens: {
+                  Chat: {
+                    path: ''
+                  }
+                }
+              },
+            },
+          },
+        },
+      },
+    },
+  }
+
+  const linking = {
+    prefixes: ['https://bein.group', 'bein://'],
+    config,
+  }
 
   return (
-    <NavigationContainer ref={ref} theme={navigationTheme}>
+    <NavigationContainer linking={linking} ref={ref} theme={navigationTheme}>
       <Stack.Navigator
         initialRouteName={initialRoute}
         screenOptions={{cardStyle: cardStyleConfig}}>
         {StackNavigators.map((stack: IStack) => {
           if (!Object.keys(screens).includes(stack.screen)) {
-            return null;
+            return null
           }
 
           return (
@@ -67,11 +101,11 @@ const StackNavigator = () => {
                     : true,
               }}
             />
-          );
+          )
         })}
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
+  )
+}
 
-export default StackNavigator;
+export default StackNavigator

@@ -21,7 +21,7 @@ export const authStack = {
 };
 
 export const homeStack = {
-  home: 'Home',
+  home: 'home',
   postDetail: 'PostDetail',
 };
 
@@ -150,10 +150,6 @@ export const tabsSetting = {
         vi: '',
         en: '',
       },
-      name: {
-        vi: 'Tin mới',
-        en: 'News Feed',
-      },
       screen: bottomTabs.home.home,
       option: {
         tabBarIcon: 'iconHome',
@@ -163,10 +159,6 @@ export const tabsSetting = {
       title: {
         vi: '',
         en: '',
-      },
-      name: {
-        vi: 'Nhóm',
-        en: 'Groups',
       },
       screen: bottomTabs.groups.subscription,
       option: {
@@ -178,10 +170,6 @@ export const tabsSetting = {
         vi: '',
         en: '',
       },
-      name: {
-        vi: 'Tin nhắn',
-        en: 'Chat',
-      },
       screen: bottomTabs.chat,
       option: {
         tabBarIcon: 'iconChat',
@@ -192,10 +180,6 @@ export const tabsSetting = {
         vi: '',
         en: '',
       },
-      name: {
-        vi: 'Thông báo',
-        en: 'Notifications',
-      },
       screen: bottomTabs.notification,
       option: {
         tabBarIcon: 'iconNotification',
@@ -205,10 +189,6 @@ export const tabsSetting = {
       title: {
         vi: '',
         en: '',
-      },
-      name: {
-        vi: 'Cài đặt',
-        en: 'Menu',
       },
       screen: bottomTabs.menu,
       option: {
