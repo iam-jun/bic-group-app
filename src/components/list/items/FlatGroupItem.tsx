@@ -4,7 +4,7 @@ import {IGroup} from "~/interfaces/IGroup";
 import {useDispatch} from "react-redux";
 import {useTheme} from "react-native-paper";
 import {useBaseHook} from "~/hooks";
-import {IObject} from "~/interfaces/common";
+import {IObject, ITheme} from "~/interfaces/common";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Image, Text} from "~/components";
 import Icon from "~/components/Icon";
@@ -16,6 +16,7 @@ const FlatGroupItem: React.FC<IGroup> = (
         name,
         userCount,
         parentId,
+        parent,
         children,
         type,
         icon,
@@ -23,33 +24,67 @@ const FlatGroupItem: React.FC<IGroup> = (
 ) => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const {spacing}:IObject<any> = theme;
     const {t, navigation} = useBaseHook();
     const styles = themeStyles(theme);
 
+    const onPressGroup = (group:any) => {
+        alert('show detail ' + group.name);
+    }
+
+    const getGroupParent = (group: IGroup, parents: IGroup[]) => {
+        parents.push(group);
+        if (group.parent) {
+            getGroupParent(group.parent, parents);
+        }
+    }
+
+    const renderPath = () => {
+        const parents:IGroup[] = [];
+        if (parent) {
+            getGroupParent(parent, parents);
+        }
+        const largestParent:IGroup | undefined = parents?.length > 1 ? parents?.[parents?.length - 1] : undefined;
+        const hasMiddleParent = parents?.length > 2;
+        const directParent:IGroup | undefined = parents?.[0];
+        return (
+            <View style={{ marginHorizontal: spacing.margin.tiny}}>
+                <Text>
+                    {largestParent && <Text onPress={() => onPressGroup(largestParent)}>{largestParent.name}/</Text>}
+                    {hasMiddleParent && <Text>.../</Text>}
+                    {directParent && <Text onPress={() => onPressGroup(directParent)}>{directParent.name}/</Text>}
+                    {parents?.length === 0 && <Text>/</Text>}
+                </Text>
+            </View>
+        );
+    };
+
     return (
         <View style={styles.container}>
-            <Image style={styles.icon} source={{uri: icon}}/>
-            <View style={styles.textContainer}>
-                <Text h5>{name}</Text>
-                <View style={styles.row}>
-                    <Icon icon={'iconUserGroup'} size={16} tintColor={grey5}/>
-                    <Text style={styles.textInfo} h5 colorThird>{userCount}</Text>
+            <View style={{marginTop: spacing.margin.tiny, flexDirection: 'row'}}>
+                <View style={styles.iconNextContainer}>
+                    <Icon icon={'iconArrowRight'} size={12} tintColor={grey9}/>
                 </View>
+                {renderPath()}
             </View>
-            <View style={styles.iconNextContainer}>
-                <Icon icon={'iconArrowRight'} size={12} tintColor={grey9}/>
+            <View style={{ flexDirection: 'row', marginVertical: spacing.margin.tiny}}>
+                <Image style={styles.icon} source={{uri: icon}}/>
+                <View style={styles.textContainer}>
+                    <Text bold h5>{name}</Text>
+                    <View style={styles.row}>
+                        <Icon icon={'iconUserGroup'} size={16} tintColor={grey5}/>
+                        <Text style={styles.textInfo} h5 colorThird>{userCount}</Text>
+                    </View>
+                </View>
             </View>
         </View>
     );
 };
 
 const themeStyles = (theme: IObject<any>) => {
-    const insets = useSafeAreaInsets();
     const {spacing, colors} = theme;
     return StyleSheet.create({
         container: {
-            paddingVertical: spacing.padding.tiny,
-            flexDirection: 'row',
         },
         textContainer: {
             paddingHorizontal: spacing.padding.base,
@@ -67,11 +102,10 @@ const themeStyles = (theme: IObject<any>) => {
             marginHorizontal: spacing.margin.tiny,
         },
         iconNextContainer: {
-            backgroundColor: colors.prelude,
+            backgroundColor: colors.grey1,
             width: 16,
             height: 16,
-            marginTop: spacing.margin.tiny,
-            marginRight: spacing.margin.small,
+            marginTop: 2,
             borderRadius: 8,
             justifyContent: 'center',
             alignItems: 'center',

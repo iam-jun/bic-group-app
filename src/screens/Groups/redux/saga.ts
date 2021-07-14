@@ -21,10 +21,13 @@ function* getJoinedGroups() {
     }
 }
 
-const getGroupChild = (item: any, array:IGroup[]) => {
+const getGroupChild = (item: any, array:IGroup[], parent: any | undefined) => {
+    if (parent) {
+        item.parent = {id: parent.id, name: parent.name, parent: parent.parent};
+    }
     array.push(item);
     if (item.children && item.children.length > 0) {
-        item.children.map((child:IGroup) => getGroupChild(child, array));
+        item.children.map((child:IGroup) => getGroupChild(child, array, item));
     }
 };
 
@@ -36,11 +39,12 @@ const requestJoinedGroups = () => {
             if (response.code === 200 && response.data?.length > 0) {
                 const originGroups = response.data;
                 const groups: IGroup[] = [];
-                originGroups.map(item => getGroupChild(item, groups));
+                originGroups.map(item => getGroupChild(item, groups, undefined));
+
                 resolve(groups);
             } else {
                 reject(response)
             }
-        }, 2000);
+        }, 1000);
     });
 };

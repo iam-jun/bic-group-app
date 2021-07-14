@@ -4,39 +4,42 @@ const mockGetJoinedGroups = {
         {
             id: 14,
             name: "Bein",
-            parentId: null,
-            userCount: 3,
+            userCount: 555555,
             icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
-            children: [ //children
+            children: [
                 {
                     id: 16,
                     name: 'Bein Community',
-                    parentId: 14,
-                    userCount: 2,
+                    userCount: 66666,
                     icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
                     children: [
                         {
-                            id: 116,
+                            id: 167,
                             name: 'Bein Community Child 1',
-                            parentId: 16,
-                            userCount: 2,
+                            userCount: 7777,
                             icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
                             children: [
                                 {
-                                    id: 1116,
+                                    id: 1678,
                                     name: 'Bein Community Child of Child 1',
-                                    parentId: 116,
-                                    userCount: 2,
+                                    userCount: 888,
                                     icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
-                                    children: [],
+                                    children: [
+                                        {
+                                            id: 16789,
+                                            name: 'Bein Community Core Team',
+                                            userCount: 99,
+                                            icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+                                            children: [],
+                                        }
+                                    ],
                                 }
                             ],
                         },
                         {
-                            id: 117,
+                            id: 116,
                             name: 'Bein Community Child 2',
-                            parentId: 16,
-                            userCount: 2,
+                            userCount: 1903,
                             icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
                             children: [],
                         }
