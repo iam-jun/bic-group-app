@@ -26,6 +26,7 @@ export const homeStack = {
 
 export const groupsStack = {
   groups: 'Groups',
+  groupDetail: 'GroupDetail',
 };
 
 export const bottomTabs = {

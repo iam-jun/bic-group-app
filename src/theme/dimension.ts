@@ -1,8 +1,10 @@
 /* Declare Dimensions */
 import {Dimensions} from 'react-native';
 
+const guidelineBaseWidth = 375;
+
 const DeviceWidth = Dimensions.get('window').width;
-const DiviceHeight = Dimensions.get('window').height;
+const DeviceHeight = Dimensions.get('window').height;
 
 /* Size config used for Text */
 export const sizes = {
@@ -35,7 +37,7 @@ export const letterSpacing = {
 /* Device Dimensions */
 export const dimensionDevice = {
   width: DeviceWidth,
-  height: DiviceHeight,
+  height: DeviceHeight,
 };
 
 /* Used for buton size width (short, medium, long, max) */
@@ -55,10 +57,13 @@ export const sizeButton = {
   height: 44,
 };
 
+export const scaleSize = (size:number) => (DeviceWidth / guidelineBaseWidth) * size;
+
 export default {
   sizes,
   lineHeights,
   dimensionDevice,
   sizeButton,
   letterSpacing,
+  scaleSize,
 };

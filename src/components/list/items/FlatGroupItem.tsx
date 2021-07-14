@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {IGroup} from "~/interfaces/IGroup";
 import {useDispatch} from "react-redux";
 import {useTheme} from "react-native-paper";
 import {useBaseHook} from "~/hooks";
-import {IObject, ITheme} from "~/interfaces/common";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {IObject} from "~/interfaces/common";
 import {Image, Text} from "~/components";
 import Icon from "~/components/Icon";
 import {grey5, grey9} from "~/theme/colors";
+import {groupsStack} from "~/configs/navigator";
 
 const FlatGroupItem: React.FC<IGroup> = (
     {
@@ -28,8 +28,12 @@ const FlatGroupItem: React.FC<IGroup> = (
     const {t, navigation} = useBaseHook();
     const styles = themeStyles(theme);
 
-    const onPressGroup = (group:any) => {
-        alert('show detail ' + group.name);
+    const _onPressParentGroup = (group:any) => {
+        navigation.navigate(groupsStack.groupDetail, {groupId: group.id});
+    }
+
+    const _onPressItem = () => {
+        navigation.navigate(groupsStack.groupDetail, {groupId: id});
     }
 
     const getGroupParent = (group: IGroup, parents: IGroup[]) => {
@@ -50,9 +54,9 @@ const FlatGroupItem: React.FC<IGroup> = (
         return (
             <View style={{ marginHorizontal: spacing.margin.tiny}}>
                 <Text>
-                    {largestParent && <Text onPress={() => onPressGroup(largestParent)}>{largestParent.name}/</Text>}
+                    {largestParent && <Text onPress={() => _onPressParentGroup(largestParent)}>{largestParent.name}/</Text>}
                     {hasMiddleParent && <Text>.../</Text>}
-                    {directParent && <Text onPress={() => onPressGroup(directParent)}>{directParent.name}/</Text>}
+                    {directParent && <Text onPress={() => _onPressParentGroup(directParent)}>{directParent.name}/</Text>}
                     {parents?.length === 0 && <Text>/</Text>}
                 </Text>
             </View>
@@ -67,16 +71,18 @@ const FlatGroupItem: React.FC<IGroup> = (
                 </View>
                 {renderPath()}
             </View>
-            <View style={{ flexDirection: 'row', marginVertical: spacing.margin.tiny}}>
-                <Image style={styles.icon} source={{uri: icon}}/>
-                <View style={styles.textContainer}>
-                    <Text bold h5>{name}</Text>
-                    <View style={styles.row}>
-                        <Icon icon={'iconUserGroup'} size={16} tintColor={grey5}/>
-                        <Text style={styles.textInfo} h5 colorThird>{userCount}</Text>
+            <TouchableOpacity onPress={_onPressItem}>
+                <View style={{ flexDirection: 'row', marginVertical: spacing.margin.tiny}}>
+                    <Image style={styles.icon} source={{uri: icon}}/>
+                    <View style={styles.textContainer}>
+                        <Text bold h5>{name}</Text>
+                        <View style={styles.row}>
+                            <Icon icon={'iconUserGroup'} size={16} tintColor={grey5}/>
+                            <Text style={styles.textInfo} h5 colorThird>{userCount}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 };

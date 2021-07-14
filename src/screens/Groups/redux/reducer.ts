@@ -1,8 +1,9 @@
 import groupsTypes from "~/screens/Groups/redux/types";
-
 const initGroupsState = {
     loadingJoinedGroups: false,
     joinedGroups: [],
+    loadingGroupDetail: false,
+    groupDetail: {},
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -17,6 +18,16 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
             return {
                 ...state,
                 joinedGroups: action.payload || [],
+            };
+        case groupsTypes.SET_LOADING_GROUP_DETAIL:
+            return {
+                ...state,
+                loadingGroupDetail: action.payload,
+            };
+        case groupsTypes.SET_GROUP_DETAIL:
+            return {
+                ...state,
+                groupDetail: action.payload || {},
             };
         default:
             return state;

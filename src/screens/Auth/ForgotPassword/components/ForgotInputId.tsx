@@ -71,7 +71,7 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
 
     return (
         <>
-            <Image resizeMode="contain" style={styles.logo} source={images.beinLogo}/>
+            <Image resizeMode="contain" style={styles.logo} source={images.logo_bein}/>
             <Container fluid style={{flex: 1}}>
                 <Text h4 bold>{t('auth:text_forgot_password')}</Text>
                 <Text style={styles.desc}>{t('auth:text_forgot_password_input_desc')}</Text>

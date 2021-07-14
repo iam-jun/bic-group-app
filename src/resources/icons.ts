@@ -174,6 +174,14 @@ const icons = {
     type: 'Ionicons',
     name: 'chevron-forward-outline',
   },
+  iconPublic: {
+    type: 'AntDesign',
+    name: 'earth',
+  },
+  iconPrivate: {
+    type: 'Ionicons',
+    name: 'lock-closed-outline',
+  },
   iconLanguageEn,
   iconLanguageVi,
 };

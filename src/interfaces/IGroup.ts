@@ -8,3 +8,11 @@ export interface IGroup {
   type?: any,
   icon?: string,
 }
+
+export interface IGroupDetail extends IGroup{
+  cover?: string,
+  privacy?: string,
+  type?: string,
+  verified?: boolean,
+  description?: string,
+}

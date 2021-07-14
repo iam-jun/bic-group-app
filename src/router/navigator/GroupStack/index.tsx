@@ -15,6 +15,11 @@ const GroupStack = () => {
                 component={Stacks[groupsStack.groups]}
                 options={{headerShown: false}}
             />
+            <Stack.Screen
+                name={groupsStack.groupDetail}
+                component={Stacks[groupsStack.groupDetail]}
+                options={{headerShown: false}}
+            />
         </Stack.Navigator>
     );
 };
