@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import HeaderView from '../../HeaderView';
-import ScreenWrapper from '../../ScreenWrapper';
-import MediaView from '../../media/MediaView';
-import ReactionsView from '../../posts/ReactionsView';
-import Divider from '../../Divider';
-import Icon from '../../Icon';
-import ListView from '../../list/ListView';
+import HeaderView from '~/components/HeaderView';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import MediaView from '~/components/media/MediaView';
+import Divider from '~/components/Divider';
+import Icon from '~/components/Icon';
+import ListView from '~/components/list/ListView';
 import {IObject} from '~/interfaces/common';
 import {borderRadius, margin, padding} from '~/theme/spacing';
-import Text from '../../texts/Text';
+import Text from '~/components/texts/Text';
+import ReactionsView from './ReactionsView';
 
 const Post: React.FC<IObject<any>> = ({
   user,

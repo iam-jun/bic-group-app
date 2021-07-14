@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useTheme, Button} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
+import {IconType} from '~/resources/icons';
 import {colors} from '~/theme';
 import Text from '../texts/Text';
 
@@ -23,7 +24,7 @@ export interface Props {
   largeBorder?: boolean;
   bigBoder?: boolean;
   uppercase?: boolean;
-  RightIcon?: any;
+  RightIcon?: IconType;
   hasRightIcon?: boolean;
   disabledShadow?: boolean;
   secondaryColor?: boolean;
@@ -33,11 +34,11 @@ export interface Props {
   type?: 'primary' | 'secondary' | 'light';
   onPress: () => void;
   onLongPress?: () => void;
-  [x: string]: any;
   icon?: string;
   disabled?: boolean;
   loading?: boolean;
   accessibilityLabel?: string;
+  [x: string]: any;
 }
 
 const PrimaryButton: React.FC<Props> = ({
@@ -106,7 +107,7 @@ const PrimaryButton: React.FC<Props> = ({
       ? light
       : defaultColor;
 
-  const contentBtnStyle: any = {
+  const contentBtnStyle = {
     flexDirection: 'row-reverse',
   };
   const styles = stylesBtn(configButton);
@@ -123,7 +124,7 @@ const PrimaryButton: React.FC<Props> = ({
       dark={type ? true : false}
       icon={icon}
       contentStyle={StyleSheet.flatten([
-        // configButton,
+        configButton,
         {height: sizeButton.height},
         secondaryColor &&
           themeDefault.dark && {

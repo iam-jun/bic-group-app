@@ -8,12 +8,11 @@ import {
 } from 'react-native-gifted-chat';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
-import {IMessage} from '~/interfaces/IChat';
 import Icon from '~/components/Icon';
 import {spacing} from '~/theme';
 import {sizes} from '~/theme/dimension';
 
-export const ChatInput = (
+const ChatInput = (
   props: InputToolbarProps & {
     // GiftedChat passes its props to all of its `render*()`
     onEnterPress: (text: string) => void;
@@ -131,3 +130,5 @@ const createStyles = (theme: IObject<any>) => {
     },
   });
 };
+
+export default ChatInput;

@@ -1,7 +1,7 @@
 import React from 'react';
-import {contentReactionIcons, contentReactionLabels} from '~/theme/reaction';
-import Post from '~/components/fragments/post/Post';
-import icons, {IconType} from '~/resources/icons';
+import Post from '~/screens/Home/fragments/Post';
+import {IconType} from '~/resources/icons';
+import {ReactionType} from '~/constants/reactions';
 
 export interface reactionType {
   like: number;
@@ -19,7 +19,7 @@ export interface reactionActionsType {
 
 export interface Props {
   type?: string;
-  reaction?: reactionType;
+  reaction?: ReactionType;
   isLike?: boolean;
   [x: string]: any;
 }
@@ -30,25 +30,7 @@ const ContentItem: React.FC<Props> = ({
   isLike,
   ...props
 }) => {
-  let reactionActions: reactionActionsType[];
-
-  if (reaction)
-    reactionActions = Object.keys(reaction).map(key => ({
-      type: key,
-      icon: contentReactionIcons[key],
-      label: contentReactionLabels[key],
-      value: reaction[key],
-      isLike: key === 'like' && isLike,
-    }));
-
-  return (
-    <Post
-      reaction={reaction}
-      isLike={isLike}
-      reactionActions={reactionActions}
-      {...props}
-    />
-  );
+  return <Post reaction={reaction} isLike={isLike} {...props} />;
 };
 
 export default React.memo(ContentItem);

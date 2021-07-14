@@ -2,18 +2,18 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import HeaderView from '../../HeaderView';
-import ScreenWrapper from '../../ScreenWrapper';
-import MediaView from '../../media/MediaView';
-import ReactionsView from '../../posts/ReactionsView';
-import Divider from '../../Divider';
-import Icon from '../../Icon';
-import Markdown from '../../texts/Markdown';
+import HeaderView from '~/components/HeaderView';
+import ScreenWrapper from '~/components/ScreenWrapper';
+import MediaView from '~/components/media/MediaView';
+import ReactionsView from './ReactionsView';
+import Divider from '~/components/Divider';
+import Icon from '~/components/Icon';
+import Markdown from '~/components/texts/Markdown';
 import {IObject} from '~/interfaces/common';
 import spacing, {borderRadius, margin, padding} from '~/theme/spacing';
 import commonActions, {IAction} from '~/constants/commonActions';
-import ViewSpacing from '../../ViewSpacing';
-import TagsView from './TagsView';
+import ViewSpacing from '~/components/ViewSpacing';
+import TagsView from '~/components/TagsView';
 
 const Post: React.FC<IObject<any>> = ({
   user,
