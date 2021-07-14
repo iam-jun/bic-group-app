@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Text from '../../texts/Text';
-import Icon from '../../Icon';
+import Icon, {IconProps} from '../../Icon';
 import {white as WHITE_COLOR} from '~/theme/colors';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
-  icon?: any;
-  value?: any;
+  icon: IconProps;
+  value: string;
   tintColor?: string;
 }
 

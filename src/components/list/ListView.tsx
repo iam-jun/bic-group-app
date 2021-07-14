@@ -6,15 +6,17 @@ import {
   ActivityIndicator,
   StyleSheet,
   RefreshControl,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
-import {spacing} from '~/theme';
 import _ from 'lodash';
+
+import {spacing} from '~/theme';
 import items, {IListViewItem} from './items';
 import ViewSpacing from '../ViewSpacing';
 import Text from '../texts/Text';
 import loadings from './loadings';
 import {IAction} from '~/constants/commonActions';
-
 export interface IListView {
   data?: Array<any>;
   type: IListViewItem;
@@ -27,7 +29,9 @@ export interface IListView {
   loadingMore?: boolean;
   onRefresh?: () => void;
   title?: string;
+  isFullView?: boolean;
   listRef?: React.Ref<FlatList>;
+  containerStyle?: StyleProp<ViewStyle>;
   [x: string]: any;
 }
 
@@ -47,8 +51,9 @@ const ListView: React.FC<IListView> = ({
   refreshing,
   onRefresh,
   title,
+  isFullView,
   listRef,
-
+  containerStyle,
   ...props
 }) => {
   const getKeyValue =
@@ -95,7 +100,7 @@ const ListView: React.FC<IListView> = ({
   }
 
   return (
-    <View>
+    <View style={[isFullView && styles.fullView, containerStyle]}>
       {title && (
         <Text h2 bold style={styles.title}>
           {title}
@@ -128,6 +133,9 @@ const ListView: React.FC<IListView> = ({
 };
 
 const styles = StyleSheet.create({
+  fullView: {
+    flex: 1,
+  },
   title: {
     margin: spacing.margin.large,
   },

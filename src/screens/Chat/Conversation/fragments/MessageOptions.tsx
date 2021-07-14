@@ -6,16 +6,19 @@ import {spacing} from '~/theme';
 import messageOptions from '~/constants/messageOptions';
 import reactions from '~/constants/reactions';
 import Icon from '~/components/Icon';
-import OptionModal from '~/components/modals/OptionModal';
-import icons from '~/resources/icons';
-
+import OptionModal, {
+  IOptionModal,
+  IOptionModalRef,
+} from '~/components/modals/OptionModal';
 export interface Props {
+  modalRef?: IOptionModalRef;
   onMenuPress?: Function;
   onReactionPress?: Function;
   [x: string]: any;
 }
 
 const MessageOptionsModal: React.FC<Props> = ({
+  modalRef,
   onMenuPress,
   onReactionPress,
   ...props
@@ -26,6 +29,7 @@ const MessageOptionsModal: React.FC<Props> = ({
   return (
     <OptionModal
       {...props}
+      ref={modalRef}
       optionData={messageOptions}
       onOptionPress={onMenuPress}
       headerComponent={
@@ -33,10 +37,7 @@ const MessageOptionsModal: React.FC<Props> = ({
           {Object.keys(reactions).map(key => (
             <Icon
               key={`reaction-${key}`}
-              icon={
-                reactions[key as keyof typeof reactions]
-                  .icon as keyof typeof icons
-              }
+              icon={reactions[key].icon}
               size={20}
               isButton
               onPress={() => onReactionPress && onReactionPress(key)}
@@ -67,4 +68,8 @@ const themeStyle = (theme: IObject<any>) => {
   });
 };
 
-export default MessageOptionsModal;
+export default React.forwardRef(
+  (props: Props, ref?: React.Ref<IOptionModal>) => (
+    <MessageOptionsModal modalRef={ref} {...props} />
+  ),
+);

@@ -5,12 +5,15 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import ChatFooter from '~/components/fragments/chat/ChatFooter';
-import {ChatInput} from '~/components/fragments/chat/ChatInput';
-import MessageContainer from '~/components/fragments/chat/MessageContainer';
-import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
+
+import {
+  LoadingMessages,
+  MessageContainer,
+  ChatInput,
+  ChatFooter,
+  MessageOptionsModal,
+} from './fragments';
 import NavigationHeader from '~/components/headers/NavigationHeader';
-import {default as LoadingMessage} from '~/components/list/loadings/Message';
 import ScreenWrapper from '~/components/ScreenWrapper';
 import {mainStack} from '~/configs/navigator';
 import {options} from '~/constants/messageOptions';
@@ -20,11 +23,9 @@ import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
-import * as actions from '~/screens/Chat/chat/actions';
-import {generateUniqueId} from '~/utils/generator';
+import * as actions from '~/screens/Chat/redux/actions';
 
 const Conversation = () => {
-  // const [messages, setMessages] = useState<IMessage[]>([]);
   const {user} = useAuth();
   const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
@@ -97,9 +98,7 @@ const Conversation = () => {
         rightPress={goConversationDetail}
       />
       {messages.loading ? (
-        Array.from(Array(20).keys()).map(() => (
-          <LoadingMessage key={generateUniqueId()} />
-        ))
+        <LoadingMessages />
       ) : (
         <GiftedChat
           messages={messages.data}
@@ -115,9 +114,12 @@ const Conversation = () => {
           renderInputToolbar={props => (
             <ChatInput
               {...props}
-              onEnterPress={text =>
-                props.onSend && props.onSend({text: text.trim()}, true)
-              }
+              /* 
+                InputToolbar has this props but 
+                GiftedChat have not been define it on InputToolbarProps
+              */
+              // @ts-ignore
+              onEnterPress={text => props.onSend({text: text.trim()}, true)}
               openImagePicker={_openImagePicker}
               openFilePicker={_openFilePicker}
             />

@@ -4,15 +4,20 @@ import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import postOptions from '~/constants/postOptions';
-import OptionModal from '~/components/modals/OptionModal';
+import OptionModal, {
+  IOptionModal,
+  IOptionModalRef,
+} from '~/components/modals/OptionModal';
 
 export interface Props {
+  modalRef?: IOptionModalRef;
   onMenuPress?: Function;
   onReactionPress?: Function;
   [x: string]: any;
 }
 
 const PostOptionsModal: React.FC<Props> = ({
+  modalRef,
   onMenuPress,
   onReactionPress,
   ...props
@@ -23,6 +28,7 @@ const PostOptionsModal: React.FC<Props> = ({
   return (
     <OptionModal
       {...props}
+      ref={modalRef}
       optionData={postOptions}
       onOptionPress={onMenuPress}
     />
@@ -48,4 +54,8 @@ const themeStyle = (theme: IObject<any>) => {
   });
 };
 
-export default PostOptionsModal;
+export default React.forwardRef(
+  (props: Props, ref?: React.Ref<IOptionModal>) => (
+    <PostOptionsModal modalRef={ref} {...props} />
+  ),
+);

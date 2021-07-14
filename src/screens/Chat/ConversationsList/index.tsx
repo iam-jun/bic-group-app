@@ -1,8 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
+import {NavigationHeader} from '~/components';
 import {mainStack} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
@@ -17,10 +18,9 @@ import {
   generateRandomUser,
   getRandomInt,
 } from '~/utils/generator';
-import * as actions from '~/screens/Chat/chat/actions';
-import {NavigationHeader} from '~/components';
+import * as actions from '~/screens/Chat/redux/actions';
 
-const Chat = () => {
+const ConversationsList = () => {
   const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
     name: generateRandomName(),
     members: [generateRandomUser(), generateRandomUser()],
@@ -42,7 +42,6 @@ const Chat = () => {
   return (
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
       <NavigationHeader title="Chat" rightIcon="iconSettings" />
-
       <Input
         style={styles.inputSearch}
         roundness="big"
@@ -51,8 +50,8 @@ const Chat = () => {
         right={<TextInput.Icon name={'magnify'} />}
       />
       <ListView
-        style={styles.listView}
         type="chat"
+        isFullView
         data={data}
         onItemPress={onChatPress}
         renderItemSeparator={() => <Divider />}
@@ -69,10 +68,7 @@ const createStyles = (theme: IObject<any>) => {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.base,
     },
-    listView: {
-      marginBottom: 70,
-    },
   });
 };
 
-export default Chat;
+export default ConversationsList;

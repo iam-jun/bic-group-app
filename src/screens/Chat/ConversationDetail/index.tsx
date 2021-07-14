@@ -16,7 +16,7 @@ import {spacing} from '~/theme';
 import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
 import memberOptions from '~/constants/memberOptions';
 
-const ConversationDetail = () => {
+const Conversation = () => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {t, navigation} = useBaseHook();
@@ -95,4 +95,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default ConversationDetail;
+export default Conversation;

@@ -7,6 +7,7 @@ export const rootSwitch = {
 export const mainStack = {
   // drawer: 'Drawer',
   bottomTabs: 'BottomTabs',
+  conversationList: 'ConversationsList',
   conversation: 'Conversation',
   conversationDetail: 'ConversationDetail',
   reply: 'CommentDetail',
