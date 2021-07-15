@@ -11,6 +11,7 @@ export const mainStack = {
   conversation: 'Conversation',
   conversationDetail: 'ConversationDetail',
   reply: 'CommentDetail',
+  createPost: 'CreatePost',
 };
 
 export const authStack = {
@@ -132,6 +133,18 @@ export const navigationSetting = {
       },
       router: mainStack.reply,
       screen: mainStack.reply,
+      options: {
+        headerShown: false,
+        animationEnabled: true,
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      router: mainStack.createPost,
+      screen: mainStack.createPost,
       options: {
         headerShown: false,
         animationEnabled: true,

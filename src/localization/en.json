@@ -75,12 +75,12 @@
     "text_forgot_password_complete_desc": "Sign in now with your new password"
   },
   "settings": {
-    "title_app_language":"App language",
-    "title_app_theme":"App theme"
+    "title_app_language": "App language",
+    "title_app_theme": "App theme"
   },
-  "languages":{
-    "title_en":"English",
-    "title_vi":"Vietnamese"
+  "languages": {
+    "title_en": "English",
+    "title_vi": "Vietnamese"
   },
   "post": {
     "button_like": "Like",
@@ -93,7 +93,14 @@
     "label_share": "Share",
     "label_comments": "Comments",
     "label_shares": "Shares",
-    "label_donate": "Contribute"
+    "label_donate": "Contribute",
+    "add_photo": "Add Photo",
+    "add_file": "Add Files",
+    "placeholder_write_post": "Write your post here...",
+    "create_post": "Create Post",
+    "post_button": "Post",
+    "send_to": "Send to",
+    "choose_group_people": "Choose group or people"
   },
   "chat": {
     "placeholder_search": "Search...",
