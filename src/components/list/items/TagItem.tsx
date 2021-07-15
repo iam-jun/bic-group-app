@@ -19,7 +19,8 @@ export interface Props {
 const TagItem: React.FC<Props> = ({name, onRemovePress}) => {
   const theme: IObject<any> = useTheme();
   return (
-    <ScreenWrapper style={[styles.container, {backgroundColor: theme.colors.tag}]}>
+    <ScreenWrapper
+      style={[styles.container, {backgroundColor: theme.colors.tag}]}>
       <Text primary={styles.textStyle} bold>
         {name}
       </Text>

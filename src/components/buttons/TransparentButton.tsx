@@ -4,7 +4,8 @@ import {
   TouchableOpacity,
   ViewStyle,
   StyleProp,
-  View, TextStyle,
+  View,
+  TextStyle,
 } from 'react-native';
 import Text from '../texts/Text';
 import Icon from '../Icon';

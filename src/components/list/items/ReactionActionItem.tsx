@@ -5,10 +5,7 @@ import HorizontalView from '../../layout/HorizontalView';
 import Icon from '../../Icon';
 import {IconType} from '~/resources/icons';
 import {useBaseHook} from '~/hooks';
-import {
-  primary as ACTIVE_COLOR,
-  grey6 as INACTIVE_COLOR,
-} from '~/theme/colors';
+import {primary as ACTIVE_COLOR, grey6 as INACTIVE_COLOR} from '~/theme/colors';
 
 export interface IReactionAction {
   icon: IconType;

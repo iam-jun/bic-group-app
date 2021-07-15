@@ -1,5 +1,11 @@
 import React from 'react';
-import {Animated, Platform, StyleSheet, View, Image as FastImage} from 'react-native';
+import {
+  Animated,
+  Platform,
+  StyleSheet,
+  View,
+  Image as FastImage,
+} from 'react-native';
 
 import {IObject} from '~/interfaces/common';
 
