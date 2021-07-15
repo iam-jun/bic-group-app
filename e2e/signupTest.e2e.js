@@ -27,7 +27,7 @@ describe('SIGNUP', () => {
     await element(by.id('btnSignUp')).tap();
   });
 
-   it('should show alert success', async () => {
+  it('should show alert success', async () => {
     await expect(element(by.id('alertModal'))).toBeVisible();
     await expect(element(by.id('textAlertConfirm'))).toBeVisible();
     await element(by.id('textAlertConfirm')).tap();

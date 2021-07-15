@@ -20,8 +20,8 @@ describe('LOGIN', () => {
   });
 
   it('should show home screen', async () => {
-    setTimeout(async() => {
+    setTimeout(async () => {
       await expect(element(by.id('HomeScreen'))).toBeVisible();
-    },1000)
+    }, 1000);
   });
 });
