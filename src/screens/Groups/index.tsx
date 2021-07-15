@@ -34,7 +34,7 @@ const Groups: React.FC<GroupsProps> = () => {
     return (
         <ScreenWrapper isFullView={true}>
             <NavigationHeader title="Groups" rightIcon="iconSearch" rightPress={onPressRight}/>
-            <Container>
+            <Container style={{ flex: 1 }}>
                 <ListView
                     type={'flatGroups'}
                     loading={loadingJoinedGroups}

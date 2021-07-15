@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {IGroup} from "~/interfaces/IGroup";
 import {useDispatch} from "react-redux";
 import {useTheme} from "react-native-paper";
 import {useBaseHook} from "~/hooks";
 import {IObject} from "~/interfaces/common";
-import {Image, Text} from "~/components";
+import {Text} from "~/components";
 import Icon from "~/components/Icon";
-import {grey5, grey9} from "~/theme/colors";
-import {groupsStack} from "~/configs/navigator";
+import {grey9} from "~/theme/colors";
+import GroupItem from "~/components/GroupItem";
+import GroupTree from "~/components/GroupTree";
 
-const FlatGroupItem: React.FC<IGroup> = (
-    {
+interface FlatGroupItem extends IGroup {
+
+}
+
+const FlatGroupItem: React.FC<FlatGroupItem> = (props) => {
+    const {
         id,
         name,
         userCount,
@@ -20,20 +25,18 @@ const FlatGroupItem: React.FC<IGroup> = (
         children,
         type,
         icon,
-    }
-) => {
+    } = props;
+
+    const [showTree, setShowTree] = useState(false);
+
     const dispatch = useDispatch();
     const theme = useTheme();
-    const {spacing}:IObject<any> = theme;
+    const {spacing}: IObject<any> = theme;
     const {t, navigation} = useBaseHook();
     const styles = themeStyles(theme);
 
-    const _onPressParentGroup = (group:any) => {
-        navigation.navigate(groupsStack.groupDetail, {groupId: group.id});
-    }
-
-    const _onPressItem = () => {
-        navigation.navigate(groupsStack.groupDetail, {groupId: id});
+    const _onPressPath = () => {
+        setShowTree(!showTree);
     }
 
     const getGroupParent = (group: IGroup, parents: IGroup[]) => {
@@ -44,22 +47,22 @@ const FlatGroupItem: React.FC<IGroup> = (
     }
 
     const renderPath = () => {
-        const parents:IGroup[] = [];
+        const parents: IGroup[] = [];
         if (parent) {
             getGroupParent(parent, parents);
         }
-        const largestParent:IGroup | undefined = parents?.length > 1 ? parents?.[parents?.length - 1] : undefined;
+        const largestParent: IGroup | undefined = parents?.length > 1 ? parents?.[parents?.length - 1] : undefined;
         const hasMiddleParent = parents?.length > 2;
-        const directParent:IGroup | undefined = parents?.[0];
+        const directParent: IGroup | undefined = parents?.[0];
         return (
-            <View style={{ marginHorizontal: spacing.margin.tiny}}>
+            <TouchableOpacity style={{marginHorizontal: spacing.margin.tiny}} onPress={_onPressPath}>
                 <Text>
-                    {largestParent && <Text onPress={() => _onPressParentGroup(largestParent)}>{largestParent.name}/</Text>}
+                    {largestParent && <Text>{largestParent.name}/</Text>}
                     {hasMiddleParent && <Text>.../</Text>}
-                    {directParent && <Text onPress={() => _onPressParentGroup(directParent)}>{directParent.name}/</Text>}
+                    {directParent && <Text>{directParent.name}/</Text>}
                     {parents?.length === 0 && <Text>/</Text>}
                 </Text>
-            </View>
+            </TouchableOpacity>
         );
     };
 
@@ -71,42 +74,15 @@ const FlatGroupItem: React.FC<IGroup> = (
                 </View>
                 {renderPath()}
             </View>
-            <TouchableOpacity onPress={_onPressItem}>
-                <View style={{ flexDirection: 'row', marginVertical: spacing.margin.tiny}}>
-                    <Image style={styles.icon} source={{uri: icon}}/>
-                    <View style={styles.textContainer}>
-                        <Text bold h5>{name}</Text>
-                        <View style={styles.row}>
-                            <Icon icon={'iconUserGroup'} size={16} tintColor={grey5}/>
-                            <Text style={styles.textInfo} h5 colorThird>{userCount}</Text>
-                        </View>
-                    </View>
-                </View>
-            </TouchableOpacity>
+            {showTree ? <GroupTree/> : <GroupItem {...props} />}
         </View>
     );
 };
 
 const themeStyles = (theme: IObject<any>) => {
-    const {spacing, colors} = theme;
+    const {colors} = theme;
     return StyleSheet.create({
-        container: {
-        },
-        textContainer: {
-            paddingHorizontal: spacing.padding.base,
-            flex: 1,
-        },
-        icon: {
-            width: 48,
-            height: 48,
-            borderRadius: spacing.borderRadius.small,
-        },
-        row: {
-            flexDirection: 'row',
-        },
-        textInfo: {
-            marginHorizontal: spacing.margin.tiny,
-        },
+        container: {},
         iconNextContainer: {
             backgroundColor: colors.grey1,
             width: 16,
