@@ -1,5 +1,6 @@
-if(__DEV__) {
-  import('~/ReactotronConfig').then(() => console.log('Reactotron Configured'))
+// eslint-disable-next-line no-undef
+if (__DEV__) {
+  import('~/ReactotronConfig').then(() => console.log('Reactotron Configured'));
 }
 
 import {AppRegistry} from 'react-native';

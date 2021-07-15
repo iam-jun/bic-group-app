@@ -1,5 +1,3 @@
-import HttpService from "~/services/httpService"
+import HttpService from '~/services/httpService';
 
-export {
-  HttpService
-}
+export {HttpService};

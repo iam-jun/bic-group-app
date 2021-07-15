@@ -1,9 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
-
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpack = require('webpack');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const appDirectory = path.resolve(__dirname);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const {presets} = require(`${appDirectory}/babel.config.js`);
 
 const compileNodeModules = [
@@ -56,15 +58,13 @@ const babelLoaderConfiguration = {
   },
 };
 
-const compileRNNodeModules = [
-    'react-native-gifted-chat'
-].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
+const compileRNNodeModules = ['react-native-gifted-chat'].map(moduleName =>
+  path.resolve(appDirectory, `node_modules/${moduleName}`),
+);
 
 const rnModulesLoaderConfiguration = {
   test: /@?.*\.(ts|js)x?$/,
-  include: [
-    ...compileRNNodeModules,
-  ],
+  include: [...compileRNNodeModules],
   use: {
     loader: 'babel-loader',
   },
