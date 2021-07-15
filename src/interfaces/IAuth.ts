@@ -34,17 +34,17 @@ export interface IUser extends User {
 }
 
 export interface IUserResponse extends IUser {
-  username: string,
-  signInUserSession?: any,
-  attributes?: any,
-  name: string, //merge from attributes
-  email: string, //merge from attributes
+  username: string;
+  signInUserSession?: any;
+  attributes?: any;
+  name: string; //merge from attributes
+  email: string; //merge from attributes
 }
 
 export interface IForgotPasswordError {
-  errBox?: string,
-  errRequest?: string,
-  errConfirm?: string
+  errBox?: string;
+  errRequest?: string;
+  errConfirm?: string;
 }
 
 export interface ISignUpResponse extends ISignUpResult {}

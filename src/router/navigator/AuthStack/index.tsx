@@ -11,9 +11,9 @@ const AuthStack = () => {
   return (
     <Stack.Navigator headerMode="screen" initialRouteName={authStack.landing}>
       <Stack.Screen
-          options={{headerShown: false}}
-          name={authStack.landing}
-          component={Stacks[authStack.landing]}
+        options={{headerShown: false}}
+        name={authStack.landing}
+        component={Stacks[authStack.landing]}
       />
       <Stack.Screen
         options={{headerShown: false}}
