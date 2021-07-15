@@ -4,10 +4,10 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {Bubble, BubbleProps} from 'react-native-gifted-chat';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
-import {IMessage} from '~/interfaces/IChat';
+import {GMessage} from '~/interfaces/IChat';
 import {sizes} from '~/theme/dimension';
 
-const ChatBubble: React.FC<BubbleProps<IMessage>> = props => {
+const ChatBubble: React.FC<BubbleProps<GMessage>> = props => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {onLongPress} = props;

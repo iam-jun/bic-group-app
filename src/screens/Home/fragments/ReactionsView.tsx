@@ -3,9 +3,9 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import {useBaseHook} from '~/hooks';
 import {formatText} from '~/utils/formatData';
 
-import HorizontalView from '../layout/HorizontalView';
-import ReactionItem from '../list/items/ReactionItem';
-import Text from '../texts/Text';
+import HorizontalView from '~/components/layout/HorizontalView';
+import ReactionItem from '~/components/list/items/ReactionItem';
+import Text from '~/components/texts/Text';
 import {
   primary as LIKE_BUTTON_COLOR,
   white as WHITE_COLOR,
@@ -39,11 +39,11 @@ const ReactionsView: React.FC<Props> = ({
               bold: true,
               backgroundColor: LIKE_BUTTON_COLOR,
             }}
-            value={
+            value={`${
               isLike && like > 1
                 ? formatText('post:label_likes_with_me', like)
                 : like
-            }
+            }`}
             tintColor={WHITE_COLOR}
           />
         </TouchableOpacity>

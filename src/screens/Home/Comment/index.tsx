@@ -4,13 +4,13 @@ import {Modalize} from 'react-native-modalize';
 import {useDispatch} from 'react-redux';
 
 import CommentItem from '~/components/list/items/CommentItem';
-import ListView from "~/components/list/ListView"
+import ListView from '~/components/list/ListView';
 import Text from '~/components/texts/Text';
 import {useBaseHook} from '~/hooks';
 import {ScreenWrapper} from '~/components';
 import InputToolbar from '~/components/inputs/InputToolbar';
 import NavigationHeader from '~/components/headers/NavigationHeader';
-import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
+import MessageOptionsModal from '../fragments/OptionsModal';
 import useAuth from '~/hooks/auth';
 import commonActions from '~/constants/commonActions';
 import IComment from '~/interfaces/IComment';

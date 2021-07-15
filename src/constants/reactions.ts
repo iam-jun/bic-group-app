@@ -1,4 +1,7 @@
-export default {
+import {IObject} from '~/interfaces/common';
+import {IReactionProps} from '~/interfaces/IReaction';
+
+export const reactions: IObject<IReactionProps> = {
   love: {
     icon: 'iconReactionLove',
   },
@@ -21,3 +24,6 @@ export default {
     icon: 'iconReactionLike',
   },
 };
+
+export type ReactionType = keyof typeof reactions;
+export default reactions;

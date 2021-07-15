@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import useAuth from '~/hooks/auth';
 import {Avatar as RNPAvatar} from 'react-native-paper';
 
-export interface Props {
+export interface AvatarProps {
   uri?: string | undefined | React.ReactNode;
   size?: keyof typeof sizes;
   [x: string]: any;
@@ -16,7 +16,7 @@ const sizes = {
   big: 60,
 };
 
-const Avatar: React.FC<Props> = ({
+const Avatar: React.FC<AvatarProps> = ({
   style,
   size = 'base',
   user,

@@ -28,9 +28,7 @@ const Reactions: React.FC<Props> = ({data, onPress}) => {
               key={`reaction-${generateUniqueId()}-${item?.type}`}
               onPress={() => onPress(item)}
               isButton
-              icon={
-                reactionsIcons[item?.type as keyof typeof reactionsIcons]?.icon
-              }
+              icon={reactionsIcons[item.type].icon}
               label={`${item.count}`}
               style={styles.icon}
             />

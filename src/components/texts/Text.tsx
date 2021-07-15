@@ -2,10 +2,10 @@
 import React from 'react';
 import {StyleSheet, Text, TextStyle, StyleProp} from 'react-native';
 import {useTheme} from 'react-native-paper';
+
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {colors} from '~/theme';
-import {formatDate} from '~/utils/formatData';
 
 const configColors: IObject<any> = colors;
 

@@ -6,16 +6,16 @@
       "type": "ios.app",
       "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
     },
-    "android.debug": {
+    "android.development.debug": {
       "type": "android.apk",
-      "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
-      "testBinaryPath": "android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
-      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
+      "binaryPath": "android/app/build/outputs/apk/development/debug/app-development-debug.apk",
+      "testBinaryPath": "android/app/build/outputs/apk/androidTest/development/debug/app-development-debug-androidTest.apk",
+      "build": "cd android && ./gradlew assembleDevelopmentDebug assembleDevelopmentDebugAndroidTest -DtestBuildType=debug && cd .."
     },
-    "android.release": {
+    "android.development.release": {
       "type": "android.apk",
-      "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
-      "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd .."
+      "binaryPath": "android/app/build/outputs/apk/development/release/app-development-release.apk",
+      "build": "cd android && ./gradlew assembleDevelopmentRelease assembleDevelopmentReleaseAndroidTest -DtestBuildType=release && cd .."
     }
   },
   "devices": {
@@ -37,13 +37,13 @@
       "device": "simulator",
       "app": "ios"
     },
-    "android.dev.debug": {
+    "android.development.debug": {
       "device": "emulator",
-      "app": "android.debug"
+      "app": "android.development.debug"
     },
-    "android.dev.release": {
+    "android.development.release": {
       "device": "emulator",
-      "app": "android.release"
+      "app": "android.development.release"
     }
   }
 }

@@ -6,22 +6,21 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import InputToolbar from '~/components/inputs/InputToolbar';
 import ContentItem from '~/components/list/items/ContentItem';
-import ListView from "~/components/list/ListView"
+import ListView from '~/components/list/ListView';
 import {spacing} from '~/theme';
 import {post} from './dummy-post-data';
 import {IObject} from '~/interfaces/common';
-import {generateUniqueId} from '~/utils/generator';
 import useAuth from '~/hooks/auth';
 import {ScreenWrapper, ViewSpacing} from '~/components';
 import {useBaseHook} from '~/hooks';
 import commonActions from '~/constants/commonActions';
 import {options} from '~/constants/postOptions';
-import MessageOptionsModal from '~/components/fragments/optionModals/MessageOptions';
+import MessageOptionsModal from '../fragments/OptionsModal';
 import {mainStack} from '~/configs/navigator';
 import Text from '~/components/texts/Text';
 import {margin} from '~/theme/spacing';
-import * as actions from '~/screens/Comment/redux/actions';
-import PostOptionsModal from '~/components/fragments/optionModals/PostOptions';
+import * as commentActions from '../Comment/redux/actions';
+import PostOptionsModal from '../fragments/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
 
@@ -52,7 +51,7 @@ const PostDetailScreen = ({
         return commentInputRef.current?.focus();
 
       case commonActions.replyComment:
-        dispatch(actions.selectComment(item));
+        dispatch(commentActions.selectComment(item));
         navigation.navigate(mainStack.reply, {commentFocus: true});
         break;
 
@@ -124,7 +123,6 @@ const PostDetailScreen = ({
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         onContentSizeChange={() => {
-          console.log('onContentSizeChange', {scrollRef});
           isCommentChanged && scrollRef.current?.scrollToEnd({animated: true});
         }}
         contentContainerStyle={styles.container}>
