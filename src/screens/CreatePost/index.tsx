@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/components/ScreenWrapper';
 import NavigationHeader from '~/components/headers/NavigationHeader';
@@ -21,14 +22,17 @@ import {useBaseHook} from '~/hooks';
 import {Text} from '~/components';
 import {IObject} from '~/interfaces/common';
 import Divider from '~/components/Divider';
-import {mainStack} from '~/configs/navigator';
+import {homeStack, mainStack} from '~/configs/navigator';
 import useAudience from '~/hooks/audience';
+import audienceActions from './SelectAudience/redux/actions';
+import postActions from './redux/actions';
 
 const CreatePostView = ({navigation}: {navigation: any}) => {
   const {t} = useBaseHook();
   const [text, setText] = useState<string>('');
   const theme: IObject<any> = useTheme();
   const {audiences} = useAudience();
+  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView
@@ -46,7 +50,15 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
               testID="CreatePost"
               title={t('post:post_button')}
               onPress={() => {
-                console.log('Post');
+                dispatch(
+                  postActions.selectPost({
+                    content: text,
+                    reaction: {like: 0, comment: 0, share: 0},
+                    isLike: true,
+                  }),
+                );
+                dispatch(audienceActions.setAudiences([]));
+                navigation.navigate(homeStack.postDetail);
               }}
             />
           }
