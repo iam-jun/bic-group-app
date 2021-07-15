@@ -7,6 +7,9 @@ const commonActions = {
   replyComment: 'reply-comment',
   emojiCommentReact: 'emoji-comment-react',
   openPostOption: 'open-post-option',
+  checkBox: 'check-box',
+  uncheckBox: 'uncheck-box',
+  removeTag: 'remove-tag',
 };
 
 export type IAction = keyof typeof commonActions;

@@ -21,11 +21,14 @@ import {useBaseHook} from '~/hooks';
 import {Text} from '~/components';
 import {IObject} from '~/interfaces/common';
 import Divider from '~/components/Divider';
+import {mainStack} from '~/configs/navigator';
+import useAudience from '~/hooks/audience';
 
 const CreatePostView = ({navigation}: {navigation: any}) => {
   const {t} = useBaseHook();
   const [text, setText] = useState<string>('');
   const theme: IObject<any> = useTheme();
+  const {audiences} = useAudience();
 
   return (
     <KeyboardAvoidingView
@@ -39,7 +42,7 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
           rightComponent={
             <PrimaryButton
               contentStyle={styles.button}
-              disabled={!!text ? false : true}
+              disabled={!!text && audiences.data.length !== 0 ? false : true}
               testID="CreatePost"
               title={t('post:post_button')}
               onPress={() => {
@@ -53,7 +56,7 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
             {t('post:send_to')}
           </Text>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => navigation.navigate(mainStack.selectPostAudience)}
             style={[
               styles.chooseAudience,
               {backgroundColor: theme.colors.tag},
@@ -63,6 +66,19 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
             </Text>
           </TouchableOpacity>
         </HorizontalView>
+
+        {audiences.data.length !== 0 && (
+          <ListView
+            contentContainerStyle={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+            }}
+            style={styles.audienceList}
+            type="tag"
+            data={audiences.data}
+          />
+        )}
+        <Divider thick={1} />
 
         <ScrollView>
           <TextInput
@@ -116,5 +132,9 @@ const styles = StyleSheet.create({
   actionList: {
     justifyContent: 'flex-end',
     marginVertical: margin.big,
+  },
+  audienceList: {
+    marginBottom: margin.large,
+    marginHorizontal: margin.large,
   },
 });

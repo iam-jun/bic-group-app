@@ -65,13 +65,16 @@ const ListView: React.FC<IListView> = ({
   const Loading = getKeyValue(loadings)(type);
 
   const _renderItem = ({item}: {item: any}) => {
-    const _onActionPress = (action: IAction) => {
-      onActionPress && onActionPress(action, item);
-    };
-
     return (
       <TouchableOpacity onPress={() => onItemPress && onItemPress(item)}>
-        <Component {...item} onActionPress={_onActionPress} />
+        <Component
+          {...item}
+          onActionPress={
+            onActionPress
+              ? (action: IAction) => onActionPress(action, item)
+              : undefined
+          }
+        />
       </TouchableOpacity>
     );
   };

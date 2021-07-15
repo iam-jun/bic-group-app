@@ -10,25 +10,32 @@ import ScreenWrapper from '~/components/ScreenWrapper';
 import Text from '../../texts/Text';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
+import Avatar from '~/components/Avatar';
+import {IUser} from '~/interfaces/IAuth';
+import {margin, padding} from '~/theme/spacing';
+import commonActions from '~/constants/commonActions';
 
 export interface Props {
+  user?: IUser;
   name?: string;
-  onRemovePress?: () => void;
+  onActionPress?: Function;
 }
 
-const TagItem: React.FC<Props> = ({name, onRemovePress}) => {
+const TagItem: React.FC<Props> = ({user, name, onActionPress}) => {
   const theme: IObject<any> = useTheme();
   return (
-    <ScreenWrapper style={[styles.container, {backgroundColor: theme.colors.tag}]}>
+    <ScreenWrapper
+      style={[styles.container, {backgroundColor: theme.colors.tag}]}>
+      {user && <Avatar style={styles.avatar} user={user} size="small" />}
       <Text primary={styles.textStyle} bold>
-        {name}
+        {name || user?.name}
       </Text>
-      {onRemovePress && (
+      {onActionPress && (
         <Icon
           tintColor={ICON_CORLOR}
-          size={10}
+          size={12}
           icon="iconClose"
-          onPress={onRemovePress}
+          onPress={() => onActionPress(commonActions.removeTag)}
         />
       )}
     </ScreenWrapper>
@@ -42,12 +49,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 4,
-    paddingVertical: 3,
+    paddingHorizontal: padding.small,
+    paddingVertical: padding.small,
   },
   textStyle: {
     color: TEXT_COLOR,
     fontSize: 10,
+  },
+  avatar: {
+    marginHorizontal: margin.tiny,
   },
 });
 

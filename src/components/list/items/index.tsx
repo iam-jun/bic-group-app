@@ -9,6 +9,7 @@ import OptionItem from './OptionItem';
 import ReactionActionItem from './ReactionActionItem';
 import ReactionItem from './ReactionItem';
 import MenuItem from './MenuItem';
+import PeopleAudienceItem from './PeopleAudienceItem';
 
 const items: {[key: string]: any} = {
   user: ItemUser,
@@ -22,6 +23,7 @@ const items: {[key: string]: any} = {
   reactionActions: ReactionActionItem,
   reaction: ReactionItem,
   menu: MenuItem,
+  people: PeopleAudienceItem,
 };
 
 export type IListViewItem = keyof typeof items;
