@@ -45,6 +45,7 @@ const Post: React.FC<IObject<any>> = ({
             secondLabel={updatedAt}
             thirdLabel={locationName}
             showBackButton={showBackButton}
+            style={styles.headerView}
           />
         )}
       </View>
@@ -77,6 +78,10 @@ const Post: React.FC<IObject<any>> = ({
 const styles = StyleSheet.create({
   container: {
     borderRadius: borderRadius.large,
+  },
+  headerView: {
+    marginStart: margin.large,
+    paddingTop: padding.large,
   },
   content: {
     marginBottom: margin.small,
