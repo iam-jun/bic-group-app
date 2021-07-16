@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Black.ttf</string>
@@ -87,6 +87,16 @@
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Thin.ttf</string>
 		<string>Roboto-ThinItalic.ttf</string>
+		<string>SegoeUI-Italic.ttf</string>
+		<string>SegoeUI-Semibold.ttf</string>
+		<string>SegoeUI-SemiboldItalic.ttf</string>
+		<string>SegoeUI.ttf</string>
+		<string>SVN-Poppins.otf</string>
+		<string>SVN-PoppinsItalic.otf</string>
+		<string>SVN-PoppinsMedium.otf</string>
+		<string>SVN-PoppinsMediumItalic.otf</string>
+		<string>SVN-PoppinsSemiBold.otf</string>
+		<string>SVN-PoppinsSemiBoldItalic.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
