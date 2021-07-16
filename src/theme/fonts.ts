@@ -1,8 +1,8 @@
 // Font family
-const light = 'Lato-Light';
-const regular = 'Lato-Regular';
+const light = 'SegoeUI';
+const regular = 'SVN-Poppins';
 // const medium = 'Lato-Black';
-const bold = 'Lato-Bold';
+const bold = 'SVN-PoppinsSemiBold';
 
 export default {
   light: {
