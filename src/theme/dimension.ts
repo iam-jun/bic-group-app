@@ -79,7 +79,8 @@ export const sizeButton = {
   height: 44,
 };
 
-export const scaleSize = (size: number) => (DeviceWidth / guidelineBaseWidth) * size;
+export const scaleSize = (size: number) =>
+  (DeviceWidth / guidelineBaseWidth) * size;
 
 export default {
   sizes,

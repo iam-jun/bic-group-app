@@ -41,12 +41,12 @@ export default {
       apple: '#FFFFFF',
 
       //react-native-paper default field
-      accent: '#6600cc',                    //secondary color for your app which complements the primary color.
-      text: '#29272A',                      //text color for content.
-      disabled: 'rgba(0, 0, 0, 0.26)',      //color for disabled elements.
-      backdrop: 'rgba(0, 0, 0, 0.5)',       //color for backdrops of various components such as modals.
-      onSurface: '#000000',                 //background color for snackbars
-      notification: '#f50057',              //background color for badges
+      accent: '#6600cc', //secondary color for your app which complements the primary color.
+      text: '#29272A', //text color for content.
+      disabled: 'rgba(0, 0, 0, 0.26)', //color for disabled elements.
+      backdrop: 'rgba(0, 0, 0, 0.5)', //color for backdrops of various components such as modals.
+      onSurface: '#000000', //background color for snackbars
+      notification: '#f50057', //background color for badges
 
       //TabBar
       tabBarBackground: '#FFFFFF',
@@ -102,12 +102,12 @@ export default {
       apple: '#FFFFFF',
 
       //react-native-paper default field
-      accent: '#6600cc',                    //secondary color for your app which complements the primary color.
-      text: '#252D42',                      //text color for content.
-      disabled: 'rgba(0, 0, 0, 0.26)',      //color for disabled elements.
-      backdrop: 'rgba(0, 0, 0, 0.5)',       //color for backdrops of various components such as modals.
-      onSurface: '#000000',                 //background color for snackbars
-      notification: '#f50057',              //background color for badges
+      accent: '#6600cc', //secondary color for your app which complements the primary color.
+      text: '#252D42', //text color for content.
+      disabled: 'rgba(0, 0, 0, 0.26)', //color for disabled elements.
+      backdrop: 'rgba(0, 0, 0, 0.5)', //color for backdrops of various components such as modals.
+      onSurface: '#000000', //background color for snackbars
+      notification: '#f50057', //background color for badges
 
       //TabBar
       tabBarBackground: '#FFFFFF',

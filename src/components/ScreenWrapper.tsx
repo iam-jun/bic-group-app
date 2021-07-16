@@ -8,11 +8,7 @@ export interface Props {
   [x: string]: any;
 }
 
-const ScreenWrapper: React.FC<Props> = ({
-  isFullView,
-  style,
-  ...restProps
-}) => {
+const ScreenWrapper: React.FC<Props> = ({isFullView, style, ...restProps}) => {
   const theme: ITheme = useTheme();
 
   return (
@@ -27,7 +23,6 @@ const ScreenWrapper: React.FC<Props> = ({
   );
 };
 
-ScreenWrapper.defaultProps = {
-};
+ScreenWrapper.defaultProps = {};
 
 export default ScreenWrapper;

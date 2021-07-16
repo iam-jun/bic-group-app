@@ -9,7 +9,7 @@ export const fontFamilies = {
   PoppinsMediumItalic: 'SVN-PoppinsMediumItalic',
   PoppinsSemiBold: 'SVN-PoppinsSemiBold',
   PoppinsSemiBoldItalic: 'SVN-PoppinsSemiBoldItalic',
-}
+};
 
 export default {
   light: {

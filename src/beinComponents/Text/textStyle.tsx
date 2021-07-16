@@ -3,11 +3,10 @@ import {fontFamilies} from '~/theme/fonts';
 import {letterSpacing, lineHeights, sizes} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 
-
-export const createStyle = (theme:ITheme) => {
+export const createStyle = (theme: ITheme) => {
   const {colors} = theme;
 
-  return (StyleSheet.create({
+  return StyleSheet.create({
     h1: {
       fontFamily: fontFamilies.PoppinsSemiBold,
       fontSize: sizes.h1,
@@ -85,5 +84,5 @@ export const createStyle = (theme:ITheme) => {
       letterSpacing: letterSpacing.subtitle,
       color: colors.textPrimary,
     },
-  }));
-}
+  });
+};
