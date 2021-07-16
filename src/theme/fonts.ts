@@ -1,28 +1,35 @@
-// Font family
-const light = 'Lato-Light';
-const regular = 'Lato-Regular';
-// const medium = 'Lato-Black';
-const bold = 'Lato-Bold';
+export const fontFamilies = {
+  Segoe: 'SegoeUI',
+  SegoeItalic: 'SegoeUI-Italic',
+  SegoeSemibold: 'SegoeUI-Semibold',
+  SegoeSemiboldItalic: 'SegoeUI-SemiboldItalic',
+  Poppins: 'SVN-Poppins',
+  PoppinsItalic: 'SVN-PoppinsItalic',
+  PoppinsMedium: 'SVN-PoppinsMedium',
+  PoppinsMediumItalic: 'SVN-PoppinsMediumItalic',
+  PoppinsSemiBold: 'SVN-PoppinsSemiBold',
+  PoppinsSemiBoldItalic: 'SVN-PoppinsSemiBoldItalic',
+};
 
 export default {
   light: {
-    fontFamily: light,
+    fontFamily: fontFamilies.Segoe,
     fontWeight: 'normal',
   },
   medium: {
-    fontFamily: regular,
-    fontWeight: '400',
+    fontFamily: fontFamilies.PoppinsMedium,
+    fontWeight: 'normal',
   },
   regular: {
-    fontFamily: regular,
+    fontFamily: fontFamilies.Poppins,
     fontWeight: 'normal',
   },
   bold: {
-    fontFamily: bold,
-    fontWeight: 'bold',
+    fontFamily: fontFamilies.PoppinsSemiBold,
+    fontWeight: 'normal',
   },
   maxBold: {
-    fontFamily: bold,
-    fontWeight: '900',
+    fontFamily: fontFamilies.PoppinsSemiBold,
+    fontWeight: 'normal',
   },
 };
