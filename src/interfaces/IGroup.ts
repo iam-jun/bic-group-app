@@ -1,8 +1,18 @@
-import {IUser} from './IAuth';
-
 export interface IGroup {
-  user: IUser;
-  updatedAt: string;
-  newPostCount: number;
-  isPinned?: boolean;
+  id: number,
+  name: string,
+  userCount?: number,
+  parent?: any,
+  parentId?: number,
+  children?: IGroup[],
+  type?: any,
+  icon?: string,
+}
+
+export interface IGroupDetail extends IGroup{
+  cover?: string,
+  privacy?: string,
+  type?: string,
+  verified?: boolean,
+  description?: string,
 }
