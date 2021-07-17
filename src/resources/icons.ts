@@ -15,7 +15,6 @@ import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 import iconLanguageEn from '../../assets/icons/icon_language_en.svg';
 import iconLanguageVi from '../../assets/icons/icon_language_vi.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
-import iconEmptyCheckbox from '../../assets/icons/icon_empty_checkbox.svg';
 
 const icons = {
   iconAdd: {
@@ -171,7 +170,6 @@ const icons = {
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
-  iconEmptyCheckbox,
 };
 
 export type IconType = keyof typeof icons;

@@ -1,33 +1,28 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 
 import HeaderView from '../../HeaderView';
 import ScreenWrapper from '../../ScreenWrapper';
-import {margin, padding} from '~/theme/spacing';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import {IUser} from '~/interfaces/IAuth';
 import CheckBox from '~/components/CheckBox';
+import {IAction} from '~/constants/commonActions';
 
 const PeopleAudienceItem = ({
   user,
   onActionPress,
 }: {
   user: IUser;
-  onActionPress: Function;
+  onActionPress: (action: IAction) => void;
 }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
-  const [toggleCheckBox, setToggleCheckBox] = useState<boolean>(false);
 
   return (
     <ScreenWrapper style={styles.container}>
       <HeaderView avatar={{user, size: 'base'}} firstLabel={user.name} />
-      <CheckBox
-        toggleCheckBox={toggleCheckBox}
-        setToggleCheckBox={setToggleCheckBox}
-        onActionPress={onActionPress}
-      />
+      <CheckBox onActionPress={onActionPress} />
     </ScreenWrapper>
   );
 };

@@ -41,7 +41,7 @@ const SelectPostAudienceScreen = ({navigation}: {navigation: any}) => {
   const styles = createStyles(theme);
 
   const removeSelectedAudience = (item: {user: IUser}) => {
-    let newData = [...selectedAudience];
+    const newData = [...selectedAudience];
     const removeIndex = selectedAudience.findIndex(
       (el: {user: IUser}) => el.user.id === item.user.id,
     );
