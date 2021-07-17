@@ -16,10 +16,13 @@ export default {
       bgDisable: '#E0E0E0',
       bgButtonPrimary: '#0C0D0E',
       bgButtonSecondary: '#ECE7F8',
-      border: '#E0E0E0',
+      borderCard: '#E0E0E0',
+      borderDivider: '#F0F0F0',
+      textInput: '#524F55',
       placeholder: '#F0F0F0',
       surface: '#FAFAFA', //background color for elements containing content, such as cards.
       iconTint: '#0C0D0E',
+      iconTintReversed: '#FFFFFF',
 
       link: '#174BE2',
       activeLink: '#3F2885',
@@ -29,9 +32,9 @@ export default {
 
       textPrimary: '#29272A',
       textSecondary: '#828085',
-      textSuccess: '#3BB774',
-      textDanger: '#E25050',
-      textWarning: '#FFE351',
+      textSuccess: '#29272A',
+      textDanger: '#ffffff',
+      textWarning: '#29272A',
       textInfo: '#174BE2',
       textDisabled: '#BDBDBD',
       textReversed: '#FFFFFF',
@@ -77,10 +80,13 @@ export default {
       bgDisable: '#E0E0E0',
       bgButtonPrimary: '#0C0D0E',
       bgButtonSecondary: '#ECE7F8',
-      border: '#E0E0E0',
+      borderCard: '#E0E0E0',
+      borderDivider: '#F0F0F0',
+      textInput: '#524F55',
       placeholder: '#F0F0F0',
       surface: '#FAFAFA', //background color for elements containing content, such as cards.
       iconTint: '#0C0D0E',
+      iconTintReversed: '#FFFFFF',
 
       link: '#174BE2',
       activeLink: '#3F2885',
@@ -90,9 +96,9 @@ export default {
 
       textPrimary: '#29272A',
       textSecondary: '#828085',
-      textSuccess: '#3BB774',
-      textDanger: '#E25050',
-      textWarning: '#FFE351',
+      textSuccess: '#29272A',
+      textDanger: '#ffffff',
+      textWarning: '#29272A',
       textInfo: '#174BE2',
       textDisabled: '#BDBDBD',
       textReversed: '#FFFFFF',
@@ -103,7 +109,7 @@ export default {
 
       //react-native-paper default field
       accent: '#6600cc', //secondary color for your app which complements the primary color.
-      text: '#252D42', //text color for content.
+      text: '#29272A', //text color for content.
       disabled: 'rgba(0, 0, 0, 0.26)', //color for disabled elements.
       backdrop: 'rgba(0, 0, 0, 0.5)', //color for backdrops of various components such as modals.
       onSurface: '#000000', //background color for snackbars

@@ -1,20 +1,24 @@
 import React from 'react';
-import {Text as TextRN} from 'react-native';
-import {useDispatch} from 'react-redux';
 
 import {ScreenWrapper} from '~/components';
-import Divider from '~/components/Divider';
-import ListView from '~/components/list/ListView';
-import {margin} from '~/theme/spacing';
-import {pinnedGroups, groups} from './dummy-data';
-import BeinText from '~/beinComponents/Text';
 import Text from '~/beinComponents/Text';
+import FlashMessage from '~/beinComponents/FlashMessage';
 
 const SubscriptionGroupScreen = () => {
-  const dispatch = useDispatch();
-
   return (
     <ScreenWrapper testID="SubscriptionScreen" isFullView style={{padding: 16}}>
+      <FlashMessage type={'error'} onClose={() => {}}>
+        {
+          'Your account is deactived in 2 hours for requesting code too many time. Please try again later'
+        }
+      </FlashMessage>
+      <FlashMessage type={'success'}>
+        {'You have successfully copied'}
+      </FlashMessage>
+      <FlashMessage type={'warning'} onClose={() => {}}>
+        {'Don’t underestimate this banner'}
+      </FlashMessage>
+
       <Text.H1>H1 Lorem Ipsum is simply dummy text</Text.H1>
       <Text.H2>H2 Lorem Ipsum is simply dummy text</Text.H2>
       <Text.H3>H3 Lorem Ipsum is simply dummy text</Text.H3>
@@ -26,7 +30,6 @@ const SubscriptionGroupScreen = () => {
       <Text.BodySM>BodySM Lorem Ipsum is simply dummy text</Text.BodySM>
       <Text.BodyS>BodyS Lorem Ipsum is simply dummy text</Text.BodyS>
       <Text.Subtitle>Subtitle Lorem Ipsum is simply dummy text</Text.Subtitle>
-
       <Text style={{textDecorationLine: 'underline'}}>RN Text</Text>
     </ScreenWrapper>
   );
