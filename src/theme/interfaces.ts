@@ -1,12 +1,12 @@
 export interface ITheme extends ReactNativePaper.Theme {
-  dark: boolean,
+  dark: boolean;
   colors: IThemeColors;
   spacing?: ISpacing;
-  dimension?: any,
-  shadow?: any,
-  fontFamily?: any,
-  fonts: any,
-  animation: any,
+  dimension?: any;
+  shadow?: any;
+  fontFamily?: any;
+  fonts: any;
+  animation: any;
 }
 
 export interface IThemeColors extends ReactNativePaper.ThemeColors {
@@ -52,16 +52,16 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
 }
 
 export interface ISpacing {
-  margin: ISpacingValue,
-  padding: ISpacingValue,
-  borderRadius: ISpacingValue,
-  lineHeight: ISpacingValue,
+  margin: ISpacingValue;
+  padding: ISpacingValue;
+  borderRadius: ISpacingValue;
+  lineHeight: ISpacingValue;
 }
 
 export interface ISpacingValue {
-  base?: number,
-  tiny?: number,
-  small?: number,
-  large?: number,
-  big?: number,
+  base?: number;
+  tiny?: number;
+  small?: number;
+  large?: number;
+  big?: number;
 }

@@ -22,24 +22,21 @@ export interface BeinTextProps extends TextProps {
   color?: string;
 }
 
-const Text: React.FC<BeinTextProps> = (
-  {
-    variant,
-    style,
-    children,
-    color,
-    ...props
-  }) => {
+const Text: React.FC<BeinTextProps> = ({
+  variant,
+  style,
+  children,
+  color,
+  ...props
+}) => {
   const theme: ITheme = useTheme();
   const styles: {[key: string]: any} = createStyle(theme);
   const textStyle = styles[variant || 'body'];
 
   return (
-    <TextRN {...props} style={StyleSheet.flatten([
-      textStyle,
-      color ? { color } : {},
-      style,
-    ])}>
+    <TextRN
+      {...props}
+      style={StyleSheet.flatten([textStyle, color ? {color} : {}, style])}>
       {children}
     </TextRN>
   );

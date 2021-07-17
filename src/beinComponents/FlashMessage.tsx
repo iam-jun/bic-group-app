@@ -12,14 +12,12 @@ export interface FlashMessageProps {
   onClose?: () => void;
 }
 
-const FlashMessage: React.FC<FlashMessageProps> = (
-  {
-    type = 'warning',
-    children,
-    style,
-    onClose,
-  },
-) => {
+const FlashMessage: React.FC<FlashMessageProps> = ({
+  type = 'warning',
+  children,
+  style,
+  onClose,
+}) => {
   const theme: ITheme = useTheme();
   const {colors, spacing} = theme;
 
@@ -41,7 +39,8 @@ const FlashMessage: React.FC<FlashMessageProps> = (
     },
   };
 
-  const {iconColor, textColor, backgroundColor} = flashMessageStyle[type] || flashMessageStyle.success;
+  const {iconColor, textColor, backgroundColor} =
+    flashMessageStyle[type] || flashMessageStyle.success;
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
@@ -55,9 +54,7 @@ const FlashMessage: React.FC<FlashMessageProps> = (
   return (
     <View style={containerStyle}>
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text.Body color={textColor}>
-          {children}
-        </Text.Body>
+        <Text.Body color={textColor}>{children}</Text.Body>
       </View>
       {onClose && (
         <Icon icon={'iconClose'} tintColor={iconColor} onPress={onClose} />

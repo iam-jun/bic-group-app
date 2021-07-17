@@ -7,9 +7,10 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 const SubscriptionGroupScreen = () => {
   return (
     <ScreenWrapper testID="SubscriptionScreen" isFullView style={{padding: 16}}>
-
       <FlashMessage type={'error'} onClose={() => {}}>
-        {'Your account is deactived in 2 hours for requesting code too many time. Please try again later'}
+        {
+          'Your account is deactived in 2 hours for requesting code too many time. Please try again later'
+        }
       </FlashMessage>
       <FlashMessage type={'success'}>
         {'You have successfully copied'}
