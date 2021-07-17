@@ -8,22 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* bein_groupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* bein_groupTests.m */; };
+		0166DCB514994F4287DC1AFB /* SVN-PoppinsMediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 69166FDA80424E02B9F2BD79 /* SVN-PoppinsMediumItalic.otf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		186CA33DFE6F4DE4825AC15C /* SVN-PoppinsMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE1AA24A3A42ED9B3DCD82 /* SVN-PoppinsMedium.otf */; };
+		38D5FC5F57D84D9CB87FE48B /* SVN-Poppins.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28F2F768180A4AFC961F428D /* SVN-Poppins.otf */; };
+		51EB5FE323194EBDB79F4AE3 /* SegoeUI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15873F56468D415A8A685AB9 /* SegoeUI.ttf */; };
+		67A480EDF9D64414A590D44C /* SegoeUI-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */; };
+		7C7F2E180C244350BB6A955E /* SegoeUI-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59158BED60514EA08C8E8E2E /* SegoeUI-SemiboldItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9202D98FA56148D88E4E08DF /* SVN-PoppinsSemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */; };
+		93F82315FB324A13B6F9DF96 /* SVN-PoppinsItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E7B037DBD714F28B0CE02D6 /* SVN-PoppinsItalic.otf */; };
+		C34A26C5CBCF47018637DA06 /* SegoeUI-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */; };
 		D45B5580C2C1082286D1C8D1 /* libPods-bein_group.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA700F8A3AF0626405ED6FA1 /* libPods-bein_group.a */; };
-		E683743F265CAEDE00DE22B7 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6837434265CAEDE00DE22B7 /* Lato-Bold.ttf */; };
-		E6837440265CAEDE00DE22B7 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6837435265CAEDE00DE22B7 /* Lato-Regular.ttf */; };
-		E6837441265CAEDE00DE22B7 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6837436265CAEDE00DE22B7 /* Lato-Light.ttf */; };
-		E6837442265CAEDE00DE22B7 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6837437265CAEDE00DE22B7 /* Lato-Thin.ttf */; };
-		E6837443265CAEDE00DE22B7 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6837438265CAEDE00DE22B7 /* Lato-BlackItalic.ttf */; };
-		E6837444265CAEDE00DE22B7 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6837439265CAEDE00DE22B7 /* Lato-Italic.ttf */; };
-		E6837445265CAEDE00DE22B7 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E683743A265CAEDE00DE22B7 /* Lato-Black.ttf */; };
-		E6837446265CAEDE00DE22B7 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E683743B265CAEDE00DE22B7 /* Lato-BoldItalic.ttf */; };
-		E6837447265CAEDE00DE22B7 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = E683743C265CAEDE00DE22B7 /* OFL.txt */; };
-		E6837448265CAEDE00DE22B7 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E683743D265CAEDE00DE22B7 /* Lato-ThinItalic.ttf */; };
-		E6837449265CAEDE00DE22B7 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E683743E265CAEDE00DE22B7 /* Lato-LightItalic.ttf */; };
+		D7214A9E725B40C3A710DAA6 /* SVN-PoppinsSemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */; };
 		F74BE7EE4B611DCED9C541F1 /* libPods-bein_group-bein_groupTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03B78A72093EB517E903A9BD /* libPods-bein_group-bein_groupTests.a */; };
 /* End PBXBuildFile section */
 
@@ -48,24 +47,23 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = bein_group/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = bein_group/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = bein_group/main.m; sourceTree = "<group>"; };
+		15873F56468D415A8A685AB9 /* SegoeUI.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SegoeUI.ttf; path = ../assets/fonts/SegoeUI.ttf; sourceTree = "<group>"; };
 		1F149DFEE29163840D4A0A19 /* Pods-bein_group.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group.release.xcconfig"; path = "Target Support Files/Pods-bein_group/Pods-bein_group.release.xcconfig"; sourceTree = "<group>"; };
 		1FA401022A8353E74511E18C /* Pods-bein_group.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group.debug.xcconfig"; path = "Target Support Files/Pods-bein_group/Pods-bein_group.debug.xcconfig"; sourceTree = "<group>"; };
+		28F2F768180A4AFC961F428D /* SVN-Poppins.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins.otf"; path = "../assets/fonts/SVN-Poppins.otf"; sourceTree = "<group>"; };
+		2E7B037DBD714F28B0CE02D6 /* SVN-PoppinsItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsItalic.otf"; path = "../assets/fonts/SVN-PoppinsItalic.otf"; sourceTree = "<group>"; };
+		3CEE1AA24A3A42ED9B3DCD82 /* SVN-PoppinsMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsMedium.otf"; path = "../assets/fonts/SVN-PoppinsMedium.otf"; sourceTree = "<group>"; };
+		59158BED60514EA08C8E8E2E /* SegoeUI-SemiboldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-SemiboldItalic.ttf"; path = "../assets/fonts/SegoeUI-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		69166FDA80424E02B9F2BD79 /* SVN-PoppinsMediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsMediumItalic.otf"; path = "../assets/fonts/SVN-PoppinsMediumItalic.otf"; sourceTree = "<group>"; };
 		76E5CF56DA41A43D52A7D5B4 /* Pods-bein_group-bein_groupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.release.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = bein_group/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-Semibold.ttf"; path = "../assets/fonts/SegoeUI-Semibold.ttf"; sourceTree = "<group>"; };
+		A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-Italic.ttf"; path = "../assets/fonts/SegoeUI-Italic.ttf"; sourceTree = "<group>"; };
 		AA700F8A3AF0626405ED6FA1 /* libPods-bein_group.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bein_group.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF50800D4E359DF25CF846A1 /* Pods-bein_group-bein_groupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.debug.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E6837434265CAEDE00DE22B7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
-		E6837435265CAEDE00DE22B7 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
-		E6837436265CAEDE00DE22B7 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
-		E6837437265CAEDE00DE22B7 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
-		E6837438265CAEDE00DE22B7 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
-		E6837439265CAEDE00DE22B7 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
-		E683743A265CAEDE00DE22B7 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
-		E683743B265CAEDE00DE22B7 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
-		E683743C265CAEDE00DE22B7 /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
-		E683743D265CAEDE00DE22B7 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
-		E683743E265CAEDE00DE22B7 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBoldItalic.otf"; path = "../assets/fonts/SVN-PoppinsSemiBoldItalic.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBold.otf"; path = "../assets/fonts/SVN-PoppinsSemiBold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,13 +147,13 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				84CCD16F26792B8C00A87641 /* fonts */,
 				13B07FAE1A68108700A75B9A /* bein_group */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* bein_groupTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				17A21493402B8A5F524B62C9 /* Pods */,
+				DDC2B1B50D934EC49C47D1B6 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -171,22 +169,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		84CCD16F26792B8C00A87641 /* fonts */ = {
+		DDC2B1B50D934EC49C47D1B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E683743A265CAEDE00DE22B7 /* Lato-Black.ttf */,
-				E6837438265CAEDE00DE22B7 /* Lato-BlackItalic.ttf */,
-				E6837434265CAEDE00DE22B7 /* Lato-Bold.ttf */,
-				E683743B265CAEDE00DE22B7 /* Lato-BoldItalic.ttf */,
-				E6837439265CAEDE00DE22B7 /* Lato-Italic.ttf */,
-				E6837436265CAEDE00DE22B7 /* Lato-Light.ttf */,
-				E683743E265CAEDE00DE22B7 /* Lato-LightItalic.ttf */,
-				E6837435265CAEDE00DE22B7 /* Lato-Regular.ttf */,
-				E6837437265CAEDE00DE22B7 /* Lato-Thin.ttf */,
-				E683743D265CAEDE00DE22B7 /* Lato-ThinItalic.ttf */,
-				E683743C265CAEDE00DE22B7 /* OFL.txt */,
+				A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */,
+				8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */,
+				59158BED60514EA08C8E8E2E /* SegoeUI-SemiboldItalic.ttf */,
+				15873F56468D415A8A685AB9 /* SegoeUI.ttf */,
+				28F2F768180A4AFC961F428D /* SVN-Poppins.otf */,
+				2E7B037DBD714F28B0CE02D6 /* SVN-PoppinsItalic.otf */,
+				3CEE1AA24A3A42ED9B3DCD82 /* SVN-PoppinsMedium.otf */,
+				69166FDA80424E02B9F2BD79 /* SVN-PoppinsMediumItalic.otf */,
+				EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */,
+				C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */,
 			);
-			path = fonts;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,19 +280,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E683743F265CAEDE00DE22B7 /* Lato-Bold.ttf in Resources */,
-				E6837440265CAEDE00DE22B7 /* Lato-Regular.ttf in Resources */,
-				E6837441265CAEDE00DE22B7 /* Lato-Light.ttf in Resources */,
-				E6837442265CAEDE00DE22B7 /* Lato-Thin.ttf in Resources */,
-				E6837443265CAEDE00DE22B7 /* Lato-BlackItalic.ttf in Resources */,
-				E6837444265CAEDE00DE22B7 /* Lato-Italic.ttf in Resources */,
-				E6837445265CAEDE00DE22B7 /* Lato-Black.ttf in Resources */,
-				E6837446265CAEDE00DE22B7 /* Lato-BoldItalic.ttf in Resources */,
-				E6837447265CAEDE00DE22B7 /* OFL.txt in Resources */,
-				E6837448265CAEDE00DE22B7 /* Lato-ThinItalic.ttf in Resources */,
-				E6837449265CAEDE00DE22B7 /* Lato-LightItalic.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C34A26C5CBCF47018637DA06 /* SegoeUI-Italic.ttf in Resources */,
+				67A480EDF9D64414A590D44C /* SegoeUI-Semibold.ttf in Resources */,
+				7C7F2E180C244350BB6A955E /* SegoeUI-SemiboldItalic.ttf in Resources */,
+				51EB5FE323194EBDB79F4AE3 /* SegoeUI.ttf in Resources */,
+				38D5FC5F57D84D9CB87FE48B /* SVN-Poppins.otf in Resources */,
+				93F82315FB324A13B6F9DF96 /* SVN-PoppinsItalic.otf in Resources */,
+				186CA33DFE6F4DE4825AC15C /* SVN-PoppinsMedium.otf in Resources */,
+				0166DCB514994F4287DC1AFB /* SVN-PoppinsMediumItalic.otf in Resources */,
+				9202D98FA56148D88E4E08DF /* SVN-PoppinsSemiBold.otf in Resources */,
+				D7214A9E725B40C3A710DAA6 /* SVN-PoppinsSemiBoldItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,55 +3,55 @@ import {IObject} from '~/interfaces/common';
 export const fontConfig: IObject<any> = {
   web: {
     regular: {
-      fontFamily: 'Lato-Regular',
+      fontFamily: 'SVN-Poppins',
       fontWeight: 'normal',
     },
     medium: {
-      fontFamily: 'Lato-Bold',
+      fontFamily: 'SVN-PoppinsMedium',
       fontWeight: 'normal',
     },
     light: {
-      fontFamily: 'Lato-Light',
+      fontFamily: 'SegoeUI',
       fontWeight: 'normal',
     },
     thin: {
-      fontFamily: 'Lato-Thin',
+      fontFamily: 'SegoeUI',
       fontWeight: 'normal',
     },
   },
   ios: {
     regular: {
-      fontFamily: 'Lato-Regular',
+      fontFamily: 'SVN-Poppins',
       fontWeight: 'normal',
     },
     medium: {
-      fontFamily: 'Lato-Bold',
+      fontFamily: 'SVN-PoppinsMedium',
       fontWeight: 'normal',
     },
     light: {
-      fontFamily: 'Lato-Light',
+      fontFamily: 'SegoeUI',
       fontWeight: 'normal',
     },
     thin: {
-      fontFamily: 'Lato-Thin',
+      fontFamily: 'SegoeUI',
       fontWeight: 'normal',
     },
   },
   android: {
     regular: {
-      fontFamily: 'Lato-Regular',
+      fontFamily: 'SVN-Poppins',
       fontWeight: 'normal',
     },
     medium: {
-      fontFamily: 'Lato-Bold',
+      fontFamily: 'SVN-PoppinsMedium',
       fontWeight: 'normal',
     },
     light: {
-      fontFamily: 'Lato-Light',
+      fontFamily: 'SegoeUI',
       fontWeight: 'normal',
     },
     thin: {
-      fontFamily: 'Lato-Thin',
+      fontFamily: 'SegoeUI',
       fontWeight: 'normal',
     },
   },
