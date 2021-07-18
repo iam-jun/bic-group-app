@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import PropTypes from 'prop-types';
 
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
-interface Props {
+interface RadioProps {
   isChecked?: boolean;
   onActionPress: (action: IAction) => void;
 }
 
-const Radio: React.FC<Props> = ({isChecked = false, onActionPress}) => {
+const Radio: React.FC<RadioProps> = ({
+  isChecked = false,
+  onActionPress,
+}: RadioProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
   const styles = createStyles(theme);
@@ -34,11 +36,6 @@ const Radio: React.FC<Props> = ({isChecked = false, onActionPress}) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-Radio.propTypes = {
-  isChecked: PropTypes.bool,
-  onActionPress: PropTypes.func.isRequired,
 };
 
 const createStyles = (theme: ITheme) => {

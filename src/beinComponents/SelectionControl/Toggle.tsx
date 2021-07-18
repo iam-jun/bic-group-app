@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import PropTypes from 'prop-types';
 
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
-interface Props {
+interface ToggleProps {
   isChecked?: boolean;
   onActionPress: (action: IAction) => void;
 }
 
-const Toggle: React.FC<Props> = ({isChecked = false, onActionPress}) => {
+const Toggle: React.FC<ToggleProps> = ({
+  isChecked = false,
+  onActionPress,
+}: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
   const styles = createStyles(theme, checked);
@@ -34,11 +36,6 @@ const Toggle: React.FC<Props> = ({isChecked = false, onActionPress}) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-Toggle.propTypes = {
-  isChecked: PropTypes.bool,
-  onActionPress: PropTypes.func.isRequired,
 };
 
 const createStyles = (theme: ITheme, isChecked: boolean) => {

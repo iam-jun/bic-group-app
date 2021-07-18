@@ -1,18 +1,20 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import PropTypes from 'prop-types';
 
 import Icon from '~/components/Icon';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
-interface Props {
+interface CheckboxProps {
   isChecked?: boolean;
   onActionPress: (action: IAction) => void;
 }
 
-const Checkbox: React.FC<Props> = ({isChecked = false, onActionPress}) => {
+const Checkbox: React.FC<CheckboxProps> = ({
+  isChecked = false,
+  onActionPress,
+}: CheckboxProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
   const styles = createStyles(theme, checked);
@@ -41,11 +43,6 @@ const Checkbox: React.FC<Props> = ({isChecked = false, onActionPress}) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-Checkbox.propTypes = {
-  isChecked: PropTypes.bool,
-  onActionPress: PropTypes.func.isRequired,
 };
 
 const createStyles = (theme: ITheme, isChecked: boolean) => {
