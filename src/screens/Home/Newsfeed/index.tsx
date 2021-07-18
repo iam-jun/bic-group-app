@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import ListView from '~/components/list/ListView';
 
-import {homeStack} from '~/configs/navigator';
+import {homeStack, mainStack} from '~/configs/navigator';
 import {NavigationHeader, ViewSpacing} from '~/components';
 import {spacing} from '~/theme';
 import * as actions from '../Comment/redux/actions';
@@ -51,7 +51,11 @@ const Home = ({navigation}: {navigation: any}) => {
 
   return (
     <View>
-      <NavigationHeader title="News Feed" rightIcon="iconSearch" />
+      <NavigationHeader
+        title="News Feed"
+        rightIcon="iconEdit"
+        rightPress={() => navigation.navigate(mainStack.createPost)}
+      />
       <ListView
         style={styles.container}
         type="content"

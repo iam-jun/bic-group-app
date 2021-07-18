@@ -8,7 +8,8 @@ import OptionItem from './OptionItem';
 import ReactionActionItem from './ReactionActionItem';
 import ReactionItem from './ReactionItem';
 import MenuItem from './MenuItem';
-import FlatGroupItem from "~/components/list/items/FlatGroupItem";
+import PeopleAudienceItem from './PeopleAudienceItem';
+import FlatGroupItem from '~/components/list/items/FlatGroupItem';
 
 const items: {[key: string]: any} = {
   user: ItemUser,
@@ -21,6 +22,7 @@ const items: {[key: string]: any} = {
   reactionActions: ReactionActionItem,
   reaction: ReactionItem,
   menu: MenuItem,
+  people: PeopleAudienceItem,
   flatGroups: FlatGroupItem,
 };
 
