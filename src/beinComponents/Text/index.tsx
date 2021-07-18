@@ -28,7 +28,7 @@ const Text: React.FC<BeinTextProps> = ({
   children,
   color,
   ...props
-}) => {
+}: BeinTextProps) => {
   const theme: ITheme = useTheme();
   const styles: {[key: string]: any} = createStyle(theme);
   const textStyle = styles[variant || 'body'];

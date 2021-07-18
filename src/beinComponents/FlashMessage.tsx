@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import Icon from '~/components/Icon';
+
+import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 
@@ -17,7 +18,7 @@ const FlashMessage: React.FC<FlashMessageProps> = ({
   children,
   style,
   onClose,
-}) => {
+}: FlashMessageProps) => {
   const theme: ITheme = useTheme();
   const {colors, spacing} = theme;
 
