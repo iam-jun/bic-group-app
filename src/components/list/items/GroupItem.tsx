@@ -55,6 +55,7 @@ const createStyles = (theme: IObject<any>) => {
     },
     header: {
       paddingVertical: padding.large,
+      marginStart: margin.large,
     },
     icon: {
       marginHorizontal: margin.base,

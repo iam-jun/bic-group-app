@@ -19,12 +19,14 @@ export interface BeinTextProps extends TextProps {
     | 'subtitle'
     | undefined;
   children?: React.ReactNode;
+  color?: string;
 }
 
 const Text: React.FC<BeinTextProps> = ({
   variant,
   style,
   children,
+  color,
   ...props
 }) => {
   const theme: ITheme = useTheme();
@@ -32,7 +34,9 @@ const Text: React.FC<BeinTextProps> = ({
   const textStyle = styles[variant || 'body'];
 
   return (
-    <TextRN {...props} style={StyleSheet.flatten([textStyle, style])}>
+    <TextRN
+      {...props}
+      style={StyleSheet.flatten([textStyle, color ? {color} : {}, style])}>
       {children}
     </TextRN>
   );

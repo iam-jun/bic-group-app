@@ -6,10 +6,10 @@ import HorizontalView from '~/components/layout/HorizontalView';
 import Text from '~/components/texts/Text';
 import {margin} from '~/theme/spacing';
 import Icon from '../../Icon';
-import {UserType} from '~/components/list/items/GroupItem';
+import {IUser} from '~/interfaces/IAuth';
 
 export interface Props {
-  user: UserType;
+  user: IUser;
   content: string;
   createdAt: string;
 }

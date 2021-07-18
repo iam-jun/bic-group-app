@@ -13,7 +13,8 @@
     "btn_confirm": "Confirm",
     "text_ok": "OK",
     "text_error": "Lỗi",
-    "text_loading": "Loading..."
+    "text_loading": "Loading...",
+    "text_save": "Save"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -75,12 +76,12 @@
     "text_forgot_password_complete_desc": "Sign in now with your new password"
   },
   "settings": {
-    "title_app_language":"App language",
-    "title_app_theme":"App theme"
+    "title_app_language": "App language",
+    "title_app_theme": "App theme"
   },
-  "languages":{
-    "title_en":"English",
-    "title_vi":"Vietnamese"
+  "languages": {
+    "title_en": "English",
+    "title_vi": "Vietnamese"
   },
   "post": {
     "button_like": "Like",
@@ -93,7 +94,21 @@
     "label_share": "Share",
     "label_comments": "Comments",
     "label_shares": "Shares",
-    "label_donate": "Contribute"
+    "label_donate": "Contribute",
+    "add_photo": "Add Photo",
+    "add_file": "Add Files",
+    "placeholder_write_post": "Write your post here...",
+    "create_post": "Create Post",
+    "post_button": "Post",
+    "send_to": "Send to",
+    "choose_group_people": "Choose group or people",
+    "placeholder_audience_search": "Search for groups or people",
+    "audience_selected": "Selected audiences",
+    "select_audience": "Select Audiences",
+    "search_results": "Search results",
+    "group_manage": "Your Groups",
+    "people_search": "People",
+    "show_all": "Show all"
   },
   "chat": {
     "placeholder_search": "Search...",

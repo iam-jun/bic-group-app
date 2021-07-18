@@ -72,6 +72,7 @@ const themeStyles = (theme: IObject<any>) => {
     },
     header: {
       paddingHorizontal: spacing.padding.base,
+      paddingTop: spacing.padding.large,
     },
   });
 };

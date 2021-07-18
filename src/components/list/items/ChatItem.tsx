@@ -44,7 +44,9 @@ const createStyles = (theme: IObject<any>) => {
       alignItems: 'center',
       borderRadius: 12,
     },
-    header: {},
+    header: {
+      marginStart: margin.large,
+    },
     badge: {
       marginHorizontal: margin.small,
     },

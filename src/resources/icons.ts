@@ -167,6 +167,22 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'theme-light-dark',
   },
+  iconUserGroup: {
+    type: 'MaterialIcons',
+    name: 'group',
+  },
+  iconArrowRight: {
+    type: 'Ionicons',
+    name: 'chevron-forward-outline',
+  },
+  iconPublic: {
+    type: 'AntDesign',
+    name: 'earth',
+  },
+  iconPrivate: {
+    type: 'Ionicons',
+    name: 'lock-closed-outline',
+  },
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,

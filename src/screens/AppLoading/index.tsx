@@ -24,7 +24,7 @@ const AppLoading = () => {
       style={styles.container}
       isFullView
       colorSecondary>
-      <Image resizeMode="contain" style={styles.logo} source={images.Logo} />
+      <Image resizeMode="contain" style={styles.logo} source={images.logo} />
     </ScreenWrapper>
   );
 };

@@ -23,6 +23,7 @@ import * as commentActions from '../Comment/redux/actions';
 import PostOptionsModal from '../fragments/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
+import usePost from '~/hooks/post';
 
 const PostDetailScreen = ({
   route,
@@ -36,6 +37,8 @@ const PostDetailScreen = ({
   const commentInputRef = React.useRef<TextInput>(null);
 
   const {user} = useAuth();
+  const {posts} = usePost();
+  const originalPost = {...posts.data[0], user};
 
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -137,7 +140,7 @@ const PostDetailScreen = ({
           ListFooterComponent={
             <>
               <ContentItem
-                {...post}
+                {...originalPost}
                 onActionPress={_onActionPress}
                 maxLength={-1}
                 showBackButton={true}
