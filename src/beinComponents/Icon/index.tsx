@@ -96,7 +96,7 @@ const Icon: React.FC<IconProps> = ({
         {...props}
       />
       {label && (
-        <Text style={[styles.label, {color: _tintColor}, labelStyle]}>
+        <Text useI18n style={[styles.label, {color: _tintColor}, labelStyle]}>
           {label}
         </Text>
       )}

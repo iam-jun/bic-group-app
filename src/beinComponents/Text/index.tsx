@@ -3,6 +3,7 @@ import {Text as TextRN, TextProps, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {createStyle} from '~/beinComponents/Text/textStyle';
 import {ITheme} from '~/theme/interfaces';
+import {useBaseHook} from '~/hooks';
 
 export interface BeinTextProps extends TextProps {
   variant?:
@@ -20,6 +21,7 @@ export interface BeinTextProps extends TextProps {
     | undefined;
   children?: React.ReactNode;
   color?: string;
+  useI18n?: boolean;
 }
 
 const Text: React.FC<BeinTextProps> = ({
@@ -27,9 +29,11 @@ const Text: React.FC<BeinTextProps> = ({
   style,
   children,
   color,
+  useI18n,
   ...props
 }: BeinTextProps) => {
   const theme: ITheme = useTheme();
+  const {t} = useBaseHook();
   const styles: {[key: string]: any} = createStyle(theme);
   const textStyle = styles[variant || 'body'];
 
@@ -37,7 +41,7 @@ const Text: React.FC<BeinTextProps> = ({
     <TextRN
       {...props}
       style={StyleSheet.flatten([textStyle, color ? {color} : {}, style])}>
-      {children}
+      {useI18n ? t(children) : children}
     </TextRN>
   );
 };

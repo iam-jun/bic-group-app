@@ -9,4 +9,9 @@ export default [
     title: 'settings:title_app_theme',
     icon: 'iconTheme',
   },
+  {
+    type: 'component',
+    title: 'Component Collection',
+    icon: 'Bug',
+  },
 ];
