@@ -32,12 +32,17 @@ export const groupsStack = {
   groupDetail: 'GroupDetail',
 };
 
+export const menuStack = {
+  menu: 'Menu',
+  componentCollection: 'ComponentCollection',
+};
+
 export const bottomTabs = {
   home: homeStack,
   groups: groupsStack,
   chat: 'Chat',
   notification: 'Notification',
-  menu: 'Menu',
+  menu: menuStack,
 };
 
 export const navigationSetting = {
@@ -235,7 +240,7 @@ export const tabsSetting = {
         vi: 'Cài đặt',
         en: 'Menu',
       },
-      screen: bottomTabs.menu,
+      screen: bottomTabs.menu.menu,
       option: {
         tabBarIcon: 'iconMenu',
       },

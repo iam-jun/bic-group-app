@@ -69,7 +69,7 @@ const ListView: React.FC<IListView> = ({
   const _renderItem = ({item}: {item: any}) => {
     return (
       <TouchableOpacity
-        disabled={!onActionPress}
+        disabled={!onItemPress}
         onPress={() => onItemPress && onItemPress(item)}>
         <Component
           {...item}
