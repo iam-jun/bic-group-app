@@ -81,7 +81,6 @@ const Icon: React.FC<IconProps> = ({
       <IconWrapper
         style={iconStyle}
         tintColor={_tintColor}
-        isButton={isButton}
         svg={_icon}
         {...props}
         {...source}

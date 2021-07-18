@@ -4,15 +4,6 @@ export const rootSwitch = {
   appLoading: 'AppLoading',
 };
 
-export const mainStack = {
-  // drawer: 'Drawer',
-  bottomTabs: 'BottomTabs',
-  conversationList: 'ConversationsList',
-  conversation: 'Conversation',
-  conversationDetail: 'ConversationDetail',
-  reply: 'CommentDetail',
-};
-
 export const authStack = {
   landing: 'Landing',
   login: 'SignIn',
@@ -34,6 +25,19 @@ export const groupTabs = {
 export const bottomTabs = {
   home: homeStack,
   groups: groupTabs,
+  chat: 'Chat',
+  notification: 'Notification',
+  menu: 'Menu',
+};
+
+export const mainStack = {
+  bottomTabs: 'BottomTabs',
+  conversationList: 'ConversationsList',
+  conversation: 'Conversation',
+  conversationDetail: 'ConversationDetail',
+  reply: 'CommentDetail',
+  home: 'home',
+  groups: 'groupTabs',
   chat: 'Chat',
   notification: 'Notification',
   menu: 'Menu',

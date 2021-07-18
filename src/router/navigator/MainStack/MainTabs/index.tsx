@@ -1,25 +1,25 @@
 import React from 'react';
 import {useTheme} from 'react-native-paper';
-import {useTranslation} from 'react-i18next';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import Icon from '~/components/Icon';
-import * as screens from '~/router/navigator/tab';
-
-import {tabsSetting} from '~/configs/navigator';
-
-import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const Tab = createBottomTabNavigator();
+import Icon from '~/components/Icon';
+import * as screens from '~/router/navigator/MainStack/MainTabs/tab';
+import {tabsSetting} from '~/configs/navigator';
+import {IObject} from '~/interfaces/common';
+import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 
-const BottomTabs = () => {
-  const {i18n} = useTranslation();
+const BottomTab = createBottomTabNavigator();
+const SideTab = createSideTabNavigator();
+
+export interface Props {
+  position: 'side' | 'bottom';
+}
+
+const MainTabs: React.FC<Props> = ({position}) => {
   const theme: IObject<any> = useTheme();
   const {colors} = theme;
 
-  const lang: string = i18n.language;
   const backBehavior = 'initialRoute';
 
   const {initialRouteName} = tabsSetting.configs;
@@ -31,7 +31,10 @@ const BottomTabs = () => {
   const listScreens: IObject<any> = screens;
   const insets = useSafeAreaInsets();
 
+  const Tab = position === 'side' ? SideTab : BottomTab;
+
   return (
+    // @ts-ignore
     <Tab.Navigator
       initialRouteName={initialRouteName}
       backBehavior={backBehavior}
@@ -47,6 +50,7 @@ const BottomTabs = () => {
       }}>
       {tabsNavigator.map((tab: IObject<any>, _i: number) => {
         return (
+          // @ts-ignore
           <Tab.Screen
             key={'tabs' + tab.screen}
             name={tab.screen}
@@ -62,7 +66,6 @@ const BottomTabs = () => {
                   />
                 );
               },
-              title: tab.title[lang],
             }}
           />
         );
@@ -71,4 +74,4 @@ const BottomTabs = () => {
   );
 };
 
-export default BottomTabs;
+export default MainTabs;
