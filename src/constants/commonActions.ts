@@ -10,6 +10,7 @@ const commonActions = {
   checkBox: 'check-box',
   uncheckBox: 'uncheck-box',
   removeTag: 'remove-tag',
+  scrollToBottom: 'scroll-to-bottom',
 };
 
 export type IAction = keyof typeof commonActions;
