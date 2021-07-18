@@ -3,7 +3,7 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import PropTypes from 'prop-types';
 
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {IObject} from '~/interfaces/common';
 

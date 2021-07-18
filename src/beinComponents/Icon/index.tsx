@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  View,
   TouchableOpacity,
   ActivityIndicator,
   StyleProp,
@@ -8,22 +7,27 @@ import {
   ViewStyle,
   StyleSheet,
 } from 'react-native';
-import SvgIcon, {SVGIconProps} from './svgIcon';
-import FontIcon, {FontIconProps} from './fontIcon';
-import {IObject} from '~/interfaces/common';
+
+import Unicons, {UniconsProps} from './Unicons';
+import SvgIcon, {SVGIconProps} from './SvgIcon';
+import FontIcon, {FontIconProps} from './FontIcon';
+
 import {useTheme} from 'react-native-paper';
 import Text from '~/components/texts/Text';
 import {spacing} from '~/theme';
-import icons, {IconType} from '~/resources/icons';
+import icons from '~/resources/icons';
+import {ITheme} from '~/theme/interfaces';
 
-export interface IconProps extends SVGIconProps, FontIconProps {
-  icon: IconType;
+export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
+  icon: any;
+  size?: number;
+  tintColor?: string;
+  backgroundColor?: string;
   style?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ViewStyle>;
   label?: string;
   labelStyle?: StyleProp<TextStyle>;
   onPress?: () => void;
-  [x: string]: any;
 }
 
 const Icon: React.FC<IconProps> = ({
@@ -31,8 +35,8 @@ const Icon: React.FC<IconProps> = ({
   iconStyle,
   labelStyle,
   icon,
+  size = 20,
   label,
-  bold,
   tintColor,
   backgroundColor,
   onPress,
@@ -40,30 +44,33 @@ const Icon: React.FC<IconProps> = ({
   isLoading,
   disabled,
   ...props
-}) => {
+}: IconProps) => {
   if (isLoading) return <ActivityIndicator size="small" />;
 
+  // @ts-ignore
   const _icon = icons[icon];
+  let IconComponent, type, name, source;
 
-  if (!icon) return null;
+  if (Unicons[icon] || Unicons[`Uil${icon}`]) {
+    IconComponent = Unicons;
+    name = icon;
+  } else if (_icon?.type) {
+    IconComponent = FontIcon;
+    type = _icon?.type;
+    name = _icon?.name;
+  } else {
+    IconComponent = SvgIcon;
+    source = _icon;
+  }
 
-  const source = Object.keys(_icon).find(key => key === 'type')
-    ? _icon
-    : {svgIcon: _icon};
-
-  const IconWrapper = (
-    Object.keys(_icon).find(key => key === 'type') ? FontIcon : SvgIcon
-  ) as React.ElementType;
-
-  const theme: IObject<any> = useTheme();
+  const theme: ITheme = useTheme();
   const {colors} = theme;
 
-  tintColor = tintColor || colors.text;
-
   const styles = StyleSheet.create(createStyles(theme));
+  tintColor = tintColor || colors.iconTint;
   const _tintColor = disabled
     ? isButton
-      ? colors.white
+      ? colors.iconTintReversed
       : colors.disabled
     : tintColor;
 
@@ -73,18 +80,20 @@ const Icon: React.FC<IconProps> = ({
         styles.container,
         isButton && styles.button,
         style,
-        backgroundColor && {backgroundColor},
+        {backgroundColor},
         disabled && isButton && styles.disabled,
       ]}
       disabled={!onPress}
       onPress={onPress}>
-      <IconWrapper
+      <IconComponent
         style={iconStyle}
         tintColor={_tintColor}
+        size={size}
         isButton={isButton}
-        svg={_icon}
+        type={type}
+        name={name}
+        source={source}
         {...props}
-        {...source}
       />
       {label && (
         <Text style={[styles.label, {color: _tintColor}, labelStyle]}>
@@ -95,7 +104,7 @@ const Icon: React.FC<IconProps> = ({
   );
 };
 
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (theme: ITheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -107,7 +116,7 @@ const createStyles = (theme: IObject<any>) => {
     button: {
       padding: 8,
       borderRadius: 100,
-      backgroundColor: colors.icon,
+      backgroundColor: colors.iconTint,
     },
     disabled: {
       backgroundColor: colors.disabled,

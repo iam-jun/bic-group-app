@@ -8,7 +8,7 @@ import {
 } from 'react-native-gifted-chat';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {spacing} from '~/theme';
 import {sizes} from '~/theme/dimension';
 

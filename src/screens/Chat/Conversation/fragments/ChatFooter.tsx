@@ -3,7 +3,7 @@ import {View, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import Text from '~/components/texts/Text';
 import {spacing} from '~/theme';
 

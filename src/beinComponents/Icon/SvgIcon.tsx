@@ -1,23 +1,23 @@
 import React from 'react';
 
 export interface SVGIconProps {
-  src?: SVGElement;
+  source?: SVGElement;
   size?: number;
   tintColor?: string;
   [x: string]: any;
 }
 
 const SvgIcon: React.FC<SVGIconProps> = ({
-  svg,
-  style,
+  source,
   size,
   tintColor,
   ...props
-}) => {
-  const SVGIcon = svg;
+}: SVGIconProps) => {
+  const SVGIcon = source;
 
-  if (!svg) return null;
+  if (!SVGIcon) return null;
 
+  // @ts-ignore
   return <SVGIcon {...props} width={size} height={size} fill={tintColor} />;
 };
 

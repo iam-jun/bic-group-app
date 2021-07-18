@@ -8,7 +8,7 @@ import {IObject} from '~/interfaces/common';
 import {IUser} from '~/interfaces/IAuth';
 import {Container, Text, ViewSpacing} from '~/components';
 import Divider from '~/components/Divider';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import Avatar from '~/components/Avatar';
 import ListView from '~/components/list/ListView';
 import ScreenWrapper from '~/components/ScreenWrapper';

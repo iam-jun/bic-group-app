@@ -5,7 +5,7 @@ import Avatar from '~/components/Avatar';
 import HorizontalView from '~/components/layout/HorizontalView';
 import Text from '~/components/texts/Text';
 import {margin} from '~/theme/spacing';
-import Icon from '../../Icon';
+import Icon from '../../../beinComponents/Icon';
 import {IUser} from '~/interfaces/IAuth';
 
 export interface Props {

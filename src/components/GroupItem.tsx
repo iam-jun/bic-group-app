@@ -6,7 +6,7 @@ import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {Image, Text} from '~/components/index';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {grey2, grey5, grey9} from '~/theme/colors';
 import {groupsStack} from '~/configs/navigator';
 

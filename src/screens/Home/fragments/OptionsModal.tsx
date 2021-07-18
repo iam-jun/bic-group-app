@@ -5,7 +5,7 @@ import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import messageOptions from '~/constants/messageOptions';
 import reactions from '~/constants/reactions';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import OptionModal, {
   IOptionModal,
   IOptionModalRef,

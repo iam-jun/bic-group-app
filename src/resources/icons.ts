@@ -188,6 +188,4 @@ const icons = {
   iconCheckbox,
 };
 
-export type IconType = keyof typeof icons;
-
 export default icons;

@@ -44,10 +44,10 @@ const FontIcon: React.FC<FontIconProps> = ({
   tintColor,
   size,
   ...props
-}) => {
+}: FontIconProps) => {
   if (!type || !name) return null;
 
-  let Control = Controls[type];
+  const Control = Controls[type];
 
   if (!Control) return null;
 
