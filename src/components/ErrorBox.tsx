@@ -3,7 +3,7 @@ import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Text} from '~/components';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {white} from '~/theme/colors';
 
 export interface Props {

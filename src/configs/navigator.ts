@@ -16,18 +16,22 @@ export const homeStack = {
   postDetail: 'PostDetail',
 };
 
-export const groupTabs = {
-  subscription: 'Subscription',
-  discovery: 'Discovery',
-  myGroups: 'MyGroups',
+export const groupsStack = {
+  groups: 'Groups',
+  groupDetail: 'GroupDetail',
+};
+
+export const menuStack = {
+  menu: 'Menu',
+  componentCollection: 'ComponentCollection',
 };
 
 export const bottomTabs = {
   home: homeStack,
-  groups: groupTabs,
+  groups: groupsStack,
   chat: 'Chat',
   notification: 'Notification',
-  menu: 'Menu',
+  menu: menuStack,
 };
 
 export const mainStack = {
@@ -41,6 +45,8 @@ export const mainStack = {
   chat: 'Chat',
   notification: 'Notification',
   menu: 'Menu',
+  createPost: 'CreatePost',
+  selectAudience: 'SelectAudience',
 };
 
 export const navigationSetting = {
@@ -141,6 +147,30 @@ export const navigationSetting = {
         animationEnabled: true,
       },
     },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      router: mainStack.createPost,
+      screen: mainStack.createPost,
+      options: {
+        headerShown: false,
+        animationEnabled: true,
+      },
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      router: mainStack.selectPostAudience,
+      screen: mainStack.selectPostAudience,
+      options: {
+        headerShown: false,
+        animationEnabled: true,
+      },
+    },
   ],
 };
 
@@ -164,7 +194,11 @@ export const tabsSetting = {
         vi: '',
         en: '',
       },
-      screen: bottomTabs.groups.subscription,
+      screen: bottomTabs.groups.groups,
+      name: {
+        vi: 'Nhóm',
+        en: 'Groups',
+      },
       option: {
         tabBarIcon: 'iconGroup',
       },
@@ -194,59 +228,13 @@ export const tabsSetting = {
         vi: '',
         en: '',
       },
-      screen: bottomTabs.menu,
+      screen: bottomTabs.menu.menu,
+      name: {
+        vi: 'Cài đặt',
+        en: 'Menu',
+      },
       option: {
         tabBarIcon: 'iconMenu',
-      },
-    },
-  ],
-};
-
-export const groupTabsSetting = {
-  configs: {
-    initialRouteName: groupTabs.subscription,
-  },
-  tabsNavigator: [
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Đã tham gia',
-        en: 'Subscription',
-      },
-      screen: groupTabs.subscription,
-      option: {
-        tabBarIcon: '',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Khám phá',
-        en: 'Discovery',
-      },
-      screen: groupTabs.discovery,
-      option: {
-        tabBarIcon: '',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Của tôi',
-        en: 'My groups',
-      },
-      screen: groupTabs.myGroups,
-      option: {
-        tabBarIcon: '',
       },
     },
   ],

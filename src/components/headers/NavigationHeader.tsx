@@ -15,7 +15,7 @@ import {
 import Text from '~/components/texts/Text';
 
 import spacing, {padding} from '~/theme/spacing';
-import Icon from '../Icon';
+import Icon from '../../beinComponents/Icon';
 import icons, {IconType} from '~/resources/icons';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';

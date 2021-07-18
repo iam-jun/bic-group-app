@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {NavigationHeader} from '~/components';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import Avatar from '~/components/Avatar';
 
 export interface Props {}

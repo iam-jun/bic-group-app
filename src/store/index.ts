@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import ReactotronConfig from '~/ReactotronConfig';
 import rootReducer from './reducers';
+import {IUserResponse} from '~/interfaces/IAuth';
 
 // import Flatted from 'flatted'
 // import immutableTransform from 'redux-persist-transform-immutable';
@@ -21,7 +22,7 @@ const persistConfig = {
   // transforms: [immutableTransform()],
   // transforms: [transformCircular],
   storage: AsyncStorage,
-  blacklist: ['auth', 'common'],
+  blacklist: ['auth', 'common', 'groups'],
   // whitelist: ['chat', 'language'],
 };
 
@@ -42,9 +43,9 @@ const enhancer = composeEnhancers(
 const store = createStore(persistedReducer, enhancer);
 const persistor = persistStore(store);
 
-const getCurrentUser = () => {
+const getCurrentUser = (): IUserResponse | boolean => {
   const state = store.getState();
-  return _.get(state, 'auth.user', null);
+  return _.get(state, 'auth.user', false);
 };
 
 export default {

@@ -16,10 +16,11 @@ import {Container, ViewSpacing} from '~/components';
 import {AppContext} from '~/contexts/AppContext';
 import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
 import languages from '~/constants/languages';
+import {menuStack} from '~/configs/navigator';
 
 const Menu = () => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const {t, navigation} = useBaseHook();
   const {user} = useAuth();
   const {changeLanguage} = useContext(AppContext);
 
@@ -35,6 +36,8 @@ const Menu = () => {
     switch (item.type) {
       case 'language':
         return languageOptionsModalRef.current?.open();
+      case 'component':
+        navigation.navigate(menuStack.componentCollection);
     }
   };
 
@@ -72,6 +75,7 @@ const themeStyles = (theme: IObject<any>) => {
     },
     header: {
       paddingHorizontal: spacing.padding.base,
+      paddingTop: spacing.padding.large,
     },
   });
 };

@@ -7,7 +7,7 @@ import ScreenWrapper from '~/components/ScreenWrapper';
 import MediaView from '~/components/media/MediaView';
 import ReactionsView from './ReactionsView';
 import Divider from '~/components/Divider';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import Markdown from '~/components/texts/Markdown';
 import {IObject} from '~/interfaces/common';
 import spacing, {borderRadius, margin, padding} from '~/theme/spacing';
@@ -45,6 +45,7 @@ const Post: React.FC<IObject<any>> = ({
             secondLabel={updatedAt}
             thirdLabel={locationName}
             showBackButton={showBackButton}
+            style={styles.headerView}
           />
         )}
       </View>
@@ -77,6 +78,10 @@ const Post: React.FC<IObject<any>> = ({
 const styles = StyleSheet.create({
   container: {
     borderRadius: borderRadius.large,
+  },
+  headerView: {
+    marginStart: margin.large,
+    paddingTop: padding.large,
   },
   content: {
     marginBottom: margin.small,

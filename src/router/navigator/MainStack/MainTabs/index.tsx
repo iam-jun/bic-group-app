@@ -3,8 +3,9 @@ import {useTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import Icon from '~/components/Icon';
 import * as screens from '~/router/navigator/MainStack/MainTabs/tab';
+import Icon from '~/beinComponents/Icon';
+
 import {tabsSetting} from '~/configs/navigator';
 import {IObject} from '~/interfaces/common';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';

@@ -74,7 +74,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
       <Image
         resizeMode="contain"
         style={styles.logo}
-        source={images.beinLogo}
+        source={images.logo_bein}
       />
       <Container fluid style={{flex: 1}}>
         <Text h4 bold>

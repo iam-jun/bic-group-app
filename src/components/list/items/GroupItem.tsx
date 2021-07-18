@@ -5,7 +5,7 @@ import HeaderView from '../../HeaderView';
 import ScreenWrapper from '../../ScreenWrapper';
 import {margin, padding} from '~/theme/spacing';
 import HorizontalView from '../../layout/HorizontalView';
-import Icon from '../../Icon';
+import Icon from '../../../beinComponents/Icon';
 import TextBadge from '../../texts/TextBadge';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
@@ -55,6 +55,7 @@ const createStyles = (theme: IObject<any>) => {
     },
     header: {
       paddingVertical: padding.large,
+      marginStart: margin.large,
     },
     icon: {
       marginHorizontal: margin.base,

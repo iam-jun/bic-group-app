@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {IReaction} from '~/interfaces/IChat';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {spacing} from '~/theme';
 import {default as reactionsIcons} from '~/constants/reactions';
 import {generateUniqueId} from '~/utils/generator';

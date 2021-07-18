@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, Platform, NativeModules} from 'react-native';
+import {StatusBar, Platform, NativeModules, LogBox} from 'react-native';
 import {useTranslation} from 'react-i18next';
-
-/* State Redux */
-import {useDispatch} from 'react-redux';
-import {fetchSetting} from '~/store/modal/actions';
-import {fontConfig} from '~/configs/fonts';
+import {Host} from 'react-native-portalize';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* Theme */
 import {
@@ -16,18 +13,21 @@ import {
   Provider as ThemeProvider,
 } from 'react-native-paper';
 import {useColorScheme} from 'react-native';
+
+/* State Redux */
+import {useDispatch} from 'react-redux';
+import {fetchSetting} from '~/store/modal/actions';
+import {fontConfig} from '~/configs/fonts';
+
 import {colors, fonts, spacing, dimension, shadow} from '~/theme';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import AlertModal from './components/modals/AlertModal';
-import {LogBox} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {AppContext} from './contexts/AppContext';
-import {getLanguage, setLanguage} from './utils/localStorage';
 import {languages, AppConfig} from './configs';
-import {Host} from 'react-native-portalize';
+import localStorage from '~/services/localStorage';
 
-export default () => {
+export default (): JSX.Element => {
   LogBox.ignoreAllLogs();
 
   const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
@@ -64,8 +64,9 @@ export default () => {
 
   /* Change language */
   const setUpLanguage = async () => {
-    const language = await getLanguage();
+    const language = await localStorage.getLanguage();
     if (language) {
+      // @ts-ignore
       i18n.language !== language && i18n.changeLanguage(language);
     } else {
       let systemLocale =
@@ -88,12 +89,12 @@ export default () => {
   };
 
   const changeLanguage = async (language: string) => {
-    i18n.changeLanguage(language);
-    setLanguage(language);
+    await i18n.changeLanguage(language);
+    await localStorage.setLanguage(language);
   };
 
   const setUpResource = async () => {
-    let stateNew = {
+    const stateNew = {
       isUpdate: false,
       loaded: false,
     };
@@ -114,7 +115,7 @@ export default () => {
   };
 
   //Set config theme
-  let themeConfig: any =
+  const themeConfig: any =
     theme === 'light'
       ? {
           ...DefaultTheme,

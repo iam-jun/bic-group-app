@@ -3,8 +3,8 @@ import {View, StyleSheet, TextStyle, StyleProp, ViewStyle} from 'react-native';
 import HorizontalView from './layout/HorizontalView';
 import Text from './texts/Text';
 import Avatar, {AvatarProps} from './Avatar';
-import Icon from './Icon';
-import {IconProps} from './Icon';
+import Icon from '../beinComponents/Icon';
+import {IconProps} from '../beinComponents/Icon';
 import {margin, padding} from '~/theme/spacing';
 import {IObject} from '~/interfaces/common';
 import * as RootNavigation from '~/utils/refNavigator';
@@ -56,7 +56,7 @@ const HeaderView: React.FC<Props> = ({
           onPress={() => RootNavigation.navigate(homeStack.home)}
         />
       )}
-      <HorizontalView>
+      <HorizontalView style={{alignItems: 'center'}}>
         <Avatar
           size="base"
           {...avatar}
@@ -97,7 +97,7 @@ const createStyles = (theme: IObject<any>) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
-      paddingTop: padding.large,
+      // paddingTop: padding.large,
       alignItems: 'flex-start',
       flexShrink: 1,
     },
@@ -114,7 +114,7 @@ const createStyles = (theme: IObject<any>) => {
       padding: 6,
     },
     avatar: {
-      marginStart: margin.large,
+      // marginStart: margin.large,
     },
     avatarWithIcon: {
       marginStart: 4,

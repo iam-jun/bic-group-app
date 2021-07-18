@@ -224,4 +224,7 @@ const styleText = (
     },
   });
 
-export default TextElement;
+// export default TextElement;
+
+import BeinText from '../../beinComponents/Text';
+export default BeinText;

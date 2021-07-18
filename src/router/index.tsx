@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 
 /*Theme*/
 import {useTheme} from 'react-native-paper';
@@ -14,11 +15,15 @@ import {createStackNavigator} from '@react-navigation/stack';
 import * as screens from './navigator';
 import {navigationSetting, rootSwitch} from '~/configs/navigator';
 
-import {navigationRef} from '~/utils/refNavigator';
+import {navigationRef, isNavigationRefReady} from '~/utils/refNavigator';
 
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
+  useEffect(() => {
+    isNavigationRefReady.current = false;
+  }, []);
+
   const theme = useTheme();
 
   const initialRoute: string = navigationSetting.configs.initialRouteName;
@@ -64,6 +69,9 @@ const StackNavigator = () => {
     <NavigationContainer
       linking={linking}
       ref={navigationRef}
+      onReady={() => {
+        isNavigationRefReady.current = true;
+      }}
       theme={navigationTheme}>
       <Stack.Navigator
         initialRouteName={initialRoute}

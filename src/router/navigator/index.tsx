@@ -5,3 +5,5 @@ export {default as Chat} from '~/screens/Chat';
 export {default as Conversation} from '~/screens/Chat/Conversation';
 export {default as CommentDetail} from '~/screens/Home/Comment';
 export {default as home} from '~/screens/Home';
+export {default as CreatePost} from '~/screens/CreatePost';
+export {default as SelectPostAudience} from '~/screens/CreatePost/SelectAudience';

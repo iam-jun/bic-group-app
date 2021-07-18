@@ -89,7 +89,7 @@ const SignIn = () => {
         <Image
           resizeMode="contain"
           style={styles.logo}
-          source={images.beinLogo}
+          source={images.logo_bein}
         />
         <Text h4 bold style={styles.desc}>
           {t('auth:text_sign_in_desc')}

@@ -14,6 +14,7 @@ import iconReport from '../../assets/icons/icon_report.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 import iconLanguageEn from '../../assets/icons/icon_language_en.svg';
 import iconLanguageVi from '../../assets/icons/icon_language_vi.svg';
+import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 
 const icons = {
   iconAdd: {
@@ -166,10 +167,25 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'theme-light-dark',
   },
+  iconUserGroup: {
+    type: 'MaterialIcons',
+    name: 'group',
+  },
+  iconArrowRight: {
+    type: 'Ionicons',
+    name: 'chevron-forward-outline',
+  },
+  iconPublic: {
+    type: 'AntDesign',
+    name: 'earth',
+  },
+  iconPrivate: {
+    type: 'Ionicons',
+    name: 'lock-closed-outline',
+  },
   iconLanguageEn,
   iconLanguageVi,
+  iconCheckbox,
 };
-
-export type IconType = keyof typeof icons;
 
 export default icons;

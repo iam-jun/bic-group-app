@@ -2,7 +2,7 @@ import * as types from './types';
 import {forgotPasswordStages} from '~/constants/authConstants';
 
 export const initAuthState = {
-  user: null,
+  user: undefined,
   loading: false,
   signingInError: '',
   forgotPasswordStage: forgotPasswordStages.INPUT_ID,
@@ -43,6 +43,8 @@ function authReducer(state = initAuthState, action: any = {}) {
         ...state,
         forgotPasswordError: {...action.payload},
       };
+    case types.SIGN_OUT:
+      return initAuthState;
     default:
       return state;
   }
