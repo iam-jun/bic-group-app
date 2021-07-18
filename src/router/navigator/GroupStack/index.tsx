@@ -7,21 +7,21 @@ import {IObject} from '~/interfaces/common';
 const Stack = createStackNavigator();
 
 const GroupStack = () => {
-    const Stacks: IObject<any> = groupsStacks;
-    return (
-        <Stack.Navigator headerMode="screen" initialRouteName={groupsStack.groups}>
-            <Stack.Screen
-                name={groupsStack.groups}
-                component={Stacks[groupsStack.groups]}
-                options={{headerShown: false}}
-            />
-            <Stack.Screen
-                name={groupsStack.groupDetail}
-                component={Stacks[groupsStack.groupDetail]}
-                options={{headerShown: false}}
-            />
-        </Stack.Navigator>
-    );
+  const Stacks: IObject<any> = groupsStacks;
+  return (
+    <Stack.Navigator headerMode="screen" initialRouteName={groupsStack.groups}>
+      <Stack.Screen
+        name={groupsStack.groups}
+        component={Stacks[groupsStack.groups]}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={groupsStack.groupDetail}
+        component={Stacks[groupsStack.groupDetail]}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
 };
 
 export default GroupStack;
