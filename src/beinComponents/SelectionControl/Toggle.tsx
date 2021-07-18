@@ -47,10 +47,10 @@ const createStyles = (theme: ITheme, isChecked: boolean) => {
       height: 16,
       borderRadius: 12,
       borderWidth: 1,
-      borderColor: isChecked ? colors.primary7 : colors.bgFocus,
+      borderColor: isChecked ? colors.primary7 : colors.borderDisable,
       alignItems: isChecked ? 'flex-end' : 'flex-start',
       justifyContent: 'center',
-      backgroundColor: isChecked ? colors.primary7 : colors.border,
+      backgroundColor: isChecked ? colors.primary7 : colors.placeholder,
     },
     insideCircle: {
       width: 16,

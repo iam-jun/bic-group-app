@@ -16,7 +16,7 @@ const Radio: React.FC<RadioProps> = ({
 }: RadioProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles(theme, checked);
 
   const _onChangeValue = () => {
     const newValue = !checked;
@@ -38,7 +38,7 @@ const Radio: React.FC<RadioProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ITheme, isChecked: boolean) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -49,6 +49,7 @@ const createStyles = (theme: ITheme) => {
       borderWidth: 1.2,
       alignItems: 'center',
       justifyContent: 'center',
+      borderColor: isChecked ? colors.borderFocus : colors.borderDisable,
     },
     insideCircle: {
       width: 12,

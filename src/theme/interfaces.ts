@@ -25,7 +25,10 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
   bgDisable?: string;
   bgButtonPrimary?: string;
   bgButtonSecondary?: string;
-  border?: string;
+  borderFocus?: string;
+  borderDisable?: string;
+  borderCard?: string;
+  borderDivider?: string;
   placeholder: string;
   surface: string;
   iconTint?: string;

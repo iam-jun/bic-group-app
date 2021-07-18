@@ -36,9 +36,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         <Icon
           icon="iconCheckbox"
           size={18}
-          tintColor={
-            checked ? theme.colors.background : theme.colors.placeholder
-          }
+          tintColor={theme.colors.background}
         />
       </View>
     </TouchableOpacity>
@@ -54,8 +52,8 @@ const createStyles = (theme: ITheme, isChecked: boolean) => {
       height: 20,
       borderWidth: 1,
       borderRadius: 6,
-      borderColor: isChecked ? colors.primary7 : colors.textSecondary,
-      backgroundColor: isChecked ? colors.primary7 : colors.surface,
+      borderColor: isChecked ? colors.primary7 : colors.borderDisable,
+      backgroundColor: isChecked ? colors.primary7 : colors.placeholder,
       justifyContent: 'center',
     },
   });
