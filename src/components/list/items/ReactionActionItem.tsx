@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import Text from '../../texts/Text';
 import HorizontalView from '../../layout/HorizontalView';
-import Icon from '../../Icon';
+import Icon from '../../../beinComponents/Icon';
 import {IconType} from '~/resources/icons';
 import {useBaseHook} from '~/hooks';
 import {primary as ACTIVE_COLOR, grey6 as INACTIVE_COLOR} from '~/theme/colors';

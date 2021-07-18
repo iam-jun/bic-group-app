@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {Text} from '~/components';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {IObject} from '~/interfaces/common';
 import {generateUniqueId} from '~/utils/generator';
 

@@ -8,7 +8,7 @@ import {useBaseHook} from '~/hooks';
 import useGroups from '~/hooks/groups';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {ScreenWrapper, Text, Image, Container} from '~/components';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {IObject} from '~/interfaces/common';
 import {scaleSize} from '~/theme/dimension';
 import images from '~/resources/images';

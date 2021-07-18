@@ -7,7 +7,7 @@ import ScreenWrapper from '~/components/ScreenWrapper';
 import MediaView from '~/components/media/MediaView';
 import ReactionsView from './ReactionsView';
 import Divider from '~/components/Divider';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import Markdown from '~/components/texts/Markdown';
 import {IObject} from '~/interfaces/common';
 import spacing, {borderRadius, margin, padding} from '~/theme/spacing';

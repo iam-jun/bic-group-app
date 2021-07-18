@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Platform, StyleSheet, TextInput} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {spacing} from '~/theme';
 import {margin} from '~/theme/spacing';
 import ScreenWrapper from '../ScreenWrapper';

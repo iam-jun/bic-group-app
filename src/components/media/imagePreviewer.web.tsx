@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import Icon from '../Icon';
+import Icon from '../../beinComponents/Icon';
 import Image from '../Image';
 
 export interface Props {

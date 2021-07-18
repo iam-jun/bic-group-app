@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Text from '../../texts/Text';
-import Icon, {IconProps} from '../../Icon';
+import Icon, {IconProps} from '../../../beinComponents/Icon';
 import {white as WHITE_COLOR} from '~/theme/colors';
 
 export interface Props {

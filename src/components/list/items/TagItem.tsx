@@ -5,7 +5,7 @@ import {
   grey4 as ICON_CORLOR,
   grey6 as TEXT_COLOR,
 } from '~/theme/colors';
-import Icon from '../../Icon';
+import Icon from '../../../beinComponents/Icon';
 import ScreenWrapper from '~/components/ScreenWrapper';
 import Text from '../../texts/Text';
 import {IObject} from '~/interfaces/common';

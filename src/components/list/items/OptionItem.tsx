@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import {IOption} from '~/interfaces/IOption';
 import {spacing} from '~/theme';
 

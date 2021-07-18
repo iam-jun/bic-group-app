@@ -8,7 +8,7 @@ import {
   TextStyle,
 } from 'react-native';
 import Text from '../texts/Text';
-import Icon from '../Icon';
+import Icon from '../../beinComponents/Icon';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import icons from '~/resources/icons';
