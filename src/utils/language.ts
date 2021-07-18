@@ -1,7 +1,9 @@
+import {Resource, ResourceLanguage} from 'i18next';
 import i18Next from '~/localization';
 
-export const convertMultiLanguage = () => {
+export const convertMultiLanguage = (): ResourceLanguage => {
   const locale = i18Next.language;
-  const languages: any = i18Next.options.resources;
+  // @ts-ignore
+  const languages: Resource = i18Next.options.resources;
   return languages[locale];
 };

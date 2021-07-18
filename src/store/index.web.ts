@@ -6,11 +6,12 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from './reducers';
 import ReactotronConfig from '~/ReactotronConfig';
+import {IUserResponse} from '~/interfaces/IAuth';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['auth', 'modal'],
+  blacklist: ['auth', 'modal', 'groups'],
 };
 
 // @ts-ignore
@@ -30,9 +31,9 @@ const enhancer = composeEnhancers(
 const store = createStore(persistedReducer, enhancer);
 const persistor = persistStore(store);
 
-const getCurrentUser = () => {
+const getCurrentUser = (): IUserResponse | boolean => {
   const state = store.getState();
-  return _.get(state, 'auth.user', null);
+  return _.get(state, 'auth.user', false);
 };
 
 export default {

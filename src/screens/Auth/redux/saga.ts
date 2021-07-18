@@ -6,12 +6,12 @@ import {authStack, rootSwitch} from '~/configs/navigator';
 import * as types from './types';
 import * as IAuth from '~/interfaces/IAuth';
 import * as refNavigator from '~/utils/refNavigator';
-import * as storage from '~/utils/localStorage';
 import * as actions from './actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
+import Store from '~/store';
 
 export default function* authSaga() {
   yield takeLatest(types.SIGN_IN, signIn);
@@ -68,7 +68,7 @@ function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
 function* onSignInSuccess(user: IUserResponse) {
   yield put(actions.setLoading(false));
 
-  let name =
+  const name =
     user?.attributes?.name?.length < 50
       ? user?.attributes?.name
       : user?.attributes?.email?.match?.(/^([^@]*)@/)[1];
@@ -85,7 +85,6 @@ function* onSignInSuccess(user: IUserResponse) {
     role: user?.username,
   };
 
-  yield storage.setUser(userResponse);
   yield put(actions.setUser(userResponse));
 
   refNavigator.replace(rootSwitch.mainStack);
@@ -145,8 +144,8 @@ function* forgotPasswordRequest({payload}: {type: string; payload: string}) {
       actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW),
     );
   } catch (error) {
-    let errBox = '',
-      errRequest = '';
+    let errBox: string;
+    const errRequest = '';
     switch (error.code) {
       case authErrors.LIMIT_EXCEEDED_EXCEPTION:
         errBox = i18n.t('auth:text_err_limit_exceeded');
@@ -209,7 +208,6 @@ function* forgotPasswordConfirm({
 
 function* signOut() {
   try {
-    yield storage.removeUser();
     yield Auth.signOut();
     refNavigator.replace(rootSwitch.authStack);
   } catch (err) {
@@ -224,9 +222,8 @@ function* signOut() {
 
 function* checkAuthState() {
   try {
-    const user: IAuth.IUser = yield storage.getUser();
+    const user: IAuth.IUserResponse | boolean = yield Store.getCurrentUser();
     if (user) {
-      yield put(actions.setUser(user));
       refNavigator.replace(rootSwitch.mainStack);
     } else {
       refNavigator.replace(rootSwitch.authStack);

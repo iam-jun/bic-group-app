@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 
 /*Theme*/
@@ -16,11 +16,15 @@ import {navigationSetting} from '~/configs/navigator';
 import {IStack} from '~/interfaces/navigator';
 import {IObject} from '~/interfaces/common';
 
-import {navigationRef} from '~/utils/refNavigator';
+import {navigationRef, isNavigationRefReady} from '~/utils/refNavigator';
 
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
+  useEffect(() => {
+    isNavigationRefReady.current = false;
+  }, []);
+
   const theme = useTheme();
   const {i18n} = useTranslation();
 
@@ -41,7 +45,12 @@ const StackNavigator = () => {
   const listScreens: IObject<any> = screens;
 
   return (
-    <NavigationContainer ref={ref} theme={navigationTheme}>
+    <NavigationContainer
+      ref={ref}
+      onReady={() => {
+        isNavigationRefReady.current = true;
+      }}
+      theme={navigationTheme}>
       <Stack.Navigator
         initialRouteName={initialRoute}
         screenOptions={{cardStyle: cardStyleConfig}}>
