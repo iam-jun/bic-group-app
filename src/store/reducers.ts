@@ -6,6 +6,7 @@ import chat from '../screens/Chat/redux/reducer';
 import comment from '../screens/Home/Comment/redux/reducer';
 import audience from '../screens/CreatePost/SelectAudience/redux/reducer';
 import post from '../screens/CreatePost/redux/reducer';
+import groupsReducer from '~/screens/Groups/redux/reducer';
 
 const rootReducers = combineReducers({
   app,
@@ -15,6 +16,7 @@ const rootReducers = combineReducers({
   comment,
   audience,
   post,
+  groups: groupsReducer,
 });
 
 export default rootReducers;

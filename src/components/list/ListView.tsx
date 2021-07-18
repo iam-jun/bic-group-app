@@ -17,6 +17,8 @@ import ViewSpacing from '../ViewSpacing';
 import Text from '../texts/Text';
 import loadings from './loadings';
 import {IAction} from '~/constants/commonActions';
+import {grey5} from '~/theme/colors';
+
 export interface IListView {
   data?: Array<any>;
   type: IListViewItem;
@@ -66,7 +68,9 @@ const ListView: React.FC<IListView> = ({
 
   const _renderItem = ({item}: {item: any}) => {
     return (
-      <TouchableOpacity onPress={() => onItemPress && onItemPress(item)}>
+      <TouchableOpacity
+        disabled={!onActionPress}
+        onPress={() => onItemPress && onItemPress(item)}>
         <Component
           {...item}
           onActionPress={
@@ -96,7 +100,7 @@ const ListView: React.FC<IListView> = ({
             ))}
           </View>
         ) : (
-          <ActivityIndicator />
+          <ActivityIndicator color={grey5} />
         )}
       </View>
     );

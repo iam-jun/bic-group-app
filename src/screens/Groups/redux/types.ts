@@ -1,0 +1,12 @@
+const groupsTypes = {
+    SET_JOINED_GROUPS: 'groups/SET_JOINED_GROUPS',
+    SET_LOADING_JOINED_GROUPS: 'groups/SET_LOADING_JOINED_GROUPS',
+    SET_LOADING_GROUP_DETAIL: 'groups/SET_LOADING_GROUP_DETAIL',
+    SET_GROUP_DETAIL: 'groups/SET_GROUP_DETAIL',
+
+    //for saga
+    GET_JOINED_GROUPS: 'groups/GET_JOINED_GROUPS',
+    GET_GROUP_DETAIL: 'groups/GET_GROUP_DETAIL',
+}
+
+export default groupsTypes;
