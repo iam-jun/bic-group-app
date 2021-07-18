@@ -1,7 +1,11 @@
-import axios, {AxiosError, AxiosRequestConfig, CancelTokenSource} from 'axios';
+import axios, {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  CancelTokenSource,
+} from 'axios';
 import _ from 'lodash';
 import {Alert} from 'react-native';
-import Config from 'react-native-config';
 import i18n from 'i18next';
 
 import tokenService, {
@@ -15,6 +19,8 @@ const commonHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
+
+const requestTimeout = 10000;
 
 const interceptorsRequestSuccess = (config: CustomAxiosRequestConfig) => {
   console.log(
@@ -120,7 +126,7 @@ const handlerError = (error: CustomAxiosError): RestfulResponse => {
   }
 };
 
-const getErrorMessage = (error: CustomAxiosError) => {
+const getErrorMessage = (error: CustomAxiosError): string => {
   if (error.clientMessage) {
     return error.clientMessage;
   }
@@ -135,14 +141,16 @@ const getErrorMessage = (error: CustomAxiosError) => {
   }
 };
 
-const createRequest = async (config: AxiosRequestConfig) => {
+const createRequest = async (
+  config: AxiosRequestConfig,
+): Promise<AxiosResponse> => {
   // set base url
   const headers = {...commonHeaders, ...config.headers};
-  const newConfig = {baseURL: Config.BASE_API_URL, ...config, headers};
+  const newConfig = {...config, headers};
 
   // create a axios instance
   const axiosInstance = axios.create();
-  axiosInstance.defaults.timeout = parseInt(Config.REQUEST_TIME_OUT, 10);
+  axiosInstance.defaults.timeout = requestTimeout;
   axiosInstance.interceptors.request.use(interceptorsRequestSuccess, undefined);
   axiosInstance.interceptors.response.use(
     interceptorsResponseSuccess,
@@ -153,7 +161,7 @@ const createRequest = async (config: AxiosRequestConfig) => {
   return axiosInstance(newConfig);
 };
 
-const request = async (config: AxiosRequestConfig) => {
+const request = async (config: AxiosRequestConfig): Promise<AxiosResponse> => {
   // Authentication
   const commonAuthHeader = tokenService.getCommonAuthHeader();
   const headers = {...config.headers, ...commonAuthHeader};
@@ -165,7 +173,9 @@ const request = async (config: AxiosRequestConfig) => {
   return createRequest(newConfig);
 };
 
-const requestWithoutToken = async (config: AxiosRequestConfig) => {
+const requestWithoutToken = async (
+  config: AxiosRequestConfig,
+): Promise<AxiosResponse> => {
   // request
   return createRequest(config);
 };
@@ -176,13 +186,13 @@ const sourceCancel = (): CancelTokenSource => {
   return CancelToken.source();
 };
 
-const cancelRequest = (source: CancelTokenSource, message: string = '') => {
+const cancelRequest = (source: CancelTokenSource, message = ''): void => {
   if (source) {
     source.cancel(message);
   }
 };
 
-const isCancel = (error: AxiosError) => {
+const isCancel = (error: AxiosError): boolean => {
   return axios.isCancel(error);
 };
 

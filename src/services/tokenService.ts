@@ -16,11 +16,11 @@ const getAccessToken = () => {
   return _.get(Store.getCurrentUser(), 'accessToken', null);
 };
 
-const getDeviceId = () => {
-  return _.get(Store.getCurrentUser(), 'deviceId', null);
-};
+// const getDeviceId = () => {
+//   return _.get(Store.getCurrentUser(), 'deviceId', null);
+// };
 
-const getAuthenticationHeader = () => {
+const getAuthenticationHeader = (): string | null => {
   const accessToken = getAccessToken();
   if (accessToken) {
     return `Bearer ${accessToken}`;
@@ -28,7 +28,7 @@ const getAuthenticationHeader = () => {
   return null;
 };
 
-const getCommonAuthHeader = () => {
+const getCommonAuthHeader = (): Record<string, unknown> => {
   // const deviceId = getDeviceId()
   const authenticationHeader = getAuthenticationHeader();
   return {
@@ -39,14 +39,14 @@ const getCommonAuthHeader = () => {
 
 // retryHandler
 interface UnauthorizedReq {
-  (success: any): Promise<void>;
+  (success: unknown): Promise<void>;
 }
 
 let unauthorizedReqQueue: UnauthorizedReq[] = [];
 const retryHandler = async (
   error: RestfulResponse,
   orgConfig: CustomAxiosRequestConfig,
-) => {
+): Promise<unknown> => {
   // check if error is not 401 or is not unauthorized type
   if (error.status !== 401) {
     return Promise.reject(error);
@@ -60,11 +60,11 @@ const retryHandler = async (
   //================== 401 Unauthorized ==================
 
   // create new promise
-  let newReqPromise = new Promise((resolve, reject) => {
-    let newOrgConfig = {...orgConfig};
+  const newReqPromise = new Promise((resolve, reject) => {
+    const newOrgConfig = {...orgConfig};
     // delete newOrgConfig.headers.Authorization
 
-    const callback: UnauthorizedReq = async (success: any) => {
+    const callback: UnauthorizedReq = async (success: unknown) => {
       if (success !== true) {
         return reject(error);
       }
@@ -141,13 +141,15 @@ const getTokenFromServer = async () => {
         return Promise.reject(null);
       }
     })
-    .catch(function (error) {
+    .catch(function (error: unknown) {
+      console.log('error when refresh token:', error);
       Alert.alert(
         i18n.t('error:alert_title'),
         i18n.t('error:http:token_expired'),
       );
       Store.store.dispatch<ReduxAction>(
-        createAction(ActionTypes.LOG_OUT, {
+        // createAction(ActionTypes.LOG_OUT, {
+        createAction(ActionTypes.REFRESH_TOKEN, {
           user: Store.getCurrentUser(),
         }),
       );
@@ -161,6 +163,7 @@ export default {
 };
 
 export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  provider?: string;
   isHandleUnauthorized?: boolean;
 }
 
@@ -175,7 +178,7 @@ export interface CustomAxiosResponse extends AxiosResponse {
 
 export interface RestfulResponse {
   status: number;
-  data?: object;
+  data?: unknown;
 }
 
 export interface TokenResponse {
