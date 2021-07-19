@@ -14,9 +14,11 @@ export interface ButtonWrapperProps {
   textProps?: TextProps;
   underlayColor?: string;
   TouchableComponent?: any;
+  testID?: string;
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
+  testID,
   children,
   style,
   onPress,
@@ -31,6 +33,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
   return (
     <TouchableComponent
+      testID={testID}
       disabled={disabled}
       onPress={onPress}
       onLongPress={onLongPress}

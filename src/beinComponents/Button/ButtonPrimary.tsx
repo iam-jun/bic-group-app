@@ -46,6 +46,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
       backgroundColor: _backgroundColor,
       padding: spacing?.padding.base,
       borderRadius: spacing?.borderRadius.small,
+      alignItems: 'center',
     },
     style,
   ]);

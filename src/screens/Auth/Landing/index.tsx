@@ -7,8 +7,8 @@ import {Container, ScreenWrapper, Text} from '~/components';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
-import PrimaryButton from '~/components/buttons/PrimaryButton';
 import {authStack} from '~/configs/navigator';
+import Button from '~/beinComponents/Button';
 
 const Landing = () => {
   const theme: IObject<any> = useTheme();
@@ -40,12 +40,11 @@ const Landing = () => {
         </Text>
         {!!desc && <Text style={styles.desc}>{desc}</Text>}
       </Container>
-      <PrimaryButton
-        max
-        title={t('auth:btn_landing_start')}
+      <Button.Primary
         style={styles.button}
-        onPress={() => navigation.navigate(authStack.login)}
-      />
+        onPress={() => navigation.navigate(authStack.login)}>
+        {t('auth:btn_landing_start')}
+      </Button.Primary>
     </ScreenWrapper>
   );
 };
@@ -69,7 +68,6 @@ const themeStyles = (theme: IObject<any>) => {
       marginBottom: spacing.margin.tiny,
     },
     button: {
-      alignSelf: 'center',
       marginTop: spacing.margin.big,
       marginBottom: 80,
     },
