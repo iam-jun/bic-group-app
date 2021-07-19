@@ -75,12 +75,12 @@
     "text_forgot_password_complete_desc": "Đăng nhập ngay với mật khẩu mới của bạn"
   },
   "settings": {
-    "title_app_language":"Ngôn ngữ",
-    "title_app_theme":"Giao diện"
+    "title_app_language": "Ngôn ngữ",
+    "title_app_theme": "Giao diện"
   },
-  "languages":{
-    "title_en":"Tiếng Anh",
-    "title_vi":"Tiếng Việt"
+  "languages": {
+    "title_en": "Tiếng Anh",
+    "title_vi": "Tiếng Việt"
   },
   "post": {
     "button_like": "Thích",
@@ -112,5 +112,8 @@
       "401": "Unauthorized",
       "token_expired": "Token expired"
     }
+  },
+  "badge": {
+    "scroll_bottom": "Xuống cuối trang"
   }
 }

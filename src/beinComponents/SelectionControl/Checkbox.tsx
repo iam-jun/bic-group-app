@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import Icon from '~/components/Icon';
+import Icon from '~/beinComponents/Icon';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
