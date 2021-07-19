@@ -8,6 +8,7 @@ import {
   RefreshControl,
   StyleProp,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import _ from 'lodash';
 
@@ -108,18 +109,14 @@ const ListView: React.FC<IListView> = ({
 
   return (
     <View style={[isFullView && styles.fullView, containerStyle]}>
-      {title && (
-        <Text h2 bold style={styles.title}>
-          {title}
-        </Text>
-      )}
+      {title && <Text.H2 style={styles.title}>{title}</Text.H2>}
       <FlatList
         {...props}
         ref={listRef}
         data={data}
         horizontal={horizontal}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={Platform.OS === 'web'}
+        showsVerticalScrollIndicator={Platform.OS === 'web'}
         renderItem={item => _renderItem(item)}
         initialNumToRender={10}
         refreshControl={

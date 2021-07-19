@@ -57,13 +57,13 @@ const Post: React.FC<IObject<any>> = ({
 
       {media && <MediaView {...media} />}
 
-      {hashtags && <TagsView style={styles.hashtags} data={hashtags} />}
+      {/* {hashtags && <TagsView style={styles.hashtags} data={hashtags} />} */}
 
       {reaction && (
         <>
           <ReactionsView isLike={isLike} {...reaction} />
           <Divider thick={1} />
-          // TODO: Add reaction (like, comment, share) view here
+          {/* TODO: Add reaction (like, comment, share) view here */}
         </>
       )}
       <TouchableOpacity

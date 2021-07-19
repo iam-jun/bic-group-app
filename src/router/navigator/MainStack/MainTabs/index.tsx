@@ -3,64 +3,61 @@ import {useTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import * as screens from '~/router/navigator/MainStack/MainTabs/tab';
 import Icon from '~/beinComponents/Icon';
 
-import {tabsSetting} from '~/configs/navigator';
-import {IObject} from '~/interfaces/common';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
+import {useWindowDimensions} from 'react-native';
+import {deviceDimensions} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import {leftScreens, centerScreens} from './screens';
+import icons from './icons';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
 
-export interface Props {
-  position: 'side' | 'bottom';
-}
-
-const MainTabs: React.FC<Props> = ({position}) => {
-  const theme: IObject<any> = useTheme();
+const MainTabs = () => {
+  const theme: ITheme = useTheme();
   const {colors} = theme;
 
   const backBehavior = 'initialRoute';
 
-  const {initialRouteName} = tabsSetting.configs;
+  // const {activeColor, inactiveColor, tabBarBackground} = colors;
 
-  const {activeColor, inactiveColor, tabBarBackground} = colors;
-
-  const {tabsNavigator} = tabsSetting;
-
-  const listScreens: IObject<any> = screens;
   const insets = useSafeAreaInsets();
+  const dimensions = useWindowDimensions();
 
-  const Tab = position === 'side' ? SideTab : BottomTab;
+  const screens =
+    dimensions.width > deviceDimensions.bigTablet ? leftScreens : centerScreens;
+
+  const Tab =
+    dimensions.width > deviceDimensions.smallTablet ? SideTab : BottomTab;
 
   return (
     // @ts-ignore
     <Tab.Navigator
-      initialRouteName={initialRouteName}
       backBehavior={backBehavior}
       tabBarOptions={{
-        activeTintColor: activeColor,
-        inactiveTintColor: inactiveColor,
+        // activeTintColor: activeColor,
+        // inactiveTintColor: inactiveColor,
         keyboardHidesTabBar: true,
         style: {
-          backgroundColor: tabBarBackground,
+          // backgroundColor: tabBarBackground,
           paddingBottom: insets.bottom,
           // height: theme.spacing.padding.big * 2,
         },
       }}>
-      {tabsNavigator.map((tab: IObject<any>, _i: number) => {
+      {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore
           <Tab.Screen
-            key={'tabs' + tab.screen}
-            name={tab.screen}
-            component={listScreens[tab.screen]}
+            key={'tabs' + name}
+            name={name}
+            component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
                 return (
                   <Icon
-                    icon={tab.option.tabBarIcon}
+                    icon={icons[name as keyof typeof icons]}
                     size={24}
                     tintColor={color}
                     bold={focused}

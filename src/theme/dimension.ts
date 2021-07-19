@@ -4,7 +4,6 @@ import {Dimensions} from 'react-native';
 const guidelineBaseWidth = 375;
 
 const DeviceWidth = Dimensions.get('window').width;
-const DiviceHeight = Dimensions.get('window').height;
 
 /* Size config used for Text */
 export const sizes = {
@@ -57,9 +56,16 @@ export const letterSpacing = {
 };
 
 /* Device Dimensions */
-export const dimensionDevice = {
-  width: DeviceWidth,
-  height: DiviceHeight,
+export const deviceDimensions = {
+  phone: 375,
+  smallTablet: 600,
+  bigTablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+  totalCols: 12,
+  leftCols: 4,
+  centerCols: 5,
+  rightCols: 3,
 };
 
 /* Used for buton size width (short, medium, long, max) */
@@ -79,13 +85,13 @@ export const sizeButton = {
   height: 44,
 };
 
-export const scaleSize = (size: number) =>
+export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
 
 export default {
   sizes,
   lineHeights,
-  dimensionDevice,
+  deviceDimensions,
   sizeButton,
   letterSpacing,
 };

@@ -3,12 +3,12 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {IGroup} from '~/interfaces/IGroup';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
-import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {Image, Text} from '~/components/index';
 import Icon from '~/beinComponents/Icon';
 import {grey2, grey5, grey9} from '~/theme/colors';
-import {groupsStack} from '~/configs/navigator';
+import {groupStack} from '~/router/navigator/MainStack/GroupStack/stack';
+import {useNavigation} from '~/hooks/navigation';
 
 interface GroupItemProps extends IGroup {
   level?: number;
@@ -28,11 +28,11 @@ const GroupItem: React.FC<GroupItemProps> = ({
 }) => {
   const theme = useTheme();
   const {spacing}: IObject<any> = theme;
-  const {navigation} = useBaseHook();
+  const {navigation} = useNavigation();
   const styles = themeStyles(theme);
 
   const _onPressItem = () => {
-    navigation.navigate(groupsStack.groupDetail, {groupId: id});
+    navigation.navigate(groupStack.groupDetail, {groupId: id});
   };
 
   const renderLine = (level: number) => {

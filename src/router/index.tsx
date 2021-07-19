@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
 
 /*Theme*/
 import {useTheme} from 'react-native-paper';
@@ -13,9 +12,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 /*import config navigation*/
 import * as screens from './navigator';
-import {navigationSetting, rootSwitch} from '~/configs/navigator';
-
-import {navigationRef, isNavigationRefReady} from '~/utils/refNavigator';
+import {navigationSetting} from '~/configs/navigator';
+import {rootSwitch} from './stack';
+import {rootNavigationRef} from './navigator/refs';
+import {isNavigationRefReady} from './helper';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +26,6 @@ const StackNavigator = () => {
 
   const theme = useTheme();
 
-  const initialRoute: string = navigationSetting.configs.initialRouteName;
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
 
   const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
@@ -68,14 +67,12 @@ const StackNavigator = () => {
   return (
     <NavigationContainer
       linking={linking}
-      ref={navigationRef}
+      ref={rootNavigationRef}
       onReady={() => {
         isNavigationRefReady.current = true;
       }}
       theme={navigationTheme}>
-      <Stack.Navigator
-        initialRouteName={initialRoute}
-        screenOptions={{cardStyle: cardStyleConfig}}>
+      <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
         <Stack.Screen
           options={{headerShown: false}}
           name={rootSwitch.appLoading}

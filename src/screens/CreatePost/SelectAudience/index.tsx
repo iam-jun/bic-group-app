@@ -19,7 +19,7 @@ import useAudience from '~/hooks/audience';
 import commonActions from '~/constants/commonActions';
 import audienceActions from './redux/actions';
 import {IUser} from '~/interfaces/IAuth';
-import {mainStack} from '~/configs/navigator';
+import {mainStack} from '~/router/navigator/MainStack/stack';
 
 const SelectPostAudienceScreen = ({navigation}: {navigation: any}) => {
   const dispatch = useDispatch();

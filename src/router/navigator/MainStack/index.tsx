@@ -1,15 +1,23 @@
 import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, StackActions} from '@react-navigation/native';
 
-import {refMainNavigator} from '~/utils/refMainNavigator';
 import HorizontalView from '~/components/layout/HorizontalView';
 
-import screens from './screens';
+import {screens, mainStack} from './stack';
 import BottomTabs from './MainTabs';
 import {useTheme} from 'react-native-paper';
-import {Text} from '~/components';
+
+import {ITheme} from '~/theme/interfaces';
+import {deviceDimensions} from '~/theme/dimension';
+import {spacing} from '~/theme';
+import {
+  leftNavigationRef,
+  rightNavigationRef,
+  centerNavigationRef,
+} from '../refs';
+import AppInfo from '~/screens/AppInfo';
 
 const Stack = createStackNavigator();
 
@@ -18,61 +26,64 @@ const MainStack = () => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
+  React.useEffect(() => {
+    if (dimensions.width > deviceDimensions.bigTablet)
+      centerNavigationRef?.current?.dispatch(StackActions.replace('home'));
+    else centerNavigationRef?.current?.dispatch(StackActions.replace('main'));
+  }, [dimensions.width]);
+
   return (
     <View style={styles.container}>
       <HorizontalView style={styles.content}>
-        {dimensions.width > 768 && (
+        {dimensions.width > deviceDimensions.bigTablet && (
           <View
             style={{
-              flex: 4,
+              flex: deviceDimensions.leftCols,
+              paddingStart: spacing.margin.base,
             }}>
-            <NavigationContainer independent={true}>
-              <BottomTabs position="side" />
+            <NavigationContainer independent ref={leftNavigationRef}>
+              <BottomTabs />
             </NavigationContainer>
           </View>
         )}
-        {dimensions.width > 768 ? (
+        <View
+          style={{
+            flex: deviceDimensions.centerCols,
+          }}>
+          <NavigationContainer ref={centerNavigationRef} independent={true}>
+            <Stack.Navigator
+              initialRouteName={
+                dimensions.width > deviceDimensions.bigTablet ? 'home' : 'main'
+              }>
+              {Object.entries(mainStack).map(([name, component]) => {
+                return (
+                  <Stack.Screen
+                    key={'screen' + component}
+                    name={component}
+                    // @ts-ignore
+                    component={screens[component]}
+                    options={{
+                      animationEnabled: true,
+                      headerShown: false,
+                      title: name,
+                    }}
+                  />
+                );
+              })}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+        {dimensions.width > deviceDimensions.laptop && (
           <View
             style={{
-              flex: 5,
-              paddingHorizontal: 12,
+              flex: deviceDimensions.rightCols,
+              paddingEnd: spacing.margin.base,
             }}>
-            <NavigationContainer ref={refMainNavigator} independent={true}>
-              <Stack.Navigator initialRouteName={'home'}>
-                {Object.entries(screens).map(([name, component]) => {
-                  return (
-                    <Stack.Screen
-                      key={'screen' + name}
-                      name={name}
-                      component={component}
-                      options={{
-                        animationEnabled: true,
-                        headerShown: false,
-                        title: name,
-                      }}
-                    />
-                  );
-                })}
+            <NavigationContainer independent ref={rightNavigationRef}>
+              <Stack.Navigator>
+                <Stack.Screen name="app-info" component={AppInfo} />
               </Stack.Navigator>
             </NavigationContainer>
-          </View>
-        ) : (
-          <View
-            style={{
-              flex: 5,
-              paddingHorizontal: 12,
-            }}>
-            <BottomTabs position={dimensions.width > 600 ? 'side' : 'bottom'} />
-          </View>
-        )}
-        {dimensions.width > 1024 && (
-          <View
-            style={{
-              flex: 3,
-            }}>
-            <Text h1 bold>
-              Empty space
-            </Text>
           </View>
         )}
       </HorizontalView>
@@ -80,7 +91,7 @@ const MainStack = () => {
   );
 };
 
-const createStyles = theme => {
+const createStyles = (theme: ITheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -91,8 +102,8 @@ const createStyles = theme => {
     content: {
       width: '100%',
       height: '100%',
-      flexGrow: 12,
-      maxWidth: 1280,
+      flexGrow: deviceDimensions.totalCols,
+      maxWidth: deviceDimensions.desktop,
       alignSelf: 'center',
     },
   });

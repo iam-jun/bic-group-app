@@ -4,7 +4,6 @@ import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {NavigationHeader} from '~/components';
-import {mainStack, rootSwitch} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
@@ -19,7 +18,7 @@ import {
   getRandomInt,
 } from '~/utils/generator';
 import * as actions from '~/screens/Chat/redux/actions';
-import {refMainNavigator} from '~/utils/refMainNavigator';
+import {useNavigation} from '~/hooks/navigation';
 
 const ConversationsList = () => {
   const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
@@ -32,23 +31,14 @@ const ConversationsList = () => {
 
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {t, navigation} = useBaseHook();
-
-  React.useEffect(() => {
-    console.log({
-      refMainNavigator,
-      route: refMainNavigator?.current?.getRootState(),
-    });
-  }, [refMainNavigator]);
+  const {t} = useBaseHook();
+  const {navigation} = useNavigation();
 
   const dispatch = useDispatch();
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
-    // refMainNavigator?.current?.navigate(rootSwitch.mainStack, {
-    //   screen: 'Notification',
-    // });
-    refMainNavigator?.current?.navigate('conversation');
+    navigation.navigate('conversation');
   };
 
   return (

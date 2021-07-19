@@ -15,7 +15,7 @@ import {
 } from './fragments';
 import NavigationHeader from '~/components/headers/NavigationHeader';
 import ScreenWrapper from '~/components/ScreenWrapper';
-import {mainStack} from '~/configs/navigator';
+import {mainStack} from '~/router/navigator/MainStack/stack';
 import {options} from '~/constants/messageOptions';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';

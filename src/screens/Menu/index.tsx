@@ -16,11 +16,13 @@ import {Container, ViewSpacing} from '~/components';
 import {AppContext} from '~/contexts/AppContext';
 import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
 import languages from '~/constants/languages';
-import {menuStack} from '~/configs/navigator';
+import {useNavigation} from '~/hooks/navigation';
+import {menuStack} from '~/router/navigator/MainStack/MenuStack/stack';
 
 const Menu = () => {
   const dispatch = useDispatch();
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const {navigation} = useNavigation();
   const {user} = useAuth();
   const {changeLanguage} = useContext(AppContext);
 
