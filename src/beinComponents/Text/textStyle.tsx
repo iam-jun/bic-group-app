@@ -49,6 +49,20 @@ export const createStyle = (theme: ITheme) => {
       letterSpacing: letterSpacing.h6,
       color: colors.textPrimary,
     },
+    buttonBase: {
+      fontFamily: fontFamilies.PoppinsMedium,
+      fontSize: sizes.buttonBase,
+      lineHeight: lineHeights.buttonBase,
+      letterSpacing: letterSpacing.buttonBase,
+      color: colors.textPrimary,
+    },
+    buttonSmall: {
+      fontFamily: fontFamilies.PoppinsMedium,
+      fontSize: sizes.buttonSmall,
+      lineHeight: lineHeights.buttonSmall,
+      letterSpacing: letterSpacing.buttonSmall,
+      color: colors.textPrimary,
+    },
     bodyM: {
       fontFamily: fontFamilies.SegoeSemibold,
       fontSize: sizes.bodyM,
