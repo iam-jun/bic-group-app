@@ -17,10 +17,10 @@ import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import Input from '~/components/inputs';
 import InputPassword from '~/components/inputs/InputPassword';
-import PrimaryButton from '~/components/buttons/PrimaryButton';
 import TransparentButton from '~/components/buttons/TransparentButton';
 import {Container, Text, ScreenWrapper} from '~/components';
 import SignInOAuth from '../components/SignInOAuth';
+import Button from '~/beinComponents/Button';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -163,14 +163,12 @@ const SignIn = () => {
           title={t('auth:btn_forgot_password')}
           onPress={() => navigation.navigate(authStack.forgotPassword)}
         />
-        <PrimaryButton
+        <Button.Primary
           testID="btnLogin"
-          style={styles.button}
           disabled={disableSignIn}
-          title={t('auth:btn_sign_in')}
-          loading={loading}
-          onPress={onSignIn}
-        />
+          onPress={onSignIn}>
+          {t('auth:btn_sign_in')}
+        </Button.Primary>
       </Container>
       <Container
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
