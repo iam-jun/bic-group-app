@@ -130,5 +130,8 @@
   },
   "badge": {
     "scroll_bottom": "Scroll to bottom"
+  },
+  "input": {
+    "search": "Search for someone to chat..."
   }
 }

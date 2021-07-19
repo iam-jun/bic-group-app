@@ -115,5 +115,8 @@
   },
   "badge": {
     "scroll_bottom": "Xuống cuối trang"
+  },
+  "input": {
+    "search": "Tìm kiếm người để trò chuyện..."
   }
 }
