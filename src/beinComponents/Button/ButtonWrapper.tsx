@@ -12,9 +12,11 @@ export interface ButtonWrapperProps {
   onLongPress?: () => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
+  underlayColor?: string;
+  TouchableComponent?: any;
 }
 
-const ButtonWrapper = ({
+const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   children,
   style,
   onPress,
@@ -22,14 +24,17 @@ const ButtonWrapper = ({
   disabled,
   textVariant = 'buttonBase',
   textProps,
+  underlayColor,
+  TouchableComponent = TouchableOpacity,
 }: ButtonWrapperProps) => {
   const {colors}: ITheme = useTheme();
 
   return (
-    <TouchableOpacity
+    <TouchableComponent
       disabled={disabled}
       onPress={onPress}
       onLongPress={onLongPress}
+      underlayColor={underlayColor}
       style={StyleSheet.flatten([style])}>
       {typeof children === 'string' ? (
         <Text
@@ -39,9 +44,9 @@ const ButtonWrapper = ({
           {children}
         </Text>
       ) : (
-        children
+        <>{children}</>
       )}
-    </TouchableOpacity>
+    </TouchableComponent>
   );
 };
 

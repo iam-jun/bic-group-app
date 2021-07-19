@@ -154,6 +154,41 @@ const Section1 = () => {
             ButtonSmall Disable
           </Button>
         </View>
+        <Button onPress={() => alert('onPress View')}>
+          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <Text>Button Wrap Views </Text>
+            <Icon icon={'Heart'} />
+          </View>
+        </Button>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.Primary></Button.Primary>`}</Text.H5>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: spacing?.margin.small,
+            marginBottom: spacing?.margin.base,
+            justifyContent: 'space-around',
+          }}>
+          <Button.Primary
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Default
+          </Button.Primary>
+          <Button.Primary onPress={() => alert('onPress')}>
+            Hover
+          </Button.Primary>
+          <Button.Primary
+            disabled
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Disabled
+          </Button.Primary>
+        </View>
       </View>,
     );
   };

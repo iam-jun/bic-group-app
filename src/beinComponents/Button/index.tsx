@@ -1,5 +1,6 @@
 import React from 'react';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import ButtonWrapper from './ButtonWrapper';
+import Primary from './ButtonPrimary';
 import {StyleProp, ViewStyle} from 'react-native';
 import {TextProps, TextVariant} from '~/beinComponents/Text';
 
@@ -17,6 +18,6 @@ const _Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   return <ButtonWrapper {...props} />;
 };
 
-const Button = Object.assign(_Button, {ButtonWrapper});
+const Button = Object.assign(_Button, {Primary});
 
 export default Button;
