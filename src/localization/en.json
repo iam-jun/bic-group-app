@@ -127,5 +127,8 @@
       "401": "Unauthorized",
       "token_expired": "Token expired"
     }
+  },
+  "badge": {
+    "scroll_bottom": "Scroll to bottom"
   }
 }
