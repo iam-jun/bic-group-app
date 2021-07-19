@@ -179,7 +179,9 @@ const Section1 = () => {
             onLongPress={() => alert('onLongPress')}>
             Default
           </Button.Primary>
-          <Button.Primary onPress={() => alert('onPress')}>
+          <Button.Primary
+            color={colors.iconTint}
+            onPress={() => alert('onPress')}>
             Hover
           </Button.Primary>
           <Button.Primary
@@ -189,6 +191,59 @@ const Section1 = () => {
             Disabled
           </Button.Primary>
         </View>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.Secondary></Button.Secondary>`}</Text.H5>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: spacing?.margin.small,
+            marginBottom: spacing?.margin.base,
+            justifyContent: 'space-around',
+          }}>
+          <Button.Secondary
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Default
+          </Button.Secondary>
+          <Button.Secondary
+            color={colors.primary2}
+            onPress={() => alert('onPress')}>
+            Hover
+          </Button.Secondary>
+          <Button.Secondary
+            disabled
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Disabled
+          </Button.Secondary>
+        </View>
+        <Button.Secondary
+          color={colors.primary3}
+          leftIcon={'Emoji'}
+          leftIconProps={{tintColor: colors.primary6}}
+          rightIcon={'ArrowRight'}
+          onPress={() => alert('onPress')}
+          onLongPress={() => alert('onLongPress')}>
+          Custom color, left, right icon
+        </Button.Secondary>
+        <Button.Secondary
+          disabled
+          color={colors.primary3}
+          style={{marginTop: spacing?.margin.small}}
+          leftIcon={'Emoji'}
+          rightIcon={'ArrowRight'}
+          onPress={() => alert('onPress')}
+          onLongPress={() => alert('onLongPress')}>
+          Custom color, left, right icon
+        </Button.Secondary>
+        <Text.Subtitle>
+          text not centered because of font, design confirm...
+        </Text.Subtitle>
       </View>,
     );
   };

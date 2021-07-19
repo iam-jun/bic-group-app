@@ -19,7 +19,6 @@ import icons from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 
 export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
-  icon: any;
   size?: number;
   tintColor?: string;
   backgroundColor?: string;
@@ -30,7 +29,11 @@ export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
   onPress?: () => void;
 }
 
-const Icon: React.FC<IconProps> = ({
+interface IconRequiredProps extends IconProps {
+  icon: any;
+}
+
+const Icon: React.FC<IconRequiredProps> = ({
   style,
   iconStyle,
   labelStyle,
@@ -44,7 +47,7 @@ const Icon: React.FC<IconProps> = ({
   isLoading,
   disabled,
   ...props
-}: IconProps) => {
+}: IconRequiredProps) => {
   if (isLoading) return <ActivityIndicator size="small" />;
 
   // @ts-ignore

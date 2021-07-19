@@ -32,7 +32,7 @@ export interface TextProps extends RNTextProps {
   useI18n?: boolean;
 }
 
-const _Text: React.FC<TextProps> = ({
+const TextComponent: React.FC<TextProps> = ({
   variant,
   style,
   children,
@@ -54,29 +54,47 @@ const _Text: React.FC<TextProps> = ({
   );
 };
 
-const H1 = ({...props}: TextProps) => <_Text variant={'h1'} {...props} />;
-const H2 = ({...props}: TextProps) => <_Text variant={'h2'} {...props} />;
-const H3 = ({...props}: TextProps) => <_Text variant={'h3'} {...props} />;
-const H4 = ({...props}: TextProps) => <_Text variant={'h4'} {...props} />;
-const H5 = ({...props}: TextProps) => <_Text variant={'h5'} {...props} />;
-const H6 = ({...props}: TextProps) => <_Text variant={'h6'} {...props} />;
+const H1 = ({...props}: TextProps) => (
+  <TextComponent variant={'h1'} {...props} />
+);
+const H2 = ({...props}: TextProps) => (
+  <TextComponent variant={'h2'} {...props} />
+);
+const H3 = ({...props}: TextProps) => (
+  <TextComponent variant={'h3'} {...props} />
+);
+const H4 = ({...props}: TextProps) => (
+  <TextComponent variant={'h4'} {...props} />
+);
+const H5 = ({...props}: TextProps) => (
+  <TextComponent variant={'h5'} {...props} />
+);
+const H6 = ({...props}: TextProps) => (
+  <TextComponent variant={'h6'} {...props} />
+);
 const ButtonBase = ({...props}: TextProps) => (
-  <_Text variant={'buttonBase'} {...props} />
+  <TextComponent variant={'buttonBase'} {...props} />
 );
 const ButtonSmall = ({...props}: TextProps) => (
-  <_Text variant={'buttonSmall'} {...props} />
+  <TextComponent variant={'buttonSmall'} {...props} />
 );
-const BodyM = ({...props}: TextProps) => <_Text variant={'bodyM'} {...props} />;
-const Body = ({...props}: TextProps) => <_Text variant={'body'} {...props} />;
+const BodyM = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyM'} {...props} />
+);
+const Body = ({...props}: TextProps) => (
+  <TextComponent variant={'body'} {...props} />
+);
 const BodySM = ({...props}: TextProps) => (
-  <_Text variant={'bodySM'} {...props} />
+  <TextComponent variant={'bodySM'} {...props} />
 );
-const BodyS = ({...props}: TextProps) => <_Text variant={'bodyS'} {...props} />;
+const BodyS = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyS'} {...props} />
+);
 const Subtitle = ({...props}: TextProps) => (
-  <_Text variant={'subtitle'} {...props} />
+  <TextComponent variant={'subtitle'} {...props} />
 );
 
-const Text = Object.assign(_Text, {
+const Text = Object.assign(TextComponent, {
   H1,
   H2,
   H3,
