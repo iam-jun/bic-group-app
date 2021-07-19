@@ -34,7 +34,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   const {colors, spacing}: ITheme = useTheme();
 
   const _colorHover = colorHover || colors.iconTint;
-  let _backgroundColor = color || colors.borderFocus;
+  let _backgroundColor = color || colors.bgButtonPrimary;
   let _textColor = textColor || colors.textReversed;
   if (disabled) {
     _backgroundColor = colorDisabled || colors.bgDisable;
