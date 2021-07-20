@@ -45,6 +45,7 @@ const Section4 = () => {
           value={'123456789'}
           helperContent={'Wrong email or password! '}
           helperAction={'Forgot password'}
+          helperActionOnPress={() => alert('onPress forgot password')}
           error
         />
         <TextInput
