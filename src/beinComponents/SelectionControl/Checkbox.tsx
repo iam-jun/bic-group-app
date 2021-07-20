@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Icon from '~/beinComponents/Icon';
@@ -7,11 +13,13 @@ import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
 interface CheckboxProps {
+  style?: StyleProp<ViewStyle>;
   isChecked?: boolean;
   onActionPress: (action: IAction) => void;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
+  style,
   isChecked = false,
   onActionPress,
 }: CheckboxProps) => {
@@ -31,7 +39,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   };
 
   return (
-    <TouchableOpacity onPress={_onChangeValue}>
+    <TouchableOpacity style={style} onPress={_onChangeValue}>
       <View style={styles.checkbox}>
         <Icon
           icon="iconCheckbox"
