@@ -242,8 +242,48 @@ const Section1 = () => {
           Custom color, left, right icon
         </Button.Secondary>
         <Text.Subtitle>
-          text not centered because of font, design confirm...
+          text not centered because of font, designer confirmed...
         </Text.Subtitle>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.BottomFixed></Button.BottomFixed>`}</Text.H5>
+        <View
+          style={{
+            backgroundColor: colors.bgButtonPrimary,
+            marginHorizontal: -12,
+            paddingTop: spacing?.padding.base,
+            paddingBottom: spacing?.padding.large,
+          }}>
+          <Button.BottomFixed
+            absoluteBottom={false}
+            onPress={() => alert('onPress BottomButton')}>
+            Bottom Button
+          </Button.BottomFixed>
+        </View>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.BottomSecondary>`}</Text.H5>
+        <View
+          style={{
+            backgroundColor: colors.bgButtonPrimary,
+            marginHorizontal: -12,
+            paddingTop: spacing?.padding.base,
+            paddingBottom: spacing?.padding.large,
+          }}>
+          <Button.BottomSecondary
+            absoluteBottom={false}
+            onPress={() => alert('onPress BottomButton')}>
+            Bottom Secondary Button
+          </Button.BottomSecondary>
+        </View>
       </View>,
     );
   };
@@ -252,9 +292,12 @@ const Section1 = () => {
     <View style={{flex: 1}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
-      {renderText()}
       {renderFlashMessage()}
       {renderIcon()}
+      {renderText()}
+      <Button.BottomFixed onPress={() => alert('onPress BottomButton')}>
+        Bottom Button - absoluteBottom
+      </Button.BottomFixed>
     </View>
   );
 };

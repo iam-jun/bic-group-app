@@ -91,6 +91,16 @@ export const sizeButton = {
   height: 44,
 };
 
+export const avatarSizes = {
+  small: 24,
+  medium: 36,
+  large: 48,
+  ultraLarge: 64,
+};
+
+export const headerHeight = 48;
+export const primaryItemHeight = 64;
+
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
 
@@ -100,4 +110,7 @@ export default {
   deviceDimensions,
   sizeButton,
   letterSpacing,
+  headerHeight,
+  primaryItemHeight,
+  avatarSizes,
 };
