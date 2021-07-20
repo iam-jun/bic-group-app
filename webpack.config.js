@@ -94,7 +94,7 @@ module.exports = {
     app: path.join(__dirname, 'index.web.js'),
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   output: {
     path: path.resolve(appDirectory, 'dist'),

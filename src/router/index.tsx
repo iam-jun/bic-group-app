@@ -32,19 +32,22 @@ const StackNavigator = () => {
 
   const config = {
     screens: {
+      AuthStack: {},
       MainStack: {
+        path: 'home',
         screens: {
-          BottomTabs: {
+          main: {
+            path: 'main',
             screens: {
               home: {
-                path: 'home',
+                path: 'home2222',
                 screens: {
-                  home: {
+                  newsfeed: {
                     path: '',
                   },
                 },
               },
-              Chat: {
+              chat: {
                 path: 'chat',
                 screens: {
                   Chat: {
@@ -66,7 +69,7 @@ const StackNavigator = () => {
 
   return (
     <NavigationContainer
-      linking={linking}
+      // linking={linking}
       ref={rootNavigationRef}
       onReady={() => {
         isNavigationRefReady.current = true;

@@ -15,8 +15,18 @@ import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 import iconLanguageEn from '../../assets/icons/icon_language_en.svg';
 import iconLanguageVi from '../../assets/icons/icon_language_vi.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
+import iconTabHome from '../../assets/icons/icon_home.svg';
+import iconTabGroups from '../../assets/icons/icon_groups.svg';
+import iconTabChat from '../../assets/icons/icon_chat.svg';
+import iconTabNotification from '../../assets/icons/icon_notification.svg';
+import iconTabMenu from '../../assets/icons/icon_menu.svg';
 
 const icons = {
+  iconTabHome,
+  iconTabGroups,
+  iconTabChat,
+  iconTabNotification,
+  iconTabMenu,
   iconAdd: {
     type: 'MaterialIcons',
     name: 'add',
@@ -67,17 +77,9 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'comment-outline',
   },
-  iconHome: {
-    type: 'MaterialCommunityIcons',
-    name: 'home-outline',
-  },
   iconDiamond: {
     type: 'MaterialCommunityIcons',
     name: 'diamond-stone',
-  },
-  iconGroup: {
-    type: 'MaterialCommunityIcons',
-    name: 'account-group',
   },
   iconNotification: {
     type: 'MaterialCommunityIcons',

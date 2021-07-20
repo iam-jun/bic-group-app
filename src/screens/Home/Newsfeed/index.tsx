@@ -63,6 +63,7 @@ const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
         style={styles.container}
         type="content"
         data={data}
+        isFullView
         onItemPress={_onItemPress}
         onActionPress={_onActionPress}
         renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}

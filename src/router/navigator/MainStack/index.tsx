@@ -1,13 +1,10 @@
 import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer, StackActions} from '@react-navigation/native';
-
-import HorizontalView from '~/components/layout/HorizontalView';
+import {NavigationContainer} from '@react-navigation/native';
+import {useTheme} from 'react-native-paper';
 
 import {screens, mainStack} from './stack';
-import BottomTabs from './MainTabs';
-import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
@@ -16,8 +13,10 @@ import {
   leftNavigationRef,
   rightNavigationRef,
   centerNavigationRef,
+  rootNavigationRef,
 } from '../refs';
 import AppInfo from '~/screens/AppInfo';
+import LeftTabs from './LeftTabs';
 
 const Stack = createStackNavigator();
 
@@ -27,22 +26,57 @@ const MainStack = () => {
   const styles = createStyles(theme);
 
   React.useEffect(() => {
-    if (dimensions.width > deviceDimensions.bigTablet)
-      centerNavigationRef?.current?.dispatch(StackActions.replace('home'));
-    else centerNavigationRef?.current?.dispatch(StackActions.replace('main'));
-  }, [dimensions.width]);
+    console.log({
+      rootNavigationRef,
+      root: rootNavigationRef?.current?.getRootState(),
+      parent: rootNavigationRef?.current?.dangerouslyGetParent(),
+      state: rootNavigationRef?.current?.dangerouslyGetState(),
+      route: rootNavigationRef?.current?.getCurrentRoute(),
+    });
+  }, [rootNavigationRef]);
+
+  const config = {
+    screens: {
+      main: {
+        path: '',
+        screens: {
+          home: {
+            path: 'home',
+            screens: {
+              newsfeed: {
+                path: '',
+              },
+            },
+          },
+          chat: {
+            path: 'chat',
+            screens: {
+              Chat: {
+                path: '',
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+
+  const linking = {
+    prefixes: ['https://bein.group', 'bein://'],
+    config,
+  };
 
   return (
     <View style={styles.container}>
-      <HorizontalView style={styles.content}>
+      <View style={styles.content}>
         {dimensions.width > deviceDimensions.bigTablet && (
           <View
             style={{
               flex: deviceDimensions.leftCols,
-              paddingStart: spacing.margin.base,
+              paddingEnd: spacing.margin.base,
             }}>
             <NavigationContainer independent ref={leftNavigationRef}>
-              <BottomTabs />
+              <LeftTabs />
             </NavigationContainer>
           </View>
         )}
@@ -50,10 +84,13 @@ const MainStack = () => {
           style={{
             flex: deviceDimensions.centerCols,
           }}>
-          <NavigationContainer ref={centerNavigationRef} independent={true}>
+          <NavigationContainer
+            linking={linking}
+            ref={centerNavigationRef}
+            independent={true}>
             <Stack.Navigator
               initialRouteName={
-                dimensions.width > deviceDimensions.bigTablet ? 'home' : 'main'
+                dimensions.width > deviceDimensions.bigTablet ? 'main' : 'main'
               }>
               {Object.entries(mainStack).map(([name, component]) => {
                 return (
@@ -77,7 +114,7 @@ const MainStack = () => {
           <View
             style={{
               flex: deviceDimensions.rightCols,
-              paddingEnd: spacing.margin.base,
+              paddingStart: spacing.margin.base,
             }}>
             <NavigationContainer independent ref={rightNavigationRef}>
               <Stack.Navigator>
@@ -86,7 +123,7 @@ const MainStack = () => {
             </NavigationContainer>
           </View>
         )}
-      </HorizontalView>
+      </View>
     </View>
   );
 };
@@ -102,6 +139,7 @@ const createStyles = (theme: ITheme) => {
     content: {
       width: '100%',
       height: '100%',
+      flexDirection: 'row',
       flexGrow: deviceDimensions.totalCols,
       maxWidth: deviceDimensions.desktop,
       alignSelf: 'center',

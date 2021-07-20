@@ -9,8 +9,8 @@ import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {useWindowDimensions} from 'react-native';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {leftScreens, centerScreens} from './screens';
-import icons from './icons';
+import {screens} from './screens';
+import {bottomTabIcons} from '~/configs/navigator';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -19,18 +19,15 @@ const MainTabs = () => {
   const theme: ITheme = useTheme();
   const {colors} = theme;
 
-  const backBehavior = 'initialRoute';
+  const backBehavior = 'history';
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
 
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
+  const phone = dimensions.width <= deviceDimensions.phone;
 
-  const screens =
-    dimensions.width > deviceDimensions.bigTablet ? leftScreens : centerScreens;
-
-  const Tab =
-    dimensions.width > deviceDimensions.smallTablet ? SideTab : BottomTab;
+  const Tab = phone ? BottomTab : SideTab;
 
   return (
     // @ts-ignore
@@ -42,8 +39,7 @@ const MainTabs = () => {
         keyboardHidesTabBar: true,
         style: {
           // backgroundColor: tabBarBackground,
-          paddingBottom: insets.bottom,
-          // height: theme.spacing.padding.big * 2,
+          paddingBottom: phone ? insets.bottom : 0,
         },
       }}>
       {Object.entries(screens).map(([name, component]) => {
@@ -55,14 +51,17 @@ const MainTabs = () => {
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
-                return (
-                  <Icon
-                    icon={icons[name as keyof typeof icons]}
-                    size={24}
-                    tintColor={color}
-                    bold={focused}
-                  />
-                );
+                if (phone)
+                  return (
+                    <Icon
+                      //@ts-ignore
+                      icon={bottomTabIcons[name]}
+                      size={24}
+                      tintColor={color}
+                      bold={focused}
+                    />
+                  );
+                return null;
               },
             }}
           />

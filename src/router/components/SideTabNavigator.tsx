@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'column',
-    padding: 12,
   },
   iconWrapper: {
     flexDirection: 'row',

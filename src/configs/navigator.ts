@@ -28,3 +28,11 @@ export const navigationSetting = {
     cardStyle: {backgroundColor: '#fff'},
   },
 };
+
+export const bottomTabIcons = {
+  home: 'iconTabHome',
+  groups: 'iconTabGroups',
+  chat: 'iconTabChat',
+  notification: 'iconTabNotification',
+  menu: 'iconTabMenu',
+};
