@@ -93,6 +93,7 @@ export const avatarSizes = {
 };
 
 export const headerHeight = 48;
+export const primaryItemHeight = 64;
 
 export const scaleSize = (size: number) =>
   (DeviceWidth / guidelineBaseWidth) * size;
@@ -104,5 +105,6 @@ export default {
   sizeButton,
   letterSpacing,
   headerHeight,
+  primaryItemHeight,
   avatarSizes,
 };

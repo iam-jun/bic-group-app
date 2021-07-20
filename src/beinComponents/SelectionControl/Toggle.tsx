@@ -1,16 +1,24 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
 interface ToggleProps {
+  style?: StyleProp<ViewStyle>;
   isChecked?: boolean;
   onActionPress: (action: IAction) => void;
 }
 
 const Toggle: React.FC<ToggleProps> = ({
+  style,
   isChecked = false,
   onActionPress,
 }: ToggleProps) => {
@@ -30,7 +38,7 @@ const Toggle: React.FC<ToggleProps> = ({
   };
 
   return (
-    <TouchableOpacity onPress={_onChangeValue}>
+    <TouchableOpacity style={style} onPress={_onChangeValue}>
       <View style={styles.outsideRectangle}>
         <View style={styles.insideCircle} />
       </View>

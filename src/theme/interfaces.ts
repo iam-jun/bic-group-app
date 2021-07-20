@@ -66,6 +66,7 @@ export interface ISpacingValue {
   tiny?: number;
   small?: number;
   large?: number;
+  extraLarge?: number;
   big?: number;
 }
 
@@ -76,5 +77,6 @@ export interface IDimension {
   sizeButton: {[key: string]: number};
   letterSpacing: {[key: string]: number};
   headerHeight: number;
+  primaryItemHeight: number;
   avatarSizes: {[key: string]: number};
 }

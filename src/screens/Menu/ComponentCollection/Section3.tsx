@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View, Image} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 const Section3 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -64,10 +65,46 @@ const Section3 = () => {
     );
   };
 
+  const renderListItem = () => {
+    return renderSection(
+      'Primary Item',
+      <View style={{paddingHorizontal: spacing?.padding.base}}>
+        <PrimaryItem
+          leftIcon={'Globe'}
+          title={'Name'}
+          subTitle={'Võ Thành Nhân'}
+          onPressMenu={() => alert('onPress Menu')}
+          onPressEdit={() => alert('onPress Edit')}
+          onPressCheckbox={action => alert('action Checkbox: ' + action)}
+          onPressToggle={action => alert('action Toggle: ' + action)}
+          RightComponent={
+            <Image
+              style={{
+                width: 32,
+                height: 32,
+                marginLeft: spacing?.margin.extraLarge,
+              }}
+              source={{
+                uri: 'https://cdn.dribbble.com/users/81809/screenshots/3448762/vegitoblue.jpg',
+              }}
+            />
+          }
+        />
+        <Divider />
+        <PrimaryItem
+          title={'Nhận thông báo'}
+          onPressToggle={action => alert('onPress Toggle: ' + action)}
+        />
+        <Divider />
+      </View>,
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 3</Text.H5>
       {renderHeader()}
+      {renderListItem()}
     </View>
   );
 };
