@@ -2,7 +2,7 @@ export interface ITheme extends ReactNativePaper.Theme {
   dark: boolean;
   colors: IThemeColors;
   spacing?: ISpacing;
-  dimension?: any;
+  dimension?: IDimension;
   shadow?: any;
   fontFamily?: any;
   fonts: any;
@@ -68,4 +68,14 @@ export interface ISpacingValue {
   small?: number;
   large?: number;
   big?: number;
+}
+
+export interface IDimension {
+  sizes: {[key: string]: number};
+  lineHeights: {[key: string]: number};
+  dimensionDevice?: {[key: string]: number};
+  sizeButton: {[key: string]: number};
+  letterSpacing: {[key: string]: number};
+  headerHeight: number;
+  avatarSizes: {[key: string]: number};
 }
