@@ -11,6 +11,8 @@ const commonActions = {
   uncheckBox: 'uncheck-box',
   removeTag: 'remove-tag',
   scrollToBottom: 'scroll-to-bottom',
+  selectEmoji: 'select-emoji',
+  unselectEmoji: 'unselect-emoji',
 };
 
 export type IAction = keyof typeof commonActions;
