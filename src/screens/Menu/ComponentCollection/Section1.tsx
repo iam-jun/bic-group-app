@@ -242,7 +242,7 @@ const Section1 = () => {
           Custom color, left, right icon
         </Button.Secondary>
         <Text.Subtitle>
-          text not centered because of font, design confirm...
+          text not centered because of font, designer confirmed...
         </Text.Subtitle>
         <Divider
           style={{
@@ -263,6 +263,26 @@ const Section1 = () => {
             onPress={() => alert('onPress BottomButton')}>
             Bottom Button
           </Button.BottomFixed>
+        </View>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.BottomSecondary>`}</Text.H5>
+        <View
+          style={{
+            backgroundColor: colors.bgButtonPrimary,
+            marginHorizontal: -12,
+            paddingTop: spacing?.padding.base,
+            paddingBottom: spacing?.padding.large,
+          }}>
+          <Button.BottomSecondary
+            absoluteBottom={false}
+            onPress={() => alert('onPress BottomButton')}>
+            Bottom Secondary Button
+          </Button.BottomSecondary>
         </View>
       </View>,
     );
