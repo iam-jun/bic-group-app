@@ -105,11 +105,12 @@ const TextInput: React.FC<TextInputProps> = ({
         label={label}
         placeholder={placeholder}
         selectionColor={colors.textInput}
-        outlineColor={disabled ? colors.bgDisable : colors.textInput}
+        outlineColor={colors.textInput}
         mode={'outlined'}
         theme={customTheme}
         dense
         error={error}
+        disabled={disabled}
         placeholderTextColor={colors.textSecondary}
         {...props}
       />

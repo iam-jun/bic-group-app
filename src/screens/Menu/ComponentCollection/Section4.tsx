@@ -42,6 +42,7 @@ const Section4 = () => {
         <TextInput
           label={'Example text'}
           placeholder={'Example text'}
+          value={'123456789'}
           helperContent={'Wrong email or password! '}
           helperAction={'Forgot password'}
           error
