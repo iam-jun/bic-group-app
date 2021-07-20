@@ -1,8 +1,12 @@
+import {ActionTypes} from '~/utils';
 import * as types from './types';
 import {forgotPasswordStages} from '~/constants/authConstants';
+import _ from 'lodash';
 
 export const initAuthState = {
   user: undefined,
+  chat: undefined,
+  feed: undefined,
   loading: false,
   signingInError: '',
   forgotPasswordStage: forgotPasswordStages.INPUT_ID,
@@ -44,7 +48,34 @@ function authReducer(state = initAuthState, action: any = {}) {
         forgotPasswordError: {...action.payload},
       };
     case types.SIGN_OUT:
+    case ActionTypes.UnauthorizedLogout:
       return initAuthState;
+    case ActionTypes.RefreshTokenSuccessBein:
+      return _.merge({}, state, {
+        user: {
+          signInUserSession: {
+            refreshToken: {
+              token: action.payload.refreshToken,
+            },
+            accessToken: {
+              jwtToken: action.payload.newToken,
+            },
+            idToken: {
+              jwtToken: action.payload.idToken,
+            },
+          },
+        },
+      });
+    case ActionTypes.SaveAuthTokens:
+      return _.merge({}, state, {
+        chat: {
+          userId: action.payload.chatUserId,
+          accessToken: action.payload.chatAccessToken,
+        },
+        feed: {
+          accessToken: action.payload.feedAccessToken,
+        },
+      });
     default:
       return state;
   }

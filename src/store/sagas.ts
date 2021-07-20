@@ -1,4 +1,5 @@
 import {all} from 'redux-saga/effects';
+import homeSaga from '~/screens/Home/redux/saga';
 import appSaga from './app/saga';
 import modalSaga from './modal/saga';
 import authSaga from '../screens/Auth/redux/saga';
@@ -16,5 +17,6 @@ export default function* rootSagas() {
     commentSaga(),
     postSaga(),
     groupsSaga(),
+    homeSaga(),
   ]);
 }

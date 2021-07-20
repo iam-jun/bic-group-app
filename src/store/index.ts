@@ -48,9 +48,15 @@ const getCurrentUser = (): IUserResponse | boolean => {
   return _.get(state, 'auth.user', false);
 };
 
+const getCurrentAuth = (): unknown | boolean => {
+  const state = store.getState();
+  return _.get(state, 'auth', false);
+};
+
 export default {
   sagaMiddleware,
   store,
   persistor,
   getCurrentUser,
+  getCurrentAuth,
 };
