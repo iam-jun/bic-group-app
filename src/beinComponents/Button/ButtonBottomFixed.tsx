@@ -2,15 +2,17 @@ import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {ButtonWrapperProps} from '~/beinComponents/Button/ButtonWrapper';
-import ButtonPrimary from '~/beinComponents/Button/ButtonPrimary';
+import ButtonPrimary, {
+  ButtonPrimaryProps,
+} from '~/beinComponents/Button/ButtonPrimary';
 import {ITheme} from '~/theme/interfaces';
 import LinearGradient from 'react-native-linear-gradient';
 
-export interface ButtonBottomFixedProps extends ButtonWrapperProps {
+export interface ButtonBottomFixedProps extends ButtonPrimaryProps {
   bottomButtonStyle?: StyleProp<ViewStyle>;
   bottomButtonContainerStyle?: StyleProp<ViewStyle>;
   absoluteBottom?: boolean;
+  linearHeight?: number;
 }
 
 const ButtonBottomFixed: React.FC<ButtonBottomFixedProps> = ({
@@ -18,6 +20,7 @@ const ButtonBottomFixed: React.FC<ButtonBottomFixedProps> = ({
   absoluteBottom = true,
   bottomButtonStyle,
   bottomButtonContainerStyle,
+  linearHeight = 36,
   ...props
 }: ButtonBottomFixedProps) => {
   const theme: ITheme = useTheme();
@@ -35,7 +38,7 @@ const ButtonBottomFixed: React.FC<ButtonBottomFixedProps> = ({
         absoluteBottom ? styles.absolute : {},
         bottomButtonContainerStyle,
       ])}>
-      <LinearGradient style={{height: 36}} colors={gradientColors} />
+      <LinearGradient style={{height: linearHeight}} colors={gradientColors} />
       <View
         style={StyleSheet.flatten([
           {
