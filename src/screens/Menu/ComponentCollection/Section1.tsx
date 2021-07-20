@@ -244,6 +244,26 @@ const Section1 = () => {
         <Text.Subtitle>
           text not centered because of font, design confirm...
         </Text.Subtitle>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.BottomFixed></Button.BottomFixed>`}</Text.H5>
+        <View
+          style={{
+            backgroundColor: colors.bgButtonPrimary,
+            marginHorizontal: -12,
+            paddingTop: spacing?.padding.base,
+            paddingBottom: spacing?.padding.large,
+          }}>
+          <Button.BottomFixed
+            absoluteBottom={false}
+            onPress={() => alert('onPress BottomButton')}>
+            Bottom Button
+          </Button.BottomFixed>
+        </View>
       </View>,
     );
   };
@@ -252,9 +272,12 @@ const Section1 = () => {
     <View style={{flex: 1}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
-      {renderText()}
       {renderFlashMessage()}
       {renderIcon()}
+      {renderText()}
+      <Button.BottomFixed onPress={() => alert('onPress BottomButton')}>
+        Bottom Button - absoluteBottom
+      </Button.BottomFixed>
     </View>
   );
 };

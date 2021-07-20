@@ -1,6 +1,7 @@
 export default {
   dark: {
     colors: {
+      transparent: 'rgba(255,255,255,0)',
       primary: '#3F2885',
       primary1: '#F9F7FD',
       primary2: '#ECE7F8',
@@ -67,6 +68,7 @@ export default {
   },
   light: {
     colors: {
+      transparent: 'rgba(255,255,255,0)',
       primary: '#3F2885',
       primary1: '#F9F7FD',
       primary2: '#ECE7F8',
