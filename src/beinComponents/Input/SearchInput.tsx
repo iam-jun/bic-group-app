@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 import Icon from '../Icon';
-import {spacing} from '~/theme';
+import {fontFamilies} from '~/theme/fonts';
 
 interface SearchInputProps {
   style?: StyleProp<ViewStyle>;
@@ -45,7 +45,7 @@ const SearchInput: React.FC<SearchInputProps> = ({style}: SearchInputProps) => {
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
     container: {
@@ -55,15 +55,14 @@ const createStyles = (theme: ITheme) => {
       backgroundColor: colors.placeholder,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingLeft: spacing.padding.base,
-      paddingRight: spacing.padding.base,
+      paddingHorizontal: spacing?.padding.base,
     },
     textInput: {
-      fontFamily: 'Segoe UI',
-      fontSize: 14,
+      fontFamily: fontFamilies.Segoe,
+      fontSize: dimension.sizes.body,
       color: colors.textPrimary,
       flex: 1,
-      marginHorizontal: spacing.margin.small,
+      marginHorizontal: spacing?.margin.small,
     },
   });
 };
