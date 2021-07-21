@@ -1,28 +1,30 @@
 import React from 'react';
-import {StyleSheet, StyleProp, View, ViewStyle} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+import AvatarComponent, {
+  AvatarProps,
+} from '~/beinComponents/Avatar/AvatarComponent';
 
-interface AvatarProps {
-  style?: StyleProp<ViewStyle>;
-  avatar?: any;
-}
+const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'tiny'} {...props} />
+);
+const Small: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'small'} {...props} />
+);
+const Medium: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'medium'} {...props} />
+);
+const Large: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'large'} {...props} />
+);
+const UltraLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'ultraLarge'} {...props} />
+);
 
-const Avatar: React.FC<AvatarProps> = ({style, avatar}: AvatarProps) => {
-  const {spacing, dimension, colors}: ITheme = useTheme();
-  return (
-    <View
-      style={StyleSheet.flatten([
-        {
-          width: dimension?.avatarSizes?.small,
-          height: dimension?.avatarSizes?.small,
-          borderRadius: spacing?.borderRadius.small,
-          backgroundColor: colors.borderCard,
-        },
-        style,
-      ])}
-    />
-  );
-};
+const Avatar = Object.assign(AvatarComponent, {
+  Tiny,
+  Small,
+  Medium,
+  Large,
+  UltraLarge,
+});
 
 export default Avatar;
