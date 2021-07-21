@@ -66,7 +66,7 @@ const createStyles = (theme: ITheme) => {
     },
     textInput: {
       fontFamily: fontFamilies.Segoe,
-      fontSize: dimension.sizes.body,
+      fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
       flex: 1,
       marginHorizontal: spacing?.margin.small,

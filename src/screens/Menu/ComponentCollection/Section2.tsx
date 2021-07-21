@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Chip from '~/beinComponents/Chip';
 import {IAction} from '~/constants/commonActions';
-import SearchInput from '~/beinComponents/Input/SearchInput';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Divider from '~/beinComponents/Divider';
 import Thread from '~/beinComponents/Badge/Thread';
 import UserBadge from '~/beinComponents/Badge/UserBadge';
