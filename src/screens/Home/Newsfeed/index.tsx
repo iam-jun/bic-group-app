@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useDispatch} from 'react-redux';
+
 import ListView from '~/components/list/ListView';
 
 import {homeStack, mainStack} from '~/configs/navigator';
 import {NavigationHeader, ViewSpacing} from '~/components';
+import {AppContext} from '~/contexts/AppContext';
 import {spacing} from '~/theme';
+import {ActionTypes, createAction} from '~/utils';
 import * as actions from '../Comment/redux/actions';
 import {StyleSheet, View} from 'react-native';
 import commonActions, {IAction} from '~/constants/commonActions';
@@ -49,6 +52,8 @@ const Home = ({navigation}: {navigation: any}) => {
     }
   };
 
+  const {streamClient} = useContext(AppContext);
+  dispatch(createAction(ActionTypes.GetStreamSample, {streamClient}));
   return (
     <View>
       <NavigationHeader

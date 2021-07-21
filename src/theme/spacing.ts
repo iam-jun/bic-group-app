@@ -20,7 +20,8 @@ export const padding = {
   tiny: 4,
   small: 8,
   large: 16,
-  big: 40,
+  extraLarge: 24,
+  big: 32,
 };
 
 // Margin
@@ -29,6 +30,7 @@ export const margin = {
   tiny: 4,
   small: 8,
   large: 16,
+  extraLarge: 24,
   big: 32,
 };
 

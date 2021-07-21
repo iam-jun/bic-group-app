@@ -1,68 +1,78 @@
-import {CustomAxiosRequestConfig} from '~/services/tokenService';
-import awsExport from '../../aws-exports';
+import {AxiosRequestConfig} from 'axios';
 
 const providers = {
-  Default: {
+  bein: {
+    url: 'http://52.15.139.185:3000/',
     name: 'Bein',
-    url: 'http://52.15.139.185:3000/api/',
   },
-  Chat: {
+  chat: {
+    url: 'http://52.15.139.185:3000/',
     name: 'RocketChat',
-    url: 'http://52.15.139.185:3000/api/',
   },
-  GetStream: {
+  getStream: {
+    url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
-    url: 'http://52.15.139.185:3000/api/',
-  },
-  Auth: {
-    name: 'Auth',
-    url: `http://${awsExport.oauth.domain}/`,
   },
 };
 
 const App = {
-  info: (): CustomAxiosRequestConfig => {
+  info: (): HttpApiRequestConfig => {
     return {
-      url: `${providers.Default.url}get_app_info`,
+      url: `${providers.bein.url}hello/bein`,
       method: 'get',
-      provider: providers.Default.name,
+      provider: providers.bein,
+      useRetry: true,
+    };
+  },
+  users: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}usersdas`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: false,
+    };
+  },
+  tokens: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}user/tokens`,
+      method: 'post',
+      provider: providers.bein,
+      useRetry: true,
     };
   },
 };
 
-const Auth = {
-  // TODO:
-  refreshToken: (refreshToken: string): CustomAxiosRequestConfig => {
-    const data = new FormData();
-    data.append('token', refreshToken);
-    return {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Accept: 'multipart/form-data',
-      },
-      url: `${providers.Auth.url}oauth2/token`,
-      method: 'post',
-      data,
-      provider: providers.Auth.name,
-    };
-  },
-  tokens: (awsToken: string): CustomAxiosRequestConfig => {
-    return {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Accept: 'multipart/form-data',
-        Authorization: `Bearer ${awsToken}`,
-        url: `${providers.Default.url}user/tokens`,
-        method: 'post',
-        provider: providers.Default.name,
-      },
-    };
-  },
-};
+export interface HttpApiRequestConfig extends AxiosRequestConfig {
+  provider: Provider;
+  useRetry: boolean;
+}
+
+export interface Provider {
+  name: string;
+  url: string;
+}
+
+export interface HttpApiResponseFormat {
+  code: number;
+  data?: any;
+  meta?: any;
+}
+
+export interface FeedResponseError {
+  message: string | any;
+  error: {
+    detail: string;
+    status_code: number;
+    code: number;
+    exception: any;
+    duration: any;
+    more_info: any;
+  };
+  response: any;
+}
 
 export default {
   providers,
 
   App,
-  Auth,
 };

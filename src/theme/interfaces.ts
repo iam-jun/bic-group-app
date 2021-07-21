@@ -2,7 +2,7 @@ export interface ITheme extends ReactNativePaper.Theme {
   dark: boolean;
   colors: IThemeColors;
   spacing?: ISpacing;
-  dimension?: any;
+  dimension?: IDimension;
   shadow?: any;
   fontFamily?: any;
   fonts: any;
@@ -10,6 +10,7 @@ export interface ITheme extends ReactNativePaper.Theme {
 }
 
 export interface IThemeColors extends ReactNativePaper.ThemeColors {
+  transparent?: string;
   primary: string;
   primary1?: string;
   primary2?: string;
@@ -29,6 +30,7 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
   borderDisable?: string;
   borderCard?: string;
   borderDivider?: string;
+  textInput?: string;
   placeholder: string;
   surface: string;
   iconTint?: string;
@@ -66,5 +68,17 @@ export interface ISpacingValue {
   tiny?: number;
   small?: number;
   large?: number;
+  extraLarge?: number;
   big?: number;
+}
+
+export interface IDimension {
+  sizes: {[key: string]: number};
+  lineHeights: {[key: string]: number};
+  dimensionDevice?: {[key: string]: number};
+  sizeButton: {[key: string]: number};
+  letterSpacing: {[key: string]: number};
+  headerHeight: number;
+  primaryItemHeight: number;
+  avatarSizes: {[key: string]: number};
 }
