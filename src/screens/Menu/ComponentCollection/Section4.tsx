@@ -4,7 +4,7 @@ import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
-import TextInput from '~/beinComponents/input/TextInput';
+import TextInput from '~/beinComponents/inputs/TextInput';
 
 const Section4 = () => {
   const {spacing, colors}: ITheme = useTheme();
