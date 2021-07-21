@@ -9,16 +9,23 @@ import {fontFamilies} from '~/theme/fonts';
 
 interface SearchInputProps {
   style?: StyleProp<ViewStyle>;
+  onChangeText?: (value: string) => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({style}: SearchInputProps) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  style,
+  onChangeText,
+}: SearchInputProps) => {
   const theme: ITheme = useTheme();
   const styles = createStyles(theme);
   const {t} = useBaseHook();
 
   const [text, setText] = useState<string>('');
 
-  const onReset = () => setText('');
+  const _onChangeText = (text: string) => {
+    setText(text);
+    onChangeText?.(text);
+  };
 
   return (
     <View style={[styles.container, style]}>
@@ -27,7 +34,7 @@ const SearchInput: React.FC<SearchInputProps> = ({style}: SearchInputProps) => {
         <TextInput
           style={styles.textInput}
           value={text}
-          onChangeText={text => setText(text)}
+          onChangeText={_onChangeText}
           placeholder={t('input:search')}
           placeholderTextColor={theme.colors.textSecondary}
         />
@@ -36,7 +43,7 @@ const SearchInput: React.FC<SearchInputProps> = ({style}: SearchInputProps) => {
             icon={'iconClose'}
             size={16}
             tintColor={theme.colors.iconTint}
-            onPress={onReset}
+            onPress={() => _onChangeText('')}
           />
         )}
       </View>

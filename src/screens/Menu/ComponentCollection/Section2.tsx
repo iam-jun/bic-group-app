@@ -41,7 +41,10 @@ const Section2 = () => {
           Text Input
         </Text.H3>
         <Divider style={{margin: spacing?.margin.base}} />
-        <SearchInput style={{margin: spacing?.margin.large}} />
+        <SearchInput
+          style={{margin: spacing?.margin.large}}
+          onChangeText={(text: string) => console.log(text)}
+        />
         <Divider
           style={{
             margin: spacing?.margin.base,
