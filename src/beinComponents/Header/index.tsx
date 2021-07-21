@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({
       ])}>
       {!hideBack && <Icon icon={'AngleLeftB'} />}
       {!!avatar && (
-        <Avatar avatar={avatar} style={{marginLeft: spacing?.margin.base}} />
+        <Avatar source={avatar} style={{marginLeft: spacing?.margin.base}} />
       )}
       <View style={{flex: 1, marginLeft: spacing?.margin.base}}>
         {!!title && <Text.H5>{title}</Text.H5>}

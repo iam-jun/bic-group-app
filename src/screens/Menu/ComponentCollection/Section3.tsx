@@ -38,7 +38,7 @@ const Section3 = () => {
           disableInsetTop
           title={'Notifications'}
           subTitle={'New Group Chat'}
-          avatar={true}
+          avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
           icon={'Search'}
           onPressIcon={() => alert('onPress search')}
           onPressMenu={() => alert('onPress menu')}
@@ -50,7 +50,7 @@ const Section3 = () => {
           disableInsetTop
           hideBack
           title={'Notifications'}
-          avatar={true}
+          avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
           icon={'Search'}
           onPressIcon={() => alert('onPress search')}
           onPressMenu={() => alert('onPress menu')}

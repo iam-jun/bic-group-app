@@ -1,29 +1,43 @@
 import React from 'react';
-import {Animated, Platform, StyleSheet, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {
+  Animated,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
+import FastImage from './FastImage';
 
-import {IObject} from '~/interfaces/common';
-
-export interface Props {
-  placeholderStyle?: IObject<any>;
-  PlaceholderContent?: IObject<any>;
-  containerStyle?: IObject<any>;
-  style?: IObject<any>;
+export interface ImageProps {
+  source?: any;
+  placeholderStyle?: StyleProp<ViewStyle>;
+  PlaceholderComponent?: any;
+  containerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   ImageComponent?: any;
   [x: string]: any;
 }
 
-const Image: React.FC<Props> = ({
+const Image: React.FC<ImageProps> = ({
+  source,
   placeholderStyle,
-  PlaceholderContent,
+  PlaceholderComponent,
   containerStyle,
   style,
-  ImageComponent,
-  ...attributes
-}) => {
+  ImageComponent = FastImage,
+  ...props
+}: ImageProps) => {
   const placeholderContainerOpacity = React.useRef(
     new Animated.Value(1),
   ).current;
+
+  if (
+    typeof source === 'string' &&
+    source.toLowerCase?.().startsWith?.('http')
+  ) {
+    source = {uri: source};
+  }
 
   const onLoadEnd = () => {
     const minimumWait = 0;
@@ -60,20 +74,16 @@ const Image: React.FC<Props> = ({
                   },
                   placeholderStyle,
                 ])}>
-                {PlaceholderContent}
+                {PlaceholderComponent}
               </Animated.View>
             </View>
 
-            <ImageComponent {...attributes} style={style} />
+            <ImageComponent source={source} {...props} style={style} />
           </React.Fragment>
         ),
         default: (
           <React.Fragment>
-            <ImageComponent
-              {...attributes}
-              onLoadEnd={onLoadEnd}
-              style={style}
-            />
+            <ImageComponent {...props} onLoadEnd={onLoadEnd} style={style} />
 
             <Animated.View
               style={StyleSheet.flatten([
@@ -87,7 +97,7 @@ const Image: React.FC<Props> = ({
                   styles.placeholder,
                   placeholderStyle,
                 ])}>
-                {PlaceholderContent}
+                {PlaceholderComponent}
               </View>
             </Animated.View>
           </React.Fragment>
@@ -97,7 +107,7 @@ const Image: React.FC<Props> = ({
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
     position: 'relative',
@@ -110,10 +120,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-};
+});
 
-Image.defaultProps = {
-  ImageComponent: FastImage,
-};
-
-export default React.memo(Image);
+export default Image;

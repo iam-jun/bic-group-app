@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  StyleProp,
-  View,
-  ViewStyle,
-  Image,
-  ImageStyle,
-} from 'react-native';
+import {StyleSheet, StyleProp, View, ViewStyle, ImageStyle} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
+import Image from '~/beinComponents/Image';
 
 export type AvatarType = 'tiny' | 'small' | 'medium' | 'large' | 'ultraLarge';
 
@@ -140,7 +134,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           avatarStyle,
           source ? {} : {backgroundColor: colors.borderCard},
         ])}>
-        <Image style={avatarStyle} source={{uri: source}} />
+        <Image style={avatarStyle} source={source} />
         {renderStatus()}
         {renderAction()}
         {renderBadge()}
