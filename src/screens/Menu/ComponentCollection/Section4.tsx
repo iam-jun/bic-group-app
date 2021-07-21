@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import {View} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
 import TextInput from '~/beinComponents/input/TextInput';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Button from '~/beinComponents/Button';
 
 const Section4 = () => {
   const {spacing, colors}: ITheme = useTheme();
+  const baseSheetRef: any = useRef();
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -57,10 +60,32 @@ const Section4 = () => {
     );
   };
 
+  const renderBottomSheet = () => {
+    return renderSection(
+      'BottomSheet',
+      <View>
+        <BottomSheet
+          modalizeRef={baseSheetRef}
+          ContentComponent={
+            <View style={{marginHorizontal: spacing?.margin.base}}>
+              <Text>Render Base Bottom Sheet Content</Text>
+            </View>
+          }>
+          <Button.Primary
+            style={{margin: spacing?.margin.tiny, alignSelf: 'center'}}
+            onPress={() => baseSheetRef.current?.open?.()}>
+            Show Base Bottom Sheet
+          </Button.Primary>
+        </BottomSheet>
+      </View>,
+    );
+  };
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 4</Text.H5>
       {renderTextInput()}
+      {renderBottomSheet()}
     </View>
   );
 };

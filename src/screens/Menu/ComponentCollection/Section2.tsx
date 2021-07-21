@@ -26,7 +26,7 @@ const Section2 = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 2</Text.H5>
       {renderBadge()}
     </View>
