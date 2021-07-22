@@ -11,7 +11,6 @@ import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
-import HorizontalView from '~/components/layout/HorizontalView';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 
@@ -29,10 +28,8 @@ const Chip: React.FC<ChipProps> = ({style, onActionPress}: ChipProps) => {
     <TouchableOpacity
       onPress={() => onActionPress(commonActions.scrollToBottom as IAction)}>
       <View style={[styles.container, style]}>
-        <HorizontalView>
-          <Text style={styles.text}>{t('badge:scroll_bottom')}</Text>
-          <Icon icon="ArrowDown" size={24} tintColor={theme.colors.primary7} />
-        </HorizontalView>
+        <Text.BodyS style={styles.text}>{t('badge:scroll_bottom')}</Text.BodyS>
+        <Icon icon="ArrowDown" size={24} tintColor={theme.colors.primary7} />
       </View>
     </TouchableOpacity>
   );
@@ -43,6 +40,7 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
+      flexDirection: 'row',
       width: 143,
       height: 32,
       justifyContent: 'center',
@@ -51,6 +49,7 @@ const createStyles = (theme: ITheme) => {
       borderWidth: 1,
       borderRadius: 22,
       borderColor: colors.primary3,
+
       shadowColor: '#000',
       shadowOffset: {
         width: 0,

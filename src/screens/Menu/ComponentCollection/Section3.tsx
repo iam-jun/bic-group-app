@@ -6,6 +6,7 @@ import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Avatar from '~/beinComponents/Avatar';
 
 const Section3 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -100,11 +101,68 @@ const Section3 = () => {
     );
   };
 
+  const renderAvatar = () => {
+    return renderSection(
+      'Avatar',
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingHorizontal: spacing?.padding.base,
+        }}>
+        <Avatar.Tiny
+          style={{margin: spacing?.margin.small}}
+          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          // onPressAction={() => alert('onPress action')}
+          // status={'online'}
+          // badge={'iconReactionLove'}
+        />
+        <Avatar.Small
+          style={{margin: spacing?.margin.small}}
+          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          // onPressAction={() => alert('onPress action')}
+          status={'online'}
+          // badge={'iconReactionLove'}
+        />
+        <Avatar.Medium
+          style={{margin: spacing?.margin.small}}
+          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          onPressAction={() => alert('onPress action')}
+          // status={'online'}
+          // badge={'iconReactionLove'}
+        />
+        <Avatar.Large
+          style={{margin: spacing?.margin.small}}
+          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          // onPressAction={() => alert('onPress action')}
+          // status={'online'}
+          badge={'iconReactionLove'}
+          badgeBottom
+        />
+        <Avatar.UltraLarge
+          style={{margin: spacing?.margin.small}}
+          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          // onPressAction={() => alert('onPress action')}
+          // status={'online'}
+          badge={'University'}
+        />
+        <Avatar
+          style={{margin: spacing?.margin.small}}
+          // source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          // onPressAction={() => alert('onPress action')}
+          // // status={'online'}
+          // badge={'iconReactionLove'}
+          // badgeBottom
+        />
+      </View>,
+    );
+  };
+
   return (
     <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 3</Text.H5>
       {renderHeader()}
       {renderListItem()}
+      {renderAvatar()}
     </View>
   );
 };
