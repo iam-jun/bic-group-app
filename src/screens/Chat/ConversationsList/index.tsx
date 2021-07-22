@@ -18,10 +18,11 @@ import {
   getRandomInt,
 } from '~/utils/generator';
 import * as actions from '~/screens/Chat/redux/actions';
-import {useNavigation} from '~/hooks/navigation';
+import {useRootNavigation} from '~/hooks/navigation';
+import {mainStack} from '~/router/navigator/MainStack/stack';
 
-const ConversationsList = () => {
-  const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
+const ConversationsList = (): React.ReactElement => {
+  const data: IConversation[] = Array.from(Array(20).keys()).map(() => ({
     name: generateRandomName(),
     members: [generateRandomUser(), generateRandomUser()],
     unreadCount: getRandomInt(0, 10),
@@ -32,13 +33,13 @@ const ConversationsList = () => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {t} = useBaseHook();
-  const {navigation} = useNavigation();
+  const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
-    navigation.navigate('conversation');
+    rootNavigation.navigate(mainStack.conversation);
   };
 
   return (

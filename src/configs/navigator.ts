@@ -36,3 +36,44 @@ export const bottomTabIcons = {
   notification: 'iconTabNotification',
   menu: 'iconTabMenu',
 };
+
+export const linkingConfig = {
+  prefixes: ['https://bein.group', 'bein://'],
+  config: {
+    screens: {
+      AuthStack: {},
+      MainStack: {
+        path: '',
+        screens: {
+          main: {
+            path: '',
+            screens: {
+              home: {
+                path: 'home',
+                screens: {
+                  newsfeed: {
+                    path: '',
+                  },
+                },
+              },
+              groups: {
+                path: '',
+                screens: {
+                  groups: {
+                    path: '',
+                  },
+                  group: {
+                    path: 'groups',
+                  },
+                },
+              },
+            },
+          },
+          conversation: {
+            path: 'chat',
+          },
+        },
+      },
+    },
+  },
+};

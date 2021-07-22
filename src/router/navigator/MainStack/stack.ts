@@ -1,4 +1,4 @@
-import Chat, {Conversation} from '~/screens/Chat';
+import {Conversation} from '~/screens/Chat';
 import Menu from './MenuStack';
 import Notification from '~/screens/Notification';
 import CommentDetail from '~/screens/Home/Comment';
@@ -11,7 +11,6 @@ export const screens = {
   comment: CommentDetail,
   'create-post': CreatePost,
   'select-audience': SelectPostAudience,
-  chat: Chat,
   conversation: Conversation,
   notification: Notification,
   menu: Menu,
@@ -22,7 +21,6 @@ export const mainStack = {
   comment: 'comment',
   createPost: 'create-post',
   selectAudience: 'select-audience',
-  chat: 'chat',
   conversation: 'conversation',
   notification: 'notification',
   menu: 'menu',

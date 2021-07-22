@@ -6,7 +6,7 @@ import {
   rightNavigationRef,
 } from '../router/navigator/refs';
 
-export const useNavigation = () => {
+export const useRootNavigation = () => {
   return {
     rootNavigation: withNavigation(rootNavigationRef),
     navigation: withNavigation(centerNavigationRef),

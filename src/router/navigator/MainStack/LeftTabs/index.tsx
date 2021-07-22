@@ -3,24 +3,26 @@ import {useTheme} from 'react-native-paper';
 
 import Icon from '~/beinComponents/Icon';
 
-import {createSideTabNavigator} from '../../../components/SideTabNavigator';
+import {createTabNavigator} from '../../../components/TabNavigator';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons} from '~/configs/navigator';
 
-const Tab = createSideTabNavigator();
+const Tab = createTabNavigator();
 
-const MainTabs = () => {
+interface Props {
+  initialRouteName?: string;
+}
+
+const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   const theme: ITheme = useTheme();
   const {colors} = theme;
-
-  const backBehavior = 'history';
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
 
   return (
     // @ts-ignore
-    <Tab.Navigator backBehavior={backBehavior}>
+    <Tab.Navigator initialRouteName={initialRouteName} backBehavior={'history'}>
       {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore
@@ -48,4 +50,4 @@ const MainTabs = () => {
   );
 };
 
-export default MainTabs;
+export default LeftTabs;

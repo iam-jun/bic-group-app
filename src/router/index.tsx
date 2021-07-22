@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {View, Linking} from 'react-native';
 
 /*Theme*/
 import {useTheme} from 'react-native-paper';
@@ -12,84 +13,81 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 /*import config navigation*/
 import * as screens from './navigator';
-import {navigationSetting} from '~/configs/navigator';
+import {linkingConfig, navigationSetting} from '~/configs/navigator';
 import {rootSwitch} from './stack';
 import {rootNavigationRef} from './navigator/refs';
 import {isNavigationRefReady} from './helper';
+import {RootStackParamList} from '~/interfaces/IRouter';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
-const StackNavigator = () => {
+const StackNavigator = (): React.ReactElement => {
   useEffect(() => {
+    //@ts-ignore
     isNavigationRefReady.current = false;
+
+    /*Deep link*/
+    Linking.addEventListener('url', handleOpenURL);
+    handleDeepLink();
   }, []);
 
   const theme = useTheme();
+
+  const [initialRouteName, setInitialRouteName] = React.useState<
+    string | undefined
+  >();
+
+  /*Deep link*/
+  /*Handle when app killed*/
+  const handleDeepLink = async () => {
+    let initialUrl = await Linking.getInitialURL();
+    console.log('handleDeepLink', {initialUrl});
+    initialUrl = initialUrl?.includes('?')
+      ? initialUrl?.split('?')[0]
+      : initialUrl;
+    const route = initialUrl?.replace('http://localhost:8080/', '');
+    setInitialRouteName(route || '');
+  };
+
+  /*Handle when app in background*/
+  const handleOpenURL = (event: any) => {
+    console.log('handleOpenURL', {event});
+  };
 
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
 
   const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
 
-  const config = {
-    screens: {
-      AuthStack: {},
-      MainStack: {
-        path: 'home',
-        screens: {
-          main: {
-            path: 'main',
-            screens: {
-              home: {
-                path: 'home2222',
-                screens: {
-                  newsfeed: {
-                    path: '',
-                  },
-                },
-              },
-              chat: {
-                path: 'chat',
-                screens: {
-                  Chat: {
-                    path: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  };
-
-  const linking = {
-    prefixes: ['https://bein.group', 'bein://'],
-    config,
-  };
+  if (initialRouteName === undefined) return <View />;
 
   return (
     <NavigationContainer
-      // linking={linking}
+      linking={linkingConfig}
       ref={rootNavigationRef}
       onReady={() => {
+        //@ts-ignore
         isNavigationRefReady.current = true;
       }}
       theme={navigationTheme}>
       <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
         <Stack.Screen
           options={{headerShown: false}}
+          //@ts-ignore
           name={rootSwitch.appLoading}
           component={screens.AppLoading}
         />
         <Stack.Screen
           options={{headerShown: false}}
+          //@ts-ignore
           name={rootSwitch.authStack}
           component={screens.AuthStack}
         />
         <Stack.Screen
           options={{headerShown: false}}
+          //@ts-ignore
           name={rootSwitch.mainStack}
           component={screens.MainStack}
+          initialParams={{initialRouteName}}
         />
       </Stack.Navigator>
     </NavigationContainer>

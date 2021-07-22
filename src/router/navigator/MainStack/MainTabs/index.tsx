@@ -5,7 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Icon from '~/beinComponents/Icon';
 
-import {createSideTabNavigator} from '../../../components/SideTabNavigator';
+import {createTabNavigator} from '../../../components/TabNavigator';
 import {useWindowDimensions} from 'react-native';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -13,7 +13,7 @@ import {screens} from './screens';
 import {bottomTabIcons} from '~/configs/navigator';
 
 const BottomTab = createBottomTabNavigator();
-const SideTab = createSideTabNavigator();
+const SideTab = createTabNavigator();
 
 const MainTabs = () => {
   const theme: ITheme = useTheme();
@@ -26,6 +26,7 @@ const MainTabs = () => {
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
   const phone = dimensions.width <= deviceDimensions.phone;
+  const smallTablet = dimensions.width < deviceDimensions.bigTablet;
 
   const Tab = phone ? BottomTab : SideTab;
 
@@ -51,7 +52,7 @@ const MainTabs = () => {
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
-                if (phone)
+                if (smallTablet)
                   return (
                     <Icon
                       //@ts-ignore
