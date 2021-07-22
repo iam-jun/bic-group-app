@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StatusBar, Platform, NativeModules, LogBox} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {Host} from 'react-native-portalize';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* Theme */
@@ -9,13 +8,15 @@ import {
   configureFonts,
   DarkTheme,
   DefaultTheme,
+  Portal,
   Provider as PaperProvider,
   Provider as ThemeProvider,
 } from 'react-native-paper';
 import {useColorScheme} from 'react-native';
 
 /* State Redux */
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useGetStream} from '~/hooks/getStream';
 import {fetchSetting} from '~/store/modal/actions';
 import {fontConfig} from '~/configs/fonts';
 
@@ -43,6 +44,14 @@ export default (): JSX.Element => {
   const colorScheme = useColorScheme();
   const [theme, switchTheme] = React.useState<'light' | 'dark'>(
     colorScheme === 'dark' ? 'dark' : 'light',
+  );
+
+  // Init Get Stream
+  const feed = useSelector((state: any) => state.auth?.feed);
+  const streamClient = useGetStream(
+    feed?.accessToken ||
+      // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjcxNzY3MywiaWF0IjoxNjI2NzE3MzczfQ.wRWWzzsfZdl9iDdIS06DF_YB1AiQHuc6kBrTbdNoFFE',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjc2NjY3NywiaWF0IjoxNjI2NzY2Mzc3fQ.FyVz-BnouPE0Tu4j_NY1WCjAm53IwJUiak2df-VXhgk',
   );
 
   useEffect(() => {
@@ -146,10 +155,11 @@ export default (): JSX.Element => {
               value={{
                 language: i18n.language,
                 changeLanguage,
+                streamClient,
               }}>
-              <Host>
+              <Portal.Host>
                 <RootNavigator />
-              </Host>
+              </Portal.Host>
               <AlertModal />
             </AppContext.Provider>
           </PaperProvider>
