@@ -1,6 +1,6 @@
 import React, {MutableRefObject, Ref} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {Portal, useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import {Modalize} from 'react-native-modalize';
@@ -8,7 +8,6 @@ import ListView from '~/components/list/ListView';
 import Text from '../texts/Text';
 import Divider from '../Divider';
 import {IListViewItem} from '../list/items';
-import {Portal} from 'react-native-portalize';
 import {IHandles} from 'react-native-modalize/lib/options';
 import {IOption} from '~/interfaces/IOption';
 
