@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import {View} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Button from '~/beinComponents/Button';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import TextInput from '~/beinComponents/inputs/TextInput';
 
 const Section4 = () => {
   const {spacing, colors}: ITheme = useTheme();
+  const baseSheetRef: any = useRef();
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -57,10 +61,52 @@ const Section4 = () => {
     );
   };
 
+  const renderBottomSheet = () => {
+    return renderSection(
+      'BottomSheet',
+      <View>
+        <BottomSheet
+          modalizeRef={baseSheetRef}
+          ContentComponent={
+            <View style={{marginHorizontal: spacing?.margin.base}}>
+              <Text.H5 style={{marginVertical: spacing?.margin.base}}>
+                Privary Type
+              </Text.H5>
+              <PrimaryItem
+                title={'Public'}
+                leftIcon={'Globe'}
+                subTitle={'Group shows to everyone. Learn more'}
+                onPressToggle={action => alert('onPress Toggle: ' + action)}
+              />
+              <PrimaryItem
+                title={'Private'}
+                leftIcon={'Lock'}
+                subTitle={'Group’s content show to only members'}
+                onPressToggle={action => alert('onPress Toggle: ' + action)}
+              />
+              <PrimaryItem
+                title={'Public'}
+                leftIcon={'EyeSlash'}
+                subTitle={'This group is secret. Learn more'}
+                onPressToggle={action => alert('onPress Toggle: ' + action)}
+              />
+            </View>
+          }>
+          <Button.Primary
+            style={{margin: spacing?.margin.tiny, alignSelf: 'center'}}
+            onPress={() => baseSheetRef.current?.open?.()}>
+            Show Base Bottom Sheet
+          </Button.Primary>
+        </BottomSheet>
+      </View>,
+    );
+  };
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 4</Text.H5>
       {renderTextInput()}
+      {renderBottomSheet()}
     </View>
   );
 };

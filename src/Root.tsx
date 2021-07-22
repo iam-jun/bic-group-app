@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StatusBar, Platform, NativeModules, LogBox} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {Host} from 'react-native-portalize';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* Theme */
@@ -9,6 +8,7 @@ import {
   configureFonts,
   DarkTheme,
   DefaultTheme,
+  Portal,
   Provider as PaperProvider,
   Provider as ThemeProvider,
 } from 'react-native-paper';
@@ -157,9 +157,9 @@ export default (): JSX.Element => {
                 changeLanguage,
                 streamClient,
               }}>
-              <Host>
+              <Portal.Host>
                 <RootNavigator />
-              </Host>
+              </Portal.Host>
               <AlertModal />
             </AppContext.Provider>
           </PaperProvider>

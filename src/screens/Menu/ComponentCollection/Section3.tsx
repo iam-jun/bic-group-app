@@ -158,7 +158,7 @@ const Section3 = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 3</Text.H5>
       {renderHeader()}
       {renderListItem()}
