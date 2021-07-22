@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
@@ -10,9 +12,12 @@ import Divider from '~/beinComponents/Divider';
 import Thread from '~/beinComponents/Badge/Thread';
 import UserBadge from '~/beinComponents/Badge/UserBadge';
 import Reaction from '~/beinComponents/Badge/Reaction';
+import AlertModal from '~/beinComponents/modals/AlertModal';
+import * as modalActions from '~/store/modal/actions';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
+  const dispatch = useDispatch();
 
   const _onActionPress = (action: IAction) => console.log('action:', action);
 
@@ -84,11 +89,47 @@ const Section2 = () => {
     );
   };
 
+  const renderModals = () => {
+    return (
+      <>
+        <Text.H3 style={{marginHorizontal: spacing?.margin.base}}>
+          Modals
+        </Text.H3>
+        <Divider style={{margin: spacing?.margin.base}} />
+        <TouchableOpacity
+          onPress={() =>
+            dispatch(
+              modalActions.showAlert({
+                title: 'Log Out',
+                content: 'Do you want to log out?',
+                iconName: 'SignOutAlt',
+                cancelBtn: true,
+                onConfirm: () => alert('Confirm button'),
+              }),
+            )
+          }>
+          <Text.H6 style={{marginHorizontal: spacing?.margin.base}}>
+            Click to show modal
+          </Text.H6>
+        </TouchableOpacity>
+
+        <AlertModal dismissable={true} />
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            marginBottom: spacing?.margin.big,
+          }}
+        />
+      </>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 2</Text.H5>
       {renderBadge()}
       {renderInput()}
+      {renderModals()}
     </View>
   );
 };

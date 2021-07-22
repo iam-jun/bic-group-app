@@ -31,7 +31,7 @@ const AlertModal: React.FC<Props> = props => {
 
   return (
     <Modal
-      visible={visible}
+      visible={false}
       contentContainerStyle={styles.modal}
       dismissable={dismissable}
       style={StyleSheet.flatten([style && style])}
