@@ -104,55 +104,163 @@ const Section3 = () => {
   const renderAvatar = () => {
     return renderSection(
       'Avatar',
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingHorizontal: spacing?.padding.base,
-        }}>
-        <Avatar.Tiny
-          style={{margin: spacing?.margin.small}}
+      <View style={{marginHorizontal: spacing?.margin.base}}>
+        <Text.H5>{`<Avatar.Tiny/>`}</Text.H5>
+        <Text.H5>{`<Avatar.Small/>`}</Text.H5>
+        <Text.H5>{`<Avatar.Medium/>`}</Text.H5>
+        <Text.H5>{`<Avatar.Large/>`}</Text.H5>
+        <Text.H5>{`<Avatar.UltraLarge/>`}</Text.H5>
+        <View style={{flexDirection: 'row'}}>
+          <Avatar.Tiny
+            style={{margin: spacing?.margin.small}}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            // onPressAction={() => alert('onPress action')}
+            // status={'online'}
+            // badge={'iconReactionLove'}
+          />
+          <Avatar.Small
+            style={{margin: spacing?.margin.small}}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            // onPressAction={() => alert('onPress action')}
+            status={'online'}
+            // badge={'iconReactionLove'}
+          />
+          <Avatar.Medium
+            style={{margin: spacing?.margin.small}}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            onPressAction={() => alert('onPress action')}
+            // status={'online'}
+            // badge={'iconReactionLove'}
+          />
+          <Avatar.Large
+            style={{margin: spacing?.margin.small}}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            // onPressAction={() => alert('onPress action')}
+            // status={'online'}
+            badge={'iconReactionLove'}
+            badgeBottom
+          />
+          <Avatar.UltraLarge
+            style={{margin: spacing?.margin.small}}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            // onPressAction={() => alert('onPress action')}
+            // status={'online'}
+            badge={'University'}
+          />
+          <Avatar
+            style={{margin: spacing?.margin.small}}
+            // source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            // onPressAction={() => alert('onPress action')}
+            // // status={'online'}
+            // badge={'iconReactionLove'}
+            // badgeBottom
+          />
+        </View>
+        <Divider style={{marginBottom: spacing?.margin.base}} />
+        <Text.H5>{`<Avatar.Group source={''} />`}</Text.H5>
+        <Avatar.Group
           source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          // onPressAction={() => alert('onPress action')}
-          // status={'online'}
-          // badge={'iconReactionLove'}
+          totalMember={123}
         />
-        <Avatar.Small
-          style={{margin: spacing?.margin.small}}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          // onPressAction={() => alert('onPress action')}
-          status={'online'}
-          // badge={'iconReactionLove'}
-        />
-        <Avatar.Medium
-          style={{margin: spacing?.margin.small}}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          onPressAction={() => alert('onPress action')}
-          // status={'online'}
-          // badge={'iconReactionLove'}
-        />
-        <Avatar.Large
-          style={{margin: spacing?.margin.small}}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          // onPressAction={() => alert('onPress action')}
-          // status={'online'}
-          badge={'iconReactionLove'}
-          badgeBottom
-        />
-        <Avatar.UltraLarge
-          style={{margin: spacing?.margin.small}}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          // onPressAction={() => alert('onPress action')}
-          // status={'online'}
-          badge={'University'}
-        />
-        <Avatar
-          style={{margin: spacing?.margin.small}}
-          // source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          // onPressAction={() => alert('onPress action')}
-          // // status={'online'}
-          // badge={'iconReactionLove'}
-          // badgeBottom
-        />
+        <Divider style={{marginVertical: spacing?.margin.base}} />
+        <Text.H5>{`<Avatar.Group listSource={[]} />`}</Text.H5>
+        <View style={{flexDirection: 'row'}}>
+          <Avatar.Group
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+            ]}
+            totalMember={123}
+          />
+          <Avatar.Group
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+            ]}
+            totalMember={123}
+          />
+          <Avatar.Group
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+            ]}
+            totalMember={123}
+          />
+          <Avatar.Group
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
+            ]}
+            totalMember={123}
+          />
+          <Avatar.Group
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2574264/pokemon_4.jpg',
+            ]}
+            totalMember={123}
+          />
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Avatar.Group
+            variant={'small'}
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2574264/pokemon_4.jpg',
+            ]}
+          />
+          <Avatar.Group
+            variant={'medium'}
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2574264/pokemon_4.jpg',
+            ]}
+            totalMember={123}
+          />
+          <Avatar.Group
+            variant={'large'}
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2574264/pokemon_4.jpg',
+            ]}
+            totalMember={123}
+          />
+          <Avatar.Group
+            variant={'ultraLarge'}
+            style={{margin: spacing?.margin.small}}
+            listSource={[
+              'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
+              'https://cdn.dribbble.com/users/183984/screenshots/2574264/pokemon_4.jpg',
+            ]}
+            totalMember={123}
+          />
+        </View>
+        <Avatar.Group style={{margin: spacing?.margin.small}} />
       </View>,
     );
   };

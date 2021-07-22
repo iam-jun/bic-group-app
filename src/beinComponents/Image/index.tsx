@@ -83,7 +83,12 @@ const Image: React.FC<ImageProps> = ({
         ),
         default: (
           <React.Fragment>
-            <ImageComponent {...props} onLoadEnd={onLoadEnd} style={style} />
+            <ImageComponent
+              source={source}
+              {...props}
+              onLoadEnd={onLoadEnd}
+              style={style}
+            />
 
             <Animated.View
               style={StyleSheet.flatten([
