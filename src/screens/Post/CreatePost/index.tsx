@@ -1,40 +1,35 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import HorizontalView from '~/components/layout/HorizontalView';
 import {margin, padding} from '~/theme/spacing';
-import ListView from '~/beinComponents/list/ListView';
-import createPostToolbar from '~/constants/createPostToolbar';
 import {useBaseHook} from '~/hooks';
-import {Text} from '~/components';
-import Divider from '~/components/Divider';
-import {homeStack, mainStack} from '~/configs/navigator';
-import useAudience from '~/hooks/audience';
+import {homeStack} from '~/configs/navigator';
 import audienceActions from './SelectAudience/redux/actions';
 import postActions from './redux/actions';
 import Header from '~/beinComponents/Header';
 import {ITheme} from '~/theme/interfaces';
+import SelectedAudienceSection from './components/SelectedAudienceSection';
+import Divider from '~/beinComponents/Divider';
+import PostInput from '~/beinComponents/inputs/PostInput';
+import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 
-const CreatePostView = ({navigation}: {navigation: any}) => {
-  const {t} = useBaseHook();
+const CreatePostView = () => {
   const [text, setText] = useState<string>('');
+  const toolbarModalizeRef = useRef();
+
+  const dispatch = useDispatch();
+  const {navigation, t} = useBaseHook();
   const theme: ITheme = useTheme();
   const {colors} = theme;
-  const {audiences} = useAudience();
-  const dispatch = useDispatch();
 
-  const disableButtonPost = true;
+  const disableButtonPost = text?.length === 0;
+
+  useEffect(() => {
+    console.log('\x1b[36m', 'namanh --- text | update : ', text, '\x1b[0m');
+  }, [text]);
 
   const onPressPost = () => {
     dispatch(
@@ -48,11 +43,15 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
     navigation.navigate(homeStack.postDetail);
   };
 
+  const onChangeText = (text: string) => {
+    setText(text);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <ScreenWrapper isFullView testID="CreatePostScreen">
+      <ScreenWrapper testID={'CreatePostScreen'}>
         <Header
           titleTextProps={{useI18n: true}}
           title={'post:create_post'}
@@ -65,49 +64,14 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
           }}
           onPressButton={onPressPost}
         />
-        <HorizontalView>
-          <Text style={styles.sendTo} bold>
-            {t('post:send_to')}
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(mainStack.selectPostAudience)}
-            style={[
-              styles.chooseAudience,
-              {backgroundColor: theme.colors.tag},
-            ]}>
-            <Text primary={{color: theme.colors.purple}}>
-              {t('post:choose_group_people')}
-            </Text>
-          </TouchableOpacity>
-        </HorizontalView>
-
-        {audiences.data.length !== 0 && (
-          <ListView
-            contentContainerStyle={{
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-            }}
-            style={styles.audienceList}
-            type="tag"
-            data={audiences.data}
-          />
-        )}
-        <Divider thick={1} />
-
-        <ScrollView>
-          <TextInput
-            placeholder={t('post:placeholder_write_post')}
-            value={text}
-            onChangeText={text => setText(text)}
-            multiline
-            autoFocus={true}
-            style={styles.textContent}
-          />
-        </ScrollView>
-        <View style={styles.actionList}>
-          <Divider thick={1} />
-          <ListView data={createPostToolbar} type="option" />
-        </View>
+        <SelectedAudienceSection />
+        <Divider />
+        <PostInput
+          multiline
+          placeholder={t('post:placeholder_write_post')}
+          onChangeText={onChangeText}
+        />
+        <PostToolbar modalizeRef={toolbarModalizeRef} />
       </ScreenWrapper>
     </KeyboardAvoidingView>
   );
