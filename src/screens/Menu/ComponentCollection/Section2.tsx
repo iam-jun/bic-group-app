@@ -94,16 +94,19 @@ const Section2 = () => {
         <Divider style={{margin: spacing?.margin.base}} />
         <View style={{flexDirection: 'row'}}>
           <Tag
+            avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
             label={'Priority'}
             selected={true}
             icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
             onActionPress={_onActionPress}
             style={{marginStart: spacing?.margin.small}}
           />
           <Tag
             label={'Priority'}
             selected={false}
-            icon={'iconClose'}
+            icon={'18Plus'}
+            onPressIcon={() => alert('onPress icon')}
             onActionPress={_onActionPress}
             style={{marginStart: spacing?.margin.small}}
           />
@@ -112,6 +115,35 @@ const Section2 = () => {
             selected={false}
             disabled
             icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+        </View>
+        <View style={{flexDirection: 'row', marginTop: 8}}>
+          <Tag.Small
+            avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            label={'Priority'}
+            selected={true}
+            icon={'Globe'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag.Small
+            label={'Priority'}
+            selected={false}
+            icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag.Small
+            label={'Priority'}
+            selected={false}
+            disabled
+            icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
             onActionPress={_onActionPress}
             style={{marginStart: spacing?.margin.small}}
           />
