@@ -10,6 +10,7 @@ import Divider from '~/beinComponents/Divider';
 import Thread from '~/beinComponents/Badge/Thread';
 import UserBadge from '~/beinComponents/Badge/UserBadge';
 import Reaction from '~/beinComponents/Badge/Reaction';
+import Tag from '~/beinComponents/Tag';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -84,11 +85,53 @@ const Section2 = () => {
     );
   };
 
+  const renderTabMenuTag = () => {
+    return (
+      <>
+        <Text.H3 style={{marginHorizontal: spacing?.margin.base}}>
+          Tab Menu and Tag
+        </Text.H3>
+        <Divider style={{margin: spacing?.margin.base}} />
+        <View style={{flexDirection: 'row'}}>
+          <Tag
+            label={'Priority'}
+            selected={true}
+            icon={'iconClose'}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag
+            label={'Priority'}
+            selected={false}
+            icon={'iconClose'}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag
+            label={'Priority'}
+            selected={false}
+            disabled
+            icon={'iconClose'}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+        </View>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            marginBottom: spacing?.margin.big,
+          }}
+        />
+      </>
+    );
+  };
+
   return (
     <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 2</Text.H5>
       {renderBadge()}
       {renderInput()}
+      {renderTabMenuTag()}
     </View>
   );
 };
