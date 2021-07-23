@@ -1,11 +1,9 @@
-import {Newsfeed, PostDetail} from '~/screens/Home';
-
-export const screens = {
-  newsfeed: Newsfeed,
-  'post-detail': PostDetail,
-};
-
-export const homeStack = {
+const homeStack = {
   newsfeed: 'newsfeed',
   postDetail: 'post-detail',
+  comment: 'comment',
+  createPost: 'create-post',
+  selectAudience: 'select-audience',
 };
+
+export default homeStack;

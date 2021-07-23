@@ -17,12 +17,12 @@ import {AppContext} from '~/contexts/AppContext';
 import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
 import languages from '~/constants/languages';
 import {useRootNavigation} from '~/hooks/navigation';
-import {menuStack} from '~/router/navigator/MainStack/MenuStack/stack';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
-const Menu = () => {
+const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const {navigation} = useRootNavigation();
+  const {rootNavigation} = useRootNavigation();
   const {user} = useAuth();
   const {changeLanguage} = useContext(AppContext);
 
@@ -39,7 +39,7 @@ const Menu = () => {
       case 'language':
         return languageOptionsModalRef.current?.open();
       case 'component':
-        navigation.navigate(menuStack.componentCollection);
+        return rootNavigation.navigate(menuStack.componentCollection);
     }
   };
 

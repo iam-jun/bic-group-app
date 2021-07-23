@@ -40,13 +40,15 @@ const StackNavigator = (): React.ReactElement => {
   /*Deep link*/
   /*Handle when app killed*/
   const handleDeepLink = async () => {
-    let initialUrl = await Linking.getInitialURL();
+    const initialUrl = await Linking.getInitialURL();
     console.log('handleDeepLink', {initialUrl});
-    initialUrl = initialUrl?.includes('?')
-      ? initialUrl?.split('?')[0]
-      : initialUrl;
-    const route = initialUrl?.replace('http://localhost:8080/', '');
-    setInitialRouteName(route || '');
+
+    //[TO-DO] replace url with config url
+    const path = initialUrl?.replace('http://localhost:8080/', '');
+    if (path) {
+      const route = path.substr(0, path.indexOf('/'));
+      setInitialRouteName(route);
+    }
   };
 
   /*Handle when app in background*/

@@ -1,16 +1,18 @@
 import {withNavigation} from '~/router/helper';
 import {
   rootNavigationRef,
-  centerNavigationRef,
   leftNavigationRef,
   rightNavigationRef,
 } from '../router/navigator/refs';
 
 export const useRootNavigation = () => {
+  const rootNavigation = withNavigation(rootNavigationRef);
+  const leftNavigation = withNavigation(leftNavigationRef);
+  const rightNavigation = withNavigation(rightNavigationRef);
+
   return {
-    rootNavigation: withNavigation(rootNavigationRef),
-    navigation: withNavigation(centerNavigationRef),
-    leftNavigation: withNavigation(leftNavigationRef),
-    rightNavigation: withNavigation(rightNavigationRef),
+    rootNavigation,
+    leftNavigation,
+    rightNavigation,
   };
 };

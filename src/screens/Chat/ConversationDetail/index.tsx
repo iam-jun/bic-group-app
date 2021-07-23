@@ -16,7 +16,7 @@ import {spacing} from '~/theme';
 import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
 import memberOptions from '~/constants/memberOptions';
 
-const Conversation = () => {
+const Conversation = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {t, navigation} = useBaseHook();
@@ -41,15 +41,13 @@ const Conversation = () => {
         <View style={styles.top}>
           <Avatar size="big" user={{name: conversation.name}} />
           <ViewSpacing height={spacing.margin.base} />
-          <Text bold h1>
-            {conversation.name}
-          </Text>
+          <Text.H1>{conversation.name}</Text.H1>
         </View>
         <Divider />
         <ViewSpacing height={spacing.margin.base} />
-        <Text h4>{`${conversation?.members?.length} ${t(
+        <Text.H4>{`${conversation?.members?.length} ${t(
           'chat:title_members',
-        )}`}</Text>
+        )}`}</Text.H4>
         <ListView
           data={conversation?.members}
           type="user"
@@ -64,9 +62,7 @@ const Conversation = () => {
           <View style={styles.top}>
             <Avatar size="base" user={selectedMember} />
             <ViewSpacing height={spacing.margin.base} />
-            <Text bold h4>
-              {selectedMember?.name}
-            </Text>
+            <Text.H4>{selectedMember?.name}</Text.H4>
             <ViewSpacing height={spacing.margin.base} />
             <Divider />
           </View>

@@ -1,29 +1,10 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {homeStack, screens} from './stack';
+import BaseStackNavigator from '~/router/components/BaseStackNavigator';
+import homeStack from './stack';
+import screens from './screens';
 
-const Stack = createStackNavigator();
-
-const HomeStack = () => {
-  return (
-    <Stack.Navigator headerMode="screen" initialRouteName={homeStack.newsfeed}>
-      {Object.entries(homeStack).map(([name, component]) => {
-        return (
-          <Stack.Screen
-            key={'screen' + component}
-            name={component}
-            //@ts-ignore
-            component={screens[component]}
-            options={{
-              animationEnabled: true,
-              headerShown: false,
-              title: name,
-            }}
-          />
-        );
-      })}
-    </Stack.Navigator>
-  );
+const HomeStack = (): React.ReactElement => {
+  return <BaseStackNavigator stack={homeStack} screens={screens} />;
 };
 
 export default HomeStack;

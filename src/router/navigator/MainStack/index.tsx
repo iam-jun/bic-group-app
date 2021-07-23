@@ -8,7 +8,8 @@ import {
 } from '@react-navigation/native';
 import {useTheme} from 'react-native-paper';
 
-import {screens, mainStack} from './stack';
+import mainStack from './stack';
+import screens from './screens';
 
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
@@ -17,6 +18,7 @@ import {leftNavigationRef, rightNavigationRef} from '../refs';
 import AppInfo from '~/screens/AppInfo';
 import LeftTabs from './LeftTabs';
 import {RootStackParamList} from '~/interfaces/IRouter';
+import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 
 const Stack = createStackNavigator();
 
@@ -44,23 +46,7 @@ const MainStack = (): React.ReactElement => {
           style={{
             flex: deviceDimensions.centerCols,
           }}>
-          <Stack.Navigator>
-            {Object.entries(mainStack).map(([name, component]) => {
-              return (
-                <Stack.Screen
-                  key={'screen' + component}
-                  name={component}
-                  // @ts-ignore
-                  component={screens[component]}
-                  options={{
-                    animationEnabled: true,
-                    headerShown: false,
-                    title: name,
-                  }}
-                />
-              );
-            })}
-          </Stack.Navigator>
+          <BaseStackNavigator screens={screens} stack={mainStack} />
         </View>
         {dimensions.width >= deviceDimensions.laptop && (
           <View

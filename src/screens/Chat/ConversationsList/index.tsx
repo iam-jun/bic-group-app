@@ -15,14 +15,16 @@ import {spacing} from '~/theme';
 import {
   generateRandomName,
   generateRandomUser,
+  generateUniqueId,
   getRandomInt,
 } from '~/utils/generator';
 import * as actions from '~/screens/Chat/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import {mainStack} from '~/router/navigator/MainStack/stack';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const ConversationsList = (): React.ReactElement => {
   const data: IConversation[] = Array.from(Array(20).keys()).map(() => ({
+    id: generateUniqueId(),
     name: generateRandomName(),
     members: [generateRandomUser(), generateRandomUser()],
     unreadCount: getRandomInt(0, 10),
@@ -39,7 +41,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
-    rootNavigation.navigate(mainStack.conversation);
+    rootNavigation.navigate(chatStack.conversation, {id: item.id});
   };
 
   return (

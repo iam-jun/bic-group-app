@@ -1,10 +1,10 @@
 import React from 'react';
-import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import stack from './stack';
 import screens from './screens';
+import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 
-const GroupStack = (): React.ReactElement => {
+const ChatStack = (): React.ReactElement => {
   return <BaseStackNavigator stack={stack} screens={screens} />;
 };
 
-export default GroupStack;
+export default ChatStack;

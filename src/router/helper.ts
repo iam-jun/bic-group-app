@@ -2,6 +2,7 @@ import React, {RefObject} from 'react';
 import {NavigationContainerRef, StackActions} from '@react-navigation/native';
 
 import {IObject} from '~/interfaces/common';
+import {createStackNavigator} from '@react-navigation/stack';
 
 export const isNavigationRefReady = React.createRef();
 
@@ -23,6 +24,11 @@ export const withNavigation = (
     if (isNavigationRefReady?.current && navigationRef?.current) {
       navigationRef?.current?.navigate(name, params);
     } else {
+      console.log(
+        'navigation is not ready',
+        isNavigationRefReady?.current,
+        navigationRef?.current,
+      );
       setTimeout(() => navigationRef?.current?.navigate(name, params), 100);
     }
   };

@@ -25,8 +25,8 @@ const MainTabs = () => {
 
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
-  const phone = dimensions.width <= deviceDimensions.phone;
-  const smallTablet = dimensions.width < deviceDimensions.bigTablet;
+  const phone = dimensions.width < deviceDimensions.smallTablet;
+  const bigTablet = dimensions.width >= deviceDimensions.bigTablet;
 
   const Tab = phone ? BottomTab : SideTab;
 
@@ -40,7 +40,7 @@ const MainTabs = () => {
         keyboardHidesTabBar: true,
         style: {
           // backgroundColor: tabBarBackground,
-          paddingBottom: phone ? insets.bottom : 0,
+          paddingBottom: !phone ? insets.bottom : 0,
         },
       }}>
       {Object.entries(screens).map(([name, component]) => {
@@ -52,7 +52,7 @@ const MainTabs = () => {
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
-                if (smallTablet)
+                if (!bigTablet)
                   return (
                     <Icon
                       //@ts-ignore

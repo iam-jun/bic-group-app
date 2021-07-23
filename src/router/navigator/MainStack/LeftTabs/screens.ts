@@ -1,13 +1,13 @@
 import Groups from '~/screens/Groups';
 import HomeLeftPanel from '~/screens/Home/LeftPanel';
-import Chat from '~/screens/Chat';
 import Notification from '~/screens/Notification';
 import Menu from '~/screens/Menu';
+import {ConversationsList} from '~/screens/Chat';
 
 export const screens = {
   home: HomeLeftPanel,
   groups: Groups,
-  chat: Chat,
+  chat: ConversationsList,
   notification: Notification,
   menu: Menu,
 };

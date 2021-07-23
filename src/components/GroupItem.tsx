@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
 import {IGroup} from '~/interfaces/IGroup';
 import {useDispatch} from 'react-redux';
@@ -9,8 +8,8 @@ import {IObject} from '~/interfaces/common';
 import {Image, Text} from '~/components/index';
 import Icon from '~/beinComponents/Icon';
 import {grey2, grey5, grey9} from '~/theme/colors';
-import {groupStack} from '~/router/navigator/MainStack/GroupStack/stack';
-import {mainStack} from '~/router/navigator/MainStack/stack';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 interface GroupItemProps extends IGroup {
   level?: number;
@@ -30,12 +29,11 @@ const GroupItem: React.FC<GroupItemProps> = ({
 }) => {
   const theme = useTheme();
   const {spacing}: IObject<any> = theme;
-  const navigation = useNavigation();
   const styles = themeStyles(theme);
+  const {rootNavigation} = useRootNavigation();
 
   const _onPressItem = () => {
-    navigation.navigate(groupStack.groups);
-    navigation.navigate(groupStack.group, {groupId: id});
+    rootNavigation.navigate(groupStack.groupDetail, {id});
   };
 
   const renderLine = (level: number) => {

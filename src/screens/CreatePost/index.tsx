@@ -25,8 +25,7 @@ import Divider from '~/components/Divider';
 import useAudience from '~/hooks/audience';
 import audienceActions from './SelectAudience/redux/actions';
 import postActions from './redux/actions';
-import {homeStack} from '~/router/navigator/MainStack/HomeStack/stack';
-import {mainStack} from '~/router/navigator/MainStack/stack';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const CreatePostView = ({navigation}: {navigation: any}) => {
   const {t} = useBaseHook();
@@ -67,7 +66,7 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
         <HorizontalView>
           <Text style={styles.sendTo}>{t('post:send_to')}</Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate(mainStack.selectPostAudience)}
+            onPress={() => navigation.navigate(homeStack.selectAudience)}
             style={[
               styles.chooseAudience,
               {backgroundColor: theme.colors.tag},

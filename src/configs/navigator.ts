@@ -41,12 +41,13 @@ export const linkingConfig = {
   prefixes: ['https://bein.group', 'bein://'],
   config: {
     screens: {
+      AppLoading: {
+        path: '',
+      },
       AuthStack: {},
       MainStack: {
-        path: '',
         screens: {
           main: {
-            path: '',
             screens: {
               home: {
                 path: 'home',
@@ -57,20 +58,39 @@ export const linkingConfig = {
                 },
               },
               groups: {
-                path: '',
+                path: 'groups',
                 screens: {
-                  groups: {
+                  'group-list': {
                     path: '',
                   },
-                  group: {
-                    path: 'groups',
+                  'group-detail': {
+                    path: ':id?',
+                  },
+                },
+              },
+              chat: {
+                path: 'chat',
+                screens: {
+                  'conversation-list': {
+                    path: '',
+                  },
+                  conversation: {
+                    path: ':id?',
+                  },
+                },
+              },
+              menu: {
+                path: 'settings',
+                screens: {
+                  settings: {
+                    path: '',
+                  },
+                  'component-collection': {
+                    path: 'component-collection',
                   },
                 },
               },
             },
-          },
-          conversation: {
-            path: 'chat',
           },
         },
       },

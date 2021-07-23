@@ -12,8 +12,7 @@ import PostOptionsModal from '../fragments/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
 import {data} from './dummy-data';
-import {mainStack} from '~/router/navigator/MainStack/stack';
-import {homeStack} from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
   const dispatch = useDispatch();
@@ -57,7 +56,7 @@ const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
       <NavigationHeader
         title="News Feed"
         rightIcon="iconEdit"
-        rightPress={() => navigation.navigate(mainStack.createPost)}
+        rightPress={() => navigation.navigate(homeStack.createPost)}
       />
       <ListView
         style={styles.container}
