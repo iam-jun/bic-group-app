@@ -20,6 +20,7 @@ export interface ButtonWrapperProps {
   onLongPress?: () => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
+  useI18n?: boolean;
   leftIcon?: any;
   leftIconProps?: IconProps;
   rightIcon?: any;
@@ -39,6 +40,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   disabled,
   textVariant = 'buttonBase',
   textProps,
+  useI18n,
   leftIcon,
   leftIconProps,
   rightIcon,
@@ -81,6 +83,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
             variant={textVariant}
             style={{textAlign: 'center'}}
             color={disabled ? colors.textDisabled : undefined}
+            useI18n={useI18n}
             {...textProps}>
             {children}
           </Text>
