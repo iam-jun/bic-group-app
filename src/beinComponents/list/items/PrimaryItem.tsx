@@ -1,7 +1,14 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewProps} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewProps,
+  ViewStyle,
+} from 'react-native';
 import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
+import Icon, {IconProps} from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
@@ -10,9 +17,12 @@ import {IAction} from '~/constants/commonActions';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewProps>;
+  height?: number;
   title?: string;
   subTitle?: string;
   leftIcon?: any;
+  leftIconProps?: IconProps;
+  onPress?: () => void;
   onPressCheckbox?: (action: IAction) => void;
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
@@ -22,9 +32,12 @@ export interface PrimaryItemProps {
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
+  height,
   title,
   subTitle,
   leftIcon,
+  leftIconProps,
+  onPress,
   onPressToggle,
   onPressCheckbox,
   onPressEdit,
@@ -32,12 +45,31 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   RightComponent,
 }: PrimaryItemProps) => {
   const theme: ITheme = useTheme();
+  const {dimension, spacing} = theme;
   const styles = createStyle(theme);
 
+  const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
+    {
+      flexDirection: 'row',
+      height: height || dimension?.primaryItemHeight,
+      alignItems: 'center',
+      paddingHorizontal: spacing?.padding.base,
+    },
+    style,
+  ]);
+
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
+    <TouchableOpacity
+      disabled={!onPress}
+      onPress={onPress}
+      style={containerStyle}>
       {!!leftIcon && (
-        <Icon size={14} style={styles.iconMarginRight} icon={leftIcon} />
+        <Icon
+          size={14}
+          style={styles.iconMarginRight}
+          icon={leftIcon}
+          {...leftIconProps}
+        />
       )}
       <View style={styles.contentContainer}>
         {!!title && <Text.H6 numberOfLines={2}>{title}</Text.H6>}
@@ -67,19 +99,13 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         />
       )}
       {RightComponent}
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, dimension} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      height: dimension?.primaryItemHeight,
-      alignItems: 'center',
-      paddingHorizontal: spacing?.padding.base,
-    },
     contentContainer: {flex: 1},
     iconMarginRight: {
       marginRight: spacing?.margin.extraLarge,

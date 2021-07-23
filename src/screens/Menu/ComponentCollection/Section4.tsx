@@ -12,6 +12,7 @@ import TextInput from '~/beinComponents/inputs/TextInput';
 const Section4 = () => {
   const {spacing, colors}: ITheme = useTheme();
   const baseSheetRef: any = useRef();
+  const postToolbarRef: any = useRef();
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -65,6 +66,10 @@ const Section4 = () => {
     return renderSection(
       'BottomSheet',
       <View>
+        <Text.H5
+          style={{
+            marginHorizontal: spacing?.margin.base,
+          }}>{`<BottomSheet/>`}</Text.H5>
         <BottomSheet
           modalizeRef={baseSheetRef}
           ContentComponent={
@@ -98,6 +103,13 @@ const Section4 = () => {
             Show Base Bottom Sheet
           </Button.Primary>
         </BottomSheet>
+
+        <Text.H5
+          style={{
+            marginHorizontal: spacing?.margin.base,
+            marginTop: spacing?.margin.base,
+          }}>{`<BottomSheet.PostToolbar/>`}</Text.H5>
+        <BottomSheet.PostToolbar modalizeRef={postToolbarRef} />
       </View>,
     );
   };
