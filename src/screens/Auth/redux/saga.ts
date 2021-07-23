@@ -1,26 +1,29 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
+import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 
 import {authStack} from '~/configs/navigator';
 import {rootSwitch} from '~/router/stack';
+import {refreshAuthTokens} from '~/services/httpApiRequest';
+import {ActionTypes} from '~/utils';
 import * as types from './types';
 import * as IAuth from '~/interfaces/IAuth';
 import * as actions from './actions';
 import * as actionsCommon from '~/store/modal/actions';
-import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
 import Store from '~/store';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
+import {StackActions} from '@react-navigation/native';
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* authSaga() {
   yield takeLatest(types.SIGN_IN, signIn);
   yield takeLatest(types.SIGN_IN_OAUTH, signInOAuth);
   yield takeLatest(types.SIGN_UP, signUp);
-  yield takeLatest(types.SIGN_OUT, signOut);
+  yield takeLatest([types.SIGN_OUT, ActionTypes.UnauthorizedLogout], signOut);
   yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
   yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest);
   yield takeLatest(types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm);
@@ -34,8 +37,6 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
     const {email, password} = payload;
     yield Auth.signIn(email, password); //handle result in useAuthHub
   } catch (error) {
-    yield put(actions.setLoading(false));
-
     let errorMessage;
     switch (error?.code) {
       case authErrors.NOT_AUTHORIZED_EXCEPTION:
@@ -45,7 +46,7 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
         errorMessage =
           error?.message || i18n.t('auth:text_err_id_password_not_matched');
     }
-    yield put(actions.setSigningInError(errorMessage));
+    yield onSignInFailed(errorMessage);
   }
 }
 
@@ -90,6 +91,24 @@ function* onSignInSuccess(user: IUserResponse) {
 
   yield put(actions.setUser(userResponse));
   navigation.replace(rootSwitch.mainStack);
+
+  // get Tokens after login success.
+  const refreshSuccess = yield refreshAuthTokens();
+  if (!refreshSuccess) {
+    console.log('get auth tokens failed');
+    // TODO:
+    // yield onSignInFailed(i18n.t('error:http:token_expired'));
+    // return;
+  }
+
+  rootNavigationRef?.current?.dispatch(
+    StackActions.replace(rootSwitch.mainStack),
+  );
+}
+
+function* onSignInFailed(errorMessage: string) {
+  yield put(actions.setLoading(false));
+  yield put(actions.setSigningInError(errorMessage));
 }
 
 function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
@@ -225,6 +244,11 @@ function* signOut() {
 
 function* checkAuthState() {
   try {
+    // const httpResponse = yield makeHttpRequest(apiConfig.App.users());
+    // console.log('httpResponse', httpResponse)
+    // if (httpResponse) {
+    //   console.log('httpResponse:', handleResponseSuccessBein(httpResponse));
+    // }
     const user: IAuth.IUserResponse | boolean = yield Store.getCurrentUser();
     if (user) {
       navigation.replace(rootSwitch.mainStack);

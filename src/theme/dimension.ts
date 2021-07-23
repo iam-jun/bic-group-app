@@ -92,6 +92,7 @@ export const sizeButton = {
 };
 
 export const avatarSizes = {
+  tiny: 16,
   small: 24,
   medium: 36,
   large: 48,

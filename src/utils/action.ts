@@ -11,7 +11,12 @@ const createAction = (type: string, payload = {}): ReduxAction => {
 };
 
 const ActionTypes = {
-  REFRESH_TOKEN: 'auth/REFRESH_TOKEN',
+  UnauthorizedLogout: 'UnauthorizedLogout',
+  RefreshTokenSuccessBein: 'RefreshTokenSuccessBein',
+  SaveAuthTokens: 'SaveAuthTokens',
+
+  // getStream
+  GetStreamSample: 'GetStreamSample',
 };
 
 export {ReduxAction, ActionTypes, createAction};

@@ -115,6 +115,7 @@ module.exports = {
     ],
     alias: {
       'react-native$': 'react-native-web',
+      'react-native-linear-gradient': 'react-native-web-linear-gradient',
       process: 'process/browser',
       tests: ['./tests'],
       '~': path.resolve(__dirname, 'src'),

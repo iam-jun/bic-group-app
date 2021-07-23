@@ -289,13 +289,15 @@ const Section1 = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
       {renderFlashMessage()}
       {renderIcon()}
       {renderText()}
-      <Button.BottomFixed onPress={() => alert('onPress BottomButton')}>
+      <Button.BottomFixed
+        absoluteBottom={false}
+        onPress={() => alert('onPress BottomButton')}>
         Bottom Button - absoluteBottom
       </Button.BottomFixed>
     </View>

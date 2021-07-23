@@ -70,7 +70,11 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       onLongPress={onLongPress}
       underlayColor={underlayColor}
       style={StyleSheet.flatten([style])}>
-      <View style={StyleSheet.flatten([{flexDirection: 'row'}, contentStyle])}>
+      <View
+        style={StyleSheet.flatten([
+          {flexDirection: 'row', alignItems: 'center'},
+          contentStyle,
+        ])}>
         {renderIcon(leftIcon, leftIconProps)}
         {typeof children === 'string' ? (
           <Text

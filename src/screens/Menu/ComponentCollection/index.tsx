@@ -12,10 +12,10 @@ const ComponentCollection = (): React.ReactElement => {
     <ScreenWrapper isFullView>
       <Header title={'ComponentCollection'} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Section3 />
         <Section1 />
-        <Section4 />
         <Section2 />
+        <Section3 />
+        <Section4 />
       </ScrollView>
     </ScreenWrapper>
   );
