@@ -52,8 +52,8 @@ const Home = ({navigation}: {navigation: any}) => {
     }
   };
 
-  const {streamClient} = useContext(AppContext);
-  dispatch(createAction(ActionTypes.GetStreamSample, {streamClient}));
+  // const {streamClient} = useContext(AppContext);
+  // dispatch(createAction(ActionTypes.GetStreamSample, {streamClient}));
   return (
     <View>
       <NavigationHeader
