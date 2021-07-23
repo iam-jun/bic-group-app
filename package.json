@@ -36,6 +36,7 @@
     "detox": "^18.13.0",
     "getstream": "~7.2.10",
     "i18next": "^20.2.2",
+    "legacy": "^0.0.3",
     "lodash": "^4.17.21",
     "react": "17.0.1",
     "react-hook-form": "^7.6.9",

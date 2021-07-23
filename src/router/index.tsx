@@ -46,7 +46,8 @@ const StackNavigator = (): React.ReactElement => {
     //[TO-DO] replace url with config url
     const path = initialUrl?.replace('http://localhost:8080/', '');
     if (path) {
-      const route = path.substr(0, path.indexOf('/'));
+      const route =
+        path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
       setInitialRouteName(route);
     }
   };
