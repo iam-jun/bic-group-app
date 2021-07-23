@@ -12,56 +12,58 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import NavigationHeader from '~/components/headers/NavigationHeader';
-import PrimaryButton from '~/components/buttons/PrimaryButton';
 import HorizontalView from '~/components/layout/HorizontalView';
 import {margin, padding} from '~/theme/spacing';
 import ListView from '~/beinComponents/list/ListView';
 import createPostToolbar from '~/constants/createPostToolbar';
 import {useBaseHook} from '~/hooks';
 import {Text} from '~/components';
-import {IObject} from '~/interfaces/common';
 import Divider from '~/components/Divider';
 import {homeStack, mainStack} from '~/configs/navigator';
 import useAudience from '~/hooks/audience';
 import audienceActions from './SelectAudience/redux/actions';
 import postActions from './redux/actions';
+import Header from '~/beinComponents/Header';
+import {ITheme} from '~/theme/interfaces';
 
 const CreatePostView = ({navigation}: {navigation: any}) => {
   const {t} = useBaseHook();
   const [text, setText] = useState<string>('');
-  const theme: IObject<any> = useTheme();
+  const theme: ITheme = useTheme();
+  const {colors} = theme;
   const {audiences} = useAudience();
   const dispatch = useDispatch();
+
+  const disableButtonPost = true;
+
+  const onPressPost = () => {
+    dispatch(
+      postActions.selectPost({
+        content: text,
+        reaction: {like: 0, comment: 0, share: 0},
+        isLike: true,
+      }),
+    );
+    dispatch(audienceActions.setAudiences([]));
+    navigation.navigate(homeStack.postDetail);
+  };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <ScreenWrapper isFullView testID="CreatePostScreen">
-        <NavigationHeader
-          isFullView
-          isDefault
-          title={t('post:create_post')}
-          rightComponent={
-            <PrimaryButton
-              contentStyle={styles.button}
-              disabled={!!text && audiences.data.length !== 0 ? false : true}
-              testID="CreatePost"
-              title={t('post:post_button')}
-              onPress={() => {
-                dispatch(
-                  postActions.selectPost({
-                    content: text,
-                    reaction: {like: 0, comment: 0, share: 0},
-                    isLike: true,
-                  }),
-                );
-                dispatch(audienceActions.setAudiences([]));
-                navigation.navigate(homeStack.postDetail);
-              }}
-            />
-          }
+        <Header
+          titleTextProps={{useI18n: true}}
+          title={'post:create_post'}
+          buttonText={'post:post_button'}
+          buttonProps={{
+            disabled: disableButtonPost,
+            color: colors.primary7,
+            textColor: colors.textReversed,
+            useI18n: true,
+          }}
+          onPressButton={onPressPost}
         />
         <HorizontalView>
           <Text style={styles.sendTo} bold>

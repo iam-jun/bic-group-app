@@ -85,6 +85,7 @@
     "title_vi": "Vietnamese"
   },
   "post": {
+    "news_feed": "News Feed",
     "button_like": "Like",
     "button_reply": "Reply",
     "button_comment_not_verify_user": "Verify your account to comment",
@@ -100,6 +101,7 @@
     "add_file": "Add Files",
     "placeholder_write_post": "Write your post here...",
     "create_post": "Create Post",
+    "create_new_post": "Create new post",
     "post_button": "Post",
     "send_to": "Send to",
     "choose_group_people": "Choose group or people",

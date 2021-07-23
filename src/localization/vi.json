@@ -84,6 +84,7 @@
     "title_vi": "Tiếng Việt"
   },
   "post": {
+    "news_feed": "News Feed",
     "button_like": "Thích",
     "button_reply": "Trả lời",
     "button_comment_not_verify_user": "Verify your account to comment",
@@ -94,7 +95,22 @@
     "label_share": "Chia sẻ",
     "label_comments": "Bình luận",
     "label_shares": "Chia sẻ",
-    "label_donate": "Đóng góp"
+    "label_donate": "Đóng góp",
+    "add_photo": "Add Photo",
+    "add_file": "Add Files",
+    "placeholder_write_post": "Write your post here...",
+    "create_post": "Create Post",
+    "create_new_post": "Tạo bài đăng",
+    "post_button": "Post",
+    "send_to": "Send to",
+    "choose_group_people": "Choose group or people",
+    "placeholder_audience_search": "Search for groups or people",
+    "audience_selected": "Selected audiences",
+    "select_audience": "Select Audiences",
+    "search_results": "Search results",
+    "group_manage": "Your Groups",
+    "people_search": "People",
+    "show_all": "Show all"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

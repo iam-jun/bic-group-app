@@ -59,13 +59,13 @@ const Post: React.FC<IObject<any>> = ({
 
       {hashtags && <TagsView style={styles.hashtags} data={hashtags} />}
 
-      {reaction && (
-        <>
-          <ReactionsView isLike={isLike} {...reaction} />
-          <Divider thick={1} />
-          // TODO: Add reaction (like, comment, share) view here
-        </>
-      )}
+      {/*{reaction && (*/}
+      {/*  <>*/}
+      {/*    <ReactionsView isLike={isLike} {...reaction} />*/}
+      {/*    <Divider thick={1} />*/}
+      {/*    // TODO: Add reaction (like, comment, share) view here*/}
+      {/*  </>*/}
+      {/*)}*/}
       <TouchableOpacity
         style={styles.iconOptions}
         onPress={() => _onActionPress(commonActions.openPostOption as IAction)}>
