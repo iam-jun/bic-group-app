@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Icon from '../../beinComponents/Icon';
-import Image from '../Image';
+import Image from '../../beinComponents/Image';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;

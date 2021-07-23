@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity, Modal, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from '../../beinComponents/Icon';
-import Image from '../Image';
+import Image from '../../beinComponents/Image';
 import {IObject} from '~/interfaces/common';
 import {colors} from '~/theme';
 

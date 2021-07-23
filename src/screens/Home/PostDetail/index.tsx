@@ -6,7 +6,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import InputToolbar from '~/components/inputs/InputToolbar';
 import ContentItem from '~/components/list/items/ContentItem';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import {spacing} from '~/theme';
 import {post} from './dummy-post-data';
 import {IObject} from '~/interfaces/common';

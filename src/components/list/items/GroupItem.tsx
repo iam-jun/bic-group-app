@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import HeaderView from '../../HeaderView';
-import ScreenWrapper from '../../ScreenWrapper';
+import ScreenWrapper from '../../../beinComponents/ScreenWrapper';
 import {margin, padding} from '~/theme/spacing';
 import HorizontalView from '../../layout/HorizontalView';
 import Icon from '../../../beinComponents/Icon';

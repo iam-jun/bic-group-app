@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import Input from '~/components/inputs';

@@ -11,12 +11,12 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import NavigationHeader from '~/components/headers/NavigationHeader';
 import PrimaryButton from '~/components/buttons/PrimaryButton';
 import HorizontalView from '~/components/layout/HorizontalView';
 import {margin, padding} from '~/theme/spacing';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import createPostToolbar from '~/constants/createPostToolbar';
 import {useBaseHook} from '~/hooks';
 import {Text} from '~/components';
