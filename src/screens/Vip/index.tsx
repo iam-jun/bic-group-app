@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from '~/components';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 const Vip = () => {
   return (

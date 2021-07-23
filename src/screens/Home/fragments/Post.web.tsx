@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import HeaderView from '~/components/HeaderView';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import MediaView from '~/components/media/MediaView';
 import Divider from '~/components/Divider';
 import Icon from '~/beinComponents/Icon';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import {IObject} from '~/interfaces/common';
 import {borderRadius, margin, padding} from '~/theme/spacing';
 import Text from '~/components/texts/Text';

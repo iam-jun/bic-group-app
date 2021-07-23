@@ -10,8 +10,8 @@ import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
 import Divider from '~/components/Divider';
 import Input from '~/components/inputs';
-import ListView from '~/components/list/ListView';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ListView from '~/beinComponents/list/ListView';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {spacing} from '~/theme';
 import {
   generateRandomName,

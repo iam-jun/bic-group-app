@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {useDispatch} from 'react-redux';
 
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 
 import {homeStack, mainStack} from '~/configs/navigator';
 import {NavigationHeader, ViewSpacing} from '~/components';

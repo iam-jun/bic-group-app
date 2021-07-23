@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 import HeaderView from '../../HeaderView';
-import ScreenWrapper from '../../ScreenWrapper';
+import ScreenWrapper from '../../../beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {useTheme} from 'react-native-paper';
 import {IUser} from '~/interfaces/IAuth';
