@@ -4,7 +4,7 @@ import {Container, NavigationHeader, ScreenWrapper, Text} from '~/components';
 import {useDispatch} from 'react-redux';
 import useGroups from '~/hooks/groups';
 import groupsActions from '~/screens/Groups/redux/actions';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import {IObject} from '~/interfaces/common';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useTheme} from 'react-native-paper';

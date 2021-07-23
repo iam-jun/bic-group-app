@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {useBaseHook} from '~/hooks';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {Container, Text, Image} from '~/components';
 import ErrorBox from '~/components/ErrorBox';

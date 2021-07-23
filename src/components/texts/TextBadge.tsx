@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {red as TINT_COLOR, white as WHITE_COLOR} from '~/theme/colors';
 import Text from './Text';
-import ScreenWrapper from '../ScreenWrapper';
+import ScreenWrapper from '../../beinComponents/ScreenWrapper';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;

@@ -14,7 +14,7 @@ import {
   MessageOptionsModal,
 } from './fragments';
 import NavigationHeader from '~/components/headers/NavigationHeader';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {mainStack} from '~/configs/navigator';
 import {options} from '~/constants/messageOptions';
 import {useBaseHook} from '~/hooks';
@@ -114,8 +114,8 @@ const Conversation = () => {
           renderInputToolbar={props => (
             <ChatInput
               {...props}
-              /* 
-                InputToolbar has this props but 
+              /*
+                InputToolbar has this props but
                 GiftedChat have not been define it on InputToolbarProps
               */
               // @ts-ignore

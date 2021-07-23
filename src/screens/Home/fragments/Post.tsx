@@ -3,7 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import HeaderView from '~/components/HeaderView';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import MediaView from '~/components/media/MediaView';
 import ReactionsView from './ReactionsView';
 import Divider from '~/components/Divider';

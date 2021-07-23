@@ -3,7 +3,7 @@ import {StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import NavigationHeader from '~/components/headers/NavigationHeader';
 import {useBaseHook} from '~/hooks';
 import Input from '~/components/inputs';
@@ -11,7 +11,7 @@ import {spacing} from '~/theme';
 import {IObject} from '~/interfaces/common';
 import Text from '~/components/texts/Text';
 import {generateRandomUser} from '~/utils/generator';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalView from '~/components/layout/HorizontalView';
 import PrimaryButton from '~/components/buttons/PrimaryButton';

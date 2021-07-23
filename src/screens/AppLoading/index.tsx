@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import images from '~/resources/images';

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 import HeaderView from '../../HeaderView';
-import ScreenWrapper from '../../ScreenWrapper';
+import ScreenWrapper from '../../../beinComponents/ScreenWrapper';
 import {margin, padding} from '~/theme/spacing';
 import TextBadge from '../../texts/TextBadge';
 import {IObject} from '~/interfaces/common';

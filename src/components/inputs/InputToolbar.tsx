@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import {spacing} from '~/theme';
 import {margin} from '~/theme/spacing';
-import ScreenWrapper from '../ScreenWrapper';
+import ScreenWrapper from '../../beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import HorizontalView from '../layout/HorizontalView';
 import KeyboardSpacer from '../layout/KeyboardSpacer';

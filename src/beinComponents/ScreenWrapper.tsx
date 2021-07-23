@@ -2,27 +2,31 @@ import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
-export interface Props {
+export interface ScreenWrapperProps extends ViewStyle {
+  backgroundColor?: string;
   isFullView?: boolean;
   style?: StyleProp<ViewStyle>;
   [x: string]: any;
 }
 
-const ScreenWrapper: React.FC<Props> = ({isFullView, style, ...restProps}) => {
+const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
+  backgroundColor,
+  isFullView = true,
+  style,
+  ...props
+}: ScreenWrapperProps) => {
   const theme: ITheme = useTheme();
 
   return (
     <View
-      {...restProps}
+      {...props}
       style={StyleSheet.flatten([
-        {backgroundColor: theme.colors.background},
+        {backgroundColor: backgroundColor || theme.colors.background},
         isFullView && {flex: 1},
         style && style,
       ])}
     />
   );
 };
-
-ScreenWrapper.defaultProps = {};
 
 export default ScreenWrapper;
