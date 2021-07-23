@@ -34,7 +34,7 @@ export const bottomTabIcons = {
   groups: 'iconTabGroups',
   chat: 'iconTabChat',
   notification: 'iconTabNotification',
-  menu: 'iconTabMenu',
+  menus: 'iconTabMenu',
 };
 
 export const linkingConfig = {
@@ -79,10 +79,10 @@ export const linkingConfig = {
                   },
                 },
               },
-              menu: {
-                path: 'settings',
+              menus: {
+                path: 'menus',
                 screens: {
-                  settings: {
+                  menu: {
                     path: '',
                   },
                   'component-collection': {

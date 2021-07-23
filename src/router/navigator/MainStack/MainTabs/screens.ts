@@ -9,5 +9,5 @@ export const screens = {
   groups: GroupStack,
   chat: ChatStack,
   notification: Notification,
-  menu: MenuStack,
+  menus: MenuStack,
 };
