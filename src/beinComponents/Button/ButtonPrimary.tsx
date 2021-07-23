@@ -18,6 +18,7 @@ export interface ButtonPrimaryProps extends ButtonWrapperProps {
   colorDisabled?: string;
   textColor?: string;
   textColorDisabled?: string;
+  useI18n?: boolean;
 }
 
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
@@ -26,6 +27,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   colorDisabled,
   textColor,
   textColorDisabled,
+  useI18n,
   children,
   style,
   disabled,
@@ -54,7 +56,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
     <ButtonWrapper
       disabled={disabled}
       style={containerStyle}
-      textProps={{color: _textColor}}
+      textProps={{color: _textColor, useI18n}}
       underlayColor={_colorHover}
       TouchableComponent={TouchableHighlight}
       {...props}>

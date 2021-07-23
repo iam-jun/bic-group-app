@@ -4,6 +4,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
+import {borderRadius} from '~/theme/spacing';
 
 export type AvatarType = 'tiny' | 'small' | 'medium' | 'large' | 'ultraLarge';
 
@@ -18,6 +19,7 @@ export interface AvatarProps {
   onPressAction?: () => void;
   badge?: any;
   badgeBottom?: boolean;
+  isRounded?: boolean;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -29,6 +31,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   onPressAction,
   badge,
   badgeBottom,
+  isRounded,
 }: AvatarProps) => {
   const theme: ITheme = useTheme();
   const {spacing, dimension, colors} = theme;
@@ -36,7 +39,14 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
   const avatarSize = dimension?.avatarSizes[variant] || 24;
   const avatarContainerStyle: StyleProp<ViewStyle> = styles[variant];
-  const avatarStyle: StyleProp<ImageStyle> = styles[variant];
+  let avatarStyle: StyleProp<ImageStyle> = styles[variant];
+
+  if (isRounded) {
+    avatarStyle = StyleSheet.flatten([
+      avatarStyle,
+      {borderRadius: avatarSize / 2},
+    ]);
+  }
 
   const renderAction = () => {
     if (!onPressAction) {

@@ -1,31 +1,38 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Text from '~/beinComponents/Text';
+import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
-import Button, {ButtonProps} from '~/beinComponents/Button';
+import Button from '~/beinComponents/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBaseHook} from '~/hooks';
+import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 
 export interface HeaderProps {
   title?: string;
+  titleTextProps?: TextProps;
   subTitle?: string;
+  subTitleTextProps?: TextProps;
   avatar?: any;
   icon?: any;
   onPressIcon?: () => void;
   buttonText?: string;
-  buttonProps?: ButtonProps;
+  buttonProps?: ButtonPrimaryProps;
   onPressButton?: () => void;
   menuIcon?: any;
   onPressMenu?: () => void;
   hideBack?: boolean;
+  onPressBack?: () => void;
   disableInsetTop?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
   title,
+  titleTextProps,
   subTitle,
+  subTitleTextProps,
   avatar,
   icon,
   onPressIcon,
@@ -35,12 +42,24 @@ const Header: React.FC<HeaderProps> = ({
   menuIcon,
   onPressMenu,
   hideBack,
+  onPressBack,
   disableInsetTop,
 }: HeaderProps) => {
   const theme: ITheme = useTheme();
   const {spacing, dimension} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
+
+  const {navigation} = useBaseHook();
+
+  const _onPressBack = () => {
+    if (onPressBack) {
+      onPressBack();
+    } else {
+      navigation.goBack();
+    }
+  };
+
   return (
     <View
       style={StyleSheet.flatten([
@@ -52,13 +71,13 @@ const Header: React.FC<HeaderProps> = ({
         },
         styles.container,
       ])}>
-      {!hideBack && <Icon icon={'AngleLeftB'} />}
+      {!hideBack && <Icon icon={'AngleLeftB'} onPress={_onPressBack} />}
       {!!avatar && (
         <Avatar source={avatar} style={{marginLeft: spacing?.margin.base}} />
       )}
       <View style={{flex: 1, marginLeft: spacing?.margin.base}}>
-        {!!title && <Text.H5>{title}</Text.H5>}
-        {!!subTitle && <Text.H6>{subTitle}</Text.H6>}
+        {!!title && <Text.H5 {...titleTextProps}>{title}</Text.H5>}
+        {!!subTitle && <Text.H6 {...subTitleTextProps}>{subTitle}</Text.H6>}
       </View>
       {!!icon && onPressIcon && (
         <Icon
