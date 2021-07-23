@@ -92,6 +92,10 @@ const Section2 = () => {
           Tab Menu and Tag
         </Text.H3>
         <Divider style={{margin: spacing?.margin.base}} />
+        <Text.H5
+          style={{
+            margin: spacing?.margin.base,
+          }}>{`<Tag/> || <Tag.Medium/>`}</Text.H5>
         <View style={{flexDirection: 'row'}}>
           <Tag
             avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
@@ -120,7 +124,9 @@ const Section2 = () => {
             style={{marginStart: spacing?.margin.small}}
           />
         </View>
-        <View style={{flexDirection: 'row', marginTop: 8}}>
+        <Text.H5
+          style={{margin: spacing?.margin.base}}>{`<Tag.Small/>`}</Text.H5>
+        <View style={{flexDirection: 'row'}}>
           <Tag.Small
             avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
             label={'Priority'}
