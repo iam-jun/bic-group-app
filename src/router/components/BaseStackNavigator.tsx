@@ -5,7 +5,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 //@ts-ignore
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 // eslint-disable-next-line react/prop-types
 const GroupStack = ({stack, screens}): React.ReactElement => {
   return (

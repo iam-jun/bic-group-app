@@ -44,12 +44,10 @@ const StackNavigator = (): React.ReactElement => {
     console.log('handleDeepLink', {initialUrl});
 
     //[TO-DO] replace url with config url
-    const path = initialUrl?.replace('http://localhost:8080/', '');
-    if (path) {
-      const route =
-        path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
-      setInitialRouteName(route);
-    }
+    const path = initialUrl?.replace('http://localhost:8080/', '') || '';
+    const route =
+      path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
+    setInitialRouteName(route || '');
   };
 
   /*Handle when app in background*/
@@ -72,7 +70,9 @@ const StackNavigator = (): React.ReactElement => {
         isNavigationRefReady.current = true;
       }}
       theme={navigationTheme}>
-      <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
+      <Stack.Navigator
+        screenOptions={{cardStyle: cardStyleConfig}}
+        initialRouteName="AppLoading">
         <Stack.Screen
           options={{headerShown: false}}
           //@ts-ignore

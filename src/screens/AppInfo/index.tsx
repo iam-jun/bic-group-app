@@ -1,9 +1,8 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
-import {spacing} from '~/theme';
 import images from '~/resources/images';
 import {Text} from '~/components';
 

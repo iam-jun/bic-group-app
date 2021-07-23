@@ -18,7 +18,6 @@ import ViewSpacing from '../ViewSpacing';
 import Text from '../texts/Text';
 import loadings from './loadings';
 import {IAction} from '~/constants/commonActions';
-import {grey5} from '~/theme/colors';
 
 export interface IListView {
   data?: Array<any>;
@@ -101,7 +100,7 @@ const ListView: React.FC<IListView> = ({
             ))}
           </View>
         ) : (
-          <ActivityIndicator color={grey5} />
+          <ActivityIndicator />
         )}
       </View>
     );
