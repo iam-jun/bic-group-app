@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {NavigationHeader} from '~/components';
 import {mainStack} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
+import useSocketChat from '~/hooks/socketChat';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
 import Divider from '~/components/Divider';
@@ -34,9 +35,21 @@ const ConversationsList = () => {
   const {t, navigation} = useBaseHook();
   const dispatch = useDispatch();
 
+  const sendMessage = useSocketChat({
+    onMessage: event => {
+      console.log(
+        'do something on message type, data must be parsed!',
+        JSON.parse(event.data),
+      );
+    },
+  });
+
+  sendMessage('test-message');
+
   const onChatPress = (item: IConversation) => {
-    dispatch(actions.selectConversation(item));
-    navigation.navigate(mainStack.conversation);
+    sendMessage('test-message');
+    // dispatch(actions.selectConversation(item));
+    // navigation.navigate(mainStack.conversation);
   };
 
   return (
