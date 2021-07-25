@@ -90,8 +90,8 @@ const getBeinAccessToken = (): string => {
   );
 };
 
-const getChatAccessToken = (): string => {
-  return _.get(Store.getCurrentAuth(), 'chat.accessToken', '');
+const getChatAuthInfo = () => {
+  return _.get(Store.getCurrentAuth(), 'chat', {});
 };
 
 const getFeedAccessToken = (): string => {
@@ -393,7 +393,7 @@ export {
   makeGetStreamRequest,
   makeHttpRequest,
   getFeedAccessToken,
-  getChatAccessToken,
+  getChatAuthInfo,
   handleResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,

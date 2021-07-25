@@ -2,7 +2,7 @@ import {AxiosRequestConfig} from 'axios';
 
 const providers = {
   bein: {
-    url: 'http://52.15.139.185:3000/',
+    url: 'http://13.212.9.73:3000/',
     name: 'Bein',
   },
   chat: {
@@ -34,8 +34,8 @@ const App = {
   },
   tokens: (): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}user/tokens`,
-      method: 'post',
+      url: `${providers.bein.url}user/token`,
+      method: 'get',
       provider: providers.bein,
       useRetry: true,
     };

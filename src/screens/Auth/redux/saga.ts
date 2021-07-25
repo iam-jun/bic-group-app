@@ -95,7 +95,7 @@ function* onSignInSuccess(user: IUserResponse) {
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
   if (!refreshSuccess) {
-    console.log('get auth tokens failed');
+    console.log('TODO: get auth tokens failed');
     // TODO:
     // yield onSignInFailed(i18n.t('error:http:token_expired'));
     // return;

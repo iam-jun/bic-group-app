@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 
 import {NavigationHeader} from '~/components';
 import {useBaseHook} from '~/hooks';
+import useSocketChat from '~/hooks/socketChat';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
 import Divider from '~/components/Divider';
@@ -39,9 +40,21 @@ const ConversationsList = (): React.ReactElement => {
 
   const dispatch = useDispatch();
 
+  const sendMessage = useSocketChat({
+    onMessage: event => {
+      console.log(
+        'do something on message type, data must be parsed!',
+        JSON.parse(event.data),
+      );
+    },
+  });
+
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
     rootNavigation.navigate(chatStack.conversation, {id: item.id});
+    sendMessage('test-message');
+    // dispatch(actions.selectConversation(item));
+    // navigation.navigate(mainStack.conversation);
   };
 
   return (
