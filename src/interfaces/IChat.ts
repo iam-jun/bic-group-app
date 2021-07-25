@@ -25,6 +25,7 @@ export type IMessage = _GMessage & {
 };
 
 export type IConversation = {
+  id: string;
   name: string;
   description?: string;
   members: IUser[];

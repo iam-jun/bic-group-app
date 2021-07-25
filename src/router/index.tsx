@@ -1,83 +1,95 @@
 import React, {useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
+import {View, Linking} from 'react-native';
 
 /*Theme*/
 import {useTheme} from 'react-native-paper';
-import {DefaultTheme, DarkTheme} from '@react-navigation/native';
-
 /* @react-navigation v5 */
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 /*import config navigation*/
 import * as screens from './navigator';
-import {navigationSetting} from '~/configs/navigator';
+import {linkingConfig, navigationSetting} from '~/configs/navigator';
+import {rootSwitch} from './stack';
+import {rootNavigationRef} from './navigator/refs';
+import {isNavigationRefReady} from './helper';
+import {RootStackParamList} from '~/interfaces/IRouter';
 
-import {IStack} from '~/interfaces/navigator';
-import {IObject} from '~/interfaces/common';
+const Stack = createStackNavigator<RootStackParamList>();
 
-import {navigationRef, isNavigationRefReady} from '~/utils/refNavigator';
-
-const Stack = createStackNavigator();
-
-const StackNavigator = () => {
+const StackNavigator = (): React.ReactElement => {
   useEffect(() => {
+    //@ts-ignore
     isNavigationRefReady.current = false;
+
+    /*Deep link*/
+    Linking.addEventListener('url', handleOpenURL);
+    handleDeepLink();
   }, []);
 
   const theme = useTheme();
-  const {i18n} = useTranslation();
 
-  const lang: string = i18n.language;
+  const [initialRouteName, setInitialRouteName] = React.useState<
+    string | undefined
+  >();
 
-  const initialRoute: string = navigationSetting.configs.initialRouteName;
+  /*Deep link*/
+  /*Handle when app killed*/
+  const handleDeepLink = async () => {
+    const initialUrl = await Linking.getInitialURL();
+    console.log('handleDeepLink', {initialUrl});
+
+    //[TO-DO] replace url with config url
+    const path = initialUrl?.replace('http://localhost:8080/', '') || '';
+    const route =
+      path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
+    setInitialRouteName(route || '');
+  };
+
+  /*Handle when app in background*/
+  const handleOpenURL = (event: any) => {
+    console.log('handleOpenURL', {event});
+  };
+
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
-
-  /* StackNavigator  */
-  const StackNavigators = navigationSetting.stacks;
 
   const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
 
-  // const containerRef = React.useRef(null);
-
-  const ref: any = navigationRef;
-
-  const listScreens: IObject<any> = screens;
+  if (initialRouteName === undefined) return <View />;
 
   return (
     <NavigationContainer
-      ref={ref}
+      linking={linkingConfig}
+      ref={rootNavigationRef}
       onReady={() => {
+        //@ts-ignore
         isNavigationRefReady.current = true;
       }}
       theme={navigationTheme}>
-      <Stack.Navigator
-        initialRouteName={initialRoute}
-        screenOptions={{cardStyle: cardStyleConfig}}>
-        {StackNavigators.map((stack: IStack) => {
-          if (!Object.keys(screens).includes(stack.screen)) {
-            return null;
-          }
-
-          return (
-            <Stack.Screen
-              key={'screen' + stack.screen}
-              name={stack.router}
-              component={listScreens[stack.screen]}
-              options={{
-                title: lang === 'en' ? stack.title.en : stack.title.vi,
-                headerShown:
-                  stack.options && stack.options.headerShown
-                    ? stack.options.headerShown
-                    : false,
-                animationEnabled:
-                  stack.options && !stack.options.animationEnabled
-                    ? stack.options.animationEnabled
-                    : true,
-              }}
-            />
-          );
-        })}
+      <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
+        <Stack.Screen
+          options={{headerShown: false}}
+          //@ts-ignore
+          name={rootSwitch.appLoading}
+          component={screens.AppLoading}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          //@ts-ignore
+          name={rootSwitch.authStack}
+          component={screens.AuthStack}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          //@ts-ignore
+          name={rootSwitch.mainStack}
+          component={screens.MainStack}
+          initialParams={{initialRouteName}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

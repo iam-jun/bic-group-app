@@ -3,7 +3,6 @@ import {useDispatch} from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
 
-import {homeStack, mainStack} from '~/configs/navigator';
 import {NavigationHeader, ViewSpacing} from '~/components';
 import {AppContext} from '~/contexts/AppContext';
 import {spacing} from '~/theme';
@@ -15,8 +14,10 @@ import {options} from '~/constants/postOptions';
 import PostOptionsModal from '../fragments/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
+import {data} from './dummy-data';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
-const Home = ({navigation}: {navigation: any}) => {
+const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
   const dispatch = useDispatch();
   const postOptionsModalRef = React.useRef<IOptionModal>();
 
@@ -30,9 +31,10 @@ const Home = ({navigation}: {navigation: any}) => {
       case commonActions.reactionComment:
         dispatch(actions.getComments());
         navigation.navigate(homeStack.postDetail, {commentFocus: true});
-
+        break;
       case commonActions.openPostOption:
-        return postOptionsModalRef.current?.open();
+        postOptionsModalRef.current?.open();
+        break;
     }
   };
 
@@ -59,11 +61,13 @@ const Home = ({navigation}: {navigation: any}) => {
       <NavigationHeader
         title="News Feed"
         rightIcon="iconEdit"
-        rightPress={() => navigation.navigate(mainStack.createPost)}
+        rightPress={() => navigation.navigate(homeStack.createPost)}
       />
       <ListView
         style={styles.container}
         type="content"
+        data={data}
+        isFullView
         onItemPress={_onItemPress}
         onActionPress={_onActionPress}
         renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
@@ -79,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Newsfeed;

@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {NavigationHeader} from '~/components';
-import {mainStack} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import useSocketChat from '~/hooks/socketChat';
 import {IObject} from '~/interfaces/common';
@@ -17,12 +16,16 @@ import {spacing} from '~/theme';
 import {
   generateRandomName,
   generateRandomUser,
+  generateUniqueId,
   getRandomInt,
 } from '~/utils/generator';
 import * as actions from '~/screens/Chat/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
-const ConversationsList = () => {
-  const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
+const ConversationsList = (): React.ReactElement => {
+  const data: IConversation[] = Array.from(Array(20).keys()).map(() => ({
+    id: generateUniqueId(),
     name: generateRandomName(),
     members: [generateRandomUser(), generateRandomUser()],
     unreadCount: getRandomInt(0, 10),
@@ -32,7 +35,9 @@ const ConversationsList = () => {
 
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
+
   const dispatch = useDispatch();
 
   const sendMessage = useSocketChat({
@@ -44,9 +49,9 @@ const ConversationsList = () => {
     },
   });
 
-  sendMessage('test-message');
-
   const onChatPress = (item: IConversation) => {
+    dispatch(actions.selectConversation(item));
+    rootNavigation.navigate(chatStack.conversation, {id: item.id});
     sendMessage('test-message');
     // dispatch(actions.selectConversation(item));
     // navigation.navigate(mainStack.conversation);
