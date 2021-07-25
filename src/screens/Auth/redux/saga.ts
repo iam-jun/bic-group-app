@@ -96,9 +96,8 @@ function* onSignInSuccess(user: IUserResponse) {
   const refreshSuccess = yield refreshAuthTokens();
   if (!refreshSuccess) {
     console.log('TODO: get auth tokens failed');
-    // TODO:
-    // yield onSignInFailed(i18n.t('error:http:token_expired'));
-    // return;
+    yield onSignInFailed(i18n.t('error:http:token_expired'));
+    return;
   }
 
   rootNavigationRef?.current?.dispatch(
