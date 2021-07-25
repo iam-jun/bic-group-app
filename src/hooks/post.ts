@@ -2,8 +2,11 @@ import {useSelector} from 'react-redux';
 import {IObject} from '~/interfaces/common';
 
 const usePost = () => {
-  const posts = useSelector((state: IObject<any>) => state.post);
-  return posts;
+  return useSelector((state: IObject<any>) => state.post);
+};
+
+export const useCreatePost = () => {
+  return useSelector((state: IObject<any>) => state.post.createPost);
 };
 
 export default usePost;

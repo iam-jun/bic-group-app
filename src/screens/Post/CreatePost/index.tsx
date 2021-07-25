@@ -6,45 +6,44 @@ import {useDispatch} from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {margin, padding} from '~/theme/spacing';
 import {useBaseHook} from '~/hooks';
-import {homeStack} from '~/configs/navigator';
-import audienceActions from './SelectAudience/redux/actions';
-import postActions from './redux/actions';
 import Header from '~/beinComponents/Header';
 import {ITheme} from '~/theme/interfaces';
 import SelectedAudienceSection from './components/SelectedAudienceSection';
 import Divider from '~/beinComponents/Divider';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
+import {useCreatePost} from '~/hooks/post';
+import postActions from '~/screens/Post/redux/actions';
+import {IPostCreatePost} from '~/interfaces/IPost';
 
 const CreatePostView = () => {
-  const [text, setText] = useState<string>('');
   const toolbarModalizeRef = useRef();
 
   const dispatch = useDispatch();
-  const {navigation, t} = useBaseHook();
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme();
   const {colors} = theme;
 
-  const disableButtonPost = text?.length === 0;
+  const createPostData = useCreatePost();
+  const {loading, data, audience, tags} = createPostData || {};
+  const {content, images, videos, files} = data || {};
+  const {groups, users} = audience || {};
+
+  const disableButtonPost = loading || content?.length === 0;
 
   useEffect(() => {
-    console.log('\x1b[36m', 'namanh --- text | update : ', text, '\x1b[0m');
-  }, [text]);
+    return () => {
+      dispatch(postActions.clearCreatPostData());
+    };
+  }, []);
 
   const onPressPost = () => {
-    dispatch(
-      postActions.selectPost({
-        content: text,
-        reaction: {like: 0, comment: 0, share: 0},
-        isLike: true,
-      }),
-    );
-    dispatch(audienceActions.setAudiences([]));
-    navigation.navigate(homeStack.postDetail);
+    const payload: IPostCreatePost = {data, audience, tags};
+    dispatch(postActions.postCreateNewPost(payload));
   };
 
   const onChangeText = (text: string) => {
-    setText(text);
+    dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
   return (
@@ -57,6 +56,7 @@ const CreatePostView = () => {
           title={'post:create_post'}
           buttonText={'post:post_button'}
           buttonProps={{
+            loading: loading,
             disabled: disableButtonPost,
             color: colors.primary7,
             textColor: colors.textReversed,

@@ -5,7 +5,7 @@ import modalSaga from './modal/saga';
 import authSaga from '../screens/Auth/redux/saga';
 import chatSaga from '../screens/Chat/redux/saga';
 import commentSaga from '../screens/Home/Comment/redux/saga';
-import postSaga from '../screens/Post/CreatePost/redux/saga';
+import postSaga from '../screens/Post/redux/saga';
 import groupsSaga from '~/screens/Groups/redux/saga';
 
 export default function* rootSagas() {
@@ -15,8 +15,8 @@ export default function* rootSagas() {
     authSaga(),
     chatSaga(),
     commentSaga(),
-    postSaga(),
     groupsSaga(),
     homeSaga(),
+    postSaga(),
   ]);
 }
