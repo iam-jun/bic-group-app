@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+import {ActivityIndicator, useTheme} from 'react-native-paper';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 
 export interface ButtonWrapperProps {
@@ -28,6 +28,7 @@ export interface ButtonWrapperProps {
   underlayColor?: string;
   TouchableComponent?: any;
   testID?: string;
+  loading?: boolean;
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
@@ -46,6 +47,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   rightIcon,
   rightIconProps,
   underlayColor,
+  loading,
   TouchableComponent = TouchableOpacity,
 }: ButtonWrapperProps) => {
   const {colors, spacing}: ITheme = useTheme();
@@ -58,6 +60,19 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
           tintColor={textProps?.color}
           style={{marginHorizontal: spacing?.margin.small}}
           {...iconProps}
+        />
+      );
+    }
+    return null;
+  };
+
+  const renderLoading = () => {
+    if (loading) {
+      return (
+        <ActivityIndicator
+          color={colors.textDisabled}
+          style={{marginRight: spacing?.margin.tiny}}
+          size={12}
         />
       );
     }
@@ -77,6 +92,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
           {flexDirection: 'row', alignItems: 'center'},
           contentStyle,
         ])}>
+        {renderLoading()}
         {renderIcon(leftIcon, leftIconProps)}
         {typeof children === 'string' ? (
           <Text
