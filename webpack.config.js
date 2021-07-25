@@ -37,7 +37,6 @@ const compileNodeModules = [
   'aws-amplify',
   'react-hook-form',
   'react-native-fast-image',
-  'react-native-linear-gradient',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {

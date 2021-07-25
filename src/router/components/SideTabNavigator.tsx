@@ -45,7 +45,7 @@ type Props = DefaultNavigatorOptions<TabNavigationOptions> &
   TabRouterOptions &
   TabNavigationConfig;
 
-function TabNavigator({
+function SideTabNavigator({
   initialRouteName,
   children,
   screenOptions,
@@ -145,7 +145,7 @@ export default createNavigatorFactory<
   TabNavigationState<ParamListBase>,
   TabNavigationOptions,
   TabNavigationEventMap,
-  typeof TabNavigator
->(TabNavigator);
+  typeof SideTabNavigator
+>(SideTabNavigator);
 
-export const createTabNavigator = createNavigatorFactory(TabNavigator);
+export const createSideTabNavigator = createNavigatorFactory(SideTabNavigator);

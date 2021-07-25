@@ -5,7 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Icon from '~/beinComponents/Icon';
 
-import {createTabNavigator} from '../../../components/TabNavigator';
+import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {useWindowDimensions} from 'react-native';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -13,7 +13,7 @@ import {screens} from './screens';
 import {bottomTabIcons} from '~/configs/navigator';
 
 const BottomTab = createBottomTabNavigator();
-const SideTab = createTabNavigator();
+const SideTab = createSideTabNavigator();
 
 const MainTabs = () => {
   const theme: ITheme = useTheme();

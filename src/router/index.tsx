@@ -70,9 +70,7 @@ const StackNavigator = (): React.ReactElement => {
         isNavigationRefReady.current = true;
       }}
       theme={navigationTheme}>
-      <Stack.Navigator
-        screenOptions={{cardStyle: cardStyleConfig}}
-        initialRouteName="AppLoading">
+      <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
         <Stack.Screen
           options={{headerShown: false}}
           //@ts-ignore

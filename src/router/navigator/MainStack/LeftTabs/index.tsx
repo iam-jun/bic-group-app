@@ -3,12 +3,12 @@ import {useTheme} from 'react-native-paper';
 
 import Icon from '~/beinComponents/Icon';
 
-import {createTabNavigator} from '../../../components/TabNavigator';
+import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons} from '~/configs/navigator';
 
-const Tab = createTabNavigator();
+const Tab = createSideTabNavigator();
 
 interface Props {
   initialRouteName?: string;
