@@ -43,8 +43,11 @@ const closeConnectChat = () => {
 const addOnMessageCallback = (
   id: string,
   callback: (event: WebSocketMessageEvent) => void,
-) => {
+): (() => void) => {
   onMessageCallbacks.push({id, callback});
+  return () => {
+    removeOnMessageCallback(id);
+  };
 };
 
 const removeOnMessageCallback = (id: string) => {
