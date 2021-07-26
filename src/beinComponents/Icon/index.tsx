@@ -83,8 +83,8 @@ const Icon: React.FC<IconRequiredProps> = ({
         styles.container,
         isButton && styles.button,
         style,
-        {backgroundColor},
         disabled && isButton && styles.disabled,
+        {backgroundColor},
       ]}
       disabled={!onPress}
       onPress={onPress}>

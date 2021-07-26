@@ -6,14 +6,13 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import Input from '~/components/inputs';
 import * as actions from '~/screens/Auth/redux/actions';
 import {Container, ViewSpacing} from '~/components';
 import InputPassword from '~/components/inputs/InputPassword';
-import * as refNavigator from '~/utils/refNavigator';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
 import * as actionsCommon from '~/store/modal/actions';
@@ -21,6 +20,7 @@ import {ISignUpResponse} from '~/interfaces/IAuth';
 import PrimaryButton from '~/components/buttons/PrimaryButton';
 import TransparentButton from '~/components/buttons/TransparentButton';
 import useAuth from '~/hooks/auth';
+import {rootNavigationRef} from '~/router/navigator/refs';
 
 const SignUp = (props: any) => {
   const dispatch = useDispatch();
@@ -179,7 +179,7 @@ const SignUp = (props: any) => {
         <TransparentButton
           testID="textSignin"
           title={t('auth:navigate_sign_in')}
-          onPress={() => refNavigator.navigate(authStack.login)}
+          onPress={() => rootNavigationRef?.current?.navigate(authStack.login)}
         />
         <ViewSpacing height={80} />
         <PrimaryButton

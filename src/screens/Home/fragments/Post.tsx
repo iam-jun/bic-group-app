@@ -3,7 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import HeaderView from '~/components/HeaderView';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import MediaView from '~/components/media/MediaView';
 import ReactionsView from './ReactionsView';
 import Divider from '~/components/Divider';
@@ -57,13 +57,13 @@ const Post: React.FC<IObject<any>> = ({
 
       {media && <MediaView {...media} />}
 
-      {hashtags && <TagsView style={styles.hashtags} data={hashtags} />}
+      {/* {hashtags && <TagsView style={styles.hashtags} data={hashtags} />} */}
 
       {reaction && (
         <>
           <ReactionsView isLike={isLike} {...reaction} />
           <Divider thick={1} />
-          // TODO: Add reaction (like, comment, share) view here
+          {/* TODO: Add reaction (like, comment, share) view here */}
         </>
       )}
       <TouchableOpacity

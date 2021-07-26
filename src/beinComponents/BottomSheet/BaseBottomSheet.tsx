@@ -1,11 +1,10 @@
 import React from 'react';
 import {Modalize, ModalizeProps} from 'react-native-modalize';
 import {Portal, useTheme} from 'react-native-paper';
-import {StyleSheet} from 'react-native';
-
-import {StyleProp, ViewProps} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
+import {StyleSheet, ViewStyle, StyleProp} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {ITheme} from '~/theme/interfaces';
 
 export type FlatListProps = {
   data: any[];
@@ -13,9 +12,8 @@ export type FlatListProps = {
 };
 
 export interface BaseBottomSheetProps extends ModalizeProps {
-  children?: React.ReactNode;
   modalizeRef: any;
-  modalizeProps?: ModalizeProps;
+  children?: React.ReactNode;
 
   adjustToContentHeight?: boolean;
   handlePosition?: 'inside' | 'outside';
@@ -27,16 +25,15 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   FooterComponent?: React.ReactNode;
   FloatingComponent?: React.ReactNode;
 
-  handleStyle?: StyleProp<ViewProps>;
-  modalStyle?: StyleProp<ViewProps>;
-  childrenStyle?: StyleProp<ViewProps>;
-  overlayStyle?: StyleProp<ViewProps>;
+  handleStyle?: StyleProp<ViewStyle>;
+  modalStyle?: StyleProp<ViewStyle>;
+  childrenStyle?: StyleProp<ViewStyle>;
+  overlayStyle?: StyleProp<ViewStyle>;
 }
 
 const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
-  children,
   modalizeRef,
-  modalizeProps,
+  children,
 
   flatListProps,
   adjustToContentHeight = true,
@@ -53,6 +50,7 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
   modalStyle,
   childrenStyle,
   overlayStyle,
+  ...props
 }: BaseBottomSheetProps) => {
   const renderModalize = () => {
     const {spacing}: ITheme = useTheme();
@@ -79,8 +77,8 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
         <Modalize
           ref={modalizeRef}
           adjustToContentHeight={adjustToContentHeight}
-          snapPoint={snapPoint}
           modalHeight={modalHeight}
+          snapPoint={snapPoint}
           HeaderComponent={HeaderComponent}
           FooterComponent={FooterComponent}
           FloatingComponent={FloatingComponent}
@@ -90,7 +88,7 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
           modalStyle={_modalStyle}
           overlayStyle={overlayStyle}
           childrenStyle={_childrenStyle}
-          {...modalizeProps}>
+          {...props}>
           {flatListProps ? undefined : ContentComponent}
         </Modalize>
       </Portal>

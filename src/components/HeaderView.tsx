@@ -7,10 +7,10 @@ import Icon from '../beinComponents/Icon';
 import {IconProps} from '../beinComponents/Icon';
 import {margin, padding} from '~/theme/spacing';
 import {IObject} from '~/interfaces/common';
-import * as RootNavigation from '~/utils/refNavigator';
 import {homeStack} from '~/configs/navigator';
 import {useTheme} from 'react-native-paper';
 import {formatDate} from '~/utils/formatData';
+import {rootNavigationRef} from '~/router/navigator/refs';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -53,7 +53,10 @@ const HeaderView: React.FC<Props> = ({
           style={styles.iconBack}
           icon="iconBack"
           size={18}
-          onPress={() => RootNavigation.navigate(homeStack.home)}
+          onPress={() =>
+            rootNavigationRef?.current?.canGoBack &&
+            rootNavigationRef?.current?.goBack()
+          }
         />
       )}
       <HorizontalView style={{alignItems: 'center'}}>

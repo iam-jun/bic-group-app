@@ -7,15 +7,15 @@ import Section3 from '~/screens/Menu/ComponentCollection/Section3';
 import Section4 from '~/screens/Menu/ComponentCollection/Section4';
 import Header from '~/beinComponents/Header';
 
-const ComponentCollection = () => {
+const ComponentCollection = (): React.ReactElement => {
   return (
     <ScreenWrapper isFullView>
       <Header title={'ComponentCollection'} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Section3 />
         <Section1 />
-        <Section4 />
         <Section2 />
+        <Section3 />
+        <Section4 />
       </ScrollView>
     </ScreenWrapper>
   );

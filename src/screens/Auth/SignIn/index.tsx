@@ -76,6 +76,7 @@ const SignIn = () => {
   }, 50);
 
   const checkDisableSignIn = () => {
+    return false; // TODO: disable for login with admin
     const email = getValues('email');
     const password = getValues('password');
     return !isEmpty(errors) || !email || !password || loading;
@@ -122,7 +123,7 @@ const SignIn = () => {
             },
           }}
           name="email"
-          defaultValue={__DEV__ && 'evol@mailinator.com'}
+          defaultValue={__DEV__ && 'fe.admin'}
         />
         <Controller
           control={control}

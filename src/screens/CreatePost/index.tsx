@@ -11,21 +11,21 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import NavigationHeader from '~/components/headers/NavigationHeader';
 import PrimaryButton from '~/components/buttons/PrimaryButton';
 import HorizontalView from '~/components/layout/HorizontalView';
 import {margin, padding} from '~/theme/spacing';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import createPostToolbar from '~/constants/createPostToolbar';
 import {useBaseHook} from '~/hooks';
 import {Text} from '~/components';
 import {IObject} from '~/interfaces/common';
 import Divider from '~/components/Divider';
-import {homeStack, mainStack} from '~/configs/navigator';
 import useAudience from '~/hooks/audience';
 import audienceActions from './SelectAudience/redux/actions';
 import postActions from './redux/actions';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const CreatePostView = ({navigation}: {navigation: any}) => {
   const {t} = useBaseHook();
@@ -64,11 +64,9 @@ const CreatePostView = ({navigation}: {navigation: any}) => {
           }
         />
         <HorizontalView>
-          <Text style={styles.sendTo} bold>
-            {t('post:send_to')}
-          </Text>
+          <Text style={styles.sendTo}>{t('post:send_to')}</Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate(mainStack.selectPostAudience)}
+            onPress={() => navigation.navigate(homeStack.selectAudience)}
             style={[
               styles.chooseAudience,
               {backgroundColor: theme.colors.tag},

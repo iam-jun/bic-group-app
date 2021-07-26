@@ -2,6 +2,7 @@ import React from 'react';
 import AvatarComponent, {
   AvatarProps,
 } from '~/beinComponents/Avatar/AvatarComponent';
+import Group from './AvatarGroup';
 
 const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant={'tiny'} {...props} />
@@ -25,6 +26,7 @@ const Avatar = Object.assign(AvatarComponent, {
   Medium,
   Large,
   UltraLarge,
+  Group,
 });
 
 export default Avatar;

@@ -42,7 +42,7 @@ const TextComponent: React.FC<TextProps> = ({
 }: TextProps) => {
   const theme: ITheme = useTheme();
   const {t} = useBaseHook();
-  const styles: {[key: string]: any} = createStyle(theme);
+  const styles = createStyle(theme);
   const textStyle = styles[variant || 'body'];
 
   return (

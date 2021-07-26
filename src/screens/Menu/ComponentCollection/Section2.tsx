@@ -14,6 +14,7 @@ import UserBadge from '~/beinComponents/Badge/UserBadge';
 import Reaction from '~/beinComponents/Badge/Reaction';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import * as modalActions from '~/store/modal/actions';
+import Tag from '~/beinComponents/Tag';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -124,12 +125,92 @@ const Section2 = () => {
     );
   };
 
+  const renderTabMenuTag = () => {
+    return (
+      <>
+        <Text.H3 style={{marginHorizontal: spacing?.margin.base}}>
+          Tab Menu and Tag
+        </Text.H3>
+        <Divider style={{margin: spacing?.margin.base}} />
+        <Text.H5
+          style={{
+            margin: spacing?.margin.base,
+          }}>{`<Tag/> || <Tag.Medium/>`}</Text.H5>
+        <View style={{flexDirection: 'row'}}>
+          <Tag
+            avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            label={'Priority'}
+            selected={true}
+            icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag
+            label={'Priority'}
+            selected={false}
+            icon={'18Plus'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag
+            label={'Priority'}
+            selected={false}
+            disabled
+            icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+        </View>
+        <Text.H5
+          style={{margin: spacing?.margin.base}}>{`<Tag.Small/>`}</Text.H5>
+        <View style={{flexDirection: 'row'}}>
+          <Tag.Small
+            avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            label={'Priority'}
+            selected={true}
+            icon={'Globe'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag.Small
+            label={'Priority'}
+            selected={false}
+            icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+          <Tag.Small
+            label={'Priority'}
+            selected={false}
+            disabled
+            icon={'iconClose'}
+            onPressIcon={() => alert('onPress icon')}
+            onActionPress={_onActionPress}
+            style={{marginStart: spacing?.margin.small}}
+          />
+        </View>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            marginBottom: spacing?.margin.big,
+          }}
+        />
+      </>
+    );
+  };
+
   return (
     <View style={{}}>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 2</Text.H5>
       {renderBadge()}
       {renderInput()}
       {renderModals()}
+      {renderTabMenuTag()}
     </View>
   );
 };

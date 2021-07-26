@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Container, NavigationHeader, Text} from '~/components';
-import ListView from '~/components/list/ListView';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ListView from '~/beinComponents/list/ListView';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {margin, padding} from '~/theme/spacing';
 import {dummyNotifications} from './dummy-notifications';
 

@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import {spacing} from '~/theme';
 import {margin} from '~/theme/spacing';
-import ScreenWrapper from '../ScreenWrapper';
+import ScreenWrapper from '../../beinComponents/ScreenWrapper';
 import {IObject} from '~/interfaces/common';
 import HorizontalView from '../layout/HorizontalView';
 import KeyboardSpacer from '../layout/KeyboardSpacer';
@@ -38,7 +38,7 @@ const InputToolbar: React.FC<Props> = ({
   const [comment, setComment] = useState<string>('');
 
   useEffect(() => {
-    replyingComment && setComment(`@${replyingComment?.user.name} `);
+    replyingComment && setComment(`@${replyingComment?.user?.name} `);
   }, [replyingComment]);
 
   const _onSend = () => {
@@ -87,9 +87,9 @@ const InputToolbar: React.FC<Props> = ({
         <HorizontalView>
           <Text style={styles.replyText}>
             {t('comment:reply_to')}
-            <Text bold>{`${replyingComment.user.name}`}</Text>
+            <Text>{`${replyingComment?.user?.name}`}</Text>
           </Text>
-          <Text style={styles.replyText} bold onPress={onCancelReply}>
+          <Text style={styles.replyText} onPress={onCancelReply}>
             {t('common:btn_cancel')}
           </Text>
         </HorizontalView>

@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import ScreenWrapper from '~/components/ScreenWrapper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {ILanguage, IObject, ISetting} from '~/interfaces/common';
 import useAuth from '~/hooks/auth';
 import HeaderView from '~/components/HeaderView';
@@ -10,17 +10,19 @@ import {spacing} from '~/theme';
 import TransparentButton from '~/components/buttons/TransparentButton';
 import {useBaseHook} from '~/hooks';
 import * as authActions from '~/screens/Auth/redux/actions';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import settings from '~/constants/settings';
 import {Container, ViewSpacing} from '~/components';
 import {AppContext} from '~/contexts/AppContext';
 import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
 import languages from '~/constants/languages';
-import {menuStack} from '~/configs/navigator';
+import {useRootNavigation} from '~/hooks/navigation';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
-const Menu = () => {
+const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const {user} = useAuth();
   const {changeLanguage} = useContext(AppContext);
 
@@ -37,7 +39,7 @@ const Menu = () => {
       case 'language':
         return languageOptionsModalRef.current?.open();
       case 'component':
-        navigation.navigate(menuStack.componentCollection);
+        return rootNavigation.navigate(menuStack.componentCollection);
     }
   };
 

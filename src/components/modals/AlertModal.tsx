@@ -8,7 +8,7 @@ import * as actions from '~/store/modal/actions';
 import {borderRadius, margin, padding} from '~/theme/spacing';
 import Text from '../texts/Text';
 import {sizes} from '~/theme/dimension';
-import ScreenWrapper from '../ScreenWrapper';
+import ScreenWrapper from '../../beinComponents/ScreenWrapper';
 import Divider from '../Divider';
 import {convertMultiLanguage} from '~/utils/language';
 import ViewSpacing from '../ViewSpacing';

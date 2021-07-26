@@ -55,7 +55,7 @@ const GroupDetail = (props: any) => {
   );
 
   useEffect(() => {
-    if (params.groupId) {
+    if (params?.groupId) {
       dispatch(groupsActions.getGroupDetail(params.groupId));
     }
   }, []);

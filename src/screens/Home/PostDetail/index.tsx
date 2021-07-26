@@ -6,7 +6,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import InputToolbar from '~/components/inputs/InputToolbar';
 import ContentItem from '~/components/list/items/ContentItem';
-import ListView from '~/components/list/ListView';
+import ListView from '~/beinComponents/list/ListView';
 import {spacing} from '~/theme';
 import {post} from './dummy-post-data';
 import {IObject} from '~/interfaces/common';
@@ -16,7 +16,6 @@ import {useBaseHook} from '~/hooks';
 import commonActions from '~/constants/commonActions';
 import {options} from '~/constants/postOptions';
 import MessageOptionsModal from '../fragments/OptionsModal';
-import {mainStack} from '~/configs/navigator';
 import Text from '~/components/texts/Text';
 import {margin} from '~/theme/spacing';
 import * as commentActions from '../Comment/redux/actions';
@@ -24,6 +23,7 @@ import PostOptionsModal from '../fragments/PostOptions';
 import {IOption} from '~/interfaces/IOption';
 import {IOptionModal} from '~/components/modals/OptionModal';
 import usePost from '~/hooks/post';
+import {mainStack} from '~/router/navigator/MainStack/stack';
 
 const PostDetailScreen = ({
   route,

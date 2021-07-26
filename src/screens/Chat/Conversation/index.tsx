@@ -14,8 +14,7 @@ import {
   MessageOptionsModal,
 } from './fragments';
 import NavigationHeader from '~/components/headers/NavigationHeader';
-import ScreenWrapper from '~/components/ScreenWrapper';
-import {mainStack} from '~/configs/navigator';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {options} from '~/constants/messageOptions';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
@@ -24,6 +23,7 @@ import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
 import * as actions from '~/screens/Chat/redux/actions';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -85,7 +85,7 @@ const Conversation = () => {
   };
 
   const goConversationDetail = () => {
-    navigation.navigate(mainStack.conversationDetail);
+    navigation.navigate(chatStack.conversationDetail);
   };
 
   return (
@@ -114,8 +114,8 @@ const Conversation = () => {
           renderInputToolbar={props => (
             <ChatInput
               {...props}
-              /* 
-                InputToolbar has this props but 
+              /*
+                InputToolbar has this props but
                 GiftedChat have not been define it on InputToolbarProps
               */
               // @ts-ignore

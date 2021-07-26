@@ -13,7 +13,6 @@ import * as actions from '~/store/modal/actions';
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
   dismissable?: boolean;
-  [x: string]: any;
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
