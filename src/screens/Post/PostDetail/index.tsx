@@ -5,15 +5,20 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import {usePostDetail} from '~/hooks/post';
+import {IPostActivity} from '~/interfaces/IPost';
+import PostView from '~/beinFragments/PostView';
 
 const PostDetail = () => {
   const theme: ITheme = useTheme();
   const styles = createStyle(theme);
 
+  const postDetail: IPostActivity = usePostDetail() || {};
+
   return (
-    <ScreenWrapper>
+    <ScreenWrapper backgroundColor={theme.colors.placeholder}>
       <Header subTitle={'Post detail'} />
-      <Text>Creating new component PostDetail</Text>
+      <PostView postData={postDetail} />
     </ScreenWrapper>
   );
 };

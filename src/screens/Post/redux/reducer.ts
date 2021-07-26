@@ -15,6 +15,7 @@ const initState = {
     },
     tags: [0], //todo remove default
   },
+  postDetail: {},
 };
 
 function postReducer(state = initState, action: any = {}) {
@@ -57,6 +58,11 @@ function postReducer(state = initState, action: any = {}) {
           ...state.createPost,
           tags: payload,
         },
+      };
+    case postTypes.SET_POST_DETAIL:
+      return {
+        ...state,
+        postDetail: payload,
       };
     default:
       return state;

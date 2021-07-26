@@ -28,6 +28,7 @@ export interface IPostActivity {
   followers?: number[];
   audience?: IPostAudience;
   tags?: string[];
+  time?: string;
 }
 
 export interface IPostCreatePost {

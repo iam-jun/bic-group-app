@@ -1,9 +1,14 @@
 import {put, call, takeLatest} from 'redux-saga/effects';
-import {IPostCreatePost} from '~/interfaces/IPost';
+import {IPostActivity, IPostCreatePost} from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import {withNavigation} from '~/router/helper';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+
+const navigation = withNavigation(rootNavigationRef);
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
@@ -23,7 +28,7 @@ function* postCreateNewPost({
   );
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    // const response = yield call(postDataHelper.postCreateNewPost, payload);
+    const response = yield call(postDataHelper.postCreateNewPost, payload);
     console.log(
       '\x1b[36m',
       'namanh --- postCreateNewPost | postCreateNewPost : ',
@@ -31,6 +36,13 @@ function* postCreateNewPost({
       '\x1b[0m',
     );
     yield put(postActions.setLoadingCreatePost(false));
+    if (response.data) {
+      const postData: IPostActivity = response.data;
+      yield put(postActions.setPostDetail(postData));
+      navigation.navigate(homeStack.postDetail);
+    } else {
+      //todo handle post error
+    }
   } catch (e) {
     console.log(
       '\x1b[33m',

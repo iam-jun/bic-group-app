@@ -1,5 +1,10 @@
 import postTypes from './types';
-import {IPostAudience, IPostCreatePost, IPostData} from '~/interfaces/IPost';
+import {
+  IPostActivity,
+  IPostAudience,
+  IPostCreatePost,
+  IPostData,
+} from '~/interfaces/IPost';
 
 const postActions = {
   setLoadingCreatePost: (payload: boolean) => ({
@@ -19,6 +24,10 @@ const postActions = {
   }),
   setCreatePostTags: (payload: string[]) => ({
     type: postTypes.SET_CREATE_POST_AUDIENCE,
+    payload,
+  }),
+  setPostDetail: (payload: IPostActivity) => ({
+    type: postTypes.SET_POST_DETAIL,
     payload,
   }),
   //saga

@@ -41,9 +41,8 @@ const CreatePost = () => {
   }, []);
 
   const onPressPost = async () => {
-    // const payload: IPostCreatePost = {actor, data, audience, tags};
-    // dispatch(postActions.postCreateNewPost(payload));
-    navigation.navigate(homeStack.postDetail);
+    const payload: IPostCreatePost = {actor, data, audience, tags};
+    dispatch(postActions.postCreateNewPost(payload));
   };
 
   const onChangeText = (text: string) => {
