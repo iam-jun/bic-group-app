@@ -8,7 +8,7 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
-import {homeStack, mainStack} from '~/configs/navigator';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const HeaderCreatePost = () => {
   const {navigation} = useBaseHook();
@@ -17,7 +17,7 @@ const HeaderCreatePost = () => {
   const styles = createStyle(theme);
 
   const onPressCreate = () => {
-    navigation.navigate(mainStack.createPost);
+    navigation.navigate(homeStack.createPost);
   };
 
   return (
@@ -50,6 +50,7 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
+      marginBottom: spacing?.margin.base,
       paddingTop: spacing?.padding.base,
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,

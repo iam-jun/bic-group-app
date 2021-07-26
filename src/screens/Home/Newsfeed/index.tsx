@@ -32,8 +32,8 @@ const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
   const styles = createStyle(theme);
 
   const _onItemPress = () => {
-    dispatch(actions.getComments());
-    navigation.navigate(homeStack.postDetail);
+    // dispatch(actions.getComments());
+    // navigation.navigate(homeStack.postDetail);
   };
 
   const _onActionPress = (action: IAction) => {
@@ -80,7 +80,6 @@ const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
         style={styles.container}
         type="content"
         data={data}
-        isFullView
         onItemPress={_onItemPress}
         onActionPress={_onActionPress}
         ListHeaderComponent={() => <HeaderCreatePost />}

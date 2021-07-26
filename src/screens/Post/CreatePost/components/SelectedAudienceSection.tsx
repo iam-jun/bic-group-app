@@ -5,7 +5,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
 import Button from '~/beinComponents/Button';
-import {mainStack} from '~/configs/navigator';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const SelectedAudienceSection = () => {
   const {navigation} = useBaseHook();
@@ -13,7 +13,7 @@ const SelectedAudienceSection = () => {
   const styles = createStyle(theme);
 
   const onPressSelectAudience = () => {
-    navigation.navigate(mainStack.selectPostAudience);
+    navigation.navigate(homeStack.selectAudience);
   };
 
   return (
