@@ -8,7 +8,7 @@ import auth from '../screens/Auth/redux/reducer';
 import chat from '../screens/Chat/redux/reducer';
 import comment from '../screens/Home/Comment/redux/reducer';
 import groupsReducer from '~/screens/Groups/redux/reducer';
-import postReducer from '../screens/Post/redux/reducer';
+import postReducer from '../screens/Home/redux/reducer';
 
 const authPersistConfig = {
   key: 'auth',

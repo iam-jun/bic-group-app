@@ -26,13 +26,13 @@ export interface IPostActivity {
   type?: string;
   data?: IPostData;
   followers?: number[];
-  audience?: IPostAudience[];
+  audience?: IPostAudience;
   tags?: string[];
 }
 
 export interface IPostCreatePost {
   actor?: number;
   data?: IPostData;
-  audience?: IPostAudience[];
-  tags?: string[];
+  audience?: IPostAudience;
+  tags?: number[];
 }

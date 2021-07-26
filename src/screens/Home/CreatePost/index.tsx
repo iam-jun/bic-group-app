@@ -13,14 +13,16 @@ import Divider from '~/beinComponents/Divider';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import {useCreatePost} from '~/hooks/post';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/screens/Home/redux/actions';
 import {IPostCreatePost} from '~/interfaces/IPost';
+import postDataHelper from '~/screens/Home/helper/PostDataHelper';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const CreatePostView = () => {
   const toolbarModalizeRef = useRef();
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const {t, navigation} = useBaseHook();
   const theme: ITheme = useTheme();
   const {colors} = theme;
 
@@ -28,18 +30,21 @@ const CreatePostView = () => {
   const {loading, data, audience, tags} = createPostData || {};
   const {content, images, videos, files} = data || {};
   const {groups, users} = audience || {};
+  const actor = 0; //todo replace with BEIN userId later...
 
   const disableButtonPost = loading || content?.length === 0;
 
   useEffect(() => {
+    dispatch(postActions.clearCreatPostData());
     return () => {
       dispatch(postActions.clearCreatPostData());
     };
   }, []);
 
-  const onPressPost = () => {
-    const payload: IPostCreatePost = {data, audience, tags};
-    dispatch(postActions.postCreateNewPost(payload));
+  const onPressPost = async () => {
+    // const payload: IPostCreatePost = {actor, data, audience, tags};
+    // dispatch(postActions.postCreateNewPost(payload));
+    navigation.navigate(homeStack.postDetail);
   };
 
   const onChangeText = (text: string) => {

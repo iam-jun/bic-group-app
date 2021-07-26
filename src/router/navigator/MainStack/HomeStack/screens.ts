@@ -1,7 +1,8 @@
-import {Newsfeed, PostDetail} from '~/screens/Home';
 import CommentDetail from '~/screens/Home/Comment';
-import CreatePost from '~/screens/Post/CreatePost';
-import SelectAudience from '~/screens/Post/CreatePost/SelectAudience';
+import CreatePost from '~/screens/Home/CreatePost';
+import SelectAudience from '~/screens/Home/CreatePost/SelectAudience';
+import PostDetail from '~/screens/Home/PostDetail';
+import Newsfeed from '~/screens/Home/Newsfeed';
 
 export default {
   newsfeed: Newsfeed,
