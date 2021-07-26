@@ -3,17 +3,21 @@ import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 
-import {authStack, rootSwitch} from '~/configs/navigator';
+import {authStack} from '~/configs/navigator';
+import {rootSwitch} from '~/router/stack';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
 import {ActionTypes} from '~/utils';
 import * as types from './types';
 import * as IAuth from '~/interfaces/IAuth';
-import * as refNavigator from '~/utils/refNavigator';
 import * as actions from './actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
 import Store from '~/store';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import {withNavigation} from '~/router/helper';
+import {StackActions} from '@react-navigation/native';
+const navigation = withNavigation(rootNavigationRef);
 
 export default function* authSaga() {
   yield takeLatest(types.SIGN_IN, signIn);
@@ -86,17 +90,19 @@ function* onSignInSuccess(user: IUserResponse) {
   };
 
   yield put(actions.setUser(userResponse));
+  navigation.replace(rootSwitch.mainStack);
 
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
   if (!refreshSuccess) {
     console.log('TODO: get auth tokens failed');
-    // TODO:
-    // yield onSignInFailed(i18n.t('error:http:token_expired'));
-    // return;
+    yield onSignInFailed(i18n.t('error:http:token_expired'));
+    return;
   }
 
-  refNavigator.replace(rootSwitch.mainStack);
+  rootNavigationRef?.current?.dispatch(
+    StackActions.replace(rootSwitch.mainStack),
+  );
 }
 
 function* onSignInFailed(errorMessage: string) {
@@ -124,7 +130,7 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
         actionsCommon.showAlert({
           title: i18n.t('auth:text_title_success'),
           content: i18n.t('auth:text_sign_up_success'),
-          onConfirm: () => refNavigator.navigate(authStack.login),
+          onConfirm: () => navigation.navigate(authStack.login),
         }),
       );
     }
@@ -223,7 +229,8 @@ function* forgotPasswordConfirm({
 function* signOut() {
   try {
     yield Auth.signOut();
-    refNavigator.replace(rootSwitch.authStack);
+
+    navigation.replace(rootSwitch.authStack);
   } catch (err) {
     yield put(
       actionsCommon.showAlert({
@@ -243,9 +250,9 @@ function* checkAuthState() {
     // }
     const user: IAuth.IUserResponse | boolean = yield Store.getCurrentUser();
     if (user) {
-      refNavigator.replace(rootSwitch.mainStack);
+      navigation.replace(rootSwitch.mainStack);
     } else {
-      refNavigator.replace(rootSwitch.authStack);
+      navigation.replace(rootSwitch.authStack);
     }
   } catch (e) {
     console.error('checkAuthState', e);

@@ -57,7 +57,7 @@ const Post: React.FC<IObject<any>> = ({
 
       {media && <MediaView {...media} />}
 
-      {hashtags && <TagsView style={styles.hashtags} data={hashtags} />}
+      {/* {hashtags && <TagsView style={styles.hashtags} data={hashtags} />} */}
 
       {/*{reaction && (*/}
       {/*  <>*/}

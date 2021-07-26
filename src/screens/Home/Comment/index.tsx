@@ -68,7 +68,7 @@ const CommentScreen = ({route}: {route: any}) => {
       <NavigationHeader
         isFullView
         isDefault
-        title={`Reply to ${originalComment.user.name}`}
+        title={`Reply to ${originalComment?.user?.name}`}
         rightIcon="iconOptions"
       />
       <ScrollView>

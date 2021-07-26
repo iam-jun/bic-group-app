@@ -2,27 +2,36 @@ import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import {NavigationHeader} from '~/components';
-import {mainStack} from '~/configs/navigator';
-import {useBaseHook} from '~/hooks';
-import useSocketChat from '~/hooks/socketChat';
-import {IObject} from '~/interfaces/common';
-import {IConversation} from '~/interfaces/IChat';
-import Divider from '~/components/Divider';
-import Input from '~/components/inputs';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+
+import {NavigationHeader} from '~/components';
+import Divider from '~/components/Divider';
+import Input from '~/components/inputs';
+import {useBaseHook} from '~/hooks';
+import {IObject} from '~/interfaces/common';
+import {IConversation} from '~/interfaces/IChat';
+import {
+  addOnMessageCallback,
+  closeConnectChat,
+  connectChat,
+  removeOnMessageCallback,
+  sendMessage,
+} from '~/services/chatSocket';
 import {spacing} from '~/theme';
 import {
   generateRandomName,
   generateRandomUser,
+  generateUniqueId,
   getRandomInt,
 } from '~/utils/generator';
 import * as actions from '~/screens/Chat/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
-const ConversationsList = () => {
-  const data: IConversation[] = Array.from(Array(20).keys()).map(index => ({
+const ConversationsList = (): React.ReactElement => {
+  const data: IConversation[] = Array.from(Array(20).keys()).map(() => ({
+    id: generateUniqueId(),
     name: generateRandomName(),
     members: [generateRandomUser(), generateRandomUser()],
     unreadCount: getRandomInt(0, 10),
@@ -32,22 +41,30 @@ const ConversationsList = () => {
 
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
+
   const dispatch = useDispatch();
 
-  const sendMessage = useSocketChat({
-    onMessage: event => {
-      console.log(
-        'do something on message type, data must be parsed!',
-        JSON.parse(event.data),
-      );
-    },
-  });
+  useEffect(() => {
+    console.log('useEffect');
+    connectChat();
+    addOnMessageCallback('callback-of-list-chat-screen', event => {
+      console.log('data must be parse!', JSON.parse(event.data));
+    });
+    return () => {
+      console.log('useEffect return');
 
-  sendMessage('test-message');
+      removeOnMessageCallback('callback-of-list-chat-screen');
+      closeConnectChat();
+    };
+  }, []);
 
   const onChatPress = (item: IConversation) => {
+    dispatch(actions.selectConversation(item));
+    rootNavigation.navigate(chatStack.conversation, {id: item.id});
     sendMessage('test-message');
+    // closeConnectChat();
     // dispatch(actions.selectConversation(item));
     // navigation.navigate(mainStack.conversation);
   };

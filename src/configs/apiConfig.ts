@@ -34,7 +34,7 @@ const App = {
   },
   tokens: (): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}user/token`,
+      url: `${providers.bein.url}auth/token`,
       method: 'get',
       provider: providers.bein,
       useRetry: true,

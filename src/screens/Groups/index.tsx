@@ -41,6 +41,7 @@ const Groups: React.FC<GroupsProps> = () => {
           type={'flatGroups'}
           loading={loadingJoinedGroups}
           data={joinedGroups}
+          isFullView
           // renderItemSeparator={() => null}
         />
       </Container>

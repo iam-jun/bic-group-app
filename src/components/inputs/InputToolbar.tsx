@@ -38,7 +38,7 @@ const InputToolbar: React.FC<Props> = ({
   const [comment, setComment] = useState<string>('');
 
   useEffect(() => {
-    replyingComment && setComment(`@${replyingComment?.user.name} `);
+    replyingComment && setComment(`@${replyingComment?.user?.name} `);
   }, [replyingComment]);
 
   const _onSend = () => {
@@ -87,9 +87,9 @@ const InputToolbar: React.FC<Props> = ({
         <HorizontalView>
           <Text style={styles.replyText}>
             {t('comment:reply_to')}
-            <Text bold>{`${replyingComment.user.name}`}</Text>
+            <Text>{`${replyingComment?.user?.name}`}</Text>
           </Text>
-          <Text style={styles.replyText} bold onPress={onCancelReply}>
+          <Text style={styles.replyText} onPress={onCancelReply}>
             {t('common:btn_cancel')}
           </Text>
         </HorizontalView>

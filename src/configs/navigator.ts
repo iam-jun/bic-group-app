@@ -1,48 +1,8 @@
-export const rootSwitch = {
-  mainStack: 'MainStack',
-  authStack: 'AuthStack',
-  appLoading: 'AppLoading',
-};
-
-export const mainStack = {
-  // drawer: 'Drawer',
-  bottomTabs: 'BottomTabs',
-  conversationList: 'ConversationsList',
-  conversation: 'Conversation',
-  conversationDetail: 'ConversationDetail',
-  reply: 'CommentDetail',
-  createPost: 'CreatePost',
-  selectPostAudience: 'SelectPostAudience',
-};
-
 export const authStack = {
   landing: 'Landing',
   login: 'SignIn',
   signup: 'SignUp',
   forgotPassword: 'ForgotPassword',
-};
-
-export const homeStack = {
-  home: 'Home',
-  postDetail: 'PostDetail',
-};
-
-export const groupsStack = {
-  groups: 'Groups',
-  groupDetail: 'GroupDetail',
-};
-
-export const menuStack = {
-  menu: 'Menu',
-  componentCollection: 'ComponentCollection',
-};
-
-export const bottomTabs = {
-  home: homeStack,
-  groups: groupsStack,
-  chat: 'Chat',
-  notification: 'Notification',
-  menu: menuStack,
 };
 
 export const navigationSetting = {
@@ -67,183 +27,73 @@ export const navigationSetting = {
     },
     cardStyle: {backgroundColor: '#fff'},
   },
-  configs: {
-    initialRouteName: rootSwitch.appLoading,
-  },
-  stacks: [
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: rootSwitch.mainStack,
-      screen: rootSwitch.mainStack,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: rootSwitch.authStack,
-      screen: rootSwitch.authStack,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: rootSwitch.appLoading,
-      screen: rootSwitch.appLoading,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: mainStack.conversation,
-      screen: mainStack.conversation,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: mainStack.conversationDetail,
-      screen: mainStack.conversationDetail,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: mainStack.reply,
-      screen: mainStack.reply,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: mainStack.createPost,
-      screen: mainStack.createPost,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      router: mainStack.selectPostAudience,
-      screen: mainStack.selectPostAudience,
-      options: {
-        headerShown: false,
-        animationEnabled: true,
-      },
-    },
-  ],
 };
 
-export const tabsSetting = {
-  configs: {
-    initialRouteName: bottomTabs.home.home,
+export const bottomTabIcons = {
+  home: 'iconTabHome',
+  groups: 'iconTabGroups',
+  chat: 'iconTabChat',
+  notification: 'iconTabNotification',
+  menus: 'iconTabMenu',
+};
+
+export const linkingConfig = {
+  prefixes: ['https://bein.group', 'bein://'],
+  config: {
+    screens: {
+      AppLoading: {
+        path: '',
+      },
+      AuthStack: {},
+      MainStack: {
+        screens: {
+          main: {
+            screens: {
+              home: {
+                path: 'home',
+                screens: {
+                  newsfeed: {
+                    path: '',
+                  },
+                },
+              },
+              groups: {
+                path: 'groups',
+                screens: {
+                  'group-list': {
+                    path: '',
+                  },
+                  'group-detail': {
+                    path: ':id?',
+                  },
+                },
+              },
+              chat: {
+                path: 'chat',
+                screens: {
+                  'conversation-list': {
+                    path: '',
+                  },
+                  conversation: {
+                    path: ':id?',
+                  },
+                },
+              },
+              menus: {
+                path: 'menus',
+                screens: {
+                  menu: {
+                    path: '',
+                  },
+                  'component-collection': {
+                    path: 'component-collection',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
-  tabsNavigator: [
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Tin mới',
-        en: 'News Feed',
-      },
-      screen: bottomTabs.home.home,
-      option: {
-        tabBarIcon: 'iconHome',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Nhóm',
-        en: 'Groups',
-      },
-      screen: bottomTabs.groups.groups,
-      option: {
-        tabBarIcon: 'iconGroup',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Tin nhắn',
-        en: 'Chat',
-      },
-      screen: bottomTabs.chat,
-      option: {
-        tabBarIcon: 'iconChat',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Thông báo',
-        en: 'Notifications',
-      },
-      screen: bottomTabs.notification,
-      option: {
-        tabBarIcon: 'iconNotification',
-      },
-    },
-    {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Cài đặt',
-        en: 'Menu',
-      },
-      screen: bottomTabs.menu.menu,
-      option: {
-        tabBarIcon: 'iconMenu',
-      },
-    },
-  ],
 };

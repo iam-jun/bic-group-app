@@ -3,7 +3,6 @@ import {useDispatch} from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
 
-import {homeStack, mainStack} from '~/configs/navigator';
 import {NavigationHeader, ScreenWrapper, ViewSpacing} from '~/components';
 import {AppContext} from '~/contexts/AppContext';
 import {spacing} from '~/theme';
@@ -22,8 +21,10 @@ import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {data} from './dummy-data';
 
-const Home = ({navigation}: {navigation: any}) => {
+const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
   const dispatch = useDispatch();
   const postOptionsModalRef = React.useRef<IOptionModal>();
 
@@ -40,9 +41,10 @@ const Home = ({navigation}: {navigation: any}) => {
       case commonActions.reactionComment:
         dispatch(actions.getComments());
         navigation.navigate(homeStack.postDetail, {commentFocus: true});
-
+        break;
       case commonActions.openPostOption:
-        return postOptionsModalRef.current?.open();
+        postOptionsModalRef.current?.open();
+        break;
     }
   };
 
@@ -77,6 +79,8 @@ const Home = ({navigation}: {navigation: any}) => {
         isFullView
         style={styles.container}
         type="content"
+        data={data}
+        isFullView
         onItemPress={_onItemPress}
         onActionPress={_onActionPress}
         ListHeaderComponent={() => <HeaderCreatePost />}
@@ -97,4 +101,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default Home;
+export default Newsfeed;

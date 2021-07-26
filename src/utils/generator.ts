@@ -1,16 +1,16 @@
 import {IUser} from '~/interfaces/IAuth';
 import _ from 'lodash';
 
-export function capFirst(str: string) {
+export function capFirst(str: string): string {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function getRandomInt(min: number, max: number) {
+export function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export function generateUniqueId() {
+export function generateUniqueId(): string {
   return _.uniqueId();
 }
 
@@ -29,9 +29,9 @@ export function generateRandomUser(): IUser {
 }
 
 export function generateRandomEmail(): string {
-  var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
-  var string = '';
-  for (var ii = 0; ii < 15; ii++) {
+  const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+  let string = '';
+  for (let ii = 0; ii < 15; ii++) {
     string += chars[Math.floor(Math.random() * chars.length)];
   }
   return string + '@domain.com';
@@ -50,7 +50,7 @@ export function generateRandomWords(min?: number, max?: number): string {
 
   let str = '';
   const maxWords = getRandomInt(min || 3, max || 50);
-  Array.from(Array(maxWords).keys()).forEach(index => {
+  Array.from(Array(maxWords).keys()).forEach(() => {
     str = `${str ? `${str} ` : ''}${
       words[Math.floor(Math.random() * words.length)]
     }`;
@@ -59,8 +59,8 @@ export function generateRandomWords(min?: number, max?: number): string {
   return str;
 }
 
-export function generateRandomName() {
-  var name1 = [
+export function generateRandomName(): string {
+  const name1 = [
     'abandoned',
     'able',
     'absolute',
@@ -1411,7 +1411,7 @@ export function generateRandomName() {
     'rocky',
   ];
 
-  var name2 = [
+  const name2 = [
     'people',
     'history',
     'way',
@@ -2915,7 +2915,7 @@ export function generateRandomName() {
     'Lieuwe',
   ];
 
-  var name =
+  const name =
     capFirst(name1[getRandomInt(0, name1.length + 1)]) +
     ' ' +
     capFirst(name2[getRandomInt(0, name2.length + 1)]);

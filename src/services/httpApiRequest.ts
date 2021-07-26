@@ -225,17 +225,17 @@ const handleResponseSuccessBein = (
 };
 
 const interceptorsRequestSuccessBein = (requestConfig: AxiosRequestConfig) => {
-  logInterceptorsRequestSuccess(requestConfig);
+  // logInterceptorsRequestSuccess(requestConfig);
   return requestConfig;
 };
 
 const interceptorsResponseSuccessBein = (response: AxiosResponse) => {
-  logInterceptorsResponseSuccess(response);
+  // logInterceptorsResponseSuccess(response);
   return response;
 };
 
 const interceptorsResponseErrorBein = async (error: AxiosError) => {
-  logInterceptorsResponseError(error);
+  // logInterceptorsResponseError(error);
   return handleResponseErrorBein(error);
 };
 
@@ -339,7 +339,7 @@ const getAuthTokens = async () => {
       return false;
     }
 
-    const {userId: chatUserId, accessToken: chatAccessToken} = data.data?.chat;
+    const {userId: chatUserId, authToken: chatAccessToken} = data.data?.chat;
     const {accessToken: feedAccessToken} = data.data?.stream;
 
     return {chatUserId, chatAccessToken, feedAccessToken};
