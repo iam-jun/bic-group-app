@@ -57,8 +57,11 @@ const removeOnMessageCallback = (id: string) => {
 };
 
 const sendMessage = (data: any) => {
-  if (socket?.readyState !== 1) {
-    console.log('socket not ready.');
+  if (socket.readyState !== 1) {
+    console.log('socket not ready. state:', socket && socket.readyState);
+    waitForSocketConnection(socket, function () {
+      sendMessage(data);
+    });
     return;
   }
   const dataSubmit = JSON.stringify(data);
@@ -68,6 +71,20 @@ const sendMessage = (data: any) => {
     return;
   }
   messageQueue.push(data);
+};
+
+const waitForSocketConnection = (socket: WebSocket, callback: any) => {
+  setTimeout(function () {
+    if (socket.readyState === 1) {
+      console.log('connection is made.');
+      if (callback != null) {
+        callback();
+      }
+    } else {
+      console.log('wait for connection...');
+      waitForSocketConnection(socket, callback);
+    }
+  }, 100);
 };
 
 const _login = () => {
