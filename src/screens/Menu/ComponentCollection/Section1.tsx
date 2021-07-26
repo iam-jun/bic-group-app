@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
@@ -290,6 +291,8 @@ const Section1 = () => {
 
   return (
     <View style={{}}>
+      <MentionInput modalPosition={'bottom'} showModal={true} />
+
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
       {renderFlashMessage()}
