@@ -13,7 +13,7 @@ import SvgIcon, {SVGIconProps} from './SvgIcon';
 import FontIcon, {FontIconProps} from './FontIcon';
 
 import {useTheme} from 'react-native-paper';
-import Text from '~/components/texts/Text';
+import Text from '~/beinComponents/Text';
 import {spacing} from '~/theme';
 import icons from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
@@ -99,9 +99,11 @@ const Icon: React.FC<IconRequiredProps> = ({
         {...props}
       />
       {label && (
-        <Text useI18n style={[styles.label, {color: _tintColor}, labelStyle]}>
+        <Text.ButtonBase
+          useI18n
+          style={[styles.label, {color: _tintColor}, labelStyle]}>
           {label}
-        </Text>
+        </Text.ButtonBase>
       )}
     </TouchableOpacity>
   );
