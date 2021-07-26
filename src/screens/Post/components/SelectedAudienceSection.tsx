@@ -13,7 +13,7 @@ const SelectedAudienceSection = () => {
   const styles = createStyle(theme);
 
   const onPressSelectAudience = () => {
-    navigation.navigate(homeStack.selectAudience);
+    navigation.navigate(homeStack.postSelectAudience);
   };
 
   return (

@@ -1,13 +1,11 @@
-import CommentDetail from '~/screens/Home/Comment';
-import CreatePost from '~/screens/Home/CreatePost';
-import SelectAudience from '~/screens/Home/CreatePost/SelectAudience';
-import PostDetail from '~/screens/Home/PostDetail';
 import Newsfeed from '~/screens/Home/Newsfeed';
+import PostDetail from '~/screens/Post/PostDetail';
+import CreatePost from '~/screens/Post/CreatePost';
+import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 
 export default {
   newsfeed: Newsfeed,
   'post-detail': PostDetail,
-  comment: CommentDetail,
   'create-post': CreatePost,
-  'select-audience': SelectAudience,
+  'post-select-audience': PostSelectAudience,
 };

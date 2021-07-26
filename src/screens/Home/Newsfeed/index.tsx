@@ -6,8 +6,6 @@ import ListView from '~/beinComponents/list/ListView';
 import {NavigationHeader, ScreenWrapper, ViewSpacing} from '~/components';
 import {AppContext} from '~/contexts/AppContext';
 import {spacing} from '~/theme';
-import {ActionTypes, createAction} from '~/utils';
-import * as actions from '../Comment/redux/actions';
 import {StyleSheet, View} from 'react-native';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {options} from '~/constants/postOptions';
@@ -37,15 +35,7 @@ const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
   };
 
   const _onActionPress = (action: IAction) => {
-    switch (action) {
-      case commonActions.reactionComment:
-        dispatch(actions.getComments());
-        navigation.navigate(homeStack.postDetail, {commentFocus: true});
-        break;
-      case commonActions.openPostOption:
-        postOptionsModalRef.current?.open();
-        break;
-    }
+    console.log('\x1b[32m', '_onActionPress : ', action, '\x1b[0m');
   };
 
   const onMenuPress = async (menu: IOption) => {

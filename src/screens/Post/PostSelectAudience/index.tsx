@@ -7,16 +7,16 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 
-export interface SelectAudienceProps {
+export interface PostSelectAudienceProps {
   listSelected: any[];
   onSelectedChange: (data: any[]) => void;
 }
 
-const SelectAudience: React.FC<SelectAudienceProps> = ({
+const PostSelectAudience: React.FC<PostSelectAudienceProps> = ({
   listSelected = [],
   onSelectedChange,
   ...props
-}: SelectAudienceProps) => {
+}: PostSelectAudienceProps) => {
   const [selected, setSelected] = useState(listSelected || []);
 
   console.log(
@@ -63,4 +63,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default SelectAudience;
+export default PostSelectAudience;

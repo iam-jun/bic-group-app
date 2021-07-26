@@ -8,17 +8,16 @@ import {margin, padding} from '~/theme/spacing';
 import {useBaseHook} from '~/hooks';
 import Header from '~/beinComponents/Header';
 import {ITheme} from '~/theme/interfaces';
-import SelectedAudienceSection from './components/SelectedAudienceSection';
+import SelectedAudienceSection from '../components/SelectedAudienceSection';
 import Divider from '~/beinComponents/Divider';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import {useCreatePost} from '~/hooks/post';
-import postActions from '~/screens/Home/redux/actions';
 import {IPostCreatePost} from '~/interfaces/IPost';
-import postDataHelper from '~/screens/Home/helper/PostDataHelper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import postActions from '~/screens/Post/redux/actions';
 
-const CreatePostView = () => {
+const CreatePost = () => {
   const toolbarModalizeRef = useRef();
 
   const dispatch = useDispatch();
@@ -82,8 +81,6 @@ const CreatePostView = () => {
   );
 };
 
-export default CreatePostView;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -121,3 +118,5 @@ const styles = StyleSheet.create({
     marginHorizontal: margin.large,
   },
 });
+
+export default CreatePost;

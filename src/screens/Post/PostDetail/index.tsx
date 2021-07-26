@@ -3,17 +3,18 @@ import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Header from '~/beinComponents/Header';
 
-export interface PostDetailProps {}
-
-const PostDetail: React.FC<PostDetailProps> = ({}: PostDetailProps) => {
+const PostDetail = () => {
   const theme: ITheme = useTheme();
   const styles = createStyle(theme);
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
+      <Header subTitle={'Post detail'} />
       <Text>Creating new component PostDetail</Text>
-    </View>
+    </ScreenWrapper>
   );
 };
 

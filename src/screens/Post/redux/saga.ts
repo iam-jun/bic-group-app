@@ -1,9 +1,9 @@
 import {put, call, takeLatest} from 'redux-saga/effects';
-import postActions from '~/screens/Home/redux/actions';
 import {IPostCreatePost} from '~/interfaces/IPost';
-import postTypes from '~/screens/Home/redux/types';
-import postDataHelper from '~/screens/Home/helper/PostDataHelper';
-import postDataMocks from '~/screens/Home/helper/PostDataMocks';
+import postTypes from '~/screens/Post/redux/types';
+import postActions from '~/screens/Post/redux/actions';
+import postDataMocks from '~/screens/Post/helper/PostDataMocks';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
