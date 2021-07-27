@@ -1,11 +1,9 @@
-import {all, put, call, takeLatest, select} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 
 import * as types from './constants';
-import * as actions from './actions';
-import * as api from './api';
-import {timeOut} from '~/utils/common';
-import {messages} from './dummy';
-import {IObject} from '~/interfaces/common';
+import actions from './actions';
+import appConfig from '~/configs/appConfig';
+import {ISocketEvent} from '~/interfaces/ISocket';
 
 /**
  * Chat
@@ -14,24 +12,22 @@ import {IObject} from '~/interfaces/common';
  */
 
 export default function* saga() {
+  yield takeLatest(types.HANDLE_CONVERSATIONS_EVENT, handleConversationsEvent);
   yield takeLatest(types.SELECT_CONVERSATION, selectConversation);
-  yield takeLatest(types.GET_MESSAGES, getMessages);
 }
 
 function* selectConversation() {
-  yield put(actions.getMessages());
+  // yield put(actions.getMessages());
 }
 
-function* getMessages() {
-  try {
-    const state: IObject<any> = yield select();
-    const {chat} = state;
+function* handleConversationsEvent({
+  payload,
+}: {
+  type: string;
+  payload: ISocketEvent;
+}) {
+  if (payload.msg !== 'result' || payload.id !== appConfig.chatSocketUniqueId)
+    return;
 
-    //[FIXME] Should be removed when API ready for use
-    yield timeOut(1000);
-    yield put(actions.setMessages(messages(chat.conversation)));
-  } catch (err) {
-    console.log('getMessages', {err});
-  } finally {
-  }
+  yield put(actions.setConversations(payload.result));
 }

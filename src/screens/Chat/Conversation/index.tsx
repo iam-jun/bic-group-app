@@ -22,8 +22,9 @@ import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
-import * as actions from '~/screens/Chat/redux/actions';
+import actions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {sendMessage} from '~/services/chatSocket';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -36,6 +37,15 @@ const Conversation = () => {
   const {colors} = theme;
   const styles = createStyles(theme);
   const {navigation} = useBaseHook();
+
+  React.useEffect(() => {
+    sendMessage({
+      msg: 'method',
+      method: 'rooms/get',
+      id: '12', //[TO-DO] replace this with a unique id
+      // params: [{$date: 1480377601}],
+    });
+  }, []);
 
   const _openImagePicker = () => {
     launchImageLibrary(

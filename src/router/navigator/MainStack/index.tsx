@@ -19,7 +19,7 @@ import AppInfo from '~/screens/AppInfo';
 import LeftTabs from './LeftTabs';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
-
+import {closeConnectChat, connectChat} from '~/services/chatSocket';
 const Stack = createStackNavigator();
 
 const MainStack = (): React.ReactElement => {
@@ -27,6 +27,13 @@ const MainStack = (): React.ReactElement => {
   const theme = useTheme();
   const styles = createStyles(theme);
   const route = useRoute<RouteProp<RootStackParamList, 'MainStack'>>();
+
+  React.useEffect(() => {
+    connectChat();
+    return () => {
+      closeConnectChat();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
