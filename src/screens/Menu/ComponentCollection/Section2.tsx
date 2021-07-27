@@ -15,6 +15,8 @@ import Reaction from '~/beinComponents/Badge/Reaction';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import * as modalActions from '~/store/modal/actions';
 import Tag from '~/beinComponents/Tag';
+import TabView from '~/beinComponents/Tab';
+import {IMenuItemProps} from '~/interfaces/IMenu';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -126,6 +128,33 @@ const Section2 = () => {
   };
 
   const renderTabMenuTag = () => {
+    const data: IMenuItemProps[] = [
+      {
+        routeName: 'Love',
+        label: '165',
+        iconName: 'iconReactionLove',
+        component: sampleScreen,
+      },
+      {
+        routeName: 'Like',
+        label: '123',
+        iconName: 'iconReactionLike',
+        component: sampleScreen,
+      },
+      {
+        routeName: 'Haha',
+        label: '55',
+        iconName: 'iconReactionHaha',
+        component: sampleScreen,
+      },
+      {
+        routeName: 'Angry',
+        label: '15',
+        iconName: 'iconReactionAngry',
+        component: sampleScreen,
+      },
+    ];
+
     return (
       <>
         <Text.H3 style={{marginHorizontal: spacing?.margin.base}}>
@@ -194,6 +223,10 @@ const Section2 = () => {
             style={{marginStart: spacing?.margin.small}}
           />
         </View>
+        <Text.H5 style={{margin: spacing?.margin.base}}>Tab Menu</Text.H5>
+
+        <TabView data={data} />
+
         <Divider
           style={{
             margin: spacing?.margin.base,
@@ -216,3 +249,11 @@ const Section2 = () => {
 };
 
 export default Section2;
+
+const sampleScreen = () => {
+  return (
+    <View>
+      <Text>This is sample screen</Text>
+    </View>
+  );
+};
