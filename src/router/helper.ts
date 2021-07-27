@@ -28,11 +28,6 @@ export const withNavigation = (
   };
 
   const replace = (name: string, params?: IObject<unknown>): void => {
-    console.log(
-      'replace',
-      isNavigationRefReady?.current,
-      navigationRef?.current,
-    );
     if (isNavigationRefReady?.current && navigationRef?.current) {
       navigationRef?.current?.dispatch(StackActions.replace(name, params));
     } else {

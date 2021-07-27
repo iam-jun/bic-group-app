@@ -1,27 +1,49 @@
 import * as Actions from './constants';
 import {IConversation, IMessage} from '../../../interfaces/IChat';
+import {ISocketEvent} from '~/interfaces/ISocket';
 
-export const selectConversation = (payload: IConversation) => ({
+const setConversationLoading = (payload: boolean) => ({
+  type: Actions.SET_CONVERSATION_LOADING,
+  payload,
+});
+
+const handleConversationsEvent = (payload: ISocketEvent) => ({
+  type: Actions.HANDLE_CONVERSATIONS_EVENT,
+  payload,
+});
+
+const setConversations = (payload: IConversation[]) => ({
+  type: Actions.SET_CONVERSATIONS,
+  payload,
+});
+
+const selectConversation = (payload: IConversation) => ({
   type: Actions.SELECT_CONVERSATION,
   payload,
 });
 
-export const getMessages = () => ({
-  type: Actions.GET_MESSAGES,
-});
-
-export const setMessages = (payload: IMessage[]) => ({
+const setMessages = (payload: IMessage[]) => ({
   type: Actions.SET_MESSAGES,
   payload,
 });
 
-export const sendMessage = (payload: IMessage) => ({
+const sendMessage = (payload: IMessage) => ({
   type: Actions.SEND_MESSAGE,
   payload,
 });
 
-export const reactMessage = (message?: IMessage, reactionType?: string) => ({
+const reactMessage = (message?: IMessage, reactionType?: string) => ({
   type: Actions.REACT_MESSAGE,
   message,
   reactionType,
 });
+
+export default {
+  setConversationLoading,
+  handleConversationsEvent,
+  setConversations,
+  selectConversation,
+  setMessages,
+  sendMessage,
+  reactMessage,
+};

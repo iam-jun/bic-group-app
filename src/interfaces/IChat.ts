@@ -28,7 +28,9 @@ export type IConversation = {
   id: string;
   name: string;
   description?: string;
-  members: IUser[];
+  uids: string[];
+  usernames: string[];
+  usersCount: number;
   unreadCount: number;
   lastMessage: string;
   updatedAt: string;

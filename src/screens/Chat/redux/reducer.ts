@@ -1,9 +1,11 @@
-import {reactionType} from '../../../components/list/items/ContentItem';
 import * as types from './constants';
-import {messages} from './dummy';
 import {IMessage, IReaction} from '../../../interfaces/IChat';
 
 export const initState = {
+  conversations: {
+    loading: false,
+    data: [],
+  },
   conversation: {},
   messages: {
     loading: false,
@@ -19,23 +21,32 @@ export const initState = {
  */
 function reducer(state = initState, action: any = {}) {
   const {type} = action;
-  const {conversation, messages} = state;
+  const {conversations, conversation, messages} = state;
 
   switch (type) {
+    case types.SET_CONVERSATION_LOADING:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          loading: true,
+        },
+      };
+    case types.SET_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: {
+          ...conversations,
+          loading: false,
+          data: action.payload,
+        },
+      };
     case types.SELECT_CONVERSATION:
       return {
         ...state,
         conversation: {
           ...conversation,
           ...action.payload,
-        },
-      };
-    case types.GET_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          loading: true,
         },
       };
     case types.SET_MESSAGES:

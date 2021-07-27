@@ -25,10 +25,10 @@ const MainTabs = () => {
 
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
-  const phone = dimensions.width < deviceDimensions.smallTablet;
-  const bigTablet = dimensions.width >= deviceDimensions.bigTablet;
+  const isPhone = dimensions.width < deviceDimensions.smallTablet;
+  const isBigTablet = dimensions.width >= deviceDimensions.bigTablet;
 
-  const Tab = phone ? BottomTab : SideTab;
+  const Tab = isPhone ? BottomTab : SideTab;
 
   return (
     // @ts-ignore
@@ -40,7 +40,7 @@ const MainTabs = () => {
         keyboardHidesTabBar: true,
         style: {
           // backgroundColor: tabBarBackground,
-          paddingBottom: !phone ? insets.bottom : 0,
+          paddingBottom: !isPhone ? 0 : insets.bottom,
         },
       }}>
       {Object.entries(screens).map(([name, component]) => {
@@ -50,16 +50,16 @@ const MainTabs = () => {
             key={'tabs' + name}
             name={name}
             component={component}
+            initialParams={{isBigTablet}}
             options={{
               tabBarIcon: ({focused, color}) => {
-                if (!bigTablet)
+                if (!isBigTablet)
                   return (
                     <Icon
                       //@ts-ignore
                       icon={bottomTabIcons[name]}
                       size={24}
                       tintColor={color}
-                      bold={focused}
                     />
                   );
                 return null;

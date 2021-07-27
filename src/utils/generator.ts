@@ -1,6 +1,19 @@
 import {IUser} from '~/interfaces/IAuth';
 import _ from 'lodash';
 
+/* 
+  Generate room name by members name incase room has no name.
+*/
+export const generateRoomName = (user: IUser, usernames: string[]): string => {
+  let name = '';
+  usernames
+    .filter(username => username !== user.name)
+    .forEach(username => {
+      name = `${name}${name ? `, ${username}` : username}`;
+    });
+  return name;
+};
+
 export function capFirst(str: string): string {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1);

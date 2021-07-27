@@ -11,64 +11,53 @@ import Input from '~/components/inputs';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
-import {
-  addOnMessageCallback,
-  closeConnectChat,
-  connectChat,
-  sendMessage,
-} from '~/services/chatSocket';
+
 import {spacing} from '~/theme';
-import {
-  generateRandomName,
-  generateRandomUser,
-  generateUniqueId,
-  getRandomInt,
-} from '~/utils/generator';
-import * as actions from '~/screens/Chat/redux/actions';
+import actions from '~/screens/Chat/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
+import useChat from '~/hooks/chat';
+import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 
 const ConversationsList = (): React.ReactElement => {
-  const data: IConversation[] = Array.from(Array(20).keys()).map(() => ({
-    id: generateUniqueId(),
-    name: generateRandomName(),
-    members: [generateRandomUser(), generateRandomUser()],
-    unreadCount: getRandomInt(0, 10),
-    lastMessage: '',
-    updatedAt: '2021-06-20T09:00:29.238335Z',
-  }));
-
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
+  const {conversations} = useChat();
+  const {data, loading} = conversations;
 
   useEffect(() => {
-    console.log('useEffect');
-    connectChat();
     const removeOnMessageCallback = addOnMessageCallback(
       'callback-of-list-chat-screen',
       event => {
-        console.log('data must be parse!', JSON.parse(event.data));
+        dispatch(actions.handleConversationsEvent(JSON.parse(event.data)));
       },
     );
-    return () => {
-      console.log('useEffect return');
 
+    _getConversations();
+
+    return () => {
       removeOnMessageCallback();
-      closeConnectChat();
     };
   }, []);
+
+  const _getConversations = () => {
+    dispatch(actions.setConversationLoading(true));
+    sendMessage({
+      msg: 'method',
+      method: 'rooms/get',
+      id: CHAT_SOCKET_GET_CONVERSIONS_ID,
+      // params: [{$date: 1480377601}],
+    });
+  };
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
     rootNavigation.navigate(chatStack.conversation, {id: item.id});
-    sendMessage('test-message');
-    // closeConnectChat();
-    // dispatch(actions.selectConversation(item));
-    // navigation.navigate(mainStack.conversation);
   };
 
   return (
@@ -84,6 +73,7 @@ const ConversationsList = (): React.ReactElement => {
       <ListView
         type="chat"
         isFullView
+        loading={loading}
         data={data}
         onItemPress={onChatPress}
         renderItemSeparator={() => <Divider />}
