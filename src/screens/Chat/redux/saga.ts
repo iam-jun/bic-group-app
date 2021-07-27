@@ -1,11 +1,11 @@
-import {generateRoomName} from './../../../utils/generator';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import * as types from './constants';
 import actions from './actions';
-import appConfig from '~/configs/appConfig';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {IObject} from '~/interfaces/common';
+import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
+import {generateRoomName} from '~/utils/generator';
 
 /**
  * Chat
@@ -29,7 +29,7 @@ function* handleConversationsEvent({
   payload: ISocketEvent;
 }) {
   console.log(payload);
-  if (payload.msg !== 'result' || payload.id !== appConfig.chatSocketUniqueId)
+  if (payload.msg !== 'result' || payload.id !== CHAT_SOCKET_GET_CONVERSIONS_ID)
     return;
 
   const state: IObject<any> = yield select();

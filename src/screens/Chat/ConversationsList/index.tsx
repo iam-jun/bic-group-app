@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -18,7 +18,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
 import useChat from '~/hooks/chat';
-import appConfig from '~/configs/appConfig';
+import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -50,7 +50,7 @@ const ConversationsList = (): React.ReactElement => {
     sendMessage({
       msg: 'method',
       method: 'rooms/get',
-      id: appConfig.chatSocketUniqueId,
+      id: CHAT_SOCKET_GET_CONVERSIONS_ID,
       // params: [{$date: 1480377601}],
     });
   };
