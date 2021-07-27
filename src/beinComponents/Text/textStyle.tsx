@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {fontFamilies} from '~/theme/fonts';
-import {letterSpacing, sizes} from '~/theme/dimension';
+import {letterSpacing, lineHeights, sizes} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 
 export const createStyle = (theme: ITheme) => {
@@ -31,35 +31,48 @@ export const createStyle = (theme: ITheme) => {
     h4: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h4,
-      // lineHeight: lineHeights.h4,
+      lineHeight: lineHeights.h4,
+      paddingTop: 5.2,
       letterSpacing: letterSpacing.h4,
       color: colors.textPrimary,
     },
     h5: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h5,
-      // lineHeight: lineHeights.h5,
+      lineHeight: lineHeights.h5,
+      paddingTop: 4.16,
       letterSpacing: letterSpacing.h5,
       color: colors.textPrimary,
     },
     h6: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h6,
-      // lineHeight: lineHeights.h6,
+      lineHeight: lineHeights.h6,
+      paddingTop: 3.64,
+      letterSpacing: letterSpacing.h6,
+      color: colors.textPrimary,
+    },
+    h6s: {
+      fontFamily: fontFamilies.Poppins,
+      fontSize: sizes.h6s,
+      lineHeight: lineHeights.h6s,
+      paddingTop: 3.64,
       letterSpacing: letterSpacing.h6,
       color: colors.textPrimary,
     },
     buttonBase: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.buttonBase,
-      // lineHeight: lineHeights.buttonBase,
+      paddingTop: 3.64,
+      lineHeight: lineHeights.buttonBase,
       letterSpacing: letterSpacing.buttonBase,
       color: colors.textPrimary,
     },
     buttonSmall: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.buttonSmall,
-      // lineHeight: lineHeights.buttonSmall,
+      lineHeight: lineHeights.buttonSmall,
+      paddingTop: 3.12,
       letterSpacing: letterSpacing.buttonSmall,
       color: colors.textPrimary,
     },

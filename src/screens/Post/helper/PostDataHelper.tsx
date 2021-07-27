@@ -1,6 +1,7 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {IPostCreatePost} from '~/interfaces/IPost';
+import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 
 export const postApiConfig = {
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -10,14 +11,14 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  getAudienceGroups: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users/0/groups-be-in`,
+  getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getAudienceUsers: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}hello/bein`,
+  getAudienceUsers: (userId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -39,10 +40,13 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getAudienceGroups: async () => {
+  getAudienceGroups: async (userId: number) => {
+    return Promise.resolve(postDataMocks.getGroups);
+    return;
+
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getAudienceGroups(),
+        postApiConfig.getAudienceGroups(userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -53,10 +57,13 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getAudienceUsers: async () => {
+  getAudienceUsers: async (userId: number) => {
+    return Promise.resolve(postDataMocks.getUsers);
+    return;
+
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getAudienceUsers(),
+        postApiConfig.getAudienceUsers(userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

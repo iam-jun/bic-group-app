@@ -9,11 +9,7 @@ const initState = {
       videos: [],
       files: [],
     },
-    audience: {
-      users: [0], //todo remove default
-      groups: [0], //todo remove default
-    },
-    tags: [0], //todo remove default
+    chosenAudiences: [],
   },
   postDetail: {},
 };
@@ -30,7 +26,7 @@ function postReducer(state = initState, action: any = {}) {
           loading: payload,
         },
       };
-    case postTypes.CLEAR_CREATE_POST_DATA:
+    case postTypes.CLEAR_CREATE_POST:
       return {
         ...state,
         createPost: initState.createPost,
@@ -43,20 +39,12 @@ function postReducer(state = initState, action: any = {}) {
           data: payload,
         },
       };
-    case postTypes.SET_CREATE_POST_AUDIENCE:
+    case postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES:
       return {
         ...state,
         createPost: {
           ...state.createPost,
-          audience: payload,
-        },
-      };
-    case postTypes.SET_CREATE_POST_TAGS:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          tags: payload,
+          chosenAudiences: payload,
         },
       };
     case postTypes.SET_POST_DETAIL:

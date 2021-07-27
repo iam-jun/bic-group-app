@@ -39,7 +39,7 @@ function* postCreateNewPost({
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.setPostDetail(postData));
-      navigation.navigate(homeStack.postDetail);
+      navigation.replace(homeStack.postDetail);
     } else {
       //todo handle post error
     }

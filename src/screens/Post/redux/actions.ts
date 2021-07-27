@@ -1,7 +1,7 @@
 import postTypes from './types';
 import {
+  IAudience,
   IPostActivity,
-  IPostAudience,
   IPostCreatePost,
   IPostData,
 } from '~/interfaces/IPost';
@@ -12,18 +12,14 @@ const postActions = {
     payload,
   }),
   clearCreatPostData: () => ({
-    type: postTypes.CLEAR_CREATE_POST_DATA,
+    type: postTypes.CLEAR_CREATE_POST,
   }),
   setCreatePostData: (payload: IPostData) => ({
     type: postTypes.SET_CREATE_POST_DATA,
     payload,
   }),
-  setCreatePostAudience: (payload: IPostAudience) => ({
-    type: postTypes.SET_CREATE_POST_AUDIENCE,
-    payload,
-  }),
-  setCreatePostTags: (payload: string[]) => ({
-    type: postTypes.SET_CREATE_POST_AUDIENCE,
+  setCreatePostChosenAudiences: (payload: IAudience[]) => ({
+    type: postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES,
     payload,
   }),
   setPostDetail: (payload: IPostActivity) => ({

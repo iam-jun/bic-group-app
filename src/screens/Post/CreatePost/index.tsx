@@ -3,35 +3,35 @@ import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {margin, padding} from '~/theme/spacing';
 import {useBaseHook} from '~/hooks';
-import Header from '~/beinComponents/Header';
+import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
-import SelectedAudienceSection from '../components/SelectedAudienceSection';
+import {IAudience, IPostCreatePost} from '~/interfaces/IPost';
+import {margin, padding} from '~/theme/spacing';
+import postActions from '~/screens/Post/redux/actions';
+
+import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import PostInput from '~/beinComponents/inputs/PostInput';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
-import {useCreatePost} from '~/hooks/post';
-import {IPostCreatePost} from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import postActions from '~/screens/Post/redux/actions';
+import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 
 const CreatePost = () => {
   const toolbarModalizeRef = useRef();
 
   const dispatch = useDispatch();
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme();
   const {colors} = theme;
 
   const createPostData = useCreatePost();
-  const {loading, data, audience, tags} = createPostData || {};
+  const {loading, data, tags = [], chosenAudiences = []} = createPostData || {};
   const {content, images, videos, files} = data || {};
-  const {groups, users} = audience || {};
   const actor = 0; //todo replace with BEIN userId later...
 
-  const disableButtonPost = loading || content?.length === 0;
+  const disableButtonPost =
+    loading || content?.length === 0 || chosenAudiences.length === 0;
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -41,6 +41,20 @@ const CreatePost = () => {
   }, []);
 
   const onPressPost = async () => {
+    const tags = [0]; //todo remove default
+
+    const users: number[] = [];
+    const groups: number[] = [];
+    const audience = {groups, users};
+
+    chosenAudiences.map((selected: IAudience) => {
+      if (selected.type === 'user') {
+        users.push(Number(selected.id));
+      } else {
+        groups.push(Number(selected.id));
+      }
+    });
+
     const payload: IPostCreatePost = {actor, data, audience, tags};
     dispatch(postActions.postCreateNewPost(payload));
   };
@@ -67,7 +81,7 @@ const CreatePost = () => {
           }}
           onPressButton={onPressPost}
         />
-        <SelectedAudienceSection />
+        <CreatePostChosenAudiences />
         <Divider />
         <PostInput
           multiline

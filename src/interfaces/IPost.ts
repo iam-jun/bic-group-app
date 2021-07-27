@@ -3,6 +3,16 @@ export interface IPostAudience {
   groups?: number[];
 }
 
+export interface IAudience {
+  id?: number | string;
+  name?: string;
+  icon?: string;
+  avatar?: string;
+  userCount?: number;
+  type?: string;
+  isGroup?: boolean;
+}
+
 export interface IPostData {
   content?: string;
   images?: string[];
