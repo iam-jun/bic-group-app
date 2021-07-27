@@ -19,7 +19,6 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
 import useChat from '~/hooks/chat';
 import appConfig from '~/configs/appConfig';
-import {getConversations} from '~/selectors/chat';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -29,8 +28,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const dispatch = useDispatch();
   const {conversations} = useChat();
-  const {loading} = conversations;
-  const data = useSelector(state => getConversations(state));
+  const {data, loading} = conversations;
 
   useEffect(() => {
     const removeOnMessageCallback = addOnMessageCallback(

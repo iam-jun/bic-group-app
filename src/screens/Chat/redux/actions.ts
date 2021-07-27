@@ -12,7 +12,7 @@ const handleConversationsEvent = (payload: ISocketEvent) => ({
   payload,
 });
 
-const setConversations = (payload: []) => ({
+const setConversations = (payload: IConversation[]) => ({
   type: Actions.SET_CONVERSATIONS,
   payload,
 });
