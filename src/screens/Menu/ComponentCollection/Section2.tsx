@@ -165,10 +165,14 @@ const Section2 = () => {
         <MentionInput
           data={userData}
           modalPosition={'bottom'}
-          showModal={true}
-          textInputStyle={{margin: 12}}
+          isMentionModalVisible={true}
+          renderInput={() => (
+            <SearchInput
+              style={{margin: spacing?.margin.base}}
+              onChangeText={(text: string) => console.log(text)}
+            />
+          )}
           onPress={() => alert('onPress View')}
-          onChangeText={(text: string) => console.log(text)}
         />
         <Divider
           style={{

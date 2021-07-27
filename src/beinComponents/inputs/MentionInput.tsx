@@ -8,6 +8,7 @@ import {
   StyleProp,
   ViewStyle,
   TouchableOpacity,
+  TextStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -19,24 +20,26 @@ import {IUser} from '~/interfaces/IAuth';
 export interface MentionInputProps extends TextInputProps {
   data: IUser[];
   modalPosition: 'top' | 'bottom';
-  showModal: boolean;
+  isMentionModalVisible: boolean;
+  placeholderText?: string;
+  textInputStyle?: StyleProp<TextStyle>;
+  modalStyle?: StyleProp<ViewStyle>;
+  renderInput?: () => React.ReactElement;
   onPress?: () => void;
   onChangeText?: (value: string) => void;
-  textInputStyle?: StyleProp<ViewStyle>;
-  modalStyle?: StyleProp<ViewStyle>;
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
   data,
   modalPosition,
-  showModal,
+  isMentionModalVisible,
+  placeholderText,
   textInputStyle,
   modalStyle,
+  renderInput,
   onPress,
   onChangeText,
 }: MentionInputProps) => {
-  const [isMentionModalVisible, setMentionModalVisible] =
-    useState<boolean>(showModal);
   const [text, setText] = useState<string>('');
 
   const theme: ITheme = useTheme();
@@ -50,37 +53,33 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const _renderItem = ({item}: {item: IUser}) => {
     return (
       <TouchableOpacity onPress={onPress}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Avatar.Medium
-            style={{
-              marginHorizontal: theme.spacing?.margin.base,
-              marginVertical: theme.spacing?.margin.small,
-            }}
-            source={item.avatarUrl}
-          />
+        <View style={styles.item}>
+          <Avatar.Medium style={styles.avatar} source={item.avatarUrl} />
           <Text>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
   };
 
-  return (
-    <View style={{zIndex: 99}}>
-      {isMentionModalVisible && !!text && (
-        <View style={StyleSheet.flatten([styles.container, modalStyle])}>
-          <FlatList data={data} renderItem={_renderItem} />
-        </View>
-      )}
+  const _renderDefaultInput = () => {
+    return (
       <TextInput
         value={text}
         onChangeText={_onChangeText}
-        placeholder={'Write text to test absolute modal'}
+        placeholder={placeholderText}
         style={StyleSheet.flatten([styles.textInputWrapper, textInputStyle])}
       />
+    );
+  };
+
+  return (
+    <View style={styles.containerWrapper}>
+      {isMentionModalVisible && (
+        <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
+          <FlatList data={data} renderItem={_renderItem} />
+        </View>
+      )}
+      {renderInput ? renderInput() : _renderDefaultInput()}
     </View>
   );
 };
@@ -89,14 +88,20 @@ const createStyles = (theme: ITheme, position: string) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    container: {
+    containerWrapper: {
+      zIndex: 1,
+    },
+    containerModal: {
       position: 'absolute',
       [position === 'top' ? 'bottom' : 'top']: '100%',
-      left: '3%',
-      width: 355,
-      height: 236,
+      left: '6%',
+      width: '85%',
+      maxWidth: 355,
+      maxHeight: 236,
       borderRadius: 6,
       backgroundColor: colors.background,
+      justifyContent: 'center',
+      alignItems: 'center',
 
       shadowColor: '#000',
       shadowOffset: {
@@ -108,13 +113,20 @@ const createStyles = (theme: ITheme, position: string) => {
       elevation: 16,
     },
     textInputWrapper: {
-      width: 327,
       height: 40,
       borderRadius: 20,
       backgroundColor: colors.placeholder,
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
+    },
+    item: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    avatar: {
+      marginHorizontal: theme.spacing?.margin.base,
+      marginVertical: theme.spacing?.margin.small,
     },
   });
 };
