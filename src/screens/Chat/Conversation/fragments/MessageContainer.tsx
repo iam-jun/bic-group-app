@@ -6,13 +6,13 @@ import {IObject} from '~/interfaces/common';
 import {Text, ViewSpacing} from '~/components';
 import ChatBubble from './ChatBubble';
 import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
-import Avatar from '~/components/Avatar';
 import {formatDate} from '~/utils/formatData';
 import {sizes} from '~/theme/dimension';
 import {spacing} from '~/theme';
 import Reactions from './Reactions';
 import QuotedMessage from './QuotedMessage';
 import {GMessage, IMessage} from '~/interfaces/IChat';
+import Avatar from '~/beinComponents/Avatar';
 
 const MessageContainer: React.FC<MessageProps<GMessage>> = props => {
   const theme: IObject<any> = useTheme();
@@ -39,11 +39,11 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = props => {
             <ViewSpacing height={spacing.margin.base} />
           )}
           <View style={styles.viewHeader}>
-            <Avatar size="base" user={_currentMessage?.user} />
+            <Avatar.Medium source={_currentMessage.user.avatar} />
             <View style={styles.viewHeaderInfo}>
-              <Text h5 bold colorSecondary style={styles.textName}>
+              <Text.H5 style={styles.textName}>
                 {_currentMessage?.user.name}
-              </Text>
+              </Text.H5>
               <Text style={styles.textTime}>
                 {formatDate(_currentMessage?.createdAt)}
               </Text>

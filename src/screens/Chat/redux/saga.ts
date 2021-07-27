@@ -1,3 +1,5 @@
+import {mapConversation, mapMessage} from './../helper';
+import {CHAT_SOCKET_GET_MESSAGES_ID} from './../../../services/constants';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import * as types from './constants';
@@ -5,7 +7,6 @@ import actions from './actions';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {IObject} from '~/interfaces/common';
 import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
-import {generateRoomName} from '~/utils/generator';
 
 /**
  * Chat
@@ -14,38 +15,38 @@ import {generateRoomName} from '~/utils/generator';
  */
 
 export default function* saga() {
-  yield takeLatest(types.HANDLE_CONVERSATIONS_EVENT, handleConversationsEvent);
-  yield takeLatest(types.SELECT_CONVERSATION, selectConversation);
+  yield takeLatest(types.HANDLE_EVENT, handleEvent);
 }
 
-function* selectConversation() {
-  // yield put(actions.getMessages());
+function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
+  // console.log('handleEvent', payload);
+
+  if (payload.msg !== 'result') return;
+
+  switch (payload.id) {
+    case CHAT_SOCKET_GET_CONVERSIONS_ID:
+      yield handleConversations(payload.result);
+      break;
+    case CHAT_SOCKET_GET_MESSAGES_ID:
+      yield handleMessages(payload.result?.messages);
+      break;
+  }
 }
 
-function* handleConversationsEvent({
-  payload,
-}: {
-  type: string;
-  payload: ISocketEvent;
-}) {
-  console.log(payload);
-  if (payload.msg !== 'result' || payload.id !== CHAT_SOCKET_GET_CONVERSIONS_ID)
-    return;
-
+function* handleConversations(data: []) {
   const state: IObject<any> = yield select();
   const {auth} = state;
 
-  const result = (payload.result || []).map((item: any) => ({
-    ...item,
-    id: item._id,
-    name: item.name || generateRoomName(auth.user, item.usernames),
-    type: item.t,
-    user: item.u,
-    updateAt: item._updateAt,
-    lastMessage: item.lastMessage?.msg,
-  }));
+  yield put(actions.setConversations(mapConversation(auth.user, data)));
+}
 
-  console.log({result});
+function* handleMessages(data?: []) {
+  const state: IObject<any> = yield select();
 
-  yield put(actions.setConversations(result));
+  const {chat} = state;
+  const {messages} = chat;
+
+  if (messages.data.length === 0)
+    yield put(actions.setMessages(mapMessage(data)));
+  else yield put(actions.setExtraMessages(mapMessage(data)));
 }

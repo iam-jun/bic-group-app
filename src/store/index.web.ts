@@ -11,7 +11,7 @@ import {IUserResponse} from '~/interfaces/IAuth';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['auth', 'modal', 'groups'],
+  blacklist: ['auth', 'modal', 'groups', 'chat'], // temporary block chat until it's stable
 };
 
 // @ts-ignore

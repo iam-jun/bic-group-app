@@ -91,7 +91,8 @@ const _login = () => {
     id: 'bein-login', // TODO: rename?
     params: [
       {
-        resume: rocketChatAuthToken,
+        resume:
+          rocketChatAuthToken || 'i2_1ZD1Ri7Z9qq7UtOf7uKlUZSGLBYKf2Ykm_sCPx8F',
       },
     ],
   });
