@@ -15,7 +15,6 @@ import {
   addOnMessageCallback,
   closeConnectChat,
   connectChat,
-  removeOnMessageCallback,
   sendMessage,
 } from '~/services/chatSocket';
 import {spacing} from '~/theme';
@@ -49,13 +48,16 @@ const ConversationsList = (): React.ReactElement => {
   useEffect(() => {
     console.log('useEffect');
     connectChat();
-    addOnMessageCallback('callback-of-list-chat-screen', event => {
-      console.log('data must be parse!', JSON.parse(event.data));
-    });
+    const removeOnMessageCallback = addOnMessageCallback(
+      'callback-of-list-chat-screen',
+      event => {
+        console.log('data must be parse!', JSON.parse(event.data));
+      },
+    );
     return () => {
       console.log('useEffect return');
 
-      removeOnMessageCallback('callback-of-list-chat-screen');
+      removeOnMessageCallback();
       closeConnectChat();
     };
   }, []);

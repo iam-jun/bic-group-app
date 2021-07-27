@@ -7,6 +7,7 @@ export const initState = {
     title: '',
     content: '',
     cancelBtn: false,
+    iconName: '',
     onConfirm: () => {},
     onCancel: () => {},
   },
@@ -22,13 +23,15 @@ function commonReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case actions.SHOW_ALERT:
-      const {title, content, onConfirm, cancelBtn, onCancel} = payload;
+      const {title, content, iconName, onConfirm, cancelBtn, onCancel} =
+        payload;
       return {
         ...state,
         alert: {
           visible: true,
           title,
           content,
+          iconName,
           onConfirm,
           cancelBtn,
           onCancel,
