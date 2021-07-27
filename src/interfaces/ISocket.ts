@@ -1,6 +1,8 @@
 export interface ISocketEvent {
   id: string;
-  msg: 'result' | 'error' | 'connected' | 'updated' | 'added';
+  msg: string;
+  // [TO-DO] Need to check in RocketChat
+  // msg: 'result' | 'error' | 'connected' | 'updated' | 'added';
   result: any;
   fields: any;
   session: string;
