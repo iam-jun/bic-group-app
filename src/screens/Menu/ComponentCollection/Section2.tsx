@@ -17,6 +17,8 @@ import * as modalActions from '~/store/modal/actions';
 import Tag from '~/beinComponents/Tag';
 import TabView from '~/beinComponents/Tab';
 import {IMenuItemProps} from '~/interfaces/IMenu';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
+import {IUser} from '~/interfaces/IAuth';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -93,6 +95,49 @@ const Section2 = () => {
   };
 
   const renderModals = () => {
+    const userData: IUser[] = [
+      {
+        id: '1',
+        _id: '1',
+        name: 'Name Name Name Name Name name 1',
+        email: '',
+        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        role: '',
+      },
+      {
+        id: '2',
+        _id: '2',
+        name: 'Name Name Name Name Name 2',
+        email: '',
+        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        role: '',
+      },
+      {
+        id: '3',
+        _id: '3',
+        name: 'Name Name Name Name Name 3',
+        email: '',
+        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        role: '',
+      },
+      {
+        id: '4',
+        _id: '4',
+        name: 'Name Name Name Name Name 4',
+        email: '',
+        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        role: '',
+      },
+      {
+        id: '5',
+        _id: '5',
+        name: 'Name Name Name Name Name 5',
+        email: '',
+        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        role: '',
+      },
+    ];
+
     return (
       <>
         <Text.H3 style={{marginHorizontal: spacing?.margin.base}}>
@@ -117,6 +162,18 @@ const Section2 = () => {
         </TouchableOpacity>
 
         <AlertModal dismissable={true} />
+        <MentionInput
+          data={userData}
+          modalPosition={'bottom'}
+          isMentionModalVisible={true}
+          renderInput={() => (
+            <SearchInput
+              style={{margin: spacing?.margin.base}}
+              onChangeText={(text: string) => console.log(text)}
+            />
+          )}
+          onPress={() => alert('onPress View')}
+        />
         <Divider
           style={{
             margin: spacing?.margin.base,
