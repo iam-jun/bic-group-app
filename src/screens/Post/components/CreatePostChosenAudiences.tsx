@@ -35,11 +35,16 @@ const CreatePostChosenAudiences = () => {
         </Text.BodyS>
         {chosenAudiences?.length === 0 && (
           <Button.Secondary
-            useI18n
+            textProps={{
+              variant: 'body',
+              useI18n: true,
+              color: theme.colors.primary7,
+            }}
             borderRadius={theme.spacing?.borderRadius.large}
             style={{
               paddingHorizontal: theme.spacing?.padding.large,
               alignSelf: 'center',
+              paddingVertical: theme.spacing?.padding.tiny,
             }}
             onPress={onPressSelectAudience}>
             post:choose_group_people
