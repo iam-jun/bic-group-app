@@ -12,7 +12,7 @@ import {
 import _ from 'lodash';
 
 import {spacing} from '~/theme';
-import items, {IListViewItem} from '../../components/list/items';
+import items, {IListViewItem} from '~/beinComponents/list/items';
 import ViewSpacing from '../../components/ViewSpacing';
 import loadings from '../../components/list/loadings';
 import {IAction} from '~/constants/commonActions';
