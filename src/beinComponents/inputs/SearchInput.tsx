@@ -3,22 +3,22 @@ import {StyleSheet, View, TextInput, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import {useBaseHook} from '~/hooks';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
 
 interface SearchInputProps {
   style?: StyleProp<ViewStyle>;
+  placeholderText?: string;
   onChangeText?: (value: string) => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
   style,
+  placeholderText,
   onChangeText,
 }: SearchInputProps) => {
   const theme: ITheme = useTheme();
   const styles = createStyles(theme);
-  const {t} = useBaseHook();
 
   const [text, setText] = useState<string>('');
 
@@ -29,13 +29,13 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
   return (
     <View style={[styles.container, style]}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.itemContainer}>
         <Icon icon={'Search'} size={16} tintColor={theme.colors.iconTint} />
         <TextInput
           style={styles.textInput}
           value={text}
           onChangeText={_onChangeText}
-          placeholder={t('input:search')}
+          placeholder={placeholderText}
           placeholderTextColor={theme.colors.textSecondary}
         />
         {!!text && (
@@ -56,13 +56,15 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
-      width: 327,
       height: 40,
       borderRadius: 20,
       backgroundColor: colors.placeholder,
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
+    },
+    itemContainer: {
+      flexDirection: 'row',
     },
     textInput: {
       fontFamily: fontFamilies.Segoe,

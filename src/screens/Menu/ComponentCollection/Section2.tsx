@@ -19,10 +19,12 @@ import TabView from '~/beinComponents/Tab';
 import {IMenuItemProps} from '~/interfaces/IMenu';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {IUser} from '~/interfaces/IAuth';
+import {useBaseHook} from '~/hooks';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
 
   const _onActionPress = (action: IAction) => console.log('action:', action);
 
@@ -82,6 +84,7 @@ const Section2 = () => {
         <Divider style={{margin: spacing?.margin.base}} />
         <SearchInput
           style={{margin: spacing?.margin.large}}
+          placeholderText={t('input:search')}
           onChangeText={(text: string) => console.log(text)}
         />
         <Divider
