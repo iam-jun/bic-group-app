@@ -28,7 +28,7 @@ export interface IActivityData {
         Otherwhile, when get data from Backend or Getstrea, actor should be STRING
  */
 export interface IPostActivity {
-  id?: number;
+  id?: string;
   foreign_id?: string;
   getstream_id?: string;
   actor?: string | number;
@@ -52,11 +52,22 @@ export type IReact = 'like' | 'love' | string;
 
 export type IReactionKind = 'comment' | 'seen' | IReact;
 
+export interface IGetStreamUser {
+  created_at?: string;
+  updated_at?: string;
+  id?: string | number;
+  data?: {
+    avatarUrl?: string;
+    fullname?: string;
+  };
+}
+
 export interface IReaction {
   created_at?: string;
   updated_at?: string;
   id?: string;
   user_id?: string | number;
+  user?: IGetStreamUser;
   kind?: IReactionKind;
   activity_id?: string;
   data?: IActivityData;

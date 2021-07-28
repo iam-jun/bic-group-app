@@ -1,59 +1,61 @@
 // dummy-data
 export const data = [
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: '...',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
     },
-    foreign_id: '81dc89c0-d09d-4451-ab47-206485967c8c',
-    id: '88997ca2-eeab-11eb-b029-128a130028af',
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
     latest_reactions: {
       comment: [
         {
-          created_at: '2021-07-28T05:02:28.157651Z',
-          updated_at: '2021-07-28T05:02:28.157651Z',
-          id: '7bf850cf-179e-451b-86b3-fabaa0907966',
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
           user_id: '0',
-          kind: 'comment',
-          activity_id: '88997ca2-eeab-11eb-b029-128a130028af',
-          data: {
-            content: 'Second comment',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
           },
-          parent: '',
-          latest_children: {},
-          children_counts: {},
-        },
-        {
-          created_at: '2021-07-28T02:52:39.272422Z',
-          updated_at: '2021-07-28T02:52:39.272422Z',
-          id: 'e10904f9-3200-48d0-b54f-cd5c669adbe2',
-          user_id: '0',
           kind: 'comment',
-          activity_id: '88997ca2-eeab-11eb-b029-128a130028af',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
           data: {
-            content: 'a new comment',
-            files: ['string'],
-            images: ['string'],
-            videos: ['string'],
+            content: 'nice!',
           },
-          parent: '',
-          latest_children: {},
-          children_counts: {},
-        },
-      ],
-      like: [
-        {
-          created_at: '2021-07-28T04:12:49.762248Z',
-          updated_at: '2021-07-28T04:12:49.762248Z',
-          id: 'e1ca9d05-86b0-4521-99f4-e7858ca34c02',
-          user_id: '0',
-          kind: 'like',
-          activity_id: '88997ca2-eeab-11eb-b029-128a130028af',
-          data: {},
           parent: '',
           latest_children: {},
           children_counts: {},
@@ -64,283 +66,630 @@ export const data = [
       comment: {
         next: '',
       },
-      like: {
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
+  },
+  {
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
+    },
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
         next: '',
       },
     },
     object: '-',
     origin: null,
     reaction_counts: {
-      comment: 2,
-      like: 1,
+      comment: 1,
     },
     target: '',
-    time: '2021-07-27T07:23:26.351069',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
-    },
-    data: {
-      content: 'A new post',
-      files: [],
-      images: [],
-      videos: [],
-    },
-    foreign_id: 'fff18c2b-d432-4463-94bc-aa09b37c420b',
-    id: 'b38db3ef-ee8a-11eb-acc7-12d73b08236b',
-    latest_reactions: {},
-    latest_reactions_extra: {},
-    object: '-',
-    origin: null,
-    reaction_counts: {},
-    target: '',
-    time: '2021-07-27T03:28:25.023794',
-    type: 'post',
-    verb: 'create',
-  },
-  {
-    actor: '0',
-    audience: {
-      groups: [0],
-      users: [0],
-    },
-    data: {
-      content: 'string',
-      files: ['string'],
-      images: ['string'],
-      videos: ['string'],
-    },
-    foreign_id: '932c8821-19d3-4060-9271-521d01ce9425',
-    id: '62c6a436-ee09-11eb-a3c8-0a1200300037',
-    latest_reactions: {},
-    latest_reactions_extra: {},
-    object: '-',
-    origin: null,
-    reaction_counts: {},
-    target: '',
-    time: '2021-07-26T12:02:44.423378',
-    type: 'post',
-    verb: 'create',
-  },
-  {
-    actor: '0',
-    audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
       content:
-        'Em không là nàng thơ\nAnh cũng không còn là nhạc sĩ mộng mơ\nTình này nhẹ như gió\nLại trĩu lên tim ta những vết hằn\nTiếng yêu này mỏng manh\nGiờ tan vỡ, thôi cũng đành\nXếp riêng những ngày tháng hồn nhiên\nTrả lại...',
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: '3a0ba2e3-d020-40da-b0f3-6907d785715b',
-    id: 'be2f52ca-ee00-11eb-9f18-1254437355c5',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
+    reaction_counts: {
+      comment: 1,
+    },
     target: '',
-    time: '2021-07-26T11:00:52.311521',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: 'This is a new post again and again',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: 'b84ef259-8baa-4c5d-9fbd-a495aea26dcd',
-    id: '3f9603ba-edff-11eb-80d6-128a130028af',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
+    reaction_counts: {
+      comment: 1,
+    },
     target: '',
-    time: '2021-07-26T10:50:10.417145',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: 'New post',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: 'f68ce22b-187f-448b-bcfd-31b1edceeeb3',
-    id: 'b03720f0-edfd-11eb-bfd3-128a130028af',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
+    reaction_counts: {
+      comment: 1,
+    },
     target: '',
-    time: '2021-07-26T10:39:00.384382',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: 'Ry',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: 'a9c8afa6-9555-4cf4-9dfb-f28cf4efc2a6',
-    id: '41f9dca6-edfd-11eb-9b31-0a1200300037',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
+    reaction_counts: {
+      comment: 1,
+    },
     target: '',
-    time: '2021-07-26T10:35:55.433489',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: 'This is a new post',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: '894989de-1295-4792-b297-0eadc3653fa3',
-    id: 'cbbac9cc-edfc-11eb-8a93-0ae838defca7',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
+    reaction_counts: {
+      comment: 1,
+    },
     target: '',
-    time: '2021-07-26T10:32:37.048981',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: 'string',
-      files: ['string'],
-      images: ['string'],
-      videos: ['string'],
-    },
-    foreign_id: '6a2ceae1-b8ad-4cfb-ac17-06ac67eb7557',
-    id: '24e50fd3-edf1-11eb-b64d-128a130028af',
-    latest_reactions: {},
-    latest_reactions_extra: {},
-    object: '-',
-    origin: null,
-    reaction_counts: {},
-    target: '',
-    time: '2021-07-26T09:09:12.682491',
-    type: 'post',
-    verb: 'create',
-  },
-  {
-    actor: '0',
-    audience: {
-      groups: [0],
-      users: [0],
-    },
-    data: {
-      content: 'Hello group 0',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: 'e88affcb-1abf-47bb-ba23-2ad27b35e109',
-    id: '3945267d-edb9-11eb-ae95-0a1200300037',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
+    reaction_counts: {
+      comment: 1,
+    },
     target: '',
-    time: '2021-07-26T02:28:55.049792',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },
   {
-    actor: '0',
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
+    },
     audience: {
-      groups: [0],
-      users: [0],
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
     data: {
-      content: 'A post from android',
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
       files: [],
       images: [],
       videos: [],
     },
-    foreign_id: '7106397c-29e5-4740-97aa-c2eecc2211bc',
-    id: 'bf9767da-edb7-11eb-afb9-1254437355c5',
-    latest_reactions: {},
-    latest_reactions_extra: {},
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
     object: '-',
     origin: null,
-    reaction_counts: {},
-    target: '',
-    time: '2021-07-26T02:18:21.410095',
-    type: 'post',
-    verb: 'create',
-  },
-  {
-    actor: '0',
-    audience: {
-      groups: [0],
-      users: [0],
+    reaction_counts: {
+      comment: 1,
     },
-    data: {
-      content: 'string',
-      files: ['string'],
-      images: ['string'],
-      videos: ['string'],
-    },
-    foreign_id: '78acca02-5d34-452e-b689-a7a87cf02168',
-    id: '89dffcaa-ec61-11eb-a5f2-1254437355c5',
-    latest_reactions: {},
-    latest_reactions_extra: {},
-    object: '-',
-    origin: null,
-    reaction_counts: {},
     target: '',
-    time: '2021-07-24T09:28:43.407275',
+    time: '2021-07-28T09:38:43.362172',
     type: 'post',
     verb: 'create',
   },

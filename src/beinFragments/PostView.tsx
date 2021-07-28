@@ -189,6 +189,7 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
       borderTopWidth: 1,
+      borderBottomWidth: 1,
       borderColor: colors.borderDivider,
       alignItems: 'center',
     },
