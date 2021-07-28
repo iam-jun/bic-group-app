@@ -6,6 +6,7 @@ import {
   Animated,
   StyleProp,
   ViewStyle,
+  Keyboard,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -69,6 +70,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onPressSend = () => {
+    Keyboard.dismiss();
     onPressSend?.();
   };
 

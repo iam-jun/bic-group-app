@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import debounce from 'lodash/debounce';
 
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
@@ -18,6 +19,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/Post/components/SelectingAudiences';
 
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
 
 const PostSelectAudience = () => {
   const [listUser, setListUser] = useState([]);
@@ -33,39 +35,13 @@ const PostSelectAudience = () => {
   const createPostData = useCreatePost();
   const {chosenAudiences} = createPostData || {};
 
-  const actor = 9; //todo replace with BEIN userId later...
-
-  const sectionListData = [
-    {title: 'Groups', data: listGroups},
-    {title: 'Users', data: listUser},
-  ];
-
-  useEffect(() => {
-    postDataHelper
-      .getAudienceUsers(actor)
-      .then(response => {
-        if (response.data) {
-          const newList: any = [];
-          response?.data?.map?.((item: IAudience) => {
-            newList.push({...item, type: 'user'});
-          });
-          setListUser(newList);
-        }
-      })
-      .catch(e => {
-        console.log('\x1b[36m', 'getAudienceUsers error : ', e, '\x1b[0m');
-      });
-    postDataHelper
-      .getAudienceGroups(actor)
-      .then(response => {
-        if (response.data) {
-          setListGroups(response.data);
-        }
-      })
-      .catch(e => {
-        console.log('\x1b[36m', 'getAudienceGroups error : ', '\x1b[0m');
-      });
-  }, []);
+  const sectionListData: any = [];
+  if (listGroups?.length > 0) {
+    sectionListData.push({title: 'Groups', data: listGroups});
+  }
+  if (listUser?.length > 0) {
+    sectionListData.push({title: 'Users', data: listUser});
+  }
 
   useEffect(() => {
     setSelectingAudiences(chosenAudiences);
@@ -97,12 +73,61 @@ const PostSelectAudience = () => {
     }
   };
 
+  const getSmallestChild = (
+    smallestGroup: IGroup,
+    newGroups: IGroup[],
+  ): any => {
+    if (smallestGroup?.children?.[0]) {
+      return getSmallestChild(smallestGroup?.children?.[0], newGroups);
+    } else {
+      newGroups.push({...smallestGroup});
+    }
+  };
+
+  const parseListGroup = (groups: any) => {
+    const newGroups: any = [];
+    groups?.map?.((item: IGroup) => {
+      getSmallestChild(item, newGroups);
+    });
+    setListGroups(newGroups);
+  };
+
+  const onSearch = debounce((searchText: string) => {
+    postDataHelper
+      .getSearchAudiences(searchText)
+      .then(response => {
+        if (response && response.data) {
+          const {users = [], groups = []} = response?.data || {};
+
+          parseListGroup(groups);
+
+          const newListUsers: any = [];
+          users?.map?.((item: any) => {
+            newListUsers.push({
+              id: item.id,
+              type: 'user',
+              name: item.fullname || item.username,
+              avatar: item.avatar,
+            });
+          });
+          setListUser(newListUsers);
+        }
+      })
+      .catch(e => {
+        console.log('\x1b[36m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
+      });
+  }, 500);
+
   const onPressCheckbox = (item: IAudience, action: IAction) => {
     if (action === commonActions.checkBox) {
       onAddItem(item);
     } else {
       onRemoveItem(item);
     }
+  };
+
+  const onChangeTextSearch = (text: string) => {
+    onSearch(text);
   };
 
   const renderItem = ({item, index}: any) => {
@@ -132,6 +157,9 @@ const PostSelectAudience = () => {
   };
 
   const renderListHeader = () => {
+    if (listGroups?.length === 0 && listUser?.length === 0) {
+      return null;
+    }
     return (
       <Text.H5 style={{marginVertical: spacing?.margin.small}}>
         Search Results
@@ -154,7 +182,10 @@ const PostSelectAudience = () => {
         buttonProps={{useI18n: true}}
         onPressButton={onPressSave}
       />
-      <SearchInput style={styles.searchInput} />
+      <SearchInput
+        style={styles.searchInput}
+        onChangeText={onChangeTextSearch}
+      />
       <SelectingAudiences
         list={selectingAudiences}
         onRemoveItem={onRemoveItem}

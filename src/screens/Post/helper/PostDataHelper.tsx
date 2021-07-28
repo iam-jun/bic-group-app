@@ -49,6 +49,15 @@ export const postApiConfig = {
       data: commentData,
     },
   }),
+  getSearchAudiences: (key: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/search/audiences`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      key,
+    },
+  }),
 };
 
 const postDataHelper = {
@@ -122,6 +131,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postNewComment(postId, commentData, userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSearchAudiences: async (key: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getSearchAudiences(key),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
