@@ -6,6 +6,15 @@ import {ITheme} from '~/theme/interfaces';
 export const createStyle = (theme: ITheme) => {
   const {colors} = theme;
 
+  /**
+   * NOTE ABOUT FONT POPPINS
+   * This font has an extra bottom space
+   * => should add padding top for balancing,
+   *    newLineHeight = lineHeight - paddingTop
+   *    apply for H4, H5, H6, H6S, ButtonBase, ButtonSmall
+   * REMOVE THIS PADDING TOP WHEN REPLACE WITH OTHER FONT
+   */
+
   return StyleSheet.create({
     h1: {
       fontFamily: fontFamilies.PoppinsSemiBold,
@@ -31,7 +40,7 @@ export const createStyle = (theme: ITheme) => {
     h4: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h4,
-      lineHeight: lineHeights.h4,
+      lineHeight: 18.8 || lineHeights.h4,
       paddingTop: 5.2,
       letterSpacing: letterSpacing.h4,
       color: colors.textPrimary,
@@ -39,7 +48,7 @@ export const createStyle = (theme: ITheme) => {
     h5: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h5,
-      lineHeight: lineHeights.h5,
+      lineHeight: 15.84 || lineHeights.h5,
       paddingTop: 4.16,
       letterSpacing: letterSpacing.h5,
       color: colors.textPrimary,
@@ -47,7 +56,7 @@ export const createStyle = (theme: ITheme) => {
     h6: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h6,
-      lineHeight: lineHeights.h6,
+      lineHeight: 16.36 || lineHeights.h6,
       paddingTop: 3.64,
       letterSpacing: letterSpacing.h6,
       color: colors.textPrimary,
@@ -55,14 +64,14 @@ export const createStyle = (theme: ITheme) => {
     h6s: {
       fontFamily: fontFamilies.Poppins,
       fontSize: sizes.h6s,
-      lineHeight: lineHeights.h6s,
+      lineHeight: 16.36 || lineHeights.h6s,
       paddingTop: 3.64,
       letterSpacing: letterSpacing.h6,
       color: colors.textPrimary,
     },
     buttonBase: {
       fontFamily: fontFamilies.PoppinsMedium,
-      fontSize: sizes.buttonBase,
+      fontSize: 16.36 || sizes.buttonBase,
       paddingTop: 3.64,
       lineHeight: lineHeights.buttonBase,
       letterSpacing: letterSpacing.buttonBase,
@@ -71,7 +80,7 @@ export const createStyle = (theme: ITheme) => {
     buttonSmall: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.buttonSmall,
-      lineHeight: lineHeights.buttonSmall,
+      lineHeight: 12.88 || lineHeights.buttonSmall,
       paddingTop: 3.12,
       letterSpacing: letterSpacing.buttonSmall,
       color: colors.textPrimary,
