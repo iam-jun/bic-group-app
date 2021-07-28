@@ -71,7 +71,13 @@ const Header: React.FC<HeaderProps> = ({
         },
         styles.container,
       ])}>
-      {!hideBack && <Icon icon={'AngleLeftB'} onPress={_onPressBack} />}
+      {!hideBack && (
+        <Icon
+          icon={'AngleLeftB'}
+          onPress={_onPressBack}
+          hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+        />
+      )}
       {!!avatar && (
         <Avatar source={avatar} style={{marginLeft: spacing?.margin.base}} />
       )}

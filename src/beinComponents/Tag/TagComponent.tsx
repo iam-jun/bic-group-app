@@ -16,11 +16,11 @@ export interface TagProps {
   textVariant?: TextVariant;
   avatar?: any;
   label: string;
-  icon: any;
-  selected: boolean;
+  icon?: any;
+  selected?: boolean;
   disabled?: boolean;
-  onActionPress: (action: IAction) => void;
-  onPressIcon: () => void;
+  onActionPress?: (action: IAction) => void;
+  onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -28,8 +28,8 @@ const TagComponent: React.FC<TagProps> = ({
   variant = 'medium',
   avatar,
   label,
-  icon,
-  selected,
+  icon = 'Times',
+  selected = false,
   disabled = false,
   onActionPress,
   onPressIcon,
@@ -40,12 +40,14 @@ const TagComponent: React.FC<TagProps> = ({
   const styles = createStyles(theme, variant, isSelected, disabled);
 
   const _onChangeValue = () => {
-    const newValue = !isSelected;
-    setIsSelected(newValue);
-    if (newValue) {
-      onActionPress(commonActions.selectEmoji as IAction);
-    } else {
-      onActionPress(commonActions.unselectEmoji as IAction);
+    if (onActionPress) {
+      const newValue = !isSelected;
+      setIsSelected(newValue);
+      if (newValue) {
+        onActionPress?.(commonActions.selectEmoji as IAction);
+      } else {
+        onActionPress?.(commonActions.unselectEmoji as IAction);
+      }
     }
   };
 
