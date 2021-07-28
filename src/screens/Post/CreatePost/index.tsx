@@ -28,7 +28,7 @@ const CreatePost = () => {
   const createPostData = useCreatePost();
   const {loading, data, tags = [], chosenAudiences = []} = createPostData || {};
   const {content, images, videos, files} = data || {};
-  const actor = 0; //todo replace with BEIN userId later...
+  const actor = 9; //todo replace with BEIN userId later...
 
   //Enable  Post button if :
   // + Has at least 1 audience AND

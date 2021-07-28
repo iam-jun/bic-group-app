@@ -85,7 +85,7 @@ const postDataMocks = {
     code: 200,
     data: [
       {
-        id: 14,
+        id: 0,
         name: 'Bein',
         userCount: 555555,
         icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
