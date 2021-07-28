@@ -1,12 +1,31 @@
-import {mapConversation, mapMessage} from './../helper';
-import {CHAT_SOCKET_GET_MESSAGES_ID} from './../../../services/constants';
+import {CHAT_SOCKET_CREATE_GROUP_CHAT_ID} from './../../../services/constants';
 import {put, select, takeLatest} from 'redux-saga/effects';
+import {AxiosResponse} from 'axios';
+
+import {
+  mapConversation,
+  mapConversations,
+  mapMessages,
+  mapUser,
+} from './../helper';
+import {CHAT_SOCKET_GET_MESSAGES_ID} from '~/services/constants';
 
 import * as types from './constants';
 import actions from './actions';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {IObject} from '~/interfaces/common';
-import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
+import {
+  CHAT_SOCKET_GET_CONVERSIONS_ID,
+  CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
+} from '~/services/constants';
+import {
+  handleResponseSuccessBein,
+  makeHttpRequest,
+} from '~/services/httpApiRequest';
+import apiConfig from '~/configs/apiConfig';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {StackActions} from '@react-navigation/native';
 
 /**
  * Chat
@@ -16,10 +35,11 @@ import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 
 export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
+  yield takeLatest(types.GET_USERS, getUsers);
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
-  // console.log('handleEvent', payload);
+  console.log('handleEvent', payload);
 
   if (payload.msg !== 'result') return;
 
@@ -30,6 +50,10 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
     case CHAT_SOCKET_GET_MESSAGES_ID:
       yield handleMessages(payload.result?.messages);
       break;
+    case CHAT_SOCKET_CREATE_DIRECT_CHAT_ID:
+    case CHAT_SOCKET_CREATE_GROUP_CHAT_ID:
+      yield handleCreateMessage(payload.result);
+      break;
   }
 }
 
@@ -37,7 +61,7 @@ function* handleConversations(data: []) {
   const state: IObject<any> = yield select();
   const {auth} = state;
 
-  yield put(actions.setConversations(mapConversation(auth.user, data)));
+  yield put(actions.setConversations(mapConversations(auth.user, data)));
 }
 
 function* handleMessages(data?: []) {
@@ -47,6 +71,31 @@ function* handleMessages(data?: []) {
   const {messages} = chat;
 
   if (messages.data.length === 0)
-    yield put(actions.setMessages(mapMessage(data)));
-  else yield put(actions.setExtraMessages(mapMessage(data)));
+    yield put(actions.setMessages(mapMessages(data)));
+  else yield put(actions.setExtraMessages(mapMessages(data)));
+}
+
+function* handleCreateMessage(data: any) {
+  const state: IObject<any> = yield select();
+  const {auth} = state;
+  const conversation = mapConversation(auth.user, data);
+  yield put(actions.selectConversation(conversation));
+  yield put(actions.createConversationSuccess(conversation));
+  rootNavigationRef?.current?.dispatch(
+    StackActions.replace(chatStack.conversation),
+  );
+}
+
+function* getUsers() {
+  try {
+    const httpResponse: AxiosResponse = yield makeHttpRequest(
+      apiConfig.App.users(),
+    );
+    if (httpResponse) {
+      const {data} = handleResponseSuccessBein(httpResponse);
+      yield put(actions.setUsers(data.map((item: any) => mapUser(item))));
+    }
+  } catch (e) {
+    console.log('getUsers error', e);
+  }
 }

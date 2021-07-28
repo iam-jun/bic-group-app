@@ -4,7 +4,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
-import {borderRadius} from '~/theme/spacing';
+import {IconType} from '~/resources/icons';
 
 export type AvatarType = 'tiny' | 'small' | 'medium' | 'large' | 'ultraLarge';
 
@@ -15,7 +15,7 @@ export interface AvatarProps {
   variant?: AvatarType;
   source?: string;
   status?: AvatarStatus;
-  actionIcon?: any;
+  actionIcon?: IconType;
   onPressAction?: () => void;
   badge?: any;
   badgeBottom?: boolean;
@@ -27,7 +27,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   style,
   source,
   status,
-  actionIcon = 'Times',
+  actionIcon,
   onPressAction,
   badge,
   badgeBottom,

@@ -26,6 +26,7 @@ import iconTabGroups from '../../assets/icons/icon_groups.svg';
 import iconTabChat from '../../assets/icons/icon_chat.svg';
 import iconTabNotification from '../../assets/icons/icon_notification.svg';
 import iconTabMenu from '../../assets/icons/icon_menu.svg';
+import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
 
 const icons = {
   iconTabHome,
@@ -196,6 +197,8 @@ const icons = {
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
+  iconCreateChat,
 };
 
 export default icons;
+export type IconType = keyof typeof icons;

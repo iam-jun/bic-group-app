@@ -2,10 +2,9 @@ import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-
-import {NavigationHeader} from '~/components';
 import Divider from '~/components/Divider';
 import Input from '~/components/inputs';
 import {useBaseHook} from '~/hooks';
@@ -19,6 +18,8 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
 import useChat from '~/hooks/chat';
 import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
+import Header from '~/beinComponents/Header';
+import i18next from 'i18next';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -60,9 +61,18 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.conversation, {id: item._id});
   };
 
+  const onMenuPress = async () => {
+    rootNavigation.navigate(chatStack.createConversation);
+  };
+
   return (
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
-      <NavigationHeader title="Chat" rightIcon="iconSettings" />
+      <Header
+        title={i18next.t('chat:title')}
+        hideBack
+        menuIcon="iconCreateChat"
+        onPressMenu={onMenuPress}
+      />
       <Input
         style={styles.inputSearch}
         roundness="big"

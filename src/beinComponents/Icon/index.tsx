@@ -15,7 +15,7 @@ import FontIcon, {FontIconProps} from './FontIcon';
 import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import {spacing} from '~/theme';
-import icons from '~/resources/icons';
+import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 
 export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
@@ -31,7 +31,7 @@ export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
 }
 
 interface IconRequiredProps extends IconProps {
-  icon: any;
+  icon: IconType;
 }
 
 const Icon: React.FC<IconRequiredProps> = ({
@@ -59,8 +59,10 @@ const Icon: React.FC<IconRequiredProps> = ({
   if (Unicons[icon] || Unicons[`Uil${icon}`]) {
     IconComponent = Unicons;
     name = icon;
+    // @ts-ignore
   } else if (_icon?.type) {
     IconComponent = FontIcon;
+    // @ts-ignore
     type = _icon?.type;
     name = _icon?.name;
   } else {

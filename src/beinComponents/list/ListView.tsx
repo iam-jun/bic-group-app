@@ -32,7 +32,15 @@ export interface ListViewProps {
   onActionPress?: (...params: any) => void;
   onRefresh?: () => void;
 
-  renderItem?: ({item, index}: {item: any; index: number}) => React.ReactNode;
+  titleField?: string;
+  subTitleField?: string;
+  renderItem?: ({
+    item,
+    index,
+  }: {
+    item: any;
+    index: number;
+  }) => React.ReactElement;
   renderItemSeparator?: any;
   renderLoading?: any;
   ListHeaderComponent: any;
@@ -59,6 +67,8 @@ const ListView: React.FC<ListViewProps> = ({
   onActionPress,
   onRefresh,
 
+  titleField,
+  subTitleField,
   renderItem,
   renderItemSeparator,
   renderLoading,
@@ -81,7 +91,7 @@ const ListView: React.FC<ListViewProps> = ({
 
   const _renderItem = ({item, index}: {item: any; index: number}) => {
     if (renderItem) {
-      renderItem({item, index});
+      return renderItem({item, index});
     }
 
     return (
@@ -90,6 +100,8 @@ const ListView: React.FC<ListViewProps> = ({
         onPress={() => onItemPress && onItemPress(item)}>
         <ItemComponent
           {...item}
+          title={item[titleField || 'title']}
+          subTitle={item[subTitleField || 'subTitle']}
           onActionPress={
             onActionPress
               ? (action: IAction) => onActionPress(action, item)
@@ -135,7 +147,9 @@ const ListView: React.FC<ListViewProps> = ({
   return (
     <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
       {title && (
-        <Text.H2 style={{margin: spacing.margin.large}}>{title}</Text.H2>
+        <Text.H6 style={{marginVertical: spacing.margin.small}}>
+          {title}
+        </Text.H6>
       )}
       <FlatList
         ref={listRef}
@@ -150,7 +164,10 @@ const ListView: React.FC<ListViewProps> = ({
         ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={ListEmptyComponent}
         ItemSeparatorComponent={_renderItemSeparator}
-        keyExtractor={(item, index) => _.uniqueId(`list-${type}-${index}`)}
+        keyExtractor={(item, index) =>
+          `list-${type}-${index}-${item.id}` ||
+          _.uniqueId(`list-${type}-${index}`)
+        }
         refreshControl={
           onRefresh ? (
             <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />

@@ -30,7 +30,7 @@ const LeftPanel = (): React.ReactElement => {
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
-    rootNavigation.navigate(chatStack.conversation, {id: item.id});
+    rootNavigation.navigate(chatStack.conversation, {id: item._id});
   };
 
   return (

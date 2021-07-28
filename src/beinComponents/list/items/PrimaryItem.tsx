@@ -13,6 +13,7 @@ import {useTheme} from 'react-native-paper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import {IAction} from '~/constants/commonActions';
+import {IconType} from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 
@@ -24,14 +25,16 @@ export interface PrimaryItemProps {
   showAvatar?: boolean;
   avatar?: string;
   avatarProps?: AvatarProps;
-  leftIcon?: any;
+  leftIcon?: IconType;
   leftIconProps?: IconProps;
+  isChecked?: boolean;
   onPress?: () => void;
   onPressCheckbox?: (action: IAction) => void;
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: () => void;
-  RightComponent?: React.ReactNode;
+  LeftComponent?: React.ReactElement;
+  RightComponent?: React.ReactElement;
   ContentComponent?: React.ReactNode;
 }
 
@@ -45,6 +48,8 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   subTitle,
   leftIcon,
   leftIconProps,
+  LeftComponent,
+  isChecked,
   onPress,
   onPressToggle,
   onPressCheckbox,
@@ -72,6 +77,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       disabled={!onPress}
       onPress={onPress}
       style={containerStyle}>
+      {LeftComponent}
       {(showAvatar || !!avatar) && (
         <Avatar.Medium source={avatar} style={styles.avatar} {...avatarProps} />
       )}
@@ -91,6 +97,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       {onPressCheckbox && (
         <Checkbox
           style={styles.iconMarginLeft}
+          isChecked={isChecked}
           onActionPress={onPressCheckbox}
         />
       )}

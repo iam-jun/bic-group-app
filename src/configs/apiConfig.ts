@@ -26,7 +26,7 @@ const App = {
   },
   users: (): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}usersdas`,
+      url: `${providers.bein.url}users`,
       method: 'get',
       provider: providers.bein,
       useRetry: false,

@@ -243,11 +243,6 @@ function* signOut() {
 
 function* checkAuthState() {
   try {
-    // const httpResponse = yield makeHttpRequest(apiConfig.App.users());
-    // console.log('httpResponse', httpResponse)
-    // if (httpResponse) {
-    //   console.log('httpResponse:', handleResponseSuccessBein(httpResponse));
-    // }
     const user: IAuth.IUserResponse | boolean = yield Store.getCurrentUser();
     if (user) {
       navigation.replace(rootSwitch.mainStack);

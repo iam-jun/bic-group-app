@@ -2,15 +2,15 @@ import React from 'react';
 import {View, StyleSheet, TextStyle, StyleProp, ViewStyle} from 'react-native';
 import HorizontalView from './layout/HorizontalView';
 import Text from './texts/Text';
-import Avatar, {AvatarProps} from './Avatar';
 import Icon from '../beinComponents/Icon';
 import {IconProps} from '../beinComponents/Icon';
-import {margin, padding} from '~/theme/spacing';
+import {margin} from '~/theme/spacing';
 import {IObject} from '~/interfaces/common';
-import {homeStack} from '~/configs/navigator';
 import {useTheme} from 'react-native-paper';
 import {formatDate} from '~/utils/formatData';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
+import Avatar from '~/beinComponents/Avatar';
 
 export interface Props {
   style?: StyleProp<ViewStyle>;
@@ -60,11 +60,7 @@ const HeaderView: React.FC<Props> = ({
         />
       )}
       <HorizontalView style={{alignItems: 'center'}}>
-        <Avatar
-          size="base"
-          {...avatar}
-          style={!showBackButton && styles.avatar}
-        />
+        <Avatar.Large {...avatar} style={!showBackButton && styles.avatar} />
         <View style={[styles.userInfo, infoStyle]}>
           <HorizontalView
             style={[styles.firstContainer, {marginBottom: space}]}>
@@ -85,7 +81,8 @@ const HeaderView: React.FC<Props> = ({
           {!!thirdLabel && (
             <Text
               style={[styles.label, thirdLabelStyle, {marginBottom: space}]}
-              h6>
+              h6
+              numberOfLines={2}>
               {thirdLabel}
             </Text>
           )}

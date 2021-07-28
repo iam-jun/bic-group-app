@@ -9,6 +9,7 @@ import Button from '~/beinComponents/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
 import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
+import {IconType} from '~/resources/icons';
 
 export interface HeaderProps {
   title?: string;
@@ -16,12 +17,12 @@ export interface HeaderProps {
   subTitle?: string;
   subTitleTextProps?: TextProps;
   avatar?: any;
-  icon?: any;
+  icon?: IconType;
   onPressIcon?: () => void;
   buttonText?: string;
   buttonProps?: ButtonPrimaryProps;
   onPressButton?: () => void;
-  menuIcon?: any;
+  menuIcon?: IconType;
   onPressMenu?: () => void;
   hideBack?: boolean;
   onPressBack?: () => void;

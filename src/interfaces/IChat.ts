@@ -132,6 +132,7 @@ export type IMessage = _GMessage & {
 export type IConversation = {
   _id: string;
   name: string;
+  avatar?: string;
   description?: string;
   uids: string[];
   user: IChatUser;

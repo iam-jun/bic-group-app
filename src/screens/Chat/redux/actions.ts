@@ -1,6 +1,7 @@
 import * as Actions from './constants';
 import {IConversation, IMessage} from '../../../interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
+import {IUser} from '~/interfaces/IAuth';
 
 const setConversationLoading = (payload: boolean) => ({
   type: Actions.SET_CONVERSATION_LOADING,
@@ -47,6 +48,25 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
   reactionType,
 });
 
+const getUsers = () => ({
+  type: Actions.GET_USERS,
+});
+
+const setUsers = (payload: IUser[]) => ({
+  type: Actions.SET_USERS,
+  payload,
+});
+
+const selectUser = (payload: IUser) => ({
+  type: Actions.SELECT_USER,
+  payload,
+});
+
+const createConversationSuccess = (payload: IConversation) => ({
+  type: Actions.CREATE_CONVERSATION_SUCCESS,
+  payload,
+});
+
 export default {
   setConversationLoading,
   handleEvent,
@@ -57,4 +77,8 @@ export default {
   mergeExtraMessages,
   sendMessage,
   reactMessage,
+  getUsers,
+  setUsers,
+  selectUser,
+  createConversationSuccess,
 };
