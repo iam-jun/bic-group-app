@@ -37,6 +37,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           onChangeText={_onChangeText}
           placeholder={placeholderText}
           placeholderTextColor={theme.colors.textSecondary}
+          selectionColor={theme.colors.textSecondary}
         />
         {!!text && (
           <Icon
@@ -71,7 +72,11 @@ const createStyles = (theme: ITheme) => {
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
       flex: 1,
-      marginHorizontal: spacing?.margin.small,
+      marginRight: spacing?.margin.small,
+    },
+    iconSearch: {
+      marginLeft: spacing?.margin.small,
+      marginRight: spacing?.margin.tiny,
     },
   });
 };

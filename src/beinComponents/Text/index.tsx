@@ -16,6 +16,7 @@ export type TextVariant =
   | 'h4'
   | 'h5'
   | 'h6'
+  | 'h6s'
   | 'buttonBase'
   | 'buttonSmall'
   | 'bodyM'
@@ -72,6 +73,9 @@ const H5 = ({...props}: TextProps) => (
 const H6 = ({...props}: TextProps) => (
   <TextComponent variant={'h6'} {...props} />
 );
+const H6S = ({...props}: TextProps) => (
+  <TextComponent variant={'h6s'} {...props} />
+);
 const ButtonBase = ({...props}: TextProps) => (
   <TextComponent variant={'buttonBase'} {...props} />
 );
@@ -101,6 +105,7 @@ const Text = Object.assign(TextComponent, {
   H4,
   H5,
   H6,
+  H6S,
   ButtonBase,
   ButtonSmall,
   BodyM,

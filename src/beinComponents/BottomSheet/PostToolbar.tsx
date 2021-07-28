@@ -6,6 +6,7 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
+  Keyboard,
 } from 'react-native';
 import {throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
@@ -44,6 +45,7 @@ const PostToolbar = ({
   };
 
   const openModal = throttle(() => {
+    Keyboard.dismiss();
     modalizeRef?.current?.open?.();
   }, 500);
 

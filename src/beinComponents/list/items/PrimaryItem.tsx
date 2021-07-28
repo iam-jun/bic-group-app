@@ -4,7 +4,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  ViewProps,
   ViewStyle,
 } from 'react-native';
 import Text from '~/beinComponents/Text';
@@ -14,12 +13,17 @@ import {useTheme} from 'react-native-paper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import {IAction} from '~/constants/commonActions';
+import Avatar from '~/beinComponents/Avatar';
+import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 
 export interface PrimaryItemProps {
-  style?: StyleProp<ViewProps>;
+  style?: StyleProp<ViewStyle>;
   height?: number;
   title?: string;
   subTitle?: string;
+  showAvatar?: boolean;
+  avatar?: string;
+  avatarProps?: AvatarProps;
   leftIcon?: any;
   leftIconProps?: IconProps;
   onPress?: () => void;
@@ -27,13 +31,17 @@ export interface PrimaryItemProps {
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: () => void;
-  RightComponent?: any;
+  RightComponent?: React.ReactNode;
+  ContentComponent?: React.ReactNode;
 }
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
   height,
   title,
+  showAvatar,
+  avatar,
+  avatarProps,
   subTitle,
   leftIcon,
   leftIconProps,
@@ -43,6 +51,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   onPressEdit,
   onPressMenu,
   RightComponent,
+  ContentComponent,
 }: PrimaryItemProps) => {
   const theme: ITheme = useTheme();
   const {dimension, spacing} = theme;
@@ -63,6 +72,9 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       disabled={!onPress}
       onPress={onPress}
       style={containerStyle}>
+      {(showAvatar || !!avatar) && (
+        <Avatar.Medium source={avatar} style={styles.avatar} {...avatarProps} />
+      )}
       {!!leftIcon && (
         <Icon
           size={14}
@@ -74,6 +86,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       <View style={styles.contentContainer}>
         {!!title && <Text.H6 numberOfLines={2}>{title}</Text.H6>}
         {!!subTitle && <Text.Body numberOfLines={2}>{subTitle}</Text.Body>}
+        {ContentComponent}
       </View>
       {onPressCheckbox && (
         <Checkbox
@@ -112,6 +125,9 @@ const createStyle = (theme: ITheme) => {
     },
     iconMarginLeft: {
       marginLeft: spacing?.margin.extraLarge,
+    },
+    avatar: {
+      marginRight: spacing?.margin.base,
     },
   });
 };
