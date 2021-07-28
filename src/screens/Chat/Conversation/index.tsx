@@ -26,7 +26,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {sendMessage} from '~/services/chatSocket';
 import {
   CHAT_SOCKET_GET_MESSAGES_ID,
-  CHAT_SOCKET_SEND_MESSAGE,
+  CHAT_SOCKET_SEND_MESSAGE_ID,
 } from '~/services/constants';
 import {useRootNavigation} from '~/hooks/navigation';
 import appConfig from '~/configs/appConfig';
@@ -110,7 +110,7 @@ const Conversation = () => {
     sendMessage({
       msg: 'method',
       method: 'sendMessage',
-      id: CHAT_SOCKET_SEND_MESSAGE,
+      id: CHAT_SOCKET_SEND_MESSAGE_ID,
       params: [
         {
           rid: conversation._id,

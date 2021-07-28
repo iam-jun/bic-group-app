@@ -1,6 +1,7 @@
 import appConfig from '~/configs/appConfig';
 import * as types from './constants';
 import {IConversation, IMessage, IReaction} from '~/interfaces/IChat';
+import {IUser} from '~/interfaces/IAuth';
 
 export const initState = {
   conversations: {
@@ -15,6 +16,8 @@ export const initState = {
     lastDate: null,
     canLoadMore: true,
   },
+  users: new Array<IUser>(),
+  selectedUsers: new Array<IUser>(),
 };
 
 /**
@@ -25,7 +28,7 @@ export const initState = {
  */
 function reducer(state = initState, action: any = {}) {
   const {type} = action;
-  const {conversations, conversation, messages} = state;
+  const {conversations, conversation, messages, users, selectedUsers} = state;
 
   switch (type) {
     case types.SET_CONVERSATION_LOADING:
@@ -53,6 +56,12 @@ function reducer(state = initState, action: any = {}) {
           ...action.payload,
         },
         messages: initState.messages,
+      };
+    case types.GET_USERS:
+      return {
+        ...state,
+        users: [],
+        selectedUsers: [],
       };
     case types.SET_MESSAGES:
       return {
@@ -90,6 +99,34 @@ function reducer(state = initState, action: any = {}) {
             messages.extra.length > 1
               ? messages.extra[messages.extra.length - 1]._updatedAt
               : messages.lastDate,
+        },
+      };
+    case types.SET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case types.SELECT_USER:
+      return {
+        ...state,
+        selectedUsers: !action.payload.selected
+          ? [...selectedUsers, {...action.payload, selected: true}]
+          : selectedUsers.filter(user => user.id !== action.payload.id),
+        users: users.map((item: IUser) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                selected: !item.selected,
+              }
+            : item,
+        ),
+      };
+    case types.CREATE_CONVERSATION_SUCCESS:
+      return {
+        ...state,
+        conversations: {
+          ...conversations,
+          data: [action.payload, ...conversations.data],
         },
       };
     case types.SEND_MESSAGE:

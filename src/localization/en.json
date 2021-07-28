@@ -11,10 +11,13 @@
     "btn_cancel": "Cancel",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
+    "btn_create": "Create",
     "text_ok": "OK",
-    "text_error": "Lỗi",
+    "text_error": "Error",
     "text_loading": "Loading...",
-    "text_save": "Save"
+    "text_save": "Save",
+    "text_all": "All",
+    "text_chosen": "Chosen"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -112,8 +115,12 @@
     "show_all": "Show all"
   },
   "chat": {
+    "title": "Chat",
     "placeholder_search": "Search...",
-    "title_members": "Members"
+    "title_members": "Members",
+    "title_add_participants": "Add participants",
+    "title_create_group_chat": "Create group chat",
+    "placeholder_input_group_chat_name":"Name your group chat (Optional)"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

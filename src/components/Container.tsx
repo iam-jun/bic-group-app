@@ -41,7 +41,7 @@ const styles = {
     flex: 1,
   },
   container: {
-    paddingHorizontal: padding.large,
+    padding: padding.base,
   },
   fluid: {
     paddingHorizontal: 0,

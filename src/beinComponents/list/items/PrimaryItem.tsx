@@ -14,20 +14,23 @@ import {useTheme} from 'react-native-paper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import {IAction} from '~/constants/commonActions';
+import {IconType} from '~/resources/icons';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewProps>;
   height?: number;
   title?: string;
   subTitle?: string;
-  leftIcon?: any;
+  leftIcon?: IconType;
   leftIconProps?: IconProps;
+  isChecked?: boolean;
   onPress?: () => void;
   onPressCheckbox?: (action: IAction) => void;
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: () => void;
-  RightComponent?: any;
+  LeftComponent?: React.ReactElement;
+  RightComponent?: React.ReactElement;
 }
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
@@ -37,6 +40,8 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   subTitle,
   leftIcon,
   leftIconProps,
+  LeftComponent,
+  isChecked,
   onPress,
   onPressToggle,
   onPressCheckbox,
@@ -63,6 +68,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       disabled={!onPress}
       onPress={onPress}
       style={containerStyle}>
+      {LeftComponent}
       {!!leftIcon && (
         <Icon
           size={14}
@@ -78,6 +84,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       {onPressCheckbox && (
         <Checkbox
           style={styles.iconMarginLeft}
+          isChecked={isChecked}
           onActionPress={onPressCheckbox}
         />
       )}

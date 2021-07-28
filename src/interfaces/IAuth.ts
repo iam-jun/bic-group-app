@@ -1,4 +1,4 @@
-import {CognitoUser, ISignUpResult} from 'amazon-cognito-identity-js';
+import {ISignUpResult} from 'amazon-cognito-identity-js';
 import {User} from 'react-native-gifted-chat';
 // Actiontype
 export interface ISignIn {
@@ -27,10 +27,12 @@ export interface ICognitoError {
 export interface IUser extends User {
   id: string;
   email: string;
-  name: string;
-  avatarUrl?: string;
+  username?: string;
+  name?: string;
+  avatar?: string;
   online?: boolean;
   role: string;
+  selected?: boolean;
 }
 
 export interface IUserResponse extends IUser {
@@ -47,4 +49,4 @@ export interface IForgotPasswordError {
   errConfirm?: string;
 }
 
-export interface ISignUpResponse extends ISignUpResult {}
+export type ISignUpResponse = ISignUpResult;

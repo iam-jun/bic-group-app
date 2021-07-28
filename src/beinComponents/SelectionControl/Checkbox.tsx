@@ -26,6 +26,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
   const styles = createStyles(theme, checked);
+  React.useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
 
   const _onChangeValue = () => {
     const newValue = !checked;
