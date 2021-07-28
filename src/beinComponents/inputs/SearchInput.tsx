@@ -30,13 +30,19 @@ const SearchInput: React.FC<SearchInputProps> = ({
   return (
     <View style={[styles.container, style]}>
       <View style={{flexDirection: 'row'}}>
-        <Icon icon={'Search'} size={16} tintColor={theme.colors.iconTint} />
+        <Icon
+          icon={'Search'}
+          size={14}
+          style={styles.iconSearch}
+          tintColor={theme.colors.textSecondary}
+        />
         <TextInput
           style={styles.textInput}
           value={text}
           onChangeText={_onChangeText}
           placeholder={t('input:search')}
           placeholderTextColor={theme.colors.textSecondary}
+          selectionColor={theme.colors.textSecondary}
         />
         {!!text && (
           <Icon
@@ -56,7 +62,6 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
-      width: 327,
       height: 40,
       borderRadius: 20,
       backgroundColor: colors.placeholder,
@@ -69,7 +74,11 @@ const createStyles = (theme: ITheme) => {
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
       flex: 1,
-      marginHorizontal: spacing?.margin.small,
+      marginRight: spacing?.margin.small,
+    },
+    iconSearch: {
+      marginLeft: spacing?.margin.small,
+      marginRight: spacing?.margin.tiny,
     },
   });
 };

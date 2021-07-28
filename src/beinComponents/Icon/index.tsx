@@ -27,6 +27,7 @@ export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
   label?: string;
   labelStyle?: StyleProp<TextStyle>;
   onPress?: () => void;
+  hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
 }
 
 interface IconRequiredProps extends IconProps {
@@ -46,6 +47,7 @@ const Icon: React.FC<IconRequiredProps> = ({
   isButton,
   isLoading,
   disabled,
+  hitSlop = {top: 10, left: 10, bottom: 10, right: 10},
   ...props
 }: IconRequiredProps) => {
   if (isLoading) return <ActivityIndicator size="small" />;
@@ -89,7 +91,8 @@ const Icon: React.FC<IconRequiredProps> = ({
         {backgroundColor},
       ]}
       disabled={!onPress}
-      onPress={onPress}>
+      onPress={onPress}
+      hitSlop={hitSlop}>
       <IconComponent
         style={iconStyle}
         tintColor={_tintColor}

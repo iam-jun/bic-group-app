@@ -116,7 +116,7 @@ const ListView: React.FC<ListViewProps> = ({
     if (renderItemSeparator) {
       return renderItemSeparator();
     }
-    return () => (
+    return (
       <ViewSpacing
         width={horizontal ? spacing.margin.small : 0}
         height={!horizontal ? spacing.margin.small : 0}

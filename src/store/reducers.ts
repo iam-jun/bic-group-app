@@ -6,10 +6,8 @@ import app from './app/reducer';
 import modal from './modal/reducer';
 import auth from '../screens/Auth/redux/reducer';
 import chat from '../screens/Chat/redux/reducer';
-import comment from '../screens/Home/Comment/redux/reducer';
-import audience from '../screens/CreatePost/SelectAudience/redux/reducer';
-import post from '../screens/CreatePost/redux/reducer';
 import groupsReducer from '~/screens/Groups/redux/reducer';
+import postReducer from '~/screens/Post/redux/reducer';
 
 const authPersistConfig = {
   key: 'auth',
@@ -22,9 +20,7 @@ const rootReducers = combineReducers({
   modal,
   auth: persistReducer(authPersistConfig, auth),
   chat,
-  comment,
-  audience,
-  post,
+  post: postReducer,
   groups: groupsReducer,
 });
 

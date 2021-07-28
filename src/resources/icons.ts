@@ -8,6 +8,12 @@ import iconReactionLove from '../../assets/icons/icon_reaction_love.svg';
 import iconReactionSad from '../../assets/icons/icon_reaction_sad.svg';
 import iconReactionShocked from '../../assets/icons/icon_reaction_shocked.svg';
 import iconReactionSmile from '../../assets/icons/icon_reaction_smile.svg';
+import iconEyeSeen from '../../assets/icons/icon_eye.svg';
+import iconReact from '../../assets/icons/icon_react.svg';
+import iconDot from '../../assets/icons/ic_dot.svg';
+import iconSticker from '../../assets/icons/icon_sticker.svg';
+import iconSmileSolid from '../../assets/icons/icon_smile_solid.svg';
+import iconSend from '../../assets/icons/icon_send.svg';
 import iconReply from '../../assets/icons/icon_reply.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
 import iconReport from '../../assets/icons/icon_report.svg';
@@ -114,10 +120,6 @@ const icons = {
     type: 'Entypo',
     name: 'attachment',
   },
-  iconSend: {
-    type: 'MaterialCommunityIcons',
-    name: 'send',
-  },
   iconSendOutline: {
     type: 'MaterialCommunityIcons',
     name: 'send-outline',
@@ -186,6 +188,12 @@ const icons = {
     type: 'Ionicons',
     name: 'lock-closed-outline',
   },
+  iconEyeSeen,
+  iconReact,
+  iconDot,
+  iconSticker,
+  iconSmileSolid,
+  iconSend,
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,

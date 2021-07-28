@@ -81,4 +81,5 @@ export interface IDimension {
   headerHeight: number;
   primaryItemHeight: number;
   avatarSizes: {[key: string]: number};
+  commentBarHeight: number;
 }

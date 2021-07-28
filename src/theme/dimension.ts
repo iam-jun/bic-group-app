@@ -14,6 +14,7 @@ export const sizes = {
   h4: 20,
   h5: 16,
   h6: 14,
+  h6s: 14,
   buttonBase: 14,
   buttonSmall: 12,
   bodyM: 14,
@@ -33,6 +34,7 @@ export const lineHeights = {
   h4: 24,
   h5: 20,
   h6: 20,
+  h6s: 20,
   buttonBase: 20,
   buttonSmall: 16,
   bodyM: 20,
@@ -51,6 +53,7 @@ export const letterSpacing = {
   h4: -0.17,
   h5: -0.17,
   h6: 0.06,
+  h6s: 0.06,
   buttonBase: 0.06,
   buttonSmall: 0.06,
   bodyM: -0.06,
@@ -96,11 +99,12 @@ export const avatarSizes = {
   small: 24,
   medium: 36,
   large: 48,
-  ultraLarge: 64,
+  ultraLarge: 52,
 };
 
 export const headerHeight = 48;
 export const primaryItemHeight = 64;
+export const commentBarHeight = 36;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
@@ -114,4 +118,5 @@ export default {
   headerHeight,
   primaryItemHeight,
   avatarSizes,
+  commentBarHeight,
 };
