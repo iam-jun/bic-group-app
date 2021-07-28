@@ -1,15 +1,19 @@
+import appConfig from '~/configs/appConfig';
 import * as types from './constants';
-import {IMessage, IReaction} from '../../../interfaces/IChat';
+import {IConversation, IMessage, IReaction} from '~/interfaces/IChat';
 
 export const initState = {
   conversations: {
     loading: false,
-    data: [],
+    data: new Array<IConversation>(),
   },
   conversation: {},
   messages: {
     loading: false,
-    data: [],
+    data: new Array<IMessage>(),
+    extra: new Array<IMessage>(),
+    lastDate: null,
+    canLoadMore: true,
   },
 };
 
@@ -48,6 +52,7 @@ function reducer(state = initState, action: any = {}) {
           ...conversation,
           ...action.payload,
         },
+        messages: initState.messages,
       };
     case types.SET_MESSAGES:
       return {
@@ -56,6 +61,35 @@ function reducer(state = initState, action: any = {}) {
           ...messages,
           loading: false,
           data: action.payload,
+          lastDate:
+            action.payload.length > 1
+              ? action.payload[action.payload.length - 1]._updatedAt
+              : messages.lastDate,
+          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case types.SET_EXTRA_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          loading: false,
+          extra: action.payload,
+          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case types.MERGE_EXTRA_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          loading: false,
+          data: [...messages.data, ...messages.extra],
+          extra: [],
+          lastDate:
+            messages.extra.length > 1
+              ? messages.extra[messages.extra.length - 1]._updatedAt
+              : messages.lastDate,
         },
       };
     case types.SEND_MESSAGE:
@@ -78,7 +112,7 @@ function reducer(state = initState, action: any = {}) {
         messages: {
           ...messages,
           data: messages.data.map((message: IMessage) =>
-            message.id === action.message.id
+            message._id === action.message._id
               ? {
                   ...message,
                   reactions: (message?.reactions || []).find(

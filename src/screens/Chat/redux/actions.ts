@@ -7,11 +7,6 @@ const setConversationLoading = (payload: boolean) => ({
   payload,
 });
 
-const handleConversationsEvent = (payload: ISocketEvent) => ({
-  type: Actions.HANDLE_CONVERSATIONS_EVENT,
-  payload,
-});
-
 const setConversations = (payload: IConversation[]) => ({
   type: Actions.SET_CONVERSATIONS,
   payload,
@@ -20,6 +15,20 @@ const setConversations = (payload: IConversation[]) => ({
 const selectConversation = (payload: IConversation) => ({
   type: Actions.SELECT_CONVERSATION,
   payload,
+});
+
+const handleEvent = (payload: ISocketEvent) => ({
+  type: Actions.HANDLE_EVENT,
+  payload,
+});
+
+const setExtraMessages = (payload: IMessage[]) => ({
+  type: Actions.SET_EXTRA_MESSAGES,
+  payload,
+});
+
+const mergeExtraMessages = () => ({
+  type: Actions.MERGE_EXTRA_MESSAGES,
 });
 
 const setMessages = (payload: IMessage[]) => ({
@@ -40,10 +49,12 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
 
 export default {
   setConversationLoading,
-  handleConversationsEvent,
+  handleEvent,
   setConversations,
   selectConversation,
   setMessages,
+  setExtraMessages,
+  mergeExtraMessages,
   sendMessage,
   reactMessage,
 };

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -16,11 +16,9 @@ import {spacing} from '~/theme';
 import actions from '~/screens/Chat/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
 import useChat from '~/hooks/chat';
-import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 
-const ConversationsList = (): React.ReactElement => {
+const LeftPanel = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {t} = useBaseHook();
@@ -30,34 +28,9 @@ const ConversationsList = (): React.ReactElement => {
   const {conversations} = useChat();
   const {data, loading} = conversations;
 
-  useEffect(() => {
-    const removeOnMessageCallback = addOnMessageCallback(
-      'callback-of-list-chat-screen',
-      event => {
-        dispatch(actions.handleEvent(JSON.parse(event.data)));
-      },
-    );
-
-    _getConversations();
-
-    return () => {
-      removeOnMessageCallback();
-    };
-  }, []);
-
-  const _getConversations = () => {
-    dispatch(actions.setConversationLoading(true));
-    sendMessage({
-      msg: 'method',
-      method: 'rooms/get',
-      id: CHAT_SOCKET_GET_CONVERSIONS_ID,
-      // params: [{$date: 1480377601}],
-    });
-  };
-
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
-    rootNavigation.navigate(chatStack.conversation, {id: item._id});
+    rootNavigation.navigate(chatStack.conversation, {id: item.id});
   };
 
   return (
@@ -93,4 +66,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default ConversationsList;
+export default LeftPanel;

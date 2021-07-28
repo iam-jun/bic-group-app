@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -16,7 +16,6 @@ import {
 import NavigationHeader from '~/components/headers/NavigationHeader';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {options} from '~/constants/messageOptions';
-import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
@@ -25,6 +24,9 @@ import {IOption} from '~/interfaces/IOption';
 import actions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {sendMessage} from '~/services/chatSocket';
+import {CHAT_SOCKET_GET_MESSAGES_ID} from '~/services/constants';
+import {useRootNavigation} from '~/hooks/navigation';
+import appConfig from '~/configs/appConfig';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -34,27 +36,46 @@ const Conversation = () => {
   const messageOptionsModalRef = React.useRef<Modalize>();
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
-  const {colors} = theme;
   const styles = createStyles(theme);
-  const {navigation} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
 
-  React.useEffect(() => {
-    sendMessage({
-      msg: 'method',
-      method: 'rooms/get',
-      id: '12', //[TO-DO] replace this with a unique id
-      // params: [{$date: 1480377601}],
-    });
+  useEffect(() => {
+    _getMessages();
   }, []);
 
-  const _openImagePicker = () => {
-    launchImageLibrary(
-      {mediaType: 'photo'},
-      async ({uri, fileName, type}) => {},
-    );
+  useEffect(() => {
+    if (messages.canLoadMore) {
+      _getMessages();
+    }
+  }, [messages.lastDate]);
+
+  const _getMessages = () => {
+    sendMessage({
+      msg: 'method',
+      method: 'loadHistory',
+      id: CHAT_SOCKET_GET_MESSAGES_ID,
+      params: [
+        conversation._id,
+        messages.lastDate,
+        appConfig.recordsPerPage,
+        Date.now(),
+      ],
+    });
   };
 
-  const _openFilePicker = () => {};
+  const loadMoreMessages = () => {
+    dispatch(actions.mergeExtraMessages());
+  };
+
+  const _openImagePicker = () => {
+    launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {
+      console.log({uri, fileName, type});
+    });
+  };
+
+  const _openFilePicker = () => {
+    console.log('_openFilePicker');
+  };
 
   const showOptions = (message?: IMessage) => {
     console.log('showOptions', {message});
@@ -86,7 +107,6 @@ const Conversation = () => {
     dispatch(
       actions.sendMessage({
         ...messages[0],
-        id: messages[0]._id,
         quoted_message: replyingMessage,
         user,
       }),
@@ -95,7 +115,7 @@ const Conversation = () => {
   };
 
   const goConversationDetail = () => {
-    navigation.navigate(chatStack.conversationDetail);
+    rootNavigation.navigate(chatStack.conversationDetail);
   };
 
   return (
@@ -118,6 +138,10 @@ const Conversation = () => {
           }}
           scrollToBottom={true}
           keyboardShouldPersistTaps="handled"
+          listViewProps={{
+            onEndReached: loadMoreMessages,
+            onEndReachedThreshold: 0.5,
+          }}
           onLongPress={showOptions}
           renderTime={() => null}
           renderMessage={props => <MessageContainer {...props} />}
@@ -129,6 +153,7 @@ const Conversation = () => {
                 GiftedChat have not been define it on InputToolbarProps
               */
               // @ts-ignore
+              // eslint-disable-next-line react/prop-types
               onEnterPress={text => props.onSend({text: text.trim()}, true)}
               openImagePicker={_openImagePicker}
               openFilePicker={_openFilePicker}
