@@ -82,10 +82,10 @@ const logInterceptorsResponseError = (error: AxiosError) => {
   );
 };
 
-const getBeinAccessToken = (): string => {
+const getBeinIdToken = (): string => {
   return _.get(
     Store.getCurrentUser(),
-    'signInUserSession.accessToken.jwtToken',
+    'signInUserSession.idToken.jwtToken',
     '',
   );
 };
@@ -150,7 +150,7 @@ const getTokenAndCallBackBein = async (): Promise<void> => {
     isRefreshingToken = true;
     let isSuccess = true;
 
-    const oldToken = getBeinAccessToken();
+    const oldToken = getBeinIdToken();
     const sessionData = await Auth.currentSession();
     const newToken = sessionData?.getAccessToken().getJwtToken();
     const refreshToken = sessionData?.getRefreshToken().getToken();
@@ -363,7 +363,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...commonHeaders,
         ...requestConfig.headers,
         ...{
-          Authorization: getBeinAccessToken(),
+          Authorization: getBeinIdToken(),
         },
       };
       break;
