@@ -81,7 +81,7 @@ const ListView: React.FC<ListViewProps> = ({
 
   const _renderItem = ({item, index}: {item: any; index: number}) => {
     if (renderItem) {
-      renderItem({item, index});
+      return renderItem({item, index});
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -30,6 +30,9 @@ const CreatePost = () => {
   const {content, images, videos, files} = data || {};
   const actor = 0; //todo replace with BEIN userId later...
 
+  //Enable  Post button if :
+  // + Has at least 1 audience AND
+  // + (text != empty OR at least 1 photo OR at least 1 file)
   const disableButtonPost =
     loading || content?.length === 0 || chosenAudiences.length === 0;
 

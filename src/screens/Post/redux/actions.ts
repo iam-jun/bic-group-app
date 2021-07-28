@@ -3,7 +3,7 @@ import {
   IAudience,
   IPostActivity,
   IPostCreatePost,
-  IPostData,
+  IActivityData,
 } from '~/interfaces/IPost';
 
 const postActions = {
@@ -14,7 +14,7 @@ const postActions = {
   clearCreatPostData: () => ({
     type: postTypes.CLEAR_CREATE_POST,
   }),
-  setCreatePostData: (payload: IPostData) => ({
+  setCreatePostData: (payload: IActivityData) => ({
     type: postTypes.SET_CREATE_POST_DATA,
     payload,
   }),

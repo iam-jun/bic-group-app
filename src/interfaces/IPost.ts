@@ -13,7 +13,7 @@ export interface IAudience {
   isGroup?: boolean;
 }
 
-export interface IPostData {
+export interface IActivityData {
   content?: string;
   images?: string[];
   videos?: string[];
@@ -34,7 +34,7 @@ export interface IPostActivity {
   actor?: string | number;
   verb?: string;
   type?: string;
-  data?: IPostData;
+  data?: IActivityData;
   followers?: number[];
   audience?: IPostAudience;
   tags?: string[];
@@ -43,7 +43,24 @@ export interface IPostActivity {
 
 export interface IPostCreatePost {
   actor?: number;
-  data?: IPostData;
+  data?: IActivityData;
   audience?: IPostAudience;
   tags?: number[];
+}
+
+export type IReact = 'like' | 'love' | string;
+
+export type IReactionKind = 'comment' | 'seen' | IReact;
+
+export interface IReaction {
+  created_at?: string;
+  updated_at?: string;
+  id?: string;
+  user_id?: string | number;
+  kind?: IReactionKind;
+  activity_id?: string;
+  data?: IActivityData;
+  parent?: string;
+  latest_children?: any;
+  children_counts?: any;
 }

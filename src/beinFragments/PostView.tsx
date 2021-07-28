@@ -73,17 +73,21 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
             {actorName}
           </ButtonWrapper>
           <View style={{flexDirection: 'row'}}>
-            <Text.BodyS
+            <Text.H6S
               useI18n
               color={colors.textSecondary}
               style={styles.textTo}>
               post:to
-            </Text.BodyS>
+            </Text.H6S>
             <ButtonWrapper style={{flex: 1}} onPress={onPressShowAudiences}>
               <Text.H6>{textAudiences}</Text.H6>
             </ButtonWrapper>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             {renderPostTime()}
             <Icon
               style={{margin: spacing?.margin.small}}

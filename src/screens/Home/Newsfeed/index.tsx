@@ -1,57 +1,25 @@
-import React, {useContext} from 'react';
-import {useDispatch} from 'react-redux';
+import React from 'react';
+import {View} from 'react-native';
 
 import ListView from '~/beinComponents/list/ListView';
 
-import {NavigationHeader, ScreenWrapper, ViewSpacing} from '~/components';
-import {AppContext} from '~/contexts/AppContext';
+import {ScreenWrapper, ViewSpacing} from '~/components';
 import {spacing} from '~/theme';
-import {StyleSheet, View} from 'react-native';
-import commonActions, {IAction} from '~/constants/commonActions';
-import {options} from '~/constants/postOptions';
-import PostOptionsModal from '../fragments/PostOptions';
-import {IOption} from '~/interfaces/IOption';
-import {IOptionModal} from '~/components/modals/OptionModal';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Header from '~/beinComponents/Header';
 import images from '~/resources/images';
-import Text from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {data} from './dummy-data';
+import PostItem from '~/beinComponents/list/items/PostItem';
 
-const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
-  const dispatch = useDispatch();
-  const postOptionsModalRef = React.useRef<IOptionModal>();
-
+const Newsfeed = () => {
   const theme: ITheme = useTheme();
   const styles = createStyle(theme);
 
-  const _onItemPress = () => {
-    // dispatch(actions.getComments());
-    // navigation.navigate(homeStack.postDetail);
-  };
-
-  const _onActionPress = (action: IAction) => {
-    console.log('\x1b[32m', '_onActionPress : ', action, '\x1b[0m');
-  };
-
-  const onMenuPress = async (menu: IOption) => {
-    switch (menu.type) {
-      case options.HIDE:
-        console.log('Hide post!');
-        break;
-
-      case options.EDIT:
-        console.log('Edit post!');
-        break;
-
-      case options.DELETE:
-        console.log('Delete post!');
-        break;
-    }
+  const renderItem = ({item}: any) => {
+    return <PostItem postData={item} />;
   };
 
   // const {streamClient} = useContext(AppContext);
@@ -68,14 +36,12 @@ const Newsfeed = ({navigation}: {navigation: any}): React.ReactElement => {
       <ListView
         isFullView
         style={styles.container}
-        type="content"
         data={data}
-        onItemPress={_onItemPress}
-        onActionPress={_onActionPress}
+        renderItem={renderItem}
         ListHeaderComponent={() => <HeaderCreatePost />}
+        ListFooterComponent={<View style={{paddingBottom: 30}} />}
         renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
       />
-      <PostOptionsModal ref={postOptionsModalRef} onMenuPress={onMenuPress} />
     </ScreenWrapper>
   );
 };
