@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-
-import {IGroup} from '~/interfaces/IGroup';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
+
+import {IGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import {Image, Text} from '~/components/index';
 import Icon from '~/beinComponents/Icon';
@@ -12,20 +12,20 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
 interface GroupItemProps extends IGroup {
-  levelMargin?: number;
+  level?: number;
 }
 
 const GroupItem: React.FC<GroupItemProps> = ({
   id,
   name,
   userCount,
-  parent_id,
+  parentId,
   parent,
   children,
   type,
-  icon = 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+  icon,
 
-  levelMargin,
+  level,
 }) => {
   const theme = useTheme();
   const {spacing}: IObject<any> = theme;
@@ -50,10 +50,8 @@ const GroupItem: React.FC<GroupItemProps> = ({
   };
 
   const renderLevelLines = () => {
-    if (typeof levelMargin === 'number' && levelMargin > 0) {
-      return Array.from(Array(levelMargin).keys()).map(item =>
-        renderLine(item),
-      );
+    if (typeof level === 'number' && level > 0) {
+      return Array.from(Array(level).keys()).map(item => renderLine(item));
     } else {
       return null;
     }

@@ -146,6 +146,7 @@
     "scroll_bottom": "Scroll to bottom"
   },
   "input": {
-    "search": "Search for someone to chat..."
+    "search": "Search for someone to chat...",
+    "search_group": "Search for groups or people..."
   }
 }

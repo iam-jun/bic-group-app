@@ -4,6 +4,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import mockGetJoinedGroups from '~/screens/Groups/mocks/getJoinedGroups';
 import {IGroup, IGroupDetail} from '~/interfaces/IGroup';
 import mockGetGroupDetail from '~/screens/Groups/mocks/getGroupDetail';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -14,7 +15,9 @@ function* getJoinedGroups() {
   try {
     yield put(groupsActions.setLoadingJoinedGroups(true));
 
-    const result = yield requestJoinedGroups();
+    // todo: need to change userId based on current user's info
+    const result = yield requestJoinedGroups(2);
+
     yield put(groupsActions.setJoinedGroups(result));
     yield put(groupsActions.setLoadingJoinedGroups(false));
   } catch (e) {
@@ -71,20 +74,22 @@ const requestGroupDetail = (id: number) => {
   });
 };
 
-const requestJoinedGroups = () => {
-  return new Promise((resolve, reject) => {
-    //todo call api
-    setTimeout(() => {
-      const response = mockGetJoinedGroups;
-      if (response.code === 200 && response.data?.length > 0) {
-        const originGroups = response.data;
-        const groups: IGroup[] = [];
-        originGroups.map(item => getGroupChild(item, groups, undefined));
+const requestJoinedGroups = async (userId: number) => {
+  try {
+    const response = await groupsDataHelper.getMyGroups(userId);
+    if (response.code === 200 && response.data?.length > 0) {
+      const originGroups = response.data;
+      const groups: IGroup[] = [];
+      originGroups.map((item: any) => getGroupChild(item, groups, undefined));
 
-        resolve(groups);
-      } else {
-        reject(response);
-      }
-    }, 1000);
-  });
+      return groups;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'namanh --- getMygroups | getMygroups catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
 };

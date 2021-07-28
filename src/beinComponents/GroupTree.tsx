@@ -1,15 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-
 import mockGetJoinedGroups from '~/screens/Groups/mocks/getJoinedGroups';
 import GroupItem from '~/components/GroupItem';
 import {IGroup} from '~/interfaces/IGroup';
-import useGroups from '~/hooks/groups';
 
-const GroupTree = () => {
+const GroupTree = ({data = mockGetJoinedGroups.data}: any) => {
   const [renderedTree, setRenderedTree] = useState([]);
-  const groupsData = useGroups();
-  const {joinedGroups: data} = groupsData;
 
   useEffect(() => {
     renderTree();
