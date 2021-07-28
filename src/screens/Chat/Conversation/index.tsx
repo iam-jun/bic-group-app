@@ -24,7 +24,10 @@ import {IOption} from '~/interfaces/IOption';
 import actions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {sendMessage} from '~/services/chatSocket';
-import {CHAT_SOCKET_GET_MESSAGES_ID} from '~/services/constants';
+import {
+  CHAT_SOCKET_GET_MESSAGES_ID,
+  CHAT_SOCKET_SEND_MESSAGE,
+} from '~/services/constants';
 import {useRootNavigation} from '~/hooks/navigation';
 import appConfig from '~/configs/appConfig';
 
@@ -104,10 +107,20 @@ const Conversation = () => {
   };
 
   const onSend = (messages: GMessage[] = []) => {
+    sendMessage({
+      msg: 'method',
+      method: 'sendMessage',
+      id: CHAT_SOCKET_SEND_MESSAGE,
+      params: [
+        {
+          rid: conversation._id,
+          msg: messages[0].text,
+        },
+      ],
+    });
     dispatch(
       actions.sendMessage({
         ...messages[0],
-        quoted_message: replyingMessage,
         user,
       }),
     );
