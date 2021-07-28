@@ -3,6 +3,22 @@ export interface IPostAudience {
   groups?: number[];
 }
 
+export interface IAudienceUser {
+  id?: number | string;
+  data?: {
+    avatarUrl?: string;
+    fullname?: string;
+  };
+}
+
+export interface IAudienceGroup {
+  id?: number | string;
+  data?: {
+    avatarUrl?: string;
+    name?: string;
+  };
+}
+
 export interface IAudience {
   id?: number | string;
   name?: string;
@@ -13,7 +29,7 @@ export interface IAudience {
   isGroup?: boolean;
 }
 
-export interface IPostData {
+export interface IActivityData {
   content?: string;
   images?: string[];
   videos?: string[];
@@ -28,13 +44,13 @@ export interface IPostData {
         Otherwhile, when get data from Backend or Getstrea, actor should be STRING
  */
 export interface IPostActivity {
-  id?: number;
+  id?: string;
   foreign_id?: string;
   getstream_id?: string;
-  actor?: string | number;
+  actor?: IAudienceUser;
   verb?: string;
   type?: string;
-  data?: IPostData;
+  data?: IActivityData;
   followers?: number[];
   audience?: IPostAudience;
   tags?: string[];
@@ -43,7 +59,35 @@ export interface IPostActivity {
 
 export interface IPostCreatePost {
   actor?: number;
-  data?: IPostData;
+  data?: IActivityData;
   audience?: IPostAudience;
   tags?: number[];
+}
+
+export type IReact = 'like' | 'love' | string;
+
+export type IReactionKind = 'comment' | 'seen' | IReact;
+
+export interface IGetStreamUser {
+  created_at?: string;
+  updated_at?: string;
+  id?: string | number;
+  data?: {
+    avatarUrl?: string;
+    fullname?: string;
+  };
+}
+
+export interface IReaction {
+  created_at?: string;
+  updated_at?: string;
+  id?: string;
+  user_id?: string | number;
+  user?: IGetStreamUser;
+  kind?: IReactionKind;
+  activity_id?: string;
+  data?: IActivityData;
+  parent?: string;
+  latest_children?: any;
+  children_counts?: any;
 }

@@ -1,11 +1,11 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {IPostCreatePost} from '~/interfaces/IPost';
+import {IActivityData, IPostCreatePost} from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 
 export const postApiConfig = {
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}api/v1/activitys/posts`,
+    url: `${ApiConfig.providers.bein.url}posts`,
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -22,6 +22,41 @@ export const postApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  getPostComment: (postId: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      post_id: postId,
+      kind: 'comment',
+    },
+  }),
+  postNewComment: (
+    postId: string,
+    commentData: IActivityData,
+    userId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions/comments`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      userId: userId,
+      referenceId: postId,
+      referenceType: 'post',
+      data: commentData,
+    },
+  }),
+  getSearchAudiences: (key: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/search/audiences`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      key,
+    },
   }),
 };
 
@@ -64,6 +99,52 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getAudienceUsers(userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getPostComment: async (postId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getPostComment(postId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postNewComment: async (
+    postId: string,
+    commentData: IActivityData,
+    userId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postNewComment(postId, commentData, userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSearchAudiences: async (key: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getSearchAudiences(key),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

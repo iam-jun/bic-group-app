@@ -29,12 +29,6 @@ function* postCreateNewPost({
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(postDataHelper.postCreateNewPost, payload);
-    console.log(
-      '\x1b[36m',
-      'namanh --- postCreateNewPost | postCreateNewPost : ',
-      JSON.stringify(postDataMocks.postCreateNewPost, undefined, 2),
-      '\x1b[0m',
-    );
     yield put(postActions.setLoadingCreatePost(false));
     if (response.data) {
       const postData: IPostActivity = response.data;

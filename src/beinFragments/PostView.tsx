@@ -22,8 +22,8 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
   const {data, actor, audience, time} = postData || {};
   const {content} = data || {};
 
-  const avatar = 'https://i.ibb.co/DW2bMGR/pikachu.jpg';
-  const actorName = `Gâu Gâu GẤU GẨU GẪU GẬU`;
+  const avatar = actor?.data?.avatarUrl;
+  const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience);
   const seenCount = '123.456';
 
@@ -73,17 +73,21 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
             {actorName}
           </ButtonWrapper>
           <View style={{flexDirection: 'row'}}>
-            <Text.BodyS
+            <Text.H6S
               useI18n
               color={colors.textSecondary}
               style={styles.textTo}>
               post:to
-            </Text.BodyS>
+            </Text.H6S>
             <ButtonWrapper style={{flex: 1}} onPress={onPressShowAudiences}>
               <Text.H6>{textAudiences}</Text.H6>
             </ButtonWrapper>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             {renderPostTime()}
             <Icon
               style={{margin: spacing?.margin.small}}
@@ -161,9 +165,10 @@ const getAudiencesText = (aud?: IPostAudience) => {
   let result = '';
   const {groups = [], users = []} = aud || {};
   groups.map(
-    item => (result = `${result}${result.length > 0 ? ', ' : ''}${item}`),
+    (item: any) =>
+      (result = `${result}${result.length > 0 ? ', ' : ''}${item?.data?.name}`),
   );
-  users.map(item => (result = `${result}, ${item}`));
+  users.map((item: any) => (result = `${result}, ${item?.data?.fullname}`));
   return result;
 };
 
@@ -185,6 +190,7 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
       borderTopWidth: 1,
+      borderBottomWidth: 1,
       borderColor: colors.borderDivider,
       alignItems: 'center',
     },

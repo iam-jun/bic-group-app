@@ -2,26 +2,56 @@ const postDataMocks = {
   postCreateNewPost: {
     code: 200,
     data: {
-      id: '3945267d-edb9-11eb-ae95-0a1200300037',
-      getstream_id: '3945267d-edb9-11eb-ae95-0a1200300037',
+      id: '0437319f-efcd-11eb-87c6-1254437355c5',
+      actor: {
+        created_at: '2021-07-28T09:30:00.735602Z',
+        updated_at: '2021-07-28T09:30:00.735602Z',
+        id: '9',
+        data: {
+          avatarUrl: 'https://placekitten.com/640/360',
+          fullname: 'user 9',
+        },
+      },
+      audience: {
+        groups: [
+          {
+            id: '6',
+            collection: 'groups',
+            foreign_id: 'groups:6',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              name: 'group 6',
+            },
+            created_at: '2021-07-28T09:29:58.335288Z',
+            updated_at: '2021-07-28T09:29:58.335288Z',
+          },
+        ],
+        users: [
+          {
+            created_at: '2021-07-28T09:29:56.022496Z',
+            updated_at: '2021-07-28T09:29:56.022496Z',
+            id: '2',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 2',
+            },
+          },
+        ],
+      },
+      getstream_id: '0437319f-efcd-11eb-87c6-1254437355c5',
       type: 'post',
       data: {
-        content: 'Hello group 0',
+        content: 'New post',
         files: [],
         images: [],
         videos: [],
       },
-      audience: {
-        groups: [0],
-        users: [0],
-      },
-      actor: '0',
-      duration: '6.03ms',
-      foreign_id: 'e88affcb-1abf-47bb-ba23-2ad27b35e109',
+      duration: '5.55ms',
+      foreign_id: '86e18b2a-5364-48cc-a8e7-bc557177224a',
       object: '-',
       origin: null,
       target: '',
-      time: '2021-07-26T02:28:55.049792',
+      time: '2021-07-28T17:55:38.299230',
       verb: 'create',
     },
   },
@@ -29,7 +59,7 @@ const postDataMocks = {
     code: 200,
     data: [
       {
-        id: 14,
+        id: 0,
         name: 'Bein',
         userCount: 555555,
         icon: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',

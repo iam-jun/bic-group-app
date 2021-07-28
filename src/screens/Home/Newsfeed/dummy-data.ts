@@ -1,269 +1,696 @@
 // dummy-data
 export const data = [
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://crypto.innercirclevip.network/wp-content/uploads/sites/19/2021/02/CIC_40047_0.jpg',
-    media: {
-      type: 'image',
-      uri: 'https://crypto.innercirclevip.network/wp-content/uploads/sites/19/2021/02/CIC_40047_0.jpg',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'é hé hé Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [
-      {name: 'Bitcoin'},
-      {name: 'Etherum'},
-      {name: 'Cảnh báo đầu tư'},
-      {name: 'Chiến lược lướt sóng dành cho thành viên'},
-    ],
-    price: '0',
-    status: 'public',
-    locationId: 'hcm9ldfl',
-    locationName: 'Nguyễn Lâm tower, Hồ Chí Minh',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'EVOL CIC Group',
-      avatarUrl: null,
-      description:
-        'Group description. Erat sed fermentum ipsum vel quis quam. Nunc etiam dui tortor, non in aliquam lacinia tempor.',
-      type: 'group',
-      coverUrl:
-        'https://crypto.innercirclevip.network/wp-content/uploads/sites/19/2021/02/CIC.png',
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: true,
-    likeCount: 1,
-    commentCount: 0,
-    reaction: {like: 1, comment: 0, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/198121970_2937709076504238_8644783693742115187_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=b9115d&_nc_ohc=X9ZNb9Fzr9gAX9KYTta&tn=Y4tohtL7UvYydNvj&_nc_ht=scontent.fvca1-1.fna&oh=0f5fbe2fe5de39f82560c07db0bb7362&oe=60D93959',
-    media: {
-      type: 'image',
-      uri: 'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/198121970_2937709076504238_8644783693742115187_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=b9115d&_nc_ohc=X9ZNb9Fzr9gAX9KYTta&tn=Y4tohtL7UvYydNvj&_nc_ht=scontent.fvca1-1.fna&oh=0f5fbe2fe5de39f82560c07db0bb7362&oe=60D93959',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Vietnam Cub Club',
-      type: 'group',
-      avatarUrl:
-        'https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/s1080x2048/157466234_2847262238847626_1160030372456367903_o.jpg?_nc_cat=108&ccb=1-3&_nc_sid=825194&_nc_ohc=OSZME2xQAwIAX_xgRon&_nc_ht=scontent.fhan4-1.fna&tp=7&oh=9cc6aba6eaeae65f10caddb6e09c1181&oe=606E3532',
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: false,
-    likeCount: 9,
-    commentCount: 7,
-    reaction: {like: 9, comment: 7, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: true,
-    likeCount: 1,
-    commentCount: 0,
-    reaction: {like: 1, comment: 0, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: false,
-    likeCount: 9,
-    commentCount: 7,
-    reaction: {like: 9, comment: 7, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: true,
-    likeCount: 1,
-    commentCount: 0,
-    reaction: {like: 1, comment: 0, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: false,
-    likeCount: 9,
-    commentCount: 7,
-    reaction: {like: 9, comment: 7, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: true,
-    likeCount: 1,
-    commentCount: 0,
-    reaction: {like: 1, comment: 0, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: false,
-    likeCount: 9,
-    commentCount: 7,
-    reaction: {like: 9, comment: 7, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
   {
-    id: 'xnfd7914kwsn',
-    coverUrl:
-      'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-    media: {
-      type: 'image',
-      uri: 'https://www.unido.org/sites/default/files/default_images/default_media_image.png',
-      isLoading: false,
-      percentage: undefined,
+    actor: {
+      created_at: '2021-07-28T09:29:54.579986Z',
+      updated_at: '2021-07-28T09:29:54.579986Z',
+      id: '0',
+      data: {
+        avatarUrl: 'https://placekitten.com/640/360',
+        fullname: 'user 0',
+      },
     },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    privacy: 'public',
-    hashtags: [],
-    price: '0',
-    status: 'public',
-    createdAt: '2021-03-09T10:59:23.767Z',
-    updatedAt: '2021-03-09T10:59:23.767Z',
-    user: {
-      id: 'x7921kljnbjkmag',
-      fullName: 'Nguyễn Văn Nam',
-      avatarUrl: null,
+    audience: {
+      groups: [
+        {
+          id: '0',
+          collection: 'groups',
+          foreign_id: 'groups:0',
+          data: {
+            avatarUrl: 'https://placekitten.com/640/360',
+            name: 'group 0',
+          },
+          created_at: '2021-07-28T09:29:54.236229Z',
+          updated_at: '2021-07-28T09:29:54.236229Z',
+        },
+      ],
+      users: [],
     },
-    isLike: true,
-    likeCount: 1,
-    commentCount: 0,
-    reaction: {like: 1, comment: 0, share: 0},
+    data: {
+      content:
+        'Life is like a box of chocolates. You never know what you’re going to get.',
+      files: [],
+      images: [],
+      videos: [],
+    },
+    foreign_id: '321c10ea-5267-4a2a-9fb5-38743ed9d229',
+    id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+    latest_reactions: {
+      comment: [
+        {
+          created_at: '2021-07-28T09:42:03.326745Z',
+          updated_at: '2021-07-28T09:42:03.326745Z',
+          id: 'f938acb0-5715-47f6-bf98-a78a0a289256',
+          user_id: '0',
+          user: {
+            created_at: '2021-07-28T09:29:54.579986Z',
+            updated_at: '2021-07-28T09:29:54.579986Z',
+            id: '0',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 0',
+            },
+          },
+          kind: 'comment',
+          activity_id: '9920d6d1-ef87-11eb-b9e2-0a0d7a10423a',
+          data: {
+            content: 'nice!',
+          },
+          parent: '',
+          latest_children: {},
+          children_counts: {},
+        },
+      ],
+    },
+    latest_reactions_extra: {
+      comment: {
+        next: '',
+      },
+    },
+    object: '-',
+    origin: null,
+    reaction_counts: {
+      comment: 1,
+    },
+    target: '',
+    time: '2021-07-28T09:38:43.362172',
+    type: 'post',
+    verb: 'create',
   },
 ];

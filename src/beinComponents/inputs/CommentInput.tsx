@@ -6,6 +6,7 @@ import {
   Animated,
   StyleProp,
   ViewStyle,
+  Keyboard,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -18,6 +19,7 @@ export interface CommentInputProps {
   placeholder?: string;
   onChangeText?: (text: string) => void;
   onPressSend?: () => void;
+  value?: string;
 }
 
 const CommentInput: React.FC<CommentInputProps> = ({
@@ -25,8 +27,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   placeholder = 'Aa',
   onChangeText,
   onPressSend,
+  value,
 }: CommentInputProps) => {
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useState<string>(value || '');
 
   const showSendAnim = useRef(new Animated.Value(0)).current;
   const showButtonsAnim = useRef(new Animated.Value(1)).current;
@@ -34,6 +37,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const theme: ITheme = useTheme();
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  useEffect(() => {
+    if (typeof value === 'string' && value !== text) {
+      setText(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     if (text?.length > 0) {
@@ -61,6 +70,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onPressSend = () => {
+    Keyboard.dismiss();
     onPressSend?.();
   };
 
@@ -159,6 +169,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           selectionColor={colors.textInput}
           multiline={true}
           placeholder={placeholder}
+          value={text}
           onChangeText={_onChangeText}
         />
         <ButtonWrapper

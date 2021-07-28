@@ -71,9 +71,9 @@ export const createStyle = (theme: ITheme) => {
     },
     buttonBase: {
       fontFamily: fontFamilies.PoppinsMedium,
-      fontSize: 16.36 || sizes.buttonBase,
+      fontSize: sizes.buttonBase,
+      lineHeight: 16.36 || lineHeights.buttonBase,
       paddingTop: 3.64,
-      lineHeight: lineHeights.buttonBase,
       letterSpacing: letterSpacing.buttonBase,
       color: colors.textPrimary,
     },
