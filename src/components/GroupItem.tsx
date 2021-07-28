@@ -24,6 +24,7 @@ const GroupItem: React.FC<GroupItemProps> = ({
   children,
   type,
   icon = 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+  description,
 
   levelMargin,
 }) => {
@@ -33,7 +34,13 @@ const GroupItem: React.FC<GroupItemProps> = ({
   const {rootNavigation} = useRootNavigation();
 
   const _onPressItem = () => {
-    rootNavigation.navigate(groupStack.groupDetail, {id});
+    rootNavigation.navigate(groupStack.groupDetail, {
+      id,
+      name,
+      userCount,
+      description,
+      icon,
+    });
   };
 
   const renderLine = (level: number) => {
