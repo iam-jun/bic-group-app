@@ -243,6 +243,13 @@ function* signOut() {
 
 function* checkAuthState() {
   try {
+    // const httpResponse = yield makeHttpRequest(
+    //   apiConfig.Chat.getDirectMessages(),
+    // );
+    // console.log('httpResponse raw', httpResponse.data);
+    // if (httpResponse) {
+    //   console.log('httpResponse:', mapResponseSuccessBein(httpResponse));
+    // }
     const user: IAuth.IUserResponse | boolean = yield Store.getCurrentUser();
     if (user) {
       navigation.replace(rootSwitch.mainStack);
