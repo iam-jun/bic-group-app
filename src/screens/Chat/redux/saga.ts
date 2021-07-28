@@ -1,3 +1,4 @@
+import {CHAT_SOCKET_CREATE_GROUP_CHAT_ID} from './../../../services/constants';
 import {put, select, takeLatest} from 'redux-saga/effects';
 import {AxiosResponse} from 'axios';
 
@@ -50,7 +51,8 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
       yield handleMessages(payload.result?.messages);
       break;
     case CHAT_SOCKET_CREATE_DIRECT_CHAT_ID:
-      yield handleCreateDirectMessage(payload.result);
+    case CHAT_SOCKET_CREATE_GROUP_CHAT_ID:
+      yield handleCreateMessage(payload.result);
       break;
   }
 }
@@ -73,7 +75,7 @@ function* handleMessages(data?: []) {
   else yield put(actions.setExtraMessages(mapMessages(data)));
 }
 
-function* handleCreateDirectMessage(data: any) {
+function* handleCreateMessage(data: any) {
   const state: IObject<any> = yield select();
   const {auth} = state;
   const conversation = mapConversation(auth.user, data);

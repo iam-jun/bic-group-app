@@ -14,13 +14,14 @@ const ChatItem: React.FC<IConversation> = ({
   updatedAt,
   unreadCount,
   lastMessage,
+  avatar,
 }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
   return (
     <ScreenWrapper style={styles.container}>
       <HeaderView
-        avatar={{user: {name}, size: 'large'}}
+        avatar={{source: avatar}}
         firstLabel={name}
         secondLabel={updatedAt}
         thirdLabel={lastMessage}

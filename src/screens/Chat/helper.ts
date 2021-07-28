@@ -9,14 +9,20 @@ export const mapConversations = (user: IUser, data?: []): IConversation[] =>
 export const mapMessages = (data?: []): IMessage[] =>
   (data || []).map((item: any) => mapMessage(item));
 
-export const mapConversation = (user: IUser, item: any): IConversation => ({
-  ...item,
-  _id: item._id || item.rid,
-  name: item?.name || generateRoomName(user, item?.usernames),
-  type: item?.t,
-  user: mapUser(item?.u),
-  lastMessage: item?.lastMessage?.msg,
-});
+export const mapConversation = (user: IUser, item: any): IConversation => {
+  const name =
+    item?.topic ||
+    (item?.usernames ? generateRoomName(user, item.usernames) : item.name);
+  return {
+    ...item,
+    _id: item._id || item.rid,
+    name,
+    type: item?.t,
+    avatar: generateAvatar(name),
+    user: mapUser(item?.u),
+    lastMessage: item?.lastMessage?.msg,
+  };
+};
 
 export const mapMessage = (item: any): IMessage => ({
   ...item,

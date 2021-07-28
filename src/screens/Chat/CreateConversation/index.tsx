@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import uuid from 'react-native-uuid';
 
 import {IObject} from '~/interfaces/common';
 import {Container, Text, ViewSpacing} from '~/components';
@@ -18,7 +19,10 @@ import {IUser} from '~/interfaces/IAuth';
 import Avatar from '~/beinComponents/Avatar';
 import {ITheme} from '~/theme/interfaces';
 import {sendMessage} from '~/services/chatSocket';
-import {CHAT_SOCKET_CREATE_DIRECT_CHAT_ID} from '~/services/constants';
+import {
+  CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
+  CHAT_SOCKET_CREATE_GROUP_CHAT_ID,
+} from '~/services/constants';
 
 const CreateConversation = (): React.ReactElement => {
   const theme: ITheme = useTheme();
@@ -32,12 +36,30 @@ const CreateConversation = (): React.ReactElement => {
     dispatch(actions.getUsers());
   }, []);
 
+  const onNextPress = () => {
+    if (selectedUsers.length > 1) createGroupChat();
+    else createDirectChat();
+  };
+
   const createDirectChat = () => {
     sendMessage({
       msg: 'method',
       method: 'createDirectMessage',
       id: CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
       params: selectedUsers.map((user: IUser) => user.username),
+    });
+  };
+
+  const createGroupChat = () => {
+    sendMessage({
+      msg: 'method',
+      method: 'createChannel',
+      id: CHAT_SOCKET_CREATE_GROUP_CHAT_ID,
+      params: [
+        uuid.v4(),
+        selectedUsers.map((user: IUser) => user.username),
+        false, // Boolean - whether the channel is read only or not
+      ],
     });
   };
 
@@ -78,13 +100,13 @@ const CreateConversation = (): React.ReactElement => {
     <ScreenWrapper testID="CreateConversationScreen" isFullView>
       <Header
         title={i18next.t('chat:title_add_participants')}
-        buttonText={i18next.t('common:btn_create')}
+        buttonText={i18next.t('common:btn_next')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
           color: colors.primary7,
           textColor: colors.textReversed,
         }}
-        onPressButton={createDirectChat}
+        onPressButton={onNextPress}
       />
       <Container isFullView>
         <SearchInput />
