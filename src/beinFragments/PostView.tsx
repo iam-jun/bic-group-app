@@ -22,8 +22,8 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
   const {data, actor, audience, time} = postData || {};
   const {content} = data || {};
 
-  const avatar = 'https://i.ibb.co/DW2bMGR/pikachu.jpg';
-  const actorName = `Gâu Gâu GẤU GẨU GẪU GẬU`;
+  const avatar = actor?.data?.avatarUrl;
+  const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience);
   const seenCount = '123.456';
 
@@ -165,9 +165,10 @@ const getAudiencesText = (aud?: IPostAudience) => {
   let result = '';
   const {groups = [], users = []} = aud || {};
   groups.map(
-    item => (result = `${result}${result.length > 0 ? ', ' : ''}${item}`),
+    (item: any) =>
+      (result = `${result}${result.length > 0 ? ', ' : ''}${item?.data?.name}`),
   );
-  users.map(item => (result = `${result}, ${item}`));
+  users.map((item: any) => (result = `${result}, ${item?.data?.fullname}`));
   return result;
 };
 

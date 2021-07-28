@@ -3,6 +3,22 @@ export interface IPostAudience {
   groups?: number[];
 }
 
+export interface IAudienceUser {
+  id?: number | string;
+  data?: {
+    avatarUrl?: string;
+    fullname?: string;
+  };
+}
+
+export interface IAudienceGroup {
+  id?: number | string;
+  data?: {
+    avatarUrl?: string;
+    name?: string;
+  };
+}
+
 export interface IAudience {
   id?: number | string;
   name?: string;
@@ -31,7 +47,7 @@ export interface IPostActivity {
   id?: string;
   foreign_id?: string;
   getstream_id?: string;
-  actor?: string | number;
+  actor?: IAudienceUser;
   verb?: string;
   type?: string;
   data?: IActivityData;

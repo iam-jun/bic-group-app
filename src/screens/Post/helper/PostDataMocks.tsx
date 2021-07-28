@@ -2,82 +2,56 @@ const postDataMocks = {
   postCreateNewPost: {
     code: 200,
     data: {
-      actor: '0',
+      id: '0437319f-efcd-11eb-87c6-1254437355c5',
+      actor: {
+        created_at: '2021-07-28T09:30:00.735602Z',
+        updated_at: '2021-07-28T09:30:00.735602Z',
+        id: '9',
+        data: {
+          avatarUrl: 'https://placekitten.com/640/360',
+          fullname: 'user 9',
+        },
+      },
       audience: {
-        groups: [0],
-        users: [0],
+        groups: [
+          {
+            id: '6',
+            collection: 'groups',
+            foreign_id: 'groups:6',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              name: 'group 6',
+            },
+            created_at: '2021-07-28T09:29:58.335288Z',
+            updated_at: '2021-07-28T09:29:58.335288Z',
+          },
+        ],
+        users: [
+          {
+            created_at: '2021-07-28T09:29:56.022496Z',
+            updated_at: '2021-07-28T09:29:56.022496Z',
+            id: '2',
+            data: {
+              avatarUrl: 'https://placekitten.com/640/360',
+              fullname: 'user 2',
+            },
+          },
+        ],
       },
+      getstream_id: '0437319f-efcd-11eb-87c6-1254437355c5',
+      type: 'post',
       data: {
-        content: '...',
+        content: 'New post',
+        files: [],
+        images: [],
+        videos: [],
       },
-      foreign_id: '81dc89c0-d09d-4451-ab47-206485967c8c',
-      id: '88997ca2-eeab-11eb-b029-128a130028af',
-      latest_reactions: {
-        comment: [
-          {
-            created_at: '2021-07-28T05:02:28.157651Z',
-            updated_at: '2021-07-28T05:02:28.157651Z',
-            id: '7bf850cf-179e-451b-86b3-fabaa0907966',
-            user_id: '0',
-            kind: 'comment',
-            activity_id: '88997ca2-eeab-11eb-b029-128a130028af',
-            data: {
-              content: 'Second comment',
-            },
-            parent: '',
-            latest_children: {},
-            children_counts: {},
-          },
-          {
-            created_at: '2021-07-28T02:52:39.272422Z',
-            updated_at: '2021-07-28T02:52:39.272422Z',
-            id: 'e10904f9-3200-48d0-b54f-cd5c669adbe2',
-            user_id: '0',
-            kind: 'comment',
-            activity_id: '88997ca2-eeab-11eb-b029-128a130028af',
-            data: {
-              content: 'a new comment',
-              files: ['string'],
-              images: ['string'],
-              videos: ['string'],
-            },
-            parent: '',
-            latest_children: {},
-            children_counts: {},
-          },
-        ],
-        like: [
-          {
-            created_at: '2021-07-28T04:12:49.762248Z',
-            updated_at: '2021-07-28T04:12:49.762248Z',
-            id: 'e1ca9d05-86b0-4521-99f4-e7858ca34c02',
-            user_id: '0',
-            kind: 'like',
-            activity_id: '88997ca2-eeab-11eb-b029-128a130028af',
-            data: {},
-            parent: '',
-            latest_children: {},
-            children_counts: {},
-          },
-        ],
-      },
-      latest_reactions_extra: {
-        comment: {
-          next: '',
-        },
-        like: {
-          next: '',
-        },
-      },
+      duration: '5.55ms',
+      foreign_id: '86e18b2a-5364-48cc-a8e7-bc557177224a',
       object: '-',
       origin: null,
-      reaction_counts: {
-        comment: 2,
-        like: 1,
-      },
       target: '',
-      time: '2021-07-27T07:23:26.351069',
-      type: 'post',
+      time: '2021-07-28T17:55:38.299230',
       verb: 'create',
     },
   },
