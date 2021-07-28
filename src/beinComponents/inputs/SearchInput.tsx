@@ -28,9 +28,14 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={StyleSheet.flatten([styles.container, style])}>
       <View style={styles.itemContainer}>
-        <Icon icon={'Search'} size={16} tintColor={theme.colors.iconTint} />
+        <Icon
+          icon={'Search'}
+          size={14}
+          style={styles.iconSearch}
+          tintColor={theme.colors.textSecondary}
+        />
         <TextInput
           style={styles.textInput}
           value={text}

@@ -1,25 +1,26 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {IGroup} from '~/interfaces/IGroup';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
+
+import {IGroup} from '~/interfaces/IGroup';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {Text} from '~/components';
 import Icon from '~/beinComponents/Icon';
-import {grey9} from '~/theme/colors';
 import GroupItem from '~/components/GroupItem';
 import GroupTree from '~/components/GroupTree';
+import {ITheme} from '~/theme/interfaces';
 
 interface FlatGroupItem extends IGroup {}
 
 const FlatGroupItem: React.FC<FlatGroupItem> = props => {
-  const {id, name, userCount, parentId, parent, children, type, icon} = props;
+  const {parent} = props;
 
   const [showTree, setShowTree] = useState(false);
 
   const dispatch = useDispatch();
-  const theme = useTheme();
+  const theme: ITheme = useTheme();
   const {spacing}: IObject<any> = theme;
   const {t, navigation} = useBaseHook();
   const styles = themeStyles(theme);
@@ -62,12 +63,16 @@ const FlatGroupItem: React.FC<FlatGroupItem> = props => {
     <View style={styles.container}>
       <View style={{marginTop: spacing.margin.tiny, flexDirection: 'row'}}>
         <View style={styles.iconNextContainer}>
-          <Icon icon={'iconArrowRight'} size={12} tintColor={grey9} />
+          <Icon
+            icon={'iconArrowRight'}
+            size={12}
+            tintColor={theme.colors.iconTint}
+          />
         </View>
         {renderPath()}
       </View>
-      <Text>To</Text>
-      {showTree ? <GroupTree /> : <GroupItem {...props} />}
+      <GroupItem {...props} />
+      {/* {showTree ? <GroupTree /> : <GroupItem {...props} />} */}
     </View>
   );
 };

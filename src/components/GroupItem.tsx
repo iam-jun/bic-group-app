@@ -12,20 +12,20 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
 interface GroupItemProps extends IGroup {
-  level?: number;
+  levelMargin?: number;
 }
 
 const GroupItem: React.FC<GroupItemProps> = ({
   id,
   name,
   userCount,
-  parentId,
+  parent_id,
   parent,
   children,
   type,
-  icon,
+  icon = 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
 
-  level,
+  levelMargin,
 }) => {
   const theme = useTheme();
   const {spacing}: IObject<any> = theme;
@@ -50,8 +50,10 @@ const GroupItem: React.FC<GroupItemProps> = ({
   };
 
   const renderLevelLines = () => {
-    if (typeof level === 'number' && level > 0) {
-      return Array.from(Array(level).keys()).map(item => renderLine(item));
+    if (typeof levelMargin === 'number' && levelMargin > 0) {
+      return Array.from(Array(levelMargin).keys()).map(item =>
+        renderLine(item),
+      );
     } else {
       return null;
     }
