@@ -21,10 +21,12 @@ const PostDetail = () => {
   const theme: ITheme = useTheme();
   const styles = createStyle(theme);
 
+  const userId = 9; //todo replace with BEIN userId later...
+
   const postDetail: IPostActivity = usePostDetail() || {};
   const {id} = postDetail || {};
 
-  useEffect(() => {
+  const getComments = () => {
     if (id) {
       setLoadingComment(true);
       postDataHelper
@@ -40,16 +42,11 @@ const PostDetail = () => {
           console.log('\x1b[36m', '🐣️ getPostComment error : ', e, '\x1b[0m');
         });
     }
-  }, []);
+  };
 
   useEffect(() => {
-    console.log(
-      '\x1b[36m',
-      '🐣 list comment updated |  : ',
-      JSON.stringify(listComments, undefined, 2),
-      '\x1b[0m',
-    );
-  }, [listComments]);
+    getComments();
+  }, []);
 
   const renderPostContent = () => {
     return <PostView postData={postDetail} />;
@@ -60,7 +57,22 @@ const PostDetail = () => {
   };
 
   const onPressSend = () => {
-    alert('send: ' + commentText);
+    const commentData = {
+      content: commentText,
+    };
+    if (id) {
+      postDataHelper
+        .postNewComment(id, commentData, userId)
+        .then(response => {
+          if (response && response.data) {
+            getComments();
+            setCommentText('');
+          }
+        })
+        .catch(e => {
+          console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
+        });
+    }
   };
 
   const renderCommentItem = ({item}: any) => {
@@ -88,7 +100,11 @@ const PostDetail = () => {
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => <View />}
       />
-      <CommentInput onChangeText={onTextChange} onPressSend={onPressSend} />
+      <CommentInput
+        value={commentText}
+        onChangeText={onTextChange}
+        onPressSend={onPressSend}
+      />
     </ScreenWrapper>
   );
 };

@@ -33,7 +33,7 @@ const PostSelectAudience = () => {
   const createPostData = useCreatePost();
   const {chosenAudiences} = createPostData || {};
 
-  const actor = 0; //todo replace with BEIN userId later...
+  const actor = 9; //todo replace with BEIN userId later...
 
   const sectionListData = [
     {title: 'Groups', data: listGroups},
