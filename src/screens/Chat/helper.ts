@@ -11,6 +11,7 @@ export const mapMessages = (data?: []): IMessage[] =>
 
 export const mapConversation = (user: IUser, item: any): IConversation => ({
   ...item,
+  _id: item._id || item.rid,
   name: item?.name || generateRoomName(user, item?.usernames),
   type: item?.t,
   user: mapUser(item?.u),
