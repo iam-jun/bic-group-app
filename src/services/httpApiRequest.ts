@@ -104,7 +104,7 @@ interface UnauthorizedReq {
 }
 
 let unauthorizedReqQueue: UnauthorizedReq[] = [];
-const handleRetryBein = async (error: AxiosError) => {
+const handleRetry = async (error: AxiosError) => {
   // check if error is not 401 or is not unauthorized type
   // check if orgConfig contain Authorization key
   if (!error.config.headers.Authorization) {
@@ -167,23 +167,24 @@ const getTokenAndCallBackBein = async (): Promise<void> => {
   }
 };
 
-const handleResponseErrorBein = async (
+const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
   let alertShow = false;
   if (error.response) {
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
-      // if (error.config.useRetry) {
-      return handleRetryBein(error);
+      return handleRetry(error);
     }
-
-    const dataFromServer = error.response.data;
-    return {
-      code: dataFromServer.code,
-      data: dataFromServer.data,
-      meta: dataFromServer.meta,
-    };
+    // @ts-ignore
+    switch (error.config?.provider?.name) {
+      case apiConfig.providers.bein.name:
+        return mapResponseSuccessBein(error.response);
+      case apiConfig.providers.chat.name:
+        return mapResponseSuccessRocketChat(error.response);
+      default:
+        return mapResponseSuccessBein(error.response);
+    }
   } else if (error.request) {
     if (!alertShow) {
       alertShow = true;
@@ -214,7 +215,7 @@ const handleResponseErrorBein = async (
   }
 };
 
-const handleResponseSuccessBein = (
+const mapResponseSuccessBein = (
   response: AxiosResponse,
 ): HttpApiResponseFormat => {
   return {
@@ -224,19 +225,30 @@ const handleResponseSuccessBein = (
   };
 };
 
-const interceptorsRequestSuccessBein = (requestConfig: AxiosRequestConfig) => {
+const mapResponseSuccessRocketChat = (
+  response: AxiosResponse,
+): HttpApiResponseFormat => {
+  // TODO: map data
+  return {
+    code: response.data.code,
+    data: response.data.data,
+    meta: response.data.meta,
+  };
+};
+
+const interceptorsRequestSuccess = (requestConfig: AxiosRequestConfig) => {
   // logInterceptorsRequestSuccess(requestConfig);
   return requestConfig;
 };
 
-const interceptorsResponseSuccessBein = (response: AxiosResponse) => {
+const interceptorsResponseSuccess = (response: AxiosResponse) => {
   // logInterceptorsResponseSuccess(response);
   return response;
 };
 
-const interceptorsResponseErrorBein = async (error: AxiosError) => {
+const interceptorsResponseError = async (error: AxiosError) => {
   // logInterceptorsResponseError(error);
-  return handleResponseErrorBein(error);
+  return handleResponseError(error);
 };
 
 const makeGetStreamRequest = async (
@@ -334,7 +346,7 @@ const getAuthTokens = async () => {
   try {
     const httpResponse = await makeHttpRequest(apiConfig.App.tokens());
     // @ts-ignore
-    const data = handleResponseSuccessBein(httpResponse);
+    const data = mapResponseSuccessBein(httpResponse);
     if (data.code != 200) {
       return false;
     }
@@ -356,9 +368,9 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
 
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
-      interceptorRequestSuccess = interceptorsRequestSuccessBein;
-      interceptorResponseSuccess = interceptorsResponseSuccessBein;
-      interceptorResponseError = interceptorsResponseErrorBein;
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorResponseError = interceptorsResponseError;
       requestConfig.headers = {
         ...commonHeaders,
         ...requestConfig.headers,
@@ -368,7 +380,17 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       };
       break;
     case apiConfig.providers.chat.name:
-      // TODO: refactor
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorResponseError = interceptorsResponseError;
+      requestConfig.headers = {
+        ...commonHeaders,
+        ...requestConfig.headers,
+        ...{
+          'X-Auth-Token': getChatAuthInfo().accessToken,
+          'X-User-Id': getChatAuthInfo().userId,
+        },
+      };
       break;
     case apiConfig.providers.getStream.name:
       // TODO: refactor
@@ -394,7 +416,7 @@ export {
   makeHttpRequest,
   getFeedAccessToken,
   getChatAuthInfo,
-  handleResponseSuccessBein,
+  mapResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,
 };

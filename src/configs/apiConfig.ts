@@ -6,12 +6,23 @@ const providers = {
     name: 'Bein',
   },
   chat: {
-    url: 'http://52.15.139.185:3000/',
+    url: 'https://rockettest.bein.group/api/v1/',
     name: 'RocketChat',
   },
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
+  },
+};
+
+const Chat = {
+  getDirectMessages: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}im.list`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+    };
   },
 };
 
@@ -75,4 +86,5 @@ export default {
   providers,
 
   App,
+  Chat,
 };
