@@ -1,21 +1,20 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
+export interface Props {
+  stack: {[x: string]: string};
+  screens: {[x: string]: React.ComponentType<any>};
+}
 
-//@ts-ignore
-// eslint-disable-next-line react/prop-types
-const GroupStack = ({stack, screens}): React.ReactElement => {
+const BaseStackNavigator = ({stack, screens}: Props): React.ReactElement => {
   return (
     <Stack.Navigator headerMode="screen">
       {Object.entries(stack).map(([name, component]) => {
         return (
           <Stack.Screen
             key={'screen' + component}
-            //@ts-ignore
             name={component}
-            //@ts-ignore
             component={screens[component]}
             options={{
               animationEnabled: true,
@@ -29,4 +28,4 @@ const GroupStack = ({stack, screens}): React.ReactElement => {
   );
 };
 
-export default GroupStack;
+export default BaseStackNavigator;

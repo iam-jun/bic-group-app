@@ -19,7 +19,7 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = props => {
   const styles = createStyles(theme);
   const {currentMessage, previousMessage, nextMessage} = props;
 
-  var sameUserInPrevMessage =
+  const sameUserInPrevMessage =
     isSameUser(currentMessage || ({} as IMessage), previousMessage) &&
     isSameDay(currentMessage || ({} as IMessage), previousMessage);
   const _currentMessage = currentMessage as IMessage;

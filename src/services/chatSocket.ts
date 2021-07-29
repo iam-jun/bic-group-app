@@ -58,7 +58,7 @@ const removeOnMessageCallback = (id: string) => {
 
 const sendMessage = (data: any) => {
   if (socket?.readyState !== 1) {
-    waitForSocketConnection(socket, function () {
+    waitForSocketConnection(function () {
       sendMessage(data);
     });
     return;
@@ -72,14 +72,14 @@ const sendMessage = (data: any) => {
   messageQueue.push(data);
 };
 
-const waitForSocketConnection = (socket?: WebSocket, callback?: any) => {
+const waitForSocketConnection = (callback?: any) => {
   setTimeout(function () {
     if (socket?.readyState === 1) {
       console.log('connection is made.');
       callback && callback();
     } else {
       console.log('wait for connection...');
-      waitForSocketConnection(socket, callback);
+      waitForSocketConnection(callback);
     }
   }, 100);
 };

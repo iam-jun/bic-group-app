@@ -22,7 +22,7 @@ import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
 const Stack = createStackNavigator();
 
-const MainStack = (): React.ReactElement => {
+const MainStack = (): React.ReactElement | null => {
   const dimensions = useWindowDimensions();
   const theme = useTheme();
   const styles = createStyles(theme);

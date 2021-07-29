@@ -84,7 +84,7 @@ const Section2 = () => {
         <Divider style={{margin: spacing?.margin.base}} />
         <SearchInput
           style={{margin: spacing?.margin.large}}
-          placeholderText={t('input:search')}
+          placeholder={t('input:search')}
           onChangeText={(text: string) => console.log(text)}
         />
         <Divider
