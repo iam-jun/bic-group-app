@@ -23,8 +23,8 @@ import i18next from 'i18next';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Avatar from '~/beinComponents/Avatar';
 import {View} from 'react-native';
-import {Text} from '~/components';
 import {formatDate} from '~/utils/formatData';
+import Text from '~/beinComponents/Text';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
