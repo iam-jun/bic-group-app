@@ -99,10 +99,6 @@ function* onSignInSuccess(user: IUserResponse) {
     yield onSignInFailed(i18n.t('error:http:token_expired'));
     return;
   }
-
-  rootNavigationRef?.current?.dispatch(
-    StackActions.replace(rootSwitch.mainStack),
-  );
 }
 
 function* onSignInFailed(errorMessage: string) {

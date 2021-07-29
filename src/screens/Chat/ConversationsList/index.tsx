@@ -20,6 +20,11 @@ import useChat from '~/hooks/chat';
 import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 import Header from '~/beinComponents/Header';
 import i18next from 'i18next';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Avatar from '~/beinComponents/Avatar';
+import {View} from 'react-native';
+import {formatDate} from '~/utils/formatData';
+import Text from '~/beinComponents/Text';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -56,6 +61,26 @@ const ConversationsList = (): React.ReactElement => {
     });
   };
 
+  const renderItem = ({item}: {item: IConversation; index: number}) => {
+    return (
+      <PrimaryItem
+        title={item.name}
+        subTitle={item.lastMessage}
+        onPress={() => onChatPress(item)}
+        LeftComponent={
+          <Avatar.Large style={styles.marginRight} source={item.avatar} />
+        }
+        RightComponent={
+          <View>
+            <Text.H6 color={theme.colors.textSecondary}>
+              {formatDate(item._updatedAt)}
+            </Text.H6>
+          </View>
+        }
+      />
+    );
+  };
+
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
     rootNavigation.navigate(chatStack.conversation, {id: item._id});
@@ -85,7 +110,7 @@ const ConversationsList = (): React.ReactElement => {
         isFullView
         loading={loading}
         data={data}
-        onItemPress={onChatPress}
+        renderItem={renderItem}
         renderItemSeparator={() => <Divider />}
       />
     </ScreenWrapper>
@@ -99,6 +124,13 @@ const createStyles = (theme: IObject<any>) => {
     inputSearch: {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.base,
+    },
+    marginRight: {
+      marginRight: spacing.margin.base,
+    },
+    item: {
+      flex: 1,
+      flexDirection: 'row',
     },
   });
 };
