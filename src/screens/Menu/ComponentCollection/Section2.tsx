@@ -190,6 +190,11 @@ const Section2 = () => {
   const renderTabMenuTag = () => {
     const data: IMenuItemProps[] = [
       {
+        routeName: 'All',
+        label: 'All',
+        component: sampleScreen,
+      },
+      {
         routeName: 'Love',
         label: '165',
         iconName: 'iconReactionLove',
