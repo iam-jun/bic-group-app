@@ -16,6 +16,8 @@ const ChatItem: React.FC<IConversation> = ({
   lastMessage,
   avatar,
 }) => {
+  console.log('name', name);
+
   const theme = useTheme();
   const styles = createStyles(theme);
   return (

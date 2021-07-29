@@ -70,7 +70,7 @@ const CreateConversation = (): React.ReactElement => {
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
     return (
       <PrimaryItem
-        title={item.name || item.username}
+        title={item.name}
         isChecked={item.selected}
         LeftComponent={
           <Avatar.Large style={styles.marginRight} source={item.avatar} />
