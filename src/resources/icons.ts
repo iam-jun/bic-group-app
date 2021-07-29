@@ -188,6 +188,8 @@ const icons = {
     type: 'Ionicons',
     name: 'lock-closed-outline',
   },
+  AngleRight: 'AngleRight',
+  AngleDown: 'AngleDown',
   iconEyeSeen,
   iconReact,
   iconDot,
