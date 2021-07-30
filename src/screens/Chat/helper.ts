@@ -11,11 +11,10 @@ export const mapMessages = (data?: []): IMessage[] =>
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
   const name =
-    item?.topic ||
-    (item?.usernames ? generateRoomName(user, item.usernames) : item.name);
+    item?.customFields?.name || generateRoomName(user, item?.usernames || []);
   return {
     ...item,
-    _id: item._id || item.rid,
+    _id: item?._id || item?.rid,
     name,
     type: item?.t,
     avatar: generateAvatar(name),
