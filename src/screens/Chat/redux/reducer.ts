@@ -63,6 +63,14 @@ function reducer(state = initState, action: any = {}) {
         users: [],
         selectedUsers: [],
       };
+    case types.GET_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          loading: true,
+        },
+      };
     case types.SET_MESSAGES:
       return {
         ...state,

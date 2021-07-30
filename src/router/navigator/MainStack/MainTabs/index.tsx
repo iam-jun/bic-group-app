@@ -50,7 +50,6 @@ const MainTabs = () => {
             key={'tabs' + name}
             name={name}
             component={component}
-            initialParams={{isBigTablet}}
             options={{
               tabBarIcon: ({focused, color}) => {
                 if (!isBigTablet)
