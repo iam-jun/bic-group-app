@@ -27,6 +27,8 @@ import iconTabChat from '../../assets/icons/icon_chat.svg';
 import iconTabNotification from '../../assets/icons/icon_notification.svg';
 import iconTabMenu from '../../assets/icons/icon_menu.svg';
 import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
+import iconShieldStar from '../../assets/icons/icon_shieldstar.svg';
+import iconMessages from '../../assets/icons/icon_messages.svg';
 
 const icons = {
   iconTabHome,
@@ -198,6 +200,8 @@ const icons = {
   iconLanguageVi,
   iconCheckbox,
   iconCreateChat,
+  iconShieldStar,
+  iconMessages,
 };
 
 export default icons;

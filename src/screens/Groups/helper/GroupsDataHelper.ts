@@ -8,6 +8,12 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getMyGroupPosts: (groupId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/timeline`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -15,6 +21,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getMyGroups(userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getMyGroupPosts: async (groupId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getMyGroupPosts(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

@@ -26,6 +26,18 @@ const groupsActions = {
       payload,
     };
   },
+  setLoadingGroupPosts: function (payload: boolean) {
+    return {
+      type: groupsTypes.SET_LOADING_GROUP_POSTS,
+      payload,
+    };
+  },
+  setGroupPosts: function (payload: IGroup[]) {
+    return {
+      type: groupsTypes.SET_GROUP_POSTS,
+      payload,
+    };
+  },
 
   //for saga
   getJoinedGroups: function (payload: any | undefined) {
@@ -37,6 +49,12 @@ const groupsActions = {
   getGroupDetail: function (payload: number) {
     return {
       type: groupsTypes.GET_GROUP_DETAIL,
+      payload,
+    };
+  },
+  getGroupPosts: function (payload: number) {
+    return {
+      type: groupsTypes.GET_GROUP_POSTS,
       payload,
     };
   },

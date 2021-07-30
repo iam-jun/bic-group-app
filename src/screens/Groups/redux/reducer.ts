@@ -4,6 +4,8 @@ const initGroupsState = {
   joinedGroups: [],
   loadingGroupDetail: false,
   groupDetail: {},
+  loadingGroupPosts: false,
+  groupPosts: [],
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -28,6 +30,16 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         groupDetail: action.payload || {},
+      };
+    case groupsTypes.SET_LOADING_GROUP_POSTS:
+      return {
+        ...state,
+        loadingGroupPosts: action.payload,
+      };
+    case groupsTypes.SET_GROUP_POSTS:
+      return {
+        ...state,
+        groupPosts: action.payload || [],
       };
     default:
       return state;
