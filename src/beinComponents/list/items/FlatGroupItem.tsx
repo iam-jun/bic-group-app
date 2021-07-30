@@ -8,7 +8,7 @@ import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {Text} from '~/components';
 import Icon from '~/beinComponents/Icon';
-import GroupItem from '~/components/GroupItem';
+import GroupItem from '~/beinComponents/GroupItem';
 import GroupTree from '~/components/GroupTree';
 import {ITheme} from '~/theme/interfaces';
 

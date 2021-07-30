@@ -10,22 +10,14 @@ import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
+import useGroups from '~/hooks/groups';
 
-interface GroupInfoHeaderProps {
-  name: string;
-  userCount: number;
-  icon: string;
-  cover?: string;
-}
-
-const GroupInfoHeader = ({
-  name,
-  userCount,
-  icon,
-  cover,
-}: GroupInfoHeaderProps) => {
+const GroupInfoHeader = () => {
   const theme: ITheme = useTheme();
   const styles = themeStyles(theme);
+  const groupData = useGroups();
+  const {groupDetail} = groupData;
+  const {name, userCount, icon, cover} = groupDetail;
 
   return (
     <View style={styles.coverAndInfoHeader}>

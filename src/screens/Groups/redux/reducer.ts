@@ -26,6 +26,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         loadingGroupDetail: action.payload,
       };
+    case groupsTypes.SELECT_GROUP_DETAIL:
     case groupsTypes.SET_GROUP_DETAIL:
       return {
         ...state,
@@ -41,6 +42,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         groupPosts: action.payload || [],
       };
+
     default:
       return state;
   }

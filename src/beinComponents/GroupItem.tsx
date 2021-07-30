@@ -1,38 +1,50 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
 
 import {IGroup} from '~/interfaces/IGroup';
+import {useDispatch} from 'react-redux';
+import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import {Image, Text} from '~/components/index';
 import Icon from '~/beinComponents/Icon';
 import {grey2, grey5, grey9} from '~/theme/colors';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 interface GroupItemProps extends IGroup {
-  level?: number;
+  levelMargin?: number;
 }
 
 const GroupItem: React.FC<GroupItemProps> = ({
   id,
   name,
   userCount,
-  parentId,
+  parent_id,
   parent,
   children,
   type,
-  icon,
+  icon = 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+  description,
 
-  level,
+  levelMargin,
 }) => {
   const theme = useTheme();
   const {spacing}: IObject<any> = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const dispatch = useDispatch();
 
   const _onPressItem = () => {
+    dispatch(
+      groupsActions.selectGroupDetail({
+        id,
+        name,
+        userCount,
+        description,
+        icon,
+      }),
+    );
     rootNavigation.navigate(groupStack.groupDetail, {id});
   };
 
@@ -50,8 +62,10 @@ const GroupItem: React.FC<GroupItemProps> = ({
   };
 
   const renderLevelLines = () => {
-    if (typeof level === 'number' && level > 0) {
-      return Array.from(Array(level).keys()).map(item => renderLine(item));
+    if (typeof levelMargin === 'number' && levelMargin > 0) {
+      return Array.from(Array(levelMargin).keys()).map(item =>
+        renderLine(item),
+      );
     } else {
       return null;
     }

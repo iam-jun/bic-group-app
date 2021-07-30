@@ -38,6 +38,12 @@ const groupsActions = {
       payload,
     };
   },
+  selectGroupDetail: function (payload: IGroupDetail) {
+    return {
+      type: groupsTypes.SELECT_GROUP_DETAIL,
+      payload,
+    };
+  },
 
   //for saga
   getJoinedGroups: function (payload: any | undefined) {
