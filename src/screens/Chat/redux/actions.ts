@@ -23,6 +23,10 @@ const handleEvent = (payload: ISocketEvent) => ({
   payload,
 });
 
+const getMessages = () => ({
+  type: Actions.GET_MESSAGES,
+});
+
 const setExtraMessages = (payload: IMessage[]) => ({
   type: Actions.SET_EXTRA_MESSAGES,
   payload,
@@ -72,6 +76,7 @@ export default {
   handleEvent,
   setConversations,
   selectConversation,
+  getMessages,
   setMessages,
   setExtraMessages,
   mergeExtraMessages,
