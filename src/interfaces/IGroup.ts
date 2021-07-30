@@ -22,7 +22,8 @@ export interface IGroup {
 export interface IParsedGroup extends IGroup {
   uiId: string;
   parentUiId: string;
-  childrenUiIds: number[] | string[];
+  childrenUiIds: string[];
+  hide: boolean;
   uiLevel: number;
   checkbox: IAction;
   isCollapsing: boolean;

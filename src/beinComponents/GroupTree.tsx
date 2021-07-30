@@ -1,24 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
-import GroupItem from '~/beinComponents/list/items/GroupItem';
+import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 
 export interface GroupTreeProps {
   data: IGroup[];
   reverseData: any[];
 }
 
+type TreeData = {[x: string]: IParsedGroup};
+
 const GroupTree: React.FC<GroupTreeProps> = ({
   data,
   reverseData,
 }: GroupTreeProps) => {
-  const [treeData, setTreeData] = useState<{[x: string]: IParsedGroup}>({});
+  const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
 
   const parseTreeData = () => {
     if (data) {
       const newData: {[x: string]: IParsedGroup} = {};
-      data?.map?.((group, index) => getItem(group, newData, 0, 0, index));
+      data?.map?.((group, index) => getItem(group, newData, 0, 'tree', index));
       setTreeData(newData);
     }
   };
@@ -35,23 +37,39 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   }, [treeData]);
 
   useEffect(() => {
-    parseTreeData();
-  }, [data]);
+    if (data) {
+      parseTreeData();
+    } else if (reverseData) {
+      parseReverseTreeData();
+    }
+  }, [data, reverseData]);
 
-  useEffect(() => {
-    parseReverseTreeData();
-  }, [reverseData]);
+  const onPressGroup = (group: GroupItemProps) => {
+    onToggleGroup(group);
+  };
 
-  const renderTree = () => {
-    console.log(
-      '\x1b[33m',
-      '🐣 treeData | renderTree : ',
-      JSON.stringify(treeData, undefined, 2),
-      '\x1b[0m',
-    );
-    const tree: React.ReactNode[] = [];
-    Object.values(treeData).map(group => tree.push(<GroupItem {...group} />));
-    setRenderedTree(tree);
+  const onToggleGroupChild = (
+    newTree: TreeData,
+    item: IParsedGroup,
+    hide: boolean,
+  ) => {
+    newTree[item.uiId].hide = hide;
+    newTree[item.uiId].isCollapsing = hide;
+    item.childrenUiIds.map((childUiId: string) => {
+      onToggleGroupChild(newTree, newTree[childUiId], hide);
+    });
+  };
+
+  const onToggleGroup = (group: GroupItemProps) => {
+    console.log('\x1b[36m', '🐣️  | onPressGroup : ', group, '\x1b[0m');
+    const newTreeData = {...treeData};
+    const newCollapsing = !group.isCollapsing;
+
+    newTreeData[group.uiId].isCollapsing = newCollapsing;
+    newTreeData[group.uiId].childrenUiIds.map(childUiId => {
+      onToggleGroupChild(newTreeData, newTreeData[childUiId], newCollapsing);
+    });
+    setTreeData(newTreeData);
   };
 
   const getItem = (
@@ -70,6 +88,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       ...group,
       uiId,
       parentUiId,
+      hide: false,
       uiLevel: uiLevel,
       isCollapsing: false,
       checkbox: 'uncheckBox',
@@ -81,6 +100,26 @@ const GroupTree: React.FC<GroupTreeProps> = ({
         getItem(child, treeData, uiLevel + 1, uiId, index),
       );
     }
+  };
+
+  const renderTree = () => {
+    console.log(
+      '\x1b[33m',
+      '🐣 treeData | renderTree : ',
+      JSON.stringify(treeData, undefined, 2),
+      '\x1b[0m',
+    );
+    const tree: React.ReactNode[] = [];
+    Object.values(treeData).map(group =>
+      tree.push(
+        <GroupItem
+          {...group}
+          onPressItem={onPressGroup}
+          onToggleItem={onToggleGroup}
+        />,
+      ),
+    );
+    setRenderedTree(tree);
   };
 
   return (

@@ -2,14 +2,13 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
+import {IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
-import Image from '~/beinComponents/Image';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IAction} from '~/constants/commonActions';
@@ -18,27 +17,51 @@ export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
   checkbox: IAction;
   isCollapsing: boolean;
+  onPressItem?: (item: GroupItemProps) => void;
+  onToggleItem?: (item: GroupItemProps) => void;
+  disableOnPressItem?: boolean;
 }
 
-const GroupItem: React.FC<GroupItemProps> = ({
-  id,
-  name,
-  userCount,
-  parentId,
-  parent,
-  children,
-  icon,
-  uiLevel,
-  checkbox,
-  isCollapsing,
-}: GroupItemProps) => {
+const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
+  const {
+    id,
+    name,
+    userCount,
+    parentId,
+    parent,
+    children,
+    icon,
+
+    childrenUiIds,
+
+    hide,
+    uiLevel,
+    checkbox,
+    isCollapsing,
+    onPressItem,
+    onToggleItem,
+    disableOnPressItem,
+  } = props;
+
   const theme: ITheme = useTheme();
   const {spacing, colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
+  if (hide) {
+    return null;
+  }
+
   const _onPressItem = () => {
-    rootNavigation.navigate(groupStack.groupDetail, {id});
+    if (onPressItem) {
+      onPressItem(props);
+    } else {
+      rootNavigation.navigate(groupStack.groupDetail, {id});
+    }
+  };
+
+  const _onToggleItem = () => {
+    onToggleItem?.(props);
   };
 
   const renderLine = (uiLevel: number) => {
@@ -55,8 +78,14 @@ const GroupItem: React.FC<GroupItemProps> = ({
   };
 
   const renderToggle = () => {
+    const hasChild = childrenUiIds.length > 0;
+
     return (
-      <View
+      <ButtonWrapper
+        onPress={_onToggleItem}
+        disabled={!hasChild}
+        activeOpacity={1}
+        hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
         style={{
           width: 2,
           height: '100%',
@@ -64,16 +93,18 @@ const GroupItem: React.FC<GroupItemProps> = ({
           marginHorizontal: spacing?.margin.base,
           flexDirection: 'row',
         }}>
-        <ButtonWrapper
-          style={{
-            marginLeft: -7,
-            alignSelf: 'center',
-            backgroundColor: colors.background,
-            paddingVertical: spacing?.padding.tiny,
-          }}>
-          <Icon size={18} icon={isCollapsing ? 'AngleDown' : 'AngleRight'} />
-        </ButtonWrapper>
-      </View>
+        {hasChild && (
+          <View
+            style={{
+              marginLeft: -7,
+              alignSelf: 'center',
+              backgroundColor: colors.background,
+              paddingVertical: spacing?.padding.tiny,
+            }}>
+            <Icon size={18} icon={isCollapsing ? 'AngleRight' : 'AngleDown'} />
+          </View>
+        )}
+      </ButtonWrapper>
     );
   };
 
@@ -86,7 +117,7 @@ const GroupItem: React.FC<GroupItemProps> = ({
   };
 
   return (
-    <TouchableOpacity onPress={_onPressItem}>
+    <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
       <View style={{flexDirection: 'row'}}>
         {renderUiLevelLines()}
         {renderToggle()}
