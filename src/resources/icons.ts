@@ -190,6 +190,8 @@ const icons = {
   },
   AngleRight: 'AngleRight',
   AngleDown: 'AngleDown',
+  Edit: 'Edit',
+  EllipsisV: 'EllipsisV',
   iconEyeSeen,
   iconReact,
   iconDot,

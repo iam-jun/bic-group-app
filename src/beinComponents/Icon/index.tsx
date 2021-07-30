@@ -19,6 +19,7 @@ import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 
 export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
+  icon: IconType;
   size?: number;
   tintColor?: string;
   backgroundColor?: string;
@@ -30,11 +31,7 @@ export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
 }
 
-interface IconRequiredProps extends IconProps {
-  icon: IconType;
-}
-
-const Icon: React.FC<IconRequiredProps> = ({
+const Icon: React.FC<IconProps> = ({
   style,
   iconStyle,
   labelStyle,
@@ -49,7 +46,7 @@ const Icon: React.FC<IconRequiredProps> = ({
   disabled,
   hitSlop = {top: 10, left: 10, bottom: 10, right: 10},
   ...props
-}: IconRequiredProps) => {
+}: IconProps) => {
   if (isLoading) return <ActivityIndicator size="small" />;
 
   // @ts-ignore

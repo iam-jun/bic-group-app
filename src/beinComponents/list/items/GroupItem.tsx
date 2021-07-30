@@ -11,14 +11,15 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {IAction} from '~/constants/commonActions';
+import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
+import commonActions, {IAction} from '~/constants/commonActions';
 
 export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
-  checkbox: IAction;
   isCollapsing: boolean;
   onPressItem?: (item: GroupItemProps) => void;
   onToggleItem?: (item: GroupItemProps) => void;
+  onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
 }
 
@@ -33,18 +34,19 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     icon,
 
     childrenUiIds,
+    isChecked,
 
     hide,
     uiLevel,
-    checkbox,
     isCollapsing,
     onPressItem,
     onToggleItem,
+    onCheckedItem,
     disableOnPressItem,
   } = props;
 
   const theme: ITheme = useTheme();
-  const {spacing, colors} = theme;
+  const {spacing, colors, dimension} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
@@ -62,6 +64,14 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const _onToggleItem = () => {
     onToggleItem?.(props);
+  };
+
+  const _onCheckedItem = (action: IAction) => {
+    let newChecked = false;
+    if (action === commonActions.checkBox) {
+      newChecked = true;
+    }
+    onCheckedItem?.(props, newChecked);
   };
 
   const renderLine = (uiLevel: number) => {
@@ -127,7 +137,20 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             flexDirection: 'row',
             paddingVertical: spacing?.padding.tiny,
           }}>
-          <Avatar.Medium source={icon} />
+          <View
+            style={{
+              width: dimension?.avatarSizes.medium,
+              height: dimension?.avatarSizes.medium,
+            }}>
+            <Avatar.Medium source={icon} />
+            {onCheckedItem && (
+              <Checkbox
+                style={{position: 'absolute', bottom: -3, right: -6}}
+                isChecked={isChecked}
+                onActionPress={_onCheckedItem}
+              />
+            )}
+          </View>
           <View style={styles.textContainer}>
             <Text.H6 style={styles.textName} numberOfLines={2}>
               {name}

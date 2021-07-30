@@ -25,7 +25,7 @@ export interface IParsedGroup extends IGroup {
   childrenUiIds: string[];
   hide: boolean;
   uiLevel: number;
-  checkbox: IAction;
+  isChecked: boolean;
   isCollapsing: boolean;
 }
 

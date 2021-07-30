@@ -4,15 +4,19 @@ import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 
 export interface GroupTreeProps {
-  data: IGroup[];
-  reverseData: any[];
+  data?: IGroup[];
+  reverseData?: any[];
+  onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
 
+export type OnChangeCheckedGroupsData = {[x: string]: boolean};
+
 const GroupTree: React.FC<GroupTreeProps> = ({
   data,
   reverseData,
+  onChangeCheckedGroups,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -45,30 +49,75 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   }, [data, reverseData]);
 
   const onPressGroup = (group: GroupItemProps) => {
-    onToggleGroup(group);
+    if (onChangeCheckedGroups) {
+      onCheckedGroup(group, !treeData[group.uiId].isChecked);
+    } else {
+      onToggleGroup(group);
+    }
   };
 
+  /**
+   * Logic toggle collapse/expand
+   *  - Expand: expand and show all children and below
+   *  - Collapse: hide all children and below
+   */
   const onToggleGroupChild = (
     newTree: TreeData,
     item: IParsedGroup,
     hide: boolean,
   ) => {
-    newTree[item.uiId].hide = hide;
-    newTree[item.uiId].isCollapsing = hide;
+    const uiId = item.uiId;
+    newTree[uiId].hide = hide;
+    newTree[uiId].isCollapsing = hide;
     item.childrenUiIds.map((childUiId: string) => {
       onToggleGroupChild(newTree, newTree[childUiId], hide);
     });
   };
 
   const onToggleGroup = (group: GroupItemProps) => {
-    console.log('\x1b[36m', '🐣️  | onPressGroup : ', group, '\x1b[0m');
     const newTreeData = {...treeData};
     const newCollapsing = !group.isCollapsing;
+    const uiId = group.uiId;
 
-    newTreeData[group.uiId].isCollapsing = newCollapsing;
-    newTreeData[group.uiId].childrenUiIds.map(childUiId => {
+    newTreeData[uiId].isCollapsing = newCollapsing;
+    newTreeData[uiId].childrenUiIds.map(childUiId => {
       onToggleGroupChild(newTreeData, newTreeData[childUiId], newCollapsing);
     });
+    setTreeData(newTreeData);
+  };
+
+  /**
+   * Logic:
+   *  - If child uncheck => auto uncheck parent and above
+   *  - If parent check => DO NOT check children
+   */
+  const onCheckedGroupParent = (
+    newTree: TreeData,
+    group: IParsedGroup,
+    newChecked: boolean,
+  ) => {
+    const uiUd = group.parentUiId;
+    if (!newTree[uiUd]) {
+      return;
+    }
+    newTree[uiUd].isChecked = newChecked;
+    onCheckedGroupParent(newTree, newTree[uiUd], newChecked);
+  };
+
+  const onCheckedGroup = (group: GroupItemProps, newChecked: boolean) => {
+    const newTreeData = {...treeData};
+    const uiId = group.uiId;
+    newTreeData[uiId].isChecked = newChecked;
+    if (!newChecked) {
+      onCheckedGroupParent(newTreeData, group, newChecked);
+    }
+    if (onChangeCheckedGroups) {
+      const callbackData: OnChangeCheckedGroupsData = {};
+      Object.values(newTreeData).map(g => {
+        callbackData[g.id] = g.isChecked;
+      });
+      onChangeCheckedGroups(callbackData);
+    }
     setTreeData(newTreeData);
   };
 
@@ -91,7 +140,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       hide: false,
       uiLevel: uiLevel,
       isCollapsing: false,
-      checkbox: 'uncheckBox',
+      isChecked: false,
       childrenUiIds,
       children: [],
     };
@@ -116,6 +165,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           {...group}
           onPressItem={onPressGroup}
           onToggleItem={onToggleGroup}
+          onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
         />,
       ),
     );
