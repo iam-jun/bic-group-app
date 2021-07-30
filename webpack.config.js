@@ -131,6 +131,17 @@ module.exports = {
       imageLoaderConfiguration,
       svgLoaderConfiguration,
       rnModulesLoaderConfiguration,
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[hash][ext][query]',
+        },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
       // TODO: Remove the below rule for .mjs, once aws-amplify supports webpack 5
       {
         test: /\.m?js/,
