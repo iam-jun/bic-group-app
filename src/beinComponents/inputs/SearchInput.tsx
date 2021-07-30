@@ -68,7 +68,6 @@ const createStyles = (theme: ITheme) => {
       justifyContent: 'center',
       // alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
-      borderColor: 'transparent',
     },
     itemContainer: {
       flexDirection: 'row',
