@@ -33,12 +33,12 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     children,
     icon,
 
-    childrenUiIds,
-    isChecked,
+    childrenUiIds = [],
+    isChecked = false,
 
-    hide,
-    uiLevel,
-    isCollapsing,
+    hide = false,
+    uiLevel = -1,
+    isCollapsing = false,
     onPressItem,
     onToggleItem,
     onCheckedItem,
@@ -88,6 +88,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   const renderToggle = () => {
+    if (uiLevel < 0) {
+      return null;
+    }
     const hasChild = childrenUiIds.length > 0;
 
     return (

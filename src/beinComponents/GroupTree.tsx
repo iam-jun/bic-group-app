@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
+import {isArray, isObject} from 'lodash';
+
 import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 
 export interface GroupTreeProps {
-  data?: IGroup[];
-  reverseData?: any[];
+  data?: IGroup[] | IGroup;
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
 }
 
@@ -15,24 +16,21 @@ export type OnChangeCheckedGroupsData = {[x: string]: boolean};
 
 const GroupTree: React.FC<GroupTreeProps> = ({
   data,
-  reverseData,
   onChangeCheckedGroups,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
 
   const parseTreeData = () => {
-    if (data) {
-      const newData: {[x: string]: IParsedGroup} = {};
+    const newData: {[x: string]: IParsedGroup} = {};
+    if (isArray(data)) {
       data?.map?.((group, index) => getItem(group, newData, 0, 'tree', index));
       setTreeData(newData);
-    }
-  };
-
-  const parseReverseTreeData = () => {
-    if (reverseData) {
-      const newData: {[x: string]: IParsedGroup} = {};
+    } else if (isObject(data)) {
+      getItem(data, newData, 0, 'tree', 0);
       setTreeData(newData);
+    } else {
+      console.log('\x1b[31m', '🐣️ parse tree data: unknown ', data, '\x1b[0m');
     }
   };
 
@@ -43,10 +41,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   useEffect(() => {
     if (data) {
       parseTreeData();
-    } else if (reverseData) {
-      parseReverseTreeData();
     }
-  }, [data, reverseData]);
+  }, [data]);
 
   const onPressGroup = (group: GroupItemProps) => {
     if (onChangeCheckedGroups) {
