@@ -17,6 +17,9 @@ export interface IGroup {
   created_at?: string;
   updated_at?: string;
   deleted_at?: string;
+
+  path?: string;
+  treeData?: IGroup;
 }
 
 export interface IParsedGroup extends IGroup {

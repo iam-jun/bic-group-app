@@ -49,13 +49,22 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
   }
 }
 
-const getGroupChild = (item: any, array: IGroup[], parent: any | undefined) => {
+const getGroupChild = (
+  item: any,
+  array: IGroup[],
+  parent: any | undefined,
+  path: string,
+) => {
   if (parent) {
     item.parent = {id: parent.id, name: parent.name, parent: parent.parent};
+    path = `${path}${parent.name}/`;
+    item.path = path;
   }
   array.push(item);
   if (item.children && item.children.length > 0) {
-    item.children.map((child: IGroup) => getGroupChild(child, array, item));
+    item.children.map((child: IGroup) =>
+      getGroupChild(child, array, item, path),
+    );
   }
 };
 
@@ -80,7 +89,9 @@ const requestJoinedGroups = async (userId: number) => {
     if (response.code === 200 && response.data?.length > 0) {
       const originGroups = response.data;
       const groups: IGroup[] = [];
-      originGroups.map((item: any) => getGroupChild(item, groups, undefined));
+      originGroups.map((item: any) =>
+        getGroupChild(item, groups, undefined, '/'),
+      );
 
       return groups;
     }

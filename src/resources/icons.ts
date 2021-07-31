@@ -189,6 +189,7 @@ const icons = {
     name: 'lock-closed-outline',
   },
   AngleRight: 'AngleRight',
+  AngleRightB: 'AngleRightB',
   AngleDown: 'AngleDown',
   Edit: 'Edit',
   EllipsisV: 'EllipsisV',
