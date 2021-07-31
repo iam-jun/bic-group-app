@@ -26,6 +26,8 @@ const GroupItem: React.FC<GroupItemProps> = ({
   type,
   icon = 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
   description,
+  background_img_url,
+  group_type,
 
   levelMargin,
 }) => {
@@ -43,6 +45,8 @@ const GroupItem: React.FC<GroupItemProps> = ({
         userCount,
         description,
         icon,
+        background_img_url,
+        group_type,
       }),
     );
     rootNavigation.navigate(groupStack.groupDetail, {id});

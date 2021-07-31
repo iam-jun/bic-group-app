@@ -61,7 +61,7 @@ function* selectGroupDetail({payload}: {payload: IGroupDetail}) {
     console.log(
       '\x1b[33m',
       'khanh --- selectGroupDetail | selectGroupDetail : error',
-      e,
+      error,
       '\x1b[0m',
     );
   }

@@ -10,9 +10,9 @@ export interface IGroup {
 }
 
 export interface IGroupDetail extends IGroup {
-  cover?: string;
+  background_img_url?: string;
   privacy?: string;
-  type?: string;
+  group_type?: string;
   verified?: boolean;
   description?: string;
 }

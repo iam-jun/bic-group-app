@@ -18,7 +18,7 @@ const GroupDetail = (props: any) => {
   return (
     <View style={styles.screenContainer}>
       <GroupTopBar />
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <GroupInfoHeader {...params} />
         <TabMenu
           data={groupProfileTabs}
@@ -37,6 +37,9 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: insets.top,
       flex: 1,
       backgroundColor: colors.background,
+    },
+    scrollView: {
+      backgroundColor: theme.colors.bgDisable,
     },
   });
 };

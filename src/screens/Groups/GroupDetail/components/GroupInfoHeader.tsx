@@ -17,14 +17,18 @@ const GroupInfoHeader = () => {
   const styles = themeStyles(theme);
   const groupData = useGroups();
   const {groupDetail} = groupData;
-  const {name, userCount, icon, cover} = groupDetail;
+  const {name, userCount, icon, background_img_url, group_type} = groupDetail;
 
   return (
     <View style={styles.coverAndInfoHeader}>
       {/* Cover photo */}
       <Image
         style={styles.cover}
-        source={cover ? {uri: cover} : images.img_cover_default}
+        source={
+          background_img_url
+            ? {uri: background_img_url}
+            : images.img_cover_default
+        }
       />
 
       {/* Group info header */}
@@ -50,7 +54,7 @@ const GroupInfoHeader = () => {
                 size={14}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodyS useI18n>Private</Text.BodyS>
+              <Text.BodyS useI18n>{group_type}</Text.BodyS>
               <Text.Subtitle> ⬩ </Text.Subtitle>
               <Icon
                 style={styles.iconSmall}
