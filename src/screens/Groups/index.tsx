@@ -26,7 +26,7 @@ const Groups: React.FC<GroupsProps> = () => {
   const {loadingJoinedGroups, joinedGroups} = groupsData;
 
   useEffect(() => {
-    dispatch(groupsActions.getJoinedGroups(undefined));
+    dispatch(groupsActions.getJoinedGroups());
   }, []);
 
   return (
