@@ -1,31 +1,36 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
-
-import {ScreenWrapper, ViewSpacing} from '~/components';
-import {spacing} from '~/theme';
-import {StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Header from '~/beinComponents/Header';
+import PostItem from '~/beinComponents/list/items/PostItem';
+import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
-import {data} from './dummy-data';
-import PostItem from '~/beinComponents/list/items/PostItem';
+import useHome from '~/hooks/home';
+import homeActions from '~/screens/Home/redux/actions';
 
 const Newsfeed = () => {
   const theme: ITheme = useTheme();
   const styles = createStyle(theme);
+  const homePostsData = useHome();
+  const {loadingHomePosts, homePosts} = homePostsData;
+  const dispatch = useDispatch();
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
 
-  // const {streamClient} = useContext(AppContext);
-  // dispatch(createAction(ActionTypes.GetStreamSample, {streamClient}));
+  useEffect(() => {
+    // TODO: will need to change the id
+    dispatch(homeActions.getHomePosts(1));
+  }, []);
+
   return (
-    <ScreenWrapper isFullView>
+    <View style={styles.container}>
       <Header
         avatar={images.logo_bein}
         hideBack
@@ -35,22 +40,29 @@ const Newsfeed = () => {
       />
       <ListView
         isFullView
-        style={styles.container}
-        data={data}
+        style={styles.listStyle}
+        data={homePosts}
+        loading={loadingHomePosts}
         renderItem={renderItem}
         ListHeaderComponent={() => <HeaderCreatePost />}
         ListFooterComponent={<View style={{paddingBottom: 30}} />}
-        renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
+        renderItemSeparator={() => (
+          <ViewSpacing height={theme.spacing?.margin.base} />
+        )}
       />
-    </ScreenWrapper>
+    </View>
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
+
   return StyleSheet.create({
     container: {
-      paddingTop: spacing.padding.base,
+      flex: 1,
+    },
+    listStyle: {
+      paddingTop: spacing?.padding.base,
       backgroundColor: colors.bgDisable,
     },
   });
