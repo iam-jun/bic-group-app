@@ -28,7 +28,7 @@ const groupsActions = {
   },
 
   //for saga
-  getJoinedGroups: function (payload: any | undefined) {
+  getJoinedGroups: function (payload?: any) {
     return {
       type: groupsTypes.GET_JOINED_GROUPS,
       payload,

@@ -1,10 +1,9 @@
-import {all, put, call, takeLatest, select} from 'redux-saga/effects';
-import groupsTypes from '~/screens/Groups/redux/types';
-import groupsActions from '~/screens/Groups/redux/actions';
-import mockGetJoinedGroups from '~/screens/Groups/mocks/getJoinedGroups';
+import {put, takeLatest} from 'redux-saga/effects';
 import {IGroup, IGroupDetail} from '~/interfaces/IGroup';
-import mockGetGroupDetail from '~/screens/Groups/mocks/getGroupDetail';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import mockGetGroupDetail from '~/screens/Groups/mocks/getGroupDetail';
+import groupsActions from '~/screens/Groups/redux/actions';
+import groupsTypes from '~/screens/Groups/redux/types';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -15,8 +14,7 @@ function* getJoinedGroups() {
   try {
     yield put(groupsActions.setLoadingJoinedGroups(true));
 
-    // todo: need to change userId based on current user's info
-    const result = yield requestJoinedGroups(2);
+    const result = yield requestJoinedGroups();
 
     yield put(groupsActions.setJoinedGroups(result));
     yield put(groupsActions.setLoadingJoinedGroups(false));
@@ -74,9 +72,9 @@ const requestGroupDetail = (id: number) => {
   });
 };
 
-const requestJoinedGroups = async (userId: number) => {
+const requestJoinedGroups = async () => {
   try {
-    const response = await groupsDataHelper.getMyGroups(userId);
+    const response = await groupsDataHelper.getMyGroups();
     if (response.code === 200 && response.data?.length > 0) {
       const originGroups = response.data;
       const groups: IGroup[] = [];
