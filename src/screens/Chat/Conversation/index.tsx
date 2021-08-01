@@ -52,7 +52,6 @@ const Conversation = () => {
       // Get messages to handle loading
       dispatch(actions.getMessages());
     }
-    console.log('get messages', conversation);
 
     sendMessage({
       msg: 'method',

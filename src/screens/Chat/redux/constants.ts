@@ -15,3 +15,4 @@ export const SET_USERS = 'chat/SET_USERS';
 export const SELECT_USER = 'chat/SELECT_USER';
 export const CREATE_CONVERSATION = 'chat/CREATE_CONVERSATION';
 export const CREATE_CONVERSATION_SUCCESS = 'chat/CREATE_CONVERSATION_SUCCESS';
+export const ADD_NEW_MESSAGE = 'chat/ADD_NEW_MESSAGE';

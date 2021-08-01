@@ -19,6 +19,8 @@ import {IUser} from '~/interfaces/IAuth';
 import Avatar from '~/beinComponents/Avatar';
 import {ITheme} from '~/theme/interfaces';
 import {roomTypes} from '~/constants/chat';
+import useAuth from '~/hooks/auth';
+import {generateRoomName} from '~/utils/generator';
 
 const CreateConversation = (): React.ReactElement => {
   const theme: ITheme = useTheme();
@@ -26,6 +28,7 @@ const CreateConversation = (): React.ReactElement => {
   const {colors} = theme;
 
   const dispatch = useDispatch();
+  const {user} = useAuth();
   const {users, selectedUsers} = useChat();
 
   useEffect(() => {
@@ -39,6 +42,10 @@ const CreateConversation = (): React.ReactElement => {
         members: selectedUsers.map((user: IUser) => user.username),
         customFields: {
           type: roomTypes.QUICK,
+          name: generateRoomName(
+            user,
+            selectedUsers.slice(0, 2).map((user: IUser) => user.name),
+          ),
         },
       }),
     );

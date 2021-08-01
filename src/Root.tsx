@@ -27,8 +27,13 @@ import AlertModal from './components/modals/AlertModal';
 import {AppContext} from './contexts/AppContext';
 import {languages, AppConfig} from './configs';
 import localStorage from '~/services/localStorage';
+import moment from 'moment';
+import moments from './configs/moments';
 
-export default (): JSX.Element => {
+moment.updateLocale('en', moments.en);
+moment.updateLocale('vi', moments.vi);
+
+export default (): React.ReactElement => {
   LogBox.ignoreAllLogs();
 
   const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});

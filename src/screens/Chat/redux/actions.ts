@@ -85,6 +85,11 @@ const createConversationSuccess = (payload: IConversation) => ({
   payload,
 });
 
+const addNewMessage = (payload: IMessage) => ({
+  type: Actions.ADD_NEW_MESSAGE,
+  payload,
+});
+
 export default {
   getConversations,
   handleEvent,
@@ -103,4 +108,5 @@ export default {
   selectUser,
   createConversation,
   createConversationSuccess,
+  addNewMessage,
 };
