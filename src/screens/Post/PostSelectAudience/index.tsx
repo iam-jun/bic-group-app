@@ -242,7 +242,7 @@ const PostSelectAudience = () => {
       <SearchInput
         style={styles.searchInput}
         onChangeText={onChangeTextSearch}
-        placeholderText={t('post:search_audiences_placeholder')}
+        placeholder={t('post:search_audiences_placeholder')}
       />
       <SelectingAudiences
         list={selectingAudiences}
