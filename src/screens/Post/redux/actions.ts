@@ -5,6 +5,8 @@ import {
   IPostCreatePost,
   IActivityData,
 } from '~/interfaces/IPost';
+import {IGroup} from '~/interfaces/IGroup';
+import {IUser} from '~/interfaces/IAuth';
 
 const postActions = {
   setLoadingCreatePost: (payload: boolean) => ({
@@ -24,6 +26,14 @@ const postActions = {
   }),
   setPostDetail: (payload: IPostActivity) => ({
     type: postTypes.SET_POST_DETAIL,
+    payload,
+  }),
+  setSearchResultAudienceGroups: (payload: IGroup[]) => ({
+    type: postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS,
+    payload,
+  }),
+  setSearchResultAudienceUsers: (payload: IUser[]) => ({
+    type: postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS,
     payload,
   }),
   //saga

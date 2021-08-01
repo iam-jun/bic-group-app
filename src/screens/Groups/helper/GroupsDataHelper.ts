@@ -2,8 +2,8 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const groupsApiConfig = {
-  getMyGroups: (userId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
+  getMyGroups: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/my-group`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -11,10 +11,10 @@ export const groupsApiConfig = {
 };
 
 const groupsDataHelper = {
-  getMyGroups: async (userId: number) => {
+  getMyGroups: async () => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyGroups(userId),
+        groupsApiConfig.getMyGroups(),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
