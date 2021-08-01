@@ -226,7 +226,9 @@ const PostSelectAudience = () => {
 
   const renderSectionHeader = ({section: {title}}: any) => {
     return (
-      <Text.H6 style={{marginVertical: spacing?.margin.small}}>{title}</Text.H6>
+      <View style={styles.sectionHeaderContainer}>
+        <Text.H6 style={styles.sectionHeaderText}>{title}</Text.H6>
+      </View>
     );
   };
 
@@ -264,7 +266,7 @@ const PostSelectAudience = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {},
     searchInput: {
@@ -273,6 +275,12 @@ const createStyle = (theme: ITheme) => {
     item: {
       height: undefined,
       paddingHorizontal: undefined,
+    },
+    sectionHeaderContainer: {
+      backgroundColor: colors.background,
+    },
+    sectionHeaderText: {
+      marginVertical: spacing?.margin.small,
     },
   });
 };
