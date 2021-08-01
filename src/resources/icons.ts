@@ -27,6 +27,7 @@ import iconTabChat from '../../assets/icons/icon_chat.svg';
 import iconTabNotification from '../../assets/icons/icon_notification.svg';
 import iconTabMenu from '../../assets/icons/icon_menu.svg';
 import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
+import iconPinGroup from '../../assets/icons/icon_pin_group.svg';
 
 const icons = {
   iconTabHome,
@@ -203,6 +204,14 @@ const icons = {
   iconLanguageVi,
   iconCheckbox,
   iconCreateChat,
+  users: 'UsersAlt',
+  search: 'Search',
+  addUser: 'UserPlus',
+  bell: 'Bell',
+  iconPinGroup,
+  attachment: 'Paperclip',
+  images: 'Images',
+  leavesGroup: 'SignOutAlt',
 };
 
 export default icons;

@@ -51,17 +51,18 @@ const Icon: React.FC<IconProps> = ({
 
   // @ts-ignore
   const _icon = icons[icon];
+
   let IconComponent, type, name, source;
 
-  if (Unicons[icon] || Unicons[`Uil${icon}`]) {
-    IconComponent = Unicons;
-    name = icon;
-    // @ts-ignore
-  } else if (_icon?.type) {
+  if (_icon?.type) {
     IconComponent = FontIcon;
     // @ts-ignore
     type = _icon?.type;
     name = _icon?.name;
+  } else if (Unicons[`${_icon}`] || Unicons[`Uil${_icon}`]) {
+    IconComponent = Unicons;
+    name = _icon;
+    // @ts-ignore
   } else {
     IconComponent = SvgIcon;
     source = _icon;
@@ -117,7 +118,6 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       alignItems: 'center',
-      justifyContent: 'center',
       flexDirection: 'row',
     },
     button: {

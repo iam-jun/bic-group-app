@@ -1,92 +1,155 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
-import {IUser} from '~/interfaces/IAuth';
-import {Container, Text, ViewSpacing} from '~/components';
-import Divider from '~/components/Divider';
-import Icon from '~/beinComponents/Icon';
-import Avatar from '~/components/Avatar';
-import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {spacing} from '~/theme';
-import OptionModal, {IOptionModal} from '~/components/modals/OptionModal';
-import memberOptions from '~/constants/memberOptions';
+import Header from '~/beinComponents/Header';
+import i18next from 'i18next';
+import Icon from '~/beinComponents/Icon';
+import Avatar from '~/beinComponents/Avatar';
+import Text from '~/beinComponents/Text';
+import {ViewSpacing} from '~/components';
+import Divider from '~/beinComponents/Divider';
 
 const Conversation = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {t, navigation} = useBaseHook();
+  const {colors} = theme;
   const {conversation} = useChat();
-  const modalRef = React.useRef<IOptionModal>();
-  const [selectedMember, setSelectedMember] = useState<IUser>();
+  const [descriptionShowAll, setDescriptionShowAll] = useState(false);
+  const [shortDescription, setShortDescription] = useState('');
 
-  const onMemberPress = (item: IUser) => {
-    setSelectedMember(item);
-    modalRef.current?.open();
-  };
+  useEffect(() => {
+    if (conversation.description?.length > 100) {
+      setShortDescription(`${conversation.description.substr(0, 100)}...`);
+    }
+  }, []);
 
   return (
     <ScreenWrapper testID="ConversationDetailScreen" isFullView>
-      <Container style={styles.container}>
-        <Icon
-          style={styles.iconBack}
-          icon="iconBack"
-          size={16}
-          onPress={() => navigation.goBack()}
-        />
+      <Header title={i18next.t('chat:title_chat_detail')} />
+      <View style={styles.container}>
         <View style={styles.top}>
-          <Avatar size="big" user={{name: conversation.name}} />
-          <ViewSpacing height={spacing.margin.base} />
-          <Text.H1>{conversation.name}</Text.H1>
+          <Avatar.Large source={conversation.avatar} />
+          <ViewSpacing width={spacing.margin.base} />
+          <Text.H4 style={styles.name}>{conversation.name}</Text.H4>
         </View>
+        <ViewSpacing height={spacing.margin.big} />
+        {conversation.description && (
+          <>
+            <Text.H5>{i18next.t('common:text_description')}</Text.H5>
+            <ViewSpacing height={spacing.margin.base} />
+            <Text>
+              <Text.BodyS>
+                {descriptionShowAll
+                  ? conversation.description
+                  : shortDescription}
+              </Text.BodyS>
+              {shortDescription && (
+                <Text.ButtonSmall
+                  onPress={() => setDescriptionShowAll(!descriptionShowAll)}
+                  color={colors.textInfo}>
+                  {` ${
+                    descriptionShowAll
+                      ? i18next.t('common:text_show_less')
+                      : i18next.t('common:text_read_more')
+                  }`}
+                </Text.ButtonSmall>
+              )}
+            </Text>
+          </>
+        )}
+        <ViewSpacing height={spacing.margin.big} />
+        <Icon
+          icon="users"
+          label={`${i18next.t('chat:title_members')} (${
+            conversation?.usersCount
+          })`}
+        />
+        <ViewSpacing height={spacing.margin.big} />
         <Divider />
         <ViewSpacing height={spacing.margin.base} />
-        <Text.H4>{`${conversation?.members?.length} ${t(
-          'chat:title_members',
-        )}`}</Text.H4>
-        <ListView
-          data={conversation?.members}
-          type="user"
-          scrollEnabled={false}
-          onItemPress={onMemberPress}
-        />
-      </Container>
-      <OptionModal
-        ref={modalRef}
-        optionData={memberOptions}
-        headerComponent={
-          <View style={styles.top}>
-            <Avatar size="base" user={selectedMember} />
-            <ViewSpacing height={spacing.margin.base} />
-            <Text.H4>{selectedMember?.name}</Text.H4>
-            <ViewSpacing height={spacing.margin.base} />
-            <Divider />
+        <View style={styles.menuContainer}>
+          <View style={styles.menu}>
+            <View style={styles.menuIcon}>
+              <Icon size={16} tintColor={colors.primary7} icon="search" />
+            </View>
+            <ViewSpacing height={spacing.margin.small} />
+            <Text>{i18next.t('common:text_search')}</Text>
           </View>
-        }
-        onOptionPress={onMemberPress}
-      />
+          <View style={styles.menu}>
+            <View style={styles.menuIcon}>
+              <Icon size={16} tintColor={colors.primary7} icon="addUser" />
+            </View>
+            <ViewSpacing height={spacing.margin.small} />
+            <Text>{i18next.t('chat:label_invite')}</Text>
+          </View>
+          <View style={styles.menu}>
+            <View style={styles.menuIcon}>
+              <Icon size={16} tintColor={colors.primary7} icon="bell" />
+            </View>
+            <ViewSpacing height={spacing.margin.small} />
+            <Text>{i18next.t('chat:label_notification')}</Text>
+          </View>
+          <View style={styles.menu}>
+            <View style={styles.menuIcon}>
+              <Icon size={16} tintColor={colors.primary7} icon="iconPinGroup" />
+            </View>
+            <ViewSpacing height={spacing.margin.small} />
+            <Text>{i18next.t('chat:label_pin')}</Text>
+          </View>
+        </View>
+        <ViewSpacing height={spacing.margin.big} />
+        <Divider />
+        <View style={styles.bottomMenu}>
+          <Icon icon="attachment" label={i18next.t('chat:label_attachments')} />
+          <ViewSpacing height={spacing.margin.big} />
+          <Icon icon="images" label={i18next.t('chat:label_gallery')} />
+          <ViewSpacing height={spacing.margin.big} />
+          <Icon
+            icon="leavesGroup"
+            label={i18next.t('chat:label_leaves_group')}
+          />
+        </View>
+      </View>
     </ScreenWrapper>
   );
 };
 
 const createStyles = (theme: IObject<any>) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      marginTop: spacing.margin.big,
+      padding: spacing.margin.base,
     },
     top: {
+      flexDirection: 'row',
       alignItems: 'center',
-      paddingTop: spacing.padding.large,
     },
-    iconBack: {
-      position: 'absolute',
-      top: spacing.padding.large,
-      left: spacing.padding.large,
-      zIndex: 99,
+    name: {
+      flexShrink: 1,
+    },
+    menuContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+    },
+    menu: {
+      alignItems: 'center',
+    },
+    menuIcon: {
+      backgroundColor: colors.primary1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: spacing?.borderRadius.small,
+      marginLeft: spacing?.padding.small,
+      width: 36,
+      height: 36,
+    },
+    bottomMenu: {
+      marginVertical: spacing.margin.big,
     },
   });
 };
