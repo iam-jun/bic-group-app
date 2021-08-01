@@ -58,7 +58,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   const onCheckedGroup = (group: GroupItemProps, newChecked: boolean) => {
     if (onChangeCheckedGroups) {
       const callbackData: OnChangeCheckedGroupsData = {};
-      callbackData[group.id] = newChecked;
+      callbackData[group.id] = newChecked ? group : false;
       onChangeCheckedGroups(callbackData);
     }
   };
@@ -122,7 +122,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
       ) : (
         <GroupItem
           {...(group as GroupItemProps)}
-          isChecked={selectingData?.[group.id] || false}
+          isChecked={!!selectingData?.[group.id]}
           onPressItem={_onPressGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
         />

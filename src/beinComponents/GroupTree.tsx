@@ -17,7 +17,7 @@ export interface GroupTreeProps {
 
 type TreeData = {[x: string]: IParsedGroup};
 
-export type OnChangeCheckedGroupsData = {[x: string]: boolean};
+export type OnChangeCheckedGroupsData = {[x: string]: IGroup | false};
 
 const GroupTree: React.FC<GroupTreeProps> = ({
   data,
@@ -125,7 +125,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     if (onChangeCheckedGroups) {
       const callbackData: OnChangeCheckedGroupsData = {};
       Object.values(newTreeData).map(g => {
-        callbackData[g.id] = g.isChecked;
+        callbackData[g.id] = g.isChecked ? g : false;
       });
       onChangeCheckedGroups(callbackData);
     }
@@ -151,7 +151,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       hide: false,
       uiLevel: uiLevel,
       isCollapsing: false,
-      isChecked: selectingData?.[group.id] || false,
+      isChecked: !!selectingData?.[group.id],
       childrenUiIds,
       children: [],
     };

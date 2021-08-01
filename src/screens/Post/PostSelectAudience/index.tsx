@@ -7,8 +7,6 @@ import debounce from 'lodash/debounce';
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
-import {IAudience} from '~/interfaces/IPost';
-import commonActions, {IAction} from '~/constants/commonActions';
 import postActions from '~/screens/Post/redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -20,14 +18,27 @@ import SelectingAudiences from '~/screens/Post/components/SelectingAudiences';
 
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
+import {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
+import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
+import {useRootNavigation} from '~/hooks/navigation';
+import {IUser} from '~/interfaces/IAuth';
 
 const PostSelectAudience = () => {
   const [listUser, setListUser] = useState([]);
   const [listGroups, setListGroups] = useState([]);
-  const [selectingAudiences, setSelectingAudiences] = useState([]);
+  const [selectingAudiences, setSelectingAudiences] = useState<
+    (IGroup | IUser)[]
+  >([]);
+  const [selectingGroups, setSelectingGroups] = useState<{[x: string]: IGroup}>(
+    {},
+  );
+  const [selectingUsers, setSelectingUsers] = useState<{[x: string]: IUser}>(
+    {},
+  );
 
   const dispatch = useDispatch();
-  const {navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme();
   const {spacing} = theme;
   const styles = createStyle(theme);
@@ -37,59 +48,86 @@ const PostSelectAudience = () => {
 
   const sectionListData: any = [];
   if (listGroups?.length > 0) {
-    sectionListData.push({title: 'Groups', data: listGroups});
+    sectionListData.push({title: t('post:label_groups'), data: listGroups});
   }
   if (listUser?.length > 0) {
-    sectionListData.push({title: 'Users', data: listUser});
+    sectionListData.push({title: t('post:label_users'), data: listUser});
   }
 
+  const updateSelectingAudiences = () => {
+    const newSelectingAudiences: (IUser | IGroup)[] = [];
+    Object.values(selectingGroups).map((group: IGroup) => {
+      if (group) {
+        newSelectingAudiences.push(group);
+      }
+    });
+    Object.values(selectingUsers).map((user: IUser) => {
+      if (user) {
+        newSelectingAudiences.push(user);
+      }
+    });
+    setSelectingAudiences(newSelectingAudiences);
+  };
+
   useEffect(() => {
-    setSelectingAudiences(chosenAudiences);
+    if (selectingAudiences?.length === 0) {
+      const newSelectingUsers: any = {};
+      const newSelectingGroups: any = {};
+      chosenAudiences?.map?.((item: any) => {
+        if (item && item?.type === 'user') {
+          newSelectingUsers[item.id] = item;
+        } else {
+          newSelectingGroups[item.id] = item;
+        }
+      });
+      setSelectingUsers(newSelectingUsers);
+      setSelectingGroups(newSelectingGroups);
+    }
   }, [chosenAudiences]);
+
+  useEffect(() => {
+    updateSelectingAudiences();
+  }, [selectingGroups]);
+
+  useEffect(() => {
+    updateSelectingAudiences();
+  }, [selectingUsers]);
 
   const onPressSave = () => {
     dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
-    navigation.goBack();
+    rootNavigation.goBack();
   };
 
-  const onRemoveItem = (item: IAudience) => {
-    const newList =
-      selectingAudiences?.filter?.(
-        (selected: IAudience) =>
-          !(selected?.id === item?.id && selected?.type === item?.type),
-      ) || [];
-    setSelectingAudiences(newList);
-  };
-
-  const onAddItem = (item: IAudience) => {
-    const added = selectingAudiences?.find?.(
-      (selected: IAudience) =>
-        item?.id === selected?.id && item?.type === selected?.type,
-    );
-    if (!added) {
-      const newList: any = [...(selectingAudiences || [])];
-      newList.unshift(item);
-      setSelectingAudiences(newList);
+  const onRemoveItem = (item: any) => {
+    if (item.type === 'user') {
+      const newSelectingUsers: any = {...selectingUsers};
+      newSelectingUsers[item.id] = false;
+      setSelectingUsers(newSelectingUsers);
+    } else {
+      const newSelectingGroups: any = {...selectingGroups};
+      newSelectingGroups[item.id] = false;
+      setSelectingGroups(newSelectingGroups);
     }
+  };
+
+  const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
+    setSelectingGroups({...selectingGroups, ...data} as any);
   };
 
   const getSmallestChild = (
     smallestGroup: IGroup,
     newGroups: IGroup[],
+    treeData: IGroup,
   ): any => {
     if (smallestGroup?.children?.[0]) {
-      return getSmallestChild(smallestGroup?.children?.[0], newGroups);
+      return getSmallestChild(
+        smallestGroup?.children?.[0],
+        newGroups,
+        treeData,
+      );
     } else {
-      newGroups.push({...smallestGroup});
+      newGroups.push({...smallestGroup, treeData: treeData});
     }
-  };
-
-  const parseListGroup = (groups: any) => {
-    const newGroups: any = [];
-    groups?.map?.((item: IGroup) => {
-      getSmallestChild(item, newGroups);
-    });
-    setListGroups(newGroups);
   };
 
   const onSearch = debounce((searchText: string) => {
@@ -99,7 +137,7 @@ const PostSelectAudience = () => {
         if (response && response.data) {
           const {users = [], groups = []} = response?.data || {};
 
-          parseListGroup(groups);
+          setListGroups(groups);
 
           const newListUsers: any = [];
           users?.map?.((item: any) => {
@@ -118,42 +156,50 @@ const PostSelectAudience = () => {
       });
   }, 500);
 
-  const onPressCheckbox = (item: IAudience, action: IAction) => {
-    if (action === commonActions.checkBox) {
-      onAddItem(item);
-    } else {
-      onRemoveItem(item);
-    }
-  };
-
   const onChangeTextSearch = (text: string) => {
     onSearch(text);
   };
 
-  const renderItem = ({item, index}: any) => {
-    const {id, name, icon, avatar, userCount, type} = item || {};
+  const onPressUser = (user: any) => {
+    const newSelectingUsers: any = {...selectingUsers};
+    if (newSelectingUsers[user.id]) {
+      newSelectingUsers[user.id] = false;
+    } else {
+      newSelectingUsers[user.id] = user;
+    }
+    setSelectingUsers(newSelectingUsers);
+  };
+
+  const renderItem = ({item}: any) => {
+    const {id, name, icon, avatar, type} = item || {};
     const isGroup = type !== 'user';
 
-    let CustomContent;
     if (isGroup) {
-      CustomContent = (
-        <View>
-          <Text>Custom content</Text>
-        </View>
+      return (
+        <FlatGroupItem
+          {...item}
+          selectingData={selectingGroups}
+          showSmallestChild
+          onChangeCheckedGroups={onChangeCheckedGroups}
+        />
+      );
+    } else {
+      return (
+        <PrimaryItem
+          showAvatar
+          avatar={icon || avatar}
+          avatarProps={{variant: isGroup ? 'ultraLarge' : 'large'}}
+          style={styles.item}
+          title={name}
+          onPressCheckbox={() => onPressUser(item)}
+          onPress={() => onPressUser(item)}
+          checkboxProps={{
+            style: {position: 'absolute', left: 26, bottom: 0},
+            isChecked: !!selectingUsers[id],
+          }}
+        />
       );
     }
-
-    return (
-      <PrimaryItem
-        showAvatar
-        avatar={icon || avatar}
-        avatarProps={{variant: isGroup ? 'ultraLarge' : 'large'}}
-        style={styles.item}
-        title={name}
-        onPressCheckbox={(action: IAction) => onPressCheckbox(item, action)}
-        ContentComponent={CustomContent}
-      />
-    );
   };
 
   const renderListHeader = () => {
@@ -185,6 +231,7 @@ const PostSelectAudience = () => {
       <SearchInput
         style={styles.searchInput}
         onChangeText={onChangeTextSearch}
+        placeholderText={t('post:search_audiences_placeholder')}
       />
       <SelectingAudiences
         list={selectingAudiences}
