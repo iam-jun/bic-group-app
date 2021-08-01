@@ -4,10 +4,15 @@ import {isArray, isObject} from 'lodash';
 
 import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface GroupTreeProps {
   data?: IGroup[] | IGroup;
+  selectingData?: OnChangeCheckedGroupsData;
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
+  toggleOnPress?: boolean;
+  onPressGroup?: (group: IGroup) => void;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -16,10 +21,16 @@ export type OnChangeCheckedGroupsData = {[x: string]: boolean};
 
 const GroupTree: React.FC<GroupTreeProps> = ({
   data,
+  selectingData,
   onChangeCheckedGroups,
+  onPressGroup,
+  toggleOnPress,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
+
+  const {rootNavigation} = useRootNavigation();
+  const styles = createStyle();
 
   const parseTreeData = () => {
     const newData: {[x: string]: IParsedGroup} = {};
@@ -44,11 +55,15 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     }
   }, [data]);
 
-  const onPressGroup = (group: GroupItemProps) => {
+  const _onPressGroup = (group: GroupItemProps) => {
     if (onChangeCheckedGroups) {
       onCheckedGroup(group, !treeData[group.uiId].isChecked);
-    } else {
+    } else if (onPressGroup) {
+      onPressGroup(group);
+    } else if (toggleOnPress) {
       onToggleGroup(group);
+    } else {
+      rootNavigation.navigate(groupStack.groupDetail, group as any);
     }
   };
 
@@ -136,7 +151,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       hide: false,
       uiLevel: uiLevel,
       isCollapsing: false,
-      isChecked: false,
+      isChecked: selectingData?.[group.id] || false,
       childrenUiIds,
       children: [],
     };
@@ -148,18 +163,12 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   };
 
   const renderTree = () => {
-    console.log(
-      '\x1b[33m',
-      '🐣 treeData | renderTree : ',
-      JSON.stringify(treeData, undefined, 2),
-      '\x1b[0m',
-    );
     const tree: React.ReactNode[] = [];
     Object.values(treeData).map(group =>
       tree.push(
         <GroupItem
           {...group}
-          onPressItem={onPressGroup}
+          onPressItem={_onPressGroup}
           onToggleItem={onToggleGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
         />,
@@ -170,9 +179,16 @@ const GroupTree: React.FC<GroupTreeProps> = ({
 
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-      <View>{renderedTree}</View>
+      <View style={styles.container}>{renderedTree}</View>
     </ScrollView>
   );
 };
 
+const createStyle = () => {
+  return StyleSheet.create({
+    container: {
+      minHeight: 51,
+    },
+  });
+};
 export default GroupTree;

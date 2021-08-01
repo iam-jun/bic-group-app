@@ -28,9 +28,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     id,
     name,
     userCount,
-    parentId,
-    parent,
-    children,
     icon,
 
     childrenUiIds = [],
@@ -46,7 +43,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   } = props;
 
   const theme: ITheme = useTheme();
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
@@ -58,7 +55,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (onPressItem) {
       onPressItem(props);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {id});
+      rootNavigation.navigate(groupStack.groupDetail, props as any);
     }
   };
 
@@ -75,16 +72,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   const renderLine = (uiLevel: number) => {
-    return (
-      <View
-        style={{
-          width: 2,
-          height: '100%',
-          backgroundColor: colors.borderDivider,
-          marginHorizontal: spacing?.margin.base,
-        }}
-      />
-    );
+    return <View style={styles.line} />;
   };
 
   const renderToggle = () => {
@@ -99,21 +87,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         disabled={!hasChild}
         activeOpacity={1}
         hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-        style={{
-          width: 2,
-          height: '100%',
-          backgroundColor: colors.borderDivider,
-          marginHorizontal: spacing?.margin.base,
-          flexDirection: 'row',
-        }}>
+        style={styles.toggleContainer}>
         {hasChild && (
-          <View
-            style={{
-              marginLeft: -7,
-              alignSelf: 'center',
-              backgroundColor: colors.background,
-              paddingVertical: spacing?.padding.tiny,
-            }}>
+          <View style={styles.toggleContent}>
             <Icon size={18} icon={isCollapsing ? 'AngleRight' : 'AngleDown'} />
           </View>
         )}
@@ -134,21 +110,12 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       <View style={{flexDirection: 'row'}}>
         {renderUiLevelLines()}
         {renderToggle()}
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            paddingVertical: spacing?.padding.tiny,
-          }}>
-          <View
-            style={{
-              width: dimension?.avatarSizes.medium,
-              height: dimension?.avatarSizes.medium,
-            }}>
+        <View style={styles.itemContainer}>
+          <View style={styles.avatarContainer}>
             <Avatar.Medium source={icon} />
             {onCheckedItem && (
               <Checkbox
-                style={{position: 'absolute', bottom: -3, right: -6}}
+                style={styles.checkbox}
                 isChecked={isChecked}
                 onActionPress={_onCheckedItem}
               />
@@ -176,7 +143,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  const {spacing, colors} = theme;
+  const {spacing, colors, dimension} = theme;
   return StyleSheet.create({
     textContainer: {
       paddingHorizontal: spacing.padding.base,
@@ -191,6 +158,35 @@ const themeStyles = (theme: IObject<any>) => {
     textInfo: {
       marginHorizontal: spacing.margin.tiny,
     },
+    line: {
+      width: 2,
+      height: '100%',
+      backgroundColor: colors.borderDivider,
+      marginHorizontal: spacing?.margin.base,
+    },
+    toggleContainer: {
+      width: 2,
+      height: '100%',
+      backgroundColor: colors.borderDivider,
+      marginHorizontal: spacing?.margin.base,
+      flexDirection: 'row',
+    },
+    toggleContent: {
+      marginLeft: -7,
+      alignSelf: 'center',
+      backgroundColor: colors.background,
+      paddingVertical: spacing?.padding.tiny,
+    },
+    itemContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      paddingVertical: spacing?.padding.tiny,
+    },
+    avatarContainer: {
+      width: dimension?.avatarSizes.medium,
+      height: dimension?.avatarSizes.medium,
+    },
+    checkbox: {position: 'absolute', bottom: -3, right: -6},
   });
 };
 
