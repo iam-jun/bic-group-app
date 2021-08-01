@@ -24,8 +24,6 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IUser} from '~/interfaces/IAuth';
 
 const PostSelectAudience = () => {
-  const [listUser, setListUser] = useState([]);
-  const [listGroups, setListGroups] = useState([]);
   const [selectingAudiences, setSelectingAudiences] = useState<
     (IGroup | IUser)[]
   >([]);
@@ -44,14 +42,24 @@ const PostSelectAudience = () => {
   const styles = createStyle(theme);
 
   const createPostData = useCreatePost();
-  const {chosenAudiences} = createPostData || {};
+  const {
+    chosenAudiences,
+    searchResultAudienceGroups,
+    searchResultAudienceUsers,
+  } = createPostData || {};
 
   const sectionListData: any = [];
-  if (listGroups?.length > 0) {
-    sectionListData.push({title: t('post:label_groups'), data: listGroups});
+  if (searchResultAudienceGroups?.length > 0) {
+    sectionListData.push({
+      title: t('post:label_groups'),
+      data: searchResultAudienceGroups,
+    });
   }
-  if (listUser?.length > 0) {
-    sectionListData.push({title: t('post:label_users'), data: listUser});
+  if (searchResultAudienceUsers?.length > 0) {
+    sectionListData.push({
+      title: t('post:label_users'),
+      data: searchResultAudienceUsers,
+    });
   }
 
   const updateSelectingAudiences = () => {
@@ -137,7 +145,7 @@ const PostSelectAudience = () => {
         if (response && response.data) {
           const {users = [], groups = []} = response?.data || {};
 
-          setListGroups(groups);
+          dispatch(postActions.setSearchResultAudienceGroups(groups));
 
           const newListUsers: any = [];
           users?.map?.((item: any) => {
@@ -148,11 +156,11 @@ const PostSelectAudience = () => {
               avatar: item.avatar,
             });
           });
-          setListUser(newListUsers);
+          dispatch(postActions.setSearchResultAudienceUsers(newListUsers));
         }
       })
       .catch(e => {
-        console.log('\x1b[36m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
+        console.log('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
       });
   }, 500);
 
@@ -203,7 +211,10 @@ const PostSelectAudience = () => {
   };
 
   const renderListHeader = () => {
-    if (listGroups?.length === 0 && listUser?.length === 0) {
+    if (
+      searchResultAudienceGroups?.length === 0 &&
+      searchResultAudienceUsers?.length === 0
+    ) {
       return null;
     }
     return (

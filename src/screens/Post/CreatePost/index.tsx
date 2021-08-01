@@ -38,6 +38,8 @@ const CreatePost = () => {
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
+    dispatch(postActions.setSearchResultAudienceGroups([]));
+    dispatch(postActions.setSearchResultAudienceUsers([]));
     return () => {
       dispatch(postActions.clearCreatPostData());
     };
