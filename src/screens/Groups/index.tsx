@@ -26,7 +26,7 @@ const Groups: React.FC<GroupsProps> = () => {
   const {loadingJoinedGroups, joinedGroups} = groupsData;
 
   useEffect(() => {
-    dispatch(groupsActions.getJoinedGroups(undefined));
+    dispatch(groupsActions.getJoinedGroups());
   }, []);
 
   return (
@@ -35,7 +35,7 @@ const Groups: React.FC<GroupsProps> = () => {
       <View style={styles.groupContainer}>
         <SearchInput
           style={{marginVertical: 12}}
-          placeholderText={t('input:search_group')}
+          placeholder={t('input:search_group')}
         />
         <ListView
           type={'flatGroups'}

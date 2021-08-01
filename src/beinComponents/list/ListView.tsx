@@ -156,8 +156,6 @@ const ListView: React.FC<ListViewProps> = ({
         data={data}
         style={listStyle}
         horizontal={horizontal}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
         renderItem={item => _renderItem(item)}
         initialNumToRender={10}
         ListHeaderComponent={ListHeaderComponent}

@@ -19,7 +19,7 @@ import {
   CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
 } from '~/services/constants';
 import {
-  handleResponseSuccessBein,
+  mapResponseSuccessBein,
   makeHttpRequest,
 } from '~/services/httpApiRequest';
 import apiConfig from '~/configs/apiConfig';
@@ -92,7 +92,7 @@ function* getUsers() {
       apiConfig.App.users(),
     );
     if (httpResponse) {
-      const {data} = handleResponseSuccessBein(httpResponse);
+      const {data} = mapResponseSuccessBein(httpResponse);
       yield put(actions.setUsers(data.map((item: any) => mapUser(item))));
     }
   } catch (e) {

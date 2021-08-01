@@ -33,7 +33,7 @@ import appConfig from '~/configs/appConfig';
 
 const Conversation = () => {
   const {user} = useAuth();
-  const {conversation, messages} = useChat();
+  const {loading, conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<Modalize>();
@@ -43,16 +43,19 @@ const Conversation = () => {
   const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
-    _getMessages();
-  }, []);
-
-  useEffect(() => {
     if (messages.canLoadMore) {
       _getMessages();
     }
-  }, [messages.lastDate]);
+  }, [conversation, messages.lastDate]);
 
   const _getMessages = () => {
+    if (messages.loading) return;
+
+    if (messages.data.length === 0) {
+      // Get messages to handle loading
+      dispatch(actions.getMessages());
+    }
+
     sendMessage({
       msg: 'method',
       method: 'loadHistory',

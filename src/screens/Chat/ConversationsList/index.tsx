@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
-import {TextInput, useTheme} from 'react-native-paper';
+import {View, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Divider from '~/components/Divider';
-import Input from '~/components/inputs';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
@@ -15,16 +14,16 @@ import {spacing} from '~/theme';
 import actions from '~/screens/Chat/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
+import {sendMessage} from '~/services/chatSocket';
 import useChat from '~/hooks/chat';
 import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 import Header from '~/beinComponents/Header';
 import i18next from 'i18next';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Avatar from '~/beinComponents/Avatar';
-import {View} from 'react-native';
 import {formatDate} from '~/utils/formatData';
 import Text from '~/beinComponents/Text';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -37,18 +36,7 @@ const ConversationsList = (): React.ReactElement => {
   const {data, loading} = conversations;
 
   useEffect(() => {
-    const removeOnMessageCallback = addOnMessageCallback(
-      'callback-of-list-chat-screen',
-      event => {
-        dispatch(actions.handleEvent(JSON.parse(event.data)));
-      },
-    );
-
     _getConversations();
-
-    return () => {
-      removeOnMessageCallback();
-    };
   }, []);
 
   const _getConversations = () => {
@@ -98,12 +86,9 @@ const ConversationsList = (): React.ReactElement => {
         menuIcon="iconCreateChat"
         onPressMenu={onMenuPress}
       />
-      <Input
+      <SearchInput
         style={styles.inputSearch}
-        roundness="big"
-        helperType="info"
         placeholder={t('chat:placeholder_search')}
-        right={<TextInput.Icon name={'magnify'} />}
       />
       <ListView
         type="chat"
@@ -122,8 +107,7 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {},
     inputSearch: {
-      marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.base,
+      margin: spacing.margin.base,
     },
     marginRight: {
       marginRight: spacing.margin.base,
