@@ -96,6 +96,8 @@
     "label_comments": "Bình luận",
     "label_shares": "Chia sẻ",
     "label_donate": "Đóng góp",
+    "label_groups": "Groups",
+    "label_users": "Users",
     "add_photo": "Add Photo",
     "add_file": "Add Files",
     "placeholder_write_post": "Writing your post...",
@@ -112,6 +114,7 @@
     "audience_selected": "Selected audiences",
     "select_audience": "Select Audiences",
     "search_results": "Search results",
+    "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
     "group_manage": "Your Groups",
     "people_search": "People",
     "show_all": "Show all"

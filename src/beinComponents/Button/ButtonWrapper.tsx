@@ -29,6 +29,8 @@ export interface ButtonWrapperProps {
   TouchableComponent?: any;
   testID?: string;
   loading?: boolean;
+  activeOpacity?: number;
+  hitSlop?: {top: number; bottom: number; right: number; left: number};
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
@@ -48,6 +50,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   rightIconProps,
   underlayColor,
   loading,
+  activeOpacity,
+  hitSlop,
   TouchableComponent = TouchableOpacity,
 }: ButtonWrapperProps) => {
   const {colors, spacing}: ITheme = useTheme();
@@ -86,6 +90,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       onPress={onPress}
       onLongPress={onLongPress}
       underlayColor={underlayColor}
+      hitSlop={hitSlop}
+      activeOpacity={activeOpacity}
       style={StyleSheet.flatten([style])}>
       <View
         style={StyleSheet.flatten([

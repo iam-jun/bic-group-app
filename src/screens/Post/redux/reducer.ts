@@ -10,6 +10,8 @@ const initState = {
       files: [],
     },
     chosenAudiences: [],
+    searchResultAudienceGroups: [],
+    searchResultAudienceUsers: [],
   },
   postDetail: {},
 };
@@ -45,6 +47,22 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           chosenAudiences: payload,
+        },
+      };
+    case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          searchResultAudienceGroups: payload,
+        },
+      };
+    case postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          searchResultAudienceUsers: payload,
         },
       };
     case postTypes.SET_POST_DETAIL:
