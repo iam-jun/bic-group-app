@@ -1,16 +1,25 @@
 import * as Actions from './constants';
-import {IConversation, IMessage} from '../../../interfaces/IChat';
+import {IConversation, IMessage} from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {IUser} from '~/interfaces/IAuth';
+import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 
-const setConversationLoading = (payload: boolean) => ({
-  type: Actions.SET_CONVERSATION_LOADING,
-  payload,
+const getConversations = () => ({
+  type: Actions.GET_CONVERSATIONS,
 });
 
 const setConversations = (payload: IConversation[]) => ({
   type: Actions.SET_CONVERSATIONS,
   payload,
+});
+
+const setExtraConversations = (payload: IConversation[]) => ({
+  type: Actions.SET_EXTRA_CONVERSATIONS,
+  payload,
+});
+
+const mergeExtraConversations = () => ({
+  type: Actions.MERGE_EXTRA_CONVERSATIONS,
 });
 
 const selectConversation = (payload: IConversation) => ({
@@ -66,15 +75,27 @@ const selectUser = (payload: IUser) => ({
   payload,
 });
 
+const createConversation = (payload: ICreateRoomReq) => ({
+  type: Actions.CREATE_CONVERSATION,
+  payload,
+});
+
 const createConversationSuccess = (payload: IConversation) => ({
   type: Actions.CREATE_CONVERSATION_SUCCESS,
   payload,
 });
 
+const addNewMessage = (payload: IMessage) => ({
+  type: Actions.ADD_NEW_MESSAGE,
+  payload,
+});
+
 export default {
-  setConversationLoading,
+  getConversations,
   handleEvent,
   setConversations,
+  setExtraConversations,
+  mergeExtraConversations,
   selectConversation,
   getMessages,
   setMessages,
@@ -85,5 +106,7 @@ export default {
   getUsers,
   setUsers,
   selectUser,
+  createConversation,
   createConversationSuccess,
+  addNewMessage,
 };

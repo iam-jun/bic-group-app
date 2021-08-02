@@ -7,8 +7,11 @@ export const initState = {
   conversations: {
     loading: false,
     data: new Array<IConversation>(),
+    extra: new Array<IConversation>(),
+    offset: 0,
+    canLoadMore: true,
   },
-  conversation: {},
+  conversation: {} as IConversation,
   messages: {
     loading: false,
     data: new Array<IMessage>(),
@@ -31,12 +34,12 @@ function reducer(state = initState, action: any = {}) {
   const {conversations, conversation, messages, users, selectedUsers} = state;
 
   switch (type) {
-    case types.SET_CONVERSATION_LOADING:
+    case types.GET_CONVERSATIONS:
       return {
         ...state,
         conversation: {
           ...conversation,
-          loading: true,
+          loading: conversations.data.length === 0,
         },
       };
     case types.SET_CONVERSATIONS:
@@ -46,6 +49,27 @@ function reducer(state = initState, action: any = {}) {
           ...conversations,
           loading: false,
           data: action.payload,
+          offset: conversations.offset + action.payload.length,
+          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case types.SET_EXTRA_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: {
+          ...conversations,
+          extra: action.payload,
+          offset: conversations.offset + action.payload.length,
+          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case types.MERGE_EXTRA_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: {
+          ...conversations,
+          data: [...conversations.data, ...conversations.extra],
+          extra: [],
         },
       };
     case types.SELECT_CONVERSATION:
@@ -107,6 +131,29 @@ function reducer(state = initState, action: any = {}) {
             messages.extra.length > 1
               ? messages.extra[messages.extra.length - 1]._updatedAt
               : messages.lastDate,
+        },
+      };
+    case types.ADD_NEW_MESSAGE:
+      return {
+        ...state,
+        messages:
+          action.payload.room_id === conversation._id
+            ? {
+                ...messages,
+                data: [action.payload, ...messages.data],
+              }
+            : messages,
+        conversations: {
+          ...conversations,
+          data: conversations.data.map((item: any) =>
+            item._id === action.payload.room_id
+              ? {
+                  ...item,
+                  lastMessage: action.payload.msg,
+                  _updatedAt: action.payload._updatedAt,
+                }
+              : item,
+          ),
         },
       };
     case types.SET_USERS:
