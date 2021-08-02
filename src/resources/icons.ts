@@ -35,22 +35,23 @@ import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
 
 // Below are the completely new icons, added on 08/01/2021
 import iconAddPost from '../../assets/icons/icon_add_post.svg';
-import iconArrowSwapHorizontal from '../../assets/icons/icon_arrow_swap_horizontal.svg';
-import iconBill from '../../assets/icons/icon_bill.svg';
-import iconBitcoinConvert from '../../assets/icons/icon_bitcoin_convert.svg';
-import iconBookmark from '../../assets/icons/icon_bookmark.svg';
-import iconBuyCrypto from '../../assets/icons/icon_buy_crypto.svg';
 import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
-import iconFeedback from '../../assets/icons/icon_feedback.svg';
-import iconLogout from '../../assets/icons/icon_logout.svg';
-import iconMessageQuestion from '../../assets/icons/icon_message_question.svg';
-import iconMonitor from '../../assets/icons/icon_monitor.svg';
-import iconMoon from '../../assets/icons/icon_moon.svg';
-import iconSetting from '../../assets/icons/icon_setting.svg';
 import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
-import iconWallet from '../../assets/icons/icon_wallet.svg';
+
+import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
+import iconMenuBookmark from '../../assets/icons/icon_menu_bookmark.svg';
+import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
+import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
+import iconMenuWallet from '../../assets/icons/icon_menu_wallet.svg';
+import iconMenuBuyCrypto from '../../assets/icons/icon_menu_buy_crypto.svg';
+import iconMenuBitConvert from '../../assets/icons/icon_menu_bit_convert.svg';
+import iconMenuHelp from '../../assets/icons/icon_menu_help.svg';
+import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
+import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
+import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
+import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 
 const icons = {
   iconTabHome,
@@ -228,22 +229,22 @@ const icons = {
   iconCheckbox,
   iconCreateChat,
   iconAddPost,
-  iconArrowSwapHorizontal,
-  iconBill,
-  iconBitcoinConvert,
-  iconBookmark,
-  iconBuyCrypto,
-  iconAddSquareGroupFilled,
-  iconAddSquareGroup,
-  iconFeedback,
-  iconLogout,
-  iconMessageQuestion,
-  iconMonitor,
-  iconMoon,
-  iconSetting,
-  iconShieldStar,
-  iconWallet,
   iconAddSquareDone,
+  iconAddSquareGroup,
+  iconAddSquareGroupFilled,
+  iconShieldStar,
+  iconMenuMoon,
+  iconMenuBookmark,
+  iconMenuMonitor,
+  iconMenuSetting,
+  iconMenuWallet,
+  iconMenuBuyCrypto,
+  iconMenuBitConvert,
+  iconMenuHelp,
+  iconMenuMenu,
+  iconMenuFeedback,
+  iconMenuSwitch,
+  iconMenuLogout,
 };
 
 export default icons;
