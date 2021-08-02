@@ -78,6 +78,13 @@ export interface IGetStreamUser {
   };
 }
 
+export interface IRequestPostComment {
+  referenceId: string;
+  referenceType: 'post' | 'comment';
+  commentData: IActivityData;
+  userId: number;
+}
+
 export interface IReaction {
   created_at?: string;
   updated_at?: string;

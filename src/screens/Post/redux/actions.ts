@@ -4,6 +4,7 @@ import {
   IPostActivity,
   IPostCreatePost,
   IActivityData,
+  IReaction,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -24,16 +25,20 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES,
     payload,
   }),
-  setPostDetail: (payload: IPostActivity) => ({
-    type: postTypes.SET_POST_DETAIL,
-    payload,
-  }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({
     type: postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS,
     payload,
   }),
   setSearchResultAudienceUsers: (payload: IUser[]) => ({
     type: postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS,
+    payload,
+  }),
+  setPostDetail: (payload: IPostActivity) => ({
+    type: postTypes.SET_POST_DETAIL,
+    payload,
+  }),
+  setPostDetailReplyingComment: (payload?: IReaction) => ({
+    type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
   }),
   //saga

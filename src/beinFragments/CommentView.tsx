@@ -11,10 +11,14 @@ import Icon from '~/beinComponents/Icon';
 
 export interface CommentViewProps {
   commentData: IReaction;
+  onPressReply: (data: IReaction) => void;
+  contentBackgroundColor?: string;
 }
 
 const CommentView: React.FC<CommentViewProps> = ({
   commentData,
+  onPressReply,
+  contentBackgroundColor,
 }: CommentViewProps) => {
   const theme: ITheme = useTheme();
   const {colors, spacing} = theme;
@@ -43,8 +47,9 @@ const CommentView: React.FC<CommentViewProps> = ({
     alert('onLongPressReact');
   };
 
-  const onPressReply = () => {
-    alert('onPressReply');
+  const _onPressReply = () => {
+    console.log('\x1b[31m', '🐣️  | _onPressReply : ', '\x1b[0m');
+    onPressReply?.(commentData);
   };
 
   return (
@@ -52,7 +57,13 @@ const CommentView: React.FC<CommentViewProps> = ({
       <View style={styles.container}>
         <Avatar source={avatar} />
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
-          <View style={styles.contentContainer}>
+          <View
+            style={StyleSheet.flatten([
+              styles.contentContainer,
+              contentBackgroundColor
+                ? {backgroundColor: contentBackgroundColor}
+                : {},
+            ])}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flex: 1}}>
                 <ButtonWrapper
@@ -74,11 +85,10 @@ const CommentView: React.FC<CommentViewProps> = ({
               onLongPress={onLongPressReact}>
               <Icon size={14} icon={'iconReact'} />
             </ButtonWrapper>
-            <ButtonWrapper>
+            <ButtonWrapper onPress={_onPressReply}>
               <Text.ButtonSmall
-                style={{marginRight: spacing?.margin.tiny}}
-                color={colors.textSecondary}
-                onPress={onPressReply}>
+                style={styles.buttonReply}
+                color={colors.textSecondary}>
                 Reply
               </Text.ButtonSmall>
             </ButtonWrapper>
@@ -111,9 +121,13 @@ const createStyle = (theme: ITheme) => {
     },
     buttonContainer: {
       flexDirection: 'row',
-      marginTop: spacing?.margin.tiny,
+      // marginTop: spacing?.margin.tiny,
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    buttonReply: {
+      marginRight: spacing?.margin.tiny,
+      marginVertical: spacing?.margin.base,
     },
   });
 };

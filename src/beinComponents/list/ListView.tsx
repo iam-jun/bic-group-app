@@ -53,6 +53,7 @@ export interface ListViewProps {
   loadingMore?: boolean;
   title?: string;
   isFullView?: boolean;
+  keyboardShouldPersistTaps?: 'always' | 'never' | 'handled';
   [x: string]: any;
 }
 
@@ -82,6 +83,7 @@ const ListView: React.FC<ListViewProps> = ({
   refreshing,
   title,
   isFullView,
+  keyboardShouldPersistTaps,
   ...props
 }: ListViewProps) => {
   const {colors}: ITheme = useTheme();
@@ -143,6 +145,12 @@ const ListView: React.FC<ListViewProps> = ({
       </View>
     );
   }
+  console.log(
+    '\x1b[31m',
+    '🐣️ keyboardShouldPersistTaps | ListView : ',
+    keyboardShouldPersistTaps,
+    '\x1b[0m',
+  );
 
   return (
     <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
@@ -162,6 +170,7 @@ const ListView: React.FC<ListViewProps> = ({
         ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={ListEmptyComponent}
         ItemSeparatorComponent={_renderItemSeparator}
+        keyboardShouldPersistTaps={keyboardShouldPersistTaps}
         keyExtractor={(item, index) =>
           `list-${type}-${index}-${item.id}` ||
           _.uniqueId(`list-${type}-${index}`)

@@ -14,6 +14,7 @@ const initState = {
     searchResultAudienceUsers: [],
   },
   postDetail: {},
+  replyingComment: {},
 };
 
 function postReducer(state = initState, action: any = {}) {
@@ -69,6 +70,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         postDetail: payload,
+      };
+    case postTypes.SET_POST_DETAIL_REPLYING_COMMENT:
+      return {
+        ...state,
+        replyingComment: payload,
       };
     default:
       return state;
