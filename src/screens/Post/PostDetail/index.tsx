@@ -42,11 +42,8 @@ const PostDetail = () => {
   const {id} = postDetail || {};
   const replying = usePostDetailReplyingComment();
 
-  console.log('\x1b[33m', '🐣️ render screen | PostDetail : ', '\x1b[0m');
-
   const getComments = () => {
     if (id) {
-      console.log('\x1b[33m', '🐣️  | getComments : ', '\x1b[0m');
       setLoadingComment(true);
       postDataHelper
         .getPostComment(id)
@@ -91,7 +88,6 @@ const PostDetail = () => {
       postDataHelper
         .postNewComment(requestData)
         .then(response => {
-          console.log('\x1b[36m', '🐣️ hahaha |  : ', response, '\x1b[0m');
           if (response && response.data) {
             getComments();
             setCommentText('');

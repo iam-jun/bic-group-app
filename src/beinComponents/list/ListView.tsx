@@ -145,12 +145,6 @@ const ListView: React.FC<ListViewProps> = ({
       </View>
     );
   }
-  console.log(
-    '\x1b[31m',
-    '🐣️ keyboardShouldPersistTaps | ListView : ',
-    keyboardShouldPersistTaps,
-    '\x1b[0m',
-  );
 
   return (
     <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
