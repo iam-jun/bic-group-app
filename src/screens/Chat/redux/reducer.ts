@@ -11,7 +11,7 @@ export const initState = {
     offset: 0,
     canLoadMore: true,
   },
-  conversation: {},
+  conversation: {} as IConversation,
   messages: {
     loading: false,
     data: new Array<IMessage>(),
@@ -131,6 +131,29 @@ function reducer(state = initState, action: any = {}) {
             messages.extra.length > 1
               ? messages.extra[messages.extra.length - 1]._updatedAt
               : messages.lastDate,
+        },
+      };
+    case types.ADD_NEW_MESSAGE:
+      return {
+        ...state,
+        messages:
+          action.payload.room_id === conversation._id
+            ? {
+                ...messages,
+                data: [action.payload, ...messages.data],
+              }
+            : messages,
+        conversations: {
+          ...conversations,
+          data: conversations.data.map((item: any) =>
+            item._id === action.payload.room_id
+              ? {
+                  ...item,
+                  lastMessage: action.payload.msg,
+                  _updatedAt: action.payload._updatedAt,
+                }
+              : item,
+          ),
         },
       };
     case types.SET_USERS:

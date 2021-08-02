@@ -28,7 +28,7 @@ const Chat = {
   },
   createRoom: (data: ICreateRoomReq): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}channels.create`,
+      url: `${providers.chat.url}groups.create`,
       method: 'post',
       useRetry: true,
       provider: providers.chat,

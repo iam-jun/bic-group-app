@@ -4,6 +4,7 @@ import {AxiosResponse} from 'axios';
 import {
   mapConversation,
   mapConversations,
+  mapMessage,
   mapMessages,
   mapUser,
 } from './../helper';
@@ -22,7 +23,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {StackActions} from '@react-navigation/native';
 import appConfig from '~/configs/appConfig';
 import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
-import {chatSocketId} from '~/constants/chat';
+import {chatSocketId, messageEventTypes} from '~/constants/chat';
 
 /**
  * Chat
@@ -42,7 +43,6 @@ function* getConversations() {
   try {
     const {auth, chat} = yield select();
     const {offset, data} = chat.conversations;
-    console.log({offset});
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getRooms({
@@ -50,8 +50,9 @@ function* getConversations() {
         count: appConfig.recordsPerPage,
       }),
     );
+
     const conversations = mapConversations(auth.user, response.data?.groups);
-    console.log({conversations});
+
     if (data.length === 0) {
       yield put(actions.setConversations(conversations));
       if (conversations.length === appConfig.recordsPerPage)
@@ -100,11 +101,44 @@ function* createConversation({
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   console.log('handleEvent', payload);
 
+  /* Because subscription "stream-room-messages" event
+      always return id: "id" so we can't handle it by id.
+      [TO-DO] Need to check with BE
+  */
+
+  if (
+    payload.msg === 'changed' &&
+    payload.collection === 'stream-room-messages'
+  ) {
+    yield handleRoomsMessage(payload);
+  }
+
   if (payload.msg !== 'result') return;
 
   switch (payload.id) {
     case chatSocketId.GET_MESSAGES:
       yield handleMessages(payload.result?.messages);
+      break;
+    // case chatSocketId.SUBSCRIBE_ROOMS_MESSAGES:
+    //   yield handleRoomsMessage(payload);
+    //   break;
+  }
+}
+
+function* handleRoomsMessage(payload?: any) {
+  const data = payload.fields.args[0];
+
+  switch (data.t) {
+    case messageEventTypes.ADD_USER:
+    case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
+    case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
+    case messageEventTypes.ROOM_CHANGED_NAME:
+    case messageEventTypes.ROOM_CHANGED_TOPIC:
+      console.log('In development');
+      break;
+    // New message event doesn't have type
+    default:
+      yield put(actions.addNewMessage(mapMessage(data)));
       break;
   }
 }
