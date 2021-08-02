@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 
 import useGroups from '~/hooks/groups';
@@ -13,6 +12,7 @@ import Header from '~/beinComponents/Header';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
+import {IGroup} from '~/interfaces/IGroup';
 
 interface GroupsProps {}
 
@@ -25,6 +25,18 @@ const Groups: React.FC<GroupsProps> = () => {
   const groupsData = useGroups();
   const {loadingJoinedGroups, joinedGroups} = groupsData;
 
+  // for groups search - client search
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<IGroup[]>([]);
+
+  const onChangeTextSearch = (text: string) => {
+    const newSearchResults = joinedGroups.filter((item: IGroup) =>
+      item.name.toLowerCase().includes(text.toLowerCase()),
+    );
+    setSearchText(text);
+    setSearchResults(newSearchResults);
+  };
+
   useEffect(() => {
     dispatch(groupsActions.getJoinedGroups());
   }, []);
@@ -35,14 +47,19 @@ const Groups: React.FC<GroupsProps> = () => {
       <View style={styles.groupContainer}>
         <SearchInput
           style={{marginVertical: 12}}
+          onChangeText={onChangeTextSearch}
           placeholder={t('input:search_group')}
         />
         <ListView
           type={'flatGroups'}
           loading={loadingJoinedGroups}
-          data={joinedGroups}
+          data={searchText ? searchResults : joinedGroups}
           isFullView
-          ListHeaderComponent={<Text.H5>All Groups</Text.H5>}
+          ListHeaderComponent={
+            <Text.H5>
+              {searchText ? t('groups:search_results') : t('groups:all_groups')}
+            </Text.H5>
+          }
         />
       </View>
     </View>
@@ -50,7 +67,6 @@ const Groups: React.FC<GroupsProps> = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const insets = useSafeAreaInsets();
   const {spacing, colors} = theme;
 
   return StyleSheet.create({

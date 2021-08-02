@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import {IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
@@ -13,6 +14,7 @@ import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, {IAction} from '~/constants/commonActions';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
@@ -46,16 +48,18 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const dispatch = useDispatch();
 
   if (hide) {
     return null;
   }
 
   const _onPressItem = () => {
+    dispatch(groupsActions.selectGroupDetail(props));
     if (onPressItem) {
       onPressItem(props);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, props as any);
+      rootNavigation.navigate(groupStack.groupDetail, {id});
     }
   };
 
