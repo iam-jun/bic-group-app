@@ -10,15 +10,15 @@ import {
 
 import Unicons, {UniconsProps} from './Unicons';
 import SvgIcon, {SVGIconProps} from './SvgIcon';
-import FontIcon, {FontIconProps} from './FontIcon';
 
 import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
+import {View} from 'react-native';
 
-export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
+export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType;
   size?: number;
   tintColor?: string;
@@ -26,6 +26,7 @@ export interface IconProps extends SVGIconProps, FontIconProps, UniconsProps {
   style?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ViewStyle>;
   label?: string;
+  labelColor?: string;
   labelStyle?: StyleProp<TextStyle>;
   onPress?: () => void;
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
@@ -39,30 +40,23 @@ const Icon: React.FC<IconProps> = ({
   size = 20,
   label,
   tintColor,
+  labelColor,
   backgroundColor,
   onPress,
   isButton,
   isLoading,
   disabled,
   hitSlop = {top: 10, left: 10, bottom: 10, right: 10},
-  ...props
 }: IconProps) => {
   if (isLoading) return <ActivityIndicator size="small" />;
 
-  // @ts-ignore
   const _icon = icons[icon];
 
   let IconComponent, type, name, source;
 
-  if (_icon?.type) {
-    IconComponent = FontIcon;
-    // @ts-ignore
-    type = _icon?.type;
-    name = _icon?.name;
-  } else if (Unicons[`${_icon}`] || Unicons[`Uil${_icon}`]) {
+  if (Unicons[`${_icon}`] || Unicons[`Uil${_icon}`]) {
     IconComponent = Unicons;
     name = _icon;
-    // @ts-ignore
   } else {
     IconComponent = SvgIcon;
     source = _icon;
@@ -73,40 +67,39 @@ const Icon: React.FC<IconProps> = ({
 
   const styles = StyleSheet.create(createStyles(theme));
   tintColor = tintColor || colors.iconTint;
+
   const _tintColor = disabled
     ? isButton
-      ? colors.iconTintReversed
+      ? colors.primary7
       : colors.disabled
     : tintColor;
 
   return (
     <TouchableOpacity
-      style={[
-        styles.container,
-        isButton && styles.button,
-        style,
-        disabled && isButton && styles.disabled,
-        {backgroundColor},
-      ]}
+      style={[styles.container, style, {backgroundColor}]}
       disabled={!onPress}
       onPress={onPress}
       hitSlop={hitSlop}>
-      <IconComponent
-        style={iconStyle}
-        tintColor={_tintColor}
-        size={size}
-        isButton={isButton}
-        type={type}
-        name={name}
-        source={source}
-        {...props}
-      />
+      <View
+        style={[
+          isButton && styles.button,
+          disabled && isButton && styles.disabled,
+          iconStyle,
+        ]}>
+        <IconComponent
+          tintColor={_tintColor}
+          size={size}
+          type={type}
+          name={name}
+          source={source}
+        />
+      </View>
       {label && (
-        <Text.ButtonBase
+        <Text.ButtonSmall
           useI18n
-          style={[styles.label, {color: _tintColor}, labelStyle]}>
+          style={[styles.label, {color: labelColor}, labelStyle]}>
           {label}
-        </Text.ButtonBase>
+        </Text.ButtonSmall>
       )}
     </TouchableOpacity>
   );
@@ -121,14 +114,13 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
     },
     button: {
-      padding: 8,
-      borderRadius: 100,
-      backgroundColor: colors.iconTint,
+      padding: spacing.padding.small,
+      borderRadius: spacing.borderRadius.small,
+      backgroundColor: colors.primary1,
     },
     disabled: {
       backgroundColor: colors.disabled,
     },
-
     label: {
       marginStart: spacing.margin.small,
     },

@@ -126,11 +126,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               {name}
             </Text.H6>
             <View style={styles.row}>
-              <Icon
-                icon={'iconUserGroup'}
-                size={16}
-                tintColor={colors.textSecondary}
-              />
+              <Icon icon="users" size={16} tintColor={colors.textSecondary} />
               <Text.BodyS color={colors.textSecondary} style={styles.textInfo}>
                 {userCount}
               </Text.BodyS>

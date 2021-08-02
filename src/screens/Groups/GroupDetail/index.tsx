@@ -55,7 +55,7 @@ const GroupDetail = (props: any) => {
               <Icon style={styles.iconSmall} icon={'iconPrivate'} size={12} />
               <Text.Subtitle useI18n>Private Group</Text.Subtitle>
               <Text.Subtitle> ⬩ </Text.Subtitle>
-              <Icon style={styles.iconSmall} icon={'iconUserGroup'} size={14} />
+              <Icon style={styles.iconSmall} icon="users" size={14} />
               <Text.Subtitle>{`${params.userCount} members`}</Text.Subtitle>
             </View>
           </View>

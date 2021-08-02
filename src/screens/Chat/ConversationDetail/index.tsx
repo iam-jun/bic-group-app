@@ -13,6 +13,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import {ViewSpacing} from '~/components';
 import Divider from '~/beinComponents/Divider';
+import Button from '~/beinComponents/Button';
 
 const Conversation = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -33,7 +34,7 @@ const Conversation = (): React.ReactElement => {
       <Header title={i18next.t('chat:title_chat_detail')} />
       <View style={styles.container}>
         <View style={styles.top}>
-          <Avatar.Large source={conversation.avatar} />
+          <Avatar.Large isRounded source={conversation.avatar} />
           <ViewSpacing width={spacing.margin.base} />
           <Text.H4 style={styles.name}>{conversation.name}</Text.H4>
         </View>
@@ -73,34 +74,26 @@ const Conversation = (): React.ReactElement => {
         <Divider />
         <ViewSpacing height={spacing.margin.base} />
         <View style={styles.menuContainer}>
-          <View style={styles.menu}>
-            <View style={styles.menuIcon}>
-              <Icon size={16} tintColor={colors.primary7} icon="search" />
-            </View>
-            <ViewSpacing height={spacing.margin.small} />
-            <Text>{i18next.t('common:text_search')}</Text>
-          </View>
-          <View style={styles.menu}>
-            <View style={styles.menuIcon}>
-              <Icon size={16} tintColor={colors.primary7} icon="addUser" />
-            </View>
-            <ViewSpacing height={spacing.margin.small} />
-            <Text>{i18next.t('chat:label_invite')}</Text>
-          </View>
-          <View style={styles.menu}>
-            <View style={styles.menuIcon}>
-              <Icon size={16} tintColor={colors.primary7} icon="bell" />
-            </View>
-            <ViewSpacing height={spacing.margin.small} />
-            <Text>{i18next.t('chat:label_notification')}</Text>
-          </View>
-          <View style={styles.menu}>
-            <View style={styles.menuIcon}>
-              <Icon size={16} tintColor={colors.primary7} icon="iconPinGroup" />
-            </View>
-            <ViewSpacing height={spacing.margin.small} />
-            <Text>{i18next.t('chat:label_pin')}</Text>
-          </View>
+          <Button.Icon
+            icon="search"
+            tintColor={colors.primary7}
+            label={i18next.t('common:text_search')}
+          />
+          <Button.Icon
+            icon="addUser"
+            tintColor={colors.primary7}
+            label={i18next.t('chat:label_invite')}
+          />
+          <Button.Icon
+            icon="bell"
+            tintColor={colors.primary7}
+            label={i18next.t('chat:label_notification')}
+          />
+          <Button.Icon
+            icon="iconPinGroup"
+            tintColor={colors.primary7}
+            label={i18next.t('chat:label_pin')}
+          />
         </View>
         <ViewSpacing height={spacing.margin.big} />
         <Divider />
