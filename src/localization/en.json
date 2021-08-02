@@ -130,6 +130,7 @@
   "chat": {
     "title": "Chat",
     "title_chat_detail":"Group chat info",
+    "title_room_members":"Group Chat Members",
     "placeholder_search": "Search...",
     "title_members": "Members",
     "title_add_participants": "Add participants",
@@ -140,7 +141,9 @@
     "label_pin":"Pin",
     "label_attachments":"Files",
     "label_gallery":"Gallery",
-    "label_leaves_group": "Leaves Group"
+    "label_leaves_group": "Leaves Group",
+    "placeholder_users_search": "Search for someone to chat...",
+    "placeholder_members_search": "Search members"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

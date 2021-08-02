@@ -14,6 +14,8 @@ import Text from '~/beinComponents/Text';
 import {ViewSpacing} from '~/components';
 import Divider from '~/beinComponents/Divider';
 import Button from '~/beinComponents/Button';
+import {useRootNavigation} from '~/hooks/navigation';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const Conversation = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -22,12 +24,17 @@ const Conversation = (): React.ReactElement => {
   const {conversation} = useChat();
   const [descriptionShowAll, setDescriptionShowAll] = useState(false);
   const [shortDescription, setShortDescription] = useState('');
+  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     if (conversation.description?.length > 100) {
       setShortDescription(`${conversation.description.substr(0, 100)}...`);
     }
   }, []);
+
+  const goGroupMembers = () => {
+    rootNavigation.navigate(chatStack.chatGroupMembers);
+  };
 
   return (
     <ScreenWrapper testID="ConversationDetailScreen" isFullView>
@@ -69,6 +76,7 @@ const Conversation = (): React.ReactElement => {
           label={`${i18next.t('chat:title_members')} (${
             conversation?.usersCount
           })`}
+          onPress={goGroupMembers}
         />
         <ViewSpacing height={spacing.margin.big} />
         <Divider />

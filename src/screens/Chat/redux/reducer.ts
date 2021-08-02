@@ -20,6 +20,13 @@ export const initState = {
     canLoadMore: true,
   },
   users: new Array<IUser>(),
+  members: {
+    loading: false,
+    data: new Array<IUser>(),
+    extra: new Array<IUser>(),
+    offset: 0,
+    canLoadMore: true,
+  },
   selectedUsers: new Array<IUser>(),
 };
 
@@ -31,14 +38,15 @@ export const initState = {
  */
 function reducer(state = initState, action: any = {}) {
   const {type} = action;
-  const {conversations, conversation, messages, users, selectedUsers} = state;
+  const {conversations, conversation, messages, users, selectedUsers, members} =
+    state;
 
   switch (type) {
     case types.GET_CONVERSATIONS:
       return {
         ...state,
-        conversation: {
-          ...conversation,
+        conversations: {
+          ...conversations,
           loading: conversations.data.length === 0,
         },
       };
@@ -196,6 +204,44 @@ function reducer(state = initState, action: any = {}) {
             },
             ...messages.data,
           ],
+        },
+      };
+    case types.GET_ROOM_MEMBERS:
+      return {
+        ...state,
+        members: {
+          ...members,
+          loading: members.data.length === 0,
+        },
+      };
+    case types.SET_ROOM_MEMBERS:
+      return {
+        ...state,
+        members: {
+          ...members,
+          loading: false,
+          data: action.payload,
+          offset: members.offset + action.payload.length,
+          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case types.SET_EXTRA_ROOM_MEMBERS:
+      return {
+        ...state,
+        members: {
+          ...members,
+          extra: action.payload,
+          offset: members.offset + action.payload.length,
+          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case types.MERGE_EXTRA_ROOM_MEMBERS:
+      return {
+        ...state,
+        members: {
+          ...members,
+          data: [...members.data, ...members.extra],
+          extra: [],
         },
       };
     case types.REACT_MESSAGE:

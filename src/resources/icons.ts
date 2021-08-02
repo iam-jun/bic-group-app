@@ -1,5 +1,4 @@
 import iconSearch from '../../assets/icons/icon_search.svg';
-import iconBack from '../../assets/icons/icon_back.svg';
 import iconReactionAngry from '../../assets/icons/icon_reaction_angry.svg';
 import iconReactionDislike from '../../assets/icons/icon_reaction_dislike.svg';
 import iconReactionHaha from '../../assets/icons/icon_reaction_haha.svg';
@@ -65,7 +64,7 @@ const icons = {
   iconTabNotificationBein,
   iconTabMenu,
   iconSearch,
-  iconBack,
+  iconBack: 'AngleLeftB',
   iconEye: 'Eye',
   iconEyeOff: 'EyeSlash',
   iconClose: 'Multiply',
