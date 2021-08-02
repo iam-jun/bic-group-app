@@ -32,6 +32,7 @@ import iconTabNotificationBein from '../../assets/icons/icon_notification_bein.s
 import iconTabMenu from '../../assets/icons/icon_menu.svg';
 import iconTabMenuBein from '../../assets/icons/icon_menu_bein.svg';
 import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
+import iconMessages from '../../assets/icons/icon_messages.svg';
 
 // Below are the completely new icons, added on 08/01/2021
 import iconAddPost from '../../assets/icons/icon_add_post.svg';
@@ -233,6 +234,7 @@ const icons = {
   iconLanguageVi,
   iconCheckbox,
   iconCreateChat,
+  iconMessages,
   iconAddPost,
   iconAddSquareDone,
   iconAddSquareGroup,

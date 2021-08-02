@@ -4,20 +4,20 @@ import PostView from '~/beinFragments/PostView';
 import {IPostActivity} from '~/interfaces/IPost';
 import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
-import {useBaseHook} from '~/hooks';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface PostItemProps {
   postData: IPostActivity;
 }
 
 const PostItem = ({postData}: any) => {
-  const {navigation} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
   const onPress = () => {
     dispatch(postActions.setPostDetail(postData));
-    navigation.navigate(homeStack.postDetail);
+    rootNavigation.navigate(homeStack.postDetail);
   };
 
   return (

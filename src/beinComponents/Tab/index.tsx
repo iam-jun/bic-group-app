@@ -5,6 +5,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IMenuItemProps} from '~/interfaces/IMenu';
+import Text from '~/beinComponents/Text';
 
 interface TabMenuProps {
   data: IMenuItemProps[];
@@ -26,8 +27,6 @@ const TabMenu = ({
   return (
     <Tab.Navigator
       tabBarOptions={{
-        showIcon: true,
-        showLabel: false,
         activeTintColor: menuActiveTintColor || theme.colors.primary7,
         inactiveTintColor: menuInactiveTintColor || theme.colors.textPrimary,
         indicatorStyle: {
@@ -41,13 +40,21 @@ const TabMenu = ({
             name={item.routeName}
             component={item.component}
             options={{
-              tabBarIcon: ({color}: {color: string}) => (
-                <Icon
-                  label={item.label}
-                  labelStyle={{width: '100%', color}}
-                  icon={item.iconName}
-                  size={16}
-                />
+              tabBarLabel: ({color}: {color: string}) => (
+                <>
+                  {item.iconName ? (
+                    <Icon
+                      label={item.label}
+                      labelStyle={{color}}
+                      icon={item.iconName}
+                      size={16}
+                    />
+                  ) : (
+                    <Text.ButtonBase style={{width: '100%', color}}>
+                      {item.label}
+                    </Text.ButtonBase>
+                  )}
+                </>
               ),
             }}
           />
