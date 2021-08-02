@@ -1,32 +1,84 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 
 import {IGroup} from '~/interfaces/IGroup';
-import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
 import {Text} from '~/components';
 import Icon from '~/beinComponents/Icon';
-import GroupItem from '~/beinComponents/GroupItem';
-import GroupTree from '~/components/GroupTree';
 import {ITheme} from '~/theme/interfaces';
+import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
+import GroupTree, {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
-interface FlatGroupItem extends IGroup {}
+export interface FlatGroupItemProps extends GroupItemProps {
+  showSmallestChild?: boolean;
+  selectingData?: OnChangeCheckedGroupsData;
+  onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
+  toggleOnPress?: boolean;
+  onPressGroup?: (group: IGroup) => void;
+  onPressItem?: (group: IGroup) => void;
+}
 
-const FlatGroupItem: React.FC<FlatGroupItem> = props => {
-  const {parent} = props;
-
+const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
+  showSmallestChild,
+  onChangeCheckedGroups,
+  selectingData,
+  toggleOnPress,
+  onPressGroup,
+  onPressItem,
+  ...props
+}: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(false);
+  const [group, setGroup] = useState<IGroup>(props);
+  const [path, setPath] = useState<string>(props.path || '/');
 
-  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme();
   const {spacing}: IObject<any> = theme;
-  const {t, navigation} = useBaseHook();
   const styles = themeStyles(theme);
 
+  const getSmallestChild = (smallestGroup: IGroup, path: string) => {
+    if (smallestGroup?.children?.[0]) {
+      path = `${path}${smallestGroup.name}/`;
+      getSmallestChild(smallestGroup?.children?.[0], path);
+    } else {
+      setGroup({...smallestGroup});
+      setPath(path);
+    }
+  };
+
+  useEffect(() => {
+    if (showSmallestChild) {
+      getSmallestChild(props, path);
+    }
+  }, []);
+
+  const onCheckedGroup = (group: GroupItemProps, newChecked: boolean) => {
+    if (onChangeCheckedGroups) {
+      const callbackData: OnChangeCheckedGroupsData = {};
+      callbackData[group.id] = newChecked ? group : false;
+      onChangeCheckedGroups(callbackData);
+    }
+  };
+
+  const _onPressGroup = (group: GroupItemProps) => {
+    if (onChangeCheckedGroups) {
+      onCheckedGroup(group, !group.isChecked);
+    } else if (onPressGroup) {
+      onPressGroup(group);
+    } else if (onPressItem) {
+      onPressItem(group);
+    } else {
+      rootNavigation.navigate(groupStack.groupDetail, group as any);
+    }
+  };
+
   const _onPressPath = () => {
-    setShowTree(!showTree);
+    if (props?.children && props.children?.length > 0) {
+      setShowTree(!showTree);
+    }
   };
 
   const getGroupParent = (group: IGroup, parents: IGroup[]) => {
@@ -37,24 +89,12 @@ const FlatGroupItem: React.FC<FlatGroupItem> = props => {
   };
 
   const renderPath = () => {
-    const parents: IGroup[] = [];
-    if (parent) {
-      getGroupParent(parent, parents);
-    }
-    const largestParent: IGroup | undefined =
-      parents?.length > 1 ? parents?.[parents?.length - 1] : undefined;
-    const hasMiddleParent = parents?.length > 2;
-    const directParent: IGroup | undefined = parents?.[0];
     return (
       <TouchableOpacity
-        style={{marginHorizontal: spacing.margin.tiny}}
+        // style={{marginHorizontal: spacing.margin.tiny}}
+        disabled={!(props?.children && props.children?.length > 0)}
         onPress={_onPressPath}>
-        <Text>
-          {largestParent && <Text>{largestParent.name}/</Text>}
-          {hasMiddleParent && <Text>.../</Text>}
-          {directParent && <Text>{directParent.name}/</Text>}
-          {parents?.length === 0 && <Text>/</Text>}
-        </Text>
+        <Text>{path}</Text>
       </TouchableOpacity>
     );
   };
@@ -64,28 +104,41 @@ const FlatGroupItem: React.FC<FlatGroupItem> = props => {
       <View style={{marginTop: spacing.margin.tiny, flexDirection: 'row'}}>
         <View style={styles.iconNextContainer}>
           <Icon
-            icon={'iconArrowRight'}
+            icon={'AngleRightB'}
             size={12}
             tintColor={theme.colors.iconTint}
           />
         </View>
         {renderPath()}
       </View>
-      <GroupItem {...props} />
-      {/* {showTree ? <GroupTree /> : <GroupItem {...props} />} */}
+      {showTree ? (
+        <GroupTree
+          data={props}
+          selectingData={selectingData}
+          onChangeCheckedGroups={onChangeCheckedGroups}
+          toggleOnPress={toggleOnPress}
+          onPressGroup={onPressGroup}
+        />
+      ) : (
+        <GroupItem
+          {...(group as GroupItemProps)}
+          isChecked={!!selectingData?.[group.id]}
+          onPressItem={_onPressGroup}
+          onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
+        />
+      )}
     </View>
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
+const themeStyles = (theme: ITheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {},
     iconNextContainer: {
-      backgroundColor: colors.grey1,
       width: 16,
       height: 16,
-      marginTop: 2,
+      marginTop: 4,
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',

@@ -12,10 +12,10 @@ import Icon from '~/beinComponents/Icon';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
-interface CheckboxProps {
+export interface CheckboxProps {
   style?: StyleProp<ViewStyle>;
   isChecked?: boolean;
-  onActionPress: (action: IAction) => void;
+  onActionPress?: (action: IAction) => void;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({

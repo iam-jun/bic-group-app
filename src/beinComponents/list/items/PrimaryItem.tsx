@@ -10,7 +10,9 @@ import Text from '~/beinComponents/Text';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
+import Checkbox, {
+  CheckboxProps,
+} from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import {IAction} from '~/constants/commonActions';
 import {IconType} from '~/resources/icons';
@@ -28,6 +30,7 @@ export interface PrimaryItemProps {
   leftIcon?: IconType;
   leftIconProps?: IconProps;
   isChecked?: boolean;
+  checkboxProps?: CheckboxProps;
   onPress?: () => void;
   onPressCheckbox?: (action: IAction) => void;
   onPressToggle?: (action: IAction) => void;
@@ -50,6 +53,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   leftIconProps,
   LeftComponent,
   isChecked,
+  checkboxProps,
   onPress,
   onPressToggle,
   onPressCheckbox,
@@ -99,6 +103,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           style={styles.iconMarginLeft}
           isChecked={isChecked}
           onActionPress={onPressCheckbox}
+          {...checkboxProps}
         />
       )}
       {onPressToggle && (
