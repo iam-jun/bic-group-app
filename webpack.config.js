@@ -75,6 +75,13 @@ const svgLoaderConfiguration = {
   use: [
     {
       loader: '@svgr/webpack',
+      options: {
+        svgoConfig: {
+          plugins: {
+            removeViewBox: false,
+          },
+        },
+      },
     },
   ],
 };

@@ -22,27 +22,57 @@ import iconLanguageEn from '../../assets/icons/icon_language_en.svg';
 import iconLanguageVi from '../../assets/icons/icon_language_vi.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 import iconTabHome from '../../assets/icons/icon_home.svg';
+import iconTabHomeBein from '../../assets/icons/icon_home_bein.svg';
 import iconTabGroups from '../../assets/icons/icon_groups.svg';
+import iconTabGroupsBein from '../../assets/icons/icon_groups_bein.svg';
 import iconTabChat from '../../assets/icons/icon_chat.svg';
+import iconTabChatBein from '../../assets/icons/icon_chat_bein.svg';
 import iconTabNotification from '../../assets/icons/icon_notification.svg';
+import iconTabNotificationBein from '../../assets/icons/icon_notification_bein.svg';
 import iconTabMenu from '../../assets/icons/icon_menu.svg';
+import iconTabMenuBein from '../../assets/icons/icon_menu_bein.svg';
 import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
 import iconPinGroup from '../../assets/icons/icon_pin_group.svg';
 
+// Below are the completely new icons, added on 08/01/2021
+import iconAddPost from '../../assets/icons/icon_add_post.svg';
+import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
+import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
+import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
+import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
+
+import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
+import iconMenuBookmark from '../../assets/icons/icon_menu_bookmark.svg';
+import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
+import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
+import iconMenuWallet from '../../assets/icons/icon_menu_wallet.svg';
+import iconMenuBuyCrypto from '../../assets/icons/icon_menu_buy_crypto.svg';
+import iconMenuBitConvert from '../../assets/icons/icon_menu_bit_convert.svg';
+import iconMenuHelp from '../../assets/icons/icon_menu_help.svg';
+import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
+import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
+import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
+import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
+
 const icons = {
   iconTabHome,
+  iconTabHomeBein,
   iconTabGroups,
+  iconTabGroupsBein,
   iconTabChat,
+  iconTabChatBein,
   iconTabNotification,
+  iconTabNotificationBein,
   iconTabMenu,
+  iconTabMenuBein,
   iconAdd: {
     type: 'MaterialIcons',
     name: 'add',
   },
-  iconMenu: {
-    type: 'MaterialIcons',
-    name: 'menu',
-  },
+  // iconMenu: {
+  //   type: 'MaterialIcons',
+  //   name: 'menu',
+  // },
   iconSearch,
   iconBack,
   iconEye: {
@@ -89,10 +119,10 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'diamond-stone',
   },
-  iconNotification: {
-    type: 'MaterialCommunityIcons',
-    name: 'bell-outline',
-  },
+  // iconNotification: {
+  //   type: 'MaterialCommunityIcons',
+  //   name: 'bell-outline',
+  // },
   iconNotificationOff: {
     type: 'MaterialCommunityIcons',
     name: 'bell-off-outline',
@@ -101,10 +131,10 @@ const icons = {
     type: 'MaterialCommunityIcons',
     name: 'magnify',
   },
-  iconChat: {
-    type: 'MaterialCommunityIcons',
-    name: 'chat-outline',
-  },
+  // iconChat: {
+  //   type: 'MaterialCommunityIcons',
+  //   name: 'chat-outline',
+  // },
   iconPin: {
     type: 'MaterialCommunityIcons',
     name: 'pin',
@@ -212,6 +242,23 @@ const icons = {
   attachment: 'Paperclip',
   images: 'Images',
   leavesGroup: 'SignOutAlt',
+  iconAddPost,
+  iconAddSquareDone,
+  iconAddSquareGroup,
+  iconAddSquareGroupFilled,
+  iconShieldStar,
+  iconMenuMoon,
+  iconMenuBookmark,
+  iconMenuMonitor,
+  iconMenuSetting,
+  iconMenuWallet,
+  iconMenuBuyCrypto,
+  iconMenuBitConvert,
+  iconMenuHelp,
+  iconMenuMenu,
+  iconMenuFeedback,
+  iconMenuSwitch,
+  iconMenuLogout,
 };
 
 export default icons;
