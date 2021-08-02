@@ -3,7 +3,6 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {IGroup} from '~/interfaces/IGroup';
-import {IObject} from '~/interfaces/common';
 import {Text} from '~/components';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -36,8 +35,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme();
-  const {spacing}: IObject<any> = theme;
-  const styles = themeStyles(theme);
+  const {spacing}: ITheme = theme;
+  const styles = createStyle();
 
   const getSmallestChild = (smallestGroup: IGroup, path: string) => {
     if (smallestGroup?.children?.[0]) {
@@ -101,7 +100,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={{marginTop: spacing.margin.tiny, flexDirection: 'row'}}>
+      <View style={{marginTop: spacing?.margin.tiny, flexDirection: 'row'}}>
         <View style={styles.iconNextContainer}>
           <Icon
             icon={'AngleRightB'}
@@ -131,8 +130,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors} = theme;
+const createStyle = () => {
   return StyleSheet.create({
     container: {},
     iconNextContainer: {
