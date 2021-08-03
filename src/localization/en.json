@@ -132,7 +132,7 @@
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
-    "placeholder_input_group_chat_name":"Name your group chat (Optional)"
+    "placeholder_input_group_chat_name": "Name your group chat (Optional)"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -154,5 +154,9 @@
   "input": {
     "search": "Search for someone to chat...",
     "search_group": "Search for groups or people..."
+  },
+  "groups": {
+    "search_results": "Search results",
+    "all_groups": "All groups"
   }
 }

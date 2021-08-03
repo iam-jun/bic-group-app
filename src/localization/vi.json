@@ -145,5 +145,9 @@
   },
   "input": {
     "search": "Tìm kiếm người để trò chuyện..."
+  },
+  "groups": {
+    "search_results": "Kết quả tìm kiếm",
+    "all_groups": "Tất cả"
   }
 }

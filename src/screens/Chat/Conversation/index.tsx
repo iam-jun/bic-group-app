@@ -24,16 +24,13 @@ import {IOption} from '~/interfaces/IOption';
 import actions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {sendMessage} from '~/services/chatSocket';
-import {
-  CHAT_SOCKET_GET_MESSAGES_ID,
-  CHAT_SOCKET_SEND_MESSAGE_ID,
-} from '~/services/constants';
 import {useRootNavigation} from '~/hooks/navigation';
 import appConfig from '~/configs/appConfig';
+import {chatSocketId} from '~/constants/chat';
 
 const Conversation = () => {
   const {user} = useAuth();
-  const {loading, conversation, messages} = useChat();
+  const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<Modalize>();
@@ -59,7 +56,7 @@ const Conversation = () => {
     sendMessage({
       msg: 'method',
       method: 'loadHistory',
-      id: CHAT_SOCKET_GET_MESSAGES_ID,
+      id: chatSocketId.GET_MESSAGES,
       params: [
         conversation._id,
         messages.lastDate,
@@ -113,7 +110,7 @@ const Conversation = () => {
     sendMessage({
       msg: 'method',
       method: 'sendMessage',
-      id: CHAT_SOCKET_SEND_MESSAGE_ID,
+      id: chatSocketId.SEND_MESSAGE,
       params: [
         {
           rid: conversation._id,
