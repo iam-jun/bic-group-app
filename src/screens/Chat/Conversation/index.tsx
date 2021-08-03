@@ -13,7 +13,6 @@ import {
   ChatFooter,
   MessageOptionsModal,
 } from './fragments';
-import NavigationHeader from '~/components/headers/NavigationHeader';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {options} from '~/constants/messageOptions';
 import useAuth from '~/hooks/auth';
@@ -27,6 +26,7 @@ import {sendMessage} from '~/services/chatSocket';
 import {useRootNavigation} from '~/hooks/navigation';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId} from '~/constants/chat';
+import Header from '~/beinComponents/Header';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -133,13 +133,7 @@ const Conversation = () => {
 
   return (
     <ScreenWrapper isFullView testID="MessageScreen">
-      <NavigationHeader
-        isFullView
-        isDefault
-        title={conversation.name}
-        rightIcon="iconOptions"
-        rightPress={goConversationDetail}
-      />
+      <Header title={conversation.name} onPressMenu={goConversationDetail} />
       {messages.loading ? (
         <LoadingMessages />
       ) : (

@@ -17,7 +17,11 @@
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_all": "All",
-    "text_chosen": "Chosen"
+    "text_chosen": "Chosen",
+    "text_description":"Description",
+    "text_search": "Search",
+    "text_read_more": "Read more",
+    "text_show_less": "Show less"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -125,11 +129,18 @@
   },
   "chat": {
     "title": "Chat",
+    "title_chat_detail":"Group chat info",
     "placeholder_search": "Search...",
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
-    "placeholder_input_group_chat_name": "Name your group chat (Optional)"
+    "placeholder_input_group_chat_name":"Name your group chat (Optional)",
+    "label_invite":"Invite",
+    "label_notification":"Notifications",
+    "label_pin":"Pin",
+    "label_attachments":"Files",
+    "label_gallery":"Gallery",
+    "label_leaves_group": "Leaves Group"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

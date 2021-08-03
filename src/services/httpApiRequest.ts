@@ -172,6 +172,7 @@ const handleResponseError = async (
 ): Promise<HttpApiResponseFormat | unknown> => {
   let alertShow = false;
   if (error.response) {
+    console.log('error.response');
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
       return handleRetry(error);
@@ -186,6 +187,7 @@ const handleResponseError = async (
         return mapResponseSuccessBein(error.response);
     }
   } else if (error.request) {
+    console.log('error.request', error.config);
     if (!alertShow) {
       alertShow = true;
       Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [

@@ -62,7 +62,7 @@ const FlatGroupItem: React.FC<FlatGroupItem> = props => {
     <View style={styles.container}>
       <View style={{marginTop: spacing.margin.tiny, flexDirection: 'row'}}>
         <View style={styles.iconNextContainer}>
-          <Icon icon={'iconArrowRight'} size={12} tintColor={grey9} />
+          <Icon icon="AngleRight" size={12} tintColor={grey9} />
         </View>
         {renderPath()}
       </View>

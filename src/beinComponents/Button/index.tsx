@@ -4,6 +4,7 @@ import Primary from './ButtonPrimary';
 import Secondary from './ButtonSecondary';
 import BottomFixed from './ButtonBottomFixed';
 import BottomSecondary from './ButtonBottomSecondary';
+import Icon from './ButtonIcon';
 import {StyleProp, ViewStyle} from 'react-native';
 import {TextProps, TextVariant} from '~/beinComponents/Text';
 
@@ -26,6 +27,7 @@ const Button = Object.assign(ButtonComponent, {
   Secondary,
   BottomFixed,
   BottomSecondary,
+  Icon,
 });
 
 export default Button;

@@ -51,6 +51,8 @@ function* getConversations() {
       }),
     );
 
+    console.log('getConversations', {response});
+
     const conversations = mapConversations(auth.user, response.data?.groups);
 
     if (data.length === 0) {
