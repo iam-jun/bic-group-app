@@ -90,6 +90,24 @@ const addNewMessage = (payload: IMessage) => ({
   payload,
 });
 
+const getRoomMembers = () => ({
+  type: Actions.GET_ROOM_MEMBERS,
+});
+
+const setRoomMembers = (payload: IUser[]) => ({
+  type: Actions.SET_ROOM_MEMBERS,
+  payload,
+});
+
+const setExtraRoomMembers = (payload: IUser[]) => ({
+  type: Actions.SET_EXTRA_CONVERSATIONS,
+  payload,
+});
+
+const mergeExtraRoomMembers = () => ({
+  type: Actions.MERGE_EXTRA_ROOM_MEMBERS,
+});
+
 export default {
   getConversations,
   handleEvent,
@@ -109,4 +127,8 @@ export default {
   createConversation,
   createConversationSuccess,
   addNewMessage,
+  getRoomMembers,
+  setRoomMembers,
+  setExtraRoomMembers,
+  mergeExtraRoomMembers,
 };

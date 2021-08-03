@@ -35,6 +35,18 @@ const Chat = {
       data,
     };
   },
+  getRoomMembers: (
+    params: IPaginationParams,
+    roomId: string,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.members`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params: {...params, roomId},
+    };
+  },
 };
 
 const App = {

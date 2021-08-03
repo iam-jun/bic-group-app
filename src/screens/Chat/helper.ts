@@ -9,6 +9,9 @@ export const mapConversations = (user: IUser, data?: []): IConversation[] =>
 export const mapMessages = (data?: []): IMessage[] =>
   (data || []).map((item: any) => mapMessage(item));
 
+export const mapUsers = (data?: []): IUser[] =>
+  (data || []).map((item: any) => mapUser(item));
+
 export const mapConversation = (user: IUser, item: any): IConversation => {
   const name =
     item?.customFields?.name || generateRoomName(user, item?.usernames || []);

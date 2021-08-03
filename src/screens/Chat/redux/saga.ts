@@ -7,6 +7,7 @@ import {
   mapMessage,
   mapMessages,
   mapUser,
+  mapUsers,
 } from './../helper';
 
 import * as types from './constants';
@@ -37,6 +38,8 @@ export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.GET_USERS, getUsers);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
+  yield takeLatest(types.GET_ROOM_MEMBERS, getRoomMembers);
+  yield takeLatest(types.MERGE_EXTRA_ROOM_MEMBERS, mergeExtraRoomMembers);
 }
 
 function* getConversations() {
@@ -50,8 +53,6 @@ function* getConversations() {
         count: appConfig.recordsPerPage,
       }),
     );
-
-    console.log('getConversations', {response});
 
     const conversations = mapConversations(auth.user, response.data?.groups);
 
@@ -72,6 +73,43 @@ function* mergeExtraConversations() {
   const {canLoadMore, loading} = chat.conversations;
   if (!loading && canLoadMore) {
     yield put(actions.getConversations());
+  }
+}
+
+function* getRoomMembers() {
+  try {
+    const {chat} = yield select();
+    const {offset, data} = chat.members;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getRoomMembers(
+        {
+          offset,
+          count: appConfig.recordsPerPage,
+        },
+        chat.conversation?._id,
+      ),
+    );
+
+    const members = mapUsers(response.data?.members);
+
+    if (data.length === 0) {
+      yield put(actions.setRoomMembers(members));
+      if (members.length === appConfig.recordsPerPage)
+        yield put(actions.getRoomMembers());
+    } else {
+      yield put(actions.setExtraRoomMembers(members));
+    }
+  } catch (err) {
+    console.log('getRoomMembers', err);
+  }
+}
+
+function* mergeExtraRoomMembers() {
+  const {chat} = yield select();
+  const {canLoadMore, loading} = chat.members;
+  if (!loading && canLoadMore) {
+    yield put(actions.getRoomMembers());
   }
 }
 
