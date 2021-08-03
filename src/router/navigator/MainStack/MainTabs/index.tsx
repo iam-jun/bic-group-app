@@ -39,6 +39,7 @@ const MainTabs = () => {
         // inactiveTintColor: inactiveColor,
         keyboardHidesTabBar: true,
         activeTintColor: colors.primary7,
+        inactiveTintColor: colors.textSecondary,
         activeBackgroundColor: colors.bgButtonSecondary,
         style: {
           // backgroundColor: tabBarBackground,
@@ -60,6 +61,7 @@ const MainTabs = () => {
                     <Icon
                       //@ts-ignore
                       icon={icon[name]}
+                      style={{padding: 0}}
                       size={24}
                       tintColor={color}
                     />
