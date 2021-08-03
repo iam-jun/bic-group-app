@@ -10,7 +10,7 @@ import {useWindowDimensions} from 'react-native';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
-import {bottomTabIcons} from '~/configs/navigator';
+import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -52,11 +52,12 @@ const MainTabs = () => {
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
+                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 if (!isBigTablet)
                   return (
                     <Icon
                       //@ts-ignore
-                      icon={bottomTabIcons[name]}
+                      icon={icon[name]}
                       size={24}
                       tintColor={color}
                     />

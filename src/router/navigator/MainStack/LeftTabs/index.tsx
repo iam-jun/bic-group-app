@@ -6,7 +6,7 @@ import Icon from '~/beinComponents/Icon';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
-import {bottomTabIcons} from '~/configs/navigator';
+import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 
 const Tab = createSideTabNavigator();
 
@@ -32,10 +32,11 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
+                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 return (
                   <Icon
                     //@ts-ignore
-                    icon={bottomTabIcons[name]}
+                    icon={icon[name]}
                     size={24}
                     tintColor={color}
                     bold={focused}
