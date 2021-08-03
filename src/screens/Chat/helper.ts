@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import {generateAvatar} from '~/utils/common';
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
@@ -40,13 +41,22 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
   };
 };
 
-export const mapMessage = (item: any): IMessage => ({
-  ...item,
-  room_id: item?.rid,
-  user: mapUser(item?.u),
-  updateAt: item?._updateAt,
-  text: item?.msg,
-});
+export const mapMessage = (item: any): IMessage => {
+  const user = mapUser(item?.u);
+  return {
+    ...item,
+    room_id: item?.rid,
+    user,
+    updateAt: item?._updateAt,
+    system: !!item.t,
+    text: item.t
+      ? i18next
+          .t(`chat:system_message_${item.t}`)
+          .replace('{0}', item.msg)
+          .replace('{1}', user.name)
+      : item?.msg,
+  };
+};
 
 export const mapUser = (item: any) => ({
   ...item,

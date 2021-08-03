@@ -13,11 +13,16 @@ import Reactions from './Reactions';
 import QuotedMessage from './QuotedMessage';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import Avatar from '~/beinComponents/Avatar';
+import SystemMessage from './SystemMessage';
 
-const MessageContainer: React.FC<MessageProps<GMessage>> = props => {
+const MessageContainer: React.FC<MessageProps<GMessage>> = (
+  props: MessageProps<GMessage>,
+) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {currentMessage, previousMessage, nextMessage} = props;
+
+  if (currentMessage?.system) return <SystemMessage {...currentMessage} />;
 
   const sameUserInPrevMessage =
     isSameUser(currentMessage || ({} as IMessage), previousMessage) &&
