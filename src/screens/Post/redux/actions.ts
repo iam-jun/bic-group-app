@@ -4,6 +4,7 @@ import {
   IPostActivity,
   IPostCreatePost,
   IActivityData,
+  IActivityImportant,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -22,6 +23,10 @@ const postActions = {
   }),
   setCreatePostChosenAudiences: (payload: IAudience[]) => ({
     type: postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES,
+    payload,
+  }),
+  setCreatePostImportant: (payload?: IActivityImportant) => ({
+    type: postTypes.SET_CREATE_POST_IMPORTANT,
     payload,
   }),
   setPostDetail: (payload: IPostActivity) => ({

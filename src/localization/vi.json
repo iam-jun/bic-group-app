@@ -11,6 +11,9 @@
     "btn_cancel": "Huỷ",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
+    "text_important": "Quan trọng",
+    "text_clear": "Xoá",
+    "text_not_set": "Chưa đặt",
     "text_ok": "OK",
     "text_error": "Lỗi",
     "text_loading": "Đang tải ..."
@@ -109,6 +112,8 @@
     "to": "đến",
     "and": "và",
     "other_places": "nơi khác",
+    "mark_as_important": "Bài viết Quan trọng",
+    "expire_on": "Ngày hết hạn:",
     "choose_group_people": "Choose group or people",
     "placeholder_audience_search": "Search for groups or people",
     "audience_selected": "Selected audiences",

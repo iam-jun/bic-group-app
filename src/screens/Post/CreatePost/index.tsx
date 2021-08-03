@@ -16,6 +16,7 @@ import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import FlashMessage from '~/beinComponents/FlashMessage';
 
 const CreatePost = () => {
   const toolbarModalizeRef = useRef();
@@ -26,7 +27,13 @@ const CreatePost = () => {
   const {colors} = theme;
 
   const createPostData = useCreatePost();
-  const {loading, data, tags = [], chosenAudiences = []} = createPostData || {};
+  const {
+    loading,
+    data,
+    tags = [],
+    chosenAudiences = [],
+    important,
+  } = createPostData || {};
   const {content, images, videos, files} = data || {};
   const actor = 9; //todo replace with BEIN userId later...
 
@@ -61,7 +68,22 @@ const CreatePost = () => {
     });
 
     const payload: IPostCreatePost = {actor, data, audience, tags};
-    dispatch(postActions.postCreateNewPost(payload));
+    if (important?.active) {
+      payload.important = important;
+    }
+    console.log(
+      '\x1b[36m',
+      '🐣 important | onPressPost : ',
+      JSON.stringify(important, undefined, 2),
+      '\x1b[0m',
+    );
+    console.log(
+      '\x1b[36m',
+      '🐣 payload | onPressPost : ',
+      JSON.stringify(payload, undefined, 2),
+      '\x1b[0m',
+    );
+    // dispatch(postActions.postCreateNewPost(payload));
   };
 
   const onChangeText = (text: string) => {
@@ -84,6 +106,14 @@ const CreatePost = () => {
           }}
           onPressButton={onPressPost}
         />
+        {important?.active && (
+          <FlashMessage
+            textProps={{variant: 'h6'}}
+            leftIcon={'InfoCircle'}
+            type={'important'}>
+            {t('common:text_important')}
+          </FlashMessage>
+        )}
         <CreatePostChosenAudiences />
         <Divider />
         <PostInput

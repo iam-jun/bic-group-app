@@ -68,6 +68,7 @@ export interface IPostCreatePost {
   data?: IActivityData;
   audience?: IPostAudience;
   tags?: number[];
+  important?: IActivityImportant;
 }
 
 export type IReact = 'like' | 'love' | string;

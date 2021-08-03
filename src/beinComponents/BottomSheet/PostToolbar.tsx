@@ -12,15 +12,22 @@ import {throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import {useDispatch} from 'react-redux';
 
 import BaseBottomSheet, {
   BaseBottomSheetProps,
 } from '~/beinComponents/BottomSheet/BaseBottomSheet';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+
+import {ITheme} from '~/theme/interfaces';
+import {useCreatePost} from '~/hooks/post';
+import commonActions, {IAction} from '~/constants/commonActions';
+import postActions from '~/screens/Post/redux/actions';
+import {useBaseHook} from '~/hooks';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -35,9 +42,15 @@ const PostToolbar = ({
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
+
+  const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme();
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
+
+  const createPostData = useCreatePost();
+  const {important} = createPostData || {};
 
   const openModal = throttle(() => {
     Keyboard.dismiss();
@@ -49,6 +62,31 @@ const PostToolbar = ({
     if (nativeEvent.velocityY < 0) {
       openModal();
     }
+  };
+
+  const onToggleImportant = (action: IAction) => {
+    const newImportant = {...important};
+    if (action === commonActions.checkBox) {
+      newImportant.active = true;
+    } else {
+      newImportant.active = false;
+    }
+    dispatch(postActions.setCreatePostImportant(newImportant));
+  };
+
+  const onSelectImportantDate = () => {
+    const newImportant = {...important};
+
+    alert('onSelectImportantDate');
+    newImportant.expiresTime = '10/01/2090';
+
+    dispatch(postActions.setCreatePostImportant(newImportant));
+  };
+
+  const onClearImportantDate = () => {
+    const newImportant = {...important};
+    newImportant.expiresTime = '';
+    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
   const onPressSelectImage = () => {
@@ -85,13 +123,50 @@ const PostToolbar = ({
     );
   };
 
+  const renderImportantDate = () => {
+    if (!important?.active) {
+      return null;
+    }
+
+    let expireDate = '';
+    if (important?.expiresTime) {
+      expireDate = 'something';
+    }
+
+    return (
+      <View style={styles.importantContainer}>
+        <Text useI18n>post:expire_on</Text>
+        {!!expireDate ? (
+          <>
+            <ButtonWrapper onPress={onSelectImportantDate}>
+              <Text style={styles.expireDate}>{expireDate}</Text>
+            </ButtonWrapper>
+            <ButtonWrapper onPress={onClearImportantDate}>
+              <Text.BodyM useI18n style={styles.expireClearButton}>
+                common:text_clear
+              </Text.BodyM>
+            </ButtonWrapper>
+          </>
+        ) : (
+          <ButtonWrapper onPress={onSelectImportantDate}>
+            <Text.BodyM useI18n style={styles.expireNotSetButton}>
+              common:text_not_set
+            </Text.BodyM>
+          </ButtonWrapper>
+        )}
+      </View>
+    );
+  };
+
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>
         <PrimaryItem
           height={48}
-          title={'Mark as Important'}
-          onPressToggle={action => alert('onPressToggle: ' + action)}
+          title={t('post:mark_as_important')}
+          toggleChecked={important?.active}
+          onPressToggle={onToggleImportant}
+          ContentComponent={renderImportantDate()}
         />
         <PrimaryItem
           height={48}
@@ -157,6 +232,21 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       paddingHorizontal: spacing?.padding.base,
       paddingBottom: spacing?.padding.base,
+    },
+    importantContainer: {
+      flexDirection: 'row',
+    },
+    expireDate: {
+      marginLeft: spacing?.margin.tiny,
+      textDecorationLine: 'underline',
+    },
+    expireClearButton: {
+      color: colors.primary7,
+      marginLeft: spacing?.margin.base,
+    },
+    expireNotSetButton: {
+      color: colors.primary7,
+      marginLeft: spacing?.margin.tiny,
     },
   });
 };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -25,6 +25,10 @@ const Toggle: React.FC<ToggleProps> = ({
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
   const styles = createStyles(theme, checked);
+
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
 
   const _onChangeValue = () => {
     const newValue = !checked;

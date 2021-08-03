@@ -10,12 +10,14 @@ import Icon from '~/beinComponents/Icon';
 import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
+import {useBaseHook} from '~/hooks';
 
 export interface PostViewProps {
   postData: IPostActivity;
 }
 
 const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme();
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
@@ -70,7 +72,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
         textProps={{variant: 'h6'}}
         leftIcon={'InfoCircle'}
         type={'important'}>
-        Important
+        {t('common:text_important')}
       </FlashMessage>
     );
   };
