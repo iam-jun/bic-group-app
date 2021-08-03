@@ -19,7 +19,8 @@ import BaseBottomSheet, {
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {ITheme} from '~/theme/interfaces';
-import Icon, {IconProps} from '~/beinComponents/Icon';
+import Icon from '~/beinComponents/Icon';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -37,12 +38,6 @@ const PostToolbar = ({
   const theme: ITheme = useTheme();
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
-
-  const leftIconProps: IconProps = {
-    size: 20,
-    tintColor: colors.primary7,
-    style: {marginRight: spacing?.margin.base},
-  };
 
   const openModal = throttle(() => {
     Keyboard.dismiss();
@@ -84,6 +79,7 @@ const PostToolbar = ({
             {renderToolbarButton('ImagePlus')}
             {renderToolbarButton('Link')}
           </TouchableOpacity>
+          <KeyboardSpacer iosOnly />
         </Animated.View>
       </PanGestureHandler>
     );
@@ -101,14 +97,24 @@ const PostToolbar = ({
           height={48}
           title={'Add Photo'}
           leftIcon={'ImagePlus'}
-          leftIconProps={leftIconProps}
+          leftIconProps={{
+            icon: 'ImagePlus',
+            size: 20,
+            tintColor: colors.primary7,
+            style: {marginRight: spacing?.margin.base},
+          }}
           onPress={onPressSelectImage}
         />
         <PrimaryItem
           height={48}
           title={'Add Files'}
           leftIcon={'Link'}
-          leftIconProps={leftIconProps}
+          leftIconProps={{
+            icon: 'Link',
+            size: 20,
+            tintColor: colors.primary7,
+            style: {marginRight: spacing?.margin.base},
+          }}
           onPress={onPressSelectFile}
         />
       </View>

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -69,9 +69,7 @@ const CreatePost = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+    <View style={styles.container}>
       <ScreenWrapper testID={'CreatePostScreen'}>
         <Header
           titleTextProps={{useI18n: true}}
@@ -95,7 +93,7 @@ const CreatePost = () => {
         />
         <PostToolbar modalizeRef={toolbarModalizeRef} />
       </ScreenWrapper>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
