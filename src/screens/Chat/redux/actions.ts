@@ -4,9 +4,10 @@ import {ISocketEvent} from '~/interfaces/ISocket';
 import {IUser} from '~/interfaces/IAuth';
 import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 
-const getData = (dataType: string, payload?: any) => ({
+const getData = (dataType: string, reset?: boolean, payload?: any) => ({
   type: Actions.GET_DATA,
   dataType,
+  reset,
   payload,
 });
 

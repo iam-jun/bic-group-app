@@ -7,6 +7,8 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useChat from '~/hooks/chat';
+import {useRootNavigation} from '~/hooks/navigation';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
@@ -15,15 +17,16 @@ const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {spacing}: ITheme = useTheme() as ITheme;
   const {conversation, members} = useChat();
+  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
-    dispatch(actions.getData('members', {roomId: conversation._id}));
+    dispatch(actions.getData('members', true, {roomId: conversation._id}));
   }, []);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onAddPress = () => {
-    console.log('onAddPress in development');
+    rootNavigation.navigate(chatStack.addMembers);
   };
 
   const onPressMenu = () => {
@@ -31,7 +34,7 @@ const GroupMembers = (): React.ReactElement => {
   };
 
   return (
-    <ScreenWrapper testID="CreateConversationScreen" isFullView>
+    <ScreenWrapper testID="GroupMembersScreen" isFullView>
       <Header
         title={i18next.t('chat:title_room_members')}
         menuIcon="addUser"

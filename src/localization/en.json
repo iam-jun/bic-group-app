@@ -21,7 +21,8 @@
     "text_description":"Description",
     "text_search": "Search",
     "text_read_more": "Read more",
-    "text_show_less": "Show less"
+    "text_show_less": "Show less",
+    "text_add": "Add"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -131,6 +132,7 @@
     "title": "Chat",
     "title_chat_detail":"Group chat info",
     "title_room_members":"Group Chat Members",
+    "title_invite_membesr":"Invite members",
     "placeholder_search": "Search...",
     "title_members": "Members",
     "title_add_participants": "Add participants",

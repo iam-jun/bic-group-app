@@ -44,7 +44,7 @@ const Conversation = () => {
   }, [conversation, messages.lastDate]);
 
   const _getMessages = () => {
-    dispatch(actions.getData('messages', {roomId: conversation._id}));
+    dispatch(actions.getData('messages', true, {roomId: conversation._id}));
   };
 
   const loadMoreMessages = () => {

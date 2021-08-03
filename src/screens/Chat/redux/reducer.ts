@@ -38,6 +38,7 @@ export interface IAction {
   type?: string;
   dataType: keyof typeof initDataState;
   payload?: any;
+  reset?: boolean;
 }
 
 const initState = {
@@ -61,7 +62,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
       return {
         ...state,
         [dataType]: {
-          ...state[dataType],
+          ...(action.reset ? initDataState[dataType] : state[dataType]),
           loading: state[dataType].data.length === 0,
           params: action.payload,
         },
@@ -139,15 +140,18 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         ...state,
         selectedUsers: !action.payload.selected
           ? [...selectedUsers, {...action.payload, selected: true}]
-          : selectedUsers.filter(user => user.id !== action.payload.id),
-        users: users.data.map((item: IUser) =>
-          item.id === action.payload.id
-            ? {
-                ...item,
-                selected: !item.selected,
-              }
-            : item,
-        ),
+          : selectedUsers.filter(user => user._id !== action.payload._id),
+        users: {
+          ...users,
+          data: users.data.map((item: IUser) =>
+            item._id === action.payload._id
+              ? {
+                  ...item,
+                  selected: !item.selected,
+                }
+              : item,
+          ),
+        },
       };
     case types.CREATE_CONVERSATION_SUCCESS:
       return {
