@@ -5,13 +5,14 @@ import {
   PlaceholderLine,
   Fade,
 } from 'rn-placeholder';
-import {getRandomInt} from '~/utils/generator';
+import {generateUniqueId, getRandomInt} from '~/utils/generator';
 
-const Message = () => {
+const LoadingMessage = () => {
   const count = getRandomInt(1, 3); // lines count
 
   return (
     <Placeholder
+      key={`loading-message-${generateUniqueId()}`}
       Animation={Fade}
       style={{
         marginVertical: 6,
@@ -20,13 +21,11 @@ const Message = () => {
       }}
       Left={() => (
         <PlaceholderMedia
-          style={[
-            {
-              width: 40,
-              height: 40,
-              borderRadius: 100,
-            },
-          ]}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 100,
+          }}
         />
       )}>
       {Array.from(Array(count).keys()).map((item, index) => (
@@ -40,4 +39,4 @@ const Message = () => {
   );
 };
 
-export default Message;
+export default LoadingMessage;

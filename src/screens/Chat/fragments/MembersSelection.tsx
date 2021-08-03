@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -19,14 +19,18 @@ export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
   selectable?: boolean;
   data: IUser[];
+  loading?: boolean;
   onPressMenu?: (user: IUser) => void;
+  onLoadMore: () => void;
 }
 
 const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectable,
   searchInputProps,
   data,
+  loading,
   onPressMenu,
+  onLoadMore,
 }: MembersSelectionProps): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -34,10 +38,6 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
 
   const dispatch = useDispatch();
   const {selectedUsers} = useChat();
-
-  useEffect(() => {
-    dispatch(actions.getUsers());
-  }, []);
 
   const onSelectUser = (user: IUser) => {
     dispatch(actions.selectUser(user));
@@ -93,7 +93,10 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
       <ListView
         title={i18next.t('common:text_all')}
         data={data}
+        loading={loading}
         renderItem={renderItemUser}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
