@@ -12,7 +12,7 @@
     "ios": "react-native run-ios",
     "start-android": "adb reverse tcp:8081 tcp:8081 && react-native start --port=8081",
     "build": "rm -rf dist/ && webpack --mode=production --config webpack.config.js",
-    "web": "webpack serve --mode=development --config webpack.config.js",
+    "web": "webpack serve --mode=development --config webpack.config.js --host 0.0.0.0",
     "test android dev": "detox test --configuration android.dev.debug",
     "test android dev-release": "detox test --configuration android.dev.release",
     "test": "detox"
@@ -25,6 +25,8 @@
     "@iconscout/react-unicons": "^1.1.6",
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/netinfo": "^6.0.0",
+    "@react-native-firebase/app": "^12.4.0",
+    "@react-native-firebase/messaging": "^12.4.0",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/material-top-tabs": "^5.3.15",
     "@react-navigation/native": "^5.9.4",
