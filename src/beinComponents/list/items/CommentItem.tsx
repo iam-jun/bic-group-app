@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -48,9 +48,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
     onPressReply?.(commentData);
   };
 
-  const renderCommentChildItem = ({item}: {item: IReaction}) => {
+  const renderCommentChildItem = useCallback(({item}) => {
     return <CommentView commentData={item} onPressReply={onPressReplyChild} />;
-  };
+  }, []);
 
   const renderCommentChildren = () => {
     if (commentChildren?.length <= 0) {
