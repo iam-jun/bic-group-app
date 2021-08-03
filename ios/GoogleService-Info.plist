@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>80653282796-q8urcq9969tvoogkkie8iiiqo79k964u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.80653282796-q8urcq9969tvoogkkie8iiiqo79k964u</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBRJ-KCGwRtwOxbHb2i2AAcJ-pS_jth5Aw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>80653282796</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.evol.bein.group</string>
+	<key>PROJECT_ID</key>
+	<string>bein-test-2754a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bein-test-2754a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:80653282796:ios:67529684718630bf88e4c9</string>
+</dict>
+</plist>
