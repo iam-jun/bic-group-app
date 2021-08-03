@@ -14,11 +14,13 @@ import actions from '../redux/actions';
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {spacing}: ITheme = useTheme() as ITheme;
-  const {members} = useChat();
+  const {conversation, members} = useChat();
 
   useEffect(() => {
-    dispatch(actions.getRoomMembers());
+    dispatch(actions.getData('members', {roomId: conversation._id}));
   }, []);
+
+  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onAddPress = () => {
     console.log('onAddPress in development');
@@ -38,10 +40,12 @@ const GroupMembers = (): React.ReactElement => {
       <ViewSpacing height={spacing.margin.base} />
       <MembersSelection
         data={members.data}
+        loading={members.loading}
         searchInputProps={{
           placeholder: i18next.t('chat:placeholder_members_search'),
         }}
         onPressMenu={onPressMenu}
+        onLoadMore={loadMoreData}
       />
     </ScreenWrapper>
   );

@@ -3,6 +3,20 @@ import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
 import {generateRoomName} from '~/utils/generator';
 
+export const mapData = (user: IUser, dataType: string, data: any) => {
+  switch (dataType) {
+    case 'users':
+    case 'members':
+      return mapUsers(data);
+    case 'groups':
+      return mapConversations(user, data);
+    case 'messages':
+      return mapMessages(data);
+    default:
+      return data;
+  }
+};
+
 export const mapConversations = (user: IUser, data?: []): IConversation[] =>
   (data || []).map((item: any) => mapConversation(user, item));
 

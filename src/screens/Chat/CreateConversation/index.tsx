@@ -24,8 +24,10 @@ const CreateConversation = (): React.ReactElement => {
   const {selectedUsers, users} = useChat();
 
   useEffect(() => {
-    dispatch(actions.getUsers());
+    dispatch(actions.getData('users'));
   }, []);
+
+  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onCreatePress = () => {
     dispatch(
@@ -56,7 +58,12 @@ const CreateConversation = (): React.ReactElement => {
         onPressButton={onCreatePress}
       />
       <ViewSpacing height={spacing?.margin.base} />
-      <MembersSelection selectable data={users} />
+      <MembersSelection
+        selectable
+        loading={users.loading}
+        data={users.data}
+        onLoadMore={loadMoreData}
+      />
     </ScreenWrapper>
   );
 };

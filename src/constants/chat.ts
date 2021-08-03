@@ -1,5 +1,4 @@
 export const chatSocketId = {
-  GET_MESSAGES: 'chat-socket-get-messages',
   SEND_MESSAGE: 'chat-socket-send-message',
   SUBSCRIBE_ROOMS_MESSAGES: 'chat-socket-subscribe-rooms-messages',
 };

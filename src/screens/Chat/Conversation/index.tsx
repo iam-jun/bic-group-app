@@ -5,28 +5,26 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import {
-  LoadingMessages,
-  MessageContainer,
-  ChatInput,
-  ChatFooter,
-  MessageOptionsModal,
-} from './fragments';
+import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import {chatSocketId} from '~/constants/chat';
 import {options} from '~/constants/messageOptions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
-import actions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import actions from '~/screens/Chat/redux/actions';
 import {sendMessage} from '~/services/chatSocket';
-import {useRootNavigation} from '~/hooks/navigation';
-import appConfig from '~/configs/appConfig';
-import {chatSocketId} from '~/constants/chat';
-import Header from '~/beinComponents/Header';
+import {
+  ChatFooter,
+  ChatInput,
+  LoadingMessage,
+  MessageContainer,
+  MessageOptionsModal,
+} from './fragments';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -46,28 +44,11 @@ const Conversation = () => {
   }, [conversation, messages.lastDate]);
 
   const _getMessages = () => {
-    if (messages.loading) return;
-
-    if (messages.data.length === 0) {
-      // Get messages to handle loading
-      dispatch(actions.getMessages());
-    }
-
-    sendMessage({
-      msg: 'method',
-      method: 'loadHistory',
-      id: chatSocketId.GET_MESSAGES,
-      params: [
-        conversation._id,
-        messages.lastDate,
-        appConfig.recordsPerPage,
-        Date.now(),
-      ],
-    });
+    dispatch(actions.getData('messages', {roomId: conversation._id}));
   };
 
   const loadMoreMessages = () => {
-    dispatch(actions.mergeExtraMessages());
+    dispatch(actions.mergeExtraData('messages'));
   };
 
   const _openImagePicker = () => {
@@ -134,48 +115,51 @@ const Conversation = () => {
   return (
     <ScreenWrapper isFullView testID="MessageScreen">
       <Header title={conversation.name} onPressMenu={goConversationDetail} />
-      {messages.loading ? (
-        <LoadingMessages />
-      ) : (
-        <GiftedChat
-          messages={messages.data}
-          onSend={messages => onSend(messages)}
-          user={{
-            _id: 1,
-          }}
-          scrollToBottom={true}
-          keyboardShouldPersistTaps="handled"
-          listViewProps={{
-            onEndReached: loadMoreMessages,
-            onEndReachedThreshold: 0.5,
-          }}
-          onLongPress={showOptions}
-          renderTime={() => null}
-          renderMessage={props => <MessageContainer {...props} />}
-          renderInputToolbar={props => (
-            <ChatInput
-              {...props}
-              /*
+
+      <GiftedChat
+        messages={messages.data}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: 1,
+        }}
+        scrollToBottom={true}
+        keyboardShouldPersistTaps="handled"
+        listViewProps={{
+          onEndReached: loadMoreMessages,
+          onEndReachedThreshold: 0.5,
+        }}
+        onLongPress={showOptions}
+        renderTime={() => null}
+        renderMessage={props =>
+          messages.loading ? (
+            <LoadingMessage />
+          ) : (
+            <MessageContainer {...props} />
+          )
+        }
+        renderInputToolbar={props => (
+          <ChatInput
+            {...props}
+            /*
                 InputToolbar has this props but
                 GiftedChat have not been define it on InputToolbarProps
               */
-              // @ts-ignore
-              // eslint-disable-next-line react/prop-types
-              onEnterPress={text => props.onSend({text: text.trim()}, true)}
-              openImagePicker={_openImagePicker}
-              openFilePicker={_openFilePicker}
+            // @ts-ignore
+            // eslint-disable-next-line react/prop-types
+            onEnterPress={text => props.onSend({text: text.trim()}, true)}
+            openImagePicker={_openImagePicker}
+            openFilePicker={_openFilePicker}
+          />
+        )}
+        renderChatFooter={() => {
+          return (
+            <ChatFooter
+              replyingMessage={replyingMessage}
+              onCancel={() => setReplyingMessage(undefined)}
             />
-          )}
-          renderChatFooter={() => {
-            return (
-              <ChatFooter
-                replyingMessage={replyingMessage}
-                onCancel={() => setReplyingMessage(undefined)}
-              />
-            );
-          }}
-        />
-      )}
+          );
+        }}
+      />
       <MessageOptionsModal
         ref={messageOptionsModalRef}
         onMenuPress={onMenuPress}
