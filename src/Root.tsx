@@ -52,12 +52,8 @@ export default (): React.ReactElement => {
   );
 
   // Init Get Stream
-  const feed = useSelector((state: any) => state.auth?.feed);
-  const streamClient = useGetStream(
-    feed?.accessToken ||
-      // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjcxNzY3MywiaWF0IjoxNjI2NzE3MzczfQ.wRWWzzsfZdl9iDdIS06DF_YB1AiQHuc6kBrTbdNoFFE',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjc2NjY3NywiaWF0IjoxNjI2NzY2Mzc3fQ.FyVz-BnouPE0Tu4j_NY1WCjAm53IwJUiak2df-VXhgk',
-  );
+  const user = useSelector((state: any) => state.auth.user);
+  const streamClient = useGetStream(user?.feed?.accessToken);
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
