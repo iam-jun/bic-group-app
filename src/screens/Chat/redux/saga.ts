@@ -1,37 +1,27 @@
-import {put, select, takeLatest} from 'redux-saga/effects';
-import {AxiosResponse} from 'axios';
-
-import {
-  mapConversation,
-  mapConversations,
-  mapData,
-  mapMessage,
-  mapMessages,
-  mapUser,
-  mapUsers,
-} from './../helper';
-
-import * as types from './constants';
-import actions from './actions';
-import {ISocketEvent} from '~/interfaces/ISocket';
-import {IObject} from '~/interfaces/common';
-import {
-  mapResponseSuccessBein,
-  makeHttpRequest,
-} from '~/services/httpApiRequest';
-import apiConfig from '~/configs/apiConfig';
-import {rootNavigationRef} from '~/router/navigator/refs';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {StackActions} from '@react-navigation/native';
+import {AxiosResponse} from 'axios';
+import {put, select, takeLatest} from 'redux-saga/effects';
+import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
-import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
+import {IObject} from '~/interfaces/common';
+import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
+import {ISocketEvent} from '~/interfaces/ISocket';
+import {withNavigation} from '~/router/helper';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import {makeHttpRequest} from '~/services/httpApiRequest';
+import {mapConversation, mapData, mapMessage} from './../helper';
+import actions from './actions';
+import * as types from './constants';
 
 /**
  * Chat
  * @param payload
  * @returns {IterableIterator<*>}
  */
+
+const navigation = withNavigation(rootNavigationRef);
 
 export default function* saga() {
   yield takeLatest(types.GET_DATA, getData);
@@ -46,6 +36,7 @@ function* getData({
 }: {
   type: string;
   payload: any;
+  reset: boolean;
   dataType: string;
 }) {
   try {
@@ -66,7 +57,7 @@ function* getData({
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
       if (result.length === appConfig.recordsPerPage)
-        yield put(actions.getData(dataType, payload));
+        yield put(actions.getData(dataType, false, payload));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -79,7 +70,7 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   const {chat} = yield select();
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
-    yield put(actions.getData(dataType, params));
+    yield put(actions.getData(dataType, false, params));
   }
 }
 
@@ -124,6 +115,15 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   }
 
   if (payload.msg !== 'result') return;
+  switch (payload.id) {
+    case chatSocketId.ADD_MEMBERS_TO_GROUP:
+      handleAddMember();
+      break;
+  }
+}
+
+function handleAddMember() {
+  navigation.replace(chatStack.conversation);
 }
 
 function* handleRoomsMessage(payload?: any) {

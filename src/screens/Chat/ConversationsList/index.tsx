@@ -38,7 +38,7 @@ const ConversationsList = (): React.ReactElement => {
   }, []);
 
   const _getConversations = () => {
-    dispatch(actions.getData('groups'));
+    dispatch(actions.getData('groups', true));
   };
 
   const loadMore = () => {
