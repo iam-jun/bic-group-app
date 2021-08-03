@@ -22,7 +22,10 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
 
   return (
     // @ts-ignore
-    <Tab.Navigator initialRouteName={initialRouteName} backBehavior={'history'}>
+    <Tab.Navigator
+      initialRouteName={initialRouteName}
+      activeBackgroundColor={colors.bgButtonSecondary}
+      backBehavior={'history'}>
       {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore

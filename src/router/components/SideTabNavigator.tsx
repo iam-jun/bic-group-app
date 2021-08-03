@@ -27,6 +27,7 @@ type TabNavigationConfig = {
   contentStyle?: StyleProp<ViewStyle>;
   activeTintColor: string;
   inactiveTintColor: string;
+  activeBackgroundColor: string;
 };
 
 type TabNavigationOptions = {
@@ -53,6 +54,7 @@ function SideTabNavigator({
   contentStyle,
   activeTintColor,
   inactiveTintColor,
+  activeBackgroundColor,
 }: Props) {
   const {state, navigation, descriptors} = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
@@ -92,7 +94,11 @@ function SideTabNavigator({
                     });
                   }
                 }}>
-                <View style={styles.iconWrapper}>
+                <View
+                  style={[
+                    styles.iconWrapper,
+                    focused ? {backgroundColor: activeBackgroundColor} : {},
+                  ]}>
                   {descriptors[route.key].options.title && (
                     <Text>{descriptors[route.key].options.title}</Text>
                   )}

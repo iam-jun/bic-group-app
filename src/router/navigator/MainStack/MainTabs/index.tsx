@@ -38,6 +38,8 @@ const MainTabs = () => {
         // activeTintColor: activeColor,
         // inactiveTintColor: inactiveColor,
         keyboardHidesTabBar: true,
+        activeTintColor: colors.primary7,
+        activeBackgroundColor: colors.bgButtonSecondary,
         style: {
           // backgroundColor: tabBarBackground,
           paddingBottom: !isPhone ? 0 : insets.bottom,
@@ -48,7 +50,7 @@ const MainTabs = () => {
           // @ts-ignore
           <Tab.Screen
             key={'tabs' + name}
-            name={name}
+            name={name.charAt(0).toUpperCase() + name.slice(1)} // Just capitalize name
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
