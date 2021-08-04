@@ -69,7 +69,7 @@ const MainTabs = () => {
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 const label = name.charAt(0).toUpperCase() + name.slice(1);
-                const styles = CreateStyle(theme, focused, isPhone);
+                const styles = CreateStyle(theme, focused, isPhone, color);
 
                 return (
                   <View style={styles.container}>
@@ -97,7 +97,12 @@ const MainTabs = () => {
   );
 };
 
-const CreateStyle = (theme: ITheme, focused: boolean, isPhone: boolean) => {
+const CreateStyle = (
+  theme: ITheme,
+  focused: boolean,
+  isPhone: boolean,
+  color: string,
+) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -109,7 +114,7 @@ const CreateStyle = (theme: ITheme, focused: boolean, isPhone: boolean) => {
       backgroundColor: focused ? colors.bgButtonSecondary : colors.background,
     },
     label: {
-      color: focused ? colors.primary7 : colors.textSecondary,
+      color: color,
     },
   });
 };
