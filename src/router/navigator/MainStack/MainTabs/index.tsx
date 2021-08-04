@@ -76,7 +76,7 @@ const MainTabs = () => {
                     <Icon
                       //@ts-ignore
                       icon={icon[name]}
-                      size={24}
+                      size={20}
                       tintColor="none"
                     />
                     {isPhone && (
@@ -86,6 +86,9 @@ const MainTabs = () => {
                 );
               },
               tabBarLabel: () => null,
+              tabBarBadgeStyle: {
+                backgroundColor: '#EC2626',
+              },
             }}
           />
         );
