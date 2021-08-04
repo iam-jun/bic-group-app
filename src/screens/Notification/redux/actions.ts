@@ -1,4 +1,4 @@
-import {IGetNotification} from '~/interfaces/INotification';
+import {IGetStreamDispatch} from '~/interfaces/common';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 const notificationsActions = {
@@ -16,7 +16,7 @@ const notificationsActions = {
   },
 
   //for saga
-  getNotifications: function (payload: IGetNotification) {
+  getNotifications: function (payload: IGetStreamDispatch) {
     return {
       type: notificationsTypes.GET_NOTIFICATIONS,
       payload,
