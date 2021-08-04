@@ -14,6 +14,8 @@
     "btn_create": "Create",
     "text_important": "Quan trọng",
     "text_clear": "Clear",
+    "text_set_time": "Set Time",
+    "text_set_date": "Set Date",
     "text_not_set": "Not set",
     "text_ok": "OK",
     "text_error": "Error",

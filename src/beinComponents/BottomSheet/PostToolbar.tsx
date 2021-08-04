@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Animated,
@@ -17,7 +17,6 @@ import {useDispatch} from 'react-redux';
 import BaseBottomSheet, {
   BaseBottomSheetProps,
 } from '~/beinComponents/BottomSheet/BaseBottomSheet';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
@@ -28,6 +27,11 @@ import {useCreatePost} from '~/hooks/post';
 import commonActions, {IAction} from '~/constants/commonActions';
 import postActions from '~/screens/Post/redux/actions';
 import {useBaseHook} from '~/hooks';
+import DateTimePicker from '~/beinComponents/DateTimePicker';
+import {formatDate} from '~/utils/formatData';
+import Button from '~/beinComponents/Button';
+import Divider from '~/beinComponents/Divider';
+import Toggle from '~/beinComponents/SelectionControl/Toggle';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -41,11 +45,13 @@ const PostToolbar = ({
   containerStyle,
   ...props
 }: PostToolbarProps) => {
+  const [selectingDate, setSelectingDate] = useState<boolean>();
+  const [selectingTime, setSelectingTime] = useState<boolean>();
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
@@ -74,15 +80,6 @@ const PostToolbar = ({
     dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
-  const onSelectImportantDate = () => {
-    const newImportant = {...important};
-
-    alert('onSelectImportantDate');
-    newImportant.expiresTime = '10/01/2090';
-
-    dispatch(postActions.setCreatePostImportant(newImportant));
-  };
-
   const onClearImportantDate = () => {
     const newImportant = {...important};
     newImportant.expiresTime = '';
@@ -95,6 +92,40 @@ const PostToolbar = ({
 
   const onPressSelectFile = () => {
     alert('select file');
+  };
+
+  const onChangeDatePicker = ({event, value}: any) => {
+    setSelectingDate(false);
+    setSelectingTime(false);
+    const newImportant = {...important};
+    let expiresTime = '';
+    if (value) {
+      const time = important.expiresTime
+        ? new Date(important.expiresTime)
+        : new Date();
+      const date = new Date(value);
+      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+      expiresTime = date.toISOString();
+    }
+    newImportant.expiresTime = expiresTime;
+    dispatch(postActions.setCreatePostImportant(newImportant));
+  };
+
+  const onChangeTimePicker = ({event, value}: any) => {
+    setSelectingDate(false);
+    setSelectingTime(false);
+    const newImportant = {...important};
+    let expiresTime = '';
+    if (value) {
+      const time = new Date(value);
+      const date = important.expiresTime
+        ? new Date(important.expiresTime)
+        : new Date();
+      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+      expiresTime = date.toISOString();
+    }
+    newImportant.expiresTime = expiresTime;
+    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
   const renderToolbarButton = (icon: any) => {
@@ -116,43 +147,98 @@ const PostToolbar = ({
             <Text.Subtitle style={{flex: 1}}>Add to your post</Text.Subtitle>
             {renderToolbarButton('ImagePlus')}
             {renderToolbarButton('Link')}
+            <View
+              style={[
+                styles.toolbarButton,
+                {backgroundColor: colors.primary7},
+              ]}>
+              <Icon
+                size={16}
+                tintColor={colors.iconTintReversed}
+                icon={'InfoCircle'}
+              />
+            </View>
           </TouchableOpacity>
           <KeyboardSpacer iosOnly />
+          {selectingDate && (
+            <DateTimePicker
+              value={
+                important.expiresTime
+                  ? new Date(important.expiresTime)
+                  : new Date()
+              }
+              onChange={onChangeDatePicker}
+            />
+          )}
+          {selectingTime && (
+            <DateTimePicker
+              mode={'time'}
+              value={
+                important.expiresTime
+                  ? new Date(important.expiresTime)
+                  : new Date()
+              }
+              onChange={onChangeTimePicker}
+            />
+          )}
         </Animated.View>
       </PanGestureHandler>
     );
   };
 
-  const renderImportantDate = () => {
-    if (!important?.active) {
-      return null;
-    }
+  const renderImportant = () => {
+    const {active, expiresTime} = important || {};
+    let date = t('common:text_set_date');
+    let time = t('common:text_set_time');
 
-    let expireDate = '';
-    if (important?.expiresTime) {
-      expireDate = 'something';
+    if (expiresTime) {
+      date = formatDate(expiresTime, 'MMM Do, YYYY');
+      time = formatDate(expiresTime, 'hh:mm A', 9999);
     }
 
     return (
       <View style={styles.importantContainer}>
-        <Text useI18n>post:expire_on</Text>
-        {!!expireDate ? (
-          <>
-            <ButtonWrapper onPress={onSelectImportantDate}>
-              <Text style={styles.expireDate}>{expireDate}</Text>
-            </ButtonWrapper>
-            <ButtonWrapper onPress={onClearImportantDate}>
-              <Text.BodyM useI18n style={styles.expireClearButton}>
-                common:text_clear
-              </Text.BodyM>
-            </ButtonWrapper>
-          </>
-        ) : (
-          <ButtonWrapper onPress={onSelectImportantDate}>
-            <Text.BodyM useI18n style={styles.expireNotSetButton}>
-              common:text_not_set
-            </Text.BodyM>
-          </ButtonWrapper>
+        <View style={styles.row}>
+          <Text.H6 style={styles.flex1} useI18n>
+            post:mark_as_important
+          </Text.H6>
+          <Toggle
+            isChecked={important?.active}
+            onActionPress={onToggleImportant}
+          />
+        </View>
+        {active && (
+          <View>
+            <Text.Subtitle color={colors.textSecondary}>
+              Choose expire date and time
+            </Text.Subtitle>
+            <View style={styles.importantButtons}>
+              <Button.Secondary
+                leftIcon={'CalendarAlt'}
+                leftIconProps={{icon: 'CalendarAlt', size: 14}}
+                style={styles.buttonDate}
+                onPress={() => setSelectingDate(true)}>
+                {date}
+              </Button.Secondary>
+              <Button.Secondary
+                leftIcon={'Clock'}
+                leftIconProps={{icon: 'Clock', size: 16}}
+                style={styles.buttonTime}
+                onPress={() => setSelectingTime(true)}>
+                {time}
+              </Button.Secondary>
+              {!!expiresTime && (
+                <Button
+                  useI18n
+                  style={styles.buttonClear}
+                  textProps={{color: colors.textInfo}}
+                  onPress={onClearImportantDate}>
+                  common:text_clear
+                </Button>
+              )}
+            </View>
+            <Divider />
+          </View>
         )}
       </View>
     );
@@ -161,13 +247,7 @@ const PostToolbar = ({
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>
-        <PrimaryItem
-          height={48}
-          title={t('post:mark_as_important')}
-          toggleChecked={important?.active}
-          onPressToggle={onToggleImportant}
-          ContentComponent={renderImportantDate()}
-        />
+        {renderImportant()}
         <PrimaryItem
           height={48}
           title={'Add Photo'}
@@ -211,6 +291,8 @@ const PostToolbar = ({
 const createStyle = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
+    row: {flexDirection: 'row'},
+    flex1: {flex: 1},
     toolbarStyle: {
       height: 52,
       backgroundColor: colors.background,
@@ -234,8 +316,19 @@ const createStyle = (theme: ITheme) => {
       paddingBottom: spacing?.padding.base,
     },
     importantContainer: {
-      flexDirection: 'row',
+      paddingHorizontal: spacing.padding.large,
+      minHeight: 48,
+      justifyContent: 'center',
     },
+    importantButtons: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingTop: spacing.padding.base,
+      paddingBottom: spacing.padding.large,
+    },
+    buttonTime: {flex: 1},
+    buttonDate: {flex: 1, marginRight: spacing.margin.base},
+    buttonClear: {padding: spacing.padding.small},
     expireDate: {
       marginLeft: spacing?.margin.tiny,
       textDecorationLine: 'underline',

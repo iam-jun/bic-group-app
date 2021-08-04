@@ -23,7 +23,7 @@ const CreatePost = () => {
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   const createPostData = useCreatePost();
@@ -83,7 +83,7 @@ const CreatePost = () => {
       JSON.stringify(payload, undefined, 2),
       '\x1b[0m',
     );
-    // dispatch(postActions.postCreateNewPost(payload));
+    dispatch(postActions.postCreateNewPost(payload));
   };
 
   const onChangeText = (text: string) => {
