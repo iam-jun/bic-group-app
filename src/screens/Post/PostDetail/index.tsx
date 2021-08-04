@@ -18,7 +18,7 @@ const PostDetail = () => {
   const [listComments, setListComments] = useState([]);
   const [loadingComment, setLoadingComment] = useState(false);
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const userId = 9; //todo replace with BEIN userId later...
