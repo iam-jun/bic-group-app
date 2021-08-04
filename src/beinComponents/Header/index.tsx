@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({
       ])}>
       {!hideBack && (
         <Icon
-          icon={'AngleLeftB'}
+          icon="iconBack"
           onPress={_onPressBack}
           hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
         />

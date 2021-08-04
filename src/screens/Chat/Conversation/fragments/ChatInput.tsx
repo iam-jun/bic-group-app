@@ -29,18 +29,16 @@ const ChatInput = (
     actionsVisible ? (
       <View style={styles.actions}>
         <Icon
-          tintColor={colors.black}
           isButton
           size={16}
-          icon="iconImageMultiple"
+          icon="iconAddImage"
           onPress={props.openImagePicker}
         />
         <Icon
           style={styles.icon}
-          tintColor={colors.black}
           isButton
           size={16}
-          icon="iconAttachment"
+          icon="attachment"
           onPress={props.openFilePicker}
         />
       </View>
@@ -48,7 +46,6 @@ const ChatInput = (
       <View style={styles.actions}>
         <Icon
           style={styles.icon}
-          tintColor={colors.black}
           size={16}
           icon="iconBack"
           onPress={() => setActionVisible(true)}

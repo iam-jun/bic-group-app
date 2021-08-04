@@ -84,7 +84,7 @@ const ListView: React.FC<ListViewProps> = ({
   isFullView,
   ...props
 }: ListViewProps) => {
-  const {colors}: ITheme = useTheme();
+  const {colors} = useTheme() as ITheme;
 
   const ItemComponent = items[type] || PrimaryItem;
   const LoadingPlaceholder = loadings[type];
@@ -147,9 +147,13 @@ const ListView: React.FC<ListViewProps> = ({
   return (
     <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
       {title && (
-        <Text.H6 style={{marginVertical: spacing.margin.small}}>
+        <Text.ButtonBase
+          style={{
+            marginVertical: spacing.margin.small,
+            marginHorizontal: spacing.margin.base,
+          }}>
           {title}
-        </Text.H6>
+        </Text.ButtonBase>
       )}
       <FlatList
         ref={listRef}
@@ -163,8 +167,9 @@ const ListView: React.FC<ListViewProps> = ({
         ListEmptyComponent={ListEmptyComponent}
         ItemSeparatorComponent={_renderItemSeparator}
         keyExtractor={(item, index) =>
-          `list-${type}-${index}-${item.id}` ||
-          _.uniqueId(`list-${type}-${index}`)
+          item.id || item._id
+            ? `list-${type}-${index}-${item.id || item._id}`
+            : _.uniqueId(`list-${type}-${index}`)
         }
         refreshControl={
           onRefresh ? (

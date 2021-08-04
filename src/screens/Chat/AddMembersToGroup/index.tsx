@@ -1,61 +1,60 @@
 import i18next from 'i18next';
 import React, {useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
-import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {roomTypes} from '~/constants/chat';
-import useAuth from '~/hooks/auth';
+import {chatSocketId} from '~/constants/chat';
 import useChat from '~/hooks/chat';
 import {IUser} from '~/interfaces/IAuth';
+import {sendMessage} from '~/services/chatSocket';
 import {ITheme} from '~/theme/interfaces';
-import {generateRoomName} from '~/utils/generator';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
 
-const CreateConversation = (): React.ReactElement => {
+const AddMembersToGroup = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
 
   const dispatch = useDispatch();
-  const {user} = useAuth();
-  const {selectedUsers, users} = useChat();
+  const {selectedUsers, users, conversation} = useChat();
 
   useEffect(() => {
-    dispatch(actions.getData('users', true));
+    dispatch(
+      actions.getData('users', true, {
+        __rooms: {$elemMatch: {$ne: conversation._id}},
+      }),
+    );
   }, []);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
-  const onCreatePress = () => {
-    dispatch(
-      actions.createConversation({
-        name: uuid.v4().toString(),
-        members: selectedUsers.map((user: IUser) => user.username),
-        customFields: {
-          type: roomTypes.QUICK,
-          name: generateRoomName(
-            user,
-            selectedUsers.slice(0, 2).map((user: IUser) => user.name),
-          ),
+  const onAddPress = () => {
+    sendMessage({
+      msg: 'method',
+      method: 'addUsersToRoom',
+      id: chatSocketId.ADD_MEMBERS_TO_GROUP,
+      params: [
+        {
+          rid: conversation._id,
+          users: selectedUsers.map((user: IUser) => user.username),
         },
-      }),
-    );
+      ],
+    });
   };
 
   return (
-    <ScreenWrapper testID="CreateConversationScreen" isFullView>
+    <ScreenWrapper testID="AddMembersToGroupScreen" isFullView>
       <Header
-        title={i18next.t('chat:title_add_participants')}
-        buttonText={i18next.t('common:btn_create')}
+        title={i18next.t('chat:title_invite_membesr')}
+        buttonText={i18next.t('common:text_add')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
           color: colors.primary7,
           textColor: colors.textReversed,
         }}
-        onPressButton={onCreatePress}
+        onPressButton={onAddPress}
       />
       <ViewSpacing height={spacing?.margin.base} />
       <MembersSelection
@@ -68,4 +67,4 @@ const CreateConversation = (): React.ReactElement => {
   );
 };
 
-export default CreateConversation;
+export default AddMembersToGroup;

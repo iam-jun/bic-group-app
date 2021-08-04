@@ -1,7 +1,7 @@
 export interface ITheme extends ReactNativePaper.Theme {
   dark: boolean;
   colors: IThemeColors;
-  spacing?: ISpacing;
+  spacing: ISpacing;
   dimension?: IDimension;
   shadow?: any;
   fontFamily?: any;

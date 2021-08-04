@@ -1,13 +1,11 @@
 export const HANDLE_EVENT = 'chat/HANDLE_EVENT';
-export const GET_CONVERSATIONS = 'chat/GET_CONVERSATIONS';
-export const SET_CONVERSATIONS = 'chat/SET_CONVERSATIONS';
-export const SET_EXTRA_CONVERSATIONS = 'chat/SET_EXTRA_CONVERSATIONS';
-export const MERGE_EXTRA_CONVERSATIONS = 'chat/MERGE_EXTRA_CONVERSATIONS';
+export const GET_DATA = 'chat/GET_DATA';
+export const SET_DATA = 'chat/SET_DATA';
+export const SET_EXTRA_DATA = 'chat/SET_EXTRA_DATA';
+export const MERGE_EXTRA_DATA = 'chat/MERGE_EXTRA_DATA';
+
 export const SELECT_CONVERSATION = 'chat/SELECT_CONVERSATION';
-export const GET_MESSAGES = 'chat/GET_MESSAGES';
-export const SET_MESSAGES = 'chat/SET_MESSAGES';
-export const SET_EXTRA_MESSAGES = 'chat/SET_EXTRA_MESSAGES';
-export const MERGE_EXTRA_MESSAGES = 'chat/MERGE_EXTRA_MESSAGES';
+
 export const SEND_MESSAGE = 'chat/SEND_MESSAGE';
 export const REACT_MESSAGE = 'chat/REACT_MESSAGE';
 export const GET_USERS = 'chat/GET_USERS';

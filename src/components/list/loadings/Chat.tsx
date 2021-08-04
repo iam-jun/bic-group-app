@@ -7,7 +7,7 @@ import {
 } from 'rn-placeholder';
 import {getRandomInt} from '~/utils/generator';
 
-const Message = () => {
+const Chat = () => {
   const count = getRandomInt(1, 3); // lines count
 
   return (
@@ -18,10 +18,9 @@ const Message = () => {
         marginHorizontal: 15,
         borderRadius: 4,
       }}
-      Left={props => (
+      Left={() => (
         <PlaceholderMedia
           style={[
-            props.style,
             {
               width: 40,
               height: 40,
@@ -30,8 +29,9 @@ const Message = () => {
           ]}
         />
       )}>
-      {Array.from(Array(count).keys()).map(item => (
+      {Array.from(Array(count).keys()).map((item, index) => (
         <PlaceholderLine
+          key={`loading-room-line-${index}`}
           style={{marginTop: 1}}
           width={getRandomInt(3, 7) * 10}
         />
@@ -40,4 +40,4 @@ const Message = () => {
   );
 };
 
-export default Message;
+export default Chat;

@@ -1,3 +1,4 @@
+import messaging from '@react-native-firebase/messaging';
 import React, {useState, useEffect} from 'react';
 import {StatusBar, Platform, NativeModules, LogBox} from 'react-native';
 import {useTranslation} from 'react-i18next';
@@ -52,8 +53,8 @@ export default (): React.ReactElement => {
   );
 
   // Init Get Stream
-  const user = useSelector((state: any) => state.auth.user);
-  const streamClient = useGetStream(user?.feed?.accessToken);
+  const auth = useSelector((state: any) => state.auth);
+  const streamClient = useGetStream(auth?.feed?.accessToken);
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
@@ -70,6 +71,16 @@ export default (): React.ReactElement => {
   useEffect(() => {
     setUpResource();
     setUpLanguage();
+    try {
+      messaging()
+        .getToken()
+        .then(deviceToken => {
+          console.log('deviceToken:', deviceToken);
+          // TODO: register token with BE
+        });
+    } catch (e) {
+      console.log('Setup device token error:', e);
+    }
   }, []);
 
   /* Change language */
