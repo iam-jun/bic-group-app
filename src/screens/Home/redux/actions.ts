@@ -1,3 +1,4 @@
+import {IGetStreamDispatch} from '~/interfaces/common';
 import {IPostActivity} from '~/interfaces/IPost';
 import homeTypes from './types';
 
@@ -16,7 +17,7 @@ const homeActions = {
   },
 
   // FOR SAGA:
-  getHomePosts: (payload?: number) => {
+  getHomePosts: (payload: IGetStreamDispatch) => {
     return {
       type: homeTypes.GET_HOME_POSTS,
       payload,

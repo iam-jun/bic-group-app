@@ -1,30 +1,40 @@
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {makeHttpRequest} from '~/services/httpApiRequest';
-
-export const homeApiConfig = {
-  // TODO: will need to change API url
-  getHomePosts: (userId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${userId}/timeline`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
-};
+import {StreamClient} from 'getstream';
+import {makeGetStreamRequest} from '~/services/httpApiRequest';
 
 const homeDataHelper = {
-  getHomePosts: async (userId: number) => {
-    try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getHomePosts(userId),
+  getHomePosts: async (userId: string, streamClient?: StreamClient) => {
+    if (streamClient) {
+      const streamOptions = {
+        offset: 0,
+        limit: 10,
+
+        user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
+        ownReactions: true,
+        withOwnReactions: true,
+        withOwnChildren: false,
+        withRecentReactions: true, // tra về 10 reaction moi nhat
+        withReactionCounts: true, // đếm số lượng reaction
+        enrich: true, // giữ liệu sẽ được mở rộng ra, lấy thêm được thông tin user và group
+      };
+
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'newsfeed',
+        userId,
+        'get',
+        streamOptions,
       );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
+
+      // console.log(
+      //   '\x1b[36m',
+      //   '🐣  | getHomePosts : ',
+      //   JSON.stringify(data.results, undefined, 2),
+      //   '\x1b[0m',
+      // );
+
+      return data.results;
     }
+    return;
   },
 };
 

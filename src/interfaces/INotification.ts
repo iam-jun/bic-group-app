@@ -1,10 +1,4 @@
-import {StreamClient} from 'getstream';
 import {IGetStreamUser, IGetStreamPost, IReaction} from './IPost';
-
-export interface IGetNotification {
-  streamClient: StreamClient;
-  userId: string;
-}
 
 export interface IGetStreamNotificationActivity {
   actor: IGetStreamUser;

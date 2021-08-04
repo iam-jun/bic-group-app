@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -11,22 +11,30 @@ import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import useHome from '~/hooks/home';
+import {AppContext} from '~/contexts/AppContext';
 import homeActions from '~/screens/Home/redux/actions';
 
 const Newsfeed = () => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const homePostsData = useHome();
   const {loadingHomePosts, homePosts} = homePostsData;
   const dispatch = useDispatch();
+  const {streamClient} = useContext(AppContext);
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
 
   useEffect(() => {
-    // TODO: will need to change the id
-    dispatch(homeActions.getHomePosts(1));
+    // TODO: will need to change userId
+    const userId = 9;
+    dispatch(
+      homeActions.getHomePosts({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
   }, []);
 
   return (

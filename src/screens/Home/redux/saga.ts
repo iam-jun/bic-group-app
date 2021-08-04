@@ -2,16 +2,19 @@ import {put, takeLatest} from 'redux-saga/effects';
 import homeTypes from '~/screens/Home/redux/types';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
+import {IGetStreamDispatch} from '~/interfaces/common';
 
 export default function* homeSaga() {
   yield takeLatest(homeTypes.GET_HOME_POSTS, getHomePosts);
 }
 
-function* getHomePosts({payload}: {payload: number}) {
+function* getHomePosts({payload}: {payload: IGetStreamDispatch}) {
   try {
+    const {userId, streamClient} = payload;
     yield put(homeActions.setLoadingHomePosts(true));
 
-    const result = yield requestHomePosts(payload);
+    // const result = yield requestHomePosts(payload);
+    const result = yield homeDataHelper.getHomePosts(userId, streamClient);
     yield put(homeActions.setHomePosts(result));
 
     yield put(homeActions.setLoadingHomePosts(false));
@@ -19,19 +22,3 @@ function* getHomePosts({payload}: {payload: number}) {
     console.log('getHomePosts error --->', error);
   }
 }
-
-const requestHomePosts = async (userId: number) => {
-  try {
-    const response = await homeDataHelper.getHomePosts(userId);
-    if (response.code === 200 && response.data?.length > 0) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestHomePosts catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-  }
-};
