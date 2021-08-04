@@ -6,6 +6,7 @@ import chatSaga from '../screens/Chat/redux/saga';
 import groupsSaga from '~/screens/Groups/redux/saga';
 import postSaga from '~/screens/Post/redux/saga';
 import homeSaga from '~/screens/Home/redux/saga';
+import notifications from '~/screens/Notification/redux/saga';
 
 export default function* rootSagas() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSagas() {
     groupsSaga(),
     postSaga(),
     homeSaga(),
+    notifications(),
   ]);
 }

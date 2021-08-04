@@ -1,4 +1,5 @@
 import {AxiosRequestConfig} from 'axios';
+import {ICreateRoomReq, IPaginationParams} from '~/interfaces/IHttpRequest';
 
 const providers = {
   bein: {
@@ -16,12 +17,51 @@ const providers = {
 };
 
 const Chat = {
-  getDirectMessages: (): HttpApiRequestConfig => {
+  groups: (params: IPaginationParams): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}im.list`,
+      url: `${providers.chat.url}groups.listAll`,
       method: 'get',
       useRetry: true,
       provider: providers.chat,
+      params,
+    };
+  },
+  createRoom: (data: ICreateRoomReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.create`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data,
+    };
+  },
+  users: (params: IPaginationParams & {params: any}) => {
+    return {
+      url: `${providers.chat.url}users.list`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  messages: (params: IPaginationParams & {roomId: string}) => {
+    return {
+      url: `${providers.chat.url}groups.history`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  members: (
+    params: IPaginationParams & {roomId: string},
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.members`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
     };
   },
 };
@@ -33,14 +73,6 @@ const App = {
       method: 'get',
       provider: providers.bein,
       useRetry: true,
-    };
-  },
-  users: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}users`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: false,
     };
   },
   tokens: (): HttpApiRequestConfig => {

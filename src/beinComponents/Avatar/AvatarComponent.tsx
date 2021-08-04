@@ -33,7 +33,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badgeBottom,
   isRounded,
 }: AvatarProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension, colors} = theme;
   const styles = creatStyle(theme);
 
@@ -69,7 +69,13 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Icon size={actionIconSize} icon={actionIcon} onPress={onPressAction} />
+        {actionIcon && (
+          <Icon
+            size={actionIconSize}
+            icon={actionIcon}
+            onPress={onPressAction}
+          />
+        )}
       </View>
     );
   };

@@ -1,98 +1,47 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import React, {useEffect} from 'react';
+import {useTheme} from 'react-native-paper';
 import uuid from 'react-native-uuid';
-
-import {IObject} from '~/interfaces/common';
-import {Container, Text, ViewSpacing} from '~/components';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {spacing} from '~/theme';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
-import ListView from '~/beinComponents/list/ListView';
+import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
-import actions from '../redux/actions';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {roomTypes} from '~/constants/chat';
+import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IUser} from '~/interfaces/IAuth';
-import Avatar from '~/beinComponents/Avatar';
 import {ITheme} from '~/theme/interfaces';
-import {sendMessage} from '~/services/chatSocket';
-import {
-  CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
-  CHAT_SOCKET_CREATE_GROUP_CHAT_ID,
-} from '~/services/constants';
+import {generateRoomName} from '~/utils/generator';
+import MembersSelection from '../fragments/MembersSelection';
+import actions from '../redux/actions';
 
 const CreateConversation = (): React.ReactElement => {
-  const theme: ITheme = useTheme();
-  const styles = createStyles(theme);
-  const {colors} = theme;
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors, spacing} = theme;
 
   const dispatch = useDispatch();
-  const {users, selectedUsers} = useChat();
+  const {user} = useAuth();
+  const {selectedUsers, users} = useChat();
 
   useEffect(() => {
-    dispatch(actions.getUsers());
+    dispatch(actions.getData('users', true));
   }, []);
 
-  const onNextPress = () => {
-    if (selectedUsers.length > 1) createGroupChat();
-    else createDirectChat();
-  };
+  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
-  const createDirectChat = () => {
-    sendMessage({
-      msg: 'method',
-      method: 'createDirectMessage',
-      id: CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
-      params: selectedUsers.map((user: IUser) => user.username),
-    });
-  };
-
-  const createGroupChat = () => {
-    sendMessage({
-      msg: 'method',
-      method: 'createChannel',
-      id: CHAT_SOCKET_CREATE_GROUP_CHAT_ID,
-      params: [
-        uuid.v4(),
-        selectedUsers.map((user: IUser) => user.username),
-        false, // Boolean - whether the channel is read only or not
-      ],
-    });
-  };
-
-  const onSelectUser = (user: IUser) => {
-    dispatch(actions.selectUser(user));
-  };
-
-  const renderItemUser = ({item}: {item: IUser; index: number}) => {
-    return (
-      <PrimaryItem
-        title={item.name}
-        isChecked={item.selected}
-        LeftComponent={
-          <Avatar.Large style={styles.marginRight} source={item.avatar} />
-        }
-        onPressCheckbox={() => onSelectUser(item)}
-      />
-    );
-  };
-
-  const renderItemSelectedUser = ({item}: {item: IUser; index: number}) => {
-    return (
-      <View style={styles.itemSelectedUser}>
-        <Avatar.Large
-          source={item.avatar}
-          actionIcon="iconClose"
-          onPressAction={() => onSelectUser(item)}
-        />
-        <ViewSpacing height={spacing.margin.small} />
-        <Text.H6 numberOfLines={1} ellipsizeMode="tail">
-          {item.name}
-        </Text.H6>
-      </View>
+  const onCreatePress = () => {
+    dispatch(
+      actions.createConversation({
+        name: uuid.v4().toString(),
+        members: selectedUsers.map((user: IUser) => user.username),
+        customFields: {
+          type: roomTypes.QUICK,
+          name: generateRoomName(
+            user,
+            selectedUsers.slice(0, 2).map((user: IUser) => user.name),
+          ),
+        },
+      }),
     );
   };
 
@@ -100,48 +49,23 @@ const CreateConversation = (): React.ReactElement => {
     <ScreenWrapper testID="CreateConversationScreen" isFullView>
       <Header
         title={i18next.t('chat:title_add_participants')}
-        buttonText={i18next.t('common:btn_next')}
+        buttonText={i18next.t('common:btn_create')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
           color: colors.primary7,
           textColor: colors.textReversed,
         }}
-        onPressButton={onNextPress}
+        onPressButton={onCreatePress}
       />
-      <Container isFullView>
-        <SearchInput />
-        <ViewSpacing height={spacing.margin.base} />
-        {selectedUsers.length > 0 && (
-          <ListView
-            title={'Chosen'}
-            data={selectedUsers}
-            horizontal
-            renderItem={renderItemSelectedUser}
-            renderItemSeparator={() => (
-              <ViewSpacing width={spacing.margin.base} />
-            )}
-          />
-        )}
-        <ViewSpacing height={spacing.margin.base} />
-        <ListView title={'All'} data={users} renderItem={renderItemUser} />
-      </Container>
+      <ViewSpacing height={spacing?.margin.base} />
+      <MembersSelection
+        selectable
+        loading={users.loading}
+        data={users.data}
+        onLoadMore={loadMoreData}
+      />
     </ScreenWrapper>
   );
-};
-
-const createStyles = (theme: IObject<any>) => {
-  const {dimension} = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    marginRight: {
-      marginRight: spacing.margin.base,
-    },
-    itemSelectedUser: {
-      width: dimension?.avatarSizes.large,
-    },
-  });
 };
 
 export default CreateConversation;

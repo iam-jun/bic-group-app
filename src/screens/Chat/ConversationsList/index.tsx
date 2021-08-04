@@ -14,9 +14,7 @@ import {spacing} from '~/theme';
 import actions from '~/screens/Chat/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {sendMessage} from '~/services/chatSocket';
 import useChat from '~/hooks/chat';
-import {CHAT_SOCKET_GET_CONVERSIONS_ID} from '~/services/constants';
 import Header from '~/beinComponents/Header';
 import i18next from 'i18next';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -32,21 +30,19 @@ const ConversationsList = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
-  const {conversations} = useChat();
-  const {data, loading} = conversations;
+  const {groups} = useChat();
+  const {data, loading} = groups;
 
   useEffect(() => {
     _getConversations();
   }, []);
 
   const _getConversations = () => {
-    dispatch(actions.setConversationLoading(true));
-    sendMessage({
-      msg: 'method',
-      method: 'rooms/get',
-      id: CHAT_SOCKET_GET_CONVERSIONS_ID,
-      // params: [{$date: 1480377601}],
-    });
+    dispatch(actions.getData('groups', true));
+  };
+
+  const loadMore = () => {
+    dispatch(actions.mergeExtraData('groups'));
   };
 
   const renderItem = ({item}: {item: IConversation; index: number}) => {
@@ -97,6 +93,8 @@ const ConversationsList = (): React.ReactElement => {
         data={data}
         renderItem={renderItem}
         renderItemSeparator={() => <Divider />}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
       />
     </ScreenWrapper>
   );

@@ -1,3 +1,4 @@
+import messaging from '@react-native-firebase/messaging';
 import React, {useState, useEffect} from 'react';
 import {StatusBar, Platform, NativeModules, LogBox} from 'react-native';
 import {useTranslation} from 'react-i18next';
@@ -27,8 +28,13 @@ import AlertModal from './components/modals/AlertModal';
 import {AppContext} from './contexts/AppContext';
 import {languages, AppConfig} from './configs';
 import localStorage from '~/services/localStorage';
+import moment from 'moment';
+import moments from './configs/moments';
 
-export default (): JSX.Element => {
+moment.updateLocale('en', moments.en);
+moment.updateLocale('vi', moments.vi);
+
+export default (): React.ReactElement => {
   LogBox.ignoreAllLogs();
 
   const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
@@ -47,12 +53,8 @@ export default (): JSX.Element => {
   );
 
   // Init Get Stream
-  const feed = useSelector((state: any) => state.auth?.feed);
-  const streamClient = useGetStream(
-    feed?.accessToken ||
-      // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjcxNzY3MywiaWF0IjoxNjI2NzE3MzczfQ.wRWWzzsfZdl9iDdIS06DF_YB1AiQHuc6kBrTbdNoFFE',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjc2NjY3NywiaWF0IjoxNjI2NzY2Mzc3fQ.FyVz-BnouPE0Tu4j_NY1WCjAm53IwJUiak2df-VXhgk',
-  );
+  const auth = useSelector((state: any) => state.auth);
+  const streamClient = useGetStream(auth?.feed?.accessToken);
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
@@ -69,6 +71,16 @@ export default (): JSX.Element => {
   useEffect(() => {
     setUpResource();
     setUpLanguage();
+    try {
+      messaging()
+        .getToken()
+        .then(deviceToken => {
+          console.log('deviceToken:', deviceToken);
+          // TODO: register token with BE
+        });
+    } catch (e) {
+      console.log('Setup device token error:', e);
+    }
   }, []);
 
   /* Change language */

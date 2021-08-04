@@ -1,31 +1,19 @@
-import {CHAT_SOCKET_CREATE_GROUP_CHAT_ID} from './../../../services/constants';
-import {put, select, takeLatest} from 'redux-saga/effects';
-import {AxiosResponse} from 'axios';
-
-import {
-  mapConversation,
-  mapConversations,
-  mapMessages,
-  mapUser,
-} from './../helper';
-import {CHAT_SOCKET_GET_MESSAGES_ID} from '~/services/constants';
-
-import * as types from './constants';
-import actions from './actions';
-import {ISocketEvent} from '~/interfaces/ISocket';
-import {IObject} from '~/interfaces/common';
-import {
-  CHAT_SOCKET_GET_CONVERSIONS_ID,
-  CHAT_SOCKET_CREATE_DIRECT_CHAT_ID,
-} from '~/services/constants';
-import {
-  mapResponseSuccessBein,
-  makeHttpRequest,
-} from '~/services/httpApiRequest';
-import apiConfig from '~/configs/apiConfig';
-import {rootNavigationRef} from '~/router/navigator/refs';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {StackActions} from '@react-navigation/native';
+import {AxiosResponse} from 'axios';
+import {put, select, takeLatest} from 'redux-saga/effects';
+import apiConfig from '~/configs/apiConfig';
+import appConfig from '~/configs/appConfig';
+import {chatSocketId, messageEventTypes} from '~/constants/chat';
+import {IObject} from '~/interfaces/common';
+import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
+import {ISocketEvent} from '~/interfaces/ISocket';
+import {withNavigation} from '~/router/helper';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import {makeHttpRequest} from '~/services/httpApiRequest';
+import {mapConversation, mapData, mapMessage} from './../helper';
+import actions from './actions';
+import * as types from './constants';
 
 /**
  * Chat
@@ -33,69 +21,125 @@ import {StackActions} from '@react-navigation/native';
  * @returns {IterableIterator<*>}
  */
 
+const navigation = withNavigation(rootNavigationRef);
+
 export default function* saga() {
+  yield takeLatest(types.GET_DATA, getData);
+  yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
-  yield takeLatest(types.GET_USERS, getUsers);
+  yield takeLatest(types.CREATE_CONVERSATION, createConversation);
+}
+
+function* getData({
+  dataType,
+  payload,
+}: {
+  type: string;
+  payload: any;
+  reset: boolean;
+  dataType: string;
+}) {
+  try {
+    const {auth, chat} = yield select();
+    const {offset, data} = chat[dataType];
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      //@ts-ignore
+      apiConfig.Chat[dataType]({
+        offset,
+        count: appConfig.recordsPerPage,
+        ...payload,
+      }),
+    );
+
+    const result = mapData(auth.user, dataType, response.data[dataType]);
+
+    if (data.length === 0) {
+      yield put(actions.setData(dataType, result));
+      if (result.length === appConfig.recordsPerPage)
+        yield put(actions.getData(dataType, false, payload));
+    } else {
+      yield put(actions.setExtraData(dataType, result));
+    }
+  } catch (err) {
+    console.log('getData', dataType, err);
+  }
+}
+
+function* mergeExtraData({dataType}: {type: string; dataType: string}) {
+  const {chat} = yield select();
+  const {canLoadMore, loading, params} = chat[dataType];
+  if (!loading && canLoadMore) {
+    yield put(actions.getData(dataType, false, params));
+  }
+}
+
+function* createConversation({
+  payload,
+}: {
+  payload: ICreateRoomReq;
+  type: string;
+}) {
+  try {
+    const state: IObject<any> = yield select();
+    const {auth} = state;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.createRoom(payload),
+    );
+    console.log(response);
+    const conversation = mapConversation(auth.user, response.data.channel);
+    yield put(actions.selectConversation(conversation));
+    yield put(actions.createConversationSuccess(conversation));
+    rootNavigationRef?.current?.dispatch(
+      StackActions.replace(chatStack.conversation),
+    );
+  } catch (err) {
+    console.log('createConversation', err);
+  }
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   console.log('handleEvent', payload);
 
-  if (payload.msg !== 'result') return;
+  /* Because subscription "stream-room-messages" event
+      always return id: "id" so we can't handle it by id.
+      [TO-DO] Need to check with BE
+  */
 
+  if (
+    payload.msg === 'changed' &&
+    payload.collection === 'stream-room-messages'
+  ) {
+    yield handleRoomsMessage(payload);
+  }
+
+  if (payload.msg !== 'result') return;
   switch (payload.id) {
-    case CHAT_SOCKET_GET_CONVERSIONS_ID:
-      yield handleConversations(payload.result);
-      break;
-    case CHAT_SOCKET_GET_MESSAGES_ID:
-      yield handleMessages(payload.result?.messages);
-      break;
-    case CHAT_SOCKET_CREATE_DIRECT_CHAT_ID:
-    case CHAT_SOCKET_CREATE_GROUP_CHAT_ID:
-      yield handleCreateMessage(payload.result);
+    case chatSocketId.ADD_MEMBERS_TO_GROUP:
+      handleAddMember();
       break;
   }
 }
 
-function* handleConversations(data: []) {
-  const state: IObject<any> = yield select();
-  const {auth} = state;
-
-  yield put(actions.setConversations(mapConversations(auth.user, data)));
+function handleAddMember() {
+  navigation.replace(chatStack.conversation);
 }
 
-function* handleMessages(data?: []) {
-  const state: IObject<any> = yield select();
+function* handleRoomsMessage(payload?: any) {
+  const data = payload.fields.args[0];
 
-  const {chat} = state;
-  const {messages} = chat;
-
-  if (messages.data.length === 0)
-    yield put(actions.setMessages(mapMessages(data)));
-  else yield put(actions.setExtraMessages(mapMessages(data)));
-}
-
-function* handleCreateMessage(data: any) {
-  const state: IObject<any> = yield select();
-  const {auth} = state;
-  const conversation = mapConversation(auth.user, data);
-  yield put(actions.selectConversation(conversation));
-  yield put(actions.createConversationSuccess(conversation));
-  rootNavigationRef?.current?.dispatch(
-    StackActions.replace(chatStack.conversation),
-  );
-}
-
-function* getUsers() {
-  try {
-    const httpResponse: AxiosResponse = yield makeHttpRequest(
-      apiConfig.App.users(),
-    );
-    if (httpResponse) {
-      const {data} = mapResponseSuccessBein(httpResponse);
-      yield put(actions.setUsers(data.map((item: any) => mapUser(item))));
-    }
-  } catch (e) {
-    console.log('getUsers error', e);
+  switch (data.t) {
+    case messageEventTypes.ADD_USER:
+    case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
+    case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
+    case messageEventTypes.ROOM_CHANGED_NAME:
+    case messageEventTypes.ROOM_CHANGED_TOPIC:
+      console.log('In development');
+      break;
+    // New message event doesn't have type
+    default:
+      yield put(actions.addNewMessage(mapMessage(data)));
+      break;
   }
 }

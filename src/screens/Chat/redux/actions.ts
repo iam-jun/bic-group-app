@@ -1,16 +1,31 @@
 import * as Actions from './constants';
-import {IConversation, IMessage} from '../../../interfaces/IChat';
+import {IConversation, IMessage} from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {IUser} from '~/interfaces/IAuth';
+import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 
-const setConversationLoading = (payload: boolean) => ({
-  type: Actions.SET_CONVERSATION_LOADING,
+const getData = (dataType: string, reset?: boolean, payload?: any) => ({
+  type: Actions.GET_DATA,
+  dataType,
+  reset,
   payload,
 });
 
-const setConversations = (payload: IConversation[]) => ({
-  type: Actions.SET_CONVERSATIONS,
+const setData = (dataType: string, payload: []) => ({
+  type: Actions.SET_DATA,
   payload,
+  dataType,
+});
+
+const setExtraData = (dataType: string, payload: []) => ({
+  type: Actions.SET_EXTRA_DATA,
+  payload,
+  dataType,
+});
+
+const mergeExtraData = (dataType: string) => ({
+  type: Actions.MERGE_EXTRA_DATA,
+  dataType,
 });
 
 const selectConversation = (payload: IConversation) => ({
@@ -20,24 +35,6 @@ const selectConversation = (payload: IConversation) => ({
 
 const handleEvent = (payload: ISocketEvent) => ({
   type: Actions.HANDLE_EVENT,
-  payload,
-});
-
-const getMessages = () => ({
-  type: Actions.GET_MESSAGES,
-});
-
-const setExtraMessages = (payload: IMessage[]) => ({
-  type: Actions.SET_EXTRA_MESSAGES,
-  payload,
-});
-
-const mergeExtraMessages = () => ({
-  type: Actions.MERGE_EXTRA_MESSAGES,
-});
-
-const setMessages = (payload: IMessage[]) => ({
-  type: Actions.SET_MESSAGES,
   payload,
 });
 
@@ -52,17 +49,13 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
   reactionType,
 });
 
-const getUsers = () => ({
-  type: Actions.GET_USERS,
-});
-
-const setUsers = (payload: IUser[]) => ({
-  type: Actions.SET_USERS,
+const selectUser = (payload: IUser) => ({
+  type: Actions.SELECT_USER,
   payload,
 });
 
-const selectUser = (payload: IUser) => ({
-  type: Actions.SELECT_USER,
+const createConversation = (payload: ICreateRoomReq) => ({
+  type: Actions.CREATE_CONVERSATION,
   payload,
 });
 
@@ -71,19 +64,22 @@ const createConversationSuccess = (payload: IConversation) => ({
   payload,
 });
 
+const addNewMessage = (payload: IMessage) => ({
+  type: Actions.ADD_NEW_MESSAGE,
+  payload,
+});
+
 export default {
-  setConversationLoading,
+  getData,
+  setData,
+  setExtraData,
+  mergeExtraData,
   handleEvent,
-  setConversations,
   selectConversation,
-  getMessages,
-  setMessages,
-  setExtraMessages,
-  mergeExtraMessages,
   sendMessage,
   reactMessage,
-  getUsers,
-  setUsers,
   selectUser,
+  createConversation,
   createConversationSuccess,
+  addNewMessage,
 };
