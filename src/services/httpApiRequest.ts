@@ -349,7 +349,7 @@ const refreshAuthTokens = async () => {
   try {
     const messaging = await initPushTokenMessage();
     const deviceToken = await messaging().getToken();
-    await makePushTokenRequest(deviceToken);
+    await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
     return true;
   } catch (e) {
     console.log('pushToken when refreshToken failed:', e);
@@ -426,13 +426,17 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   return axiosInstance(requestConfig);
 };
 
-const makePushTokenRequest = (deviceToken: string) => {
+const makePushTokenRequest = (
+  deviceToken: string,
+  chatToken?: string,
+  chatUserId?: string,
+) => {
   return makeHttpRequest(
     apiConfig.App.pushToken(
       deviceToken,
       Platform.OS,
-      getChatAuthInfo().accessToken,
-      getChatAuthInfo().userId,
+      chatToken || getChatAuthInfo().accessToken,
+      chatUserId || getChatAuthInfo().userId,
     ),
   );
 };

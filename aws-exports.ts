@@ -6,8 +6,8 @@ const awsmobile = {
   aws_cognito_identity_pool_id:
     'ap-southeast-1:c158f335-c3ed-480d-871c-dc672bde36ed',
   aws_cognito_region: 'ap-southeast-1',
-  aws_user_pools_id: 'ap-southeast-1_dsvSrNB6q',
-  aws_user_pools_web_client_id: '3e2i1kb4s29udcm398ckbkeid4',
+  aws_user_pools_id: 'ap-southeast-1_FhiXldsTQ',
+  aws_user_pools_web_client_id: '265e8ou8a3ifm1o5h05mk8sigt',
   oauth: {
     domain: 'bein.auth.ap-southeast-1.amazoncognito.com',
     responseType: 'token',
