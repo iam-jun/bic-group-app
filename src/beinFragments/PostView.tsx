@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect} from 'react';
+import React, {FC, useState, useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -14,6 +14,9 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
+import {useDispatch} from 'react-redux';
+import {AppContext} from '~/contexts/AppContext';
+import homeActions from '~/screens/Home/redux/actions';
 
 export interface PostViewProps {
   postData: IPostActivity;
@@ -23,6 +26,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
 
+  const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -33,6 +37,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   const {content} = data || {};
 
   const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
 
   const avatar = actor?.data?.avatarUrl;
   const actorName = actor?.data?.fullname;
@@ -94,14 +99,14 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
       postDataHelper
         .postMarkAsRead(id, userId)
         .then(response => {
-          console.log(
-            '\x1b[36m',
-            '🐣 response |  : ',
-            JSON.stringify(response, undefined, 2),
-            '\x1b[0m',
-          );
           if (response && response?.data) {
             setCalledMarkAsRead(true);
+            dispatch(
+              homeActions.getHomePosts({
+                streamClient,
+                userId: userId.toString(),
+              }),
+            );
           }
         })
         .catch(e => {
