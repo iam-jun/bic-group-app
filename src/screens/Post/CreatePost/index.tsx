@@ -17,6 +17,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import FlashMessage from '~/beinComponents/FlashMessage';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const CreatePost = () => {
   const toolbarModalizeRef = useRef();
@@ -35,7 +36,7 @@ const CreatePost = () => {
     important,
   } = createPostData || {};
   const {content, images, videos, files} = data || {};
-  const actor = 9; //todo replace with BEIN userId later...
+  const actor = useUserIdAuth();
 
   //Enable  Post button if :
   // + Has at least 1 audience AND

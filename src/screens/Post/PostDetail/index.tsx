@@ -12,6 +12,7 @@ import ListView from '~/beinComponents/list/ListView';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import Loading from '~/beinComponents/Loading';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const PostDetail = () => {
   const [commentText, setCommentText] = useState('');
@@ -21,7 +22,7 @@ const PostDetail = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const userId = 9; //todo replace with BEIN userId later...
+  const userId = useUserIdAuth();
 
   const postDetail: IPostActivity = usePostDetail() || {};
   const {id} = postDetail || {};

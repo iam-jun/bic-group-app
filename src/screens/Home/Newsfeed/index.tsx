@@ -36,7 +36,7 @@ const Newsfeed = () => {
         userId: userId.toString(),
       }),
     );
-  }, []);
+  }, [streamClient]);
 
   return (
     <View style={styles.container}>
