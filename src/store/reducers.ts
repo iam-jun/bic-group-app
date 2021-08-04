@@ -8,6 +8,7 @@ import auth from '../screens/Auth/redux/reducer';
 import chat from '../screens/Chat/redux/reducer';
 import groupsReducer from '~/screens/Groups/redux/reducer';
 import postReducer from '~/screens/Post/redux/reducer';
+import notificationsReducer from '~/screens/Notification/redux/reducer';
 
 const authPersistConfig = {
   key: 'auth',
@@ -22,6 +23,7 @@ const rootReducers = combineReducers({
   chat,
   post: postReducer,
   groups: groupsReducer,
+  notifications: notificationsReducer,
 });
 
 export default rootReducers;
