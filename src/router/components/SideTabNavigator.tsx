@@ -25,9 +25,9 @@ type TabNavigationConfig = {
   containerStyle?: StyleProp<ViewStyle>;
   tabBarStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
-  activeTintColor: string;
-  inactiveTintColor: string;
-  activeBackgroundColor: string;
+  activeTintColor?: string;
+  inactiveTintColor?: string;
+  activeBackgroundColor?: string;
 };
 
 type TabNavigationOptions = {
