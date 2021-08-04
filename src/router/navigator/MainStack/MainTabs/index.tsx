@@ -77,7 +77,7 @@ const MainTabs = () => {
                       //@ts-ignore
                       icon={icon[name]}
                       size={24}
-                      tintColor={color}
+                      tintColor="none"
                     />
                     {isPhone && (
                       <Text.BodyS style={styles.label}>{label}</Text.BodyS>

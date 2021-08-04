@@ -45,7 +45,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
                       //@ts-ignore
                       icon={icon[name]}
                       size={24}
-                      tintColor={color}
+                      tintColor="none"
                       bold={focused}
                     />
                   </View>
