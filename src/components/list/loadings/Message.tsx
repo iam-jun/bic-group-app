@@ -18,10 +18,9 @@ const Message = () => {
         marginHorizontal: 15,
         borderRadius: 4,
       }}
-      Left={props => (
+      Left={() => (
         <PlaceholderMedia
           style={[
-            props.style,
             {
               width: 40,
               height: 40,
@@ -30,8 +29,9 @@ const Message = () => {
           ]}
         />
       )}>
-      {Array.from(Array(count).keys()).map(item => (
+      {Array.from(Array(count).keys()).map((item, index) => (
         <PlaceholderLine
+          key={`loading-message-line-${index}`}
           style={{marginTop: 1}}
           width={getRandomInt(3, 7) * 10}
         />

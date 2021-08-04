@@ -17,7 +17,7 @@ const providers = {
 };
 
 const Chat = {
-  getRooms: (params: IPaginationParams): HttpApiRequestConfig => {
+  groups: (params: IPaginationParams): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}groups.listAll`,
       method: 'get',
@@ -35,6 +35,35 @@ const Chat = {
       data,
     };
   },
+  users: (params: IPaginationParams & {params: any}) => {
+    return {
+      url: `${providers.chat.url}users.list`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  messages: (params: IPaginationParams & {roomId: string}) => {
+    return {
+      url: `${providers.chat.url}groups.history`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  members: (
+    params: IPaginationParams & {roomId: string},
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.members`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
 };
 
 const App = {
@@ -44,14 +73,6 @@ const App = {
       method: 'get',
       provider: providers.bein,
       useRetry: true,
-    };
-  },
-  users: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}users`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: false,
     };
   },
   tokens: (): HttpApiRequestConfig => {

@@ -6,7 +6,7 @@ import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
 
-interface SearchInputProps {
+export interface SearchInputProps {
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?: (value: string) => void;
@@ -17,7 +17,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   placeholder,
   onChangeText,
 }: SearchInputProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
   const [text, setText] = useState<string>('');
@@ -31,7 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
     <View style={StyleSheet.flatten([styles.container, style])}>
       <View style={styles.itemContainer}>
         <Icon
-          icon={'Search'}
+          icon="search"
           size={14}
           style={styles.iconSearch}
           tintColor={theme.colors.textSecondary}
@@ -46,7 +46,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         />
         {!!text && (
           <Icon
-            icon={'iconClose'}
+            icon="iconClose"
             size={16}
             tintColor={theme.colors.iconTint}
             onPress={() => _onChangeText('')}

@@ -30,19 +30,19 @@ const ConversationsList = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
-  const {conversations} = useChat();
-  const {data, loading} = conversations;
+  const {groups} = useChat();
+  const {data, loading} = groups;
 
   useEffect(() => {
     _getConversations();
   }, []);
 
   const _getConversations = () => {
-    dispatch(actions.getConversations());
+    dispatch(actions.getData('groups', true));
   };
 
   const loadMore = () => {
-    dispatch(actions.mergeExtraConversations());
+    dispatch(actions.mergeExtraData('groups'));
   };
 
   const renderItem = ({item}: {item: IConversation; index: number}) => {

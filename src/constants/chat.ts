@@ -1,7 +1,7 @@
 export const chatSocketId = {
-  GET_MESSAGES: 'chat-socket-get-messages',
   SEND_MESSAGE: 'chat-socket-send-message',
   SUBSCRIBE_ROOMS_MESSAGES: 'chat-socket-subscribe-rooms-messages',
+  ADD_MEMBERS_TO_GROUP: 'chat-socket-add-members-to-groups',
 };
 
 export const roomTypes = {

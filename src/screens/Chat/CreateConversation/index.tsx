@@ -1,39 +1,33 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import React, {useEffect} from 'react';
+import {useTheme} from 'react-native-paper';
 import uuid from 'react-native-uuid';
-
-import {IObject} from '~/interfaces/common';
-import {Container, Text, ViewSpacing} from '~/components';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {spacing} from '~/theme';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
-import ListView from '~/beinComponents/list/ListView';
+import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
-import actions from '../redux/actions';
-import useChat from '~/hooks/chat';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {IUser} from '~/interfaces/IAuth';
-import Avatar from '~/beinComponents/Avatar';
-import {ITheme} from '~/theme/interfaces';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
+import useChat from '~/hooks/chat';
+import {IUser} from '~/interfaces/IAuth';
+import {ITheme} from '~/theme/interfaces';
 import {generateRoomName} from '~/utils/generator';
+import MembersSelection from '../fragments/MembersSelection';
+import actions from '../redux/actions';
 
 const CreateConversation = (): React.ReactElement => {
-  const theme: ITheme = useTheme();
-  const styles = createStyles(theme);
-  const {colors} = theme;
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors, spacing} = theme;
 
   const dispatch = useDispatch();
   const {user} = useAuth();
-  const {users, selectedUsers} = useChat();
+  const {selectedUsers, users} = useChat();
 
   useEffect(() => {
-    dispatch(actions.getUsers());
+    dispatch(actions.getData('users', true));
   }, []);
+
+  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onCreatePress = () => {
     dispatch(
@@ -51,39 +45,6 @@ const CreateConversation = (): React.ReactElement => {
     );
   };
 
-  const onSelectUser = (user: IUser) => {
-    dispatch(actions.selectUser(user));
-  };
-
-  const renderItemUser = ({item}: {item: IUser; index: number}) => {
-    return (
-      <PrimaryItem
-        title={item.name}
-        isChecked={item.selected}
-        LeftComponent={
-          <Avatar.Large style={styles.marginRight} source={item.avatar} />
-        }
-        onPressCheckbox={() => onSelectUser(item)}
-      />
-    );
-  };
-
-  const renderItemSelectedUser = ({item}: {item: IUser; index: number}) => {
-    return (
-      <View style={styles.itemSelectedUser}>
-        <Avatar.Large
-          source={item.avatar}
-          actionIcon="iconClose"
-          onPressAction={() => onSelectUser(item)}
-        />
-        <ViewSpacing height={spacing.margin.small} />
-        <Text.H6 numberOfLines={1} ellipsizeMode="tail">
-          {item.name}
-        </Text.H6>
-      </View>
-    );
-  };
-
   return (
     <ScreenWrapper testID="CreateConversationScreen" isFullView>
       <Header
@@ -96,44 +57,15 @@ const CreateConversation = (): React.ReactElement => {
         }}
         onPressButton={onCreatePress}
       />
-      <Container isFullView>
-        <SearchInput />
-        <ViewSpacing height={spacing.margin.base} />
-        {selectedUsers.length > 0 && (
-          <ListView
-            title={i18next.t('common:text_chosen')}
-            data={selectedUsers}
-            horizontal
-            renderItem={renderItemSelectedUser}
-            renderItemSeparator={() => (
-              <ViewSpacing width={spacing.margin.base} />
-            )}
-          />
-        )}
-        <ViewSpacing height={spacing.margin.base} />
-        <ListView
-          title={i18next.t('common:text_all')}
-          data={users}
-          renderItem={renderItemUser}
-        />
-      </Container>
+      <ViewSpacing height={spacing?.margin.base} />
+      <MembersSelection
+        selectable
+        loading={users.loading}
+        data={users.data}
+        onLoadMore={loadMoreData}
+      />
     </ScreenWrapper>
   );
-};
-
-const createStyles = (theme: IObject<any>) => {
-  const {dimension} = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    marginRight: {
-      marginRight: spacing.margin.base,
-    },
-    itemSelectedUser: {
-      width: dimension?.avatarSizes.large,
-    },
-  });
 };
 
 export default CreateConversation;
