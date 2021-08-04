@@ -61,6 +61,7 @@ export interface IPostActivity {
   tags?: string[];
   time?: string;
   important?: IActivityImportant;
+  own_reactions?: any;
 }
 
 export interface IPostCreatePost {

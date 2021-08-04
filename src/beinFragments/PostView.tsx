@@ -1,34 +1,73 @@
-import React, {FC} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Button from '~/beinComponents/Button/';
 import Icon from '~/beinComponents/Icon';
 import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {useUserIdAuth} from '~/hooks/auth';
 
 export interface PostViewProps {
   postData: IPostActivity;
 }
 
 const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
+  const [isImportant, setIsImportant] = useState(false);
+  const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
+
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {data, actor, audience, time, important} = postData || {};
+  const {id, data, actor, audience, time, important, own_reactions} =
+    postData || {};
   const {content} = data || {};
+
+  const userId = useUserIdAuth();
 
   const avatar = actor?.data?.avatarUrl;
   const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience);
   const seenCount = '123.456';
+
+  /**
+   * Check Important
+   * - important active = true
+   * - important expiresTime > now
+   * - Not mark as read
+   * - Not called mark as read
+   */
+  const checkImportant = () => {
+    const {active = false, expiresTime} = important || {};
+    let notExpired = false;
+    let notMarkAsRead = true;
+
+    if (expiresTime) {
+      const now = new Date();
+      notExpired = now.getTime() < new Date(expiresTime).getTime();
+    }
+
+    if (own_reactions?.mark_as_read?.length > 0) {
+      notMarkAsRead = false;
+    }
+
+    setIsImportant(active && notExpired && notMarkAsRead);
+  };
+
+  useEffect(() => {
+    if (important && important.active) {
+      checkImportant();
+    }
+  }, [important]);
 
   const onPressActor = () => {
     alert('onPressActor id: ' + actor);
@@ -50,6 +89,27 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
     alert('onPressComment');
   };
 
+  const onPressMarkAsRead = () => {
+    if (id) {
+      postDataHelper
+        .postMarkAsRead(id, userId)
+        .then(response => {
+          console.log(
+            '\x1b[36m',
+            '🐣 response |  : ',
+            JSON.stringify(response, undefined, 2),
+            '\x1b[0m',
+          );
+          if (response && response?.data) {
+            setCalledMarkAsRead(true);
+          }
+        })
+        .catch(e => {
+          console.log('\x1b[31m', '🐣️ onPressMarkAsRead |  : ', e, '\x1b[0m');
+        });
+    }
+  };
+
   const renderPostTime = () => {
     if (!time) {
       return null;
@@ -63,7 +123,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   };
 
   const renderImportant = () => {
-    if (!important) {
+    if (!isImportant) {
       return null;
     }
 
@@ -82,14 +142,14 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
       <View style={{flexDirection: 'row', marginTop: spacing?.margin.small}}>
         <Avatar.UltraLarge source={avatar} style={styles.avatar} />
         <View style={{flex: 1}}>
-          <ButtonWrapper
+          <Button
             textProps={{
               variant: 'h6',
               style: {flex: 1, alignSelf: 'auto'},
             }}
             onPress={onPressActor}>
             {actorName}
-          </ButtonWrapper>
+          </Button>
           <View style={{flexDirection: 'row'}}>
             <Text.H6S
               useI18n
@@ -97,9 +157,9 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
               style={styles.textTo}>
               post:to
             </Text.H6S>
-            <ButtonWrapper style={{flex: 1}} onPress={onPressShowAudiences}>
+            <Button style={{flex: 1}} onPress={onPressShowAudiences}>
               <Text.H6>{textAudiences}</Text.H6>
-            </ButtonWrapper>
+            </Button>
           </View>
           <View
             style={{
@@ -134,7 +194,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   const renderReactButtons = () => {
     return (
       <View style={styles.reactButtonContainer}>
-        <ButtonWrapper
+        <Button
           onPress={onPressReact}
           onLongPress={onLongPressReact}
           leftIcon={'iconReact'}
@@ -149,9 +209,9 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
           }}
           style={styles.buttonReact}>
           React
-        </ButtonWrapper>
+        </Button>
         <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
-        <ButtonWrapper
+        <Button
           onPress={onPressComment}
           leftIcon={'CommentAltDots'}
           leftIconProps={{
@@ -165,7 +225,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
           }}
           style={styles.buttonReact}>
           Comment
-        </ButtonWrapper>
+        </Button>
       </View>
     );
   };
@@ -183,6 +243,15 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
       {renderImportant()}
       {renderHeader()}
       {renderContent()}
+      {isImportant && (
+        <Button.Secondary
+          useI18n
+          style={{margin: spacing.margin.base}}
+          disabled={calledMarkAsRead}
+          onPress={onPressMarkAsRead}>
+          post:mark_as_read
+        </Button.Secondary>
+      )}
       {renderReactButtons()}
     </View>
   );

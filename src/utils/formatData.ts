@@ -9,7 +9,7 @@ export const formatNumber = (n: number) => {
 
 export const formatDate = (
   value: string | number | Date,
-  format: string,
+  format?: string,
   maxFromDays = 2,
 ) => {
   const formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
