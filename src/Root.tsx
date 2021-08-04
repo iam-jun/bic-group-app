@@ -53,8 +53,8 @@ export default (): React.ReactElement => {
   );
 
   // Init Get Stream
-  const user = useSelector((state: any) => state.auth.user);
-  const streamClient = useGetStream(user?.feed?.accessToken);
+  const auth = useSelector((state: any) => state.auth);
+  const streamClient = useGetStream(auth?.feed?.accessToken);
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
