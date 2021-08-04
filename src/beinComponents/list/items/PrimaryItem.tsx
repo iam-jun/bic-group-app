@@ -33,6 +33,7 @@ export interface PrimaryItemProps {
   checkboxProps?: CheckboxProps;
   onPress?: () => void;
   onPressCheckbox?: (action: IAction) => void;
+  toggleChecked?: boolean;
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: () => void;
@@ -55,6 +56,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   isChecked,
   checkboxProps,
   onPress,
+  toggleChecked,
   onPressToggle,
   onPressCheckbox,
   onPressEdit,
@@ -107,7 +109,11 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         />
       )}
       {onPressToggle && (
-        <Toggle style={styles.iconMarginLeft} onActionPress={onPressToggle} />
+        <Toggle
+          style={styles.iconMarginLeft}
+          isChecked={toggleChecked}
+          onActionPress={onPressToggle}
+        />
       )}
       {onPressEdit && (
         <Icon

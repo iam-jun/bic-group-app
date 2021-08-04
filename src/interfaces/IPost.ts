@@ -36,6 +36,11 @@ export interface IActivityData {
   files?: string[];
 }
 
+export interface IActivityImportant {
+  active?: boolean;
+  expiresTime?: string;
+}
+
 /**
   actor: userId
   - Getstream saved as string
@@ -55,6 +60,7 @@ export interface IPostActivity {
   audience?: IPostAudience;
   tags?: string[];
   time?: string;
+  important?: IActivityImportant;
 }
 
 export interface IPostCreatePost {
@@ -62,6 +68,7 @@ export interface IPostCreatePost {
   data?: IActivityData;
   audience?: IPostAudience;
   tags?: number[];
+  important?: IActivityImportant;
 }
 
 export type IReact = 'like' | 'love' | string;
@@ -90,4 +97,47 @@ export interface IReaction {
   parent?: string;
   latest_children?: any;
   children_counts?: any;
+}
+
+export interface IGetStreamAudienceUser {
+  id?: number | string;
+  collection?: string;
+  foreign_id: string;
+  data?: {
+    avatarUrl?: string;
+    fullname?: string;
+  };
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IGetStreamAudienceGroup {
+  id?: number | string;
+  collection?: string;
+  foreign_id: string;
+  data?: {
+    avatarUrl?: string;
+    name?: string;
+  };
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IGetStreamAudience {
+  groups: IGetStreamAudienceGroup[];
+  users: IGetStreamAudienceUser[];
+}
+
+export interface IGetStreamPost {
+  id?: string;
+  foreign_id?: string;
+  actor: IGetStreamUser;
+  audience: IGetStreamAudience;
+  verb: string;
+  type: string;
+  data: IActivityData;
+  object?: string;
+  origin?: string | null;
+  target?: string;
+  time?: string;
 }

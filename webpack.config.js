@@ -25,18 +25,17 @@ const compileNodeModules = [
   '@react-navigation/native',
   'react-native-screens',
   'react-native-paper',
-  'react-native-vector-icons',
   '@unimodules/react-native-adapter',
   'i18next',
   'react-i18next',
   'react-native-reanimate',
   'react-native-image-picker',
-  'react-native-vector-icons',
   '@react-native-async-storage/async-storage',
   'amazon-cognito-identity-js',
   'aws-amplify',
   'react-hook-form',
   'react-native-fast-image',
+  'react-native-vector-icons',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {

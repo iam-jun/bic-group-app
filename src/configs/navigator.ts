@@ -37,6 +37,14 @@ export const bottomTabIcons = {
   menus: 'iconTabMenu',
 };
 
+export const bottomTabIconsFocused = {
+  home: 'iconTabHomeBein',
+  groups: 'iconTabGroupsBein',
+  chat: 'iconTabChatBein',
+  notification: 'iconTabNotificationBein',
+  menus: 'iconTabMenuBein',
+};
+
 export const linkingConfig = {
   prefixes: ['https://bein.group', 'bein://'],
   config: {

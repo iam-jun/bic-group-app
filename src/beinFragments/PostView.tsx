@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -9,17 +9,20 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
+import FlashMessage from '~/beinComponents/FlashMessage';
+import {useBaseHook} from '~/hooks';
 
 export interface PostViewProps {
   postData: IPostActivity;
 }
 
-const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
+const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme();
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {data, actor, audience, time} = postData || {};
+  const {data, actor, audience, time, important} = postData || {};
   const {content} = data || {};
 
   const avatar = actor?.data?.avatarUrl;
@@ -57,6 +60,21 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
       postTime = formatDate(date) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
+  };
+
+  const renderImportant = () => {
+    if (!important) {
+      return null;
+    }
+
+    return (
+      <FlashMessage
+        textProps={{variant: 'h6'}}
+        leftIcon={'InfoCircle'}
+        type={'important'}>
+        {t('common:text_important')}
+      </FlashMessage>
+    );
   };
 
   const renderHeader = () => {
@@ -120,7 +138,11 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
           onPress={onPressReact}
           onLongPress={onLongPressReact}
           leftIcon={'iconReact'}
-          leftIconProps={{size: 14, tintColor: colors.textSecondary}}
+          leftIconProps={{
+            icon: 'iconReact',
+            size: 14,
+            tintColor: colors.textSecondary,
+          }}
           textProps={{
             variant: 'bodyM',
             color: colors.textSecondary,
@@ -132,7 +154,11 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
         <ButtonWrapper
           onPress={onPressComment}
           leftIcon={'CommentAltDots'}
-          leftIconProps={{size: 14, tintColor: colors.textSecondary}}
+          leftIconProps={{
+            icon: 'CommentAltDots',
+            size: 14,
+            tintColor: colors.textSecondary,
+          }}
           textProps={{
             variant: 'bodyM',
             color: colors.textSecondary,
@@ -154,6 +180,7 @@ const PostView: React.FC<PostViewProps> = ({postData}: PostViewProps) => {
 
   return (
     <View style={styles.container}>
+      {renderImportant()}
       {renderHeader()}
       {renderContent()}
       {renderReactButtons()}

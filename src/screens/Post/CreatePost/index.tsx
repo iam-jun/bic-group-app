@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -16,17 +16,24 @@ import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import FlashMessage from '~/beinComponents/FlashMessage';
 
 const CreatePost = () => {
   const toolbarModalizeRef = useRef();
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   const createPostData = useCreatePost();
-  const {loading, data, tags = [], chosenAudiences = []} = createPostData || {};
+  const {
+    loading,
+    data,
+    tags = [],
+    chosenAudiences = [],
+    important,
+  } = createPostData || {};
   const {content, images, videos, files} = data || {};
   const actor = 9; //todo replace with BEIN userId later...
 
@@ -61,6 +68,21 @@ const CreatePost = () => {
     });
 
     const payload: IPostCreatePost = {actor, data, audience, tags};
+    if (important?.active) {
+      payload.important = important;
+    }
+    console.log(
+      '\x1b[36m',
+      '🐣 important | onPressPost : ',
+      JSON.stringify(important, undefined, 2),
+      '\x1b[0m',
+    );
+    console.log(
+      '\x1b[36m',
+      '🐣 payload | onPressPost : ',
+      JSON.stringify(payload, undefined, 2),
+      '\x1b[0m',
+    );
     dispatch(postActions.postCreateNewPost(payload));
   };
 
@@ -69,9 +91,7 @@ const CreatePost = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+    <View style={styles.container}>
       <ScreenWrapper testID={'CreatePostScreen'}>
         <Header
           titleTextProps={{useI18n: true}}
@@ -86,6 +106,14 @@ const CreatePost = () => {
           }}
           onPressButton={onPressPost}
         />
+        {important?.active && (
+          <FlashMessage
+            textProps={{variant: 'h6'}}
+            leftIcon={'InfoCircle'}
+            type={'important'}>
+            {t('common:text_important')}
+          </FlashMessage>
+        )}
         <CreatePostChosenAudiences />
         <Divider />
         <PostInput
@@ -95,7 +123,7 @@ const CreatePost = () => {
         />
         <PostToolbar modalizeRef={toolbarModalizeRef} />
       </ScreenWrapper>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
