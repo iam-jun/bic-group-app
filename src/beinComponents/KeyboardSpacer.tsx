@@ -1,7 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import {Animated, Keyboard, Platform} from 'react-native';
 
-const KeyboardSpacer = ({extraHeight = 0}) => {
+export interface KeyboardSpacerProps {
+  iosOnly?: boolean;
+  extraHeight?: number;
+}
+
+const KeyboardSpacer: FC<KeyboardSpacerProps> = ({
+  extraHeight = 0,
+  iosOnly,
+}: KeyboardSpacerProps) => {
+  if (iosOnly && Platform.OS !== 'ios') {
+    return null;
+  }
+
   const [height, setHeight] = useState(0);
   const animatedValue = new Animated.Value(0);
   animatedValue.addListener(height => {
@@ -13,7 +25,7 @@ const KeyboardSpacer = ({extraHeight = 0}) => {
   const dismissEvent =
     Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
 
-  React.useEffect(() => {
+  useEffect(() => {
     const keyboardWillShowListener = Keyboard.addListener(showEvent, event => {
       if (event.endCoordinates?.height)
         Animated.timing(animatedValue, {
@@ -38,10 +50,7 @@ const KeyboardSpacer = ({extraHeight = 0}) => {
       keyboardWillShowListener.remove();
     };
   }, []);
-
-  return (
-    <Animated.View style={{width: '100%', height: height}}></Animated.View>
-  );
+  return <Animated.View style={{width: '100%', height: height}} />;
 };
 
 export default KeyboardSpacer;

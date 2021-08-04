@@ -36,6 +36,11 @@ export interface IActivityData {
   files?: string[];
 }
 
+export interface IActivityImportant {
+  active?: boolean;
+  expiresTime?: string;
+}
+
 /**
   actor: userId
   - Getstream saved as string
@@ -55,6 +60,7 @@ export interface IPostActivity {
   audience?: IPostAudience;
   tags?: string[];
   time?: string;
+  important?: IActivityImportant;
 }
 
 export interface IPostCreatePost {
@@ -62,6 +68,7 @@ export interface IPostCreatePost {
   data?: IActivityData;
   audience?: IPostAudience;
   tags?: number[];
+  important?: IActivityImportant;
 }
 
 export type IReact = 'like' | 'love' | string;

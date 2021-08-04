@@ -8,19 +8,23 @@ export const formatNumber = (n: number) => {
 };
 
 export const formatDate = (
-  value?: string | number | Date,
-  format: string = 'L',
-  maxFromDays: number = 2,
+  value: string | number | Date,
+  format: string,
+  maxFromDays = 2,
 ) => {
-  var formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
+  const formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
   const date = moment(value, formats, true);
-  if (!date.isValid()) return null;
+  if (!date.isValid()) return '';
 
-  const days = moment(new Date()).diff(date, 'days'); // today - future < 0
-  if (days < maxFromDays) value = moment(value).calendar();
-  else value = moment(value).format(format);
+  if (format) {
+    value = moment(value).format(format);
+  } else {
+    const days = moment(new Date()).diff(date, 'days'); // today - future < 0
+    if (days < maxFromDays) value = moment(value).calendar();
+    else value = moment(value).format('L');
+  }
 
-  return value;
+  return value || '';
 };
 
 export const formatText = (text_label: string, ...params: number[]): string => {
@@ -55,7 +59,7 @@ export const formatPhoneNumber = (text: string) => {
 
 export const toNumber = (text: string, decimalFixed: number) => {
   if (!text) return text;
-  let fixed = decimalFixed || 2;
+  const fixed = decimalFixed || 2;
   let value: string | number = text;
 
   text = text.replace(/,/g, '.');
