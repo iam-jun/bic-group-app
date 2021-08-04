@@ -54,9 +54,9 @@ const Icon: React.FC<IconProps> = ({
 
   let IconComponent, type, name, source;
 
-  if (Unicons[`${_icon}`] || Unicons[`Uil${_icon}`]) {
+  if (Unicons[`${_icon || icon}`] || Unicons[`Uil${_icon || icon}`]) {
     IconComponent = Unicons;
-    name = _icon;
+    name = _icon || icon;
   } else {
     IconComponent = SvgIcon;
     source = _icon;

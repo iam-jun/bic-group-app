@@ -90,6 +90,7 @@ const icons = {
   AngleRightB: 'AngleRightB',
   AngleDown: 'AngleDown',
   Edit: 'Edit',
+  Redo: 'Redo',
   EllipsisV: 'EllipsisV',
   EllipsisH: 'EllipsisH',
   InfoCircle: 'InfoCircle',
