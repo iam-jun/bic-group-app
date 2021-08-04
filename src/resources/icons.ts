@@ -91,6 +91,7 @@ const icons = {
   AngleDown: 'AngleDown',
   Edit: 'Edit',
   EllipsisV: 'EllipsisV',
+  EllipsisH: 'EllipsisH',
   iconEyeSeen,
   iconReact,
   iconDot,
