@@ -6,11 +6,12 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from '~/beinComponents/Icon';
 
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {useWindowDimensions} from 'react-native';
+import {useWindowDimensions, View, StyleSheet} from 'react-native';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
+import {Text} from '~/components';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -43,37 +44,71 @@ const MainTabs = () => {
         activeBackgroundColor: colors.bgButtonSecondary,
         style: {
           // backgroundColor: tabBarBackground,
+          height: 60,
           paddingBottom: !isPhone ? 0 : insets.bottom,
         },
-      }}>
+      }}
+      tabBarStyle={
+        isPhone
+          ? {}
+          : {
+              width: 64,
+              backgroundColor: colors.background,
+            }
+      }>
       {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore
           <Tab.Screen
             key={'tabs' + name}
-            name={name.charAt(0).toUpperCase() + name.slice(1)} // Just capitalize name
+            name={name}
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
+                if (isBigTablet) return null;
+
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
-                if (!isBigTablet)
-                  return (
+                const label = name.charAt(0).toUpperCase() + name.slice(1);
+                const styles = CreateStyle(theme, focused, isPhone);
+
+                return (
+                  <View style={styles.container}>
                     <Icon
                       //@ts-ignore
                       icon={icon[name]}
-                      style={{padding: 0}}
                       size={24}
                       tintColor={color}
                     />
-                  );
-                return null;
+                    {isPhone && (
+                      <Text.BodyS style={styles.label}>{label}</Text.BodyS>
+                    )}
+                  </View>
+                );
               },
+              tabBarLabel: () => null,
             }}
           />
         );
       })}
     </Tab.Navigator>
   );
+};
+
+const CreateStyle = (theme: ITheme, focused: boolean, isPhone: boolean) => {
+  const {colors} = theme;
+
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      height: isPhone ? '100%' : 64,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: focused ? colors.bgButtonSecondary : colors.background,
+    },
+    label: {
+      color: focused ? colors.primary7 : colors.textSecondary,
+    },
+  });
 };
 
 export default MainTabs;
