@@ -15,17 +15,19 @@ import actions from '../redux/actions';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const {spacing}: ITheme = useTheme() as ITheme;
+  const {spacing} = useTheme() as ITheme;
   const {conversation, members} = useChat();
   const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
-    dispatch(actions.getData('members', true, {roomId: conversation._id}));
+    dispatch(actions.resetData('members'));
+    dispatch(actions.getData('members', {roomId: conversation._id}));
   }, []);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onAddPress = () => {
+    dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.addMembers);
   };
 

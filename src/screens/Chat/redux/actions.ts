@@ -4,10 +4,9 @@ import {ISocketEvent} from '~/interfaces/ISocket';
 import {IUser} from '~/interfaces/IAuth';
 import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 
-const getData = (dataType: string, reset?: boolean, payload?: any) => ({
+const getData = (dataType: string, payload?: any) => ({
   type: Actions.GET_DATA,
   dataType,
-  reset,
   payload,
 });
 
@@ -25,6 +24,11 @@ const setExtraData = (dataType: string, payload: []) => ({
 
 const mergeExtraData = (dataType: string) => ({
   type: Actions.MERGE_EXTRA_DATA,
+  dataType,
+});
+
+const resetData = (dataType: string) => ({
+  type: Actions.RESET_DATA,
   dataType,
 });
 
@@ -54,6 +58,10 @@ const selectUser = (payload: IUser) => ({
   payload,
 });
 
+const clearSelectedUsers = () => ({
+  type: Actions.CLEAR_SELECTED_USERS,
+});
+
 const createConversation = (payload: ICreateRoomReq) => ({
   type: Actions.CREATE_CONVERSATION,
   payload,
@@ -74,11 +82,13 @@ export default {
   setData,
   setExtraData,
   mergeExtraData,
+  resetData,
   handleEvent,
   selectConversation,
   sendMessage,
   reactMessage,
   selectUser,
+  clearSelectedUsers,
   createConversation,
   createConversationSuccess,
   addNewMessage,

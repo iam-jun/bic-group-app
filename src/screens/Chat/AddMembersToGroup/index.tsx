@@ -21,9 +21,10 @@ const AddMembersToGroup = (): React.ReactElement => {
   const {selectedUsers, users, conversation} = useChat();
 
   useEffect(() => {
+    dispatch(actions.resetData('users'));
     dispatch(
-      actions.getData('users', true, {
-        __rooms: {$elemMatch: {$ne: conversation._id}},
+      actions.getData('users', {
+        query: {__rooms: {$nin: [conversation._id]}},
       }),
     );
   }, []);

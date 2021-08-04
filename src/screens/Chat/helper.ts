@@ -28,8 +28,7 @@ export const mapUsers = (data?: []): IUser[] =>
   (data || []).map((item: any) => mapUser(item));
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
-  const name =
-    item?.customFields?.name || generateRoomName(user, item?.usernames || []);
+  const name = item?.topic || generateRoomName(user, item?.usernames || []);
   return {
     ...item,
     _id: item?._id || item?.rid,
@@ -47,13 +46,14 @@ export const mapMessage = (item: any): IMessage => {
     ...item,
     room_id: item?.rid,
     user,
-    updateAt: item?._updateAt,
+    type: item.t,
     system: !!item.t,
+    createdAt: item.ts,
     text: item.t
       ? i18next
           .t(`chat:system_message_${item.t}`)
-          .replace('{0}', item.msg)
-          .replace('{1}', user.name)
+          .replace('{0}', user.name)
+          .replace('{1}', item.msg)
       : item?.msg,
   };
 };
