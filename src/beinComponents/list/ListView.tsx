@@ -9,15 +9,15 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import {useTheme} from 'react-native-paper';
 import _ from 'lodash';
 
 import {spacing} from '~/theme';
 import items, {IListViewItem} from '~/beinComponents/list/items';
-import ViewSpacing from '../../components/ViewSpacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import loadings from '../../components/list/loadings';
 import {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 

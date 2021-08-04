@@ -7,7 +7,7 @@ import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 
 const GroupTopBar = () => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {navigation} = useBaseHook();
 
@@ -15,24 +15,24 @@ const GroupTopBar = () => {
     <View style={styles.container}>
       <Icon
         icon={'iconBack'}
-        size={14}
+        size={26}
         tintColor={theme.colors.iconTint}
         onPress={() => navigation.goBack()}
       />
       <View style={{flexDirection: 'row'}}>
         <Icon
           icon={'iconSearch'}
-          size={18}
-          style={{marginRight: 8}}
+          size={22}
+          style={{marginRight: theme.spacing.margin.large}}
           tintColor={theme.colors.iconTint}
         />
         <Icon
           icon={'iconShieldStar'}
           fill={theme.colors.iconTint}
-          size={20}
-          style={{marginRight: 8}}
+          size={24}
+          style={{marginRight: theme.spacing.margin.large}}
         />
-        <Icon icon={'iconOptions'} tintColor={theme.colors.iconTint} />
+        <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
       </View>
     </View>
   );
