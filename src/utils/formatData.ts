@@ -27,6 +27,30 @@ export const formatDate = (
   return value || '';
 };
 
+export const countTime = (timeIso: string) => {
+  let result = '';
+  const date = new Date(timeIso);
+  const now = new Date();
+  const deltaSecond = Math.round(
+    Math.max(now.getTime() - date.getTime(), date.getTime() - now.getTime()) /
+      1000,
+  );
+  if (deltaSecond < 60) {
+    result = 'now';
+  } else if (deltaSecond < 60 * 60) {
+    result = Math.round(deltaSecond / 60) + 'm';
+  } else if (deltaSecond < 60 * 60 * 24) {
+    result = Math.round(deltaSecond / (60 * 60)) + 'h';
+  } else if (deltaSecond < 60 * 60 * 24 * 7) {
+    result = Math.round(deltaSecond / (60 * 60 * 24)) + 'd';
+  } else if (deltaSecond < 60 * 60 * 24 * 7 * 52) {
+    result = Math.round(deltaSecond / (60 * 60 * 24 * 7)) + 'w';
+  } else if (deltaSecond >= 60 * 60 * 24 * 7 * 52) {
+    result = Math.round(deltaSecond / (60 * 60 * 24 * 7 * 52)) + 'y';
+  }
+  return result;
+};
+
 export const formatText = (text_label: string, ...params: number[]): string => {
   if (!text_label) return '';
   const {t} = useBaseHook();
