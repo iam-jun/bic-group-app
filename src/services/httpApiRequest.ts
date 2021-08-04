@@ -3,13 +3,14 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 import apiConfig, {
   FeedResponseError,
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/configs/apiConfig';
+import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
 import {ActionTypes, createAction} from '~/utils';
 
@@ -172,7 +173,6 @@ const handleResponseError = async (
 ): Promise<HttpApiResponseFormat | unknown> => {
   let alertShow = false;
   if (error.response) {
-    console.log('error.response');
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
       return handleRetry(error);
@@ -341,7 +341,20 @@ const refreshAuthTokens = async () => {
 
   const {chatUserId, chatAccessToken, feedAccessToken} = dataTokens;
   dispatchStoreAuthTokens(chatUserId, chatAccessToken, feedAccessToken);
-  return true;
+
+  // after refresh token, update push token with the new tokens
+  if (Platform.OS === 'web') {
+    return true;
+  }
+  try {
+    const messaging = await initPushTokenMessage();
+    const deviceToken = await messaging().getToken();
+    await makePushTokenRequest(deviceToken);
+    return true;
+  } catch (e) {
+    console.log('pushToken when refreshToken failed:', e);
+    return false;
+  }
 };
 
 const getAuthTokens = async () => {
@@ -413,9 +426,21 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   return axiosInstance(requestConfig);
 };
 
+const makePushTokenRequest = (deviceToken: string) => {
+  return makeHttpRequest(
+    apiConfig.App.pushToken(
+      deviceToken,
+      Platform.OS,
+      getChatAuthInfo().accessToken,
+      getChatAuthInfo().userId,
+    ),
+  );
+};
+
 export {
   makeGetStreamRequest,
   makeHttpRequest,
+  makePushTokenRequest,
   getFeedAccessToken,
   getChatAuthInfo,
   mapResponseSuccessBein,

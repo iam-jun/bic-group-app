@@ -150,7 +150,7 @@ const _onMessageMustHave = (event: WebSocketMessageEvent) => {
   if (data.error?.error === 403 && !isAuthRefreshing) {
     isAuthRefreshing = true;
     refreshAuthTokens().then(success => {
-      console.log('retry success:', success);
+      // console.log('retry success:', success);
       if (!success) {
         messageQueue = [];
         isAuthRefreshing = false;

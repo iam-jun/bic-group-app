@@ -1,22 +1,23 @@
-import {put, takeLatest} from 'redux-saga/effects';
+import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
+import {Platform} from 'react-native';
+import {put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
-import {rootSwitch} from '~/router/stack';
-import {refreshAuthTokens} from '~/services/httpApiRequest';
-import {ActionTypes} from '~/utils';
-import * as types from './types';
-import * as IAuth from '~/interfaces/IAuth';
-import * as actions from './actions';
-import * as actionsCommon from '~/store/modal/actions';
-import {IUserResponse} from '~/interfaces/IAuth';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
-import Store from '~/store';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import * as IAuth from '~/interfaces/IAuth';
+import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
-import {StackActions} from '@react-navigation/native';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootSwitch} from '~/router/stack';
+import {checkAuthState, setupPushToken} from '~/screens/AppLoading/redux/saga';
+import {refreshAuthTokens} from '~/services/httpApiRequest';
+import * as actionsCommon from '~/store/modal/actions';
+import {ActionTypes} from '~/utils';
+import * as actions from './actions';
+import * as types from './types';
+
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* authSaga() {
@@ -99,6 +100,12 @@ function* onSignInSuccess(user: IUserResponse) {
     yield onSignInFailed(i18n.t('error:http:token_expired'));
     return;
   }
+
+  // setup push token
+  if (Platform.OS === 'web') {
+    return;
+  }
+  yield setupPushToken();
 }
 
 function* onSignInFailed(errorMessage: string) {
@@ -234,25 +241,5 @@ function* signOut() {
         content: err.message,
       }),
     );
-  }
-}
-
-function* checkAuthState() {
-  try {
-    // const httpResponse = yield makeHttpRequest(
-    //   apiConfig.Chat.getDirectMessages(),
-    // );
-    // console.log('httpResponse raw', httpResponse.data);
-    // if (httpResponse) {
-    //   console.log('httpResponse:', mapResponseSuccessBein(httpResponse));
-    // }
-    const user: IAuth.IUserResponse | boolean = yield Store.getCurrentUser();
-    if (user) {
-      navigation.replace(rootSwitch.mainStack);
-    } else {
-      navigation.replace(rootSwitch.authStack);
-    }
-  } catch (e) {
-    console.error('checkAuthState', e);
   }
 }

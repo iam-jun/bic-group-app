@@ -83,6 +83,27 @@ const App = {
       useRetry: true,
     };
   },
+  pushToken: (
+    deviceToken: string,
+    os: string,
+    chatToken: string,
+    chatUserId: string,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}notification/token`,
+      method: 'post',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': chatToken,
+        'X-User-Id': chatUserId,
+      },
+      data: {
+        token: deviceToken,
+        os,
+      },
+    };
+  },
 };
 
 export interface HttpApiRequestConfig extends AxiosRequestConfig {

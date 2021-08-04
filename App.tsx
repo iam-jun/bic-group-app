@@ -1,6 +1,6 @@
 import Amplify from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Alert, Linking} from 'react-native';
+import {Linking} from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -58,13 +58,6 @@ export default () => {
 
   useEffect(() => {
     setupFirebasePermission();
-
-    // TODO:
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-
-    return unsubscribe;
   }, []);
 
   Store.sagaMiddleware.run(rootSaga);
