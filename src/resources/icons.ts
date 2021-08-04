@@ -31,7 +31,7 @@ import iconTabMenu from '../../assets/icons/icon_menu.svg';
 import iconTabMenuBein from '../../assets/icons/icon_menu_bein.svg';
 import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
 import iconPinGroup from '../../assets/icons/icon_pin_group.svg';
-import iconMessages from '../../assets/icons/icon_messages.svg';
+import iconMessages from '../../assets/icons/icon_chat_bein.svg';
 
 // Below are the completely new icons, added on 08/01/2021
 import iconAddPost from '../../assets/icons/icon_add_post.svg';
