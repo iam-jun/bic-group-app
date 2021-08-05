@@ -3,6 +3,7 @@ import {generateAvatar} from '~/utils/common';
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
 import {generateRoomName} from '~/utils/generator';
+import {timestampToISODate} from '~/utils/formatData';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -37,6 +38,7 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     avatar: generateAvatar(name),
     user: mapUser(item?.u),
     lastMessage: item?.lastMessage?.msg,
+    _updatedAt: timestampToISODate(item._updatedAt),
   };
 };
 
@@ -48,7 +50,8 @@ export const mapMessage = (item: any): IMessage => {
     user,
     type: item.t,
     system: !!item.t,
-    createdAt: item.ts,
+    createdAt: timestampToISODate(item.ts),
+    _updatedAt: timestampToISODate(item._updatedAt),
     text: item.t
       ? i18next
           .t(`chat:system_message_${item.t}`)

@@ -126,7 +126,7 @@ export type IMessage = _GMessage & {
   quoted_message?: IMessage;
   reactions?: IReaction[];
   attachments?: IAttachment[];
-  _updatedAt?: string;
+  _updatedAt: string;
   type?: string;
 };
 
@@ -141,5 +141,5 @@ export type IConversation = {
   usersCount: number;
   unreadCount: number;
   lastMessage: string;
-  _updatedAt: Date;
+  _updatedAt: string;
 };

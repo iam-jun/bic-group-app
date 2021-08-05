@@ -8,7 +8,7 @@ import {Text, ViewSpacing} from '~/components';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {spacing} from '~/theme';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import ChatBubble from './ChatBubble';
 import QuotedMessage from './QuotedMessage';
 import Reactions from './Reactions';
@@ -56,7 +56,7 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = (
                 {_currentMessage?.user.name}
               </Text.H6>
               <Text.Body style={styles.textTime}>
-                {formatDate(_currentMessage?._updatedAt)}
+                {countTime(_currentMessage?._updatedAt)}
               </Text.Body>
             </View>
           </View>
@@ -97,7 +97,6 @@ const createStyles = (theme: IObject<any>) => {
       textTransform: 'capitalize',
     },
     textTime: {
-      fontSize: 10,
       color: colors.textSecondary,
       marginStart: spacing.margin.small,
     },

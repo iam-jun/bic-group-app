@@ -140,7 +140,7 @@ function* handleRoomsMessage(payload?: any) {
       console.log('In development');
       break;
     // New message event doesn't have type
-    default:
+    case undefined:
       yield put(actions.addNewMessage(mapMessage(data)));
       break;
   }
