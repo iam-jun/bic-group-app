@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IOption} from '~/interfaces/IOption';
-import {Text} from '~/components';
+import Text from '~/beinComponents/Text';
 
 const MenuItem: React.FC<IOption> = ({
   title,

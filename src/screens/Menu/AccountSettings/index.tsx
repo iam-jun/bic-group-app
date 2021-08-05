@@ -8,20 +8,26 @@ import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {ISetting} from '~/interfaces/common';
 import * as modalActions from '~/store/modal/actions';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
 import AlertModal from '~/beinComponents/modals/AlertModal';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const onAccountSettingsPress = (item: ISetting) => {
     switch (item.type) {
+      case 'userProfile':
+        return rootNavigation.navigate(mainStack.userProfile);
+
       default:
         dispatch(
           modalActions.showAlert({

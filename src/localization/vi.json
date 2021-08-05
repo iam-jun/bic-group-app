@@ -100,7 +100,11 @@
     "title_notification": "Notification",
     "title_appearance": "Appearance",
     "title_language": "Language",
-    "title_currency": "Currency"
+    "title_currency": "Currency",
+    "title_about": "About",
+    "title_name": "Name",
+    "title_gender": "Gender",
+    "title_birthday": "Birthday"
   },
   "languages": {
     "title_en": "Tiếng Anh",
