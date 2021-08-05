@@ -94,6 +94,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         title={i18next.t('common:text_all')}
         data={data}
         loading={loading}
+        isFullView
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}
