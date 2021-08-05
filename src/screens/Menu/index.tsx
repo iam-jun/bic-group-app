@@ -24,6 +24,7 @@ import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import {ITheme} from '~/theme/interfaces';
 import AlertModal from '~/beinComponents/modals/AlertModal';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -36,6 +37,9 @@ const Menu = (): React.ReactElement => {
 
   const onSettingPress = (item: ISetting) => {
     switch (item.type) {
+      case 'accountSettings':
+        return rootNavigation.navigate(mainStack.accountSettings);
+
       case 'component':
         return rootNavigation.navigate(menuStack.componentCollection);
 

@@ -89,7 +89,18 @@
   },
   "settings": {
     "title_app_language": "Ngôn ngữ",
-    "title_app_theme": "Giao diện"
+    "title_app_theme": "Giao diện",
+    "title_account_settings": "Account Settings",
+    "title_help": "Help",
+    "title_app_policies": "App Policies",
+    "title_feedback": "Feedback",
+    "title_user_profile": "User Profile",
+    "title_security_login": "Security and Login",
+    "title_privacy": "Privacy",
+    "title_notification": "Notification",
+    "title_appearance": "Appearance",
+    "title_language": "Language",
+    "title_currency": "Currency"
   },
   "languages": {
     "title_en": "Tiếng Anh",
