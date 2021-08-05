@@ -1,5 +1,4 @@
 import moment from 'moment';
-import {useBaseHook} from '~/hooks';
 
 export const formatNumber = (n: number) => {
   return n.toFixed(0).replace(/./g, function (c, i, a) {
@@ -10,7 +9,7 @@ export const formatNumber = (n: number) => {
 export const formatDate = (
   value: string | number | Date,
   format?: string,
-  maxFromDays = 2,
+  maxFromDays?: number,
 ) => {
   const formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
   const date = moment(value, formats, true);
@@ -20,11 +19,17 @@ export const formatDate = (
     value = moment(value).format(format);
   } else {
     const days = moment(new Date()).diff(date, 'days'); // today - future < 0
-    if (days < maxFromDays) value = moment(value).calendar();
+    if (days < (maxFromDays || 1)) value = moment(value).calendar();
     else value = moment(value).format('L');
   }
 
   return value || '';
+};
+
+export const timestampToISODate = (date: any): string => {
+  if (typeof date === 'object') return new Date(date?.$date).toISOString();
+  if (typeof date === 'number') return new Date(date).toISOString();
+  return date;
 };
 
 export const countTime = (timeIso: string) => {
@@ -49,21 +54,6 @@ export const countTime = (timeIso: string) => {
     result = Math.round(deltaSecond / (60 * 60 * 24 * 7 * 52)) + 'y';
   }
   return result;
-};
-
-export const formatText = (text_label: string, ...params: number[]): string => {
-  if (!text_label) return '';
-  const {t} = useBaseHook();
-
-  let text = t(text_label);
-  params.forEach((param, index) => {
-    if (text.includes(`{${index}}`)) {
-      text = text.replace(`{${index}}`, t(param));
-    } else {
-      text = `${text} ${t(param)}`;
-    }
-  });
-  return text;
 };
 
 export const formatPhoneNumber = (text: string) => {
