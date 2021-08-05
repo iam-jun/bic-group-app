@@ -6,7 +6,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import Icon from '../../Icon';
 import {ITheme} from '~/theme/interfaces';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 
 export interface NotificationItemProps {
@@ -20,7 +20,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
   is_seen,
 }: NotificationItemProps) => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = createStyles(theme, is_seen);
   const activity = activities[0];
 
@@ -45,7 +45,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         ) : null}
       </View>
       <Text.Subtitle style={styles.timeCreated}>
-        {formatDate(`${activity.reaction.created_at}`)}
+        {countTime(`${activity.reaction.created_at}`)}
       </Text.Subtitle>
       <Icon style={styles.iconOptions} icon="EllipsisH" size={16} />
     </View>
