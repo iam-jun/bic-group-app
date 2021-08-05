@@ -95,6 +95,7 @@ const icons = {
   EllipsisH: 'EllipsisH',
   InfoCircle: 'InfoCircle',
   CalendarAlt: 'CalendarAlt',
+  ImageV: 'ImageV',
   Clock: 'Clock',
   CommentAltDots: 'CommentAltDots',
   iconEyeSeen,

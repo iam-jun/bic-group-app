@@ -13,6 +13,7 @@ import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {fontFamilies} from '~/theme/fonts';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface CommentInputProps {
   style?: StyleProp<ViewStyle>;
@@ -34,7 +35,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const showSendAnim = useRef(new Animated.Value(0)).current;
   const showButtonsAnim = useRef(new Animated.Value(1)).current;
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
@@ -131,7 +132,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <ButtonWrapper style={styles.iconContainer} onPress={onPressFile}>
             <Icon
               size={13}
-              icon={'Paperclip'}
+              icon={'attachment'}
               tintColor={theme.colors.iconTintReversed}
             />
           </ButtonWrapper>
@@ -154,41 +155,44 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
-      {renderButtons()}
-      <Animated.View
-        style={{
-          flexDirection: 'row',
-          flex: 1,
-          zIndex: 1,
-          marginLeft: textInputMarginLeft,
-          marginRight: textInputMarginRight,
-        }}>
-        <TextInput
-          style={styles.textInput}
-          selectionColor={colors.textInput}
-          multiline={true}
-          placeholder={placeholder}
-          value={text}
-          onChangeText={_onChangeText}
-        />
-        <ButtonWrapper
-          style={{position: 'absolute', right: 10, bottom: 10}}
-          onPress={onPressEmoji}>
-          <Icon
-            size={24}
-            icon={'iconSmileSolid'}
-            tintColor={theme.colors.iconTintReversed}
+    <View>
+      <View style={StyleSheet.flatten([styles.container, style])}>
+        {renderButtons()}
+        <Animated.View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            zIndex: 1,
+            marginLeft: textInputMarginLeft,
+            marginRight: textInputMarginRight,
+          }}>
+          <TextInput
+            style={styles.textInput}
+            selectionColor={colors.textInput}
+            multiline={true}
+            placeholder={placeholder}
+            value={text}
+            onChangeText={_onChangeText}
           />
-        </ButtonWrapper>
-      </Animated.View>
-      <Icon
-        style={styles.iconSend}
-        onPress={_onPressSend}
-        size={16}
-        icon={'iconSend'}
-        tintColor={theme.colors.primary7}
-      />
+          <ButtonWrapper
+            style={{position: 'absolute', right: 10, bottom: 10}}
+            onPress={onPressEmoji}>
+            <Icon
+              size={24}
+              icon={'iconSmileSolid'}
+              tintColor={theme.colors.iconTintReversed}
+            />
+          </ButtonWrapper>
+        </Animated.View>
+        <Icon
+          style={styles.iconSend}
+          onPress={_onPressSend}
+          size={16}
+          icon={'iconSend'}
+          tintColor={theme.colors.primary7}
+        />
+      </View>
+      <KeyboardSpacer />
     </View>
   );
 };
