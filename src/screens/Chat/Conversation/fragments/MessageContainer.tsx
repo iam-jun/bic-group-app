@@ -1,18 +1,17 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
 import {MessageProps} from 'react-native-gifted-chat';
-import {IObject} from '~/interfaces/common';
-import {Text, ViewSpacing} from '~/components';
-import ChatBubble from './ChatBubble';
 import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
-import {formatDate} from '~/utils/formatData';
-import {sizes} from '~/theme/dimension';
-import {spacing} from '~/theme';
-import Reactions from './Reactions';
-import QuotedMessage from './QuotedMessage';
-import {GMessage, IMessage} from '~/interfaces/IChat';
+import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import {Text, ViewSpacing} from '~/components';
+import {IObject} from '~/interfaces/common';
+import {GMessage, IMessage} from '~/interfaces/IChat';
+import {spacing} from '~/theme';
+import {formatDate} from '~/utils/formatData';
+import ChatBubble from './ChatBubble';
+import QuotedMessage from './QuotedMessage';
+import Reactions from './Reactions';
 import SystemMessage from './SystemMessage';
 
 const MessageContainer: React.FC<MessageProps<GMessage>> = (
@@ -25,9 +24,15 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = (
   if (currentMessage?.system) return <SystemMessage {...currentMessage} />;
 
   const sameUserInPrevMessage =
-    isSameUser(currentMessage || ({} as IMessage), previousMessage) &&
-    isSameDay(currentMessage || ({} as IMessage), previousMessage);
+    currentMessage &&
+    isSameUser(currentMessage, previousMessage) &&
+    isSameDay(currentMessage, previousMessage);
+
   const _currentMessage = currentMessage as IMessage;
+  const _previousMessage = previousMessage as IMessage;
+
+  const sameType = _currentMessage?.type === _previousMessage?.type;
+
   const reactions = _currentMessage?.reactions || [];
 
   return (
@@ -38,20 +43,21 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = (
           <QuotedMessage {..._currentMessage.quoted_message} />
         </>
       )}
-      {(!sameUserInPrevMessage || _currentMessage.quoted_message) && (
+      {(!(sameUserInPrevMessage && sameType) ||
+        _currentMessage.quoted_message) && (
         <>
           {!_currentMessage.quoted_message && (
-            <ViewSpacing height={spacing.margin.base} />
+            <ViewSpacing height={spacing.margin.large} />
           )}
           <View style={styles.viewHeader}>
             <Avatar.Medium source={_currentMessage.user.avatar} />
             <View style={styles.viewHeaderInfo}>
-              <Text.H5 style={styles.textName}>
+              <Text.H6 style={styles.textName}>
                 {_currentMessage?.user.name}
-              </Text.H5>
-              <Text style={styles.textTime}>
-                {formatDate(_currentMessage?.createdAt)}
-              </Text>
+              </Text.H6>
+              <Text.Body style={styles.textTime}>
+                {formatDate(_currentMessage?._updatedAt)}
+              </Text.Body>
             </View>
           </View>
           <ViewSpacing height={spacing.margin.base} />
@@ -63,7 +69,9 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = (
           <Reactions data={reactions} onPress={() => {}} />
         )}
       </View>
-      {!nextMessage && <ViewSpacing height={spacing.margin.large} />}
+      {(!nextMessage || nextMessage.system) && (
+        <ViewSpacing height={spacing.margin.big} />
+      )}
     </View>
   );
 };
@@ -73,7 +81,6 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
-      paddingBottom: spacing.padding.base,
     },
     viewHeader: {
       flexDirection: 'row',
@@ -84,22 +91,14 @@ const createStyles = (theme: IObject<any>) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    avatar: {
-      width: 37,
-      height: 37,
-      borderRadius: 100,
-    },
-    text: {
-      fontSize: sizes.base,
-      color: colors.text,
-    },
+
     textName: {
       marginStart: spacing.margin.small,
       textTransform: 'capitalize',
     },
     textTime: {
       fontSize: 10,
-      color: colors.grey6,
+      color: colors.textSecondary,
       marginStart: spacing.margin.small,
     },
     reactions: {

@@ -127,6 +127,7 @@ export type IMessage = _GMessage & {
   reactions?: IReaction[];
   attachments?: IAttachment[];
   _updatedAt?: string;
+  type?: string;
 };
 
 export type IConversation = {

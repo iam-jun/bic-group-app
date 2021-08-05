@@ -7,10 +7,18 @@ export interface IPaginationParams {
 export interface ICreateRoomReq {
   name: string;
   members: string[];
+  extraData: {
+    topic: string;
+  };
   customFields?: {
     type: string;
     beinGroupId?: string;
     [x: string]: any;
   };
   readOnly?: boolean;
+}
+
+export interface IUpdateRoomTopicReq {
+  roomId: string;
+  topic: string;
 }

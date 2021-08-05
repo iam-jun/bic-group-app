@@ -38,7 +38,8 @@ const ConversationsList = (): React.ReactElement => {
   }, []);
 
   const _getConversations = () => {
-    dispatch(actions.getData('groups', true));
+    dispatch(actions.resetData('groups'));
+    dispatch(actions.getData('groups'));
   };
 
   const loadMore = () => {
@@ -71,6 +72,7 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   const onMenuPress = async () => {
+    dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.createConversation);
   };
 

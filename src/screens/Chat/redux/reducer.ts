@@ -62,7 +62,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
       return {
         ...state,
         [dataType]: {
-          ...(action.reset ? initDataState[dataType] : state[dataType]),
+          ...state[dataType],
           loading: state[dataType].data.length === 0,
           params: action.payload,
         },
@@ -96,6 +96,11 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           data: [...state[dataType].data, ...state[dataType].extra],
           extra: [],
         },
+      };
+    case types.RESET_DATA:
+      return {
+        ...state,
+        [dataType]: initDataState[dataType],
       };
     case types.SELECT_CONVERSATION:
       return {
@@ -152,6 +157,11 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
               : item,
           ),
         },
+      };
+    case types.CLEAR_SELECTED_USERS:
+      return {
+        ...state,
+        selectedUsers: [],
       };
     case types.CREATE_CONVERSATION_SUCCESS:
       return {

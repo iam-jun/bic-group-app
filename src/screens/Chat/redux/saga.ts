@@ -57,7 +57,7 @@ function* getData({
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
       if (result.length === appConfig.recordsPerPage)
-        yield put(actions.getData(dataType, false, payload));
+        yield put(actions.getData(dataType, payload));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -70,7 +70,7 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   const {chat} = yield select();
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
-    yield put(actions.getData(dataType, false, params));
+    yield put(actions.getData(dataType, params));
   }
 }
 
@@ -87,10 +87,12 @@ function* createConversation({
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.createRoom(payload),
     );
-    console.log(response);
-    const conversation = mapConversation(auth.user, response.data.channel);
+
+    const conversation = mapConversation(auth.user, response.data.group);
+
     yield put(actions.selectConversation(conversation));
     yield put(actions.createConversationSuccess(conversation));
+
     rootNavigationRef?.current?.dispatch(
       StackActions.replace(chatStack.conversation),
     );

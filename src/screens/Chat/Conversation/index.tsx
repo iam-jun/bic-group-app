@@ -44,7 +44,8 @@ const Conversation = () => {
   }, [conversation, messages.lastDate]);
 
   const _getMessages = () => {
-    dispatch(actions.getData('messages', true, {roomId: conversation._id}));
+    dispatch(actions.resetData('messages'));
+    dispatch(actions.getData('messages', {roomId: conversation._id}));
   };
 
   const loadMoreMessages = () => {
@@ -99,12 +100,12 @@ const Conversation = () => {
         },
       ],
     });
-    dispatch(
-      actions.sendMessage({
-        ...messages[0],
-        user,
-      }),
-    );
+    // dispatch(
+    //   actions.sendMessage({
+    //     ...messages[0],
+    //     user,
+    //   }),
+    // );
     setReplyingMessage(undefined);
   };
 

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import useChat from '~/hooks/chat';
 import {IObject} from '~/interfaces/common';
@@ -16,8 +17,10 @@ import Divider from '~/beinComponents/Divider';
 import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import actions from '../redux/actions';
 
 const Conversation = (): React.ReactElement => {
+  const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {colors} = theme;
@@ -34,6 +37,11 @@ const Conversation = (): React.ReactElement => {
 
   const goGroupMembers = () => {
     rootNavigation.navigate(chatStack.chatGroupMembers);
+  };
+
+  const goAddMembers = () => {
+    dispatch(actions.clearSelectedUsers());
+    rootNavigation.navigate(chatStack.addMembers);
   };
 
   return (
@@ -91,6 +99,7 @@ const Conversation = (): React.ReactElement => {
             icon="addUser"
             tintColor={colors.primary7}
             label={i18next.t('chat:label_invite')}
+            onPress={goAddMembers}
           />
           <Button.Icon
             icon="bell"
