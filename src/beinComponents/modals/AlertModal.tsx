@@ -24,7 +24,15 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const styles = themeStyles(theme);
 
   const {alert} = useModal();
-  const {visible, title, content, iconName, onConfirm, cancelBtn} = alert;
+  const {
+    visible,
+    title,
+    content,
+    iconName,
+    onConfirm,
+    confirmLabel,
+    cancelBtn,
+  } = alert;
 
   const dispatch = useDispatch();
 
@@ -61,7 +69,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               dispatch(actions.hideAlert());
               onConfirm();
             }}>
-            {title}
+            {confirmLabel}
           </Button.Secondary>
         </View>
       </View>

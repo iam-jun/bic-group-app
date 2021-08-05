@@ -156,6 +156,7 @@ const Section2 = () => {
                 iconName: 'SignOutAlt',
                 cancelBtn: true,
                 onConfirm: () => alert('Confirm button'),
+                confirmLabel: 'Log Out',
               }),
             )
           }>
