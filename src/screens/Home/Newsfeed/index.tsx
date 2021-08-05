@@ -13,6 +13,7 @@ import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePos
 import useHome from '~/hooks/home';
 import {AppContext} from '~/contexts/AppContext';
 import homeActions from '~/screens/Home/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const Newsfeed = () => {
   const theme = useTheme() as ITheme;
@@ -22,20 +23,20 @@ const Newsfeed = () => {
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
 
+  const userId = useUserIdAuth();
+
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
 
   useEffect(() => {
-    // TODO: will need to change userId
-    const userId = 9;
     dispatch(
       homeActions.getHomePosts({
         streamClient,
         userId: userId.toString(),
       }),
     );
-  }, []);
+  }, [streamClient]);
 
   return (
     <View style={styles.container}>

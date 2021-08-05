@@ -44,7 +44,7 @@ const MainTabs = () => {
         activeBackgroundColor: colors.bgButtonSecondary,
         style: {
           // backgroundColor: tabBarBackground,
-          height: 60,
+          // height: 60,
           paddingBottom: !isPhone ? 0 : insets.bottom,
         },
       }}
