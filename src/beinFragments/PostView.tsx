@@ -14,19 +14,19 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useDispatch} from 'react-redux';
-import {AppContext} from '~/contexts/AppContext';
-import homeActions from '~/screens/Home/redux/actions';
 
 export interface PostViewProps {
   postData: IPostActivity;
+  onPressComment?: (data: IPostActivity) => void;
 }
 
-const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
+const PostView: FC<PostViewProps> = ({
+  postData,
+  onPressComment,
+}: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
 
-  const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -37,7 +37,6 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   const {content} = data || {};
 
   const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
   const avatar = actor?.data?.avatarUrl;
   const actorName = actor?.data?.fullname;
@@ -90,8 +89,8 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
     alert('onLongPressReact');
   };
 
-  const onPressComment = () => {
-    alert('onPressComment');
+  const _onPressComment = () => {
+    onPressComment?.(postData);
   };
 
   const onPressMarkAsRead = () => {
@@ -101,12 +100,6 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
         .then(response => {
           if (response && response?.data) {
             setCalledMarkAsRead(true);
-            dispatch(
-              homeActions.getHomePosts({
-                streamClient,
-                userId: userId.toString(),
-              }),
-            );
           }
         })
         .catch(e => {
@@ -217,7 +210,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
         </Button>
         <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
         <Button
-          onPress={onPressComment}
+          onPress={_onPressComment}
           leftIcon={'CommentAltDots'}
           leftIconProps={{
             icon: 'CommentAltDots',

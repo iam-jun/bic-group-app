@@ -20,6 +20,7 @@ export interface CommentInputProps {
   placeholder?: string;
   onChangeText?: (text: string) => void;
   onPressSend?: () => void;
+  autoFocus?: boolean;
   value?: string;
 }
 
@@ -28,6 +29,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   placeholder = 'Aa',
   onChangeText,
   onPressSend,
+  autoFocus,
   value,
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -170,6 +172,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             style={styles.textInput}
             selectionColor={colors.textInput}
             multiline={true}
+            autoFocus={autoFocus}
             placeholder={placeholder}
             value={text}
             onChangeText={_onChangeText}

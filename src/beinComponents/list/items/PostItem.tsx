@@ -20,9 +20,14 @@ const PostItem = ({postData}: any) => {
     rootNavigation.navigate(homeStack.postDetail);
   };
 
+  const onPressComment = () => {
+    dispatch(postActions.setPostDetail(postData));
+    rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+  };
+
   return (
     <TouchableOpacity onPress={onPress}>
-      <PostView postData={postData} />
+      <PostView postData={postData} onPressComment={onPressComment} />
     </TouchableOpacity>
   );
 };

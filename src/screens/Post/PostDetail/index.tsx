@@ -14,13 +14,15 @@ import CommentItem from '~/beinComponents/list/items/CommentItem';
 import Loading from '~/beinComponents/Loading';
 import {useUserIdAuth} from '~/hooks/auth';
 
-const PostDetail = () => {
+const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
   const [listComments, setListComments] = useState([]);
   const [loadingComment, setLoadingComment] = useState(false);
 
+  const params = props?.route?.params;
+  const {focusComment} = params || {};
+
   const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
 
@@ -103,6 +105,7 @@ const PostDetail = () => {
       />
       <CommentInput
         value={commentText}
+        autoFocus={focusComment}
         onChangeText={onTextChange}
         onPressSend={onPressSend}
       />
