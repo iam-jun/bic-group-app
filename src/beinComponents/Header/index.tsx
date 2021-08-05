@@ -10,6 +10,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
 import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {IconType} from '~/resources/icons';
+import {Platform} from 'react-native';
 
 export interface HeaderProps {
   title?: string;
@@ -46,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
   onPressBack,
   disableInsetTop,
 }: HeaderProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
@@ -122,6 +123,8 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
       backgroundColor: colors.background,
       paddingLeft: spacing?.padding.large,
+      borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
+      borderColor: colors.borderDivider,
       shadowOffset: {width: 0, height: 1},
       shadowColor: '#000',
       shadowOpacity: 0.1,
