@@ -1,3 +1,37 @@
+export const appSettingsMenu = [
+  {
+    type: 'accountSettings',
+    title: 'Account Settings',
+    icon: 'iconMenuSetting',
+  },
+];
+
+export const documentsMenu = [
+  {
+    type: 'help',
+    title: 'Help',
+    icon: 'iconMenuHelp',
+  },
+  {
+    type: 'appPolicies',
+    title: 'App Policies',
+    icon: 'iconMenuMenu',
+  },
+  {
+    type: 'feedback',
+    title: 'Feedback',
+    icon: 'iconMenuFeedback',
+  },
+];
+
+export const logoutMenu = [
+  {
+    type: 'logOut',
+    title: 'auth:text_sign_out',
+    icon: 'iconMenuLogout',
+  },
+];
+
 export default [
   {
     type: 'language',
