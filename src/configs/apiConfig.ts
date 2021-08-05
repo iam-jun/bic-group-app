@@ -99,9 +99,12 @@ const App = {
   },
   pushToken: (
     deviceToken: string,
-    os: string,
+    deviceOS: string,
     chatToken: string,
     chatUserId: string,
+    appBundleId: string,
+    deviceType: string,
+    deviceName: string,
   ): HttpApiRequestConfig => {
     return {
       url: `${providers.bein.url}notification/token`,
@@ -114,7 +117,10 @@ const App = {
       },
       data: {
         token: deviceToken,
-        os,
+        device_os: deviceOS,
+        app_name: appBundleId,
+        device_type: deviceType,
+        device_name: deviceName,
       },
     };
   },

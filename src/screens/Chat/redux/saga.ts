@@ -131,8 +131,6 @@ function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
-  console.log('handleEvent', payload);
-
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
       [TO-DO] Need to check with BE
