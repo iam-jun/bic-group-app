@@ -2,6 +2,7 @@ import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
   IPaginationParams,
+  ISendMessageReq,
   IUpdateRoomTopicReq,
 } from '~/interfaces/IHttpRequest';
 
@@ -66,6 +67,15 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       params,
+    };
+  },
+  sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.postMessage`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
     };
   },
 };

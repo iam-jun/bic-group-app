@@ -2,6 +2,7 @@ import appConfig from '~/configs/appConfig';
 import * as types from './constants';
 import {IConversation, IMessage, IReaction} from '~/interfaces/IChat';
 import {IUser} from '~/interfaces/IAuth';
+import {messageStatus} from '~/constants/chat';
 
 export const initDataState = {
   groups: {
@@ -179,10 +180,41 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           data: [
             {
               ...action.payload,
-              pending: true,
+              status: messageStatus.SENDING,
             },
             ...messages.data,
           ],
+        },
+      };
+    case types.RETRY_SEND_MESSAGE:
+    case types.SEND_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item.localId === action.payload.localId
+              ? {
+                  ...action.payload,
+                  status: messageStatus.SENT,
+                }
+              : item,
+          ),
+        },
+      };
+    case types.SEND_MESSAGE_FAILED:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item.localId === action.payload.localId
+              ? {
+                  ...item,
+                  status: messageStatus.FAILED,
+                }
+              : item,
+          ),
         },
       };
     case types.REACT_MESSAGE:

@@ -1,3 +1,4 @@
+import {messageStatus} from './../../../constants/chat';
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {put, select, takeLatest} from 'redux-saga/effects';
@@ -14,6 +15,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import {mapConversation, mapData, mapMessage} from './../helper';
 import actions from './actions';
 import * as types from './constants';
+import {IMessage} from '~/interfaces/IChat';
 
 /**
  * Chat
@@ -28,6 +30,8 @@ export default function* saga() {
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
+  yield takeLatest(types.SEND_MESSAGE, sendMessage);
+  yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
 }
 
 function* getData({
@@ -101,6 +105,31 @@ function* createConversation({
   }
 }
 
+function* sendMessage({payload}: {payload: IMessage; type: string}) {
+  try {
+    const {chat} = yield select();
+    const {conversation} = chat;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.sendMessage({
+        roomId: conversation._id,
+        channel: conversation.name,
+        text: payload.text,
+      }),
+    );
+
+    const message = mapMessage(response.data.message);
+    yield put(actions.sendMessageSuccess({...payload, ...message}));
+  } catch (err) {
+    console.log('createConversation', err);
+    yield put(actions.sendMessageFailed(payload));
+  }
+}
+
+function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
+  yield sendMessage({payload, type});
+}
+
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   console.log('handleEvent', payload);
 
@@ -130,6 +159,7 @@ function handleAddMember() {
 
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
+  const {auth} = yield select();
 
   switch (data.t) {
     case messageEventTypes.ADD_USER:
@@ -141,7 +171,9 @@ function* handleRoomsMessage(payload?: any) {
       break;
     // New message event doesn't have type
     case undefined:
-      yield put(actions.addNewMessage(mapMessage(data)));
+      // Current user messges are handled locally
+      if (data.u.username !== auth.user.username)
+        yield put(actions.addNewMessage(mapMessage(data)));
       break;
   }
 }

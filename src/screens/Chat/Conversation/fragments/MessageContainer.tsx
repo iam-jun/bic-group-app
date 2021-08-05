@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {MessageProps} from 'react-native-gifted-chat';
 import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
 import {useTheme} from 'react-native-paper';
+
 import Avatar from '~/beinComponents/Avatar';
 import {Text, ViewSpacing} from '~/components';
 import {IObject} from '~/interfaces/common';
@@ -10,16 +11,26 @@ import {GMessage, IMessage} from '~/interfaces/IChat';
 import {spacing} from '~/theme';
 import {countTime} from '~/utils/formatData';
 import ChatBubble from './ChatBubble';
+import LoadingMessage from './LoadingMessage';
+import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import Reactions from './Reactions';
 import SystemMessage from './SystemMessage';
 
-const MessageContainer: React.FC<MessageProps<GMessage>> = (
-  props: MessageProps<GMessage>,
+export interface MessageContainerProps extends Partial<MessageProps<GMessage>> {
+  loading?: boolean;
+  onRetryPress: (message: IMessage) => void;
+}
+
+const MessageContainer: React.FC<MessageContainerProps> = (
+  props: MessageContainerProps,
 ) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {currentMessage, previousMessage, nextMessage} = props;
+  const {loading, currentMessage, previousMessage, nextMessage, onRetryPress} =
+    props;
+
+  if (loading) return <LoadingMessage />;
 
   if (currentMessage?.system) return <SystemMessage {...currentMessage} />;
 
@@ -34,6 +45,7 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = (
   const sameType = _currentMessage?.type === _previousMessage?.type;
 
   const reactions = _currentMessage?.reactions || [];
+  const _onRetryPress = () => onRetryPress(_currentMessage);
 
   return (
     <View style={styles.container}>
@@ -63,7 +75,19 @@ const MessageContainer: React.FC<MessageProps<GMessage>> = (
           <ViewSpacing height={spacing.margin.base} />
         </>
       )}
-      <ChatBubble {...props} />
+      {
+        //@ts-ignore
+        <ChatBubble {...props} />
+      }
+      {/*
+          Now only show failed status
+        */}
+      {_currentMessage.status === 'failed' && (
+        <MessageStatus
+          status={_currentMessage.status}
+          onRetryPress={_onRetryPress}
+        />
+      )}
       <View style={styles.reactions}>
         {reactions?.length > 0 && (
           <Reactions data={reactions} onPress={() => {}} />
@@ -84,7 +108,7 @@ const createStyles = (theme: IObject<any>) => {
     },
     viewHeader: {
       flexDirection: 'row',
-      marginBottom: -32,
+      marginBottom: -32, // default gifted chat avatar size
       alignItems: 'flex-start',
     },
     viewHeaderInfo: {

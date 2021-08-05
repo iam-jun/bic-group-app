@@ -8,6 +8,10 @@ export const RESET_DATA = 'chat/RESET_DATA';
 export const SELECT_CONVERSATION = 'chat/SELECT_CONVERSATION';
 
 export const SEND_MESSAGE = 'chat/SEND_MESSAGE';
+export const SEND_MESSAGE_SUCCESS = 'chat/SEND_MESSAGE_SUCCESS';
+export const SEND_MESSAGE_FAILED = 'chat/SEND_MESSAGE_FAILED';
+export const RETRY_SEND_MESSAGE = 'chat/RETRY_SEND_MESSAGE';
+
 export const REACT_MESSAGE = 'chat/REACT_MESSAGE';
 export const GET_USERS = 'chat/GET_USERS';
 export const SET_USERS = 'chat/SET_USERS';
