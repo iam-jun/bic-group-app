@@ -1,4 +1,5 @@
 import {IMessage as _GMessage} from 'react-native-gifted-chat';
+import {messageStatus} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IUser} from './IAuth';
 export interface IReaction {
@@ -120,6 +121,8 @@ export type IAttachment = {
   video_url?: string;
 };
 
+export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
+
 export type IMessage = _GMessage & {
   _id: string | number;
   user: IChatUser;
@@ -128,6 +131,8 @@ export type IMessage = _GMessage & {
   attachments?: IAttachment[];
   _updatedAt: string;
   type?: string;
+  localId?: string;
+  status?: IMesssageStatus;
 };
 
 export type IConversation = {

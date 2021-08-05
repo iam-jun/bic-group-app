@@ -47,6 +47,21 @@ const sendMessage = (payload: IMessage) => ({
   payload,
 });
 
+const sendMessageSuccess = (payload: IMessage) => ({
+  type: Actions.SEND_MESSAGE_SUCCESS,
+  payload,
+});
+
+const retrySendMessage = (payload: IMessage) => ({
+  type: Actions.RETRY_SEND_MESSAGE,
+  payload,
+});
+
+const sendMessageFailed = (payload: IMessage) => ({
+  type: Actions.SEND_MESSAGE_FAILED,
+  payload,
+});
+
 const reactMessage = (message?: IMessage, reactionType?: string) => ({
   type: Actions.REACT_MESSAGE,
   message,
@@ -86,6 +101,9 @@ export default {
   handleEvent,
   selectConversation,
   sendMessage,
+  sendMessageSuccess,
+  sendMessageFailed,
+  retrySendMessage,
   reactMessage,
   selectUser,
   clearSelectedUsers,
