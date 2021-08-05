@@ -101,6 +101,8 @@
     "news_feed": "News Feed",
     "button_like": "Like",
     "button_reply": "Reply",
+    "button_react": "React",
+    "button_comment": "Comment",
     "button_comment_not_verify_user": "Verify your account to comment",
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",

@@ -195,7 +195,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           tintColor={theme.colors.primary7}
         />
       </View>
-      <KeyboardSpacer />
+      <KeyboardSpacer iosOnly />
     </View>
   );
 };

@@ -40,7 +40,7 @@ const PostView: FC<PostViewProps> = ({
 
   const avatar = actor?.data?.avatarUrl;
   const actorName = actor?.data?.fullname;
-  const textAudiences = getAudiencesText(audience);
+  const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
 
   /**
@@ -193,6 +193,7 @@ const PostView: FC<PostViewProps> = ({
     return (
       <View style={styles.reactButtonContainer}>
         <Button
+          useI18n
           onPress={onPressReact}
           onLongPress={onLongPressReact}
           leftIcon={'iconReact'}
@@ -206,10 +207,12 @@ const PostView: FC<PostViewProps> = ({
             color: colors.textSecondary,
           }}
           style={styles.buttonReact}>
-          React
+          post:button_react
         </Button>
         <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
         <Button
+          useI18n
+          disabled={!onPressComment}
           onPress={_onPressComment}
           leftIcon={'CommentAltDots'}
           leftIconProps={{
@@ -222,7 +225,7 @@ const PostView: FC<PostViewProps> = ({
             color: colors.textSecondary,
           }}
           style={styles.buttonReact}>
-          Comment
+          post:button_comment
         </Button>
       </View>
     );
@@ -255,14 +258,18 @@ const PostView: FC<PostViewProps> = ({
   );
 };
 
-const getAudiencesText = (aud?: IPostAudience) => {
+const getAudiencesText = (aud?: IPostAudience, t?: any) => {
   let result = '';
   const {groups = [], users = []} = aud || {};
-  groups.map(
-    (item: any) =>
-      (result = `${result}${result.length > 0 ? ', ' : ''}${item?.data?.name}`),
-  );
-  users.map((item: any) => (result = `${result}, ${item?.data?.fullname}`));
+  const total = groups.length + users.length;
+  result = groups?.[0]?.data?.name || users?.[0]?.data?.fullname || '';
+  if (result?.length > 25) {
+    result = `${result.substr(0, 25)}...`;
+  }
+  const left = total - 1;
+  if (left > 0) {
+    result = `${result} +${left} ${t?.('post:other_places')}`;
+  }
   return result;
 };
 
