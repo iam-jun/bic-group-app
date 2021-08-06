@@ -89,6 +89,13 @@
     "text_forgot_password_complete_title": "Your new password have been created",
     "text_forgot_password_complete_desc": "Sign in now with your new password"
   },
+  "tabs": {
+    "home": "News feed",
+    "groups": "Groups",
+    "chat": "Chat",
+    "notification": "Notifications",
+    "menus": "Menu"
+  },
   "settings": {
     "title_app_language": "App language",
     "title_app_theme": "App theme"
