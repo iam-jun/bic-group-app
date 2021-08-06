@@ -36,7 +36,7 @@ const UserProfile = () => {
         subTitle={item.subtitle}
         LeftComponent={
           <Icon
-            style={{marginRight: theme.spacing.margin.extraLarge}}
+            style={styles.leftIcon}
             icon={item.leftIcon}
             tintColor={theme.colors.primary7}
           />
@@ -47,10 +47,7 @@ const UserProfile = () => {
               <Icon icon={item.privacyIcon} />
             </ButtonWrapper>
             <ButtonWrapper onPress={popupMessage}>
-              <Icon
-                icon={'EditAlt'}
-                style={{marginLeft: theme.spacing.margin.extraLarge}}
-              />
+              <Icon icon={'EditAlt'} style={styles.rightEditIcon} />
             </ButtonWrapper>
           </>
         }
@@ -84,13 +81,13 @@ const UserProfile = () => {
           <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
         </ButtonWrapper>
       </View>
-      <ButtonWrapper onPress={popupMessage} style={{alignItems: 'center'}}>
+      <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
         <Image
           style={styles.avatar}
           source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
         />
       </ButtonWrapper>
-      <Divider style={{marginVertical: theme.spacing.margin.small}} />
+      <Divider style={styles.divider} />
 
       {/* --- COVER --- */}
       <View style={styles.coverHeader}>
@@ -105,7 +102,7 @@ const UserProfile = () => {
           source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
         />
       </ButtonWrapper>
-      <Divider style={{marginVertical: theme.spacing.margin.small}} />
+      <Divider style={styles.divider} />
 
       {/* --- BASIC INFO --- */}
       <View style={styles.infoHeader}>
@@ -162,6 +159,18 @@ const themeStyles = (theme: ITheme) => {
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,
+    },
+    leftIcon: {
+      marginRight: theme.spacing.margin.extraLarge,
+    },
+    rightEditIcon: {
+      marginLeft: theme.spacing.margin.extraLarge,
+    },
+    imageButton: {
+      alignItems: 'center',
+    },
+    divider: {
+      marginVertical: theme.spacing.margin.small,
     },
   });
 };
