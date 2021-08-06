@@ -49,6 +49,7 @@
     "btn_sign_in_apple": "Sign In With Apple",
     "btn_sign_up": "Sign Up",
     "btn_send": "Send",
+    "btn_send_recover_code": "Send recover code",
     "btn_forgot_password": "Forgot password?",
     "btn_sign_up_now": "Sign up now.",
     "text_err_login_failed": "Email or password is wrong!",

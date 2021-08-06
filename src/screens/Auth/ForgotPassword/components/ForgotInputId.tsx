@@ -117,7 +117,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
         testID="btnSend"
         disabled={disableRequest}
         loading={forgotPasswordLoading}
-        title={t('auth:btn_send')}
+        title={t('auth:btn_send_recover_code')}
         onPress={onRequestForgotPassword}
       />
     </>
