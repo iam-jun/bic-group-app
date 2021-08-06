@@ -1,13 +1,13 @@
 import {connect, StreamClient} from 'getstream';
 import {useEffect, useState} from 'react';
-import Config from 'react-native-config';
+import {getEnv} from '~/utils/env';
 
 const useGetStream = (token: string): StreamClient | undefined => {
   const [client, setClient] = useState<StreamClient | undefined>(undefined);
 
   useEffect(() => {
     setClient(
-      connect(Config.GET_STREAM_API_KEY, token, Config.GET_STREAM_APP_ID),
+      connect(getEnv('GET_STREAM_API_KEY'), token, getEnv('GET_STREAM_APP_ID')),
     );
   }, [token]);
 
