@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -13,7 +13,6 @@ import menuActions from '~/screens/Menu/redux/actions';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
@@ -36,7 +35,7 @@ const UserProfile = () => {
         subTitle={item.subtitle}
         LeftComponent={
           <Icon
-            style={{marginRight: theme.spacing.margin.extraLarge}}
+            style={styles.leftIcon}
             icon={item.leftIcon}
             tintColor={theme.colors.primary7}
           />
@@ -47,10 +46,7 @@ const UserProfile = () => {
               <Icon icon={item.privacyIcon} />
             </ButtonWrapper>
             <ButtonWrapper onPress={popupMessage}>
-              <Icon
-                icon={'EditAlt'}
-                style={{marginLeft: theme.spacing.margin.extraLarge}}
-              />
+              <Icon icon={'EditAlt'} style={styles.rightEditIcon} />
             </ButtonWrapper>
           </>
         }
@@ -75,52 +71,52 @@ const UserProfile = () => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header title={t('settings:title_about')} />
+      <ScrollView>
+        <Header title={t('settings:title_about')} />
 
-      {/* --- AVATAR --- */}
-      <View style={styles.avatarHeader}>
-        <Text.H5 color={theme.colors.iconTint}>Avatar</Text.H5>
-        <ButtonWrapper onPress={popupMessage}>
-          <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+        {/* --- AVATAR --- */}
+        <View style={styles.avatarHeader}>
+          <Text.H5 color={theme.colors.iconTint}>Avatar</Text.H5>
+          <ButtonWrapper onPress={popupMessage}>
+            <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+          </ButtonWrapper>
+        </View>
+        <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
+          <Image
+            style={styles.avatar}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          />
         </ButtonWrapper>
-      </View>
-      <ButtonWrapper onPress={popupMessage} style={{alignItems: 'center'}}>
-        <Image
-          style={styles.avatar}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-        />
-      </ButtonWrapper>
-      <Divider style={{marginVertical: theme.spacing.margin.small}} />
+        <Divider style={styles.divider} />
 
-      {/* --- COVER --- */}
-      <View style={styles.coverHeader}>
-        <Text.H5 color={theme.colors.iconTint}>Cover</Text.H5>
+        {/* --- COVER --- */}
+        <View style={styles.coverHeader}>
+          <Text.H5 color={theme.colors.iconTint}>Cover</Text.H5>
+          <ButtonWrapper onPress={popupMessage}>
+            <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+          </ButtonWrapper>
+        </View>
         <ButtonWrapper onPress={popupMessage}>
-          <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+          <Image
+            style={styles.cover}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          />
         </ButtonWrapper>
-      </View>
-      <ButtonWrapper onPress={popupMessage}>
-        <Image
-          style={styles.cover}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+        <Divider style={styles.divider} />
+
+        {/* --- BASIC INFO --- */}
+        <View style={styles.infoHeader}>
+          <Text.H5 color={theme.colors.iconTint}>Basic Info</Text.H5>
+        </View>
+        <ListView
+          scrollEnabled={false}
+          type="primary"
+          data={userProfile}
+          loading={loadingUserProfile}
+          renderItem={renderItem}
+          listStyle={styles.basicInfoList}
         />
-      </ButtonWrapper>
-      <Divider style={{marginVertical: theme.spacing.margin.small}} />
-
-      {/* --- BASIC INFO --- */}
-      <View style={styles.infoHeader}>
-        <Text.H5 color={theme.colors.iconTint}>Basic Info</Text.H5>
-      </View>
-      <ListView
-        scrollEnabled={false}
-        type="primary"
-        data={userProfile}
-        loading={loadingUserProfile}
-        renderItem={renderItem}
-        listStyle={styles.basicInfoList}
-      />
-
-      <AlertModal />
+      </ScrollView>
     </ScreenWrapper>
   );
 };
@@ -162,6 +158,18 @@ const themeStyles = (theme: ITheme) => {
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,
+    },
+    leftIcon: {
+      marginRight: theme.spacing.margin.extraLarge,
+    },
+    rightEditIcon: {
+      marginLeft: theme.spacing.margin.extraLarge,
+    },
+    imageButton: {
+      alignItems: 'center',
+    },
+    divider: {
+      marginVertical: theme.spacing.margin.small,
     },
   });
 };

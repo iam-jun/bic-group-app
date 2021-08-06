@@ -16,7 +16,6 @@ import languages from '~/constants/languages';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
@@ -86,7 +85,6 @@ const GeneralSettings = () => {
         listStyle={styles.menuList}
         onItemPress={onAccountSettingsPress}
       />
-      <AlertModal />
       <BottomSheet
         modalizeRef={baseSheetRef}
         ContentComponent={

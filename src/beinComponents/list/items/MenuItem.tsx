@@ -19,13 +19,15 @@ const MenuItem: React.FC<IOption> = ({
   return (
     <View style={styles.container}>
       <Icon icon={icon} label={title} labelStyle={styles.label} />
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.rightComponent}>
         {rightSubTitle && (
-          <Text.BodyS style={styles.subText} useI18n>
+          <Text.BodyS color={theme.colors.iconTint} useI18n>
             {rightSubTitle}
           </Text.BodyS>
         )}
-        {rightSubIcon && <Icon icon={rightSubIcon} style={{marginLeft: 12}} />}
+        {rightSubIcon && (
+          <Icon icon={rightSubIcon} style={styles.rightSubIcon} />
+        )}
       </View>
     </View>
   );
@@ -43,11 +45,14 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
       justifyContent: 'space-between',
     },
+    rightComponent: {
+      flexDirection: 'row',
+    },
     label: {
       marginStart: spacing.margin.extraLarge,
     },
-    subText: {
-      color: colors.iconTint,
+    rightSubIcon: {
+      marginLeft: spacing.margin.base,
     },
   });
 };

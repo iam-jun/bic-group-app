@@ -1,27 +1,21 @@
+import i18next from 'i18next';
 import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
+import Header from '~/beinComponents/Header';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Divider from '~/components/Divider';
 import {useBaseHook} from '~/hooks';
+import useChat from '~/hooks/chat';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
-
-import {spacing} from '~/theme';
-import actions from '~/screens/Chat/redux/actions';
-import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import useChat from '~/hooks/chat';
-import Header from '~/beinComponents/Header';
-import i18next from 'i18next';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Avatar from '~/beinComponents/Avatar';
-import {countTime} from '~/utils/formatData';
-import Text from '~/beinComponents/Text';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
+import actions from '~/screens/Chat/redux/actions';
+import {spacing} from '~/theme';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -44,26 +38,6 @@ const ConversationsList = (): React.ReactElement => {
 
   const loadMore = () => {
     dispatch(actions.mergeExtraData('groups'));
-  };
-
-  const renderItem = ({item}: {item: IConversation; index: number}) => {
-    return (
-      <PrimaryItem
-        title={item.name}
-        subTitle={item.lastMessage}
-        onPress={() => onChatPress(item)}
-        LeftComponent={
-          <Avatar.Large style={styles.marginRight} source={item.avatar} />
-        }
-        RightComponent={
-          <View style={styles.marginLeft}>
-            <Text.H6 color={theme.colors.textSecondary}>
-              {countTime(item._updatedAt)}
-            </Text.H6>
-          </View>
-        }
-      />
-    );
   };
 
   const onChatPress = (item: IConversation) => {
@@ -89,11 +63,11 @@ const ConversationsList = (): React.ReactElement => {
         placeholder={t('chat:placeholder_search')}
       />
       <ListView
-        type="chat"
+        type="conversation"
         isFullView
         loading={loading}
         data={data}
-        renderItem={renderItem}
+        onItemPress={onChatPress}
         renderItemSeparator={() => <Divider />}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
@@ -109,12 +83,7 @@ const createStyles = (theme: IObject<any>) => {
     inputSearch: {
       margin: spacing.margin.base,
     },
-    marginLeft: {
-      marginLeft: spacing.margin.base,
-    },
-    marginRight: {
-      marginRight: spacing.margin.base,
-    },
+
     item: {
       flex: 1,
       flexDirection: 'row',

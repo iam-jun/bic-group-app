@@ -23,7 +23,6 @@ import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import {ITheme} from '~/theme/interfaces';
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 const Menu = (): React.ReactElement => {
@@ -110,8 +109,6 @@ const Menu = (): React.ReactElement => {
         data={settings}
         onItemPress={onSettingPress}
       />
-
-      <AlertModal dismissable={true} />
     </ScreenWrapper>
   );
 };
