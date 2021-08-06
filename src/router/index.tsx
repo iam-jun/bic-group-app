@@ -42,6 +42,9 @@ const StackNavigator = (): React.ReactElement => {
   const handleDeepLink = async () => {
     const initialUrl = await Linking.getInitialURL();
     console.log('handleDeepLink', {initialUrl});
+    // TODO:
+    // const navigation = withNavigation(rootNavigationRef);
+    // navigation.replace(rootSwitch.mainStack);
 
     //[TO-DO] replace url with config url
     const path = initialUrl?.replace('http://localhost:8080/', '') || '';
@@ -52,6 +55,9 @@ const StackNavigator = (): React.ReactElement => {
 
   /*Handle when app in background*/
   const handleOpenURL = (event: any) => {
+    // TODO:
+    // const navigation = withNavigation(rootNavigationRef);
+    // navigation.replace(rootSwitch.authStack);
     console.log('handleOpenURL', {event});
   };
 
@@ -61,14 +67,15 @@ const StackNavigator = (): React.ReactElement => {
 
   if (initialRouteName === undefined) return <View />;
 
+  const onReady = () => {
+    isNavigationRefReady.current = true;
+  };
+
   return (
     <NavigationContainer
       linking={linkingConfig}
       ref={rootNavigationRef}
-      onReady={() => {
-        //@ts-ignore
-        isNavigationRefReady.current = true;
-      }}
+      onReady={onReady}
       theme={navigationTheme}>
       <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
         <Stack.Screen
