@@ -1,5 +1,10 @@
 import {AxiosRequestConfig} from 'axios';
-import {ICreateRoomReq, IPaginationParams} from '~/interfaces/IHttpRequest';
+import {
+  ICreateRoomReq,
+  IPaginationParams,
+  ISendMessageReq,
+  IUpdateRoomTopicReq,
+} from '~/interfaces/IHttpRequest';
 
 const providers = {
   bein: {
@@ -19,7 +24,7 @@ const providers = {
 const Chat = {
   groups: (params: IPaginationParams): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}groups.listAll`,
+      url: `${providers.chat.url}groups.list`,
       method: 'get',
       useRetry: true,
       provider: providers.chat,
@@ -64,6 +69,15 @@ const Chat = {
       params,
     };
   },
+  sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.postMessage`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
 };
 
 const App = {
@@ -85,9 +99,12 @@ const App = {
   },
   pushToken: (
     deviceToken: string,
-    os: string,
+    deviceOS: string,
     chatToken: string,
     chatUserId: string,
+    appBundleId: string,
+    deviceType: string,
+    deviceName: string,
   ): HttpApiRequestConfig => {
     return {
       url: `${providers.bein.url}notification/token`,
@@ -100,7 +117,10 @@ const App = {
       },
       data: {
         token: deviceToken,
-        os,
+        device_os: deviceOS,
+        app_name: appBundleId,
+        device_type: deviceType,
+        device_name: deviceName,
       },
     };
   },

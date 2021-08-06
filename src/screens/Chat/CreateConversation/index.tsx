@@ -24,7 +24,8 @@ const CreateConversation = (): React.ReactElement => {
   const {selectedUsers, users} = useChat();
 
   useEffect(() => {
-    dispatch(actions.getData('users', true));
+    dispatch(actions.resetData('users'));
+    dispatch(actions.getData('users'));
   }, []);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
@@ -34,12 +35,14 @@ const CreateConversation = (): React.ReactElement => {
       actions.createConversation({
         name: uuid.v4().toString(),
         members: selectedUsers.map((user: IUser) => user.username),
-        customFields: {
-          type: roomTypes.QUICK,
-          name: generateRoomName(
+        extraData: {
+          topic: generateRoomName(
             user,
             selectedUsers.slice(0, 2).map((user: IUser) => user.name),
           ),
+        },
+        customFields: {
+          type: roomTypes.QUICK,
         },
       }),
     );

@@ -1,9 +1,10 @@
 import {Auth} from 'aws-amplify';
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {StreamClient} from 'getstream';
+import {connect, StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
 import {Alert, Platform} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 
 import apiConfig, {
   FeedResponseError,
@@ -13,6 +14,7 @@ import apiConfig, {
 import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
 import {ActionTypes, createAction} from '~/utils';
+import {getEnv} from '~/utils/env';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -293,8 +295,13 @@ const handleResponseFailFeedActivity = async (
         }
 
         try {
+          const newStreamClient = connect(
+            getEnv('GET_STREAM_API_KEY'),
+            getFeedAccessToken(),
+            getEnv('GET_STREAM_APP_ID'),
+          );
           const resp = await makeGetStreamRequest(
-            streamClient,
+            newStreamClient,
             feedSlug,
             userId,
             funcName,
@@ -426,17 +433,21 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   return axiosInstance(requestConfig);
 };
 
-const makePushTokenRequest = (
+const makePushTokenRequest = async (
   deviceToken: string,
   chatToken?: string,
   chatUserId?: string,
 ) => {
+  const deviceName = await DeviceInfo.getDeviceName();
   return makeHttpRequest(
     apiConfig.App.pushToken(
       deviceToken,
       Platform.OS,
       chatToken || getChatAuthInfo().accessToken,
       chatUserId || getChatAuthInfo().userId,
+      DeviceInfo.getBundleId(),
+      DeviceInfo.getDeviceType(),
+      deviceName,
     ),
   );
 };
@@ -445,7 +456,6 @@ export {
   makeGetStreamRequest,
   makeHttpRequest,
   makePushTokenRequest,
-  getFeedAccessToken,
   getChatAuthInfo,
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,

@@ -35,8 +35,7 @@ function* setupPushToken() {
     // Get Firebase token
     const deviceToken = yield messaging().getToken();
     // Push token firebase
-    const r = yield makePushTokenRequest(deviceToken);
-    console.log('rererererer:', r); // TODO: remove
+    yield makePushTokenRequest(deviceToken);
   } catch (e) {
     console.log('setupPushToken fail:', e);
   }
