@@ -71,9 +71,8 @@ const UserProfile = () => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+      <Header title={t('settings:title_about')} />
       <ScrollView>
-        <Header title={t('settings:title_about')} />
-
         {/* --- AVATAR --- */}
         <View style={styles.avatarHeader}>
           <Text.H5 color={theme.colors.iconTint}>Avatar</Text.H5>
