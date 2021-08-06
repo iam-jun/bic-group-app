@@ -21,7 +21,9 @@ const MenuItem: React.FC<IOption> = ({
       <Icon icon={icon} label={title} labelStyle={styles.label} />
       <View style={styles.rightComponent}>
         {rightSubTitle && (
-          <Text.BodyS color={theme.colors.iconTint}>{rightSubTitle}</Text.BodyS>
+          <Text.BodyS color={theme.colors.iconTint} useI18n>
+            {rightSubTitle}
+          </Text.BodyS>
         )}
         {rightSubIcon && (
           <Icon icon={rightSubIcon} style={styles.rightSubIcon} />

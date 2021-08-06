@@ -34,16 +34,6 @@ export const logoutMenu = [
 
 export default [
   {
-    type: 'language',
-    title: 'settings:title_app_language',
-    icon: 'iconLanguage',
-  },
-  {
-    type: 'theme',
-    title: 'settings:title_app_theme',
-    icon: 'iconTheme',
-  },
-  {
     type: 'component',
     title: 'Component Collection',
     icon: 'Bug',
@@ -82,7 +72,7 @@ export const accountSettingsMenu = [
     type: 'language',
     title: 'settings:title_language',
     icon: 'Globe',
-    rightSubTitle: 'English',
+    rightSubTitle: 'settings:app_language',
     rightSubIcon: 'AngleRightB',
   },
   {
