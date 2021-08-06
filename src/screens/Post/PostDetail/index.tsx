@@ -1,31 +1,50 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, StyleSheet, Keyboard} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import {usePostDetail} from '~/hooks/post';
-import {IPostActivity} from '~/interfaces/IPost';
+import {usePostDetail, usePostDetailReplyingComment} from '~/hooks/post';
+import {
+  IPostActivity,
+  IReaction,
+  IRequestPostComment,
+} from '~/interfaces/IPost';
 import PostView from '~/beinFragments/PostView';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import ListView from '~/beinComponents/list/ListView';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import Loading from '~/beinComponents/Loading';
+import Text from '~/beinComponents/Text';
+import {useBaseHook} from '~/hooks';
+import postActions from '~/screens/Post/redux/actions';
+import {useDispatch} from 'react-redux';
+import Icon from '~/beinComponents/Icon';
 import {useUserIdAuth} from '~/hooks/auth';
 
-const PostDetail = () => {
+const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
   const [listComments, setListComments] = useState([]);
   const [loadingComment, setLoadingComment] = useState(false);
 
+  const params = props?.route?.params;
+  const {focusComment} = params || {};
+
+  const textInputRef = useRef<any>();
+  const listRef = useRef<any>();
+
+  const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
 
   const postDetail: IPostActivity = usePostDetail() || {};
   const {id} = postDetail || {};
+  const replying = usePostDetailReplyingComment();
 
   const getComments = () => {
     if (id) {
@@ -46,6 +65,7 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
+    dispatch(postActions.setPostDetailReplyingComment());
     getComments();
   }, []);
 
@@ -58,26 +78,52 @@ const PostDetail = () => {
   };
 
   const onPressSend = () => {
-    const commentData = {
-      content: commentText,
-    };
     if (id) {
+      const commentData = {
+        content: commentText?.trim(),
+      };
+      const replyCmtId = replying?.id;
+      const requestData: IRequestPostComment = {
+        referenceId: replyCmtId || id,
+        referenceType: replyCmtId ? 'comment' : 'post',
+        commentData,
+        userId,
+      };
       postDataHelper
-        .postNewComment(id, commentData, userId)
+        .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
             getComments();
             setCommentText('');
+            dispatch(postActions.setPostDetailReplyingComment());
           }
         })
         .catch(e => {
           console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
         });
+    } else {
+      console.log('\x1b[31m', '🐣️  | onPressSend : invalid id ', '\x1b[0m');
     }
   };
 
-  const renderCommentItem = ({item}: any) => {
-    return <CommentItem commentData={item} />;
+  const renderCommentItem = ({
+    item,
+    index,
+  }: {
+    item: IReaction;
+    index: number;
+  }) => {
+    const bgColor = item.id === replying?.id ? colors.bgFocus : undefined;
+    return (
+      <CommentItem
+        commentData={item}
+        contentBackgroundColor={bgColor}
+        onPressReply={data => {
+          textInputRef.current?.focus?.();
+          listRef.current?.scrollToIndex({index: index});
+        }}
+      />
+    );
   };
 
   const renderFooter = () => {
@@ -90,21 +136,54 @@ const PostDetail = () => {
     );
   };
 
+  const renderCommentInputHeader = () => {
+    if (!replying) {
+      return null;
+    }
+    return (
+      <View style={styles.commentInputHeader}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{flex: 1}}>
+            <Text>
+              {t('post:reply_comment_1')}
+              <Text.BodyM>
+                {replying?.user?.data?.fullname || t('post:someone')}
+              </Text.BodyM>
+              <Text>{t('post:reply_comment_2')}</Text>
+            </Text>
+          </Text>
+          <Icon
+            icon={'iconClose'}
+            onPress={() => dispatch(postActions.setPostDetailReplyingComment())}
+          />
+        </View>
+        <Text.Subtitle
+          color={colors.textSecondary}
+          numberOfLines={1}>{`${replying.data?.content}`}</Text.Subtitle>
+      </View>
+    );
+  };
+
   return (
-    <ScreenWrapper backgroundColor={theme.colors.placeholder}>
+    <ScreenWrapper backgroundColor={colors.placeholder}>
       <Header subTitle={'Post detail'} />
       <ListView
+        listRef={listRef}
         isFullView
         data={listComments}
         renderItem={renderCommentItem}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => <View />}
+        keyboardShouldPersistTaps={'handled'}
       />
       <CommentInput
+        textInputRef={textInputRef}
         value={commentText}
+        autoFocus={focusComment}
         onChangeText={onTextChange}
         onPressSend={onPressSend}
+        HeaderComponent={renderCommentInputHeader()}
       />
     </ScreenWrapper>
   );
@@ -114,6 +193,10 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {},
+    commentInputHeader: {
+      marginHorizontal: spacing?.margin.base,
+      marginTop: spacing?.margin.tiny,
+    },
   });
 };
 

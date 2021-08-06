@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {IGroup} from '~/interfaces/IGroup';
-import {IObject} from '~/interfaces/common';
 import {Text} from '~/components';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -11,6 +10,7 @@ import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import GroupTree, {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import Button from '~/beinComponents/Button';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   showSmallestChild?: boolean;
@@ -19,7 +19,18 @@ export interface FlatGroupItemProps extends GroupItemProps {
   toggleOnPress?: boolean;
   onPressGroup?: (group: IGroup) => void;
   onPressItem?: (group: IGroup) => void;
+  hidePath?: boolean;
+  initShowTree?: boolean;
 }
+
+type PathData = {
+  path: string;
+  total: number;
+  more: number;
+};
+
+const limitLength = 45;
+const limitLengthShort = 35;
 
 const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   showSmallestChild,
@@ -28,30 +39,60 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   toggleOnPress,
   onPressGroup,
   onPressItem,
+  hidePath = false,
+  initShowTree = false,
   ...props
 }: FlatGroupItemProps) => {
-  const [showTree, setShowTree] = useState(false);
+  const [showTree, setShowTree] = useState(initShowTree);
   const [group, setGroup] = useState<IGroup>(props);
-  const [path, setPath] = useState<string>(props.path || '/');
+  const [path, setPath] = useState<PathData>({path: '', total: 0, more: 0});
 
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme();
-  const {spacing}: IObject<any> = theme;
+  const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const getSmallestChild = (smallestGroup: IGroup, path: string) => {
+  const getSmallestChild = (smallestGroup: IGroup, path: PathData) => {
     if (smallestGroup?.children?.[0]) {
-      path = `${path}${smallestGroup.name}/`;
+      path.total = path.total + 1;
+      if (path.path?.length < limitLength) {
+        path.path = `${path.path}${path.path?.length > 0 ? ' ▸ ' : ''}${
+          smallestGroup.name
+        }`;
+      } else {
+        path.more = path.more + 1;
+      }
+
       getSmallestChild(smallestGroup?.children?.[0], path);
     } else {
+      if (path.path?.length >= limitLength) {
+        path.path =
+          path.path
+            .substr(0, path.more > 0 ? limitLengthShort : limitLength)
+            ?.trim() + '...';
+      }
       setGroup({...smallestGroup});
-      setPath(path);
+      setPath({...path});
+    }
+  };
+
+  const getParentPath = (group: IGroup, path: PathData) => {
+    if (group.parent) {
+      path.total = path.total + 1;
+      path.path = `${group.parent.name}${path.path?.length > 0 ? ' ▸ ' : ''}${
+        path.path
+      }`;
+
+      getParentPath(group.parent, path);
+    } else {
+      setPath({...path});
     }
   };
 
   useEffect(() => {
     if (showSmallestChild) {
       getSmallestChild(props, path);
+    } else {
+      getParentPath(props, path);
     }
   }, []);
 
@@ -81,36 +122,33 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     }
   };
 
-  const getGroupParent = (group: IGroup, parents: IGroup[]) => {
-    parents.push(group);
-    if (group.parent) {
-      getGroupParent(group.parent, parents);
-    }
-  };
-
   const renderPath = () => {
+    const hasTree = props?.children && props.children?.length > 0;
+    const moreText = path.more > 0 ? `+${path.more} more` : '';
+    const buttonText = !hasTree ? '' : showTree ? 'Showless' : moreText;
+
     return (
-      <TouchableOpacity
-        // style={{marginHorizontal: spacing.margin.tiny}}
-        disabled={!(props?.children && props.children?.length > 0)}
-        onPress={_onPressPath}>
-        <Text>{path}</Text>
-      </TouchableOpacity>
+      <View style={styles.pathContainer}>
+        <Button onPress={_onPressPath} disabled={!hasTree}>
+          <View style={styles.iconArrowRight}>
+            <Icon
+              icon={'AngleRightB'}
+              size={12}
+              tintColor={theme.colors.iconTint}
+            />
+          </View>
+          <Text style={{paddingRight: 20}}>
+            {showTree ? '' : path.path}{' '}
+            <Text color={theme.colors.primary7}>{buttonText}</Text>
+          </Text>
+        </Button>
+      </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <View style={{marginTop: spacing.margin.tiny, flexDirection: 'row'}}>
-        <View style={styles.iconNextContainer}>
-          <Icon
-            icon={'AngleRightB'}
-            size={12}
-            tintColor={theme.colors.iconTint}
-          />
-        </View>
-        {renderPath()}
-      </View>
+      {!hidePath && renderPath()}
       {showTree ? (
         <GroupTree
           data={props}
@@ -132,15 +170,21 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {},
-    iconNextContainer: {
+    iconArrowRight: {
       width: 16,
       height: 16,
-      marginTop: 4,
+      backgroundColor: colors.borderDivider,
+      marginRight: spacing.margin.tiny,
       borderRadius: 8,
       justifyContent: 'center',
+      alignItems: 'center',
+    },
+    pathContainer: {
+      marginTop: spacing.margin.tiny,
+      flexDirection: 'row',
       alignItems: 'center',
     },
   });
