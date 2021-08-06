@@ -1,32 +1,23 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useTheme} from 'react-native-paper';
 
 import {Container, ScreenWrapper, Text} from '~/components';
-import {IObject} from '~/interfaces/common';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import Button from '~/beinComponents/Button';
+// import {ITheme} from "~/theme/interfaces";
 
 const Landing = () => {
-  const theme: IObject<any> = useTheme();
+  // const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
-  const styles = themeStyles(theme);
+  const styles = createStyle();
 
-  const {logo, img, groupName}: any = {
-    groupName: 'EVOLGROUP',
+  const {logo, img}: any = {
     logo: 'https://i.ibb.co/THjnH3g/landing-logo.png',
-    img: 'https://i.ibb.co/b5MRfBj/landing-img-group.png',
+    img: 'https://i.ibb.co/XZ98dD0/landing-img.png',
   };
-
-  const title = groupName
-    ? t('auth:text_landing_title_group').replace('{0}', groupName)
-    : t('auth:text_landing_title');
-  const desc = groupName
-    ? t('auth:text_landing_desc_group').replace('{0}', groupName)
-    : '';
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
@@ -35,8 +26,7 @@ const Landing = () => {
       )}
       <Container fluid style={styles.contentContainer}>
         <Image resizeMode="contain" style={styles.img} source={{uri: img}} />
-        <Text.H5 style={styles.title}>{title}</Text.H5>
-        {!!desc && <Text.Subtitle style={styles.desc}>{desc}</Text.Subtitle>}
+        <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
       </Container>
       <Button.Primary
         style={styles.button}
@@ -48,9 +38,8 @@ const Landing = () => {
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
+const createStyle = () => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: insets.top,
@@ -61,14 +50,15 @@ const themeStyles = (theme: IObject<any>) => {
       justifyContent: 'center',
     },
     title: {
-      marginVertical: spacing.margin.tiny,
+      textAlign: 'center',
+      marginVertical: spacing.margin.extraLarge,
     },
     desc: {
       marginBottom: spacing.margin.tiny,
     },
     button: {
       marginTop: spacing.margin.big,
-      marginBottom: 80,
+      marginBottom: 40,
     },
     logo: {
       width: 64,
