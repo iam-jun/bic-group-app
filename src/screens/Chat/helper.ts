@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import {generateAvatar} from '~/utils/common';
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
+import {getEnv} from '~/utils/env';
 import {generateRoomName} from '~/utils/generator';
 import {timestampToISODate} from '~/utils/formatData';
 
@@ -72,4 +73,4 @@ export const mapUser = (item: any) => ({
 });
 
 export const getAvatar = (username: string) =>
-  `${Config.ROCKET_CHAT_SERVER}avatar/${username}`;
+  `${getEnv('ROCKET_CHAT_SERVER')}avatar/${username}`;
