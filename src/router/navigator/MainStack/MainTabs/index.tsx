@@ -2,6 +2,7 @@ import React from 'react';
 import {useTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import i18next from 'i18next';
 
 import Icon from '~/beinComponents/Icon';
 
@@ -43,9 +44,8 @@ const MainTabs = () => {
         inactiveTintColor: colors.textSecondary,
         activeBackgroundColor: colors.bgButtonSecondary,
         style: {
-          // backgroundColor: tabBarBackground,
-          // height: 60,
-          paddingBottom: !isPhone ? 0 : insets.bottom,
+          backgroundColor: colors.background,
+          height: 60 + (!isPhone ? 0 : insets.bottom),
         },
       }}
       tabBarStyle={
@@ -80,7 +80,9 @@ const MainTabs = () => {
                       tintColor="none"
                     />
                     {isPhone && (
-                      <Text.BodyS style={styles.label}>{label}</Text.BodyS>
+                      <Text.BodyS style={styles.label}>
+                        {i18next.t(`tabs:${name}`)}
+                      </Text.BodyS>
                     )}
                   </View>
                 );
