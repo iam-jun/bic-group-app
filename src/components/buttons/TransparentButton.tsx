@@ -37,7 +37,7 @@ const TransparentButton: React.FC<Props> = ({
   return (
     <TouchableOpacity onPress={onPress} {...restProps}>
       <View style={[styles.container, style]}>
-        <Text style={[styles.text, textStyle, {color: colors.primary}]}>
+        <Text style={[styles.text, {color: colors.primary}, textStyle]}>
           {title}
         </Text>
       </View>
