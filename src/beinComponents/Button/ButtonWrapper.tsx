@@ -41,7 +41,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   onPress,
   onLongPress,
   disabled,
-  textVariant = 'buttonBase',
+  textVariant,
   textProps,
   useI18n,
   leftIcon,
@@ -55,6 +55,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   TouchableComponent = TouchableOpacity,
 }: ButtonWrapperProps) => {
   const {colors, spacing}: ITheme = useTheme();
+  textVariant = textVariant || 'buttonBase';
 
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {
