@@ -14,19 +14,19 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useDispatch} from 'react-redux';
-import {AppContext} from '~/contexts/AppContext';
-import homeActions from '~/screens/Home/redux/actions';
 
 export interface PostViewProps {
   postData: IPostActivity;
+  onPressComment?: (data: IPostActivity) => void;
 }
 
-const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
+const PostView: FC<PostViewProps> = ({
+  postData,
+  onPressComment,
+}: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
 
-  const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -37,11 +37,10 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   const {content} = data || {};
 
   const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
   const avatar = actor?.data?.avatarUrl;
   const actorName = actor?.data?.fullname;
-  const textAudiences = getAudiencesText(audience);
+  const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
 
   /**
@@ -90,8 +89,8 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
     alert('onLongPressReact');
   };
 
-  const onPressComment = () => {
-    alert('onPressComment');
+  const _onPressComment = () => {
+    onPressComment?.(postData);
   };
 
   const onPressMarkAsRead = () => {
@@ -101,12 +100,6 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
         .then(response => {
           if (response && response?.data) {
             setCalledMarkAsRead(true);
-            dispatch(
-              homeActions.getHomePosts({
-                streamClient,
-                userId: userId.toString(),
-              }),
-            );
           }
         })
         .catch(e => {
@@ -200,6 +193,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
     return (
       <View style={styles.reactButtonContainer}>
         <Button
+          useI18n
           onPress={onPressReact}
           onLongPress={onLongPressReact}
           leftIcon={'iconReact'}
@@ -213,11 +207,13 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
             color: colors.textSecondary,
           }}
           style={styles.buttonReact}>
-          React
+          post:button_react
         </Button>
         <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
         <Button
-          onPress={onPressComment}
+          useI18n
+          disabled={!onPressComment}
+          onPress={_onPressComment}
           leftIcon={'CommentAltDots'}
           leftIconProps={{
             icon: 'CommentAltDots',
@@ -229,7 +225,7 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
             color: colors.textSecondary,
           }}
           style={styles.buttonReact}>
-          Comment
+          post:button_comment
         </Button>
       </View>
     );
@@ -262,14 +258,21 @@ const PostView: FC<PostViewProps> = ({postData}: PostViewProps) => {
   );
 };
 
-const getAudiencesText = (aud?: IPostAudience) => {
+const getAudiencesText = (aud?: IPostAudience, t?: any) => {
+  const limitLength = 25;
   let result = '';
   const {groups = [], users = []} = aud || {};
-  groups.map(
-    (item: any) =>
-      (result = `${result}${result.length > 0 ? ', ' : ''}${item?.data?.name}`),
-  );
-  users.map((item: any) => (result = `${result}, ${item?.data?.fullname}`));
+  const total = groups.length + users.length;
+  result = groups?.[0]?.data?.name || users?.[0]?.data?.fullname || '';
+  const left = total - 1;
+  if (result?.length > limitLength) {
+    result = `${result.substr(0, limitLength)}...`;
+  } else if (left > 0) {
+    result = `${result},...`;
+  }
+  if (left > 0) {
+    result = `${result} +${left} ${t?.('post:other_places')}`;
+  }
   return result;
 };
 

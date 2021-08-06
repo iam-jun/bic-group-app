@@ -44,7 +44,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableOnPressItem,
   } = props;
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -90,7 +90,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         onPress={_onToggleItem}
         disabled={!hasChild}
         activeOpacity={1}
-        hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={styles.toggleContainer}>
         {hasChild && (
           <View style={styles.toggleContent}>

@@ -23,10 +23,13 @@ import {useDispatch} from 'react-redux';
 import Icon from '~/beinComponents/Icon';
 import {useUserIdAuth} from '~/hooks/auth';
 
-const PostDetail = () => {
+const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
   const [listComments, setListComments] = useState([]);
   const [loadingComment, setLoadingComment] = useState(false);
+
+  const params = props?.route?.params;
+  const {focusComment} = params || {};
 
   const textInputRef = useRef<any>();
   const listRef = useRef<any>();
@@ -177,6 +180,7 @@ const PostDetail = () => {
       <CommentInput
         textInputRef={textInputRef}
         value={commentText}
+        autoFocus={focusComment}
         onChangeText={onTextChange}
         onPressSend={onPressSend}
         HeaderComponent={renderCommentInputHeader()}

@@ -7,20 +7,20 @@ import {
   StyleProp,
   ViewStyle,
   Keyboard,
-  Platform,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {fontFamilies} from '~/theme/fonts';
-import KeyboardSpacer from '~/components/layout/KeyboardSpacer';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface CommentInputProps {
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?: (text: string) => void;
   onPressSend?: () => void;
+  autoFocus?: boolean;
   value?: string;
   HeaderComponent?: React.ReactNode;
   textInputRef?: any;
@@ -31,6 +31,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   placeholder = 'Aa',
   onChangeText,
   onPressSend,
+  autoFocus,
   value,
   HeaderComponent,
   textInputRef,
@@ -40,7 +41,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const showSendAnim = useRef(new Animated.Value(0)).current;
   const showButtonsAnim = useRef(new Animated.Value(1)).current;
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
@@ -137,7 +138,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <ButtonWrapper style={styles.iconContainer} onPress={onPressFile}>
             <Icon
               size={13}
-              icon={'Paperclip'}
+              icon={'attachment'}
               tintColor={theme.colors.iconTintReversed}
             />
           </ButtonWrapper>
@@ -177,11 +178,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
             style={styles.textInput}
             selectionColor={colors.textInput}
             multiline={true}
+            autoFocus={autoFocus}
             placeholder={placeholder}
             value={text}
             onChangeText={_onChangeText}
           />
-          <ButtonWrapper style={styles.buttonEmoji} onPress={onPressEmoji}>
+          <ButtonWrapper
+            style={{position: 'absolute', right: 10, bottom: 10}}
+            onPress={onPressEmoji}>
             <Icon
               size={24}
               icon={'iconSmileSolid'}
@@ -197,7 +201,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           tintColor={theme.colors.primary7}
         />
       </View>
-      {Platform.OS === 'ios' && <KeyboardSpacer />}
+      <KeyboardSpacer iosOnly />
     </View>
   );
 };

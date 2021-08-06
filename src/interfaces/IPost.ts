@@ -1,6 +1,6 @@
 export interface IPostAudience {
-  users?: number[];
-  groups?: number[];
+  users?: IAudienceUser[];
+  groups?: IAudienceGroup[];
 }
 
 export interface IAudienceUser {

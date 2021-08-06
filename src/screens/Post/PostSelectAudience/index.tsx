@@ -37,7 +37,7 @@ const PostSelectAudience = () => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing} = theme;
   const styles = createStyle(theme);
 
@@ -186,6 +186,8 @@ const PostSelectAudience = () => {
       return (
         <FlatGroupItem
           {...item}
+          initShowTree={false}
+          hidePath={false}
           selectingData={selectingGroups}
           showSmallestChild
           onChangeCheckedGroups={onChangeCheckedGroups}
