@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Container} from '~/components';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Image from '~/beinComponents/Image';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
@@ -23,13 +23,13 @@ const Landing = () => {
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
-      {!!logo && (
+      {logo && (
         <Image resizeMode="contain" style={styles.logo} source={{uri: logo}} />
       )}
-      <Container fluid style={styles.contentContainer}>
+      <View style={styles.contentContainer}>
         <Image resizeMode="contain" style={styles.img} source={{uri: img}} />
         <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
-      </Container>
+      </View>
       <Button.Primary
         style={styles.button}
         onPress={() => navigation.navigate(authStack.login)}
