@@ -12,6 +12,7 @@ import ListView from '~/beinComponents/list/ListView';
 import {Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
 import {IUser} from '~/interfaces/IAuth';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 
@@ -50,7 +51,11 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         isChecked={item.selected}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
         LeftComponent={
-          <Avatar.Large style={styles.marginRight} source={item.avatar} />
+          <Avatar.Large
+            style={styles.marginRight}
+            source={item.avatar}
+            placeholderSource={images.img_user_avatar_default}
+          />
         }
         onPressCheckbox={selectable ? () => onSelectUser(item) : undefined}
       />
@@ -63,6 +68,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         <Avatar.Large
           source={item.avatar}
           actionIcon="iconClose"
+          placeholderSource={images.img_user_avatar_default}
           onPressAction={() => onSelectUser(item)}
         />
         <ViewSpacing height={spacing?.margin.small} />
