@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Platform,
@@ -11,33 +11,52 @@ import FastImage from './FastImage';
 
 export interface ImageProps {
   source?: any;
+  placeholderSource?: any;
   placeholderStyle?: StyleProp<ViewStyle>;
   PlaceholderComponent?: any;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   ImageComponent?: any;
+  onError?: (err: any) => void;
   [x: string]: any;
 }
 
 const Image: React.FC<ImageProps> = ({
   source,
+  placeholderSource,
   placeholderStyle,
   PlaceholderComponent,
   containerStyle,
   style,
   ImageComponent = FastImage,
+  onError,
   ...props
 }: ImageProps) => {
   const placeholderContainerOpacity = React.useRef(
     new Animated.Value(1),
   ).current;
 
-  if (
-    typeof source === 'string' &&
-    source.toLowerCase?.().startsWith?.('http')
-  ) {
-    source = {uri: source};
-  }
+  const [_source, setSource] = useState(source);
+
+  useEffect(() => {
+    updateSource(source);
+  }, [source]);
+
+  const _onError = (error: any) => {
+    if (onError) return onError(error);
+    placeholderSource && updateSource(placeholderSource);
+  };
+
+  const updateSource = (source: any) => {
+    if (
+      typeof source === 'string' &&
+      source.toLowerCase?.().startsWith?.('http')
+    ) {
+      setSource({uri: source});
+    } else {
+      setSource(source);
+    }
+  };
 
   const onLoadEnd = () => {
     const minimumWait = 0;
@@ -52,6 +71,7 @@ const Image: React.FC<ImageProps> = ({
       minimumWait + staggerNonce,
     );
   };
+
   return (
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>
       {Platform.select({
@@ -78,15 +98,21 @@ const Image: React.FC<ImageProps> = ({
               </Animated.View>
             </View>
 
-            <ImageComponent source={source} {...props} style={style} />
+            <ImageComponent
+              source={_source}
+              {...props}
+              style={style}
+              onError={_onError}
+            />
           </React.Fragment>
         ),
         default: (
           <React.Fragment>
             <ImageComponent
-              source={source}
+              source={_source}
               {...props}
               onLoadEnd={onLoadEnd}
+              onError={_onError}
               style={style}
             />
 

@@ -1,3 +1,4 @@
+import {Config} from 'react-native-config';
 import i18next from 'i18next';
 import {generateAvatar} from '~/utils/common';
 import {IUser} from '~/interfaces/IAuth';
@@ -29,13 +30,16 @@ export const mapUsers = (data?: []): IUser[] =>
   (data || []).map((item: any) => mapUser(item));
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
-  const name = item?.topic || generateRoomName(user, item?.usernames || []);
+  const name =
+    item?.topic ||
+    generateRoomName(user, item?.usernames || []) ||
+    item.u?.name;
   return {
     ...item,
     _id: item?._id || item?.rid,
     name,
     type: item?.t,
-    avatar: generateAvatar(name),
+    avatar: getAvatar(item.name),
     user: mapUser(item?.u),
     lastMessage: item?.lastMessage?.msg,
     _updatedAt: timestampToISODate(item._updatedAt),
@@ -63,8 +67,9 @@ export const mapMessage = (item: any): IMessage => {
 
 export const mapUser = (item: any) => ({
   ...item,
-  avatar:
-    item?.avatarOrigin ||
-    generateAvatar(item?.name || item?.fullname || item?.username),
+  avatar: getAvatar(item.username),
   name: item?.name || item?.fullname || item?.username,
 });
+
+export const getAvatar = (username: string) =>
+  `${Config.ROCKET_CHAT_SERVER}avatar/${username}`;

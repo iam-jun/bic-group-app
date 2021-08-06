@@ -8,6 +8,7 @@ import Avatar from '~/beinComponents/Avatar';
 import {Text, ViewSpacing} from '~/components';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
+import images from '~/resources/images';
 import {spacing} from '~/theme';
 import {countTime} from '~/utils/formatData';
 import ChatBubble from './ChatBubble';
@@ -62,7 +63,10 @@ const MessageContainer: React.FC<MessageContainerProps> = (
             <ViewSpacing height={spacing.margin.large} />
           )}
           <View style={styles.viewHeader}>
-            <Avatar.Medium source={_currentMessage.user.avatar} />
+            <Avatar.Medium
+              source={_currentMessage.user.avatar}
+              placeholderSource={images.img_user_avatar_default}
+            />
             <View style={styles.viewHeaderInfo}>
               <Text.H6 style={styles.textName}>
                 {_currentMessage?.user.name}
@@ -113,16 +117,19 @@ const createStyles = (theme: IObject<any>) => {
     },
     viewHeaderInfo: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     },
 
     textName: {
       marginStart: spacing.margin.small,
       textTransform: 'capitalize',
+      paddingTop: 0,
     },
     textTime: {
       color: colors.textSecondary,
       marginStart: spacing.margin.small,
+      marginTop: 0,
+      textAlignVertical: 'top',
     },
     reactions: {
       flexDirection: 'row',
