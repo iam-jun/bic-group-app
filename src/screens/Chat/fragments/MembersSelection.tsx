@@ -77,7 +77,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     <View style={styles.container}>
       <SearchInput style={styles.searchInput} {...searchInputProps} />
       <ViewSpacing height={spacing?.margin.base} />
-      {selectedUsers.length > 0 && (
+      {selectable && selectedUsers.length > 0 && (
         <ListView
           title={i18next.t('common:text_chosen')}
           data={selectedUsers}
@@ -94,6 +94,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         title={i18next.t('common:text_all')}
         data={data}
         loading={loading}
+        isFullView
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}

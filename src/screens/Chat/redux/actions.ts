@@ -4,10 +4,9 @@ import {ISocketEvent} from '~/interfaces/ISocket';
 import {IUser} from '~/interfaces/IAuth';
 import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 
-const getData = (dataType: string, reset?: boolean, payload?: any) => ({
+const getData = (dataType: string, payload?: any) => ({
   type: Actions.GET_DATA,
   dataType,
-  reset,
   payload,
 });
 
@@ -28,6 +27,11 @@ const mergeExtraData = (dataType: string) => ({
   dataType,
 });
 
+const resetData = (dataType: string) => ({
+  type: Actions.RESET_DATA,
+  dataType,
+});
+
 const selectConversation = (payload: IConversation) => ({
   type: Actions.SELECT_CONVERSATION,
   payload,
@@ -43,6 +47,21 @@ const sendMessage = (payload: IMessage) => ({
   payload,
 });
 
+const sendMessageSuccess = (payload: IMessage) => ({
+  type: Actions.SEND_MESSAGE_SUCCESS,
+  payload,
+});
+
+const retrySendMessage = (payload: IMessage) => ({
+  type: Actions.RETRY_SEND_MESSAGE,
+  payload,
+});
+
+const sendMessageFailed = (payload: IMessage) => ({
+  type: Actions.SEND_MESSAGE_FAILED,
+  payload,
+});
+
 const reactMessage = (message?: IMessage, reactionType?: string) => ({
   type: Actions.REACT_MESSAGE,
   message,
@@ -52,6 +71,10 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
 const selectUser = (payload: IUser) => ({
   type: Actions.SELECT_USER,
   payload,
+});
+
+const clearSelectedUsers = () => ({
+  type: Actions.CLEAR_SELECTED_USERS,
 });
 
 const createConversation = (payload: ICreateRoomReq) => ({
@@ -74,11 +97,16 @@ export default {
   setData,
   setExtraData,
   mergeExtraData,
+  resetData,
   handleEvent,
   selectConversation,
   sendMessage,
+  sendMessageSuccess,
+  sendMessageFailed,
+  retrySendMessage,
   reactMessage,
   selectUser,
+  clearSelectedUsers,
   createConversation,
   createConversationSuccess,
   addNewMessage,

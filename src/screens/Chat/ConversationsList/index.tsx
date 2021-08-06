@@ -19,7 +19,7 @@ import Header from '~/beinComponents/Header';
 import i18next from 'i18next';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Avatar from '~/beinComponents/Avatar';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import Text from '~/beinComponents/Text';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 
@@ -38,7 +38,8 @@ const ConversationsList = (): React.ReactElement => {
   }, []);
 
   const _getConversations = () => {
-    dispatch(actions.getData('groups', true));
+    dispatch(actions.resetData('groups'));
+    dispatch(actions.getData('groups'));
   };
 
   const loadMore = () => {
@@ -55,9 +56,9 @@ const ConversationsList = (): React.ReactElement => {
           <Avatar.Large style={styles.marginRight} source={item.avatar} />
         }
         RightComponent={
-          <View>
+          <View style={styles.marginLeft}>
             <Text.H6 color={theme.colors.textSecondary}>
-              {formatDate(item._updatedAt)}
+              {countTime(item._updatedAt)}
             </Text.H6>
           </View>
         }
@@ -71,6 +72,7 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   const onMenuPress = async () => {
+    dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.createConversation);
   };
 
@@ -106,6 +108,9 @@ const createStyles = (theme: IObject<any>) => {
     container: {},
     inputSearch: {
       margin: spacing.margin.base,
+    },
+    marginLeft: {
+      marginLeft: spacing.margin.base,
     },
     marginRight: {
       marginRight: spacing.margin.base,

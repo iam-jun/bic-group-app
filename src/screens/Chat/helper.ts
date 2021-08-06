@@ -3,6 +3,7 @@ import {generateAvatar} from '~/utils/common';
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
 import {generateRoomName} from '~/utils/generator';
+import {timestampToISODate} from '~/utils/formatData';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -28,8 +29,7 @@ export const mapUsers = (data?: []): IUser[] =>
   (data || []).map((item: any) => mapUser(item));
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
-  const name =
-    item?.customFields?.name || generateRoomName(user, item?.usernames || []);
+  const name = item?.topic || generateRoomName(user, item?.usernames || []);
   return {
     ...item,
     _id: item?._id || item?.rid,
@@ -38,6 +38,7 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     avatar: generateAvatar(name),
     user: mapUser(item?.u),
     lastMessage: item?.lastMessage?.msg,
+    _updatedAt: timestampToISODate(item._updatedAt),
   };
 };
 
@@ -47,13 +48,15 @@ export const mapMessage = (item: any): IMessage => {
     ...item,
     room_id: item?.rid,
     user,
-    updateAt: item?._updateAt,
+    type: item.t,
     system: !!item.t,
+    createdAt: timestampToISODate(item.ts),
+    _updatedAt: timestampToISODate(item._updatedAt),
     text: item.t
       ? i18next
           .t(`chat:system_message_${item.t}`)
-          .replace('{0}', item.msg)
-          .replace('{1}', user.name)
+          .replace('{0}', user.name)
+          .replace('{1}', item.msg)
       : item?.msg,
   };
 };
