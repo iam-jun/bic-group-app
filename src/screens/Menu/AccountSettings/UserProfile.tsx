@@ -13,7 +13,6 @@ import menuActions from '~/screens/Menu/redux/actions';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
@@ -116,8 +115,6 @@ const UserProfile = () => {
         renderItem={renderItem}
         listStyle={styles.basicInfoList}
       />
-
-      <AlertModal />
     </ScreenWrapper>
   );
 };

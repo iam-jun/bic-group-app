@@ -20,6 +20,7 @@ import LeftTabs from './LeftTabs';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
+import AlertModal from '~/beinComponents/modals/AlertModal';
 const Stack = createStackNavigator();
 
 const MainStack = (): React.ReactElement => {
@@ -69,6 +70,7 @@ const MainStack = (): React.ReactElement => {
           </View>
         )}
       </View>
+      <AlertModal />
     </View>
   );
 };

@@ -13,7 +13,6 @@ import {useRootNavigation} from '~/hooks/navigation';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 const GeneralSettings = () => {
@@ -51,7 +50,6 @@ const GeneralSettings = () => {
         listStyle={styles.list}
         onItemPress={onAccountSettingsPress}
       />
-      <AlertModal />
     </ScreenWrapper>
   );
 };
