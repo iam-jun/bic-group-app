@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -71,50 +71,52 @@ const UserProfile = () => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header title={t('settings:title_about')} />
+      <ScrollView>
+        <Header title={t('settings:title_about')} />
 
-      {/* --- AVATAR --- */}
-      <View style={styles.avatarHeader}>
-        <Text.H5 color={theme.colors.iconTint}>Avatar</Text.H5>
-        <ButtonWrapper onPress={popupMessage}>
-          <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+        {/* --- AVATAR --- */}
+        <View style={styles.avatarHeader}>
+          <Text.H5 color={theme.colors.iconTint}>Avatar</Text.H5>
+          <ButtonWrapper onPress={popupMessage}>
+            <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+          </ButtonWrapper>
+        </View>
+        <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
+          <Image
+            style={styles.avatar}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          />
         </ButtonWrapper>
-      </View>
-      <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
-        <Image
-          style={styles.avatar}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-        />
-      </ButtonWrapper>
-      <Divider style={styles.divider} />
+        <Divider style={styles.divider} />
 
-      {/* --- COVER --- */}
-      <View style={styles.coverHeader}>
-        <Text.H5 color={theme.colors.iconTint}>Cover</Text.H5>
+        {/* --- COVER --- */}
+        <View style={styles.coverHeader}>
+          <Text.H5 color={theme.colors.iconTint}>Cover</Text.H5>
+          <ButtonWrapper onPress={popupMessage}>
+            <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+          </ButtonWrapper>
+        </View>
         <ButtonWrapper onPress={popupMessage}>
-          <Text.H6 color={theme.colors.primary7}>Edit</Text.H6>
+          <Image
+            style={styles.cover}
+            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+          />
         </ButtonWrapper>
-      </View>
-      <ButtonWrapper onPress={popupMessage}>
-        <Image
-          style={styles.cover}
-          source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-        />
-      </ButtonWrapper>
-      <Divider style={styles.divider} />
+        <Divider style={styles.divider} />
 
-      {/* --- BASIC INFO --- */}
-      <View style={styles.infoHeader}>
-        <Text.H5 color={theme.colors.iconTint}>Basic Info</Text.H5>
-      </View>
-      <ListView
-        scrollEnabled={false}
-        type="primary"
-        data={userProfile}
-        loading={loadingUserProfile}
-        renderItem={renderItem}
-        listStyle={styles.basicInfoList}
-      />
+        {/* --- BASIC INFO --- */}
+        <View style={styles.infoHeader}>
+          <Text.H5 color={theme.colors.iconTint}>Basic Info</Text.H5>
+        </View>
+        <ListView
+          scrollEnabled={false}
+          type="primary"
+          data={userProfile}
+          loading={loadingUserProfile}
+          renderItem={renderItem}
+          listStyle={styles.basicInfoList}
+        />
+      </ScrollView>
     </ScreenWrapper>
   );
 };
