@@ -10,6 +10,7 @@ import groupsReducer from '~/screens/Groups/redux/reducer';
 import postReducer from '~/screens/Post/redux/reducer';
 import homeReducer from '~/screens/Home/redux/reducer';
 import notificationsReducer from '~/screens/Notification/redux/reducer';
+import menuReducer from '~/screens/Menu/redux/reducer';
 
 const authPersistConfig = {
   key: 'auth',
@@ -26,6 +27,7 @@ const rootReducers = combineReducers({
   groups: groupsReducer,
   home: homeReducer,
   notifications: notificationsReducer,
+  menu: menuReducer,
 });
 
 export default rootReducers;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -7,6 +7,8 @@ import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
+import useMenu from '~/hooks/menu';
+import menuActions from '~/screens/Menu/redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -14,18 +16,18 @@ import ListView from '~/beinComponents/list/ListView';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
-import dataBasicInfo from './basicInfoFields';
 
 const UserProfile = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const menuData = useMenu();
+  const {loadingUserProfile, userProfile} = menuData;
 
   const renderItem = ({item}: {item: any}) => {
     return (
@@ -67,6 +69,10 @@ const UserProfile = () => {
       }),
     );
 
+  useEffect(() => {
+    dispatch(menuActions.getUserProfile());
+  }, []);
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header title={t('settings:title_about')} />
@@ -79,10 +85,9 @@ const UserProfile = () => {
         </ButtonWrapper>
       </View>
       <ButtonWrapper onPress={popupMessage} style={{alignItems: 'center'}}>
-        <Avatar.UltraLarge
+        <Image
+          style={styles.avatar}
           source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          badge={'Edit'}
-          badgeBottom
         />
       </ButtonWrapper>
       <Divider style={{marginVertical: theme.spacing.margin.small}} />
@@ -109,7 +114,8 @@ const UserProfile = () => {
       <ListView
         scrollEnabled={false}
         type="primary"
-        data={dataBasicInfo}
+        data={userProfile}
+        loading={loadingUserProfile}
         renderItem={renderItem}
         listStyle={styles.basicInfoList}
       />
@@ -145,9 +151,14 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
+    avatar: {
+      width: scaleSize(96),
+      height: scaleSize(96),
+      borderRadius: 8,
+    },
     cover: {
       width: scaleSize(375),
-      height: scaleSize(210),
+      height: scaleSize(136),
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,
