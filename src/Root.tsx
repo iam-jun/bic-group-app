@@ -1,7 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {StatusBar, Platform, NativeModules, LogBox} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+import moment from 'moment';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {
+  Alert,
+  LogBox,
+  NativeModules,
+  Platform,
+  StatusBar,
+  useColorScheme,
+} from 'react-native';
 
 /* Theme */
 import {
@@ -12,23 +20,22 @@ import {
   Provider as PaperProvider,
   Provider as ThemeProvider,
 } from 'react-native-paper';
-import {useColorScheme} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
 import {useDispatch, useSelector} from 'react-redux';
-import {useGetStream} from '~/hooks/getStream';
-import {fetchSetting} from '~/store/modal/actions';
 import {fontConfig} from '~/configs/fonts';
-
-import {colors, fonts, spacing, dimension, shadow} from '~/theme';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
+import {useGetStream} from '~/hooks/getStream';
 import RootNavigator from '~/router';
-import AlertModal from './components/modals/AlertModal';
-import {AppContext} from './contexts/AppContext';
-import {languages, AppConfig} from './configs';
 import localStorage from '~/services/localStorage';
-import moment from 'moment';
+import {fetchSetting} from '~/store/modal/actions';
+
+import {colors, dimension, fonts, shadow, spacing} from '~/theme';
+import AlertModal from './components/modals/AlertModal';
+import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
+import {AppContext} from './contexts/AppContext';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
@@ -52,12 +59,8 @@ export default (): React.ReactElement => {
   );
 
   // Init Get Stream
-  const feed = useSelector((state: any) => state.auth?.feed);
-  const streamClient = useGetStream(
-    feed?.accessToken ||
-      // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjcxNzY3MywiaWF0IjoxNjI2NzE3MzczfQ.wRWWzzsfZdl9iDdIS06DF_YB1AiQHuc6kBrTbdNoFFE',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGhpZW5uYSIsImV4cCI6MTYyNjc2NjY3NywiaWF0IjoxNjI2NzY2Mzc3fQ.FyVz-BnouPE0Tu4j_NY1WCjAm53IwJUiak2df-VXhgk',
-  );
+  const token = useSelector((state: any) => state.auth?.feed?.accessToken);
+  const streamClient = useGetStream(token);
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
@@ -74,6 +77,12 @@ export default (): React.ReactElement => {
   useEffect(() => {
     setUpResource();
     setUpLanguage();
+    // TODO:
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
   }, []);
 
   /* Change language */

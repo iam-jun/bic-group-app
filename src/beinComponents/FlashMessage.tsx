@@ -1,26 +1,32 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Icon from '~/beinComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
+import {IconType} from '~/resources/icons';
 
 export interface FlashMessageProps {
-  type?: 'error' | 'success' | 'warning';
+  type?: 'error' | 'success' | 'warning' | 'important';
   children?: React.ReactNode;
+  textProps?: TextProps;
+  leftIcon?: IconType;
   style?: StyleProp<ViewStyle>;
   onClose?: () => void;
 }
 
-const FlashMessage: React.FC<FlashMessageProps> = ({
+const FlashMessage: FC<FlashMessageProps> = ({
   type = 'warning',
   children,
+  textProps,
+  leftIcon,
   style,
   onClose,
 }: FlashMessageProps) => {
   const theme: ITheme = useTheme();
   const {colors, spacing} = theme;
+  const styles = createStyle(theme);
 
   const flashMessageStyle = {
     success: {
@@ -38,6 +44,11 @@ const FlashMessage: React.FC<FlashMessageProps> = ({
       textColor: colors.textDanger,
       backgroundColor: colors.error,
     },
+    important: {
+      iconColor: colors.iconTintReversed,
+      textColor: colors.textReversed,
+      backgroundColor: colors.primary7,
+    },
   };
 
   const {iconColor, textColor, backgroundColor} =
@@ -54,14 +65,35 @@ const FlashMessage: React.FC<FlashMessageProps> = ({
 
   return (
     <View style={containerStyle}>
+      {!!leftIcon && (
+        <Icon
+          style={styles.leftIcon}
+          size={16}
+          icon={leftIcon}
+          tintColor={iconColor}
+        />
+      )}
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text.Body color={textColor}>{children}</Text.Body>
+        <Text.Body {...textProps} color={textColor}>
+          {children}
+        </Text.Body>
       </View>
       {onClose && (
         <Icon icon={'iconClose'} tintColor={iconColor} onPress={onClose} />
       )}
     </View>
   );
+};
+
+const createStyle = (theme: ITheme) => {
+  const {spacing} = theme;
+  return StyleSheet.create({
+    container: {},
+    leftIcon: {
+      marginLeft: spacing?.margin.base,
+      marginRight: spacing?.margin.base,
+    },
+  });
 };
 
 export default FlashMessage;

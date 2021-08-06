@@ -8,6 +8,7 @@ export const initState = {
     content: '',
     cancelBtn: false,
     iconName: '',
+    confirmLabel: '',
     onConfirm: () => {},
     onCancel: () => {},
   },
@@ -23,8 +24,15 @@ function commonReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case actions.SHOW_ALERT:
-      const {title, content, iconName, onConfirm, cancelBtn, onCancel} =
-        payload;
+      const {
+        title,
+        content,
+        iconName,
+        onConfirm,
+        confirmLabel,
+        cancelBtn,
+        onCancel,
+      } = payload;
       return {
         ...state,
         alert: {
@@ -32,6 +40,7 @@ function commonReducer(state = initState, action: any = {}) {
           title,
           content,
           iconName,
+          confirmLabel,
           onConfirm,
           cancelBtn,
           onCancel,

@@ -3,17 +3,16 @@ import {StyleSheet, StyleProp, View, ViewStyle, ImageStyle} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
-import Image from '~/beinComponents/Image';
+import Image, {ImageProps} from '~/beinComponents/Image';
 import {IconType} from '~/resources/icons';
 
 export type AvatarType = 'tiny' | 'small' | 'medium' | 'large' | 'ultraLarge';
 
 export type AvatarStatus = 'online';
 
-export interface AvatarProps {
+export interface AvatarProps extends ImageProps {
   style?: StyleProp<ViewStyle>;
   variant?: AvatarType;
-  source?: string;
   status?: AvatarStatus;
   actionIcon?: IconType;
   onPressAction?: () => void;
@@ -32,8 +31,9 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badge,
   badgeBottom,
   isRounded,
+  ...props
 }: AvatarProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension, colors} = theme;
   const styles = creatStyle(theme);
 
@@ -69,7 +69,13 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Icon size={actionIconSize} icon={actionIcon} onPress={onPressAction} />
+        {actionIcon && (
+          <Icon
+            size={actionIconSize}
+            icon={actionIcon}
+            onPress={onPressAction}
+          />
+        )}
       </View>
     );
   };
@@ -144,7 +150,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           avatarStyle,
           source ? {} : {backgroundColor: colors.borderCard},
         ])}>
-        <Image style={avatarStyle} source={source} />
+        <Image style={avatarStyle} source={source} {...props} />
         {renderStatus()}
         {renderAction()}
         {renderBadge()}

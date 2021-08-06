@@ -37,6 +37,14 @@ export const bottomTabIcons = {
   menus: 'iconTabMenu',
 };
 
+export const bottomTabIconsFocused = {
+  home: 'iconTabHomeBein',
+  groups: 'iconTabGroupsBein',
+  chat: 'iconTabChatBein',
+  notification: 'iconTabNotificationBein',
+  menus: 'iconTabMenuBein',
+};
+
 export const linkingConfig = {
   prefixes: ['https://bein.group', 'bein://'],
   config: {
@@ -44,7 +52,22 @@ export const linkingConfig = {
       AppLoading: {
         path: '',
       },
-      AuthStack: {},
+      AuthStack: {
+        screens: {
+          Landing: {
+            path: 'welcome',
+          },
+          SignIn: {
+            path: 'login',
+          },
+          SignUp: {
+            path: 'register',
+          },
+          ForgotPassword: {
+            path: 'reset-password',
+          },
+        },
+      },
       MainStack: {
         screens: {
           main: {
@@ -65,6 +88,9 @@ export const linkingConfig = {
                   },
                   'group-detail': {
                     path: ':id?',
+                  },
+                  'post-detail': {
+                    path: 'post=:id?',
                   },
                 },
               },

@@ -2,15 +2,17 @@ import React from 'react';
 import {useTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import i18next from 'i18next';
 
 import Icon from '~/beinComponents/Icon';
 
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {useWindowDimensions} from 'react-native';
+import {useWindowDimensions, View, StyleSheet} from 'react-native';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
-import {bottomTabIcons} from '~/configs/navigator';
+import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
+import {Text} from '~/components';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -38,11 +40,22 @@ const MainTabs = () => {
         // activeTintColor: activeColor,
         // inactiveTintColor: inactiveColor,
         keyboardHidesTabBar: true,
+        activeTintColor: colors.primary7,
+        inactiveTintColor: colors.textSecondary,
+        activeBackgroundColor: colors.bgButtonSecondary,
         style: {
-          // backgroundColor: tabBarBackground,
-          paddingBottom: !isPhone ? 0 : insets.bottom,
+          backgroundColor: colors.background,
+          height: 60 + (!isPhone ? 0 : insets.bottom),
         },
-      }}>
+      }}
+      tabBarStyle={
+        isPhone
+          ? {}
+          : {
+              width: 64,
+              backgroundColor: colors.background,
+            }
+      }>
       {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore
@@ -52,16 +65,31 @@ const MainTabs = () => {
             component={component}
             options={{
               tabBarIcon: ({focused, color}) => {
-                if (!isBigTablet)
-                  return (
+                if (isBigTablet) return null;
+
+                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
+                const label = name.charAt(0).toUpperCase() + name.slice(1);
+                const styles = CreateStyle(theme, focused, isPhone, color);
+
+                return (
+                  <View style={styles.container}>
                     <Icon
                       //@ts-ignore
-                      icon={bottomTabIcons[name]}
-                      size={24}
-                      tintColor={color}
+                      icon={icon[name]}
+                      size={20}
+                      tintColor="none"
                     />
-                  );
-                return null;
+                    {isPhone && (
+                      <Text.BodyS style={styles.label}>
+                        {i18next.t(`tabs:${name}`)}
+                      </Text.BodyS>
+                    )}
+                  </View>
+                );
+              },
+              tabBarLabel: () => null,
+              tabBarBadgeStyle: {
+                backgroundColor: '#EC2626',
               },
             }}
           />
@@ -69,6 +97,28 @@ const MainTabs = () => {
       })}
     </Tab.Navigator>
   );
+};
+
+const CreateStyle = (
+  theme: ITheme,
+  focused: boolean,
+  isPhone: boolean,
+  color: string,
+) => {
+  const {colors} = theme;
+
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      height: isPhone ? '100%' : 64,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: focused ? colors.bgButtonSecondary : colors.background,
+    },
+    label: {
+      color: color,
+    },
+  });
 };
 
 export default MainTabs;

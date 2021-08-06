@@ -1,17 +1,20 @@
 import {Auth} from 'aws-amplify';
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {StreamClient} from 'getstream';
+import {connect, StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 
 import apiConfig, {
   FeedResponseError,
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/configs/apiConfig';
+import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
 import {ActionTypes, createAction} from '~/utils';
+import {getEnv} from '~/utils/env';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -186,6 +189,7 @@ const handleResponseError = async (
         return mapResponseSuccessBein(error.response);
     }
   } else if (error.request) {
+    console.log('error.request', error.config);
     if (!alertShow) {
       alertShow = true;
       Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
@@ -291,8 +295,13 @@ const handleResponseFailFeedActivity = async (
         }
 
         try {
+          const newStreamClient = connect(
+            getEnv('GET_STREAM_API_KEY'),
+            getFeedAccessToken(),
+            getEnv('GET_STREAM_APP_ID'),
+          );
           const resp = await makeGetStreamRequest(
-            streamClient,
+            newStreamClient,
             feedSlug,
             userId,
             funcName,
@@ -339,7 +348,20 @@ const refreshAuthTokens = async () => {
 
   const {chatUserId, chatAccessToken, feedAccessToken} = dataTokens;
   dispatchStoreAuthTokens(chatUserId, chatAccessToken, feedAccessToken);
-  return true;
+
+  // after refresh token, update push token with the new tokens
+  if (Platform.OS === 'web') {
+    return true;
+  }
+  try {
+    const messaging = await initPushTokenMessage();
+    const deviceToken = await messaging().getToken();
+    await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
+    return true;
+  } catch (e) {
+    console.log('pushToken when refreshToken failed:', e);
+    return false;
+  }
 };
 
 const getAuthTokens = async () => {
@@ -411,10 +433,29 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   return axiosInstance(requestConfig);
 };
 
+const makePushTokenRequest = async (
+  deviceToken: string,
+  chatToken?: string,
+  chatUserId?: string,
+) => {
+  const deviceName = await DeviceInfo.getDeviceName();
+  return makeHttpRequest(
+    apiConfig.App.pushToken(
+      deviceToken,
+      Platform.OS,
+      chatToken || getChatAuthInfo().accessToken,
+      chatUserId || getChatAuthInfo().userId,
+      DeviceInfo.getBundleId(),
+      DeviceInfo.getDeviceType(),
+      deviceName,
+    ),
+  );
+};
+
 export {
   makeGetStreamRequest,
   makeHttpRequest,
-  getFeedAccessToken,
+  makePushTokenRequest,
   getChatAuthInfo,
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,

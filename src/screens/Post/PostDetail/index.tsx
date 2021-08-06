@@ -21,6 +21,7 @@ import {useBaseHook} from '~/hooks';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 import Icon from '~/beinComponents/Icon';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const PostDetail = () => {
   const [commentText, setCommentText] = useState('');
@@ -32,11 +33,11 @@ const PostDetail = () => {
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
-  const userId = 9; //todo replace with BEIN userId later...
+  const userId = useUserIdAuth();
 
   const postDetail: IPostActivity = usePostDetail() || {};
   const {id} = postDetail || {};

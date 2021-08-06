@@ -45,6 +45,16 @@ export const postApiConfig = {
       data: params.commentData,
     },
   }),
+  postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      postId: postId,
+      userId: userId,
+    },
+  }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}posts/search/audiences`,
     method: 'get',
@@ -123,6 +133,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postNewComment(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postMarkAsRead: async (postId: string, userId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postMarkAsRead(postId, userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

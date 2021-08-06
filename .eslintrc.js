@@ -33,6 +33,7 @@ module.exports = {
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "prettier/prettier": 1
+    "prettier/prettier": 1,
+    "no-extra-boolean-cast": 0,
   }
 }

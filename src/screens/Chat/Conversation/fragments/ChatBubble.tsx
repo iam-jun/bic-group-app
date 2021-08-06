@@ -7,14 +7,16 @@ import {IObject} from '~/interfaces/common';
 import {GMessage} from '~/interfaces/IChat';
 import {sizes} from '~/theme/dimension';
 
-const ChatBubble: React.FC<BubbleProps<GMessage>> = props => {
+const ChatBubble: React.FC<BubbleProps<GMessage>> = (
+  props: BubbleProps<GMessage>,
+) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {onLongPress} = props;
+  const {onLongPress, currentMessage} = props;
 
   return (
     <TouchableWithoutFeedback
-      onLongPress={() => onLongPress && onLongPress(props.currentMessage)}>
+      onLongPress={() => onLongPress && onLongPress(currentMessage)}>
       <Bubble
         {...props}
         onLongPress={() => {}}
@@ -44,7 +46,7 @@ const createStyles = (theme: IObject<any>) => {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       backgroundColor: 'transparent',
-      marginStart: 40,
+      marginStart: 34,
     },
   });
 };

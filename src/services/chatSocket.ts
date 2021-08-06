@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import Config from 'react-native-config';
 
 import {getChatAuthInfo, refreshAuthTokens} from '~/services/httpApiRequest';
+import {getEnv} from '~/utils/env';
 
 export const ManualSocketCloseCodeDefault = 4567;
 
@@ -17,20 +17,19 @@ interface OnMessageCallback {
   callback: (event: WebSocketMessageEvent) => void;
 }
 
-let socket: WebSocket;
+let socket: WebSocket | undefined;
 let manualSocketCloseCode: number;
 let rocketChatAuthToken: string;
 let messageQueue: any[] = [];
 let isAuthRefreshing = false;
 let onMessageCallbacks: Array<OnMessageCallback> = [];
+let countRetryConnect = 0;
 
 const connectChat = () => {
   if (socket && socket.readyState == 1) {
     return;
   }
-  socket = new WebSocket(
-    'wss://rockettest.bein.group/websocket' || Config.SOCKET_ROCKET_CHAT,
-  ); // TODO: remove
+  socket = new WebSocket(getEnv('SOCKET_ROCKET_CHAT'));
   _setupSocket();
 };
 
@@ -73,12 +72,17 @@ const sendMessage = (data: any) => {
 };
 
 const waitForSocketConnection = (callback?: any) => {
+  if (countRetryConnect > 10) {
+    return;
+  }
   setTimeout(function () {
     if (socket?.readyState === 1) {
+      countRetryConnect = 0;
       console.log('connection is made.');
       callback && callback();
     } else {
-      console.log('wait for connection...');
+      countRetryConnect++;
+      console.log(countRetryConnect, 'wait for connection...');
       waitForSocketConnection(callback);
     }
   }, 100);
@@ -91,8 +95,7 @@ const _login = () => {
     id: 'bein-login', // TODO: rename?
     params: [
       {
-        resume:
-          rocketChatAuthToken || 'i2_1ZD1Ri7Z9qq7UtOf7uKlUZSGLBYKf2Ykm_sCPx8F',
+        resume: rocketChatAuthToken,
       },
     ],
   });
@@ -110,13 +113,16 @@ const _onOpenDefault = () => {
 
 const _onCloseDefault = (event: WebSocketCloseEvent) => {
   console.log('onCloseDefault:', event); // TODO: comment
-  if (manualSocketCloseCode === ManualSocketCloseCodeDefault) {
+  if (manualSocketCloseCode === ManualSocketCloseCodeDefault && socket) {
+    socket.onopen = null;
+    socket.onclose = null;
+    socket.onerror = null;
+    socket.onmessage = null;
+    socket = undefined;
     manualSocketCloseCode = 0;
     return;
   }
-  socket = new WebSocket(
-    'wss://rockettest.bein.group/websocket' || Config.SOCKET_ROCKET_CHAT,
-  );
+  socket = new WebSocket(getEnv('SOCKET_ROCKET_CHAT'));
   _setupSocket();
 };
 
@@ -150,7 +156,6 @@ const _onMessageMustHave = (event: WebSocketMessageEvent) => {
   if (data.error?.error === 403 && !isAuthRefreshing) {
     isAuthRefreshing = true;
     refreshAuthTokens().then(success => {
-      console.log('retry success:', success);
       if (!success) {
         messageQueue = [];
         isAuthRefreshing = false;

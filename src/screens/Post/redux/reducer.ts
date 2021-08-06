@@ -12,6 +12,10 @@ const initState = {
     chosenAudiences: [],
     searchResultAudienceGroups: [],
     searchResultAudienceUsers: [],
+    important: {
+      active: false,
+      expiresTime: '',
+    },
   },
   postDetail: {},
   replyingComment: {},
@@ -48,6 +52,14 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           chosenAudiences: payload,
+        },
+      };
+    case postTypes.SET_CREATE_POST_IMPORTANT:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          important: payload || initState.createPost.important,
         },
       };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:

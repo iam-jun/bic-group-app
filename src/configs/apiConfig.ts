@@ -1,5 +1,10 @@
 import {AxiosRequestConfig} from 'axios';
-import {ICreateRoomReq, IPaginationParams} from '~/interfaces/IHttpRequest';
+import {
+  ICreateRoomReq,
+  IPaginationParams,
+  ISendMessageReq,
+  IUpdateRoomTopicReq,
+} from '~/interfaces/IHttpRequest';
 
 const providers = {
   bein: {
@@ -17,9 +22,9 @@ const providers = {
 };
 
 const Chat = {
-  getRooms: (params: IPaginationParams): HttpApiRequestConfig => {
+  groups: (params: IPaginationParams): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}groups.listAll`,
+      url: `${providers.chat.url}groups.list`,
       method: 'get',
       useRetry: true,
       provider: providers.chat,
@@ -35,6 +40,44 @@ const Chat = {
       data,
     };
   },
+  users: (params: IPaginationParams & {params: any}) => {
+    return {
+      url: `${providers.chat.url}users.list`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  messages: (params: IPaginationParams & {roomId: string}) => {
+    return {
+      url: `${providers.chat.url}groups.history`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  members: (
+    params: IPaginationParams & {roomId: string},
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.members`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.postMessage`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
 };
 
 const App = {
@@ -46,20 +89,39 @@ const App = {
       useRetry: true,
     };
   },
-  users: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}users`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: false,
-    };
-  },
   tokens: (): HttpApiRequestConfig => {
     return {
       url: `${providers.bein.url}auth/token`,
       method: 'get',
       provider: providers.bein,
       useRetry: true,
+    };
+  },
+  pushToken: (
+    deviceToken: string,
+    deviceOS: string,
+    chatToken: string,
+    chatUserId: string,
+    appBundleId: string,
+    deviceType: string,
+    deviceName: string,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}notification/token`,
+      method: 'post',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': chatToken,
+        'X-User-Id': chatUserId,
+      },
+      data: {
+        token: deviceToken,
+        device_os: deviceOS,
+        app_name: appBundleId,
+        device_type: deviceType,
+        device_name: deviceName,
+      },
     };
   },
 };

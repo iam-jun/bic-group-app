@@ -7,6 +7,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appDirectory = path.resolve(__dirname);
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const {presets} = require(`${appDirectory}/babel.config.js`);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config({path: './.env'});
 
 const compileNodeModules = [
   // Add every react-native package that needs compiling
@@ -15,28 +17,42 @@ const compileNodeModules = [
   'react-native-lightbox',
   'react-native-typing-animation',
   'react-native-parsed-text',
-  '@react-navigation/native',
-  '@react-navigation/drawer',
   'redux',
   'react-redux',
   'redux-persist',
   'react-native-safe-area-context',
-  '@react-navigation/stack',
-  '@react-navigation/native',
   'react-native-screens',
   'react-native-paper',
-  'react-native-vector-icons',
-  '@unimodules/react-native-adapter',
   'i18next',
   'react-i18next',
   'react-native-reanimate',
   'react-native-image-picker',
-  'react-native-vector-icons',
-  '@react-native-async-storage/async-storage',
   'amazon-cognito-identity-js',
   'aws-amplify',
   'react-hook-form',
   'react-native-fast-image',
+  'react-native-vector-icons',
+  'react-native-gifted-chat',
+  // '@unimodules/react-native-adapter',
+  // 'getstream',
+  '@react-native-async-storage/async-storage', //
+  '@aws-amplify', // remove on product
+  '@aws-crypto', //
+  '@aws-sdk', //
+  'zen-observable-ts', //
+  'immer', //
+  'html-parse-stringify', //
+  '@callstack', //
+  'jwt-decode', //
+  '@react-navigation', //
+  'rn-placeholder', //
+  '@expo', //
+  'react-native-action-sheet', //
+  'react-native-device-info', //
+  'react-native-uuid', //
+  'react-native-tab-view', //
+  'sockjs-client', //
+  '@egjs', //
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {
@@ -55,18 +71,6 @@ const babelLoaderConfiguration = {
       presets,
       plugins: ['react-native-web'],
     },
-  },
-};
-
-const compileRNNodeModules = ['react-native-gifted-chat'].map(moduleName =>
-  path.resolve(appDirectory, `node_modules/${moduleName}`),
-);
-
-const rnModulesLoaderConfiguration = {
-  test: /@?.*\.(ts|js)x?$/,
-  include: [...compileRNNodeModules],
-  use: {
-    loader: 'babel-loader',
   },
 };
 
@@ -137,7 +141,6 @@ module.exports = {
       babelLoaderConfiguration,
       imageLoaderConfiguration,
       svgLoaderConfiguration,
-      rnModulesLoaderConfiguration,
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
@@ -169,7 +172,8 @@ module.exports = {
     new webpack.DefinePlugin({
       // See: https://github.com/necolas/react-native-web/issues/349
       __DEV__: JSON.stringify(true),
-      'process.env.NODE_ENV': JSON.stringify('development'),
+      // 'process.env.NODE_ENV': JSON.stringify('development'),
+      'process.env': JSON.stringify(process.env),
     }),
   ],
 };

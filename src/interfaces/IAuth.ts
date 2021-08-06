@@ -30,9 +30,9 @@ export interface IUser extends User {
   username?: string;
   name?: string;
   avatar?: string;
-  online?: boolean;
   role: string;
   selected?: boolean;
+  status?: string;
 }
 
 export interface IUserResponse extends IUser {

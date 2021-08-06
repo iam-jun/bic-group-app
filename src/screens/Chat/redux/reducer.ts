@@ -2,75 +2,106 @@ import appConfig from '~/configs/appConfig';
 import * as types from './constants';
 import {IConversation, IMessage, IReaction} from '~/interfaces/IChat';
 import {IUser} from '~/interfaces/IAuth';
+import {messageStatus} from '~/constants/chat';
 
-export const initState = {
-  conversations: {
+export const initDataState = {
+  groups: {
     loading: false,
-    data: new Array<IConversation>(),
-    extra: new Array<IConversation>(),
+    data: [],
+    extra: [],
     offset: 0,
     canLoadMore: true,
   },
-  conversation: {} as IConversation,
-  messages: {
+  users: {
     loading: false,
-    data: new Array<IMessage>(),
-    extra: new Array<IMessage>(),
-    lastDate: null,
+    data: [],
+    extra: [],
+    offset: 0,
     canLoadMore: true,
   },
-  users: new Array<IUser>(),
+  members: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
+  messages: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
+};
+
+export interface IAction {
+  type?: string;
+  dataType: keyof typeof initDataState;
+  payload?: any;
+  reset?: boolean;
+}
+
+const initState = {
+  ...initDataState,
+  conversation: {} as IConversation,
   selectedUsers: new Array<IUser>(),
 };
 
 /**
- * Video reducer
+ * Chat reducer
  * @param state
  * @param action
  * @returns {*}
  */
-function reducer(state = initState, action: any = {}) {
-  const {type} = action;
-  const {conversations, conversation, messages, users, selectedUsers} = state;
+function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
+  const {type, dataType, payload} = action;
+  const {groups, conversation, messages, users, selectedUsers} = state;
 
   switch (type) {
-    case types.GET_CONVERSATIONS:
+    case types.GET_DATA:
       return {
         ...state,
-        conversation: {
-          ...conversation,
-          loading: conversations.data.length === 0,
+        [dataType]: {
+          ...state[dataType],
+          loading: state[dataType].data.length === 0,
+          params: action.payload,
         },
       };
-    case types.SET_CONVERSATIONS:
+    case types.SET_DATA:
       return {
         ...state,
-        conversations: {
-          ...conversations,
+        [dataType]: {
+          ...state[dataType],
           loading: false,
-          data: action.payload,
-          offset: conversations.offset + action.payload.length,
-          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+          data: payload,
+          offset: state[dataType].offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
         },
       };
-    case types.SET_EXTRA_CONVERSATIONS:
+    case types.SET_EXTRA_DATA:
       return {
         ...state,
-        conversations: {
-          ...conversations,
-          extra: action.payload,
-          offset: conversations.offset + action.payload.length,
-          canLoadMore: action.payload.length === appConfig.recordsPerPage,
+        [dataType]: {
+          ...state[dataType],
+          extra: payload,
+          offset: state[dataType].offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
         },
       };
-    case types.MERGE_EXTRA_CONVERSATIONS:
+    case types.MERGE_EXTRA_DATA:
       return {
         ...state,
-        conversations: {
-          ...conversations,
-          data: [...conversations.data, ...conversations.extra],
+        [dataType]: {
+          ...state[dataType],
+          data: [...state[dataType].data, ...state[dataType].extra],
           extra: [],
         },
+      };
+    case types.RESET_DATA:
+      return {
+        ...state,
+        [dataType]: initDataState[dataType],
       };
     case types.SELECT_CONVERSATION:
       return {
@@ -87,52 +118,6 @@ function reducer(state = initState, action: any = {}) {
         users: [],
         selectedUsers: [],
       };
-    case types.GET_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          loading: true,
-        },
-      };
-    case types.SET_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          loading: false,
-          data: action.payload,
-          lastDate:
-            action.payload.length > 1
-              ? action.payload[action.payload.length - 1]._updatedAt
-              : messages.lastDate,
-          canLoadMore: action.payload.length === appConfig.recordsPerPage,
-        },
-      };
-    case types.SET_EXTRA_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          loading: false,
-          extra: action.payload,
-          canLoadMore: action.payload.length === appConfig.recordsPerPage,
-        },
-      };
-    case types.MERGE_EXTRA_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          loading: false,
-          data: [...messages.data, ...messages.extra],
-          extra: [],
-          lastDate:
-            messages.extra.length > 1
-              ? messages.extra[messages.extra.length - 1]._updatedAt
-              : messages.lastDate,
-        },
-      };
     case types.ADD_NEW_MESSAGE:
       return {
         ...state,
@@ -143,9 +128,9 @@ function reducer(state = initState, action: any = {}) {
                 data: [action.payload, ...messages.data],
               }
             : messages,
-        conversations: {
-          ...conversations,
-          data: conversations.data.map((item: any) =>
+        groups: {
+          ...groups,
+          data: groups.data.map((item: any) =>
             item._id === action.payload.room_id
               ? {
                   ...item,
@@ -156,32 +141,35 @@ function reducer(state = initState, action: any = {}) {
           ),
         },
       };
-    case types.SET_USERS:
-      return {
-        ...state,
-        users: action.payload,
-      };
     case types.SELECT_USER:
       return {
         ...state,
         selectedUsers: !action.payload.selected
           ? [...selectedUsers, {...action.payload, selected: true}]
-          : selectedUsers.filter(user => user.id !== action.payload.id),
-        users: users.map((item: IUser) =>
-          item.id === action.payload.id
-            ? {
-                ...item,
-                selected: !item.selected,
-              }
-            : item,
-        ),
+          : selectedUsers.filter(user => user._id !== action.payload._id),
+        users: {
+          ...users,
+          data: users.data.map((item: IUser) =>
+            item._id === action.payload._id
+              ? {
+                  ...item,
+                  selected: !item.selected,
+                }
+              : item,
+          ),
+        },
+      };
+    case types.CLEAR_SELECTED_USERS:
+      return {
+        ...state,
+        selectedUsers: [],
       };
     case types.CREATE_CONVERSATION_SUCCESS:
       return {
         ...state,
-        conversations: {
-          ...conversations,
-          data: [action.payload, ...conversations.data],
+        groups: {
+          ...groups,
+          data: [action.payload, ...groups.data],
         },
       };
     case types.SEND_MESSAGE:
@@ -192,10 +180,41 @@ function reducer(state = initState, action: any = {}) {
           data: [
             {
               ...action.payload,
-              pending: true,
+              status: messageStatus.SENDING,
             },
             ...messages.data,
           ],
+        },
+      };
+    case types.RETRY_SEND_MESSAGE:
+    case types.SEND_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item.localId === action.payload.localId
+              ? {
+                  ...action.payload,
+                  status: messageStatus.SENT,
+                }
+              : item,
+          ),
+        },
+      };
+    case types.SEND_MESSAGE_FAILED:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item.localId === action.payload.localId
+              ? {
+                  ...item,
+                  status: messageStatus.FAILED,
+                }
+              : item,
+          ),
         },
       };
     case types.REACT_MESSAGE:

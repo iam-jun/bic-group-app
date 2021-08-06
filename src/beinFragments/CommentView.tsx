@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -6,8 +6,9 @@ import {useTheme} from 'react-native-paper';
 import {IReaction} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import Icon from '~/beinComponents/Icon';
+import i18next from 'i18next';
 
 export interface CommentViewProps {
   commentData: IReaction;
@@ -20,7 +21,10 @@ const CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const theme: ITheme = useTheme();
+  const [contentShowAll, setContentShowAll] = useState(false);
+  const [shortDescription, shortContent] = useState('');
+
+  const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
@@ -31,9 +35,14 @@ const CommentView: React.FC<CommentViewProps> = ({
 
   let postTime = '';
   if (created_at) {
-    const date = new Date(created_at);
-    postTime = formatDate(date) || '';
+    postTime = countTime(created_at);
   }
+
+  useEffect(() => {
+    if (content && content?.length > 400) {
+      shortContent(`${content.substr(0, 100)}...`);
+    }
+  }, []);
 
   const onPressUser = () => {
     alert('onPressUser: ' + user?.id);
@@ -77,6 +86,22 @@ const CommentView: React.FC<CommentViewProps> = ({
               </Text.Subtitle>
             </View>
             <Text>{content}</Text>
+            <Text>
+              <Text.BodyS>
+                {contentShowAll ? content : shortDescription}
+              </Text.BodyS>
+              {shortDescription && (
+                <Text.ButtonSmall
+                  onPress={() => setContentShowAll(!contentShowAll)}
+                  color={colors.textInfo}>
+                  {` ${
+                    contentShowAll
+                      ? i18next.t('common:text_show_less')
+                      : i18next.t('common:text_read_more')
+                  }`}
+                </Text.ButtonSmall>
+              )}
+            </Text>
           </View>
           <View style={styles.buttonContainer}>
             <ButtonWrapper

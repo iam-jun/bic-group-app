@@ -4,37 +4,33 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
+import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
-
-import {
-  LoadingMessages,
-  MessageContainer,
-  ChatInput,
-  ChatFooter,
-  MessageOptionsModal,
-} from './fragments';
-import NavigationHeader from '~/components/headers/NavigationHeader';
+import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {options} from '~/constants/messageOptions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
-import actions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {sendMessage} from '~/services/chatSocket';
-import {useRootNavigation} from '~/hooks/navigation';
-import appConfig from '~/configs/appConfig';
-import {chatSocketId} from '~/constants/chat';
+import actions from '~/screens/Chat/redux/actions';
+import {
+  ChatFooter,
+  ChatInput,
+  MessageContainer,
+  MessageOptionsModal,
+} from './fragments';
 
 const Conversation = () => {
-  const {user} = useAuth();
   const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<Modalize>();
   const dispatch = useDispatch();
+  const {user} = useAuth();
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -46,28 +42,12 @@ const Conversation = () => {
   }, [conversation, messages.lastDate]);
 
   const _getMessages = () => {
-    if (messages.loading) return;
-
-    if (messages.data.length === 0) {
-      // Get messages to handle loading
-      dispatch(actions.getMessages());
-    }
-
-    sendMessage({
-      msg: 'method',
-      method: 'loadHistory',
-      id: chatSocketId.GET_MESSAGES,
-      params: [
-        conversation._id,
-        messages.lastDate,
-        appConfig.recordsPerPage,
-        Date.now(),
-      ],
-    });
+    dispatch(actions.resetData('messages'));
+    dispatch(actions.getData('messages', {roomId: conversation._id}));
   };
 
   const loadMoreMessages = () => {
-    dispatch(actions.mergeExtraMessages());
+    dispatch(actions.mergeExtraData('messages'));
   };
 
   const _openImagePicker = () => {
@@ -107,24 +87,20 @@ const Conversation = () => {
   };
 
   const onSend = (messages: GMessage[] = []) => {
-    sendMessage({
-      msg: 'method',
-      method: 'sendMessage',
-      id: chatSocketId.SEND_MESSAGE,
-      params: [
-        {
-          rid: conversation._id,
-          msg: messages[0].text,
-        },
-      ],
-    });
     dispatch(
       actions.sendMessage({
         ...messages[0],
         user,
+        _updatedAt: new Date().toISOString(),
+        localId: uuid.v4().toString(),
       }),
     );
+
     setReplyingMessage(undefined);
+  };
+
+  const onRetry = (message: IMessage) => {
+    dispatch(actions.retrySendMessage(message));
   };
 
   const goConversationDetail = () => {
@@ -133,55 +109,53 @@ const Conversation = () => {
 
   return (
     <ScreenWrapper isFullView testID="MessageScreen">
-      <NavigationHeader
-        isFullView
-        isDefault
-        title={conversation.name}
-        rightIcon="iconOptions"
-        rightPress={goConversationDetail}
-      />
-      {messages.loading ? (
-        <LoadingMessages />
-      ) : (
-        <GiftedChat
-          messages={messages.data}
-          onSend={messages => onSend(messages)}
-          user={{
-            _id: 1,
-          }}
-          scrollToBottom={true}
-          keyboardShouldPersistTaps="handled"
-          listViewProps={{
-            onEndReached: loadMoreMessages,
-            onEndReachedThreshold: 0.5,
-          }}
-          onLongPress={showOptions}
-          renderTime={() => null}
-          renderMessage={props => <MessageContainer {...props} />}
-          renderInputToolbar={props => (
-            <ChatInput
-              {...props}
-              /*
+      <Header title={conversation.name} onPressMenu={goConversationDetail} />
+
+      <GiftedChat
+        messages={messages.data}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: 1,
+        }}
+        scrollToBottom={true}
+        keyboardShouldPersistTaps="handled"
+        listViewProps={{
+          onEndReached: loadMoreMessages,
+          onEndReachedThreshold: 0.5,
+        }}
+        messagesContainerStyle={styles.container}
+        onLongPress={showOptions}
+        renderTime={() => null}
+        renderMessage={props => (
+          <MessageContainer
+            {...props}
+            loading={messages.loading}
+            onRetryPress={onRetry}
+          />
+        )}
+        renderInputToolbar={props => (
+          <ChatInput
+            {...props}
+            /*
                 InputToolbar has this props but
                 GiftedChat have not been define it on InputToolbarProps
               */
-              // @ts-ignore
-              // eslint-disable-next-line react/prop-types
-              onEnterPress={text => props.onSend({text: text.trim()}, true)}
-              openImagePicker={_openImagePicker}
-              openFilePicker={_openFilePicker}
+            // @ts-ignore
+            // eslint-disable-next-line react/prop-types
+            onEnterPress={text => props.onSend({text: text.trim()}, true)}
+            openImagePicker={_openImagePicker}
+            openFilePicker={_openFilePicker}
+          />
+        )}
+        renderChatFooter={() => {
+          return (
+            <ChatFooter
+              replyingMessage={replyingMessage}
+              onCancel={() => setReplyingMessage(undefined)}
             />
-          )}
-          renderChatFooter={() => {
-            return (
-              <ChatFooter
-                replyingMessage={replyingMessage}
-                onCancel={() => setReplyingMessage(undefined)}
-              />
-            );
-          }}
-        />
-      )}
+          );
+        }}
+      />
       <MessageOptionsModal
         ref={messageOptionsModalRef}
         onMenuPress={onMenuPress}
@@ -193,10 +167,10 @@ const Conversation = () => {
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {colors} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {
-      flex: 1,
+      paddingBottom: spacing.padding.large,
     },
   });
 };

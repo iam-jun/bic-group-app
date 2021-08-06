@@ -1,6 +1,7 @@
-module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
-  plugins: [
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+module.exports = function (api) {
+  const presets = ['module:metro-react-native-babel-preset'];
+  const plugins = [
     [
       'module-resolver',
       {
@@ -24,5 +25,17 @@ module.exports = {
         },
       },
     ],
-  ],
+  ];
+
+  // console.log('test env:', api.env('production'));
+
+  if (api.env('production')) {
+    plugins.push(['transform-remove-console']);
+    // plugins.push(['react-native-paper/babel']);
+  }
+
+  return {
+    presets,
+    plugins,
+  };
 };

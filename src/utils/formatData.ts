@@ -1,5 +1,4 @@
 import moment from 'moment';
-import {useBaseHook} from '~/hooks';
 
 export const formatNumber = (n: number) => {
   return n.toFixed(0).replace(/./g, function (c, i, a) {
@@ -8,34 +7,53 @@ export const formatNumber = (n: number) => {
 };
 
 export const formatDate = (
-  value?: string | number | Date,
-  format: string = 'L',
-  maxFromDays: number = 2,
+  value: string | number | Date,
+  format?: string,
+  maxFromDays?: number,
 ) => {
-  var formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
+  const formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
   const date = moment(value, formats, true);
-  if (!date.isValid()) return null;
+  if (!date.isValid()) return '';
 
-  const days = moment(new Date()).diff(date, 'days'); // today - future < 0
-  if (days < maxFromDays) value = moment(value).calendar();
-  else value = moment(value).format(format);
+  if (format) {
+    value = moment(value).format(format);
+  } else {
+    const days = moment(new Date()).diff(date, 'days'); // today - future < 0
+    if (days < (maxFromDays || 1)) value = moment(value).calendar();
+    else value = moment(value).format('L');
+  }
 
-  return value;
+  return value || '';
 };
 
-export const formatText = (text_label: string, ...params: number[]): string => {
-  if (!text_label) return '';
-  const {t} = useBaseHook();
+export const timestampToISODate = (date: any): string => {
+  if (typeof date === 'object') return new Date(date?.$date).toISOString();
+  if (typeof date === 'number') return new Date(date).toISOString();
+  return date;
+};
 
-  let text = t(text_label);
-  params.forEach((param, index) => {
-    if (text.includes(`{${index}}`)) {
-      text = text.replace(`{${index}}`, t(param));
-    } else {
-      text = `${text} ${t(param)}`;
-    }
-  });
-  return text;
+export const countTime = (timeIso: string) => {
+  let result = '';
+  const date = new Date(timeIso);
+  const now = new Date();
+  const deltaSecond = Math.round(
+    Math.max(now.getTime() - date.getTime(), date.getTime() - now.getTime()) /
+      1000,
+  );
+  if (deltaSecond < 60) {
+    result = 'now';
+  } else if (deltaSecond < 60 * 60) {
+    result = Math.round(deltaSecond / 60) + 'm';
+  } else if (deltaSecond < 60 * 60 * 24) {
+    result = Math.round(deltaSecond / (60 * 60)) + 'h';
+  } else if (deltaSecond < 60 * 60 * 24 * 7) {
+    result = Math.round(deltaSecond / (60 * 60 * 24)) + 'd';
+  } else if (deltaSecond < 60 * 60 * 24 * 7 * 52) {
+    result = Math.round(deltaSecond / (60 * 60 * 24 * 7)) + 'w';
+  } else if (deltaSecond >= 60 * 60 * 24 * 7 * 52) {
+    result = Math.round(deltaSecond / (60 * 60 * 24 * 7 * 52)) + 'y';
+  }
+  return result;
 };
 
 export const formatPhoneNumber = (text: string) => {
@@ -55,7 +73,7 @@ export const formatPhoneNumber = (text: string) => {
 
 export const toNumber = (text: string, decimalFixed: number) => {
   if (!text) return text;
-  let fixed = decimalFixed || 2;
+  const fixed = decimalFixed || 2;
   let value: string | number = text;
 
   text = text.replace(/,/g, '.');
