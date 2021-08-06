@@ -26,7 +26,7 @@ const AvatarGroup = ({
   listSource,
   ...props
 }: AvatarGroupProps) => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const {colors, spacing, dimension} = theme;
 
   const containerSize = dimension?.avatarSizes?.[variant] || 36;
