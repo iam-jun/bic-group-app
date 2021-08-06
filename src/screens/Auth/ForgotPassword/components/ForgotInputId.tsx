@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Container, Image, Text} from '~/components';
 import images from '~/resources/images';
 import {Controller} from 'react-hook-form';
-import Input from '~/components/inputs';
+import TextInput from '~/beinComponents/inputs/TextInput';
 import * as validation from '~/constants/commonRegex';
 import PrimaryButton from '~/components/buttons/PrimaryButton';
 import {useBaseHook} from '~/hooks';
@@ -15,6 +15,7 @@ import {useDispatch} from 'react-redux';
 import * as actions from '~/screens/Auth/redux/actions';
 import useAuth from '~/hooks/auth';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
+import {ITheme} from '~/theme/interfaces';
 
 interface Props {
   useFormData: IObject<any>;
@@ -22,7 +23,7 @@ interface Props {
 
 const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   const dispatch = useDispatch();
-  const theme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
@@ -77,16 +78,14 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
         source={images.logo_bein}
       />
       <Container fluid style={{flex: 1}}>
-        <Text h4 bold>
-          {t('auth:text_forgot_password')}
-        </Text>
-        <Text style={styles.desc}>
+        <Text.H6>{t('auth:text_forgot_password')}</Text.H6>
+        <Text.Body style={styles.desc}>
           {t('auth:text_forgot_password_input_desc')}
-        </Text>
+        </Text.Body>
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <Input
+            <TextInput
               testID="inputEmail"
               label={t('auth:input_label_email')}
               placeholder={t('auth:input_label_email')}
@@ -98,9 +97,9 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
                 onChange(text);
                 validateEmail();
               }}
-              helperType="error"
+              helperType={errors.email?.message ? 'error' : undefined}
               helperContent={errors?.email?.message}
-              helperVisible={errors.email}
+              style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
             />
           )}
           rules={{
@@ -125,14 +124,16 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
-  const {spacing} = theme;
+const themeStyles = (theme: ITheme) => {
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     desc: {
       marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.large,
+      color: colors.textSecondary,
     },
     logo: {
+      alignSelf: 'center',
       width: 64,
       height: 64,
       marginVertical: spacing.margin.big,
