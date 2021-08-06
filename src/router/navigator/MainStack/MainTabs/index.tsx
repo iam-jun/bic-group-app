@@ -80,7 +80,9 @@ const MainTabs = () => {
                       tintColor="none"
                     />
                     {isPhone && (
-                      <Text.BodyS style={styles.label}>{i18next.t(`tabs:${name}`)}</Text.BodyS>
+                      <Text.BodyS style={styles.label}>
+                        {i18next.t(`tabs:${name}`)}
+                      </Text.BodyS>
                     )}
                   </View>
                 );
