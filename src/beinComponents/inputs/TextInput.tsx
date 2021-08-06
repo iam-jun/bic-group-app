@@ -29,7 +29,6 @@ export interface TextInputProps extends TextInputPaperProps {
   helperTextProps?: TextProps;
   helperAction?: string;
   helperActionOnPress?: () => void;
-
   theme?: ITheme;
   placeholder?: string;
   label?: string;
@@ -47,14 +46,13 @@ const TextInput: React.FC<TextInputProps> = ({
   helperTextProps,
   helperAction,
   helperActionOnPress,
-
   label,
   placeholder,
   error,
   disabled,
   ...props
 }: TextInputProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
 
   const customTheme = {
@@ -114,10 +112,12 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholderTextColor={colors.textSecondary}
         {...props}
       />
-      <Text.Subtitle {..._textHelperProps}>
-        {helperContent}
-        {renderHelperAction()}
-      </Text.Subtitle>
+      {helperContent && (
+        <Text.Subtitle {..._textHelperProps}>
+          {helperContent}
+          {renderHelperAction()}
+        </Text.Subtitle>
+      )}
     </View>
   );
 };
