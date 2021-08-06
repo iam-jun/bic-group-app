@@ -46,6 +46,10 @@ const initState = {
   ...initDataState,
   conversation: {} as IConversation,
   selectedUsers: new Array<IUser>(),
+  roles: {
+    loading: false,
+    data: [],
+  },
 };
 
 /**
@@ -103,6 +107,23 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         ...state,
         [dataType]: initDataState[dataType],
       };
+    case types.GET_GROUP_ROLES:
+      return {
+        ...state,
+        roles: {
+          ...state.roles,
+          loading: true,
+        },
+      };
+    case types.SET_GROUP_ROLES:
+      return {
+        ...state,
+        roles: {
+          ...state.roles,
+          loading: false,
+          data: action.payload,
+        },
+      };
     case types.SELECT_CONVERSATION:
       return {
         ...state,
@@ -111,12 +132,6 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ...action.payload,
         },
         messages: initState.messages,
-      };
-    case types.GET_USERS:
-      return {
-        ...state,
-        users: [],
-        selectedUsers: [],
       };
     case types.ADD_NEW_MESSAGE:
       return {

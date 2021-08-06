@@ -1,4 +1,3 @@
-import {messageStatus} from './../../../constants/chat';
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {put, select, takeLatest} from 'redux-saga/effects';
@@ -6,16 +5,16 @@ import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
+import {IMessage} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {mapConversation, mapData, mapMessage} from './../helper';
+import {mapConversation, mapData, mapMessage, mapRole} from './../helper';
 import actions from './actions';
 import * as types from './constants';
-import {IMessage} from '~/interfaces/IChat';
 
 /**
  * Chat
@@ -28,6 +27,7 @@ const navigation = withNavigation(rootNavigationRef);
 export default function* saga() {
   yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
+  yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeLatest(types.SEND_MESSAGE, sendMessage);
@@ -37,10 +37,11 @@ export default function* saga() {
 function* getData({
   dataType,
   payload,
+  field,
 }: {
   type: string;
   payload: any;
-  reset: boolean;
+  field: string;
   dataType: string;
 }) {
   try {
@@ -56,7 +57,11 @@ function* getData({
       }),
     );
 
-    const result = mapData(auth.user, dataType, response.data[dataType]);
+    const result = mapData(
+      auth.user,
+      dataType,
+      response.data[field || dataType],
+    );
 
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
@@ -75,6 +80,25 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
     yield put(actions.getData(dataType, params));
+  }
+}
+
+function* getGroupRoles() {
+  try {
+    const {chat} = yield select();
+    const {conversation} = chat;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.roles({
+        roomId: conversation._id,
+      }),
+    );
+
+    const roles = (response.data.roles || []).map((role: any) => mapRole(role));
+
+    yield put(actions.setGroupRoles(roles));
+  } catch (err) {
+    console.log('getGroupRoles', err);
   }
 }
 

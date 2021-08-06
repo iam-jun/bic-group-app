@@ -71,5 +71,10 @@ export const mapUser = (item: any) => ({
   name: item?.name || item?.fullname || item?.username,
 });
 
+export const mapRole = (item: any) => ({
+  ...item,
+  ...mapUser(item.u),
+});
+
 export const getAvatar = (username: string) =>
   `${Config.ROCKET_CHAT_SERVER}avatar/${username}`;
