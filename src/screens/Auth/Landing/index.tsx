@@ -10,22 +10,19 @@ import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 // import {ITheme} from "~/theme/interfaces";
+import images from '~/resources/images';
 
 const Landing = () => {
   // const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
   const styles = createStyle();
 
-  const {logo, img}: any = {
-    logo: 'https://i.ibb.co/THjnH3g/landing-logo.png',
-    img: 'https://i.ibb.co/XZ98dD0/landing-img.png',
-  };
+  const logo = images.logo_bein;
+  const img = 'https://i.ibb.co/XZ98dD0/landing-img.png';
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
-      {logo && (
-        <Image resizeMode="contain" style={styles.logo} source={{uri: logo}} />
-      )}
+      {logo && <Image resizeMode="contain" style={styles.logo} source={logo} />}
       <View style={styles.contentContainer}>
         <Image resizeMode="contain" style={styles.img} source={{uri: img}} />
         <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
