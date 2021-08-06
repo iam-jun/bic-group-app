@@ -35,14 +35,13 @@ const Landing = () => {
       )}
       <Container fluid style={styles.contentContainer}>
         <Image resizeMode="contain" style={styles.img} source={{uri: img}} />
-        <Text h4 bold style={styles.title}>
-          {title}
-        </Text>
-        {!!desc && <Text style={styles.desc}>{desc}</Text>}
+        <Text.H5 style={styles.title}>{title}</Text.H5>
+        {!!desc && <Text.Subtitle style={styles.desc}>{desc}</Text.Subtitle>}
       </Container>
       <Button.Primary
         style={styles.button}
-        onPress={() => navigation.navigate(authStack.login)}>
+        onPress={() => navigation.navigate(authStack.login)}
+        textVariant="h5">
         {t('auth:btn_landing_start')}
       </Button.Primary>
     </ScreenWrapper>
