@@ -21,7 +21,9 @@ const MenuItem: React.FC<IOption> = ({
       <Icon icon={icon} label={title} labelStyle={styles.label} />
       <View style={{flexDirection: 'row'}}>
         {rightSubTitle && (
-          <Text.BodyS style={styles.subText}>{rightSubTitle}</Text.BodyS>
+          <Text.BodyS style={styles.subText} useI18n>
+            {rightSubTitle}
+          </Text.BodyS>
         )}
         {rightSubIcon && <Icon icon={rightSubIcon} style={{marginLeft: 12}} />}
       </View>

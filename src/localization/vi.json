@@ -90,24 +90,26 @@
   "settings": {
     "title_app_language": "Ngôn ngữ",
     "title_app_theme": "Giao diện",
-    "title_account_settings": "Account Settings",
+    "title_account_settings": "Thiết lập tài khoản",
     "title_help": "Help",
     "title_app_policies": "App Policies",
     "title_feedback": "Feedback",
-    "title_user_profile": "User Profile",
-    "title_security_login": "Security and Login",
-    "title_privacy": "Privacy",
-    "title_notification": "Notification",
+    "title_user_profile": "Thông tin cá nhận",
+    "title_security_login": "Bảo mật và đăng nhập",
+    "title_privacy": "Bảo mật",
+    "title_notification": "Thông báo",
     "title_appearance": "Appearance",
-    "title_language": "Language",
+    "title_language": "Ngôn ngữ",
     "title_currency": "Currency",
     "title_about": "About",
     "title_name": "Name",
     "title_gender": "Gender",
-    "title_birthday": "Birthday"
+    "title_birthday": "Birthday",
+    "title_choose_language": "Chọn ngôn ngữ",
+    "app_language": "Tiếng Việt"
   },
   "languages": {
-    "title_en": "Tiếng Anh",
+    "title_en": "English",
     "title_vi": "Tiếng Việt"
   },
   "post": {

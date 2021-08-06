@@ -114,11 +114,13 @@
     "title_about": "About",
     "title_name": "Name",
     "title_gender": "Gender",
-    "title_birthday": "Birthday"
+    "title_birthday": "Birthday",
+    "title_choose_language": "Choose Language",
+    "app_language": "English"
   },
   "languages": {
     "title_en": "English",
-    "title_vi": "Vietnamese"
+    "title_vi": "Tiếng Việt"
   },
   "post": {
     "news_feed": "News Feed",
@@ -184,10 +186,10 @@
     "system_message_room_changed_description": "{0} has changed the chat description.",
     "system_message_room_changed_announcement": "{0} has changed the chat announcement.",
     "system_message_room_changed_topic": "{0} has changed the group chat name to “{1}”",
-    "message_status":{
-      "pending":"Sending",
+    "message_status": {
+      "pending": "Sending",
       "sent": "Sent",
-      "received":"Received",
+      "received": "Received",
       "failed": "Failed"
     }
   },
