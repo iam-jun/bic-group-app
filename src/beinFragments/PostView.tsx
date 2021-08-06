@@ -259,14 +259,17 @@ const PostView: FC<PostViewProps> = ({
 };
 
 const getAudiencesText = (aud?: IPostAudience, t?: any) => {
+  const limitLength = 25;
   let result = '';
   const {groups = [], users = []} = aud || {};
   const total = groups.length + users.length;
   result = groups?.[0]?.data?.name || users?.[0]?.data?.fullname || '';
-  if (result?.length > 25) {
-    result = `${result.substr(0, 25)}...`;
-  }
   const left = total - 1;
+  if (result?.length > limitLength) {
+    result = `${result.substr(0, limitLength)}...`;
+  } else if (left > 0) {
+    result = `${result},...`;
+  }
   if (left > 0) {
     result = `${result} +${left} ${t?.('post:other_places')}`;
   }
