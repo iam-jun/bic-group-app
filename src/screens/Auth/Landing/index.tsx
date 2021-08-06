@@ -2,11 +2,13 @@ import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Container, ScreenWrapper, Text} from '~/components';
+import {Container} from '~/components';
+import Button from '~/beinComponents/Button';
+import Text from '~/beinComponents/Text';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
-import Button from '~/beinComponents/Button';
 // import {ITheme} from "~/theme/interfaces";
 
 const Landing = () => {
