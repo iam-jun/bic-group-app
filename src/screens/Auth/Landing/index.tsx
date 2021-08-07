@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTheme} from 'react-native-paper';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
@@ -9,22 +10,29 @@ import Image from '~/beinComponents/Image';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
-// import {ITheme} from "~/theme/interfaces";
+import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
+import LandingImg from '../../../../assets/images/Noti_Illustration.svg';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
 const Landing = () => {
-  // const theme: ITheme = useTheme() as ITheme;
+  const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
-  const styles = createStyle();
+  const styles = createStyle(theme);
+  const dimensions = useWindowDimensions();
 
   const logo = images.logo_bein;
-  const img = 'https://i.ibb.co/XZ98dD0/landing-img.png';
+  const logoMaxWidth = 500;
+  const logoPadding = 67;
+  let logoSize = dimensions.width - 2 * logoPadding;
+  if (logoSize > logoMaxWidth) logoSize = logoMaxWidth;
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
       {logo && <Image resizeMode="contain" style={styles.logo} source={logo} />}
       <View style={styles.contentContainer}>
-        <Image resizeMode="contain" style={styles.img} source={{uri: img}} />
+        {/* @ts-ignore */}
+        <SVGIcon source={LandingImg} size={logoSize} />
         <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
       </View>
       <Button.Primary
@@ -37,8 +45,10 @@ const Landing = () => {
   );
 };
 
-const createStyle = () => {
+const createStyle = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
+  const {colors} = theme;
+
   return StyleSheet.create({
     container: {
       paddingTop: insets.top,
@@ -47,10 +57,12 @@ const createStyle = () => {
     contentContainer: {
       flex: 1,
       justifyContent: 'center',
+      alignItems: 'center',
     },
     title: {
       textAlign: 'center',
-      marginVertical: spacing.margin.extraLarge,
+      color: colors.primary6,
+      marginTop: spacing.margin.large,
     },
     desc: {
       marginBottom: spacing.margin.tiny,
