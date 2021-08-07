@@ -72,7 +72,7 @@ const sendMessage = (data: any) => {
 };
 
 const waitForSocketConnection = (callback?: any) => {
-  if (countRetryConnect > 50) {
+  if (countRetryConnect > 10) {
     return;
   }
   setTimeout(function () {

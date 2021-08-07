@@ -92,18 +92,44 @@
     "text_forgot_password_complete_title": "Your new password have been created",
     "text_forgot_password_complete_desc": "Sign in now with your new password"
   },
+  "tabs": {
+    "home": "News feed",
+    "groups": "Groups",
+    "chat": "Chat",
+    "notification": "Notifications",
+    "menus": "Menu"
+  },
   "settings": {
     "title_app_language": "App language",
-    "title_app_theme": "App theme"
+    "title_app_theme": "App theme",
+    "title_account_settings": "Account Settings",
+    "title_help": "Help",
+    "title_app_policies": "App Policies",
+    "title_feedback": "Feedback",
+    "title_user_profile": "User Profile",
+    "title_security_login": "Security and Login",
+    "title_privacy": "Privacy",
+    "title_notification": "Notification",
+    "title_appearance": "Appearance",
+    "title_language": "Language",
+    "title_currency": "Currency",
+    "title_about": "About",
+    "title_name": "Name",
+    "title_gender": "Gender",
+    "title_birthday": "Birthday",
+    "title_choose_language": "Choose Language",
+    "app_language": "English"
   },
   "languages": {
     "title_en": "English",
-    "title_vi": "Vietnamese"
+    "title_vi": "Tiếng Việt"
   },
   "post": {
     "news_feed": "News Feed",
     "button_like": "Like",
     "button_reply": "Reply",
+    "button_react": "React",
+    "button_comment": "Comment",
     "button_comment_not_verify_user": "Verify your account to comment",
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",
@@ -125,7 +151,10 @@
     "save": "Save",
     "and": "and",
     "to": "to",
-    "other_places": "others",
+    "reply_comment_1": "Reply to ",
+    "reply_comment_2": "'s comment:",
+    "someone": "someone",
+    "other_places": "more",
     "mark_as_read": "Mark as read",
     "mark_as_important": "Mark as Important",
     "expire_on": "Expire on:",
@@ -164,10 +193,11 @@
     "system_message_room_changed_description": "{0} has changed the chat description.",
     "system_message_room_changed_announcement": "{0} has changed the chat announcement.",
     "system_message_room_changed_topic": "{0} has changed the group chat name to “{1}”",
-    "message_status":{
-      "pending":"Sending",
+    "system_message_room_changed_avatar": "{0} has changed the group avatar",
+    "message_status": {
+      "pending": "Sending",
       "sent": "Sent",
-      "received":"Received",
+      "received": "Received",
       "failed": "Failed"
     }
   },
