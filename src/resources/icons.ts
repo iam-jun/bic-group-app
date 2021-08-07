@@ -52,6 +52,7 @@ import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
 import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
+import reactionIcons from '~/resources/reactions';
 
 const icons = {
   iconTabHome,
@@ -140,6 +141,7 @@ const icons = {
   iconMenuSwitch,
   iconMenuLogout,
   iconTabMenuBein,
+  ...reactionIcons,
 };
 
 export default icons;
