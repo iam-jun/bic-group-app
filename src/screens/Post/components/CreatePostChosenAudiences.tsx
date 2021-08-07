@@ -12,7 +12,7 @@ import Icon from '~/beinComponents/Icon';
 
 const CreatePostChosenAudiences = () => {
   const {t, navigation} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const createPostData = useCreatePost();
