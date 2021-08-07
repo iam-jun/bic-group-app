@@ -3,7 +3,7 @@ import {fontFamilies} from '~/theme/fonts';
 import {letterSpacing, lineHeights, sizes} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 
-export const createStyle = (theme: ITheme) => {
+export const createTextStyle = (theme: ITheme) => {
   const {colors} = theme;
 
   /**
