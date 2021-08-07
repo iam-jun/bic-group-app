@@ -46,7 +46,9 @@ const SignIn = () => {
   useEffect(() => {
     const email = getValues('email');
     if (email) {
-      trigger();
+      trigger().then(() => {
+        // do nothing
+      });
     }
   }, []);
 
@@ -127,7 +129,6 @@ const SignIn = () => {
               helperType={errors.email?.message ? 'error' : undefined}
               helperContent={errors?.email?.message}
               style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
-              inputStyle={{height: 48}}
             />
           )}
           rules={{
@@ -158,7 +159,6 @@ const SignIn = () => {
               helperType="error"
               helperContent={errors?.password?.message}
               style={{marginTop: 0, marginBottom: 0}}
-              inputStyle={{height: 48}}
             />
           )}
           name="password"
