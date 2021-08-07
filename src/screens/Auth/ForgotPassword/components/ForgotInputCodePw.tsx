@@ -1,21 +1,21 @@
 import React, {useEffect} from 'react';
-import {Text} from '~/components';
-import {Controller} from 'react-hook-form';
-import Input from '~/components/inputs';
-import * as validation from '~/constants/commonRegex';
-import PrimaryButton from '~/components/buttons/PrimaryButton';
-import {useBaseHook} from '~/hooks';
-import {IObject} from '~/interfaces/common';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {Controller} from 'react-hook-form';
+import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
-import InputPassword from '~/components/inputs/InputPassword';
+
+import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
+import TextInput from '~/beinComponents/inputs/TextInput';
 import * as actions from '~/screens/Auth/redux/actions';
-import {useDispatch} from 'react-redux';
+import * as validation from '~/constants/commonRegex';
+import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
+import {IObject} from '~/interfaces/common';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
+import {ITheme} from '~/theme/interfaces';
 
 interface Props {
   useFormData: IObject<any>;
@@ -23,7 +23,7 @@ interface Props {
 
 const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   const dispatch = useDispatch();
-  const theme: IObject<any> = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
@@ -122,18 +122,16 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   }, 50);
 
   return (
-    <>
-      <View style={styles.inputCodePwContainer}>
-        <Text h4 bold>
-          {t('auth:text_forgot_password_input_code_title')}
-        </Text>
-        <Text h5 style={styles.inputCodePwDesc}>
+    <View style={styles.container}>
+      <View style={styles.inputSectionContainer}>
+        <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
+        <Text.Body style={styles.desc}>
           {t('auth:text_forgot_password_input_code_desc')}
-        </Text>
+        </Text.Body>
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <Input
+            <TextInput
               testID="inputCode"
               label={t('auth:input_label_code')}
               placeholder={t('auth:input_label_code')}
@@ -147,7 +145,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               }}
               helperType="error"
               helperContent={errors?.code?.message}
-              helperVisible={errors.code}
               helperAction={t('auth:text_request_new_code')}
               helperContentTriggerAction={t('auth:text_err_wrong_code')}
               helperOnPressAction={onRequestForgotPassword}
@@ -163,18 +160,19 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           }}
           defaultValue=""
         />
-        <Text h4 bold>
-          {t('auth:text_forgot_password_input_pw_title')}
-        </Text>
-        <Text h5 style={styles.inputCodePwDesc}>
+      </View>
+      <View style={styles.inputSectionContainer}>
+        <Text.H6>{t('auth:text_forgot_password_input_pw_title')}</Text.H6>
+        <Text.Body style={styles.desc}>
           {t('auth:text_forgot_password_input_pw_desc')}
-        </Text>
+        </Text.Body>
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <InputPassword
+            <TextInput
               testID="inputNewPassword"
               label={t('auth:input_label_enter_new_password')}
+              secureTextEntry={true}
               placeholder={t('auth:input_label_enter_new_password')}
               error={errors.newPassword}
               value={value}
@@ -185,7 +183,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               }}
               helperType="error"
               helperContent={errors?.newPassword?.message}
-              helperVisible={errors.newPassword}
             />
           )}
           rules={{
@@ -203,9 +200,10 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <InputPassword
+            <TextInput
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
+              secureTextEntry={true}
               placeholder={t('auth:input_label_confirm_new_password')}
               error={errors.confirmPassword}
               value={value}
@@ -232,51 +230,32 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           defaultValue=""
         />
       </View>
-      <PrimaryButton
+      <Button.Primary
         testID="btnChangePassword"
         disabled={disableConfirm}
         loading={forgotPasswordLoading}
-        title={t('auth:btn_send')}
         onPress={onConfirmForgotPassword}
-      />
-    </>
+        style={styles.btnConfirmNewPassword}>
+        {t('auth:input_label_confirm_new_password')}
+      </Button.Primary>
+    </View>
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
-  const insets = useSafeAreaInsets();
+const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      alignContent: 'center',
-      paddingTop: insets.top,
-      paddingBottom: insets.bottom + spacing.padding.big,
     },
-    inputCodePwContainer: {
-      flex: 1,
-      marginTop: spacing.margin.big,
-    },
-    button: {
-      marginTop: spacing.margin.big,
+    inputSectionContainer: {
+      marginTop: spacing.padding.big,
     },
     desc: {
-      marginTop: spacing.margin.tiny,
-      marginBottom: spacing.margin.large,
+      marginBottom: spacing.margin.base,
     },
-    logo: {
-      width: 64,
-      height: 64,
-      marginVertical: spacing.margin.big,
-    },
-    imgComplete: {
-      width: 305,
-      height: 240,
-      alignSelf: 'center',
-      marginVertical: spacing.margin.big,
-    },
-    inputCodePwDesc: {
-      marginBottom: spacing.margin.large,
+    btnConfirmNewPassword: {
+      marginTop: spacing.margin.extraLarge,
     },
   });
 };
