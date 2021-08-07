@@ -52,7 +52,7 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingTop: insets.top,
-      paddingHorizontal: spacing.margin.big,
+      paddingHorizontal: spacing.padding.big,
     },
     contentContainer: {
       flex: 1,
