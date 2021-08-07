@@ -1,27 +1,30 @@
 // This is for landing page with invitation
+// copied from old landing
 
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useTheme} from 'react-native-paper';
+// import {useTheme} from 'react-native-paper';
 
-import {Container, ScreenWrapper, Text} from '~/components';
-import {IObject} from '~/interfaces/common';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
-import Button from '~/beinComponents/Button';
+import images from '~/resources/images';
+import LandingImg from '../../../../assets/images/Noti_Illustration.svg';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+// import {ITheme} from '~/theme/interfaces';
 
 const LandingWithInvitation = () => {
-  const theme: IObject<any> = useTheme();
+  // const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
-  const styles = themeStyles(theme);
+  const styles = themeStyles();
+  const dimensions = useWindowDimensions();
 
-  const {logo, img, groupName}: any = {
-    groupName: 'EVOLGROUP',
-    logo: 'https://i.ibb.co/THjnH3g/landing-logo.png',
-    img: 'https://i.ibb.co/b5MRfBj/landing-img-group.png',
-  };
+  const groupName = 'EVOLGROUP';
+  const logo = images.logo_bein;
 
   const title = groupName
     ? t('auth:text_landing_title_group').replace('{0}', groupName)
@@ -30,16 +33,22 @@ const LandingWithInvitation = () => {
     ? t('auth:text_landing_desc_group').replace('{0}', groupName)
     : '';
 
+  const imgMaxWidth = 500;
+  const imgPadding = 67;
+  let imgSize = dimensions.width - 2 * imgPadding;
+  if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
+
   return (
     <ScreenWrapper isFullView style={styles.container}>
       {!!logo && (
-        <Image resizeMode="contain" style={styles.logo} source={{uri: logo}} />
+        <Image resizeMode="contain" style={styles.logo} source={logo} />
       )}
-      <Container fluid style={styles.contentContainer}>
-        <Image resizeMode="contain" style={styles.img} source={{uri: img}} />
+      <View style={styles.contentContainer}>
+        {/*@ts-ignore*/}
+        <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{title}</Text.H5>
         {!!desc && <Text.Subtitle style={styles.desc}>{desc}</Text.Subtitle>}
-      </Container>
+      </View>
       <Button.Primary
         style={styles.button}
         onPress={() => navigation.navigate(authStack.login)}
@@ -50,13 +59,12 @@ const LandingWithInvitation = () => {
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
+const themeStyles = () => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: insets.top,
-      paddingHorizontal: spacing.margin.big,
+      paddingHorizontal: spacing.padding.big,
     },
     contentContainer: {
       flex: 1,
@@ -77,11 +85,6 @@ const themeStyles = (theme: IObject<any>) => {
       height: 64,
       marginTop: spacing.margin.big,
       marginBottom: 40,
-      alignSelf: 'center',
-    },
-    img: {
-      width: 305,
-      height: 240,
       alignSelf: 'center',
     },
   });
