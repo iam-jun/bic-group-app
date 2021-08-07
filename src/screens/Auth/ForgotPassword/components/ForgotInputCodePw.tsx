@@ -16,6 +16,7 @@ import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 
 interface Props {
   useFormData: IObject<any>;
@@ -175,7 +176,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <TextInput
+            <PasswordInput
               testID="inputNewPassword"
               label={t('auth:input_label_enter_new_password')}
               secureTextEntry={true}
@@ -207,7 +208,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <TextInput
+            <PasswordInput
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
               secureTextEntry={true}

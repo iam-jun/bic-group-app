@@ -15,6 +15,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Input from '~/beinComponents/inputs/TextInput';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import {createStyle as createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
@@ -143,7 +144,7 @@ const SignIn = () => {
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <Input //TODO: Add show password eye icon
+            <PasswordInput
               testID="inputPassword"
               label={t('auth:input_label_password')}
               secureTextEntry={true}
