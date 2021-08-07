@@ -53,7 +53,7 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
   ...props
 }: BaseBottomSheetProps) => {
   const renderModalize = () => {
-    const {spacing}: ITheme = useTheme();
+    const {spacing}: ITheme = useTheme() as ITheme;
     const insets = useSafeAreaInsets();
 
     const _modalStyle = StyleSheet.flatten([
