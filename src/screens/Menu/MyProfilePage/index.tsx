@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -26,7 +26,8 @@ const MyProfilePage = () => {
   const dispatch = useDispatch();
   const menuData = useMenu();
   const {userProfile} = menuData;
-  const {fullname, background_img_url, avatar, description} = userProfile;
+  const {fullname, background_img_url, avatar, description, isPublic} =
+    userProfile;
 
   const popupMessage = () =>
     dispatch(
@@ -40,11 +41,12 @@ const MyProfilePage = () => {
     );
 
   return (
-    <ScreenWrapper testID="MyProfilePage" style={styles.container} isFullView>
+    <ScreenWrapper testID="MyProfilePage" style={styles.container}>
       <Header />
       <ButtonWrapper onPress={popupMessage}>
         <Image
           style={styles.cover}
+          resizeMode="cover"
           source={
             background_img_url
               ? {uri: background_img_url}
@@ -56,6 +58,7 @@ const MyProfilePage = () => {
       <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
         <Image
           style={styles.avatar}
+          resizeMode="cover"
           source={avatar ? {uri: avatar} : images.img_user_avatar_default}
         />
       </ButtonWrapper>
@@ -65,12 +68,26 @@ const MyProfilePage = () => {
         <Text.Body style={styles.subtitleText}>{description}</Text.Body>
       </View>
 
-      <Button.Secondary
-        style={styles.editButton}
-        color={theme.colors.bgButtonSecondary}
-        onPress={popupMessage}>
-        {t('settings:title_edit_public_info')}
-      </Button.Secondary>
+      {isPublic ? (
+        <Button.Secondary
+          style={styles.button}
+          color={theme.colors.primary7}
+          textColor={theme.colors.background}
+          rightIcon={'Message'}
+          onPress={popupMessage}>
+          {t('profile:title_direct_message')}
+        </Button.Secondary>
+      ) : (
+        <Button.Secondary
+          style={styles.button}
+          color={theme.colors.bgButtonSecondary}
+          textColor={theme.colors.primary}
+          rightIcon={'EditAlt'}
+          onPress={popupMessage}>
+          {t('profile:title_edit_profile')}
+        </Button.Secondary>
+      )}
+
       <Divider style={styles.divider} />
 
       <AboutProfile />
@@ -84,7 +101,9 @@ const themeStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    container: {},
+    container: {
+      backgroundColor: colors.background,
+    },
     coverHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -97,6 +116,8 @@ const themeStyles = (theme: ITheme) => {
     cover: {
       width: scaleSize(375),
       height: scaleSize(136),
+      maxHeight: 250,
+      maxWidth: 525,
     },
     imageButton: {
       alignItems: 'center',
@@ -105,6 +126,8 @@ const themeStyles = (theme: ITheme) => {
     avatar: {
       width: scaleSize(96),
       height: scaleSize(96),
+      maxHeight: 125,
+      maxWidth: 125,
       borderRadius: 8,
     },
     headerName: {
@@ -114,7 +137,7 @@ const themeStyles = (theme: ITheme) => {
     subtitleText: {
       marginVertical: spacing.margin.tiny,
     },
-    editButton: {
+    button: {
       marginHorizontal: spacing.margin.large,
     },
   });

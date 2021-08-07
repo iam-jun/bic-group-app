@@ -2,15 +2,15 @@ import {IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
 
 const menuActions = {
-  setLoadingUserProfile: (payload: boolean) => {
-    return {
-      type: menuTypes.SET_LOADING_USER_PROFILE,
-      payload,
-    };
-  },
   setUserProfile: (payload: IUserProfile) => {
     return {
       type: menuTypes.SET_USER_PROFILE,
+      payload,
+    };
+  },
+  selectUserProfile: (payload: IUserProfile) => {
+    return {
+      type: menuTypes.SELECT_USER_PROFILE,
       payload,
     };
   },
