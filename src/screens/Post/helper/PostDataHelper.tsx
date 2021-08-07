@@ -1,6 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {IActivityData, IPostCreatePost} from '~/interfaces/IPost';
+import {IPostCreatePost, IRequestPostComment} from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 
 export const postApiConfig = {
@@ -33,20 +33,16 @@ export const postApiConfig = {
       kind: 'comment',
     },
   }),
-  postNewComment: (
-    postId: string,
-    commentData: IActivityData,
-    userId: number,
-  ): HttpApiRequestConfig => ({
+  postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/comments`,
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     data: {
-      userId: userId,
-      referenceId: postId,
-      referenceType: 'post',
-      data: commentData,
+      userId: params.userId,
+      referenceId: params.referenceId,
+      referenceType: params.referenceType || 'post',
+      data: params.commentData,
     },
   }),
   postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
@@ -133,14 +129,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postNewComment: async (
-    postId: string,
-    commentData: IActivityData,
-    userId: number,
-  ) => {
+  postNewComment: async (params: IRequestPostComment) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.postNewComment(postId, commentData, userId),
+        postApiConfig.postNewComment(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

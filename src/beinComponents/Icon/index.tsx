@@ -95,11 +95,11 @@ const Icon: React.FC<IconProps> = ({
         />
       </View>
       {label && (
-        <Text.ButtonSmall
+        <Text.ButtonBase
           useI18n
           style={[styles.label, {color: labelColor}, labelStyle]}>
           {label}
-        </Text.ButtonSmall>
+        </Text.ButtonBase>
       )}
     </TouchableOpacity>
   );

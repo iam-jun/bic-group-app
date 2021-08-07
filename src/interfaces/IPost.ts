@@ -1,6 +1,6 @@
 export interface IPostAudience {
-  users?: number[];
-  groups?: number[];
+  users?: IAudienceUser[];
+  groups?: IAudienceGroup[];
 }
 
 export interface IAudienceUser {
@@ -84,6 +84,13 @@ export interface IGetStreamUser {
     avatarUrl?: string;
     fullname?: string;
   };
+}
+
+export interface IRequestPostComment {
+  referenceId: string;
+  referenceType: 'post' | 'comment';
+  commentData: IActivityData;
+  userId: number;
 }
 
 export interface IReaction {

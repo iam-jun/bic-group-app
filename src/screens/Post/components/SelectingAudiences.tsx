@@ -18,7 +18,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
 }: SelectingAudiencesProps) => {
   const [showAll, setShowAll] = useState(false);
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const onPressShowAll = () => {

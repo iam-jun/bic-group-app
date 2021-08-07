@@ -7,13 +7,12 @@ const useAuth = () => {
 };
 
 export const useUserIdAuth = () => {
-  //todo get bein user id
-
-  // return useSelector(
-  //   (state: IObject<any>) =>
-  //     state.auth?.user?.signInUserSession?.idToken?.payload?.bein_user_id,
-  // );
-  return 9;
+  const userId =
+    useSelector(
+      (state: IObject<any>) =>
+        state.auth?.user?.signInUserSession?.idToken?.payload?.bein_user_id,
+    ) || '';
+  return userId;
 };
 
 export default useAuth;
