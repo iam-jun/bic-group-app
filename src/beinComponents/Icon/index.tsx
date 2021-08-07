@@ -13,13 +13,14 @@ import SvgIcon, {SVGIconProps} from './SvgIcon';
 
 import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
+import Image from '~/beinComponents/Image';
 import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
-  icon: IconType;
+  icon: IconType | number;
   size?: number;
   tintColor?: string;
   backgroundColor?: string;
@@ -50,29 +51,36 @@ const Icon: React.FC<IconProps> = ({
 }: IconProps) => {
   if (isLoading) return <ActivityIndicator size="small" />;
 
-  const _icon = icons[icon];
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
+
+  const styles = StyleSheet.create(createStyles(theme));
+  tintColor = tintColor || colors.iconTint;
+
+  let _tintColor = disabled
+    ? isButton
+      ? colors.primary7
+      : colors.disabled
+    : tintColor;
+
+  const _icon = typeof icon === 'string' ? icons[icon] : icon;
+  const _style: StyleProp<ViewStyle> = {};
 
   let IconComponent, type, name, source;
 
   if (Unicons[`${_icon || icon}`] || Unicons[`Uil${_icon || icon}`]) {
     IconComponent = Unicons;
     name = _icon || icon;
-  } else {
+  } else if (typeof _icon === 'function') {
     IconComponent = SvgIcon;
     source = _icon;
+  } else {
+    IconComponent = Image;
+    source = _icon;
+    _style.width = size;
+    _style.height = size;
+    _tintColor = undefined;
   }
-
-  const theme: ITheme = useTheme();
-  const {colors} = theme;
-
-  const styles = StyleSheet.create(createStyles(theme));
-  tintColor = tintColor || colors.iconTint;
-
-  const _tintColor = disabled
-    ? isButton
-      ? colors.primary7
-      : colors.disabled
-    : tintColor;
 
   return (
     <TouchableOpacity
@@ -87,6 +95,7 @@ const Icon: React.FC<IconProps> = ({
           iconStyle,
         ]}>
         <IconComponent
+          style={_style}
           tintColor={_tintColor}
           size={size}
           type={type}
