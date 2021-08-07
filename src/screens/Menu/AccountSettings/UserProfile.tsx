@@ -9,16 +9,17 @@ import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
 import useMenu from '~/hooks/menu';
 import menuActions from '~/screens/Menu/redux/actions';
+import {IconType} from '~/resources/icons';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import ListView from '~/beinComponents/list/ListView';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
+import images from '~/resources/images';
 
 const UserProfile = () => {
   const theme = useTheme() as ITheme;
@@ -26,24 +27,31 @@ const UserProfile = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const menuData = useMenu();
-  const {loadingUserProfile, userProfile} = menuData;
+  const {userProfile} = menuData;
+  const {fullname, gender, avatar, background_img_url, birthday, language} =
+    userProfile;
 
-  const renderItem = ({item}: {item: any}) => {
+  const renderItem = (
+    title: string,
+    subtitle: string,
+    leftIcon: IconType,
+    privacyIcon: IconType,
+  ) => {
     return (
       <PrimaryItem
-        title={t(item.title)}
-        subTitle={item.subtitle}
+        title={t(title)}
+        subTitle={subtitle}
         LeftComponent={
           <Icon
             style={styles.leftIcon}
-            icon={item.leftIcon}
+            icon={leftIcon}
             tintColor={theme.colors.primary7}
           />
         }
         RightComponent={
           <>
             <ButtonWrapper onPress={popupMessage}>
-              <Icon icon={item.privacyIcon} />
+              <Icon icon={privacyIcon} />
             </ButtonWrapper>
             <ButtonWrapper onPress={popupMessage}>
               <Icon icon={'EditAlt'} style={styles.rightEditIcon} />
@@ -83,7 +91,7 @@ const UserProfile = () => {
         <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
           <Image
             style={styles.avatar}
-            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            source={avatar ? {uri: avatar} : images.img_user_avatar_default}
           />
         </ButtonWrapper>
         <Divider style={styles.divider} />
@@ -98,7 +106,11 @@ const UserProfile = () => {
         <ButtonWrapper onPress={popupMessage}>
           <Image
             style={styles.cover}
-            source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+            source={
+              background_img_url
+                ? {uri: background_img_url}
+                : images.img_cover_default
+            }
           />
         </ButtonWrapper>
         <Divider style={styles.divider} />
@@ -107,14 +119,17 @@ const UserProfile = () => {
         <View style={styles.infoHeader}>
           <Text.H5 color={theme.colors.iconTint}>Basic Info</Text.H5>
         </View>
-        <ListView
-          scrollEnabled={false}
-          type="primary"
-          data={userProfile}
-          loading={loadingUserProfile}
-          renderItem={renderItem}
-          listStyle={styles.basicInfoList}
-        />
+        <View style={styles.basicInfoList}>
+          {renderItem('settings:title_name', fullname, 'TextFields', 'Globe')}
+          {renderItem('settings:title_gender', gender, 'UserSquare', 'Lock')}
+          {renderItem('settings:title_birthday', birthday, 'Calender', 'Lock')}
+          {renderItem(
+            'settings:title_language',
+            language,
+            'CommentsAlt',
+            'Lock',
+          )}
+        </View>
       </ScrollView>
     </ScreenWrapper>
   );
