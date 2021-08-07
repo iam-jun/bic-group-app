@@ -9,7 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
 const Section1 = () => {
-  const {spacing, colors}: ITheme = useTheme();
+  const {spacing, colors}: ITheme = useTheme() as ITheme;
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
@@ -56,6 +56,16 @@ const Section1 = () => {
         <Text.Subtitle>
           Subtitle. Lorem Ipsum is simply dummy text
         </Text.Subtitle>
+        <Text allowMarkdown>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Website:
+          https://join.bein.global. Email: join@bein.global. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          *Excepteur sint occaecat* cupidatat non proident, sunt in culpa qui
+          officia deserunt mollit anim id est laborum. #BeinCoreTeam #EVOL
+        </Text>
       </View>,
     );
   };
@@ -89,15 +99,9 @@ const Section1 = () => {
       'Icon',
       <View>
         <Icon
-          icon={'Ship'}
+          icon={'bell'}
           size={36}
           label={'Unicons Icon (Ship)'}
-          style={{marginBottom: spacing?.margin.small}}
-        />
-        <Icon
-          icon={'iconDiamond'}
-          size={36}
-          label={'Font Icon (iconDiamond)'}
           style={{marginBottom: spacing?.margin.small}}
         />
         <Icon
@@ -157,7 +161,7 @@ const Section1 = () => {
         <Button onPress={() => alert('onPress View')}>
           <View style={{flexDirection: 'row', alignSelf: 'center'}}>
             <Text>Button Wrap Views </Text>
-            <Icon icon={'Heart'} />
+            <Icon icon={'bell'} />
           </View>
         </Button>
         <Divider
@@ -224,8 +228,8 @@ const Section1 = () => {
         </View>
         <Button.Secondary
           color={colors.primary3}
-          leftIcon={'Emoji'}
-          leftIconProps={{tintColor: colors.primary6}}
+          leftIcon={'bell'}
+          leftIconProps={{icon: 'bell', tintColor: colors.primary6}}
           rightIcon={'ArrowRight'}
           onPress={() => alert('onPress')}
           onLongPress={() => alert('onLongPress')}>
