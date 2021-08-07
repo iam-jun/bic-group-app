@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect, useContext} from 'react';
+import React, {FC, useState, useEffect, useContext, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -8,12 +8,17 @@ import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Icon from '~/beinComponents/Icon';
+
 import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
+import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
+import {IReactionProps} from '~/interfaces/IReaction';
+import {ReactionType} from '~/constants/reactions';
+import ReactionView from '~/screens/Post/components/ReactionView';
 
 export interface PostViewProps {
   postData: IPostActivity;
@@ -26,14 +31,23 @@ const PostView: FC<PostViewProps> = ({
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
+  const reactionSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {id, data, actor, audience, time, important, own_reactions} =
-    postData || {};
+  const {
+    id,
+    data,
+    actor,
+    audience,
+    time,
+    important,
+    own_reactions,
+    reaction_counts,
+  } = postData || {};
   const {content} = data || {};
 
   const userId = useUserIdAuth();
@@ -82,7 +96,7 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = () => {
-    alert('onPressReact');
+    reactionSheetRef?.current?.open?.();
   };
 
   const onLongPressReact = () => {
@@ -105,6 +119,26 @@ const PostView: FC<PostViewProps> = ({
         .catch(e => {
           console.log('\x1b[31m', '🐣️ onPressMarkAsRead |  : ', e, '\x1b[0m');
         });
+    }
+  };
+
+  const onPressReaction = (reaction: IReactionProps) => {
+    if (id) {
+      const data: ReactionType[] = [];
+      data.push(reaction.id);
+      postDataHelper.postReaction(id, 'post', data, userId).then(
+        response => {
+          console.log(
+            '\x1b[32m',
+            '🐣️ reaction success : ',
+            response,
+            '\x1b[0m',
+          );
+        },
+        error => {
+          console.log('\x1b[31m', '🐣️ postReaction |  : ', error, '\x1b[0m');
+        },
+      );
     }
   };
 
@@ -245,15 +279,26 @@ const PostView: FC<PostViewProps> = ({
       {renderHeader()}
       {renderContent()}
       {isImportant && (
-        <Button.Secondary
-          useI18n
-          style={{margin: spacing.margin.base}}
-          disabled={calledMarkAsRead}
-          onPress={onPressMarkAsRead}>
-          post:mark_as_read
-        </Button.Secondary>
+        <>
+          <Button.Secondary
+            useI18n
+            style={{margin: spacing.margin.base}}
+            disabled={calledMarkAsRead}
+            onPress={onPressMarkAsRead}>
+            post:mark_as_read
+          </Button.Secondary>
+          <Divider />
+        </>
       )}
+      <ReactionView
+        ownReactions={own_reactions}
+        reactionCounts={reaction_counts}
+      />
       {renderReactButtons()}
+      <ReactionBottomSheet
+        reactionSheetRef={reactionSheetRef}
+        onPressReaction={onPressReaction}
+      />
     </View>
   );
 };
@@ -299,7 +344,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     contentContainer: {
-      marginVertical: spacing?.margin.base,
+      marginVertical: spacing?.margin.small,
       marginHorizontal: spacing?.margin.large,
     },
     buttonReact: {

@@ -1,3 +1,6 @@
+import {ReactionType} from '~/constants/reactions';
+import {IObject} from '~/interfaces/common';
+
 export interface IPostAudience {
   users?: IAudienceUser[];
   groups?: IAudienceGroup[];
@@ -62,6 +65,7 @@ export interface IPostActivity {
   time?: string;
   important?: IActivityImportant;
   own_reactions?: any;
+  reaction_counts?: IObject<number>;
 }
 
 export interface IPostCreatePost {

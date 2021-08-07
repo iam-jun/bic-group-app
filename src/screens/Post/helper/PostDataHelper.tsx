@@ -2,6 +2,7 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {IPostCreatePost, IRequestPostComment} from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
+import {ReactionType} from '~/constants/reactions';
 
 export const postApiConfig = {
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -62,6 +63,23 @@ export const postApiConfig = {
     useRetry: true,
     params: {
       key,
+    },
+  }),
+  postReaction: (
+    referenceId: string,
+    referenceType: 'post' | 'comment',
+    data: ReactionType[],
+    userId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions/reacts`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      referenceId: referenceId,
+      referenceType: referenceType,
+      data: data,
+      userId: userId,
     },
   }),
 };
@@ -161,6 +179,25 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getSearchAudiences(key),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postReaction: async (
+    referenceId: string,
+    referenceType: 'post' | 'comment',
+    data: ReactionType[],
+    userId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postReaction(referenceId, referenceType, data, userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

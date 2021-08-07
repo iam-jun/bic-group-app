@@ -10,7 +10,6 @@ import {
   IReaction,
   IRequestPostComment,
 } from '~/interfaces/IPost';
-import PostView from '~/beinFragments/PostView';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import ListView from '~/beinComponents/list/ListView';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
@@ -22,6 +21,7 @@ import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 import Icon from '~/beinComponents/Icon';
 import {useUserIdAuth} from '~/hooks/auth';
+import PostView from '~/screens/Post/components/PostView';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
