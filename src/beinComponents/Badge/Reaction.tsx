@@ -23,7 +23,8 @@ const Reaction: React.FC<ReactionProps> = ({
   style,
 }: ReactionProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyles(theme, isSelected);
 
   const _onChangeValue = () => {
@@ -41,8 +42,12 @@ const Reaction: React.FC<ReactionProps> = ({
     <TouchableOpacity
       style={[styles.container, style]}
       onPress={_onChangeValue}>
-      <Icon icon={icon} size={12} />
-      <Text.Subtitle style={styles.textInput}>{value}</Text.Subtitle>
+      <Icon icon={icon} size={16} />
+      <Text.BodySM
+        color={isSelected ? colors.primary7 : colors.textPrimary}
+        style={styles.textInput}>
+        {value}
+      </Text.BodySM>
     </TouchableOpacity>
   );
 };
@@ -64,7 +69,6 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
     },
     textInput: {
       marginStart: spacing?.margin.tiny,
-      color: colors.textPrimary,
     },
   });
 };
