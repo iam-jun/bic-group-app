@@ -22,17 +22,17 @@ const Landing = () => {
   const dimensions = useWindowDimensions();
 
   const logo = images.logo_bein;
-  const logoMaxWidth = 500;
-  const logoPadding = 67;
-  let logoSize = dimensions.width - 2 * logoPadding;
-  if (logoSize > logoMaxWidth) logoSize = logoMaxWidth;
+  const imgMaxWidth = 500;
+  const imgPadding = 67;
+  let imgSize = dimensions.width - 2 * imgPadding;
+  if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
       {logo && <Image resizeMode="contain" style={styles.logo} source={logo} />}
       <View style={styles.contentContainer}>
         {/* @ts-ignore */}
-        <SVGIcon source={LandingImg} size={logoSize} />
+        <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
       </View>
       <Button.Primary
