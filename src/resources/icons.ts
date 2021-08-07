@@ -140,6 +140,11 @@ const icons = {
   iconMenuSwitch,
   iconMenuLogout,
   iconTabMenuBein,
+  BriefcaseAlt: 'BriefcaseAlt',
+  LocationPoint: 'LocationPoint',
+  CommentsAlt: 'CommentsAlt',
+  Phone: 'Phone',
+  Envelope: 'Envelope',
 };
 
 export default icons;

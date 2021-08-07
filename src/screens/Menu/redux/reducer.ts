@@ -2,7 +2,7 @@ import menuTypes from './types';
 
 const initMenuState = {
   loadingUserProfile: false,
-  userProfile: [],
+  userProfile: {},
 };
 
 const menuReducer = (state = initMenuState, action: any = {}) => {
@@ -18,7 +18,7 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
     case menuTypes.SET_USER_PROFILE:
       return {
         ...state,
-        userProfile: payload || [],
+        userProfile: payload || {},
       };
 
     default:

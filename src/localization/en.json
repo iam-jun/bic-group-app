@@ -116,7 +116,8 @@
     "title_gender": "Gender",
     "title_birthday": "Birthday",
     "title_choose_language": "Choose Language",
-    "app_language": "English"
+    "app_language": "English",
+    "title_edit_public_info": "Edit public Info"
   },
   "languages": {
     "title_en": "English",

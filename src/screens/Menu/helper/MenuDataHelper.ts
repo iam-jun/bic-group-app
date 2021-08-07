@@ -1,6 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import userProfileDataMocks from './mockDataUserProfile';
+import userProfileDataMocksResponse from './mockDataUserProfile';
 
 export const menuApiConfig = {
   getMyProfile: (): HttpApiRequestConfig => ({
@@ -16,14 +16,13 @@ const menuDataHelper = {
   getMyProfile: async () => {
     try {
       // TODO: will need to change response data
-      const response: any = userProfileDataMocks;
-      return Promise.resolve(response.data);
+      const response: any = userProfileDataMocksResponse;
       // const response: any = await makeHttpRequest(menuApiConfig.getMyProfile());
-      // if (response && response?.data) {
-      //   return Promise.resolve(response?.data);
-      // } else {
-      //   return Promise.reject(response);
-      // }
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
     } catch (e) {
       return Promise.reject(e);
     }
