@@ -75,6 +75,12 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   };
   const disableRequest = checkDisableRequest();
 
+  const checkDisableInputPassword = () => {
+    const code = getValues('code');
+    return !code || errors.code;
+  };
+  const disableInputPassword = checkDisableInputPassword();
+
   const onConfirmForgotPassword = () => {
     const email = getValues('email');
     const code = getValues('code');
@@ -146,8 +152,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               helperType="error"
               helperContent={errors?.code?.message}
               helperAction={t('auth:text_request_new_code')}
-              helperContentTriggerAction={t('auth:text_err_wrong_code')}
-              helperOnPressAction={onRequestForgotPassword}
+              // helperContentTriggerAction={t('auth:text_err_wrong_code')}
+              helperActionOnPress={onRequestForgotPassword}
             />
           )}
           name="code"
@@ -183,6 +189,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               }}
               helperType="error"
               helperContent={errors?.newPassword?.message}
+              disabled={disableInputPassword}
             />
           )}
           rules={{
@@ -214,7 +221,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               }}
               helperType="error"
               helperContent={errors?.confirmPassword?.message}
-              helperVisible={errors.confirmPassword}
+              disabled={disableInputPassword}
             />
           )}
           name="confirmPassword"
