@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
@@ -11,16 +11,15 @@ import * as validation from '~/constants/commonRegex';
 import images from '~/resources/images';
 import * as actions from '../redux/actions';
 
+import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Input from '~/beinComponents/inputs/TextInput';
+import {createStyle as createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
-import {Container, ScreenWrapper} from '~/components';
-import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
-import Input from '~/beinComponents/inputs/TextInput';
-import TransparentButton from '~/components/buttons/TransparentButton';
 // import SignInOAuth from '../components/SignInOAuth';
-import {createStyle as createTextStyle} from '~/beinComponents/Text/textStyle';
 import {ITheme} from '~/theme/interfaces';
 import * as modalActions from '~/store/modal/actions';
 import AlertModal from '~/beinComponents/modals/AlertModal';
@@ -104,13 +103,13 @@ const SignIn = () => {
 
   return (
     <ScreenWrapper testID="SignInScreen" style={styles.container} isFullView>
-      <Container>
+      <View>
         <Image
           resizeMode="contain"
           style={styles.logo}
           source={images.logo_bein}
         />
-        <Text.H6 style={styles.desc}>{t('auth:text_sign_in_desc')}</Text.H6>
+        <Text.H6 style={styles.title}>{t('auth:text_sign_in_desc')}</Text.H6>
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
@@ -173,33 +172,38 @@ const SignIn = () => {
           }}
           defaultValue={__DEV__ && 'ABCxyz123@'}
         />
-        <TransparentButton
-          style={styles.forgotButton}
-          textStyle={styles.forgotButtonText}
-          testID="btnSignInForgotPassword"
-          title={t('auth:btn_forgot_password')}
-          onPress={() => navigation.navigate(authStack.forgotPassword)}
-        />
+        <View style={styles.forgotButton}>
+          <TouchableOpacity
+            testID="btnSignInForgotPassword"
+            onPress={() => navigation.navigate(authStack.forgotPassword)}>
+            <Text.H6 style={styles.pressableText}>
+              {t('auth:btn_forgot_password')}
+            </Text.H6>
+          </TouchableOpacity>
+        </View>
         <Button.Primary
           testID="btnLogin"
+          style={styles.btnSignIn}
           disabled={disableSignIn}
           onPress={onSignIn}>
           {t('auth:btn_sign_in')}
         </Button.Primary>
-      </Container>
+      </View>
       {/*<Container*/}
       {/*  style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>*/}
       {/*  <Text.H5 style={styles.orText}>{t('auth:text_or')}</Text.H5>*/}
       {/*</Container>*/}
       {/*<SignInOAuth />*/}
-      <View style={styles.buttonSignUpContainer}>
+      <View style={styles.signUpContainer}>
         <Text.H6>{t('auth:text_sign_up_desc')} </Text.H6>
-        <TransparentButton
-          textStyle={styles.buttonSignupText}
-          title={t('auth:btn_sign_up_now')}
+        <TouchableOpacity
+          testID="btnSignInForgotPassword"
           // onPress={() => navigation.navigate(authStack.signup)}
-          onPress={handleSignUpNotFunctioning}
-        />
+          onPress={handleSignUpNotFunctioning}>
+          <Text.H6 style={styles.pressableText}>
+            {t('auth:btn_sign_up_now')}
+          </Text.H6>
+        </TouchableOpacity>
       </View>
       <AlertModal dismissable={true} />
     </ScreenWrapper>
@@ -215,14 +219,8 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flex: 1,
       paddingTop: insets.top,
+      paddingHorizontal: spacing.padding.big,
       alignContent: 'center',
-    },
-    desc: {
-      marginBottom: spacing.margin.extraLarge,
-    },
-    button: {
-      marginBottom: spacing.margin.base,
-      marginTop: spacing.margin.big,
     },
     logo: {
       alignSelf: 'center',
@@ -230,24 +228,26 @@ const themeStyles = (theme: ITheme) => {
       height: 64,
       marginVertical: spacing.margin.big,
     },
+    title: {
+      marginVertical: spacing.margin.large,
+    },
     forgotButton: {
       alignSelf: 'flex-end',
       marginTop: spacing.margin.large,
-      marginBottom: spacing.margin.extraLarge,
+      color: colors.primary7,
     },
-    forgotButtonText: {
-      ...textStyle.h6,
-      color: theme.colors.primary7,
-      marginEnd: 0,
+    pressableText: {
+      color: colors.primary7,
     },
     orText: {
       fontWeight: '600',
     },
-    buttonSignUpContainer: {
+    btnSignIn: {
+      marginVertical: spacing.margin.extraLarge,
+    },
+    signUpContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: spacing.margin.small,
-      marginBottom: 64,
       fontWeight: '400',
     },
     buttonSignupText: {
