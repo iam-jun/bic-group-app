@@ -18,6 +18,7 @@ import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '../redux/actions';
+import images from '~/resources/images';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -49,7 +50,11 @@ const Conversation = (): React.ReactElement => {
       <Header title={i18next.t('chat:title_chat_detail')} />
       <View style={styles.container}>
         <View style={styles.top}>
-          <Avatar.Large isRounded source={conversation.avatar} />
+          <Avatar.Large
+            isRounded
+            source={conversation.avatar}
+            placeholderSource={images.img_user_avatar_default}
+          />
           <ViewSpacing width={spacing.margin.base} />
           <Text.H4 style={styles.name}>{conversation.name}</Text.H4>
         </View>
