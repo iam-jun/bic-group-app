@@ -1,30 +1,33 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import {useForm} from 'react-hook-form';
+
+import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import FlashMessage from '~/beinComponents/FlashMessage';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
 import {useBaseHook} from '~/hooks';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {IObject} from '~/interfaces/common';
-import {Container, Text, Image} from '~/components';
-import ErrorBox from '~/components/ErrorBox';
-import PrimaryButton from '~/components/buttons/PrimaryButton';
-import images from '~/resources/images';
 import {authStack} from '~/configs/navigator';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import {forgotPasswordStages} from '~/constants/authConstants';
 import useAuth from '~/hooks/auth';
-import {useDispatch} from 'react-redux';
 import * as actions from '~/screens/Auth/redux/actions';
-import {useForm} from 'react-hook-form';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
+import LockImg from '../../../../assets/images/Lock.svg';
+import {ITheme} from '~/theme/interfaces';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const theme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
   const styles = themeStyles(theme);
+  const dimensions = useWindowDimensions();
 
   const {forgotPasswordStage, forgotPasswordError} = useAuth();
   const {errBox}: IForgotPasswordError = forgotPasswordError || {};
@@ -39,35 +42,44 @@ const ForgotPassword = () => {
     dispatch(actions.setForgotPasswordError({errBox: ''}));
   };
 
+  const imgMaxWidth = 500;
+  const imgPadding = 67;
+  let imgSize = dimensions.width - 2 * imgPadding;
+  if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
+
   const renderComplete = () => {
     return (
-      <>
-        <Image
-          resizeMode="contain"
-          style={styles.imgComplete}
-          source={images.img_auth_forgot_password_complete}
+      <View style={styles.completeContainer}>
+        <SVGIcon
+          style={{alignSelf: 'center'}}
+          // @ts-ignore
+          source={LockImg}
+          size={imgSize}
         />
-        <View style={{flex: 1, justifyContent: 'space-around'}}>
-          <View>
-            <Text h4 bold>
-              {t('auth:text_forgot_password_complete_title')}
-            </Text>
-            <Text h5>{t('auth:text_forgot_password_complete_desc')}</Text>
-          </View>
-          <PrimaryButton
-            testID="btnComplete"
-            title={t('auth:btn_sign_in')}
-            onPress={() => navigation.navigate(authStack.login)}
-          />
+        <View style={styles.textContainer}>
+          <Text.H6>{t('auth:text_forgot_password_complete_title')}</Text.H6>
+          <Text.Body>{t('auth:text_forgot_password_complete_desc')}</Text.Body>
         </View>
-      </>
+        <Button.Primary
+          testID="btnComplete"
+          onPress={() => navigation.navigate(authStack.login)}>
+          {t('auth:btn_sign_in')}
+        </Button.Primary>
+      </View>
     );
   };
 
   return (
     <ScreenWrapper testID="ForgotPasswordScreen" isFullView>
-      <Container style={styles.container}>
-        {!!errBox && <ErrorBox content={errBox} onClose={onClearErrorBox} />}
+      <View style={styles.container}>
+        {!!errBox && (
+          <FlashMessage
+            type="error"
+            onClose={onClearErrorBox}
+            style={{marginTop: theme.spacing.margin.big}}>
+            {errBox}
+          </FlashMessage>
+        )}
         {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
           <ForgotInputId useFormData={useFormData} />
         )}
@@ -76,26 +88,31 @@ const ForgotPassword = () => {
         )}
         {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
           renderComplete()}
-      </Container>
+      </View>
     </ScreenWrapper>
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
+const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {spacing, colors} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
       alignContent: 'center',
       paddingTop: insets.top,
+      // @ts-ignore
       paddingBottom: insets.bottom + spacing.padding.big,
+      paddingHorizontal: spacing.padding.big,
     },
-    imgComplete: {
-      width: 305,
-      height: 240,
-      alignSelf: 'center',
-      marginVertical: spacing.margin.big,
+    completeContainer: {
+      // @ts-ignore
+      paddingTop: spacing.padding.big + spacing.padding.large,
+    },
+    textContainer: {
+      marginTop: spacing.margin.large,
+      paddingTop: spacing.padding.large,
+      marginBottom: spacing.margin.big,
     },
   });
 };
