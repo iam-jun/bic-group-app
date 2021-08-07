@@ -222,6 +222,7 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
       alignContent: 'center',
+      backgroundColor: colors.background,
     },
     logo: {
       alignSelf: 'center',

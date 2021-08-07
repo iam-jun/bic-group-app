@@ -53,6 +53,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
+      backgroundColor: colors.background,
     },
     contentContainer: {
       flex: 1,

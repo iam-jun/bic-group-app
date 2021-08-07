@@ -4,7 +4,7 @@
 import React from 'react';
 import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-// import {useTheme} from 'react-native-paper';
+import {useTheme} from 'react-native-paper';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
@@ -15,12 +15,12 @@ import {authStack} from '~/configs/navigator';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/Noti_Illustration.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
-// import {ITheme} from '~/theme/interfaces';
+import {ITheme} from '~/theme/interfaces';
 
 const LandingWithInvitation = () => {
-  // const theme: ITheme = useTheme() as ITheme;
+  const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
-  const styles = themeStyles();
+  const styles = themeStyles(theme);
   const dimensions = useWindowDimensions();
 
   const groupName = 'EVOLGROUP';
@@ -59,12 +59,15 @@ const LandingWithInvitation = () => {
   );
 };
 
-const themeStyles = () => {
+const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
+  const {colors} = theme;
+
   return StyleSheet.create({
     container: {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
+      backgroundColor: colors.background,
     },
     contentContainer: {
       flex: 1,

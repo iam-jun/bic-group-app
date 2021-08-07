@@ -95,7 +95,7 @@ const ForgotPassword = () => {
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -104,6 +104,7 @@ const themeStyles = (theme: ITheme) => {
       // @ts-ignore
       paddingBottom: insets.bottom + spacing.padding.big,
       paddingHorizontal: spacing.padding.big,
+      backgroundColor: colors.background,
     },
     completeContainer: {
       // @ts-ignore
