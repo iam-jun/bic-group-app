@@ -24,7 +24,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
   style,
   onClose,
 }: FlashMessageProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
