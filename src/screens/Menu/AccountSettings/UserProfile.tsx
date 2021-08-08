@@ -90,6 +90,7 @@ const UserProfile = () => {
         </View>
         <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
           <Image
+            resizeMode="cover"
             style={styles.avatar}
             source={avatar ? {uri: avatar} : images.img_user_avatar_default}
           />
@@ -105,6 +106,7 @@ const UserProfile = () => {
         </View>
         <ButtonWrapper onPress={popupMessage}>
           <Image
+            resizeMode="cover"
             style={styles.cover}
             source={
               background_img_url
@@ -141,7 +143,9 @@ const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    container: {},
+    container: {
+      flex: 1,
+    },
     list: {
       marginTop: spacing.margin.base,
     },
@@ -164,11 +168,15 @@ const themeStyles = (theme: ITheme) => {
     avatar: {
       width: scaleSize(96),
       height: scaleSize(96),
+      maxHeight: 125,
+      maxWidth: 125,
       borderRadius: 8,
     },
     cover: {
       width: scaleSize(375),
       height: scaleSize(136),
+      maxHeight: 250,
+      maxWidth: 525,
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,

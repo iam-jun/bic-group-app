@@ -37,7 +37,7 @@ const Menu = (): React.ReactElement => {
 
   const menuData = useMenu();
   const {userProfile} = menuData;
-  const {fullname, email, avatar} = userProfile;
+  const {id, fullname, email, avatar} = userProfile;
 
   useEffect(() => {
     dispatch(menuActions.getUserProfile());
@@ -77,7 +77,18 @@ const Menu = (): React.ReactElement => {
     }
   };
 
-  const goToMyProfile = () => rootNavigation.navigate(mainStack.myProfile);
+  const goToMyProfile = () => {
+    dispatch(
+      menuActions.selectUserProfile({
+        id,
+        fullname,
+        email,
+        avatar,
+        isPublic: false,
+      }),
+    );
+    rootNavigation.navigate(mainStack.myProfile);
+  };
 
   return (
     <ScreenWrapper testID="DrawerComponent" style={styles.container} isFullView>

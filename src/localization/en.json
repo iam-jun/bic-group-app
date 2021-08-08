@@ -116,8 +116,7 @@
     "title_gender": "Gender",
     "title_birthday": "Birthday",
     "title_choose_language": "Choose Language",
-    "app_language": "English",
-    "title_edit_public_info": "Edit public Info"
+    "app_language": "English"
   },
   "languages": {
     "title_en": "English",
@@ -225,5 +224,9 @@
   "groups": {
     "search_results": "Search results",
     "all_groups": "All groups"
+  },
+  "profile": {
+    "title_edit_profile": "Edit Profile",
+    "title_direct_message": "Direct Message"
   }
 }

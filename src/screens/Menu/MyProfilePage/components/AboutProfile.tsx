@@ -17,7 +17,7 @@ const AboutProfile = () => {
 
   const menuData = useMenu();
   const {userProfile} = menuData;
-  const {email, address, language, phone} = userProfile;
+  const {email, address, language, phone, isPublic} = userProfile;
 
   const renderItem = (icon: IconType, label: string) => {
     return (
@@ -34,10 +34,10 @@ const AboutProfile = () => {
         {t('settings:title_about')}
       </Text.ButtonBase>
       {renderItem('BriefcaseAlt', 'Employer at EVOLGROUP')}
-      {renderItem('LocationPoint', address)}
+      {!isPublic && renderItem('LocationPoint', address)}
       {renderItem('CommentsAlt', language)}
-      {renderItem('Phone', phone)}
-      {renderItem('Envelope', email)}
+      {!isPublic && renderItem('Phone', phone)}
+      {!isPublic && renderItem('Envelope', email)}
     </View>
   );
 };
@@ -50,6 +50,7 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       marginHorizontal: spacing.margin.large,
+      marginTop: spacing.margin.small,
     },
     itemComponent: {
       flexDirection: 'row',
