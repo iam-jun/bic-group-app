@@ -27,11 +27,9 @@ module.exports = function (api) {
     ],
   ];
 
-  // console.log('test env:', api.env('production'));
-
   if (api.env('production')) {
     plugins.push(['transform-remove-console']);
-    // plugins.push(['react-native-paper/babel']);
+    plugins.push(['react-native-paper/babel']);
   }
 
   return {

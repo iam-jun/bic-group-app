@@ -4,16 +4,16 @@ import {
   IGetGroupRolesReq,
   IPaginationParams,
   ISendMessageReq,
-  IUpdateRoomTopicReq,
 } from '~/interfaces/IHttpRequest';
+import {getEnv} from '~/utils/env';
 
 const providers = {
   bein: {
-    url: 'http://13.212.9.73:3000/',
+    url: getEnv('BEIN_API'),
     name: 'Bein',
   },
   chat: {
-    url: 'https://rockettest.bein.group/api/v1/',
+    url: getEnv('ROCKET_CHAT_API'),
     name: 'RocketChat',
   },
   getStream: {
