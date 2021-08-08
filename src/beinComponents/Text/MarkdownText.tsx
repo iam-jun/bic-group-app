@@ -5,16 +5,28 @@ import {useTheme} from 'react-native-paper';
 import ParsedText from 'react-native-parsed-text';
 import {openLink} from '~/utils/common';
 
+export interface IMarkdownAudience {
+  type?: 'u' | 'g' | string;
+  id?: string;
+  name?: string;
+}
+
 export interface MarkdownTextProps extends RNTextProps {
   children?: React.ReactNode;
+  showRawText?: boolean;
+  onPressAudience?: (audience: IMarkdownAudience) => void;
 }
 
 const MarkdownText: FC<MarkdownTextProps> = ({
   children,
+  showRawText,
+  onPressAudience,
   ...props
 }: MarkdownTextProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
+
+  const audienceRegex = /@\[([^:]+):([^:]+):([^\]]+)\]/;
 
   //params: url: string, matchIndex: number
   const onPressUrl = async (url: string) => {
@@ -25,12 +37,36 @@ const MarkdownText: FC<MarkdownTextProps> = ({
     await openLink(`tel:${phoneNumber}`);
   };
 
-  const handleEmailPress = async (email: string) => {
+  const onPressEmail = async (email: string) => {
     await openLink(`mailto:${email}`);
   };
 
+  const _onPressAudience = (matched: string) => {
+    if (matched) {
+      const match = matched.match(audienceRegex);
+      const audience: IMarkdownAudience = {
+        type: match?.[1],
+        id: match?.[2],
+        name: match?.[3],
+      };
+      onPressAudience?.(audience);
+    }
+  };
+
   const getMatchText = (matched: string, matches: string[]) => {
-    return matches?.[1] || matched;
+    if (showRawText) {
+      return matched;
+    } else {
+      return matches?.[1] || matched;
+    }
+  };
+
+  const getMatchAudienceText = (matched: string, matches: string[]) => {
+    if (showRawText) {
+      return matched;
+    } else {
+      return matches?.[3] || matched;
+    }
   };
 
   return (
@@ -46,13 +82,19 @@ const MarkdownText: FC<MarkdownTextProps> = ({
         {
           type: 'email',
           style: styles.email,
-          onPress: handleEmailPress,
+          onPress: onPressEmail,
         },
         {pattern: /#(\w+)/, style: styles.hashTag},
         {
           pattern: /\*(.*?)\*/,
           style: styles.bold,
           renderText: getMatchText,
+        },
+        {
+          pattern: audienceRegex,
+          style: styles.bold,
+          renderText: getMatchAudienceText,
+          onPress: _onPressAudience,
         },
       ]}
       {...props}>

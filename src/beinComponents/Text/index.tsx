@@ -8,7 +8,9 @@ import {useTheme} from 'react-native-paper';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
-import MarkdownText from '~/beinComponents/Text/MarkdownText';
+import MarkdownText, {
+  MarkdownTextProps,
+} from '~/beinComponents/Text/MarkdownText';
 
 export type TextVariant =
   | 'h1'
@@ -27,7 +29,7 @@ export type TextVariant =
   | 'subtitle'
   | undefined;
 
-export interface TextProps extends RNTextProps {
+export interface TextProps extends RNTextProps, MarkdownTextProps {
   variant?: TextVariant;
   children?: React.ReactNode;
   color?: string;
