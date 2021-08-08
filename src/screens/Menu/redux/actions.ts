@@ -1,3 +1,4 @@
+import {IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
 
 const menuActions = {
@@ -7,7 +8,7 @@ const menuActions = {
       payload,
     };
   },
-  setUserProfile: (payload: any[]) => {
+  setUserProfile: (payload: IUserProfile) => {
     return {
       type: menuTypes.SET_USER_PROFILE,
       payload,

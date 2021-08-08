@@ -50,3 +50,20 @@ export interface IForgotPasswordError {
 }
 
 export type ISignUpResponse = ISignUpResult;
+
+export interface IUserProfile {
+  cognito_uuid?: string;
+  stream_uuid?: string;
+  fullname: string;
+  gender?: string;
+  birthday?: string;
+  bein_staff_role?: string;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string;
+  background_img_url?: string;
+  phone?: string;
+  address?: string;
+  language?: string;
+  description?: string;
+}

@@ -100,7 +100,6 @@ const icons = {
   EllipsisH: 'EllipsisH',
   InfoCircle: 'InfoCircle',
   CalendarAlt: 'CalendarAlt',
-  ImageV: 'ImageV',
   Clock: 'Clock',
   CommentAltDots: 'CommentAltDots',
   iconEyeSeen,
@@ -140,6 +139,17 @@ const icons = {
   iconMenuSwitch,
   iconMenuLogout,
   iconTabMenuBein,
+  BriefcaseAlt: 'BriefcaseAlt',
+  LocationPoint: 'LocationPoint',
+  CommentsAlt: 'CommentsAlt',
+  Phone: 'Phone',
+  Envelope: 'Envelope',
+  EditAlt: 'EditAlt',
+  TextFields: 'TextFields',
+  UserSquare: 'UserSquare',
+  Calender: 'Calender',
+  Globe: 'Globe',
+  Lock: 'Lock',
 };
 
 export default icons;

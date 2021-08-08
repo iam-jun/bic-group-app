@@ -106,7 +106,8 @@
     "title_gender": "Gender",
     "title_birthday": "Birthday",
     "title_choose_language": "Chọn ngôn ngữ",
-    "app_language": "Tiếng Việt"
+    "app_language": "Tiếng Việt",
+    "title_edit_public_info": "Chỉnh sửa thông tin công khai"
   },
   "languages": {
     "title_en": "English",

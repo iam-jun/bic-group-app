@@ -17,6 +17,7 @@ interface HeaderAvatarViewProps {
   secondLabel: string;
   avatar: string;
   containerStyle: StyleProp<ViewStyle>;
+  onPress?: (...params: any) => void;
 }
 
 const HeaderAvatarView = ({
@@ -24,13 +25,15 @@ const HeaderAvatarView = ({
   secondLabel,
   avatar,
   containerStyle,
+  onPress,
 }: HeaderAvatarViewProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   return (
     <TouchableOpacity
-      style={StyleSheet.flatten([styles.container, containerStyle])}>
+      style={StyleSheet.flatten([styles.container, containerStyle])}
+      onPress={onPress}>
       <Avatar.UltraLarge source={avatar} style={styles.avatar} />
       <View style={{flex: 1}}>
         <Text.H6>{firstLabel}</Text.H6>
