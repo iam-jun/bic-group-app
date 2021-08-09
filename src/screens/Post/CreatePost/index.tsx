@@ -20,7 +20,6 @@ import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import {useUserIdAuth} from '~/hooks/auth';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
-import {mentionRegex} from '~/constants/commonRegex';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
@@ -82,37 +81,22 @@ const CreatePost = () => {
     if (important?.active) {
       payload.important = important;
     }
-    console.log(
-      '\x1b[36m',
-      '🐣 important | onPressPost : ',
-      JSON.stringify(important, undefined, 2),
-      '\x1b[0m',
-    );
-    console.log(
-      '\x1b[36m',
-      '🐣 payload | onPressPost : ',
-      JSON.stringify(payload, undefined, 2),
-      '\x1b[0m',
-    );
     dispatch(postActions.postCreateNewPost(payload));
   };
 
-  const getMention = debounce((str: string) => {
-    const matches = str.match(mentionRegex);
-    if (str && matches && matches.length > 0) {
-      const mentionKey = matches[matches.length - 1]?.replace('@', '');
-      dispatch(postActions.setMentionSearchKey(mentionKey));
-      dispatch(postActions.getSearchMentionAudiences({key: mentionKey}));
-    } else if (mentionKey) {
+  const onChangeText = (text: string) => {
+    dispatch(postActions.setCreatePostData({...data, content: text}));
+  };
+
+  const onMentionText = debounce((textMention: string) => {
+    if (textMention) {
+      dispatch(postActions.setMentionSearchKey(textMention));
+      dispatch(postActions.getSearchMentionAudiences({key: textMention}));
+    } else if (mentionKey || mentionResult?.length > 0) {
       dispatch(postActions.setMentionSearchResult([]));
       dispatch(postActions.setMentionSearchKey(''));
     }
   }, 300);
-
-  const onChangeText = (text: string) => {
-    dispatch(postActions.setCreatePostData({...data, content: text}));
-    getMention(text);
-  };
 
   const onPressMentionAudience = (audience: any) => {
     const mention = `@[u:${audience.id}:${
@@ -157,14 +141,10 @@ const CreatePost = () => {
           modalStyle={styles.mentionInputModal}
           isMentionModalVisible={!!content && mentionResult?.length > 0}
           onPress={onPressMentionAudience}
-          renderInput={() => (
-            <PostInput
-              multiline
-              placeholder={t('post:placeholder_write_post')}
-              onChangeText={onChangeText}
-              value={content}
-            />
-          )}
+          onChangeText={onChangeText}
+          onMentionText={onMentionText}
+          value={content}
+          ComponentInput={PostInput}
         />
         <PostToolbar modalizeRef={toolbarModalizeRef} />
       </ScreenWrapper>

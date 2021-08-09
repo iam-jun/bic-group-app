@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -15,6 +15,7 @@ import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
+import {mentionRegex} from '~/constants/commonRegex';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -24,9 +25,12 @@ export interface MentionInputProps extends TextInputProps {
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
-  renderInput?: () => React.ReactElement;
   onPress?: (item: any) => void;
   onChangeText?: (value: string) => void;
+  onMentionText?: (textMention: string) => void;
+  value?: string;
+  ComponentInput?: any;
+  children?: React.ReactNode;
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
@@ -37,17 +41,23 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
-  renderInput,
   onPress,
   onChangeText,
+  onMentionText,
+  value,
+  ComponentInput = TextInput,
+  children,
 }: MentionInputProps) => {
-  const [text, setText] = useState<string>('');
-
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme, modalPosition);
 
   const _onChangeText = (text: string) => {
-    setText(text);
+    const matches = text?.match?.(mentionRegex);
+    let mentionKey = '';
+    if (text && matches && matches.length > 0) {
+      mentionKey = matches[matches.length - 1]?.replace('@', '');
+    }
+    onMentionText?.(mentionKey);
     onChangeText?.(text);
   };
 
@@ -63,17 +73,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
     );
   };
 
-  const _renderDefaultInput = () => {
-    return (
-      <TextInput
-        value={text}
-        onChangeText={_onChangeText}
-        placeholder={placeholderText}
-        style={StyleSheet.flatten([styles.textInputWrapper, textInputStyle])}
-      />
-    );
-  };
-
   return (
     <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
       {isMentionModalVisible && (
@@ -85,7 +84,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
           />
         </View>
       )}
-      {renderInput ? renderInput() : _renderDefaultInput()}
+      <ComponentInput
+        value={children ? undefined : value}
+        onChangeText={_onChangeText}
+        placeholder={placeholderText}
+        style={textInputStyle}>
+        {children}
+      </ComponentInput>
     </View>
   );
 };
