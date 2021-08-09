@@ -1,6 +1,7 @@
 import React, {FC, useState, useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -14,6 +15,9 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
+import menuActions from '~/screens/Menu/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface PostViewProps {
   postData: IPostActivity;
@@ -42,6 +46,9 @@ const PostView: FC<PostViewProps> = ({
   const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
+
+  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   /**
    * Check Important
@@ -74,7 +81,13 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    alert('onPressActor id: ' + actor);
+    dispatch(
+      menuActions.selectUserProfile({
+        id: actor?.id?.toString(),
+        isPublic: true,
+      }),
+    );
+    rootNavigation.navigate(mainStack.myProfile);
   };
 
   const onPressShowAudiences = () => {

@@ -1,18 +1,19 @@
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
+  IGetGroupRolesReq,
   IPaginationParams,
   ISendMessageReq,
-  IUpdateRoomTopicReq,
 } from '~/interfaces/IHttpRequest';
+import {getEnv} from '~/utils/env';
 
 const providers = {
   bein: {
-    url: 'http://13.212.9.73:3000/',
+    url: getEnv('BEIN_API'),
     name: 'Bein',
   },
   chat: {
-    url: 'https://rockettest.bein.group/api/v1/',
+    url: getEnv('ROCKET_CHAT_API'),
     name: 'RocketChat',
   },
   getStream: {
@@ -62,7 +63,16 @@ const Chat = {
     params: IPaginationParams & {roomId: string},
   ): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}groups.members`,
+      url: `${providers.chat.url}users.list`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  roles: (params: IGetGroupRolesReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.roles`,
       method: 'get',
       useRetry: true,
       provider: providers.chat,

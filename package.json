@@ -11,8 +11,8 @@
     "android": "react-native run-android --variant=developmentDebug",
     "ios": "react-native run-ios",
     "start-android": "adb reverse tcp:8081 tcp:8081 && react-native start --port=8081",
-    "build": "rm -rf dist/ && webpack --mode=production --config webpack.config.js",
-    "web": "webpack serve --mode=development --config webpack.config.js --host 0.0.0.0",
+    "build": "rm -rf dist/ && webpack --mode=production --config webpack.prod.js",
+    "web": "webpack serve --mode=development --config webpack.dev.js --host 0.0.0.0",
     "test android dev": "detox test --configuration android.dev.debug",
     "test android dev-release": "detox test --configuration android.dev.release",
     "test": "detox"
@@ -115,6 +115,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.37.0",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.8.0"
   }
 }
