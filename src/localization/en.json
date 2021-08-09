@@ -130,7 +130,8 @@
     "title_group_type": "Group Type",
     "title_avatar": "Avatar",
     "title_cover": "Cover",
-    "title_edit": "Edit"
+    "title_edit": "Edit",
+    "title_privacy_type": "Privacy Type"
   },
   "languages": {
     "title_en": "English",

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -20,6 +20,9 @@ import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import ListView from '~/beinComponents/list/ListView';
+import privacyTypes from '~/constants/privacyTypes';
 
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
@@ -30,14 +33,17 @@ const GeneralInformation = () => {
   const {groupDetail} = groupData;
   const {name, icon, background_img_url, description, privacy} = groupDetail;
 
+  const baseSheetRef: any = useRef();
+
   const renderItem = (
     title: string,
     subtitle: string,
     rightIcon: IconType,
     privacyIcon?: IconType,
+    onPress?: () => void,
   ) => {
     return (
-      <TouchableOpacity onPress={popupMessage}>
+      <TouchableOpacity onPress={onPress}>
         <PrimaryItem
           title={t(title)}
           subTitle={subtitle}
@@ -66,6 +72,32 @@ const GeneralInformation = () => {
   useEffect(() => {
     dispatch(menuActions.getUserProfile());
   }, []);
+
+  const editGroupPrivacy = () => baseSheetRef.current?.open?.();
+  const onPrivacyMenuPress = (item: any) => {
+    console.log('yo:', item);
+  };
+
+  const renderBottomSheet = ({item}: {item: any}) => {
+    return (
+      <TouchableOpacity onPress={() => onPrivacyMenuPress(item)}>
+        <PrimaryItem
+          title={t(item.title)}
+          subTitle={t(item.subtitle)}
+          LeftComponent={<Icon style={{marginRight: 16}} icon={item.icon} />}
+          RightComponent={
+            true ? (
+              <Icon
+                icon={'Check'}
+                size={24}
+                tintColor={theme.colors.primary7}
+              />
+            ) : null
+          }
+        />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
@@ -126,8 +158,29 @@ const GeneralInformation = () => {
             titleCase(privacy),
             'EditAlt',
             'Globe',
+            editGroupPrivacy,
           )}
         </View>
+
+        <BottomSheet
+          modalizeRef={baseSheetRef}
+          ContentComponent={
+            <View style={styles.contentBottomSheet}>
+              <Text.H5
+                color={theme.colors.iconTint}
+                style={styles.privacyTypeText}
+                useI18n>
+                settings:title_privacy_type
+              </Text.H5>
+              <ListView
+                type="primary"
+                data={privacyTypes}
+                renderItem={renderBottomSheet}
+                onItemPress={onPrivacyMenuPress}
+              />
+            </View>
+          }
+        />
       </ScrollView>
     </ScreenWrapper>
   );
@@ -188,6 +241,15 @@ const themeStyles = (theme: ITheme) => {
     },
     divider: {
       marginVertical: theme.spacing.margin.small,
+    },
+    contentBottomSheet: {
+      marginHorizontal: spacing.margin.base,
+      marginTop: spacing.margin.large,
+    },
+    privacyTypeText: {
+      marginLeft: spacing.margin.base,
+      marginBottom: spacing.margin.small,
+      fontSize: 18,
     },
   });
 };
