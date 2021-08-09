@@ -78,7 +78,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
     <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
       {isMentionModalVisible && (
         <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
-          <FlatList data={data} renderItem={_renderItem} />
+          <FlatList
+            keyboardShouldPersistTaps={'always'}
+            data={data}
+            renderItem={_renderItem}
+          />
         </View>
       )}
       {renderInput ? renderInput() : _renderDefaultInput()}
