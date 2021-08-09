@@ -112,7 +112,7 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholderTextColor={colors.textSecondary}
         {...props}
       />
-      {helperContent && (
+      {!!helperContent && (
         <Text.Subtitle {..._textHelperProps}>
           {helperContent}
           {renderHelperAction()}
