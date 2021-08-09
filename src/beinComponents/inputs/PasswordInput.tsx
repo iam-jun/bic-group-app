@@ -1,7 +1,10 @@
 import React from 'react';
-import {TextInput as TextInputPaper, useTheme} from 'react-native-paper';
+import {useTheme} from 'react-native-paper';
 import TextInput, {TextInputProps} from './TextInput';
 import {ITheme} from '~/theme/interfaces';
+import Icon from '~/beinComponents/Icon';
+import {View, Text} from 'react-native';
+import icons from '~/resources/icons';
 
 const InputPassword: React.FC<TextInputProps> = ({...props}) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -9,17 +12,23 @@ const InputPassword: React.FC<TextInputProps> = ({...props}) => {
   const [hidePassword, setHidePassword] = React.useState(true);
 
   return (
-    <TextInput
-      {...props}
-      secureTextEntry={hidePassword}
-      right={
-        <TextInputPaper.Icon
-          style={{marginTop: spacing.margin.base}}
-          name={hidePassword ? 'eye' : 'eye-off'}
-          onPress={() => setHidePassword(!hidePassword)}
-        />
-      }
-    />
+    <View>
+      <TextInput
+        {...props}
+        secureTextEntry={hidePassword}
+        right={<Text>haha</Text>}
+      />
+      <Icon
+        // @ts-ignore
+        icon={hidePassword ? icons.iconEye : icons.iconEyeOff}
+        style={{
+          position: 'absolute',
+          right: spacing.margin.large,
+          top: '37.5%',
+        }}
+        onPress={() => setHidePassword(!hidePassword)}
+      />
+    </View>
   );
 };
 
