@@ -3,6 +3,7 @@ const groupStack = {
   groupDetail: 'group-detail',
   postDetail: 'post-detail',
   groupAdmin: 'groupAdmin',
+  generalInfo: 'generalInfo',
 };
 
 export default groupStack;
