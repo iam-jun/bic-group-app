@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {debounce} from 'lodash';
 
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
@@ -18,6 +19,9 @@ import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import {useUserIdAuth} from '~/hooks/auth';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const CreatePost = () => {
   const toolbarModalizeRef = useRef();
@@ -38,6 +42,9 @@ const CreatePost = () => {
   const {content, images, videos, files} = data || {};
   const actor = useUserIdAuth();
 
+  const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
+  const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
+
   //Enable  Post button if :
   // + Has at least 1 audience AND
   // + (text != empty OR at least 1 photo OR at least 1 file)
@@ -48,6 +55,8 @@ const CreatePost = () => {
     dispatch(postActions.clearCreatPostData());
     dispatch(postActions.setSearchResultAudienceGroups([]));
     dispatch(postActions.setSearchResultAudienceUsers([]));
+    dispatch(postActions.setMentionSearchResult([]));
+    dispatch(postActions.setMentionSearchKey(''));
     return () => {
       dispatch(postActions.clearCreatPostData());
     };
@@ -72,18 +81,6 @@ const CreatePost = () => {
     if (important?.active) {
       payload.important = important;
     }
-    console.log(
-      '\x1b[36m',
-      '🐣 important | onPressPost : ',
-      JSON.stringify(important, undefined, 2),
-      '\x1b[0m',
-    );
-    console.log(
-      '\x1b[36m',
-      '🐣 payload | onPressPost : ',
-      JSON.stringify(payload, undefined, 2),
-      '\x1b[0m',
-    );
     dispatch(postActions.postCreateNewPost(payload));
   };
 
@@ -91,9 +88,29 @@ const CreatePost = () => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
+  const onMentionText = debounce((textMention: string) => {
+    if (textMention) {
+      dispatch(postActions.setMentionSearchKey(textMention));
+      dispatch(postActions.getSearchMentionAudiences({key: textMention}));
+    } else if (mentionKey || mentionResult?.length > 0) {
+      dispatch(postActions.setMentionSearchResult([]));
+      dispatch(postActions.setMentionSearchKey(''));
+    }
+  }, 300);
+
+  const onPressMentionAudience = (audience: any) => {
+    const mention = `@[u:${audience.id}:${
+      audience.fullname || audience.name
+    }] `;
+    const newContent = content.replace(`@${mentionKey}`, mention);
+    dispatch(postActions.setCreatePostData({...data, content: newContent}));
+    dispatch(postActions.setMentionSearchResult([]));
+    dispatch(postActions.setMentionSearchKey(''));
+  };
+
   return (
     <View style={styles.container}>
-      <ScreenWrapper testID={'CreatePostScreen'}>
+      <ScreenWrapper isFullView testID={'CreatePostScreen'}>
         <Header
           titleTextProps={{useI18n: true}}
           title={'post:create_post'}
@@ -117,10 +134,17 @@ const CreatePost = () => {
         )}
         <CreatePostChosenAudiences />
         <Divider />
-        <PostInput
-          multiline
-          placeholder={t('post:placeholder_write_post')}
+        <MentionInput
+          style={styles.flex1}
+          data={mentionResult}
+          modalPosition={'top'}
+          modalStyle={styles.mentionInputModal}
+          isMentionModalVisible={!!content && mentionResult?.length > 0}
+          onPress={onPressMentionAudience}
           onChangeText={onChangeText}
+          onMentionText={onMentionText}
+          value={content}
+          ComponentInput={PostInput}
         />
         <PostToolbar modalizeRef={toolbarModalizeRef} />
       </ScreenWrapper>
@@ -129,6 +153,7 @@ const CreatePost = () => {
 };
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
   container: {
     flex: 1,
   },
@@ -163,6 +188,11 @@ const styles = StyleSheet.create({
   audienceList: {
     marginBottom: margin.large,
     marginHorizontal: margin.large,
+  },
+  mentionInputModal: {
+    position: 'absolute',
+    top: undefined,
+    bottom: 0,
   },
 });
 

@@ -235,7 +235,7 @@ const PostSelectAudience = () => {
   };
 
   return (
-    <ScreenWrapper style={styles.container}>
+    <ScreenWrapper isFullView style={styles.container}>
       <Header
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}
@@ -244,6 +244,7 @@ const PostSelectAudience = () => {
         onPressButton={onPressSave}
       />
       <SearchInput
+        autoFocus
         style={styles.searchInput}
         onChangeText={onChangeTextSearch}
         placeholder={t('post:search_audiences_placeholder')}
