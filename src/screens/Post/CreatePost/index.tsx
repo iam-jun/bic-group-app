@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {debounce} from 'lodash';
 
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
@@ -18,6 +19,10 @@ import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import {useUserIdAuth} from '~/hooks/auth';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
+import {mentionRegex} from '~/constants/commonRegex';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const CreatePost = () => {
   const toolbarModalizeRef = useRef();
@@ -38,6 +43,9 @@ const CreatePost = () => {
   const {content, images, videos, files} = data || {};
   const actor = useUserIdAuth();
 
+  const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
+  const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
+
   //Enable  Post button if :
   // + Has at least 1 audience AND
   // + (text != empty OR at least 1 photo OR at least 1 file)
@@ -48,6 +56,8 @@ const CreatePost = () => {
     dispatch(postActions.clearCreatPostData());
     dispatch(postActions.setSearchResultAudienceGroups([]));
     dispatch(postActions.setSearchResultAudienceUsers([]));
+    dispatch(postActions.setMentionSearchResult([]));
+    dispatch(postActions.setMentionSearchKey(''));
     return () => {
       dispatch(postActions.clearCreatPostData());
     };
@@ -87,8 +97,31 @@ const CreatePost = () => {
     dispatch(postActions.postCreateNewPost(payload));
   };
 
+  const getMention = debounce((str: string) => {
+    const matches = str.match(mentionRegex);
+    if (str && matches && matches.length > 0) {
+      const mentionKey = matches[matches.length - 1]?.replace('@', '');
+      dispatch(postActions.setMentionSearchKey(mentionKey));
+      dispatch(postActions.getSearchMentionAudiences({key: mentionKey}));
+    } else if (mentionKey) {
+      dispatch(postActions.setMentionSearchResult([]));
+      dispatch(postActions.setMentionSearchKey(''));
+    }
+  }, 300);
+
   const onChangeText = (text: string) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
+    getMention(text);
+  };
+
+  const onPressMentionAudience = (audience: any) => {
+    const mention = `@[u:${audience.id}:${
+      audience.fullname || audience.name
+    }] `;
+    const newContent = content.replace(`@${mentionKey}`, mention);
+    dispatch(postActions.setCreatePostData({...data, content: newContent}));
+    dispatch(postActions.setMentionSearchResult([]));
+    dispatch(postActions.setMentionSearchKey(''));
   };
 
   return (
@@ -117,10 +150,21 @@ const CreatePost = () => {
         )}
         <CreatePostChosenAudiences />
         <Divider />
-        <PostInput
-          multiline
-          placeholder={t('post:placeholder_write_post')}
-          onChangeText={onChangeText}
+        <MentionInput
+          style={styles.flex1}
+          data={mentionResult}
+          modalPosition={'top'}
+          modalStyle={styles.mentionInputModal}
+          isMentionModalVisible={mentionResult?.length > 0}
+          onPress={onPressMentionAudience}
+          renderInput={() => (
+            <PostInput
+              multiline
+              placeholder={t('post:placeholder_write_post')}
+              onChangeText={onChangeText}
+              value={content}
+            />
+          )}
         />
         <PostToolbar modalizeRef={toolbarModalizeRef} />
       </ScreenWrapper>
@@ -129,6 +173,7 @@ const CreatePost = () => {
 };
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
   container: {
     flex: 1,
   },
@@ -163,6 +208,11 @@ const styles = StyleSheet.create({
   audienceList: {
     marginBottom: margin.large,
     marginHorizontal: margin.large,
+  },
+  mentionInputModal: {
+    position: 'absolute',
+    top: undefined,
+    bottom: 0,
   },
 });
 

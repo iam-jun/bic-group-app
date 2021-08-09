@@ -15,21 +15,22 @@ import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
-import {IUser} from '~/interfaces/IAuth';
 
 export interface MentionInputProps extends TextInputProps {
-  data: IUser[];
+  style?: StyleProp<ViewStyle>;
+  data: any[];
   modalPosition: 'top' | 'bottom';
   isMentionModalVisible: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
   renderInput?: () => React.ReactElement;
-  onPress?: () => void;
+  onPress?: (item: any) => void;
   onChangeText?: (value: string) => void;
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
+  style,
   data,
   modalPosition,
   isMentionModalVisible,
@@ -42,7 +43,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
 }: MentionInputProps) => {
   const [text, setText] = useState<string>('');
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme, modalPosition);
 
   const _onChangeText = (text: string) => {
@@ -50,13 +51,14 @@ const MentionInput: React.FC<MentionInputProps> = ({
     onChangeText?.(text);
   };
 
-  const _renderItem = ({item}: {item: IUser}) => {
+  const _renderItem = ({item}: {item: any}) => {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.item}>
-          <Avatar.Medium style={styles.avatar} source={item.avatarUrl} />
-          <Text>{item.name}</Text>
-        </View>
+      <TouchableOpacity style={styles.item} onPress={() => onPress?.(item)}>
+        <Avatar.Medium
+          style={styles.avatar}
+          source={item.avatar || item.icon}
+        />
+        <Text>{item.name || item.fullname}</Text>
       </TouchableOpacity>
     );
   };
@@ -73,7 +75,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   return (
-    <View style={styles.containerWrapper}>
+    <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
       {isMentionModalVisible && (
         <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
           <FlatList data={data} renderItem={_renderItem} />
@@ -101,7 +103,6 @@ const createStyles = (theme: ITheme, position: string) => {
       borderRadius: 6,
       backgroundColor: colors.background,
       justifyContent: 'center',
-      alignItems: 'center',
 
       shadowColor: '#000',
       shadowOffset: {
@@ -111,6 +112,7 @@ const createStyles = (theme: ITheme, position: string) => {
       shadowOpacity: 0.12,
       shadowRadius: 10.32,
       elevation: 16,
+      zIndex: 2,
     },
     textInputWrapper: {
       height: 40,

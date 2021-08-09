@@ -92,7 +92,7 @@ const MarkdownText: FC<MarkdownTextProps> = ({
         },
         {
           pattern: audienceRegex,
-          style: styles.bold,
+          style: styles.audience,
           renderText: getMatchAudienceText,
           onPress: _onPressAudience,
         },
@@ -120,6 +120,10 @@ const createStyle = (theme: ITheme) => {
     },
     bold: {
       fontWeight: 'bold',
+    },
+    audience: {
+      fontWeight: 'bold',
+      color: colors.link,
     },
   });
 };

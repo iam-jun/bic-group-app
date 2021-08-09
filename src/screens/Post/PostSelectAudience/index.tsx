@@ -244,6 +244,7 @@ const PostSelectAudience = () => {
         onPressButton={onPressSave}
       />
       <SearchInput
+        autoFocus
         style={styles.searchInput}
         onChangeText={onChangeTextSearch}
         placeholder={t('post:search_audiences_placeholder')}

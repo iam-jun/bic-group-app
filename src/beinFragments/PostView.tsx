@@ -81,6 +81,12 @@ const PostView: FC<PostViewProps> = ({
     alert('onPressShowAudiences');
   };
 
+  const onPressMentionAudience = (audience: any) => {
+    if (audience) {
+      alert(`Show profile of ${audience.name || audience.fullname}`);
+    }
+  };
+
   const onPressReact = () => {
     alert('onPressReact');
   };
@@ -234,7 +240,11 @@ const PostView: FC<PostViewProps> = ({
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>
-        <Text>{content}</Text>
+        <Text
+          allowMarkdown
+          onPressAudience={(audience: any) => onPressMentionAudience(audience)}>
+          {content}
+        </Text>
       </View>
     );
   };

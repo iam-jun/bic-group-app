@@ -17,6 +17,10 @@ const initState = {
       expiresTime: '',
     },
   },
+  mention: {
+    searchKey: '',
+    searchResult: [],
+  },
   postDetail: {},
   replyingComment: {},
 };
@@ -87,6 +91,23 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         replyingComment: payload,
+      };
+    //mention
+    case postTypes.SET_MENTION_SEARCH_KEY:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          searchKey: payload,
+        },
+      };
+    case postTypes.SET_MENTION_SEARCH_RESULT:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          searchResult: state.mention.searchKey ? payload : [],
+        },
       };
     default:
       return state;

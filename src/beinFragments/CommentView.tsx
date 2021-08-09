@@ -85,7 +85,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                 {postTime}
               </Text.Subtitle>
             </View>
-            <Text>{content}</Text>
+            <Text allowMarkdown>{content}</Text>
             <Text>
               <Text.BodyS>
                 {contentShowAll ? content : shortDescription}
