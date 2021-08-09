@@ -235,7 +235,7 @@ const PostSelectAudience = () => {
   };
 
   return (
-    <ScreenWrapper style={styles.container}>
+    <ScreenWrapper isFullView style={styles.container}>
       <Header
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}

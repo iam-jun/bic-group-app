@@ -126,7 +126,7 @@ const CreatePost = () => {
 
   return (
     <View style={styles.container}>
-      <ScreenWrapper testID={'CreatePostScreen'}>
+      <ScreenWrapper isFullView testID={'CreatePostScreen'}>
         <Header
           titleTextProps={{useI18n: true}}
           title={'post:create_post'}
