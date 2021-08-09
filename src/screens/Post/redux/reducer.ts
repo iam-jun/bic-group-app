@@ -106,7 +106,7 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         mention: {
           ...state.mention,
-          searchResult: state.mention.searchKey ? payload : [],
+          searchResult: payload,
         },
       };
     default:

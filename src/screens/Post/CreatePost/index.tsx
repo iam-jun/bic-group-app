@@ -155,7 +155,7 @@ const CreatePost = () => {
           data={mentionResult}
           modalPosition={'top'}
           modalStyle={styles.mentionInputModal}
-          isMentionModalVisible={mentionResult?.length > 0}
+          isMentionModalVisible={!!content && mentionResult?.length > 0}
           onPress={onPressMentionAudience}
           renderInput={() => (
             <PostInput
