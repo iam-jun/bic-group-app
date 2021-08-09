@@ -5,6 +5,8 @@ import {useDispatch} from 'react-redux';
 
 import {accountSettingsMenu} from '~/constants/settings';
 import {useBaseHook} from '~/hooks';
+import useMenu from '~/hooks/menu';
+import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
 import * as modalActions from '~/store/modal/actions';
@@ -30,6 +32,11 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
+  const {isLanguageModalOpen} = useMenu();
+
+  const onLanguageModalClose = () => {
+    dispatch(menuActions.setLanguageModalOpen(false));
+  };
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
@@ -41,7 +48,8 @@ const GeneralSettings = () => {
         return rootNavigation.navigate(mainStack.userProfile);
 
       case 'language':
-        return baseSheetRef.current?.open?.();
+        dispatch(menuActions.setLanguageModalOpen(true));
+        return;
 
       default:
         dispatch(
@@ -86,6 +94,8 @@ const GeneralSettings = () => {
         onItemPress={onAccountSettingsPress}
       />
       <BottomSheet
+        isOpen={isLanguageModalOpen}
+        onClose={onLanguageModalClose}
         modalizeRef={baseSheetRef}
         ContentComponent={
           <View style={styles.contentComponent}>

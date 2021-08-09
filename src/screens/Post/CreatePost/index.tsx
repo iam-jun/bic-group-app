@@ -34,6 +34,7 @@ const CreatePost = () => {
   const createPostData = useCreatePost();
   const {
     loading,
+    isOpenModal,
     data,
     tags = [],
     chosenAudiences = [],
@@ -119,6 +120,13 @@ const CreatePost = () => {
     dispatch(postActions.setMentionSearchKey(''));
   };
 
+  const onOpenPostToolbarModal = () => {
+    dispatch(postActions.setOpenPostToolBarModal(true));
+  };
+  const onClosePostToolbarModal = () => {
+    dispatch(postActions.setOpenPostToolBarModal(false));
+  };
+
   return (
     <View style={styles.container}>
       <ScreenWrapper isFullView testID={'CreatePostScreen'}>
@@ -157,7 +165,12 @@ const CreatePost = () => {
           value={content}
           ComponentInput={PostInput}
         />
-        <PostToolbar modalizeRef={toolbarModalizeRef} />
+        <PostToolbar
+          isOpenModal={isOpenModal}
+          onOpenModal={onOpenPostToolbarModal}
+          onCloseModal={onClosePostToolbarModal}
+          modalizeRef={toolbarModalizeRef}
+        />
       </ScreenWrapper>
     </View>
   );
