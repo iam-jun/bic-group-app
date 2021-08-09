@@ -147,7 +147,6 @@ const SignIn = () => {
             <PasswordInput
               testID="inputPassword"
               label={t('auth:input_label_password')}
-              secureTextEntry={true}
               placeholder={t('auth:input_label_password')}
               error={errors.password}
               editable={!loading}
