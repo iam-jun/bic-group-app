@@ -117,7 +117,7 @@ const SignIn = () => {
             <Input
               testID="inputEmail"
               label={t('auth:input_label_email')}
-              placeholder={t('auth:input_label_email')}
+              placeholder={'sample@email.com'}
               autoCapitalize="none"
               editable={!loading}
               value={value}
@@ -149,13 +149,14 @@ const SignIn = () => {
               label={t('auth:input_label_password')}
               placeholder={t('auth:input_label_password')}
               error={errors.password}
+              autoCapitalize="none"
               editable={!loading}
               value={value}
               onChangeText={text => {
                 onChange(text);
                 validatePassword();
               }}
-              helperType="error"
+              helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
               style={{marginTop: 0, marginBottom: 0}}
             />
@@ -163,8 +164,8 @@ const SignIn = () => {
           name="password"
           rules={{
             required: t('auth:text_err_password_blank'),
-            min: 8,
-            max: 20,
+            // min: 8,
+            // max: 20,
             pattern: {
               value: validation.passwordRegex,
               message: t('auth:text_err_password_format'),
