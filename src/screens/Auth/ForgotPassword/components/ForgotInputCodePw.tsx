@@ -9,6 +9,7 @@ import isEmpty from 'lodash/isEmpty';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import TextInput from '~/beinComponents/inputs/TextInput';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import * as actions from '~/screens/Auth/redux/actions';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
@@ -16,7 +17,6 @@ import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 
 interface Props {
   useFormData: IObject<any>;
@@ -159,10 +159,10 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           )}
           name="code"
           rules={{
-            required: t('auth:text_err_code'),
+            required: t('auth:text_err_code') + ' ',
             pattern: {
               value: validation.codeRegex,
-              message: t('auth:text_err_code'),
+              message: t('auth:text_err_code') + ' ',
             },
           }}
           defaultValue=""
@@ -179,24 +179,24 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             <PasswordInput
               testID="inputNewPassword"
               label={t('auth:input_label_enter_new_password')}
-              secureTextEntry={true}
               placeholder={t('auth:input_label_enter_new_password')}
               error={errors.newPassword}
-              value={value}
+              autoCapitalize="none"
               editable={!forgotPasswordLoading}
+              value={value}
               onChangeText={text => {
                 onChange(text);
                 validateNewPassword();
               }}
-              helperType="error"
+              helperType={errors.newPassword?.message ? 'error' : undefined}
               helperContent={errors?.newPassword?.message}
               disabled={disableInputPassword}
             />
           )}
           rules={{
             required: t('auth:text_err_password_blank'),
-            min: 8,
-            max: 20,
+            // min: 8,
+            // max: 20,
             pattern: {
               value: validation.passwordRegex,
               message: t('auth:text_err_password_format'),
@@ -211,16 +211,16 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             <PasswordInput
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
-              secureTextEntry={true}
               placeholder={t('auth:input_label_confirm_new_password')}
               error={errors.confirmPassword}
-              value={value}
+              autoCapitalize="none"
               editable={!forgotPasswordLoading}
+              value={value}
               onChangeText={text => {
                 onChange(text);
                 validateConfirmPassword();
               }}
-              helperType="error"
+              helperType={errors.confirmPassword?.message ? 'error' : undefined}
               helperContent={errors?.confirmPassword?.message}
               disabled={disableInputPassword}
             />
@@ -228,8 +228,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           name="confirmPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
-            min: 8,
-            max: 20,
+            // min: 8,
+            // max: 20,
             // pattern: {
             //   value: validation.passwordRegex,
             //   message: t('auth:text_err_password_format'),
