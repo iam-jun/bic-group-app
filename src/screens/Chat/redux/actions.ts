@@ -1,13 +1,14 @@
-import * as Actions from './constants';
-import {IConversation, IMessage} from '~/interfaces/IChat';
-import {ISocketEvent} from '~/interfaces/ISocket';
 import {IUser} from '~/interfaces/IAuth';
+import {IConversation, IMessage} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
+import {ISocketEvent} from '~/interfaces/ISocket';
+import * as Actions from './constants';
 
-const getData = (dataType: string, payload?: any) => ({
+const getData = (dataType: string, payload?: any, field?: string) => ({
   type: Actions.GET_DATA,
   dataType,
   payload,
+  field,
 });
 
 const setData = (dataType: string, payload: []) => ({
@@ -30,6 +31,15 @@ const mergeExtraData = (dataType: string) => ({
 const resetData = (dataType: string) => ({
   type: Actions.RESET_DATA,
   dataType,
+});
+
+const getGroupRols = () => ({
+  type: Actions.GET_GROUP_ROLES,
+});
+
+const setGroupRoles = (payload: IUser[]) => ({
+  type: Actions.SET_GROUP_ROLES,
+  payload,
 });
 
 const selectConversation = (payload: IConversation) => ({
@@ -98,6 +108,8 @@ export default {
   setExtraData,
   mergeExtraData,
   resetData,
+  getGroupRols,
+  setGroupRoles,
   handleEvent,
   selectConversation,
   sendMessage,

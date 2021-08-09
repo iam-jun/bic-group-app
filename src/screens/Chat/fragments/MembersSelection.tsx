@@ -20,6 +20,10 @@ export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
   selectable?: boolean;
   data: IUser[];
+  roles?: {
+    loading: boolean;
+    data: IUser[];
+  };
   loading?: boolean;
   onPressMenu?: (user: IUser) => void;
   onLoadMore: () => void;
@@ -29,6 +33,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectable,
   searchInputProps,
   data,
+  roles,
   loading,
   onPressMenu,
   onLoadMore,
@@ -79,6 +84,21 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     );
   };
 
+  const renderRoles = () => (
+    <View>
+      {roles && roles.data.length > 0 && (
+        <ListView
+          title={i18next.t('chat:title_admin')}
+          {...roles}
+          renderItem={renderItemUser}
+        />
+      )}
+      <Text.ButtonBase style={styles.title}>
+        {i18next.t('chat:title_members')}
+      </Text.ButtonBase>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <SearchInput style={styles.searchInput} {...searchInputProps} />
@@ -95,12 +115,13 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           listStyle={styles.selectedUsers}
         />
       )}
+
       <ViewSpacing height={spacing?.margin.base} />
       <ListView
-        title={i18next.t('common:text_all')}
         data={data}
         loading={loading}
         isFullView
+        ListHeaderComponent={renderRoles}
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}
@@ -117,6 +138,10 @@ const createStyles = (theme: ITheme) => {
     },
     searchInput: {
       marginHorizontal: spacing?.margin.base,
+    },
+    title: {
+      marginVertical: spacing.margin.small,
+      marginHorizontal: spacing.margin.base,
     },
     marginRight: {
       marginRight: spacing?.margin.base,

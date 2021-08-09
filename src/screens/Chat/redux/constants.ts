@@ -11,10 +11,10 @@ export const SEND_MESSAGE = 'chat/SEND_MESSAGE';
 export const SEND_MESSAGE_SUCCESS = 'chat/SEND_MESSAGE_SUCCESS';
 export const SEND_MESSAGE_FAILED = 'chat/SEND_MESSAGE_FAILED';
 export const RETRY_SEND_MESSAGE = 'chat/RETRY_SEND_MESSAGE';
+export const GET_GROUP_ROLES = 'chat/GET_GROUP_ROLES';
+export const SET_GROUP_ROLES = 'chat/SET_GROUP_ROLES';
 
 export const REACT_MESSAGE = 'chat/REACT_MESSAGE';
-export const GET_USERS = 'chat/GET_USERS';
-export const SET_USERS = 'chat/SET_USERS';
 export const SELECT_USER = 'chat/SELECT_USER';
 export const CLEAR_SELECTED_USERS = 'chat/CLEAR_SELECTED_USERS';
 export const CREATE_CONVERSATION = 'chat/CREATE_CONVERSATION';
