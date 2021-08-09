@@ -106,7 +106,15 @@
     "title_gender": "Gender",
     "title_birthday": "Birthday",
     "title_choose_language": "Chọn ngôn ngữ",
-    "app_language": "Tiếng Việt"
+    "app_language": "Tiếng Việt",
+    "title_group_moderating": "Group Moderating",
+    "title_pending_members": "Pending Members",
+    "title_group_settings": "Group Settings",
+    "title_general_information": "General Information",
+    "title_role_management": "Role Management",
+    "title_membership_settings": "Membership Settings",
+    "title_post_settings": "Post Settings",
+    "title_module_settings": "Module Settings"
   },
   "languages": {
     "title_en": "English",

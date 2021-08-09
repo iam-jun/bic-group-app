@@ -1,15 +1,18 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
+import {useRootNavigation} from '~/hooks/navigation';
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const GroupTopBar = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {navigation} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
 
   return (
     <View style={styles.container}>
@@ -26,12 +29,15 @@ const GroupTopBar = () => {
           style={{marginRight: theme.spacing.margin.large}}
           tintColor={theme.colors.iconTint}
         />
-        <Icon
-          icon={'iconShieldStar'}
-          fill={theme.colors.iconTint}
-          size={24}
-          style={{marginRight: theme.spacing.margin.large}}
-        />
+        <TouchableOpacity
+          onPress={() => rootNavigation.navigate(groupStack.groupAdmin)}>
+          <Icon
+            icon={'iconShieldStar'}
+            fill={theme.colors.iconTint}
+            size={24}
+            style={{marginRight: theme.spacing.margin.large}}
+          />
+        </TouchableOpacity>
         <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
       </View>
     </View>
