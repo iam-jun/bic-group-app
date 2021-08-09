@@ -104,6 +104,17 @@ const CreatePost = () => {
     }] `;
     const newContent = content.replace(`@${mentionKey}`, mention);
     dispatch(postActions.setCreatePostData({...data, content: newContent}));
+
+    const newChosenAudience = [...chosenAudiences];
+    const mentionUser = {
+      id: audience.id,
+      name: audience.name || audience.fullname,
+      avatar: audience.avatar,
+      type: 'user',
+    };
+    newChosenAudience.unshift(mentionUser);
+    dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
+
     dispatch(postActions.setMentionSearchResult([]));
     dispatch(postActions.setMentionSearchKey(''));
   };
