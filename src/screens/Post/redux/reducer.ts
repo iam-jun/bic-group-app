@@ -3,6 +3,7 @@ import postTypes from './types';
 const initState = {
   createPost: {
     loading: false,
+    isOpenModal: false,
     data: {
       content: '',
       images: [],
@@ -29,6 +30,14 @@ function postReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
 
   switch (type) {
+    case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          isOpenModal: payload,
+        },
+      };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
         ...state,

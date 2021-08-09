@@ -1,18 +1,14 @@
 import React from 'react';
 import {Modalize, ModalizeProps} from 'react-native-modalize';
 import {Portal, useTheme} from 'react-native-paper';
-import {StyleSheet, ViewStyle, StyleProp} from 'react-native';
+import {StyleSheet, ViewStyle, StyleProp, Keyboard} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {ITheme} from '~/theme/interfaces';
 
-export type FlatListProps = {
-  data: any[];
-  renderItem: ({index, item}: {index: number; item: any}) => React.ReactNode;
-};
-
 export interface BaseBottomSheetProps extends ModalizeProps {
   modalizeRef: any;
+  isOpen?: boolean;
   children?: React.ReactNode;
 
   adjustToContentHeight?: boolean;
@@ -21,17 +17,17 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   modalHeight?: number;
 
   ContentComponent?: React.ReactNode;
-  HeaderComponent?: React.ReactNode;
-  FooterComponent?: React.ReactNode;
-  FloatingComponent?: React.ReactNode;
 
   handleStyle?: StyleProp<ViewStyle>;
   modalStyle?: StyleProp<ViewStyle>;
   childrenStyle?: StyleProp<ViewStyle>;
   overlayStyle?: StyleProp<ViewStyle>;
+
+  onClose?: () => void;
 }
 
 const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
+  isOpen,
   modalizeRef,
   children,
 
@@ -42,9 +38,6 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
   modalHeight,
 
   ContentComponent,
-  HeaderComponent,
-  FooterComponent,
-  FloatingComponent,
 
   handleStyle,
   modalStyle,
@@ -72,6 +65,11 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
       childrenStyle,
     ]);
 
+    if (isOpen) {
+      Keyboard.dismiss();
+      modalizeRef?.current?.open?.();
+    }
+
     return (
       <Portal>
         <Modalize
@@ -79,9 +77,6 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
           adjustToContentHeight={adjustToContentHeight}
           modalHeight={modalHeight}
           snapPoint={snapPoint}
-          HeaderComponent={HeaderComponent}
-          FooterComponent={FooterComponent}
-          FloatingComponent={FloatingComponent}
           flatListProps={flatListProps}
           handlePosition={handlePosition}
           handleStyle={handleStyle}

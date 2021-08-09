@@ -2,6 +2,7 @@ import menuTypes from './types';
 
 const initMenuState = {
   loadingUserProfile: false,
+  isLanguageModalOpen: false,
   userProfile: {},
 };
 
@@ -24,6 +25,12 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         loadingUserProfile: true,
+      };
+
+    case menuTypes.SET_LANGUAGE_MODAL_OPEN:
+      return {
+        ...state,
+        isLanguageModalOpen: payload,
       };
 
     default:
