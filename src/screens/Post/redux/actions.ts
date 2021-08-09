@@ -1,3 +1,4 @@
+import post from '~/hooks/post';
 import postTypes from './types';
 import {
   IAudience,
@@ -12,6 +13,10 @@ import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
 const postActions = {
+  setOpenPostToolBarModal: (payload: boolean) => ({
+    type: postTypes.SET_OPEN_POST_TOOLBAR_MODAL,
+    payload,
+  }),
   setLoadingCreatePost: (payload: boolean) => ({
     type: postTypes.SET_LOADING_CREATE_POST,
     payload,
