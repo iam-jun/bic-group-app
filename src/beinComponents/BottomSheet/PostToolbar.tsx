@@ -154,11 +154,17 @@ const PostToolbar = ({
             <View
               style={[
                 styles.toolbarButton,
-                {backgroundColor: colors.primary7},
+                {
+                  backgroundColor: important.active
+                    ? colors.primary7
+                    : colors.primary1,
+                },
               ]}>
               <Icon
                 size={16}
-                tintColor={colors.iconTintReversed}
+                tintColor={
+                  important.active ? colors.iconTintReversed : colors.primary7
+                }
                 icon={'InfoCircle'}
               />
             </View>
@@ -210,7 +216,7 @@ const PostToolbar = ({
                 post:expire_time_desc
               </Text.Subtitle>
             </View>
-            <Icon onPress={onClearImportantDate} icon={'Times'} />
+            <Icon size={16} onPress={onClearImportantDate} icon={'iconClose'} />
           </View>
           <View style={styles.importantButtons}>
             <Button.Secondary
