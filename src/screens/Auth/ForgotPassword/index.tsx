@@ -98,9 +98,10 @@ const ForgotPassword = () => {
         {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
           <ForgotInputId useFormData={useFormData} />
         )}
-        {forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-          <ForgotInputCodePw useFormData={useFormData} />
-        )}
+        {!errBox &&
+          forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+            <ForgotInputCodePw useFormData={useFormData} />
+          )}
         {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
           renderComplete()}
       </View>
