@@ -88,6 +88,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
             testID="inputEmail"
             label={t('auth:input_label_email')}
             placeholder={t('auth:input_label_email')}
+            keyboardType="email-address"
             autoCapitalize="none"
             value={value}
             editable={!forgotPasswordLoading}

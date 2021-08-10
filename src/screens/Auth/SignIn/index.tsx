@@ -118,6 +118,7 @@ const SignIn = () => {
               testID="inputEmail"
               label={t('auth:input_label_email')}
               placeholder={'sample@email.com'}
+              keyboardType="email-address"
               autoCapitalize="none"
               editable={!loading}
               value={value}
