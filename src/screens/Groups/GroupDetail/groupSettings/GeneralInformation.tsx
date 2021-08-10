@@ -13,6 +13,8 @@ import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
 import privacyTypes, {PRIVACY_TYPE} from '~/constants/privacyTypes';
 import groupsActions from '~/screens/Groups/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -23,6 +25,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import ListView from '~/beinComponents/list/ListView';
+import GroupSectionItem from '../components/GroupSectionItem';
 
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
@@ -35,29 +38,7 @@ const GeneralInformation = () => {
     groupDetail.group;
 
   const baseSheetRef: any = useRef();
-
-  const renderItem = (
-    title: string,
-    subtitle: string,
-    rightIcon: IconType,
-    privacyIcon?: IconType,
-    onPress?: () => void,
-  ) => {
-    return (
-      <TouchableOpacity onPress={onPress}>
-        <PrimaryItem
-          title={t(title)}
-          subTitle={subtitle}
-          RightComponent={
-            <>
-              {privacyIcon && <Icon icon={privacyIcon} />}
-              <Icon icon={rightIcon} style={styles.rightEditIcon} />
-            </>
-          }
-        />
-      </TouchableOpacity>
-    );
-  };
+  const {rootNavigation} = useRootNavigation();
 
   const popupMessage = () =>
     dispatch(
@@ -75,6 +56,9 @@ const GeneralInformation = () => {
   const onPrivacyMenuPress = (item: any) => {
     dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
   };
+
+  const editGroudescripton = () =>
+    rootNavigation.navigate(groupStack.editGroupDescription);
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
@@ -157,19 +141,26 @@ const GeneralInformation = () => {
 
         {/* --- GROUP INFO --- */}
         <View style={styles.basicInfoList}>
-          {renderItem('settings:title_group_name', name, 'AngleRightB')}
-          {renderItem(
-            'settings:title_group_description',
-            description,
-            'AngleRightB',
-          )}
-          {renderItem(
-            'settings:title_privacy',
-            titleCase(privacy),
-            'EditAlt',
-            checkPrivacyIcon(privacy),
-            editGroupPrivacy,
-          )}
+          <GroupSectionItem
+            title={'settings:title_group_name'}
+            subtitle={name}
+            rightIcon={'AngleRightB'}
+          />
+
+          <GroupSectionItem
+            title={'settings:title_group_description'}
+            subtitle={description}
+            onPress={editGroudescripton}
+            rightIcon={'AngleRightB'}
+          />
+
+          <GroupSectionItem
+            title={'settings:title_privacy'}
+            subtitle={titleCase(privacy)}
+            rightIcon={'EditAlt'}
+            privacyIcon={checkPrivacyIcon(privacy)}
+            onPress={editGroupPrivacy}
+          />
         </View>
 
         <BottomSheet

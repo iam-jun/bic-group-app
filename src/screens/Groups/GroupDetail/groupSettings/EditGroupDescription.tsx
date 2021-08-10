@@ -1,11 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -15,8 +9,9 @@ import useGroups from '~/hooks/groups';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
+import TextInput from '~/beinComponents/inputs/TextInput';
+import groupsActions from '../../redux/actions';
 
 const EditGroupDescription = () => {
   const theme = useTheme() as ITheme;
@@ -25,28 +20,43 @@ const EditGroupDescription = () => {
   const dispatch = useDispatch();
   const groupData = useGroups();
   const {groupDetail} = groupData;
-  const {name, description} = groupDetail;
+  const {id, description} = groupDetail.group;
 
   const [text, setText] = useState<string>(description);
   const _onChangeText = (value: string) => {
     setText(value);
   };
 
+  const onSave = () => {
+    dispatch(groupsActions.editGroupDetail({id, description: text}));
+  };
+
   return (
-    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+    <ScreenWrapper
+      testID="EditGroupDescription"
+      style={styles.container}
+      isFullView>
       <Header
         title={t('settings:title_group_description')}
         buttonText={'Save'}
-        onPressButton={() => alert('onPress Save')}
+        onPressButton={onSave}
       />
-      <Text.H6>{`Description of ${name}`}</Text.H6>
-      <TextInput
-        value={text}
-        onChangeText={_onChangeText}
-        maxLength={256}
-        multiline
-        style={styles.textinput}
-      />
+
+      <View style={styles.content}>
+        <Text.H6
+          style={styles.textEdit}
+          color={theme.colors.textPrimary}
+          useI18n>
+          settings:title_edit_description
+        </Text.H6>
+        <TextInput
+          value={text}
+          onChangeText={_onChangeText}
+          maxLength={256}
+          multiline
+          minHeight={248}
+        />
+      </View>
     </ScreenWrapper>
   );
 };
@@ -60,6 +70,12 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flex: 1,
     },
-    textinput: {},
+    content: {
+      marginTop: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
+    },
+    textEdit: {
+      marginBottom: spacing.margin.small,
+    },
   });
 };
