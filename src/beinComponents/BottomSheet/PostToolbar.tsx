@@ -6,6 +6,7 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import {throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
@@ -169,32 +170,6 @@ const PostToolbar = ({
             </View>
           </TouchableOpacity>
           <KeyboardSpacer iosOnly />
-          {selectingDate && (
-            <DateTimePicker
-              isVisible={selectingDate}
-              date={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
-                  : new Date()
-              }
-              mode={'date'}
-              onConfirm={onChangeDatePicker}
-              onCancel={onChangeDatePicker}
-            />
-          )}
-          {selectingTime && (
-            <DateTimePicker
-              isVisible={selectingTime}
-              date={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
-                  : new Date()
-              }
-              mode={'time'}
-              onConfirm={onChangeTimePicker}
-              onCancel={onChangeTimePicker}
-            />
-          )}
         </Animated.View>
       </PanGestureHandler>
     );
@@ -309,6 +284,34 @@ const PostToolbar = ({
           }}
           onPress={onPressSelectFile}
         />
+        <View style={{position: 'absolute', alignSelf: 'center'}}>
+          {selectingDate && (
+            <DateTimePicker
+              isVisible={selectingDate}
+              date={
+                important.expiresTime
+                  ? new Date(important.expiresTime)
+                  : new Date()
+              }
+              mode={Platform.OS === 'web' ? 'time' : 'date'}
+              onConfirm={onChangeDatePicker}
+              onCancel={onChangeDatePicker}
+            />
+          )}
+          {selectingTime && (
+            <DateTimePicker
+              isVisible={selectingTime}
+              date={
+                important.expiresTime
+                  ? new Date(important.expiresTime)
+                  : new Date()
+              }
+              mode={'time'}
+              onConfirm={onChangeTimePicker}
+              onCancel={onChangeTimePicker}
+            />
+          )}
+        </View>
       </View>
     );
   };
