@@ -81,13 +81,15 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    dispatch(
-      menuActions.selectUserProfile({
-        id: actor?.id?.toString(),
-        isPublic: true,
-      }),
-    );
-    rootNavigation.navigate(mainStack.myProfile);
+    if (actor?.id) {
+      dispatch(
+        menuActions.selectUserProfile({
+          id: actor?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(mainStack.myProfile);
+    }
   };
 
   const onPressShowAudiences = () => {
