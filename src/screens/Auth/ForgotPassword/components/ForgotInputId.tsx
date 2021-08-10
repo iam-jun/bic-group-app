@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Controller} from 'react-hook-form';
 import {useTheme} from 'react-native-paper';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 import {useDispatch} from 'react-redux';
 
-import images from '~/resources/images';
-import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import Button from '~/beinComponents/Button';
@@ -73,12 +71,12 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   }, 50);
 
   return (
-    <>
-      <Image
-        resizeMode="contain"
-        style={styles.logo}
-        source={images.logo_bein}
-      />
+    <View style={styles.container}>
+      {/*<Image*/}
+      {/*  resizeMode="contain"*/}
+      {/*  style={styles.logo}*/}
+      {/*  source={images.logo_bein}*/}
+      {/*/>*/}
       <Text.H6>{t('auth:text_forgot_password')}</Text.H6>
       <Text.Body style={styles.desc}>
         {t('auth:text_forgot_password_input_desc')}
@@ -121,13 +119,16 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
         style={styles.btnSendRecoverCode}>
         {t('auth:btn_send_recover_code')}
       </Button.Primary>
-    </>
+    </View>
   );
 };
 
 const themeStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
+    container: {
+      paddingTop: spacing.padding.big,
+    },
     logo: {
       alignSelf: 'center',
       width: 64,
