@@ -257,7 +257,9 @@ const themeStyles = (theme: ITheme) => {
       flex: 1,
       paddingTop: spacing.padding.big,
     },
-    inputSectionContainer: {},
+    inputSectionContainer: {
+      marginBottom: spacing.margin.big,
+    },
     desc: {
       marginBottom: spacing.margin.base,
     },
