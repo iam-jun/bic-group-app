@@ -31,6 +31,7 @@ const compileNodeModules = [
   'react-native-fast-image',
   'react-native-vector-icons',
   'react-native-gifted-chat',
+  'react-modal',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = env => {

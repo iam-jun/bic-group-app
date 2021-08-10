@@ -400,6 +400,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...requestConfig.headers,
         ...{
           Authorization: getBeinIdToken(),
+          'X-Requested-With': 'google',
         },
       };
       break;

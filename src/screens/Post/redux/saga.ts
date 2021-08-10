@@ -1,8 +1,11 @@
 import {put, call, takeLatest} from 'redux-saga/effects';
-import {IPostActivity, IPostCreatePost} from '~/interfaces/IPost';
+import {
+  IParamSearchMentionAudiences,
+  IPostActivity,
+  IPostCreatePost,
+} from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
-import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
@@ -12,6 +15,10 @@ const navigation = withNavigation(rootNavigationRef);
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeLatest(
+    postTypes.GET_SEARCH_MENTION_AUDIENCES,
+    getSearchMentionAudiences,
+  );
 }
 
 function* postCreateNewPost({
@@ -45,6 +52,25 @@ function* postCreateNewPost({
       '\x1b[0m',
     );
     yield put(postActions.setLoadingCreatePost(false));
+  }
+}
+
+function* getSearchMentionAudiences({
+  payload,
+}: {
+  type: string;
+  payload: IParamSearchMentionAudiences;
+}) {
+  try {
+    const response = yield call(
+      postDataHelper.getSearchMentionAudiences,
+      payload,
+    );
+    if (response?.data) {
+      yield put(postActions.setMentionSearchResult(response?.data));
+    }
+  } catch (e) {
+    console.log('\x1b[36m', '🐣️ searchMentionAudiences error:', e, '\x1b[0m');
   }
 }
 
