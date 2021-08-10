@@ -5,10 +5,7 @@ import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import {usePostDetailReplyingComment} from '~/hooks/post';
-import {
-  IReaction,
-  IRequestPostComment,
-} from '~/interfaces/IPost';
+import {IReaction, IRequestPostComment} from '~/interfaces/IPost';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import ListView from '~/beinComponents/list/ListView';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';

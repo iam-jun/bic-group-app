@@ -8,6 +8,7 @@ import {
   IPostActivity,
   IPostCreatePost,
   IReaction,
+  IReactionCounts,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -102,6 +103,23 @@ function* addToAllPosts({
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
+function* onUpdateReactionOfPostById(
+  postId: string,
+  ownReaction: IOwnReaction,
+  reactionCounts: IReactionCounts,
+) {
+  try {
+    const allPosts = yield select(state => state?.post?.allPosts) || {};
+    const post: IPostActivity = allPosts?.[postId] || {};
+    post.reaction_counts = reactionCounts;
+    post.own_reactions = ownReaction;
+    allPosts[postId] = post;
+    yield put(postActions.setAllPosts(allPosts));
+  } catch (e) {
+    console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
+  }
+}
+
 function* postReactToPost({
   payload,
 }: {
@@ -133,6 +151,12 @@ function* postReactToPost({
         const newReactionCounts = {...reactionCounts};
         newReactionCounts[reactionId] =
           (newReactionCounts?.[reactionId] || 0) + 1;
+
+        yield onUpdateReactionOfPostById(
+          postId,
+          newOwnReaction,
+          newReactionCounts,
+        );
       }
     }
   } catch (e) {
