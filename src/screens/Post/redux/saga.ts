@@ -2,9 +2,12 @@ import {put, call, takeLatest, select} from 'redux-saga/effects';
 import {isArray} from 'lodash';
 
 import {
+  IOwnReaction,
   IParamSearchMentionAudiences,
+  IPayloadReactToPost,
   IPostActivity,
   IPostCreatePost,
+  IReaction,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -12,6 +15,7 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {ReactionType} from '~/constants/reactions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -22,6 +26,7 @@ export default function* postSaga() {
     getSearchMentionAudiences,
   );
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
+  yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
 }
 
 function* postCreateNewPost({
@@ -95,6 +100,44 @@ function* addToAllPosts({
     newAllPosts[payload.id] = payload;
   }
   yield put(postActions.setAllPosts(newAllPosts));
+}
+
+function* postReactToPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactToPost;
+}) {
+  try {
+    const {postId, reactionId, reactionCounts, ownReaction, userId} = payload;
+    const data: ReactionType[] = [];
+    data.push(reactionId);
+    const added = ownReaction?.[reactionId]?.length > 0;
+    if (!added) {
+      const response = yield call(
+        postDataHelper.postReaction,
+        postId,
+        'post',
+        data,
+        userId,
+      );
+      if (response?.data) {
+        const newOwnReaction: IOwnReaction = {...ownReaction};
+        const reactionArr: IReaction[] = [];
+        //todo waiting for BE update response
+        //reactionArr.push(response.data)
+        reactionArr.push({kind: reactionId});
+        //todo remove above
+        newOwnReaction[reactionId] = reactionArr;
+
+        const newReactionCounts = {...reactionCounts};
+        newReactionCounts[reactionId] =
+          (newReactionCounts?.[reactionId] || 0) + 1;
+      }
+    }
+  } catch (e) {
+    console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
+  }
 }
 
 // import {takeLatest} from 'redux-saga/effects';

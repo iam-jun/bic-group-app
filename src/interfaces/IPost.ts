@@ -1,5 +1,5 @@
-import {ReactionType} from '~/constants/reactions';
 import {IObject} from '~/interfaces/common';
+import {ReactionType} from '~/constants/reactions';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -72,6 +72,12 @@ export interface IPostActivity {
   reaction_counts?: IObject<number>;
 }
 
+export interface IOwnReaction {
+  [reactionKind: string]: IReaction[];
+}
+
+export type IReactionCounts = {[reactionKind: string]: number};
+
 export interface IAllPosts {
   [id: string]: IPostActivity;
 }
@@ -87,9 +93,7 @@ export interface IPostCreatePost {
   important?: IActivityImportant;
 }
 
-export type IReact = 'like' | 'love' | string;
-
-export type IReactionKind = 'comment' | 'seen' | IReact;
+export type IReactionKind = 'comment' | 'seen' | ReactionType;
 
 export interface IGetStreamUser {
   created_at?: string;
@@ -171,4 +175,12 @@ export interface IParamSearchMentionAudiences {
   user_ids?: string;
   skip?: number;
   take?: number;
+}
+
+export interface IPayloadReactToPost {
+  postId: string;
+  reactionId: ReactionType;
+  ownReaction: IOwnReaction;
+  reactionCounts: IReactionCounts;
+  userId: number;
 }

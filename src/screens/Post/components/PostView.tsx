@@ -1,11 +1,11 @@
-import React, {FC, useState, useEffect, useContext, useRef} from 'react';
+import React, {FC, useState, useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {IPostAudience} from '~/interfaces/IPost';
+import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Icon from '~/beinComponents/Icon';
@@ -21,10 +21,10 @@ import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
-import {ReactionType} from '~/constants/reactions';
 import ReactionView from '~/screens/Post/components/ReactionView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import postActions from '~/screens/Post/redux/actions';
 
 export interface PostViewProps {
   postId: string;
@@ -150,23 +150,14 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReaction = (reaction: IReactionProps) => {
-    if (postId) {
-      const data: ReactionType[] = [];
-      data.push(reaction.id);
-      postDataHelper.postReaction(postId, 'post', data, userId).then(
-        response => {
-          console.log(
-            '\x1b[32m',
-            '🐣️ reaction success : ',
-            response,
-            '\x1b[0m',
-          );
-        },
-        error => {
-          console.log('\x1b[31m', '🐣️ postReaction |  : ', error, '\x1b[0m');
-        },
-      );
-    }
+    const payload: IPayloadReactToPost = {
+      postId,
+      reactionId: reaction.id,
+      ownReaction: own_reactions,
+      reactionCounts: reaction_counts,
+      userId: userId,
+    };
+    dispatch(postActions.postReactToPost(payload));
   };
 
   const renderPostTime = () => {

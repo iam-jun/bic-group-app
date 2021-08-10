@@ -3,6 +3,9 @@ const postKeySelector = {
     searchKey: 'post.mention.searchKey',
     searchResult: 'post.mention.searchResult',
   },
+  postDetail: {
+    id: 'post.postDetail.id',
+  },
   allPosts: 'post.allPosts',
   postById: (id: string) => `post.allPosts.${id}`,
   postObjectDataById: (id: string) => `post.allPosts.${id}.object.data`,

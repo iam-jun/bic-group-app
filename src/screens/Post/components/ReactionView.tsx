@@ -4,10 +4,11 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Reaction from '~/beinComponents/Badge/Reaction';
 import reactions, {ReactionType} from '~/constants/reactions';
+import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 
 export interface ReactionViewProps {
-  ownReactions: any;
-  reactionCounts: any;
+  ownReactions: IOwnReaction;
+  reactionCounts: IReactionCounts;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
@@ -17,7 +18,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  if (Object.keys?.(reactionCounts)?.length === 0) {
+  if (!reactionCounts || Object.keys?.(reactionCounts)?.length === 0) {
     return null;
   }
 
@@ -47,7 +48,7 @@ const ReactionView: FC<ReactionViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

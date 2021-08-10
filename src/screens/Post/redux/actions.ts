@@ -8,6 +8,7 @@ import {
   IReaction,
   IParamSearchMentionAudiences,
   IAllPosts,
+  IPayloadReactToPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -78,6 +79,10 @@ const postActions = {
   }),
   getSearchMentionAudiences: (payload: IParamSearchMentionAudiences) => ({
     type: postTypes.GET_SEARCH_MENTION_AUDIENCES,
+    payload,
+  }),
+  postReactToPost: (payload: IPayloadReactToPost) => ({
+    type: postTypes.POST_REACT_TO_POST,
     payload,
   }),
 };
