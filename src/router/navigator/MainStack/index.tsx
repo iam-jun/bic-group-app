@@ -15,6 +15,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {rootSwitch} from '~/router/stack';
 import AppInfo from '~/screens/AppInfo';
+import notificationsActions from '~/constants/notificationActions';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
 import {spacing} from '~/theme';
 import {deviceDimensions} from '~/theme/dimension';
@@ -33,6 +34,14 @@ const MainStack = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
 
   React.useEffect(() => {
+    listenFCMEvents();
+    connectChat();
+    return () => {
+      closeConnectChat();
+    };
+  }, []);
+
+  const listenFCMEvents = () => {
     messaging().onNotificationOpenedApp(remoteMessage => {
       handleOpenedNotification(remoteMessage);
     });
@@ -40,36 +49,43 @@ const MainStack = (): React.ReactElement => {
     messaging()
       .getInitialNotification()
       .then(remoteMessage => {
-        if (remoteMessage) {
-          console.log(
-            'Notification caused app to open from quit state:',
-            remoteMessage,
-          );
-          remoteMessage.data?.type &&
-            rootNavigation.replace(rootSwitch.mainStack, {
-              screen: remoteMessage.data?.type,
-            });
-        }
+        handleInitialNotification(remoteMessage);
       });
-    console.log({route});
-    connectChat();
-    return () => {
-      closeConnectChat();
-    };
-  }, []);
+  };
 
   const handleOpenedNotification = (
     remoteMessage: FirebaseMessagingTypes.RemoteMessage,
   ) => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
+    const data = handleMessageData(remoteMessage);
+    if (data) rootNavigation.navigate(data.screen, data.params);
+  };
 
-    remoteMessage.data?.type &&
-      rootNavigation.navigate(remoteMessage.data?.type);
+  const handleInitialNotification = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ) => {
+    const data = handleMessageData(remoteMessage);
 
-    // setInitialRouteName(remoteMessage.data?.type);
+    if (data) rootNavigation.navigate(rootSwitch.mainStack, data);
+  };
+
+  const handleMessageData = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ): {screen: any; params: any} | undefined => {
+    if (!remoteMessage) return;
+
+    try {
+      //@ts-ignore
+      let screen = notificationsActions[remoteMessage?.data?.type];
+      const payload = remoteMessage?.data?.payload
+        ? JSON.parse(remoteMessage?.data?.payload)
+        : undefined;
+      if (screen.params)
+        screen = {...screen, params: {...screen.params, params: payload}};
+      else screen = {...screen, params: payload};
+      return screen;
+    } catch (err) {
+      return;
+    }
   };
 
   return (

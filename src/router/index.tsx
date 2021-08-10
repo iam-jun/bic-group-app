@@ -1,8 +1,3 @@
-import React, {useEffect} from 'react';
-import {View, Linking} from 'react-native';
-import messaging from '@react-native-firebase/messaging';
-/*Theme*/
-import {useTheme} from 'react-native-paper';
 /* @react-navigation v5 */
 import {
   DarkTheme,
@@ -10,14 +5,17 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import React, {useEffect} from 'react';
+import {Linking} from 'react-native';
+/*Theme*/
+import {useTheme} from 'react-native-paper';
+import {linkingConfig, navigationSetting} from '~/configs/navigator';
+import {RootStackParamList} from '~/interfaces/IRouter';
+import {isNavigationRefReady} from './helper';
 /*import config navigation*/
 import * as screens from './navigator';
-import {linkingConfig, navigationSetting} from '~/configs/navigator';
-import {rootSwitch} from './stack';
 import {rootNavigationRef} from './navigator/refs';
-import {isNavigationRefReady} from './helper';
-import {RootStackParamList} from '~/interfaces/IRouter';
+import {rootSwitch} from './stack';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -31,10 +29,9 @@ const StackNavigator = (): React.ReactElement => {
   useEffect(() => {
     //@ts-ignore
     isNavigationRefReady.current = false;
-
+    handleDeepLink();
     /*Deep link*/
     Linking.addEventListener('url', handleOpenURL);
-    handleDeepLink();
   }, []);
 
   /*Deep link*/
@@ -58,14 +55,13 @@ const StackNavigator = (): React.ReactElement => {
     // TODO:
     // const navigation = withNavigation(rootNavigationRef);
     // navigation.replace(rootSwitch.authStack);
-    console.log('handleOpenURL', {event});
   };
 
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
 
   const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
 
-  if (initialRouteName === undefined) return <View />;
+  // if (!ready) return <View />;
 
   const onReady = () => {
     //@ts-ignore
@@ -74,24 +70,7 @@ const StackNavigator = (): React.ReactElement => {
 
   return (
     <NavigationContainer
-      linking={{
-        ...linkingConfig,
-        async getInitialURL() {
-          // Check if app was opened from a deep link
-          const url = await Linking.getInitialURL();
-
-          if (url != null) {
-            return url;
-          }
-
-          // Check if there is an initial firebase notification
-          const message = await messaging().getInitialNotification();
-
-          // Get deep link from data
-          // if this is undefined, the app will open the default/home page
-          return message?.data?.link;
-        },
-      }}
+      linking={linkingConfig}
       ref={rootNavigationRef}
       onReady={onReady}
       theme={navigationTheme}>

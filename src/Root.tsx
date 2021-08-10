@@ -160,7 +160,9 @@ export default (): React.ReactElement => {
     <SafeAreaProvider>
       <ThemeProvider>
         <StatusBar
-          barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+          // Dark mode has not ready yet
+          // barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+          barStyle="dark-content"
           translucent
           backgroundColor="transparent"
         />

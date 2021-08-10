@@ -173,7 +173,6 @@ const getTokenAndCallBackBein = async (): Promise<void> => {
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
-  console.log('http error', error);
   let alertShow = false;
   if (error.response) {
     // @ts-ignore
@@ -388,7 +387,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   let interceptorRequestSuccess,
     interceptorResponseSuccess,
     interceptorResponseError;
-  console.log(requestConfig);
 
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
