@@ -13,7 +13,7 @@ import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import images from '~/resources/images';
-import LandingImg from '../../../../assets/images/Noti_Illustration.svg';
+import LandingImg from '../../../../assets/images/landingpage.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import {ITheme} from '~/theme/interfaces';
 
