@@ -3,7 +3,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const groupsApiConfig = {
   getMyGroups: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users/my-group`,
+    url: `${ApiConfig.providers.bein.url}users/my-groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,

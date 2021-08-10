@@ -109,7 +109,6 @@ const requestGroupDetail = async (userId: number) => {
   try {
     const response = await groupsDataHelper.getGroupDetail(userId);
     if (response.code === 200) {
-      console.log('data group detail:', response.data);
       return response.data;
     }
   } catch (err) {
