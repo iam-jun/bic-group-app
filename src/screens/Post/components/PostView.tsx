@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
+import {IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Icon from '~/beinComponents/Icon';
@@ -23,14 +23,16 @@ import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import {ReactionType} from '~/constants/reactions';
 import ReactionView from '~/screens/Post/components/ReactionView';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface PostViewProps {
-  postData: IPostActivity;
-  onPressComment?: (data: IPostActivity) => void;
+  postId: string;
+  onPressComment?: (postId: string) => void;
 }
 
 const PostView: FC<PostViewProps> = ({
-  postData,
+  postId,
   onPressComment,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
@@ -42,17 +44,21 @@ const PostView: FC<PostViewProps> = ({
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {
-    id,
-    object,
-    actor,
-    audience,
-    time,
-    important,
-    own_reactions,
-    reaction_counts,
-  } = postData || {};
-  const {content} = object?.data || {};
+  const actor = useKeySelector(postKeySelector.postActorById(postId));
+  const audience = useKeySelector(postKeySelector.postAudienceById(postId));
+  const time = useKeySelector(postKeySelector.postTimeById(postId));
+  const important = useKeySelector(postKeySelector.postImportantById(postId));
+  const own_reactions = useKeySelector(
+    postKeySelector.postOwnReactionById(postId),
+  );
+  const reaction_counts = useKeySelector(
+    postKeySelector.postReactionCountsById(postId),
+  );
+  const postObjectData = useKeySelector(
+    postKeySelector.postObjectDataById(postId),
+  );
+
+  const {content} = postObjectData || {};
 
   const userId = useUserIdAuth();
 
@@ -95,13 +101,15 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    dispatch(
-      menuActions.selectUserProfile({
-        id: actor?.id?.toString(),
-        isPublic: true,
-      }),
-    );
-    rootNavigation.navigate(mainStack.myProfile);
+    if (actor?.id) {
+      dispatch(
+        menuActions.selectUserProfile({
+          id: actor?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(mainStack.myProfile);
+    }
   };
 
   const onPressShowAudiences = () => {
@@ -123,13 +131,13 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const _onPressComment = () => {
-    onPressComment?.(postData);
+    onPressComment?.(postId);
   };
 
   const onPressMarkAsRead = () => {
-    if (id) {
+    if (postId) {
       postDataHelper
-        .postMarkAsRead(id, userId)
+        .postMarkAsRead(postId, userId)
         .then(response => {
           if (response && response?.data) {
             setCalledMarkAsRead(true);
@@ -142,10 +150,10 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReaction = (reaction: IReactionProps) => {
-    if (id) {
+    if (postId) {
       const data: ReactionType[] = [];
       data.push(reaction.id);
-      postDataHelper.postReaction(id, 'post', data, userId).then(
+      postDataHelper.postReaction(postId, 'post', data, userId).then(
         response => {
           console.log(
             '\x1b[32m',

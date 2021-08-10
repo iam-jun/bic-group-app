@@ -70,7 +70,10 @@ const PostDetail = (props: any) => {
   }, []);
 
   const renderPostContent = () => {
-    return <PostView postData={postDetail} />;
+    if (!id) {
+      return null;
+    }
+    return <PostView postId={id} />;
   };
 
   const onTextChange = (text: string) => {
