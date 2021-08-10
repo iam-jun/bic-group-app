@@ -6,7 +6,6 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
-  Keyboard,
 } from 'react-native';
 import {throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
@@ -34,12 +33,18 @@ import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
+  isOpenModal: boolean;
+  onOpenModal: () => void;
+  onCloseModal: () => void;
   modalizeRef: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }
 
 const PostToolbar = ({
+  isOpenModal,
+  onOpenModal,
+  onCloseModal,
   modalizeRef,
   style,
   containerStyle,
@@ -60,8 +65,9 @@ const PostToolbar = ({
   const {important} = createPostData || {};
 
   const openModal = throttle(() => {
-    Keyboard.dismiss();
-    modalizeRef?.current?.open?.();
+    onOpenModal && onOpenModal();
+    // Keyboard.dismiss();
+    // modalizeRef?.current?.open?.();
   }, 500);
 
   const handleGesture = (event: GestureEvent<any>) => {
@@ -299,10 +305,12 @@ const PostToolbar = ({
 
   return (
     <BaseBottomSheet
+      isOpen={isOpenModal}
       modalizeRef={modalizeRef}
       ContentComponent={renderContent()}
       panGestureAnimatedValue={animated}
       overlayStyle={{backgroundColor: 'transparent'}}
+      onClose={onCloseModal}
       {...props}>
       {renderToolbar()}
     </BaseBottomSheet>

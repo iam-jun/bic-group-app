@@ -11,13 +11,15 @@ import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import useGroups from '~/hooks/groups';
+import {titleCase} from '~/utils/common';
 
 const GroupInfoHeader = () => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const groupData = useGroups();
   const {groupDetail} = groupData;
-  const {name, userCount, icon, background_img_url, group_type} = groupDetail;
+  const {name, user_count, icon, background_img_url, privacy} =
+    groupDetail.group;
 
   return (
     <View style={styles.coverAndInfoHeader}>
@@ -54,15 +56,15 @@ const GroupInfoHeader = () => {
                 size={14}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodyS useI18n>{group_type}</Text.BodyS>
+              <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
               <Text.Subtitle> ⬩ </Text.Subtitle>
               <Icon
                 style={styles.iconSmall}
-                icon={'iconUserGroup'}
+                icon={'UsersAlt'}
                 size={16}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodySM>{userCount}</Text.BodySM>
+              <Text.BodySM>{user_count}</Text.BodySM>
             </View>
           </View>
           <ButtonWrapper

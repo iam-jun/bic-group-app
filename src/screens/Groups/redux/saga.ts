@@ -1,14 +1,15 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import {IGroup} from '~/interfaces/IGroup';
+import {IGroup, IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
-  // yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
+  yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
+  yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
 }
 
 function* getJoinedGroups() {
@@ -30,30 +31,47 @@ function* getJoinedGroups() {
   }
 }
 
-// function* getGroupDetail({payload}: {type: string; payload: number}) {
-//   try {
-//     yield put(groupsActions.setLoadingGroupDetail(true));
+function* getGroupDetail({payload}: {type: string; payload: number}) {
+  try {
+    yield put(groupsActions.setLoadingGroupDetail(true));
 
-//     const result = yield requestGroupDetail(payload);
-//     yield put(groupsActions.setGroupDetail(result));
-//     yield put(groupsActions.setLoadingGroupDetail(false));
-//   } catch (e) {
-//     yield put(groupsActions.setLoadingGroupDetail(false));
-//     console.log(
-//       '\x1b[36m',
-//       'namanh --- getGroupDetail | getGroupDetail : error',
-//       e,
-//       '\x1b[0m',
-//     );
-//   }
-// }
+    const result = yield requestGroupDetail(payload);
+    yield put(groupsActions.setGroupDetail(result));
 
-function* selectGroupDetail({payload}: {payload: IGroup}) {
+    yield put(groupsActions.setLoadingGroupDetail(false));
+  } catch (e) {
+    yield put(groupsActions.setLoadingGroupDetail(false));
+    console.log(
+      '\x1b[36m',
+      'namanh --- getGroupDetail | getGroupDetail : error',
+      e,
+      '\x1b[0m',
+    );
+  }
+}
+
+function* editGroupDetail({
+  payload,
+}: {
+  type: string;
+  payload: IGroupDetailEdit;
+}) {
+  try {
+    const result = yield requestEditGroupDetail(payload);
+    console.log('result:', result);
+    // yield put(groupsActions.setGroupDetail({group: result}));
+  } catch (error) {
+    console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
+  }
+}
+
+function* selectGroupDetail({payload}: {type: string; payload: IGroup}) {
   try {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
     // GET MORE INFO FOR GROUP HERE
     yield put(groupsActions.getGroupPosts(payload.id));
+    yield put(groupsActions.getGroupDetail(payload.id));
 
     yield put(groupsActions.setLoadingGroupDetail(false));
   } catch (error) {
@@ -85,7 +103,7 @@ const getGroupChild = (
   }
 };
 
-function* getGroupPosts({payload}: {payload: number}) {
+function* getGroupPosts({payload}: {type: string; payload: number}) {
   try {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
@@ -103,20 +121,21 @@ function* getGroupPosts({payload}: {payload: number}) {
   }
 }
 
-// const requestGroupDetail = async (id: number) => {
-//   return new Promise((resolve, reject) => {
-//     //todo call api
-//     setTimeout(() => {
-//       const response = mockGetGroupDetail;
-//       if (response.code === 200 && response.data) {
-//         const groupDetail: IGroupDetail = response.data;
-//         resolve(groupDetail);
-//       } else {
-//         reject(response);
-//       }
-//     }, 1000);
-//   });
-// };
+const requestGroupDetail = async (userId: number) => {
+  try {
+    const response = await groupsDataHelper.getGroupDetail(userId);
+    if (response.code === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'requestGroupDetail catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+};
 
 const requestJoinedGroups = async () => {
   try {
@@ -150,6 +169,25 @@ const requestGroupPosts = async (userId: number) => {
     console.log(
       '\x1b[33m',
       'namanh --- getMyGroupPosts | getMyGroupPosts catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+};
+
+const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
+  try {
+    const groupId = data.id;
+    delete data.id; // edit data should not contain group's id
+
+    const response = await groupsDataHelper.editGroupPrivacy(groupId, data);
+    if (response.code === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'requestEditGroupDetail catch: ',
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );

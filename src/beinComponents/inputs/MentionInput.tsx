@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -15,71 +15,82 @@ import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
-import {IUser} from '~/interfaces/IAuth';
+import {mentionRegex} from '~/constants/commonRegex';
 
 export interface MentionInputProps extends TextInputProps {
-  data: IUser[];
+  style?: StyleProp<ViewStyle>;
+  data: any[];
   modalPosition: 'top' | 'bottom';
   isMentionModalVisible: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
-  renderInput?: () => React.ReactElement;
-  onPress?: () => void;
+  onPress?: (item: any) => void;
   onChangeText?: (value: string) => void;
+  onMentionText?: (textMention: string) => void;
+  value?: string;
+  ComponentInput?: any;
+  children?: React.ReactNode;
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
+  style,
   data,
   modalPosition,
   isMentionModalVisible,
   placeholderText,
   textInputStyle,
   modalStyle,
-  renderInput,
   onPress,
   onChangeText,
+  onMentionText,
+  value,
+  ComponentInput = TextInput,
+  children,
 }: MentionInputProps) => {
-  const [text, setText] = useState<string>('');
-
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme, modalPosition);
 
   const _onChangeText = (text: string) => {
-    setText(text);
+    const matches = text?.match?.(mentionRegex);
+    let mentionKey = '';
+    if (text && matches && matches.length > 0) {
+      mentionKey = matches[matches.length - 1]?.replace('@', '');
+    }
+    onMentionText?.(mentionKey);
     onChangeText?.(text);
   };
 
-  const _renderItem = ({item}: {item: IUser}) => {
+  const _renderItem = ({item}: {item: any}) => {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.item}>
-          <Avatar.Medium style={styles.avatar} source={item.avatarUrl} />
-          <Text>{item.name}</Text>
-        </View>
+      <TouchableOpacity style={styles.item} onPress={() => onPress?.(item)}>
+        <Avatar.Medium
+          style={styles.avatar}
+          source={item.avatar || item.icon}
+        />
+        <Text>{item.name || item.fullname}</Text>
       </TouchableOpacity>
     );
   };
 
-  const _renderDefaultInput = () => {
-    return (
-      <TextInput
-        value={text}
-        onChangeText={_onChangeText}
-        placeholder={placeholderText}
-        style={StyleSheet.flatten([styles.textInputWrapper, textInputStyle])}
-      />
-    );
-  };
-
   return (
-    <View style={styles.containerWrapper}>
+    <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
       {isMentionModalVisible && (
         <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
-          <FlatList data={data} renderItem={_renderItem} />
+          <FlatList
+            keyboardShouldPersistTaps={'always'}
+            data={data}
+            renderItem={_renderItem}
+          />
         </View>
       )}
-      {renderInput ? renderInput() : _renderDefaultInput()}
+      <ComponentInput
+        value={children ? undefined : value}
+        onChangeText={_onChangeText}
+        placeholder={placeholderText}
+        style={textInputStyle}>
+        {children}
+      </ComponentInput>
     </View>
   );
 };
@@ -101,7 +112,6 @@ const createStyles = (theme: ITheme, position: string) => {
       borderRadius: 6,
       backgroundColor: colors.background,
       justifyContent: 'center',
-      alignItems: 'center',
 
       shadowColor: '#000',
       shadowOffset: {
@@ -111,6 +121,7 @@ const createStyles = (theme: ITheme, position: string) => {
       shadowOpacity: 0.12,
       shadowRadius: 10.32,
       elevation: 16,
+      zIndex: 2,
     },
     textInputWrapper: {
       height: 40,
