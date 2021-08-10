@@ -59,8 +59,9 @@ export interface IPostActivity {
   verb?: string;
   type?: string;
   object?: {
-    id?: string;
     data?: IActivityData;
+    created_at?: string;
+    updated_at?: string;
   };
   followers?: number[];
   audience?: IPostAudience;

@@ -44,7 +44,7 @@ const PostView: FC<PostViewProps> = ({
 
   const {
     id,
-    data,
+    object,
     actor,
     audience,
     time,
@@ -52,7 +52,7 @@ const PostView: FC<PostViewProps> = ({
     own_reactions,
     reaction_counts,
   } = postData || {};
-  const {content} = data || {};
+  const {content} = object?.data || {};
 
   const userId = useUserIdAuth();
 
