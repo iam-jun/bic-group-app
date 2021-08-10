@@ -9,12 +9,14 @@ import {fontFamilies} from '~/theme/fonts';
 export interface SearchInputProps {
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
+  autoFocus?: boolean;
   onChangeText?: (value: string) => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
   style,
   placeholder,
+  autoFocus,
   onChangeText,
 }: SearchInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -39,6 +41,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <TextInput
           style={styles.textInput}
           value={text}
+          autoFocus={autoFocus}
           onChangeText={_onChangeText}
           placeholder={placeholder}
           placeholderTextColor={theme.colors.textSecondary}

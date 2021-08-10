@@ -3,3 +3,4 @@ export const emailRegex =
 export const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 export const codeRegex = /^[0-9]{1,6}$/;
+export const mentionRegex = /@(?!(?:[a-z0-9.]*\s){3})[._a-z0-9\s]{1,24}/;

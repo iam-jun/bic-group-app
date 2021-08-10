@@ -67,7 +67,10 @@ export interface IPostActivity {
 export interface IPostCreatePost {
   actor?: number;
   data?: IActivityData;
-  audience?: IPostAudience;
+  audience?: {
+    users: number[];
+    groups: number[];
+  };
   tags?: number[];
   important?: IActivityImportant;
 }
@@ -148,4 +151,12 @@ export interface IGetStreamPost {
   origin?: string | null;
   target?: string;
   time?: string;
+}
+
+export interface IParamSearchMentionAudiences {
+  key?: string;
+  group_ids?: string;
+  user_ids?: string;
+  skip?: number;
+  take?: number;
 }

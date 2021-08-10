@@ -25,7 +25,7 @@ const GroupAdministration = () => {
   const {rootNavigation} = useRootNavigation();
   const groupData = useGroups();
   const {groupDetail} = groupData;
-  const {name, icon} = groupDetail;
+  const {name, icon} = groupDetail.group;
 
   const onGroupAdminPress = () => {
     dispatch(

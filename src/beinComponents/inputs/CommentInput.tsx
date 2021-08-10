@@ -8,12 +8,14 @@ import {
   ViewStyle,
   Keyboard,
 } from 'react-native';
+
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {fontFamilies} from '~/theme/fonts';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import Text from '~/beinComponents/Text';
 
 export interface CommentInputProps {
   style?: StyleProp<ViewStyle>;
@@ -180,9 +182,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
             multiline={true}
             autoFocus={autoFocus}
             placeholder={placeholder}
-            value={text}
-            onChangeText={_onChangeText}
-          />
+            onChangeText={_onChangeText}>
+            <Text allowMarkdown showRawText={true}>
+              {text}
+            </Text>
+          </TextInput>
           <ButtonWrapper
             style={{position: 'absolute', right: 10, bottom: 10}}
             onPress={onPressEmoji}>
