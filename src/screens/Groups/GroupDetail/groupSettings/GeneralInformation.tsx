@@ -28,7 +28,8 @@ const GeneralInformation = () => {
   const dispatch = useDispatch();
   const groupData = useGroups();
   const {groupDetail} = groupData;
-  const {name, icon, background_img_url, description, privacy} = groupDetail;
+  const {name, icon, background_img_url, description, privacy} =
+    groupDetail.group;
 
   const renderItem = (
     title: string,

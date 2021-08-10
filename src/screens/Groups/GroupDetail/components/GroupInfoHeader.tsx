@@ -11,6 +11,7 @@ import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import useGroups from '~/hooks/groups';
+import {titleCase} from '~/utils/common';
 
 const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
@@ -55,7 +56,7 @@ const GroupInfoHeader = () => {
                 size={14}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodyS useI18n>{privacy}</Text.BodyS>
+              <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
               <Text.Subtitle> ⬩ </Text.Subtitle>
               <Icon
                 style={styles.iconSmall}
