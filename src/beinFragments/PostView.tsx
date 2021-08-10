@@ -1,7 +1,8 @@
-import React, {FC, useState, useEffect, useContext} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import moment from 'moment';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -135,8 +136,9 @@ const PostView: FC<PostViewProps> = ({
     }
     let postTime = '';
     if (time) {
-      const date = new Date(time);
-      postTime = formatDate(date) || '';
+      const dateUtc = moment.utc(time);
+      const localDate = dateUtc.local();
+      postTime = formatDate(localDate) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };
