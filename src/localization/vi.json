@@ -185,5 +185,9 @@
   "groups": {
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả"
+  },
+  "profile": {
+    "title_edit_profile": "Chỉnh sửa thông tin",
+    "title_direct_message": "Gửi tin nhắn"
   }
 }

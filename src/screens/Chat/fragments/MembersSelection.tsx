@@ -12,6 +12,7 @@ import ListView from '~/beinComponents/list/ListView';
 import {Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
 import {IUser} from '~/interfaces/IAuth';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 
@@ -19,6 +20,10 @@ export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
   selectable?: boolean;
   data: IUser[];
+  roles?: {
+    loading: boolean;
+    data: IUser[];
+  };
   loading?: boolean;
   onPressMenu?: (user: IUser) => void;
   onLoadMore: () => void;
@@ -28,6 +33,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectable,
   searchInputProps,
   data,
+  roles,
   loading,
   onPressMenu,
   onLoadMore,
@@ -50,7 +56,11 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         isChecked={item.selected}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
         LeftComponent={
-          <Avatar.Large style={styles.marginRight} source={item.avatar} />
+          <Avatar.Large
+            style={styles.marginRight}
+            source={item.avatar}
+            placeholderSource={images.img_user_avatar_default}
+          />
         }
         onPressCheckbox={selectable ? () => onSelectUser(item) : undefined}
       />
@@ -63,6 +73,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         <Avatar.Large
           source={item.avatar}
           actionIcon="iconClose"
+          placeholderSource={images.img_user_avatar_default}
           onPressAction={() => onSelectUser(item)}
         />
         <ViewSpacing height={spacing?.margin.small} />
@@ -72,6 +83,21 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
       </View>
     );
   };
+
+  const renderRoles = () => (
+    <View>
+      {roles && roles.data.length > 0 && (
+        <ListView
+          title={i18next.t('chat:title_admin')}
+          {...roles}
+          renderItem={renderItemUser}
+        />
+      )}
+      <Text.ButtonBase style={styles.title}>
+        {i18next.t('chat:title_members')}
+      </Text.ButtonBase>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -89,12 +115,13 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           listStyle={styles.selectedUsers}
         />
       )}
+
       <ViewSpacing height={spacing?.margin.base} />
       <ListView
-        title={i18next.t('common:text_all')}
         data={data}
         loading={loading}
         isFullView
+        ListHeaderComponent={renderRoles}
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}
@@ -111,6 +138,10 @@ const createStyles = (theme: ITheme) => {
     },
     searchInput: {
       marginHorizontal: spacing?.margin.base,
+    },
+    title: {
+      marginVertical: spacing.margin.small,
+      marginHorizontal: spacing.margin.base,
     },
     marginRight: {
       marginRight: spacing?.margin.base,

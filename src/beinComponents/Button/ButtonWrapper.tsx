@@ -54,7 +54,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   hitSlop,
   TouchableComponent = TouchableOpacity,
 }: ButtonWrapperProps) => {
-  const {colors, spacing}: ITheme = useTheme();
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
 
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {

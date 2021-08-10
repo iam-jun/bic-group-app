@@ -1,6 +1,7 @@
 import React, {FC, useState, useEffect, useContext, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -15,6 +16,9 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
+import menuActions from '~/screens/Menu/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import {ReactionType} from '~/constants/reactions';
@@ -57,6 +61,9 @@ const PostView: FC<PostViewProps> = ({
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
 
+  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
+
   /**
    * Check Important
    * - important active = true
@@ -88,11 +95,23 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    alert('onPressActor id: ' + actor);
+    dispatch(
+      menuActions.selectUserProfile({
+        id: actor?.id?.toString(),
+        isPublic: true,
+      }),
+    );
+    rootNavigation.navigate(mainStack.myProfile);
   };
 
   const onPressShowAudiences = () => {
     alert('onPressShowAudiences');
+  };
+
+  const onPressMentionAudience = (audience: any) => {
+    if (audience) {
+      alert(`Show profile of ${audience.name || audience.fullname}`);
+    }
   };
 
   const onPressReact = () => {
@@ -268,7 +287,11 @@ const PostView: FC<PostViewProps> = ({
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>
-        <Text>{content}</Text>
+        <Text
+          allowMarkdown
+          onPressAudience={(audience: any) => onPressMentionAudience(audience)}>
+          {content}
+        </Text>
       </View>
     );
   };

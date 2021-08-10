@@ -16,15 +16,32 @@ import actions from '../redux/actions';
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {spacing} = useTheme() as ITheme;
-  const {conversation, members} = useChat();
+  const {conversation, members, roles} = useChat();
   const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
-    dispatch(actions.resetData('members'));
-    dispatch(actions.getData('members', {roomId: conversation._id}));
+    dispatch(actions.getGroupRols());
   }, []);
 
-  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
+  useEffect(() => {
+    if (roles.data.length > 0) {
+      dispatch(actions.resetData('members'));
+      dispatch(
+        actions.getData(
+          'members',
+          {
+            query: {
+              __rooms: {$eq: conversation._id},
+              _id: {$nin: roles.data.map((role: any) => role._id)},
+            },
+          },
+          'users',
+        ),
+      );
+    }
+  }, [roles]);
+
+  const loadMoreData = () => dispatch(actions.mergeExtraData('members'));
 
   const onAddPress = () => {
     dispatch(actions.clearSelectedUsers());
@@ -45,6 +62,7 @@ const GroupMembers = (): React.ReactElement => {
       <ViewSpacing height={spacing.margin.base} />
       <MembersSelection
         data={members.data}
+        roles={roles}
         loading={members.loading}
         searchInputProps={{
           placeholder: i18next.t('chat:placeholder_members_search'),

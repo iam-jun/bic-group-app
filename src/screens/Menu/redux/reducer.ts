@@ -2,23 +2,35 @@ import menuTypes from './types';
 
 const initMenuState = {
   loadingUserProfile: false,
-  userProfile: [],
+  isLanguageModalOpen: false,
+  userProfile: {},
 };
 
 const menuReducer = (state = initMenuState, action: any = {}) => {
   const {type, payload} = action;
 
   switch (type) {
-    case menuTypes.SET_LOADING_USER_PROFILE:
-      return {
-        ...state,
-        loadingUserProfile: payload,
-      };
-
+    case menuTypes.SELECT_USER_PROFILE:
     case menuTypes.SET_USER_PROFILE:
       return {
         ...state,
-        userProfile: payload || [],
+        loadingUserProfile: false,
+        userProfile: {
+          ...state.userProfile,
+          ...payload,
+        },
+      };
+
+    case menuTypes.GET_USER_PROFILE:
+      return {
+        ...state,
+        loadingUserProfile: true,
+      };
+
+    case menuTypes.SET_LANGUAGE_MODAL_OPEN:
+      return {
+        ...state,
+        isLanguageModalOpen: payload,
       };
 
     default:

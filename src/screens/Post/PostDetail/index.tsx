@@ -165,7 +165,7 @@ const PostDetail = (props: any) => {
   };
 
   return (
-    <ScreenWrapper backgroundColor={colors.placeholder}>
+    <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
       <Header subTitle={'Post detail'} />
       <ListView
         listRef={listRef}

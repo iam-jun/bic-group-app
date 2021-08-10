@@ -11,8 +11,8 @@
     "android": "react-native run-android --variant=developmentDebug",
     "ios": "react-native run-ios",
     "start-android": "adb reverse tcp:8081 tcp:8081 && react-native start --port=8081",
-    "build": "rm -rf dist/ && webpack --mode=production --config webpack.config.js",
-    "web": "webpack serve --mode=development --config webpack.config.js --host 0.0.0.0",
+    "build": "rm -rf dist/ && webpack --mode=production --config webpack.prod.js",
+    "web": "webpack serve --mode=development --config webpack.dev.js --host 0.0.0.0",
     "test android dev": "detox test --configuration android.dev.debug",
     "test android dev-release": "detox test --configuration android.dev.release",
     "test": "detox"
@@ -40,8 +40,10 @@
     "i18next": "^20.2.2",
     "lodash": "^4.17.21",
     "react": "17.0.1",
+    "react-datepicker": "^4.2.0",
     "react-hook-form": "^7.6.9",
     "react-i18next": "^11.8.15",
+    "react-modal": "^3.14.3",
     "react-native": "0.64.1",
     "react-native-config": "^1.4.2",
     "react-native-device-info": "^8.1.6",
@@ -55,6 +57,7 @@
     "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-modalize": "^2.0.8",
     "react-native-paper": "^4.8.1",
+    "react-native-parsed-text": "0.0.22",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.2.0",
@@ -80,6 +83,8 @@
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.169",
     "@types/react": "^17.0.5",
+    "@types/react-datepicker": "^4.1.4",
+    "@types/react-modal": "^3.12.1",
     "@types/react-native": "^0.64.5",
     "@types/react-redux": "^7.1.16",
     "@types/react-test-renderer": "^17.0.1",
@@ -114,6 +119,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.37.0",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.8.0"
   }
 }

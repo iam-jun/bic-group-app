@@ -11,11 +11,11 @@ export interface ScreenWrapperProps extends ViewStyle {
 
 const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   backgroundColor,
-  isFullView = true,
+  isFullView = false,
   style,
   ...props
 }: ScreenWrapperProps) => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
 
   return (
     <View

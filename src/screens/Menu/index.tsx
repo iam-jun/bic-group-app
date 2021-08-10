@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {ISetting} from '~/interfaces/common';
-import useAuth from '~/hooks/auth';
 import {useBaseHook} from '~/hooks';
 import * as authActions from '~/screens/Auth/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -15,6 +14,10 @@ import settings, {
   logoutMenu,
 } from '~/constants/settings';
 import * as modalActions from '~/store/modal/actions';
+import mainStack from '~/router/navigator/MainStack/stack';
+import useMenu from '~/hooks/menu';
+import {ITheme} from '~/theme/interfaces';
+import menuActions from '~/screens/Menu/redux/actions';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -22,17 +25,23 @@ import ListView from '~/beinComponents/list/ListView';
 import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
-import {ITheme} from '~/theme/interfaces';
-import mainStack from '~/router/navigator/MainStack/stack';
+import images from '~/resources/images';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const {user} = useAuth();
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+
+  const menuData = useMenu();
+  const {userProfile} = menuData;
+  const {id, fullname, email, avatar} = userProfile;
+
+  useEffect(() => {
+    dispatch(menuActions.getUserProfile());
+  }, []);
 
   const onSettingPress = (item: ISetting) => {
     switch (item.type) {
@@ -68,14 +77,28 @@ const Menu = (): React.ReactElement => {
     }
   };
 
+  const goToMyProfile = () => {
+    dispatch(
+      menuActions.selectUserProfile({
+        id,
+        fullname,
+        email,
+        avatar,
+        isPublic: false,
+      }),
+    );
+    rootNavigation.navigate(mainStack.myProfile);
+  };
+
   return (
     <ScreenWrapper testID="DrawerComponent" style={styles.container} isFullView>
       <Header hideBack title={'Menu'} />
       <HeaderAvatarView
-        firstLabel={user?.name}
-        secondLabel={user?.email}
-        avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
+        firstLabel={fullname}
+        secondLabel={email}
+        avatar={avatar ? {uri: avatar} : images.img_user_avatar_default}
         containerStyle={styles.header}
+        onPress={goToMyProfile}
       />
       <ViewSpacing height={theme.spacing.margin.large} />
 

@@ -1,15 +1,22 @@
+import {IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
 
 const menuActions = {
-  setLoadingUserProfile: (payload: boolean) => {
+  setLanguageModalOpen: (payload: boolean) => {
     return {
-      type: menuTypes.SET_LOADING_USER_PROFILE,
+      type: menuTypes.SET_LANGUAGE_MODAL_OPEN,
       payload,
     };
   },
-  setUserProfile: (payload: any[]) => {
+  setUserProfile: (payload: IUserProfile) => {
     return {
       type: menuTypes.SET_USER_PROFILE,
+      payload,
+    };
+  },
+  selectUserProfile: (payload: IUserProfile) => {
+    return {
+      type: menuTypes.SELECT_USER_PROFILE,
       payload,
     };
   },

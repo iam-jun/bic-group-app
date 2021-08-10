@@ -1,6 +1,10 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {IPostCreatePost, IRequestPostComment} from '~/interfaces/IPost';
+import {
+  IParamSearchMentionAudiences,
+  IPostCreatePost,
+  IRequestPostComment,
+} from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
 
@@ -63,6 +67,21 @@ export const postApiConfig = {
     useRetry: true,
     params: {
       key,
+    },
+  }),
+  getSearchMentionAudiences: (
+    params: IParamSearchMentionAudiences,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      group_ids: params.group_ids,
+      user_ids: params.user_ids,
+      key: params.key,
+      skip: params.skip,
+      take: params.take,
     },
   }),
   postReaction: (
@@ -179,6 +198,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getSearchAudiences(key),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSearchMentionAudiences: async (params: IParamSearchMentionAudiences) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getSearchMentionAudiences(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
