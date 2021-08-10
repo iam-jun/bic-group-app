@@ -37,9 +37,9 @@ const PostView: FC<PostViewProps> = ({
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {id, data, actor, audience, time, important, own_reactions} =
+  const {id, object, actor, audience, time, important, own_reactions} =
     postData || {};
-  const {content} = data || {};
+  const {content} = object?.data || {};
 
   const userId = useUserIdAuth();
 
