@@ -134,7 +134,6 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         messages: initState.messages,
       };
     case types.GET_CONVERSATION_DETAIL:
-      console.log(action);
       return {
         ...state,
         conversation: {
@@ -142,8 +141,6 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         },
       };
     case types.SET_CONVERSATION_DETAIL:
-      console.log(action);
-
       return {
         ...state,
         conversation: action.payload,
