@@ -11,6 +11,7 @@ export const initState = {
     confirmLabel: '',
     onConfirm: () => {},
     onCancel: () => {},
+    isDismissable: true,
   },
 };
 
@@ -32,6 +33,7 @@ function commonReducer(state = initState, action: any = {}) {
         confirmLabel,
         cancelBtn,
         onCancel,
+        isDismissable,
       } = payload;
       return {
         ...state,
@@ -44,6 +46,7 @@ function commonReducer(state = initState, action: any = {}) {
           onConfirm,
           cancelBtn,
           onCancel,
+          isDismissable,
         },
       };
     case actions.HIDE_ALERT:
