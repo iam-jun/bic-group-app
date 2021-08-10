@@ -6,7 +6,7 @@ import groupsTypes from '~/screens/Groups/redux/types';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
-  // yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
+  yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
 }
@@ -30,30 +30,32 @@ function* getJoinedGroups() {
   }
 }
 
-// function* getGroupDetail({payload}: {type: string; payload: number}) {
-//   try {
-//     yield put(groupsActions.setLoadingGroupDetail(true));
+function* getGroupDetail({payload}: {type: string; payload: number}) {
+  try {
+    yield put(groupsActions.setLoadingGroupDetail(true));
 
-//     const result = yield requestGroupDetail(payload);
-//     yield put(groupsActions.setGroupDetail(result));
-//     yield put(groupsActions.setLoadingGroupDetail(false));
-//   } catch (e) {
-//     yield put(groupsActions.setLoadingGroupDetail(false));
-//     console.log(
-//       '\x1b[36m',
-//       'namanh --- getGroupDetail | getGroupDetail : error',
-//       e,
-//       '\x1b[0m',
-//     );
-//   }
-// }
+    const result = yield requestGroupDetail(payload);
+    yield put(groupsActions.setGroupDetail(result));
 
-function* selectGroupDetail({payload}: {payload: IGroup}) {
+    yield put(groupsActions.setLoadingGroupDetail(false));
+  } catch (e) {
+    yield put(groupsActions.setLoadingGroupDetail(false));
+    console.log(
+      '\x1b[36m',
+      'namanh --- getGroupDetail | getGroupDetail : error',
+      e,
+      '\x1b[0m',
+    );
+  }
+}
+
+function* selectGroupDetail({payload}: {type: string; payload: IGroup}) {
   try {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
     // GET MORE INFO FOR GROUP HERE
     yield put(groupsActions.getGroupPosts(payload.id));
+    yield put(groupsActions.getGroupDetail(payload.id));
 
     yield put(groupsActions.setLoadingGroupDetail(false));
   } catch (error) {
@@ -85,7 +87,7 @@ const getGroupChild = (
   }
 };
 
-function* getGroupPosts({payload}: {payload: number}) {
+function* getGroupPosts({payload}: {type: string; payload: number}) {
   try {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
@@ -103,20 +105,22 @@ function* getGroupPosts({payload}: {payload: number}) {
   }
 }
 
-// const requestGroupDetail = async (id: number) => {
-//   return new Promise((resolve, reject) => {
-//     //todo call api
-//     setTimeout(() => {
-//       const response = mockGetGroupDetail;
-//       if (response.code === 200 && response.data) {
-//         const groupDetail: IGroupDetail = response.data;
-//         resolve(groupDetail);
-//       } else {
-//         reject(response);
-//       }
-//     }, 1000);
-//   });
-// };
+const requestGroupDetail = async (userId: number) => {
+  try {
+    const response = await groupsDataHelper.getGroupDetail(userId);
+    if (response.code === 200) {
+      console.log('data group detail:', response.data);
+      return response.data;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'requestGroupDetail catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+};
 
 const requestJoinedGroups = async () => {
   try {

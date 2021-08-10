@@ -27,6 +27,12 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         loadingGroupDetail: action.payload,
       };
     case groupsTypes.SELECT_GROUP_DETAIL:
+      return {
+        ...state,
+        groupDetail: {
+          group: action.payload,
+        },
+      };
     case groupsTypes.SET_GROUP_DETAIL:
       return {
         ...state,
