@@ -8,6 +8,6 @@ export default {
   'group-list': Groups,
   'group-detail': GroupDetail,
   'post-detail': PostDetail,
-  groupAdmin: GroupAdministration,
-  generalInfo: GeneralInformation,
+  'group-admin': GroupAdministration,
+  'general-info': GeneralInformation,
 };

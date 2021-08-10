@@ -3,6 +3,7 @@ import postTypes from './types';
 const initState = {
   createPost: {
     loading: false,
+    isOpenModal: false,
     data: {
       content: '',
       images: [],
@@ -17,6 +18,10 @@ const initState = {
       expiresTime: '',
     },
   },
+  mention: {
+    searchKey: '',
+    searchResult: [],
+  },
   postDetail: {},
   replyingComment: {},
 };
@@ -25,6 +30,14 @@ function postReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
 
   switch (type) {
+    case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          isOpenModal: payload,
+        },
+      };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
         ...state,
@@ -87,6 +100,23 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         replyingComment: payload,
+      };
+    //mention
+    case postTypes.SET_MENTION_SEARCH_KEY:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          searchKey: payload,
+        },
+      };
+    case postTypes.SET_MENTION_SEARCH_RESULT:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          searchResult: payload,
+        },
       };
     default:
       return state;

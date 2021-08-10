@@ -7,12 +7,16 @@ import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import useGroups from '~/hooks/groups';
 
 const GroupTopBar = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {navigation} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
+  const groupData = useGroups();
+  const {groupDetail} = groupData;
+  const {can_setting} = groupDetail;
 
   return (
     <View style={styles.container}>
@@ -29,15 +33,18 @@ const GroupTopBar = () => {
           style={{marginRight: theme.spacing.margin.large}}
           tintColor={theme.colors.iconTint}
         />
-        <TouchableOpacity
-          onPress={() => rootNavigation.navigate(groupStack.groupAdmin)}>
-          <Icon
-            icon={'iconShieldStar'}
-            fill={theme.colors.iconTint}
-            size={24}
-            style={{marginRight: theme.spacing.margin.large}}
-          />
-        </TouchableOpacity>
+        {can_setting && (
+          <TouchableOpacity
+            onPress={() => rootNavigation.navigate(groupStack.groupAdmin)}>
+            <Icon
+              icon={'iconShieldStar'}
+              fill={theme.colors.iconTint}
+              size={24}
+              style={{marginRight: theme.spacing.margin.large}}
+            />
+          </TouchableOpacity>
+        )}
+
         <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
       </View>
     </View>

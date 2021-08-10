@@ -12,6 +12,7 @@ import {
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
+import Text from '~/beinComponents/Text';
 
 export interface PostInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -23,6 +24,7 @@ export interface PostInputProps extends TextInputProps {
   keyboardType?: KeyboardType;
   returnKeyType?: ReturnKeyType;
   onSubmitEditing?: () => void;
+  value: string;
 }
 
 const PostInput: React.FC<PostInputProps> = ({
@@ -35,9 +37,10 @@ const PostInput: React.FC<PostInputProps> = ({
   keyboardType,
   returnKeyType,
   onSubmitEditing = () => Keyboard.dismiss,
+  value,
   ...props
 }: PostInputProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -56,8 +59,11 @@ const PostInput: React.FC<PostInputProps> = ({
       keyboardType={keyboardType}
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
-      {...props}
-    />
+      {...props}>
+      <Text allowMarkdown showRawText>
+        {value}
+      </Text>
+    </TextInput>
   );
 };
 
