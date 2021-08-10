@@ -23,7 +23,7 @@ const Landing = () => {
 
   const logo = images.logo_bein;
   const imgMaxWidth = 500;
-  const imgPadding = 67;
+  const imgPadding = theme.spacing.margin.base || 12;
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
