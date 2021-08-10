@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, Linking} from 'react-native';
-
+import messaging from '@react-native-firebase/messaging';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
 /* @react-navigation v5 */
@@ -22,6 +22,12 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigator = (): React.ReactElement => {
+  const theme = useTheme();
+
+  const [initialRouteName, setInitialRouteName] = React.useState<
+    string | undefined
+  >();
+
   useEffect(() => {
     //@ts-ignore
     isNavigationRefReady.current = false;
@@ -30,12 +36,6 @@ const StackNavigator = (): React.ReactElement => {
     Linking.addEventListener('url', handleOpenURL);
     handleDeepLink();
   }, []);
-
-  const theme = useTheme();
-
-  const [initialRouteName, setInitialRouteName] = React.useState<
-    string | undefined
-  >();
 
   /*Deep link*/
   /*Handle when app killed*/
@@ -47,7 +47,7 @@ const StackNavigator = (): React.ReactElement => {
     // navigation.replace(rootSwitch.mainStack);
 
     //[TO-DO] replace url with config url
-    const path = initialUrl?.replace('http://localhost:8080/', '') || '';
+    const path = initialUrl?.replace('http://0.0.0.0:8080/', '') || '';
     const route =
       path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
     setInitialRouteName(route || '');
@@ -68,12 +68,30 @@ const StackNavigator = (): React.ReactElement => {
   if (initialRouteName === undefined) return <View />;
 
   const onReady = () => {
+    //@ts-ignore
     isNavigationRefReady.current = true;
   };
 
   return (
     <NavigationContainer
-      linking={linkingConfig}
+      linking={{
+        ...linkingConfig,
+        async getInitialURL() {
+          // Check if app was opened from a deep link
+          const url = await Linking.getInitialURL();
+
+          if (url != null) {
+            return url;
+          }
+
+          // Check if there is an initial firebase notification
+          const message = await messaging().getInitialNotification();
+
+          // Get deep link from data
+          // if this is undefined, the app will open the default/home page
+          return message?.data?.link;
+        },
+      }}
       ref={rootNavigationRef}
       onReady={onReady}
       theme={navigationTheme}>

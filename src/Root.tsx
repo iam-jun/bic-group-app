@@ -79,6 +79,7 @@ export default (): React.ReactElement => {
     setUpLanguage();
     // TODO:
     const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('foreground', {remoteMessage});
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
 

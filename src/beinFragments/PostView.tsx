@@ -1,23 +1,22 @@
-import React, {FC, useState, useEffect, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
-import Icon from '~/beinComponents/Icon';
-import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import menuActions from '~/screens/Menu/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
+import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import menuActions from '~/screens/Menu/redux/actions';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {ITheme} from '~/theme/interfaces';
+import {formatDate} from '~/utils/formatData';
 
 export interface PostViewProps {
   postData: IPostActivity;
@@ -87,7 +86,7 @@ const PostView: FC<PostViewProps> = ({
         isPublic: true,
       }),
     );
-    rootNavigation.navigate(mainStack.myProfile);
+    rootNavigation.navigate(menuStack.myProfile);
   };
 
   const onPressShowAudiences = () => {

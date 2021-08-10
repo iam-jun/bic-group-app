@@ -25,10 +25,7 @@ export interface IUpdateRoomTopicReq {
 
 export interface ISendMessageReq {
   roomId: string;
-  /*
-    The message's id to create a thread.
-    */
-  channel: string;
+
   /*
     This will cause the message's name to appear as the given alias, 
     but your username will still display.
