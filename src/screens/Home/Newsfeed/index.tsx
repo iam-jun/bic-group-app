@@ -46,6 +46,12 @@ const Newsfeed = () => {
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
         icon={images.logo_bein}
+        onPressMenu={() =>
+          dispatch(
+            homeActions.getHomePosts({streamClient, userId: userId.toString()}),
+          )
+        }
+        menuIcon={'Sync'}
       />
       <ListView
         isFullView

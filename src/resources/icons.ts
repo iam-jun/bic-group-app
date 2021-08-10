@@ -96,6 +96,7 @@ const icons = {
   ImageV: 'ImageV',
   Paperclip: 'Paperclip',
   ImagePlus: 'ImagePlus',
+  Sync: 'Sync',
   Link: 'Link',
   EllipsisV: 'EllipsisV',
   EllipsisH: 'EllipsisH',
