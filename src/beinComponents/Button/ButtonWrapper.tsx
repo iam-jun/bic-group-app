@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View,
   StyleProp,
-  TouchableOpacity,
-  ViewStyle,
   StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
