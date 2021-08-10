@@ -33,6 +33,16 @@ const resetData = (dataType: string) => ({
   dataType,
 });
 
+const getConversationDetail = (payload: string) => ({
+  type: Actions.GET_CONVERSATION_DETAIL,
+  payload,
+});
+
+const setConversationDetail = (payload: IConversation) => ({
+  type: Actions.SET_CONVERSATION_DETAIL,
+  payload,
+});
+
 const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
@@ -108,6 +118,8 @@ export default {
   setExtraData,
   mergeExtraData,
   resetData,
+  getConversationDetail,
+  setConversationDetail,
   getGroupRols,
   setGroupRoles,
   handleEvent,

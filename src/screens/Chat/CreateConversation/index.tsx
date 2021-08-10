@@ -63,6 +63,7 @@ const CreateConversation = (): React.ReactElement => {
       <ViewSpacing height={spacing?.margin.base} />
       <MembersSelection
         selectable
+        title={i18next.t('common:text_all')}
         loading={users.loading}
         data={users.data}
         onLoadMore={loadMoreData}

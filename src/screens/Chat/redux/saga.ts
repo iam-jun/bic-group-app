@@ -28,6 +28,7 @@ export default function* saga() {
   yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
+  yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeLatest(types.SEND_MESSAGE, sendMessage);
@@ -99,6 +100,25 @@ function* getGroupRoles() {
     yield put(actions.setGroupRoles(roles));
   } catch (err) {
     console.log('getGroupRoles', err);
+  }
+}
+
+function* getConversationDetail({payload}: {type: string; payload: string}) {
+  try {
+    const {auth} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.groupInfo({
+        roomId: payload,
+      }),
+    );
+
+    yield put(
+      actions.setConversationDetail(
+        mapConversation(auth.user, response.data?.group),
+      ),
+    );
+  } catch (err) {
+    console.log('getConversationDetail', err);
   }
 }
 

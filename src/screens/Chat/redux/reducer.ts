@@ -133,6 +133,21 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         },
         messages: initState.messages,
       };
+    case types.GET_CONVERSATION_DETAIL:
+      console.log(action);
+      return {
+        ...state,
+        conversation: {
+          _id: action.payload,
+        },
+      };
+    case types.SET_CONVERSATION_DETAIL:
+      console.log(action);
+
+      return {
+        ...state,
+        conversation: action.payload,
+      };
     case types.ADD_NEW_MESSAGE:
       return {
         ...state,

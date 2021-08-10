@@ -1,3 +1,4 @@
+import {RouteProp, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
@@ -15,6 +16,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
+import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {
@@ -34,12 +36,18 @@ const Conversation = () => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
 
   useEffect(() => {
-    if (messages.canLoadMore) {
-      _getMessages();
+    if (route.params?.roomId) {
+      dispatch(actions.getConversationDetail(route.params.roomId));
     }
-  }, [conversation, messages.lastDate]);
+  }, [route.params]);
+
+  useEffect(() => {
+    console.log('change', conversation);
+    _getMessages();
+  }, [conversation]);
 
   const _getMessages = () => {
     dispatch(actions.resetData('messages'));

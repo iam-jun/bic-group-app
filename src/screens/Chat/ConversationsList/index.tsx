@@ -42,7 +42,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
-    rootNavigation.navigate(chatStack.conversation, {id: item._id});
+    rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
   };
 
   const onMenuPress = async () => {

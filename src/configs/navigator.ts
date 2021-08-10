@@ -101,7 +101,7 @@ export const linkingConfig = {
                     path: '',
                   },
                   conversation: {
-                    path: ':id?',
+                    path: ':roomId?',
                   },
                 },
               },

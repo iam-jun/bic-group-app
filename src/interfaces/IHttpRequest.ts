@@ -42,3 +42,7 @@ export interface ISendMessageReq {
 export interface IGetGroupRolesReq {
   roomId: string;
 }
+
+export interface IGetGroupReq {
+  roomId: string;
+}

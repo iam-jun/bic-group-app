@@ -1,6 +1,7 @@
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
+  IGetGroupReq,
   IGetGroupRolesReq,
   IPaginationParams,
   ISendMessageReq,
@@ -86,6 +87,15 @@ const Chat = {
       useRetry: false,
       provider: providers.chat,
       data,
+    };
+  },
+  groupInfo: (params: IGetGroupReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.info`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
     };
   },
 };

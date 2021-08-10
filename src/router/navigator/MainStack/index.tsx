@@ -80,8 +80,11 @@ const MainStack = (): React.ReactElement => {
         ? JSON.parse(remoteMessage?.data?.payload)
         : undefined;
       if (screen.params)
-        screen = {...screen, params: {...screen.params, params: payload}};
-      else screen = {...screen, params: payload};
+        screen = {
+          ...screen,
+          params: {...screen.params, params: {...payload, initial: false}},
+        };
+      else screen = {...screen, params: {...payload, initial: false}};
       return screen;
     } catch (err) {
       return;
