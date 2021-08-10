@@ -10,6 +10,7 @@ import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import Icon from '~/beinComponents/Icon';
 
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
@@ -21,6 +22,7 @@ import * as actions from '~/screens/Auth/redux/actions';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import LockImg from '../../../../assets/images/Lock.svg';
 import {ITheme} from '~/theme/interfaces';
+import icons from '~/resources/icons';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -47,15 +49,14 @@ const ForgotPassword = () => {
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
-  const renderBtnCancel = () => {
+  const renderBtnBack = () => {
     return (
-      <Button.Secondary
-        style={{
-          width: 67,
-        }}
-        onPress={() => navigation.navigate(authStack.login)}>
-        {t('common:btn_cancel')}
-      </Button.Secondary>
+      <Icon
+        // @ts-ignore
+        icon={icons.iconBack}
+        size={28}
+        onPress={() => navigation.navigate(authStack.login)}
+      />
     );
   };
 
@@ -85,7 +86,7 @@ const ForgotPassword = () => {
     <ScreenWrapper testID="ForgotPasswordScreen" isFullView>
       <View style={styles.container}>
         {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
-          <View style={styles.headerContainer}>{renderBtnCancel()}</View>
+          <View style={styles.headerContainer}>{renderBtnBack()}</View>
         )}
         {!!errBox && (
           <FlashMessage
