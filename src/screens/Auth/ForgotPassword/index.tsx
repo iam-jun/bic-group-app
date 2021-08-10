@@ -47,6 +47,18 @@ const ForgotPassword = () => {
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
+  const renderBtnCancel = () => {
+    return (
+      <Button.Secondary
+        style={{
+          width: 67,
+        }}
+        onPress={() => navigation.navigate(authStack.login)}>
+        {t('common:btn_cancel')}
+      </Button.Secondary>
+    );
+  };
+
   const renderComplete = () => {
     return (
       <View style={styles.completeContainer}>
@@ -72,6 +84,9 @@ const ForgotPassword = () => {
   return (
     <ScreenWrapper testID="ForgotPasswordScreen" isFullView>
       <View style={styles.container}>
+        {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
+          <View style={styles.headerContainer}>{renderBtnCancel()}</View>
+        )}
         {!!errBox && (
           <FlashMessage
             type="error"
@@ -83,9 +98,10 @@ const ForgotPassword = () => {
         {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
           <ForgotInputId useFormData={useFormData} />
         )}
-        {forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-          <ForgotInputCodePw useFormData={useFormData} />
-        )}
+        {!errBox &&
+          forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+            <ForgotInputCodePw useFormData={useFormData} />
+          )}
         {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
           renderComplete()}
       </View>
@@ -105,6 +121,10 @@ const themeStyles = (theme: ITheme) => {
       paddingBottom: insets.bottom + spacing.padding.big,
       paddingHorizontal: spacing.padding.big,
       backgroundColor: colors.background,
+    },
+    headerContainer: {
+      marginTop: spacing.margin.small,
+      paddingVertical: spacing.padding.small,
     },
     completeContainer: {
       // @ts-ignore
