@@ -255,10 +255,9 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: spacing.padding.big,
     },
-    inputSectionContainer: {
-      marginTop: spacing.padding.big,
-    },
+    inputSectionContainer: {},
     desc: {
       marginBottom: spacing.margin.base,
     },
