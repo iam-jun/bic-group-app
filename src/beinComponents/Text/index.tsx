@@ -5,9 +5,12 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {createStyle} from '~/beinComponents/Text/textStyle';
+import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
+import MarkdownText, {
+  MarkdownTextProps,
+} from '~/beinComponents/Text/MarkdownText';
 
 export type TextVariant =
   | 'h1'
@@ -26,11 +29,12 @@ export type TextVariant =
   | 'subtitle'
   | undefined;
 
-export interface TextProps extends RNTextProps {
+export interface TextProps extends RNTextProps, MarkdownTextProps {
   variant?: TextVariant;
   children?: React.ReactNode;
   color?: string;
   useI18n?: boolean;
+  allowMarkdown?: boolean;
 }
 
 const TextComponent: React.FC<TextProps> = ({
@@ -39,19 +43,22 @@ const TextComponent: React.FC<TextProps> = ({
   children,
   color,
   useI18n,
+  allowMarkdown,
   ...props
 }: TextProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
-  const styles = createStyle(theme);
+  const styles = createTextStyle(theme);
   const textStyle = styles[variant || 'body'];
 
+  const TextComp = allowMarkdown ? MarkdownText : TextRN;
+
   return (
-    <TextRN
+    <TextComp
       {...props}
       style={StyleSheet.flatten([textStyle, color ? {color} : {}, style])}>
       {useI18n ? t(children) : children}
-    </TextRN>
+    </TextComp>
   );
 };
 
