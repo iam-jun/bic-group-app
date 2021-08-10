@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -7,11 +7,12 @@ import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
-import menuActions from '~/screens/Menu/redux/actions';
 import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
+import privacyTypes, {PRIVACY_TYPE} from '~/constants/privacyTypes';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -22,7 +23,6 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import ListView from '~/beinComponents/list/ListView';
-import privacyTypes from '~/constants/privacyTypes';
 
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
@@ -31,7 +31,7 @@ const GeneralInformation = () => {
   const dispatch = useDispatch();
   const groupData = useGroups();
   const {groupDetail} = groupData;
-  const {name, icon, background_img_url, description, privacy} =
+  const {id, name, icon, background_img_url, description, privacy} =
     groupDetail.group;
 
   const baseSheetRef: any = useRef();
@@ -70,13 +70,10 @@ const GeneralInformation = () => {
       }),
     );
 
-  useEffect(() => {
-    dispatch(menuActions.getUserProfile());
-  }, []);
-
   const editGroupPrivacy = () => baseSheetRef.current?.open?.();
+
   const onPrivacyMenuPress = (item: any) => {
-    console.log('yo:', item);
+    dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
   };
 
   const renderBottomSheet = ({item}: {item: any}) => {
@@ -85,19 +82,31 @@ const GeneralInformation = () => {
         <PrimaryItem
           title={t(item.title)}
           subTitle={t(item.subtitle)}
-          LeftComponent={<Icon style={{marginRight: 16}} icon={item.icon} />}
+          LeftComponent={
+            <Icon style={styles.bottomSheetLeftIcon} icon={item.icon} />
+          }
           RightComponent={
-            true ? (
+            privacy === item.type ? (
               <Icon
                 icon={'Check'}
                 size={24}
                 tintColor={theme.colors.primary7}
               />
-            ) : null
+            ) : undefined
           }
         />
       </TouchableOpacity>
     );
+  };
+
+  const checkPrivacyIcon = (value: PRIVACY_TYPE): IconType => {
+    if (value === 'PUBLIC') {
+      return 'Globe';
+    } else if (value === 'PRIVATE') {
+      return 'Lock';
+    } else {
+      return 'EyeSlash';
+    }
   };
 
   return (
@@ -158,7 +167,7 @@ const GeneralInformation = () => {
             'settings:title_privacy',
             titleCase(privacy),
             'EditAlt',
-            'Globe',
+            checkPrivacyIcon(privacy),
             editGroupPrivacy,
           )}
         </View>
@@ -251,6 +260,9 @@ const themeStyles = (theme: ITheme) => {
       marginLeft: spacing.margin.base,
       marginBottom: spacing.margin.small,
       fontSize: 18,
+    },
+    bottomSheetLeftIcon: {
+      marginRight: spacing.margin.large,
     },
   });
 };
