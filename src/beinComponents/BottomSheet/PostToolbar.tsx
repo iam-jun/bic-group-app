@@ -98,38 +98,37 @@ const PostToolbar = ({
     alert('select file');
   };
 
-  const onChangeDatePicker = ({event, value}: any) => {
+  const onChangeDatePicker = (date?: Date) => {
     setSelectingDate(false);
     setSelectingTime(false);
-    const newImportant = {...important};
-    let expiresTime = '';
-    if (value) {
-      const time = important.expiresTime
-        ? new Date(important.expiresTime)
-        : new Date();
-      const date = new Date(value);
-      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      expiresTime = date.toISOString();
+    if (date) {
+      const newImportant = {...important};
+      let expiresTime = '';
+      if (date) {
+        const time = important.expiresTime
+          ? new Date(important.expiresTime)
+          : new Date();
+        date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+        expiresTime = date.toISOString();
+      }
+      newImportant.expiresTime = expiresTime;
+      dispatch(postActions.setCreatePostImportant(newImportant));
     }
-    newImportant.expiresTime = expiresTime;
-    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
-  const onChangeTimePicker = ({event, value}: any) => {
+  const onChangeTimePicker = (time?: Date) => {
     setSelectingDate(false);
     setSelectingTime(false);
-    const newImportant = {...important};
-    let expiresTime = '';
-    if (value) {
-      const time = new Date(value);
+    if (time) {
+      const newImportant = {...important};
       const date = important.expiresTime
         ? new Date(important.expiresTime)
         : new Date();
       date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      expiresTime = date.toISOString();
+      const expiresTime = date.toISOString();
+      newImportant.expiresTime = expiresTime;
+      dispatch(postActions.setCreatePostImportant(newImportant));
     }
-    newImportant.expiresTime = expiresTime;
-    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
   const renderToolbarButton = (icon: any) => {
@@ -172,23 +171,28 @@ const PostToolbar = ({
           <KeyboardSpacer iosOnly />
           {selectingDate && (
             <DateTimePicker
-              value={
+              isVisible={selectingDate}
+              date={
                 important.expiresTime
                   ? new Date(important.expiresTime)
                   : new Date()
               }
-              onChange={onChangeDatePicker}
+              mode={'date'}
+              onConfirm={onChangeDatePicker}
+              onCancel={onChangeDatePicker}
             />
           )}
           {selectingTime && (
             <DateTimePicker
-              mode={'time'}
-              value={
+              isVisible={selectingTime}
+              date={
                 important.expiresTime
                   ? new Date(important.expiresTime)
                   : new Date()
               }
-              onChange={onChangeTimePicker}
+              mode={'time'}
+              onConfirm={onChangeTimePicker}
+              onCancel={onChangeTimePicker}
             />
           )}
         </Animated.View>
