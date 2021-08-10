@@ -1,4 +1,6 @@
-import {put, call, takeLatest} from 'redux-saga/effects';
+import {put, call, takeLatest, select} from 'redux-saga/effects';
+import {isArray} from 'lodash';
+
 import {
   IParamSearchMentionAudiences,
   IPostActivity,
@@ -19,6 +21,7 @@ export default function* postSaga() {
     postTypes.GET_SEARCH_MENTION_AUDIENCES,
     getSearchMentionAudiences,
   );
+  yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
 }
 
 function* postCreateNewPost({
@@ -72,6 +75,26 @@ function* getSearchMentionAudiences({
   } catch (e) {
     console.log('\x1b[36m', '🐣️ searchMentionAudiences error:', e, '\x1b[0m');
   }
+}
+
+function* addToAllPosts({
+  payload,
+}: {
+  type: string;
+  payload: IPostActivity[] | IPostActivity;
+}) {
+  const allPosts = yield select(state => state?.post?.allPosts) || {};
+  const newAllPosts = {...allPosts};
+  if (isArray(payload) && payload.length > 0) {
+    payload.map((item: IPostActivity) => {
+      if (item?.id) {
+        newAllPosts[item.id] = item;
+      }
+    });
+  } else if (payload && 'id' in payload && payload.id) {
+    newAllPosts[payload.id] = payload;
+  }
+  yield put(postActions.setAllPosts(newAllPosts));
 }
 
 // import {takeLatest} from 'redux-saga/effects';

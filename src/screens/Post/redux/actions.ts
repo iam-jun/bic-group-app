@@ -1,4 +1,3 @@
-import post from '~/hooks/post';
 import postTypes from './types';
 import {
   IAudience,
@@ -8,11 +7,16 @@ import {
   IActivityImportant,
   IReaction,
   IParamSearchMentionAudiences,
+  IAllPosts,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
 const postActions = {
+  setAllPosts: (payload: IAllPosts) => ({
+    type: postTypes.SET_ALL_POSTS,
+    payload,
+  }),
   setOpenPostToolBarModal: (payload: boolean) => ({
     type: postTypes.SET_OPEN_POST_TOOLBAR_MODAL,
     payload,
@@ -44,6 +48,7 @@ const postActions = {
     type: postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS,
     payload,
   }),
+  //post detail
   setPostDetail: (payload: IPostActivity) => ({
     type: postTypes.SET_POST_DETAIL,
     payload,
@@ -65,6 +70,10 @@ const postActions = {
   //saga
   postCreateNewPost: (payload: IPostCreatePost) => ({
     type: postTypes.POST_CREATE_NEW_POST,
+    payload,
+  }),
+  addToAllPosts: (payload: IPostActivity[] | IPostActivity) => ({
+    type: postTypes.ADD_TO_ALL_POSTS,
     payload,
   }),
   getSearchMentionAudiences: (payload: IParamSearchMentionAudiences) => ({

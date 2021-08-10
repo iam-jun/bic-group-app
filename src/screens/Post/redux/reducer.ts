@@ -24,12 +24,18 @@ const initState = {
   },
   postDetail: {},
   replyingComment: {},
+  allPosts: {},
 };
 
 function postReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
 
   switch (type) {
+    case postTypes.SET_ALL_POSTS:
+      return {
+        ...state,
+        allPosts: payload,
+      };
     case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
       return {
         ...state,

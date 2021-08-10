@@ -58,7 +58,10 @@ export interface IPostActivity {
   actor?: IAudienceUser;
   verb?: string;
   type?: string;
-  data?: IActivityData;
+  object?: {
+    id?: string;
+    data?: IActivityData;
+  };
   followers?: number[];
   audience?: IPostAudience;
   tags?: string[];
@@ -66,6 +69,10 @@ export interface IPostActivity {
   important?: IActivityImportant;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
+}
+
+export interface IAllPosts {
+  [id: string]: IPostActivity;
 }
 
 export interface IPostCreatePost {
