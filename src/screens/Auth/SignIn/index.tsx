@@ -16,7 +16,7 @@ import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Input from '~/beinComponents/inputs/TextInput';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
-import {createStyle as createTextStyle} from '~/beinComponents/Text/textStyle';
+import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
