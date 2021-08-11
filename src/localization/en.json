@@ -139,7 +139,8 @@
     "title_private": "Private",
     "title_private_subtitle": "Group's content show to only members.\nLearn more",
     "title_secret": "Secret",
-    "title_secret_subtitle": "This group is secret. Learn more"
+    "title_secret_subtitle": "This group is secret. Learn more",
+    "title_edit_description": "Edit Description"
   },
   "languages": {
     "title_en": "English",
