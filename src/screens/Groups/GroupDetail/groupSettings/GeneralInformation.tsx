@@ -30,9 +30,9 @@ const GeneralInformation = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const groupData = useGroups();
-  const {groupDetail} = groupData;
+  const {groupDetail} = groupData || {};
   const {id, name, icon, background_img_url, description, privacy} =
-    groupDetail.group;
+    groupDetail?.group || {};
 
   const baseSheetRef: any = useRef();
 
@@ -110,7 +110,10 @@ const GeneralInformation = () => {
   };
 
   return (
-    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+    <ScreenWrapper
+      testID="GeneralInformation"
+      style={styles.container}
+      isFullView>
       <Header title={t('settings:title_general_information')} />
       <ScrollView>
         {/* --- AVATAR --- */}
@@ -128,7 +131,7 @@ const GeneralInformation = () => {
           <Image
             resizeMode="cover"
             style={styles.avatar}
-            source={icon ? {uri: icon} : images.img_user_avatar_default}
+            source={icon || images.img_user_avatar_default}
           />
         </ButtonWrapper>
 
@@ -147,11 +150,7 @@ const GeneralInformation = () => {
           <Image
             resizeMode="cover"
             style={styles.cover}
-            source={
-              background_img_url
-                ? {uri: background_img_url}
-                : images.img_cover_default
-            }
+            source={background_img_url || images.img_cover_default}
           />
         </ButtonWrapper>
 
