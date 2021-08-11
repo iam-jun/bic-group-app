@@ -3,7 +3,6 @@ import HomeStack from '../HomeStack';
 import GroupStack from '../GroupStack';
 import MenuStack from '../MenuStack';
 import Notification from '~/screens/Notification';
-import MyProfilePage from '~/screens/Menu/MyProfilePage';
 
 export const screens = {
   home: HomeStack,
@@ -11,5 +10,4 @@ export const screens = {
   chat: ChatStack,
   notification: Notification,
   menus: MenuStack,
-  'my-profile': MyProfilePage,
 };
