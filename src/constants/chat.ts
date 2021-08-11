@@ -6,6 +6,7 @@ export const chatSocketId = {
 export const roomTypes = {
   QUICK: 'quick',
   GROUP: 'group',
+  DIRECT: 'direct',
 };
 
 export const messageEventTypes = {
