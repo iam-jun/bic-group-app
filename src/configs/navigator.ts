@@ -49,9 +49,6 @@ export const linkingConfig = {
   prefixes: ['https://bein.group', 'bein://'],
   config: {
     screens: {
-      AppLoading: {
-        path: '',
-      },
       AuthStack: {
         screens: {
           Landing: {
@@ -70,51 +67,47 @@ export const linkingConfig = {
       },
       MainStack: {
         screens: {
-          main: {
+          home: {
+            path: 'home',
             screens: {
-              home: {
-                path: 'home',
-                screens: {
-                  newsfeed: {
-                    path: '',
-                  },
-                },
+              newsfeed: {
+                path: '',
               },
-              groups: {
-                path: 'groups',
-                screens: {
-                  'group-list': {
-                    path: '',
-                  },
-                  'group-detail': {
-                    path: ':id?',
-                  },
-                  'post-detail': {
-                    path: 'post=:id?',
-                  },
-                },
+            },
+          },
+          groups: {
+            path: 'groups',
+            screens: {
+              'group-list': {
+                path: '',
               },
-              chat: {
-                path: 'chat',
-                screens: {
-                  'conversation-list': {
-                    path: '',
-                  },
-                  conversation: {
-                    path: ':roomId?',
-                  },
-                },
+              'group-detail': {
+                path: ':id?',
               },
-              menus: {
-                path: 'menus',
-                screens: {
-                  menu: {
-                    path: '',
-                  },
-                  'component-collection': {
-                    path: 'component-collection',
-                  },
-                },
+              // 'post-detail': {
+              //   path: 'post=:id?',
+              // },
+            },
+          },
+          chat: {
+            path: 'chat',
+            screens: {
+              'conversation-list': {
+                path: '',
+              },
+              conversation: {
+                path: ':roomId?',
+              },
+            },
+          },
+          menus: {
+            path: 'menus',
+            screens: {
+              menu: {
+                path: '',
+              },
+              'component-collection': {
+                path: 'component-collection',
               },
             },
           },

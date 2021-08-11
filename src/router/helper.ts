@@ -23,7 +23,7 @@ export const withNavigation = (
     if (isNavigationRefReady?.current && navigationRef?.current) {
       navigationRef?.current?.navigate(name, params);
     } else {
-      setTimeout(() => navigate(name, params), 100);
+      setTimeout(() => navigationRef?.current?.navigate(name, params), 100);
     }
   };
 
@@ -31,7 +31,11 @@ export const withNavigation = (
     if (isNavigationRefReady?.current && navigationRef?.current) {
       navigationRef?.current?.dispatch(StackActions.replace(name, params));
     } else {
-      setTimeout(() => replace(name, params), 100);
+      setTimeout(
+        () =>
+          navigationRef?.current?.dispatch(StackActions.replace(name, params)),
+        100,
+      );
     }
   };
 

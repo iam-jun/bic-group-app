@@ -184,11 +184,14 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
               : item,
           ),
         },
-        subscriptions: state.subscriptions.map((sub: any) =>
-          sub.rid === action.payload.room_id
-            ? {...sub, unread: sub.unread + 1}
-            : sub,
-        ),
+        subscriptions:
+          action.payload.room_id !== conversation._id
+            ? state.subscriptions.map((sub: any) =>
+                sub.rid === action.payload.room_id
+                  ? {...sub, unread: sub.unread + 1}
+                  : sub,
+              )
+            : state.subscriptions,
       };
     }
     case types.SELECT_USER:

@@ -1,3 +1,4 @@
+import {useIsFocused} from '@react-navigation/native';
 import i18next from 'i18next';
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
@@ -23,12 +24,17 @@ const ConversationsList = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   const {conversations} = useChat();
   const {data, loading} = conversations;
 
   useEffect(() => {
-    dispatch(actions.getSubscriptions());
+    isFocused && dispatch(actions.getSubscriptions());
+  }, [isFocused]);
+
+  useEffect(() => {
+    // dispatch(actions.getSubscriptions());
     _getConversations();
   }, []);
 
