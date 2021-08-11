@@ -5,11 +5,30 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 
 const DatePickerComponent: FC<DatePickerComponentProps> = ({
-  onChange,
+  isVisible = false,
+  date,
+  onConfirm,
+  onCancel,
+  mode,
   ...props
 }: DatePickerComponentProps) => {
+  const onChange = (data?: any) => {
+    onConfirm?.(data);
+  };
+
+  const onClickOutside = () => {
+    onCancel?.();
+  };
+
   return (
-    <DatePicker {...props} onChange={data => console.log('time data', data)} />
+    <DatePicker
+      selected={date}
+      onChange={onChange}
+      onClickOutside={onClickOutside}
+      showTimeSelect={mode === 'time'}
+      inline
+      {...props}
+    />
   );
 };
 

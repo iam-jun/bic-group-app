@@ -18,7 +18,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   tintColor,
   ...props
 }: ButtonIconProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing} = theme;
   const styles = createStyle(theme);
 
