@@ -49,6 +49,7 @@ function* postCreateNewPost({
     yield put(postActions.setLoadingCreatePost(false));
     if (response.data) {
       const postData: IPostActivity = response.data;
+      yield put(postActions.addToAllPosts(postData));
       yield put(postActions.setPostDetail(postData));
       navigation.replace(homeStack.postDetail);
     } else {
