@@ -85,6 +85,10 @@ const postActions = {
     type: postTypes.POST_REACT_TO_POST,
     payload,
   }),
+  deleteReactToPost: (payload: IPayloadReactToPost) => ({
+    type: postTypes.DELETE_REACT_TO_POST,
+    payload,
+  }),
 };
 
 export default postActions;

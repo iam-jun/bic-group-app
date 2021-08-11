@@ -5,15 +5,20 @@ import {useTheme} from 'react-native-paper';
 import Reaction from '~/beinComponents/Badge/Reaction';
 import reactions, {ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
+import commonActions, {IAction} from '~/constants/commonActions';
 
 export interface ReactionViewProps {
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
+  onAddReaction: (reaction: ReactionType) => void;
+  onRemoveReaction: (reaction: ReactionType) => void;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
   ownReactions,
   reactionCounts,
+  onAddReaction,
+  onRemoveReaction,
 }: ReactionViewProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -21,6 +26,14 @@ const ReactionView: FC<ReactionViewProps> = ({
   if (!reactionCounts || Object.keys?.(reactionCounts)?.length === 0) {
     return null;
   }
+
+  const onActionReaction = (reactionId: ReactionType, action: IAction) => {
+    if (action === commonActions.selectEmoji) {
+      onAddReaction?.(reactionId);
+    } else {
+      onRemoveReaction?.(reactionId);
+    }
+  };
 
   const renderReactions = () => {
     const rendered: React.ReactNode[] = [];
@@ -34,9 +47,7 @@ const ReactionView: FC<ReactionViewProps> = ({
             value={reactionCounts[key]}
             icon={key}
             selected={false}
-            onActionPress={() =>
-              console.log('\x1b[36m', '🐣️ onPress |  : ', '\x1b[0m')
-            }
+            onActionPress={action => onActionReaction(react, action)}
           />,
         );
       }

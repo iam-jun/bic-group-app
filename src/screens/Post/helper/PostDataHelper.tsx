@@ -101,6 +101,12 @@ export const postApiConfig = {
       userId: userId,
     },
   }),
+  deleteReaction: (id: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions/${id}`,
+    method: 'delete',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const postDataHelper = {
@@ -231,6 +237,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postReaction(referenceId, referenceType, data, userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteReaction: async (id: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.deleteReaction(id),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

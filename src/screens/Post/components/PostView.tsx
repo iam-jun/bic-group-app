@@ -25,6 +25,7 @@ import ReactionView from '~/screens/Post/components/ReactionView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
+import {ReactionType} from '~/constants/reactions';
 
 export interface PostViewProps {
   postId: string;
@@ -149,15 +150,26 @@ const PostView: FC<PostViewProps> = ({
     }
   };
 
-  const onPressReaction = (reaction: IReactionProps) => {
+  const onAddReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
       postId,
-      reactionId: reaction.id,
+      reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
       userId: userId,
     };
     dispatch(postActions.postReactToPost(payload));
+  };
+
+  const onRemoveReaction = (reactionId: ReactionType) => {
+    const payload: IPayloadReactToPost = {
+      postId,
+      reactionId: reactionId,
+      ownReaction: own_reactions,
+      reactionCounts: reaction_counts,
+      userId: userId,
+    };
+    dispatch(postActions.deleteReactToPost(payload));
   };
 
   const renderPostTime = () => {
@@ -315,11 +327,13 @@ const PostView: FC<PostViewProps> = ({
       <ReactionView
         ownReactions={own_reactions}
         reactionCounts={reaction_counts}
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
       />
       {renderReactButtons()}
       <ReactionBottomSheet
         reactionSheetRef={reactionSheetRef}
-        onPressReaction={onPressReaction}
+        onPressReaction={onAddReaction}
       />
     </View>
   );

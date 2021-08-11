@@ -28,6 +28,7 @@ export default function* postSaga() {
   );
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
+  yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
 }
 
 function* postCreateNewPost({
@@ -126,12 +127,25 @@ function* postReactToPost({
   type: string;
   payload: IPayloadReactToPost;
 }) {
+  const {postId, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
-    const {postId, reactionId, reactionCounts, ownReaction, userId} = payload;
     const data: ReactionType[] = [];
     data.push(reactionId);
     const added = ownReaction?.[reactionId]?.length > 0;
     if (!added) {
+      const newOwnReaction: IOwnReaction = {...ownReaction};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({kind: reactionId});
+      newOwnReaction[reactionId] = reactionArr;
+      const newReactionCounts = {...reactionCounts};
+      newReactionCounts[reactionId] =
+        (newReactionCounts?.[reactionId] || 0) + 1;
+      yield onUpdateReactionOfPostById(
+        postId,
+        newOwnReaction,
+        newReactionCounts,
+      );
+
       const response = yield call(
         postDataHelper.postReaction,
         postId,
@@ -140,17 +154,12 @@ function* postReactToPost({
         userId,
       );
       if (response?.data) {
-        const newOwnReaction: IOwnReaction = {...ownReaction};
-        const reactionArr: IReaction[] = [];
+        const reactionArr2: IReaction[] = [];
         //todo waiting for BE update response
         //reactionArr.push(response.data)
-        reactionArr.push({kind: reactionId});
+        reactionArr2.push({kind: reactionId});
         //todo remove above
-        newOwnReaction[reactionId] = reactionArr;
-
-        const newReactionCounts = {...reactionCounts};
-        newReactionCounts[reactionId] =
-          (newReactionCounts?.[reactionId] || 0) + 1;
+        newOwnReaction[reactionId] = reactionArr2;
 
         yield onUpdateReactionOfPostById(
           postId,
@@ -160,7 +169,38 @@ function* postReactToPost({
       }
     }
   } catch (e) {
+    yield onUpdateReactionOfPostById(postId, ownReaction, reactionCounts); //rollback
     console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
+  }
+}
+
+function* deleteReactToPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactToPost;
+}) {
+  const {postId, reactionId, reactionCounts, ownReaction} = payload;
+  try {
+    const id = ownReaction?.[reactionId]?.[0]?.id;
+    if (id) {
+      const newOwnReaction = {...ownReaction};
+      newOwnReaction[reactionId] = [];
+      const newReactionCounts = {...reactionCounts};
+      newReactionCounts[reactionId] = Math.max(
+        0,
+        (newReactionCounts[reactionId] || 0) - 1,
+      );
+      yield onUpdateReactionOfPostById(
+        postId,
+        newOwnReaction,
+        newReactionCounts,
+      );
+      yield call(postDataHelper.deleteReaction, id);
+    }
+  } catch (e) {
+    yield onUpdateReactionOfPostById(postId, ownReaction, reactionCounts); //rollback
+    console.log(`\x1b[31m🐣️ deleteReactToPost : ${e}\x1b[0m`);
   }
 }
 

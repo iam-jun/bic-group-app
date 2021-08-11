@@ -2,11 +2,12 @@ import React, {FC} from 'react';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import SelectReactionView from '~/beinFragments/reaction/SelectReactionView';
+import {ReactionType} from '~/constants/reactions';
 
 export interface ReactionBottomSheetProps {
   reactionSheetRef: any;
   autoHide?: boolean;
-  onPressReaction?: (reaction: IReactionProps) => void;
+  onPressReaction?: (reactionId: ReactionType) => void;
 }
 
 const ReactionBottomSheet: FC<ReactionBottomSheetProps> = ({
@@ -15,7 +16,7 @@ const ReactionBottomSheet: FC<ReactionBottomSheetProps> = ({
   onPressReaction,
 }: ReactionBottomSheetProps) => {
   const _onPressReaction = (reaction: IReactionProps) => {
-    onPressReaction?.(reaction);
+    onPressReaction?.(reaction.id);
     autoHide && reactionSheetRef?.current?.close?.();
   };
 

@@ -184,3 +184,9 @@ export interface IPayloadReactToPost {
   reactionCounts: IReactionCounts;
   userId: number;
 }
+
+export interface IPayloadUpdateReactionOfPostById {
+  postId: string;
+  ownReaction: IOwnReaction;
+  reactionCounts: IReactionCounts;
+}
