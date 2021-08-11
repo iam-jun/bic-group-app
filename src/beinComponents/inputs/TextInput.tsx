@@ -87,7 +87,7 @@ const TextInput: React.FC<TextInputProps> = ({
       <Text.H6
         onPress={helperActionOnPress}
         {..._textHelperProps}
-        style={{textDecorationLine: 'underline'}}>
+        style={helperActionStyle.style}>
         {`${helperAction}`}
       </Text.H6>
     );
@@ -140,5 +140,9 @@ const getTextHelperProps = (theme: ITheme, type: HelperType) => {
   };
   return props[type || 'secondary'] || props.secondary;
 };
+
+const helperActionStyle = StyleSheet.create({
+  style: {textDecorationLine: 'underline'},
+});
 
 export default TextInput;
