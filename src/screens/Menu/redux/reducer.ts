@@ -4,6 +4,7 @@ const initMenuState = {
   loadingUserProfile: false,
   isLanguageModalOpen: false,
   userProfile: {},
+  selectedProfile: {},
 };
 
 const menuReducer = (state = initMenuState, action: any = {}) => {

@@ -9,10 +9,10 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.SELECT_USER_PROFILE, selectUserProfile);
 }
 
-function* getUserProfile() {
+function* getUserProfile({payload}: {type: string; payload: number}) {
   const {userProfile} = yield select();
   try {
-    const result: IUserProfile = yield requestUserProfile();
+    const result: IUserProfile = yield requestUserProfile(payload);
     yield put(menuActions.setUserProfile(result));
   } catch (err) {
     yield put(menuActions.setUserProfile(userProfile));
@@ -20,9 +20,9 @@ function* getUserProfile() {
   }
 }
 
-const requestUserProfile = async () => {
+const requestUserProfile = async (userId: number) => {
   try {
-    const response = await menuDataHelper.getMyProfile();
+    const response = await menuDataHelper.getMyProfile(userId);
 
     if (response.code === 200 && response.data) {
       return response.data;
@@ -34,10 +34,7 @@ const requestUserProfile = async () => {
 
 function* selectUserProfile({payload}: {payload: IUserProfile; type: string}) {
   try {
-    // TODO: will need to add userId option when we have
-    // a new API to get info for any user
-    // currently we temporarily use get-my-profile API
-    yield put(menuActions.getUserProfile());
+    yield put(menuActions.getUserProfile(payload.id));
   } catch (err) {
     console.log('selectUserProfile error ---> ', err);
   }

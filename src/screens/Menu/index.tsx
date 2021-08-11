@@ -26,6 +26,7 @@ import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import images from '~/resources/images';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -38,9 +39,10 @@ const Menu = (): React.ReactElement => {
   const menuData = useMenu();
   const {userProfile} = menuData;
   const {id, fullname, email, avatar} = userProfile;
+  const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    dispatch(menuActions.getUserProfile());
+    dispatch(menuActions.getUserProfile(currentUserId));
   }, []);
 
   const onSettingPress = (item: ISetting) => {

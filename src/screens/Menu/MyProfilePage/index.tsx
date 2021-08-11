@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -9,6 +9,7 @@ import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
 import useMenu from '~/hooks/menu';
 import images from '~/resources/images';
+import menuActions from '~/screens/Menu/redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -39,6 +40,10 @@ const MyProfilePage = () => {
         confirmLabel: 'Got it',
       }),
     );
+
+  // useEffect(() => {
+  //   dispatch(menuActions.getUserProfile(userId));
+  // }, []);
 
   return (
     <ScreenWrapper testID="MyProfilePage" style={styles.container}>

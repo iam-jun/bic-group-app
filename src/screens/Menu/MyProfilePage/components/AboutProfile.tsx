@@ -21,10 +21,14 @@ const AboutProfile = () => {
 
   const renderItem = (icon: IconType, label: string) => {
     return (
-      <View style={styles.itemComponent}>
-        <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
-        <Text.Body style={styles.text}>{label}</Text.Body>
-      </View>
+      <>
+        {label && (
+          <View style={styles.itemComponent}>
+            <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
+            <Text.Body style={styles.text}>{label}</Text.Body>
+          </View>
+        )}
+      </>
     );
   };
 

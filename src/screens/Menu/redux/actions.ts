@@ -22,9 +22,10 @@ const menuActions = {
   },
 
   // FOR SAGA:
-  getUserProfile: () => {
+  getUserProfile: (payload: string) => {
     return {
       type: menuTypes.GET_USER_PROFILE,
+      payload,
     };
   },
 };
