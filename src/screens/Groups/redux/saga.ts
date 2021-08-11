@@ -58,8 +58,7 @@ function* editGroupDetail({
 }) {
   try {
     const result = yield requestEditGroupDetail(payload);
-    console.log('result:', result);
-    // yield put(groupsActions.setGroupDetail({group: result}));
+    yield put(groupsActions.setGroupDetail(result));
   } catch (error) {
     console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
   }
