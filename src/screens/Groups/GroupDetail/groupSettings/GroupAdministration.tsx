@@ -24,8 +24,8 @@ const GroupAdministration = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const groupData = useGroups();
-  const {groupDetail} = groupData;
-  const {name, icon} = groupDetail.group;
+  const {groupDetail} = groupData || {};
+  const {name, icon} = groupDetail?.group || {};
 
   const onGroupAdminPress = () => {
     dispatch(
@@ -56,16 +56,8 @@ const GroupAdministration = () => {
           labelStyle={styles.label}
         />
         <View style={styles.rightComponent}>
-          {rightSubTitle && (
-            <View
-              style={{
-                backgroundColor: theme.colors.error,
-                paddingVertical: 2,
-                paddingHorizontal: 6.5,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 100,
-              }}>
+          {!!rightSubTitle && (
+            <View style={styles.rightSubtitle}>
               <Text.BodyS color={theme.colors.background} useI18n>
                 {rightSubTitle}
               </Text.BodyS>
@@ -173,6 +165,14 @@ const themeStyles = (theme: ITheme) => {
     },
     headerTitle: {
       marginBottom: spacing.margin.small,
+    },
+    rightSubtitle: {
+      backgroundColor: colors.error,
+      paddingVertical: 2,
+      paddingHorizontal: 6.5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 100,
     },
   });
 };

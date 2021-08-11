@@ -17,9 +17,9 @@ const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const groupData = useGroups();
-  const {groupDetail} = groupData;
+  const {groupDetail} = groupData || {};
   const {name, user_count, icon, background_img_url, privacy} =
-    groupDetail.group;
+    groupDetail?.group || {};
 
   return (
     <View style={styles.coverAndInfoHeader}>

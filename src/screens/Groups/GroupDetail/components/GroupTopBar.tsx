@@ -15,8 +15,8 @@ const GroupTopBar = () => {
   const {navigation} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const groupData = useGroups();
-  const {groupDetail} = groupData;
-  const {can_setting} = groupDetail;
+  const {groupDetail} = groupData || {};
+  const {can_setting} = groupDetail || {};
 
   return (
     <View style={styles.container}>
@@ -26,7 +26,7 @@ const GroupTopBar = () => {
         tintColor={theme.colors.iconTint}
         onPress={() => navigation.goBack()}
       />
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.rightComponent}>
         <Icon
           icon={'iconSearch'}
           size={22}
@@ -40,7 +40,7 @@ const GroupTopBar = () => {
               icon={'iconShieldStar'}
               fill={theme.colors.iconTint}
               size={24}
-              style={{marginRight: theme.spacing.margin.large}}
+              style={styles.iconShieldStar}
             />
           </TouchableOpacity>
         )}
@@ -62,6 +62,12 @@ const themeStyles = (theme: ITheme) => {
       justifyContent: 'space-between',
       marginHorizontal: spacing?.margin.large,
       marginVertical: spacing?.margin.small,
+    },
+    rightComponent: {
+      flexDirection: 'row',
+    },
+    iconShieldStar: {
+      marginRight: spacing.margin.large,
     },
   });
 };
