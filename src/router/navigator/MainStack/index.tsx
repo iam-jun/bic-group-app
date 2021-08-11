@@ -40,7 +40,6 @@ const MainStack = (): React.ReactElement => {
             style={{
               flex: deviceDimensions.leftCols,
               paddingEnd: theme.spacing.margin.base,
-              borderWidth: 1,
             }}>
             <NavigationContainer independent ref={leftNavigationRef}>
               <LeftTabs initialRouteName={route?.params?.initialRouteName} />
@@ -50,7 +49,6 @@ const MainStack = (): React.ReactElement => {
         <View
           style={{
             flex: deviceDimensions.centerCols,
-            borderWidth: 1,
           }}>
           <MainTabs />
         </View>
@@ -59,7 +57,6 @@ const MainStack = (): React.ReactElement => {
             style={{
               flex: deviceDimensions.rightCols,
               paddingStart: theme.spacing.margin.base,
-              borderWidth: 1,
             }}>
             <NavigationContainer independent ref={rightNavigationRef}>
               <Stack.Navigator>

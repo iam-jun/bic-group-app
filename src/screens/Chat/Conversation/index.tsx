@@ -58,7 +58,7 @@ const Conversation = () => {
 
   useEffect(() => {
     !isFocused && dispatch(actions.readSubcriptions(conversation._id));
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     if (route.params?.roomId) {

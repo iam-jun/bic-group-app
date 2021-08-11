@@ -38,6 +38,7 @@ function* setupPushToken() {
 
 function* copyDeviceToken() {
   const deviceToken: string = yield messaging().getToken();
+  console.log('deviceToken', deviceToken);
   Clipboard.setString(deviceToken);
   alert(`Copied\n\n ${deviceToken}`);
 }
