@@ -8,7 +8,7 @@ const initGroupsState = {
   },
   groupMember: {
     skip: 0,
-    take: 10,
+    take: 20,
     canLoadMore: true,
     //type admin, member...
   },

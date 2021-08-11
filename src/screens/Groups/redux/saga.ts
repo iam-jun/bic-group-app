@@ -70,7 +70,7 @@ function* getGroupMember({payload}: {type: string; payload: number}) {
   try {
     const groupMembers: any = {}; //yield select(state => state?.groups?.groupMember);
     const newGroupMembers = Object.assign({}, groupMembers || {});
-    const {skip = 0, take = 10, canLoadMore = true} = newGroupMembers;
+    const {skip = 0, take = 20, canLoadMore = true} = newGroupMembers;
     if (canLoadMore) {
       const response = yield call(
         groupsDataHelper.getGroupMembers,
