@@ -26,18 +26,14 @@ const GroupInfoHeader = () => {
       {/* Cover photo */}
       <Image
         style={styles.cover}
-        source={
-          background_img_url
-            ? {uri: background_img_url}
-            : images.img_cover_default
-        }
+        source={background_img_url || images.img_cover_default}
       />
 
       {/* Group info header */}
       <View style={styles.infoContainer}>
         <View style={styles.header}>
           <Avatar.UltraLarge source={icon} style={styles.avatar} />
-          <View style={{flex: 1}}>
+          <View style={styles.nameHeader}>
             <ButtonWrapper
               textProps={{
                 variant: 'h5',
@@ -45,18 +41,14 @@ const GroupInfoHeader = () => {
               {name}
             </ButtonWrapper>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: theme.spacing?.margin.tiny,
-              }}>
+            <View style={styles.groupInfoText}>
               <Icon
                 style={styles.iconSmall}
                 icon={'iconPrivate'}
                 size={14}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
+              <Text.BodyS useI18n>{!!privacy && titleCase(privacy)}</Text.BodyS>
               <Text.Subtitle> ⬩ </Text.Subtitle>
               <Icon
                 style={styles.iconSmall}
@@ -68,11 +60,7 @@ const GroupInfoHeader = () => {
             </View>
           </View>
           <ButtonWrapper
-            style={{
-              backgroundColor: theme.colors.bgButtonSecondary,
-              padding: 4,
-              borderRadius: 6,
-            }}
+            style={styles.chatButton}
             onPress={() => alert('go to chat group')}>
             <Icon
               style={styles.iconSmall}
@@ -119,5 +107,15 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing?.margin.large,
       marginVertical: spacing?.margin.small,
     },
+    chatButton: {
+      backgroundColor: colors.bgButtonSecondary,
+      padding: spacing.padding.tiny,
+      borderRadius: 6,
+    },
+    groupInfoText: {
+      flexDirection: 'row',
+      marginTop: spacing.margin.tiny,
+    },
+    nameHeader: {flex: 1},
   });
 };
