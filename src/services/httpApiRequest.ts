@@ -255,14 +255,21 @@ const interceptorsResponseError = async (error: AxiosError) => {
   return handleResponseError(error);
 };
 
+/**
+ * @param streamClient
+ * @param feedSlug
+ * @param feedId: id with prefix type. Example: `u-${userId}`, `g-${groupId}`
+ * @param funcName
+ * @param params
+ */
 const makeGetStreamRequest = async (
   streamClient: StreamClient,
-  feedSlug: string,
-  userId: string,
+  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedId: string,
   funcName: string,
   params: any,
 ) => {
-  const user = streamClient.feed(feedSlug, userId);
+  const user = streamClient.feed(feedSlug, feedId);
   // @ts-ignore
   return user[funcName](params)
     .then((getStreamResponse: any) => getStreamResponse)
@@ -271,7 +278,7 @@ const makeGetStreamRequest = async (
         activitiesError,
         streamClient,
         feedSlug,
-        userId,
+        feedId,
         funcName,
         params,
       );
@@ -282,8 +289,8 @@ let unauthorizedGetStreamReqQueue: UnauthorizedReq[] = [];
 const handleResponseFailFeedActivity = async (
   activitiesError: FeedResponseError,
   streamClient: StreamClient,
-  feedSlug: string,
-  userId: string,
+  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedId: string,
   funcName: any,
   params: any,
 ) => {
@@ -303,7 +310,7 @@ const handleResponseFailFeedActivity = async (
           const resp = await makeGetStreamRequest(
             newStreamClient,
             feedSlug,
-            userId,
+            feedId,
             funcName,
             params,
           );
