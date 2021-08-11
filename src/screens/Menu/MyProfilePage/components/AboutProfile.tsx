@@ -9,20 +9,23 @@ import useMenu from '~/hooks/menu';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
+import {IUserProfile} from '~/interfaces/IAuth';
 
-const AboutProfile = () => {
+const AboutProfile = ({
+  email,
+  address,
+  language,
+  phone,
+  isPublic,
+}: IUserProfile) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {t} = useBaseHook();
 
-  const menuData = useMenu();
-  const {userProfile} = menuData;
-  const {email, address, language, phone, isPublic} = userProfile;
-
-  const renderItem = (icon: IconType, label: string) => {
+  const renderItem = (icon: IconType, label?: string) => {
     return (
       <>
-        {label && (
+        {!!label && (
           <View style={styles.itemComponent}>
             <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
             <Text.Body style={styles.text}>{label}</Text.Body>

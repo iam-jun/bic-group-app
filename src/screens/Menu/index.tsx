@@ -39,7 +39,7 @@ const Menu = (): React.ReactElement => {
   const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    dispatch(menuActions.getUserProfile(currentUserId));
+    dispatch(menuActions.getMyProfile(currentUserId));
   }, []);
 
   const onSettingPress = (item: ISetting) => {
@@ -78,7 +78,7 @@ const Menu = (): React.ReactElement => {
 
   const goToMyProfile = () => {
     dispatch(
-      menuActions.selectUserProfile({
+      menuActions.selectMyProfile({
         id,
         fullname,
         email,

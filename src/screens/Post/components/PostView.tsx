@@ -105,12 +105,12 @@ const PostView: FC<PostViewProps> = ({
   const onPressActor = () => {
     if (actor?.id) {
       dispatch(
-        menuActions.selectUserProfile({
+        menuActions.selectedProfile({
           id: actor?.id?.toString(),
           isPublic: true,
         }),
       );
-      rootNavigation.navigate(homeStack.myProfile);
+      rootNavigation.navigate(homeStack.publicProfile);
     }
   };
 
