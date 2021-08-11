@@ -62,6 +62,7 @@ const GroupMembers = (): React.ReactElement => {
       <ViewSpacing height={spacing.margin.base} />
       <MembersSelection
         data={members.data}
+        title={i18next.t('chat:title_members')}
         roles={roles}
         loading={members.loading}
         searchInputProps={{

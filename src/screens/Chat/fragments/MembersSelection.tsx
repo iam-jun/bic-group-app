@@ -19,6 +19,7 @@ import actions from '../redux/actions';
 export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
   selectable?: boolean;
+  title: string;
   data: IUser[];
   roles?: {
     loading: boolean;
@@ -32,6 +33,7 @@ export interface MembersSelectionProps {
 const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectable,
   searchInputProps,
+  title,
   data,
   roles,
   loading,
@@ -93,9 +95,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           renderItem={renderItemUser}
         />
       )}
-      <Text.ButtonBase style={styles.title}>
-        {i18next.t('chat:title_members')}
-      </Text.ButtonBase>
+      <Text.ButtonBase style={styles.title}>{i18next.t(title)}</Text.ButtonBase>
     </View>
   );
 

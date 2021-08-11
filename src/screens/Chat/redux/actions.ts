@@ -1,6 +1,6 @@
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
-import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
+import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
@@ -33,12 +33,36 @@ const resetData = (dataType: string) => ({
   dataType,
 });
 
+const getConversationDetail = (payload: string) => ({
+  type: Actions.GET_CONVERSATION_DETAIL,
+  payload,
+});
+
+const setConversationDetail = (payload: IConversation) => ({
+  type: Actions.SET_CONVERSATION_DETAIL,
+  payload,
+});
+
 const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
 
 const setGroupRoles = (payload: IUser[]) => ({
   type: Actions.SET_GROUP_ROLES,
+  payload,
+});
+
+const getSubscriptions = () => ({
+  type: Actions.GET_SUBSCRIPTIONS,
+});
+
+const setSubscriptions = (payload: IConversation[]) => ({
+  type: Actions.SET_SUBSCRIPTIONS,
+  payload,
+});
+
+const readSubcriptions = (payload: string) => ({
+  type: Actions.READ_SUBCRIPTIONS,
   payload,
 });
 
@@ -108,8 +132,13 @@ export default {
   setExtraData,
   mergeExtraData,
   resetData,
+  getConversationDetail,
+  setConversationDetail,
   getGroupRols,
   setGroupRoles,
+  getSubscriptions,
+  setSubscriptions,
+  readSubcriptions,
   handleEvent,
   selectConversation,
   sendMessage,
