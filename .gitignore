@@ -61,3 +61,4 @@ buck-out/
 # for my personal AWS development
 amplify/*
 src/aws-exports.js
+android/app/production/
