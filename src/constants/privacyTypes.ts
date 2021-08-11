@@ -1,22 +1,23 @@
 export type PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET';
+export type GROUP_TYPE = 'GENERIC' | 'COMMUNITY' | 'COMPANY';
 
 export default [
   {
     type: 'PUBLIC',
-    title: 'Public',
+    title: 'settings:title_public',
     icon: 'Globe',
-    subtitle: 'Group shows to everyone. Learn more',
+    subtitle: 'settings:title_public_subtitle',
   },
   {
     type: 'PRIVATE',
-    title: 'Private',
+    title: 'settings:title_private',
     icon: 'Lock',
-    subtitle: "Group's content show to only members.\nLearn more",
+    subtitle: 'settings:title_private_subtitle',
   },
   {
     type: 'SECRET',
-    title: 'Secret',
+    title: 'settings:title_secret',
     icon: 'EyeSlash',
-    subtitle: 'This group is secret. Learn more',
+    subtitle: 'settings:title_secret_subtitle',
   },
 ];

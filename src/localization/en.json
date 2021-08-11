@@ -131,7 +131,13 @@
     "title_avatar": "Avatar",
     "title_cover": "Cover",
     "title_edit": "Edit",
-    "title_privacy_type": "Privacy Type"
+    "title_privacy_type": "Privacy Type",
+    "title_public": "Public",
+    "title_public_subtitle": "Group shows to everyone. Learn more",
+    "title_private": "Private",
+    "title_private_subtitle": "Group's content show to only members.\nLearn more",
+    "title_secret": "Secret",
+    "title_secret_subtitle": "This group is secret. Learn more"
   },
   "languages": {
     "title_en": "English",
