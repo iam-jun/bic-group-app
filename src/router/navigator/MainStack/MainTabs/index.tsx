@@ -18,7 +18,7 @@ const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
 
 const MainTabs = () => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   const backBehavior = 'history';
@@ -68,7 +68,6 @@ const MainTabs = () => {
                 if (isBigTablet) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
-                const label = name.charAt(0).toUpperCase() + name.slice(1);
                 const styles = CreateStyle(theme, focused, isPhone, color);
 
                 return (
