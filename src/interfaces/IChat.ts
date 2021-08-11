@@ -1,5 +1,5 @@
 import {IMessage as _GMessage} from 'react-native-gifted-chat';
-import {messageStatus} from '~/constants/chat';
+import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IUser} from './IAuth';
 export interface IReaction {
@@ -135,6 +135,8 @@ export type IMessage = _GMessage & {
   status?: IMesssageStatus;
 };
 
+export type IRoomType = typeof roomTypes[keyof typeof roomTypes];
+
 export type IConversation = {
   _id: string;
   name: string;
@@ -147,4 +149,5 @@ export type IConversation = {
   unreadCount: number;
   lastMessage: string;
   _updatedAt: string;
+  type: IRoomType;
 };

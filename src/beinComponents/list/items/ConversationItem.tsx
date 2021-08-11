@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
+import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {getAvatar} from '~/screens/Chat/helper';
@@ -18,18 +19,35 @@ const ConversationItem: React.FC<IConversation> = ({
   avatar,
   _updatedAt,
   unreadCount,
+  type,
 }: IConversation): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {text, textReversed, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textcolor = unreadCount ? text : textSecondary;
+  const isDirect = type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
     if (usernames)
       setAvatar(usernames.map((username: string) => getAvatar(username)));
     else setAvatar(images.img_group_avatar_default);
   };
+
+  const ItemAvatar = isDirect ? (
+    <Avatar.UltraLarge
+      style={styles.marginRight}
+      source={avatar}
+      placeholderSource={images.img_user_avatar_default}
+    />
+  ) : (
+    <Avatar.Group
+      variant="large"
+      style={styles.marginRight}
+      source={_avatar}
+      onError={onLoadAvatarError}
+    />
+  );
 
   return (
     <PrimaryItem
@@ -42,14 +60,7 @@ const ConversationItem: React.FC<IConversation> = ({
         color: textcolor,
       }}
       subTitle={lastMessage}
-      LeftComponent={
-        <Avatar.Group
-          variant="large"
-          style={styles.marginRight}
-          source={_avatar}
-          onError={onLoadAvatarError}
-        />
-      }
+      LeftComponent={ItemAvatar}
       RightComponent={
         <View style={styles.rightComponent}>
           <Text.Subtitle
@@ -83,7 +94,7 @@ const createStyles = (theme: ITheme) => {
       marginRight: spacing.margin.base,
     },
     textUpdate: {
-      paddingTop: 0,
+      paddingTop: spacing.padding.tiny,
     },
     unread: {
       borderRadius: spacing?.borderRadius.large,
