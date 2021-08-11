@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -13,6 +13,7 @@ interface ReactionProps {
   selected: boolean;
   onActionPress: (action: IAction) => void;
   style?: StyleProp<ViewStyle>;
+  disableUpdateState?: boolean;
 }
 
 const Reaction: React.FC<ReactionProps> = ({
@@ -21,14 +22,23 @@ const Reaction: React.FC<ReactionProps> = ({
   selected,
   onActionPress,
   style,
+  disableUpdateState,
 }: ReactionProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyles(theme, isSelected);
+
+  useEffect(() => {
+    setIsSelected(selected);
+  }, [selected]);
 
   const _onChangeValue = () => {
     const newValue = !isSelected;
-    setIsSelected(newValue);
+
+    if (!disableUpdateState) {
+      setIsSelected(newValue);
+    }
 
     if (newValue) {
       onActionPress(commonActions.selectEmoji as IAction);
@@ -41,8 +51,12 @@ const Reaction: React.FC<ReactionProps> = ({
     <TouchableOpacity
       style={[styles.container, style]}
       onPress={_onChangeValue}>
-      <Icon icon={icon} size={12} />
-      <Text.Subtitle style={styles.textInput}>{value}</Text.Subtitle>
+      <Icon icon={icon} size={16} />
+      <Text.BodySM
+        color={isSelected ? colors.primary7 : colors.textPrimary}
+        style={styles.textInput}>
+        {value}
+      </Text.BodySM>
     </TouchableOpacity>
   );
 };
@@ -64,7 +78,6 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
     },
     textInput: {
       marginStart: spacing?.margin.tiny,
-      color: colors.textPrimary,
     },
   });
 };

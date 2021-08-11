@@ -1,4 +1,4 @@
-import {IAction} from '~/constants/commonActions';
+import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
 
 export interface IGroup {
   id: number;
@@ -13,7 +13,7 @@ export interface IGroup {
   description?: string;
   background_img_url?: string;
   privacy?: string;
-  group_type?: string;
+  group_type?: GROUP_TYPE;
   verified?: boolean;
   level?: number;
   parents?: number[];
@@ -34,4 +34,24 @@ export interface IParsedGroup extends IGroup {
   uiLevel: number;
   isChecked: boolean;
   isCollapsing: boolean;
+}
+
+export interface IGroupDetailEdit {
+  id?: number;
+  parent_id?: number;
+  name?: string;
+  description?: string;
+  level?: number;
+  owner_id?: number;
+  icon?: string;
+  background_img_url?: string;
+  group_type?: GROUP_TYPE;
+  privacy?: PRIVACY_TYPE;
+}
+
+export interface IGroupDetail {
+  group: IGroup;
+  can_manage_member: boolean;
+  can_setting: boolean;
+  join_status: number;
 }

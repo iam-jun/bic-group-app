@@ -1,11 +1,11 @@
-import React, {FC, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {FC, useEffect, useState, useRef} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
 
 import {ITheme} from '~/theme/interfaces';
-import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
+import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
@@ -19,27 +19,47 @@ import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {formatDate} from '~/utils/formatData';
+import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
+import {IReactionProps} from '~/interfaces/IReaction';
+import ReactionView from '~/screens/Post/components/ReactionView';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import postActions from '~/screens/Post/redux/actions';
+import {ReactionType} from '~/constants/reactions';
 
 export interface PostViewProps {
-  postData: IPostActivity;
-  onPressComment?: (data: IPostActivity) => void;
+  postId: string;
+  onPressComment?: (postId: string) => void;
 }
 
 const PostView: FC<PostViewProps> = ({
-  postData,
+  postId,
   onPressComment,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
+  const reactionSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {id, object, actor, audience, time, important, own_reactions} =
-    postData || {};
-  const {content} = object?.data || {};
+  const actor = useKeySelector(postKeySelector.postActorById(postId));
+  const audience = useKeySelector(postKeySelector.postAudienceById(postId));
+  const time = useKeySelector(postKeySelector.postTimeById(postId));
+  const important = useKeySelector(postKeySelector.postImportantById(postId));
+  const own_reactions = useKeySelector(
+    postKeySelector.postOwnReactionById(postId),
+  );
+  const reaction_counts = useKeySelector(
+    postKeySelector.postReactionCountsById(postId),
+  );
+  const postObjectData = useKeySelector(
+    postKeySelector.postObjectDataById(postId),
+  );
+
+  const {content} = postObjectData || {};
 
   const userId = useUserIdAuth();
 
@@ -82,13 +102,15 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    dispatch(
-      menuActions.selectUserProfile({
-        id: actor?.id?.toString(),
-        isPublic: true,
-      }),
-    );
-    rootNavigation.navigate(menuStack.myProfile);
+    if (actor?.id) {
+      dispatch(
+        menuActions.selectUserProfile({
+          id: actor?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(menuStack.myProfile);
+    }
   };
 
   const onPressShowAudiences = () => {
@@ -102,7 +124,7 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = () => {
-    alert('onPressReact');
+    reactionSheetRef?.current?.open?.();
   };
 
   const onLongPressReact = () => {
@@ -110,13 +132,13 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const _onPressComment = () => {
-    onPressComment?.(postData);
+    onPressComment?.(postId);
   };
 
   const onPressMarkAsRead = () => {
-    if (id) {
+    if (postId) {
       postDataHelper
-        .postMarkAsRead(id, userId)
+        .postMarkAsRead(postId, userId)
         .then(response => {
           if (response && response?.data) {
             setCalledMarkAsRead(true);
@@ -126,6 +148,28 @@ const PostView: FC<PostViewProps> = ({
           console.log('\x1b[31m', '🐣️ onPressMarkAsRead |  : ', e, '\x1b[0m');
         });
     }
+  };
+
+  const onAddReaction = (reactionId: ReactionType) => {
+    const payload: IPayloadReactToPost = {
+      postId,
+      reactionId: reactionId,
+      ownReaction: own_reactions,
+      reactionCounts: reaction_counts,
+      userId: userId,
+    };
+    dispatch(postActions.postReactToPost(payload));
+  };
+
+  const onRemoveReaction = (reactionId: ReactionType) => {
+    const payload: IPayloadReactToPost = {
+      postId,
+      reactionId: reactionId,
+      ownReaction: own_reactions,
+      reactionCounts: reaction_counts,
+      userId: userId,
+    };
+    dispatch(postActions.deleteReactToPost(payload));
   };
 
   const renderPostTime = () => {
@@ -270,15 +314,28 @@ const PostView: FC<PostViewProps> = ({
       {renderHeader()}
       {renderContent()}
       {isImportant && (
-        <Button.Secondary
-          useI18n
-          style={{margin: spacing.margin.base}}
-          disabled={calledMarkAsRead}
-          onPress={onPressMarkAsRead}>
-          post:mark_as_read
-        </Button.Secondary>
+        <>
+          <Button.Secondary
+            useI18n
+            style={{margin: spacing.margin.base}}
+            disabled={calledMarkAsRead}
+            onPress={onPressMarkAsRead}>
+            post:mark_as_read
+          </Button.Secondary>
+          <Divider />
+        </>
       )}
+      <ReactionView
+        ownReactions={own_reactions}
+        reactionCounts={reaction_counts}
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+      />
       {renderReactButtons()}
+      <ReactionBottomSheet
+        reactionSheetRef={reactionSheetRef}
+        onPressReaction={onAddReaction}
+      />
     </View>
   );
 };
@@ -324,7 +381,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     contentContainer: {
-      marginVertical: spacing?.margin.base,
+      marginVertical: spacing?.margin.small,
       marginHorizontal: spacing?.margin.large,
     },
     buttonReact: {

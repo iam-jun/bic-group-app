@@ -1,16 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, StyleSheet, Keyboard} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import {usePostDetail, usePostDetailReplyingComment} from '~/hooks/post';
-import {
-  IPostActivity,
-  IReaction,
-  IRequestPostComment,
-} from '~/interfaces/IPost';
-import PostView from '~/beinFragments/PostView';
+import {usePostDetailReplyingComment} from '~/hooks/post';
+import {IReaction, IRequestPostComment} from '~/interfaces/IPost';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import ListView from '~/beinComponents/list/ListView';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
@@ -22,6 +17,9 @@ import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 import Icon from '~/beinComponents/Icon';
 import {useUserIdAuth} from '~/hooks/auth';
+import PostView from '~/screens/Post/components/PostView';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
@@ -42,8 +40,7 @@ const PostDetail = (props: any) => {
 
   const userId = useUserIdAuth();
 
-  const postDetail: IPostActivity = usePostDetail() || {};
-  const {id} = postDetail || {};
+  const id = useKeySelector(postKeySelector.postDetail.id);
   const replying = usePostDetailReplyingComment();
 
   const getComments = () => {
@@ -70,7 +67,10 @@ const PostDetail = (props: any) => {
   }, []);
 
   const renderPostContent = () => {
-    return <PostView postData={postDetail} />;
+    if (!id) {
+      return null;
+    }
+    return <PostView postId={id} />;
   };
 
   const onTextChange = (text: string) => {
@@ -190,7 +190,7 @@ const PostDetail = (props: any) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {},
     commentInputHeader: {
