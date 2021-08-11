@@ -129,7 +129,7 @@ const SignIn = () => {
               }}
               helperType={errors.email?.message ? 'error' : undefined}
               helperContent={errors?.email?.message}
-              style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
+              style={styles.inputEmail}
             />
           )}
           rules={{
@@ -159,7 +159,7 @@ const SignIn = () => {
               }}
               helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
-              style={{marginTop: 0, marginBottom: 0}}
+              style={styles.inputPassword}
             />
           )}
           name="password"
@@ -191,10 +191,7 @@ const SignIn = () => {
           {t('auth:btn_sign_in')}
         </Button.Primary>
       </View>
-      {/*<Container*/}
-      {/*  style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>*/}
-      {/*  <Text.H5 style={styles.orText}>{t('auth:text_or')}</Text.H5>*/}
-      {/*</Container>*/}
+      {/*<Text.H5 style={styles.orText}>{t('auth:text_or')}</Text.H5>*/}
       {/*<SignInOAuth />*/}
       <View style={styles.signUpContainer}>
         <Text.H6>{t('auth:text_sign_up_desc')} </Text.H6>
@@ -233,6 +230,14 @@ const themeStyles = (theme: ITheme) => {
     },
     title: {
       marginVertical: spacing.margin.large,
+    },
+    inputEmail: {
+      marginTop: 0,
+      marginBottom: theme.spacing.margin.small,
+    },
+    inputPassword: {
+      marginTop: 0,
+      marginBottom: 0,
     },
     forgotButton: {
       alignSelf: 'flex-end',

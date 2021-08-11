@@ -64,7 +64,7 @@ const ForgotPassword = () => {
     return (
       <View style={styles.completeContainer}>
         <SVGIcon
-          style={{alignSelf: 'center'}}
+          style={styles.svg}
           // @ts-ignore
           source={LockImg}
           size={imgSize}
@@ -92,7 +92,7 @@ const ForgotPassword = () => {
           <FlashMessage
             type="error"
             onClose={onClearErrorBox}
-            style={{marginTop: theme.spacing.margin.big}}>
+            style={styles.flashMessage}>
             {errBox}
           </FlashMessage>
         )}
@@ -127,9 +127,15 @@ const themeStyles = (theme: ITheme) => {
       marginTop: spacing.margin.small,
       paddingVertical: spacing.padding.small,
     },
+    flashMessage: {
+      marginTop: theme.spacing.margin.big,
+    },
     completeContainer: {
       // @ts-ignore
       paddingTop: spacing.padding.big + spacing.padding.large,
+    },
+    svg: {
+      alignSelf: 'center',
     },
     textContainer: {
       marginTop: spacing.margin.large,
