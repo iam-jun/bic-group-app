@@ -1,7 +1,8 @@
-import React, {FC, useState, useEffect, useContext} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import moment from 'moment';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -36,9 +37,9 @@ const PostView: FC<PostViewProps> = ({
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {id, data, actor, audience, time, important, own_reactions} =
+  const {id, object, actor, audience, time, important, own_reactions} =
     postData || {};
-  const {content} = data || {};
+  const {content} = object?.data || {};
 
   const userId = useUserIdAuth();
 
@@ -81,13 +82,15 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    dispatch(
-      menuActions.selectUserProfile({
-        id: actor?.id?.toString(),
-        isPublic: true,
-      }),
-    );
-    rootNavigation.navigate(mainStack.myProfile);
+    if (actor?.id) {
+      dispatch(
+        menuActions.selectUserProfile({
+          id: actor?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(mainStack.myProfile);
+    }
   };
 
   const onPressShowAudiences = () => {
@@ -133,8 +136,9 @@ const PostView: FC<PostViewProps> = ({
     }
     let postTime = '';
     if (time) {
-      const date = new Date(time);
-      postTime = formatDate(date) || '';
+      const dateUtc = moment.utc(time);
+      const localDate = dateUtc.local();
+      postTime = formatDate(localDate) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };
