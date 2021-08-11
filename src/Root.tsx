@@ -79,6 +79,7 @@ export default (): React.ReactElement => {
     setUpLanguage();
     // TODO:
     const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('foreground', {remoteMessage});
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
 
@@ -159,7 +160,9 @@ export default (): React.ReactElement => {
     <SafeAreaProvider>
       <ThemeProvider>
         <StatusBar
-          barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+          // Dark mode has not ready yet
+          // barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+          barStyle="dark-content"
           translucent
           backgroundColor="transparent"
         />

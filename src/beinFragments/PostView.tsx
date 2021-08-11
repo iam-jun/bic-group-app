@@ -1,24 +1,24 @@
-import React, {FC, useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
 
-import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
-import Icon from '~/beinComponents/Icon';
-import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import menuActions from '~/screens/Menu/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import menuActions from '~/screens/Menu/redux/actions';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {formatDate} from '~/utils/formatData';
 
 export interface PostViewProps {
   postData: IPostActivity;
@@ -82,15 +82,13 @@ const PostView: FC<PostViewProps> = ({
   }, [important]);
 
   const onPressActor = () => {
-    if (actor?.id) {
-      dispatch(
-        menuActions.selectUserProfile({
-          id: actor?.id?.toString(),
-          isPublic: true,
-        }),
-      );
-      rootNavigation.navigate(mainStack.myProfile);
-    }
+    dispatch(
+      menuActions.selectUserProfile({
+        id: actor?.id?.toString(),
+        isPublic: true,
+      }),
+    );
+    rootNavigation.navigate(menuStack.myProfile);
   };
 
   const onPressShowAudiences = () => {

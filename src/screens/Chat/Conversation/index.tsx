@@ -43,7 +43,7 @@ const Conversation = () => {
 
   const _getMessages = () => {
     dispatch(actions.resetData('messages'));
-    dispatch(actions.getData('messages', {roomId: conversation._id}));
+    dispatch(actions.getData('messages', {roomId: conversation?._id}));
   };
 
   const loadMoreMessages = () => {

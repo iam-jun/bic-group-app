@@ -137,7 +137,6 @@ function* sendMessage({payload}: {payload: IMessage; type: string}) {
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.sendMessage({
         roomId: conversation._id,
-        channel: conversation.name,
         text: payload.text,
       }),
     );

@@ -1,40 +1,92 @@
-import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import {
   NavigationContainer,
   RouteProp,
   useRoute,
 } from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import mainStack from './stack';
-import screens from './screens';
-
-import {ITheme} from '~/theme/interfaces';
-import {deviceDimensions} from '~/theme/dimension';
-import {spacing} from '~/theme';
-import {leftNavigationRef, rightNavigationRef} from '../refs';
-import AppInfo from '~/screens/AppInfo';
-import LeftTabs from './LeftTabs';
-import {RootStackParamList} from '~/interfaces/IRouter';
-import BaseStackNavigator from '~/router/components/BaseStackNavigator';
-import {closeConnectChat, connectChat} from '~/services/chatSocket';
 import AlertModal from '~/beinComponents/modals/AlertModal';
+import {useRootNavigation} from '~/hooks/navigation';
+import {RootStackParamList} from '~/interfaces/IRouter';
+import {rootSwitch} from '~/router/stack';
+import AppInfo from '~/screens/AppInfo';
+import notificationsActions from '~/constants/notificationActions';
+import {closeConnectChat, connectChat} from '~/services/chatSocket';
+import {spacing} from '~/theme';
+import {deviceDimensions} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import {leftNavigationRef, rightNavigationRef} from '../refs';
+import LeftTabs from './LeftTabs';
+import MainTabs from './MainTabs';
+
 const Stack = createStackNavigator();
 
 const MainStack = (): React.ReactElement => {
   const dimensions = useWindowDimensions();
-  const theme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const route = useRoute<RouteProp<RootStackParamList, 'MainStack'>>();
+  const {rootNavigation} = useRootNavigation();
 
   React.useEffect(() => {
+    listenFCMEvents();
     connectChat();
     return () => {
       closeConnectChat();
     };
   }, []);
+
+  const listenFCMEvents = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      handleOpenedNotification(remoteMessage);
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        handleInitialNotification(remoteMessage);
+      });
+  };
+
+  const handleOpenedNotification = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage,
+  ) => {
+    const data = handleMessageData(remoteMessage);
+    if (data) rootNavigation.navigate(data.screen, data.params);
+  };
+
+  const handleInitialNotification = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ) => {
+    const data = handleMessageData(remoteMessage);
+
+    if (data) rootNavigation.navigate(rootSwitch.mainStack, data);
+  };
+
+  const handleMessageData = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ): {screen: any; params: any} | undefined => {
+    if (!remoteMessage) return;
+
+    try {
+      //@ts-ignore
+      let screen = notificationsActions[remoteMessage?.data?.type];
+      const payload = remoteMessage?.data?.payload
+        ? JSON.parse(remoteMessage?.data?.payload)
+        : undefined;
+      if (screen.params)
+        screen = {...screen, params: {...screen.params, params: payload}};
+      else screen = {...screen, params: payload};
+      return screen;
+    } catch (err) {
+      return;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -54,7 +106,7 @@ const MainStack = (): React.ReactElement => {
           style={{
             flex: deviceDimensions.centerCols,
           }}>
-          <BaseStackNavigator screens={screens} stack={mainStack} />
+          <MainTabs />
         </View>
         {dimensions.width >= deviceDimensions.laptop && (
           <View
