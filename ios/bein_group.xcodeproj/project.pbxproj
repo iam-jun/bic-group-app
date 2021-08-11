@@ -555,7 +555,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = bein_group/Info.plist;
@@ -573,6 +573,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -586,7 +587,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -602,6 +603,7 @@
 				PRODUCT_NAME = bein_group;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

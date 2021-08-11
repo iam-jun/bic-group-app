@@ -39,9 +39,9 @@ export interface PrimaryItemProps {
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: () => void;
-  LeftComponent?: React.ReactElement;
-  RightComponent?: React.ReactElement;
-  ContentComponent?: React.ReactNode;
+  LeftComponent?: React.ReactNode | React.ReactElement;
+  RightComponent?: React.ReactNode | React.ReactElement;
+  ContentComponent?: React.ReactNode | React.ReactElement;
 }
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({

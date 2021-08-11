@@ -26,6 +26,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {ReactionType} from '~/constants/reactions';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 export interface PostViewProps {
   postId: string;
@@ -109,7 +110,7 @@ const PostView: FC<PostViewProps> = ({
           isPublic: true,
         }),
       );
-      rootNavigation.navigate(menuStack.myProfile);
+      rootNavigation.navigate(homeStack.myProfile);
     }
   };
 

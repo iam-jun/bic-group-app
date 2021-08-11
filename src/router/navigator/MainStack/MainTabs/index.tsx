@@ -52,7 +52,7 @@ const MainTabs = () => {
         isPhone
           ? {}
           : {
-              width: 64,
+              width: isBigTablet ? 0 : 64,
               backgroundColor: colors.background,
             }
       }>

@@ -9,6 +9,7 @@ import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import {roomTypes} from '~/constants/chat';
 import {options} from '~/constants/messageOptions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
@@ -43,12 +44,16 @@ const Conversation = () => {
     conversation.avatar,
   );
   const isFocused = useIsFocused();
+  const isDirect = conversation.type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
-    const {usernames} = conversation;
-    if (usernames)
-      setAvatar(usernames.map((username: string) => getAvatar(username)));
-    else setAvatar(images.img_group_avatar_default);
+    if (isDirect) setAvatar(images.img_user_avatar_default);
+    else {
+      const {usernames} = conversation;
+      if (usernames)
+        setAvatar(usernames.map((username: string) => getAvatar(username)));
+      else setAvatar(images.img_group_avatar_default);
+    }
   };
 
   useEffect(() => {
