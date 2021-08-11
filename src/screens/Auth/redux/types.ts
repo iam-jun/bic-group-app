@@ -12,4 +12,3 @@ export const SIGN_OUT = 'auth/SIGN_OUT';
 export const FORGOT_PASSWORD_REQUEST = 'auth/FORGOT_PASSWORD_REQUEST';
 export const FORGOT_PASSWORD_CONFIRM = 'auth/FORGOT_PASSWORD_CONFIRM';
 export const SIGN_IN_SUCCESS = 'auth/SIGN_IN_SUCCESS';
-export const CHECK_AUTH_STATE = 'auth/CHECK_AUTH_STATE';

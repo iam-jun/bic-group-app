@@ -11,11 +11,11 @@ import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
-import {checkAuthState, setupPushToken} from '~/screens/AppLoading/redux/saga';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import * as actions from './actions';
+import * as appActions from '~/store/app/actions';
 import * as types from './types';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -28,7 +28,6 @@ export default function* authSaga() {
   yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
   yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest);
   yield takeLatest(types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm);
-  yield takeLatest(types.CHECK_AUTH_STATE, checkAuthState);
 }
 
 function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
@@ -105,7 +104,7 @@ function* onSignInSuccess(user: IUserResponse) {
   if (Platform.OS === 'web') {
     return;
   }
-  yield setupPushToken();
+  yield put(appActions.setupPushToken());
 }
 
 function* onSignInFailed(errorMessage: string) {

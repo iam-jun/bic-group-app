@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import messaging from '@react-native-firebase/messaging';
 import {View} from 'react-native';
-import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
-import FlashMessage from '~/beinComponents/FlashMessage';
-import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
+import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
-import {Clipboard} from 'react-native';
+import Divider from '~/beinComponents/Divider';
+import FlashMessage from '~/beinComponents/FlashMessage';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
+import {copyDeviceToken} from '~/store/app/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const Section1 = () => {
   const {spacing, colors}: ITheme = useTheme() as ITheme;
@@ -16,11 +16,10 @@ const Section1 = () => {
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
   const [showSuccess, setShowSuccess] = useState(true);
+  const dispatch = useDispatch();
 
-  const copyDeviceToken = async () => {
-    const deviceToken = await messaging().getToken();
-    Clipboard.setString(deviceToken);
-    alert(`Copied\n\n ${deviceToken}`);
+  const copyToken = async () => {
+    dispatch(copyDeviceToken());
   };
 
   const renderSection = (title: string, child: React.ReactNode) => {
@@ -307,9 +306,7 @@ const Section1 = () => {
 
   return (
     <View style={{}}>
-      <Button.Primary onPress={copyDeviceToken}>
-        Copy Device Token
-      </Button.Primary>
+      <Button.Primary onPress={copyToken}>Copy Device Token</Button.Primary>
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
       {renderFlashMessage()}
