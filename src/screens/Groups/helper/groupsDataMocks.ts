@@ -57,6 +57,42 @@ const groupDataMocks = {
       message: 'Get group tree which the user being in successful',
     },
   },
+  getGroupMembers: {
+    code: 200,
+    data: {
+      admin: {
+        id: 1,
+        user_count: 5,
+        name: 'Admin',
+        data: [
+          {
+            id: 15,
+            fullname: 'Trang Trang',
+            avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+            title: 'Admin blah blah',
+          },
+        ],
+      },
+      member: {
+        id: 1,
+        user_count: 99999,
+        name: 'Members',
+        data: [
+          {
+            id: 9,
+            fullname: 'Nam Anh',
+            avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+            title: '', //optional
+          },
+          {
+            id: 13,
+            fullname: 'Ốc Hu Mần',
+            avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+          },
+        ],
+      },
+    },
+  },
 };
 
 export default groupDataMocks;

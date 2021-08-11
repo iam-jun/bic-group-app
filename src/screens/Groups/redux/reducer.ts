@@ -3,7 +3,15 @@ const initGroupsState = {
   loadingJoinedGroups: false,
   joinedGroups: [],
   loadingGroupDetail: false,
-  groupDetail: {},
+  groupDetail: {
+    group: undefined,
+  },
+  groupMember: {
+    skip: 0,
+    take: 10,
+    canLoadMore: true,
+    //type admin, member...
+  },
   loadingGroupPosts: false,
   groupPosts: [],
 };
@@ -37,6 +45,16 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         groupDetail: action.payload || {},
+      };
+    case groupsTypes.CLEAR_GROUP_MEMBER:
+      return {
+        ...state,
+        groupMember: initGroupsState.groupMember,
+      };
+    case groupsTypes.SET_GROUP_MEMBER:
+      return {
+        ...state,
+        groupMember: action.payload,
       };
     case groupsTypes.SET_LOADING_GROUP_POSTS:
       return {

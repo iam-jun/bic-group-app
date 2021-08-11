@@ -15,6 +15,7 @@ import {AppContext} from '~/contexts/AppContext';
 import homeActions from '~/screens/Home/redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
 import postActions from '~/screens/Post/redux/actions';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const Newsfeed = () => {
   const theme = useTheme() as ITheme;
@@ -57,7 +58,9 @@ const Newsfeed = () => {
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
         icon={images.logo_bein}
-        onPressMenu={getData}
+        onPressMenu={() => {
+          dispatch(groupsActions.clearGroupMembers());
+        }}
         menuIcon={'Sync'}
       />
       <ListView
