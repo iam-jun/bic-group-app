@@ -5,11 +5,16 @@ const Stack = createStackNavigator();
 export interface Props {
   stack: {[x: string]: string};
   screens: {[x: string]: React.ComponentType<any>};
+  initialRouteName?: string;
 }
 
-const BaseStackNavigator = ({stack, screens}: Props): React.ReactElement => {
+const BaseStackNavigator = ({
+  stack,
+  screens,
+  initialRouteName,
+}: Props): React.ReactElement => {
   return (
-    <Stack.Navigator headerMode="screen">
+    <Stack.Navigator headerMode="screen" initialRouteName={initialRouteName}>
       {Object.entries(stack).map(([name, component]) => {
         return (
           <Stack.Screen

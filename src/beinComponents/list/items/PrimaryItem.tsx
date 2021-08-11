@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import Text from '~/beinComponents/Text';
+import Text, {TextProps} from '~/beinComponents/Text';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -23,7 +23,9 @@ export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
   height?: number;
   title?: string;
+  titleProps?: TextProps;
   subTitle?: string;
+  subTitleProps?: TextProps;
   showAvatar?: boolean;
   avatar?: string;
   avatarProps?: AvatarProps;
@@ -46,10 +48,12 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
   height,
   title,
+  titleProps,
   showAvatar,
   avatar,
   avatarProps,
   subTitle,
+  subTitleProps,
   leftIcon,
   leftIconProps,
   LeftComponent,
@@ -64,7 +68,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   RightComponent,
   ContentComponent,
 }: PrimaryItemProps) => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const {dimension, spacing} = theme;
   const styles = createStyle(theme);
 
@@ -96,8 +100,16 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         />
       )}
       <View style={styles.contentContainer}>
-        {!!title && <Text.H6 numberOfLines={2}>{title}</Text.H6>}
-        {!!subTitle && <Text.Body numberOfLines={2}>{subTitle}</Text.Body>}
+        {!!title && (
+          <Text variant="h6" numberOfLines={2} {...titleProps}>
+            {title}
+          </Text>
+        )}
+        {!!subTitle && (
+          <Text variant="body" numberOfLines={2} {...subTitleProps}>
+            {subTitle}
+          </Text>
+        )}
         {ContentComponent}
       </View>
       {onPressCheckbox && (

@@ -50,6 +50,7 @@ const initState = {
     loading: false,
     data: [],
   },
+  subscriptions: [],
 };
 
 /**
@@ -124,6 +125,18 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           data: action.payload,
         },
       };
+    case types.SET_SUBSCRIPTIONS:
+      return {
+        ...state,
+        subscriptions: action.payload,
+      };
+    case types.READ_SUBCRIPTIONS:
+      return {
+        ...state,
+        subscriptions: state.subscriptions.map((sub: any) =>
+          sub.rid === action.payload ? {...sub, unread: 0} : sub,
+        ),
+      };
     case types.SELECT_CONVERSATION:
       return {
         ...state,
@@ -133,11 +146,27 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         },
         messages: initState.messages,
       };
-    case types.ADD_NEW_MESSAGE:
+    case types.GET_CONVERSATION_DETAIL:
+      return {
+        ...state,
+        conversation: {
+          _id: action.payload,
+        },
+      };
+    case types.SET_CONVERSATION_DETAIL:
+      return {
+        ...state,
+        conversation: action.payload,
+      };
+    case types.ADD_NEW_MESSAGE: {
+      const include = messages.data.find(
+        (item: IMessage) => item._id === action.payload._id,
+      );
+
       return {
         ...state,
         messages:
-          action.payload.room_id === conversation._id
+          action.payload.room_id === conversation._id && !include
             ? {
                 ...messages,
                 data: [action.payload, ...messages.data],
@@ -155,7 +184,13 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
               : item,
           ),
         },
+        subscriptions: state.subscriptions.map((sub: any) =>
+          sub.rid === action.payload.room_id
+            ? {...sub, unread: sub.unread + 1}
+            : sub,
+        ),
       };
+    }
     case types.SELECT_USER:
       return {
         ...state,

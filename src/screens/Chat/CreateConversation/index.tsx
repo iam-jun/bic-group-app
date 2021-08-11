@@ -38,7 +38,7 @@ const CreateConversation = (): React.ReactElement => {
         extraData: {
           topic: generateRoomName(
             user,
-            selectedUsers.slice(0, 2).map((user: IUser) => user.name),
+            selectedUsers.map((user: IUser) => user.name),
           ),
         },
         customFields: {
@@ -63,6 +63,7 @@ const CreateConversation = (): React.ReactElement => {
       <ViewSpacing height={spacing?.margin.base} />
       <MembersSelection
         selectable
+        title={i18next.t('common:text_all')}
         loading={users.loading}
         data={users.data}
         onLoadMore={loadMoreData}

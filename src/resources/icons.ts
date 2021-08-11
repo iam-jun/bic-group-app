@@ -152,6 +152,16 @@ const icons = {
   Calender: 'Calender',
   Globe: 'Globe',
   Lock: 'Lock',
+  ConversationInfo: 'CommentInfo',
+  UserExclamation: 'UserExclamation',
+  Cog: 'Cog',
+  ChatBubbleUser: 'ChatBubbleUser',
+  UserCircle: 'UserCircle',
+  FileCopyAlt: 'FileCopyAlt',
+  WebGrid: 'WebGrid',
+  EyeSlash: 'EyeSlash',
+  Check: 'Check',
+  UsersAlt: 'UsersAlt',
   ...reactionIcons,
 };
 

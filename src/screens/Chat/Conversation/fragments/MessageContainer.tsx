@@ -68,12 +68,12 @@ const MessageContainer: React.FC<MessageContainerProps> = (
               placeholderSource={images.img_user_avatar_default}
             />
             <View style={styles.viewHeaderInfo}>
-              <Text.H6 style={styles.textName}>
+              <Text.BodyM style={styles.textName}>
                 {_currentMessage?.user.name}
-              </Text.H6>
-              <Text.Body style={styles.textTime}>
+              </Text.BodyM>
+              <Text.BodyS style={styles.textTime}>
                 {countTime(_currentMessage?._updatedAt)}
-              </Text.Body>
+              </Text.BodyS>
             </View>
           </View>
           <ViewSpacing height={spacing.margin.base} />
@@ -117,23 +117,23 @@ const createStyles = (theme: IObject<any>) => {
     },
     viewHeaderInfo: {
       flexDirection: 'row',
-      alignItems: 'flex-start',
+      alignItems: 'center',
+      paddingLeft: spacing.padding.tiny,
+      marginTop: -spacing.margin.small,
+      marginBottom: spacing.margin.base,
     },
 
     textName: {
       marginStart: spacing.margin.small,
       textTransform: 'capitalize',
-      paddingTop: 0,
     },
     textTime: {
       color: colors.textSecondary,
       marginStart: spacing.margin.small,
-      marginTop: 0,
-      textAlignVertical: 'top',
     },
     reactions: {
       flexDirection: 'row',
-      marginStart: 40,
+      marginStart: 44,
       paddingHorizontal: spacing.padding.small,
     },
   });

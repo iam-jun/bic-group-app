@@ -1,24 +1,24 @@
-import React, {FC, useState, useEffect, useRef} from 'react';
+import React, {FC, useEffect, useState, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import moment from 'moment';
 
-import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
-import Icon from '~/beinComponents/Icon';
-
-import {formatDate} from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import menuActions from '~/screens/Menu/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import menuActions from '~/screens/Menu/redux/actions';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {formatDate} from '~/utils/formatData';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import ReactionView from '~/screens/Post/components/ReactionView';
@@ -109,7 +109,7 @@ const PostView: FC<PostViewProps> = ({
           isPublic: true,
         }),
       );
-      rootNavigation.navigate(mainStack.myProfile);
+      rootNavigation.navigate(menuStack.myProfile);
     }
   };
 
@@ -178,8 +178,9 @@ const PostView: FC<PostViewProps> = ({
     }
     let postTime = '';
     if (time) {
-      const date = new Date(time);
-      postTime = formatDate(date) || '';
+      const dateUtc = moment.utc(time);
+      const localDate = dateUtc.local();
+      postTime = formatDate(localDate) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };

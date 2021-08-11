@@ -30,7 +30,7 @@ export interface PostInputProps extends TextInputProps {
 const PostInput: React.FC<PostInputProps> = ({
   style,
   placeholder,
-  multiline,
+  multiline = true,
   isFullScreen = true,
   textAlignVertical = 'top',
   onChangeText,

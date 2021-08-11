@@ -1,3 +1,4 @@
+import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
@@ -15,8 +16,11 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
+import {RootStackParamList} from '~/interfaces/IRouter';
+import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import {getAvatar} from '../helper';
 import {
   ChatFooter,
   ChatInput,
@@ -34,16 +38,36 @@ const Conversation = () => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
+  const [_avatar, setAvatar] = useState<string | string[] | undefined>(
+    conversation.avatar,
+  );
+  const isFocused = useIsFocused();
+
+  const onLoadAvatarError = () => {
+    const {usernames} = conversation;
+    if (usernames)
+      setAvatar(usernames.map((username: string) => getAvatar(username)));
+    else setAvatar(images.img_group_avatar_default);
+  };
 
   useEffect(() => {
-    if (messages.canLoadMore) {
-      _getMessages();
+    !isFocused && dispatch(actions.readSubcriptions(conversation._id));
+  }, []);
+
+  useEffect(() => {
+    if (route.params?.roomId) {
+      dispatch(actions.getConversationDetail(route.params.roomId));
     }
-  }, [conversation, messages.lastDate]);
+  }, [route.params]);
+
+  useEffect(() => {
+    _getMessages();
+  }, [conversation._id]);
 
   const _getMessages = () => {
     dispatch(actions.resetData('messages'));
-    dispatch(actions.getData('messages', {roomId: conversation._id}));
+    dispatch(actions.getData('messages', {roomId: conversation?._id}));
   };
 
   const loadMoreMessages = () => {
@@ -86,6 +110,10 @@ const Conversation = () => {
     messageOptionsModalRef.current?.close();
   };
 
+  const onSearchPress = async () => {
+    alert('Searching is in development');
+  };
+
   const onSend = (messages: GMessage[] = []) => {
     dispatch(
       actions.sendMessage({
@@ -109,11 +137,20 @@ const Conversation = () => {
 
   return (
     <ScreenWrapper isFullView testID="MessageScreen">
-      <Header title={conversation.name} onPressMenu={goConversationDetail} />
+      <Header
+        avatar={_avatar}
+        avatarProps={{onError: onLoadAvatarError}}
+        title={conversation.name}
+        titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
+        icon="search"
+        onPressIcon={onSearchPress}
+        menuIcon="ConversationInfo"
+        onPressMenu={goConversationDetail}
+      />
 
       <GiftedChat
         messages={messages.data}
-        onSend={messages => onSend(messages)}
+        onSend={onSend}
         user={{
           _id: 1,
         }}
@@ -171,6 +208,9 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
+    },
+    headerTitle: {
+      marginEnd: spacing.margin.small,
     },
   });
 };

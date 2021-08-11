@@ -46,7 +46,7 @@ const createStyles = (theme: IObject<any>) => {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       backgroundColor: 'transparent',
-      marginStart: 34,
+      marginStart: 38,
     },
   });
 };
