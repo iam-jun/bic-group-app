@@ -154,12 +154,9 @@ function* postReactToPost({
         data,
         userId,
       );
-      if (response?.data) {
+      if (response?.data?.[0]) {
         const reactionArr2: IReaction[] = [];
-        //todo waiting for BE update response
-        //reactionArr.push(response.data)
-        reactionArr2.push({kind: reactionId});
-        //todo remove above
+        reactionArr2.push({id: response?.data?.[0]});
         newOwnReaction[reactionId] = reactionArr2;
 
         yield onUpdateReactionOfPostById(
