@@ -1,0 +1,28 @@
+const reactionIcons = {
+  angry_furious: require('../../assets/reactions/angry_furious.png'),
+  congratulations_party: require('../../assets/reactions/congratulations_party.png'),
+  crazy_love_heart: require('../../assets/reactions/crazy_love_heart.png'),
+  crying_sad: require('../../assets/reactions/crying_sad.png'),
+  curious: require('../../assets/reactions/curious.png'),
+  excited: require('../../assets/reactions/excited.png'),
+  explosive_meltdown: require('../../assets/reactions/explosive_meltdown.png'),
+  fake_happy: require('../../assets/reactions/fake_happy.png'),
+  greedy_money: require('../../assets/reactions/greedy_money.png'),
+  laugh_lol: require('../../assets/reactions/laugh_lol.png'),
+  laugh_rofl: require('../../assets/reactions/laugh_rofl.png'),
+  like_a_boss_cool: require('../../assets/reactions/like_a_boss_cool.png'),
+  love_hearts: require('../../assets/reactions/love_hearts.png'),
+  pleading_cute: require('../../assets/reactions/pleading_cute.png'),
+  pokerface: require('../../assets/reactions/pokerface.png'),
+  relieved_laughter: require('../../assets/reactions/relieved_laughter.png'),
+  sad_sweat: require('../../assets/reactions/sad_sweat.png'),
+  scare_frightened: require('../../assets/reactions/scare_frightened.png'),
+  smile_laugh: require('../../assets/reactions/smile_laugh.png'),
+  stunned_game_over: require('../../assets/reactions/stunned_game_over.png'),
+  stunned_wow: require('../../assets/reactions/stunned_wow.png'),
+  tongue_out_smile: require('../../assets/reactions/tongue_out_smile.png'),
+  wink_kiss: require('../../assets/reactions/wink_kiss.png'),
+  worry_sad: require('../../assets/reactions/worry_sad.png'),
+};
+
+export default reactionIcons;

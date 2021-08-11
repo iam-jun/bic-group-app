@@ -3,7 +3,7 @@ import React from 'react';
 import * as RnUnicons from '@iconscout/react-native-unicons';
 
 export interface UniconsProps {
-  icon?: string;
+  icon?: string | number;
   name?: string;
   size?: number;
   tintColor?: string;

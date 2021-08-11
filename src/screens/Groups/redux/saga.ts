@@ -3,6 +3,7 @@ import {IGroup, IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
+import postActions from '~/screens/Post/redux/actions';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -107,6 +108,7 @@ function* getGroupPosts({payload}: {type: string; payload: number}) {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
     const result = yield requestGroupPosts(payload);
+    yield put(postActions.addToAllPosts(result));
     yield put(groupsActions.setGroupPosts(result));
     yield put(groupsActions.setLoadingGroupPosts(false));
   } catch (e) {

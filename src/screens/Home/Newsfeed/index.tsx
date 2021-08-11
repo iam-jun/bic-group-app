@@ -14,6 +14,7 @@ import useHome from '~/hooks/home';
 import {AppContext} from '~/contexts/AppContext';
 import homeActions from '~/screens/Home/redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
+import postActions from '~/screens/Post/redux/actions';
 
 const Newsfeed = () => {
   const theme = useTheme() as ITheme;
@@ -29,14 +30,24 @@ const Newsfeed = () => {
     return <PostItem postData={item} />;
   };
 
+  const getData = () => {
+    if (streamClient) {
+      dispatch(
+        homeActions.getHomePosts({
+          streamClient,
+          userId: userId.toString(),
+        }),
+      );
+    }
+  };
+
   useEffect(() => {
-    dispatch(
-      homeActions.getHomePosts({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
+    getData();
   }, [streamClient]);
+
+  useEffect(() => {
+    dispatch(postActions.addToAllPosts(homePosts));
+  }, [homePosts]);
 
   return (
     <View style={styles.container}>
@@ -46,6 +57,8 @@ const Newsfeed = () => {
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
         icon={images.logo_bein}
+        onPressMenu={getData}
+        menuIcon={'Sync'}
       />
       <ListView
         isFullView

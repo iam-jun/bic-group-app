@@ -52,6 +52,7 @@ import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
 import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
+import reactionIcons from '~/resources/reactions';
 
 const icons = {
   iconTabHome,
@@ -95,6 +96,7 @@ const icons = {
   ImageV: 'ImageV',
   Paperclip: 'Paperclip',
   ImagePlus: 'ImagePlus',
+  Sync: 'Sync',
   Link: 'Link',
   EllipsisV: 'EllipsisV',
   EllipsisH: 'EllipsisH',
@@ -160,6 +162,7 @@ const icons = {
   EyeSlash: 'EyeSlash',
   Check: 'Check',
   UsersAlt: 'UsersAlt',
+  ...reactionIcons,
 };
 
 export default icons;
