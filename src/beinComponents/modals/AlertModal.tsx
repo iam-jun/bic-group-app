@@ -12,19 +12,18 @@ import * as actions from '~/store/modal/actions';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
-  dismissable?: boolean;
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
   style,
-  dismissable,
   ...props
 }: AlertModalProps) => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   const {alert} = useModal();
   const {
+    isDismissable,
     visible,
     title,
     content,
@@ -36,10 +35,13 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
   const dispatch = useDispatch();
 
+  const _onDismiss = () => dispatch(actions.hideAlert());
+
   return (
     <Modal
       visible={visible}
-      dismissable={dismissable}
+      dismissable={isDismissable}
+      onDismiss={_onDismiss}
       contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
       {...props}>
       <View style={styles.container}>
@@ -55,9 +57,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               style={{marginEnd: theme.spacing?.margin.base}}
               textColor={theme.colors.primary7}
               color={theme.colors.primary2}
-              onPress={() => {
-                dispatch(actions.hideAlert());
-              }}>
+              onPress={_onDismiss}>
               Cancel
             </Button.Secondary>
           )}

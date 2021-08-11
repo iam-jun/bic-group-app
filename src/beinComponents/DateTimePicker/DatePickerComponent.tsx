@@ -1,17 +1,27 @@
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from 'react-native-modal-datetime-picker';
 
 import React, {FC} from 'react';
 import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 
 const DatePickerComponent: FC<DatePickerComponentProps> = ({
-  onChange,
+  isVisible = false,
+  date,
+  onConfirm,
+  onCancel,
+  mode,
   ...props
 }: DatePickerComponentProps) => {
-  const _onChange = (event: Event, time: Date) => {
-    onChange?.({event: event?.type, value: time});
-  };
   // @ts-ignore
-  return <RNDateTimePicker {...props} onChange={_onChange} />;
+  return (
+    <RNDateTimePicker
+      isVisible={isVisible}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+      mode={mode}
+      date={date}
+      {...props}
+    />
+  );
 };
 
 export default DatePickerComponent;

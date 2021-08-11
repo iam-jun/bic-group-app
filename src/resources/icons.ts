@@ -151,6 +151,12 @@ const icons = {
   Globe: 'Globe',
   Lock: 'Lock',
   ConversationInfo: 'CommentInfo',
+  UserExclamation: 'UserExclamation',
+  Cog: 'Cog',
+  ChatBubbleUser: 'ChatBubbleUser',
+  UserCircle: 'UserCircle',
+  FileCopyAlt: 'FileCopyAlt',
+  WebGrid: 'WebGrid',
 };
 
 export default icons;
