@@ -1,9 +1,11 @@
 import {useSelector} from 'react-redux';
-import {IObject} from '~/interfaces/common';
+import {getConversations} from '~/selectors/chat';
 
 const useChat = () => {
-  const chat = useSelector((state: IObject<any>) => state.chat);
-  return chat;
+  const chat = useSelector((state: any) => state.chat);
+  const conversations = useSelector(state => getConversations(state));
+
+  return {...chat, conversations};
 };
 
 export default useChat;

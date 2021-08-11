@@ -1,6 +1,6 @@
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
-import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
+import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
@@ -49,6 +49,20 @@ const getGroupRols = () => ({
 
 const setGroupRoles = (payload: IUser[]) => ({
   type: Actions.SET_GROUP_ROLES,
+  payload,
+});
+
+const getSubscriptions = () => ({
+  type: Actions.GET_SUBSCRIPTIONS,
+});
+
+const setSubscriptions = (payload: IConversation[]) => ({
+  type: Actions.SET_SUBSCRIPTIONS,
+  payload,
+});
+
+const readSubcriptions = (payload: string) => ({
+  type: Actions.READ_SUBCRIPTIONS,
   payload,
 });
 
@@ -122,6 +136,9 @@ export default {
   setConversationDetail,
   getGroupRols,
   setGroupRoles,
+  getSubscriptions,
+  setSubscriptions,
+  readSubcriptions,
   handleEvent,
   selectConversation,
   sendMessage,

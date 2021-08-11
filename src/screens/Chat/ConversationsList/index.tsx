@@ -15,7 +15,6 @@ import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
-import {spacing} from '~/theme';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -24,16 +23,18 @@ const ConversationsList = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
-  const {groups} = useChat();
-  const {data, loading} = groups;
+
+  const {conversations} = useChat();
+  const {data, loading} = conversations;
 
   useEffect(() => {
+    dispatch(actions.getSubscriptions());
     _getConversations();
   }, []);
 
   const _getConversations = () => {
     dispatch(actions.resetData('groups'));
-    dispatch(actions.getData('groups'));
+    dispatch(actions.getData('groups', {sort: {_updatedAt: -1}}));
   };
 
   const loadMore = () => {
@@ -42,6 +43,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.selectConversation(item));
+    dispatch(actions.readSubcriptions(item._id));
     rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
   };
 
@@ -77,7 +79,7 @@ const ConversationsList = (): React.ReactElement => {
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {colors} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {},
     inputSearch: {

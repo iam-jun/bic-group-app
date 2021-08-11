@@ -6,7 +6,7 @@ import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
-import {ICreateRoomReq} from '~/interfaces/IHttpRequest';
+import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -33,6 +33,8 @@ export default function* saga() {
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeLatest(types.SEND_MESSAGE, sendMessage);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
+  yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
+  yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
 }
 
 function* getData({
@@ -100,6 +102,30 @@ function* getGroupRoles() {
     yield put(actions.setGroupRoles(roles));
   } catch (err) {
     console.log('getGroupRoles', err);
+  }
+}
+
+function* getSubscriptions() {
+  try {
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.subcriptions(),
+    );
+
+    yield put(actions.setSubscriptions(response.data?.update || []));
+  } catch (err) {
+    console.log('getSubscriptions', err);
+  }
+}
+
+function* readSubcriptions({payload}: {type: string; payload: string}) {
+  try {
+    yield makeHttpRequest(
+      apiConfig.Chat.readSubcriptions({
+        rid: payload,
+      }),
+    );
+  } catch (err) {
+    console.log('readSubcriptions', err);
   }
 }
 
@@ -212,9 +238,7 @@ function* handleRoomsMessage(payload?: any) {
       break;
     // New message event doesn't have type
     case undefined:
-      // Current user messges are handled locally
-      if (data.u.username !== auth.user.username)
-        yield put(actions.addNewMessage(mapMessage(data)));
+      yield put(actions.addNewMessage(mapMessage(data)));
       break;
   }
 }

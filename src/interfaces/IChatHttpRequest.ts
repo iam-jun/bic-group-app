@@ -46,3 +46,7 @@ export interface IGetGroupRolesReq {
 export interface IGetGroupReq {
   roomId: string;
 }
+
+export interface IReadSubscription {
+  rid: string;
+}

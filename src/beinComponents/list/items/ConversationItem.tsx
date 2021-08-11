@@ -17,11 +17,13 @@ const ConversationItem: React.FC<IConversation> = ({
   usernames,
   avatar,
   _updatedAt,
+  unreadCount,
 }: IConversation): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-
+  const {text, textReversed, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
+  const textcolor = unreadCount ? text : textSecondary;
 
   const onLoadAvatarError = () => {
     if (usernames)
@@ -32,19 +34,36 @@ const ConversationItem: React.FC<IConversation> = ({
   return (
     <PrimaryItem
       title={name}
+      titleProps={{
+        color: textcolor,
+      }}
+      subTitleProps={{
+        variant: unreadCount ? 'bodyM' : 'body',
+        color: textcolor,
+      }}
       subTitle={lastMessage}
       LeftComponent={
         <Avatar.Group
+          variant="large"
           style={styles.marginRight}
           source={_avatar}
           onError={onLoadAvatarError}
         />
       }
       RightComponent={
-        <View style={styles.marginLeft}>
-          <Text.H6 color={theme.colors.textSecondary}>
+        <View style={styles.rightComponent}>
+          <Text.Subtitle
+            style={styles.textUpdate}
+            color={theme.colors.textSecondary}>
             {countTime(_updatedAt)}
-          </Text.H6>
+          </Text.Subtitle>
+          {unreadCount && (
+            <View style={styles.unread}>
+              <Text.ButtonSmall color={textReversed}>
+                {unreadCount}
+              </Text.ButtonSmall>
+            </View>
+          )}
         </View>
       }
     />
@@ -52,14 +71,28 @@ const ConversationItem: React.FC<IConversation> = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
-    marginLeft: {
+    rightComponent: {
       marginLeft: spacing.margin.base,
+      alignSelf: 'baseline',
+      alignItems: 'flex-end',
     },
     marginRight: {
       marginRight: spacing.margin.base,
+    },
+    textUpdate: {
+      paddingTop: 0,
+    },
+    unread: {
+      borderRadius: spacing?.borderRadius.large,
+      width: spacing?.lineHeight.base,
+      height: spacing?.lineHeight.base,
+      marginTop: spacing?.margin.base,
+      backgroundColor: colors.error,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

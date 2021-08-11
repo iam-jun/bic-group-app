@@ -38,7 +38,7 @@ const CreateConversation = (): React.ReactElement => {
         extraData: {
           topic: generateRoomName(
             user,
-            selectedUsers.slice(0, 2).map((user: IUser) => user.name),
+            selectedUsers.map((user: IUser) => user.name),
           ),
         },
         customFields: {

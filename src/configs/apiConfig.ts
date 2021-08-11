@@ -4,8 +4,9 @@ import {
   IGetGroupReq,
   IGetGroupRolesReq,
   IPaginationParams,
+  IReadSubscription,
   ISendMessageReq,
-} from '~/interfaces/IHttpRequest';
+} from '~/interfaces/IChatHttpRequest';
 import {getEnv} from '~/utils/env';
 
 const providers = {
@@ -78,6 +79,23 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       params,
+    };
+  },
+  subcriptions: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}subscriptions.get`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+    };
+  },
+  readSubcriptions: (data: IReadSubscription): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}subscriptions.read`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data,
     };
   },
   sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {

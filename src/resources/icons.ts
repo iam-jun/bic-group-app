@@ -150,6 +150,7 @@ const icons = {
   Calender: 'Calender',
   Globe: 'Globe',
   Lock: 'Lock',
+  ConversationInfo: 'CommentInfo',
 };
 
 export default icons;
