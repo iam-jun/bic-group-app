@@ -29,7 +29,6 @@ export interface TextInputProps extends TextInputPaperProps {
   helperTextProps?: TextProps;
   helperAction?: string;
   helperActionOnPress?: () => void;
-
   theme?: ITheme;
   placeholder?: string;
   label?: string;
@@ -47,14 +46,13 @@ const TextInput: React.FC<TextInputProps> = ({
   helperTextProps,
   helperAction,
   helperActionOnPress,
-
   label,
   placeholder,
   error,
   disabled,
   ...props
 }: TextInputProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
 
   const customTheme = {
@@ -89,7 +87,7 @@ const TextInput: React.FC<TextInputProps> = ({
       <Text.H6
         onPress={helperActionOnPress}
         {..._textHelperProps}
-        style={{textDecorationLine: 'underline'}}>
+        style={helperActionStyle.style}>
         {`${helperAction}`}
       </Text.H6>
     );
@@ -114,10 +112,12 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholderTextColor={colors.textSecondary}
         {...props}
       />
-      <Text.Subtitle {..._textHelperProps}>
-        {helperContent}
-        {renderHelperAction()}
-      </Text.Subtitle>
+      {!!helperContent && (
+        <Text.Subtitle {..._textHelperProps}>
+          {helperContent}
+          {renderHelperAction()}
+        </Text.Subtitle>
+      )}
     </View>
   );
 };
@@ -140,5 +140,9 @@ const getTextHelperProps = (theme: ITheme, type: HelperType) => {
   };
   return props[type || 'secondary'] || props.secondary;
 };
+
+const helperActionStyle = StyleSheet.create({
+  style: {textDecorationLine: 'underline'},
+});
 
 export default TextInput;
