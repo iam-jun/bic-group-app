@@ -97,9 +97,3 @@ export function forgotPasswordConfirm(payload: IForgotPasswordConfirm) {
     payload,
   };
 }
-
-export function checkAuthState() {
-  return {
-    type: types.CHECK_AUTH_STATE,
-  };
-}

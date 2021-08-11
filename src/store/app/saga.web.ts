@@ -1,8 +1,5 @@
 import {takeLatest} from 'redux-saga/effects';
-import messaging from '@react-native-firebase/messaging';
-import {makePushTokenRequest} from '~/services/httpApiRequest';
 import * as types from './constants';
-import {Clipboard} from 'react-native';
 
 function timeOut(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -26,20 +23,11 @@ function* getConfigs() {
 }
 
 function* setupPushToken() {
-  try {
-    // Get Firebase token
-    const deviceToken: string = yield messaging().getToken();
-    // Push token firebase
-    yield makePushTokenRequest(deviceToken);
-  } catch (e) {
-    console.log('setupPushToken fail:', e);
-  }
+  yield console.log('web is not supported');
 }
 
 function* copyDeviceToken() {
-  const deviceToken: string = yield messaging().getToken();
-  Clipboard.setString(deviceToken);
-  alert(`Copied\n\n ${deviceToken}`);
+  yield console.log('web is not supported');
 }
 
 export {setupPushToken};
