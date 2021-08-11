@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -13,6 +13,7 @@ interface ReactionProps {
   selected: boolean;
   onActionPress: (action: IAction) => void;
   style?: StyleProp<ViewStyle>;
+  disableUpdateState?: boolean;
 }
 
 const Reaction: React.FC<ReactionProps> = ({
@@ -21,15 +22,23 @@ const Reaction: React.FC<ReactionProps> = ({
   selected,
   onActionPress,
   style,
+  disableUpdateState,
 }: ReactionProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme, isSelected);
 
+  useEffect(() => {
+    setIsSelected(selected);
+  }, [selected]);
+
   const _onChangeValue = () => {
     const newValue = !isSelected;
-    setIsSelected(newValue);
+
+    if (!disableUpdateState) {
+      setIsSelected(newValue);
+    }
 
     if (newValue) {
       onActionPress(commonActions.selectEmoji as IAction);

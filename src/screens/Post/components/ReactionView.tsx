@@ -46,7 +46,8 @@ const ReactionView: FC<ReactionViewProps> = ({
             style={{margin: 2}}
             value={reactionCounts[key]}
             icon={key}
-            selected={false}
+            disableUpdateState
+            selected={ownReactions?.[react]?.length > 0}
             onActionPress={action => onActionReaction(react, action)}
           />,
         );
