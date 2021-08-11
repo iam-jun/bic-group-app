@@ -1,4 +1,6 @@
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -36,6 +38,10 @@ import AlertModal from './components/modals/AlertModal';
 import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
+import {useRootNavigation} from './hooks/navigation';
+import {rootSwitch} from './router/stack';
+import notificationsActions from '~/constants/notificationActions';
+import {setupPushToken} from './store/app/actions';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
@@ -61,6 +67,7 @@ export default (): React.ReactElement => {
   // Init Get Stream
   const token = useSelector((state: any) => state.auth?.feed?.accessToken);
   const streamClient = useGetStream(token);
+  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
@@ -77,6 +84,8 @@ export default (): React.ReactElement => {
   useEffect(() => {
     setUpResource();
     setUpLanguage();
+    listenFCMEvents();
+
     // TODO:
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('foreground', {remoteMessage});
@@ -85,6 +94,48 @@ export default (): React.ReactElement => {
 
     return unsubscribe;
   }, []);
+
+  const listenFCMEvents = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      handleInitialNotification(remoteMessage);
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        handleInitialNotification(remoteMessage);
+      });
+  };
+
+  const handleInitialNotification = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ) => {
+    const data = handleMessageData(remoteMessage);
+    if (data) rootNavigation.navigate(rootSwitch.mainStack, data);
+  };
+
+  const handleMessageData = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ): {screen: any; params: any} | undefined => {
+    if (!remoteMessage) return;
+
+    try {
+      //@ts-ignore
+      let screen = notificationsActions[remoteMessage?.data?.type];
+      const payload = remoteMessage?.data?.payload
+        ? JSON.parse(remoteMessage?.data?.payload)
+        : undefined;
+      if (screen?.params)
+        screen = {
+          ...screen,
+          params: {...screen.params, params: {...payload, initial: false}},
+        };
+      else screen = {...screen, params: {...payload, initial: false}};
+      return screen;
+    } catch (err) {
+      return;
+    }
+  };
 
   /* Change language */
   const setUpLanguage = async () => {
@@ -123,6 +174,7 @@ export default (): React.ReactElement => {
       loaded: false,
     };
     try {
+      dispatch(setupPushToken());
       /*Fetch setting*/
       dispatch(fetchSetting());
 

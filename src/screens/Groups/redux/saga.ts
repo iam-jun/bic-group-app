@@ -1,4 +1,4 @@
-import {put, takeLatest} from 'redux-saga/effects';
+import {call, put, select, takeLatest} from 'redux-saga/effects';
 import {IGroup, IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -8,6 +8,7 @@ import postActions from '~/screens/Post/redux/actions';
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
+  yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
@@ -62,6 +63,45 @@ function* editGroupDetail({
     yield put(groupsActions.setGroupDetail(result));
   } catch (error) {
     console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
+  }
+}
+
+function* getGroupMember({payload}: {type: string; payload: number}) {
+  try {
+    const groupMembers: any = {}; //yield select(state => state?.groups?.groupMember);
+    const newGroupMembers = Object.assign({}, groupMembers || {});
+    const {skip = 0, take = 20, canLoadMore = true} = newGroupMembers;
+    if (canLoadMore) {
+      const response = yield call(
+        groupsDataHelper.getGroupMembers,
+        payload,
+        skip,
+        take,
+      );
+      let newSkip = skip;
+      let newCanLoadMore = canLoadMore;
+      if (response) {
+        Object.keys(response)?.map?.((role: any) => {
+          newSkip = newSkip + response?.[role]?.data?.length || 0;
+          if (newGroupMembers?.[role]) {
+            const roleData = {...newGroupMembers[role]};
+            newGroupMembers[role].data = roleData.data?.concat(
+              response?.[role]?.data || [],
+            );
+          } else {
+            newGroupMembers[role] = response?.[role];
+          }
+          newGroupMembers.skip = newSkip;
+        });
+        if (newSkip === skip) {
+          newCanLoadMore = false;
+        }
+        newGroupMembers.canLoadMore = newCanLoadMore;
+        yield put(groupsActions.setGroupMembers(newGroupMembers));
+      }
+    }
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
   }
 }
 

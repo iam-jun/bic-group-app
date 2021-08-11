@@ -30,7 +30,7 @@ import {
 } from './fragments';
 
 const Conversation = () => {
-  const {conversation, messages} = useChat();
+  const {conversation, messages, mentionResult} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<Modalize>();
@@ -176,6 +176,17 @@ const Conversation = () => {
           />
         )}
         renderInputToolbar={props => (
+          // <MentionInput
+          //   data={mentionResult}
+          //   modalStyle={styles.mentionInputModal}
+          //   modalPosition={'top'}
+          //   isMentionModalVisible={!!content && mentionResult?.length > 0}
+          //   onPress={onPressMentionAudience}
+          //   onChangeText={onChangeText}
+          //   onMentionText={onMentionText}
+          //   value={content}
+          //   ComponentInput={ChatInput}
+          // />
           <ChatInput
             {...props}
             /*

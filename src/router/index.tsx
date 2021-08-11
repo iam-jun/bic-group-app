@@ -16,6 +16,8 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import Store from '~/store';
+import {IUserResponse} from '~/interfaces/IAuth';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -25,6 +27,8 @@ const StackNavigator = (): React.ReactElement => {
   const [initialRouteName, setInitialRouteName] = React.useState<
     string | undefined
   >();
+
+  const user: IUserResponse | boolean = Store.getCurrentUser();
 
   useEffect(() => {
     //@ts-ignore
@@ -61,8 +65,6 @@ const StackNavigator = (): React.ReactElement => {
 
   const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
 
-  // if (!ready) return <View />;
-
   const onReady = () => {
     //@ts-ignore
     isNavigationRefReady.current = true;
@@ -75,18 +77,14 @@ const StackNavigator = (): React.ReactElement => {
       onReady={onReady}
       theme={navigationTheme}>
       <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
-        <Stack.Screen
-          options={{headerShown: false}}
-          //@ts-ignore
-          name={rootSwitch.appLoading}
-          component={screens.AppLoading}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          //@ts-ignore
-          name={rootSwitch.authStack}
-          component={screens.AuthStack}
-        />
+        {!user && (
+          <Stack.Screen
+            options={{headerShown: false}}
+            //@ts-ignore
+            name={rootSwitch.authStack}
+            component={screens.AuthStack}
+          />
+        )}
         <Stack.Screen
           options={{headerShown: false}}
           //@ts-ignore
