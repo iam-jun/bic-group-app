@@ -29,7 +29,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {
     id,
     name,
-    userCount,
+    user_count,
     icon,
 
     childrenUiIds = [],
@@ -132,7 +132,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             <View style={styles.row}>
               <Icon icon="users" size={16} tintColor={colors.textSecondary} />
               <Text.BodyS color={colors.textSecondary} style={styles.textInfo}>
-                {userCount}
+                {user_count}
               </Text.BodyS>
             </View>
           </View>
