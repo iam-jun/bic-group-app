@@ -1,5 +1,5 @@
 import groupsTypes from '~/screens/Groups/redux/types';
-import {IGroup} from '~/interfaces/IGroup';
+import {IGroup, IGroupDetail, IGroupDetailEdit} from '~/interfaces/IGroup';
 
 const groupsActions = {
   setLoadingJoinedGroups: function (payload: boolean) {
@@ -20,7 +20,7 @@ const groupsActions = {
       payload,
     };
   },
-  setGroupDetail: function (payload: IGroup) {
+  setGroupDetail: function (payload: IGroupDetail) {
     return {
       type: groupsTypes.SET_GROUP_DETAIL,
       payload,
@@ -61,6 +61,12 @@ const groupsActions = {
   getGroupPosts: function (payload: number) {
     return {
       type: groupsTypes.GET_GROUP_POSTS,
+      payload,
+    };
+  },
+  editGroupDetail: function (payload: IGroupDetailEdit) {
+    return {
+      type: groupsTypes.EDIT_GROUP_DETAIL,
       payload,
     };
   },

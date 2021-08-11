@@ -1,5 +1,5 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import {IGroup} from '~/interfaces/IGroup';
+import {IGroup, IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
@@ -9,6 +9,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
+  yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
 }
 
 function* getJoinedGroups() {
@@ -46,6 +47,20 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
       e,
       '\x1b[0m',
     );
+  }
+}
+
+function* editGroupDetail({
+  payload,
+}: {
+  type: string;
+  payload: IGroupDetailEdit;
+}) {
+  try {
+    const result = yield requestEditGroupDetail(payload);
+    yield put(groupsActions.setGroupDetail(result));
+  } catch (error) {
+    console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
   }
 }
 
@@ -153,6 +168,25 @@ const requestGroupPosts = async (userId: number) => {
     console.log(
       '\x1b[33m',
       'namanh --- getMyGroupPosts | getMyGroupPosts catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+};
+
+const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
+  try {
+    const groupId = data.id;
+    delete data.id; // edit data should not contain group's id
+
+    const response = await groupsDataHelper.editGroupPrivacy(groupId, data);
+    if (response.code === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'requestEditGroupDetail catch: ',
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );

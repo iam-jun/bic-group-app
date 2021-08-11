@@ -157,6 +157,9 @@ const icons = {
   UserCircle: 'UserCircle',
   FileCopyAlt: 'FileCopyAlt',
   WebGrid: 'WebGrid',
+  EyeSlash: 'EyeSlash',
+  Check: 'Check',
+  UsersAlt: 'UsersAlt',
 };
 
 export default icons;
