@@ -15,6 +15,7 @@ import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
 import useGroups from '~/hooks/groups';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const GroupAdministration = () => {
   const theme = useTheme() as ITheme;
@@ -37,6 +38,8 @@ const GroupAdministration = () => {
       }),
     );
   };
+
+  const goToGeneralInfo = () => rootNavigation.navigate(groupStack.generalInfo);
 
   const renderItem = (
     icon: IconType,
@@ -102,7 +105,7 @@ const GroupAdministration = () => {
         {renderItem(
           'Cog',
           'settings:title_general_information',
-          onGroupAdminPress,
+          goToGeneralInfo,
         )}
         {renderItem(
           'ChatBubbleUser',

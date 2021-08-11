@@ -2,7 +2,8 @@ const groupStack = {
   groups: 'group-list',
   groupDetail: 'group-detail',
   postDetail: 'post-detail',
-  groupAdmin: 'groupAdmin',
+  groupAdmin: 'group-admin',
+  generalInfo: 'general-info',
 };
 
 export default groupStack;
