@@ -18,7 +18,7 @@ const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
 
 const MainTabs = () => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   const backBehavior = 'history';
@@ -68,7 +68,6 @@ const MainTabs = () => {
                 if (isBigTablet) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
-                const label = name.charAt(0).toUpperCase() + name.slice(1);
                 const styles = CreateStyle(theme, focused, isPhone, color);
 
                 return (
@@ -80,9 +79,9 @@ const MainTabs = () => {
                       tintColor="none"
                     />
                     {isPhone && (
-                      <Text.BodyS style={styles.label}>
+                      <Text.Subtitle style={styles.label}>
                         {i18next.t(`tabs:${name}`)}
-                      </Text.BodyS>
+                      </Text.Subtitle>
                     )}
                   </View>
                 );
@@ -117,6 +116,7 @@ const CreateStyle = (
     },
     label: {
       color: color,
+      textAlign: 'center',
     },
   });
 };

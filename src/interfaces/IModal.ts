@@ -6,4 +6,5 @@ export interface IShowAlert {
   cancelBtn?: boolean;
   onCancel?: () => void;
   confirmLabel: string;
+  isDismissable?: boolean;
 }

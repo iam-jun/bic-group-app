@@ -3,13 +3,13 @@ import {View, FlatList, StyleSheet} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {IReaction} from '~/interfaces/IPost';
-import CommentView from '~/beinFragments/CommentView';
 import {useDispatch} from 'react-redux';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import postActions from '~/screens/Post/redux/actions';
 import _ from 'lodash';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
+import CommentView from '~/screens/Post/components/CommentView';
 
 export interface CommentItemProps {
   commentData: IReaction;
@@ -34,7 +34,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   }, [commentData?.latest_children?.comment]);
 
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 

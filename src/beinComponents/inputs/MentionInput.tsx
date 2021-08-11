@@ -28,6 +28,7 @@ export interface MentionInputProps extends TextInputProps {
   onPress?: (item: any) => void;
   onChangeText?: (value: string) => void;
   onMentionText?: (textMention: string) => void;
+  onContentSizeChange?: (data: any) => void;
   value?: string;
   ComponentInput?: any;
   children?: React.ReactNode;
@@ -44,6 +45,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   onPress,
   onChangeText,
   onMentionText,
+  onContentSizeChange,
   value,
   ComponentInput = TextInput,
   children,
@@ -75,6 +77,14 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   return (
     <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
+      <ComponentInput
+        value={children ? undefined : value}
+        onChangeText={_onChangeText}
+        placeholder={placeholderText}
+        onContentSizeChange={onContentSizeChange}
+        style={textInputStyle}>
+        {children}
+      </ComponentInput>
       {isMentionModalVisible && (
         <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
           <FlatList
@@ -84,13 +94,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
           />
         </View>
       )}
-      <ComponentInput
-        value={children ? undefined : value}
-        onChangeText={_onChangeText}
-        placeholder={placeholderText}
-        style={textInputStyle}>
-        {children}
-      </ComponentInput>
     </View>
   );
 };

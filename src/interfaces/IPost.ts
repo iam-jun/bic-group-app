@@ -1,3 +1,6 @@
+import {IObject} from '~/interfaces/common';
+import {ReactionType} from '~/constants/reactions';
+
 export interface IPostAudience {
   users?: IAudienceUser[];
   groups?: IAudienceGroup[];
@@ -55,13 +58,28 @@ export interface IPostActivity {
   actor?: IAudienceUser;
   verb?: string;
   type?: string;
-  data?: IActivityData;
+  object?: {
+    data?: IActivityData;
+    created_at?: string;
+    updated_at?: string;
+  };
   followers?: number[];
   audience?: IPostAudience;
   tags?: string[];
   time?: string;
   important?: IActivityImportant;
   own_reactions?: any;
+  reaction_counts?: IObject<number>;
+}
+
+export interface IOwnReaction {
+  [reactionKind: string]: IReaction[];
+}
+
+export type IReactionCounts = {[reactionKind: string]: number};
+
+export interface IAllPosts {
+  [id: string]: IPostActivity;
 }
 
 export interface IPostCreatePost {
@@ -75,9 +93,7 @@ export interface IPostCreatePost {
   important?: IActivityImportant;
 }
 
-export type IReact = 'like' | 'love' | string;
-
-export type IReactionKind = 'comment' | 'seen' | IReact;
+export type IReactionKind = 'comment' | 'seen' | ReactionType;
 
 export interface IGetStreamUser {
   created_at?: string;
@@ -159,4 +175,18 @@ export interface IParamSearchMentionAudiences {
   user_ids?: string;
   skip?: number;
   take?: number;
+}
+
+export interface IPayloadReactToPost {
+  postId: string;
+  reactionId: ReactionType;
+  ownReaction: IOwnReaction;
+  reactionCounts: IReactionCounts;
+  userId: number;
+}
+
+export interface IPayloadUpdateReactionOfPostById {
+  postId: string;
+  ownReaction: IOwnReaction;
+  reactionCounts: IReactionCounts;
 }

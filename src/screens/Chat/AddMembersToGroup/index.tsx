@@ -60,6 +60,7 @@ const AddMembersToGroup = (): React.ReactElement => {
       <ViewSpacing height={spacing?.margin.base} />
       <MembersSelection
         selectable
+        title={'common:text_all'}
         loading={users.loading}
         data={users.data}
         onLoadMore={loadMoreData}

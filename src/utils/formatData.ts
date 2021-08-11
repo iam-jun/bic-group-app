@@ -7,7 +7,7 @@ export const formatNumber = (n: number) => {
 };
 
 export const formatDate = (
-  value: string | number | Date,
+  value: string | number | Date | moment.Moment,
   format?: string,
   maxFromDays?: number,
 ) => {

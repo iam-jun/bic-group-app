@@ -1,11 +1,11 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import PostView from '~/beinFragments/PostView';
 import {IPostActivity} from '~/interfaces/IPost';
 import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import PostView from '~/screens/Post/components/PostView';
 
 export interface PostItemProps {
   postData: IPostActivity;
@@ -27,7 +27,7 @@ const PostItem = ({postData}: any) => {
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <PostView postData={postData} onPressComment={onPressComment} />
+      <PostView postId={postData?.id} onPressComment={onPressComment} />
     </TouchableOpacity>
   );
 };

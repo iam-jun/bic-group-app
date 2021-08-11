@@ -1,10 +1,12 @@
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
+  IGetGroupReq,
   IGetGroupRolesReq,
   IPaginationParams,
+  IReadSubscription,
   ISendMessageReq,
-} from '~/interfaces/IHttpRequest';
+} from '~/interfaces/IChatHttpRequest';
 import {getEnv} from '~/utils/env';
 
 const providers = {
@@ -79,6 +81,23 @@ const Chat = {
       params,
     };
   },
+  subcriptions: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}subscriptions.get`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+    };
+  },
+  readSubcriptions: (data: IReadSubscription): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}subscriptions.read`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data,
+    };
+  },
   sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}chat.postMessage`,
@@ -86,6 +105,15 @@ const Chat = {
       useRetry: false,
       provider: providers.chat,
       data,
+    };
+  },
+  groupInfo: (params: IGetGroupReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.info`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
     };
   },
 };

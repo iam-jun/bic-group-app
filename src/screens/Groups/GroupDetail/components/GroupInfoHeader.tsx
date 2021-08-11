@@ -11,31 +11,29 @@ import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import useGroups from '~/hooks/groups';
+import {titleCase} from '~/utils/common';
 
 const GroupInfoHeader = () => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const groupData = useGroups();
-  const {groupDetail} = groupData;
-  const {name, userCount, icon, background_img_url, group_type} = groupDetail;
+  const {groupDetail} = groupData || {};
+  const {name, user_count, icon, background_img_url, privacy} =
+    groupDetail?.group || {};
 
   return (
     <View style={styles.coverAndInfoHeader}>
       {/* Cover photo */}
       <Image
         style={styles.cover}
-        source={
-          background_img_url
-            ? {uri: background_img_url}
-            : images.img_cover_default
-        }
+        source={background_img_url || images.img_cover_default}
       />
 
       {/* Group info header */}
       <View style={styles.infoContainer}>
         <View style={styles.header}>
           <Avatar.UltraLarge source={icon} style={styles.avatar} />
-          <View style={{flex: 1}}>
+          <View style={styles.nameHeader}>
             <ButtonWrapper
               textProps={{
                 variant: 'h5',
@@ -43,34 +41,26 @@ const GroupInfoHeader = () => {
               {name}
             </ButtonWrapper>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: theme.spacing?.margin.tiny,
-              }}>
+            <View style={styles.groupInfoText}>
               <Icon
                 style={styles.iconSmall}
                 icon={'iconPrivate'}
                 size={14}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodyS useI18n>{group_type}</Text.BodyS>
+              <Text.BodyS useI18n>{!!privacy && titleCase(privacy)}</Text.BodyS>
               <Text.Subtitle> ⬩ </Text.Subtitle>
               <Icon
                 style={styles.iconSmall}
-                icon={'iconUserGroup'}
+                icon={'UsersAlt'}
                 size={16}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodySM>{userCount}</Text.BodySM>
+              <Text.BodySM>{user_count}</Text.BodySM>
             </View>
           </View>
           <ButtonWrapper
-            style={{
-              backgroundColor: theme.colors.bgButtonSecondary,
-              padding: 4,
-              borderRadius: 6,
-            }}
+            style={styles.chatButton}
             onPress={() => alert('go to chat group')}>
             <Icon
               style={styles.iconSmall}
@@ -117,5 +107,15 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing?.margin.large,
       marginVertical: spacing?.margin.small,
     },
+    chatButton: {
+      backgroundColor: colors.bgButtonSecondary,
+      padding: spacing.padding.tiny,
+      borderRadius: 6,
+    },
+    groupInfoText: {
+      flexDirection: 'row',
+      marginTop: spacing.margin.tiny,
+    },
+    nameHeader: {flex: 1},
   });
 };

@@ -2,31 +2,28 @@ import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import {ISetting} from '~/interfaces/common';
-import {useBaseHook} from '~/hooks';
-import * as authActions from '~/screens/Auth/redux/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import Divider from '~/beinComponents/Divider';
+import Header from '~/beinComponents/Header';
+import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
+import ListView from '~/beinComponents/list/ListView';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import settings, {
   appSettingsMenu,
   documentsMenu,
   logoutMenu,
 } from '~/constants/settings';
-import * as modalActions from '~/store/modal/actions';
-import mainStack from '~/router/navigator/MainStack/stack';
+import {useBaseHook} from '~/hooks';
 import useMenu from '~/hooks/menu';
-import {ITheme} from '~/theme/interfaces';
-import menuActions from '~/screens/Menu/redux/actions';
-
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import ListView from '~/beinComponents/list/ListView';
-import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
-import Header from '~/beinComponents/Header';
-import Divider from '~/beinComponents/Divider';
+import {useRootNavigation} from '~/hooks/navigation';
+import {ISetting} from '~/interfaces/common';
 import images from '~/resources/images';
 import {useUserIdAuth} from '~/hooks/auth';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import * as authActions from '~/screens/Auth/redux/actions';
+import menuActions from '~/screens/Menu/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -48,7 +45,7 @@ const Menu = (): React.ReactElement => {
   const onSettingPress = (item: ISetting) => {
     switch (item.type) {
       case 'accountSettings':
-        return rootNavigation.navigate(mainStack.accountSettings);
+        return rootNavigation.navigate(menuStack.accountSettings);
 
       case 'component':
         return rootNavigation.navigate(menuStack.componentCollection);
@@ -89,7 +86,7 @@ const Menu = (): React.ReactElement => {
         isPublic: false,
       }),
     );
-    rootNavigation.navigate(mainStack.myProfile);
+    rootNavigation.navigate(menuStack.myProfile);
   };
 
   return (

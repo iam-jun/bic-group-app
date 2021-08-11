@@ -7,30 +7,22 @@ const homeDataHelper = {
       const streamOptions = {
         offset: 0,
         limit: 10,
-
-        user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
+        user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
         withOwnReactions: true,
         withOwnChildren: false,
-        withRecentReactions: true, // tra về 10 reaction moi nhat
-        withReactionCounts: true, // đếm số lượng reaction
-        enrich: true, // giữ liệu sẽ được mở rộng ra, lấy thêm được thông tin user và group
+        withRecentReactions: true,
+        withReactionCounts: true,
+        enrich: true, //extra data for user & group
       };
 
       const data = await makeGetStreamRequest(
         streamClient,
         'newsfeed',
-        userId,
+        `u-${userId}`,
         'get',
         streamOptions,
       );
-
-      // console.log(
-      //   '\x1b[36m',
-      //   '🐣  | getHomePosts : ',
-      //   JSON.stringify(data.results, undefined, 2),
-      //   '\x1b[0m',
-      // );
 
       return data.results;
     }

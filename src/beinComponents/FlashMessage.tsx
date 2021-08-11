@@ -24,7 +24,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
   style,
   onClose,
 }: FlashMessageProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
@@ -73,7 +73,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
           tintColor={iconColor}
         />
       )}
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={styles.textContainer}>
         <Text.Body {...textProps} color={textColor}>
           {children}
         </Text.Body>
@@ -89,6 +89,10 @@ const createStyle = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {},
+    textContainer: {
+      flex: 1,
+      justifyContent: 'center',
+    },
     leftIcon: {
       marginLeft: spacing?.margin.base,
       marginRight: spacing?.margin.base,

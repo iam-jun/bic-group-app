@@ -11,6 +11,7 @@ import {useBaseHook} from '~/hooks';
 import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {IconType} from '~/resources/icons';
 import {Platform} from 'react-native';
+import {ImageProps} from '../Image';
 
 export interface HeaderProps {
   title?: string;
@@ -18,6 +19,7 @@ export interface HeaderProps {
   subTitle?: string;
   subTitleTextProps?: TextProps;
   avatar?: any;
+  avatarProps?: ImageProps;
   icon?: IconType;
   onPressIcon?: () => void;
   buttonText?: string;
@@ -36,6 +38,7 @@ const Header: React.FC<HeaderProps> = ({
   subTitle,
   subTitleTextProps,
   avatar,
+  avatarProps,
   icon,
   onPressIcon,
   buttonText,
@@ -81,7 +84,11 @@ const Header: React.FC<HeaderProps> = ({
         />
       )}
       {!!avatar && (
-        <Avatar source={avatar} style={{marginLeft: spacing?.margin.base}} />
+        <Avatar
+          source={avatar}
+          style={{marginLeft: spacing?.margin.base}}
+          {...avatarProps}
+        />
       )}
       <View style={{flex: 1, marginLeft: spacing?.margin.base}}>
         {!!title && <Text.H5 {...titleTextProps}>{title}</Text.H5>}

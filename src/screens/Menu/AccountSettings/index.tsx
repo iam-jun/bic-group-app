@@ -1,28 +1,26 @@
-import React, {useRef, useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useContext, useRef} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Divider from '~/beinComponents/Divider';
+import Header from '~/beinComponents/Header';
+import Icon from '~/beinComponents/Icon';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ListView from '~/beinComponents/list/ListView';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
+import languages from '~/constants/languages';
 import {accountSettingsMenu} from '~/constants/settings';
+import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
 import useMenu from '~/hooks/menu';
 import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
-import {AppContext} from '~/contexts/AppContext';
-import languages from '~/constants/languages';
-
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
-import ListView from '~/beinComponents/list/ListView';
-import BottomSheet from '~/beinComponents/BottomSheet';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Text from '~/beinComponents/Text';
-import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -45,7 +43,7 @@ const GeneralSettings = () => {
   const onAccountSettingsPress = (item: ISetting) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(mainStack.userProfile);
+        return rootNavigation.navigate(menuStack.userProfile);
 
       case 'language':
         dispatch(menuActions.setLanguageModalOpen(true));

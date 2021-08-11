@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View,
   StyleProp,
-  TouchableOpacity,
-  ViewStyle,
   StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -41,7 +41,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   onPress,
   onLongPress,
   disabled,
-  textVariant = 'buttonBase',
+  textVariant,
   textProps,
   useI18n,
   leftIcon,
@@ -54,7 +54,10 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   hitSlop,
   TouchableComponent = TouchableOpacity,
 }: ButtonWrapperProps) => {
-  const {colors, spacing}: ITheme = useTheme() as ITheme;
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
+  const styles = themeStyles(theme);
+  textVariant = textVariant || 'buttonBase';
 
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {
@@ -62,7 +65,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
         <Icon
           icon={iconSource}
           tintColor={textProps?.color}
-          style={{marginHorizontal: spacing?.margin.small}}
+          style={styles.icon}
           {...iconProps}
         />
       );
@@ -75,7 +78,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       return (
         <ActivityIndicator
           color={colors.textDisabled}
-          style={{marginRight: spacing?.margin.tiny}}
+          style={styles.loading}
           size={12}
         />
       );
@@ -103,7 +106,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
         {typeof children === 'string' ? (
           <Text
             variant={textVariant}
-            style={{textAlign: 'center'}}
+            style={styles.text}
             color={disabled ? colors.textDisabled : undefined}
             useI18n={useI18n}
             {...textProps}>
@@ -116,6 +119,22 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       </View>
     </TouchableComponent>
   );
+};
+
+const themeStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+
+  return StyleSheet.create({
+    icon: {
+      marginHorizontal: spacing?.margin.small,
+    },
+    loading: {
+      marginRight: spacing?.margin.tiny,
+    },
+    text: {
+      textAlign: 'center',
+    },
+  });
 };
 
 export default ButtonWrapper;

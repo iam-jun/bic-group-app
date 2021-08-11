@@ -1,28 +1,26 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useForm, Controller} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
+
+import TextInput from '~/beinComponents/inputs/TextInput';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {IObject} from '~/interfaces/common';
+import Button from '~/beinComponents/Button';
 import {spacing} from '~/theme';
-import Input from '~/components/inputs';
 import * as actions from '~/screens/Auth/redux/actions';
-import {Container, ViewSpacing} from '~/components';
-import InputPassword from '~/components/inputs/InputPassword';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
-import * as actionsCommon from '~/store/modal/actions';
-import {ISignUpResponse} from '~/interfaces/IAuth';
-import PrimaryButton from '~/components/buttons/PrimaryButton';
-import TransparentButton from '~/components/buttons/TransparentButton';
 import useAuth from '~/hooks/auth';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import {ITheme} from '~/theme/interfaces';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const SignUp = (props: any) => {
+const SignUp = () => {
   const dispatch = useDispatch();
   const {
     control,
@@ -32,7 +30,7 @@ const SignUp = (props: any) => {
     clearErrors,
     getValues,
   } = useForm();
-  const theme: IObject<any> = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
   const {loading} = useAuth();
@@ -84,18 +82,17 @@ const SignUp = (props: any) => {
     const email: string = getValues('email');
     const username: string = getValues('username');
     const password: string = getValues('password');
-    if (!isEmpty(errors) || !email || !username || !password) return true;
-    return false;
+    return !isEmpty(errors) || !email || !username || !password;
   };
   const disableBtn = checkDisableBtn();
 
   return (
     <ScreenWrapper testID="SignUpScreen" style={styles.container} isFullView>
-      <Container>
+      <View>
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <Input
+            <TextInput
               testID="inputUsername"
               label={t('auth:input_label_username')}
               placeholder={t('auth:input_label_username')}
@@ -106,7 +103,6 @@ const SignUp = (props: any) => {
               onChangeText={text => onUsernameChange(text, onChange)}
               helperType="error"
               helperContent={errors?.username?.message}
-              helperVisible={errors.username}
             />
           )}
           rules={{required: t('auth:text_err_username_blank')}}
@@ -117,7 +113,7 @@ const SignUp = (props: any) => {
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <Input
+            <TextInput
               testID="inputEmail"
               label={t('auth:input_label_email')}
               placeholder={t('auth:input_label_email')}
@@ -132,7 +128,6 @@ const SignUp = (props: any) => {
               }}
               helperType="error"
               helperContent={errors?.email?.message}
-              helperVisible={errors.email}
             />
           )}
           rules={{
@@ -148,7 +143,7 @@ const SignUp = (props: any) => {
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <InputPassword
+            <PasswordInput
               testID="inputPassword"
               label={t('auth:input_label_password')}
               placeholder={t('auth:input_label_password')}
@@ -161,7 +156,6 @@ const SignUp = (props: any) => {
               }}
               helperType="error"
               helperContent={errors?.password?.message}
-              helperVisible={errors.password}
             />
           )}
           name="password"
@@ -175,30 +169,34 @@ const SignUp = (props: any) => {
             // },
           }}
         />
-        <ViewSpacing height={spacing.margin.base} />
-        <TransparentButton
+        <Button
           testID="textSignin"
-          title={t('auth:navigate_sign_in')}
-          onPress={() => rootNavigationRef?.current?.navigate(authStack.login)}
-        />
-        <ViewSpacing height={80} />
-        <PrimaryButton
+          onPress={() => rootNavigationRef?.current?.navigate(authStack.login)}>
+          {t('auth:navigate_sign_in')}
+        </Button>
+        <Button.Primary
           testID="btnSignUp"
           disabled={disableBtn || loading}
           loading={loading}
-          title={t('auth:btn_sign_up')}
-          onPress={onSubmit}
-        />
-      </Container>
+          onPress={onSubmit}>
+          {t('auth:btn_sign_up')}
+        </Button.Primary>
+      </View>
     </ScreenWrapper>
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
+const themeStyles = (theme: ITheme) => {
+  const insets = useSafeAreaInsets();
+  const {colors} = theme;
+
   return StyleSheet.create({
     container: {
-      justifyContent: 'center',
+      flex: 1,
+      paddingTop: insets.top,
+      paddingHorizontal: spacing.padding.big,
       alignContent: 'center',
+      backgroundColor: colors.background,
     },
     button: {
       marginTop: spacing.margin.big,
