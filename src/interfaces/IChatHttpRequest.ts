@@ -7,9 +7,6 @@ export interface IPaginationParams {
 export interface ICreateRoomReq {
   name: string;
   members: string[];
-  extraData: {
-    topic: string;
-  };
   customFields?: {
     type: string;
     beinGroupId?: string;
