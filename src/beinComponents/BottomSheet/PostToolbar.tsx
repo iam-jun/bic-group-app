@@ -6,6 +6,7 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import {throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
@@ -98,38 +99,37 @@ const PostToolbar = ({
     alert('select file');
   };
 
-  const onChangeDatePicker = ({event, value}: any) => {
+  const onChangeDatePicker = (date?: Date) => {
     setSelectingDate(false);
     setSelectingTime(false);
-    const newImportant = {...important};
-    let expiresTime = '';
-    if (value) {
-      const time = important.expiresTime
-        ? new Date(important.expiresTime)
-        : new Date();
-      const date = new Date(value);
-      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      expiresTime = date.toISOString();
+    if (date) {
+      const newImportant = {...important};
+      let expiresTime = '';
+      if (date) {
+        const time = important.expiresTime
+          ? new Date(important.expiresTime)
+          : new Date();
+        date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+        expiresTime = date.toISOString();
+      }
+      newImportant.expiresTime = expiresTime;
+      dispatch(postActions.setCreatePostImportant(newImportant));
     }
-    newImportant.expiresTime = expiresTime;
-    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
-  const onChangeTimePicker = ({event, value}: any) => {
+  const onChangeTimePicker = (time?: Date) => {
     setSelectingDate(false);
     setSelectingTime(false);
-    const newImportant = {...important};
-    let expiresTime = '';
-    if (value) {
-      const time = new Date(value);
+    if (time) {
+      const newImportant = {...important};
       const date = important.expiresTime
         ? new Date(important.expiresTime)
         : new Date();
       date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      expiresTime = date.toISOString();
+      const expiresTime = date.toISOString();
+      newImportant.expiresTime = expiresTime;
+      dispatch(postActions.setCreatePostImportant(newImportant));
     }
-    newImportant.expiresTime = expiresTime;
-    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
   const renderToolbarButton = (icon: any) => {
@@ -154,37 +154,22 @@ const PostToolbar = ({
             <View
               style={[
                 styles.toolbarButton,
-                {backgroundColor: colors.primary7},
+                {
+                  backgroundColor: important.active
+                    ? colors.primary7
+                    : colors.primary1,
+                },
               ]}>
               <Icon
                 size={16}
-                tintColor={colors.iconTintReversed}
+                tintColor={
+                  important.active ? colors.iconTintReversed : colors.primary7
+                }
                 icon={'InfoCircle'}
               />
             </View>
           </TouchableOpacity>
           <KeyboardSpacer iosOnly />
-          {selectingDate && (
-            <DateTimePicker
-              value={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
-                  : new Date()
-              }
-              onChange={onChangeDatePicker}
-            />
-          )}
-          {selectingTime && (
-            <DateTimePicker
-              mode={'time'}
-              value={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
-                  : new Date()
-              }
-              onChange={onChangeTimePicker}
-            />
-          )}
         </Animated.View>
       </PanGestureHandler>
     );
@@ -210,7 +195,7 @@ const PostToolbar = ({
                 post:expire_time_desc
               </Text.Subtitle>
             </View>
-            <Icon onPress={onClearImportantDate} icon={'Times'} />
+            <Icon size={16} onPress={onClearImportantDate} icon={'iconClose'} />
           </View>
           <View style={styles.importantButtons}>
             <Button.Secondary
@@ -299,6 +284,34 @@ const PostToolbar = ({
           }}
           onPress={onPressSelectFile}
         />
+        <View style={{position: 'absolute', alignSelf: 'center'}}>
+          {selectingDate && (
+            <DateTimePicker
+              isVisible={selectingDate}
+              date={
+                important.expiresTime
+                  ? new Date(important.expiresTime)
+                  : new Date()
+              }
+              mode={Platform.OS === 'web' ? 'time' : 'date'}
+              onConfirm={onChangeDatePicker}
+              onCancel={onChangeDatePicker}
+            />
+          )}
+          {selectingTime && (
+            <DateTimePicker
+              isVisible={selectingTime}
+              date={
+                important.expiresTime
+                  ? new Date(important.expiresTime)
+                  : new Date()
+              }
+              mode={'time'}
+              onConfirm={onChangeTimePicker}
+              onCancel={onChangeTimePicker}
+            />
+          )}
+        </View>
       </View>
     );
   };

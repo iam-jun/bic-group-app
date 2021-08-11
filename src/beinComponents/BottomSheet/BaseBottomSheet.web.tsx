@@ -10,12 +10,12 @@ import {BaseBottomSheetProps} from './BaseBottomSheet';
 Modal.setAppElement('#app-root');
 
 const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
-  isOpen,
+  isOpen = false,
   children,
   ContentComponent,
   onClose,
 }: BaseBottomSheetProps) => {
-  const {colors}: ITheme = useTheme();
+  const {colors}: ITheme = useTheme() as ITheme;
 
   const renderModal = () => {
     return (

@@ -105,6 +105,25 @@ const CreatePost = () => {
     }] `;
     const newContent = content.replace(`@${mentionKey}`, mention);
     dispatch(postActions.setCreatePostData({...data, content: newContent}));
+
+    const newChosenAudience = [...chosenAudiences];
+    const mentionUser = {
+      id: audience.id,
+      name: audience.name || audience.fullname,
+      avatar: audience.avatar,
+      type: 'user',
+    };
+    let isDuplicate = false;
+    newChosenAudience.map(item => {
+      if (item?.id === mentionUser?.id && item?.type === mentionUser?.type) {
+        isDuplicate = true;
+      }
+    });
+    if (!isDuplicate) {
+      newChosenAudience.unshift(mentionUser);
+      dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
+    }
+
     dispatch(postActions.setMentionSearchResult([]));
     dispatch(postActions.setMentionSearchKey(''));
   };
@@ -143,10 +162,11 @@ const CreatePost = () => {
         <CreatePostChosenAudiences />
         <Divider />
         <MentionInput
-          style={styles.flex1}
           data={mentionResult}
-          modalPosition={'top'}
+          style={styles.flex1}
+          textInputStyle={styles.flex1}
           modalStyle={styles.mentionInputModal}
+          modalPosition={'top'}
           isMentionModalVisible={!!content && mentionResult?.length > 0}
           onPress={onPressMentionAudience}
           onChangeText={onChangeText}
@@ -203,9 +223,11 @@ const styles = StyleSheet.create({
     marginHorizontal: margin.large,
   },
   mentionInputModal: {
-    position: 'absolute',
+    position: undefined,
     top: undefined,
-    bottom: 0,
+    bottom: undefined,
+    marginTop: -12,
+    maxHeight: 180,
   },
 });
 
