@@ -3,6 +3,7 @@ import {View, Text} from 'react-native';
 
 import {IMenuItemProps} from '~/interfaces/IMenu';
 import GroupContent from './components/GroupContent';
+import GroupMembers from '~/screens/Groups/GroupDetail/components/GroupMembers';
 
 // Todo: this samplescreen is temporary and will be removed
 const sampleScreen = () => {
@@ -27,7 +28,7 @@ const groupProfileTabs: IMenuItemProps[] = [
   {
     routeName: 'Members',
     label: 'Members',
-    component: sampleScreen,
+    component: GroupMembers,
   },
   {
     routeName: 'Files',

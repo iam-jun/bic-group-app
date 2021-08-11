@@ -20,6 +20,23 @@ const groupsActions = {
       payload,
     };
   },
+  clearGroupMembers: function () {
+    return {
+      type: groupsTypes.CLEAR_GROUP_MEMBER,
+    };
+  },
+  setGroupMembers: function (payload: any) {
+    return {
+      type: groupsTypes.SET_GROUP_MEMBER,
+      payload,
+    };
+  },
+  getGroupMembers: function (payload: number) {
+    return {
+      type: groupsTypes.GET_GROUP_MEMBER,
+      payload,
+    };
+  },
   setGroupDetail: function (payload: IGroupDetail) {
     return {
       type: groupsTypes.SET_GROUP_DETAIL,

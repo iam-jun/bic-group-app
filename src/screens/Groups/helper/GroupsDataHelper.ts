@@ -1,6 +1,7 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
+import groupDataMocks from '~/screens/Groups/helper/groupsDataMocks';
 
 export const groupsApiConfig = {
   getMyGroups: (): HttpApiRequestConfig => ({
@@ -14,6 +15,20 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  getGroupMembers: (
+    groupId: number,
+    skip?: number,
+    take?: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/members`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      skip: skip,
+      take: take,
+    },
   }),
   getGroupDetail: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
@@ -55,6 +70,21 @@ const groupsDataHelper = {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getMyGroupPosts(groupId),
       );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getGroupMembers: async (groupId: number, skip?: number, take?: number) => {
+    try {
+      // const response: any = await makeHttpRequest(
+      //   groupsApiConfig.getGroupMembers(groupId, skip, take),
+      // );
+      const response = groupDataMocks.getGroupMembers;
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
