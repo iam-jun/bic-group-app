@@ -150,6 +150,12 @@ const icons = {
   Calender: 'Calender',
   Globe: 'Globe',
   Lock: 'Lock',
+  UserExclamation: 'UserExclamation',
+  Cog: 'Cog',
+  ChatBubbleUser: 'ChatBubbleUser',
+  UserCircle: 'UserCircle',
+  FileCopyAlt: 'FileCopyAlt',
+  WebGrid: 'WebGrid',
 };
 
 export default icons;
