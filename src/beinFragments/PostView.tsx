@@ -2,6 +2,10 @@ import React, {FC, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import moment from 'moment';
+
+import {ITheme} from '~/theme/interfaces';
+import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
@@ -11,11 +15,9 @@ import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IPostActivity, IPostAudience} from '~/interfaces/IPost';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
 
 export interface PostViewProps {
@@ -35,9 +37,9 @@ const PostView: FC<PostViewProps> = ({
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const {id, data, actor, audience, time, important, own_reactions} =
+  const {id, object, actor, audience, time, important, own_reactions} =
     postData || {};
-  const {content} = data || {};
+  const {content} = object?.data || {};
 
   const userId = useUserIdAuth();
 
@@ -132,8 +134,9 @@ const PostView: FC<PostViewProps> = ({
     }
     let postTime = '';
     if (time) {
-      const date = new Date(time);
-      postTime = formatDate(date) || '';
+      const dateUtc = moment.utc(time);
+      const localDate = dateUtc.local();
+      postTime = formatDate(localDate) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };

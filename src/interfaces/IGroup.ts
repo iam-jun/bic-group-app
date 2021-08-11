@@ -3,7 +3,7 @@ import {IAction} from '~/constants/commonActions';
 export interface IGroup {
   id: number;
   name: string;
-  userCount?: number;
+  user_count?: number;
   parent?: any;
   parentId?: number;
   children?: IGroup[];

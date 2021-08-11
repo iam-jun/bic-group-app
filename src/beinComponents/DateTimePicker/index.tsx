@@ -2,16 +2,11 @@ import React, {FC} from 'react';
 import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 import DatePickerComponent from '~/beinComponents/DateTimePicker/DatePickerComponent';
 
-export interface DateTimePickerProps extends DatePickerComponentProps {
-  mode?: 'date' | 'time';
-}
-
-const DateTimePicker: FC<DateTimePickerProps> = ({
-  mode,
-  ...props
-}: DateTimePickerProps) => {
+const DateTimePicker: FC<DatePickerComponentProps> = (
+  props: DatePickerComponentProps,
+) => {
   // @ts-ignore
-  return <DatePickerComponent mode={mode} {...props} />;
+  return <DatePickerComponent {...props} />;
 };
 
 export default DateTimePicker;
