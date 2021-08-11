@@ -31,18 +31,21 @@ const CreateConversation = (): React.ReactElement => {
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onCreatePress = () => {
-    dispatch(
-      actions.createConversation({
-        name: uuid.v4().toString(),
-        members: selectedUsers.map((user: IUser) => user.username),
-        extraData: {
-          topic: generateRoomName(
+    const name =
+      selectedUsers.length > 1
+        ? generateRoomName(
             user,
             selectedUsers.map((user: IUser) => user.name),
-          ),
-        },
+          )
+        : selectedUsers[0].name;
+    const type = selectedUsers.length > 1 ? roomTypes.QUICK : roomTypes.DIRECT;
+
+    dispatch(
+      actions.createConversation({
+        name,
+        members: selectedUsers.map((user: IUser) => user.username),
         customFields: {
-          type: roomTypes.QUICK,
+          type,
         },
       }),
     );

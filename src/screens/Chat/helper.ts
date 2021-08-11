@@ -32,14 +32,16 @@ export const mapUsers = (data?: []): IUser[] =>
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
   const name =
-    item?.topic ||
+    item?.fname ||
+    item.name ||
     generateRoomName(user, item?.usernames || []) ||
     item.u?.name;
+
   return {
     ...item,
     _id: item?._id || item?.rid,
     name,
-    type: item?.t,
+    type: item.customFields?.type,
     avatar: getAvatar(item.name),
     user: mapUser(item?.u),
     lastMessage: item?.lastMessage?.msg,

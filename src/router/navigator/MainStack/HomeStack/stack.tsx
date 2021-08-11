@@ -3,6 +3,7 @@ const homeStack = {
   postDetail: 'post-detail',
   createPost: 'create-post',
   postSelectAudience: 'post-select-audience',
+  myProfile: 'my-profile',
 };
 
 export default homeStack;
