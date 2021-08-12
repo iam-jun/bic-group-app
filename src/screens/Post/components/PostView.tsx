@@ -336,6 +336,7 @@ const PostView: FC<PostViewProps> = ({
       <ReactionBottomSheet
         reactionSheetRef={reactionSheetRef}
         onPressReaction={onAddReaction}
+        title={t('post:label_all_reacts')}
       />
     </View>
   );
