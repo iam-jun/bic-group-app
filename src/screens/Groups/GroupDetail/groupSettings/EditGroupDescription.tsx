@@ -16,7 +16,7 @@ import groupsActions from '../../redux/actions';
 const EditGroupDescription = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const {t} = useBaseHook();
+  const {t, navigation} = useBaseHook();
   const dispatch = useDispatch();
   const groupData = useGroups();
   const {groupDetail} = groupData;
@@ -29,6 +29,7 @@ const EditGroupDescription = () => {
 
   const onSave = () => {
     dispatch(groupsActions.editGroupDetail({id, description: text}));
+    navigation.goBack();
   };
 
   return (
