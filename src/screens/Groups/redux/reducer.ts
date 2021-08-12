@@ -44,13 +44,17 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         groupDetail: {
+          ...state.groupDetail,
           group: action.payload,
         },
       };
     case groupsTypes.SET_GROUP_DETAIL:
       return {
         ...state,
-        groupDetail: action.payload || {},
+        groupDetail: {
+          ...state.groupDetail,
+          ...action.payload,
+        },
       };
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {

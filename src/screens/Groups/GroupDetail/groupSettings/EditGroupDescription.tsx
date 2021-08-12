@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/core';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import useGroups from '~/hooks/groups';
+import i18next from 'i18next';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -16,11 +17,10 @@ import groupsActions from '../../redux/actions';
 const EditGroupDescription = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const {t, navigation} = useBaseHook();
   const dispatch = useDispatch();
-  const groupData = useGroups();
-  const {groupDetail} = groupData;
+  const {groupDetail} = useGroups();
   const {id, description} = groupDetail.group;
+  const navigation = useNavigation();
 
   const [text, setText] = useState<string>(description);
   const _onChangeText = (value: string) => {
@@ -38,7 +38,7 @@ const EditGroupDescription = () => {
       style={styles.container}
       isFullView>
       <Header
-        title={t('settings:title_group_description')}
+        title={i18next.t('settings:title_group_description')}
         buttonText={'Save'}
         onPressButton={onSave}
       />
