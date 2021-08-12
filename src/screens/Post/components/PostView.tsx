@@ -29,6 +29,7 @@ import {ReactionType} from '~/constants/reactions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
 
 export interface PostViewProps {
   postId: string;
@@ -46,6 +47,7 @@ const PostView: FC<PostViewProps> = ({
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
   const reactionSheetRef = useRef<any>();
+  const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
@@ -122,6 +124,10 @@ const PostView: FC<PostViewProps> = ({
 
   const onPressShowAudiences = () => {
     alert('onPressShowAudiences');
+  };
+
+  const onPressMenu = () => {
+    menuSheetRef.current?.open?.();
   };
 
   const onPressMentionAudience = (audience: any) => {
@@ -243,7 +249,7 @@ const PostView: FC<PostViewProps> = ({
           <Icon
             style={{alignSelf: 'auto'}}
             icon={'EllipsisH'}
-            onPress={() => alert('onPress menu')}
+            onPress={onPressMenu}
           />
         </View>
       </TouchableOpacity>
@@ -349,6 +355,7 @@ const PostView: FC<PostViewProps> = ({
         reactionSheetRef={reactionSheetRef}
         onPressReaction={onAddReaction}
       />
+      <PostViewMenuBottomSheet modalizeRef={menuSheetRef} />
     </View>
   );
 };
