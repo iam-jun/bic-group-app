@@ -321,7 +321,7 @@ const PostView: FC<PostViewProps> = ({
             style={{margin: spacing.margin.base}}
             disabled={calledMarkAsRead}
             onPress={onPressMarkAsRead}>
-            post:mark_as_read
+            {calledMarkAsRead ? 'post:marked_as_read' : 'post:mark_as_read'}
           </Button.Secondary>
           <Divider />
         </>
