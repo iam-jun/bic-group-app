@@ -7,11 +7,10 @@ import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
-import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
-import privacyTypes, {PRIVACY_TYPE} from '~/constants/privacyTypes';
+import privacyTypes from '~/constants/privacyTypes';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -87,16 +86,6 @@ const GeneralInformation = () => {
     );
   };
 
-  const checkPrivacyIcon = (value: PRIVACY_TYPE): IconType => {
-    if (value === 'PUBLIC') {
-      return 'Globe';
-    } else if (value === 'PRIVATE') {
-      return 'Lock';
-    } else {
-      return 'EyeSlash';
-    }
-  };
-
   return (
     <ScreenWrapper
       testID="GeneralInformation"
@@ -161,7 +150,6 @@ const GeneralInformation = () => {
             title={'settings:title_privacy'}
             subtitle={titleCase(privacy)}
             rightIcon={'EditAlt'}
-            privacyIcon={checkPrivacyIcon(privacy)}
             onPress={editGroupPrivacy}
           />
         </View>
