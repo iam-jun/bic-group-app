@@ -128,7 +128,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     const buttonText = !hasTree ? '' : showTree ? 'Showless' : moreText;
 
     if (!path.path) {
-      return null;
+      return <View style={styles.pathContainer} />;
     }
 
     return (

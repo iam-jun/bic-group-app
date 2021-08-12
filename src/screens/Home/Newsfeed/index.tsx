@@ -82,6 +82,7 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: colors.background,
     },
     listStyle: {
       paddingTop: spacing?.padding.base,
