@@ -5,7 +5,7 @@ const initGroupsState = {
   joinedGroups: [],
   loadingGroupDetail: false,
   groupDetail: {
-    group: undefined,
+    group: {},
   },
   groupMember: {
     skip: 0,
@@ -71,6 +71,17 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         groupPosts: action.payload || [],
+      };
+    case groupsTypes.EDIT_GROUP_DETAIL:
+      return {
+        ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          group: {
+            ...state.groupDetail.group,
+            ...action.payload,
+          },
+        },
       };
 
     default:
