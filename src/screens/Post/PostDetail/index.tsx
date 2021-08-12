@@ -119,9 +119,11 @@ const PostDetail = (props: any) => {
       <CommentItem
         commentData={item}
         contentBackgroundColor={bgColor}
-        onPressReply={data => {
+        onPressReply={(data, isChild) => {
           textInputRef.current?.focus?.();
-          listRef.current?.scrollToIndex({index: index});
+          if (!isChild) {
+            listRef.current?.scrollToIndex({index: index});
+          }
         }}
       />
     );
