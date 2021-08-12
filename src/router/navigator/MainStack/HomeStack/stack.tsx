@@ -4,6 +4,7 @@ const homeStack = {
   createPost: 'create-post',
   postSelectAudience: 'post-select-audience',
   myProfile: 'my-profile',
+  publicProfile: 'public-profile',
 };
 
 export default homeStack;

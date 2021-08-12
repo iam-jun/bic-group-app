@@ -14,6 +14,7 @@ import useHome from '~/hooks/home';
 import {AppContext} from '~/contexts/AppContext';
 import homeActions from '~/screens/Home/redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
+import menuActions from '~/screens/Menu/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 
 const Newsfeed = () => {

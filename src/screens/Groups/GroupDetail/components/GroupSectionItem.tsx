@@ -35,7 +35,7 @@ const GroupSectionItem = ({
         subTitle={subtitle}
         RightComponent={
           <>
-            {privacyIcon && <Icon icon={privacyIcon} />}
+            {!!privacyIcon && <Icon icon={privacyIcon} />}
             <Icon icon={rightIcon} style={styles.rightIcon} />
           </>
         }

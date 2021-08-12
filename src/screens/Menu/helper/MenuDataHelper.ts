@@ -1,11 +1,9 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import userProfileDataMocksResponse from './mockDataUserProfile';
 
 export const menuApiConfig = {
-  getMyProfile: (): HttpApiRequestConfig => ({
-    // TODO: will need to change API URL
-    url: `${ApiConfig.providers.bein.url}users/my-group`,
+  getMyProfile: (userId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -13,11 +11,11 @@ export const menuApiConfig = {
 };
 
 const menuDataHelper = {
-  getMyProfile: async () => {
+  getMyProfile: async (userId: number) => {
     try {
-      // TODO: will need to change response data
-      const response: any = userProfileDataMocksResponse;
-      // const response: any = await makeHttpRequest(menuApiConfig.getMyProfile());
+      const response: any = await makeHttpRequest(
+        menuApiConfig.getMyProfile(userId),
+      );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
