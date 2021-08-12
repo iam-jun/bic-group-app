@@ -1,5 +1,6 @@
 import groupsTypes from '~/screens/Groups/redux/types';
 const initGroupsState = {
+  isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
   loadingGroupDetail: false,
@@ -19,6 +20,11 @@ const initGroupsState = {
 function groupsReducer(state = initGroupsState, action: any = {}) {
   const {type} = action;
   switch (type) {
+    case groupsTypes.SET_PRIVACY_MODAL_OPEN:
+      return {
+        ...state,
+        isPrivacyModalOpen: action.payload,
+      };
     case groupsTypes.SET_LOADING_JOINED_GROUPS:
       return {
         ...state,

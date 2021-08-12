@@ -33,7 +33,7 @@ const GeneralInformation = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const groupData = useGroups();
-  const {groupDetail} = groupData || {};
+  const {groupDetail, isPrivacyModalOpen} = groupData || {};
   const {id, name, icon, background_img_url, description, privacy} =
     groupDetail?.group || {};
 
@@ -51,7 +51,11 @@ const GeneralInformation = () => {
       }),
     );
 
-  const editGroupPrivacy = () => baseSheetRef.current?.open?.();
+  const onPrivacyModalClose = () =>
+    dispatch(groupsActions.setPrivacyModalOpen(false));
+
+  const editGroupPrivacy = () =>
+    dispatch(groupsActions.setPrivacyModalOpen(true));
 
   const onPrivacyMenuPress = (item: any) => {
     dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
@@ -163,6 +167,8 @@ const GeneralInformation = () => {
         </View>
 
         <BottomSheet
+          isOpen={isPrivacyModalOpen}
+          onClose={onPrivacyModalClose}
           modalizeRef={baseSheetRef}
           ContentComponent={
             <View style={styles.contentBottomSheet}>
