@@ -47,7 +47,7 @@ const SecurityLogin = () => {
   };
 
   return (
-    <ScreenWrapper testID="SecurityAndLogin" isFullView>
+    <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_security_login')} />
       <ListView
         type="menu"
