@@ -36,17 +36,17 @@ const ChangePassword = () => {
     if (getValues('password') === getValues('newPassword')) {
       setError('newPassword', {
         type: 'manual',
-        message: 'New password must not be the same as the current password',
+        message: t('auth:text_err_new_password_must_differ_from_current'),
       });
     }
   }, 50);
 
-  const validateConfirmPassword = debounce(async () => {
-    await trigger('confirmPassword');
-    if (getValues('newPassword') !== getValues('confirmPassword')) {
-      setError('confirmPassword', {
+  const validateConfirmNewPassword = debounce(async () => {
+    await trigger('confirmNewPassword');
+    if (getValues('newPassword') !== getValues('confirmNewPassword')) {
+      setError('confirmNewPassword', {
         type: 'manual',
-        message: t('auth:text_err_confirm_password_not_matched'),
+        message: t('auth:text_err_confirm_new_password_not_matched'),
       });
     }
   }, 50);
@@ -117,18 +117,20 @@ const ChangePassword = () => {
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
               placeholder={t('auth:input_label_confirm_new_password')}
-              error={errors.confirmPassword}
+              error={errors.confirmNewPassword}
               autoCapitalize="none"
               value={value}
               onChangeText={text => {
                 onChange(text);
-                validateConfirmPassword();
+                validateConfirmNewPassword();
               }}
-              helperType={errors.confirmPassword?.message ? 'error' : undefined}
-              helperContent={errors?.confirmPassword?.message}
+              helperType={
+                errors.confirmNewPassword?.message ? 'error' : undefined
+              }
+              helperContent={errors?.confirmNewPassword?.message}
             />
           )}
-          name="confirmPassword"
+          name="confirmNewPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
