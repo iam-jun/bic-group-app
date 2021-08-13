@@ -71,10 +71,10 @@ export const deviceDimensions = {
   bigTablet: 768,
   laptop: 1024,
   desktop: 1280,
-  totalCols: 12,
-  leftCols: 4,
-  centerCols: 5,
-  rightCols: 3,
+  totalCols: 10,
+  leftCols: 2.8,
+  centerCols: 4.7,
+  rightCols: 2.5,
 };
 
 /* Used for buton size width (short, medium, long, max) */

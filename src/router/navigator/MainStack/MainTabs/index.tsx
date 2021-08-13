@@ -32,6 +32,8 @@ const MainTabs = () => {
 
   const Tab = isPhone ? BottomTab : SideTab;
 
+  const styles = createStyles(theme, isPhone, isBigTablet);
+
   return (
     // @ts-ignore
     <Tab.Navigator
@@ -48,14 +50,7 @@ const MainTabs = () => {
           height: 60 + (!isPhone ? 0 : insets.bottom),
         },
       }}
-      tabBarStyle={
-        isPhone
-          ? {}
-          : {
-              width: isBigTablet ? 0 : 64,
-              backgroundColor: colors.background,
-            }
-      }>
+      tabBarStyle={styles.tabBar}>
       {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore
@@ -118,6 +113,22 @@ const CreateStyle = (
       color: color,
       textAlign: 'center',
     },
+  });
+};
+
+const createStyles = (
+  theme: ITheme,
+  isPhone: boolean,
+  isBigTablet: boolean,
+) => {
+  const {colors} = theme;
+  return StyleSheet.create({
+    tabBar: isPhone
+      ? {}
+      : {
+          width: isBigTablet ? 0 : 64,
+          backgroundColor: colors.background,
+        },
   });
 };
 

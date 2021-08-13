@@ -5,8 +5,9 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import AppInfo from '~/screens/AppInfo';
@@ -36,11 +37,7 @@ const MainStack = (): React.ReactElement => {
     <View style={styles.container}>
       <View style={styles.content}>
         {dimensions.width >= deviceDimensions.bigTablet && (
-          <View
-            style={{
-              flex: deviceDimensions.leftCols,
-              paddingEnd: theme.spacing.margin.base,
-            }}>
+          <View style={styles.leftCol}>
             <NavigationContainer independent ref={leftNavigationRef}>
               <LeftTabs initialRouteName={route?.params?.initialRouteName} />
             </NavigationContainer>
@@ -53,11 +50,7 @@ const MainStack = (): React.ReactElement => {
           <MainTabs />
         </View>
         {dimensions.width >= deviceDimensions.laptop && (
-          <View
-            style={{
-              flex: deviceDimensions.rightCols,
-              paddingStart: theme.spacing.margin.base,
-            }}>
+          <View style={styles.rightCol}>
             <NavigationContainer independent ref={rightNavigationRef}>
               <Stack.Navigator>
                 <Stack.Screen name="app-info" component={AppInfo} />
@@ -76,7 +69,8 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.background,
       alignItems: 'center',
     },
     content: {
@@ -86,6 +80,22 @@ const createStyles = (theme: ITheme) => {
       flexGrow: deviceDimensions.totalCols,
       maxWidth: deviceDimensions.desktop,
       alignSelf: 'center',
+    },
+    leftCol: {
+      flex: deviceDimensions.leftCols,
+      paddingEnd: theme.spacing.padding.extraLarge,
+      ...Platform.select({
+        web: {
+          borderLeftColor: theme.colors.borderDivider,
+          borderLeftWidth: 1,
+        },
+      }),
+    },
+    rightCol: {
+      flex: deviceDimensions.rightCols,
+      paddingStart: theme.spacing.padding.extraLarge,
+      borderRightColor: theme.colors.borderDivider,
+      borderRightWidth: 1,
     },
   });
 };

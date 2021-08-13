@@ -8,6 +8,7 @@ import {
   RefreshControl,
   StyleProp,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import _ from 'lodash';
@@ -58,6 +59,7 @@ export interface ListViewProps {
   title?: string;
   isFullView?: boolean;
   keyboardShouldPersistTaps?: 'always' | 'never' | 'handled';
+
   [x: string]: any;
 }
 
@@ -165,6 +167,7 @@ const ListView: React.FC<ListViewProps> = ({
         </Text.ButtonBase>
       )}
       <FlatList
+        showsVerticalScrollIndicator={Platform.OS !== 'web'}
         ref={listRef}
         data={data}
         style={listStyle}
