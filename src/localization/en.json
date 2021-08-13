@@ -54,6 +54,7 @@
     "btn_send_recover_code": "Send recover code",
     "btn_forgot_password": "Forgot password?",
     "btn_sign_up_now": "Sign up now.",
+    "btn_back_to_login": "Back to Login",
     "text_err_login_failed": "Email or password is wrong!",
     "text_err_forgot_password": "Email is invalid!",
     "text_err_exist_email": "Email is exist!",
@@ -95,7 +96,9 @@
     "text_forgot_password_input_pw_title": "New password",
     "text_forgot_password_input_pw_desc": "Create your new password",
     "text_forgot_password_complete_title": "Your new password have been created",
-    "text_forgot_password_complete_desc": "Sign in now with your new password"
+    "text_forgot_password_complete_desc": "Sign in now with your new password",
+    "text_change_password_complete_title": "Your new password have been changed",
+    "text_change_password_complete_desc": "For us, your privacy and security is our most priority"
   },
   "tabs": {
     "home": "News feed",

@@ -44,6 +44,7 @@
     "btn_send_recover_code": "Gửi mã xác thực",
     "btn_forgot_password": "Quên mật khẩu?",
     "btn_sign_up_now": "Đăng ký ngay.",
+    "btn_back_to_login": "Back to Login",
     "text_err_login_failed": "Sai tài khoản hoặc mật khẩu",
     "text_err_forgot_password": "Định dạng email chưa đúng!",
     "text_err_exist_email": "Email đã tồn tại!",
@@ -85,7 +86,9 @@
     "text_forgot_password_input_pw_title": "Mật khẩu mới",
     "text_forgot_password_input_pw_desc": "Tạo mật khẩu mới của bạn",
     "text_forgot_password_complete_title": "Tài khoản của bạn đã được thay đổi mật khẩu mới",
-    "text_forgot_password_complete_desc": "Đăng nhập ngay với mật khẩu mới của bạn"
+    "text_forgot_password_complete_desc": "Đăng nhập ngay với mật khẩu mới của bạn",
+    "text_change_password_complete_title": "Tài khoản của bạn đã được thay đổi mật khẩu mới",
+    "text_change_password_complete_desc": "For us, your privacy and security is our most priority"
   },
   "tabs": {
     "home": "Bản tin",
