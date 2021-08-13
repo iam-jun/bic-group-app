@@ -54,6 +54,7 @@ const SecurityLogin = () => {
         data={securityLoginMenu.password}
         scrollEnabled={false}
         onItemPress={onSecurityLoginPress}
+        style={styles.firstMenuGroup}
       />
       <Divider style={styles.divider} />
       <ListView
@@ -72,6 +73,9 @@ const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
+    firstMenuGroup: {
+      marginTop: spacing.margin.base,
+    },
     divider: {
       marginVertical: spacing.margin.small,
     },
