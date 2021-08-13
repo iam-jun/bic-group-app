@@ -178,8 +178,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           render={({field: {onChange, value}}) => (
             <PasswordInput
               testID="inputNewPassword"
-              label={t('auth:input_label_enter_new_password')}
-              placeholder={t('auth:input_label_enter_new_password')}
+              label={t('auth:input_label_new_password')}
+              placeholder={t('auth:input_label_new_password')}
               error={errors.newPassword}
               autoCapitalize="none"
               editable={!forgotPasswordLoading}
