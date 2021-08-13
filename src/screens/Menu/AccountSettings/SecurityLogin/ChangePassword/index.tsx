@@ -13,9 +13,14 @@ import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import * as validation from '~/constants/commonRegex';
 import {ITheme} from '~/theme/interfaces';
+import {useDispatch} from 'react-redux';
+import * as modalActions from '~/store/modal/actions';
+import {useRootNavigation} from '~/hooks/navigation';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
+  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -50,6 +55,18 @@ const ChangePassword = () => {
       });
     }
   }, 50);
+
+  const handleForgotPassword = () => {
+    dispatch(
+      modalActions.showAlert({
+        title: 'Info',
+        content:
+          'Function has not been developed. Stay tuned for further releases 😀',
+        onConfirm: () => dispatch(modalActions.hideAlert()),
+        confirmLabel: 'Got it',
+      }),
+    );
+  };
 
   return (
     <ScreenWrapper testID="SecurityLogin" isFullView>
@@ -143,16 +160,24 @@ const ChangePassword = () => {
             alert('All of your devices will be logged out.')
           }
         />
-        <Button.Primary testID="btnChangePasswordSave" style={styles.btnSave}>
+        <Button.Primary
+          testID="btnChangePasswordSave"
+          style={styles.btnSave}
+          onPress={() => {
+            // do nothing
+          }}>
           {t('common:text_save')}
         </Button.Primary>
         <Button.Secondary
           testID="btnCancelChangePassword"
-          style={styles.btnCancel}>
+          style={styles.btnCancel}
+          onPress={() => rootNavigation.goBack()}>
           {t('common:btn_cancel')}
         </Button.Secondary>
         <View style={styles.forgotPasswordContainer}>
-          <TouchableOpacity testID="btnSignInForgotPassword">
+          <TouchableOpacity
+            testID="btnSignInForgotPassword"
+            onPress={handleForgotPassword}>
             <Text.H6 style={styles.forgotPasswordText}>
               {t('auth:btn_forgot_password')}
             </Text.H6>
