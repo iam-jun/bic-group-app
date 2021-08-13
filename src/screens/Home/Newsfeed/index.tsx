@@ -90,7 +90,9 @@ const Newsfeed = () => {
         onLoadMore={() => getData()}
         renderItem={renderItem}
         ListHeaderComponent={() =>
-          (!refreshing || homePosts?.length > 0) && <HeaderCreatePost />
+          (!refreshing || homePosts?.length > 0) && (
+            <HeaderCreatePost style={styles.headerCreatePost} />
+          )
         }
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => (
@@ -114,13 +116,15 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.bgDisable,
     },
     listStyle: {
-      paddingTop: spacing?.padding.base,
       backgroundColor: colors.bgDisable,
     },
     listFooter: {
       height: 150,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    headerCreatePost: {
+      marginTop: spacing.margin.base,
     },
   });
 };
