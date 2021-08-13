@@ -33,9 +33,8 @@ const Menu = (): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const menuData = useMenu();
-  const {userProfile} = menuData;
-  const {id, fullname, email, avatar} = userProfile;
+  const {myProfile} = useMenu();
+  const {id, fullname, email, avatar} = myProfile;
   const currentUserId = useUserIdAuth();
 
   useEffect(() => {
@@ -95,7 +94,7 @@ const Menu = (): React.ReactElement => {
       <HeaderAvatarView
         firstLabel={fullname}
         secondLabel={email}
-        avatar={avatar ? {uri: avatar} : images.img_user_avatar_default}
+        avatar={avatar || images.img_user_avatar_default}
         containerStyle={styles.header}
         onPress={goToMyProfile}
       />
