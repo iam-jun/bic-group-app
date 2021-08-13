@@ -26,9 +26,11 @@ const PostItem = ({postData}: any) => {
   };
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <PostView postId={postData?.id} onPressComment={onPressComment} />
-    </TouchableOpacity>
+    <PostView
+      postId={postData?.id}
+      onPressHeader={onPress}
+      onPressComment={onPressComment}
+    />
   );
 };
 

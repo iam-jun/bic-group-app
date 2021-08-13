@@ -2,6 +2,12 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import {IGroup, IGroupDetail, IGroupDetailEdit} from '~/interfaces/IGroup';
 
 const groupsActions = {
+  setPrivacyModalOpen: (payload: boolean) => {
+    return {
+      type: groupsTypes.SET_PRIVACY_MODAL_OPEN,
+      payload,
+    };
+  },
   setLoadingJoinedGroups: function (payload: boolean) {
     return {
       type: groupsTypes.SET_LOADING_JOINED_GROUPS,

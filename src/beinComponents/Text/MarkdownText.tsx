@@ -26,7 +26,7 @@ const MarkdownText: FC<MarkdownTextProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const audienceRegex = /@\[([^:]+):([^:]+):([^\]]+)\]/;
+  const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)\]/;
 
   //params: url: string, matchIndex: number
   const onPressUrl = async (url: string) => {

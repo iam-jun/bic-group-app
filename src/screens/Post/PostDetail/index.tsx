@@ -20,6 +20,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import PostView from '~/screens/Post/components/PostView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import Button from '~/beinComponents/Button';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
@@ -70,7 +71,7 @@ const PostDetail = (props: any) => {
     if (!id) {
       return null;
     }
-    return <PostView postId={id} />;
+    return <PostView postId={id} isPostDetail />;
   };
 
   const onTextChange = (text: string) => {
@@ -118,9 +119,11 @@ const PostDetail = (props: any) => {
       <CommentItem
         commentData={item}
         contentBackgroundColor={bgColor}
-        onPressReply={data => {
+        onPressReply={(data, isChild) => {
           textInputRef.current?.focus?.();
-          listRef.current?.scrollToIndex({index: index});
+          if (!isChild) {
+            listRef.current?.scrollToIndex({index: index});
+          }
         }}
       />
     );
@@ -152,14 +155,21 @@ const PostDetail = (props: any) => {
               <Text>{t('post:reply_comment_2')}</Text>
             </Text>
           </Text>
-          <Icon
-            icon={'iconClose'}
-            onPress={() => dispatch(postActions.setPostDetailReplyingComment())}
-          />
+          <Button
+            onPress={() =>
+              dispatch(postActions.setPostDetailReplyingComment())
+            }>
+            <Text.BodyS>
+              {'• '}
+              <Text.BodyM useI18n color={colors.primary7}>
+                common:btn_cancel
+              </Text.BodyM>
+            </Text.BodyS>
+          </Button>
         </View>
-        <Text.Subtitle
-          color={colors.textSecondary}
-          numberOfLines={1}>{`${replying.data?.content}`}</Text.Subtitle>
+        {/*<Text.Subtitle*/}
+        {/*  color={colors.textSecondary}*/}
+        {/*  numberOfLines={1}>{`${replying.data?.content}`}</Text.Subtitle>*/}
       </View>
     );
   };

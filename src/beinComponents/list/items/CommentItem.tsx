@@ -14,7 +14,7 @@ import CommentView from '~/screens/Post/components/CommentView';
 export interface CommentItemProps {
   commentData: IReaction;
   contentBackgroundColor?: string;
-  onPressReply?: (data: IReaction) => void;
+  onPressReply?: (data: IReaction, isChild?: boolean) => void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -38,14 +38,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const {colors} = theme;
   const styles = createStyle(theme);
 
-  const _onPressReply = (data: IReaction) => {
+  const _onPressReply = (data: IReaction, isChild?: boolean) => {
     dispatch(postActions.setPostDetailReplyingComment(commentData));
     onPressReply?.(commentData);
   };
 
   const onPressReplyChild = (data: IReaction) => {
     dispatch(postActions.setPostDetailReplyingComment(commentData));
-    onPressReply?.(commentData);
+    onPressReply?.(commentData, true);
   };
 
   const renderCommentChildItem = useCallback(({item}) => {

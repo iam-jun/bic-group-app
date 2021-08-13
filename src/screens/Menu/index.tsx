@@ -18,6 +18,7 @@ import useMenu from '~/hooks/menu';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ISetting} from '~/interfaces/common';
 import images from '~/resources/images';
+import {useUserIdAuth} from '~/hooks/auth';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
@@ -32,12 +33,12 @@ const Menu = (): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const menuData = useMenu();
-  const {userProfile} = menuData;
-  const {id, fullname, email, avatar} = userProfile;
+  const {myProfile} = useMenu();
+  const {id, fullname, email, avatar} = myProfile;
+  const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    dispatch(menuActions.getUserProfile());
+    dispatch(menuActions.getMyProfile(currentUserId));
   }, []);
 
   const onSettingPress = (item: ISetting) => {
@@ -76,7 +77,7 @@ const Menu = (): React.ReactElement => {
 
   const goToMyProfile = () => {
     dispatch(
-      menuActions.selectUserProfile({
+      menuActions.selectMyProfile({
         id,
         fullname,
         email,
@@ -93,7 +94,7 @@ const Menu = (): React.ReactElement => {
       <HeaderAvatarView
         firstLabel={fullname}
         secondLabel={email}
-        avatar={avatar ? {uri: avatar} : images.img_user_avatar_default}
+        avatar={avatar || images.img_user_avatar_default}
         containerStyle={styles.header}
         onPress={goToMyProfile}
       />

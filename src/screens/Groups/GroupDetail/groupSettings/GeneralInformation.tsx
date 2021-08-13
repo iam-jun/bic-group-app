@@ -7,11 +7,10 @@ import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
-import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
-import privacyTypes, {PRIVACY_TYPE} from '~/constants/privacyTypes';
+import privacyTypes from '~/constants/privacyTypes';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -33,7 +32,7 @@ const GeneralInformation = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const groupData = useGroups();
-  const {groupDetail} = groupData || {};
+  const {groupDetail, isPrivacyModalOpen} = groupData || {};
   const {id, name, icon, background_img_url, description, privacy} =
     groupDetail?.group || {};
 
@@ -51,9 +50,14 @@ const GeneralInformation = () => {
       }),
     );
 
-  const editGroupPrivacy = () => baseSheetRef.current?.open?.();
+  const onPrivacyModalClose = () =>
+    dispatch(groupsActions.setPrivacyModalOpen(false));
+
+  const editGroupPrivacy = () =>
+    dispatch(groupsActions.setPrivacyModalOpen(true));
 
   const onPrivacyMenuPress = (item: any) => {
+    baseSheetRef.current?.close();
     dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
   };
 
@@ -81,16 +85,6 @@ const GeneralInformation = () => {
         />
       </TouchableOpacity>
     );
-  };
-
-  const checkPrivacyIcon = (value: PRIVACY_TYPE): IconType => {
-    if (value === 'PUBLIC') {
-      return 'Globe';
-    } else if (value === 'PRIVATE') {
-      return 'Lock';
-    } else {
-      return 'EyeSlash';
-    }
   };
 
   return (
@@ -157,12 +151,13 @@ const GeneralInformation = () => {
             title={'settings:title_privacy'}
             subtitle={titleCase(privacy)}
             rightIcon={'EditAlt'}
-            privacyIcon={checkPrivacyIcon(privacy)}
             onPress={editGroupPrivacy}
           />
         </View>
 
         <BottomSheet
+          isOpen={isPrivacyModalOpen}
+          onClose={onPrivacyModalClose}
           modalizeRef={baseSheetRef}
           ContentComponent={
             <View style={styles.contentBottomSheet}>

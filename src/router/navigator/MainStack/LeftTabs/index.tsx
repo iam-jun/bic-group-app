@@ -1,10 +1,9 @@
 import React from 'react';
 import {useTheme} from 'react-native-paper';
+import {View, StyleSheet, Platform} from 'react-native';
 
 import Icon from '~/beinComponents/Icon';
-
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {View, StyleSheet} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
@@ -62,7 +61,14 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
 const CreateStyle = () => {
   return StyleSheet.create({
     navigatorContainer: {
-      width: 48,
+      ...Platform.select({
+        web: {
+          width: '22%',
+        },
+        default: {
+          width: 48,
+        },
+      }),
     },
     iconContainer: {
       flex: 1,
