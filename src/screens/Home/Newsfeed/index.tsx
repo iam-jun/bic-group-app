@@ -1,6 +1,6 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ActivityIndicator, useTheme} from 'react-native-paper';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
