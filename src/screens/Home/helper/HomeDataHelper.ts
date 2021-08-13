@@ -19,18 +19,20 @@ const homeDataHelper = {
         withReactionCounts: true,
         enrich: true, //extra data for user & group
       };
-
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'newsfeed',
-        `u-${userId}`,
-        'get',
-        streamOptions,
-      );
-
-      return data.results;
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'newsfeed',
+          `u-${userId}`,
+          'get',
+          streamOptions,
+        );
+        return Promise.resolve(data?.results || []);
+      } catch (e) {
+        return Promise.reject(e);
+      }
     }
-    return;
+    return Promise.reject('StreamClient not found');
   },
 };
 

@@ -77,8 +77,6 @@ const Newsfeed = () => {
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
         icon={images.logo_bein}
-        onPressMenu={getData}
-        menuIcon={'Sync'}
       />
       <ListView
         isFullView
