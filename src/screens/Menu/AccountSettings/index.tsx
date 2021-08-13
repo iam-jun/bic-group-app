@@ -45,6 +45,9 @@ const GeneralSettings = () => {
       case 'userProfile':
         return rootNavigation.navigate(menuStack.userProfile);
 
+      case 'securityLogin':
+        return rootNavigation.navigate(menuStack.securityLogin);
+
       case 'language':
         dispatch(menuActions.setLanguageModalOpen(true));
         return;

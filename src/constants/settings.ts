@@ -83,3 +83,27 @@ export const accountSettingsMenu = [
     rightSubIcon: 'AngleRightB',
   },
 ];
+
+export const securityLoginMenu = [
+  {
+    type: 'changePassword',
+    title: 'settings:title_change_password',
+    subTitle: 'settings:subtitle_change_password',
+    rightSubIcon: 'AngleRightB',
+    icon: 'KeySkeleton',
+  },
+  {
+    type: 'twoFactorAuthentication',
+    title: 'settings:title_two_factor_authentication',
+    subTitle: 'settings:subtitle_two_factor_authentication',
+    rightSubIcon: 'AngleRightB',
+    icon: 'ShieldCheck',
+  },
+  {
+    type: 'loginLogs',
+    title: 'settings:title_login_logs',
+    subTitle: 'settings:subtitle_login_logs',
+    rightSubIcon: 'AngleRightB',
+    icon: 'KeySkeleton',
+  },
+];
