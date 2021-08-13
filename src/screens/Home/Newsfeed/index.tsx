@@ -89,7 +89,9 @@ const Newsfeed = () => {
         onRefresh={() => getData(true)}
         onLoadMore={() => getData()}
         renderItem={renderItem}
-        ListHeaderComponent={() => <HeaderCreatePost />}
+        ListHeaderComponent={() =>
+          (!refreshing || homePosts?.length > 0) && <HeaderCreatePost />
+        }
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => (
           <ViewSpacing height={theme.spacing?.margin.base} />

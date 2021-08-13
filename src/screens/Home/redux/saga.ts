@@ -23,12 +23,13 @@ function* getHomePosts({
       get(state, homeKeySelector.noMoreHomePosts),
     );
 
-    if (noMoreHomePosts) {
+    if (noMoreHomePosts && !isRefresh) {
       return;
     }
 
     if (isRefresh) {
       yield put(homeActions.setRefreshingHomePosts(true));
+      yield put(homeActions.setNoMoreHomePosts(false));
       homePosts = [];
       offset = 0;
     } else {
