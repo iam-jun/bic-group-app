@@ -13,25 +13,20 @@ import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {securityLoginMenu} from '~/constants/settings';
 import {ITheme} from '~/theme/interfaces';
+import {useRootNavigation} from '~/hooks/navigation';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
 const SecurityLogin = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   const onSecurityLoginPress = (item: ISetting) => {
     switch (item.type) {
       case 'changePassword':
-        dispatch(
-          modalActions.showAlert({
-            title: 'Change password',
-            content: 'Nothing to look here 😏😏😏',
-            onConfirm: () => dispatch(modalActions.hideAlert()),
-            confirmLabel: 'Got it',
-          }),
-        );
-        return;
+        return rootNavigation.navigate(menuStack.changePassword);
 
       default:
         dispatch(
