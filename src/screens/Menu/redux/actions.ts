@@ -8,23 +8,42 @@ const menuActions = {
       payload,
     };
   },
-  setUserProfile: (payload: IUserProfile) => {
+  setMyProfile: (payload: IUserProfile) => {
     return {
-      type: menuTypes.SET_USER_PROFILE,
+      type: menuTypes.SET_MY_PROFILE,
       payload,
     };
   },
-  selectUserProfile: (payload: IUserProfile) => {
+  selectMyProfile: (payload: IUserProfile) => {
     return {
-      type: menuTypes.SELECT_USER_PROFILE,
+      type: menuTypes.SELECT_MY_PROFILE,
+      payload,
+    };
+  },
+  setSelectedProfile: (payload: IUserProfile) => {
+    return {
+      type: menuTypes.SET_SELECTED_PROFILE,
+      payload,
+    };
+  },
+  selectedProfile: (payload: IUserProfile) => {
+    return {
+      type: menuTypes.SELECTED_PROFILE,
       payload,
     };
   },
 
   // FOR SAGA:
-  getUserProfile: () => {
+  getMyProfile: (payload: string) => {
     return {
-      type: menuTypes.GET_USER_PROFILE,
+      type: menuTypes.GET_MY_PROFILE,
+      payload,
+    };
+  },
+  getSelectedProfile: (payload: string) => {
+    return {
+      type: menuTypes.GET_SELECTED_PROFILE,
+      payload,
     };
   },
 };

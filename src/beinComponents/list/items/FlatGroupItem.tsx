@@ -127,6 +127,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     const moreText = path.more > 0 ? `+${path.more} more` : '';
     const buttonText = !hasTree ? '' : showTree ? 'Showless' : moreText;
 
+    if (!path.path) {
+      return <View style={styles.pathContainer} />;
+    }
+
     return (
       <View style={styles.pathContainer}>
         <Button onPress={_onPressPath} disabled={!hasTree}>

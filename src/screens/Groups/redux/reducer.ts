@@ -1,10 +1,11 @@
 import groupsTypes from '~/screens/Groups/redux/types';
 const initGroupsState = {
+  isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
   loadingGroupDetail: false,
   groupDetail: {
-    group: undefined,
+    group: {},
   },
   groupMember: {
     skip: 0,
@@ -19,6 +20,11 @@ const initGroupsState = {
 function groupsReducer(state = initGroupsState, action: any = {}) {
   const {type} = action;
   switch (type) {
+    case groupsTypes.SET_PRIVACY_MODAL_OPEN:
+      return {
+        ...state,
+        isPrivacyModalOpen: action.payload,
+      };
     case groupsTypes.SET_LOADING_JOINED_GROUPS:
       return {
         ...state,
@@ -65,6 +71,17 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         groupPosts: action.payload || [],
+      };
+    case groupsTypes.EDIT_GROUP_DETAIL:
+      return {
+        ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          group: {
+            ...state.groupDetail.group,
+            ...action.payload,
+          },
+        },
       };
 
     default:

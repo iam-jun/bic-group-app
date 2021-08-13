@@ -9,26 +9,32 @@ import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
 import useMenu from '~/hooks/menu';
 import images from '~/resources/images';
+import {IUserProfile} from '~/interfaces/IAuth';
 import menuActions from '~/screens/Menu/redux/actions';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
-import AboutProfile from './components/AboutProfile';
+import AboutProfile from '../MyProfilePage/components/AboutProfile';
 
-const MyProfilePage = () => {
+const ProfileInfo = ({
+  fullname,
+  description,
+  avatar,
+  background_img_url,
+  email,
+  address,
+  language,
+  phone,
+  isPublic,
+}: IUserProfile) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const menuData = useMenu();
-  const {userProfile} = menuData;
-  const {fullname, background_img_url, avatar, description, isPublic} =
-    userProfile;
 
   const popupMessage = () =>
     dispatch(
@@ -41,33 +47,23 @@ const MyProfilePage = () => {
       }),
     );
 
-  // useEffect(() => {
-  //   dispatch(menuActions.getUserProfile(userId));
-  // }, []);
-
   return (
-    <ScreenWrapper testID="MyProfilePage" style={styles.container}>
+    <View>
       <Header />
-      <ButtonWrapper onPress={popupMessage}>
+      <ButtonWrapper>
         <Image
           style={styles.cover}
           resizeMode="cover"
-          source={
-            background_img_url
-              ? {uri: background_img_url}
-              : images.img_cover_default
-          }
+          source={background_img_url || images.img_cover_default}
         />
       </ButtonWrapper>
-
-      <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
+      <ButtonWrapper style={styles.imageButton}>
         <Image
           style={styles.avatar}
           resizeMode="cover"
-          source={avatar ? {uri: avatar} : images.img_user_avatar_default}
+          source={avatar || images.img_user_avatar_default}
         />
       </ButtonWrapper>
-
       <View style={styles.headerName}>
         <Text.H5>{fullname}</Text.H5>
         <Text.Body style={styles.subtitleText}>{description}</Text.Body>
@@ -92,15 +88,20 @@ const MyProfilePage = () => {
           {t('profile:title_edit_profile')}
         </Button.Secondary>
       )}
-
       <Divider style={styles.divider} />
 
-      <AboutProfile />
-    </ScreenWrapper>
+      <AboutProfile
+        email={email}
+        address={address}
+        language={language}
+        phone={phone}
+        isPublic={isPublic}
+      />
+    </View>
   );
 };
 
-export default MyProfilePage;
+export default ProfileInfo;
 
 const themeStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
