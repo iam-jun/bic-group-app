@@ -71,7 +71,7 @@ const PostDetail = (props: any) => {
     if (!id) {
       return null;
     }
-    return <PostView postId={id} />;
+    return <PostView postId={id} isPostDetail />;
   };
 
   const onTextChange = (text: string) => {

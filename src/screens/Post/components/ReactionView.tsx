@@ -23,10 +23,6 @@ const ReactionView: FC<ReactionViewProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  if (!reactionCounts || Object.keys?.(reactionCounts)?.length === 0) {
-    return null;
-  }
-
   const onActionReaction = (reactionId: ReactionType, action: IAction) => {
     if (action === commonActions.selectEmoji) {
       onAddReaction?.(reactionId);
@@ -37,7 +33,7 @@ const ReactionView: FC<ReactionViewProps> = ({
 
   const renderReactions = () => {
     const rendered: React.ReactNode[] = [];
-    Object.keys(reactionCounts || {}).map((key, index) => {
+    Object.keys(reactionCounts || {})?.map?.((key, index) => {
       const react = key as ReactionType;
       if (reactions?.[react] && reactionCounts?.[key]) {
         rendered.push(
@@ -56,7 +52,13 @@ const ReactionView: FC<ReactionViewProps> = ({
     return rendered;
   };
 
-  return <View style={styles.container}>{renderReactions()}</View>;
+  const renderedReactions = renderReactions();
+
+  if (renderedReactions.length === 0) {
+    return <View />;
+  } else {
+    return <View style={styles.container}>{renderReactions()}</View>;
+  }
 };
 
 const createStyle = (theme: ITheme) => {

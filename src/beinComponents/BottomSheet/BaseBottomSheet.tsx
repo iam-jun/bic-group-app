@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Modalize, ModalizeProps} from 'react-native-modalize';
 import {Portal, useTheme} from 'react-native-paper';
 import {StyleSheet, ViewStyle, StyleProp, Keyboard} from 'react-native';
@@ -49,6 +49,13 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
     const {spacing}: ITheme = useTheme() as ITheme;
     const insets = useSafeAreaInsets();
 
+    useEffect(() => {
+      if (isOpen) {
+        Keyboard.dismiss();
+        modalizeRef?.current?.open?.();
+      }
+    }, [isOpen]);
+
     const _modalStyle = StyleSheet.flatten([
       {
         borderTopRightRadius: 0,
@@ -64,11 +71,6 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
       },
       childrenStyle,
     ]);
-
-    if (isOpen) {
-      Keyboard.dismiss();
-      modalizeRef?.current?.open?.();
-    }
 
     return (
       <Portal>

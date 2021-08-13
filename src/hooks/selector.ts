@@ -1,7 +1,15 @@
 import {useSelector} from 'react-redux';
+import {createSelector} from 'reselect';
 import {get} from 'lodash';
-import {IObject} from '~/interfaces/common';
 
-export const useKeySelector = (key: string) => {
-  return useSelector((state: IObject<any>) => get(state, key));
+export const useKeySelector = (
+  key: string,
+  filterFunction?: (stateData: any) => any,
+) => {
+  return useSelector(
+    createSelector(
+      state => get(state, key),
+      filterFunction || (stateData => stateData),
+    ),
+  );
 };
