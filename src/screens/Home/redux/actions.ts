@@ -1,6 +1,6 @@
-import {IGetStreamDispatch} from '~/interfaces/common';
 import {IPostActivity} from '~/interfaces/IPost';
 import homeTypes from './types';
+import {IPayloadGetHomePost} from '~/interfaces/IHome';
 
 const homeActions = {
   setLoadingHomePosts: (payload: boolean) => {
@@ -9,6 +9,19 @@ const homeActions = {
       payload,
     };
   },
+  setRefreshingHomePosts: (payload: boolean) => {
+    return {
+      type: homeTypes.SET_REFRESHING_HOME_POSTS,
+      payload,
+    };
+  },
+  setNoMoreHomePosts: (payload: boolean) => {
+    return {
+      type: homeTypes.SET_NO_MORE_HOME_POSTS,
+      payload,
+    };
+  },
+
   setHomePosts: (payload: IPostActivity) => {
     return {
       type: homeTypes.SET_HOME_POSTS,
@@ -17,7 +30,7 @@ const homeActions = {
   },
 
   // FOR SAGA:
-  getHomePosts: (payload: IGetStreamDispatch) => {
+  getHomePosts: (payload: IPayloadGetHomePost) => {
     return {
       type: homeTypes.GET_HOME_POSTS,
       payload,
