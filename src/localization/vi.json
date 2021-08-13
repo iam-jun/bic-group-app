@@ -53,6 +53,7 @@
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
     "text_err_id_password_not_matched": "Email hoặc mật khẩu không chính xác",
     "text_err_password_blank": "Yêu cầu điền mật khẩu!",
+    "text_err_new_password_blank": "Yêu cầu điền mật khẩu mới!",
     "text_err_password_format": "Mật khẩu từ 8 ký tự, ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt!",
     "text_err_email_blank": "Yêu cầu điền email ",
     "text_err_email_format": "Email sai định dạng",
@@ -138,7 +139,8 @@
     "title_private_subtitle": "Group's content show to only members.\nLearn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "This group is secret. Learn more",
-    "title_edit_description": "Edit Description"
+    "title_edit_description": "Edit Description",
+    "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị"
   },
   "languages": {
     "title_en": "English",

@@ -63,6 +63,7 @@
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
     "text_err_id_password_not_matched": "Email and password doesn't match.",
     "text_err_password_blank": "Password is required!",
+    "text_err_new_password_blank": "New password is required!",
     "text_err_password_format": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
     "text_err_email_blank": "Email is required!",
     "text_err_email_format": "Invalid email!",
@@ -148,7 +149,8 @@
     "title_private_subtitle": "Group's content show to only members.\nLearn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "This group is secret. Learn more",
-    "title_edit_description": "Edit Description"
+    "title_edit_description": "Edit Description",
+    "title_logout_from_all_devices": "Logout from all devices"
   },
   "languages": {
     "title_en": "English",
