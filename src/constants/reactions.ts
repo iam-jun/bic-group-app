@@ -4,99 +4,99 @@ import reactionIcons from '~/resources/reactions';
 export const reactions = {
   angry_furious: {
     id: 'angry_furious',
-    icon: reactionIcons.angry_furious,
+    icon: 'angry_furious',
   },
   congratulations_party: {
     id: 'congratulations_party',
-    icon: reactionIcons.congratulations_party,
+    icon: 'congratulations_party',
   },
   crazy_love_heart: {
     id: 'crazy_love_heart',
-    icon: reactionIcons.crazy_love_heart,
+    icon: 'crazy_love_heart',
   },
   crying_sad: {
     id: 'crying_sad',
-    icon: reactionIcons.crying_sad,
+    icon: 'crying_sad',
   },
   curious: {
     id: 'curious',
-    icon: reactionIcons.curious,
+    icon: 'curious',
   },
   excited: {
     id: 'excited',
-    icon: reactionIcons.excited,
+    icon: 'excited',
   },
   explosive_meltdown: {
     id: 'explosive_meltdown',
-    icon: reactionIcons.explosive_meltdown,
+    icon: 'explosive_meltdown',
   },
   fake_happy: {
     id: 'fake_happy',
-    icon: reactionIcons.fake_happy,
+    icon: 'fake_happy',
   },
   greedy_money: {
     id: 'greedy_money',
-    icon: reactionIcons.greedy_money,
+    icon: 'greedy_money',
   },
   laugh_lol: {
     id: 'laugh_lol',
-    icon: reactionIcons.laugh_lol,
+    icon: 'laugh_lol',
   },
   laugh_rofl: {
     id: 'laugh_rofl',
-    icon: reactionIcons.laugh_rofl,
+    icon: 'laugh_rofl',
   },
   like_a_boss_cool: {
     id: 'like_a_boss_cool',
-    icon: reactionIcons.like_a_boss_cool,
+    icon: 'like_a_boss_cool',
   },
   love_hearts: {
     id: 'love_hearts',
-    icon: reactionIcons.love_hearts,
+    icon: 'love_hearts',
   },
   pleading_cute: {
     id: 'pleading_cute',
-    icon: reactionIcons.pleading_cute,
+    icon: 'pleading_cute',
   },
   pokerface: {
     id: 'pokerface',
-    icon: reactionIcons.pokerface,
+    icon: 'pokerface',
   },
   relieved_laughter: {
     id: 'relieved_laughter',
-    icon: reactionIcons.relieved_laughter,
+    icon: 'relieved_laughter',
   },
   sad_sweat: {
     id: 'sad_sweat',
-    icon: reactionIcons.sad_sweat,
+    icon: 'sad_sweat',
   },
   scare_frightened: {
     id: 'scare_frightened',
-    icon: reactionIcons.scare_frightened,
+    icon: 'scare_frightened',
   },
   smile_laugh: {
     id: 'smile_laugh',
-    icon: reactionIcons.smile_laugh,
+    icon: 'smile_laugh',
   },
   stunned_game_over: {
     id: 'stunned_game_over',
-    icon: reactionIcons.stunned_game_over,
+    icon: 'stunned_game_over',
   },
   stunned_wow: {
     id: 'stunned_wow',
-    icon: reactionIcons.stunned_wow,
+    icon: 'stunned_wow',
   },
   tongue_out_smile: {
     id: 'tongue_out_smile',
-    icon: reactionIcons.tongue_out_smile,
+    icon: 'tongue_out_smile',
   },
   wink_kiss: {
     id: 'wink_kiss',
-    icon: reactionIcons.wink_kiss,
+    icon: 'wink_kiss',
   },
   worry_sad: {
     id: 'worry_sad',
-    icon: reactionIcons.worry_sad,
+    icon: 'worry_sad',
   },
 };
 

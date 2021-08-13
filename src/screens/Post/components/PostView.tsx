@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState, useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
@@ -27,19 +27,27 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {ReactionType} from '~/constants/reactions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {IconType} from '~/resources/icons';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
 
 export interface PostViewProps {
   postId: string;
+  isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
+  onPressHeader?: (postId: string) => void;
 }
 
 const PostView: FC<PostViewProps> = ({
   postId,
+  isPostDetail,
   onPressComment,
+  onPressHeader,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
   const reactionSheetRef = useRef<any>();
+  const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
@@ -118,6 +126,10 @@ const PostView: FC<PostViewProps> = ({
     alert('onPressShowAudiences');
   };
 
+  const onPressMenu = () => {
+    menuSheetRef.current?.open?.();
+  };
+
   const onPressMentionAudience = (audience: any) => {
     if (audience) {
       alert(`Show profile of ${audience.name || audience.fullname}`);
@@ -126,10 +138,6 @@ const PostView: FC<PostViewProps> = ({
 
   const onPressReact = () => {
     reactionSheetRef?.current?.open?.();
-  };
-
-  const onLongPressReact = () => {
-    alert('onLongPressReact');
   };
 
   const _onPressComment = () => {
@@ -203,17 +211,16 @@ const PostView: FC<PostViewProps> = ({
 
   const renderHeader = () => {
     return (
-      <View style={{flexDirection: 'row', marginTop: spacing?.margin.small}}>
+      <TouchableOpacity
+        onPress={() => onPressHeader?.(postId)}
+        style={styles.headerContainer}>
         <Avatar.UltraLarge source={avatar} style={styles.avatar} />
         <View style={{flex: 1}}>
-          <Button
-            textProps={{
-              variant: 'h6',
-              style: {flex: 1, alignSelf: 'auto'},
-            }}
-            onPress={onPressActor}>
-            {actorName}
-          </Button>
+          <TouchableOpacity
+            onPress={onPressActor}
+            style={{alignSelf: 'flex-start'}}>
+            <Text.H6>{actorName}</Text.H6>
+          </TouchableOpacity>
           <View style={{flexDirection: 'row'}}>
             <Text.H6S
               useI18n
@@ -221,15 +228,9 @@ const PostView: FC<PostViewProps> = ({
               style={styles.textTo}>
               post:to
             </Text.H6S>
-            <Button style={{flex: 1}} onPress={onPressShowAudiences}>
-              <Text.H6>{textAudiences}</Text.H6>
-            </Button>
+            <Text.H6 onPress={onPressShowAudiences}>{textAudiences}</Text.H6>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+          <View style={styles.rowCenter}>
             {renderPostTime()}
             <Icon
               style={{margin: spacing?.margin.small}}
@@ -248,63 +249,65 @@ const PostView: FC<PostViewProps> = ({
           <Icon
             style={{alignSelf: 'auto'}}
             icon={'EllipsisH'}
-            onPress={() => alert('onPress menu')}
+            onPress={onPressMenu}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
-  const renderReactButtons = () => {
+  const renderReactButtonItem = (
+    title: string,
+    icon: IconType,
+    onPress: any,
+    onLongPress: any,
+    disabled?: boolean,
+  ) => {
     return (
-      <View style={styles.reactButtonContainer}>
-        <Button
-          useI18n
-          onPress={onPressReact}
-          onLongPress={onLongPressReact}
-          leftIcon={'iconReact'}
-          leftIconProps={{
-            icon: 'iconReact',
-            size: 14,
-            tintColor: colors.textSecondary,
-          }}
-          textProps={{
-            variant: 'bodyM',
-            color: colors.textSecondary,
-          }}
-          style={styles.buttonReact}>
-          post:button_react
-        </Button>
-        <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
-        <Button
-          useI18n
-          disabled={!onPressComment}
-          onPress={_onPressComment}
-          leftIcon={'CommentAltDots'}
-          leftIconProps={{
-            icon: 'CommentAltDots',
-            size: 14,
-            tintColor: colors.textSecondary,
-          }}
-          textProps={{
-            variant: 'bodyM',
-            color: colors.textSecondary,
-          }}
-          style={styles.buttonReact}>
-          post:button_comment
-        </Button>
-      </View>
+      <Button
+        useI18n
+        onPress={onPress}
+        onLongPress={onLongPress}
+        disabled={disabled}
+        leftIcon={icon}
+        leftIconProps={{
+          icon: icon,
+          size: 14,
+          tintColor: colors.textSecondary,
+        }}
+        textProps={{
+          variant: 'bodyM',
+          color: colors.textSecondary,
+        }}
+        style={styles.buttonReact}>
+        {title}
+      </Button>
     );
   };
 
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>
-        <Text
-          allowMarkdown
-          onPressAudience={(audience: any) => onPressMentionAudience(audience)}>
-          {content}
-        </Text>
+        {isPostDetail ? (
+          <Text
+            allowMarkdown
+            onPressAudience={(audience: any) =>
+              onPressMentionAudience(audience)
+            }>
+            {content}
+          </Text>
+        ) : (
+          <CollapsibleText
+            content={content}
+            limitLength={400}
+            shortLength={400}
+            allowMarkdown
+            toggleOnPress
+            onPressAudience={(audience: any) =>
+              onPressMentionAudience(audience)
+            }
+          />
+        )}
       </View>
     );
   };
@@ -315,7 +318,7 @@ const PostView: FC<PostViewProps> = ({
       {renderHeader()}
       {renderContent()}
       {isImportant && (
-        <>
+        <View>
           <Button.Secondary
             useI18n
             style={{margin: spacing.margin.base}}
@@ -324,7 +327,7 @@ const PostView: FC<PostViewProps> = ({
             {calledMarkAsRead ? 'post:marked_as_read' : 'post:mark_as_read'}
           </Button.Secondary>
           <Divider />
-        </>
+        </View>
       )}
       <ReactionView
         ownReactions={own_reactions}
@@ -332,12 +335,28 @@ const PostView: FC<PostViewProps> = ({
         onAddReaction={onAddReaction}
         onRemoveReaction={onRemoveReaction}
       />
-      {renderReactButtons()}
+      <View style={styles.reactButtonContainer}>
+        {renderReactButtonItem(
+          'post:button_react',
+          'iconReact',
+          onPressReact,
+          onPressReact,
+        )}
+        <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
+        {renderReactButtonItem(
+          'post:button_comment',
+          'CommentAltDots',
+          _onPressComment,
+          _onPressComment,
+          !onPressComment,
+        )}
+      </View>
       <ReactionBottomSheet
         reactionSheetRef={reactionSheetRef}
         onPressReaction={onAddReaction}
         title={t('post:label_all_reacts')}
       />
+      <PostViewMenuBottomSheet modalizeRef={menuSheetRef} />
     </View>
   );
 };
@@ -363,8 +382,13 @@ const getAudiencesText = (aud?: IPostAudience, t?: any) => {
 const createStyle = (theme: ITheme) => {
   const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
+    rowCenter: {flexDirection: 'row', alignItems: 'center'},
     container: {
       backgroundColor: colors.background,
+    },
+    headerContainer: {
+      flexDirection: 'row',
+      paddingTop: spacing?.margin.small,
     },
     avatar: {
       marginLeft: spacing?.margin.large,

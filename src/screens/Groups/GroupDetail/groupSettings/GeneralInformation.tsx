@@ -57,6 +57,7 @@ const GeneralInformation = () => {
     dispatch(groupsActions.setPrivacyModalOpen(true));
 
   const onPrivacyMenuPress = (item: any) => {
+    baseSheetRef.current?.close();
     dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
   };
 
