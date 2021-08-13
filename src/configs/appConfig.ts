@@ -1,5 +1,5 @@
 export default {
   dataMode: 'mock',
   defaultLanguage: 'en',
-  recordsPerPage: 15,
+  recordsPerPage: 25,
 };

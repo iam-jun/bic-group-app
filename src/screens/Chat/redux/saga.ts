@@ -1,3 +1,4 @@
+import uuid from 'react-native-uuid';
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {put, select, takeLatest} from 'redux-saga/effects';
@@ -182,15 +183,18 @@ function* sendMessage({payload}: {payload: IMessage; type: string}) {
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.sendMessage({
-        roomId: conversation._id,
-        text: payload.text,
+        message: {
+          _id: payload._id.toString(),
+          rid: conversation._id,
+          msg: payload.text,
+        },
       }),
     );
 
     const message = mapMessage(response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
-    console.log('createConversation', err);
+    console.log('sendMessage', err);
     yield put(actions.sendMessageFailed(payload));
   }
 }

@@ -35,15 +35,14 @@ const MessageContainer: React.FC<MessageContainerProps> = (
 
   if (currentMessage?.system) return <SystemMessage {...currentMessage} />;
 
-  const sameUserInPrevMessage =
-    currentMessage &&
-    isSameUser(currentMessage, previousMessage) &&
-    isSameDay(currentMessage, previousMessage);
-
   const _currentMessage = currentMessage as IMessage;
   const _previousMessage = previousMessage as IMessage;
-
+  const sameUser =
+    _currentMessage?.user?.username === _previousMessage?.user?.username;
   const sameType = _currentMessage?.type === _previousMessage?.type;
+
+  const sameUserInPrevMessage =
+    currentMessage && sameUser && isSameDay(currentMessage, previousMessage);
 
   const reactions = _currentMessage?.reactions || [];
   const _onRetryPress = () => onRetryPress(_currentMessage);
@@ -119,7 +118,7 @@ const createStyles = (theme: IObject<any>) => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingLeft: spacing.padding.tiny,
-      marginTop: -spacing.margin.small,
+      marginTop: -2,
       marginBottom: spacing.margin.base,
     },
 

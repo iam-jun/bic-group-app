@@ -34,7 +34,6 @@ const ConversationsList = (): React.ReactElement => {
   }, [isFocused]);
 
   useEffect(() => {
-    // dispatch(actions.getSubscriptions());
     _getConversations();
   }, []);
 
