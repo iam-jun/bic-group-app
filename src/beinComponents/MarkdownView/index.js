@@ -26,6 +26,8 @@ import {styles} from './src/styles';
 import {stringToTokens} from './src/util/stringToTokens';
 import FitImage from 'react-native-fit-image';
 import textStyleProps from './src/data/textStyleProps';
+import emojiShortcuts from './emoji/shortcuts';
+import emojiDefs from './emoji/defs';
 
 export {
   getUniqueID,
@@ -41,6 +43,8 @@ export {
   removeTextStyleProps,
   FitImage,
   textStyleProps,
+  emojiShortcuts,
+  emojiDefs
 };
 
 // we use StyleSheet.flatten here to make sure we have an object, in case someone
@@ -136,7 +140,7 @@ const getRenderer = (
   }
 };
 
-const MarkdownView = React.memo(
+const Markdown = React.memo(
   ({
     children,
     renderer = null,
@@ -193,7 +197,7 @@ const MarkdownView = React.memo(
   },
 );
 
-MarkdownView.propTypes = {
+Markdown.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.array]).isRequired,
   renderer: PropTypes.oneOfType([
     PropTypes.func,
@@ -235,4 +239,4 @@ MarkdownView.propTypes = {
   debugPrintTree: PropTypes.bool,
 };
 
-export default MarkdownView;
+export default Markdown;

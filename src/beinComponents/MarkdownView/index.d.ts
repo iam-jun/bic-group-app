@@ -83,7 +83,7 @@ export function stringToTokens(
 
 export function tokensToAST(tokens: ReadonlyArray<Token>): ASTNode[];
 
-export interface MarkdownViewProps {
+export interface MarkdownProps {
   rules?: RenderRules;
   style?: StyleSheet.NamedStyles<any>;
   renderer?: AstRenderer;
@@ -93,8 +93,10 @@ export interface MarkdownViewProps {
   onLinkPress?: (url: string) => boolean;
 }
 
-type MarkdownViewStatic = ComponentType<MarkdownViewProps>;
-export const MarkdownView: MarkdownViewStatic;
-export type MarkdownView = MarkdownViewStatic;
+type MarkdownStatic = ComponentType<MarkdownProps>;
+export const Markdown: MarkdownStatic;
+export type Markdown = MarkdownStatic;
 export {MarkdownIt};
-export default MarkdownView;
+export const emojiShortcuts: any;
+export const emojiDefs: any;
+export default Markdown;
