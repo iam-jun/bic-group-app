@@ -12,6 +12,7 @@ export default {
       primary7: '#5234AD',
 
       background: '#FFFFFF',
+      bgSecondary: '#F5F5F5',
       bgFocus: '#BDBDBD',
       bgHover: '#BDBDBD',
       bgDisable: '#E0E0E0',
@@ -79,6 +80,7 @@ export default {
       primary7: '#5234AD',
 
       background: '#FFFFFF',
+      bgSecondary: '#F5F5F5',
       bgFocus: '#BDBDBD',
       bgHover: '#BDBDBD',
       bgDisable: '#E0E0E0',

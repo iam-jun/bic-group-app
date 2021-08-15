@@ -21,6 +21,7 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
   primary7?: string;
 
   background: string;
+  bgSecondary?: string;
   bgFocus?: string;
   bgHover?: string;
   bgDisable?: string;

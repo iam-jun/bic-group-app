@@ -209,10 +209,10 @@
     "label_invite": "Invite",
     "label_notification": "Notifications",
     "label_mute": "Mute",
-    "label_pin": "Pin",
+    "label_pin_chat": "Pin Chat",
     "label_attachments": "Files",
     "label_gallery": "Gallery",
-    "label_leaves_group": "Leaves Group",
+    "label_leaves_group": "Leaves Group Chat",
     "label_create_group_chat_with": "Create group chat with",
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
@@ -227,7 +227,14 @@
       "sent": "Sent",
       "received": "Received",
       "failed": "Failed"
-    }
+    },
+    "title_privacy": "Privacy",
+    "title_more_actions": "More actions",
+    "title_admin_tool": "Admin Tool",
+    "text_block": "Block",
+    "text_feedback":"Feedback this chat",
+    "label_pin_messagess": "Pin Messages",
+    "label_permisstion_management": "Permissions Management"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
