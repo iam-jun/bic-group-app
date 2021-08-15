@@ -26,8 +26,8 @@ import {styles} from './src/styles';
 import {stringToTokens} from './src/util/stringToTokens';
 import FitImage from 'react-native-fit-image';
 import textStyleProps from './src/data/textStyleProps';
-import emojiShortcuts from './emoji/shortcuts';
-import emojiDefs from './emoji/defs';
+import emojiShortcuts from '../emoji/shortcuts';
+import emojiDefs from '../emoji/defs';
 
 export {
   getUniqueID,
@@ -44,7 +44,7 @@ export {
   FitImage,
   textStyleProps,
   emojiShortcuts,
-  emojiDefs
+  emojiDefs,
 };
 
 // we use StyleSheet.flatten here to make sure we have an object, in case someone
