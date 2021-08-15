@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, TouchableHighlight} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -10,9 +16,15 @@ import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
-const HeaderCreatePost = () => {
+export interface HeaderCreatePostProps {
+  style?: StyleProp<ViewStyle>;
+}
+
+const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
+  style,
+}: HeaderCreatePostProps) => {
   const {navigation} = useBaseHook();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -21,7 +33,7 @@ const HeaderCreatePost = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={StyleSheet.flatten([styles.container, style])}>
       <Avatar.Medium
         isRounded={true}
         source={

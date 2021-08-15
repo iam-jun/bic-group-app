@@ -2,10 +2,14 @@ import {StreamClient} from 'getstream';
 import {makeGetStreamRequest} from '~/services/httpApiRequest';
 
 const homeDataHelper = {
-  getHomePosts: async (userId: string, streamClient?: StreamClient) => {
+  getHomePosts: async (
+    userId: string,
+    streamClient?: StreamClient,
+    offset?: number,
+  ) => {
     if (streamClient) {
       const streamOptions = {
-        offset: 0,
+        offset: offset || 0,
         limit: 10,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
@@ -15,18 +19,20 @@ const homeDataHelper = {
         withReactionCounts: true,
         enrich: true, //extra data for user & group
       };
-
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'newsfeed',
-        `u-${userId}`,
-        'get',
-        streamOptions,
-      );
-
-      return data.results;
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'newsfeed',
+          `u-${userId}`,
+          'get',
+          streamOptions,
+        );
+        return Promise.resolve(data?.results || []);
+      } catch (e) {
+        return Promise.reject(e);
+      }
     }
-    return;
+    return Promise.reject('StreamClient not found');
   },
 };
 

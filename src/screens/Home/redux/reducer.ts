@@ -2,6 +2,8 @@ import homeTypes from './types';
 
 const initialHomeState = {
   loadingHomePosts: false,
+  refreshingHomePosts: false,
+  noMoreHomePosts: false,
   homePosts: [],
 };
 
@@ -14,7 +16,16 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
         ...state,
         loadingHomePosts: payload,
       };
-
+    case homeTypes.SET_REFRESHING_HOME_POSTS:
+      return {
+        ...state,
+        refreshingHomePosts: payload,
+      };
+    case homeTypes.SET_NO_MORE_HOME_POSTS:
+      return {
+        ...state,
+        noMoreHomePosts: payload,
+      };
     case homeTypes.SET_HOME_POSTS:
       return {
         ...state,

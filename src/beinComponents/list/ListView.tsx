@@ -32,9 +32,13 @@ export interface ListViewProps {
   onItemPress?: (...params: any) => void;
   onActionPress?: (...params: any) => void;
   onRefresh?: () => void;
+  onLoadMore?: () => void;
 
   titleField?: string;
   subTitleField?: string;
+  loadMoreColor?: string;
+  onEndReachedThreshold?: number;
+
   renderItem?: ({
     item,
     index,
@@ -69,9 +73,12 @@ const ListView: React.FC<ListViewProps> = ({
   onItemPress,
   onActionPress,
   onRefresh,
+  onLoadMore,
 
   titleField,
   subTitleField,
+  onEndReachedThreshold = 0.1,
+
   renderItem,
   renderItemSeparator,
   renderLoading,
@@ -182,6 +189,8 @@ const ListView: React.FC<ListViewProps> = ({
             <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
           ) : undefined
         }
+        onEndReached={() => onLoadMore?.()}
+        onEndReachedThreshold={onEndReachedThreshold}
         {...props}
       />
       {loadingMore && <ActivityIndicator />}
