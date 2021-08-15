@@ -125,6 +125,11 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           data: action.payload,
         },
       };
+    case types.GET_SUBSCRIPTIONS:
+      return {
+        ...state,
+        conversation: initState.conversation,
+      };
     case types.SET_SUBSCRIPTIONS:
       return {
         ...state,
@@ -162,14 +167,17 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
       const include = messages.data.find(
         (item: IMessage) => item._id === action.payload._id,
       );
+      const newMessages = !include
+        ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
+        : messages.data;
 
       return {
         ...state,
         messages:
-          action.payload.room_id === conversation._id && !include
+          action.payload.room_id === conversation._id
             ? {
                 ...messages,
-                data: [action.payload, ...messages.data],
+                data: newMessages,
               }
             : messages,
         groups: {
@@ -187,7 +195,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>
-                sub.rid === action.payload.room_id
+                sub.rid === action.payload.room_id && action.payload.unread
                   ? {...sub, unread: sub.unread + 1}
                   : sub,
               )
@@ -246,7 +254,9 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         messages: {
           ...messages,
           data: messages.data.map((item: IMessage) =>
-            item.localId === action.payload.localId
+            item._id === action.payload._id &&
+            // message has updated from event
+            item.status !== messageStatus.SENT
               ? {
                   ...action.payload,
                   status: messageStatus.SENT,
@@ -261,7 +271,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         messages: {
           ...messages,
           data: messages.data.map((item: IMessage) =>
-            item.localId === action.payload.localId
+            item._id === action.payload._id
               ? {
                   ...item,
                   status: messageStatus.FAILED,

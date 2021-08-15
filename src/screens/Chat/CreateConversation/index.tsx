@@ -25,7 +25,11 @@ const CreateConversation = (): React.ReactElement => {
 
   useEffect(() => {
     dispatch(actions.resetData('users'));
-    dispatch(actions.getData('users'));
+    dispatch(
+      actions.getData('users', {
+        query: {username: {$ne: user.username}},
+      }),
+    );
   }, []);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));

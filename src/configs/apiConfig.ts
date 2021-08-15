@@ -100,7 +100,7 @@ const Chat = {
   },
   sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}chat.postMessage`,
+      url: `${providers.chat.url}chat.sendMessage`,
       method: 'post',
       useRetry: false,
       provider: providers.chat,
