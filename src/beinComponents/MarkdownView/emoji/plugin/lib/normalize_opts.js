@@ -3,15 +3,13 @@
 
 'use strict';
 
-
 function quoteRE(str) {
   return str.replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');
 }
 
-
 module.exports = function normalize_opts(options) {
   var emojies = options.defs,
-      shortcuts;
+    shortcuts;
 
   // Filter emojies by whitelist, if needed
   if (options.enabled.length) {
@@ -26,7 +24,9 @@ module.exports = function normalize_opts(options) {
   // Flatten shortcuts to simple object: { alias: emoji_name }
   shortcuts = Object.keys(options.shortcuts).reduce(function (acc, key) {
     // Skip aliases for filtered emojies, to reduce regexp
-    if (!emojies[key]) { return acc; }
+    if (!emojies[key]) {
+      return acc;
+    }
 
     if (Array.isArray(options.shortcuts[key])) {
       options.shortcuts[key].forEach(function (alias) {
@@ -40,7 +40,7 @@ module.exports = function normalize_opts(options) {
   }, {});
 
   var keys = Object.keys(emojies),
-      names;
+    names;
 
   // If no definitions are given, return empty regex to avoid replacements with 'undefined'.
   if (keys.length === 0) {
@@ -48,11 +48,15 @@ module.exports = function normalize_opts(options) {
   } else {
     // Compile regexp
     names = keys
-      .map(function (name) { return ':' + name + ':'; })
+      .map(function (name) {
+        return ':' + name + ':';
+      })
       .concat(Object.keys(shortcuts))
       .sort()
       .reverse()
-      .map(function (name) { return quoteRE(name); })
+      .map(function (name) {
+        return quoteRE(name);
+      })
       .join('|');
   }
   var scanRE = RegExp(names);
@@ -62,6 +66,6 @@ module.exports = function normalize_opts(options) {
     defs: emojies,
     shortcuts: shortcuts,
     scanRE: scanRE,
-    replaceRE: replaceRE
+    replaceRE: replaceRE,
   };
 };

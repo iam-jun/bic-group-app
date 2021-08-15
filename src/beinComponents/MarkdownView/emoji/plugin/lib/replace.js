@@ -6,14 +6,21 @@
 
 'use strict';
 
-
-module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE) {
+module.exports = function create_rule(
+  md,
+  emojies,
+  shortcuts,
+  scanRE,
+  replaceRE,
+) {
   var arrayReplaceAt = md.utils.arrayReplaceAt,
-      ucm = md.utils.lib.ucmicro,
-      ZPCc = new RegExp([ ucm.Z.source, ucm.P.source, ucm.Cc.source ].join('|'));
+    ucm = md.utils.lib.ucmicro,
+    ZPCc = new RegExp([ucm.Z.source, ucm.P.source, ucm.Cc.source].join('|'));
 
   function splitTextToken(text, level, Token) {
-    var token, last_pos = 0, nodes = [];
+    var token,
+      last_pos = 0,
+      nodes = [];
 
     text.replace(replaceRE, function (match, offset, src) {
       var emoji_name;
@@ -28,7 +35,10 @@ module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE)
         }
 
         // Don't allow letters after any shortcut
-        if (offset + match.length < src.length && !ZPCc.test(src[offset + match.length])) {
+        if (
+          offset + match.length < src.length &&
+          !ZPCc.test(src[offset + match.length])
+        ) {
           return;
         }
       } else {
@@ -37,13 +47,13 @@ module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE)
 
       // Add new tokens to pending list
       if (offset > last_pos) {
-        token         = new Token('text', '', 0);
+        token = new Token('text', '', 0);
         token.content = text.slice(last_pos, offset);
         nodes.push(token);
       }
 
-      token         = new Token('emoji', '', 0);
-      token.markup  = emoji_name;
+      token = new Token('emoji', '', 0);
+      token.markup = emoji_name;
       token.content = emojies[emoji_name];
       nodes.push(token);
 
@@ -51,7 +61,7 @@ module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE)
     });
 
     if (last_pos < text.length) {
-      token         = new Token('text', '', 0);
+      token = new Token('text', '', 0);
       token.content = text.slice(last_pos);
       nodes.push(token);
     }
@@ -60,12 +70,18 @@ module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE)
   }
 
   return function emoji_replace(state) {
-    var i, j, l, tokens, token,
-        blockTokens = state.tokens,
-        autolinkLevel = 0;
+    var i,
+      j,
+      l,
+      tokens,
+      token,
+      blockTokens = state.tokens,
+      autolinkLevel = 0;
 
     for (j = 0, l = blockTokens.length; j < l; j++) {
-      if (blockTokens[j].type !== 'inline') { continue; }
+      if (blockTokens[j].type !== 'inline') {
+        continue;
+      }
       tokens = blockTokens[j].children;
 
       // We scan from the end, to keep position when new tags added.
@@ -74,13 +90,21 @@ module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE)
         token = tokens[i];
 
         if (token.type === 'link_open' || token.type === 'link_close') {
-          if (token.info === 'auto') { autolinkLevel -= token.nesting; }
+          if (token.info === 'auto') {
+            autolinkLevel -= token.nesting;
+          }
         }
 
-        if (token.type === 'text' && autolinkLevel === 0 && scanRE.test(token.content)) {
+        if (
+          token.type === 'text' &&
+          autolinkLevel === 0 &&
+          scanRE.test(token.content)
+        ) {
           // replace current node
           blockTokens[j].children = tokens = arrayReplaceAt(
-            tokens, i, splitTextToken(token.content, token.level, state.Token)
+            tokens,
+            i,
+            splitTextToken(token.content, token.level, state.Token),
           );
         }
       }
