@@ -15,17 +15,12 @@ import blockEmbedPlugin from 'markdown-it-block-embed';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
-import {allMarkdown} from '~/beinComponents/MarkdownView/test';
 
 export interface MarkdownViewProps {
   style?: StyleProp<ViewStyle>;
-  children?: string;
+  children?: React.ReactNode;
   debugPrintTree?: boolean;
 }
-
-const test = `
-:wink: :) :) :wtf: :! :uruguay: >:( :angry: :explosive_meltdown:
-`;
 
 const MarkdownView: FC<MarkdownViewProps> = ({
   style,
@@ -36,6 +31,11 @@ const MarkdownView: FC<MarkdownViewProps> = ({
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
+  if (typeof children !== 'string') {
+    console.log(`\x1b[31m🐣️ MarkdownView content is not a string\x1b[0m`);
+    return null;
+  }
+
   const markdownIt = MarkdownIt({typographer: true})
     .use(blockEmbedPlugin, {
       containerClassName: 'video-embed',
@@ -44,11 +44,6 @@ const MarkdownView: FC<MarkdownViewProps> = ({
       defs: emojiDefs,
       shortcuts: emojiShortcuts,
     });
-  const astTree = markdownIt.parse(children, {});
-  console.log(`\x1b[33m🐣️  | astTree :`, astTree, `\x1b[0m`);
-
-  const html = markdownIt.render(children);
-  console.log(html);
 
   const rules = {
     link: (node: any, children: any, parent: any, styles: any) => {
@@ -86,7 +81,7 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     },
   };
 
-  const mdStyles = {
+  const markdownStyles = {
     link: {
       color: 'green',
     },
@@ -98,14 +93,21 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     },
   };
 
+  if (debugPrintTree) {
+    const html = markdownIt.render(children);
+    const astTree = markdownIt.parse(children, {});
+    console.log(`\x1b[34m🐣️ html :`, html, `\x1b[0m`);
+    console.log(`\x1b[35m🐣️ astTree :`, astTree, `\x1b[0m`);
+  }
+
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
       <Markdown
-        style={mdStyles}
+        style={markdownStyles}
         rules={rules}
         markdownit={markdownIt}
         debugPrintTree={debugPrintTree}>
-        {allMarkdown || test || children}
+        {children}
       </Markdown>
     </View>
   );
