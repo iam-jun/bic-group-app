@@ -1,5 +1,5 @@
-import full from './data/full';
-import light from './data/light';
+import full from './plugin/lib/data/full.json';
+import light from './plugin/lib/data/light.json';
 import reactionIcons from '~/resources/reactions';
 
 const getDefs = (defaultDefs = {}) => {

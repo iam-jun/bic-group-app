@@ -99,4 +99,5 @@ export type Markdown = MarkdownStatic;
 export {MarkdownIt};
 export const emojiShortcuts: any;
 export const emojiDefs: any;
+export const emojiPlugin: any;
 export default Markdown;

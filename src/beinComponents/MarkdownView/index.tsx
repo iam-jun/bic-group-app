@@ -1,16 +1,15 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Markdown, {
   emojiDefs,
+  emojiPlugin,
   emojiShortcuts,
   MarkdownIt,
 } from '~/beinComponents/MarkdownView/Markdown/index';
 // @ts-ignore
-import emojiPlugin from 'markdown-it-emoji';
-// @ts-ignore
-import blockEmbedPlugin from 'markdown-it-block-embed';
+// import createRegexPlugin from '~/beinComponents/MarkdownView/regexp';
 
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
@@ -36,14 +35,25 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     return null;
   }
 
-  const markdownIt = MarkdownIt({typographer: true})
-    .use(blockEmbedPlugin, {
-      containerClassName: 'video-embed',
-    })
-    .use(emojiPlugin, {
-      defs: emojiDefs,
-      shortcuts: emojiShortcuts,
-    });
+  // const regexPlugin = createRegexPlugin(
+  //   // regexp to match
+  //   /@(\w+)/,
+  //
+  //   // this function will be called when something matches
+  //   function (match: any, utils: any) {
+  //     const url = 'http://example.org/u/' + match[1];
+  //
+  //     return (
+  //       '<a href="' + utils.escape(url) + '">' + utils.escape(match[1]) + '</a>'
+  //     );
+  //   },
+  // );
+
+  const markdownIt = MarkdownIt({typographer: true}).use(emojiPlugin, {
+    defs: emojiDefs,
+    shortcuts: emojiShortcuts,
+  });
+  // .use(regexPlugin);
 
   const rules = {
     link: (node: any, children: any, parent: any, styles: any) => {
@@ -56,27 +66,19 @@ const MarkdownView: FC<MarkdownViewProps> = ({
         </Text>
       );
     },
-    video: (node: any, children: any, parent: any, styles: any) => {
-      // examine the node properties to see what video we need to render
-      console.log(node); // expected output of this is in readme.md below this code snip
-
-      return (
-        <Text key={node.key} style={styles.video}>
-          Return a video component instead of this text component!
-        </Text>
-      );
-    },
     emoji: (node: any, children: any, parent: any, styles: any) => {
-      // examine the node properties to see what video we need to render
-      console.log(node); // expected output of this is in readme.md below this code snip
       if (!!node.content) {
         return (
-          <Text key={node.key} style={styles.emoji}>
+          <Text key={node.key} style={styles.emojiText}>
             {node.content}
           </Text>
         );
       } else {
-        return <Icon icon={node?.markup} />;
+        return (
+          <View style={styles.emojiContainer}>
+            <Icon style={styles.emojiIcon} size={16} icon={node?.markup} />
+          </View>
+        );
       }
     },
   };
@@ -88,8 +90,14 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     video: {
       color: 'red',
     },
-    emoji: {
-      color: 'tomato',
+    emojiText: {},
+    emojiContainer: {
+      height: 10,
+      top: Platform.OS === 'web' ? 3 : 0,
+      paddingHorizontal: 1,
+    },
+    emojiIcon: {
+      marginTop: Platform.OS === 'web' ? 0 : -3,
     },
   };
 
