@@ -24,7 +24,6 @@ import {IconType} from '~/resources/icons';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import * as modalActions from '~/store/modal/actions';
-import TextInput from '~/beinComponents/inputs/TextInput';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
