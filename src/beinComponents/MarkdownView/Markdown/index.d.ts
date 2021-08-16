@@ -100,4 +100,5 @@ export {MarkdownIt};
 export const emojiShortcuts: any;
 export const emojiDefs: any;
 export const emojiPlugin: any;
+export const regexPlugin: any;
 export default Markdown;

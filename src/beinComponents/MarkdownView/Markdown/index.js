@@ -29,6 +29,7 @@ import textStyleProps from './src/data/textStyleProps';
 import emojiShortcuts from '../emoji/shortcuts';
 import emojiDefs from '../emoji/defs';
 import emojiPlugin from '../emoji/plugin';
+import regexPlugin from '../regex/plugin';
 
 export {
   getUniqueID,
@@ -47,6 +48,7 @@ export {
   emojiShortcuts,
   emojiDefs,
   emojiPlugin,
+  regexPlugin,
 };
 
 // we use StyleSheet.flatten here to make sure we have an object, in case someone

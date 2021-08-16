@@ -8,6 +8,17 @@ Headings
   ##### h5 Heading
   ###### h6 Heading
 
+Custom regex audience
+@[u:9:Ốc Human] in @[g:1:EVOL Community]
+
+Emoji
+
+:wink: :) :) :uruguay: >:( :angry: :explosive_meltdown::congratulations_party::fake_happy::pleading_cute::scare_frightened::stunned_wow::worry_sad::greedy_money:
+
+raw text of emoji:
+\`\`\`
+:wink: :) :) :uruguay: >:( :angry: :explosive_meltdown::congratulations_party::fake_happy::pleading_cute::scare_frightened::stunned_wow::worry_sad::greedy_money:
+\`\`\`
 
 Horizontal Rules
 
