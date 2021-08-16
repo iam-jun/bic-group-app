@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -22,6 +22,8 @@ import {roomTypes} from '~/constants/chat';
 import {ScrollView} from 'react-native';
 import {IconType} from '~/resources/icons';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import * as modalActions from '~/store/modal/actions';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ const Conversation = (): React.ReactElement => {
   const [shortDescription, setShortDescription] = useState('');
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
+  const baseSheetRef: any = useRef();
 
   useEffect(() => {
     if (conversation.description?.length > 100) {
@@ -51,6 +54,30 @@ const Conversation = (): React.ReactElement => {
 
   const goProfile = () => {
     rootNavigation.navigate('menus', {screen: menuStack.userProfile});
+  };
+
+  const saveChatName = (text: string) => {
+    dispatch(modalActions.hideAlert());
+    dispatch(actions.updateConversationName(text));
+  };
+
+  const showChangeNameModal = () => {
+    baseSheetRef.current?.close();
+    dispatch(
+      modalActions.showAlert({
+        title: i18next.t('chat:detail_menu:edit_name'),
+        input: true,
+        inputProps: {
+          value: conversation.name,
+          onClearText: () => {
+            return true;
+          },
+        },
+        cancelBtn: true,
+        confirmLabel: i18next.t('common:text_save'),
+        onConfirm: saveChatName,
+      }),
+    );
   };
 
   const renderAvatar = () => {
@@ -236,13 +263,47 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
+  const renderBottomSheet = () => {
+    return (
+      <BottomSheet
+        modalizeRef={baseSheetRef}
+        ContentComponent={
+          <View style={styles.bottomSheet}>
+            <Icon
+              style={styles.marginBottom}
+              labelStyle={styles.marginStart}
+              icon="ImageV"
+              size={22}
+              label={i18next.t('chat:detail_menu:change_avatar')}
+            />
+            <Icon
+              style={styles.marginBottom}
+              labelStyle={styles.marginStart}
+              icon="EditAlt"
+              size={22}
+              label={i18next.t('chat:detail_menu:edit_description')}
+            />
+            <Icon
+              style={styles.marginBottom}
+              labelStyle={styles.marginStart}
+              icon="TextFields"
+              size={22}
+              label={i18next.t('chat:detail_menu:edit_name')}
+              onPress={showChangeNameModal}
+            />
+          </View>
+        }
+      />
+    );
+  };
+
   return (
     <ScrollView>
       <ScreenWrapper
         style={styles.wrapper}
         testID="ConversationDetailScreen"
         isFullView>
-        <Header />
+        <Header onPressMenu={() => baseSheetRef.current?.open()} />
         <View style={styles.container}>
           <View style={styles.top}>
             {renderHeader()}
@@ -254,6 +315,7 @@ const Conversation = (): React.ReactElement => {
           {renderActions()}
           {renderPrivacy()}
         </View>
+        {renderBottomSheet()}
       </ScreenWrapper>
     </ScrollView>
   );
@@ -315,6 +377,16 @@ const createStyles = (theme: IObject<any>) => {
     actionItem: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+    },
+    bottomSheet: {
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing?.padding.base,
+    },
+    marginBottom: {
+      marginBottom: spacing.margin.large,
+    },
+    marginStart: {
+      marginStart: spacing.margin.large,
     },
   });
 };

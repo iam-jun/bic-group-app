@@ -1,14 +1,15 @@
-import React from 'react';
-import {StyleProp, StyleSheet, ViewStyle, View} from 'react-native';
-import {useTheme, Modal} from 'react-native-paper';
+import i18next from 'i18next';
+import React, {useEffect, useState} from 'react';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {Modal, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {ITheme} from '~/theme/interfaces';
-import Icon from '../Icon';
+import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
+import Icon from '../Icon';
+import TextInput from '../inputs/TextInput';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
@@ -27,15 +28,25 @@ const AlertModal: React.FC<AlertModalProps> = ({
     visible,
     title,
     content,
+    input,
+    inputProps,
     iconName,
     onConfirm,
+    onDissmiss,
     confirmLabel,
     cancelBtn,
   } = alert;
 
   const dispatch = useDispatch();
 
-  const _onDismiss = () => dispatch(actions.hideAlert());
+  const _onDismiss = () => {
+    onDissmiss && onDissmiss();
+    dispatch(actions.hideAlert());
+  };
+  const [text, setText] = useState(inputProps?.value || '');
+  useEffect(() => {
+    setText(inputProps?.value || '');
+  }, [inputProps]);
 
   return (
     <Modal
@@ -49,8 +60,17 @@ const AlertModal: React.FC<AlertModalProps> = ({
           <Text.ButtonBase>{title}</Text.ButtonBase>
           <Icon icon={iconName} size={20} tintColor={theme.colors.iconTint} />
         </View>
-        <Text.Subtitle style={styles.content}>{content}</Text.Subtitle>
-
+        {!!content && (
+          <Text.Subtitle style={styles.content}>{content}</Text.Subtitle>
+        )}
+        {input && (
+          <TextInput
+            {...inputProps}
+            value={text}
+            onChangeText={(value: string) => setText(value)}
+            onClearText={() => inputProps.onClearText && setText('')}
+          />
+        )}
         <View style={styles.displayBtn}>
           {cancelBtn && (
             <Button.Secondary
@@ -58,7 +78,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               textColor={theme.colors.primary7}
               color={theme.colors.primary2}
               onPress={_onDismiss}>
-              Cancel
+              {i18next.t('common:btn_cancel')}
             </Button.Secondary>
           )}
 
@@ -67,7 +87,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
             color={theme.colors.primary7}
             onPress={() => {
               dispatch(actions.hideAlert());
-              onConfirm();
+              onConfirm(text);
             }}>
             {confirmLabel}
           </Button.Secondary>
@@ -83,7 +103,6 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     modal: {
       width: 320,
-      height: 148,
       backgroundColor: colors.background,
       borderWidth: 1,
       borderColor: colors.borderCard,

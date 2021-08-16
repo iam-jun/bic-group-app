@@ -248,7 +248,12 @@
     "text_block": "Block",
     "text_feedback":"Feedback this chat",
     "label_pin_messagess": "Pin Messages",
-    "label_permisstion_management": "Permissions Management"
+    "label_permisstion_management": "Permissions Management",
+    "detail_menu": {
+      "change_avatar": "Change Group Avatar",
+      "edit_description": "Edit Description",
+      "edit_name": "Edit Group Chat Name"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

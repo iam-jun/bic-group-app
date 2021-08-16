@@ -2,6 +2,7 @@ package com.evol.bein.group;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.facebook.react.ReactActivity;
 
