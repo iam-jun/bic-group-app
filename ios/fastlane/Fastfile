@@ -1,0 +1,44 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Submit a new Build to Diawi"
+  lane :deploy_dev do
+    Dotenv.overload '.development.env'
+    build_app(
+        workspace: "#{ENV['SCHEME_NAME_IOS']}.xcworkspace",
+        scheme: "#{ENV['SCHEME_NAME_IOS']}",
+        configuration: "Release",
+        output_directory:"./fastlane/development/",
+        output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+        export_method: "development",
+        silent: true,
+    )
+    diawi(
+        token: ENV['DIAWI_TOKEN'],
+        timeout: 600,
+        file: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
+    )
+    rocket_chat(
+        message: "New build version of iOS can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+    )
+  end
+
+  desc "Push a new beta build to TestFlight"
+  lane :develop do
+    Dotenv.overload '.development.env'
+    increment_build_number(build_number: latest_testflight_build_number + 1, xcodeproj: "./#{ENV['SCHEME_NAME_IOS']}.xcodeproj")
+    build_app(
+      workspace: "#{ENV['SCHEME_NAME_IOS']}.xcworkspace",
+      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      configuration: "Release",
+      output_directory:"./fastlane/development/",
+      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      export_method: "#{ENV['EXPORT_METHOD_IOS']}",
+      clean: true
+    )
+    upload_to_testflight(
+      ipa: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      changelog: "#{ENV['CHANGE_LOG_IOS']}",
+    )
+  end
+end
