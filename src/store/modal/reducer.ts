@@ -25,30 +25,15 @@ function commonReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case actions.SHOW_ALERT:
-      const {
-        title,
-        content,
-        iconName,
-        onConfirm,
-        confirmLabel,
-        cancelBtn,
-        onCancel,
-        isDismissable,
-      } = payload;
       return {
         ...state,
         alert: {
+          ...state.alert,
+          ...payload,
           visible: true,
-          title,
-          content,
-          iconName,
-          confirmLabel,
-          onConfirm,
-          cancelBtn,
-          onCancel,
-          isDismissable,
         },
       };
+
     case actions.HIDE_ALERT:
       return initState;
     default:

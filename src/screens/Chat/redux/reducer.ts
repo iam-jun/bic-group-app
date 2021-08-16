@@ -280,6 +280,23 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
+    case types.UPDATE_CONVERSATION_NAME:
+      return {
+        ...state,
+        conversation: {
+          ...state.conversation,
+          name: action.payload,
+        },
+        groups: {
+          ...state.groups,
+          data: state.groups.data.map((item: IConversation) =>
+            item._id === conversation._id
+              ? {...item, name: action.payload}
+              : item,
+          ),
+        },
+      };
+
     case types.REACT_MESSAGE:
       return {
         ...state,

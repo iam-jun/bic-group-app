@@ -12,6 +12,7 @@ import {TextInputProps as TextInputPaperProps} from 'react-native-paper/lib/type
 import {ITheme} from '~/theme/interfaces';
 import {fontFamilies} from '~/theme/fonts';
 import Text, {TextProps} from '~/beinComponents/Text';
+import Icon from '../Icon';
 
 export type HelperType =
   | 'error'
@@ -37,6 +38,7 @@ export interface TextInputProps extends TextInputPaperProps {
   keyboardType?: KeyboardTypeOptions | undefined;
   editable?: boolean;
   onChangeText?: ((text: string) => void) | undefined;
+  onClearText?: () => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -50,6 +52,7 @@ const TextInput: React.FC<TextInputProps> = ({
   placeholder,
   error,
   disabled,
+  onClearText,
   ...props
 }: TextInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -77,6 +80,8 @@ const TextInput: React.FC<TextInputProps> = ({
     getTextHelperProps(theme, helperType),
     helperTextProps,
   );
+
+  const styles = createStyles(theme);
 
   const renderHelperAction = () => {
     if (!helperAction) {
@@ -112,6 +117,14 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholderTextColor={colors.textSecondary}
         {...props}
       />
+      {onClearText && (
+        <Icon
+          style={styles.iconClear}
+          icon="iconClose"
+          size={14}
+          onPress={() => onClearText()}
+        />
+      )}
       {!!helperContent && (
         <Text.Subtitle {..._textHelperProps}>
           {helperContent}
@@ -120,6 +133,19 @@ const TextInput: React.FC<TextInputProps> = ({
       )}
     </View>
   );
+};
+
+const createStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+
+  return StyleSheet.create({
+    iconClear: {
+      position: 'absolute',
+      right: spacing.margin.large,
+      // @ts-ignore
+      top: spacing.margin.base + spacing.margin.small || 13,
+    },
+  });
 };
 
 const getTextHelperProps = (theme: ITheme, type: HelperType) => {

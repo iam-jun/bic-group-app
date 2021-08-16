@@ -50,3 +50,8 @@ export interface IGetGroupReq {
 export interface IReadSubscription {
   rid: string;
 }
+
+export interface IUpdateGroupName {
+  roomId: string;
+  name: string;
+}

@@ -126,6 +126,11 @@ const addNewMessage = (payload: IMessage) => ({
   payload,
 });
 
+const updateConversationName = (payload: string) => ({
+  type: Actions.UPDATE_CONVERSATION_NAME,
+  payload,
+});
+
 export default {
   getData,
   setData,
@@ -151,4 +156,5 @@ export default {
   createConversation,
   createConversationSuccess,
   addNewMessage,
+  updateConversationName,
 };
