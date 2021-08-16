@@ -22,6 +22,10 @@ import {IHeaderFlashMessage} from '~/interfaces/common';
 
 const navigation = withNavigation(rootNavigationRef);
 
+function timeOut(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
@@ -77,7 +81,12 @@ function* deletePost({payload}: {type: string; payload: string}) {
   try {
     const response = yield call(postDataHelper.deletePost, payload);
     if (response?.data) {
-      //todo set deleted
+      const allPosts = yield select(state => state?.post?.allPosts) || {};
+      const post: IPostActivity = allPosts?.[payload] || {};
+      post.deleted = true;
+      allPosts[payload] = post;
+      yield put(postActions.setAllPosts(allPosts));
+      yield timeOut(500);
       const flashMessage: IHeaderFlashMessage = {
         content: 'post:delete_post_complete',
         props: {

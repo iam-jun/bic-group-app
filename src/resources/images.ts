@@ -6,6 +6,7 @@ const images = {
   img_groups: require('../../assets/images/groups.png'),
   img_user_avatar_default: require('../../assets/images/user_avatar_default.png'),
   img_group_avatar_default: require('../../assets/images/group_avatar_default.png'),
+  img_delete: require('../../assets/images/img_delete.png'),
 };
 
 export default images;
