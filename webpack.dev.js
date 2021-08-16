@@ -60,6 +60,10 @@ module.exports = merge(common(), {
   devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
+    port: 8081,
+  },
+  output: {
+    publicPath: 'http://localhost:8081/',
   },
   module: {
     rules: [babelLoaderConfiguration],
