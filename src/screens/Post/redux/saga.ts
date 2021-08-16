@@ -17,6 +17,8 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ReactionType} from '~/constants/reactions';
+import {showHeaderFlashMessage} from '~/store/app/actions';
+import {IHeaderFlashMessage} from '~/interfaces/common';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -76,6 +78,14 @@ function* deletePost({payload}: {type: string; payload: string}) {
     const response = yield call(postDataHelper.deletePost, payload);
     if (response?.data) {
       //todo set deleted
+      const flashMessage: IHeaderFlashMessage = {
+        content: 'post:delete_post_complete',
+        props: {
+          textProps: {variant: 'h6', useI18n: true},
+          type: 'error',
+        },
+      };
+      yield put(showHeaderFlashMessage(flashMessage));
     }
     console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
   } catch (e) {

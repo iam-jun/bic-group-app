@@ -194,6 +194,7 @@
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
     "expire_time_desc": "This post stay on top of feed until expire time.",
+    "delete_post_complete": "Bài viết đã được xoá",
     "search_results": "Search results",
     "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
     "group_manage": "Your Groups",
