@@ -42,14 +42,17 @@ const CreateConversation = (): React.ReactElement => {
             selectedUsers.map((user: IUser) => user.name),
           )
         : selectedUsers[0].name;
+
     const type = selectedUsers.length > 1 ? roomTypes.QUICK : roomTypes.DIRECT;
+    const usernames = selectedUsers.map((user: IUser) => user.username);
 
     dispatch(
       actions.createConversation({
         name,
-        members: selectedUsers.map((user: IUser) => user.username),
+        members: usernames,
         customFields: {
           type,
+          usernames,
         },
       }),
     );
