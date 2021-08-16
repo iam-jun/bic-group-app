@@ -9,6 +9,7 @@ import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import appConfig from '~/configs/appConfig';
 import {roomTypes} from '~/constants/chat';
 import {options} from '~/constants/messageOptions';
 import useAuth from '~/hooks/auth';
@@ -67,7 +68,7 @@ const Conversation = () => {
   }, [route.params]);
 
   useEffect(() => {
-    _getMessages();
+    if (conversation?._id) _getMessages();
   }, [conversation._id]);
 
   const _getMessages = () => {
@@ -120,12 +121,13 @@ const Conversation = () => {
   };
 
   const onSend = (messages: GMessage[] = []) => {
+    const message = messages[0] || {};
     dispatch(
       actions.sendMessage({
-        ...messages[0],
+        ...message,
+        _id: uuid.v4().toString(),
         user,
         _updatedAt: new Date().toISOString(),
-        localId: uuid.v4().toString(),
       }),
     );
 
@@ -164,6 +166,9 @@ const Conversation = () => {
         listViewProps={{
           onEndReached: loadMoreMessages,
           onEndReachedThreshold: 0.5,
+          removeClippedSubviews: true,
+          maxToRenderPerBatch: appConfig.recordsPerPage,
+          initialNumToRender: appConfig.recordsPerPage,
         }}
         messagesContainerStyle={styles.container}
         onLongPress={showOptions}

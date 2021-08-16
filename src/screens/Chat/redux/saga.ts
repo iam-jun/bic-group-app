@@ -1,3 +1,4 @@
+import uuid from 'react-native-uuid';
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {put, select, takeLatest} from 'redux-saga/effects';
@@ -35,6 +36,7 @@ export default function* saga() {
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
+  yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
 }
 
 function* getData({
@@ -182,16 +184,35 @@ function* sendMessage({payload}: {payload: IMessage; type: string}) {
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.sendMessage({
-        roomId: conversation._id,
-        text: payload.text,
+        message: {
+          _id: payload._id.toString(),
+          rid: conversation._id,
+          msg: payload.text,
+        },
       }),
     );
 
     const message = mapMessage(response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
-    console.log('createConversation', err);
+    console.log('sendMessage', err);
     yield put(actions.sendMessageFailed(payload));
+  }
+}
+
+function* updateConversationName({payload}: {type: string; payload: string}) {
+  try {
+    const {chat} = yield select();
+    const {conversation} = chat;
+
+    yield makeHttpRequest(
+      apiConfig.Chat.updateGroupName({
+        roomId: conversation._id,
+        name: payload,
+      }),
+    );
+  } catch (err) {
+    console.log('updateConversationName', err);
   }
 }
 

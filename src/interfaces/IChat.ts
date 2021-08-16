@@ -124,7 +124,7 @@ export type IAttachment = {
 export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
 
 export type IMessage = _GMessage & {
-  _id: string | number;
+  _id: string | number; // id of the message from gifted chat
   user: IChatUser;
   quoted_message?: IMessage;
   reactions?: IReaction[];

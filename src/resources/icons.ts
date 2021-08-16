@@ -168,6 +168,9 @@ const icons = {
   Check: 'Check',
   UsersAlt: 'UsersAlt',
   ...reactionIcons,
+  Feedback: 'Feedback',
+  ChatBlock: 'CommentBlock',
+  ChatPermission: 'KeyholeSquareFull',
 };
 
 export default icons;

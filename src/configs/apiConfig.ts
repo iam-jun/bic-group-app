@@ -6,6 +6,7 @@ import {
   IPaginationParams,
   IReadSubscription,
   ISendMessageReq,
+  IUpdateGroupName,
 } from '~/interfaces/IChatHttpRequest';
 import {getEnv} from '~/utils/env';
 
@@ -100,7 +101,7 @@ const Chat = {
   },
   sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
     return {
-      url: `${providers.chat.url}chat.postMessage`,
+      url: `${providers.chat.url}chat.sendMessage`,
       method: 'post',
       useRetry: false,
       provider: providers.chat,
@@ -114,6 +115,15 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       params,
+    };
+  },
+  updateGroupName: (data: IUpdateGroupName): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.rename`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
     };
   },
 };

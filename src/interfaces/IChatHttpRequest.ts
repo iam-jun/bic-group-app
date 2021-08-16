@@ -21,19 +21,22 @@ export interface IUpdateRoomTopicReq {
 }
 
 export interface ISendMessageReq {
-  roomId: string;
+  message: {
+    rid: string;
+    _id: string;
 
-  /*
+    /*
     This will cause the message's name to appear as the given alias, 
     but your username will still display.
   */
-  alias?: string;
-  text?: string;
-  emoji?: string;
-  /*
+    alias?: string;
+    msg?: string;
+    emoji?: string;
+    /*
     If provided, this will make the avatar use the provided image url.
   */
-  avatar?: string;
+    avatar?: string;
+  };
 }
 
 export interface IGetGroupRolesReq {
@@ -46,4 +49,9 @@ export interface IGetGroupReq {
 
 export interface IReadSubscription {
   rid: string;
+}
+
+export interface IUpdateGroupName {
+  roomId: string;
+  name: string;
 }
