@@ -8,6 +8,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
 import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
 
 export interface PostViewMenuBottomSheetProps {
   modalizeRef: any;
@@ -25,6 +26,20 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
+
+  const onPressDelete = () => {
+    modalizeRef?.current?.close?.();
+    dispatch(
+      modalActions.showAlert({
+        title: t('post:title_delete_post'),
+        content: t('post:content_delete_post'),
+        iconName: 'Trash',
+        cancelBtn: true,
+        confirmLabel: t('common:btn_delete'),
+        onConfirm: () => dispatch(postActions.deletePost(postId)),
+      }),
+    );
+  };
 
   const renderContent = () => {
     return (
@@ -71,7 +86,7 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
             leftIcon={'TrashAlt'}
             leftIconProps={{icon: 'TrashAlt', size: 24}}
             title={t('post:label_menu_delete')}
-            onPress={() => dispatch(postActions.deletePost(postId))}
+            onPress={onPressDelete}
           />
         )}
       </View>
