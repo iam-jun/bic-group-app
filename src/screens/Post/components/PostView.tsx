@@ -6,6 +6,8 @@ import moment from 'moment';
 
 import {ITheme} from '~/theme/interfaces';
 import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
@@ -30,8 +32,6 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
-import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
 
 export interface PostViewProps {
   postId: string;
