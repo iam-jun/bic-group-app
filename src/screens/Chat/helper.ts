@@ -6,6 +6,7 @@ import {IConversation, IMessage} from '~/interfaces/IChat';
 import {getEnv} from '~/utils/env';
 import {generateRoomName} from '~/utils/generator';
 import {timestampToISODate} from '~/utils/formatData';
+import {roomTypes} from '~/constants/chat';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -36,13 +37,21 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     item.name ||
     generateRoomName(user, item?.usernames || []) ||
     item.u?.name;
+  const _id = item?._id || item?.rid;
+  const {type, usernames} = item?.customFields || {};
+
+  const avatar =
+    type === roomTypes.DIRECT
+      ? getAvatar(usernames?.length > 0 && usernames[0])
+      : getRoomAvatar(_id);
 
   return {
     ...item,
-    _id: item?._id || item?.rid,
+    _id,
     name,
+    usernames,
     type: item.customFields?.type,
-    avatar: getAvatar(item.name),
+    avatar,
     user: mapUser(item?.u),
     lastMessage: item?.lastMessage?.msg,
     _updatedAt: timestampToISODate(item._updatedAt),
@@ -81,3 +90,6 @@ export const mapRole = (item: any) => ({
 
 export const getAvatar = (username: string) =>
   `${getEnv('ROCKET_CHAT_SERVER')}avatar/${username}`;
+
+export const getRoomAvatar = (roomId: string) =>
+  `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}`;
