@@ -30,6 +30,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
+import MarkdownView from '~/beinComponents/MarkdownView';
 
 export interface PostViewProps {
   postId: string;
@@ -289,13 +290,12 @@ const PostView: FC<PostViewProps> = ({
     return (
       <View style={styles.contentContainer}>
         {isPostDetail ? (
-          <Text
-            allowMarkdown
+          <MarkdownView
             onPressAudience={(audience: any) =>
               onPressMentionAudience(audience)
             }>
             {content}
-          </Text>
+          </MarkdownView>
         ) : (
           <CollapsibleText
             content={content}

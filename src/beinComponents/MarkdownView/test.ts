@@ -1,7 +1,9 @@
 export const allMarkdown = `
-Headings
+Hello everyone, this is a post about markdown in @[g:1:EVOL Community]
 
-  # h1 Heading 8-)
+Heading
+
+  # h1 Heading
   ## h2 Heading
   ### h3 Heading
   #### h4 Heading
@@ -9,7 +11,6 @@ Headings
   ###### h6 Heading
 
 Custom regex audience
-@[u:9:Ốc Human] in @[g:1:EVOL Community]
 
 Emoji
 
@@ -95,8 +96,9 @@ Links
 
 Images
 
-  ![Minion](https://octodex.github.com/images/minion.png)
-  ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
+  ![Pokemon1](https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg)
+  ![Pokemon2](https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg "Pokemon 2")
+  ![Pokemon3](https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg "Pokemon 3")
 
   Like links, Images also have a footnote style syntax
 
@@ -105,35 +107,28 @@ Images
   With a reference later in the document defining the URL location:
 
   [id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
-
-
-Typographic Replacements
-
-  Enable typographer option to see result.
-
-  (c) (C) (r) (R) (tm) (TM) (p) (P) +-
-
-  test.. test... test..... test?..... test!....
-
-  !!!!!! ???? ,,  -- ---
-
-  "Smartypants, double quotes" and 'single quotes'
   
-  Tables
+### Bein Core Team
 
-  | Option | Description |
-  | ------ | ----------- |
-  | data   | path to data files to supply the data that will be passed into templates. |
-  | engine | engine to be used for processing templates. Handlebars is the default. |
-  | ext    | extension to be used for dest files. |
+  |  Id | Username    | Name             |
+  | --- | ----------- | ---------------- |
+  |  1  | khoattd     | Trần Đăng Khoa   |
+  |  2  | vinc        | Nhâm Chấn Vĩ     |
+  |  3  | thanct      | Cao Trọng Thân   |
+  |  4  | tronghm     | Hoàng Minh Trọng |
+  |  5  | nhutdh      | Dương Hoàng Nhựt |
+  |  6  | hoangle     | Lê Hoàng         |
+  |  7  | khanhhp     | Huỳnh Phương Khanh|
+  |  8  | thudlm      | Diệp Lâm Minh Thư|
+  |  9  | anhtn       | Trần Nam Anh     |
+  |  10 | thienna     | Nguyễn Anh Thiện |
+  |  11 | khoibn      | Bùi Nhật Khôi    |
+  |  12 | nhanlx      | Nhân Long Xuyên  |
+  |  13 | nhanvt      | Ốc Hu Mần        |
+  |  14 | toannv      | Nguyễn Văn Toàn  |
+  |  15 | trangha     | Hà Phạm Diễm Trang|
+  |  16 | anhnm       | Nguyễn Minh Anh   |
 
-  Right aligned columns
-
-  | Option | Description |
-  | ------:| -----------:|
-  | data   | path to data files to supply the data that will be passed into templates. |
-  | engine | engine to be used for processing templates. Handlebars is the default. |
-  | ext    | extension to be used for dest files. |
 `;
 
 export const table = `
