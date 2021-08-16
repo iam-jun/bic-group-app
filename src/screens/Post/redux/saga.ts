@@ -22,6 +22,7 @@ const navigation = withNavigation(rootNavigationRef);
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeLatest(postTypes.DELETE_POST, deletePost);
   yield takeLatest(
     postTypes.GET_SEARCH_MENTION_AUDIENCES,
     getSearchMentionAudiences,
@@ -63,6 +64,22 @@ function* postCreateNewPost({
       '\x1b[0m',
     );
     yield put(postActions.setLoadingCreatePost(false));
+  }
+}
+
+function* deletePost({payload}: {type: string; payload: string}) {
+  if (!payload) {
+    console.log(`\x1b[31m🐣️ saga deletePost: id not found\x1b[0m`);
+    return;
+  }
+  try {
+    const response = yield call(postDataHelper.deletePost, payload);
+    if (response?.data) {
+      //todo set deleted
+    }
+    console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
+  } catch (e) {
+    console.log(`\x1b[35m🐣️ saga deletePost ${payload} failed`, e, `\x1b[0m`);
   }
 }
 

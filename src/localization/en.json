@@ -179,6 +179,7 @@
     "label_groups": "Groups",
     "label_users": "Users",
     "label_all_reacts": "All Reacts",
+    "label_menu_delete": "Delete post",
     "add_photo": "Add Photo",
     "add_file": "Add Files",
     "placeholder_write_post": "Writing your post...",

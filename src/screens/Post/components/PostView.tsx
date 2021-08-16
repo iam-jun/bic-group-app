@@ -356,7 +356,11 @@ const PostView: FC<PostViewProps> = ({
         onPressReaction={onAddReaction}
         title={t('post:label_all_reacts')}
       />
-      <PostViewMenuBottomSheet modalizeRef={menuSheetRef} />
+      <PostViewMenuBottomSheet
+        modalizeRef={menuSheetRef}
+        postId={postId}
+        isActor={actor.id == userId}
+      />
     </View>
   );
 };

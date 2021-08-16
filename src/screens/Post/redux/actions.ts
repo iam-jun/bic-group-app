@@ -73,6 +73,10 @@ const postActions = {
     type: postTypes.POST_CREATE_NEW_POST,
     payload,
   }),
+  deletePost: (payload: string) => ({
+    type: postTypes.DELETE_POST,
+    payload,
+  }),
   addToAllPosts: (payload: IPostActivity[] | IPostActivity) => ({
     type: postTypes.ADD_TO_ALL_POSTS,
     payload,
