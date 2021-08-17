@@ -76,15 +76,15 @@ const StackNavigator = (): React.ReactElement => {
       ref={rootNavigationRef}
       onReady={onReady}
       theme={navigationTheme}>
-      <Stack.Navigator screenOptions={{cardStyle: cardStyleConfig}}>
-        {!user && (
-          <Stack.Screen
-            options={{headerShown: false}}
-            //@ts-ignore
-            name={rootSwitch.authStack}
-            component={screens.AuthStack}
-          />
-        )}
+      <Stack.Navigator
+        initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
+        screenOptions={{cardStyle: cardStyleConfig}}>
+        <Stack.Screen
+          options={{headerShown: false}}
+          //@ts-ignore
+          name={rootSwitch.authStack}
+          component={screens.AuthStack}
+        />
         <Stack.Screen
           options={{headerShown: false}}
           //@ts-ignore

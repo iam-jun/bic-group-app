@@ -1,5 +1,6 @@
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
+import {debounce} from 'lodash';
+import React, {useCallback, useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -45,6 +46,26 @@ const AddMembersToGroup = (): React.ReactElement => {
     });
   };
 
+  const searchUsers = (searchQuery: string) => {
+    dispatch(actions.resetData('users'));
+    dispatch(
+      actions.getData('users', {
+        query: {
+          $and: [
+            {__rooms: {$nin: [conversation._id]}},
+            {name: {$regex: searchQuery, $options: 'ig'}},
+          ],
+        },
+      }),
+    );
+  };
+
+  const seachHandler = useCallback(debounce(searchUsers, 2000), []);
+
+  const onQueryChanged = (text: string) => {
+    seachHandler(text);
+  };
+
   return (
     <ScreenWrapper testID="AddMembersToGroupScreen" isFullView>
       <Header
@@ -63,6 +84,9 @@ const AddMembersToGroup = (): React.ReactElement => {
         title={'common:text_all'}
         loading={users.loading}
         data={users.data}
+        searchInputProps={{
+          onChangeText: onQueryChanged,
+        }}
         onLoadMore={loadMoreData}
       />
     </ScreenWrapper>
