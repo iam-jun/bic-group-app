@@ -215,6 +215,7 @@ const PostView: FC<PostViewProps> = ({
   const renderHeader = () => {
     return (
       <TouchableOpacity
+        disabled={!onPressHeader}
         onPress={() => onPressHeader?.(postId)}
         style={styles.headerContainer}>
         <Avatar.UltraLarge source={avatar} style={styles.avatar} />
