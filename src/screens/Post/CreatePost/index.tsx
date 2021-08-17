@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -7,7 +7,7 @@ import {debounce} from 'lodash';
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
-import {IAudience, IPostCreatePost} from '~/interfaces/IPost';
+import {IAudience, IPostActivity, IPostCreatePost} from '~/interfaces/IPost';
 import {margin, padding} from '~/theme/spacing';
 import postActions from '~/screens/Post/redux/actions';
 
@@ -23,13 +23,28 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
-const CreatePost = () => {
+export interface CreatePostProps {
+  route?: {
+    params?: {
+      postId?: string;
+      pushDetail?: boolean;
+    };
+  };
+}
+
+const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
+  const {postId, pushDetail = true} = route?.params || {};
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+
+  let initPostData: IPostActivity = {};
+  if (postId) {
+    initPostData = useKeySelector(postKeySelector.postById(postId));
+  }
 
   const createPostData = useCreatePost();
   const {
@@ -63,8 +78,37 @@ const CreatePost = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (initPostData?.id) {
+      const initData = initPostData?.object?.data || {};
+      dispatch(postActions.setCreatePostData(initData));
+
+      const initChosenAudience: any = [];
+      initPostData?.audience?.groups?.map?.(group => {
+        initChosenAudience.push({
+          id: group?.id,
+          type: 'group',
+          name: group?.data?.name,
+          avatar: group?.data?.avatarUrl,
+        });
+      });
+      initPostData?.audience?.users?.map?.(user => {
+        initChosenAudience.push({
+          id: user?.id,
+          type: 'user',
+          name: user?.data?.fullname,
+          avatar: user?.data?.avatarUrl,
+        });
+      });
+      dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+
+      const initImportant = initPostData?.important || {};
+      dispatch(postActions.setCreatePostImportant(initImportant));
+    }
+  }, [initPostData?.id]);
+
   const onPressPost = async () => {
-    const tags = [0]; //todo remove default
+    const tags: any = []; //todo remove default
 
     const users: number[] = [];
     const groups: number[] = [];
@@ -78,11 +122,21 @@ const CreatePost = () => {
       }
     });
 
-    const payload: IPostCreatePost = {actor, data, audience, tags};
-    if (important?.active) {
-      payload.important = important;
+    //Check for update or create new post
+    if (initPostData?.id) {
+      console.log(`\x1b[36m🐣️ index onPressPost ${initPostData.id}\x1b[0m`);
+      // const payload: IPostCreatePost = {actor, data, audience, tags};
+      // if (important?.active) {
+      //   payload.important = important;
+      // }
+      // dispatch(postActions.postCreateNewPost(payload));
+    } else {
+      const payload: IPostCreatePost = {actor, data, audience, tags};
+      if (important?.active) {
+        payload.important = important;
+      }
+      dispatch(postActions.postCreateNewPost(payload));
     }
-    dispatch(postActions.postCreateNewPost(payload));
   };
 
   const onChangeText = (text: string) => {

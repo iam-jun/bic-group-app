@@ -84,6 +84,7 @@ export interface IAllPosts {
 }
 
 export interface IPostCreatePost {
+  getstream_id?: string;
   actor?: number;
   data?: IActivityData;
   audience?: {
