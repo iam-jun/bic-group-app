@@ -261,7 +261,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onPressBack={onPressBack}
           onPressButton={onPressPost}
         />
-        {important?.active && (
+        {!!important?.active && (
           <FlashMessage
             textProps={{variant: 'h6'}}
             leftIcon={'InfoCircle'}

@@ -14,7 +14,7 @@ const initState = {
     searchResultAudienceGroups: [],
     searchResultAudienceUsers: [],
     important: {
-      active: false,
+      active: 0,
       expiresTime: '',
     },
   },

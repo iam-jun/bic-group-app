@@ -40,7 +40,7 @@ export interface IActivityData {
 }
 
 export interface IActivityImportant {
-  active?: boolean;
+  active?: 0 | 1;
   expiresTime?: string;
 }
 
