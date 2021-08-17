@@ -21,6 +21,7 @@ import PostView from '~/screens/Post/components/PostView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Button from '~/beinComponents/Button';
+import {useRootNavigation} from '~/hooks/navigation';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
@@ -34,6 +35,7 @@ const PostDetail = (props: any) => {
   const listRef = useRef<any>();
 
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -42,6 +44,7 @@ const PostDetail = (props: any) => {
   const userId = useUserIdAuth();
 
   const id = useKeySelector(postKeySelector.postDetail.id);
+  const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const replying = usePostDetailReplyingComment();
 
   const getComments = () => {
@@ -66,6 +69,12 @@ const PostDetail = (props: any) => {
     dispatch(postActions.setPostDetailReplyingComment());
     getComments();
   }, []);
+
+  useEffect(() => {
+    if (deleted) {
+      rootNavigation.goBack();
+    }
+  }, [deleted]);
 
   const renderPostContent = () => {
     if (!id) {

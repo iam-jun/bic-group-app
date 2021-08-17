@@ -12,6 +12,9 @@ import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {IconType} from '~/resources/icons';
 import {Platform} from 'react-native';
 import {ImageProps} from '../Image';
+import FlashMessage from '~/beinComponents/FlashMessage';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface HeaderProps {
   title?: string;
@@ -30,6 +33,7 @@ export interface HeaderProps {
   hideBack?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
+  allowFlashMessage?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -49,6 +53,7 @@ const Header: React.FC<HeaderProps> = ({
   hideBack,
   onPressBack,
   disableInsetTop,
+  allowFlashMessage = true,
 }: HeaderProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -56,6 +61,8 @@ const Header: React.FC<HeaderProps> = ({
   const insets = useSafeAreaInsets();
 
   const {navigation} = useBaseHook();
+
+  const flashMessage = useKeySelector('app.headerFlashMessage') || {};
 
   const _onPressBack = () => {
     if (onPressBack) {
@@ -76,6 +83,7 @@ const Header: React.FC<HeaderProps> = ({
         },
         styles.container,
       ])}>
+      <ViewSpacing width={spacing.margin.large} />
       {!hideBack && (
         <Icon
           icon="iconBack"
@@ -118,6 +126,11 @@ const Header: React.FC<HeaderProps> = ({
           {buttonText}
         </Button.Secondary>
       )}
+      {allowFlashMessage && !!flashMessage?.content && (
+        <FlashMessage style={styles.flashMessage} {...flashMessage?.props}>
+          {flashMessage?.content}
+        </FlashMessage>
+      )}
     </View>
   );
 };
@@ -129,7 +142,6 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: colors.background,
-      paddingLeft: spacing?.padding.large,
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
       borderColor: colors.borderDivider,
       shadowOffset: {width: 0, height: 1},
@@ -138,6 +150,7 @@ const createStyle = (theme: ITheme) => {
       shadowRadius: 1,
       elevation: 2,
     },
+    flashMessage: {position: 'absolute', width: '100%', bottom: '-90%'},
   });
 };
 

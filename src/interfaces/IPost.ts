@@ -70,6 +70,7 @@ export interface IPostActivity {
   important?: IActivityImportant;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
+  deleted?: boolean;
 }
 
 export interface IOwnReaction {

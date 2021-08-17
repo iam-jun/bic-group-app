@@ -1,8 +1,13 @@
-import {takeLatest} from 'redux-saga/effects';
+import {takeLatest, put} from 'redux-saga/effects';
 import messaging from '@react-native-firebase/messaging';
 import {makePushTokenRequest} from '~/services/httpApiRequest';
 import * as types from './constants';
 import {Clipboard} from 'react-native';
+import {IHeaderFlashMessage} from '~/interfaces/common';
+import {
+  clearHeaderFlashMessage,
+  setHeaderFlashMessage,
+} from '~/store/app/actions';
 
 function timeOut(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -12,6 +17,7 @@ export default function* saga() {
   yield takeLatest(types.GET_CONFIGS, getConfigs);
   yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
   yield takeLatest(types.COPY_DEVICE_TOKEN, copyDeviceToken);
+  yield takeLatest(types.SHOW_HEADER_FLASH_MESSAGE, showHeaderFlashMessage);
 }
 
 function* getConfigs() {
@@ -41,6 +47,17 @@ function* copyDeviceToken() {
   console.log('deviceToken', deviceToken);
   Clipboard.setString(deviceToken);
   alert(`Copied\n\n ${deviceToken}`);
+}
+
+function* showHeaderFlashMessage({
+  payload,
+}: {
+  type: string;
+  payload: IHeaderFlashMessage;
+}) {
+  yield put(setHeaderFlashMessage(payload));
+  yield timeOut(payload?.duration || 5000);
+  yield put(clearHeaderFlashMessage());
 }
 
 export {setupPushToken};

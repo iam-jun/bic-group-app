@@ -16,6 +16,12 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
+  deletePost: (id: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/${id}`,
+    method: 'delete',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
     method: 'get',
@@ -115,6 +121,18 @@ const postDataHelper = {
       const response: any = await makeHttpRequest(
         postApiConfig.postCreateNewPost(data),
       );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deletePost: async (id: string) => {
+    try {
+      const response: any = await makeHttpRequest(postApiConfig.deletePost(id));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
