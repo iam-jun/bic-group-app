@@ -8,7 +8,8 @@ import {
   IReaction,
   IParamSearchMentionAudiences,
   IAllPosts,
-  IPayloadReactToPost, IPayloadPutEditPost,
+  IPayloadReactToPost,
+  IPayloadPutEditPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';

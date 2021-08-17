@@ -76,7 +76,7 @@ function* postCreateNewPost({
 }
 
 function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
-  const {id, data} = payload;
+  const {id, data, replaceWithDetail = true} = payload;
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
     return;
@@ -85,9 +85,21 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(postDataHelper.putEditPost, id, data);
     yield put(postActions.setLoadingCreatePost(false));
-    console.log(`\x1b[35m🐣️ saga putEditPost response: `, response, `\x1b[0m`);
     if (response?.data) {
-      console.log(`\x1b[32m🐣️ saga putEditPost update success\x1b[0m`);
+      const allPosts = yield select(state => state?.post?.allPosts) || {};
+      const post: IPostActivity = allPosts?.[id] || {};
+      if (post?.object) {
+        post.object.data = data?.data || {};
+      }
+      //todo waiting for backend update response, replace whole object from response instead of local change
+      allPosts[id] = post;
+      yield put(postActions.setAllPosts(allPosts));
+      if (replaceWithDetail) {
+        yield put(postActions.setPostDetail(post));
+        navigation.replace(homeStack.postDetail);
+      } else {
+        navigation.goBack();
+      }
     }
   } catch (e) {
     console.log(

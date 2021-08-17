@@ -98,6 +98,7 @@ export interface IPostCreatePost {
 export interface IPayloadPutEditPost {
   id: string;
   data: IPostCreatePost;
+  replaceWithDetail?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
