@@ -4,6 +4,7 @@ import {Dimensions} from 'react-native';
 const guidelineBaseWidth = 375;
 
 const DeviceWidth = Dimensions.get('window').width;
+const DeviceHeight = Dimensions.get('window').height;
 
 /* Size config used for Text */
 export const sizes = {
@@ -119,4 +120,6 @@ export default {
   primaryItemHeight,
   avatarSizes,
   commentBarHeight,
+  deviceWidth: DeviceWidth,
+  deviceHeight: DeviceHeight,
 };

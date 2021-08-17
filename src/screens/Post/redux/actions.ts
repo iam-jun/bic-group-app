@@ -9,7 +9,7 @@ import {
   IParamSearchMentionAudiences,
   IAllPosts,
   IPayloadReactToPost,
-  IPayloadPutEditPost,
+  IPayloadPutEditPost, IPostAudienceSheet,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -97,6 +97,20 @@ const postActions = {
   deleteReactToPost: (payload: IPayloadReactToPost) => ({
     type: postTypes.DELETE_REACT_TO_POST,
     payload,
+  }),
+  setPostAudiencesBottomSheet: (payload: IPostAudienceSheet) => ({
+    type: postTypes.SET_POST_AUDIENCES_BOTTOM_SHEET,
+    payload,
+  }),
+  showPostAudiencesBottomSheet: (payload: {
+    postId: string;
+    fromStack: string;
+  }) => ({
+    type: postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
+    payload,
+  }),
+  hidePostAudiencesBottomSheet: () => ({
+    type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
   }),
 };
 

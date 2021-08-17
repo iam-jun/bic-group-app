@@ -20,6 +20,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ReactionType} from '~/constants/reactions';
 import {showHeaderFlashMessage} from '~/store/app/actions';
 import {IHeaderFlashMessage} from '~/interfaces/common';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -38,6 +39,10 @@ export default function* postSaga() {
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
+  yield takeLatest(
+    postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
+    showPostAudienceBottomSheet,
+  );
 }
 
 function* postCreateNewPost({
@@ -274,27 +279,63 @@ function* deleteReactToPost({
   }
 }
 
-// import {takeLatest} from 'redux-saga/effects';
-// import {makeGetStreamRequest} from '~/services/httpApiRequest';
-//
-// import {ActionTypes} from '~/utils';
-//
-// export default function* homeSaga() {
-//   yield takeLatest(ActionTypes.GetStreamSample, getStreamSample);
-// }
-//
-// function* getStreamSample({payload}: any) {
-//   const {streamClient} = payload;
-//   try {
-//     const streamResponse = yield makeGetStreamRequest(
-//       streamClient,
-//       'user',
-//       'userIdtest',
-//       'get',
-//       {limit: 5, offset: 5},
-//     );
-//     console.log('streamResponse:', streamResponse);
-//   } catch (e) {
-//     console.log('getStreamSample error:', e);
-//   }
-// }
+function* showPostAudienceBottomSheet({
+  payload,
+}: {
+  type: string;
+  payload: {postId: string; fromStack?: any};
+}) {
+  const {postId, fromStack} = payload;
+  if (!postId) {
+    console.log(`\x1b[31m🐣️saga showPostAudienceBottomSheet no postId\x1b[0m`);
+  }
+  const allPosts = yield select(state => state?.post?.allPosts) || {};
+  const post: IPostActivity = allPosts?.[postId] || {};
+  if (post) {
+    yield put(
+      postActions.setPostAudiencesBottomSheet({
+        isShow: true,
+        data: [],
+        fromStack: fromStack,
+      }),
+    );
+
+    const sectionList = [];
+    const audience = post.audience;
+    const {groups = [], users = []} = audience || {};
+
+    //get groups
+    const arrGroupIds: any = [];
+    groups.map?.(group => arrGroupIds.push(group.id));
+    if (arrGroupIds.length > 0) {
+      const groupIds = arrGroupIds.join(',');
+      const response = yield call(groupsDataHelper.getInfoGroups, groupIds);
+      if (response?.data?.length > 0) {
+        sectionList.push({title: 'Groups', data: response.data});
+      }
+    }
+
+    if (users.length > 0) {
+      const sectionUsers: any = [];
+      users.map(user => {
+        sectionUsers.push({
+          id: user?.id,
+          name: user?.data?.fullname,
+          avatar: user?.data?.avatarUrl,
+          type: 'user',
+        });
+      });
+      sectionList.push({title: 'Users', data: sectionUsers});
+    }
+
+    yield put(
+      postActions.setPostAudiencesBottomSheet({
+        isShow: true,
+        data: sectionList,
+        fromStack: fromStack,
+      }),
+    );
+  } else {
+    console.log(`\x1b[31m🐣️saga showPostAudienceSheet post not found\x1b[0m`);
+  }
+}

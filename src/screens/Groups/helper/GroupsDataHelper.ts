@@ -30,6 +30,15 @@ export const groupsApiConfig = {
       take: take,
     },
   }),
+  getInfoGroups: (ids: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      ids: ids,
+    },
+  }),
   getGroupDetail: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
     method: 'get',
@@ -69,6 +78,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getMyGroupPosts(groupId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getInfoGroups: async (ids: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getInfoGroups(ids),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

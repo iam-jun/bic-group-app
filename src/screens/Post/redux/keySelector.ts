@@ -6,6 +6,7 @@ const postKeySelector = {
   postDetail: {
     id: 'post.postDetail.id',
   },
+  postAudienceSheet: 'post.postAudienceSheet',
   allPosts: 'post.allPosts',
   postById: (id: string) => `post.allPosts.${id}`,
   postObjectDataById: (id: string) => `post.allPosts.${id}.object.data`,

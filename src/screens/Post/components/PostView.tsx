@@ -126,7 +126,12 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressShowAudiences = () => {
-    alert('onPressShowAudiences');
+    dispatch(
+      postActions.showPostAudiencesBottomSheet({
+        postId,
+        fromStack: 'somewhere',
+      }),
+    );
   };
 
   const onPressMenu = () => {
@@ -373,7 +378,7 @@ const PostView: FC<PostViewProps> = ({
         modalizeRef={menuSheetRef}
         postId={postId}
         isPostDetail={isPostDetail}
-        isActor={actor.id == userId}
+        isActor={actor?.id == userId}
       />
     </View>
   );
