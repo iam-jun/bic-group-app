@@ -191,6 +191,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
       dispatch(postActions.postCreateNewPost(payload));
     }
+    Keyboard.dismiss();
   };
 
   const onChangeText = (text: string) => {
