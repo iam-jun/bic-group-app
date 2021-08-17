@@ -51,13 +51,13 @@ const GroupMembers = () => {
   };
 
   const renderItem = ({item}: any) => {
-    const {id, fullname, avatarUrl, title} = item || {};
+    const {id, fullname, avatar, title} = item || {};
 
     return (
       <PrimaryItem
         showAvatar
         style={styles.itemContainer}
-        avatar={avatarUrl}
+        avatar={avatar}
         title={fullname}
         onPressMenu={() => onPressUser(id)}
         subTitle={title}
