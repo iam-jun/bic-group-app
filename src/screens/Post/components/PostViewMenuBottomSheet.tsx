@@ -15,12 +15,14 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 export interface PostViewMenuBottomSheetProps {
   modalizeRef: any;
   postId: string;
+  isPostDetail: boolean;
   isActor: boolean;
 }
 
 const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   modalizeRef,
   postId,
+  isPostDetail,
   isActor,
 }: PostViewMenuBottomSheetProps) => {
   const dispatch = useDispatch();
@@ -46,7 +48,10 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
 
   const onPressEdit = () => {
     modalizeRef?.current?.close?.();
-    rootNavigation.navigate(homeStack.createPost, {postId});
+    rootNavigation.navigate(homeStack.createPost, {
+      postId,
+      replaceWithDetail: !isPostDetail,
+    });
   };
 
   const renderContent = () => {

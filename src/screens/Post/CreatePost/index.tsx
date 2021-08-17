@@ -32,14 +32,14 @@ export interface CreatePostProps {
   route?: {
     params?: {
       postId?: string;
-      pushDetail?: boolean;
+      replaceWithDetail?: boolean;
     };
   };
 }
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
-  const {postId, pushDetail = true} = route?.params || {};
+  const {postId, replaceWithDetail} = route?.params || {};
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -140,6 +140,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
+        replaceWithDetail: replaceWithDetail,
         data: newEditData,
       };
       dispatch(postActions.putEditPost(payload));

@@ -42,7 +42,7 @@ export interface PostViewProps {
 
 const PostView: FC<PostViewProps> = ({
   postId,
-  isPostDetail,
+  isPostDetail = false,
   onPressComment,
   onPressHeader,
 }: PostViewProps) => {
@@ -371,6 +371,7 @@ const PostView: FC<PostViewProps> = ({
       <PostViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         postId={postId}
+        isPostDetail={isPostDetail}
         isActor={actor.id == userId}
       />
     </View>
