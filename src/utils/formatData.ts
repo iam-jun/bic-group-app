@@ -26,6 +26,33 @@ export const formatDate = (
   return value || '';
 };
 
+export const formatLargeNumber = (value: number) => {
+  if (value < 1000) {
+    return value;
+  } else if (value < 10000) {
+    return `${Number(value / 1000)
+      .toFixed(2)
+      .replace(/(\.0+|0+)$/, '')}k`;
+  } else if (value < 100000) {
+    return `${Number(value / 1000)
+      .toFixed(1)
+      .replace(/(\.0+|0+)$/, '')}k`;
+  } else if (value < 1000000) {
+    return `${Number(value / 1000)
+      .toFixed(3)
+      .replace(/(\.0+|0+)$/, '')}k`;
+  } else if (value < 1000000000) {
+    return `${Number(value / 1000000)
+      .toFixed(0)
+      .replace(/(\.0+|0+)$/, '')}m`;
+  } else if (value >= 1000000000) {
+    return `${Number(value / 1000000000)
+      .toFixed(0)
+      .replace(/(\.0+|0+)$/, '')}b`;
+  }
+  return value;
+};
+
 export const timestampToISODate = (date: any): string => {
   if (typeof date === 'object') return new Date(date?.$date).toISOString();
   if (typeof date === 'number') return new Date(date).toISOString();

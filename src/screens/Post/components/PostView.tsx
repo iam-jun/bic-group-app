@@ -20,7 +20,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {formatDate} from '~/utils/formatData';
+import {formatDate, formatLargeNumber} from '~/utils/formatData';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import ReactionView from '~/screens/Post/components/ReactionView';
@@ -79,6 +79,11 @@ const PostView: FC<PostViewProps> = ({
   const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
+
+  const commentCount = formatLargeNumber(reaction_counts?.comment || 0);
+  const labelButtonComment = `${t('post:button_comment')}${
+    commentCount ? ` (${commentCount})` : ''
+  }`;
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -362,7 +367,7 @@ const PostView: FC<PostViewProps> = ({
         )}
         <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
         {renderReactButtonItem(
-          'post:button_comment',
+          labelButtonComment,
           'CommentAltDots',
           _onPressComment,
           _onPressComment,
