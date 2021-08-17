@@ -21,7 +21,7 @@ export const groupsApiConfig = {
     skip?: number,
     take?: number,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/members`,
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -104,12 +104,11 @@ const groupsDataHelper = {
   },
   getGroupMembers: async (groupId: number, skip?: number, take?: number) => {
     try {
-      // const response: any = await makeHttpRequest(
-      //   groupsApiConfig.getGroupMembers(groupId, skip, take),
-      // );
-      const response = groupDataMocks.getGroupMembers;
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getGroupMembers(groupId, skip, take),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

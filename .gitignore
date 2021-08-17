@@ -62,3 +62,6 @@ buck-out/
 amplify/*
 src/aws-exports.js
 android/app/production/
+*.dSYM.zip
+.production.env
+.bundle/

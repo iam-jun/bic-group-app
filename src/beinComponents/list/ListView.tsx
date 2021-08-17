@@ -134,26 +134,27 @@ const ListView: React.FC<ListViewProps> = ({
       />
     );
   };
-
-  if (loading) {
-    if (renderLoading) {
-      return renderLoading();
-    }
-    if (LoadingPlaceholder) {
+  const _renderLoading = () => {
+    if (loading) {
+      if (renderLoading) {
+        return renderLoading();
+      }
+      if (LoadingPlaceholder) {
+        return (
+          <View>
+            {Array.from(Array(10).keys()).map(item => (
+              <LoadingPlaceholder key={`loading_placeholder_${item}`} />
+            ))}
+          </View>
+        );
+      }
       return (
         <View>
-          {Array.from(Array(10).keys()).map(item => (
-            <LoadingPlaceholder key={`loading_placeholder_${item}`} />
-          ))}
+          <ActivityIndicator color={colors.borderDisable} />
         </View>
       );
     }
-    return (
-      <View>
-        <ActivityIndicator color={colors.borderDisable} />
-      </View>
-    );
-  }
+  };
 
   return (
     <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
@@ -166,6 +167,7 @@ const ListView: React.FC<ListViewProps> = ({
           {title}
         </Text.ButtonBase>
       )}
+      {_renderLoading()}
       <FlatList
         showsVerticalScrollIndicator={Platform.OS !== 'web'}
         ref={listRef}

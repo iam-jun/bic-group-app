@@ -192,7 +192,8 @@ const handleResponseError = async (
     console.log('error.request', error.config);
     if (!alertShow) {
       alertShow = true;
-      Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
+      // Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
+      Alert.alert(i18n.t('error:alert_title'), error.message, [
         {
           onPress: () => {
             alertShow = false;
