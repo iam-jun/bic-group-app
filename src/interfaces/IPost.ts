@@ -95,6 +95,11 @@ export interface IPostCreatePost {
   important?: IActivityImportant;
 }
 
+export interface IPayloadPutEditPost {
+  id: string;
+  data: IPostCreatePost;
+}
+
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
 
 export interface IGetStreamUser {

@@ -4,6 +4,7 @@ import {isArray} from 'lodash';
 import {
   IOwnReaction,
   IParamSearchMentionAudiences,
+  IPayloadPutEditPost,
   IPayloadReactToPost,
   IPostActivity,
   IPostCreatePost,
@@ -28,6 +29,7 @@ function timeOut(ms: number) {
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
   yield takeLatest(
     postTypes.GET_SEARCH_MENTION_AUDIENCES,
@@ -70,6 +72,28 @@ function* postCreateNewPost({
       '\x1b[0m',
     );
     yield put(postActions.setLoadingCreatePost(false));
+  }
+}
+
+function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
+  const {id, data} = payload;
+  if (!id || !data) {
+    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
+    return;
+  }
+  try {
+    yield put(postActions.setLoadingCreatePost(true));
+    const response = yield call(postDataHelper.putEditPost, id, data);
+    yield put(postActions.setLoadingCreatePost(false));
+    console.log(`\x1b[35m🐣️ saga putEditPost response: `, response, `\x1b[0m`);
+    if (response?.data) {
+      console.log(`\x1b[32m🐣️ saga putEditPost update success\x1b[0m`);
+    }
+  } catch (e) {
+    console.log(
+      `\x1b[31m🐣️ saga putEditPost error: `,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
   }
 }
 

@@ -7,7 +7,12 @@ import {debounce} from 'lodash';
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
-import {IAudience, IPostActivity, IPostCreatePost} from '~/interfaces/IPost';
+import {
+  IAudience,
+  IPayloadPutEditPost,
+  IPostActivity,
+  IPostCreatePost,
+} from '~/interfaces/IPost';
 import {margin, padding} from '~/theme/spacing';
 import postActions from '~/screens/Post/redux/actions';
 
@@ -124,12 +129,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
     //Check for update or create new post
     if (initPostData?.id) {
-      console.log(`\x1b[36m🐣️ index onPressPost ${initPostData.id}\x1b[0m`);
-      // const payload: IPostCreatePost = {actor, data, audience, tags};
-      // if (important?.active) {
-      //   payload.important = important;
-      // }
-      // dispatch(postActions.postCreateNewPost(payload));
+      const newEditData: IPostCreatePost = {
+        getstream_id: initPostData.id,
+        data,
+        audience,
+        tags,
+      };
+      if (important?.active) {
+        newEditData.important = important;
+      }
+      const payload: IPayloadPutEditPost = {
+        id: initPostData?.id,
+        data: newEditData,
+      };
+      dispatch(postActions.putEditPost(payload));
     } else {
       const payload: IPostCreatePost = {actor, data, audience, tags};
       if (important?.active) {

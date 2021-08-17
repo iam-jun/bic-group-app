@@ -16,6 +16,13 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
+  putPost: (id: string, data: IPostCreatePost): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/${id}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data,
+  }),
   deletePost: (id: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}posts/${id}`,
     method: 'delete',
@@ -120,6 +127,21 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postCreateNewPost(data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+
+  putEditPost: async (id: string, data: IPostCreatePost) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.putPost(id, data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
