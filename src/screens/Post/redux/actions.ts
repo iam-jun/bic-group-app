@@ -9,7 +9,8 @@ import {
   IParamSearchMentionAudiences,
   IAllPosts,
   IPayloadReactToPost,
-  IPayloadPutEditPost, IPostAudienceSheet,
+  IPayloadPutEditPost,
+  IPostAudienceSheet,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
