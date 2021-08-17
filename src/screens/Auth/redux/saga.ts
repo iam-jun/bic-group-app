@@ -12,10 +12,11 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
+import * as appActions from '~/store/app/actions';
+import * as modalActions from '~/store/modal/actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import * as actions from './actions';
-import * as appActions from '~/store/app/actions';
 import * as types from './types';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -28,6 +29,7 @@ export default function* authSaga() {
   yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
   yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest);
   yield takeLatest(types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm);
+  yield takeLatest(types.CHANGE_PASSWORD, changePassword);
 }
 
 function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
@@ -47,6 +49,44 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
           error?.message || i18n.t('auth:text_err_id_password_not_matched');
     }
     yield onSignInFailed(errorMessage);
+  }
+}
+
+function* changePassword({
+  payload,
+}: {
+  type: string;
+  payload: IAuth.IChangePasswordPayload;
+}) {
+  try {
+    const {oldPassword, newPassword, global} = payload;
+    const user = yield Auth.currentAuthenticatedUser();
+    const data = yield Auth.changePassword(user, oldPassword, newPassword);
+    if (data === 'SUCCESS' && global) {
+      yield Auth.signOut({global});
+    }
+    navigation.goBack();
+    yield put(
+      modalActions.showAlert({
+        title: i18n.t('auth:text_change_password_success_title'),
+        content: i18n.t('auth:text_change_password_success_desc'),
+        onConfirm: () => put(modalActions.hideAlert()),
+        confirmLabel: i18n.t(
+          'auth:text_change_password_success_confirm_button',
+        ),
+      }),
+    );
+  } catch (error) {
+    navigation.goBack();
+    yield put(
+      modalActions.showAlert({
+        title: i18n.t('error:alert_title'),
+        content: error.code || error.message,
+        onConfirm: () => put(modalActions.hideAlert()),
+        confirmLabel: i18n.t('error:button_confirm'),
+      }),
+    );
+    console.log('changePassword error:', error);
   }
 }
 
