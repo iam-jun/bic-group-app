@@ -19,6 +19,12 @@ const GroupMembers = () => {
   const groupId = useKeySelector('groups.groupDetail.group.id');
   const groupMember = useKeySelector('groups.groupMember');
 
+  const getMembers = () => {
+    if (groupId) {
+      dispatch(groupsActions.getGroupMembers(groupId));
+    }
+  };
+
   useEffect(() => {
     if (groupMember) {
       const newSectionList: any = [];
@@ -37,17 +43,22 @@ const GroupMembers = () => {
   }, [groupMember]);
 
   useEffect(() => {
-    if (groupId) {
-      dispatch(groupsActions.getGroupMembers(groupId));
-    }
+    getMembers();
   }, [groupId]);
 
   useEffect(() => {
     dispatch(groupsActions.clearGroupMembers());
+    return () => {
+      dispatch(groupsActions.clearGroupMembers());
+    };
   }, []);
 
   const onPressUser = (userId: string) => {
     alert('onPress userId: ' + userId);
+  };
+
+  const onLoadMore = () => {
+    getMembers();
   };
 
   const renderItem = ({item}: any) => {
@@ -84,6 +95,8 @@ const GroupMembers = () => {
         style={{}}
         sections={sectionList}
         keyExtractor={(item, index) => `section_list_${item}_${index}`}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.1}
         ListHeaderComponent={renderListHeader}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
