@@ -126,7 +126,12 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressShowAudiences = () => {
-    alert('onPressShowAudiences');
+    dispatch(
+      postActions.showPostAudiencesBottomSheet({
+        postId,
+        fromStack: 'somewhere',
+      }),
+    );
   };
 
   const onPressMenu = () => {

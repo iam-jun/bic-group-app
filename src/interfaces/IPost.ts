@@ -185,6 +185,12 @@ export interface IParamSearchMentionAudiences {
   take?: number;
 }
 
+export interface IPostAudienceSheet {
+  isShow: boolean;
+  data: any[];
+  fromStack?: 'newsfeed' | 'groups';
+}
+
 export interface IPayloadReactToPost {
   postId: string;
   reactionId: ReactionType;

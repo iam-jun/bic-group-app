@@ -17,6 +17,7 @@ import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import MainTabs from './MainTabs';
+import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,7 @@ const MainStack = (): React.ReactElement => {
         )}
       </View>
       <AlertModal />
+      <PostAudiencesBottomSheet />
     </View>
   );
 };
