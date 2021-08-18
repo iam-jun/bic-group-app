@@ -23,6 +23,8 @@
     "text_not_set": "Not set",
     "text_ok": "OK",
     "text_error": "Error",
+    "text_error_message": "Something went wrong",
+    "text_important_posts": "Important Potst",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_all": "All",
@@ -35,6 +37,12 @@
     "text_retry": "Retry"
   },
   "auth": {
+    "text_kickout_title": "Notice",
+    "text_kickout_desc": "Your session has expired.",
+    "text_kickout_confirm_button": "Got it",
+    "text_change_password_success_title": "Notice",
+    "text_change_password_success_desc": "You have changed password success.",
+    "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Sign In",
     "text_sign_in_desc": "Login with your Bein account",
     "text_sign_up": "Sign Up",
@@ -68,7 +76,8 @@
     "text_err_id_password_not_matched": "Email and password doesn't match.",
     "text_err_password_blank": "Password is required!",
     "text_err_new_password_blank": "New password is required!",
-    "text_err_password_format": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
+    "text_err_password_format_todo_revert": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
+    "text_err_password_format": "Password must be eight characters, at least one number!",
     "text_err_email_blank": "Email is required!",
     "text_err_email_format": "Invalid email!",
     "text_err_username_blank": "User name is required!",
@@ -277,6 +286,7 @@
   "error": {
     "alert_title": "Notice",
     "no_internet": "No internet",
+    "button_confirm": "Got it",
     "http": {
       "unknown": "Unknown http error",
       "401": "Unauthorized",

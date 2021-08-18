@@ -1,29 +1,29 @@
+import {debounce, isEmpty} from 'lodash';
 import React, {useEffect} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
-import {useForm, Controller} from 'react-hook-form';
-import {isEmpty, debounce} from 'lodash';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import Button from '~/beinComponents/Button';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
+import Input from '~/beinComponents/inputs/TextInput';
+import AlertModal from '~/beinComponents/modals/AlertModal';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+
+import Text from '~/beinComponents/Text';
+import {createTextStyle} from '~/beinComponents/Text/textStyle';
 
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
-import images from '~/resources/images';
-import * as actions from '../redux/actions';
-
-import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Input from '~/beinComponents/inputs/TextInput';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
+import images from '~/resources/images';
+import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
-import * as modalActions from '~/store/modal/actions';
-import AlertModal from '~/beinComponents/modals/AlertModal';
+import * as actions from '../redux/actions';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -81,7 +81,6 @@ const SignIn = () => {
   }, 50);
 
   const checkDisableSignIn = () => {
-    return false; // TODO: disable for login with admin
     const email = getValues('email');
     const password = getValues('password');
     return !isEmpty(errors) || !email || !password || loading;

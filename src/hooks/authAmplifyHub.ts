@@ -1,7 +1,7 @@
-import {useEffect} from 'react';
-import {Auth, Hub} from 'aws-amplify';
-import {useDispatch} from 'react-redux';
 import {HubCapsule} from '@aws-amplify/core/src/Hub';
+import {Auth, Hub} from 'aws-amplify';
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 
 import * as actions from '~/screens/Auth/redux/actions';
 

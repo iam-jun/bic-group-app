@@ -5,24 +5,32 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
 import {Linking} from 'react-native';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {put} from 'redux-saga/effects';
 import {linkingConfig, navigationSetting} from '~/configs/navigator';
+import {useBaseHook} from '~/hooks';
+import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
+import {signOut} from '~/screens/Auth/redux/actions';
+import Store from '~/store';
+import * as modalActions from '~/store/modal/actions';
 import {isNavigationRefReady} from './helper';
 /*import config navigation*/
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
-import Store from '~/store';
-import {IUserResponse} from '~/interfaces/IAuth';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigator = (): React.ReactElement => {
   const theme = useTheme();
+  const {t} = useBaseHook();
+  const dispatch = useDispatch();
 
   const [initialRouteName, setInitialRouteName] = React.useState<
     string | undefined
@@ -30,9 +38,32 @@ const StackNavigator = (): React.ReactElement => {
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
+  const checkAuthKickout = async () => {
+    try {
+      await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+    } catch (e) {
+      // user not authenticated
+      if (!user) {
+        return;
+      }
+      dispatch(signOut());
+      dispatch(
+        modalActions.showAlert({
+          title: t('auth:text_kickout_title'),
+          content: t('auth:text_kickout_desc'),
+          onConfirm: () => put(modalActions.hideAlert()),
+          confirmLabel: t('auth:text_kickout_confirm_button'),
+        }),
+      );
+    }
+  };
+
   useEffect(() => {
     //@ts-ignore
     isNavigationRefReady.current = false;
+    checkAuthKickout();
     handleDeepLink();
     /*Deep link*/
     Linking.addEventListener('url', handleOpenURL);

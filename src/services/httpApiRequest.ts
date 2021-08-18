@@ -5,6 +5,7 @@ import i18n from 'i18next';
 import _ from 'lodash';
 import {Alert, Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {put} from 'redux-saga/effects';
 
 import apiConfig, {
   FeedResponseError,
@@ -13,6 +14,7 @@ import apiConfig, {
 } from '~/configs/apiConfig';
 import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
+import * as modalActions from '~/store/modal/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 
@@ -24,6 +26,17 @@ const commonHeaders = {
 
 const _dispatchLogout = () => {
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
+};
+
+const _dispatchSessionExpire = () => {
+  Store.store.dispatch(
+    modalActions.showAlert({
+      title: i18n.t('auth:text_kickout_title'),
+      content: i18n.t('auth:text_kickout_desc'),
+      onConfirm: () => put(modalActions.hideAlert()),
+      confirmLabel: i18n.t('auth:text_kickout_confirm_button'),
+    }),
+  );
 };
 
 const _dispatchRefreshTokenSuccess = (
@@ -153,16 +166,23 @@ const getTokenAndCallBackBein = async (): Promise<void> => {
     isRefreshingToken = true;
     let isSuccess = true;
 
-    const oldToken = getBeinIdToken();
-    const sessionData = await Auth.currentSession();
-    const newToken = sessionData?.getAccessToken().getJwtToken();
-    const refreshToken = sessionData?.getRefreshToken().getToken();
-    const idToken = sessionData?.getIdToken().getJwtToken();
-    if (newToken === oldToken) {
+    try {
+      const oldToken = getBeinIdToken();
+      const sessionData = await Auth.currentSession();
+      const newToken = sessionData?.getAccessToken().getJwtToken();
+      const refreshToken = sessionData?.getRefreshToken().getToken();
+      const idToken = sessionData?.getIdToken().getJwtToken();
+      if (idToken === oldToken) {
+        await Auth.currentAuthenticatedUser(); // TODO: verify
+        _dispatchLogout();
+        _dispatchSessionExpire();
+        isSuccess = false;
+      }
+      _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+    } catch (e) {
       _dispatchLogout();
-      isSuccess = false;
+      _dispatchSessionExpire();
     }
-    _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
 
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];

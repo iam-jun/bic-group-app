@@ -5,6 +5,7 @@ import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
 import {IPayloadGetHomePost} from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
+import {IPostActivity} from '~/interfaces/IPost';
 
 export default function* homeSaga() {
   yield takeLatest(homeTypes.GET_HOME_POSTS, getHomePosts);
@@ -46,6 +47,14 @@ function* getHomePosts({
       offset,
     );
     const newHomePosts = homePosts.concat?.(result) || result;
+    if (offset === 0) {
+      const ip = newHomePosts?.filter?.(
+        (post: IPostActivity) => post?.important?.active,
+      );
+      const count =
+        ip?.length > 0 ? `${ip?.length < 10 ? ip?.length : '9+'}` : '';
+      yield put(homeActions.setHomePostsImportantCount(count));
+    }
     yield put(homeActions.setHomePosts(newHomePosts));
 
     if (newHomePosts?.length === homePosts?.length) {
