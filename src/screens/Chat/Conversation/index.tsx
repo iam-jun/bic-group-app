@@ -1,34 +1,31 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
 import {GiftedChat} from 'react-native-gifted-chat';
-import {launchImageLibrary} from 'react-native-image-picker';
-import DocumentPicker, {
-  DocumentPickerResponse,
-} from 'react-native-document-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
-
+import FlashMessage from '~/beinComponents/FlashMessage';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import appConfig from '~/configs/appConfig';
 import {roomTypes} from '~/constants/chat';
 import {options} from '~/constants/messageOptions';
-import * as modalActions from '~/store/modal/actions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
-import {GMessage, IMessage} from '~/interfaces/IChat';
+import {GMessage, IFileResponse, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import * as modalActions from '~/store/modal/actions';
 import {getAvatar, validateFile} from '../helper';
 import {
   ChatFooter,
@@ -89,8 +86,25 @@ const Conversation = () => {
   };
 
   const _openImagePicker = () => {
-    launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {
-      console.log({uri, fileName, type});
+    ImagePicker.openPicker({
+      cropping: false,
+      mediaType: 'any',
+      multiple: false,
+      compressVideoPreset: 'Passthrough',
+    }).then(result => {
+      if (!result) return;
+
+      const file = {
+        name: result.filename,
+        size: result.size,
+        type: result.mime,
+        uri: result.path,
+      };
+      const _error = validateFile(file);
+      setError(_error);
+      if (_error) return;
+      const type = file.type.includes('/') ? file.type.split('/')[0] : 'image';
+      showUploadConfirmation(file, type);
     });
   };
 
@@ -99,13 +113,13 @@ const Conversation = () => {
     const _error = validateFile(file);
     setError(_error);
     if (_error) return;
-    showUploadConfirmation(file);
+    showUploadConfirmation(file, 'file');
   };
 
-  const showUploadConfirmation = (file: DocumentPickerResponse) => {
+  const showUploadConfirmation = (file: IFileResponse, type: string) => {
     dispatch(
       modalActions.showAlert({
-        title: i18next.t('chat:label_confirm_send_file'),
+        title: i18next.t(`chat:label_confirm_send_${type}`),
         content: file.name,
         cancelBtn: true,
         onConfirm: () => uploadFile(file),
@@ -114,7 +128,7 @@ const Conversation = () => {
     );
   };
 
-  const uploadFile = (file: DocumentPickerResponse) => {
+  const uploadFile = (file: IFileResponse) => {
     const _id = uuid.v4().toString();
     dispatch(
       actions.uploadFile({

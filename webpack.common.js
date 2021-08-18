@@ -24,7 +24,7 @@ const compileNodeModules = [
   'i18next',
   'react-i18next',
   'react-native-reanimate',
-  'react-native-image-picker',
+  'react-native-image-crop-picker',
   'amazon-cognito-identity-js',
   'aws-amplify',
   'react-hook-form',
