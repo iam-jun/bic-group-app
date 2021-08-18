@@ -34,7 +34,6 @@ import localStorage from '~/services/localStorage';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
-import AlertModal from './components/modals/AlertModal';
 import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
@@ -228,7 +227,6 @@ export default (): React.ReactElement => {
               <Portal.Host>
                 <RootNavigator />
               </Portal.Host>
-              <AlertModal />
             </AppContext.Provider>
           </PaperProvider>
         </PreferencesContext.Provider>
