@@ -15,6 +15,8 @@
     "web": "webpack serve --mode=development --config webpack.dev.js --host 0.0.0.0",
     "test android dev": "detox test --configuration android.dev.debug",
     "test android dev-release": "detox test --configuration android.dev.release",
+    "ios-deploy-dev": "cd ios && fastlane deploy_dev",
+    "android-deploy-dev": "cd android && fastlane deploy_dev",
     "test": "detox"
   },
   "jest": {

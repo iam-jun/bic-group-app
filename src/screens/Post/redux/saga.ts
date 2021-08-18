@@ -1,5 +1,6 @@
 import {put, call, takeLatest, select} from 'redux-saga/effects';
 import {isArray} from 'lodash';
+import i18n from 'i18next';
 
 import {
   IOwnReaction,
@@ -17,11 +18,19 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ReactionType} from '~/constants/reactions';
+import {showHeaderFlashMessage} from '~/store/app/actions';
+import {IHeaderFlashMessage} from '~/interfaces/common';
+import * as modalActions from '~/store/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
+function timeOut(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeLatest(postTypes.DELETE_POST, deletePost);
   yield takeLatest(
     postTypes.GET_SEARCH_MENTION_AUDIENCES,
     getSearchMentionAudiences,
@@ -63,6 +72,43 @@ function* postCreateNewPost({
       '\x1b[0m',
     );
     yield put(postActions.setLoadingCreatePost(false));
+    yield put(
+      modalActions.showAlert({
+        title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+        content:
+          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+        confirmLabel: i18n.t('common:text_ok'),
+      }),
+    );
+  }
+}
+
+function* deletePost({payload}: {type: string; payload: string}) {
+  if (!payload) {
+    console.log(`\x1b[31m🐣️ saga deletePost: id not found\x1b[0m`);
+    return;
+  }
+  try {
+    const response = yield call(postDataHelper.deletePost, payload);
+    if (response?.data) {
+      const allPosts = yield select(state => state?.post?.allPosts) || {};
+      const post: IPostActivity = allPosts?.[payload] || {};
+      post.deleted = true;
+      allPosts[payload] = post;
+      yield put(postActions.setAllPosts(allPosts));
+      yield timeOut(500);
+      const flashMessage: IHeaderFlashMessage = {
+        content: 'post:delete_post_complete',
+        props: {
+          textProps: {variant: 'h6', useI18n: true},
+          type: 'error',
+        },
+      };
+      yield put(showHeaderFlashMessage(flashMessage));
+    }
+    console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
+  } catch (e) {
+    console.log(`\x1b[35m🐣️ saga deletePost ${payload} failed`, e, `\x1b[0m`);
   }
 }
 
