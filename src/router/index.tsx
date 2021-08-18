@@ -7,12 +7,17 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
-import {linkingConfig, navigationSetting} from '~/configs/navigator';
+import AlertModal from '~/beinComponents/modals/AlertModal';
+import {
+  linkingConfig,
+  linkingConfigFull,
+  navigationSetting,
+} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
@@ -44,7 +49,7 @@ const StackNavigator = (): React.ReactElement => {
         bypassCache: true,
       });
     } catch (e) {
-      // user not authenticated
+      // user not authenticated, user is false
       if (!user) {
         return;
       }
@@ -102,30 +107,39 @@ const StackNavigator = (): React.ReactElement => {
   };
 
   return (
-    <NavigationContainer
-      linking={linkingConfig}
-      ref={rootNavigationRef}
-      onReady={onReady}
-      theme={navigationTheme}>
-      <Stack.Navigator
-        initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
-        screenOptions={{cardStyle: cardStyleConfig}}>
-        <Stack.Screen
-          options={{headerShown: false}}
-          //@ts-ignore
-          name={rootSwitch.authStack}
-          component={screens.AuthStack}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          //@ts-ignore
-          name={rootSwitch.mainStack}
-          component={screens.MainStack}
-          initialParams={{initialRouteName}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <NavigationContainer
+        linking={user ? linkingConfigFull : linkingConfig}
+        ref={rootNavigationRef}
+        onReady={onReady}
+        theme={navigationTheme}>
+        <Stack.Navigator
+          initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
+          screenOptions={{cardStyle: cardStyleConfig}}>
+          <Stack.Screen
+            options={{headerShown: false}}
+            //@ts-ignore
+            name={rootSwitch.authStack}
+            component={screens.AuthStack}
+          />
+          <Stack.Screen
+            options={{headerShown: false}}
+            //@ts-ignore
+            name={rootSwitch.mainStack}
+            component={screens.MainStack}
+            initialParams={{initialRouteName}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <AlertModal />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default StackNavigator;

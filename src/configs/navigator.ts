@@ -65,6 +65,30 @@ export const linkingConfig = {
           },
         },
       },
+    },
+  },
+};
+
+export const linkingConfigFull = {
+  prefixes: ['https://bein.group', 'bein://'],
+  config: {
+    screens: {
+      AuthStack: {
+        screens: {
+          Landing: {
+            path: 'welcome',
+          },
+          SignIn: {
+            path: 'login',
+          },
+          SignUp: {
+            path: 'register',
+          },
+          ForgotPassword: {
+            path: 'reset-password',
+          },
+        },
+      },
       MainStack: {
         screens: {
           home: {
