@@ -121,6 +121,18 @@ const Chat = {
     return {
       url: `${providers.chat.url}groups.rename`,
       method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data,
+    };
+  },
+  uploadFile: (roomId: string, data: FormData): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}rooms.upload/${roomId}`,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
       useRetry: false,
       provider: providers.chat,
       data,

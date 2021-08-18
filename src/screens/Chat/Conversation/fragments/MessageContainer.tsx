@@ -11,6 +11,7 @@ import {GMessage, IMessage} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {spacing} from '~/theme';
 import {countTime} from '~/utils/formatData';
+import AttachmentView from './AttachmentView';
 import ChatBubble from './ChatBubble';
 import LoadingMessage from './LoadingMessage';
 import MessageStatus from './MessageStatus';
@@ -28,24 +29,23 @@ const MessageContainer: React.FC<MessageContainerProps> = (
 ) => {
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
-  const {loading, currentMessage, previousMessage, nextMessage, onRetryPress} =
-    props;
+  const {loading, nextMessage, onRetryPress} = props;
 
   if (loading) return <LoadingMessage />;
 
-  if (currentMessage?.system) return <SystemMessage {...currentMessage} />;
-
-  const _currentMessage = currentMessage as IMessage;
-  const _previousMessage = previousMessage as IMessage;
+  const _currentMessage = props.currentMessage as IMessage;
+  const _previousMessage = props.previousMessage as IMessage;
   const sameUser =
     _currentMessage?.user?.username === _previousMessage?.user?.username;
   const sameType = _currentMessage?.type === _previousMessage?.type;
 
   const sameUserInPrevMessage =
-    currentMessage && sameUser && isSameDay(currentMessage, previousMessage);
+    _currentMessage && sameUser && isSameDay(_currentMessage, _previousMessage);
 
   const reactions = _currentMessage?.reactions || [];
   const _onRetryPress = () => onRetryPress(_currentMessage);
+
+  if (_currentMessage?.system) return <SystemMessage {..._currentMessage} />;
 
   return (
     <View style={styles.container}>
@@ -78,10 +78,12 @@ const MessageContainer: React.FC<MessageContainerProps> = (
           <ViewSpacing height={spacing.margin.base} />
         </>
       )}
-      {
-        //@ts-ignore
+      {_currentMessage.attachment ? (
+        <AttachmentView {..._currentMessage} />
+      ) : (
+        // @ts-ignore
         <ChatBubble {...props} />
-      }
+      )}
       {/*
           Now only show failed status
         */}

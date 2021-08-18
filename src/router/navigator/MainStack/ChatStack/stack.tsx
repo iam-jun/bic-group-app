@@ -5,6 +5,7 @@ const chatStack = {
   createConversation: 'create-conversation',
   chatGroupMembers: 'chat-group-members',
   addMembers: 'add-members',
+  userProfile: 'user-profile',
 };
 
 export default chatStack;

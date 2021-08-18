@@ -1,4 +1,3 @@
-import uuid from 'react-native-uuid';
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {put, select, takeLatest} from 'redux-saga/effects';
@@ -33,6 +32,7 @@ export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeLatest(types.SEND_MESSAGE, sendMessage);
+  yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
@@ -177,6 +177,41 @@ function* createConversation({
   }
 }
 
+function* uploadFile({payload}: {payload: IMessage; type: string}) {
+  try {
+    if (!payload.attachment) return;
+    const {chat} = yield select();
+    const {conversation} = chat;
+
+    const formData = new FormData();
+    formData.append('file', {
+      type: payload.attachment.type,
+      //@ts-ignore
+      name: payload.attachment.name || 'fileMessage',
+      uri: payload.attachment.uri,
+    });
+    formData.append(
+      'description',
+      JSON.stringify({
+        localId: payload.localId,
+        size: payload.attachment.size,
+        type: payload.attachment.type,
+      }),
+    );
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.uploadFile(conversation._id, formData),
+    );
+    console.log('uploadFile', response);
+
+    const message = mapMessage(response.data.message);
+    yield put(actions.sendMessageSuccess({...payload, ...message}));
+  } catch (err) {
+    console.log('uploadFile', err);
+    yield put(actions.sendMessageFailed(payload));
+  }
+}
+
 function* sendMessage({payload}: {payload: IMessage; type: string}) {
   try {
     const {chat} = yield select();
@@ -187,7 +222,7 @@ function* sendMessage({payload}: {payload: IMessage; type: string}) {
         message: {
           _id: payload._id.toString(),
           rid: conversation._id,
-          msg: payload.text,
+          msg: payload?.text,
         },
       }),
     );
@@ -217,7 +252,8 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
 }
 
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
-  yield sendMessage({payload, type});
+  if (payload.attachment) yield uploadFile({payload, type});
+  else yield sendMessage({payload, type});
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {

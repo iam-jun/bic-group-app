@@ -72,7 +72,7 @@ const GroupMembers = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 2000), []);
+  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
 
   const onQueryChanged = (text: string) => {
     seachHandler(text);
