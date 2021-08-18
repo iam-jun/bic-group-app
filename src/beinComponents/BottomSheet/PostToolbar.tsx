@@ -80,7 +80,7 @@ const PostToolbar = ({
 
   const onToggleImportant = (action: IAction) => {
     const newImportant = {...important};
-    newImportant.active = action === commonActions.checkBox;
+    newImportant.active = action === commonActions.checkBox ? 1 : 0;
     dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
@@ -251,7 +251,7 @@ const PostToolbar = ({
             onActionPress={onToggleImportant}
           />
         </View>
-        {active && renderImportantDate()}
+        {!!active && renderImportantDate()}
       </View>
     );
   };

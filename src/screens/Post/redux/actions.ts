@@ -9,6 +9,7 @@ import {
   IParamSearchMentionAudiences,
   IAllPosts,
   IPayloadReactToPost,
+  IPayloadPutEditPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -71,6 +72,10 @@ const postActions = {
   //saga
   postCreateNewPost: (payload: IPostCreatePost) => ({
     type: postTypes.POST_CREATE_NEW_POST,
+    payload,
+  }),
+  putEditPost: (payload: IPayloadPutEditPost) => ({
+    type: postTypes.PUT_EDIT_POST,
     payload,
   }),
   deletePost: (payload: string) => ({

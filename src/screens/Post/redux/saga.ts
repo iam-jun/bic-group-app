@@ -5,6 +5,7 @@ import i18n from 'i18next';
 import {
   IOwnReaction,
   IParamSearchMentionAudiences,
+  IPayloadPutEditPost,
   IPayloadReactToPost,
   IPostActivity,
   IPostCreatePost,
@@ -30,6 +31,7 @@ function timeOut(ms: number) {
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
   yield takeLatest(
     postTypes.GET_SEARCH_MENTION_AUDIENCES,
@@ -79,6 +81,40 @@ function* postCreateNewPost({
           e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
         confirmLabel: i18n.t('common:text_ok'),
       }),
+    );
+  }
+}
+
+function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
+  const {id, data, replaceWithDetail = true} = payload;
+  if (!id || !data) {
+    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
+    return;
+  }
+  try {
+    yield put(postActions.setLoadingCreatePost(true));
+    const response = yield call(postDataHelper.putEditPost, id, data);
+    yield put(postActions.setLoadingCreatePost(false));
+    if (response?.data) {
+      const allPosts = yield select(state => state?.post?.allPosts) || {};
+      const post: IPostActivity = allPosts?.[id] || {};
+      if (post?.object) {
+        post.object.data = data?.data || {};
+      }
+      //todo waiting for backend update response, replace whole object from response instead of local change
+      allPosts[id] = post;
+      yield put(postActions.setAllPosts(allPosts));
+      if (replaceWithDetail) {
+        yield put(postActions.setPostDetail(post));
+        navigation.replace(homeStack.postDetail);
+      } else {
+        navigation.goBack();
+      }
+    }
+  } catch (e) {
+    console.log(
+      `\x1b[31m🐣️ saga putEditPost error: `,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
   }
 }

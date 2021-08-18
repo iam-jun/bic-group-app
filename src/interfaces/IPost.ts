@@ -40,7 +40,7 @@ export interface IActivityData {
 }
 
 export interface IActivityImportant {
-  active?: boolean;
+  active?: 0 | 1;
   expiresTime?: string;
 }
 
@@ -84,6 +84,7 @@ export interface IAllPosts {
 }
 
 export interface IPostCreatePost {
+  getstream_id?: string;
   actor?: number;
   data?: IActivityData;
   audience?: {
@@ -92,6 +93,12 @@ export interface IPostCreatePost {
   };
   tags?: number[];
   important?: IActivityImportant;
+}
+
+export interface IPayloadPutEditPost {
+  id: string;
+  data: IPostCreatePost;
+  replaceWithDetail?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;

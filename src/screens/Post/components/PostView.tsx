@@ -42,7 +42,7 @@ export interface PostViewProps {
 
 const PostView: FC<PostViewProps> = ({
   postId,
-  isPostDetail,
+  isPostDetail = false,
   onPressComment,
   onPressHeader,
 }: PostViewProps) => {
@@ -215,6 +215,7 @@ const PostView: FC<PostViewProps> = ({
   const renderHeader = () => {
     return (
       <TouchableOpacity
+        disabled={!onPressHeader}
         onPress={() => onPressHeader?.(postId)}
         style={styles.headerContainer}>
         <Avatar.UltraLarge source={avatar} style={styles.avatar} />
@@ -371,6 +372,7 @@ const PostView: FC<PostViewProps> = ({
       <PostViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         postId={postId}
+        isPostDetail={isPostDetail}
         isActor={actor?.id == userId}
       />
     </View>

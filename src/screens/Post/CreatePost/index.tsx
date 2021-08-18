@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {FC, useEffect, useRef} from 'react';
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
@@ -7,7 +7,12 @@ import {debounce} from 'lodash';
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
-import {IAudience, IPostCreatePost} from '~/interfaces/IPost';
+import {
+  IAudience,
+  IPayloadPutEditPost,
+  IPostActivity,
+  IPostCreatePost,
+} from '~/interfaces/IPost';
 import {margin, padding} from '~/theme/spacing';
 import postActions from '~/screens/Post/redux/actions';
 
@@ -22,14 +27,32 @@ import {useUserIdAuth} from '~/hooks/auth';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {useRootNavigation} from '~/hooks/navigation';
+import * as modalActions from '~/store/modal/actions';
 
-const CreatePost = () => {
+export interface CreatePostProps {
+  route?: {
+    params?: {
+      postId?: string;
+      replaceWithDetail?: boolean;
+    };
+  };
+}
+
+const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
+  const {postId, replaceWithDetail} = route?.params || {};
 
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+
+  let initPostData: IPostActivity = {};
+  if (postId) {
+    initPostData = useKeySelector(postKeySelector.postById(postId));
+  }
 
   const createPostData = useCreatePost();
   const {
@@ -46,11 +69,17 @@ const CreatePost = () => {
   const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
   const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
 
+  const isEditPost = !!initPostData?.id;
+  const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+
   //Enable  Post button if :
   // + Has at least 1 audience AND
   // + (text != empty OR at least 1 photo OR at least 1 file)
   const disableButtonPost =
-    loading || content?.length === 0 || chosenAudiences.length === 0;
+    loading ||
+    content?.length === 0 ||
+    chosenAudiences.length === 0 ||
+    (isEditPost && !isEditPostHasChange);
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -63,8 +92,69 @@ const CreatePost = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (initPostData?.id) {
+      const initData = initPostData?.object?.data || {};
+      dispatch(postActions.setCreatePostData(initData));
+
+      const initChosenAudience: any = [];
+      initPostData?.audience?.groups?.map?.(group => {
+        initChosenAudience.push({
+          id: group?.id,
+          type: 'group',
+          name: group?.data?.name,
+          avatar: group?.data?.avatarUrl,
+        });
+      });
+      initPostData?.audience?.users?.map?.(user => {
+        initChosenAudience.push({
+          id: user?.id,
+          type: 'user',
+          name: user?.data?.fullname,
+          avatar: user?.data?.avatarUrl,
+        });
+      });
+      dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+
+      const initImportant = initPostData?.important || {};
+      dispatch(postActions.setCreatePostImportant(initImportant));
+    }
+  }, [initPostData?.id]);
+
+  const onPressBack = () => {
+    Keyboard.dismiss();
+    if (isEditPost) {
+      if (isEditPostHasChange) {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:alert_title_back_edit_post'),
+            content: t('post:alert_content_back_edit_post'),
+            cancelBtn: true,
+            confirmLabel: t('common:btn_discard'),
+            onConfirm: () => rootNavigation.goBack(),
+          }),
+        );
+        return;
+      }
+    } else {
+      if (content) {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:alert_title_back_create_post'),
+            content: t('post:alert_content_back_create_post'),
+            cancelBtn: true,
+            confirmLabel: t('common:btn_discard'),
+            onConfirm: () => rootNavigation.goBack(),
+          }),
+        );
+        return;
+      }
+    }
+    rootNavigation.goBack();
+  };
+
   const onPressPost = async () => {
-    const tags = [0]; //todo remove default
+    const tags: any = []; //todo remove default
 
     const users: number[] = [];
     const groups: number[] = [];
@@ -78,11 +168,30 @@ const CreatePost = () => {
       }
     });
 
-    const payload: IPostCreatePost = {actor, data, audience, tags};
-    if (important?.active) {
-      payload.important = important;
+    if (isEditPost && initPostData?.id) {
+      const newEditData: IPostCreatePost = {
+        getstream_id: initPostData.id,
+        data,
+        audience,
+        tags,
+      };
+      if (important?.active) {
+        newEditData.important = important;
+      }
+      const payload: IPayloadPutEditPost = {
+        id: initPostData?.id,
+        replaceWithDetail: replaceWithDetail,
+        data: newEditData,
+      };
+      dispatch(postActions.putEditPost(payload));
+    } else {
+      const payload: IPostCreatePost = {actor, data, audience, tags};
+      if (important?.active) {
+        payload.important = important;
+      }
+      dispatch(postActions.postCreateNewPost(payload));
     }
-    dispatch(postActions.postCreateNewPost(payload));
+    Keyboard.dismiss();
   };
 
   const onChangeText = (text: string) => {
@@ -140,8 +249,8 @@ const CreatePost = () => {
       <ScreenWrapper isFullView testID={'CreatePostScreen'}>
         <Header
           titleTextProps={{useI18n: true}}
-          title={'post:create_post'}
-          buttonText={'post:post_button'}
+          title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
+          buttonText={isEditPost ? 'common:btn_edit' : 'post:post_button'}
           buttonProps={{
             loading: loading,
             disabled: disableButtonPost,
@@ -149,9 +258,10 @@ const CreatePost = () => {
             textColor: colors.textReversed,
             useI18n: true,
           }}
+          onPressBack={onPressBack}
           onPressButton={onPressPost}
         />
-        {important?.active && (
+        {!!important?.active && (
           <FlashMessage
             textProps={{variant: 'h6'}}
             leftIcon={'InfoCircle'}

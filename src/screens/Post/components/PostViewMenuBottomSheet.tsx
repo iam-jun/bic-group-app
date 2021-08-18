@@ -9,19 +9,24 @@ import {useBaseHook} from '~/hooks';
 import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 export interface PostViewMenuBottomSheetProps {
   modalizeRef: any;
   postId: string;
+  isPostDetail: boolean;
   isActor: boolean;
 }
 
 const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   modalizeRef,
   postId,
+  isPostDetail,
   isActor,
 }: PostViewMenuBottomSheetProps) => {
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
@@ -39,6 +44,14 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
         onConfirm: () => dispatch(postActions.deletePost(postId)),
       }),
     );
+  };
+
+  const onPressEdit = () => {
+    modalizeRef?.current?.close?.();
+    rootNavigation.navigate(homeStack.createPost, {
+      postId,
+      replaceWithDetail: !isPostDetail,
+    });
   };
 
   const renderContent = () => {
@@ -68,12 +81,15 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
           leftIconProps={{icon: 'Bell', size: 24}}
           title={'Turn off notification for this post'}
         />
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'Edit'}
-          leftIconProps={{icon: 'Edit', size: 24}}
-          title={'Edit Post'}
-        />
+        {isActor && (
+          <PrimaryItem
+            style={styles.item}
+            leftIcon={'Edit'}
+            leftIconProps={{icon: 'Edit', size: 24}}
+            title={'Edit Post'}
+            onPress={onPressEdit}
+          />
+        )}
         <PrimaryItem
           style={styles.item}
           leftIcon={'Redo'}
