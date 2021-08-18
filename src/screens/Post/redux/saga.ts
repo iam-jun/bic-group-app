@@ -1,5 +1,6 @@
 import {put, call, takeLatest, select} from 'redux-saga/effects';
 import {isArray} from 'lodash';
+import i18n from 'i18next';
 
 import {
   IOwnReaction,
@@ -20,6 +21,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ReactionType} from '~/constants/reactions';
 import {showHeaderFlashMessage} from '~/store/app/actions';
 import {IHeaderFlashMessage} from '~/interfaces/common';
+import * as modalActions from '~/store/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -72,6 +74,14 @@ function* postCreateNewPost({
       '\x1b[0m',
     );
     yield put(postActions.setLoadingCreatePost(false));
+    yield put(
+      modalActions.showAlert({
+        title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+        content:
+          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+        confirmLabel: i18n.t('common:text_ok'),
+      }),
+    );
   }
 }
 

@@ -1,21 +1,22 @@
+import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
 import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import debounce from 'lodash/debounce';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
-import {useBaseHook} from '~/hooks';
-import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
 import * as validation from '~/constants/commonRegex';
-import {ITheme} from '~/theme/interfaces';
-import {useDispatch} from 'react-redux';
-import * as modalActions from '~/store/modal/actions';
+import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
+import {changePassword} from '~/screens/Auth/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
@@ -68,6 +69,21 @@ const ChangePassword = () => {
     );
   };
 
+  // const [isCheckLogoutGlobal, setIsCheckLogoutGlobal] = useState(false);
+  // const handleOnCheckLogoutGlobal = () => {
+  //   setIsCheckLogoutGlobal(!isCheckLogoutGlobal);
+  // };
+
+  const handleOnSaveChangePassword = debounce(() => {
+    if (!_.isEmpty(errors)) {
+      return;
+    }
+
+    const oldPassword = getValues('password');
+    const newPassword = getValues('confirmNewPassword');
+    dispatch(changePassword({oldPassword, newPassword, global: false}));
+  }, 500);
+
   return (
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
@@ -81,7 +97,7 @@ const ChangePassword = () => {
               placeholder={t('auth:input_label_current_password')}
               error={errors.password}
               autoCapitalize="none"
-              value={value}
+              value={value || ''}
               onChangeText={text => {
                 onChange(text);
                 validatePassword();
@@ -108,7 +124,7 @@ const ChangePassword = () => {
               placeholder={t('auth:input_label_new_password')}
               error={errors.newPassword}
               autoCapitalize="none"
-              value={value}
+              value={value || ''}
               onChangeText={text => {
                 onChange(text);
                 validateNewPassword();
@@ -136,7 +152,7 @@ const ChangePassword = () => {
               placeholder={t('auth:input_label_confirm_new_password')}
               error={errors.confirmNewPassword}
               autoCapitalize="none"
-              value={value}
+              value={value || ''}
               onChangeText={text => {
                 onChange(text);
                 validateConfirmNewPassword();
@@ -153,19 +169,16 @@ const ChangePassword = () => {
           }}
           defaultValue=""
         />
-        <PrimaryItem
-          title={t('settings:title_logout_from_all_devices')}
-          style={styles.logoutFromAllDevices}
-          onPressCheckbox={() =>
-            alert('All of your devices will be logged out.')
-          }
-        />
+        {/*<PrimaryItem*/}
+        {/*  title={t('settings:title_logout_from_all_devices')}*/}
+        {/*  style={styles.logoutFromAllDevices}*/}
+        {/*  isChecked={isCheckLogoutGlobal}*/}
+        {/*  onPressCheckbox={handleOnCheckLogoutGlobal}*/}
+        {/*/>*/}
         <Button.Primary
           testID="btnChangePasswordSave"
           style={styles.btnSave}
-          onPress={() => {
-            // do nothing
-          }}>
+          onPress={handleOnSaveChangePassword}>
           {t('common:text_save')}
         </Button.Primary>
         <Button.Secondary
