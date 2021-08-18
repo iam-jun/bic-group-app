@@ -1,5 +1,6 @@
 import {ISignUpResult} from 'amazon-cognito-identity-js';
 import {User} from 'react-native-gifted-chat';
+
 // Actiontype
 export interface ISignIn {
   email: string;
@@ -71,4 +72,10 @@ export interface IUserProfile {
   language?: string;
   description?: string;
   isPublic?: boolean;
+}
+
+export interface IChangePasswordPayload {
+  oldPassword: string;
+  newPassword: string;
+  global: boolean;
 }

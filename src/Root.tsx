@@ -5,7 +5,6 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-  Alert,
   LogBox,
   NativeModules,
   Platform,
@@ -27,6 +26,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 /* State Redux */
 import {useDispatch, useSelector} from 'react-redux';
 import {fontConfig} from '~/configs/fonts';
+import notificationsActions from '~/constants/notificationActions';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
 import RootNavigator from '~/router';
@@ -40,7 +40,6 @@ import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
 import {useRootNavigation} from './hooks/navigation';
 import {rootSwitch} from './router/stack';
-import notificationsActions from '~/constants/notificationActions';
 import {setupPushToken} from './store/app/actions';
 
 moment.updateLocale('en', moments.en);

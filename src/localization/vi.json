@@ -23,9 +23,17 @@
     "text_not_set": "Chưa đặt",
     "text_ok": "OK",
     "text_error": "Lỗi",
+    "text_error_message": "Có gì đó sai sai",
+    "text_important_posts": "Bài viết quan trọng",
     "text_loading": "Đang tải ..."
   },
   "auth": {
+    "text_kickout_title": "Notice",
+    "text_kickout_desc": "Your session has expired.",
+    "text_kickout_confirm_button": "Got it",
+    "text_change_password_success_title": "Notice",
+    "text_change_password_success_desc": "You have changed password success.",
+    "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Đăng nhập",
     "text_sign_in_desc": "Đăng nhập với tài khoản Bein",
     "text_sign_up": "Đăng ký",
@@ -58,7 +66,8 @@
     "text_err_id_password_not_matched": "Email hoặc mật khẩu không chính xác",
     "text_err_password_blank": "Yêu cầu điền mật khẩu!",
     "text_err_new_password_blank": "Yêu cầu điền mật khẩu mới!",
-    "text_err_password_format": "Mật khẩu từ 8 ký tự, ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt!",
+    "text_err_password_format_todo_revert": "Mật khẩu từ 8 ký tự, ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt!",
+    "text_err_password_format": "Mật khẩu từ 8 ký tự, ít nhất 1 số!",
     "text_err_email_blank": "Yêu cầu điền email ",
     "text_err_email_format": "Email sai định dạng",
     "text_err_username_blank": "Yêu cầu điền tên",
@@ -225,6 +234,7 @@
   "error": {
     "alert_title": "Notice",
     "no_internet": "No internet",
+    "button_confirm": "Got it",
     "http": {
       "unknown": "Unknown http error",
       "401": "Unauthorized",
