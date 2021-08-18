@@ -18,6 +18,7 @@ const homeDataHelper = {
         withRecentReactions: true,
         withReactionCounts: true,
         enrich: true, //extra data for user & group
+        ranking: 'important_first', //important posts will on top of results
       };
       try {
         const data = await makeGetStreamRequest(

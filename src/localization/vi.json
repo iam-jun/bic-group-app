@@ -21,6 +21,8 @@
     "text_not_set": "Chưa đặt",
     "text_ok": "OK",
     "text_error": "Lỗi",
+    "text_error_message": "Có gì đó sai sai",
+    "text_important_posts": "Bài viết quan trọng",
     "text_loading": "Đang tải ..."
   },
   "auth": {
