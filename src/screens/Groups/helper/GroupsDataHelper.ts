@@ -18,16 +18,16 @@ export const groupsApiConfig = {
   }),
   getGroupMembers: (
     groupId: number,
-    skip?: number,
-    take?: number,
+    offset?: number,
+    limit?: number,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      skip: skip,
-      take: take,
+      offset: offset,
+      limit: limit,
     },
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
@@ -102,10 +102,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMembers: async (groupId: number, skip?: number, take?: number) => {
+  getGroupMembers: async (groupId: number, offset?: number, limit?: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupMembers(groupId, skip, take),
+        groupsApiConfig.getGroupMembers(groupId, offset, limit),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);

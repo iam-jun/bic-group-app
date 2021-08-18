@@ -93,8 +93,8 @@ export const postApiConfig = {
       group_ids: params.group_ids,
       user_ids: params.user_ids,
       key: params.key,
-      skip: params.skip,
-      take: params.take,
+      offset: params.skip,
+      limit: params.take,
     },
   }),
   postReaction: (
