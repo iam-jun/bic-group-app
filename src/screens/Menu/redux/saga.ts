@@ -2,20 +2,23 @@ import {select, put, takeLatest} from 'redux-saga/effects';
 import menuActions from './actions';
 import menuTypes from './types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {IUserProfile} from '~/interfaces/IAuth';
+import {IUserProfile, IUserEdit} from '~/interfaces/IAuth';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
   yield takeLatest(menuTypes.SELECT_MY_PROFILE, selectMyProfile);
   yield takeLatest(menuTypes.GET_SELECTED_PROFILE, getSelectedProfile);
   yield takeLatest(menuTypes.SELECTED_PROFILE, selectPublicProfile);
+  yield takeLatest(menuTypes.EDIT_MY_PROFILE, editMyProfile);
 }
 
 function* getMyProfile({payload}: {type: string; payload: number}) {
   const {myProfile} = yield select();
   try {
     const result: IUserProfile = yield requestUserProfile(payload);
-    yield put(menuActions.setMyProfile(result));
+    yield put(
+      menuActions.setMyProfile({...result, language: result.language || []}),
+    );
   } catch (err) {
     yield put(menuActions.setMyProfile(myProfile));
     console.log('getMyProfile error:', err);
@@ -65,3 +68,33 @@ function* selectPublicProfile({
     console.log('selectPublicProfile error ---> ', err);
   }
 }
+
+function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
+  try {
+    const result = yield requestEditMyProfile(payload);
+    yield put(
+      menuActions.setMyProfile({...result, language: result.language || []}),
+    );
+  } catch (error) {
+    console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
+  }
+}
+
+const requestEditMyProfile = async (data: IUserEdit) => {
+  try {
+    const userId = data.id;
+    delete data.id; // edit data should not contain user's id
+
+    const response = await menuDataHelper.editMyProfile(userId, data);
+    if (response.code === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'requestEditMyProfile catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+};

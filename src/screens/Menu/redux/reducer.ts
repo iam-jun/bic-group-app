@@ -3,7 +3,9 @@ import menuTypes from './types';
 const initMenuState = {
   loadingMyProfile: false,
   isLanguageModalOpen: false,
-  myProfile: {},
+  myProfile: {
+    language: [],
+  },
   selectedProfile: {},
 };
 
