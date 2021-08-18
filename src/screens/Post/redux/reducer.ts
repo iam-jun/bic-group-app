@@ -14,7 +14,7 @@ const initState = {
     searchResultAudienceGroups: [],
     searchResultAudienceUsers: [],
     important: {
-      active: false,
+      active: 0,
       expiresTime: '',
     },
   },
@@ -25,6 +25,11 @@ const initState = {
   postDetail: {},
   replyingComment: {},
   allPosts: {},
+  postAudienceSheet: {
+    isShow: false,
+    data: undefined,
+    fromStack: '',
+  },
 };
 
 function postReducer(state = initState, action: any = {}) {
@@ -123,6 +128,16 @@ function postReducer(state = initState, action: any = {}) {
           ...state.mention,
           searchResult: payload,
         },
+      };
+    case postTypes.SET_POST_AUDIENCES_BOTTOM_SHEET:
+      return {
+        ...state,
+        postAudienceSheet: payload,
+      };
+    case postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET:
+      return {
+        ...state,
+        postAudienceSheet: initState.postAudienceSheet,
       };
     default:
       return state;

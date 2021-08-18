@@ -9,6 +9,8 @@ import {
   IParamSearchMentionAudiences,
   IAllPosts,
   IPayloadReactToPost,
+  IPayloadPutEditPost,
+  IPostAudienceSheet,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -73,6 +75,10 @@ const postActions = {
     type: postTypes.POST_CREATE_NEW_POST,
     payload,
   }),
+  putEditPost: (payload: IPayloadPutEditPost) => ({
+    type: postTypes.PUT_EDIT_POST,
+    payload,
+  }),
   deletePost: (payload: string) => ({
     type: postTypes.DELETE_POST,
     payload,
@@ -92,6 +98,20 @@ const postActions = {
   deleteReactToPost: (payload: IPayloadReactToPost) => ({
     type: postTypes.DELETE_REACT_TO_POST,
     payload,
+  }),
+  setPostAudiencesBottomSheet: (payload: IPostAudienceSheet) => ({
+    type: postTypes.SET_POST_AUDIENCES_BOTTOM_SHEET,
+    payload,
+  }),
+  showPostAudiencesBottomSheet: (payload: {
+    postId: string;
+    fromStack: string;
+  }) => ({
+    type: postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
+    payload,
+  }),
+  hidePostAudiencesBottomSheet: () => ({
+    type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
   }),
 };
 

@@ -2,7 +2,7 @@ export interface ITheme extends ReactNativePaper.Theme {
   dark: boolean;
   colors: IThemeColors;
   spacing: ISpacing;
-  dimension?: IDimension;
+  dimension: IDimension;
   shadow?: any;
   fontFamily?: any;
   fonts: any;
@@ -83,4 +83,6 @@ export interface IDimension {
   primaryItemHeight: number;
   avatarSizes: {[key: string]: number};
   commentBarHeight: number;
+  deviceWidth: number;
+  deviceHeight: number;
 }
