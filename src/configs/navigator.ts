@@ -92,46 +92,81 @@ export const linkingConfigFull = {
       MainStack: {
         screens: {
           home: {
-            path: 'home',
+            path: '',
             screens: {
               newsfeed: {
                 path: '',
+              },
+              'my-profile': {
+                path: '/me',
+              },
+              'public-profile': {
+                path: '/profile/:id?',
+              },
+              'post-detail': {
+                path: '/post/:id?',
+              },
+              'create-post': {
+                path: '/post/new',
               },
             },
           },
           groups: {
             path: 'groups',
             screens: {
-              'group-list': {
-                path: '',
-              },
               'group-detail': {
-                path: ':id?',
+                path: '/t/:id?',
+                screens: {
+                  Content: {
+                    path: '',
+                  },
+                  About: {
+                    path: '/about',
+                  },
+                  Members: {
+                    path: '/members',
+                  },
+                  Files: {
+                    path: '/files',
+                  },
+                },
               },
-              // 'post-detail': {
-              //   path: 'post=:id?',
-              // },
+              'group-admin': {
+                path: '/t/:id?/edit',
+              },
+              'create-post': {
+                path: '/post/new',
+              },
+              'post-detail': {
+                path: '/post/:id?',
+              },
             },
           },
           chat: {
             path: 'chat',
             screens: {
-              'conversation-list': {
-                path: '',
-              },
               conversation: {
-                path: ':roomId?',
+                path: '/t/:roomId?',
+              },
+              'create-conversation': {
+                path: '/new',
               },
             },
           },
           menus: {
-            path: 'menus',
+            path: 'settings',
             screens: {
-              menu: {
+              'account-settings': {
                 path: '',
               },
               'component-collection': {
-                path: 'component-collection',
+                path: '/component-collection',
+              },
+              'change-password': {
+                path: '/change-password',
+              },
+              'security-and-login': {
+                path: '/security-and-login',
               },
             },
           },

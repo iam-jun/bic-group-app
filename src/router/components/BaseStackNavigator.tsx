@@ -1,5 +1,5 @@
-import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
 
 const Stack = createStackNavigator();
 export interface Props {
@@ -19,7 +19,7 @@ const BaseStackNavigator = ({
         return (
           <Stack.Screen
             key={'screen' + component}
-            name={component}
+            name={component} // TODO: refactor
             component={screens[component]}
             options={{
               animationEnabled: true,
