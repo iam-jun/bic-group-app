@@ -1,6 +1,7 @@
 import {ISignUpResult} from 'amazon-cognito-identity-js';
 import {User} from 'react-native-gifted-chat';
 import {GENDER_TYPE, RELATIONSHIP_TYPE} from './IEditUser';
+
 // Actiontype
 export interface ISignIn {
   email: string;
@@ -88,4 +89,9 @@ export interface IUserEdit {
   language?: string[];
   description?: string;
   relationship_status?: RELATIONSHIP_TYPE;
+}
+export interface IChangePasswordPayload {
+  oldPassword: string;
+  newPassword: string;
+  global: boolean;
 }

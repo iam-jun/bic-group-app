@@ -4,7 +4,6 @@ import {useTheme} from 'react-native-paper';
 
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
-import useMenu from '~/hooks/menu';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';

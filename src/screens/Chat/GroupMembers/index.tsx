@@ -1,5 +1,6 @@
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
+import {debounce} from 'lodash';
+import React, {useCallback, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -52,6 +53,31 @@ const GroupMembers = (): React.ReactElement => {
     Alert.alert('onMenuPress in development');
   };
 
+  const searchUsers = (searchQuery: string) => {
+    dispatch(actions.resetData('members'));
+    dispatch(
+      actions.getData(
+        'members',
+        {
+          query: {
+            $and: [
+              {__rooms: {$eq: conversation._id}},
+              {_id: {$nin: roles.data.map((role: any) => role._id)}},
+              {name: {$regex: searchQuery, $options: 'ig'}},
+            ],
+          },
+        },
+        'users',
+      ),
+    );
+  };
+
+  const seachHandler = useCallback(debounce(searchUsers, 2000), []);
+
+  const onQueryChanged = (text: string) => {
+    seachHandler(text);
+  };
+
   return (
     <ScreenWrapper testID="GroupMembersScreen" isFullView>
       <Header
@@ -67,6 +93,7 @@ const GroupMembers = (): React.ReactElement => {
         loading={members.loading}
         searchInputProps={{
           placeholder: i18next.t('chat:placeholder_members_search'),
+          onChangeText: onQueryChanged,
         }}
         onPressMenu={onPressMenu}
         onLoadMore={loadMoreData}

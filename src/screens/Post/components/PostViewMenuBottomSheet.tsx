@@ -5,17 +5,41 @@ import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBaseHook} from '~/hooks';
+import {useDispatch} from 'react-redux';
+import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
 
 export interface PostViewMenuBottomSheetProps {
   modalizeRef: any;
+  postId: string;
+  isActor: boolean;
 }
 
 const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   modalizeRef,
+  postId,
+  isActor,
 }: PostViewMenuBottomSheetProps) => {
+  const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
+
+  const onPressDelete = () => {
+    modalizeRef?.current?.close?.();
+    dispatch(
+      modalActions.showAlert({
+        title: t('post:title_delete_post'),
+        content: t('post:content_delete_post'),
+        iconName: 'Trash',
+        cancelBtn: true,
+        confirmLabel: t('common:btn_delete'),
+        onConfirm: () => dispatch(postActions.deletePost(postId)),
+      }),
+    );
+  };
 
   const renderContent = () => {
     return (
@@ -56,12 +80,15 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
           leftIconProps={{icon: 'Redo', size: 24}}
           title={'View Edit History'}
         />
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'TrashAlt'}
-          leftIconProps={{icon: 'TrashAlt', size: 24}}
-          title={'Delete post'}
-        />
+        {isActor && (
+          <PrimaryItem
+            style={styles.item}
+            leftIcon={'TrashAlt'}
+            leftIconProps={{icon: 'TrashAlt', size: 24}}
+            title={t('post:label_menu_delete')}
+            onPress={onPressDelete}
+          />
+        )}
       </View>
     );
   };

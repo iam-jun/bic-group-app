@@ -6,6 +6,8 @@ import moment from 'moment';
 
 import {ITheme} from '~/theme/interfaces';
 import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
@@ -58,6 +60,7 @@ const PostView: FC<PostViewProps> = ({
   const audience = useKeySelector(postKeySelector.postAudienceById(postId));
   const time = useKeySelector(postKeySelector.postTimeById(postId));
   const important = useKeySelector(postKeySelector.postImportantById(postId));
+  const deleted = useKeySelector(postKeySelector.postDeletedById(postId));
   const own_reactions = useKeySelector(
     postKeySelector.postOwnReactionById(postId),
   );
@@ -312,6 +315,15 @@ const PostView: FC<PostViewProps> = ({
     );
   };
 
+  if (deleted) {
+    return (
+      <View style={styles.deletedContainer}>
+        <Image style={styles.imageDelete} source={images.img_delete} />
+        <Text.H6 useI18n>post:label_post_deleted</Text.H6>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {renderImportant()}
@@ -356,7 +368,11 @@ const PostView: FC<PostViewProps> = ({
         onPressReaction={onAddReaction}
         title={t('post:label_all_reacts')}
       />
-      <PostViewMenuBottomSheet modalizeRef={menuSheetRef} />
+      <PostViewMenuBottomSheet
+        modalizeRef={menuSheetRef}
+        postId={postId}
+        isActor={actor.id == userId}
+      />
     </View>
   );
 };
@@ -386,6 +402,13 @@ const createStyle = (theme: ITheme) => {
     container: {
       backgroundColor: colors.background,
     },
+    deletedContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: spacing.padding.large,
+      backgroundColor: colors.background,
+    },
+    imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
     headerContainer: {
       flexDirection: 'row',
       paddingTop: spacing?.margin.small,

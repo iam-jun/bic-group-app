@@ -5,8 +5,9 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
+import {TextInputProps} from './TextInput';
 
-export interface SearchInputProps {
+export interface SearchInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   autoFocus?: boolean;

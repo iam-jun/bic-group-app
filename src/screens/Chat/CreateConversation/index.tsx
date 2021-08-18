@@ -1,7 +1,7 @@
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
+import {debounce} from 'lodash';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from 'react-native-paper';
-import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -35,27 +35,48 @@ const CreateConversation = (): React.ReactElement => {
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onCreatePress = () => {
-    const name =
-      selectedUsers.length > 1
-        ? generateRoomName(
-            user,
-            selectedUsers.map((user: IUser) => user.name),
-          )
-        : selectedUsers[0].name;
+    const name = generateRoomName(
+      user,
+      selectedUsers.map((user: IUser) => user.name),
+    );
 
     const type = selectedUsers.length > 1 ? roomTypes.QUICK : roomTypes.DIRECT;
-    const usernames = selectedUsers.map((user: IUser) => user.username);
+
+    const members = [...selectedUsers, user];
 
     dispatch(
       actions.createConversation({
         name,
-        members: usernames,
+        members: selectedUsers.map((user: IUser) => user.username),
         customFields: {
           type,
-          usernames,
+          usernames: members.map((user: IUser) => user.username),
+          members,
         },
       }),
     );
+  };
+
+  const searchUsers = (searchQuery: string) => {
+    dispatch(actions.resetData('users'));
+    dispatch(
+      actions.getData('users', {
+        query: {
+          $and: [
+            {
+              username: {$ne: user.username},
+            },
+            {name: {$regex: searchQuery, $options: 'ig'}},
+          ],
+        },
+      }),
+    );
+  };
+
+  const seachHandler = useCallback(debounce(searchUsers, 2000), []);
+
+  const onQueryChanged = (text: string) => {
+    seachHandler(text);
   };
 
   return (
@@ -76,6 +97,9 @@ const CreateConversation = (): React.ReactElement => {
         title={i18next.t('common:text_all')}
         loading={users.loading}
         data={users.data}
+        searchInputProps={{
+          onChangeText: onQueryChanged,
+        }}
         onLoadMore={loadMoreData}
       />
     </ScreenWrapper>

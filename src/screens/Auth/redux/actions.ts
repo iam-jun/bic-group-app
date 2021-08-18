@@ -1,12 +1,13 @@
-import * as types from './types';
 import {
-  ISignUp,
-  ISignIn,
+  IChangePasswordPayload,
   IForgotPasswordConfirm,
+  IForgotPasswordError,
+  ISignIn,
+  ISignUp,
   IUser,
   IUserResponse,
-  IForgotPasswordError,
 } from '~/interfaces/IAuth';
+import * as types from './types';
 
 export function setUser(payload?: IUser) {
   return {
@@ -94,6 +95,13 @@ export function forgotPasswordRequest(payload: string) {
 export function forgotPasswordConfirm(payload: IForgotPasswordConfirm) {
   return {
     type: types.FORGOT_PASSWORD_CONFIRM,
+    payload,
+  };
+}
+
+export function changePassword(payload: IChangePasswordPayload) {
+  return {
+    type: types.CHANGE_PASSWORD,
     payload,
   };
 }

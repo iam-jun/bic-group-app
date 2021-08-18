@@ -1,12 +1,10 @@
-import {Config} from 'react-native-config';
+import {generateRoomName} from '~/utils/generator';
 import i18next from 'i18next';
-import {generateAvatar} from '~/utils/common';
+import {roomTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
 import {getEnv} from '~/utils/env';
-import {generateRoomName} from '~/utils/generator';
 import {timestampToISODate} from '~/utils/formatData';
-import {roomTypes} from '~/constants/chat';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -32,17 +30,28 @@ export const mapUsers = (data?: []): IUser[] =>
   (data || []).map((item: any) => mapUser(item));
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
-  const name =
-    item?.fname ||
-    item.name ||
-    generateRoomName(user, item?.usernames || []) ||
-    item.u?.name;
   const _id = item?._id || item?.rid;
-  const {type, usernames} = item?.customFields || {};
+  const {type, usernames, members} = item?.customFields || {};
+
+  const membersExcludeMe = (members || []).filter(
+    (member: any) => member.username !== user.username,
+  );
+
+  const name =
+    type === roomTypes.DIRECT
+      ? members?.length > 0
+        ? generateRoomName(
+            user,
+            membersExcludeMe.map(
+              (member: any) => member.name || member.username,
+            ),
+          )
+        : item.fname || item.name
+      : item?.fname || item.name;
 
   const avatar =
     type === roomTypes.DIRECT
-      ? getAvatar(usernames?.length > 0 && usernames[0])
+      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0]?.username)
       : getRoomAvatar(_id);
 
   return {
@@ -71,13 +80,13 @@ export const mapMessage = (item: any): IMessage => {
     text: item.t
       ? i18next
           .t(`chat:system_message_${item.t}`)
-          .replace('{0}', user.name)
+          .replace('{0}', user.name || '')
           .replace('{1}', item.msg)
       : item?.msg,
   };
 };
 
-export const mapUser = (item: any) => ({
+export const mapUser = (item: any): IUser => ({
   ...item,
   avatar: getAvatar(item.username),
   name: item?.name || item?.fullname || item?.username,
