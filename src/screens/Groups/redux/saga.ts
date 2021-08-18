@@ -1,5 +1,5 @@
 import {call, put, select, takeLatest} from 'redux-saga/effects';
-import {IGroup, IGroupDetailEdit} from '~/interfaces/IGroup';
+import {IGroup, IGroupDetailEdit, IGroupImageUpload} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
@@ -12,6 +12,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
+  yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
 }
 
 function* getJoinedGroups() {
@@ -229,6 +230,42 @@ const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
     console.log(
       '\x1b[33m',
       'requestEditGroupDetail catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+};
+
+function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
+  try {
+    const {image, id, fieldName} = payload;
+
+    const formData = new FormData();
+    formData.append('file', {
+      type: image.type,
+      // @ts-ignore
+      name: image.fileName || 'fileMessage',
+      uri: image.uri,
+    });
+
+    const result = yield requestUploadImage(formData);
+
+    yield put(groupsActions.editGroupDetail({id, [fieldName]: result.src}));
+  } catch (e) {
+    console.log('\x1b[33m', 'uploadImage : error', e, '\x1b[0m');
+  }
+}
+
+const requestUploadImage = async (formData: FormData) => {
+  try {
+    const response = await groupsDataHelper.uploadImage(formData);
+    if (response.code === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'requestUploadImage catch: ',
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );

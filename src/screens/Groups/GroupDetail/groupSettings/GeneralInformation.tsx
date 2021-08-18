@@ -2,11 +2,11 @@ import React, {useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
-import * as modalActions from '~/store/modal/actions';
 import images from '~/resources/images';
 import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
@@ -31,24 +31,12 @@ const GeneralInformation = () => {
   const styles = themeStyles(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const groupData = useGroups();
-  const {groupDetail, isPrivacyModalOpen} = groupData || {};
+  const {groupDetail, isPrivacyModalOpen} = useGroups();
   const {id, name, icon, background_img_url, description, privacy} =
-    groupDetail?.group || {};
+    groupDetail.group;
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
-
-  const popupMessage = () =>
-    dispatch(
-      modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
-      }),
-    );
 
   const onPrivacyModalClose = () =>
     dispatch(groupsActions.setPrivacyModalOpen(false));
@@ -63,6 +51,34 @@ const GeneralInformation = () => {
 
   const editGroudescripton = () =>
     rootNavigation.navigate(groupStack.editGroupDescription);
+
+  const onEditAvatar = () => {
+    launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {
+      if (uri && fileName && type) {
+        dispatch(
+          groupsActions.uploadImage({
+            id,
+            image: {uri, fileName, type},
+            fieldName: 'icon',
+          }),
+        );
+      }
+    });
+  };
+
+  const onEditCover = () => {
+    launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {
+      if (uri && fileName && type) {
+        dispatch(
+          groupsActions.uploadImage({
+            id,
+            image: {uri, fileName, type},
+            fieldName: 'background_img_url',
+          }),
+        );
+      }
+    });
+  };
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
@@ -99,13 +115,13 @@ const GeneralInformation = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={popupMessage}>
+          <ButtonWrapper onPress={onEditAvatar}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
+        <ButtonWrapper style={styles.imageButton}>
           <Image
             resizeMode="cover"
             style={styles.avatar}
@@ -118,13 +134,13 @@ const GeneralInformation = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={popupMessage}>
+          <ButtonWrapper onPress={onEditCover}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper onPress={popupMessage}>
+        <ButtonWrapper>
           <Image
             resizeMode="cover"
             style={styles.cover}
@@ -190,9 +206,6 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flex: 1,
     },
-    list: {
-      marginTop: spacing.margin.base,
-    },
     avatarHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -202,10 +215,6 @@ const themeStyles = (theme: ITheme) => {
     coverHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-    infoHeader: {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
@@ -225,17 +234,8 @@ const themeStyles = (theme: ITheme) => {
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,
     },
-    leftIcon: {
-      marginRight: theme.spacing.margin.extraLarge,
-    },
-    rightEditIcon: {
-      marginLeft: theme.spacing.margin.extraLarge,
-    },
     imageButton: {
       alignItems: 'center',
-    },
-    divider: {
-      marginVertical: theme.spacing.margin.small,
     },
     contentBottomSheet: {
       marginHorizontal: spacing.margin.base,

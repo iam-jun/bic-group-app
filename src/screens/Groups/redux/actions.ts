@@ -1,5 +1,10 @@
 import groupsTypes from '~/screens/Groups/redux/types';
-import {IGroup, IGroupDetail, IGroupDetailEdit} from '~/interfaces/IGroup';
+import {
+  IGroup,
+  IGroupDetail,
+  IGroupDetailEdit,
+  IGroupImageUpload,
+} from '~/interfaces/IGroup';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -90,6 +95,12 @@ const groupsActions = {
   editGroupDetail: function (payload: IGroupDetailEdit) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
+      payload,
+    };
+  },
+  uploadImage: function (payload: IGroupImageUpload) {
+    return {
+      type: groupsTypes.UPLOAD_IMAGE,
       payload,
     };
   },

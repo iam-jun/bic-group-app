@@ -55,3 +55,14 @@ export interface IGroupDetail {
   can_setting: boolean;
   join_status: number;
 }
+
+interface IImageFile {
+  uri: string;
+  fileName: string;
+  type: string;
+}
+export interface IGroupImageUpload {
+  id: number;
+  fieldName: string;
+  image: IImageFile;
+}
