@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import {debounce} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -73,7 +73,7 @@ const CreateConversation = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 2000), []);
+  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
 
   const onQueryChanged = (text: string) => {
     seachHandler(text);

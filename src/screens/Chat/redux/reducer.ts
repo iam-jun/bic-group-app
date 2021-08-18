@@ -165,7 +165,9 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
       };
     case types.ADD_NEW_MESSAGE: {
       const include = messages.data.find(
-        (item: IMessage) => item._id === action.payload._id,
+        (item: IMessage) =>
+          item._id === action.payload._id ||
+          (item.localId && item.localId === action.payload.localId),
       );
       const newMessages = !include
         ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
@@ -233,6 +235,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           data: [action.payload, ...groups.data],
         },
       };
+    case types.UPLOAD_FILE:
     case types.SEND_MESSAGE:
       return {
         ...state,
@@ -248,13 +251,29 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         },
       };
     case types.RETRY_SEND_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item._id === action.payload._id ||
+            (item.localId && item.localId === action.payload.localId)
+              ? {
+                  ...action.payload,
+                  status: messageStatus.SENDING,
+                }
+              : item,
+          ),
+        },
+      };
     case types.SEND_MESSAGE_SUCCESS:
       return {
         ...state,
         messages: {
           ...messages,
           data: messages.data.map((item: IMessage) =>
-            item._id === action.payload._id &&
+            (item._id === action.payload._id ||
+              (item.localId && item.localId === action.payload.localId)) &&
             // message has updated from event
             item.status !== messageStatus.SENT
               ? {
@@ -271,7 +290,8 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         messages: {
           ...messages,
           data: messages.data.map((item: IMessage) =>
-            item._id === action.payload._id
+            item._id === action.payload._id ||
+            (item.localId && item.localId === action.payload.localId)
               ? {
                   ...item,
                   status: messageStatus.FAILED,

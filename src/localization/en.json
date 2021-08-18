@@ -29,7 +29,9 @@
     "text_read_more": "Read more",
     "text_show_less": "Show less",
     "text_add": "Add",
-    "text_retry": "Retry"
+    "text_retry": "Retry",
+    "text_download": "Download",
+    "text_send":"Send"
   },
   "auth": {
     "text_sign_in": "Sign In",
@@ -234,13 +236,17 @@
     "system_message_ru": "{0} has removed  {1} from the group chat.",
     "system_message_room_changed_description": "{0} has changed the chat description.",
     "system_message_room_changed_announcement": "{0} has changed the chat announcement.",
-    "system_message_room_changed_topic": "{0} has changed the group chat name to “{1}”",
+    "system_message_room_changed_topic": "{0} has changed the group chat topic to “{1}”",
     "system_message_room_changed_avatar": "{0} has changed the group avatar",
+    "system_message_r": "{0} has changed the group chat name to “{1}”",
     "message_status": {
-      "pending": "Sending",
+      "sending": "Sending",
       "sent": "Sent",
       "received": "Received",
       "failed": "Failed"
+    },
+    "upload_status":{
+      "sending": "Uploading"
     },
     "title_privacy": "Privacy",
     "title_more_actions": "More actions",
@@ -253,7 +259,14 @@
       "change_avatar": "Change Group Avatar",
       "edit_description": "Edit Description",
       "edit_name": "Edit Group Chat Name"
-    }
+    },
+    "label_last_message":{
+      "my_attachment": "You sent an attachment",
+      "other_attachment": "{0} sent an attachment",
+      "my_photo": "You sent a photo",
+      "other_photo": "{0} sent a photo"
+    },
+    "label_confirm_send_file": "Send this file?"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

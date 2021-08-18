@@ -1,5 +1,5 @@
 import {IUser} from '~/interfaces/IAuth';
-import {IConversation, IMessage} from '~/interfaces/IChat';
+import {IAttachmentMessage, IConversation, IMessage} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
@@ -131,6 +131,11 @@ const updateConversationName = (payload: string) => ({
   payload,
 });
 
+const uploadFile = (payload: IMessage) => ({
+  type: Actions.UPLOAD_FILE,
+  payload,
+});
+
 export default {
   getData,
   setData,
@@ -157,4 +162,5 @@ export default {
   createConversationSuccess,
   addNewMessage,
   updateConversationName,
+  uploadFile,
 };

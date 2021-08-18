@@ -3,26 +3,33 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {launchImageLibrary} from 'react-native-image-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
+
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import appConfig from '~/configs/appConfig';
 import {roomTypes} from '~/constants/chat';
 import {options} from '~/constants/messageOptions';
+import * as modalActions from '~/store/modal/actions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import {IOption} from '~/interfaces/IOption';
+import FlashMessage from '~/beinComponents/FlashMessage';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
-import {getAvatar} from '../helper';
+import {getAvatar, validateFile} from '../helper';
 import {
   ChatFooter,
   ChatInput,
@@ -45,6 +52,7 @@ const Conversation = () => {
     conversation.avatar,
   );
   const isFocused = useIsFocused();
+  const [error, setError] = useState<string | null>(null);
   const isDirect = conversation.type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
@@ -86,8 +94,39 @@ const Conversation = () => {
     });
   };
 
-  const _openFilePicker = () => {
-    console.log('_openFilePicker');
+  const _openFilePicker = async () => {
+    const file = await DocumentPicker.pickSingle();
+    const _error = validateFile(file);
+    setError(_error);
+    if (_error) return;
+    showUploadConfirmation(file);
+  };
+
+  const showUploadConfirmation = (file: DocumentPickerResponse) => {
+    dispatch(
+      modalActions.showAlert({
+        title: i18next.t('chat:label_confirm_send_file'),
+        content: file.name,
+        cancelBtn: true,
+        onConfirm: () => uploadFile(file),
+        confirmLabel: i18next.t('common:text_send'),
+      }),
+    );
+  };
+
+  const uploadFile = (file: DocumentPickerResponse) => {
+    const _id = uuid.v4().toString();
+    dispatch(
+      actions.uploadFile({
+        _id,
+        localId: _id,
+        text: '',
+        createdAt: new Date(),
+        user,
+        _updatedAt: new Date().toISOString(),
+        attachment: file,
+      }),
+    );
   };
 
   const showOptions = (message?: IMessage) => {
@@ -154,7 +193,11 @@ const Conversation = () => {
         menuIcon="ConversationInfo"
         onPressMenu={goConversationDetail}
       />
-
+      {!!error && (
+        <FlashMessage type="error" onClose={() => setError('')}>
+          {error}
+        </FlashMessage>
+      )}
       <GiftedChat
         messages={messages.data}
         onSend={onSend}
@@ -205,14 +248,12 @@ const Conversation = () => {
             openFilePicker={_openFilePicker}
           />
         )}
-        renderChatFooter={() => {
-          return (
-            <ChatFooter
-              replyingMessage={replyingMessage}
-              onCancel={() => setReplyingMessage(undefined)}
-            />
-          );
-        }}
+        renderChatFooter={() => (
+          <ChatFooter
+            replyingMessage={replyingMessage}
+            onCancel={() => setReplyingMessage(undefined)}
+          />
+        )}
       />
       <MessageOptionsModal
         ref={messageOptionsModalRef}

@@ -5,6 +5,8 @@ import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage} from '~/interfaces/IChat';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
+import {AppConfig} from '~/configs';
+import {DocumentPickerResponse} from 'react-native-document-picker';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -54,6 +56,20 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
       ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0]?.username)
       : getRoomAvatar(_id);
 
+  const attachment =
+    item.lastMessage?.attachments?.length > 0 &&
+    item.lastMessage.attachments[0];
+
+  const lastMessage = item.lastMessage
+    ? attachment
+      ? item.lastMessage.u?.username === user?.username
+        ? i18next.t('chat:label_last_message:my_attachment')
+        : i18next
+            .t('chat:label_last_message:other_attachment')
+            .replace('{0}', item.lastMessage.u?.name)
+      : `${item.lastMessage.u?.name}: ${item?.lastMessage?.msg}`
+    : null;
+
   return {
     ...item,
     _id,
@@ -62,27 +78,37 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     type: item.customFields?.type,
     avatar,
     user: mapUser(item?.u),
-    lastMessage: item?.lastMessage?.msg,
+    directUser: membersExcludeMe?.length > 0 && membersExcludeMe[0],
+    lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
   };
 };
 
 export const mapMessage = (item: any): IMessage => {
   const user = mapUser(item?.u);
+  const attachment = item.attachments?.length > 0 && {
+    name: item.attachments[0].title,
+    ...JSON.parse(item.attachments[0].description || {}),
+  };
+  const type = item.type || attachment?.type;
+
   return {
     ...item,
     room_id: item?.rid,
     user,
-    type: item.t,
+    type,
     system: !!item.t,
     createdAt: timestampToISODate(item.ts),
     _updatedAt: timestampToISODate(item._updatedAt),
+    status: 'sent',
     text: item.t
       ? i18next
           .t(`chat:system_message_${item.t}`)
           .replace('{0}', user.name || '')
           .replace('{1}', item.msg)
       : item?.msg,
+    attachment,
+    localId: item.localId || attachment?.localId,
   };
 };
 
@@ -102,3 +128,10 @@ export const getAvatar = (username: string) =>
 
 export const getRoomAvatar = (roomId: string) =>
   `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}`;
+
+export const validateFile = (file: DocumentPickerResponse): string | null => {
+  if (file.size > AppConfig.maxFileSize) {
+    return 'Your video must be less than 10MB';
+  }
+  return null;
+};

@@ -1,3 +1,4 @@
+import {DocumentPickerResponse} from 'react-native-document-picker';
 import {IMessage as _GMessage} from 'react-native-gifted-chat';
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
@@ -133,7 +134,17 @@ export type IMessage = _GMessage & {
   type?: string;
   localId?: string;
   status?: IMesssageStatus;
+  attachment?: DocumentPickerResponse;
 };
+
+export interface IAttachmentMessage {
+  _id: string | number;
+  user: IChatUser;
+  _updatedAt: string;
+  type?: string;
+  status?: string;
+  attachment: DocumentPickerResponse;
+}
 
 export type IRoomType = typeof roomTypes[keyof typeof roomTypes];
 

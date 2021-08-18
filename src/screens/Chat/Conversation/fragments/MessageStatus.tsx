@@ -37,6 +37,7 @@ const createStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginBottom: spacing.margin.base,
       marginStart:
         (dimension?.avatarSizes.medium || 36) + (spacing.margin.small || 8),
     },
