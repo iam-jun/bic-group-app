@@ -24,7 +24,7 @@ const compileNodeModules = [
   'i18next',
   'react-i18next',
   'react-native-reanimate',
-  'react-native-image-picker',
+  'react-native-image-crop-picker',
   'amazon-cognito-identity-js',
   'aws-amplify',
   'react-hook-form',
@@ -32,6 +32,7 @@ const compileNodeModules = [
   'react-native-vector-icons',
   'react-native-gifted-chat',
   'react-modal',
+  'react-native-video',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = env => {

@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {MessageProps} from 'react-native-gifted-chat';
-import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
+import {isSameDay} from 'react-native-gifted-chat/lib/utils';
 import {useTheme} from 'react-native-paper';
-
 import Avatar from '~/beinComponents/Avatar';
 import {Text, ViewSpacing} from '~/components';
 import {IObject} from '~/interfaces/common';

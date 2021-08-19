@@ -315,6 +315,7 @@ const PostView: FC<PostViewProps> = ({
             content={content}
             limitLength={400}
             shortLength={400}
+            useMarkdown
             allowMarkdown
             toggleOnPress
             onPressAudience={(audience: any) =>
