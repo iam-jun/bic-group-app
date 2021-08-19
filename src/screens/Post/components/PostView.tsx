@@ -39,6 +39,7 @@ export interface PostViewProps {
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
   onPressHeader?: (postId: string) => void;
+  hideMarkAsRead?: boolean;
 }
 
 const PostView: FC<PostViewProps> = ({
@@ -46,6 +47,7 @@ const PostView: FC<PostViewProps> = ({
   isPostDetail = false,
   onPressComment,
   onPressHeader,
+  hideMarkAsRead = true,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
@@ -341,7 +343,7 @@ const PostView: FC<PostViewProps> = ({
       {renderImportant()}
       {renderHeader()}
       {renderContent()}
-      {isImportant && (
+      {!hideMarkAsRead && isImportant && (
         <View>
           <Button.Secondary
             useI18n

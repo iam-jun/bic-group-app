@@ -31,9 +31,6 @@ const Newsfeed = () => {
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts);
-  const importantCount = useKeySelector(
-    homeKeySelector.homePostsImportantCount,
-  );
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
@@ -74,22 +71,6 @@ const Newsfeed = () => {
     );
   };
 
-  const renderHeader = () => {
-    if (!refreshing || homePosts?.length > 0) {
-      return (
-        <View>
-          <HeaderCreatePost style={styles.headerCreatePost} />
-          {!!importantCount && (
-            <Text.H6 style={styles.importantCount}>{`${t(
-              'common:text_important_posts',
-            )} • ${importantCount}`}</Text.H6>
-          )}
-        </View>
-      );
-    }
-    return null;
-  };
-
   return (
     <View style={styles.container}>
       <Header
@@ -108,7 +89,9 @@ const Newsfeed = () => {
         onRefresh={() => getData(true)}
         onLoadMore={() => getData()}
         renderItem={renderItem}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={() => (
+          <HeaderCreatePost style={styles.headerCreatePost} />
+        )}
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => (
           <ViewSpacing height={theme.spacing?.margin.base} />
