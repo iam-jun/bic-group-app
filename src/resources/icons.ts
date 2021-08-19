@@ -149,6 +149,7 @@ const icons = {
   BriefcaseAlt: 'BriefcaseAlt',
   LocationPoint: 'LocationPoint',
   CommentsAlt: 'CommentsAlt',
+  CommentSlash: 'CommentSlash',
   Phone: 'Phone',
   Envelope: 'Envelope',
   EditAlt: 'EditAlt',

@@ -73,23 +73,23 @@ const MarkdownText: FC<MarkdownTextProps> = ({
     <ParsedText
       childrenProps={{allowFontScaling: false}}
       parse={[
-        {type: 'url', style: styles.url, onPress: onPressUrl},
-        {
-          type: 'phone',
-          style: styles.phone,
-          onPress: onPressPhoneNumber,
-        },
-        {
-          type: 'email',
-          style: styles.email,
-          onPress: onPressEmail,
-        },
-        {pattern: /#(\w+)/, style: styles.hashTag},
-        {
-          pattern: /\*(.*?)\*/,
-          style: styles.bold,
-          renderText: getMatchText,
-        },
+        // {type: 'url', style: styles.url, onPress: onPressUrl},
+        // {
+        //   type: 'phone',
+        //   style: styles.phone,
+        //   onPress: onPressPhoneNumber,
+        // },
+        // {
+        //   type: 'email',
+        //   style: styles.email,
+        //   onPress: onPressEmail,
+        // },
+        // {pattern: /#(\w+)/, style: styles.hashTag},
+        // {
+        //   pattern: /\*(.*?)\*/,
+        //   style: styles.bold,
+        //   renderText: getMatchText,
+        // },
         {
           pattern: audienceRegex,
           style: styles.audience,
