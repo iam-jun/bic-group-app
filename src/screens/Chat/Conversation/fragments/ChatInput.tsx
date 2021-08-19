@@ -114,8 +114,8 @@ const createStyles = (theme: IObject<any>) => {
       paddingHorizontal: spacing.padding.base,
       paddingVertical: spacing.padding.small,
       borderTopColor: 'transparent',
-      justifyContent: 'center',
-      alignItems: 'center',
+      // justifyContent: 'center',
+      // alignItems: 'center',
     },
     composerWrapper: {
       flex: 1,
@@ -126,7 +126,6 @@ const createStyles = (theme: IObject<any>) => {
       borderRadius: spacing.borderRadius.large,
     },
     composer: {
-      flexWrap: 'wrap',
       fontFamily: fontFamilies.Segoe,
       fontSize: sizes.body,
       lineHeight: 16,

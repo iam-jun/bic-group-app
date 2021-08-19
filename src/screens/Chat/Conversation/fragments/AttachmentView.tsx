@@ -1,9 +1,8 @@
-import React, {useRef, useState} from 'react';
-import {createRef} from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import Video from 'react-native-video';
 import Icon from '~/beinComponents/Icon';
+import Video from '~/beinComponents/Video';
 import {Image, Text} from '~/components';
 import {messageStatus} from '~/constants/chat';
 import {IMessage} from '~/interfaces/IChat';
@@ -17,8 +16,6 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
   const styles = createStyles(theme);
   const {attachment, status} = props;
   const {name, size} = attachment || {};
-  const videoRef = createRef<Video>();
-  const [videoPaused, setVideoPaused] = useState(true);
 
   const color =
     status === messageStatus.FAILED ? theme.colors.error : theme.colors.text;
@@ -27,11 +24,6 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
     status === messageStatus.FAILED
       ? theme.colors.error
       : theme.colors.textSecondary;
-
-  const playVideo = () => {
-    videoRef.current?.presentFullscreenPlayer();
-    setVideoPaused(false);
-  };
 
   const renderAttachment = () => {
     if (status === messageStatus.SENT) {
@@ -44,23 +36,7 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
       } else if (attachment?.video_url) {
         const url = getMessageAttachmentUrl(attachment?.video_url);
 
-        return (
-          <View style={styles.videoContainer}>
-            <Video
-              ref={videoRef}
-              style={styles.video}
-              paused={videoPaused}
-              source={{uri: url}}
-              onFullscreenPlayerDidDismiss={() => setVideoPaused(true)}
-            />
-            <Icon
-              style={styles.iconPlay}
-              size={36}
-              icon="PlayVideo"
-              onPress={playVideo}
-            />
-          </View>
-        );
+        return <Video source={{uri: url}} />;
       }
     }
 
@@ -111,22 +87,9 @@ const createStyles = (theme: ITheme) => {
       paddingVertical: spacing.padding.base,
     },
     image: {
-      width: scaleSize(307),
-      height: scaleSize(225.5),
+      width: Platform.OS === 'web' ? 307 : scaleSize(307),
+      height: Platform.OS === 'web' ? 225.5 : scaleSize(225.5),
       backgroundColor: colors.placeholder,
-    },
-    videoContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    video: {
-      width: scaleSize(307),
-      height: scaleSize(225.5),
-      backgroundColor: colors.placeholder,
-    },
-    iconPlay: {
-      position: 'absolute',
-      zIndex: 1,
     },
     defaultFileContainer: {
       flexDirection: 'row',
