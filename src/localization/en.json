@@ -290,7 +290,14 @@
       "my_photo": "You sent a photo",
       "other_photo": "{0} sent a photo"
     },
-    "label_confirm_send_file": "Send this file?"
+    "label_confirm_send_file": "Send this file?",
+    "label_confirm_send_image": "Send this photo?",
+    "label_confirm_send_video": "Send this video?",
+    "error":{
+      "file":{
+        "over_file_size":"Your file must be less than 10MB"
+      }
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
