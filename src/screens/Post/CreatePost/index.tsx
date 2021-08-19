@@ -261,16 +261,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onPressBack={onPressBack}
           onPressButton={onPressPost}
         />
-        {!!important?.active && (
-          <FlashMessage
-            textProps={{variant: 'h6'}}
-            leftIcon={'InfoCircle'}
-            type={'important'}>
-            {t('common:text_important')}
-          </FlashMessage>
+        {!isEditPost && (
+          <View>
+            {!!important?.active && (
+              <FlashMessage
+                textProps={{variant: 'h6'}}
+                leftIcon={'InfoCircle'}
+                type={'important'}>
+                {t('common:text_important')}
+              </FlashMessage>
+            )}
+            <CreatePostChosenAudiences />
+            <Divider />
+          </View>
         )}
-        <CreatePostChosenAudiences />
-        <Divider />
         <MentionInput
           data={mentionResult}
           style={styles.flex1}
@@ -284,12 +288,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           value={content}
           ComponentInput={PostInput}
         />
-        <PostToolbar
-          isOpenModal={isOpenModal}
-          onOpenModal={onOpenPostToolbarModal}
-          onCloseModal={onClosePostToolbarModal}
-          modalizeRef={toolbarModalizeRef}
-        />
+        {!isEditPost && (
+          <PostToolbar
+            isOpenModal={isOpenModal}
+            onOpenModal={onOpenPostToolbarModal}
+            onCloseModal={onClosePostToolbarModal}
+            modalizeRef={toolbarModalizeRef}
+          />
+        )}
       </ScreenWrapper>
     </View>
   );
