@@ -90,6 +90,14 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
             onPress={onPressEdit}
           />
         )}
+        {!isActor && (
+          <PrimaryItem
+            style={styles.item}
+            leftIcon={'CommentSlash'}
+            leftIconProps={{icon: 'CommentSlash', size: 24}}
+            title={'Remove Mentioned'}
+          />
+        )}
         <PrimaryItem
           style={styles.item}
           leftIcon={'Redo'}
@@ -103,6 +111,14 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
             leftIconProps={{icon: 'TrashAlt', size: 24}}
             title={t('post:label_menu_delete')}
             onPress={onPressDelete}
+          />
+        )}
+        {!isActor && (
+          <PrimaryItem
+            style={styles.item}
+            leftIcon={'InfoCircle'}
+            leftIconProps={{icon: 'InfoCircle', size: 24}}
+            title={'Report to group Admin'}
           />
         )}
       </View>
