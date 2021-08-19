@@ -7,6 +7,8 @@ interface DatePickerComponentProps {
   onConfirm: (date: Date) => void;
   onCancel: () => void;
   mode: 'date' | 'time';
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 export default DatePickerComponentProps;
