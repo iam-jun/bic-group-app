@@ -1,15 +1,19 @@
+import messaging from '@react-native-firebase/messaging';
 import Amplify from 'aws-amplify';
 import React, {useEffect} from 'react';
 import {Linking} from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import messaging from '@react-native-firebase/messaging';
+import i18Next from '~/localization';
 
 import Root from '~/Root';
 import rootSaga from '~/store/sagas';
 import awsconfig from './aws-exports';
 import Store from './src/store';
+
+i18Next.language;
+i18Next.options.resources;
 
 async function urlOpener(url: string, redirectUrl: string) {
   await InAppBrowser.isAvailable();

@@ -173,6 +173,7 @@ const icons = {
   ChatBlock: 'CommentBlock',
   ChatPermission: 'KeyholeSquareFull',
   Save: 'Save',
+  File: 'File',
 };
 
 export default icons;

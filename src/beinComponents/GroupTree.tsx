@@ -100,19 +100,26 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   /**
    * Logic:
    *  - If child uncheck => auto uncheck parent and above
-   *  - If parent check => DO NOT check children
    */
-  const onCheckedGroupParent = (
-    newTree: TreeData,
-    group: IParsedGroup,
-    newChecked: boolean,
-  ) => {
+  const onCheckedGroupParent = (newTree: TreeData, group: IParsedGroup) => {
     const uiUd = group.parentUiId;
     if (!newTree[uiUd]) {
       return;
     }
-    newTree[uiUd].isChecked = newChecked;
-    onCheckedGroupParent(newTree, newTree[uiUd], newChecked);
+    newTree[uiUd].isChecked = false;
+    onCheckedGroupParent(newTree, newTree[uiUd]);
+  };
+
+  /**
+   * Logic:
+   *  - If group checked => auto check inner group
+   */
+  const onCheckedGroupInner = (newTree: TreeData, group: IParsedGroup) => {
+    group?.childrenUiIds?.map?.(innerUiId => {
+      newTree[innerUiId] = treeData[innerUiId];
+      newTree[innerUiId].isChecked = true;
+      onCheckedGroupInner(newTree, treeData[innerUiId]);
+    });
   };
 
   const onCheckedGroup = (group: GroupItemProps, newChecked: boolean) => {
@@ -120,7 +127,9 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     const uiId = group.uiId;
     newTreeData[uiId].isChecked = newChecked;
     if (!newChecked) {
-      onCheckedGroupParent(newTreeData, group, newChecked);
+      onCheckedGroupParent(newTreeData, group);
+    } else {
+      onCheckedGroupInner(newTreeData, group);
     }
     if (onChangeCheckedGroups) {
       const callbackData: OnChangeCheckedGroupsData = {};

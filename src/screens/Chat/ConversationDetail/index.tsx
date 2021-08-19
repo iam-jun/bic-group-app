@@ -24,6 +24,7 @@ import {IconType} from '~/resources/icons';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import * as modalActions from '~/store/modal/actions';
+import menuActions from '~/screens/Menu/redux/actions';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -53,7 +54,15 @@ const Conversation = (): React.ReactElement => {
   };
 
   const goProfile = () => {
-    rootNavigation.navigate('menus', {screen: menuStack.userProfile});
+    if (conversation.type === roomTypes.DIRECT) {
+      dispatch(
+        menuActions.selectedProfile({
+          id: conversation.directUser._id,
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(chatStack.userProfile);
+    }
   };
 
   const saveChatName = (text: string) => {

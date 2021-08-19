@@ -8,16 +8,15 @@ import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import AppInfo from '~/screens/AppInfo';
+import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import MainTabs from './MainTabs';
-import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 
 const Stack = createStackNavigator();
 
@@ -60,7 +59,6 @@ const MainStack = (): React.ReactElement => {
           </View>
         )}
       </View>
-      <AlertModal />
       <PostAudiencesBottomSheet />
     </View>
   );

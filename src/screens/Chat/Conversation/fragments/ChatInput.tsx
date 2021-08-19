@@ -9,8 +9,10 @@ import {
 import {useTheme} from 'react-native-paper';
 import {IObject} from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
-import {spacing} from '~/theme';
-import {sizes} from '~/theme/dimension';
+import {letterSpacing, sizes} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {fontFamilies} from '~/theme/fonts';
 
 const ChatInput = (
   props: InputToolbarProps & {
@@ -20,8 +22,8 @@ const ChatInput = (
     openFilePicker: () => void;
   },
 ) => {
-  const theme: IObject<any> = useTheme();
-  const {colors} = theme;
+  const theme = useTheme() as ITheme;
+  const {colors, spacing} = theme;
   const styles = createStyles(theme);
   const [actionsVisible, setActionVisible] = useState(true);
 
@@ -29,15 +31,17 @@ const ChatInput = (
     actionsVisible ? (
       <View style={styles.actions}>
         <Icon
-          isButton
           size={16}
+          iconStyle={styles.icon}
+          tintColor={colors.textReversed}
           icon="iconAddImage"
           onPress={props.openImagePicker}
         />
+        <ViewSpacing width={spacing.margin.small} />
         <Icon
-          style={styles.icon}
-          isButton
           size={16}
+          iconStyle={styles.icon}
+          tintColor={colors.textReversed}
           icon="attachment"
           onPress={props.openFilePicker}
         />
@@ -45,8 +49,7 @@ const ChatInput = (
     ) : (
       <View style={styles.actions}>
         <Icon
-          style={styles.icon}
-          size={16}
+          size={22}
           icon="iconBack"
           onPress={() => setActionVisible(true)}
         />
@@ -69,6 +72,7 @@ const ChatInput = (
             }}
             textInputProps={{
               ...composerProps.textInputProps,
+              placeholder: 'Aa',
               // for enabling the Return key to send a message only on web
               blurOnSubmit: Platform.OS === 'web',
               onSubmitEditing:
@@ -86,7 +90,7 @@ const ChatInput = (
       renderSend={props => {
         return (
           <Send {...props} containerStyle={styles.iconSend}>
-            <Icon icon="iconSend" size={20} tintColor={colors.accent} />
+            <Icon icon="iconSend" size={22} tintColor={colors.accent} />
           </Send>
         );
       }}
@@ -95,35 +99,43 @@ const ChatInput = (
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     actions: {
       flexDirection: 'row',
       alignSelf: 'center',
     },
     icon: {
-      marginStart: spacing.margin.base,
+      backgroundColor: colors.primary,
+      borderRadius: spacing.borderRadius.small,
+      padding: spacing.padding.tiny,
     },
     inputToolbar: {
       paddingHorizontal: spacing.padding.base,
-      backgroundColor: colors.bgColor,
-      borderTopColor: colors.divider,
+      paddingVertical: spacing.padding.small,
+      borderTopColor: 'transparent',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     composerWrapper: {
       flex: 1,
       flexDirection: 'row',
-      borderRadius: spacing.borderRadius.base,
+      marginHorizontal: spacing.margin.small,
+      paddingVertical: 2,
+      backgroundColor: colors.placeholder,
+      borderRadius: spacing.borderRadius.large,
     },
     composer: {
-      fontSize: sizes.base,
-      color: colors.text,
+      flexWrap: 'wrap',
+      fontFamily: fontFamilies.Segoe,
+      fontSize: sizes.body,
+      lineHeight: 16,
+      letterSpacing: letterSpacing.body,
+      color: colors.textPrimary,
     },
     iconSend: {
-      height: 34,
       alignItems: 'center',
       justifyContent: 'center',
-      marginStart: spacing.margin.base,
-      marginBottom: spacing.margin.base,
     },
   });
 };
