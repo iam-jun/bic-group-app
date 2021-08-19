@@ -99,20 +99,16 @@ const PostView: FC<PostViewProps> = ({
    * - Not called mark as read
    */
   const checkImportant = () => {
-    const {active = false, expiresTime} = important || {};
-    let notExpired = false;
+    const {active = false} = important || {};
     let notMarkAsRead = true;
-
-    if (expiresTime) {
-      const now = new Date();
-      notExpired = now.getTime() < new Date(expiresTime).getTime();
-    }
-
+    // if (expiresTime) {
+    //   const now = new Date();
+    //   notExpired = now.getTime() < new Date(expiresTime).getTime();
+    // }
     if (own_reactions?.mark_as_read?.length > 0) {
       notMarkAsRead = false;
     }
-
-    setIsImportant(active && notExpired && notMarkAsRead);
+    setIsImportant(active && notMarkAsRead);
   };
 
   useEffect(() => {
