@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -9,6 +9,12 @@ import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
 import useMenu from '~/hooks/menu';
+import images from '~/resources/images';
+import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import {formatDate} from '~/utils/formatData';
+import {titleCase} from '~/utils/common';
+import speakingLanguages from '~/constants/speakingLanguages';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -16,11 +22,6 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
-import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import {formatDate} from '~/utils/formatData';
-import {titleCase} from '~/utils/common';
 
 const UserProfile = () => {
   const theme = useTheme() as ITheme;
@@ -38,6 +39,12 @@ const UserProfile = () => {
     language,
     relationship_status,
   } = myProfile;
+
+  const userLanguageList = language.map(
+    // @ts-ignore
+    (code: string) => speakingLanguages[code].name,
+  );
+  const userLanguages = userLanguageList.join(', ');
 
   const popupMessage = () =>
     dispatch(
@@ -128,7 +135,7 @@ const UserProfile = () => {
           />
           <SettingItem
             title={'settings:title_speaking_languages'}
-            subtitle={language}
+            subtitle={userLanguages}
             leftIcon={'CommentsAlt'}
             rightIcon={'Lock'}
           />
@@ -189,12 +196,6 @@ const themeStyles = (theme: ITheme) => {
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,
-    },
-    leftIcon: {
-      marginRight: theme.spacing.margin.extraLarge,
-    },
-    rightEditIcon: {
-      marginLeft: theme.spacing.margin.extraLarge,
     },
     imageButton: {
       alignItems: 'center',

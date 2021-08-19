@@ -76,7 +76,7 @@ function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
       menuActions.setMyProfile({...result, language: result.language || []}),
     );
   } catch (error) {
-    console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
+    console.log('\x1b[33m', 'editMyProfile : error', error, '\x1b[0m');
   }
 }
 

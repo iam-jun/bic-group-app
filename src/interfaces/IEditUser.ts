@@ -11,8 +11,9 @@ export interface IGenderItem {
 }
 
 export interface ILanguageItem {
-  type: string;
-  title: string;
+  code: string;
+  fullName: string;
+  name: string;
 }
 
 export interface IRelationshipItem {

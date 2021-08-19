@@ -6,17 +6,18 @@ import i18next from 'i18next';
 import {ITheme} from '~/theme/interfaces';
 import useMenu from '~/hooks/menu';
 import speakingLanguages from '~/constants/speakingLanguages';
+import SettingItem from './SettingItem';
+import {ILanguageItem} from '~/interfaces/IEditUser';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import SettingItem from './SettingItem';
 
 interface LanguageOptionMenuProps {
   title: string;
-  onChangeLanguages: (languages: any[]) => void;
+  onChangeLanguages: (languages: ILanguageItem[]) => void;
 }
 
 const LanguageOptionMenu = ({
@@ -28,13 +29,30 @@ const LanguageOptionMenu = ({
   const {myProfile} = useMenu();
   const {language: userLanguages} = myProfile;
 
-  const [languages, setLanguages] = useState(speakingLanguages);
-  const [selectedLanguages, setSelectedLanguages] = useState<any[]>([]);
+  const speakingLanguagesList = Object.keys(speakingLanguages).map(
+    (code: string) => ({
+      code,
+      // @ts-ignore
+      ...speakingLanguages[code],
+    }),
+  );
+  const [languages, setLanguages] = useState(speakingLanguagesList);
+  const [selectedLanguages, setSelectedLanguages] = useState<ILanguageItem[]>(
+    [],
+  );
 
   const languageSheetRef = useRef<any>();
 
   useEffect(() => {
-    setSelectedLanguages(userLanguages);
+    setSelectedLanguages(
+      speakingLanguagesList.filter(lang => userLanguages.includes(lang.code)),
+    );
+    setLanguages(
+      languages.map(lang => ({
+        ...lang,
+        selected: userLanguages.includes(lang.code),
+      })),
+    );
   }, [userLanguages]);
 
   useEffect(() => {
@@ -45,11 +63,11 @@ const LanguageOptionMenu = ({
     setSelectedLanguages(
       !language.selected
         ? [...selectedLanguages, {...language, selected: true}]
-        : selectedLanguages.filter(item => item.type !== language.type),
+        : selectedLanguages.filter(item => item.code !== language.code),
     );
     setLanguages(
       languages.map((item: any) =>
-        item.type === language.type
+        item.code === language.code
           ? {
               ...item,
               selected: !item.selected,
@@ -62,7 +80,7 @@ const LanguageOptionMenu = ({
   const renderItem = ({item}: {item: any}) => {
     return (
       <PrimaryItem
-        title={i18next.t(item.title)}
+        title={i18next.t(item.fullName)}
         height={36}
         isChecked={item.selected}
         onPressCheckbox={() => onSelectItem(item)}
@@ -75,7 +93,7 @@ const LanguageOptionMenu = ({
       <SettingItem
         title={'settings:title_language'}
         subtitle={
-          selectedLanguages.map(language => language.title).join(', ') ||
+          selectedLanguages.map(language => language.name).join(', ') ||
           i18next.t('settings:text_not_set')
         }
         leftIcon={'CommentsAlt'}

@@ -45,7 +45,7 @@ const EditBasicInfo = () => {
   const [genderState, setGenderState] = useState(gender);
   const [selectingDate, setSelectingDate] = useState<boolean>(false);
   const [birthdayState, setBirthdayState] = useState<string>(birthday);
-  const [languageState, setLanguageState] = useState<any[]>(language);
+  const [languageState, setLanguageState] = useState<string[]>(language);
   const [relationshipState, setRelationshipState] =
     useState<RELATIONSHIP_TYPE>(relationship_status);
 
@@ -56,7 +56,7 @@ const EditBasicInfo = () => {
         fullname: nameState,
         gender: genderState,
         birthday: birthdayState,
-        // language: languageState, // TODO: will remove comment when API is ready for editing language
+        language: languageState,
         relationship_status: relationshipState,
       }),
     );
@@ -81,8 +81,7 @@ const EditBasicInfo = () => {
   };
 
   const _onChangeLanguages = (languages: ILanguageItem[]) => {
-    const selectedLanguages = languages.map(item => item.type);
-    console.log('selected Languages:', selectedLanguages);
+    const selectedLanguages = languages.map(lang => lang.code);
     setLanguageState(selectedLanguages);
   };
 

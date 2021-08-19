@@ -1,54 +1,54 @@
-export default [
-  {
-    type: 'english',
-    title: 'English',
+export default {
+  vi: {
+    fullName: 'Vietnamese - Tiếng Việt',
+    name: 'Vietnamese',
   },
-  {
-    type: 'vietnamese',
-    title: 'Vietnamese - Tiếng Việt',
+  en: {
+    fullName: 'English',
+    name: 'English',
   },
-  {
-    type: 'chinese',
-    title: 'Chinese (Traditional) - 中国人',
+  zh: {
+    fullName: 'Chinese (Traditional) - 中国人',
+    name: 'Chinese (Traditional)',
   },
-  {
-    type: 'spanish',
-    title: 'Spanish - Español',
+  es: {
+    fullName: 'Spanish - Español',
+    name: 'Spanish',
   },
-  {
-    type: 'hindi',
-    title: 'Hindi - हिन्दी',
+  hi: {
+    fullName: 'Hindi - हिन्दी',
+    name: 'Hindi',
   },
-  {
-    type: 'arabic',
-    title: 'Arabic',
+  ar: {
+    fullName: 'Arabic',
+    name: 'Arabic',
   },
-  {
-    type: 'brasil',
-    title: 'Brasil - Português',
+  'pt-BR': {
+    fullName: 'Brasil - Português',
+    name: 'Brasil',
   },
-  {
-    type: 'bengali',
-    title: 'Bengali - বাংলা',
+  bn: {
+    fullName: 'Bengali - বাংলা',
+    name: 'Bengali',
   },
-  {
-    type: 'russian',
-    title: 'Russian - Русский',
+  ru: {
+    fullName: 'Russian - Русский',
+    name: 'Russian',
   },
-  {
-    type: 'japanese',
-    title: 'Japanese - 日本語',
+  ja: {
+    fullName: 'Japanese - 日本語',
+    name: 'Japanese',
   },
-  {
-    type: 'deutsch',
-    title: 'Deutsch',
+  de: {
+    fullName: 'German - Deutsch',
+    name: 'German',
   },
-  {
-    type: 'urdu',
-    title: 'Urdu',
+  ur: {
+    fullName: 'Urdu',
+    name: 'Urdu',
   },
-  {
-    type: 'français',
-    title: 'Français',
+  fr: {
+    fullName: 'French - Français',
+    name: 'French',
   },
-];
+};
