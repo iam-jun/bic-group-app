@@ -250,7 +250,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <Header
           titleTextProps={{useI18n: true}}
           title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
-          buttonText={isEditPost ? 'common:btn_edit' : 'post:post_button'}
+          buttonText={isEditPost ? 'common:btn_save' : 'post:post_button'}
           buttonProps={{
             loading: loading,
             disabled: disableButtonPost,
