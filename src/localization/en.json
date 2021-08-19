@@ -297,7 +297,8 @@
       "file":{
         "over_file_size":"Your file must be less than 10MB"
       }
-    }
+    },
+    "text_search_emtpy": "No people here to chat"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
