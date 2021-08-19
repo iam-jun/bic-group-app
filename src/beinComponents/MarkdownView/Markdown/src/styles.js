@@ -171,8 +171,6 @@ export const styles = {
   text: {},
   textgroup: {},
   paragraph: {
-    marginTop: 10,
-    marginBottom: 10,
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'flex-start',
