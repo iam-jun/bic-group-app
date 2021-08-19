@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "husky install",
+    "postinstall": "husky install && brew list fastlane || brew install fastlane",
     "precommit": "npm run prettier-format",
     "lint": "npx eslint .",
     "prettier-format": "npx prettier --config .prettierrc.json \"**/*.{js,jsx,ts,tsx}\" --write",
