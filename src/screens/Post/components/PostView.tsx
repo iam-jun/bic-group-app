@@ -39,6 +39,7 @@ export interface PostViewProps {
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
   onPressHeader?: (postId: string) => void;
+  hideMarkAsRead?: boolean;
 }
 
 const PostView: FC<PostViewProps> = ({
@@ -46,6 +47,7 @@ const PostView: FC<PostViewProps> = ({
   isPostDetail = false,
   onPressComment,
   onPressHeader,
+  hideMarkAsRead = true,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
@@ -97,20 +99,16 @@ const PostView: FC<PostViewProps> = ({
    * - Not called mark as read
    */
   const checkImportant = () => {
-    const {active = false, expiresTime} = important || {};
-    let notExpired = false;
+    const {active = false} = important || {};
     let notMarkAsRead = true;
-
-    if (expiresTime) {
-      const now = new Date();
-      notExpired = now.getTime() < new Date(expiresTime).getTime();
-    }
-
+    // if (expiresTime) {
+    //   const now = new Date();
+    //   notExpired = now.getTime() < new Date(expiresTime).getTime();
+    // }
     if (own_reactions?.mark_as_read?.length > 0) {
       notMarkAsRead = false;
     }
-
-    setIsImportant(active && notExpired && notMarkAsRead);
+    setIsImportant(active && notMarkAsRead);
   };
 
   useEffect(() => {
@@ -341,7 +339,7 @@ const PostView: FC<PostViewProps> = ({
       {renderImportant()}
       {renderHeader()}
       {renderContent()}
-      {isImportant && (
+      {!hideMarkAsRead && isImportant && (
         <View>
           <Button.Secondary
             useI18n

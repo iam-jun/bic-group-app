@@ -38,15 +38,16 @@ const AlertModal: React.FC<AlertModalProps> = ({
   } = alert;
 
   const dispatch = useDispatch();
+  const [text, setText] = useState(inputProps?.value || '');
+
+  useEffect(() => {
+    setText(inputProps?.value || '');
+  }, [inputProps]);
 
   const _onDismiss = () => {
     onDissmiss && onDissmiss();
     dispatch(actions.hideAlert());
   };
-  const [text, setText] = useState(inputProps?.value || '');
-  useEffect(() => {
-    setText(inputProps?.value || '');
-  }, [inputProps]);
 
   return (
     <Modal
@@ -66,9 +67,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
         {input && (
           <TextInput
             {...inputProps}
-            value={text}
             onChangeText={(value: string) => setText(value)}
-            onClearText={() => inputProps.onClearText && setText('')}
           />
         )}
         <View style={styles.displayBtn}>
@@ -85,6 +84,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
           <Button.Secondary
             textColor={theme.colors.background}
             color={theme.colors.primary7}
+            disabled={input && !text}
             onPress={() => {
               dispatch(actions.hideAlert());
               onConfirm(text);

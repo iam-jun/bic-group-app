@@ -5,11 +5,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 
 const DatePickerComponent: FC<DatePickerComponentProps> = ({
-  isVisible = false,
   date,
   onConfirm,
   onCancel,
   mode,
+  minDate,
+  maxDate,
   ...props
 }: DatePickerComponentProps) => {
   const onChange = (data?: any) => {
@@ -26,6 +27,8 @@ const DatePickerComponent: FC<DatePickerComponentProps> = ({
       onChange={onChange}
       onClickOutside={onClickOutside}
       showTimeSelect={mode === 'time'}
+      minDate={minDate}
+      maxDate={maxDate}
       inline
       {...props}
     />

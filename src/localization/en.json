@@ -32,6 +32,7 @@
     "text_chosen": "Chosen",
     "text_description": "Description",
     "text_search": "Search",
+    "text_search_results": "Search results",
     "text_read_more": "Read more",
     "text_show_less": "Show less",
     "text_add": "Add",
@@ -297,7 +298,8 @@
       "file":{
         "over_file_size":"Your file must be less than 10MB"
       }
-    }
+    },
+    "text_search_emtpy": "No people here to chat"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
