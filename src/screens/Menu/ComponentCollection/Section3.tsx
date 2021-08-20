@@ -163,18 +163,18 @@ const Section3 = () => {
           totalMember={123}
         />
         <Divider style={{marginVertical: spacing?.margin.base}} />
-        <Text.H5>{`<Avatar.Group listSource={[]} />`}</Text.H5>
+        <Text.H5>{`<Avatar.Group source={[]} />`}</Text.H5>
         <View style={{flexDirection: 'row'}}>
           <Avatar.Group
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
             ]}
             totalMember={123}
           />
           <Avatar.Group
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
             ]}
@@ -182,7 +182,7 @@ const Section3 = () => {
           />
           <Avatar.Group
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
@@ -191,7 +191,7 @@ const Section3 = () => {
           />
           <Avatar.Group
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
@@ -201,7 +201,7 @@ const Section3 = () => {
           />
           <Avatar.Group
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
@@ -215,7 +215,7 @@ const Section3 = () => {
           <Avatar.Group
             variant={'small'}
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
@@ -226,7 +226,7 @@ const Section3 = () => {
           <Avatar.Group
             variant={'medium'}
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
@@ -238,7 +238,7 @@ const Section3 = () => {
           <Avatar.Group
             variant={'large'}
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
@@ -250,7 +250,7 @@ const Section3 = () => {
           <Avatar.Group
             variant={'ultraLarge'}
             style={{margin: spacing?.margin.small}}
-            listSource={[
+            source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg',
               'https://cdn.dribbble.com/users/183984/screenshots/2565088/pokemon_2.jpg',
