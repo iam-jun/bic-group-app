@@ -15,7 +15,7 @@ interface Props {
 }
 
 const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = CreateStyle();
 

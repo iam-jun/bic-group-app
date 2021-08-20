@@ -17,7 +17,7 @@ export const getConversations = createSelector(chatState, data => {
           ...item,
           unreadCount: sub?.unread
             ? sub.unread > 9
-              ? '9'
+              ? '9+'
               : `${sub.unread}`
             : null,
         };
@@ -27,4 +27,15 @@ export const getConversations = createSelector(chatState, data => {
         return new Date(b._updatedAt) - new Date(a._updatedAt);
       }),
   };
+});
+
+export const getUnreadConversationCount = createSelector(chatState, data => {
+  let count = 0;
+  (data?.groups?.data || []).forEach((item: IConversation) => {
+    const sub: any = (data?.subscriptions || []).find(
+      (sub: any) => sub.rid === item._id,
+    );
+    if (sub.unread > 0) count++;
+  });
+  return count;
 });
