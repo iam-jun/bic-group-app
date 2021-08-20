@@ -113,6 +113,7 @@
 		<string>SVN-PoppinsMediumItalic.otf</string>
 		<string>SVN-PoppinsSemiBold.otf</string>
 		<string>SVN-PoppinsSemiBoldItalic.otf</string>
+        <string>JetBrainsMono-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

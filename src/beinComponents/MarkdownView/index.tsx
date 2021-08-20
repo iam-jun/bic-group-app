@@ -135,20 +135,26 @@ const createStyle = (theme: ITheme) => {
     body: {...textStyles.body},
 
     // Headings
-    heading1: {...textStyles.h1},
-    heading2: {...textStyles.h2},
-    heading3: {...textStyles.h3},
-    heading4: {...textStyles.h4},
-    heading5: {...textStyles.h5},
+    heading1: {...textStyles.h3},
+    heading2: {...textStyles.h4},
+    heading3: {...textStyles.h5},
+    heading4: {...textStyles.h6},
+    heading5: {...textStyles.h6},
     heading6: {...textStyles.h6},
 
     // Horizontal Rule
     hr: {},
 
     // Emphasis
-    strong: {},
-    em: {},
-    s: {},
+    strong: {
+      ...textStyles.bodyM,
+    },
+    em: {
+      ...textStyles.bodyI,
+    },
+    s: {
+      ...textStyles.body,
+    },
 
     // Blockquotes
     blockquote: {},
@@ -164,9 +170,30 @@ const createStyle = (theme: ITheme) => {
     ordered_list_content: {},
 
     // Code
-    code_inline: {},
-    code_block: {},
-    fence: {},
+    code_inline: {
+      ...textStyles.code,
+      backgroundColor: colors.borderDivider,
+    },
+    code_block: {
+      ...textStyles.code,
+      marginTop: spacing.margin.tiny,
+      marginBottom: spacing.margin.tiny,
+      borderColor: colors.borderDisable,
+      backgroundColor: colors.borderDivider,
+      padding: spacing.padding.base,
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+    },
+    fence: {
+      ...textStyles.code,
+      marginTop: spacing.margin.tiny,
+      marginBottom: spacing.margin.tiny,
+      borderColor: colors.borderDisable,
+      backgroundColor: colors.borderDivider,
+      padding: spacing.padding.base,
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+    },
 
     // Tables
     table: {},
@@ -186,7 +213,10 @@ const createStyle = (theme: ITheme) => {
     // Text Output
     text: {},
     textgroup: {},
-    paragraph: {},
+    paragraph: {
+      marginTop: 2,
+      marginBottom: 2,
+    },
     hardbreak: {},
     softbreak: {},
   });
