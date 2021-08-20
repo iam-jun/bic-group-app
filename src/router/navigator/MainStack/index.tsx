@@ -53,7 +53,11 @@ const MainStack = (): React.ReactElement => {
           <View style={styles.rightCol}>
             <NavigationContainer independent ref={rightNavigationRef}>
               <Stack.Navigator>
-                <Stack.Screen name="app-info" component={AppInfo} />
+                <Stack.Screen
+                  name="app-info"
+                  component={AppInfo}
+                  options={{headerShown: false}}
+                />
               </Stack.Navigator>
             </NavigationContainer>
           </View>
