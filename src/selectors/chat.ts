@@ -37,5 +37,5 @@ export const getUnreadConversationCount = createSelector(chatState, data => {
     );
     if (sub.unread > 0) count++;
   });
-  return count;
+  return count > 99 ? '99+' : count;
 });

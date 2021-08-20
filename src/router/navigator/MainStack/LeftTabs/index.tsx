@@ -7,6 +7,7 @@ import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
+import useTabBadge from '~/hooks/tabBadge';
 
 const Tab = createSideTabNavigator();
 
@@ -20,6 +21,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   const styles = CreateStyle();
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
+  const tabBadge = useTabBadge();
 
   return (
     // @ts-ignore
@@ -35,6 +37,10 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             key={'tabs' + name}
             name={name}
             component={component}
+            tabBarBadge={tabBadge[name]}
+            tabBarBadgeStyle={{
+              backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
+            }}
             options={{
               tabBarIcon: ({focused, color}) => {
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
