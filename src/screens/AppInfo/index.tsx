@@ -4,7 +4,7 @@ import {Image, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import {rightPanelsMenu} from '~/constants/rightPanels';
+import {rightColMenu} from '~/constants/rightCol';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -60,14 +60,14 @@ const AppLoading = () => {
       <Image
         resizeMode="contain"
         style={styles.img}
-        source={images.img_right_panel}
+        source={images.img_right_col}
       />
       <View style={styles.mainContainer}>
-        {rightPanelsMenu.map((item, index) => {
+        {rightColMenu.map((item, index) => {
           if (index % 2 !== 0) return null;
 
           // only render even item, and odd item on the same row
-          return renderRowItems(item, rightPanelsMenu[index + 1]);
+          return renderRowItems(item, rightColMenu[index + 1]);
         })}
       </View>
       <View style={styles.footerContainer}>
@@ -79,7 +79,7 @@ const AppLoading = () => {
           />
         </View>
         <Text.BodyM style={styles.footerText}>
-          {t('right_panel:bein_2021')}
+          {t('right_col:bein_2021')}
         </Text.BodyM>
       </View>
     </ScreenWrapper>
