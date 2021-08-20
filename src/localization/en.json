@@ -320,5 +320,14 @@
   "profile": {
     "title_edit_profile": "Edit Profile",
     "title_direct_message": "Direct Message"
+  },
+  "right_panel": {
+    "about_bein": "About Bein",
+    "help_center": "Help Center",
+    "privacy_terms": "Privacy & terms",
+    "business_services": "Business Services",
+    "cryptocurrency": "Cryptocurrency",
+    "more": "More",
+    "bein_2021": "Bein @ 2021"
   }
 }
