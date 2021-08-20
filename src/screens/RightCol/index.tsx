@@ -12,7 +12,7 @@ import {useBaseHook} from '~/hooks';
 import * as modalActions from '~/store/modal/actions';
 import {IRightMenu} from '~/interfaces/common';
 
-const AppLoading = () => {
+const RightCol = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -56,7 +56,7 @@ const AppLoading = () => {
   };
 
   return (
-    <ScreenWrapper testID="AppLoading" style={styles.container} isFullView>
+    <ScreenWrapper testID="RightCol" style={styles.container} isFullView>
       <Image
         resizeMode="contain"
         style={styles.img}
@@ -155,4 +155,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default AppLoading;
+export default RightCol;

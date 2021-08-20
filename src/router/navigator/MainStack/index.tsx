@@ -9,7 +9,7 @@ import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {RootStackParamList} from '~/interfaces/IRouter';
-import AppInfo from '~/screens/AppInfo';
+import RightCol from '~/screens/RightCol';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
 import {deviceDimensions} from '~/theme/dimension';
@@ -54,8 +54,8 @@ const MainStack = (): React.ReactElement => {
             <NavigationContainer independent ref={rightNavigationRef}>
               <Stack.Navigator>
                 <Stack.Screen
-                  name="app-info"
-                  component={AppInfo}
+                  name="right-column"
+                  component={RightCol}
                   options={{headerShown: false}}
                 />
               </Stack.Navigator>
