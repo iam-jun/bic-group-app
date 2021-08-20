@@ -571,7 +571,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group;
 				PRODUCT_NAME = bein_group;
-				PROVISIONING_PROFILE_SPECIFIER = "Bein-Development";
+				PROVISIONING_PROFILE_SPECIFIER = BeinDevelopment;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -603,7 +603,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group;
 				PRODUCT_NAME = bein_group;
-				PROVISIONING_PROFILE_SPECIFIER = "Bein-Development";
+				PROVISIONING_PROFILE_SPECIFIER = BeinDevelopment;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
