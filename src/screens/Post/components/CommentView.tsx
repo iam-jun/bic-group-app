@@ -85,7 +85,11 @@ const CommentView: React.FC<CommentViewProps> = ({
                 {postTime}
               </Text.Subtitle>
             </View>
-            <CollapsibleText useMarkdown content={content || ''} />
+            <CollapsibleText
+              useMarkdown
+              limitMarkdownTypes
+              content={content || ''}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <ButtonWrapper

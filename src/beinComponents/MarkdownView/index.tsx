@@ -16,11 +16,16 @@ import Icon from '~/beinComponents/Icon';
 import {audienceRegex} from '~/constants/commonRegex';
 import {IAudience} from '~/interfaces/IPost';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
+import {
+  blacklistDefault,
+  blacklistLimit,
+} from '~/beinComponents/MarkdownView/constant';
 
 export interface MarkdownViewProps {
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
   debugPrintTree?: boolean;
+  limitMarkdownTypes?: boolean;
 
   onLinkPress?: (url: string) => boolean;
   onPressAudience?: (audience: IAudience) => void;
@@ -30,6 +35,7 @@ const MarkdownView: FC<MarkdownViewProps> = ({
   style,
   children,
   debugPrintTree,
+  limitMarkdownTypes,
 
   onLinkPress,
   onPressAudience,
@@ -38,7 +44,7 @@ const MarkdownView: FC<MarkdownViewProps> = ({
   const styles = createStyle(theme);
 
   if (typeof children !== 'string') {
-    console.log(`\x1b[31m🐣️ MarkdownView content is not a string\x1b[0m`);
+    // console.log(`\x1b[31m🐣️ MarkdownView content is not a string\x1b[0m`);
     return null;
   }
 
@@ -47,7 +53,8 @@ const MarkdownView: FC<MarkdownViewProps> = ({
       defs: emojiDefs,
       shortcuts: emojiShortcuts,
     })
-    .use(regexPlugin, 'audience', audienceRegex, '@');
+    .use(regexPlugin, 'audience', audienceRegex, '@')
+    .disable(limitMarkdownTypes ? blacklistLimit : blacklistDefault);
 
   if (debugPrintTree) {
     const html = markdownIt.render(children);
