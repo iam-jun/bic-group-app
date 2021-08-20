@@ -58,11 +58,9 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
         </MarkdownView>
         {!!shortContent && (
           <Text onPress={onToggleShowLess} color={colors.textInfo}>
-            {` ${
-              contentShowAll
-                ? i18next.t('common:text_show_less')
-                : i18next.t('common:text_read_more')
-            }`}
+            {contentShowAll
+              ? i18next.t('common:text_show_less')
+              : i18next.t('common:text_read_more')}
           </Text>
         )}
       </View>
@@ -90,6 +88,7 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
 
   return (
     <TouchableOpacity
+      activeOpacity={0.6}
       disabled={!(onPress || (toggleOnPress && shortContent))}
       onPress={_onPress}>
       {useMarkdown ? renderContentWithMarkdown() : renderContent()}

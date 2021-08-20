@@ -11,18 +11,18 @@ export interface IMarkdownAudience {
   name?: string;
 }
 
-export interface MarkdownTextProps extends RNTextProps {
+export interface ParseTextProps extends RNTextProps {
   children?: React.ReactNode;
   showRawText?: boolean;
   onPressAudience?: (audience: IMarkdownAudience) => void;
 }
 
-const MarkdownText: FC<MarkdownTextProps> = ({
+const ParseText: FC<ParseTextProps> = ({
   children,
   showRawText,
   onPressAudience,
   ...props
-}: MarkdownTextProps) => {
+}: ParseTextProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -128,4 +128,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default MarkdownText;
+export default ParseText;

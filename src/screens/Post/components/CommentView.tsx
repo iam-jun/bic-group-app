@@ -8,7 +8,7 @@ import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {countTime} from '~/utils/formatData';
 import Icon from '~/beinComponents/Icon';
-import i18next from 'i18next';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 
 export interface CommentViewProps {
   commentData: IReaction;
@@ -85,23 +85,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                 {postTime}
               </Text.Subtitle>
             </View>
-            <Text allowMarkdown>{content}</Text>
-            <Text>
-              <Text.BodyS>
-                {contentShowAll ? content : shortDescription}
-              </Text.BodyS>
-              {shortDescription && (
-                <Text.ButtonSmall
-                  onPress={() => setContentShowAll(!contentShowAll)}
-                  color={colors.textInfo}>
-                  {` ${
-                    contentShowAll
-                      ? i18next.t('common:text_show_less')
-                      : i18next.t('common:text_read_more')
-                  }`}
-                </Text.ButtonSmall>
-              )}
-            </Text>
+            <CollapsibleText useMarkdown content={content || ''} />
           </View>
           <View style={styles.buttonContainer}>
             <ButtonWrapper
