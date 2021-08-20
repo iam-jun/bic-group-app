@@ -10,7 +10,7 @@ import {ITheme} from '~/theme/interfaces';
 import NotFoundImg from '../../../assets/images/404_Colored.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
-const NotFoundPage = () => {
+const NotFound = () => {
   const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = createStyle(theme);
@@ -66,4 +66,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default NotFoundPage;
+export default NotFound;
