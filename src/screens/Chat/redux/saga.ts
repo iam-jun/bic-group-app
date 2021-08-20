@@ -5,7 +5,7 @@ import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
-import {IMessage} from '~/interfaces/IChat';
+import {IConversation, IMessage} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
@@ -257,6 +257,7 @@ function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
+  console.log('handleEvent', payload);
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
       [TO-DO] Need to check with BE
@@ -281,9 +282,34 @@ function handleAddMember() {
   navigation.replace(chatStack.conversation);
 }
 
+function* handleNewMessage(data: any) {
+  try {
+    const {chat, auth} = yield select();
+    const message = mapMessage(data);
+    const existed = chat.groups.data.find(
+      (item: IConversation) => item._id === message.room_id,
+    );
+    if (existed) yield put(actions.addNewMessage(message));
+    else {
+      const response: AxiosResponse = yield makeHttpRequest(
+        apiConfig.Chat.groupInfo({
+          roomId: message.room_id,
+        }),
+      );
+      yield put(
+        actions.createConversationSuccess(
+          mapConversation(auth.user, response.data?.group),
+        ),
+      );
+      yield getSubscriptions();
+    }
+  } catch (err) {
+    console.log('handleNewMessage', err);
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
-  const {auth} = yield select();
 
   switch (data.t) {
     case messageEventTypes.ADD_USER:
@@ -295,7 +321,7 @@ function* handleRoomsMessage(payload?: any) {
       break;
     // New message event doesn't have type
     case undefined:
-      yield put(actions.addNewMessage(mapMessage(data)));
+      yield handleNewMessage(data);
       break;
   }
 }

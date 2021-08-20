@@ -51,7 +51,7 @@ const CreateConversation = (): React.ReactElement => {
         customFields: {
           type,
           usernames: members.map((user: IUser) => user.username),
-          members,
+          members: selectedUsers.length === 1 ? members : null,
         },
       }),
     );

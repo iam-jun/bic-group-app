@@ -37,12 +37,12 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
   const {type, usernames, members} = item?.customFields || {};
 
   const membersExcludeMe = (members || []).filter(
-    (member: any) => member.username !== user.username,
+    (member: any) => member?.username !== user?.username,
   );
 
   const name =
     type === roomTypes.DIRECT
-      ? members?.length > 0
+      ? (members || []).length > 0
         ? generateRoomName(
             user,
             membersExcludeMe.map(
