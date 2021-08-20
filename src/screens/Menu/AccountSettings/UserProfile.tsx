@@ -3,6 +3,7 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import i18next from 'i18next';
 
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
@@ -15,6 +16,7 @@ import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import {formatDate} from '~/utils/formatData';
 import {titleCase} from '~/utils/common';
 import speakingLanguages from '~/constants/speakingLanguages';
+import relationshipStatus from '~/constants/relationshipStatus';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -141,7 +143,8 @@ const UserProfile = () => {
           />
           <SettingItem
             title={'settings:title_relationship_status'}
-            subtitle={titleCase(relationship_status)}
+            // @ts-ignore
+            subtitle={i18next.t(relationshipStatus[relationship_status])}
             leftIcon={'Heart'}
             rightIcon={'Lock'}
           />
@@ -201,7 +204,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     divider: {
-      marginVertical: theme.spacing.margin.small,
+      marginVertical: spacing.margin.small,
     },
   });
 };

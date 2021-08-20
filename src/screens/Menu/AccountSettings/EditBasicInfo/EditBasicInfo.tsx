@@ -3,9 +3,10 @@ import {StyleSheet, View, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
+import i18next from 'i18next';
+import {isEqual} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
-import i18next from 'i18next';
 import useMenu from '~/hooks/menu';
 import genders from '~/constants/genders';
 import {titleCase} from '~/utils/common';
@@ -26,7 +27,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import EditName from './EditName';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
-import {isEqual} from 'lodash';
 
 const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
@@ -47,6 +47,16 @@ const EditBasicInfo = () => {
   const [languageState, setLanguageState] = useState<string[]>(language);
   const [relationshipState, setRelationshipState] =
     useState<RELATIONSHIP_TYPE>(relationship_status);
+
+  const dataMapping = (dataObject: any) => {
+    const dataList = Object.keys(dataObject).map(type => ({
+      type,
+      title: dataObject[type],
+    }));
+    return dataList;
+  };
+
+  const relationshipStatusList = dataMapping(relationshipStatus);
 
   const onSave = () => {
     dispatch(
@@ -153,7 +163,8 @@ const EditBasicInfo = () => {
         <SettingItem
           title={'settings:title_relationship_status'}
           subtitle={
-            titleCase(relationshipState) || i18next.t('settings:text_not_set')
+            i18next.t(relationshipStatus[relationshipState]) ||
+            i18next.t('settings:text_not_set')
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}
@@ -169,7 +180,7 @@ const EditBasicInfo = () => {
         onItemPress={onGenderItemPress}
       />
       <OptionMenu
-        data={relationshipStatus}
+        data={relationshipStatusList}
         value={relationshipState}
         title={'settings:title_choose_relationship'}
         menuRef={relationshipSheetRef}
