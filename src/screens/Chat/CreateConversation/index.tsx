@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import {debounce} from 'lodash';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -22,6 +22,7 @@ const CreateConversation = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {user} = useAuth();
   const {selectedUsers, users} = useChat();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     dispatch(actions.resetData('users'));
@@ -51,7 +52,7 @@ const CreateConversation = (): React.ReactElement => {
         customFields: {
           type,
           usernames: members.map((user: IUser) => user.username),
-          members,
+          members: selectedUsers.length === 1 ? members : null,
         },
       }),
     );
@@ -76,6 +77,7 @@ const CreateConversation = (): React.ReactElement => {
   const seachHandler = useCallback(debounce(searchUsers, 1000), []);
 
   const onQueryChanged = (text: string) => {
+    setSearchQuery(text);
     seachHandler(text);
   };
 
@@ -94,7 +96,11 @@ const CreateConversation = (): React.ReactElement => {
       <ViewSpacing height={spacing?.margin.base} />
       <MembersSelection
         selectable
-        title={i18next.t('common:text_all')}
+        title={
+          searchQuery
+            ? i18next.t('common:text_search_results')
+            : i18next.t('common:text_all')
+        }
         loading={users.loading}
         data={users.data}
         searchInputProps={{

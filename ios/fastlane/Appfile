@@ -1,5 +1,5 @@
-app_identifier("com.evol.bein.group") # The bundle identifier of your app
-apple_id("anhthien@tgm.vn") # Your Apple email address
+app_identifier("com.evol.bein.group")
+apple_id("anhthien@tgm.vn")
 
 # itc_team_id("118795591") # App Store Connect Team ID
 team_id("44S5N8GAPS") # Developer Portal Team ID

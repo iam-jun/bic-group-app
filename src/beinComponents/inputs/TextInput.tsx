@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -37,8 +37,9 @@ export interface TextInputProps extends TextInputPaperProps {
   disabled?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   editable?: boolean;
+  value?: string;
   onChangeText?: ((text: string) => void) | undefined;
-  onClearText?: () => void;
+  clearText?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -52,11 +53,14 @@ const TextInput: React.FC<TextInputProps> = ({
   placeholder,
   error,
   disabled,
-  onClearText,
+  value,
+  onChangeText,
+  clearText,
   ...props
 }: TextInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
+  const [text, setText] = useState<string>(value || '');
 
   const customTheme = {
     colors: {
@@ -98,6 +102,15 @@ const TextInput: React.FC<TextInputProps> = ({
     );
   };
 
+  const _onChangeText = (text: string) => {
+    setText(text);
+    onChangeText && onChangeText(text);
+  };
+
+  const _onClearText = () => {
+    _onChangeText('');
+  };
+
   return (
     <View
       style={StyleSheet.flatten([
@@ -116,13 +129,15 @@ const TextInput: React.FC<TextInputProps> = ({
         disabled={disabled}
         placeholderTextColor={colors.textSecondary}
         {...props}
+        value={text}
+        onChangeText={_onChangeText}
       />
-      {onClearText && (
+      {clearText && !!text && (
         <Icon
           style={styles.iconClear}
           icon="iconClose"
           size={14}
-          onPress={() => onClearText()}
+          onPress={_onClearText}
         />
       )}
       {!!helperContent && (
