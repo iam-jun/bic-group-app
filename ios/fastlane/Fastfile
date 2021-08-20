@@ -57,9 +57,9 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
         timeout: 600,
         file: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
     )
-#     rocket_chat(
-#         message: "New build version of iOS can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
-#     )
+    rocket_chat(
+        message: "New build version of iOS can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+    )
   end
 
   desc "Push a new beta build to TestFlight"
