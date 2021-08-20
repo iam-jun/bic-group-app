@@ -1,8 +1,6 @@
-import {DocumentPickerResponse} from 'react-native-document-picker';
 import {IMessage as _GMessage} from 'react-native-gifted-chat';
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
-import {IUser} from './IAuth';
 export interface IReaction {
   type: ReactionType;
   count: number;
@@ -117,6 +115,7 @@ export type IAttachment = {
   message_link?: string;
   author_name?: string;
   title?: string;
+  description?: string;
   image_url?: string;
   audio_url?: string;
   video_url?: string;
@@ -134,8 +133,15 @@ export type IMessage = _GMessage & {
   type?: string;
   localId?: string;
   status?: IMesssageStatus;
-  attachment?: DocumentPickerResponse;
+  attachment?: IFileResponse & IAttachment;
 };
+
+export interface IFileResponse {
+  name?: string;
+  uri: string;
+  size: number;
+  type: string;
+}
 
 export interface IAttachmentMessage {
   _id: string | number;
@@ -143,7 +149,7 @@ export interface IAttachmentMessage {
   _updatedAt: string;
   type?: string;
   status?: string;
-  attachment: DocumentPickerResponse;
+  attachment: IFileResponse;
 }
 
 export type IRoomType = typeof roomTypes[keyof typeof roomTypes];

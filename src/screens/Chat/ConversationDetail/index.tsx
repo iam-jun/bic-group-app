@@ -78,9 +78,7 @@ const Conversation = (): React.ReactElement => {
         input: true,
         inputProps: {
           value: conversation.name,
-          onClearText: () => {
-            return true;
-          },
+          clearText: true,
         },
         cancelBtn: true,
         confirmLabel: i18next.t('common:text_save'),

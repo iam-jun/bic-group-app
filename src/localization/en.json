@@ -13,6 +13,7 @@
     "btn_delete": "Delete",
     "btn_discard": "Discard",
     "btn_edit": "Edit",
+    "btn_save": "Save",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
     "btn_create": "Create",
@@ -31,6 +32,7 @@
     "text_chosen": "Chosen",
     "text_description": "Description",
     "text_search": "Search",
+    "text_search_results": "Search results",
     "text_read_more": "Read more",
     "text_show_less": "Show less",
     "text_add": "Add",
@@ -289,7 +291,15 @@
       "my_photo": "You sent a photo",
       "other_photo": "{0} sent a photo"
     },
-    "label_confirm_send_file": "Send this file?"
+    "label_confirm_send_file": "Send this file?",
+    "label_confirm_send_image": "Send this photo?",
+    "label_confirm_send_video": "Send this video?",
+    "error":{
+      "file":{
+        "over_file_size":"Your file must be less than 10MB"
+      }
+    },
+    "text_search_emtpy": "No people here to chat"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

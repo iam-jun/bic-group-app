@@ -9,7 +9,7 @@ import SearchInput, {
 } from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
-import {Text, ViewSpacing} from '~/components';
+import {Image, Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
 import {IUser} from '~/interfaces/IAuth';
 import images from '~/resources/images';
@@ -95,7 +95,18 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           renderItem={renderItemUser}
         />
       )}
-      <Text.ButtonBase style={styles.title}>{i18next.t(title)}</Text.ButtonBase>
+      {data.length > 0 && (
+        <Text.ButtonBase style={styles.title}>
+          {i18next.t(title)}
+        </Text.ButtonBase>
+      )}
+    </View>
+  );
+
+  const EmptyComponent = () => (
+    <View style={styles.empty}>
+      <Text.Body useI18n>chat:text_search_emtpy</Text.Body>
+      <Image style={styles.imageEmtpy} source={images.img_search_empty} />
     </View>
   );
 
@@ -122,6 +133,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         loading={loading}
         isFullView
         ListHeaderComponent={renderRoles}
+        ListEmptyComponent={EmptyComponent}
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}
@@ -151,6 +163,13 @@ const createStyles = (theme: ITheme) => {
     },
     itemSelectedUser: {
       width: dimension?.avatarSizes.large,
+    },
+    empty: {
+      alignItems: 'center',
+    },
+    imageEmtpy: {
+      width: '100%',
+      aspectRatio: 1,
     },
   });
 };

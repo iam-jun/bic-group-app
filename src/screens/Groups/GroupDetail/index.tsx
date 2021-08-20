@@ -8,6 +8,7 @@ import {ITheme} from '~/theme/interfaces';
 import GroupInfoHeader from './components/GroupInfoHeader';
 import GroupTopBar from './components/GroupTopBar';
 import groupProfileTabs from './GroupProfileTabs';
+import Header from '~/beinComponents/Header';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -17,7 +18,9 @@ const GroupDetail = (props: any) => {
 
   return (
     <View style={styles.screenContainer}>
-      <GroupTopBar />
+      <Header>
+        <GroupTopBar />
+      </Header>
       <ScrollView style={styles.scrollView}>
         <GroupInfoHeader {...params} />
         <TabMenu

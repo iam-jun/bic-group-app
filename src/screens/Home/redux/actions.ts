@@ -3,12 +3,6 @@ import homeTypes from './types';
 import {IPayloadGetHomePost} from '~/interfaces/IHome';
 
 const homeActions = {
-  setHomePostsImportantCount: (payload: string) => {
-    return {
-      type: homeTypes.SET_HOME_POSTS_IMPORTANT_COUNT,
-      payload,
-    };
-  },
   setLoadingHomePosts: (payload: boolean) => {
     return {
       type: homeTypes.SET_LOADING_HOME_POSTS,

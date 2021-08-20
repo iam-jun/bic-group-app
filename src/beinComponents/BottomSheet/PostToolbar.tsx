@@ -1,12 +1,12 @@
 import React, {useRef, useState} from 'react';
 import {
-  View,
   Animated,
-  TouchableOpacity,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
   Platform,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
 import {throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
@@ -33,6 +33,8 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 
+const MAX_DAYS = 7;
+
 export interface PostToolbarProps extends BaseBottomSheetProps {
   isOpenModal: boolean;
   onOpenModal: () => void;
@@ -53,7 +55,6 @@ const PostToolbar = ({
 }: PostToolbarProps) => {
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
-  const [showImportantTime, setShowImportantTime] = useState<boolean>();
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
@@ -81,14 +82,10 @@ const PostToolbar = ({
   const onToggleImportant = (action: IAction) => {
     const newImportant = {...important};
     newImportant.active = action === commonActions.checkBox ? 1 : 0;
+    if (!important.expiresTime) {
+      newImportant.expiresTime = getDefaultExpire();
+    }
     dispatch(postActions.setCreatePostImportant(newImportant));
-  };
-
-  const onClearImportantDate = () => {
-    const newImportant = {...important};
-    newImportant.expiresTime = '';
-    dispatch(postActions.setCreatePostImportant(newImportant));
-    setShowImportantTime(false);
   };
 
   const onPressSelectImage = () => {
@@ -185,56 +182,35 @@ const PostToolbar = ({
       time = formatDate(expiresTime, 'hh:mm A', 9999);
     }
 
-    if (showImportantTime) {
-      return (
-        <View style={{marginTop: spacing.margin.large}}>
-          <View style={styles.row}>
-            <View style={styles.flex1}>
-              <Text.H6 useI18n>post:expiring_time</Text.H6>
-              <Text.Subtitle useI18n color={colors.textSecondary}>
-                post:expire_time_desc
-              </Text.Subtitle>
-            </View>
-            <Icon size={16} onPress={onClearImportantDate} icon={'iconClose'} />
+    return (
+      <View style={{marginTop: spacing.margin.large}}>
+        <View style={styles.row}>
+          <View style={styles.flex1}>
+            <Text.H6 useI18n>post:expiring_time</Text.H6>
+            <Text.Subtitle useI18n color={colors.textSecondary}>
+              post:expire_time_desc
+            </Text.Subtitle>
           </View>
-          <View style={styles.importantButtons}>
-            <Button.Secondary
-              leftIcon={'CalendarAlt'}
-              leftIconProps={{icon: 'CalendarAlt', size: 14}}
-              style={styles.buttonDate}
-              onPress={() => setSelectingDate(true)}>
-              {date}
-            </Button.Secondary>
-            <Button.Secondary
-              leftIcon={'Clock'}
-              leftIconProps={{icon: 'Clock', size: 16}}
-              style={styles.buttonTime}
-              onPress={() => setSelectingTime(true)}>
-              {time}
-            </Button.Secondary>
-          </View>
-          <Divider />
         </View>
-      );
-    } else {
-      return (
-        <View>
-          <View style={styles.importantNotSetContainer}>
-            <Text>Expire time.</Text>
-            <Button
-              onPress={() => {
-                setShowImportantTime(true);
-                setSelectingDate(true);
-              }}>
-              <Text.BodyM color={colors.primary7} style={styles.textNotSet}>
-                Not set
-              </Text.BodyM>
-            </Button>
-          </View>
-          <Divider />
+        <View style={styles.importantButtons}>
+          <Button.Secondary
+            leftIcon={'CalendarAlt'}
+            leftIconProps={{icon: 'CalendarAlt', size: 14}}
+            style={styles.buttonDate}
+            onPress={() => setSelectingDate(true)}>
+            {date}
+          </Button.Secondary>
+          <Button.Secondary
+            leftIcon={'Clock'}
+            leftIconProps={{icon: 'Clock', size: 16}}
+            style={styles.buttonTime}
+            onPress={() => setSelectingTime(true)}>
+            {time}
+          </Button.Secondary>
         </View>
-      );
-    }
+        <Divider />
+      </View>
+    );
   };
 
   const renderImportant = () => {
@@ -293,6 +269,8 @@ const PostToolbar = ({
                   ? new Date(important.expiresTime)
                   : new Date()
               }
+              minDate={new Date()}
+              maxDate={getMaxDate()}
               mode={Platform.OS === 'web' ? 'time' : 'date'}
               onConfirm={onChangeDatePicker}
               onCancel={onChangeDatePicker}
@@ -306,6 +284,8 @@ const PostToolbar = ({
                   ? new Date(important.expiresTime)
                   : new Date()
               }
+              minDate={new Date()}
+              maxDate={getMaxDate()}
               mode={'time'}
               onConfirm={onChangeTimePicker}
               onCancel={onChangeTimePicker}
@@ -328,6 +308,18 @@ const PostToolbar = ({
       {renderToolbar()}
     </BaseBottomSheet>
   );
+};
+
+const getMaxDate = () => {
+  const now = new Date();
+  const max = now.setDate(now.getDate() + MAX_DAYS);
+  return new Date(max);
+};
+
+const getDefaultExpire = () => {
+  const max = getMaxDate();
+  const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
+  return new Date(maxWithTime).toISOString();
 };
 
 const createStyle = (theme: ITheme) => {

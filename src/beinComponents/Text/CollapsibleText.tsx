@@ -1,9 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
-import Text, {TextProps} from '~/beinComponents/Text';
-import i18next from 'i18next';
-import {ITheme} from '~/theme/interfaces';
+import {View, StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
+import i18next from 'i18next';
+
+import Text, {TextProps} from '~/beinComponents/Text';
+import {ITheme} from '~/theme/interfaces';
+import MarkdownView from '~/beinComponents/MarkdownView';
 
 export interface CollapsibleTextProps extends TextProps {
   style?: StyleProp<ViewStyle>;
@@ -12,6 +14,8 @@ export interface CollapsibleTextProps extends TextProps {
   shortLength?: number;
   onPress?: () => void;
   toggleOnPress?: boolean;
+  useMarkdown?: boolean;
+  [x: string]: any;
 }
 
 const CollapsibleText: FC<CollapsibleTextProps> = ({
@@ -21,6 +25,7 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   shortLength = 120,
   onPress,
   toggleOnPress,
+  useMarkdown,
   ...textProps
 }: CollapsibleTextProps) => {
   const [contentShowAll, setContentShowAll] = useState(false);
@@ -45,10 +50,27 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
     }
   };
 
-  return (
-    <TouchableOpacity
-      disabled={!(onPress || (toggleOnPress && shortContent))}
-      onPress={_onPress}>
+  const renderContentWithMarkdown = () => {
+    return (
+      <View style={style}>
+        <MarkdownView>
+          {!shortContent ? content : contentShowAll ? content : shortContent}
+        </MarkdownView>
+        {!!shortContent && (
+          <Text onPress={onToggleShowLess} color={colors.textInfo}>
+            {` ${
+              contentShowAll
+                ? i18next.t('common:text_show_less')
+                : i18next.t('common:text_read_more')
+            }`}
+          </Text>
+        )}
+      </View>
+    );
+  };
+
+  const renderContent = () => {
+    return (
       <Text style={style}>
         <Text {...textProps}>
           {!shortContent ? content : contentShowAll ? content : shortContent}
@@ -63,6 +85,14 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
           </Text>
         )}
       </Text>
+    );
+  };
+
+  return (
+    <TouchableOpacity
+      disabled={!(onPress || (toggleOnPress && shortContent))}
+      onPress={_onPress}>
+      {useMarkdown ? renderContentWithMarkdown() : renderContent()}
     </TouchableOpacity>
   );
 };
