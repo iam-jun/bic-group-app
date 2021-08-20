@@ -1,21 +1,19 @@
 import React from 'react';
 import {StyleSheet, StyleProp, View, ViewStyle} from 'react-native';
-import AvatarComponent, {
-  AvatarProps,
-  AvatarType,
-} from '~/beinComponents/Avatar/AvatarComponent';
+import {AvatarProps, AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import {fontFamilies} from '~/theme/fonts';
+import Avatar from '.';
+import images from '~/resources/images';
 
 export interface AvatarGroupProps extends AvatarProps {
   variant?: AvatarType;
   style?: StyleProp<ViewStyle>;
   source?: any;
   totalMember?: number;
-  listSource?: string[];
 }
 
 const AvatarGroup = ({
@@ -23,7 +21,6 @@ const AvatarGroup = ({
   style,
   source,
   totalMember,
-  listSource,
   ...props
 }: AvatarGroupProps) => {
   const theme = useTheme() as ITheme;
@@ -41,17 +38,6 @@ const AvatarGroup = ({
     ultraLarge: 14,
   };
   const totalMemberFontSize = totalMemberFontSizes[variant] || 8;
-
-  if (source) {
-    return (
-      <AvatarComponent
-        variant={variant}
-        style={style}
-        source={source}
-        {...props}
-      />
-    );
-  }
 
   const renderItem = (
     index: number,
@@ -73,6 +59,7 @@ const AvatarGroup = ({
           style,
         ])}>
         <Image
+          {...props}
           style={{
             width: itemSize,
             height: itemSize,
@@ -85,22 +72,31 @@ const AvatarGroup = ({
   };
 
   const renderItems = () => {
-    switch (listSource?.length) {
+    if (!Array.isArray(source))
+      return (
+        <Avatar.UltraLarge
+          {...props}
+          source={source}
+          placeholderSource={images.img_group_avatar_default}
+        />
+      );
+
+    switch (source?.length) {
       case 1:
-        return renderItem(0, listSource?.[0]);
+        return renderItem(0, source?.[0]);
       case 2:
         return (
           <View style={{flexDirection: 'row'}}>
-            {renderItem(0, listSource?.[0])}
-            {renderItem(1, listSource?.[1], {marginLeft: -6})}
+            {renderItem(0, source?.[0])}
+            {renderItem(1, source?.[1], {marginLeft: -6})}
           </View>
         );
       case 3:
         return (
           <View>
             <View style={{flexDirection: 'row'}}>
-              {renderItem(0, listSource?.[0])}
-              {renderItem(1, listSource?.[1], {marginLeft: -6})}
+              {renderItem(0, source?.[0])}
+              {renderItem(1, source?.[1], {marginLeft: -6})}
             </View>
             <View
               style={{
@@ -108,7 +104,7 @@ const AvatarGroup = ({
                 justifyContent: 'center',
                 marginTop: -8,
               }}>
-              {renderItem(2, listSource?.[2])}
+              {renderItem(2, source?.[2])}
             </View>
           </View>
         );
@@ -116,8 +112,8 @@ const AvatarGroup = ({
         return (
           <View>
             <View style={{flexDirection: 'row'}}>
-              {renderItem(0, listSource?.[0])}
-              {renderItem(1, listSource?.[1], {marginLeft: -6})}
+              {renderItem(0, source?.[0])}
+              {renderItem(1, source?.[1], {marginLeft: -6})}
             </View>
             <View
               style={{
@@ -125,8 +121,8 @@ const AvatarGroup = ({
                 justifyContent: 'center',
                 marginTop: -8,
               }}>
-              {renderItem(2, listSource?.[2])}
-              {renderItem(3, listSource?.[3], {marginLeft: -6})}
+              {renderItem(2, source?.[2])}
+              {renderItem(3, source?.[3], {marginLeft: -6})}
             </View>
           </View>
         );
@@ -134,8 +130,8 @@ const AvatarGroup = ({
         return (
           <View>
             <View style={{flexDirection: 'row'}}>
-              {renderItem(0, listSource?.[0])}
-              {renderItem(1, listSource?.[1], {marginLeft: -6})}
+              {renderItem(0, source?.[0])}
+              {renderItem(1, source?.[1], {marginLeft: -6})}
             </View>
             <View
               style={{
@@ -143,7 +139,7 @@ const AvatarGroup = ({
                 justifyContent: 'center',
                 marginTop: -8,
               }}>
-              {renderItem(2, listSource?.[2])}
+              {renderItem(2, source?.[2])}
               <View
                 style={{
                   width: itemContainerSize,
@@ -164,7 +160,7 @@ const AvatarGroup = ({
                     {`+${Math.min(99, totalMember)}`}
                   </Text>
                 ) : (
-                  renderItem(3, listSource?.[3])
+                  renderItem(3, source?.[3])
                 )}
               </View>
             </View>
