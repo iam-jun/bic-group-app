@@ -98,8 +98,6 @@ const createStyles = (theme: ITheme) => {
     rightCol: {
       flex: deviceDimensions.rightCols,
       paddingStart: theme.spacing.padding.extraLarge,
-      borderRightColor: theme.colors.borderDivider,
-      borderRightWidth: 1,
     },
   });
 };
