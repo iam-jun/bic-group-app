@@ -40,16 +40,14 @@ export const createTextStyle = (theme: ITheme) => {
     h4: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h4,
-      lineHeight: 18.8 || lineHeights.h4,
-      paddingTop: 5.2,
+      // lineHeight: lineHeights.h4,
       letterSpacing: letterSpacing.h4,
       color: colors.textPrimary,
     },
     h5: {
       fontFamily: fontFamilies.PoppinsMedium,
       fontSize: sizes.h5,
-      lineHeight: 15.84 || lineHeights.h5,
-      paddingTop: 4.16,
+      // lineHeight: lineHeights.h5,
       letterSpacing: letterSpacing.h5,
       color: colors.textPrimary,
     },
@@ -92,6 +90,20 @@ export const createTextStyle = (theme: ITheme) => {
       letterSpacing: letterSpacing.bodyM,
       color: colors.textPrimary,
     },
+    bodyMI: {
+      fontFamily: fontFamilies.SegoeSemiboldItalic,
+      fontSize: sizes.body,
+      lineHeight: lineHeights.body,
+      letterSpacing: letterSpacing.body,
+      color: colors.textPrimary,
+    },
+    bodyI: {
+      fontFamily: fontFamilies.SegoeItalic,
+      fontSize: sizes.body,
+      lineHeight: lineHeights.body,
+      letterSpacing: letterSpacing.body,
+      color: colors.textPrimary,
+    },
     body: {
       fontFamily: fontFamilies.Segoe,
       fontSize: sizes.body,
@@ -118,6 +130,13 @@ export const createTextStyle = (theme: ITheme) => {
       fontSize: sizes.subtitle,
       // lineHeight: lineHeights.subtitle,
       letterSpacing: letterSpacing.subtitle,
+      color: colors.textPrimary,
+    },
+    code: {
+      fontFamily: fontFamilies.JetBrainsMono,
+      fontSize: sizes.code,
+      lineHeight: lineHeights.code,
+      letterSpacing: letterSpacing.code,
       color: colors.textPrimary,
     },
   });

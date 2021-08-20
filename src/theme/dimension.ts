@@ -24,6 +24,7 @@ export const sizes = {
   bodyS: 13,
   subtitle: 12,
   error: 14,
+  code: 14,
 };
 
 /* Line Height used for Text */
@@ -44,6 +45,7 @@ export const lineHeights = {
   bodyS: 20,
   subtitle: 16,
   error: 20,
+  code: 20,
 };
 
 export const letterSpacing = {
@@ -63,6 +65,7 @@ export const letterSpacing = {
   bodyS: -0.17,
   subtitle: -0.17,
   error: 0.06,
+  code: 0.06,
 };
 
 /* Device Dimensions */

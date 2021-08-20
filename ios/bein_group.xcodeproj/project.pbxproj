@@ -24,6 +24,7 @@
 		C34A26C5CBCF47018637DA06 /* SegoeUI-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */; };
 		D45B5580C2C1082286D1C8D1 /* libPods-bein_group.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA700F8A3AF0626405ED6FA1 /* libPods-bein_group.a */; };
 		D7214A9E725B40C3A710DAA6 /* SVN-PoppinsSemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */; };
+		E3472CF726CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3472CF626CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf */; };
 		F74BE7EE4B611DCED9C541F1 /* libPods-bein_group-bein_groupTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03B78A72093EB517E903A9BD /* libPods-bein_group-bein_groupTests.a */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		AA700F8A3AF0626405ED6FA1 /* libPods-bein_group.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bein_group.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF50800D4E359DF25CF846A1 /* Pods-bein_group-bein_groupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.debug.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBoldItalic.otf"; path = "../assets/fonts/SVN-PoppinsSemiBoldItalic.otf"; sourceTree = "<group>"; };
+		E3472CF626CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "JetBrainsMono-Regular.ttf"; path = "../assets/fonts/JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBold.otf"; path = "../assets/fonts/SVN-PoppinsSemiBold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +179,7 @@
 		DDC2B1B50D934EC49C47D1B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E3472CF626CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf */,
 				A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */,
 				8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */,
 				59158BED60514EA08C8E8E2E /* SegoeUI-SemiboldItalic.ttf */,
@@ -286,6 +289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3472CF726CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf in Resources */,
 				1B685C9C26B8F6AE00CA4CEA /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,

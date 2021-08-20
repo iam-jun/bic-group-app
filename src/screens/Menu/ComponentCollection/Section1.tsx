@@ -64,7 +64,7 @@ const Section1 = () => {
           Subtitle. Lorem Ipsum is simply dummy text
         </Text.Subtitle>
         <Text
-          allowMarkdown
+          useParseText
           onPressAudience={audience =>
             alert('onPressAudience: ' + JSON.stringify(audience))
           }>
