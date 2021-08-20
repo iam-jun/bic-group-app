@@ -14,9 +14,9 @@ import images from '~/resources/images';
 import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import {formatDate} from '~/utils/formatData';
-import {titleCase} from '~/utils/common';
 import speakingLanguages from '~/constants/speakingLanguages';
 import relationshipStatus from '~/constants/relationshipStatus';
+import genders from '~/constants/genders';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -125,7 +125,8 @@ const UserProfile = () => {
           />
           <SettingItem
             title={'settings:title_gender'}
-            subtitle={titleCase(gender)}
+            // @ts-ignore
+            subtitle={i18next.t(genders[gender])}
             leftIcon={'UserSquare'}
             rightIcon={'Lock'}
           />

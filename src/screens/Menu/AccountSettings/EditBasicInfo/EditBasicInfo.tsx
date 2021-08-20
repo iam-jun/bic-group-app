@@ -14,7 +14,9 @@ import {formatDate} from '~/utils/formatData';
 import relationshipStatus from '~/constants/relationshipStatus';
 import menuActions from '~/screens/Menu/redux/actions';
 import {
+  GENDER_TYPE,
   IGenderItem,
+  IOptionItem,
   IRelationshipItem,
   RELATIONSHIP_TYPE,
 } from '~/interfaces/IEditUser';
@@ -41,14 +43,14 @@ const EditBasicInfo = () => {
   const relationshipSheetRef = useRef<any>();
 
   const [nameState, setNameState] = useState<string>(fullname);
-  const [genderState, setGenderState] = useState(gender);
+  const [genderState, setGenderState] = useState<GENDER_TYPE>(gender);
   const [selectingDate, setSelectingDate] = useState<boolean>(false);
   const [birthdayState, setBirthdayState] = useState<string>(birthday);
   const [languageState, setLanguageState] = useState<string[]>(language);
   const [relationshipState, setRelationshipState] =
     useState<RELATIONSHIP_TYPE>(relationship_status);
 
-  const dataMapping = (dataObject: any) => {
+  const dataMapping = (dataObject: any): IOptionItem[] => {
     const dataList = Object.keys(dataObject).map(type => ({
       type,
       title: dataObject[type],
@@ -57,6 +59,7 @@ const EditBasicInfo = () => {
   };
 
   const relationshipStatusList = dataMapping(relationshipStatus);
+  const gendersList = dataMapping(genders);
 
   const onSave = () => {
     dispatch(
@@ -173,7 +176,7 @@ const EditBasicInfo = () => {
       </View>
 
       <OptionMenu
-        data={genders}
+        data={gendersList}
         value={genderState}
         title={'settings:title_choose_gender'}
         menuRef={genderSheetRef}
