@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import {debounce} from 'lodash';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -19,6 +19,7 @@ const GroupMembers = (): React.ReactElement => {
   const {spacing} = useTheme() as ITheme;
   const {conversation, members, roles} = useChat();
   const {rootNavigation} = useRootNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     dispatch(actions.getGroupRols());
@@ -75,6 +76,7 @@ const GroupMembers = (): React.ReactElement => {
   const seachHandler = useCallback(debounce(searchUsers, 1000), []);
 
   const onQueryChanged = (text: string) => {
+    setSearchQuery(text);
     seachHandler(text);
   };
 
@@ -89,7 +91,7 @@ const GroupMembers = (): React.ReactElement => {
       <MembersSelection
         data={members.data}
         title={i18next.t('chat:title_members')}
-        roles={roles}
+        roles={searchQuery ? null : roles}
         loading={members.loading}
         searchInputProps={{
           placeholder: i18next.t('chat:placeholder_members_search'),

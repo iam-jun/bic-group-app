@@ -4,6 +4,7 @@ platform :ios do
   desc "Submit a new Build to Diawi"
   lane :deploy_dev do
     Dotenv.overload '.development.env'
+    match(git_private_key: 'bein-group-secret', readonly: true)
     build_app(
         workspace: "#{ENV['SCHEME_NAME_IOS']}.xcworkspace",
         scheme: "#{ENV['SCHEME_NAME_IOS']}",

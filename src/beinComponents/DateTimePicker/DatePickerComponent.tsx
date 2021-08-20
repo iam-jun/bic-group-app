@@ -9,6 +9,8 @@ const DatePickerComponent: FC<DatePickerComponentProps> = ({
   onConfirm,
   onCancel,
   mode,
+  minDate,
+  maxDate,
   ...props
 }: DatePickerComponentProps) => {
   // @ts-ignore
@@ -19,6 +21,8 @@ const DatePickerComponent: FC<DatePickerComponentProps> = ({
       onCancel={onCancel}
       mode={mode}
       date={date}
+      minimumDate={minDate}
+      maximumDate={maxDate}
       {...props}
     />
   );
