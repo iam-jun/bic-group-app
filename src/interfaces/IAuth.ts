@@ -70,7 +70,7 @@ export interface IUserProfile {
   background_img_url?: string;
   phone?: string;
   address?: string;
-  language?: string;
+  language?: string[];
   description?: string;
   relationship_status?: string;
   isPublic?: boolean;

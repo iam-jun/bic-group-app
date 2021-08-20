@@ -17,7 +17,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 interface LanguageOptionMenuProps {
   title: string;
-  onChangeLanguages: (languages: ILanguageItem[]) => void;
+  onChangeLanguages: (languages: string[]) => void;
 }
 
 const LanguageOptionMenu = ({
@@ -37,16 +37,12 @@ const LanguageOptionMenu = ({
     }),
   );
   const [languages, setLanguages] = useState(speakingLanguagesList);
-  const [selectedLanguages, setSelectedLanguages] = useState<ILanguageItem[]>(
-    [],
-  );
+  const [selectedLanguages, setSelectedLanguages] =
+    useState<string[]>(userLanguages);
 
   const languageSheetRef = useRef<any>();
 
   useEffect(() => {
-    setSelectedLanguages(
-      speakingLanguagesList.filter(lang => userLanguages.includes(lang.code)),
-    );
     setLanguages(
       languages.map(lang => ({
         ...lang,
@@ -59,14 +55,15 @@ const LanguageOptionMenu = ({
     onChangeLanguages(selectedLanguages);
   }, [selectedLanguages]);
 
-  const onSelectItem = (language: any) => {
+  const onSelectItem = (language: ILanguageItem) => {
     setSelectedLanguages(
       !language.selected
-        ? [...selectedLanguages, {...language, selected: true}]
-        : selectedLanguages.filter(item => item.code !== language.code),
+        ? [...selectedLanguages, language.code]
+        : selectedLanguages.filter((item: string) => item !== language.code),
     );
+
     setLanguages(
-      languages.map((item: any) =>
+      languages.map((item: ILanguageItem) =>
         item.code === language.code
           ? {
               ...item,
@@ -77,7 +74,7 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const renderItem = ({item}: {item: any}) => {
+  const renderItem = ({item}: {item: ILanguageItem}) => {
     return (
       <PrimaryItem
         title={i18next.t(item.fullName)}
@@ -93,8 +90,10 @@ const LanguageOptionMenu = ({
       <SettingItem
         title={'settings:title_language'}
         subtitle={
-          selectedLanguages.map(language => language.name).join(', ') ||
-          i18next.t('settings:text_not_set')
+          selectedLanguages
+            // @ts-ignore
+            .map(language => speakingLanguages[language]?.name)
+            .join(', ') || i18next.t('settings:text_not_set')
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}

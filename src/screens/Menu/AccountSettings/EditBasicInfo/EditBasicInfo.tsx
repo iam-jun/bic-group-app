@@ -14,7 +14,6 @@ import relationshipStatus from '~/constants/relationshipStatus';
 import menuActions from '~/screens/Menu/redux/actions';
 import {
   IGenderItem,
-  ILanguageItem,
   IRelationshipItem,
   RELATIONSHIP_TYPE,
 } from '~/interfaces/IEditUser';
@@ -80,9 +79,8 @@ const EditBasicInfo = () => {
     setSelectingDate(false);
   };
 
-  const _onChangeLanguages = (languages: ILanguageItem[]) => {
-    const selectedLanguages = languages.map(lang => lang.code);
-    setLanguageState(selectedLanguages);
+  const _onChangeLanguages = (languages: string[]) => {
+    setLanguageState(languages);
   };
 
   const _onPressBack = () => {

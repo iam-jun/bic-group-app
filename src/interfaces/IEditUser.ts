@@ -14,6 +14,7 @@ export interface ILanguageItem {
   code: string;
   fullName: string;
   name: string;
+  selected?: boolean;
 }
 
 export interface IRelationshipItem {
