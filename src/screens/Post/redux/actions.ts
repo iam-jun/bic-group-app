@@ -8,7 +8,7 @@ import {
   IReaction,
   IParamSearchMentionAudiences,
   IAllPosts,
-  IPayloadReactToPost,
+  IPayloadReactToId,
   IPayloadPutEditPost,
   IPostAudienceSheet,
   IPayloadUpdateCommentsById,
@@ -106,12 +106,20 @@ const postActions = {
     type: postTypes.GET_SEARCH_MENTION_AUDIENCES,
     payload,
   }),
-  postReactToPost: (payload: IPayloadReactToPost) => ({
+  postReactToPost: (payload: IPayloadReactToId) => ({
     type: postTypes.POST_REACT_TO_POST,
     payload,
   }),
-  deleteReactToPost: (payload: IPayloadReactToPost) => ({
+  deleteReactToPost: (payload: IPayloadReactToId) => ({
     type: postTypes.DELETE_REACT_TO_POST,
+    payload,
+  }),
+  postReactToComment: (payload: IPayloadReactToId) => ({
+    type: postTypes.POST_REACT_TO_COMMENT,
+    payload,
+  }),
+  deleteReactToComment: (payload: IPayloadReactToId) => ({
+    type: postTypes.DELETE_REACT_TO_COMMENT,
     payload,
   }),
   setPostAudiencesBottomSheet: (payload: IPostAudienceSheet) => ({

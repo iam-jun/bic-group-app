@@ -7,7 +7,7 @@ import {
   IParamSearchMentionAudiences,
   IPayloadGetCommentsById,
   IPayloadPutEditPost,
-  IPayloadReactToPost,
+  IPayloadReactToId,
   IPayloadUpdateCommentsById,
   IPostActivity,
   IPostCreatePost,
@@ -44,6 +44,8 @@ export default function* postSaga() {
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
+  yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
+  yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
     showPostAudienceBottomSheet,
@@ -221,9 +223,9 @@ function* postReactToPost({
   payload,
 }: {
   type: string;
-  payload: IPayloadReactToPost;
+  payload: IPayloadReactToId;
 }) {
-  const {postId, reactionId, reactionCounts, ownReaction, userId} = payload;
+  const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
     const data: ReactionType[] = [];
     data.push(reactionId);
@@ -236,15 +238,11 @@ function* postReactToPost({
       const newReactionCounts = {...reactionCounts};
       newReactionCounts[reactionId] =
         (newReactionCounts?.[reactionId] || 0) + 1;
-      yield onUpdateReactionOfPostById(
-        postId,
-        newOwnReaction,
-        newReactionCounts,
-      );
+      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
 
       const response = yield call(
         postDataHelper.postReaction,
-        postId,
+        id,
         'post',
         data,
         userId,
@@ -254,15 +252,11 @@ function* postReactToPost({
         reactionArr2.push({id: response?.data?.[0]});
         newOwnReaction[reactionId] = reactionArr2;
 
-        yield onUpdateReactionOfPostById(
-          postId,
-          newOwnReaction,
-          newReactionCounts,
-        );
+        yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
       }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(postId, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
     console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
   }
 }
@@ -271,9 +265,9 @@ function* deleteReactToPost({
   payload,
 }: {
   type: string;
-  payload: IPayloadReactToPost;
+  payload: IPayloadReactToId;
 }) {
-  const {postId, reactionId, reactionCounts, ownReaction} = payload;
+  const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
     const id = ownReaction?.[reactionId]?.[0]?.id;
     if (id) {
@@ -284,16 +278,55 @@ function* deleteReactToPost({
         0,
         (newReactionCounts[reactionId] || 0) - 1,
       );
-      yield onUpdateReactionOfPostById(
-        postId,
-        newOwnReaction,
-        newReactionCounts,
-      );
+      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
       yield call(postDataHelper.deleteReaction, id);
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(postId, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
     console.log(`\x1b[31m🐣️ deleteReactToPost : ${e}\x1b[0m`);
+  }
+}
+
+function* postReactToComment({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactToId;
+}) {
+  const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
+  try {
+    const data: ReactionType[] = [];
+    data.push(reactionId);
+    const added = ownReaction?.[reactionId]?.length > 0;
+    if (!added) {
+      const response = yield call(
+        postDataHelper.postReaction,
+        id,
+        'comment',
+        data,
+        userId,
+      );
+    }
+  } catch (e) {
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
+  }
+}
+
+function* deleteReactToComment({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactToId;
+}) {
+  const {id, reactionId, reactionCounts, ownReaction} = payload;
+  try {
+    const id = ownReaction?.[reactionId]?.[0]?.id;
+    if (id) {
+      yield call(postDataHelper.deleteReaction, id);
+    }
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ deleteReactToComment : ${e}\x1b[0m`);
   }
 }
 

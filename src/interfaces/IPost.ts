@@ -191,8 +191,8 @@ export interface IPostAudienceSheet {
   fromStack?: 'newsfeed' | 'groups';
 }
 
-export interface IPayloadReactToPost {
-  postId: string;
+export interface IPayloadReactToId {
+  id: string;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;

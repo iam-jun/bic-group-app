@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import moment from 'moment';
 
 import {ITheme} from '~/theme/interfaces';
-import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
+import {IPayloadReactToId, IPostAudience} from '~/interfaces/IPost';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Avatar from '~/beinComponents/Avatar';
@@ -178,8 +178,8 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
-    const payload: IPayloadReactToPost = {
-      postId,
+    const payload: IPayloadReactToId = {
+      id: postId,
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
@@ -189,8 +189,8 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onRemoveReaction = (reactionId: ReactionType) => {
-    const payload: IPayloadReactToPost = {
-      postId,
+    const payload: IPayloadReactToId = {
+      id: postId,
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,

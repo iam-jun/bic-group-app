@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {IReaction} from '~/interfaces/IPost';
+import {IPayloadReactToId, IReaction} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {countTime} from '~/utils/formatData';
-import Icon from '~/beinComponents/Icon';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import postActions from '~/screens/Post/redux/actions';
+import {useDispatch} from 'react-redux';
+import {useBaseHook} from '~/hooks';
+import {ReactionType} from '~/constants/reactions';
+import ReactionView from '~/screens/Post/components/ReactionView';
+import {useUserIdAuth} from '~/hooks/auth';
 
 export interface CommentViewProps {
   commentData: IReaction;
@@ -21,14 +26,15 @@ const CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const [contentShowAll, setContentShowAll] = useState(false);
-  const [shortDescription, shortContent] = useState('');
-
+  const {t} = useBaseHook();
+  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
-  const {data, created_at, user} = commentData || {};
+  const userId = useUserIdAuth();
+
+  const {id, data, created_at, user, children_counts} = commentData || {};
   const {content} = data || {};
   const avatar = user?.data?.avatarUrl || '';
   const name = user?.data?.fullname || '';
@@ -38,22 +44,45 @@ const CommentView: React.FC<CommentViewProps> = ({
     postTime = countTime(created_at);
   }
 
-  useEffect(() => {
-    if (content && content?.length > 400) {
-      shortContent(`${content.substr(0, 100)}...`);
-    }
-  }, []);
-
   const onPressUser = () => {
     alert('onPressUser: ' + user?.id);
   };
 
-  const onPressReact = () => {
-    alert('onPressReact');
+  const onAddReaction = (reactionId: ReactionType) => {
+    if (id) {
+      const payload: IPayloadReactToId = {
+        id,
+        reactionId: reactionId,
+        ownReaction: {},
+        reactionCounts: children_counts,
+        userId: userId,
+      };
+      dispatch(postActions.postReactToComment(payload));
+    }
   };
 
-  const onLongPressReact = () => {
-    alert('onLongPressReact');
+  const onRemoveReaction = (reactionId: ReactionType) => {
+    if (id) {
+      const payload: IPayloadReactToId = {
+        id,
+        reactionId: reactionId,
+        ownReaction: {},
+        reactionCounts: children_counts,
+        userId: userId,
+      };
+      dispatch(postActions.deleteReactToComment(payload));
+      alert(reactionId);
+    }
+  };
+
+  const onPressReact = () => {
+    dispatch(
+      postActions.setShowReactionBottomSheet({
+        show: true,
+        title: t('post:label_all_reacts'),
+        callback: onAddReaction,
+      }),
+    );
   };
 
   const _onPressReply = () => {
@@ -92,12 +121,13 @@ const CommentView: React.FC<CommentViewProps> = ({
             />
           </View>
           <View style={styles.buttonContainer}>
-            <ButtonWrapper
-              style={styles.buttonReact}
-              onPress={onPressReact}
-              onLongPress={onLongPressReact}>
-              <Icon size={14} icon={'iconReact'} />
-            </ButtonWrapper>
+            <ReactionView
+              ownReactions={{}}
+              reactionCounts={children_counts}
+              onAddReaction={onAddReaction}
+              onRemoveReaction={onRemoveReaction}
+              onPressSelectReaction={onPressReact}
+            />
             <ButtonWrapper onPress={_onPressReply}>
               <Text.ButtonSmall
                 style={styles.buttonReply}
@@ -125,12 +155,6 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing?.padding.small,
       backgroundColor: colors.surface,
       borderRadius: spacing?.borderRadius.small,
-    },
-    buttonReact: {
-      borderWidth: 1,
-      borderColor: colors.borderCard,
-      borderRadius: spacing?.borderRadius.small,
-      padding: 2,
     },
     buttonContainer: {
       flexDirection: 'row',
