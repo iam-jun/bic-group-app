@@ -21,6 +21,11 @@ const NotFound = () => {
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
+  /*
+  TODO: Handle pressing go back.
+    - If signed in, go to home page.
+    - Otherwise, go to landing page
+  */
   return (
     <ScreenWrapper isFullView style={styles.container}>
       <View style={styles.contentContainer}>
