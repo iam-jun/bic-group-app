@@ -60,7 +60,7 @@ const PostInput: React.FC<PostInputProps> = ({
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
       {...props}>
-      <Text allowMarkdown showRawText>
+      <Text useParseText showRawText>
         {value}
       </Text>
     </TextInput>

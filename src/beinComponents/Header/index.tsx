@@ -127,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({
         )}
         {onPressMenu && (
           <Icon
-            icon={menuIcon || 'EllipsisV'}
+            icon={menuIcon || 'menu'}
             size={20}
             style={{marginRight: spacing?.margin.large}}
             onPress={onPressMenu}

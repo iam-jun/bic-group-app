@@ -232,7 +232,7 @@ const Conversation = (): React.ReactElement => {
         {isDirect ? (
           <>
             {renderActionItem(
-              'images',
+              'ChatBlock',
               `${i18next.t('chat:text_block')} ${conversation.name}`,
             )}
           </>
