@@ -1,14 +1,19 @@
-import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useContext} from 'react';
+import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import TabMenu from '~/beinComponents/Tab';
+import {useDispatch} from 'react-redux';
 
+import TabMenu from '~/beinComponents/Tab';
 import {ITheme} from '~/theme/interfaces';
 import GroupInfoHeader from './components/GroupInfoHeader';
 import GroupTopBar from './components/GroupTopBar';
 import groupProfileTabs from './GroupProfileTabs';
 import Header from '~/beinComponents/Header';
+import {AppContext} from '~/contexts/AppContext';
+import {useUserIdAuth} from '~/hooks/auth';
+import groupsActions from '~/screens/Groups/redux/actions';
+import useGroups from '~/hooks/groups';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -16,12 +21,37 @@ const GroupDetail = (props: any) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
+  const {streamClient} = useContext(AppContext);
+  const userId = useUserIdAuth();
+  const dispatch = useDispatch();
+  const groupData = useGroups();
+  const {groupDetail, refreshingGroupPosts} = groupData;
+  const {id: groupId} = groupDetail?.group;
+
+  const getGroupPosts = () => {
+    if (streamClient) {
+      dispatch(groupsActions.getGroupPosts({streamClient, userId, groupId}));
+    }
+  };
+
+  useEffect(() => {
+    getGroupPosts();
+  }, []);
+
   return (
     <View style={styles.screenContainer}>
       <Header>
         <GroupTopBar />
       </Header>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={!!refreshingGroupPosts}
+            onRefresh={getGroupPosts}
+            tintColor={theme.colors.borderDisable}
+          />
+        }
+        style={styles.scrollView}>
         <GroupInfoHeader {...params} />
         <TabMenu
           data={groupProfileTabs}
