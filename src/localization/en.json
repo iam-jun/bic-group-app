@@ -38,7 +38,7 @@
     "text_add": "Add",
     "text_retry": "Retry",
     "text_download": "Download",
-    "text_send":"Send"
+    "text_send": "Send"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -86,7 +86,7 @@
     "text_err_email_format": "Invalid email!",
     "text_err_username_blank": "User name is required!",
     "text_err_code": "Code must have 6 numbers!",
-    "text_err_new_password_must_differ_from_current":  "New password must be different from the current password.",
+    "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",
     "text_err_confirm_password_not_matched": "Password doesn't match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
     "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting code too many time. Please try again later.",
@@ -164,12 +164,17 @@
     "title_cover": "Cover",
     "title_edit": "Edit",
     "title_privacy_type": "Privacy Type",
+    "text_info": "Info",
+    "text_help_center": "Help center is coming soon 🤗",
+    "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
+    "text_got_it": "Got it",
     "title_public": "Public",
-    "title_public_subtitle": "Group shows to everyone. Learn more",
+    "title_public_subtitle": "Group is visible to everyone and anyone can join.",
     "title_private": "Private",
-    "title_private_subtitle": "Group's content show to only members.\nLearn more",
+    "title_private_subtitle": "Group is visible to everyone and anyone can request to join.",
+    "text_learn_more": "Learn more",
     "title_secret": "Secret",
-    "title_secret_subtitle": "This group is secret. Learn more",
+    "title_secret_subtitle": "Group is invisible to everyone and members are invited.",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices"
   },
@@ -270,14 +275,14 @@
       "received": "Received",
       "failed": "Failed"
     },
-    "upload_status":{
+    "upload_status": {
       "sending": "Uploading"
     },
     "title_privacy": "Privacy",
     "title_more_actions": "More actions",
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
-    "text_feedback":"Feedback this chat",
+    "text_feedback": "Feedback this chat",
     "label_pin_messagess": "Pin Messages",
     "label_permisstion_management": "Permissions Management",
     "detail_menu": {
@@ -285,7 +290,7 @@
       "edit_description": "Edit Description",
       "edit_name": "Edit Group Chat Name"
     },
-    "label_last_message":{
+    "label_last_message": {
       "my_attachment": "You sent an attachment",
       "other_attachment": "{0} sent an attachment",
       "my_photo": "You sent a photo",
@@ -294,9 +299,9 @@
     "label_confirm_send_file": "Send this file?",
     "label_confirm_send_image": "Send this photo?",
     "label_confirm_send_video": "Send this video?",
-    "error":{
-      "file":{
-        "over_file_size":"Your file must be less than 10MB"
+    "error": {
+      "file": {
+        "over_file_size": "Your file must be less than 10MB"
       }
     },
     "text_search_emtpy": "No people here to chat"
