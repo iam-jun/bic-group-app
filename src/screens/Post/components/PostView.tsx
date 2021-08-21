@@ -149,7 +149,13 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = () => {
-    reactionSheetRef?.current?.open?.();
+    dispatch(
+      postActions.setShowReactionBottomSheet({
+        show: true,
+        title: t('post:label_all_reacts'),
+        callback: onAddReaction,
+      }),
+    );
   };
 
   const _onPressComment = () => {
@@ -372,11 +378,6 @@ const PostView: FC<PostViewProps> = ({
           !onPressComment,
         )}
       </View>
-      <ReactionBottomSheet
-        reactionSheetRef={reactionSheetRef}
-        onPressReaction={onAddReaction}
-        title={t('post:label_all_reacts')}
-      />
       <PostViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         postId={postId}

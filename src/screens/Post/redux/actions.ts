@@ -11,10 +11,12 @@ import {
   IPayloadReactToPost,
   IPayloadPutEditPost,
   IPostAudienceSheet,
-  IPayloadUpdateCommentsById, IPayloadGetCommentsById,
+  IPayloadUpdateCommentsById,
+  IPayloadGetCommentsById,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
+import {ReactionType} from '~/constants/reactions';
 
 const postActions = {
   setAllPosts: (payload: IAllPosts) => ({
@@ -72,6 +74,14 @@ const postActions = {
   }),
   setAllCommentsByParentIds: (payload: {[x: string]: IReaction}) => ({
     type: postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS,
+    payload,
+  }),
+  setShowReactionBottomSheet: (payload?: {
+    show?: boolean;
+    title?: string;
+    callback?: (reactionId: ReactionType) => void;
+  }) => ({
+    type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,
     payload,
   }),
 

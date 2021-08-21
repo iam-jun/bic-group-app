@@ -1,4 +1,5 @@
 const postKeySelector = {
+  reactionBottomSheet: 'post.reactionBottomSheet',
   mention: {
     searchKey: 'post.mention.searchKey',
     searchResult: 'post.mention.searchResult',

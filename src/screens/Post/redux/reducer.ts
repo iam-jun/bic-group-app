@@ -18,6 +18,11 @@ const initState = {
       expiresTime: '',
     },
   },
+  reactionBottomSheet: {
+    show: false,
+    title: '',
+    callback: undefined,
+  },
   mention: {
     searchKey: '',
     searchResult: [],
@@ -144,6 +149,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         allCommentsByParentIds: payload,
+      };
+    case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
+      return {
+        ...state,
+        reactionBottomSheet: payload || initState.reactionBottomSheet,
       };
     default:
       return state;
