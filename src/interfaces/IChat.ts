@@ -125,6 +125,7 @@ export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
 
 export type IMessage = _GMessage & {
   _id: string | number; // id of the message from gifted chat
+  room_id: string;
   user: IChatUser;
   quoted_message?: IMessage;
   reactions?: IReaction[];
