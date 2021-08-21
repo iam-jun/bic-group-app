@@ -204,3 +204,14 @@ export interface IPayloadUpdateReactionOfPostById {
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
 }
+
+export interface IPayloadUpdateCommentsById {
+  id: string;
+  comments: IReaction[];
+  isMerge: boolean;
+}
+
+export interface IPayloadGetCommentsById {
+  id: string;
+  isMerge: boolean;
+}

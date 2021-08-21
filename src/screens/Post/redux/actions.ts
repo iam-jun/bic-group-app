@@ -11,6 +11,7 @@ import {
   IPayloadReactToPost,
   IPayloadPutEditPost,
   IPostAudienceSheet,
+  IPayloadUpdateCommentsById, IPayloadGetCommentsById,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -69,6 +70,10 @@ const postActions = {
     type: postTypes.SET_MENTION_SEARCH_RESULT,
     payload,
   }),
+  setAllCommentsByParentIds: (payload: {[x: string]: IReaction}) => ({
+    type: postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS,
+    payload,
+  }),
 
   //saga
   postCreateNewPost: (payload: IPostCreatePost) => ({
@@ -112,6 +117,16 @@ const postActions = {
   }),
   hidePostAudiencesBottomSheet: () => ({
     type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
+  }),
+  updateAllCommentsByParentIdsWithComments: (
+    payload: IPayloadUpdateCommentsById,
+  ) => ({
+    type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
+    payload,
+  }),
+  getCommentsById: (payload: IPayloadGetCommentsById) => ({
+    type: postTypes.GET_COMMENTS_BY_IDS,
+    payload,
   }),
 };
 

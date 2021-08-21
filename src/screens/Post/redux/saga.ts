@@ -1,12 +1,14 @@
 import {put, call, takeLatest, select} from 'redux-saga/effects';
-import {isArray} from 'lodash';
+import {isArray, get} from 'lodash';
 import i18n from 'i18next';
 
 import {
   IOwnReaction,
   IParamSearchMentionAudiences,
+  IPayloadGetCommentsById,
   IPayloadPutEditPost,
   IPayloadReactToPost,
+  IPayloadUpdateCommentsById,
   IPostActivity,
   IPostCreatePost,
   IReaction,
@@ -23,6 +25,7 @@ import {showHeaderFlashMessage} from '~/store/app/actions';
 import {IHeaderFlashMessage} from '~/interfaces/common';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -45,6 +48,11 @@ export default function* postSaga() {
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
     showPostAudienceBottomSheet,
   );
+  yield takeLatest(
+    postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
+    updateAllCommentsByParentIdsWithComments,
+  );
+  yield takeLatest(postTypes.GET_COMMENTS_BY_IDS, getCommentsById);
 }
 
 function* postCreateNewPost({
@@ -347,5 +355,58 @@ function* showPostAudienceBottomSheet({
     );
   } else {
     console.log(`\x1b[31m🐣️saga showPostAudienceSheet post not found\x1b[0m`);
+  }
+}
+
+function* updateAllCommentsByParentIdsWithComments({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadUpdateCommentsById;
+}) {
+  const {id, comments, isMerge} = payload || {};
+  const allComments = yield select(state =>
+    get(state, postKeySelector.allCommentsByParentIds),
+  ) || {};
+  const commentsById = allComments[id] || [];
+  let newComments;
+  if (isMerge) {
+    newComments = commentsById.concat(comments);
+  } else {
+    newComments = comments;
+  }
+  allComments[id] = newComments.sort(
+    (c1: IReaction, c2: IReaction) =>
+      c1?.created_at && c2?.created_at && c1?.created_at > c2?.created_at,
+  );
+  yield put(postActions.setAllCommentsByParentIds(allComments));
+}
+
+function* getCommentsById({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetCommentsById;
+}) {
+  const {id, isMerge} = payload || {};
+  try {
+    const response = yield call(postDataHelper.getCommentsById, id);
+    if (response?.length > 0) {
+      const p = {id, comments: response, isMerge};
+      yield put(postActions.updateAllCommentsByParentIdsWithComments(p));
+    }
+  } catch (e) {
+    console.log(
+      `\x1b[34m🐣️ saga getCommentsById error:`,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
+    yield put(
+      modalActions.showAlert({
+        title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+        content:
+          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+        confirmLabel: i18n.t('common:text_ok'),
+      }),
+    );
   }
 }

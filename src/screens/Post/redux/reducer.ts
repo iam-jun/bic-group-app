@@ -25,6 +25,7 @@ const initState = {
   postDetail: {},
   replyingComment: {},
   allPosts: {},
+  allCommentsByParentIds: {},
   postAudienceSheet: {
     isShow: false,
     data: undefined,
@@ -138,6 +139,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         postAudienceSheet: initState.postAudienceSheet,
+      };
+    case postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS:
+      return {
+        ...state,
+        allCommentsByParentIds: payload,
       };
     default:
       return state;

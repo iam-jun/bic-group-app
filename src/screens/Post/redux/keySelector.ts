@@ -17,6 +17,10 @@ const postKeySelector = {
   postOwnReactionById: (id: string) => `post.allPosts.${id}.own_reactions`,
   postReactionCountsById: (id: string) => `post.allPosts.${id}.reaction_counts`,
   postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
+  postLatestReactionsComments: (id: string) =>
+    `post.allPosts.${id}.latest_reactions.comment`,
+  allCommentsByParentIds: 'post.allCommentsByParentIds',
+  commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
 };
 
 export default postKeySelector;
