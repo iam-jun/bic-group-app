@@ -35,7 +35,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   disabled,
   ...props
 }: ButtonPrimaryProps) => {
-  const {colors, spacing}: ITheme = useTheme();
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
 
   const _colorHover = colorHover || colors.iconTint;
   let _backgroundColor = color || colors.bgButtonPrimary;
