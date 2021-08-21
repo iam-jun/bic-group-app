@@ -99,6 +99,7 @@ const icons = {
   ImagePlus: 'ImagePlus',
   Sync: 'Sync',
   Link: 'Link',
+  menu: 'EllipsisH',
   EllipsisV: 'EllipsisV',
   EllipsisH: 'EllipsisH',
   TachometerFastAlt: 'TachometerFastAlt',

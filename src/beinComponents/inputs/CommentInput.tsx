@@ -183,7 +183,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             autoFocus={autoFocus}
             placeholder={placeholder}
             onChangeText={_onChangeText}>
-            <Text allowMarkdown showRawText={true}>
+            <Text useParseText showRawText={true}>
               {text}
             </Text>
           </TextInput>

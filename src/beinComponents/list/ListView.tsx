@@ -188,7 +188,11 @@ const ListView: React.FC<ListViewProps> = ({
         }
         refreshControl={
           onRefresh ? (
-            <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
+            <RefreshControl
+              refreshing={!!refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.borderDisable}
+            />
           ) : undefined
         }
         onEndReached={() => onLoadMore?.()}
