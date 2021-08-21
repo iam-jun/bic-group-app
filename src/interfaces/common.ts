@@ -29,3 +29,8 @@ export interface IHeaderFlashMessage {
   props: FlashMessageProps;
   duration?: number;
 }
+
+export interface IRightMenu {
+  type: string;
+  title: string;
+}
