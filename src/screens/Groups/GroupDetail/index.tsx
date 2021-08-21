@@ -13,7 +13,8 @@ import Header from '~/beinComponents/Header';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import groupsActions from '~/screens/Groups/redux/actions';
-import useGroups from '~/hooks/groups';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../redux/keySelector';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -24,9 +25,11 @@ const GroupDetail = (props: any) => {
   const {streamClient} = useContext(AppContext);
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
-  const groupData = useGroups();
-  const {groupDetail, refreshingGroupPosts} = groupData;
-  const {id: groupId} = groupDetail?.group;
+  const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
+  const {id: groupId} = groupInfo;
 
   const getGroupPosts = () => {
     if (streamClient) {

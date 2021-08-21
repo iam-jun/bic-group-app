@@ -209,10 +209,10 @@ const requestJoinedGroups = async () => {
   }
 };
 
-const requestGroupPosts = async (payload: IPayloadGetGroupPost) => {
+function* requestGroupPosts(payload: IPayloadGetGroupPost) {
   try {
     const {userId, groupId, streamClient} = payload;
-    const result = await groupsDataHelper.getMyGroupPosts(
+    const result: unknown = yield groupsDataHelper.getMyGroupPosts(
       userId,
       groupId,
       streamClient,
@@ -226,7 +226,7 @@ const requestGroupPosts = async (payload: IPayloadGetGroupPost) => {
       '\x1b[0m',
     );
   }
-};
+}
 
 const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
   try {

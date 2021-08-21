@@ -693,7 +693,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 7b423f9e248eae65987838148c36eec1dbfe0b53
-  FBReactNativeSpec: d4bf8a14a1f405a2f14966eb5aae072e77d3c81f
+  FBReactNativeSpec: d66579f911bc0a6931931ee2c0e6b6b6c7a456f6
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
   FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
@@ -726,11 +726,11 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 124e8f99992490d0d13e0649d950d3e1aae06fe9
   React-jsinspector: 500a59626037be5b3b3d89c5151bc3baa9abf1a9
   react-native-config: 387b1ea507bc50a2059e69149dac1342b9532f58
-  react-native-document-picker: dc2b62ed1040219c7c9d6c89854553b59424e92e
-  react-native-netinfo: 34f4d7a42f49157f3b45c14217d256bce7dc9682
-  react-native-safe-area-context: 8465df05de8106c584b117f0e027e17174d6e02e
+  react-native-document-picker: 5e691d2d993d49ba5a736dfc88fe4d72592ee0d2
+  react-native-netinfo: e849fc21ca2f4128a5726c801a82fc6f4a6db50d
+  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-unicons: 3f98688cbfc9f47e3ae45dd1560b7a2ab65075f4
-  react-native-video: 1574074179ecaf6a9dd067116c8f31bf9fec15c8
+  react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
   React-perflogger: aad6d4b4a267936b3667260d1f649b6f6069a675
   React-RCTActionSheet: fc376be462c9c8d6ad82c0905442fd77f82a9d2a
   React-RCTAnimation: ba0a1c3a2738be224a08092fa7f1b444ab77d309
@@ -744,15 +744,15 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: ff951a0c241bfaefc4940a3f1f1a229e7cb32fa6
   ReactCommon: bedc99ed4dae329c4fcf128d0c31b9115e5365ca
   RNAWSCognito: e2c01d53b4e6b83e1db587f06d34fead6fed4949
-  RNCAsyncStorage: 8324611026e8dc3706f829953aa6e3899f581589
-  RNDateTimePicker: c9911be59b1f8670b9f244b85af3a7c295e175ed
-  RNDeviceInfo: e87b1a06d349958bd03c96c43d070ad329ef6c2d
+  RNCAsyncStorage: 56a3355a10b5d660c48c6e37325ac85ebfd09885
+  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
+  RNDeviceInfo: ace1442cd0f7d01292a39a3b587666177eaf8cb0
   RNFastImage: a7384db75df352500261e8e8f1ac2026def26102
   RNFBApp: 97b2da195d4606716b284a7c8a988dd8ed5cec41
   RNFBMessaging: ee81245484ef7e835975d09c2cd4000dfa2ae5e7
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 35a3ceb837446fa11547704709bb22b5fac6d584
-  RNInAppBrowser: 5672feb84e731411f6911979c71649c240a90202
+  RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
   RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f

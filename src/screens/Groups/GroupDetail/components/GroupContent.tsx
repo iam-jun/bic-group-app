@@ -8,13 +8,13 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import {ITheme} from '~/theme/interfaces';
-import useGroups from '~/hooks/groups';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 
 const GroupContent = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const groupData = useGroups();
-  const {groupPosts} = groupData;
+  const groupPosts = useKeySelector(groupsKeySelector.groupPosts);
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
