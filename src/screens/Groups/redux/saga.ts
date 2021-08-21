@@ -1,5 +1,9 @@
 import {call, put, select, takeLatest} from 'redux-saga/effects';
-import {IGroup, IGroupDetailEdit} from '~/interfaces/IGroup';
+import {
+  IGroup,
+  IGroupDetailEdit,
+  IPayloadGetGroupPost,
+} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
@@ -110,7 +114,6 @@ function* selectGroupDetail({payload}: {type: string; payload: IGroup}) {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
     // GET MORE INFO FOR GROUP HERE
-    yield put(groupsActions.getGroupPosts(payload.id));
     yield put(groupsActions.getGroupDetail(payload.id));
 
     yield put(groupsActions.setLoadingGroupDetail(false));
@@ -143,10 +146,16 @@ const getGroupChild = (
   }
 };
 
-function* getGroupPosts({payload}: {type: string; payload: number}) {
+function* getGroupPosts({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetGroupPost;
+}) {
   try {
     yield put(groupsActions.setLoadingGroupPosts(true));
 
+    // @ts-ignore
     const result = yield requestGroupPosts(payload);
     yield put(postActions.addToAllPosts(result));
     yield put(groupsActions.setGroupPosts(result));
@@ -200,16 +209,19 @@ const requestJoinedGroups = async () => {
   }
 };
 
-const requestGroupPosts = async (userId: number) => {
+const requestGroupPosts = async (payload: IPayloadGetGroupPost) => {
   try {
-    const response = await groupsDataHelper.getMyGroupPosts(userId);
-    if (response.code === 200 && response.data?.length > 0) {
-      return response.data;
-    }
+    const {userId, groupId, streamClient} = payload;
+    const result = await groupsDataHelper.getMyGroupPosts(
+      userId,
+      groupId,
+      streamClient,
+    );
+    return result;
   } catch (err) {
     console.log(
       '\x1b[33m',
-      'namanh --- getMyGroupPosts | getMyGroupPosts catch: ',
+      'requestGroupPosts catch: ',
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );

@@ -1,5 +1,10 @@
 import groupsTypes from '~/screens/Groups/redux/types';
-import {IGroup, IGroupDetail, IGroupDetailEdit} from '~/interfaces/IGroup';
+import {
+  IGroup,
+  IGroupDetail,
+  IGroupDetailEdit,
+  IPayloadGetGroupPost,
+} from '~/interfaces/IGroup';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -81,7 +86,7 @@ const groupsActions = {
       payload,
     };
   },
-  getGroupPosts: function (payload: number) {
+  getGroupPosts: function (payload: IPayloadGetGroupPost) {
     return {
       type: groupsTypes.GET_GROUP_POSTS,
       payload,

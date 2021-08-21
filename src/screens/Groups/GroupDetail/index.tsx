@@ -13,7 +13,7 @@ import Header from '~/beinComponents/Header';
 const GroupDetail = (props: any) => {
   const params = props.route.params;
 
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   return (
