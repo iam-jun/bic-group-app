@@ -92,7 +92,7 @@ const GroupMembers = () => {
   return (
     <View style={styles.container}>
       <SectionList
-        style={{}}
+        style={styles.content}
         sections={sectionList}
         keyExtractor={(item, index) => `section_list_${item}_${index}`}
         onEndReached={onLoadMore}
@@ -111,7 +111,8 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.placeholder,
+      paddingTop: spacing.padding.base,
     },
     itemContainer: {
       height: undefined,
@@ -122,6 +123,9 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.base,
+    },
+    content: {
+      backgroundColor: colors.background,
     },
   });
 };
