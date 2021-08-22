@@ -13,6 +13,7 @@ import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {Text} from '~/components';
+import useTabBadge from '~/hooks/tabBadge';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -33,6 +34,7 @@ const MainTabs = () => {
   const Tab = isPhone ? BottomTab : SideTab;
 
   const styles = createStyles(theme, isPhone, isBigTablet);
+  const tabBadge = useTabBadge();
 
   return (
     // @ts-ignore
@@ -82,8 +84,9 @@ const MainTabs = () => {
                 );
               },
               tabBarLabel: () => null,
+              tabBarBadge: tabBadge[name],
               tabBarBadgeStyle: {
-                backgroundColor: '#EC2626',
+                backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
               },
             }}
           />

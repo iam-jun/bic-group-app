@@ -71,6 +71,7 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.large,
+      marginTop: spacing.margin.base,
     },
     labelDescription: {
       paddingVertical: spacing.padding.small,

@@ -23,7 +23,7 @@ const ButtonBottomFixed: React.FC<ButtonBottomFixedProps> = ({
   linearHeight = 36,
   ...props
 }: ButtonBottomFixedProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle();
 
