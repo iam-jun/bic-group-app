@@ -26,6 +26,7 @@ import {IHeaderFlashMessage} from '~/interfaces/common';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {sortComments} from '~/screens/Post/helper/PostUtils';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -408,10 +409,7 @@ function* updateAllCommentsByParentIdsWithComments({
   } else {
     newComments = comments;
   }
-  allComments[id] = newComments.sort(
-    (c1: IReaction, c2: IReaction) =>
-      c1?.created_at && c2?.created_at && c1?.created_at > c2?.created_at,
-  );
+  allComments[id] = sortComments(newComments);
   yield put(postActions.setAllCommentsByParentIds(allComments));
 }
 

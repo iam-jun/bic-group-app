@@ -22,6 +22,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
+import {sortComments} from '~/screens/Post/helper/PostUtils';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
@@ -43,6 +44,9 @@ const PostDetail = (props: any) => {
 
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
+  const latest_reactions = useKeySelector(
+    postKeySelector.postLatestReactionsComments(id),
+  );
   const replying = usePostDetailReplyingComment();
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
@@ -169,7 +173,7 @@ const PostDetail = (props: any) => {
       <ListView
         listRef={listRef}
         isFullView
-        data={comments || []}
+        data={comments || sortComments(latest_reactions) || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}

@@ -22,7 +22,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   contentBackgroundColor,
   onPressReply,
 }: CommentItemProps) => {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
   const [commentChildren, setCommentChildren] = useState<IReaction[]>(
     commentData?.latest_children?.comment || [],
   );
