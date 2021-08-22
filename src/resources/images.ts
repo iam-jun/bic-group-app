@@ -8,6 +8,7 @@ const images = {
   img_group_avatar_default: require('../../assets/images/group_avatar_default.png'),
   img_delete: require('../../assets/images/img_delete.png'),
   img_search_empty: require('../../assets/images/search_empty.png'),
+  img_right_col: require('../../assets/images/img_right_col.png'),
 };
 
 export default images;

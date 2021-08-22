@@ -41,7 +41,7 @@ const themeStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     listStyle: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor: colors.placeholder,
     },
     listHeaderComponentStyle: {
       marginTop: spacing?.margin.base,
