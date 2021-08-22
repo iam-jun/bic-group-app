@@ -116,6 +116,7 @@ const PostDetail = (props: any) => {
     const bgColor = item.id === replying?.id ? colors.bgFocus : undefined;
     return (
       <CommentItem
+        postId={id}
         commentData={item}
         contentBackgroundColor={bgColor}
         onPressReply={(data, isChild) => {

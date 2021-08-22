@@ -193,6 +193,8 @@ export interface IPostAudienceSheet {
 
 export interface IPayloadReactToId {
   id: string;
+  postId?: string;
+  parentCommentId?: string;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;

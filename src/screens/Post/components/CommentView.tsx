@@ -16,12 +16,16 @@ import ReactionView from '~/screens/Post/components/ReactionView';
 import {useUserIdAuth} from '~/hooks/auth';
 
 export interface CommentViewProps {
+  postId: string;
+  parentCommentId?: string;
   commentData: IReaction;
   onPressReply: (data: IReaction) => void;
   contentBackgroundColor?: string;
 }
 
 const CommentView: React.FC<CommentViewProps> = ({
+  postId,
+  parentCommentId,
   commentData,
   onPressReply,
   contentBackgroundColor,
@@ -52,6 +56,8 @@ const CommentView: React.FC<CommentViewProps> = ({
     if (id) {
       const payload: IPayloadReactToId = {
         id,
+        postId,
+        parentCommentId,
         reactionId: reactionId,
         ownReaction: {},
         reactionCounts: children_counts,
@@ -65,6 +71,8 @@ const CommentView: React.FC<CommentViewProps> = ({
     if (id) {
       const payload: IPayloadReactToId = {
         id,
+        postId,
+        parentCommentId,
         reactionId: reactionId,
         ownReaction: {},
         reactionCounts: children_counts,

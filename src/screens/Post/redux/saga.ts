@@ -27,6 +27,7 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
+import comment from '~/hooks/comment';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -294,12 +295,45 @@ function* postReactToComment({
   type: string;
   payload: IPayloadReactToId;
 }) {
-  const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
+  const {
+    id,
+    postId,
+    parentCommentId,
+    reactionId,
+    reactionCounts,
+    ownReaction,
+    userId,
+  } = payload;
+  const isChildComment = !!parentCommentId;
+  if (!postId) {
+    console.log(`\x1b[31m🐣️ saga postReactToComment: postId not found\x1b[0m`);
+    return;
+  }
   try {
     const data: ReactionType[] = [];
     data.push(reactionId);
     const added = ownReaction?.[reactionId]?.length > 0;
     if (!added) {
+      const allCommentsByIds: any = yield select(state =>
+        get(state, postKeySelector.allCommentsByParentIds),
+      );
+      if (!isChildComment) {
+        const comments: IReaction[] = allCommentsByIds[postId];
+        const comment = comments.find(c => c?.id === id) as IReaction;
+        const newChildrenCounts = comment.children_counts || {};
+        newChildrenCounts[reactionId] =
+          (newChildrenCounts[reactionId] || 0) + 1;
+        comment.children_counts = newChildrenCounts;
+        yield put(
+          postActions.updateAllCommentsByParentIdsWithComments({
+            id: postId,
+            isMerge: false,
+            comments: [...comments],
+          }),
+        );
+      } else if (isChildComment) {
+        //todo update for children
+      }
       const response = yield call(
         postDataHelper.postReaction,
         id,
@@ -307,6 +341,9 @@ function* postReactToComment({
         data,
         userId,
       );
+      if (response?.data?.[0]) {
+        const newReactionId = response?.data?.[0];
+      }
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback

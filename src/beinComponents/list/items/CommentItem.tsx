@@ -12,12 +12,14 @@ import Icon from '~/beinComponents/Icon';
 import CommentView from '~/screens/Post/components/CommentView';
 
 export interface CommentItemProps {
+  postId: string;
   commentData: IReaction;
   contentBackgroundColor?: string;
   onPressReply?: (data: IReaction, isChild?: boolean) => void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
+  postId,
   commentData,
   contentBackgroundColor,
   onPressReply,
@@ -49,7 +51,13 @@ const CommentItem: React.FC<CommentItemProps> = ({
   };
 
   const renderCommentChildItem = useCallback(({item}) => {
-    return <CommentView commentData={item} onPressReply={onPressReplyChild} />;
+    return (
+      <CommentView
+        postId={postId}
+        commentData={item}
+        onPressReply={onPressReplyChild}
+      />
+    );
   }, []);
 
   const renderCommentChildren = () => {
@@ -114,6 +122,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   return (
     <View style={styles.container}>
       <CommentView
+        postId={postId}
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}
