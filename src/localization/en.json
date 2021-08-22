@@ -319,7 +319,9 @@
       "unknown": "Unknown http error",
       "401": "Unauthorized",
       "token_expired": "Token expired"
-    }
+    },
+    "not_found_desc": "We couldn't find the page you are looking for? Sometimes, something oddly happens.",
+    "button_not_found": "Go Back to Safety"
   },
   "badge": {
     "scroll_bottom": "Scroll to bottom"
