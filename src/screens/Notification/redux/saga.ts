@@ -13,11 +13,17 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
     const {userId, streamClient} = payload;
     yield put(notificationsActions.setLoadingNotifications(true));
 
-    const result = yield notificationsDataHelper.getNotificationList(
+    const response = yield notificationsDataHelper.getNotificationList(
       userId,
       streamClient,
     );
-    yield put(notificationsActions.setNotifications(result));
+
+    yield put(
+      notificationsActions.setNotifications({
+        notifications: response.results,
+        unseen: response.unseen,
+      }),
+    );
 
     yield put(notificationsActions.setLoadingNotifications(false));
   } catch (err) {

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
+import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 import {View, StyleSheet, Platform} from 'react-native';
 
@@ -8,6 +9,12 @@ import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import useTabBadge from '~/hooks/tabBadge';
+
+import {AppContext} from '~/contexts/AppContext';
+import notificationsActions from '../../../../screens/Notification/redux/actions';
+import useNotifications from '~/hooks/notifications';
+import {useUserIdAuth} from '~/hooks/auth';
+import RedDot from '~/beinComponents/Badge/RedDot';
 
 const Tab = createSideTabNavigator();
 
@@ -22,6 +29,39 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
   const tabBadge = useTabBadge();
+
+  const dispatch = useDispatch();
+  const notificationData = useNotifications();
+
+  const {streamClient} = useContext(AppContext);
+  const userId = useUserIdAuth();
+  useEffect(() => {
+    dispatch(
+      notificationsActions.getNotifications({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
+  }, []);
+
+  // render badget function
+  const renderBadget = name => {
+    let number = 0;
+    switch (name) {
+      case 'notification':
+        number = notificationData.unseenNumber;
+        break;
+      // implement other badget number here
+      default:
+        break;
+    }
+
+    if (number > 0) {
+      return <RedDot style={{top: 15, left: 45}} number={number} />;
+    } else {
+      return null;
+    }
+  };
 
   return (
     // @ts-ignore
@@ -53,6 +93,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
                       tintColor="none"
                       bold={focused}
                     />
+                    {renderBadget(name)}
                   </View>
                 );
               },
@@ -81,6 +122,7 @@ const CreateStyle = () => {
       height: 64,
       justifyContent: 'center',
       alignItems: 'center',
+      position: 'relative',
     },
   });
 };

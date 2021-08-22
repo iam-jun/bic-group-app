@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
+import {useDispatch} from 'react-redux';
+
 import {useTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -14,6 +16,11 @@ import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {Text} from '~/components';
 import useTabBadge from '~/hooks/tabBadge';
+
+import {AppContext} from '~/contexts/AppContext';
+import notificationsActions from '../../../../screens/Notification/redux/actions';
+import useNotifications from '~/hooks/notifications';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -35,6 +42,40 @@ const MainTabs = () => {
 
   const styles = createStyles(theme, isPhone, isBigTablet);
   const tabBadge = useTabBadge();
+
+  const dispatch = useDispatch();
+  const notificationData = useNotifications();
+
+  const {streamClient} = useContext(AppContext);
+
+  const userId = useUserIdAuth();
+  useEffect(() => {
+    dispatch(
+      notificationsActions.getNotifications({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
+  }, []);
+
+  // render badget function
+  const getBadgetNumber = name => {
+    let number = 0;
+    switch (name) {
+      case 'notification':
+        number = notificationData.unseenNumber;
+        break;
+      // implement other badget number here
+      default:
+        break;
+    }
+
+    if (number > 0) {
+      return number >= 100 ? '99+' : number;
+    } else {
+      return undefined;
+    }
+  };
 
   return (
     // @ts-ignore
@@ -88,6 +129,7 @@ const MainTabs = () => {
               tabBarBadgeStyle: {
                 backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
               },
+              tabBarBadge: getBadgetNumber(name),
             }}
           />
         );

@@ -9,6 +9,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {AppContext} from '~/contexts/AppContext';
 import notificationsActions from './redux/actions';
 import useNotifications from '~/hooks/notifications';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const Notfitication = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,9 @@ const Notfitication = () => {
 
   const {streamClient} = useContext(AppContext);
 
+  const userId = useUserIdAuth();
   useEffect(() => {
     // TODO: will need to change userId
-    const userId = 0;
     dispatch(
       notificationsActions.getNotifications({
         streamClient,
@@ -39,7 +40,7 @@ const Notfitication = () => {
         loading={loadingNotifications}
         isFullView
         renderItemSeparator={() => <ViewSpacing height={2} />}
-        data={notificationList.results}
+        data={notificationList}
         onItemPress={_onItemPress}
       />
     </ScreenWrapper>
