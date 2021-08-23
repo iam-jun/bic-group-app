@@ -77,8 +77,6 @@ const AvatarGroup = ({
     if (!Array.isArray(source))
       return (
         <AvatarComponent
-          variant={'ultraLarge'}
-          {...props}
           {...props}
           source={source}
           placeholderSource={images.img_group_avatar_default}
