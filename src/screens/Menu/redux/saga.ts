@@ -5,6 +5,7 @@ import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import {IUserProfile, IUserEdit} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
 import i18next from 'i18next';
+import {mapProfile} from './helper';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
@@ -17,10 +18,8 @@ export default function* menuSaga() {
 function* getMyProfile({payload}: {type: string; payload: number}) {
   const {myProfile} = yield select();
   try {
-    const result: IUserProfile = yield requestUserProfile(payload);
-    yield put(
-      menuActions.setMyProfile({...result, language: result.language || []}),
-    );
+    const result: unknown = yield requestUserProfile(payload);
+    yield put(menuActions.setMyProfile(mapProfile(result)));
   } catch (err) {
     yield put(menuActions.setMyProfile(myProfile));
     console.log('getMyProfile error:', err);
@@ -73,10 +72,8 @@ function* selectPublicProfile({
 
 function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
   try {
-    const result: IUserProfile = yield requestEditMyProfile(payload);
-    yield put(
-      menuActions.setMyProfile({...result, language: result.language || []}),
-    );
+    const result: unknown = yield requestEditMyProfile(payload);
+    yield put(menuActions.setMyProfile(mapProfile(result)));
   } catch (err) {
     console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
     yield put(
