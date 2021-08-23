@@ -1,13 +1,15 @@
 import React from 'react';
-import {StyleSheet, StyleProp, View, ViewStyle} from 'react-native';
-import {AvatarProps, AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
-import {ITheme} from '~/theme/interfaces';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import AvatarComponent, {
+  AvatarProps,
+  AvatarType,
+} from '~/beinComponents/Avatar/AvatarComponent';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
-import {fontFamilies} from '~/theme/fonts';
-import Avatar from '.';
 import images from '~/resources/images';
+import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
 
 export interface AvatarGroupProps extends AvatarProps {
   variant?: AvatarType;
@@ -74,7 +76,9 @@ const AvatarGroup = ({
   const renderItems = () => {
     if (!Array.isArray(source))
       return (
-        <Avatar.UltraLarge
+        <AvatarComponent
+          variant={'ultraLarge'}
+          {...props}
           {...props}
           source={source}
           placeholderSource={images.img_group_avatar_default}
