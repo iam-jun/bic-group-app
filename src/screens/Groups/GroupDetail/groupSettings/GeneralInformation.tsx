@@ -18,7 +18,7 @@ import * as modalActions from '~/store/modal/actions';
 import GroupSectionItem from '../components/GroupSectionItem';
 import {validateFile} from '~/utils/validation';
 import {IFileResponse} from '~/interfaces/common';
-import dimension from '~/theme/dimension';
+import {groupProfileImageCropRatio} from '~/theme/dimension';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -69,7 +69,10 @@ const GeneralInformation = () => {
   const editGroupDescripton = () =>
     rootNavigation.navigate(groupStack.editGroupDescription);
 
-  const uploadFile = (file: IFileResponse, fieldName: string) => {
+  const uploadFile = (
+    file: IFileResponse,
+    fieldName: 'icon' | 'background_img_url',
+  ) => {
     dispatch(
       groupsActions.uploadImage({
         id,
@@ -78,14 +81,12 @@ const GeneralInformation = () => {
       }),
     );
   };
+
+  // fieldName: field name in group profile to be edited
+  // 'icon' for avatar and 'background_img_url' for cover
   const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
     ImagePicker.openPicker({
-      width:
-        fieldName === 'background_img_url' ? dimension.deviceWidth : undefined,
-      height:
-        fieldName === 'background_img_url'
-          ? (dimension.deviceWidth / 16) * 9
-          : undefined,
+      ...groupProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
       multiple: false,

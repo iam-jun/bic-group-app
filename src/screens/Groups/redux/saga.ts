@@ -249,7 +249,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     formData.append('file', {
       type: image.type,
       // @ts-ignore
-      name: image.name || 'fileMessage',
+      name: image.name || 'imageName',
       uri: image.uri,
     });
     const response: IResponseData = yield groupsDataHelper.uploadImage(

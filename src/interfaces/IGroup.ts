@@ -59,6 +59,6 @@ export interface IGroupDetail {
 
 export interface IGroupImageUpload {
   id: number;
-  fieldName: string;
+  fieldName: 'icon' | 'background_img_url';
   image: IFileResponse;
 }
