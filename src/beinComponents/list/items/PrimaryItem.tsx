@@ -22,9 +22,9 @@ import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
   height?: number;
-  title?: string;
+  title?: string | React.ReactNode;
   titleProps?: TextProps;
-  subTitle?: string;
+  subTitle?: string | React.ReactNode;
   subTitleProps?: TextProps;
   showAvatar?: boolean;
   avatar?: string;

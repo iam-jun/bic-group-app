@@ -145,7 +145,9 @@ const Conversation = (): React.ReactElement => {
           <ViewSpacing height={spacing.margin.base} />
           <Text>
             <Text.BodyS>
-              {descriptionShowAll ? conversation.description : shortDescription}
+              {!descriptionShowAll && !!shortDescription
+                ? shortDescription
+                : conversation.description}
             </Text.BodyS>
             {!!shortDescription && (
               <Text.ButtonSmall

@@ -1,4 +1,5 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
@@ -22,11 +23,14 @@ const TabMenu = ({
   menuInactiveTintColor,
   indicatorActiveColor,
 }: TabMenuProps) => {
-  const theme: ITheme = useTheme();
+  const theme = useTheme() as ITheme;
+  const styles = createStyles(theme);
 
   return (
     <Tab.Navigator
+      sceneContainerStyle={styles.sceneContainerStyle}
       tabBarOptions={{
+        style: {backgroundColor: theme.colors.background},
         activeTintColor: menuActiveTintColor || theme.colors.primary7,
         inactiveTintColor: menuInactiveTintColor || theme.colors.textPrimary,
         indicatorStyle: {
@@ -50,7 +54,10 @@ const TabMenu = ({
                       size={16}
                     />
                   ) : (
-                    <Text.ButtonBase style={{width: '100%', color}}>
+                    <Text.ButtonBase
+                      allowFontScaling
+                      maxFontSizeMultiplier={1.1}
+                      style={{width: '100%', color}}>
                       {item.label}
                     </Text.ButtonBase>
                   )}
@@ -65,3 +72,13 @@ const TabMenu = ({
 };
 
 export default TabMenu;
+
+const createStyles = (theme: ITheme) => {
+  const {colors} = theme;
+
+  return StyleSheet.create({
+    sceneContainerStyle: {
+      backgroundColor: colors.placeholder,
+    },
+  });
+};

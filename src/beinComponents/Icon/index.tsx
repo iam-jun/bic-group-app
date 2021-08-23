@@ -106,7 +106,11 @@ const Icon: React.FC<IconProps> = ({
       {label && (
         <Text.ButtonBase
           useI18n
-          style={[styles.label, {color: labelColor}, labelStyle]}>
+          style={[
+            styles.label,
+            {color: labelColor || theme.colors.textPrimary},
+            labelStyle,
+          ]}>
           {label}
         </Text.ButtonBase>
       )}

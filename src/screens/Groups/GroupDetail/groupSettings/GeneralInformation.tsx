@@ -2,8 +2,8 @@ import React, {useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
@@ -29,7 +29,6 @@ import GroupSectionItem from '../components/GroupSectionItem';
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const groupData = useGroups();
   const {groupDetail, isPrivacyModalOpen} = groupData || {};
@@ -42,13 +41,24 @@ const GeneralInformation = () => {
   const popupMessage = () =>
     dispatch(
       modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
+        title: i18next.t('settings:text_info'),
+        content: i18next.t('settings:text_popup_message'),
         onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
+        confirmLabel: i18next.t('settings:text_got_it'),
       }),
     );
+
+  const helpMessage = () => {
+    baseSheetRef.current?.close();
+    dispatch(
+      modalActions.showAlert({
+        title: i18next.t('settings:text_info'),
+        content: i18next.t('settings:text_help_center'),
+        onConfirm: () => dispatch(modalActions.hideAlert()),
+        confirmLabel: i18next.t('settings:text_got_it'),
+      }),
+    );
+  };
 
   const onPrivacyModalClose = () =>
     dispatch(groupsActions.setPrivacyModalOpen(false));
@@ -68,8 +78,15 @@ const GeneralInformation = () => {
     return (
       <TouchableOpacity onPress={() => onPrivacyMenuPress(item)}>
         <PrimaryItem
-          title={t(item.title)}
-          subTitle={t(item.subtitle)}
+          title={i18next.t(item.title)}
+          subTitle={
+            <Text>
+              {`${i18next.t(item.subtitle)} `}
+              <Text onPress={helpMessage} color={theme.colors.link} useI18n>
+                settings:text_learn_more
+              </Text>
+            </Text>
+          }
           LeftComponent={
             <Icon style={styles.bottomSheetLeftIcon} icon={item.icon} />
           }
@@ -92,7 +109,7 @@ const GeneralInformation = () => {
       testID="GeneralInformation"
       style={styles.container}
       isFullView>
-      <Header title={t('settings:title_general_information')} />
+      <Header title={i18next.t('settings:title_general_information')} />
       <ScrollView>
         {/* --- AVATAR --- */}
         <View style={styles.avatarHeader}>
@@ -226,16 +243,16 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.tiny,
     },
     leftIcon: {
-      marginRight: theme.spacing.margin.extraLarge,
+      marginRight: spacing.margin.extraLarge,
     },
     rightEditIcon: {
-      marginLeft: theme.spacing.margin.extraLarge,
+      marginLeft: spacing.margin.extraLarge,
     },
     imageButton: {
       alignItems: 'center',
     },
     divider: {
-      marginVertical: theme.spacing.margin.small,
+      marginVertical: spacing.margin.small,
     },
     contentBottomSheet: {
       marginHorizontal: spacing.margin.base,
