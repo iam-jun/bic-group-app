@@ -39,7 +39,9 @@
     "text_retry": "Retry",
     "text_done": "Done",
     "text_download": "Download",
-    "text_send": "Send"
+    "text_send": "Send",
+    "text_discard_changes": "Discard Changes?",
+    "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?"
   },
   "auth": {
     "text_kickout_title": "Notice",

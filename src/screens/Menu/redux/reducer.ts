@@ -1,12 +1,11 @@
+import {IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
 
 const initMenuState = {
   loadingMyProfile: false,
   isLanguageModalOpen: false,
-  myProfile: {
-    language: [],
-  },
-  selectedProfile: {},
+  myProfile: {} as IUserProfile,
+  selectedProfile: {} as IUserProfile,
 };
 
 const menuReducer = (state = initMenuState, action: any = {}) => {

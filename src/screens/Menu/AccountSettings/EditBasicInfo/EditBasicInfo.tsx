@@ -107,20 +107,26 @@ const EditBasicInfo = () => {
     if (isChanged) {
       dispatch(
         modalActions.showAlert({
-          title: 'Discard Changes?',
+          title: i18next.t('common:text_discard_changes'),
           iconName: 'Save',
           cancelBtn: true,
           isDismissable: false,
           onConfirm: () => navigation.goBack(),
-          confirmLabel: 'Discard',
-          content:
-            'Your changes haven’t been saved. Are you sure to discard changes?',
+          confirmLabel: i18next.t('common:btn_discard'),
+          content: i18next.t('common:text_not_saved_changes_warning'),
         }),
       );
     } else {
       navigation.goBack();
     }
   };
+
+  const onGenderEditOpen = () => genderSheetRef?.current?.open?.();
+
+  const onDateEditOpen = () => setSelectingDate(true);
+  const onDateEditClose = () => setSelectingDate(false);
+
+  const onRelationshipEditOpen = () => relationshipSheetRef?.current?.open?.();
 
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
@@ -147,7 +153,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'UserSquare'}
           rightIcon={'EditAlt'}
-          onPress={() => genderSheetRef?.current?.open?.()}
+          onPress={onGenderEditOpen}
         />
         <SettingItem
           title={'settings:title_birthday'}
@@ -157,7 +163,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'Calender'}
           rightIcon={'EditAlt'}
-          onPress={() => setSelectingDate(true)}
+          onPress={onDateEditOpen}
         />
         <LanguageOptionMenu
           title={'settings:title_choose_languages'}
@@ -171,7 +177,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}
-          onPress={() => relationshipSheetRef?.current?.open?.()}
+          onPress={onRelationshipEditOpen}
         />
       </View>
 
@@ -196,7 +202,7 @@ const EditBasicInfo = () => {
           date={new Date()}
           mode={Platform.OS === 'web' ? 'time' : 'date'}
           onConfirm={onSetBirthday}
-          onCancel={() => setSelectingDate(false)}
+          onCancel={onDateEditClose}
         />
       )}
     </ScreenWrapper>

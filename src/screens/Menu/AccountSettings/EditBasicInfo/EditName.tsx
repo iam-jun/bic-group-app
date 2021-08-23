@@ -32,6 +32,8 @@ const EditName = ({onChangeName}: EditNameProps) => {
     setName(text);
   };
 
+  const onNameEditOpen = () => setEditName(true);
+
   return (
     <View>
       {editName ? (
@@ -52,7 +54,7 @@ const EditName = ({onChangeName}: EditNameProps) => {
           subtitle={name || i18next.t('settings:text_not_set')}
           leftIcon={'TextFields'}
           rightIcon={'EditAlt'}
-          onPress={() => setEditName(true)}
+          onPress={onNameEditOpen}
         />
       )}
     </View>

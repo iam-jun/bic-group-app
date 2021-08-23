@@ -3,6 +3,8 @@ import menuActions from './actions';
 import menuTypes from './types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import {IUserProfile, IUserEdit} from '~/interfaces/IAuth';
+import * as modalActions from '~/store/modal/actions';
+import i18next from 'i18next';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
@@ -71,30 +73,29 @@ function* selectPublicProfile({
 
 function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
   try {
-    const result = yield requestEditMyProfile(payload);
+    const result: IUserProfile = yield requestEditMyProfile(payload);
     yield put(
       menuActions.setMyProfile({...result, language: result.language || []}),
     );
-  } catch (error) {
-    console.log('\x1b[33m', 'editMyProfile : error', error, '\x1b[0m');
+  } catch (err) {
+    console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 
 const requestEditMyProfile = async (data: IUserEdit) => {
-  try {
-    const userId = data.id;
-    delete data.id; // edit data should not contain user's id
+  const userId = data.id;
+  delete data.id; // edit data should not contain user's id
 
-    const response = await menuDataHelper.editMyProfile(userId, data);
-    if (response.code === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestEditMyProfile catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-  }
+  const response = await menuDataHelper.editMyProfile(userId, data);
+
+  return response.data;
 };

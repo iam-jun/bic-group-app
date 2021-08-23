@@ -85,6 +85,8 @@ const LanguageOptionMenu = ({
     );
   };
 
+  const onLanguageEditOpen = () => languageSheetRef?.current?.open?.();
+
   return (
     <View>
       <SettingItem
@@ -97,7 +99,7 @@ const LanguageOptionMenu = ({
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}
-        onPress={() => languageSheetRef?.current?.open?.()}
+        onPress={onLanguageEditOpen}
       />
 
       <BottomSheet

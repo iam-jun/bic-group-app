@@ -60,6 +60,7 @@ export interface IUserProfile {
   username?: string;
   cognito_uuid?: string;
   stream_uuid?: string;
+  rocket_chat_id?: string;
   gender?: string;
   birthday?: string;
   bein_staff_role?: string;
