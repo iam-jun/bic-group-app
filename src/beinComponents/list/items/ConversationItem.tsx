@@ -23,8 +23,7 @@ const ConversationItem: React.FC<IConversation> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {text, textReversed, textSecondary} = theme.colors;
-  const [_avatar, setAvatar] = useState<string | undefined>(avatar);
-  const [_avatarGroup, setAvatarGroup] = useState<string[] | undefined>();
+  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textcolor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
 
@@ -33,7 +32,7 @@ const ConversationItem: React.FC<IConversation> = ({
       const avatarGroup = usernames.map((username: string) =>
         getAvatar(username),
       );
-      setAvatarGroup(avatarGroup);
+      setAvatar(avatarGroup);
     } else setAvatar(images.img_group_avatar_default);
   };
 
@@ -47,8 +46,7 @@ const ConversationItem: React.FC<IConversation> = ({
     <Avatar.Group
       variant="large"
       style={styles.marginRight}
-      source={!_avatarGroup && _avatar}
-      listSource={_avatarGroup}
+      source={_avatar}
       onError={onLoadAvatarError}
     />
   );

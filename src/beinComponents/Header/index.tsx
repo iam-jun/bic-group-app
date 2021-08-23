@@ -99,9 +99,10 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         {!!avatar && (
-          <Avatar
+          <Avatar.Group
             source={avatar}
-            style={{marginLeft: spacing?.margin.base}}
+            style={styles.avatar}
+            variant="small"
             {...avatarProps}
           />
         )}
@@ -173,6 +174,9 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     flashMessage: {},
+    avatar: {
+      marginHorizontal: spacing?.margin.base,
+    },
   });
 };
 
