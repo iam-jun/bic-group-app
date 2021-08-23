@@ -18,7 +18,7 @@ const ButtonBottomSecondary: React.FC<ButtonBottomSecondaryProps> = ({
   style,
   ...props
 }: ButtonBottomSecondaryProps) => {
-  const {colors, spacing}: ITheme = useTheme();
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
 
   return (
     <ButtonBottomFixed

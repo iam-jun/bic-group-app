@@ -12,11 +12,6 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
   const {type, payload} = action;
 
   switch (type) {
-    case homeTypes.SET_HOME_POSTS_IMPORTANT_COUNT:
-      return {
-        ...state,
-        homePostsImportantCount: payload || '',
-      };
     case homeTypes.SET_LOADING_HOME_POSTS:
       return {
         ...state,

@@ -1,12 +1,13 @@
-import {generateRoomName} from '~/utils/generator';
 import i18next from 'i18next';
+import {AppConfig} from '~/configs';
 import {roomTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
-import {IConversation, IMessage} from '~/interfaces/IChat';
+import {IAttachment, IConversation, IMessage} from '~/interfaces/IChat';
+import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
-import {AppConfig} from '~/configs';
-import {DocumentPickerResponse} from 'react-native-document-picker';
+import {generateRoomName} from '~/utils/generator';
+import {IFileResponse} from './../../interfaces/IChat';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -36,12 +37,12 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
   const {type, usernames, members} = item?.customFields || {};
 
   const membersExcludeMe = (members || []).filter(
-    (member: any) => member.username !== user.username,
+    (member: any) => member?.username !== user?.username,
   );
 
   const name =
     type === roomTypes.DIRECT
-      ? members?.length > 0
+      ? (members || []).length > 0
         ? generateRoomName(
             user,
             membersExcludeMe.map(
@@ -86,10 +87,16 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
 
 export const mapMessage = (item: any): IMessage => {
   const user = mapUser(item?.u);
-  const attachment = item.attachments?.length > 0 && {
-    name: item.attachments[0].title,
-    ...JSON.parse(item.attachments[0].description || {}),
-  };
+  let attachment = null;
+  if (item.attachments?.length > 0) {
+    const _attachment: IAttachment = item.attachments[0];
+    const extraData = JSON.parse(_attachment.description || '{}');
+    attachment = {
+      ..._attachment,
+      name: _attachment.title,
+      ...extraData,
+    };
+  }
   const type = item.type || attachment?.type;
 
   return {
@@ -129,9 +136,27 @@ export const getAvatar = (username: string) =>
 export const getRoomAvatar = (roomId: string) =>
   `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}`;
 
-export const validateFile = (file: DocumentPickerResponse): string | null => {
+export const getMessageAttachmentUrl = (attachmentUrl: string) => {
+  const auth = getChatAuthInfo();
+
+  if (attachmentUrl.startsWith('http')) {
+    if (attachmentUrl.includes('rc_token')) {
+      return encodeURI(attachmentUrl);
+    }
+    return encodeURI(
+      `${attachmentUrl}?rc_uid=${auth.userId}&rc_token=${auth.accessToken}`,
+    );
+  }
+  return encodeURI(
+    `${getEnv('ROCKET_CHAT_SERVER')}${attachmentUrl}?rc_uid=${
+      auth.userId
+    }&rc_token=${auth.accessToken}`,
+  );
+};
+
+export const validateFile = (file: IFileResponse): string | null => {
   if (file.size > AppConfig.maxFileSize) {
-    return 'Your video must be less than 10MB';
+    return i18next.t('chat:error:file:over_file_size');
   }
   return null;
 };

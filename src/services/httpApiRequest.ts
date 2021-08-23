@@ -106,7 +106,7 @@ const getBeinIdToken = (): string => {
   );
 };
 
-const getChatAuthInfo = () => {
+export const getChatAuthInfo = () => {
   return _.get(Store.getCurrentAuth(), 'chat', {});
 };
 

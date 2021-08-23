@@ -2,9 +2,8 @@ import React, {useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {launchImageLibrary} from 'react-native-image-picker';
+import i18next from 'i18next';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import images from '~/resources/images';
@@ -14,6 +13,7 @@ import privacyTypes from '~/constants/privacyTypes';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import * as modalActions from '~/store/modal/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -29,7 +29,6 @@ import GroupSectionItem from '../components/GroupSectionItem';
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {groupDetail, isPrivacyModalOpen} = useGroups();
   const {id, name, icon, background_img_url, description, privacy} =
@@ -37,6 +36,18 @@ const GeneralInformation = () => {
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
+
+  const helpMessage = () => {
+    baseSheetRef.current?.close();
+    dispatch(
+      modalActions.showAlert({
+        title: i18next.t('settings:text_info'),
+        content: i18next.t('settings:text_help_center'),
+        onConfirm: () => dispatch(modalActions.hideAlert()),
+        confirmLabel: i18next.t('settings:text_got_it'),
+      }),
+    );
+  };
 
   const onPrivacyModalClose = () =>
     dispatch(groupsActions.setPrivacyModalOpen(false));
@@ -52,40 +63,23 @@ const GeneralInformation = () => {
   const editGroudescripton = () =>
     rootNavigation.navigate(groupStack.editGroupDescription);
 
-  const onEditAvatar = () => {
-    launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {
-      if (uri && fileName && type) {
-        dispatch(
-          groupsActions.uploadImage({
-            id,
-            image: {uri, fileName, type},
-            fieldName: 'icon',
-          }),
-        );
-      }
-    });
-  };
+  const onEditAvatar = () => {};
 
-  const onEditCover = () => {
-    launchImageLibrary({mediaType: 'photo'}, async ({uri, fileName, type}) => {
-      if (uri && fileName && type) {
-        dispatch(
-          groupsActions.uploadImage({
-            id,
-            image: {uri, fileName, type},
-            fieldName: 'background_img_url',
-          }),
-        );
-      }
-    });
-  };
+  const onEditCover = () => {};
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
       <TouchableOpacity onPress={() => onPrivacyMenuPress(item)}>
         <PrimaryItem
-          title={t(item.title)}
-          subTitle={t(item.subtitle)}
+          title={i18next.t(item.title)}
+          subTitle={
+            <Text>
+              {`${i18next.t(item.subtitle)} `}
+              <Text onPress={helpMessage} color={theme.colors.link} useI18n>
+                settings:text_learn_more
+              </Text>
+            </Text>
+          }
           LeftComponent={
             <Icon style={styles.bottomSheetLeftIcon} icon={item.icon} />
           }
@@ -108,7 +102,7 @@ const GeneralInformation = () => {
       testID="GeneralInformation"
       style={styles.container}
       isFullView>
-      <Header title={t('settings:title_general_information')} />
+      <Header title={i18next.t('settings:title_general_information')} />
       <ScrollView>
         {/* --- AVATAR --- */}
         <View style={styles.avatarHeader}>

@@ -11,18 +11,18 @@ export interface IMarkdownAudience {
   name?: string;
 }
 
-export interface MarkdownTextProps extends RNTextProps {
+export interface ParseTextProps extends RNTextProps {
   children?: React.ReactNode;
   showRawText?: boolean;
   onPressAudience?: (audience: IMarkdownAudience) => void;
 }
 
-const MarkdownText: FC<MarkdownTextProps> = ({
+const ParseText: FC<ParseTextProps> = ({
   children,
   showRawText,
   onPressAudience,
   ...props
-}: MarkdownTextProps) => {
+}: ParseTextProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -73,23 +73,23 @@ const MarkdownText: FC<MarkdownTextProps> = ({
     <ParsedText
       childrenProps={{allowFontScaling: false}}
       parse={[
-        {type: 'url', style: styles.url, onPress: onPressUrl},
-        {
-          type: 'phone',
-          style: styles.phone,
-          onPress: onPressPhoneNumber,
-        },
-        {
-          type: 'email',
-          style: styles.email,
-          onPress: onPressEmail,
-        },
-        {pattern: /#(\w+)/, style: styles.hashTag},
-        {
-          pattern: /\*(.*?)\*/,
-          style: styles.bold,
-          renderText: getMatchText,
-        },
+        // {type: 'url', style: styles.url, onPress: onPressUrl},
+        // {
+        //   type: 'phone',
+        //   style: styles.phone,
+        //   onPress: onPressPhoneNumber,
+        // },
+        // {
+        //   type: 'email',
+        //   style: styles.email,
+        //   onPress: onPressEmail,
+        // },
+        // {pattern: /#(\w+)/, style: styles.hashTag},
+        // {
+        //   pattern: /\*(.*?)\*/,
+        //   style: styles.bold,
+        //   renderText: getMatchText,
+        // },
         {
           pattern: audienceRegex,
           style: styles.audience,
@@ -128,4 +128,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default MarkdownText;
+export default ParseText;

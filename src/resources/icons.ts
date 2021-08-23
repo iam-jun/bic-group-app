@@ -52,6 +52,7 @@ import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
 import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
+import iconPlay from '../../assets/icons/icon_play.svg';
 import reactionIcons from '~/resources/reactions';
 
 const icons = {
@@ -98,6 +99,7 @@ const icons = {
   ImagePlus: 'ImagePlus',
   Sync: 'Sync',
   Link: 'Link',
+  menu: 'EllipsisH',
   EllipsisV: 'EllipsisV',
   EllipsisH: 'EllipsisH',
   TachometerFastAlt: 'TachometerFastAlt',
@@ -149,6 +151,7 @@ const icons = {
   BriefcaseAlt: 'BriefcaseAlt',
   LocationPoint: 'LocationPoint',
   CommentsAlt: 'CommentsAlt',
+  CommentSlash: 'CommentSlash',
   Phone: 'Phone',
   Envelope: 'Envelope',
   EditAlt: 'EditAlt',
@@ -172,6 +175,7 @@ const icons = {
   ChatBlock: 'CommentBlock',
   ChatPermission: 'KeyholeSquareFull',
   File: 'File',
+  PlayVideo: iconPlay,
 };
 
 export default icons;

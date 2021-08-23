@@ -38,12 +38,8 @@ export const styles = {
   },
 
   // Emphasis
-  strong: {
-    fontWeight: 'bold',
-  },
-  em: {
-    fontStyle: 'italic',
-  },
+  strong: {},
+  em: {},
   s: {
     textDecorationLine: 'line-through',
   },
@@ -85,49 +81,25 @@ export const styles = {
 
   // Code
   code_inline: {
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
     backgroundColor: '#f5f5f5',
-    padding: 10,
-    borderRadius: 4,
-    ...Platform.select({
-      ['ios']: {
-        fontFamily: 'Courier',
-      },
-      ['android']: {
-        fontFamily: 'monospace',
-      },
-    }),
   },
   code_block: {
+    marginTop: 8,
+    marginBottom: 8,
     borderWidth: 1,
     borderColor: '#CCCCCC',
     backgroundColor: '#f5f5f5',
     padding: 10,
     borderRadius: 4,
-    ...Platform.select({
-      ['ios']: {
-        fontFamily: 'Courier',
-      },
-      ['android']: {
-        fontFamily: 'monospace',
-      },
-    }),
   },
   fence: {
+    marginTop: 8,
+    marginBottom: 8,
     borderWidth: 1,
     borderColor: '#CCCCCC',
     backgroundColor: '#f5f5f5',
     padding: 10,
     borderRadius: 4,
-    ...Platform.select({
-      ['ios']: {
-        fontFamily: 'Courier',
-      },
-      ['android']: {
-        fontFamily: 'monospace',
-      },
-    }),
   },
 
   // Tables
@@ -171,8 +143,6 @@ export const styles = {
   text: {},
   textgroup: {},
   paragraph: {
-    marginTop: 10,
-    marginBottom: 10,
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'flex-start',

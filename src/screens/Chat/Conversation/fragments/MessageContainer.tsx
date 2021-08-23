@@ -1,16 +1,15 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {MessageProps} from 'react-native-gifted-chat';
-import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
+import {isSameDay} from 'react-native-gifted-chat/lib/utils';
 import {useTheme} from 'react-native-paper';
-
 import Avatar from '~/beinComponents/Avatar';
 import {Text, ViewSpacing} from '~/components';
 import {IObject} from '~/interfaces/common';
 import {GMessage, IMessage} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {spacing} from '~/theme';
-import {countTime} from '~/utils/formatData';
+import {formatDate} from '~/utils/formatData';
 import AttachmentView from './AttachmentView';
 import ChatBubble from './ChatBubble';
 import LoadingMessage from './LoadingMessage';
@@ -71,7 +70,7 @@ const MessageContainer: React.FC<MessageContainerProps> = (
                 {_currentMessage?.user.name}
               </Text.BodyM>
               <Text.BodyS style={styles.textTime}>
-                {countTime(_currentMessage?._updatedAt)}
+                {formatDate(_currentMessage?._updatedAt)}
               </Text.BodyS>
             </View>
           </View>

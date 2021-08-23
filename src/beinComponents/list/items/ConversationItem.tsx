@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
@@ -9,7 +8,7 @@ import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {getAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
-import {countTime} from '~/utils/formatData';
+import {formatDate} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
 
 const ConversationItem: React.FC<IConversation> = ({
@@ -24,14 +23,18 @@ const ConversationItem: React.FC<IConversation> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {text, textReversed, textSecondary} = theme.colors;
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
+  const [_avatar, setAvatar] = useState<string | undefined>(avatar);
+  const [_avatarGroup, setAvatarGroup] = useState<string[] | undefined>();
   const textcolor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
-    if (usernames)
-      setAvatar(usernames.map((username: string) => getAvatar(username)));
-    else setAvatar(images.img_group_avatar_default);
+    if (usernames) {
+      const avatarGroup = usernames.map((username: string) =>
+        getAvatar(username),
+      );
+      setAvatarGroup(avatarGroup);
+    } else setAvatar(images.img_group_avatar_default);
   };
 
   const ItemAvatar = isDirect ? (
@@ -44,7 +47,8 @@ const ConversationItem: React.FC<IConversation> = ({
     <Avatar.Group
       variant="large"
       style={styles.marginRight}
-      source={_avatar}
+      source={!_avatarGroup && _avatar}
+      listSource={_avatarGroup}
       onError={onLoadAvatarError}
     />
   );
@@ -66,7 +70,7 @@ const ConversationItem: React.FC<IConversation> = ({
           <Text.Subtitle
             style={styles.textUpdate}
             color={theme.colors.textSecondary}>
-            {countTime(_updatedAt)}
+            {formatDate(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
             <View style={styles.unread}>
