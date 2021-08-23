@@ -45,7 +45,6 @@ const MainTabs = () => {
   const tabBadge = useTabBadge();
 
   const dispatch = useDispatch();
-  const notificationData = useNotifications();
 
   const {streamClient} = useContext(AppContext);
 
@@ -80,25 +79,6 @@ const MainTabs = () => {
       realtimeCallback,
     );
   }, []);
-
-  // render badget function
-  const getBadgetNumber = name => {
-    let number = 0;
-    switch (name) {
-      case 'notification':
-        number = notificationData.unseenNumber;
-        break;
-      // implement other badget number here
-      default:
-        break;
-    }
-
-    if (number > 0) {
-      return number >= 100 ? '99+' : number;
-    } else {
-      return undefined;
-    }
-  };
 
   return (
     // @ts-ignore
@@ -148,11 +128,10 @@ const MainTabs = () => {
                 );
               },
               tabBarLabel: () => null,
-              tabBarBadge: tabBadge[name],
+              tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name],
               tabBarBadgeStyle: {
                 backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
               },
-              tabBarBadge: getBadgetNumber(name),
             }}
           />
         );

@@ -12,10 +12,8 @@ import useTabBadge from '~/hooks/tabBadge';
 
 import {AppContext} from '~/contexts/AppContext';
 import notificationsActions from '../../../../screens/Notification/redux/actions';
-import useNotifications from '~/hooks/notifications';
 import {useUserIdAuth} from '~/hooks/auth';
 import RedDot from '~/beinComponents/Badge/RedDot';
-import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 
 const Tab = createSideTabNavigator();
 
@@ -32,7 +30,6 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   const tabBadge = useTabBadge();
 
   const dispatch = useDispatch();
-  const notificationData = useNotifications();
 
   const {streamClient} = useContext(AppContext);
   const userId = useUserIdAuth();
@@ -45,39 +42,9 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     );
   }, []);
 
-  // callback function when client receive realtime activity in notification feed
-  // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
-  // with this, we also not to load notification again when access Notification screen
-  const realtimeCallback = () => {
-    dispatch(
-      notificationsActions.getNotifications({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
-  };
-
-  const {streamNotiSubClient} = useContext(AppContext);
-  useEffect(() => {
-    subscribeGetstreamFeed(
-      streamNotiSubClient,
-      'notification',
-      'u-' + userId,
-      realtimeCallback,
-    );
-  }, []);
-
   // render badget function
   const renderBadget = name => {
-    let number = 0;
-    switch (name) {
-      case 'notification':
-        number = notificationData.unseenNumber;
-        break;
-      // implement other badget number here
-      default:
-        break;
-    }
+    const number = tabBadge[name];
 
     if (number > 0) {
       return <RedDot style={{top: 15, left: 45}} number={number} />;
@@ -100,10 +67,6 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             key={'tabs' + name}
             name={name}
             component={component}
-            tabBarBadge={tabBadge[name]}
-            tabBarBadgeStyle={{
-              backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
-            }}
             options={{
               tabBarIcon: ({focused, color}) => {
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
