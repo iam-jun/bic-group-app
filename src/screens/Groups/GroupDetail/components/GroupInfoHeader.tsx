@@ -1,25 +1,36 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
+
+import useGroups from '~/hooks/groups';
+import {titleCase} from '~/utils/common';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {scaleSize} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import images from '~/resources/images';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
-import {scaleSize} from '~/theme/dimension';
-import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
-import useGroups from '~/hooks/groups';
-import {titleCase} from '~/utils/common';
 
 const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const groupData = useGroups();
   const {groupDetail} = groupData || {};
-  const {name, user_count, icon, background_img_url, privacy} =
+  const {name, user_count, icon, background_img_url, privacy, rocket_chat_id} =
     groupDetail?.group || {};
+  const navigation = useNavigation();
+
+  const goToGroupChat = () => {
+    navigation.navigate('chat', {
+      screen: chatStack.conversation,
+      params: {roomId: rocket_chat_id, initial: false},
+    });
+  };
 
   return (
     <View style={styles.coverAndInfoHeader}>
@@ -48,7 +59,7 @@ const GroupInfoHeader = () => {
                 size={14}
                 tintColor={theme.colors.iconTint}
               />
-              <Text.BodyS useI18n>{!!privacy && titleCase(privacy)}</Text.BodyS>
+              <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
               <Text.Subtitle> ⬩ </Text.Subtitle>
               <Icon
                 style={styles.iconSmall}
@@ -59,15 +70,16 @@ const GroupInfoHeader = () => {
               <Text.BodySM>{user_count}</Text.BodySM>
             </View>
           </View>
-          <ButtonWrapper
-            style={styles.chatButton}
-            onPress={() => alert('go to chat group')}>
+          <ButtonWrapper style={styles.chatButton} onPress={goToGroupChat}>
             <Icon
               style={styles.iconSmall}
               icon={'iconMessages'}
-              size={32}
+              size={22}
               tintColor={theme.colors.iconTint}
             />
+            <Text.ButtonBase color={theme.colors.primary} useI18n>
+              chat:title
+            </Text.ButtonBase>
           </ButtonWrapper>
         </View>
       </View>
@@ -81,8 +93,8 @@ const themeStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
     infoContainer: {
-      paddingHorizontal: spacing?.padding.large,
-      paddingVertical: spacing?.padding.base,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
     },
     header: {
       flexDirection: 'row',
@@ -96,7 +108,7 @@ const themeStyles = (theme: ITheme) => {
       height: scaleSize(210),
     },
     iconSmall: {
-      marginRight: spacing?.margin.tiny,
+      marginRight: spacing.margin.small,
     },
     coverAndInfoHeader: {
       backgroundColor: colors.background,
@@ -104,12 +116,12 @@ const themeStyles = (theme: ITheme) => {
     headerIcons: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginHorizontal: spacing?.margin.large,
-      marginVertical: spacing?.margin.small,
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.small,
     },
     chatButton: {
       backgroundColor: colors.bgButtonSecondary,
-      padding: spacing.padding.tiny,
+      padding: spacing.padding.small,
       borderRadius: 6,
     },
     groupInfoText: {
