@@ -136,6 +136,7 @@ export interface IReaction {
   parent?: string;
   latest_children?: any;
   children_counts?: any;
+  own_children?: any;
 }
 
 export interface IGetStreamAudienceUser {

@@ -329,7 +329,7 @@ function* onUpdateReactionOfCommentById(
     const comment: IReaction = allComments?.[commentId] || {};
     const newComment = {...comment};
     newComment.children_counts = reactionCounts;
-    //todo comment.own_reaction = ownReaction;
+    newComment.own_children = ownReaction;
     allComments[commentId] = newComment;
     yield put(postActions.setAllComments(allComments));
   } catch (e) {
@@ -364,7 +364,11 @@ function* postReactToComment({
     if (!added) {
       const newChildrenCounts = {...reactionCounts};
       newChildrenCounts[reactionId] = (newChildrenCounts[reactionId] || 0) + 1;
-      yield onUpdateReactionOfCommentById(id, ownReaction, newChildrenCounts);
+      const newOwnChildren = {...ownReaction};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({kind: reactionId});
+      newOwnChildren[reactionId] = reactionArr;
+      yield onUpdateReactionOfCommentById(id, newOwnChildren, newChildrenCounts);
 
       const response = yield call(
         postDataHelper.postReaction,
@@ -374,7 +378,10 @@ function* postReactToComment({
         userId,
       );
       if (response?.data?.[0]) {
-        const newReactionId = response?.data?.[0];
+        const reactionArr2: IReaction[] = [];
+        reactionArr2.push({id: response?.data?.[0]});
+        newOwnChildren[reactionId] = reactionArr2;
+        yield onUpdateReactionOfCommentById(id, newOwnChildren, newChildrenCounts);
       }
     }
   } catch (e) {
