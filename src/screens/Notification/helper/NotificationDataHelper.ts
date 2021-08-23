@@ -7,7 +7,6 @@ const notificationsDataHelper = {
       const streamOptions = {
         offset: 0,
         limit: 10,
-
         user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
         ownReactions: true,
         withOwnReactions: true,
@@ -20,7 +19,7 @@ const notificationsDataHelper = {
       const data = await makeGetStreamRequest(
         streamClient,
         'notification',
-        userId,
+        'u-' + userId,
         'get',
         streamOptions,
       );

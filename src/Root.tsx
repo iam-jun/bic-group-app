@@ -64,7 +64,13 @@ export default (): React.ReactElement => {
 
   // Init Get Stream
   const token = useSelector((state: any) => state.auth?.feed?.accessToken);
+  const notiSubscribeToken = useSelector(
+    (state: any) => state.auth?.feed?.notiSubscribeToken,
+  );
+
   const streamClient = useGetStream(token);
+  const streamNotiSubClient = useGetStream(notiSubscribeToken);
+
   const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
@@ -223,6 +229,7 @@ export default (): React.ReactElement => {
                 language: i18n.language,
                 changeLanguage,
                 streamClient,
+                streamNotiSubClient,
               }}>
               <Portal.Host>
                 <RootNavigator />

@@ -8,7 +8,7 @@ const notificationsActions = {
       payload,
     };
   },
-  setNotifications: function (payload: any[]) {
+  setNotifications: function (payload: any) {
     return {
       type: notificationsTypes.SET_NOTIFICATIONS,
       payload,

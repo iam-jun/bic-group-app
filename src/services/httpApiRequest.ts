@@ -57,12 +57,14 @@ const dispatchStoreAuthTokens = (
   chatUserId: string,
   chatAccessToken: string,
   feedAccessToken: string,
+  notiSubscribeToken: string,
 ) => {
   Store.store.dispatch(
     createAction(ActionTypes.SaveAuthTokens, {
       chatUserId,
       chatAccessToken,
       feedAccessToken,
+      notiSubscribeToken,
     }),
   );
 };
@@ -374,8 +376,14 @@ const refreshAuthTokens = async () => {
     return false;
   }
 
-  const {chatUserId, chatAccessToken, feedAccessToken} = dataTokens;
-  dispatchStoreAuthTokens(chatUserId, chatAccessToken, feedAccessToken);
+  const {chatUserId, chatAccessToken, feedAccessToken, notiSubscribeToken} =
+    dataTokens;
+  dispatchStoreAuthTokens(
+    chatUserId,
+    chatAccessToken,
+    feedAccessToken,
+    notiSubscribeToken,
+  );
 
   // after refresh token, update push token with the new tokens
   if (Platform.OS === 'web') {
@@ -402,9 +410,15 @@ const getAuthTokens = async () => {
     }
 
     const {userId: chatUserId, authToken: chatAccessToken} = data.data?.chat;
-    const {accessToken: feedAccessToken} = data.data?.stream;
+    const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
+      data.data?.stream;
 
-    return {chatUserId, chatAccessToken, feedAccessToken};
+    return {
+      chatUserId,
+      chatAccessToken,
+      feedAccessToken,
+      notiSubscribeToken,
+    };
   } catch (e) {
     console.log('getAuthTokens failed.');
     return false;
@@ -481,6 +495,31 @@ const makePushTokenRequest = async (
   );
 };
 
+// helper function to make subscription to get stream and run callback when client receive new activity
+const subscribeGetstreamFeed = (
+  streamClient: StreamClient,
+  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedId: string,
+  callback,
+) => {
+  // just a log when client subscribe the notification feed successfully
+  const subscribeSuccessCallback = () => {
+    console.log('now listening to changes in realtime');
+  };
+
+  // just a log when client subscribe the notification feed failed
+  const subscribeFailCallback = data => {
+    console.log('something went wrong, check the console logs');
+    console.log(data);
+  };
+
+  // subscribe notification feed to get realtime activity
+  streamClient
+    .feed(feedSlug, feedId)
+    .subscribe(callback)
+    .then(subscribeSuccessCallback, subscribeFailCallback);
+};
+
 export {
   makeGetStreamRequest,
   makeHttpRequest,
@@ -489,4 +528,5 @@ export {
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,
+  subscribeGetstreamFeed,
 };
