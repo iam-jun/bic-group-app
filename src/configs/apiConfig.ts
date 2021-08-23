@@ -1,3 +1,4 @@
+import {IRemoveMemberReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
@@ -134,6 +135,15 @@ const Chat = {
         'Content-Type': 'multipart/form-data',
       },
       useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  removeMember: (data: IRemoveMemberReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.kick`,
+      method: 'post',
+      useRetry: true,
       provider: providers.chat,
       data,
     };

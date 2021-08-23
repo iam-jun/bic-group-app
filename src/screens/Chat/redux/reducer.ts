@@ -164,6 +164,8 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         conversation: action.payload,
       };
     case types.ADD_NEW_MESSAGE: {
+      if (payload.system) return state;
+
       const include = messages.data.find(
         (item: IMessage) =>
           item._id === action.payload._id ||
@@ -316,7 +318,26 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
-
+    case types.REMOVE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        members: {
+          ...state.members,
+          data: state.members.data.filter(
+            (member: IUser) => member.username !== payload.msg,
+          ),
+        },
+      };
+    case types.KICK_ME_OUT:
+      return {
+        ...state,
+        groups: {
+          ...state.groups,
+          data: state.groups.data.filter(
+            (group: IConversation) => group._id !== payload.room_id,
+          ),
+        },
+      };
     case types.REACT_MESSAGE:
       return {
         ...state,

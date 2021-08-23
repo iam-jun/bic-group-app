@@ -299,7 +299,13 @@
         "over_file_size":"Your file must be less than 10MB"
       }
     },
-    "text_search_emtpy": "No people here to chat"
+    "text_search_emtpy": "No people here to chat",
+    "member_menu":{
+      "label_view_profile":"View profile",
+      "label_set_as_admin": "Set as admin",
+      "label_direct_message": "Direct message",
+      "label_remove_from_group_chat": "Remove from group chat"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

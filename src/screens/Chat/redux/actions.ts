@@ -1,5 +1,5 @@
 import {IUser} from '~/interfaces/IAuth';
-import {IAttachmentMessage, IConversation, IMessage} from '~/interfaces/IChat';
+import {IConversation, IMessage} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
@@ -136,6 +136,21 @@ const uploadFile = (payload: IMessage) => ({
   payload,
 });
 
+const removeMember = (payload: IUser) => ({
+  type: Actions.REMOVE_MEMBER,
+  payload,
+});
+
+const removeMemberSuccess = (payload: IMessage) => ({
+  type: Actions.REMOVE_MEMBER_SUCCESS,
+  payload,
+});
+
+const kickMeOut = (payload: IMessage) => ({
+  type: Actions.KICK_ME_OUT,
+  payload,
+});
+
 export default {
   getData,
   setData,
@@ -163,4 +178,7 @@ export default {
   addNewMessage,
   updateConversationName,
   uploadFile,
+  removeMember,
+  removeMemberSuccess,
+  kickMeOut,
 };

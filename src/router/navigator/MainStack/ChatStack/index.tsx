@@ -34,6 +34,11 @@ const ChatStack = (): React.ReactElement => {
       name: 'stream-room-messages',
       params: ['__my_messages__', false],
     });
+    sendMessage({
+      msg: 'sub',
+      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
+      name: 'stream-notify-user',
+    });
   };
 
   const unsubscribeRoomsMessages = () => {

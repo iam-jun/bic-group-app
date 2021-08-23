@@ -1,30 +1,27 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import i18next from 'i18next';
+import React, {useEffect, useRef, useState} from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import useChat from '~/hooks/chat';
-import {IObject} from '~/interfaces/common';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
-import i18next from 'i18next';
-import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Button from '~/beinComponents/Button';
+import Divider from '~/beinComponents/Divider';
+import Header from '~/beinComponents/Header';
+import Icon from '~/beinComponents/Icon';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {ViewSpacing} from '~/components';
-import Divider from '~/beinComponents/Divider';
-import Button from '~/beinComponents/Button';
-import {useRootNavigation} from '~/hooks/navigation';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import actions from '../redux/actions';
-import images from '~/resources/images';
 import {roomTypes} from '~/constants/chat';
-import {ScrollView} from 'react-native';
+import useChat from '~/hooks/chat';
+import {useRootNavigation} from '~/hooks/navigation';
+import {IObject} from '~/interfaces/common';
 import {IconType} from '~/resources/icons';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import BottomSheet from '~/beinComponents/BottomSheet';
-import * as modalActions from '~/store/modal/actions';
+import images from '~/resources/images';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import actions from '../redux/actions';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();

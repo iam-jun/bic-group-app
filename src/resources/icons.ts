@@ -176,6 +176,7 @@ const icons = {
   ChatPermission: 'KeyholeSquareFull',
   File: 'File',
   PlayVideo: iconPlay,
+  Star: 'Star',
 };
 
 export default icons;
