@@ -31,7 +31,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   updated_at,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme, is_seen);
+  const styles = createStyles(theme, is_read);
 
   const activity = activities[0];
   const post = activity.object;
@@ -71,7 +71,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, isSeen: boolean) => {
+const createStyles = (theme: ITheme, isRead: boolean) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
@@ -79,7 +79,7 @@ const createStyles = (theme: ITheme, isSeen: boolean) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: isSeen ? colors.background : colors.primary2,
+      backgroundColor: isRead ? colors.background : colors.primary2,
       paddingVertical: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.base,
       borderRadius: 6,
