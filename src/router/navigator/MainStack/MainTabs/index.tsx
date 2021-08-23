@@ -1,27 +1,27 @@
-import React, {useEffect, useContext} from 'react';
-import {useDispatch} from 'react-redux';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import i18next from 'i18next';
+import React, {useContext, useEffect} from 'react';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 
 import {useTheme} from 'react-native-paper';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import i18next from 'i18next';
+import {useDispatch} from 'react-redux';
 
 import Icon from '~/beinComponents/Icon';
-
-import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {useWindowDimensions, View, StyleSheet} from 'react-native';
-import {deviceDimensions} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
-import {screens} from './screens';
-import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {Text} from '~/components';
-import useTabBadge from '~/hooks/tabBadge';
+import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 
 import {AppContext} from '~/contexts/AppContext';
-import notificationsActions from '../../../../screens/Notification/redux/actions';
-import useNotifications from '~/hooks/notifications';
 import {useUserIdAuth} from '~/hooks/auth';
+import useTabBadge from '~/hooks/tabBadge';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
+import {deviceDimensions} from '~/theme/dimension';
+import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
+import notificationsActions from '../../../../screens/Notification/redux/actions';
+
+import {createSideTabNavigator} from '../../../components/SideTabNavigator';
+import {screens} from './screens';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -130,6 +130,7 @@ const MainTabs = () => {
               tabBarLabel: () => null,
               tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name],
               tabBarBadgeStyle: {
+                fontFamily: fontFamilies.SegoeSemibold,
                 backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
               },
             }}
