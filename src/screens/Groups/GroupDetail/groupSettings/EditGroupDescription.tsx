@@ -53,10 +53,14 @@ const EditGroupDescription = () => {
         <TextInput
           value={text}
           onChangeText={_onChangeText}
-          maxLength={256}
+          maxLength={500}
           multiline
-          minHeight={248}
+          // @ts-ignore
+          minHeight={224}
         />
+        <Text.BodyS color={theme.colors.textSecondary} useI18n>
+          settings:text_maximum_character
+        </Text.BodyS>
       </View>
     </ScreenWrapper>
   );
