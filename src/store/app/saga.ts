@@ -1,13 +1,14 @@
-import {takeLatest, put} from 'redux-saga/effects';
 import messaging from '@react-native-firebase/messaging';
-import {makePushTokenRequest} from '~/services/httpApiRequest';
-import * as types from './constants';
 import {Clipboard} from 'react-native';
+import {put, takeLatest} from 'redux-saga/effects';
+
 import {IHeaderFlashMessage} from '~/interfaces/common';
+import {makePushTokenRequest} from '~/services/httpApiRequest';
 import {
   clearHeaderFlashMessage,
   setHeaderFlashMessage,
 } from '~/store/app/actions';
+import * as types from './constants';
 
 function timeOut(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
