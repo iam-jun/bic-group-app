@@ -44,7 +44,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const {id, data, created_at, user, children_counts, own_children} =
     comment || commentData || {};
   const {content} = data || {};
-  const avatar = user?.data?.avatarUrl || '';
+  const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
   let postTime = '';
@@ -80,12 +80,11 @@ const CommentView: React.FC<CommentViewProps> = ({
         postId,
         parentCommentId,
         reactionId: reactionId,
-        ownReaction: {},
+        ownReaction: own_children,
         reactionCounts: children_counts,
         userId: userId,
       };
       dispatch(postActions.deleteReactToComment(payload));
-      alert(reactionId);
     }
   };
 

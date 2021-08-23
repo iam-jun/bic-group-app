@@ -414,13 +414,33 @@ function* deleteReactToComment({
   type: string;
   payload: IPayloadReactToComment;
 }) {
-  const {id, reactionId, reactionCounts, ownReaction} = payload;
+  const {id, comment, reactionId, reactionCounts, ownReaction} = payload;
   try {
     const id = ownReaction?.[reactionId]?.[0]?.id;
     if (id) {
+      const newChildrenCounts = {...reactionCounts};
+      newChildrenCounts[reactionId] = Math.max(
+        0,
+        (newChildrenCounts[reactionId] || 0) - 1,
+      );
+      const newOwnChildren = {...ownReaction};
+      newOwnChildren[reactionId] = [];
+      yield onUpdateReactionOfCommentById(
+        id,
+        newOwnChildren,
+        newChildrenCounts,
+        comment,
+      );
+
       yield call(postDataHelper.deleteReaction, id);
     }
   } catch (e) {
+    yield onUpdateReactionOfCommentById(
+      id,
+      ownReaction,
+      reactionCounts,
+      comment,
+    );
     console.log(`\x1b[31m🐣️ deleteReactToComment : ${e}\x1b[0m`);
   }
 }
