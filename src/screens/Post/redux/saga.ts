@@ -28,7 +28,6 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
-import comment from '~/hooks/comment';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -300,8 +299,8 @@ function* deleteReactToPost({
 }) {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
-    const id = ownReaction?.[reactionId]?.[0]?.id;
-    if (id) {
+    const rId = ownReaction?.[reactionId]?.[0]?.id;
+    if (rId) {
       const newOwnReaction = {...ownReaction};
       newOwnReaction[reactionId] = [];
       const newReactionCounts = {...reactionCounts};
@@ -310,7 +309,7 @@ function* deleteReactToPost({
         (newReactionCounts[reactionId] || 0) - 1,
       );
       yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
-      yield call(postDataHelper.deleteReaction, id);
+      yield call(postDataHelper.deleteReaction, rId);
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
