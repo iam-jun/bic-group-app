@@ -165,7 +165,7 @@ export default (): React.ReactElement => {
                 language: i18n.language,
                 changeLanguage,
                 streamClient,
-                streamNotiSubClient
+                streamNotiSubClient,
               }}>
               <Portal.Host>
                 <RootNavigator />

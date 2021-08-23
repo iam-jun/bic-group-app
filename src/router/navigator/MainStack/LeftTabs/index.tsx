@@ -45,6 +45,28 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     );
   }, []);
 
+  // callback function when client receive realtime activity in notification feed
+  // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
+  // with this, we also not to load notification again when access Notification screen
+  const realtimeCallback = () => {
+    dispatch(
+      notificationsActions.getNotifications({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
+  };
+
+  const {streamNotiSubClient} = useContext(AppContext);
+  useEffect(() => {
+    subscribeGetstreamFeed(
+      streamNotiSubClient,
+      'notification',
+      'u-' + userId,
+      realtimeCallback,
+    );
+  }, []);
+
   // render badget function
   const renderBadget = name => {
     let number = 0;
