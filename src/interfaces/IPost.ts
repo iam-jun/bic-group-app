@@ -196,8 +196,17 @@ export interface IPostAudienceSheet {
   fromStack?: 'newsfeed' | 'groups';
 }
 
-export interface IPayloadReactToId {
+export interface IPayloadReactToPost {
   id: string;
+  reactionId: ReactionType;
+  ownReaction: IOwnReaction;
+  reactionCounts: IReactionCounts;
+  userId: number;
+}
+
+export interface IPayloadReactToComment {
+  id: string;
+  comment: IReaction;
   postId?: string;
   parentCommentId?: string;
   reactionId: ReactionType;

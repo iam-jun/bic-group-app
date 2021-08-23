@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {IPayloadReactToId, IReaction} from '~/interfaces/IPost';
+import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {countTime} from '~/utils/formatData';
@@ -58,8 +58,9 @@ const CommentView: React.FC<CommentViewProps> = ({
 
   const onAddReaction = (reactionId: ReactionType) => {
     if (id) {
-      const payload: IPayloadReactToId = {
+      const payload: IPayloadReactToComment = {
         id,
+        comment: comment || commentData,
         postId,
         parentCommentId,
         reactionId: reactionId,
@@ -73,8 +74,9 @@ const CommentView: React.FC<CommentViewProps> = ({
 
   const onRemoveReaction = (reactionId: ReactionType) => {
     if (id) {
-      const payload: IPayloadReactToId = {
+      const payload: IPayloadReactToComment = {
         id,
+        comment: comment || commentData,
         postId,
         parentCommentId,
         reactionId: reactionId,

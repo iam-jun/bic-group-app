@@ -7,7 +7,8 @@ import {
   IParamSearchMentionAudiences,
   IPayloadGetCommentsById,
   IPayloadPutEditPost,
-  IPayloadReactToId,
+  IPayloadReactToComment,
+  IPayloadReactToPost,
   IPayloadUpdateCommentsById,
   IPostActivity,
   IPostCreatePost,
@@ -253,7 +254,7 @@ function* postReactToPost({
   payload,
 }: {
   type: string;
-  payload: IPayloadReactToId;
+  payload: IPayloadReactToPost;
 }) {
   const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
@@ -295,7 +296,7 @@ function* deleteReactToPost({
   payload,
 }: {
   type: string;
-  payload: IPayloadReactToId;
+  payload: IPayloadReactToPost;
 }) {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
@@ -321,12 +322,13 @@ function* onUpdateReactionOfCommentById(
   commentId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
+  defaultComment: IReaction,
 ) {
   try {
     const allComments = yield select(state =>
       get(state, postKeySelector.allComments),
     ) || {};
-    const comment: IReaction = allComments?.[commentId] || {};
+    const comment: IReaction = allComments?.[commentId] || defaultComment || {};
     const newComment = {...comment};
     newComment.children_counts = reactionCounts;
     newComment.own_children = ownReaction;
@@ -341,10 +343,11 @@ function* postReactToComment({
   payload,
 }: {
   type: string;
-  payload: IPayloadReactToId;
+  payload: IPayloadReactToComment;
 }) {
   const {
     id,
+    comment,
     postId,
     parentCommentId,
     reactionId,
@@ -368,7 +371,12 @@ function* postReactToComment({
       const reactionArr: IReaction[] = [];
       reactionArr.push({kind: reactionId});
       newOwnChildren[reactionId] = reactionArr;
-      yield onUpdateReactionOfCommentById(id, newOwnChildren, newChildrenCounts);
+      yield onUpdateReactionOfCommentById(
+        id,
+        newOwnChildren,
+        newChildrenCounts,
+        comment,
+      );
 
       const response = yield call(
         postDataHelper.postReaction,
@@ -381,11 +389,21 @@ function* postReactToComment({
         const reactionArr2: IReaction[] = [];
         reactionArr2.push({id: response?.data?.[0]});
         newOwnChildren[reactionId] = reactionArr2;
-        yield onUpdateReactionOfCommentById(id, newOwnChildren, newChildrenCounts);
+        yield onUpdateReactionOfCommentById(
+          id,
+          newOwnChildren,
+          newChildrenCounts,
+          comment,
+        );
       }
     }
   } catch (e) {
-    yield onUpdateReactionOfCommentById(id, ownReaction, reactionCounts);
+    yield onUpdateReactionOfCommentById(
+      id,
+      ownReaction,
+      reactionCounts,
+      comment,
+    );
     console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
   }
 }
@@ -394,7 +412,7 @@ function* deleteReactToComment({
   payload,
 }: {
   type: string;
-  payload: IPayloadReactToId;
+  payload: IPayloadReactToComment;
 }) {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {

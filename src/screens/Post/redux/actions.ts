@@ -8,12 +8,13 @@ import {
   IReaction,
   IParamSearchMentionAudiences,
   IAllPosts,
-  IPayloadReactToId,
+  IPayloadReactToPost,
   IPayloadPutEditPost,
   IPostAudienceSheet,
   IPayloadUpdateCommentsById,
   IPayloadGetCommentsById,
   IAllComments,
+  IPayloadReactToComment,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -115,19 +116,19 @@ const postActions = {
     type: postTypes.GET_SEARCH_MENTION_AUDIENCES,
     payload,
   }),
-  postReactToPost: (payload: IPayloadReactToId) => ({
+  postReactToPost: (payload: IPayloadReactToPost) => ({
     type: postTypes.POST_REACT_TO_POST,
     payload,
   }),
-  deleteReactToPost: (payload: IPayloadReactToId) => ({
+  deleteReactToPost: (payload: IPayloadReactToPost) => ({
     type: postTypes.DELETE_REACT_TO_POST,
     payload,
   }),
-  postReactToComment: (payload: IPayloadReactToId) => ({
+  postReactToComment: (payload: IPayloadReactToComment) => ({
     type: postTypes.POST_REACT_TO_COMMENT,
     payload,
   }),
-  deleteReactToComment: (payload: IPayloadReactToId) => ({
+  deleteReactToComment: (payload: IPayloadReactToComment) => ({
     type: postTypes.DELETE_REACT_TO_COMMENT,
     payload,
   }),
