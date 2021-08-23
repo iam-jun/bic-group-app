@@ -415,8 +415,8 @@ function* deleteReactToComment({
 }) {
   const {id, comment, reactionId, reactionCounts, ownReaction} = payload;
   try {
-    const id = ownReaction?.[reactionId]?.[0]?.id;
-    if (id) {
+    const rId = ownReaction?.[reactionId]?.[0]?.id;
+    if (rId) {
       const newChildrenCounts = {...reactionCounts};
       newChildrenCounts[reactionId] = Math.max(
         0,
@@ -431,7 +431,7 @@ function* deleteReactToComment({
         comment,
       );
 
-      yield call(postDataHelper.deleteReaction, id);
+      yield call(postDataHelper.deleteReaction, rId);
     }
   } catch (e) {
     yield onUpdateReactionOfCommentById(
