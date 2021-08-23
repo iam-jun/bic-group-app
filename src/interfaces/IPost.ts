@@ -9,7 +9,7 @@ export interface IPostAudience {
 export interface IAudienceUser {
   id?: number | string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     fullname?: string;
   };
 }
@@ -17,7 +17,7 @@ export interface IAudienceUser {
 export interface IAudienceGroup {
   id?: number | string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     name?: string;
   };
 }
@@ -112,7 +112,7 @@ export interface IGetStreamUser {
   updated_at?: string;
   id?: string | number;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     fullname?: string;
   };
 }
@@ -144,7 +144,7 @@ export interface IGetStreamAudienceUser {
   collection?: string;
   foreign_id: string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     fullname?: string;
   };
   created_at: string;
@@ -156,7 +156,7 @@ export interface IGetStreamAudienceGroup {
   collection?: string;
   foreign_id: string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     name?: string;
   };
   created_at: string;

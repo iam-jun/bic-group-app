@@ -78,7 +78,7 @@ const PostView: FC<PostViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const avatar = actor?.data?.avatarUrl;
+  const avatar = actor?.data?.avatar;
   const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';

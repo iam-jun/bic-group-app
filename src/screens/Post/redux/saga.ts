@@ -486,7 +486,7 @@ function* showPostAudienceBottomSheet({
         sectionUsers.push({
           id: user?.id,
           name: user?.data?.fullname,
-          avatar: user?.data?.avatarUrl,
+          avatar: user?.data?.avatar,
           type: 'user',
         });
       });
