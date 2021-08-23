@@ -172,10 +172,12 @@ const icons = {
   EyeSlash: 'EyeSlash',
   Check: 'Check',
   UsersAlt: 'UsersAlt',
+  Heart: 'Heart',
   ...reactionIcons,
   Feedback: 'Feedback',
   ChatBlock: 'CommentBlock',
   ChatPermission: 'KeyholeSquareFull',
+  Save: 'Save',
   File: 'File',
   PlayVideo: iconPlay,
 };

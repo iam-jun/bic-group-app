@@ -130,7 +130,6 @@ function* onSignInSuccess(user: IUserResponse) {
   };
 
   yield put(actions.setUser(userResponse));
-  navigation.replace(rootSwitch.mainStack);
 
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
@@ -140,6 +139,7 @@ function* onSignInSuccess(user: IUserResponse) {
     return;
   }
 
+  navigation.replace(rootSwitch.mainStack);
   // setup push token
   if (Platform.OS === 'web') {
     return;

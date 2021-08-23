@@ -9,7 +9,7 @@ import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {RootStackParamList} from '~/interfaces/IRouter';
-import AppInfo from '~/screens/AppInfo';
+import RightCol from '~/screens/RightCol';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
 import {deviceDimensions} from '~/theme/dimension';
@@ -54,7 +54,11 @@ const MainStack = (): React.ReactElement => {
           <View style={styles.rightCol}>
             <NavigationContainer independent ref={rightNavigationRef}>
               <Stack.Navigator>
-                <Stack.Screen name="app-info" component={AppInfo} />
+                <Stack.Screen
+                  name="right-column"
+                  component={RightCol}
+                  options={{headerShown: false}}
+                />
               </Stack.Navigator>
             </NavigationContainer>
           </View>
@@ -96,8 +100,6 @@ const createStyles = (theme: ITheme) => {
     rightCol: {
       flex: deviceDimensions.rightCols,
       paddingStart: theme.spacing.padding.extraLarge,
-      borderRightColor: theme.colors.borderDivider,
-      borderRightWidth: 1,
     },
   });
 };

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
+import {useDispatch} from 'react-redux';
+
 import {useTheme} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -14,6 +16,12 @@ import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {Text} from '~/components';
 import useTabBadge from '~/hooks/tabBadge';
+
+import {AppContext} from '~/contexts/AppContext';
+import notificationsActions from '../../../../screens/Notification/redux/actions';
+import useNotifications from '~/hooks/notifications';
+import {useUserIdAuth} from '~/hooks/auth';
+import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -35,6 +43,42 @@ const MainTabs = () => {
 
   const styles = createStyles(theme, isPhone, isBigTablet);
   const tabBadge = useTabBadge();
+
+  const dispatch = useDispatch();
+
+  const {streamClient} = useContext(AppContext);
+
+  const userId = useUserIdAuth();
+  useEffect(() => {
+    dispatch(
+      notificationsActions.getNotifications({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
+  }, []);
+
+  // callback function when client receive realtime activity in notification feed
+  // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
+  // with this, we also not to load notification again when access Notification screen
+  const realtimeCallback = () => {
+    dispatch(
+      notificationsActions.getNotifications({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
+  };
+
+  const {streamNotiSubClient} = useContext(AppContext);
+  useEffect(() => {
+    subscribeGetstreamFeed(
+      streamNotiSubClient,
+      'notification',
+      'u-' + userId,
+      realtimeCallback,
+    );
+  }, []);
 
   return (
     // @ts-ignore
@@ -84,7 +128,7 @@ const MainTabs = () => {
                 );
               },
               tabBarLabel: () => null,
-              tabBarBadge: tabBadge[name],
+              tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name],
               tabBarBadgeStyle: {
                 backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
               },
