@@ -2,6 +2,7 @@ import React, {useContext, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
@@ -10,6 +11,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+
 import languages from '~/constants/languages';
 import {accountSettingsMenu} from '~/constants/settings';
 import {AppContext} from '~/contexts/AppContext';
