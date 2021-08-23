@@ -30,6 +30,7 @@ const initState = {
   postDetail: {},
   replyingComment: {},
   allPosts: {},
+  allComments: {},
   allCommentsByParentIds: {},
   postAudienceSheet: {
     isShow: false,
@@ -46,6 +47,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         allPosts: payload,
+      };
+    case postTypes.SET_ALL_COMMENTS:
+      return {
+        ...state,
+        allComments: payload,
       };
     case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
       return {

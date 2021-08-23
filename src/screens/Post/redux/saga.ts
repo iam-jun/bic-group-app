@@ -44,6 +44,7 @@ export default function* postSaga() {
     getSearchMentionAudiences,
   );
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
+  yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
   yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
@@ -204,6 +205,33 @@ function* addToAllPosts({
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
+function* addToAllComments({
+  payload,
+}: {
+  type: string;
+  payload: IReaction[] | IReaction;
+}) {
+  try {
+    const allComments = yield select(state => state?.post?.allComments) || {};
+    const newAllComments = {...allComments};
+    if (isArray(payload) && payload.length > 0) {
+      payload.map((item: IReaction) => {
+        if (item?.id) {
+          newAllComments[item.id] = item;
+        }
+      });
+    } else if (payload && 'id' in payload && payload.id) {
+      newAllComments[payload.id] = payload;
+    }
+    yield put(postActions.setAllComments(newAllComments));
+  } catch (e) {
+    console.log(
+      `\x1b[31m🐣️ saga addToAllComments error:`,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
+  }
+}
+
 function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
@@ -289,6 +317,26 @@ function* deleteReactToPost({
   }
 }
 
+function* onUpdateReactionOfCommentById(
+  commentId: string,
+  ownReaction: IOwnReaction,
+  reactionCounts: IReactionCounts,
+) {
+  try {
+    const allComments = yield select(state =>
+      get(state, postKeySelector.allComments),
+    ) || {};
+    const comment: IReaction = allComments?.[commentId] || {};
+    const newComment = {...comment};
+    newComment.children_counts = reactionCounts;
+    //todo comment.own_reaction = ownReaction;
+    allComments[commentId] = newComment;
+    yield put(postActions.setAllComments(allComments));
+  } catch (e) {
+    console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
+  }
+}
+
 function* postReactToComment({
   payload,
 }: {
@@ -314,26 +362,10 @@ function* postReactToComment({
     data.push(reactionId);
     const added = ownReaction?.[reactionId]?.length > 0;
     if (!added) {
-      const allCommentsByIds: any = yield select(state =>
-        get(state, postKeySelector.allCommentsByParentIds),
-      );
-      if (!isChildComment) {
-        const comments: IReaction[] = allCommentsByIds[postId];
-        const comment = comments.find(c => c?.id === id) as IReaction;
-        const newChildrenCounts = comment.children_counts || {};
-        newChildrenCounts[reactionId] =
-          (newChildrenCounts[reactionId] || 0) + 1;
-        comment.children_counts = newChildrenCounts;
-        yield put(
-          postActions.updateAllCommentsByParentIdsWithComments({
-            id: postId,
-            isMerge: false,
-            comments: [...comments],
-          }),
-        );
-      } else if (isChildComment) {
-        //todo update for children
-      }
+      const newChildrenCounts = {...reactionCounts};
+      newChildrenCounts[reactionId] = (newChildrenCounts[reactionId] || 0) + 1;
+      yield onUpdateReactionOfCommentById(id, ownReaction, newChildrenCounts);
+
       const response = yield call(
         postDataHelper.postReaction,
         id,
@@ -346,7 +378,7 @@ function* postReactToComment({
       }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfCommentById(id, ownReaction, reactionCounts);
     console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
   }
 }
@@ -460,6 +492,7 @@ function* getCommentsById({
   try {
     const response = yield call(postDataHelper.getCommentsById, id);
     if (response?.length > 0) {
+      yield put(postActions.addToAllComments(response));
       const p = {id, comments: response, isMerge};
       yield put(postActions.updateAllCommentsByParentIdsWithComments(p));
     }

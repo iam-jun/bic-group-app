@@ -14,6 +14,8 @@ import {useBaseHook} from '~/hooks';
 import {ReactionType} from '~/constants/reactions';
 import ReactionView from '~/screens/Post/components/ReactionView';
 import {useUserIdAuth} from '~/hooks/auth';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface CommentViewProps {
   postId: string;
@@ -38,7 +40,9 @@ const CommentView: React.FC<CommentViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const {id, data, created_at, user, children_counts} = commentData || {};
+  const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
+  const {id, data, created_at, user, children_counts} =
+    comment || commentData || {};
   const {content} = data || {};
   const avatar = user?.data?.avatarUrl || '';
   const name = user?.data?.fullname || '';
@@ -166,8 +170,6 @@ const createStyle = (theme: ITheme) => {
     },
     buttonContainer: {
       flexDirection: 'row',
-      // marginTop: spacing?.margin.tiny,
-      justifyContent: 'space-between',
       alignItems: 'center',
     },
     buttonReply: {

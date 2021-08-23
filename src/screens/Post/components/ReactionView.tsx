@@ -60,7 +60,7 @@ const ReactionView: FC<ReactionViewProps> = ({
 
   if (renderedReactions.length === 0) {
     return (
-      <View>
+      <View style={styles.containerButtonOnly}>
         {!!onPressSelectReaction && (
           <Button style={styles.buttonReact} onPress={onPressSelectReaction}>
             <Icon size={16} icon={'iconReact'} />
@@ -87,7 +87,9 @@ const ReactionView: FC<ReactionViewProps> = ({
 const createStyle = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
+    containerButtonOnly: {flex: 1, alignItems: 'flex-start'},
     container: {
+      flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
       padding: spacing.padding.small,

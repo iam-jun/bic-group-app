@@ -13,6 +13,7 @@ import {
   IPostAudienceSheet,
   IPayloadUpdateCommentsById,
   IPayloadGetCommentsById,
+  IAllComments,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -21,6 +22,10 @@ import {ReactionType} from '~/constants/reactions';
 const postActions = {
   setAllPosts: (payload: IAllPosts) => ({
     type: postTypes.SET_ALL_POSTS,
+    payload,
+  }),
+  setAllComments: (payload: IAllComments) => ({
+    type: postTypes.SET_ALL_COMMENTS,
     payload,
   }),
   setOpenPostToolBarModal: (payload: boolean) => ({
@@ -100,6 +105,10 @@ const postActions = {
   }),
   addToAllPosts: (payload: IPostActivity[] | IPostActivity) => ({
     type: postTypes.ADD_TO_ALL_POSTS,
+    payload,
+  }),
+  addToAllComments: (payload: IReaction[] | IReaction) => ({
+    type: postTypes.ADD_TO_ALL_COMMENTS,
     payload,
   }),
   getSearchMentionAudiences: (payload: IParamSearchMentionAudiences) => ({

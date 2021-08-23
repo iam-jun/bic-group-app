@@ -9,6 +9,7 @@ const postKeySelector = {
   },
   postAudienceSheet: 'post.postAudienceSheet',
   allPosts: 'post.allPosts',
+  allComments: 'post.allComments',
   postById: (id: string) => `post.allPosts.${id}`,
   postObjectDataById: (id: string) => `post.allPosts.${id}.object.data`,
   postActorById: (id: string) => `post.allPosts.${id}.actor`,
@@ -22,6 +23,7 @@ const postKeySelector = {
     `post.allPosts.${id}.latest_reactions.comment`,
   allCommentsByParentIds: 'post.allCommentsByParentIds',
   commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
+  commentById: (id?: string) => `post.allComments.${id}`,
 };
 
 export default postKeySelector;

@@ -22,7 +22,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
-import {sortComments} from '~/screens/Post/helper/PostUtils';
+import {sortComments} from '../helper/PostUtils';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');

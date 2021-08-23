@@ -83,6 +83,10 @@ export interface IAllPosts {
   [id: string]: IPostActivity;
 }
 
+export interface IAllComments {
+  [id: string]: IReaction;
+}
+
 export interface IPostCreatePost {
   getstream_id?: string;
   actor?: number;
