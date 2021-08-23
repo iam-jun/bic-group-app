@@ -1,7 +1,6 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {Platform} from 'react-native';
 import {put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
@@ -12,7 +11,6 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
-import * as appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
@@ -130,7 +128,6 @@ function* onSignInSuccess(user: IUserResponse) {
   };
 
   yield put(actions.setUser(userResponse));
-  navigation.replace(rootSwitch.mainStack);
 
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
@@ -140,11 +137,7 @@ function* onSignInSuccess(user: IUserResponse) {
     return;
   }
 
-  // setup push token
-  if (Platform.OS === 'web') {
-    return;
-  }
-  yield put(appActions.setupPushToken());
+  navigation.replace(rootSwitch.mainStack);
 }
 
 function* onSignInFailed(errorMessage: string) {

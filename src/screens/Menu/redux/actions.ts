@@ -1,4 +1,4 @@
-import {IUserProfile} from '~/interfaces/IAuth';
+import {IUserEdit, IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
 
 const menuActions = {
@@ -29,6 +29,12 @@ const menuActions = {
   selectedProfile: (payload: IUserProfile) => {
     return {
       type: menuTypes.SELECTED_PROFILE,
+      payload,
+    };
+  },
+  editMyProfile: function (payload: IUserEdit) {
+    return {
+      type: menuTypes.EDIT_MY_PROFILE,
       payload,
     };
   },

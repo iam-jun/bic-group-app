@@ -3,6 +3,7 @@ import notificationsTypes from '~/screens/Notification/redux/types';
 const initNotificationsState = {
   loadingNotifications: false,
   notificationList: [],
+  unseenNumber: 0,
 };
 
 function notificationsReducer(
@@ -19,7 +20,8 @@ function notificationsReducer(
     case notificationsTypes.SET_NOTIFICATIONS:
       return {
         ...state,
-        notificationList: payload || [],
+        notificationList: payload.notifications || [],
+        unseenNumber: payload.unseen,
       };
 
     default:
