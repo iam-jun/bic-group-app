@@ -74,6 +74,7 @@ function authReducer(state = initAuthState, action: any = {}) {
         },
         feed: {
           accessToken: action.payload.feedAccessToken,
+          notiSubscribeToken: action.payload.notiSubscribeToken,
         },
       });
     default:

@@ -21,6 +21,7 @@ import {AppContext} from '~/contexts/AppContext';
 import notificationsActions from '../../../../screens/Notification/redux/actions';
 import useNotifications from '~/hooks/notifications';
 import {useUserIdAuth} from '~/hooks/auth';
+import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();

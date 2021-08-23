@@ -15,6 +15,7 @@ import notificationsActions from '../../../../screens/Notification/redux/actions
 import useNotifications from '~/hooks/notifications';
 import {useUserIdAuth} from '~/hooks/auth';
 import RedDot from '~/beinComponents/Badge/RedDot';
+import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 
 const Tab = createSideTabNavigator();
 

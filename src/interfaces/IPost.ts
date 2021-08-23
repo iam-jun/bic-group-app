@@ -108,6 +108,7 @@ export interface IGetStreamUser {
   updated_at?: string;
   id?: string | number;
   data?: {
+    avatar?: string;
     avatarUrl?: string;
     fullname?: string;
   };
