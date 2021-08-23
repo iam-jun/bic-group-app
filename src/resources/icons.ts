@@ -92,6 +92,8 @@ const icons = {
   AngleRightB: 'AngleRightB',
   AngleDown: 'AngleDown',
   AngleUp: 'AngleUp',
+  CornerDownRight: 'CornerDownRight',
+  Trash: 'Trash',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',

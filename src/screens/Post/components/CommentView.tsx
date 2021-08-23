@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -16,6 +16,8 @@ import ReactionView from '~/screens/Post/components/ReactionView';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMenuBottomSheet';
+import Button from '~/beinComponents/Button';
 
 export interface CommentViewProps {
   postId: string;
@@ -32,16 +34,18 @@ const CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
+  const menuSheetRef = useRef<any>();
+
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
-  const userId = useUserIdAuth();
+  const currentUserId = useUserIdAuth();
 
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
-  const {id, data, created_at, user, children_counts, own_children} =
+  const {id, user_id, data, created_at, user, children_counts, own_children} =
     comment || commentData || {};
   const {content} = data || {};
   const avatar = user?.data?.avatar || '';
@@ -66,7 +70,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         reactionId: reactionId,
         ownReaction: own_children,
         reactionCounts: children_counts,
-        userId: userId,
+        userId: currentUserId,
       };
       dispatch(postActions.postReactToComment(payload));
     }
@@ -82,7 +86,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         reactionId: reactionId,
         ownReaction: own_children,
         reactionCounts: children_counts,
-        userId: userId,
+        userId: currentUserId,
       };
       dispatch(postActions.deleteReactToComment(payload));
     }
@@ -103,36 +107,42 @@ const CommentView: React.FC<CommentViewProps> = ({
     onPressReply?.(commentData);
   };
 
+  const onLongPress = () => {
+    menuSheetRef?.current?.open?.();
+  };
+
   return (
     <View>
       <View style={styles.container}>
         <Avatar source={avatar} />
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
-          <View
-            style={StyleSheet.flatten([
-              styles.contentContainer,
-              contentBackgroundColor
-                ? {backgroundColor: contentBackgroundColor}
-                : {},
-            ])}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1}}>
-                <ButtonWrapper
-                  style={{alignSelf: 'flex-start'}}
-                  onPress={onPressUser}>
-                  <Text.H6>{name}</Text.H6>
-                </ButtonWrapper>
+          <Button onLongPress={onLongPress}>
+            <View
+              style={StyleSheet.flatten([
+                styles.contentContainer,
+                contentBackgroundColor
+                  ? {backgroundColor: contentBackgroundColor}
+                  : {},
+              ])}>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                  <ButtonWrapper
+                    style={{alignSelf: 'flex-start'}}
+                    onPress={onPressUser}>
+                    <Text.H6>{name}</Text.H6>
+                  </ButtonWrapper>
+                </View>
+                <Text.Subtitle color={colors.textSecondary}>
+                  {postTime}
+                </Text.Subtitle>
               </View>
-              <Text.Subtitle color={colors.textSecondary}>
-                {postTime}
-              </Text.Subtitle>
+              <CollapsibleText
+                useMarkdown
+                limitMarkdownTypes
+                content={content || ''}
+              />
             </View>
-            <CollapsibleText
-              useMarkdown
-              limitMarkdownTypes
-              content={content || ''}
-            />
-          </View>
+          </Button>
           <View style={styles.buttonContainer}>
             <ReactionView
               ownReactions={own_children}
@@ -151,6 +161,13 @@ const CommentView: React.FC<CommentViewProps> = ({
           </View>
         </View>
       </View>
+      <CommentViewMenuBottomSheet
+        modalizeRef={menuSheetRef}
+        commentId={id}
+        isActor={currentUserId === user_id}
+        onPressMoreReaction={onPressReact}
+        onAddReaction={onAddReaction}
+      />
     </View>
   );
 };
