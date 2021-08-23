@@ -1,4 +1,5 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
+import {IFileResponse} from './common';
 
 export interface IGroup {
   id: number;
@@ -56,13 +57,8 @@ export interface IGroupDetail {
   join_status: number;
 }
 
-interface IImageFile {
-  uri: string;
-  fileName: string;
-  type: string;
-}
 export interface IGroupImageUpload {
   id: number;
   fieldName: string;
-  image: IImageFile;
+  image: IFileResponse;
 }

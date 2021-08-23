@@ -1,9 +1,14 @@
+import {AxiosResponse} from 'axios';
 import {call, put, select, takeLatest} from 'redux-saga/effects';
+import i18next from 'i18next';
+
 import {IGroup, IGroupDetailEdit, IGroupImageUpload} from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {IResponseData} from '~/interfaces/common';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -244,30 +249,25 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     formData.append('file', {
       type: image.type,
       // @ts-ignore
-      name: image.fileName || 'fileMessage',
+      name: image.name || 'fileMessage',
       uri: image.uri,
     });
-
-    const result = yield requestUploadImage(formData);
-
-    yield put(groupsActions.editGroupDetail({id, [fieldName]: result.src}));
-  } catch (e) {
-    console.log('\x1b[33m', 'uploadImage : error', e, '\x1b[0m');
-  }
-}
-
-const requestUploadImage = async (formData: FormData) => {
-  try {
-    const response = await groupsDataHelper.uploadImage(formData);
-    if (response.code === 200) {
-      return response.data;
-    }
+    const response: IResponseData = yield groupsDataHelper.uploadImage(
+      formData,
+    );
+    yield put(
+      groupsActions.editGroupDetail({id, [fieldName]: response?.data?.src}),
+    );
   } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestUploadImage catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
+    console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
     );
   }
-};
+}

@@ -1,8 +1,9 @@
-import React, {useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
@@ -14,6 +15,10 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import * as modalActions from '~/store/modal/actions';
+import GroupSectionItem from '../components/GroupSectionItem';
+import {validateFile} from '~/utils/validation';
+import {IFileResponse} from '~/interfaces/common';
+import dimension from '~/theme/dimension';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -24,7 +29,6 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import ListView from '~/beinComponents/list/ListView';
-import GroupSectionItem from '../components/GroupSectionItem';
 
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
@@ -36,6 +40,8 @@ const GeneralInformation = () => {
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
+
+  const [error, setError] = useState<string | null>(null);
 
   const helpMessage = () => {
     baseSheetRef.current?.close();
@@ -60,12 +66,48 @@ const GeneralInformation = () => {
     dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
   };
 
-  const editGroudescripton = () =>
+  const editGroupDescripton = () =>
     rootNavigation.navigate(groupStack.editGroupDescription);
 
-  const onEditAvatar = () => {};
+  const uploadFile = (file: IFileResponse, fieldName: string) => {
+    dispatch(
+      groupsActions.uploadImage({
+        id,
+        image: file,
+        fieldName,
+      }),
+    );
+  };
+  const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
+    ImagePicker.openPicker({
+      width:
+        fieldName === 'background_img_url' ? dimension.deviceWidth : undefined,
+      height:
+        fieldName === 'background_img_url'
+          ? (dimension.deviceWidth / 16) * 9
+          : undefined,
+      cropping: true,
+      mediaType: 'photo',
+      multiple: false,
+    }).then(result => {
+      if (!result) return;
 
-  const onEditCover = () => {};
+      const file = {
+        name: result.filename,
+        size: result.size,
+        type: result.mime,
+        uri: result.path,
+      };
+      const _error = validateFile(file);
+      setError(_error);
+      if (_error) return;
+      uploadFile(file, fieldName);
+    });
+  };
+
+  const onEditAvatar = () => _openImagePicker('icon');
+
+  const onEditCover = () => _openImagePicker('background_img_url');
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
@@ -153,7 +195,7 @@ const GeneralInformation = () => {
           <GroupSectionItem
             title={'settings:title_group_description'}
             subtitle={description}
-            onPress={editGroudescripton}
+            onPress={editGroupDescripton}
             rightIcon={'AngleRightB'}
           />
 
@@ -221,7 +263,7 @@ const themeStyles = (theme: ITheme) => {
     },
     cover: {
       width: scaleSize(375),
-      height: scaleSize(192),
+      height: scaleSize(210),
       maxHeight: 250,
       maxWidth: 525,
     },
