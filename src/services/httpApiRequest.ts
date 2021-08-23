@@ -376,7 +376,8 @@ const refreshAuthTokens = async () => {
     return false;
   }
 
-  const {chatUserId, chatAccessToken, feedAccessToken, notiSubscribeToken} = dataTokens;
+  const {chatUserId, chatAccessToken, feedAccessToken, notiSubscribeToken} =
+    dataTokens;
   dispatchStoreAuthTokens(
     chatUserId,
     chatAccessToken,
@@ -409,7 +410,8 @@ const getAuthTokens = async () => {
     }
 
     const {userId: chatUserId, authToken: chatAccessToken} = data.data?.chat;
-    const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} = data.data?.stream;
+    const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
+      data.data?.stream;
 
     return {
       chatUserId,
