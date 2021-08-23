@@ -51,6 +51,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
         output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
         export_method: "development",
         silent: true,
+        clean: true,
     )
     diawi(
         token: ENV['DIAWI_TOKEN'],

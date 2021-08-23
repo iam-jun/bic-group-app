@@ -13,10 +13,11 @@ const PrivateView = () => {
   const styles = themeStyles(theme);
   const menuData = useMenu();
   const {myProfile} = menuData || {};
-  const {fullname, background_img_url, avatar, description, isPublic} =
+  const {id, fullname, background_img_url, avatar, description, isPublic} =
     myProfile || {};
 
   const data = {
+    id,
     fullname,
     background_img_url,
     avatar,

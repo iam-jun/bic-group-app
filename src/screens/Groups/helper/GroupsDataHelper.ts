@@ -139,7 +139,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  editGroupPrivacy: async (groupId: number, data: IGroupDetailEdit) => {
+  editGroupDetail: async (groupId: number, data: IGroupDetailEdit) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.editGroupDetail(groupId, data),

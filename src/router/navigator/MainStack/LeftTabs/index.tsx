@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
+import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 import {View, StyleSheet, Platform} from 'react-native';
 
@@ -8,6 +9,11 @@ import {ITheme} from '~/theme/interfaces';
 import {screens} from './screens';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import useTabBadge from '~/hooks/tabBadge';
+
+import {AppContext} from '~/contexts/AppContext';
+import notificationsActions from '../../../../screens/Notification/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
+import RedDot from '~/beinComponents/Badge/RedDot';
 
 const Tab = createSideTabNavigator();
 
@@ -23,6 +29,30 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
   const tabBadge = useTabBadge();
 
+  const dispatch = useDispatch();
+
+  const {streamClient} = useContext(AppContext);
+  const userId = useUserIdAuth();
+  useEffect(() => {
+    dispatch(
+      notificationsActions.getNotifications({
+        streamClient,
+        userId: userId.toString(),
+      }),
+    );
+  }, []);
+
+  // render badget function
+  const renderBadget = name => {
+    const number = tabBadge[name];
+
+    if (number > 0) {
+      return <RedDot style={{top: 15, left: 45}} number={number} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     // @ts-ignore
     <Tab.Navigator
@@ -37,10 +67,6 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             key={'tabs' + name}
             name={name}
             component={component}
-            tabBarBadge={tabBadge[name]}
-            tabBarBadgeStyle={{
-              backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
-            }}
             options={{
               tabBarIcon: ({focused, color}) => {
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
@@ -53,6 +79,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
                       tintColor="none"
                       bold={focused}
                     />
+                    {renderBadget(name)}
                   </View>
                 );
               },
@@ -81,6 +108,7 @@ const CreateStyle = () => {
       height: 64,
       justifyContent: 'center',
       alignItems: 'center',
+      position: 'relative',
     },
   });
 };

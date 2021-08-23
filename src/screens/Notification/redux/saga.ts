@@ -11,17 +11,19 @@ export default function* notificationsSaga() {
 function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
   try {
     const {userId, streamClient} = payload;
-    yield put(notificationsActions.setLoadingNotifications(true));
 
-    const result = yield notificationsDataHelper.getNotificationList(
+    const response = yield notificationsDataHelper.getNotificationList(
       userId,
       streamClient,
     );
-    yield put(notificationsActions.setNotifications(result));
 
-    yield put(notificationsActions.setLoadingNotifications(false));
+    yield put(
+      notificationsActions.setNotifications({
+        notifications: response.results,
+        unseen: response.unseen,
+      }),
+    );
   } catch (err) {
-    yield put(notificationsActions.setLoadingNotifications(false));
     console.log(
       '\x1b[33m',
       'khanh --- getNotifications | getNotifications : error',
