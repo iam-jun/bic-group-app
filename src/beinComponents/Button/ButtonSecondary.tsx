@@ -16,7 +16,7 @@ const ButtonSecondary: React.FC<ButtonPrimaryProps> = ({
   style,
   ...props
 }: ButtonPrimaryProps) => {
-  const {colors, spacing}: ITheme = useTheme();
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
 
   return (
     <ButtonPrimary

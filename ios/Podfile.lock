@@ -335,7 +335,7 @@ PODS:
     - React-Core
   - react-native-netinfo (6.0.0):
     - React-Core
-  - react-native-safe-area-context (3.3.0):
+  - react-native-safe-area-context (3.2.0):
     - React-Core
   - react-native-unicons (1.0.3):
     - React
@@ -438,9 +438,9 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNInAppBrowser (3.6.3):
+  - RNInAppBrowser (3.5.1):
     - React-Core
-  - RNReanimated (2.2.0):
+  - RNReanimated (2.1.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -469,10 +469,9 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.5.0):
+  - RNScreens (3.2.0):
     - React-Core
-    - React-RCTImage
-  - RNSVG (9.13.6):
+  - RNSVG (9.12.0):
     - React
   - RNVectorIcons (8.1.0):
     - React-Core
@@ -693,7 +692,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 7b423f9e248eae65987838148c36eec1dbfe0b53
-  FBReactNativeSpec: d66579f911bc0a6931931ee2c0e6b6b6c7a456f6
+  FBReactNativeSpec: 6525555159d9a96e38e3494a026acf7a09adb981
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
   FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
@@ -728,7 +727,7 @@ SPEC CHECKSUMS:
   react-native-config: 387b1ea507bc50a2059e69149dac1342b9532f58
   react-native-document-picker: 5e691d2d993d49ba5a736dfc88fe4d72592ee0d2
   react-native-netinfo: e849fc21ca2f4128a5726c801a82fc6f4a6db50d
-  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
+  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-unicons: 3f98688cbfc9f47e3ae45dd1560b7a2ab65075f4
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
   React-perflogger: aad6d4b4a267936b3667260d1f649b6f6069a675
@@ -752,10 +751,10 @@ SPEC CHECKSUMS:
   RNFBMessaging: ee81245484ef7e835975d09c2cd4000dfa2ae5e7
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 35a3ceb837446fa11547704709bb22b5fac6d584
-  RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
-  RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
-  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
-  RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
+  RNInAppBrowser: 48b95ba7a4eaff5cc223bca338d3e319561dbd1b
+  RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
+  RNScreens: c277bfc4b5bb7c2fe977d19635df6f974f95dfd6
+  RNSVG: 75670614bca635d3dd64bc267bc199e539cb4fa9
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21

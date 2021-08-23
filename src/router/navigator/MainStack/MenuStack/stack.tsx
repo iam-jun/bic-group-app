@@ -6,6 +6,7 @@ const menuStack = {
   myProfile: 'my-profile',
   securityLogin: 'security-and-login',
   changePassword: 'change-password',
+  editBasicInfo: 'edit-basic-info',
 };
 
 export default menuStack;

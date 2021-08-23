@@ -4,7 +4,7 @@ platform :android do
   desc "Submit a new Build to Diawi"
   lane :deploy_dev do
     Dotenv.overload '.development.env'
-    # gradle(task: "clean assembleProductionRelease")
+    gradle(task: "clean assembleProductionRelease")
     #buildNumber = prompt(
     #    text: "Please enter your build number:",
     #    multi_line_end_keyword: "END",

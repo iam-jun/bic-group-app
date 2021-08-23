@@ -11,6 +11,7 @@ import useMenu from '~/hooks/menu';
 import images from '~/resources/images';
 import {IUserProfile} from '~/interfaces/IAuth';
 import menuActions from '~/screens/Menu/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import Header from '~/beinComponents/Header';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -19,6 +20,7 @@ import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import AboutProfile from '../MyProfilePage/components/AboutProfile';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
 const ProfileInfo = ({
   fullname,
@@ -35,6 +37,7 @@ const ProfileInfo = ({
   const styles = themeStyles(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const popupMessage = () =>
     dispatch(
@@ -46,6 +49,9 @@ const ProfileInfo = ({
         confirmLabel: 'Got it',
       }),
     );
+
+  const onEditProfileButton = () =>
+    rootNavigation.navigate(menuStack.userProfile);
 
   return (
     <View>
@@ -84,7 +90,7 @@ const ProfileInfo = ({
           color={theme.colors.bgButtonSecondary}
           textColor={theme.colors.primary}
           rightIcon={'EditAlt'}
-          onPress={popupMessage}>
+          onPress={onEditProfileButton}>
           {t('profile:title_edit_profile')}
         </Button.Secondary>
       )}

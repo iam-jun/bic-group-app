@@ -233,7 +233,7 @@ const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
     const groupId = data.id;
     delete data.id; // edit data should not contain group's id
 
-    const response = await groupsDataHelper.editGroupPrivacy(groupId, data);
+    const response = await groupsDataHelper.editGroupDetail(groupId, data);
     if (response.code === 200) {
       return response.data;
     }

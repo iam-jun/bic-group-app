@@ -14,38 +14,57 @@ export interface NotificationItemProps {
   verb: string;
   is_read: boolean;
   is_seen: boolean;
+  activity_count: number;
+  actor_count: number;
+  created_at: string;
+  updated_at: string;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
+  verb,
   is_seen,
+  is_read,
+  activity_count,
+  actor_count,
+  created_at,
+  updated_at,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme, is_seen);
+
   const activity = activities[0];
+  const post = activity.object;
+  const groupNames: string[] = [];
+  activity.audience?.groups?.forEach(group => {
+    if (group.data?.name) {
+      groupNames.push(group.data.name);
+    }
+  });
+  const avatar = activity.actor.data?.avatar || activity.actor.data?.avatarUrl;
 
   return (
     <View style={styles.container}>
-      <Avatar.Large source={activity.actor.data?.avatarUrl} />
+      <Avatar.Large source={avatar} />
 
       <View style={styles.content}>
         <Text.BodyM style={styles.title}>
           {activity.actor.data?.fullname}
           <Text.Body style={styles.title}>
             {` ${activity.verb} your post in`}
-            <Text.BodyM>{` ${activity.object.audience.groups[0].data?.name}`}</Text.BodyM>
+            <Text.BodyM>{groupNames.join(',')}</Text.BodyM>
           </Text.Body>
         </Text.BodyM>
 
-        {activity.reaction.data?.content ? (
+        {post.data?.content ? (
           <Text.Subtitle
             style={
               styles.subContent
-            }>{`"${activity.reaction.data?.content}"`}</Text.Subtitle>
+            }>{`"${post.data?.content}"`}</Text.Subtitle>
         ) : null}
       </View>
       <Text.Subtitle style={styles.timeCreated}>
-        {countTime(`${activity.reaction.created_at}`)}
+        {countTime(`${updated_at}`)}
       </Text.Subtitle>
       <Icon style={styles.iconOptions} icon="EllipsisH" size={16} />
     </View>

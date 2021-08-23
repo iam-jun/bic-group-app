@@ -35,7 +35,7 @@ export const getUnreadConversationCount = createSelector(chatState, data => {
     const sub: any = (data?.subscriptions || []).find(
       (sub: any) => sub.rid === item._id,
     );
-    if (sub.unread > 0) count++;
+    if (typeof sub !== 'undefined' && sub.unread > 0) count++;
   });
-  return count > 99 ? '99+' : count;
+  return count;
 });
