@@ -1,22 +1,28 @@
-import _ from 'lodash';
+import React, {useEffect, useState} from 'react';
+import _, {isEmpty} from 'lodash';
 import debounce from 'lodash/debounce';
-import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
+import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
+import FlashMessage from '~/beinComponents/FlashMessage';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
 import * as validation from '~/constants/commonRegex';
-import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import {changePassword} from '~/screens/Auth/redux/actions';
+import {useBaseHook} from '~/hooks';
+import {
+  changePassword,
+  setChangePasswordError,
+} from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import {IChangePasswordError} from '~/interfaces/IAuth';
+import useAuth from '~/hooks/auth';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
@@ -25,19 +31,61 @@ const ChangePassword = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
+  const {changePasswordError, changePasswordLoading} = useAuth();
+  const {errCurrentPassword, errBox}: IChangePasswordError =
+    changePasswordError || {};
+  const [disableSaveButton, setDisableSaveButton] = useState(true);
+
+  useEffect(() => {
+    dispatch(
+      setChangePasswordError({
+        errCurrentPassword: '',
+      }),
+    );
+  }, []);
+
+  useEffect(() => {
+    console.log('Loading change', changePasswordLoading);
+    checkDisableSaveButton();
+  }, [changePasswordLoading]);
+
+  useEffect(() => {
+    if (errCurrentPassword) {
+      setError('password', {
+        type: 'manual',
+        message: errCurrentPassword,
+      });
+    } else {
+      clearErrors('password');
+    }
+  }, [errCurrentPassword]);
+
+  const onClearErrorBox = () => {
+    dispatch(setChangePasswordError({errBox: ''}));
+  };
+
   const {
     control,
     formState: {errors},
     trigger,
     setError,
+    clearErrors,
     getValues,
   } = useForm();
 
-  const validatePassword = debounce(async () => {
+  const validatePassword = async () => {
     await trigger('password');
-  }, 50);
+    if (getValues('password') === getValues('newPassword')) {
+      setError('newPassword', {
+        type: 'manual',
+        message: t('auth:text_err_new_password_must_differ_from_current'),
+      });
+    } else if (errors['newPassword'].type === 'manual') {
+      clearErrors('newPassword');
+    }
+  };
 
-  const validateNewPassword = debounce(async () => {
+  const validateNewPassword = async () => {
     await trigger('newPassword');
     if (getValues('password') === getValues('newPassword')) {
       setError('newPassword', {
@@ -45,9 +93,9 @@ const ChangePassword = () => {
         message: t('auth:text_err_new_password_must_differ_from_current'),
       });
     }
-  }, 50);
+  };
 
-  const validateConfirmNewPassword = debounce(async () => {
+  const validateConfirmNewPassword = async () => {
     await trigger('confirmNewPassword');
     if (getValues('newPassword') !== getValues('confirmNewPassword')) {
       setError('confirmNewPassword', {
@@ -55,7 +103,32 @@ const ChangePassword = () => {
         message: t('auth:text_err_confirm_new_password_not_matched'),
       });
     }
-  }, 50);
+  };
+
+  const checkDisableSaveButton = debounce(async () => {
+    const password = getValues('password');
+    const newPassword = getValues('newPassword');
+    const confirmNewPassword = getValues('confirmNewPassword');
+    console.log('========================================');
+    console.log('Error check', errors, ' => ', !isEmpty(errors));
+    console.log('DEBUG 0:', password, newPassword, confirmNewPassword);
+    const result =
+      !isEmpty(errors) ||
+      !password ||
+      !newPassword ||
+      !confirmNewPassword ||
+      changePasswordLoading;
+    console.log(
+      'DEBUG 1:',
+      result,
+      !isEmpty(errors),
+      !password,
+      !newPassword,
+      !confirmNewPassword,
+      changePasswordLoading,
+    );
+    setDisableSaveButton(result);
+  }, 10);
 
   const handleForgotPassword = () => {
     dispatch(
@@ -88,6 +161,14 @@ const ChangePassword = () => {
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
+        {!!errBox && (
+          <FlashMessage
+            type="error"
+            onClose={onClearErrorBox}
+            style={styles.flashMessage}>
+            {errBox}
+          </FlashMessage>
+        )}
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
@@ -97,10 +178,12 @@ const ChangePassword = () => {
               placeholder={t('auth:input_label_current_password')}
               error={errors.password}
               autoCapitalize="none"
+              editable={!changePasswordLoading}
               value={value || ''}
               onChangeText={text => {
                 onChange(text);
                 validatePassword();
+                checkDisableSaveButton();
               }}
               helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
@@ -124,10 +207,12 @@ const ChangePassword = () => {
               placeholder={t('auth:input_label_new_password')}
               error={errors.newPassword}
               autoCapitalize="none"
+              editable={!changePasswordLoading}
               value={value || ''}
               onChangeText={text => {
                 onChange(text);
                 validateNewPassword();
+                checkDisableSaveButton();
               }}
               helperType={errors.newPassword?.message ? 'error' : undefined}
               helperContent={errors?.newPassword?.message}
@@ -152,10 +237,12 @@ const ChangePassword = () => {
               placeholder={t('auth:input_label_confirm_new_password')}
               error={errors.confirmNewPassword}
               autoCapitalize="none"
+              editable={!changePasswordLoading}
               value={value || ''}
               onChangeText={text => {
                 onChange(text);
                 validateConfirmNewPassword();
+                checkDisableSaveButton();
               }}
               helperType={
                 errors.confirmNewPassword?.message ? 'error' : undefined
@@ -178,6 +265,7 @@ const ChangePassword = () => {
         <Button.Primary
           testID="btnChangePasswordSave"
           style={styles.btnSave}
+          disabled={disableSaveButton}
           onPress={handleOnSaveChangePassword}>
           {t('common:text_save')}
         </Button.Primary>
@@ -211,6 +299,9 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: spacing.padding.large,
       paddingHorizontal: spacing.padding.base,
       alignContent: 'center',
+    },
+    flashMessage: {
+      marginBottom: theme.spacing.margin.extraLarge,
     },
     logoutFromAllDevices: {
       marginVertical: spacing.margin.tiny,
