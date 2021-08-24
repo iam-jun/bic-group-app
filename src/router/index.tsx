@@ -7,7 +7,7 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking, StyleSheet, View} from 'react-native';
+import {Linking, Platform, StyleSheet, View} from 'react-native';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -129,11 +129,25 @@ const StackNavigator = (): React.ReactElement => {
             component={screens.MainStack}
             initialParams={{initialRouteName}}
           />
+          <Stack.Screen
+            options={getOptions(t)}
+            // @ts-ignore
+            name={rootSwitch.notFound}
+            component={screens.NotFound}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       <AlertModal />
     </View>
   );
+};
+
+const getOptions = (t: any) => {
+  if (Platform.OS !== 'web') {
+    return undefined;
+  }
+
+  return {headerShown: false, title: t('web:title_not_found')};
 };
 
 const styles = StyleSheet.create({
