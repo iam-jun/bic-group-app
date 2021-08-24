@@ -72,6 +72,7 @@ const PostDetail = (props: any) => {
       <CommentItem
         postId={id}
         commentData={item}
+        groupIds={groupIds}
         onPressReply={(data, isChild) => {
           textInputRef.current?.focus?.();
           if (!isChild) {

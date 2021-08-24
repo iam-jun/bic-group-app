@@ -109,6 +109,9 @@ export const linkingConfigFull = {
               'create-post': {
                 path: '/post/new',
               },
+              'create-comment': {
+                path: '/post/comment/new',
+              },
             },
           },
           groups: {
@@ -136,6 +139,9 @@ export const linkingConfigFull = {
               },
               'create-post': {
                 path: '/post/new',
+              },
+              'create-comment': {
+                path: '/post/comment/new',
               },
               'post-detail': {
                 path: '/post/:id?',

@@ -14,6 +14,7 @@ import {IconType} from '~/resources/icons';
 
 export interface CommentItemProps {
   postId: string;
+  groupIds: string;
   commentData: IReaction;
   contentBackgroundColor?: string;
   onPressReply?: (data: IReaction, isChild?: boolean) => void;
@@ -21,6 +22,7 @@ export interface CommentItemProps {
 
 const CommentItem: React.FC<CommentItemProps> = ({
   postId,
+  groupIds,
   commentData,
   contentBackgroundColor,
   onPressReply,
@@ -55,6 +57,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
     return (
       <CommentView
         postId={postId}
+        groupIds={groupIds}
         commentData={item}
         onPressReply={onPressReplyChild}
       />
@@ -114,6 +117,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
     <View style={styles.container}>
       <CommentView
         postId={postId}
+        groupIds={groupIds}
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}

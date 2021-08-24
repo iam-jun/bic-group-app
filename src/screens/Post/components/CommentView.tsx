@@ -21,6 +21,7 @@ import Button from '~/beinComponents/Button';
 
 export interface CommentViewProps {
   postId: string;
+  groupIds: string;
   parentCommentId?: string;
   commentData: IReaction;
   onPressReply: (data: IReaction) => void;
@@ -29,6 +30,7 @@ export interface CommentViewProps {
 
 const CommentView: React.FC<CommentViewProps> = ({
   postId,
+  groupIds,
   parentCommentId,
   commentData,
   onPressReply,
@@ -164,6 +166,7 @@ const CommentView: React.FC<CommentViewProps> = ({
       <CommentViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         commentId={id}
+        groupIds={groupIds}
         isActor={currentUserId === user_id}
         onPressMoreReaction={onPressReact}
         onAddReaction={onAddReaction}
