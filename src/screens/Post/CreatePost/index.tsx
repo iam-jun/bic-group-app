@@ -199,8 +199,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onMentionText = debounce((textMention: string) => {
-    console.log({textMention});
-
     if (textMention) {
       const groupIds: any[] = [];
       chosenAudiences.map((selected: IAudience) => {

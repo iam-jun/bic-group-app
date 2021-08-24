@@ -29,14 +29,13 @@ const MessageItem = (props: MessageItemProps) => {
   const sameUser = user?.username === previousMessage?.user?.username;
   const sameType = type === previousMessage?.type;
 
-  const sameUserInPrevMessage = currentMessage && sameUser;
   // && isSameDay(currentMessage, previousMessage);
 
   const _onRetryPress = () => {
     dispatch(actions.retrySendMessage(currentMessage));
   };
 
-  const showHeader = !(sameUserInPrevMessage && sameType) || quoted_message;
+  const showHeader = (sameUser && sameType) || quoted_message;
 
   if (system) return <SystemMessage {...currentMessage} />;
 

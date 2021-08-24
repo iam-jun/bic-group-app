@@ -95,7 +95,7 @@ export const mapMessage = (item: any): IMessage => {
       ...extraData,
     };
   }
-  const type = item.type || attachment?.type;
+  const type = item.t || attachment?.type;
 
   return {
     ...item,

@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import {debounce} from 'lodash';
 import React, {useState} from 'react';
 import {Platform} from 'react-native';
 import uuid from 'react-native-uuid';
@@ -20,7 +21,6 @@ interface Props {
 const ChatInput: React.FC<Props> = ({onError}: Props) => {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
-  const [mentionedUsers, setMentionedUsers] = useState<IChatUser[]>([]);
 
   const {user} = useAuth();
   const {conversation, mention} = useChat();
@@ -89,8 +89,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     );
   };
 
-  const onMentionText = (textMention: string) => {
-    console.log({textMention});
+  const onMentionText = debounce((textMention: string) => {
     if (textMention) {
       dispatch(actions.setMentionSearchKey(textMention));
       dispatch(actions.getMentionUsers(textMention));
@@ -98,25 +97,12 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       dispatch(actions.setMentionUsers([]));
       dispatch(actions.setMentionSearchKey(''));
     }
-  };
+  });
 
   const onPressMentionUser = (user: IChatUser) => {
     const mention = `@[u:${user._id}:${user.name}] `;
     const newText = text.replace(`@${mentionKey}`, mention);
     setText(newText);
-
-    const _mentionedUsers = [...mentionedUsers];
-
-    let isDuplicate = false;
-    mentionedUsers.map(item => {
-      if (item?._id === user?._id) {
-        isDuplicate = true;
-      }
-    });
-    if (!isDuplicate) {
-      _mentionedUsers.unshift(user);
-      setMentionedUsers(_mentionedUsers);
-    }
 
     dispatch(actions.setMentionUsers([]));
     dispatch(actions.setMentionSearchKey(''));

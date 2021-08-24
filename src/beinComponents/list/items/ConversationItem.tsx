@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import MarkdownView from '~/beinComponents/MarkdownView';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
@@ -37,7 +38,7 @@ const ConversationItem: React.FC<IConversation> = ({
   };
 
   const ItemAvatar = isDirect ? (
-    <Avatar.UltraLarge
+    <Avatar.Large
       style={styles.marginRight}
       source={avatar}
       placeholderSource={images.img_user_avatar_default}
@@ -61,7 +62,7 @@ const ConversationItem: React.FC<IConversation> = ({
         variant: unreadCount ? 'bodyM' : 'body',
         color: textcolor,
       }}
-      subTitle={lastMessage}
+      subTitle={<MarkdownView>{lastMessage}</MarkdownView>}
       LeftComponent={ItemAvatar}
       RightComponent={
         <View style={styles.rightComponent}>

@@ -16,6 +16,7 @@ import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import {mentionRegex} from '~/constants/commonRegex';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import images from '~/resources/images';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -71,6 +72,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         <Avatar.Medium
           style={styles.avatar}
           source={item.avatar || item.icon}
+          placeholderSource={images.img_user_avatar_default}
         />
         <Text>{item.name || item.fullname}</Text>
       </TouchableOpacity>
@@ -85,8 +87,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         onChangeText={_onChangeText}
         placeholder={placeholderText}
         onContentSizeChange={onContentSizeChange}
-        style={textInputStyle}
-        {...componentInputProps}>
+        style={textInputStyle}>
         {children}
       </ComponentInput>
       {isMentionModalVisible && (
@@ -95,6 +96,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
             keyboardShouldPersistTaps={'always'}
             data={data}
             renderItem={_renderItem}
+            keyExtractor={item => item.id || item._id}
           />
         </View>
       )}

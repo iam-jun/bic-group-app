@@ -38,6 +38,7 @@ export interface IChatUser {
     [key: string]: any;
   };
   settings?: IUserSettings;
+  selected?: boolean;
 }
 interface ILoginToken {
   hashedToken: string;

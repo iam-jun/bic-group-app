@@ -1,5 +1,4 @@
 import {ISignUpResult} from 'amazon-cognito-identity-js';
-import {User} from 'react-native-gifted-chat';
 import {GENDER_TYPE, RELATIONSHIP_TYPE} from './IEditUser';
 
 // Actiontype
@@ -26,7 +25,7 @@ export interface ICognitoError {
   message: string;
 }
 
-export interface IUser extends User {
+export interface IUser {
   id: string;
   email: string;
   username?: string;

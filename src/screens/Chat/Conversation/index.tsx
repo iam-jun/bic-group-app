@@ -6,7 +6,6 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import Header from '~/beinComponents/Header';
-import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
@@ -22,8 +21,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {getAvatar} from '../helper';
-import {ChatInput, MessageOptionsModal} from './fragments';
-import MessageItem from './fragments/MessageItem';
+import {MessageContainer, ChatInput, MessageOptionsModal} from './fragments';
 
 const Conversation = () => {
   const {conversation, messages} = useChat();
@@ -107,7 +105,7 @@ const Conversation = () => {
       previousMessage: index > 1 && messages.data[index - 1],
       currentMessage: item,
     };
-    return <MessageItem {...props} />;
+    return <MessageContainer {...props} />;
   };
 
   return (
