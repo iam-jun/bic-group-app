@@ -21,6 +21,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import {getAvatar} from '../helper';
 import actions from '../redux/actions';
 
 const Conversation = (): React.ReactElement => {
@@ -34,6 +35,9 @@ const Conversation = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
+  const [_avatar, setAvatar] = useState<string | string[] | undefined>(
+    conversation.avatar,
+  );
 
   useEffect(() => {
     if (conversation.description?.length > 100) {
@@ -84,20 +88,23 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
-  const renderAvatar = () => {
-    if (isDirect) {
-      return (
-        <Avatar.UltraLarge
-          source={conversation.avatar}
-          placeholderSource={images.img_user_avatar_default}
-        />
+  const onLoadAvatarError = () => {
+    if (conversation.type === roomTypes.DIRECT) {
+      setAvatar(images.img_user_avatar_default);
+    } else if (conversation.usernames) {
+      const avatarGroup = conversation.usernames.map((username: string) =>
+        getAvatar(username),
       );
-    }
+      setAvatar(avatarGroup);
+    } else setAvatar(images.img_group_avatar_default);
+  };
+
+  const renderAvatar = () => {
     return (
       <Avatar.Group
         variant="ultraLarge"
-        source={conversation.avatar}
-        placeholderSource={images.img_group_avatar_default}
+        source={_avatar}
+        onError={onLoadAvatarError}
       />
     );
   };

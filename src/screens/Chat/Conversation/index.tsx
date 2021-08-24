@@ -199,7 +199,7 @@ const Conversation = () => {
     <ScreenWrapper isFullView testID="MessageScreen">
       <Header
         avatar={_avatar}
-        avatarProps={{onError: onLoadAvatarError}}
+        avatarProps={{variant: 'default', onError: onLoadAvatarError}}
         title={conversation.name}
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"

@@ -14,6 +14,7 @@ import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
+import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 
@@ -62,6 +63,7 @@ const ConversationsList = (): React.ReactElement => {
       <Header
         title={i18next.t('chat:title')}
         hideBack
+        avatar={images.img_menu_chat}
         menuIcon="iconCreateChat"
         onPressMenu={onMenuPress}
       />
