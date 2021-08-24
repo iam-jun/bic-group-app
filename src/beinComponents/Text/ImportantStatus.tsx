@@ -61,7 +61,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
           isButton
           iconStyle={[styles.iconStyle, {backgroundColor: iconBackgroundColor}]}
           style={styles.leftIcon}
-          size={18}
+          size={14}
           icon={'iconStar'}
           tintColor={iconColor}
         />
@@ -88,7 +88,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing.margin.small,
       marginLeft: spacing.margin.tiny,
     },
-    iconStyle: {padding: 2},
+    iconStyle: {padding: 3, borderRadius: 100},
   });
 };
 

@@ -92,7 +92,7 @@ const groupsDataHelper = {
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
         withOwnReactions: true,
-        withOwnChildren: false,
+        withOwnChildren: true,
         withRecentReactions: true,
         withReactionCounts: true,
         enrich: true, //extra data for user & group
