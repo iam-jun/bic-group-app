@@ -57,12 +57,16 @@ function* changePassword({
   payload: IAuth.IChangePasswordPayload;
 }) {
   try {
+    yield put(actions.setChangePasswordLoading(true));
+
     const {oldPassword, newPassword, global} = payload;
     const user = yield Auth.currentAuthenticatedUser();
     const data = yield Auth.changePassword(user, oldPassword, newPassword);
     if (data === 'SUCCESS' && global) {
       yield Auth.signOut({global});
     }
+    yield put(actions.setChangePasswordLoading(false));
+
     navigation.goBack();
     yield put(
       modalActions.showAlert({
@@ -75,16 +79,23 @@ function* changePassword({
       }),
     );
   } catch (error) {
-    navigation.goBack();
-    yield put(
-      modalActions.showAlert({
-        title: i18n.t('error:alert_title'),
-        content: error.code || error.message,
-        onConfirm: () => put(modalActions.hideAlert()),
-        confirmLabel: i18n.t('error:button_confirm'),
-      }),
-    );
+    console.log('DEBUG');
     console.log('changePassword error:', error);
+    let errCurrentPassword = '',
+      errBox = '';
+    switch (error.code) {
+      case authErrors.NOT_AUTHORIZED_EXCEPTION:
+        errCurrentPassword = i18n.t('auth:text_err_wrong_current_password');
+        break;
+      case authErrors.LIMIT_EXCEEDED_EXCEPTION:
+        errBox = i18n.t('auth:text_err_limit_exceeded');
+        break;
+      default:
+        errBox = error?.message || '';
+    }
+    console.log('Err', errCurrentPassword);
+    yield put(actions.setChangePasswordLoading(false));
+    yield put(actions.setChangePasswordError({errCurrentPassword, errBox}));
   }
 }
 
