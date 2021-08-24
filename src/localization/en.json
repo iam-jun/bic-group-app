@@ -40,6 +40,14 @@
     "text_done": "Done",
     "text_download": "Download",
     "text_send": "Send",
+    "label_confirm_send_file": "Send this file?",
+    "label_confirm_send_image": "Send this photo?",
+    "label_confirm_send_video": "Send this video?",
+    "error": {
+      "file": {
+        "over_file_size": "Your file must be less than 10MB"
+      }
+    },
     "text_discard_changes": "Discard Changes?",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?"
   },

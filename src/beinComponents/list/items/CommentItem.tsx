@@ -10,19 +10,22 @@ import _ from 'lodash';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import CommentView from '~/screens/Post/components/CommentView';
+import {IconType} from '~/resources/icons';
 
 export interface CommentItemProps {
+  postId: string;
   commentData: IReaction;
   contentBackgroundColor?: string;
   onPressReply?: (data: IReaction, isChild?: boolean) => void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
+  postId,
   commentData,
   contentBackgroundColor,
   onPressReply,
 }: CommentItemProps) => {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
   const [commentChildren, setCommentChildren] = useState<IReaction[]>(
     commentData?.latest_children?.comment || [],
   );
@@ -49,8 +52,28 @@ const CommentItem: React.FC<CommentItemProps> = ({
   };
 
   const renderCommentChildItem = useCallback(({item}) => {
-    return <CommentView commentData={item} onPressReply={onPressReplyChild} />;
+    return (
+      <CommentView
+        postId={postId}
+        commentData={item}
+        onPressReply={onPressReplyChild}
+      />
+    );
   }, []);
+
+  const renderButtonShow = (icon: IconType, title: string) => {
+    return (
+      <ButtonWrapper style={styles.row} onPress={() => setShowAll(!showAll)}>
+        <Icon
+          style={styles.iconShowMore}
+          size={16}
+          icon={icon}
+          tintColor={colors.textSecondary}
+        />
+        <Text.BodyS color={theme.colors.textSecondary}>{title}</Text.BodyS>
+      </ButtonWrapper>
+    );
+  };
 
   const renderCommentChildren = () => {
     if (commentChildren?.length <= 0) {
@@ -69,42 +92,18 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 `list-${index}-${item.id}` || _.uniqueId(`list-${index}`)
               }
             />
-            <ButtonWrapper
-              style={styles.row}
-              onPress={() => setShowAll(!showAll)}>
-              <Icon
-                style={styles.iconShowMore}
-                size={16}
-                icon={'AngleUp'}
-                tintColor={colors.textSecondary}
-              />
-              <Text.BodyS
-                color={
-                  theme.colors.textSecondary
-                }>{`Show less reply`}</Text.BodyS>
-            </ButtonWrapper>
+            {/*{renderButtonShow('AngleUp', 'Show less reply')}*/}
           </View>
         );
       } else {
         return (
           <View style={styles.commentChildrenContainer}>
             {renderCommentChildItem({item: commentChildren[0]})}
-            {commentChildren?.length > 1 && (
-              <ButtonWrapper
-                style={styles.row}
-                onPress={() => setShowAll(!showAll)}>
-                <Icon
-                  style={styles.iconShowMore}
-                  size={16}
-                  icon={'AngleDown'}
-                  tintColor={colors.textSecondary}
-                />
-                <Text.BodyS
-                  color={theme.colors.textSecondary}>{`Show more replies (${
-                  commentChildren?.length - 1
-                })`}</Text.BodyS>
-              </ButtonWrapper>
-            )}
+            {commentChildren?.length > 1 &&
+              renderButtonShow(
+                'AngleDown',
+                `Show more replies (${commentChildren?.length - 1})`,
+              )}
           </View>
         );
       }
@@ -114,6 +113,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   return (
     <View style={styles.container}>
       <CommentView
+        postId={postId}
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}

@@ -78,7 +78,7 @@ const PostView: FC<PostViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const avatar = actor?.data?.avatarUrl;
+  const avatar = actor?.data?.avatar;
   const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
@@ -149,7 +149,13 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = () => {
-    reactionSheetRef?.current?.open?.();
+    dispatch(
+      postActions.setShowReactionBottomSheet({
+        show: true,
+        title: t('post:label_all_reacts'),
+        callback: onAddReaction,
+      }),
+    );
   };
 
   const _onPressComment = () => {
@@ -173,7 +179,7 @@ const PostView: FC<PostViewProps> = ({
 
   const onAddReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
-      postId,
+      id: postId,
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
@@ -184,7 +190,7 @@ const PostView: FC<PostViewProps> = ({
 
   const onRemoveReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
-      postId,
+      id: postId,
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
@@ -372,11 +378,6 @@ const PostView: FC<PostViewProps> = ({
           !onPressComment,
         )}
       </View>
-      <ReactionBottomSheet
-        reactionSheetRef={reactionSheetRef}
-        onPressReaction={onAddReaction}
-        title={t('post:label_all_reacts')}
-      />
       <PostViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         postId={postId}

@@ -6,12 +6,15 @@ import Reaction from '~/beinComponents/Badge/Reaction';
 import reactions, {ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
+import Icon from '~/beinComponents/Icon';
+import Button from '~/beinComponents/Button';
 
 export interface ReactionViewProps {
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
+  onPressSelectReaction?: () => void;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
@@ -19,6 +22,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   reactionCounts,
   onAddReaction,
   onRemoveReaction,
+  onPressSelectReaction,
 }: ReactionViewProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -55,20 +59,52 @@ const ReactionView: FC<ReactionViewProps> = ({
   const renderedReactions = renderReactions();
 
   if (renderedReactions.length === 0) {
-    return <View />;
+    return (
+      <View style={styles.containerButtonOnly}>
+        {!!onPressSelectReaction && (
+          <Button style={styles.buttonReact} onPress={onPressSelectReaction}>
+            <Icon size={16} icon={'iconReact'} />
+          </Button>
+        )}
+      </View>
+    );
   } else {
-    return <View style={styles.container}>{renderReactions()}</View>;
+    return (
+      <View style={styles.container}>
+        {renderReactions()}
+        {!!onPressSelectReaction && (
+          <Button
+            style={[styles.buttonReact, styles.marginHorizontal6]}
+            onPress={onPressSelectReaction}>
+            <Icon size={16} icon={'iconReact'} />
+          </Button>
+        )}
+      </View>
+    );
   }
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
+    containerButtonOnly: {flex: 1, alignItems: 'flex-start'},
     container: {
+      flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
       padding: spacing.padding.small,
     },
+    buttonReact: {
+      marginVertical: 2,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      borderRadius: spacing?.borderRadius.small,
+      paddingHorizontal: spacing.padding.small,
+      paddingVertical: 6,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    marginHorizontal6: {marginHorizontal: 6},
   });
 };
 

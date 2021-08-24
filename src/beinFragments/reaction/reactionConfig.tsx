@@ -1,4 +1,13 @@
 import {reactions} from '~/constants/reactions';
+
+export const reactionDefault = [
+  reactions.crazy_love_heart,
+  reactions.stunned_wow,
+  reactions.laugh_rofl,
+  reactions.crying_sad,
+  reactions.angry_furious,
+];
+
 const reactionConfig: any = [
   [
     reactions.smile_laugh,

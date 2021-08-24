@@ -1,12 +1,15 @@
 import {put, call, takeLatest, select} from 'redux-saga/effects';
-import {isArray} from 'lodash';
+import {isArray, get} from 'lodash';
 import i18n from 'i18next';
 
 import {
   IOwnReaction,
   IParamSearchMentionAudiences,
+  IPayloadGetCommentsById,
   IPayloadPutEditPost,
+  IPayloadReactToComment,
   IPayloadReactToPost,
+  IPayloadUpdateCommentsById,
   IPostActivity,
   IPostCreatePost,
   IReaction,
@@ -23,6 +26,8 @@ import {showHeaderFlashMessage} from '~/store/app/actions';
 import {IHeaderFlashMessage} from '~/interfaces/common';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import {sortComments} from '~/screens/Post/helper/PostUtils';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -39,12 +44,20 @@ export default function* postSaga() {
     getSearchMentionAudiences,
   );
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
+  yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
+  yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
+  yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
     showPostAudienceBottomSheet,
   );
+  yield takeLatest(
+    postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
+    updateAllCommentsByParentIdsWithComments,
+  );
+  yield takeLatest(postTypes.GET_COMMENTS_BY_IDS, getCommentsById);
 }
 
 function* postCreateNewPost({
@@ -192,6 +205,33 @@ function* addToAllPosts({
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
+function* addToAllComments({
+  payload,
+}: {
+  type: string;
+  payload: IReaction[] | IReaction;
+}) {
+  try {
+    const allComments = yield select(state => state?.post?.allComments) || {};
+    const newAllComments = {...allComments};
+    if (isArray(payload) && payload.length > 0) {
+      payload.map((item: IReaction) => {
+        if (item?.id) {
+          newAllComments[item.id] = item;
+        }
+      });
+    } else if (payload && 'id' in payload && payload.id) {
+      newAllComments[payload.id] = payload;
+    }
+    yield put(postActions.setAllComments(newAllComments));
+  } catch (e) {
+    console.log(
+      `\x1b[31m🐣️ saga addToAllComments error:`,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
+  }
+}
+
 function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
@@ -215,7 +255,7 @@ function* postReactToPost({
   type: string;
   payload: IPayloadReactToPost;
 }) {
-  const {postId, reactionId, reactionCounts, ownReaction, userId} = payload;
+  const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
     const data: ReactionType[] = [];
     data.push(reactionId);
@@ -228,15 +268,11 @@ function* postReactToPost({
       const newReactionCounts = {...reactionCounts};
       newReactionCounts[reactionId] =
         (newReactionCounts?.[reactionId] || 0) + 1;
-      yield onUpdateReactionOfPostById(
-        postId,
-        newOwnReaction,
-        newReactionCounts,
-      );
+      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
 
       const response = yield call(
         postDataHelper.postReaction,
-        postId,
+        id,
         'post',
         data,
         userId,
@@ -246,15 +282,11 @@ function* postReactToPost({
         reactionArr2.push({id: response?.data?.[0]});
         newOwnReaction[reactionId] = reactionArr2;
 
-        yield onUpdateReactionOfPostById(
-          postId,
-          newOwnReaction,
-          newReactionCounts,
-        );
+        yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
       }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(postId, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
     console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
   }
 }
@@ -265,10 +297,10 @@ function* deleteReactToPost({
   type: string;
   payload: IPayloadReactToPost;
 }) {
-  const {postId, reactionId, reactionCounts, ownReaction} = payload;
+  const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
-    const id = ownReaction?.[reactionId]?.[0]?.id;
-    if (id) {
+    const rId = ownReaction?.[reactionId]?.[0]?.id;
+    if (rId) {
       const newOwnReaction = {...ownReaction};
       newOwnReaction[reactionId] = [];
       const newReactionCounts = {...reactionCounts};
@@ -276,16 +308,139 @@ function* deleteReactToPost({
         0,
         (newReactionCounts[reactionId] || 0) - 1,
       );
-      yield onUpdateReactionOfPostById(
-        postId,
-        newOwnReaction,
-        newReactionCounts,
-      );
-      yield call(postDataHelper.deleteReaction, id);
+      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+      yield call(postDataHelper.deleteReaction, rId);
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(postId, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
     console.log(`\x1b[31m🐣️ deleteReactToPost : ${e}\x1b[0m`);
+  }
+}
+
+function* onUpdateReactionOfCommentById(
+  commentId: string,
+  ownReaction: IOwnReaction,
+  reactionCounts: IReactionCounts,
+  defaultComment: IReaction,
+) {
+  try {
+    const allComments = yield select(state =>
+      get(state, postKeySelector.allComments),
+    ) || {};
+    const comment: IReaction = allComments?.[commentId] || defaultComment || {};
+    const newComment = {...comment};
+    newComment.children_counts = reactionCounts;
+    newComment.own_children = ownReaction;
+    allComments[commentId] = newComment;
+    yield put(postActions.setAllComments(allComments));
+  } catch (e) {
+    console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
+  }
+}
+
+function* postReactToComment({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactToComment;
+}) {
+  const {
+    id,
+    comment,
+    postId,
+    parentCommentId,
+    reactionId,
+    reactionCounts,
+    ownReaction,
+    userId,
+  } = payload;
+  const isChildComment = !!parentCommentId;
+  if (!postId) {
+    console.log(`\x1b[31m🐣️ saga postReactToComment: postId not found\x1b[0m`);
+    return;
+  }
+  try {
+    const data: ReactionType[] = [];
+    data.push(reactionId);
+    const added = ownReaction?.[reactionId]?.length > 0;
+    if (!added) {
+      const newChildrenCounts = {...reactionCounts};
+      newChildrenCounts[reactionId] = (newChildrenCounts[reactionId] || 0) + 1;
+      const newOwnChildren = {...ownReaction};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({kind: reactionId});
+      newOwnChildren[reactionId] = reactionArr;
+      yield onUpdateReactionOfCommentById(
+        id,
+        newOwnChildren,
+        newChildrenCounts,
+        comment,
+      );
+
+      const response = yield call(
+        postDataHelper.postReaction,
+        id,
+        'comment',
+        data,
+        userId,
+      );
+      if (response?.data?.[0]) {
+        const reactionArr2: IReaction[] = [];
+        reactionArr2.push({id: response?.data?.[0]});
+        newOwnChildren[reactionId] = reactionArr2;
+        yield onUpdateReactionOfCommentById(
+          id,
+          newOwnChildren,
+          newChildrenCounts,
+          comment,
+        );
+      }
+    }
+  } catch (e) {
+    yield onUpdateReactionOfCommentById(
+      id,
+      ownReaction,
+      reactionCounts,
+      comment,
+    );
+    console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
+  }
+}
+
+function* deleteReactToComment({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactToComment;
+}) {
+  const {id, comment, reactionId, reactionCounts, ownReaction} = payload;
+  try {
+    const rId = ownReaction?.[reactionId]?.[0]?.id;
+    if (rId) {
+      const newChildrenCounts = {...reactionCounts};
+      newChildrenCounts[reactionId] = Math.max(
+        0,
+        (newChildrenCounts[reactionId] || 0) - 1,
+      );
+      const newOwnChildren = {...ownReaction};
+      newOwnChildren[reactionId] = [];
+      yield onUpdateReactionOfCommentById(
+        id,
+        newOwnChildren,
+        newChildrenCounts,
+        comment,
+      );
+
+      yield call(postDataHelper.deleteReaction, rId);
+    }
+  } catch (e) {
+    yield onUpdateReactionOfCommentById(
+      id,
+      ownReaction,
+      reactionCounts,
+      comment,
+    );
+    console.log(`\x1b[31m🐣️ deleteReactToComment : ${e}\x1b[0m`);
   }
 }
 
@@ -331,7 +486,7 @@ function* showPostAudienceBottomSheet({
         sectionUsers.push({
           id: user?.id,
           name: user?.data?.fullname,
-          avatar: user?.data?.avatarUrl,
+          avatar: user?.data?.avatar,
           type: 'user',
         });
       });
@@ -347,5 +502,56 @@ function* showPostAudienceBottomSheet({
     );
   } else {
     console.log(`\x1b[31m🐣️saga showPostAudienceSheet post not found\x1b[0m`);
+  }
+}
+
+function* updateAllCommentsByParentIdsWithComments({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadUpdateCommentsById;
+}) {
+  const {id, comments, isMerge} = payload || {};
+  const allComments = yield select(state =>
+    get(state, postKeySelector.allCommentsByParentIds),
+  ) || {};
+  const commentsById = allComments[id] || [];
+  let newComments;
+  if (isMerge) {
+    newComments = commentsById.concat(comments);
+  } else {
+    newComments = comments;
+  }
+  allComments[id] = sortComments(newComments);
+  yield put(postActions.setAllCommentsByParentIds(allComments));
+}
+
+function* getCommentsById({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetCommentsById;
+}) {
+  const {id, isMerge} = payload || {};
+  try {
+    const response = yield call(postDataHelper.getCommentsById, id);
+    if (response?.length > 0) {
+      yield put(postActions.addToAllComments(response));
+      const p = {id, comments: response, isMerge};
+      yield put(postActions.updateAllCommentsByParentIdsWithComments(p));
+    }
+  } catch (e) {
+    console.log(
+      `\x1b[34m🐣️ saga getCommentsById error:`,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
+    yield put(
+      modalActions.showAlert({
+        title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+        content:
+          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+        confirmLabel: i18n.t('common:text_ok'),
+      }),
+    );
   }
 }

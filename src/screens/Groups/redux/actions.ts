@@ -4,6 +4,7 @@ import {
   IGroupDetail,
   IGroupDetailEdit,
   IPayloadGetGroupPost,
+  IGroupImageUpload,
 } from '~/interfaces/IGroup';
 
 const groupsActions = {
@@ -95,6 +96,12 @@ const groupsActions = {
   editGroupDetail: function (payload: IGroupDetailEdit) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
+      payload,
+    };
+  },
+  uploadImage: function (payload: IGroupImageUpload) {
+    return {
+      type: groupsTypes.UPLOAD_IMAGE,
       payload,
     };
   },

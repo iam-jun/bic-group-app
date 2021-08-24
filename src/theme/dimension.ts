@@ -6,6 +6,16 @@ const guidelineBaseWidth = 375;
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 
+export const groupProfileImageCropRatio = {
+  // image crop ratio for cover photo: 16:9
+  background_img_url: {
+    width: DeviceWidth,
+    height: (DeviceWidth / 16) * 9,
+  },
+  // image crop ratio for avatar: 1:1 -> default, no need to define
+  icon: {},
+};
+
 /* Size config used for Text */
 export const sizes = {
   base: 14,

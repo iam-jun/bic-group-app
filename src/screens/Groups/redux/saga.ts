@@ -1,13 +1,18 @@
 import {call, put, select, takeLatest} from 'redux-saga/effects';
+import i18next from 'i18next';
+
 import {
   IGroup,
   IGroupDetailEdit,
+  IGroupImageUpload,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {IResponseData} from '~/interfaces/common';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -16,6 +21,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
+  yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
 }
 
 function* getJoinedGroups() {
@@ -246,3 +252,34 @@ const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
     );
   }
 };
+
+function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
+  try {
+    const {image, id, fieldName} = payload;
+
+    const formData = new FormData();
+    formData.append('file', {
+      type: image.type,
+      // @ts-ignore
+      name: image.name || 'imageName',
+      uri: image.uri,
+    });
+    const response: IResponseData = yield groupsDataHelper.uploadImage(
+      formData,
+    );
+    yield put(
+      groupsActions.editGroupDetail({id, [fieldName]: response?.data?.src}),
+    );
+  } catch (err) {
+    console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
+  }
+}
