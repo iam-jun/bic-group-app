@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import {AppConfig} from '~/configs';
 import {roomTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IAttachment, IConversation, IMessage} from '~/interfaces/IChat';
@@ -7,7 +6,6 @@ import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 import {generateRoomName} from '~/utils/generator';
-import {IFileResponse} from './../../interfaces/IChat';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -152,11 +150,4 @@ export const getMessageAttachmentUrl = (attachmentUrl: string) => {
       auth.userId
     }&rc_token=${auth.accessToken}`,
   );
-};
-
-export const validateFile = (file: IFileResponse): string | null => {
-  if (file.size > AppConfig.maxFileSize) {
-    return i18next.t('chat:error:file:over_file_size');
-  }
-  return null;
 };

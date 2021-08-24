@@ -46,16 +46,17 @@ const MainTabs = () => {
 
   const dispatch = useDispatch();
 
-  const {streamClient} = useContext(AppContext);
+  const {streamClient, streamNotiSubClient} = useContext(AppContext);
 
   const userId = useUserIdAuth();
   useEffect(() => {
-    dispatch(
-      notificationsActions.getNotifications({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
+    streamClient?.currentUser?.token &&
+      dispatch(
+        notificationsActions.getNotifications({
+          streamClient,
+          userId: userId.toString(),
+        }),
+      );
   }, []);
 
   // callback function when client receive realtime activity in notification feed
@@ -70,14 +71,14 @@ const MainTabs = () => {
     );
   };
 
-  const {streamNotiSubClient} = useContext(AppContext);
   useEffect(() => {
-    subscribeGetstreamFeed(
-      streamNotiSubClient,
-      'notification',
-      'u-' + userId,
-      realtimeCallback,
-    );
+    streamClient?.currentUser?.token &&
+      subscribeGetstreamFeed(
+        streamNotiSubClient,
+        'notification',
+        'u-' + userId,
+        realtimeCallback,
+      );
   }, []);
 
   return (

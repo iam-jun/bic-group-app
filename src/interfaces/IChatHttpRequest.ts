@@ -55,3 +55,6 @@ export interface IUpdateGroupName {
   roomId: string;
   name: string;
 }
+export interface IGetMentionUsersReq {
+  query: any;
+}

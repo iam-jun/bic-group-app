@@ -1,142 +1,145 @@
+import i18next from 'i18next';
 import React, {useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import {
-  Composer,
-  InputToolbar,
-  InputToolbarProps,
-  Send,
-} from 'react-native-gifted-chat';
-import {useTheme} from 'react-native-paper';
-import {IObject} from '~/interfaces/common';
-import Icon from '~/beinComponents/Icon';
-import {letterSpacing, sizes} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {fontFamilies} from '~/theme/fonts';
+import {Platform} from 'react-native';
+import uuid from 'react-native-uuid';
+import {useDispatch} from 'react-redux';
+import CommentInput from '~/beinComponents/inputs/CommentInput';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
+import useAuth from '~/hooks/auth';
+import useChat from '~/hooks/chat';
+import {IFileResponse} from '~/interfaces/common';
+import {IChatUser} from '~/interfaces/IChat';
+import actions from '~/screens/Chat/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {validateFile} from '~/utils/validation';
 
-const ChatInput = (
-  props: InputToolbarProps & {
-    // GiftedChat passes its props to all of its `render*()`
-    onEnterPress: (text: string) => void;
-    openImagePicker: () => void;
-    openFilePicker: () => void;
-  },
-) => {
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyles(theme);
-  const [actionsVisible, setActionVisible] = useState(true);
+interface Props {
+  onError: (err: any) => void;
+}
 
-  const renderActions = () =>
-    actionsVisible ? (
-      <View style={styles.actions}>
-        <Icon
-          size={16}
-          iconStyle={styles.icon}
-          tintColor={colors.textReversed}
-          icon="iconAddImage"
-          onPress={props.openImagePicker}
-        />
-        <ViewSpacing width={spacing.margin.small} />
-        <Icon
-          size={16}
-          iconStyle={styles.icon}
-          tintColor={colors.textReversed}
-          icon="attachment"
-          onPress={props.openFilePicker}
-        />
-      </View>
-    ) : (
-      <View style={styles.actions}>
-        <Icon
-          size={22}
-          icon="iconBack"
-          onPress={() => setActionVisible(true)}
-        />
-      </View>
+const ChatInput: React.FC<Props> = ({onError}: Props) => {
+  const dispatch = useDispatch();
+  const [text, setText] = useState('');
+  const [mentionedUsers, setMentionedUsers] = useState<IChatUser[]>([]);
+
+  const {user} = useAuth();
+  const {conversation, mention} = useChat();
+  const {mentionUsers, mentionKey} = mention;
+
+  const _onChangeText = (value: string) => {
+    setText(value);
+  };
+
+  const onSend = () => {
+    dispatch(
+      actions.sendMessage({
+        _id: uuid.v4().toString(),
+        room_id: conversation._id,
+        _updatedAt: new Date().toISOString(),
+        text,
+        user,
+      }),
     );
+    setText('');
+  };
+
+  const onSubmitEditing = () => {
+    if (Platform.OS !== 'web') return;
+    onSend();
+  };
+
+  const onPressSelectImage = (file: IFileResponse) => {
+    const _error = validateFile(file);
+    onError(_error);
+    if (_error) return;
+    const type = file.type.includes('/') ? file.type.split('/')[0] : 'image';
+    showUploadConfirmation(file, type);
+  };
+
+  const onPressFile = (file: IFileResponse) => {
+    const _error = validateFile(file);
+    onError(_error);
+    if (_error) return;
+    showUploadConfirmation(file, 'file');
+  };
+
+  const showUploadConfirmation = (file: IFileResponse, type: string) => {
+    dispatch(
+      modalActions.showAlert({
+        title: i18next.t(`chat:label_confirm_send_${type}`),
+        content: file.name,
+        cancelBtn: true,
+        onConfirm: () => uploadFile(file),
+        confirmLabel: i18next.t('common:text_send'),
+      }),
+    );
+  };
+
+  const uploadFile = (file: IFileResponse) => {
+    const _id = uuid.v4().toString();
+    dispatch(
+      actions.uploadFile({
+        _id,
+        localId: _id,
+        user,
+        room_id: conversation._id,
+        _updatedAt: new Date().toISOString(),
+        attachment: file,
+      }),
+    );
+  };
+
+  const onMentionText = (textMention: string) => {
+    console.log({textMention});
+    if (textMention) {
+      dispatch(actions.setMentionSearchKey(textMention));
+      dispatch(actions.getMentionUsers(textMention));
+    } else if (mentionKey || mentionUsers?.length > 0) {
+      dispatch(actions.setMentionUsers([]));
+      dispatch(actions.setMentionSearchKey(''));
+    }
+  };
+
+  const onPressMentionUser = (user: IChatUser) => {
+    const mention = `@[u:${user._id}:${user.name}] `;
+    const newText = text.replace(`@${mentionKey}`, mention);
+    setText(newText);
+
+    const _mentionedUsers = [...mentionedUsers];
+
+    let isDuplicate = false;
+    mentionedUsers.map(item => {
+      if (item?._id === user?._id) {
+        isDuplicate = true;
+      }
+    });
+    if (!isDuplicate) {
+      _mentionedUsers.unshift(user);
+      setMentionedUsers(_mentionedUsers);
+    }
+
+    dispatch(actions.setMentionUsers([]));
+    dispatch(actions.setMentionSearchKey(''));
+  };
 
   return (
-    <InputToolbar
-      {...props}
-      containerStyle={styles.inputToolbar}
-      renderActions={renderActions}
-      renderComposer={composerProps => (
-        <View style={styles.composerWrapper}>
-          <Composer
-            {...composerProps}
-            textInputStyle={styles.composer}
-            onTextChanged={text => {
-              composerProps.onTextChanged && composerProps.onTextChanged(text);
-              actionsVisible && setActionVisible(false);
-            }}
-            textInputProps={{
-              ...composerProps.textInputProps,
-              placeholder: 'Aa',
-              // for enabling the Return key to send a message only on web
-              blurOnSubmit: Platform.OS === 'web',
-              onSubmitEditing:
-                Platform.OS === 'web'
-                  ? event => {
-                      if (props.onEnterPress) {
-                        props.onEnterPress(event.nativeEvent.text.trim());
-                      }
-                    }
-                  : undefined,
-            }}
-          />
-        </View>
-      )}
-      renderSend={props => {
-        return (
-          <Send {...props} containerStyle={styles.iconSend}>
-            <Icon icon="iconSend" size={22} tintColor={colors.accent} />
-          </Send>
-        );
+    <MentionInput
+      data={mentionUsers}
+      modalPosition={'top'}
+      isMentionModalVisible={!!text && mentionUsers?.length > 0}
+      onChangeText={_onChangeText}
+      onMentionText={onMentionText}
+      value={text}
+      onPress={onPressMentionUser}
+      ComponentInput={CommentInput}
+      componentInputProps={{
+        onPressSend: onSend,
+        onSubmitEditing,
+        onPressFile,
+        onPressSelectImage,
       }}
     />
   );
-};
-
-const createStyles = (theme: IObject<any>) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    actions: {
-      flexDirection: 'row',
-      alignSelf: 'center',
-    },
-    icon: {
-      backgroundColor: colors.primary,
-      borderRadius: spacing.borderRadius.small,
-      padding: spacing.padding.tiny,
-    },
-    inputToolbar: {
-      paddingHorizontal: spacing.padding.base,
-      paddingVertical: spacing.padding.small,
-      borderTopColor: 'transparent',
-      // justifyContent: 'center',
-      // alignItems: 'center',
-    },
-    composerWrapper: {
-      flex: 1,
-      flexDirection: 'row',
-      marginHorizontal: spacing.margin.small,
-      paddingVertical: 2,
-      backgroundColor: colors.placeholder,
-      borderRadius: spacing.borderRadius.large,
-    },
-    composer: {
-      fontFamily: fontFamilies.Segoe,
-      fontSize: sizes.body,
-      lineHeight: 16,
-      letterSpacing: letterSpacing.body,
-      color: colors.textPrimary,
-    },
-    iconSend: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
 };
 
 export default ChatInput;

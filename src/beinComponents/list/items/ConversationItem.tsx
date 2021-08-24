@@ -8,7 +8,7 @@ import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {getAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
 
 const ConversationItem: React.FC<IConversation> = ({
@@ -68,7 +68,7 @@ const ConversationItem: React.FC<IConversation> = ({
           <Text.Subtitle
             style={styles.textUpdate}
             color={theme.colors.textSecondary}>
-            {formatDate(_updatedAt)}
+            {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
             <View style={styles.unread}>

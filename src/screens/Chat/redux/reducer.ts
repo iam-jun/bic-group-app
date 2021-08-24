@@ -51,6 +51,10 @@ const initState = {
     data: [],
   },
   subscriptions: [],
+  mention: {
+    searchKey: '',
+    mentionUsers: [],
+  },
 };
 
 /**
@@ -316,7 +320,23 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
-
+    //mention
+    case types.SET_MENTION_SEARCH_KEY:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          searchKey: payload,
+        },
+      };
+    case types.SET_MENTION_USERS:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          mentionUsers: payload,
+        },
+      };
     case types.REACT_MESSAGE:
       return {
         ...state,

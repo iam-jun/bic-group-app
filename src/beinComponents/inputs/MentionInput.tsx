@@ -31,6 +31,7 @@ export interface MentionInputProps extends TextInputProps {
   onContentSizeChange?: (data: any) => void;
   value?: string;
   ComponentInput?: any;
+  componentInputProps?: any;
   children?: React.ReactNode;
 }
 
@@ -48,6 +49,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   onContentSizeChange,
   value,
   ComponentInput = TextInput,
+  componentInputProps,
   children,
 }: MentionInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -78,6 +80,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   return (
     <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
       <ComponentInput
+        // {...componentInputProps}
         value={children ? undefined : value}
         onChangeText={_onChangeText}
         placeholder={placeholderText}

@@ -199,6 +199,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onMentionText = debounce((textMention: string) => {
+    console.log({textMention});
+
     if (textMention) {
       dispatch(postActions.setMentionSearchKey(textMention));
       dispatch(postActions.getSearchMentionAudiences({key: textMention}));
@@ -287,6 +289,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onMentionText={onMentionText}
           value={content}
           ComponentInput={PostInput}
+          componentInputProps={{
+            blurOnSubmit: true,
+          }}
         />
         {!isEditPost && (
           <PostToolbar

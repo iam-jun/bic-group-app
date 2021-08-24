@@ -1,18 +1,16 @@
-import {IMessage as _GMessage} from 'react-native-gifted-chat';
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
+import {IFileResponse} from './common';
 export interface IReaction {
   type: ReactionType;
   count: number;
   reacted?: boolean;
 }
 
-export type GMessage = _GMessage;
-
 export interface IChatUser {
   _id: string;
   createdAt: Date;
-  roles: string[];
+  roles?: string[];
   type: string;
   active: boolean;
   username?: string;
@@ -123,10 +121,11 @@ export type IAttachment = {
 
 export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
 
-export type IMessage = _GMessage & {
-  _id: string | number; // id of the message from gifted chat
+export type IMessage = {
+  _id: string;
   room_id: string;
   user: IChatUser;
+  text?: string;
   quoted_message?: IMessage;
   reactions?: IReaction[];
   attachments?: IAttachment[];
@@ -134,15 +133,9 @@ export type IMessage = _GMessage & {
   type?: string;
   localId?: string;
   status?: IMesssageStatus;
+  system?: boolean;
   attachment?: IFileResponse & IAttachment;
 };
-
-export interface IFileResponse {
-  name?: string;
-  uri: string;
-  size: number;
-  type: string;
-}
 
 export interface IAttachmentMessage {
   _id: string | number;
@@ -169,3 +162,20 @@ export type IConversation = {
   _updatedAt: string;
   type: IRoomType;
 };
+
+export interface ISendMessageAction {
+  _id: string;
+  text: string;
+  user: IChatUser;
+  room_id: string;
+  _updatedAt: string;
+}
+
+export interface IUploadFileAction {
+  _id: string;
+  localId: string;
+  user: IChatUser;
+  room_id: string;
+  _updatedAt: string;
+  attachment: IFileResponse;
+}

@@ -3,6 +3,7 @@ import {
   ICreateRoomReq,
   IGetGroupReq,
   IGetGroupRolesReq,
+  IGetMentionUsersReq,
   IPaginationParams,
   IReadSubscription,
   ISendMessageReq,
@@ -136,6 +137,15 @@ const Chat = {
       useRetry: false,
       provider: providers.chat,
       data,
+    };
+  },
+  mentionUsers: (params: IGetMentionUsersReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}users.list`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
     };
   },
 };
