@@ -1,4 +1,5 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
+import {StreamClient} from 'getstream';
 import {IFileResponse} from './common';
 
 export interface IGroup {
@@ -55,6 +56,12 @@ export interface IGroupDetail {
   can_manage_member: boolean;
   can_setting: boolean;
   join_status: number;
+}
+
+export interface IPayloadGetGroupPost {
+  streamClient: StreamClient;
+  groupId: number;
+  userId: number;
 }
 
 export interface IGroupImageUpload {

@@ -3,6 +3,7 @@ import {
   IGroup,
   IGroupDetail,
   IGroupDetailEdit,
+  IPayloadGetGroupPost,
   IGroupImageUpload,
 } from '~/interfaces/IGroup';
 
@@ -86,7 +87,7 @@ const groupsActions = {
       payload,
     };
   },
-  getGroupPosts: function (payload: number) {
+  getGroupPosts: function (payload: IPayloadGetGroupPost) {
     return {
       type: groupsTypes.GET_GROUP_POSTS,
       payload,
