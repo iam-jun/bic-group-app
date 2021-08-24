@@ -11,6 +11,8 @@ export const initAuthState = {
   signingInError: '',
   forgotPasswordStage: forgotPasswordStages.INPUT_ID,
   forgotPasswordError: {errBox: '', errRequest: '', errConfirm: ''},
+  changePasswordError: {errCurrentPassword: '', errBox: ''},
+  changePasswordLoading: false,
 };
 
 function authReducer(state = initAuthState, action: any = {}) {
@@ -46,6 +48,16 @@ function authReducer(state = initAuthState, action: any = {}) {
       return {
         ...state,
         forgotPasswordError: {...action.payload},
+      };
+    case types.SET_CHANGE_PASSWORD_ERROR:
+      return {
+        ...state,
+        changePasswordError: {...action.payload},
+      };
+    case types.SET_CHANGE_PASSWORD_LOADING:
+      return {
+        ...state,
+        changePasswordLoading: action.payload,
       };
     case types.SIGN_OUT:
     case ActionTypes.UnauthorizedLogout:
