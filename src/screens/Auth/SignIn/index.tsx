@@ -229,13 +229,13 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       paddingHorizontal: spacing.padding.big,
       backgroundColor: colors.background,
       alignContent: 'center',
-      alignItems: !isPhone ? 'center' : undefined,
+      alignItems: 'center',
       justifyContent: !isPhone ? 'center' : undefined,
     },
     container: {
       alignContent: 'center',
-      width: !isPhone ? '30%' : undefined,
-      maxWidth: 600,
+      width: '100%',
+      maxWidth: 375,
     },
     logo: {
       alignSelf: 'center',

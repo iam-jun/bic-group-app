@@ -65,9 +65,11 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
       justifyContent: 'center',
     },
     container: {
+      flex: 1,
       alignContent: 'center',
-      width: !isPhone ? '40%' : undefined,
+      width: '100%',
       maxWidth: 600,
+      maxHeight: !isPhone ? 754 : undefined,
     },
     contentContainer: {
       flex: 1,
