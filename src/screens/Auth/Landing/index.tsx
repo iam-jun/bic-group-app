@@ -11,6 +11,7 @@ import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import {ITheme} from '~/theme/interfaces';
+import {deviceDimensions} from '~/theme/dimension';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landingpage.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
@@ -18,8 +19,9 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 const Landing = () => {
   const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
-  const styles = createStyle(theme);
   const dimensions = useWindowDimensions();
+  const isPhone = dimensions.width < deviceDimensions.smallTablet;
+  const styles = createStyle(theme, isPhone);
 
   const logo = images.logo_bein;
   const imgMaxWidth = 330;
@@ -49,7 +51,7 @@ const Landing = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
 
@@ -64,6 +66,7 @@ const createStyle = (theme: ITheme) => {
     },
     container: {
       alignContent: 'center',
+      width: !isPhone ? '40%' : undefined,
       maxWidth: 600,
     },
     contentContainer: {
