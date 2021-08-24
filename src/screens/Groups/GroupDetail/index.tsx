@@ -32,9 +32,28 @@ const GroupDetail = (props: any) => {
   const {id: groupId} = groupInfo;
 
   const getGroupPosts = () => {
-    if (streamClient) {
+    if (streamClient && userId && groupId) {
       dispatch(groupsActions.getGroupPosts({streamClient, userId, groupId}));
     }
+  };
+
+  const getGroupDetail = () => {
+    if (groupId) {
+      dispatch(groupsActions.getGroupDetail(groupId));
+    }
+  };
+
+  const getGroupMembers = () => {
+    dispatch(groupsActions.clearGroupMembers());
+    if (groupId) {
+      dispatch(groupsActions.getGroupMembers(groupId));
+    }
+  };
+
+  const _onRefresh = () => {
+    getGroupDetail();
+    getGroupPosts();
+    getGroupMembers();
   };
 
   useEffect(() => {
@@ -50,7 +69,7 @@ const GroupDetail = (props: any) => {
         refreshControl={
           <RefreshControl
             refreshing={!!refreshingGroupPosts}
-            onRefresh={getGroupPosts}
+            onRefresh={_onRefresh}
             tintColor={theme.colors.borderDisable}
           />
         }
