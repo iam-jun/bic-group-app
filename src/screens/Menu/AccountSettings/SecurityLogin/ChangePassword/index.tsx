@@ -75,6 +75,21 @@ const ChangePassword = () => {
 
   const validatePassword = debounce(async () => {
     await trigger('password');
+    compareCurrentWithNewPassword();
+  }, 3);
+
+  const validateNewPassword = debounce(async () => {
+    await trigger('newPassword');
+    compareNewPasswordWithConfirmation();
+    compareCurrentWithNewPassword();
+  }, 3);
+
+  const validateConfirmNewPassword = debounce(async () => {
+    await trigger('confirmNewPassword');
+    compareNewPasswordWithConfirmation();
+  }, 3);
+
+  const compareCurrentWithNewPassword = () => {
     if (getValues('password') === getValues('newPassword')) {
       setError('newPassword', {
         type: 'manual',
@@ -83,50 +98,33 @@ const ChangePassword = () => {
     } else if (errors['newPassword'].type === 'manual') {
       clearErrors('newPassword');
     }
-  }, 3);
+  };
 
-  const validateNewPassword = debounce(async () => {
-    await trigger('newPassword');
-    if (getValues('password') === getValues('newPassword')) {
-      setError('newPassword', {
-        type: 'manual',
-        message: t('auth:text_err_new_password_must_differ_from_current'),
-      });
-    }
-  }, 3);
+  const compareNewPasswordWithConfirmation = () => {
+    const confirmNewPassword = getValues('confirmNewPassword');
+    if (!confirmNewPassword) return;
+    const newPassword = getValues('newPassword');
 
-  const validateConfirmNewPassword = debounce(async () => {
-    await trigger('confirmNewPassword');
-    if (getValues('newPassword') !== getValues('confirmNewPassword')) {
+    if (newPassword !== confirmNewPassword) {
       setError('confirmNewPassword', {
         type: 'manual',
         message: t('auth:text_err_confirm_new_password_not_matched'),
       });
+    } else {
+      clearErrors('confirmNewPassword');
     }
-  }, 3);
+  };
 
   const checkDisableSaveButton = debounce(async () => {
     const password = getValues('password');
     const newPassword = getValues('newPassword');
     const confirmNewPassword = getValues('confirmNewPassword');
-    console.log('========================================');
-    console.log('Error check', errors, ' => ', !isEmpty(errors));
-    console.log('DEBUG 0:', password, newPassword, confirmNewPassword);
     const result =
       !isEmpty(errors) ||
       !password ||
       !newPassword ||
       !confirmNewPassword ||
       changePasswordLoading;
-    console.log(
-      'DEBUG 1:',
-      result,
-      !isEmpty(errors),
-      !password,
-      !newPassword,
-      !confirmNewPassword,
-      changePasswordLoading,
-    );
     setDisableSaveButton(result);
   }, 10);
 
