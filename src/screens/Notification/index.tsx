@@ -15,6 +15,9 @@ import notificationsActions from './redux/actions';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useDispatch} from 'react-redux';
+import postActions from '~/screens/Post/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const Notfitication = () => {
   const menuSheetRef = useRef<any>();
@@ -22,7 +25,7 @@ const Notfitication = () => {
   const notificationData = useNotifications();
   const {loadingNotifications, notificationList} = notificationData;
 
-  const _onItemPress = (item?: any) => alert('Notification press');
+  const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -41,6 +44,41 @@ const Notfitication = () => {
 
   const onPressMenu = () => {
     menuSheetRef.current?.open?.();
+  };
+
+  const _onItemPress = (item?: any) => {
+    // note: item is a notification group
+    // get first activity in notification group
+    // for now make the navigation to be simple by redirect to post detail screen
+    // for feature, check notification type to implement more complex requirements
+    const act = item.activities[0];
+    const verb = item.verb;
+    const post = act.object;
+    if (post && post.collection && post.collection === 'post') {
+      if (verb === 'comment') {
+        dispatch(postActions.setPostDetail(act));
+        rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+      } else {
+        dispatch(postActions.setPostDetail(act));
+        rootNavigation.navigate(homeStack.postDetail);
+      }
+    } else {
+      console.log(
+        '\x1b[33m',
+        'this notication not relate to a post',
+        act,
+        '\x1b[0m',
+      );
+    }
+
+    // finally mark the notification as read
+    dispatch(
+      notificationsActions.markAsRead({
+        userId: userId,
+        activityId: item.id,
+        streamClient: streamClient,
+      }),
+    );
   };
 
   const theme: ITheme = useTheme();
