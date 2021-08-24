@@ -1,38 +1,41 @@
-import React, {FC} from 'react';
+import React, {useRef} from 'react';
 import {View} from 'react-native';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import SelectReactionView from '~/beinFragments/reaction/SelectReactionView';
-import {ReactionType} from '~/constants/reactions';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import {useDispatch} from 'react-redux';
+import postActions from '~/screens/Post/redux/actions';
 
-export interface ReactionBottomSheetProps {
-  reactionSheetRef: any;
-  autoHide?: boolean;
-  title?: string;
-  onPressReaction?: (reactionId: ReactionType) => void;
-}
+const ReactionBottomSheet = () => {
+  const reactionSheetRef: any = useRef();
 
-const ReactionBottomSheet: FC<ReactionBottomSheetProps> = ({
-  reactionSheetRef,
-  autoHide = true,
-  title,
-  onPressReaction,
-}: ReactionBottomSheetProps) => {
+  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
 
+  const data = useKeySelector(postKeySelector.reactionBottomSheet);
+  const {title, show, callback} = data || {};
+
   const _onPressReaction = (reaction: IReactionProps) => {
-    onPressReaction?.(reaction.id);
-    autoHide && reactionSheetRef?.current?.close?.();
+    reactionSheetRef?.current?.close?.();
+    callback?.(reaction.id);
+  };
+
+  const _onClose = () => {
+    dispatch(postActions.setShowReactionBottomSheet());
   };
 
   return (
     <BottomSheet
       modalizeRef={reactionSheetRef}
+      isOpen={show}
+      onClose={_onClose}
       ContentComponent={
         <View>
           {!!title && (

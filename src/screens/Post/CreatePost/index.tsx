@@ -103,7 +103,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           id: group?.id,
           type: 'group',
           name: group?.data?.name,
-          avatar: group?.data?.avatarUrl,
+          avatar: group?.data?.avatar,
         });
       });
       initPostData?.audience?.users?.map?.(user => {
@@ -111,7 +111,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           id: user?.id,
           type: 'user',
           name: user?.data?.fullname,
-          avatar: user?.data?.avatarUrl,
+          avatar: user?.data?.avatar,
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));

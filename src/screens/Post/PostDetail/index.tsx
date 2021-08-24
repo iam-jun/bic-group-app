@@ -22,11 +22,10 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
+import {sortComments} from '../helper/PostUtils';
 
 const PostDetail = (props: any) => {
   const [commentText, setCommentText] = useState('');
-  const [listComments, setListComments] = useState([]);
-  const [loadingComment, setLoadingComment] = useState(false);
 
   const params = props?.route?.params;
   const {focusComment} = params || {};
@@ -45,29 +44,21 @@ const PostDetail = (props: any) => {
 
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
+  const latest_reactions = useKeySelector(
+    postKeySelector.postLatestReactionsComments(id),
+  );
   const replying = usePostDetailReplyingComment();
 
-  const getComments = () => {
+  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+
+  useEffect(() => {
     if (id) {
-      setLoadingComment(true);
-      postDataHelper
-        .getPostComment(id)
-        .then(response => {
-          if (response && response.data) {
-            setListComments(response.data);
-          }
-          setLoadingComment(false);
-        })
-        .catch(e => {
-          setLoadingComment(false);
-          console.log('\x1b[36m', '🐣️ getPostComment error : ', e, '\x1b[0m');
-        });
+      dispatch(postActions.getCommentsById({id, isMerge: false}));
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     dispatch(postActions.setPostDetailReplyingComment());
-    getComments();
   }, []);
 
   useEffect(() => {
@@ -103,7 +94,6 @@ const PostDetail = (props: any) => {
         .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
-            getComments();
             setCommentText('');
             dispatch(postActions.setPostDetailReplyingComment());
           }
@@ -126,6 +116,7 @@ const PostDetail = (props: any) => {
     const bgColor = item.id === replying?.id ? colors.bgFocus : undefined;
     return (
       <CommentItem
+        postId={id}
         commentData={item}
         contentBackgroundColor={bgColor}
         onPressReply={(data, isChild) => {
@@ -139,13 +130,7 @@ const PostDetail = (props: any) => {
   };
 
   const renderFooter = () => {
-    return (
-      <View>
-        {loadingComment && (
-          <Loading style={{margin: theme.spacing?.margin.base}} />
-        )}
-      </View>
-    );
+    return null;
   };
 
   const renderCommentInputHeader = () => {
@@ -189,7 +174,7 @@ const PostDetail = (props: any) => {
       <ListView
         listRef={listRef}
         isFullView
-        data={listComments}
+        data={comments || sortComments(latest_reactions) || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}
