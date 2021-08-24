@@ -54,7 +54,7 @@ export function setForgotPasswordError(payload: IForgotPasswordError) {
 
 export function setChangePasswordLoading(payload: boolean) {
   return {
-    type: types.SET_CHANGE_PASSWORD_ERROR,
+    type: types.SET_CHANGE_PASSWORD_LOADING,
     payload,
   };
 }

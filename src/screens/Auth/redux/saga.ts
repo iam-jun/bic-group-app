@@ -79,7 +79,6 @@ function* changePassword({
       }),
     );
   } catch (error) {
-    console.log('DEBUG');
     console.log('changePassword error:', error);
     let errCurrentPassword = '',
       errBox = '';
@@ -93,7 +92,6 @@ function* changePassword({
       default:
         errBox = error?.message || '';
     }
-    console.log('Err', errCurrentPassword);
     yield put(actions.setChangePasswordLoading(false));
     yield put(actions.setChangePasswordError({errCurrentPassword, errBox}));
   }
