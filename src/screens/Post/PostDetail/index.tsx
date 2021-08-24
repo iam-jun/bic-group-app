@@ -24,6 +24,7 @@ const PostDetail = (props: any) => {
 
   const textInputRef = useRef<any>();
   const listRef = useRef<any>();
+  let layoutSetted = useRef(false).current;
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -91,18 +92,30 @@ const PostDetail = (props: any) => {
     return null;
   };
 
+  const onLayout = () => {
+    if (!layoutSetted) {
+      layoutSetted = true;
+      focusComment &&
+        listRef?.current?.scrollToIndex?.({index: 0, animated: true});
+    }
+  };
+
+  const data = comments || sortComments(latest_reactions) || [];
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
       <Header subTitle={'Post detail'} />
       <ListView
         listRef={listRef}
         isFullView
-        data={comments || sortComments(latest_reactions) || []}
+        data={data}
         renderItem={renderCommentItem}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => <View />}
         keyboardShouldPersistTaps={'handled'}
+        onLayout={onLayout}
+        onContentSizeChange={onLayout}
       />
       <CommentInputView
         postId={id}
