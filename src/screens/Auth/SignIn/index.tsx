@@ -1,5 +1,5 @@
-import {debounce, isEmpty} from 'lodash';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {isEmpty} from 'lodash';
 import {Controller, useForm} from 'react-hook-form';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -8,7 +8,6 @@ import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import Input from '~/beinComponents/inputs/TextInput';
-import AlertModal from '~/beinComponents/modals/AlertModal';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Text from '~/beinComponents/Text';
@@ -24,12 +23,14 @@ import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import * as actions from '../redux/actions';
+import {setSigningInError} from '../redux/actions';
 
 const SignIn = () => {
   useAuthAmplifyHub();
   const {t, navigation} = useBaseHook();
   const dispatch = useDispatch();
   const {loading, signingInError} = useAuth();
+  const [disableSignIn, setDisableSignIn] = useState(true);
 
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -44,49 +45,61 @@ const SignIn = () => {
   } = useForm();
 
   useEffect(() => {
-    const email = getValues('email');
-    if (email) {
-      trigger().then(() => {
-        // do nothing
-      });
-    }
+    dispatch(setSigningInError(''));
+    checkDisableSignIn();
   }, []);
 
   useEffect(() => {
     if (signingInError) {
       setError('password', {
-        type: 'required',
+        type: 'validate',
         message: signingInError,
       });
+      setError('email', {
+        type: 'validate',
+        message: signingInError,
+      });
+      checkDisableSignIn();
     } else {
-      clearErrors('password');
+      clearAllErrors();
     }
   }, [signingInError]);
 
+  const clearAllErrors = () => {
+    clearErrors('email');
+    clearErrors('password');
+  };
+
+  const clearFieldError = (name: string) => {
+    const error = errors[name];
+    if (!error) return;
+
+    if (error.message === signingInError) clearAllErrors();
+    else clearErrors(name);
+  };
+
   const onSignIn = async () => {
-    if (disableSignIn) {
-      return;
-    }
+    const validInputs = await validateInputs();
+    checkDisableSignIn();
+    if (!validInputs) return;
+
     const email = getValues('email');
     const password = getValues('password');
     dispatch(actions.signIn({email, password}));
   };
 
-  const validateEmail = debounce(async () => {
-    await trigger('email');
-  }, 50);
-
-  const validatePassword = debounce(async () => {
-    await trigger('password');
-  }, 50);
+  const validateInputs = async () => {
+    const validEmail = await trigger('email');
+    const validPassword = await trigger('password');
+    return validEmail && validPassword;
+  };
 
   const checkDisableSignIn = () => {
     const email = getValues('email');
     const password = getValues('password');
-    return !isEmpty(errors) || !email || !password || loading;
+    const result = !isEmpty(errors) || !email || !password || loading;
+    setDisableSignIn(result);
   };
-
-  const disableSignIn = checkDisableSignIn();
 
   // TODO: remove when function signup come back
   const handleSignUpNotFunctioning = () => {
@@ -124,10 +137,15 @@ const SignIn = () => {
               error={errors.email}
               onChangeText={text => {
                 onChange(text);
-                validateEmail();
+                clearFieldError('email');
+                checkDisableSignIn();
               }}
               helperType={errors.email?.message ? 'error' : undefined}
-              helperContent={errors?.email?.message}
+              helperContent={
+                errors?.email?.message === signingInError
+                  ? ''
+                  : errors?.email?.message
+              }
               style={styles.inputEmail}
             />
           )}
@@ -154,7 +172,8 @@ const SignIn = () => {
               value={value}
               onChangeText={text => {
                 onChange(text);
-                validatePassword();
+                clearFieldError('password');
+                checkDisableSignIn();
               }}
               helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
@@ -203,7 +222,6 @@ const SignIn = () => {
           </Text.H6>
         </TouchableOpacity>
       </View>
-      <AlertModal dismissable={true} />
     </ScreenWrapper>
   );
 };
