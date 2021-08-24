@@ -56,13 +56,13 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     root: {
       flex: 1,
+      paddingTop: insets.top,
+      paddingHorizontal: spacing.padding.big,
       backgroundColor: colors.background,
       alignItems: 'center',
       justifyContent: 'center',
     },
     container: {
-      paddingTop: insets.top,
-      paddingHorizontal: spacing.padding.big,
       alignContent: 'center',
       maxWidth: 600,
     },
