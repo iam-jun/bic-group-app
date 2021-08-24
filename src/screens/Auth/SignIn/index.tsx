@@ -79,6 +79,8 @@ const SignIn = () => {
   };
 
   const onSignIn = async () => {
+    if (disableSignIn) return;
+
     const validInputs = await validateInputs();
     checkDisableSignIn();
     if (!validInputs) return;
@@ -140,6 +142,7 @@ const SignIn = () => {
                 clearFieldError('email');
                 checkDisableSignIn();
               }}
+              onSubmitEditing={() => onSignIn()}
               helperType={errors.email?.message ? 'error' : undefined}
               helperContent={
                 errors?.email?.message === signingInError
@@ -175,6 +178,7 @@ const SignIn = () => {
                 clearFieldError('password');
                 checkDisableSignIn();
               }}
+              onSubmitEditing={() => onSignIn()}
               helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
               style={styles.inputPassword}
