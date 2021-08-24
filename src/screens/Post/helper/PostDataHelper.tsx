@@ -85,7 +85,7 @@ export const postApiConfig = {
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users`,
+    url: `${ApiConfig.providers.bein.url}users/mentionable`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
