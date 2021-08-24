@@ -70,7 +70,7 @@ const SignIn = () => {
     clearErrors('password');
   };
 
-  const clearFieldError = (name: string) => {
+  const clearFieldError = (name: 'email' | 'password') => {
     const error = errors[name];
     if (!error) return;
 
