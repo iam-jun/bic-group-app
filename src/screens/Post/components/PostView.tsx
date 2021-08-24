@@ -33,6 +33,7 @@ import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 
 export interface PostViewProps {
   postId: string;
@@ -78,7 +79,7 @@ const PostView: FC<PostViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const avatar = actor?.data?.avatarUrl;
+  const avatar = actor?.data?.avatar;
   const actorName = actor?.data?.fullname;
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
@@ -149,7 +150,13 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = () => {
-    reactionSheetRef?.current?.open?.();
+    dispatch(
+      postActions.setShowReactionBottomSheet({
+        show: true,
+        title: t('post:label_all_reacts'),
+        callback: onAddReaction,
+      }),
+    );
   };
 
   const _onPressComment = () => {
@@ -173,7 +180,7 @@ const PostView: FC<PostViewProps> = ({
 
   const onAddReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
-      postId,
+      id: postId,
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
@@ -184,7 +191,7 @@ const PostView: FC<PostViewProps> = ({
 
   const onRemoveReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
-      postId,
+      id: postId,
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
@@ -211,14 +218,13 @@ const PostView: FC<PostViewProps> = ({
       return null;
     }
 
-    return (
-      <FlashMessage
-        textProps={{variant: 'h6'}}
-        leftIcon={'InfoCircle'}
-        type={'important'}>
-        {t('common:text_important')}
-      </FlashMessage>
-    );
+    const expireTime = important?.expiresTime;
+    if (expireTime) {
+      const now = new Date();
+      const notExpired = now.getTime() < new Date(expireTime).getTime();
+
+      return <ImportantStatus notExpired={notExpired} />;
+    }
   };
 
   const renderHeader = () => {
@@ -372,11 +378,6 @@ const PostView: FC<PostViewProps> = ({
           !onPressComment,
         )}
       </View>
-      <ReactionBottomSheet
-        reactionSheetRef={reactionSheetRef}
-        onPressReaction={onAddReaction}
-        title={t('post:label_all_reacts')}
-      />
       <PostViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         postId={postId}

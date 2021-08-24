@@ -41,13 +41,13 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getPostComment: (postId: string): HttpApiRequestConfig => ({
+  getCommentsById: (id: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      post_id: postId,
+      post_id: id,
       kind: 'comment',
     },
   }),
@@ -85,7 +85,7 @@ export const postApiConfig = {
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users`,
+    url: `${ApiConfig.providers.bein.url}users/mentionable`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -198,13 +198,16 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getPostComment: async (postId: string) => {
+  getCommentsById: async (id: string) => {
+    if (!id) {
+      return Promise.reject('Id not found');
+    }
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getPostComment(postId),
+        postApiConfig.getCommentsById(id),
       );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
+      if (response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

@@ -40,6 +40,14 @@
     "text_done": "Done",
     "text_download": "Download",
     "text_send": "Send",
+    "label_confirm_send_file": "Send this file?",
+    "label_confirm_send_image": "Send this photo?",
+    "label_confirm_send_video": "Send this video?",
+    "error": {
+      "file": {
+        "over_file_size": "Your file must be less than 10MB"
+      }
+    },
     "text_discard_changes": "Discard Changes?",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?"
   },
@@ -48,7 +56,7 @@
     "text_kickout_desc": "Your session has expired.",
     "text_kickout_confirm_button": "Got it",
     "text_change_password_success_title": "Notice",
-    "text_change_password_success_desc": "You have changed password success.",
+    "text_change_password_success_desc": "You have changed password successfully.",
     "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Sign In",
     "text_sign_in_desc": "Login with your Bein account",
@@ -92,9 +100,10 @@
     "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",
     "text_err_confirm_password_not_matched": "Password doesn't match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
-    "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting code too many time. Please try again later.",
+    "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
     "text_err_wrong_code": "Wrong Code Input? ",
     "text_err_missing_token": "Oops, something went wrong. ",
+    "text_err_wrong_current_password": "Wrong current password",
     "text_request_new_code": "Resend new code.",
     "text_title_success": "Successfully!",
     "text_sign_up_desc": "Don’t have an account?",

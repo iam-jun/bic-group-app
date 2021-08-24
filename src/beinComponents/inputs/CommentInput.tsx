@@ -209,6 +209,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             multiline={true}
             autoFocus={autoFocus}
             placeholder={placeholder}
+            placeholderTextColor={colors.textSecondary}
             onChangeText={_onChangeText}>
             <Text useParseText showRawText={true}>
               {text}

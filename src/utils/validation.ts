@@ -4,7 +4,7 @@ import {IFileResponse} from '~/interfaces/common';
 
 export const validateFile = (file: IFileResponse): string | null => {
   if (file.size > AppConfig.maxFileSize) {
-    return i18next.t('chat:error:file:over_file_size');
+    return i18next.t('common:error:file:over_file_size');
   }
   return null;
 };

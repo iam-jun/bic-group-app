@@ -34,9 +34,16 @@ export interface IRightMenu {
   type: string;
   title: string;
 }
+
 export interface IFileResponse {
   name?: string;
   uri: string;
   size: number;
   type: string;
+}
+
+export interface IResponseData {
+  code: number;
+  data: any;
+  meta: any;
 }

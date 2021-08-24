@@ -103,7 +103,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           id: group?.id,
           type: 'group',
           name: group?.data?.name,
-          avatar: group?.data?.avatarUrl,
+          avatar: group?.data?.avatar,
         });
       });
       initPostData?.audience?.users?.map?.(user => {
@@ -111,7 +111,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           id: user?.id,
           type: 'user',
           name: user?.data?.fullname,
-          avatar: user?.data?.avatarUrl,
+          avatar: user?.data?.avatar,
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
@@ -202,8 +202,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     console.log({textMention});
 
     if (textMention) {
+      const groupIds: any[] = [];
+      chosenAudiences.map((selected: IAudience) => {
+        if (selected.type !== 'user') {
+          groupIds.push(selected.id);
+        }
+      });
+      const strGroupIds = groupIds.join(',');
       dispatch(postActions.setMentionSearchKey(textMention));
-      dispatch(postActions.getSearchMentionAudiences({key: textMention}));
+      dispatch(
+        postActions.getSearchMentionAudiences({
+          key: textMention,
+          group_ids: strGroupIds,
+        }),
+      );
     } else if (mentionKey || mentionResult?.length > 0) {
       dispatch(postActions.setMentionSearchResult([]));
       dispatch(postActions.setMentionSearchKey(''));
@@ -217,23 +229,24 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     const newContent = content.replace(`@${mentionKey}`, mention);
     dispatch(postActions.setCreatePostData({...data, content: newContent}));
 
-    const newChosenAudience = [...chosenAudiences];
-    const mentionUser = {
-      id: audience.id,
-      name: audience.name || audience.fullname,
-      avatar: audience.avatar,
-      type: 'user',
-    };
-    let isDuplicate = false;
-    newChosenAudience.map(item => {
-      if (item?.id === mentionUser?.id && item?.type === mentionUser?.type) {
-        isDuplicate = true;
-      }
-    });
-    if (!isDuplicate) {
-      newChosenAudience.unshift(mentionUser);
-      dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
-    }
+    //TEMP DISABLE AUTO ADD USER SELECTED TO AUDIENCE
+    // const newChosenAudience = [...chosenAudiences];
+    // const mentionUser = {
+    //   id: audience.id,
+    //   name: audience.name || audience.fullname,
+    //   avatar: audience.avatar,
+    //   type: 'user',
+    // };
+    // let isDuplicate = false;
+    // newChosenAudience.map(item => {
+    //   if (item?.id === mentionUser?.id && item?.type === mentionUser?.type) {
+    //     isDuplicate = true;
+    //   }
+    // });
+    // if (!isDuplicate) {
+    //   newChosenAudience.unshift(mentionUser);
+    //   dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
+    // }
 
     dispatch(postActions.setMentionSearchResult([]));
     dispatch(postActions.setMentionSearchKey(''));

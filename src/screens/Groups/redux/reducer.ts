@@ -15,6 +15,7 @@ const initGroupsState = {
   },
   loadingGroupPosts: false,
   groupPosts: [],
+  refreshingGroupPosts: false,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -75,6 +76,12 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         groupPosts: action.payload || [],
+        refreshingGroupPosts: false,
+      };
+    case groupsTypes.GET_GROUP_POSTS:
+      return {
+        ...state,
+        refreshingGroupPosts: true,
       };
     case groupsTypes.EDIT_GROUP_DETAIL:
       return {

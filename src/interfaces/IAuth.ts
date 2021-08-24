@@ -51,6 +51,11 @@ export interface IForgotPasswordError {
   errConfirm?: string;
 }
 
+export interface IChangePasswordError {
+  errCurrentPassword?: string;
+  errBox?: string;
+}
+
 export type ISignUpResponse = ISignUpResult;
 
 export interface IUserProfile {

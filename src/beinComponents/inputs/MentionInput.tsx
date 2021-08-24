@@ -7,7 +7,6 @@ import {
   FlatList,
   StyleProp,
   ViewStyle,
-  TouchableOpacity,
   TextStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -16,6 +15,7 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import {mentionRegex} from '~/constants/commonRegex';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -49,7 +49,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   onContentSizeChange,
   value,
   ComponentInput = TextInput,
-  componentInputProps,
+  componentInputProps = {},
   children,
 }: MentionInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -80,12 +80,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
   return (
     <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
       <ComponentInput
-        // {...componentInputProps}
+        {...componentInputProps}
         value={children ? undefined : value}
         onChangeText={_onChangeText}
         placeholder={placeholderText}
         onContentSizeChange={onContentSizeChange}
-        style={textInputStyle}>
+        style={textInputStyle}
+        {...componentInputProps}>
         {children}
       </ComponentInput>
       {isMentionModalVisible && (
