@@ -22,25 +22,29 @@ const Landing = () => {
   const dimensions = useWindowDimensions();
 
   const logo = images.logo_bein;
-  const imgMaxWidth = 500;
+  const imgMaxWidth = 330;
   const imgPadding = theme.spacing.margin.base || 12;
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
   return (
-    <ScreenWrapper isFullView style={styles.container}>
-      {logo && <Image resizeMode="contain" style={styles.logo} source={logo} />}
-      <View style={styles.contentContainer}>
-        {/* @ts-ignore */}
-        <SVGIcon source={LandingImg} size={imgSize} />
-        <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
+    <ScreenWrapper isFullView style={styles.root}>
+      <View style={styles.container}>
+        {logo && (
+          <Image resizeMode="contain" style={styles.logo} source={logo} />
+        )}
+        <View style={styles.contentContainer}>
+          {/* @ts-ignore */}
+          <SVGIcon source={LandingImg} size={imgSize} />
+          <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
+        </View>
+        <Button.Primary
+          style={styles.button}
+          onPress={() => navigation.navigate(authStack.login)}
+          textVariant="h5">
+          {t('auth:btn_landing_start')}
+        </Button.Primary>
       </View>
-      <Button.Primary
-        style={styles.button}
-        onPress={() => navigation.navigate(authStack.login)}
-        textVariant="h5">
-        {t('auth:btn_landing_start')}
-      </Button.Primary>
     </ScreenWrapper>
   );
 };
@@ -50,10 +54,17 @@ const createStyle = (theme: ITheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
+    root: {
+      flex: 1,
+      backgroundColor: colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     container: {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
-      backgroundColor: colors.background,
+      alignContent: 'center',
+      maxWidth: 600,
     },
     contentContainer: {
       flex: 1,
