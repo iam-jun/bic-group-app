@@ -117,8 +117,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     }
     return (
       <View style={styles.commentInputHeader}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{flex: 1}}>
+        <View style={styles.row}>
+          <Text style={styles.flex1}>
             <Text>
               {t('post:reply_comment_1')}
               <Text.BodyM>
@@ -168,6 +168,8 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {},
+    flex1: {flex: 1},
+    row: {flexDirection: 'row'},
     commentInputHeader: {
       marginHorizontal: spacing?.margin.base,
       marginTop: spacing?.margin.tiny,
