@@ -1,4 +1,5 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
+import {IFileResponse} from './common';
 
 export interface IGroup {
   id: number;
@@ -54,4 +55,10 @@ export interface IGroupDetail {
   can_manage_member: boolean;
   can_setting: boolean;
   join_status: number;
+}
+
+export interface IGroupImageUpload {
+  id: number;
+  fieldName: 'icon' | 'background_img_url';
+  image: IFileResponse;
 }
