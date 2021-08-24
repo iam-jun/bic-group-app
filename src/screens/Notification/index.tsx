@@ -48,7 +48,7 @@ const Notfitication = () => {
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <View style={styles.screenContainer}>
-        <Header hideBack title={'Notifications'}>
+        <Header>
           <NotificationTopBar onPressMenu={onPressMenu} />
         </Header>
         <ListView

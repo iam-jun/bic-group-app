@@ -8,6 +8,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
+import i18n from 'i18next';
 
 export interface NotificationBottomSheetProps {
   modalizeRef: any;
@@ -38,14 +39,14 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
           style={styles.item}
           leftIcon={'CommentAltCheck'}
           leftIconProps={{icon: 'CommentAltCheck', size: 24}}
-          title={'Mark all as read'}
+          title={i18n.t('notification:mark_all_as_read')}
           onPress={markReadAllNotifications}
         />
         <PrimaryItem
           style={styles.item}
           leftIcon={'Cog'}
           leftIconProps={{icon: 'Cog', size: 24}}
-          title={'Notification Settings'}
+          title={i18n.t('notification:notification_settings')}
         />
       </View>
     );
