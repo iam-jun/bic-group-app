@@ -73,7 +73,7 @@ const ChangePassword = () => {
     getValues,
   } = useForm();
 
-  const validatePassword = async () => {
+  const validatePassword = debounce(async () => {
     await trigger('password');
     if (getValues('password') === getValues('newPassword')) {
       setError('newPassword', {
@@ -83,9 +83,9 @@ const ChangePassword = () => {
     } else if (errors['newPassword'].type === 'manual') {
       clearErrors('newPassword');
     }
-  };
+  }, 3);
 
-  const validateNewPassword = async () => {
+  const validateNewPassword = debounce(async () => {
     await trigger('newPassword');
     if (getValues('password') === getValues('newPassword')) {
       setError('newPassword', {
@@ -93,9 +93,9 @@ const ChangePassword = () => {
         message: t('auth:text_err_new_password_must_differ_from_current'),
       });
     }
-  };
+  }, 3);
 
-  const validateConfirmNewPassword = async () => {
+  const validateConfirmNewPassword = debounce(async () => {
     await trigger('confirmNewPassword');
     if (getValues('newPassword') !== getValues('confirmNewPassword')) {
       setError('confirmNewPassword', {
@@ -103,7 +103,7 @@ const ChangePassword = () => {
         message: t('auth:text_err_confirm_new_password_not_matched'),
       });
     }
-  };
+  }, 3);
 
   const checkDisableSaveButton = debounce(async () => {
     const password = getValues('password');
