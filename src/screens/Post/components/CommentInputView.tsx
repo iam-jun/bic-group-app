@@ -53,9 +53,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const onPressSend = () => {
     if (postId) {
-      const commentData = {
-        content: content?.trim(),
-      };
+      setContent('');
+      dispatch(postActions.setPostDetailReplyingComment());
+      const commentData = {content: content?.trim()};
       const replyCmtId = replying?.id;
       const requestData: IRequestPostComment = {
         referenceId: replyCmtId || postId,
@@ -67,8 +67,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
-            setContent('');
-            dispatch(postActions.setPostDetailReplyingComment());
+            dispatch(postActions.getCommentsById({id: postId, isMerge: false}));
           }
         })
         .catch(e => {

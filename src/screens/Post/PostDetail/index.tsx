@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -39,6 +39,7 @@ const PostDetail = (props: any) => {
   );
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const data = comments || sortComments(latest_reactions) || [];
 
   useEffect(() => {
     if (id) {
@@ -92,7 +93,7 @@ const PostDetail = (props: any) => {
     return null;
   };
 
-  const onLayout = () => {
+  const onLayout = useCallback(() => {
     if (!layoutSetted) {
       layoutSetted = true;
       if (focusComment) {
@@ -101,9 +102,7 @@ const PostDetail = (props: any) => {
         }, 500);
       }
     }
-  };
-
-  const data = comments || sortComments(latest_reactions) || [];
+  }, [layoutSetted]);
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
