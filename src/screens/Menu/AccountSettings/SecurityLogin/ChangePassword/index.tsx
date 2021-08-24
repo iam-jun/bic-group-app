@@ -45,7 +45,6 @@ const ChangePassword = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Loading change', changePasswordLoading);
     checkDisableSaveButton();
   }, [changePasswordLoading]);
 
@@ -76,17 +75,20 @@ const ChangePassword = () => {
   const validatePassword = debounce(async () => {
     await trigger('password');
     compareCurrentWithNewPassword();
+    checkDisableSaveButton();
   }, 3);
 
   const validateNewPassword = debounce(async () => {
     await trigger('newPassword');
     compareNewPasswordWithConfirmation();
     compareCurrentWithNewPassword();
+    checkDisableSaveButton();
   }, 3);
 
   const validateConfirmNewPassword = debounce(async () => {
     await trigger('confirmNewPassword');
     compareNewPasswordWithConfirmation();
+    checkDisableSaveButton();
   }, 3);
 
   const compareCurrentWithNewPassword = () => {
@@ -95,7 +97,7 @@ const ChangePassword = () => {
         type: 'manual',
         message: t('auth:text_err_new_password_must_differ_from_current'),
       });
-    } else if (errors['newPassword'].type === 'manual') {
+    } else if (errors.newPassword && errors.newPassword.type === 'manual') {
       clearErrors('newPassword');
     }
   };
@@ -115,7 +117,7 @@ const ChangePassword = () => {
     }
   };
 
-  const checkDisableSaveButton = debounce(async () => {
+  const checkDisableSaveButton = () => {
     const password = getValues('password');
     const newPassword = getValues('newPassword');
     const confirmNewPassword = getValues('confirmNewPassword');
@@ -126,7 +128,7 @@ const ChangePassword = () => {
       !confirmNewPassword ||
       changePasswordLoading;
     setDisableSaveButton(result);
-  }, 10);
+  };
 
   const handleForgotPassword = () => {
     dispatch(
@@ -145,7 +147,7 @@ const ChangePassword = () => {
   //   setIsCheckLogoutGlobal(!isCheckLogoutGlobal);
   // };
 
-  const handleOnSaveChangePassword = debounce(() => {
+  const handleOnSaveChangePassword = async () => {
     if (!_.isEmpty(errors)) {
       return;
     }
@@ -153,7 +155,7 @@ const ChangePassword = () => {
     const oldPassword = getValues('password');
     const newPassword = getValues('confirmNewPassword');
     dispatch(changePassword({oldPassword, newPassword, global: false}));
-  }, 500);
+  };
 
   return (
     <ScreenWrapper testID="SecurityLogin" isFullView>
@@ -181,7 +183,6 @@ const ChangePassword = () => {
               onChangeText={text => {
                 onChange(text);
                 validatePassword();
-                checkDisableSaveButton();
               }}
               helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
@@ -210,7 +211,6 @@ const ChangePassword = () => {
               onChangeText={text => {
                 onChange(text);
                 validateNewPassword();
-                checkDisableSaveButton();
               }}
               helperType={errors.newPassword?.message ? 'error' : undefined}
               helperContent={errors?.newPassword?.message}
@@ -240,7 +240,6 @@ const ChangePassword = () => {
               onChangeText={text => {
                 onChange(text);
                 validateConfirmNewPassword();
-                checkDisableSaveButton();
               }}
               helperType={
                 errors.confirmNewPassword?.message ? 'error' : undefined
