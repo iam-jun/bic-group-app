@@ -33,7 +33,7 @@ import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
 import MarkdownView from '~/beinComponents/MarkdownView';
-import ImportantStatus from '~/beinComponents/Text/ImportantStatus';
+import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 
 export interface PostViewProps {
   postId: string;
