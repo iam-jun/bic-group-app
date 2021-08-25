@@ -97,7 +97,7 @@ const PostDetail = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSetted) {
       layoutSetted = true;
-      if (focusComment) {
+      if (focusComment && data?.length > 0) {
         setTimeout(() => {
           listRef?.current?.scrollToIndex?.({index: 0, animated: true});
         }, 500);
