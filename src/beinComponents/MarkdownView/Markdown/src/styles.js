@@ -38,8 +38,12 @@ export const styles = {
   },
 
   // Emphasis
-  strong: {},
-  em: {},
+  strong: {
+    fontWeight: 'bold',
+  },
+  em: {
+    fontStyle: 'italic',
+  },
   s: {
     textDecorationLine: 'line-through',
   },
@@ -54,8 +58,12 @@ export const styles = {
   },
 
   // Lists
-  bullet_list: {},
-  ordered_list: {},
+  bullet_list: {
+    color: 'red',
+  },
+  ordered_list: {
+    color: 'blue',
+  },
   list_item: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
