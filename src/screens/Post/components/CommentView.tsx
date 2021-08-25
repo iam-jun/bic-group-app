@@ -188,11 +188,10 @@ const createStyle = (theme: ITheme) => {
     },
     buttonContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
     },
     buttonReply: {
       marginRight: spacing?.margin.tiny,
-      marginVertical: spacing?.margin.base,
+      marginTop: spacing?.margin.large,
     },
   });
 };
