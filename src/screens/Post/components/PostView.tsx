@@ -33,6 +33,7 @@ import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 
 export interface PostViewProps {
   postId: string;
@@ -217,14 +218,13 @@ const PostView: FC<PostViewProps> = ({
       return null;
     }
 
-    return (
-      <FlashMessage
-        textProps={{variant: 'h6'}}
-        leftIcon={'InfoCircle'}
-        type={'important'}>
-        {t('common:text_important')}
-      </FlashMessage>
-    );
+    const expireTime = important?.expiresTime;
+    if (expireTime) {
+      const now = new Date();
+      const notExpired = now.getTime() < new Date(expireTime).getTime();
+
+      return <ImportantStatus notExpired={notExpired} />;
+    }
   };
 
   const renderHeader = () => {
