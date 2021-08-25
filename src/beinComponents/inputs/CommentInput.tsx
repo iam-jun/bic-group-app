@@ -1,24 +1,25 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  View,
+  Animated,
+  Keyboard,
+  Platform,
+  StyleProp,
   StyleSheet,
   TextInput,
-  Animated,
-  StyleProp,
+  View,
   ViewStyle,
-  Keyboard,
 } from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
-import ImagePicker from 'react-native-image-crop-picker';
-
-import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import Icon from '~/beinComponents/Icon';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {fontFamilies} from '~/theme/fonts';
+
+import DocumentPicker from '~/beinComponents/DocumentPicker';
+import Icon from '~/beinComponents/Icon';
+import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/beinComponents/Text';
 import {IFileResponse} from '~/interfaces/common';
+import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
 
 export interface CommentInputProps {
   style?: StyleProp<ViewStyle>;
@@ -88,7 +89,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
         type: result.mime,
         uri: result.path,
       };
-      onPressSelectImage?.(file);
+      // @ts-ignore
+      onPressSelectImage?.(Platform.OS === 'web' ? result : file);
     });
   };
 
