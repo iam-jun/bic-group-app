@@ -6,6 +6,7 @@ const notificationsTypes = {
   GET_NOTIFICATIONS: 'notifications/GET_NOTIFICATIONS',
   MARK_AS_READ_ALL: 'notifications/MARK_AS_READ_ALL',
   MARK_AS_SEEN_ALL: 'notifications/MARK_AS_SEEN_ALL',
+  MARK_AS_READ: 'notifications/MARK_AS_READ',
 };
 
 export default notificationsTypes;

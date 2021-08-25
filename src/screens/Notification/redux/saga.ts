@@ -7,11 +7,13 @@ import notificationSelector from './selector';
 import {get} from 'lodash';
 import {showHeaderFlashMessage} from '~/store/app/actions';
 import {timeOut} from '~/utils/common';
+import {IMarkAsReadAnActivity} from '~/interfaces/INotification';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
   yield takeLatest(notificationsTypes.MARK_AS_READ_ALL, markAsReadAll);
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
+  yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
 }
 
 function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
@@ -102,5 +104,35 @@ function* markAsSeenAll({payload}: {payload: IGetStreamDispatch}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsSeenAll error', err, '\x1b[0m');
+  }
+}
+
+function* markAsRead({payload}: {payload: IMarkAsReadAnActivity}) {
+  try {
+    // send request to Getstream to mark notification as read without waiting response
+    const {userId, streamClient, activityId} = payload;
+    notificationsDataHelper.markAsRead(userId, activityId, streamClient);
+
+    // get all notifications from store
+    const notifications = yield select(state =>
+      get(state, notificationSelector.notifications),
+    ) || [];
+
+    // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
+    notifications.forEach(notificationGroup => {
+      if (notificationGroup.id === activityId) {
+        notificationGroup.is_read = true;
+      }
+    });
+
+    // finally, set notification back to store,
+    yield put(
+      notificationsActions.setNotifications({
+        notifications: notifications,
+        unseen: 0, // hardcode because we re-use setNotifications function
+      }),
+    );
+  } catch (err) {
+    console.log('\x1b[33m', 'notification markAsRead error', err, '\x1b[0m');
   }
 }

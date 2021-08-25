@@ -77,6 +77,30 @@ const notificationsDataHelper = {
     }
     return;
   },
+
+  /**
+   * Send request to getstream to mark notification as seen by activity id
+   * @param userId        integer       User id
+   * @param activityId    integer       Activity id
+   * @param streamClient  StreamClient  Stream Client
+   */
+  markAsRead: async (
+    userId: string,
+    activityId: string,
+    streamClient: StreamClient,
+  ) => {
+    if (streamClient) {
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'notification',
+        'u-' + userId,
+        'get',
+        {mark_read: [activityId]},
+      );
+      return data;
+    }
+    return;
+  },
 };
 
 export default notificationsDataHelper;

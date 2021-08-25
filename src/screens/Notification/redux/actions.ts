@@ -1,5 +1,6 @@
 import {IGetStreamDispatch} from '~/interfaces/common';
 import notificationsTypes from '~/screens/Notification/redux/types';
+import {IMarkAsReadAnActivity} from '~/interfaces/INotification';
 
 const notificationsActions = {
   setLoadingNotifications: function (payload: boolean) {
@@ -31,6 +32,12 @@ const notificationsActions = {
   markAsSeenAll: function (payload: IGetStreamDispatch) {
     return {
       type: notificationsTypes.MARK_AS_SEEN_ALL,
+      payload,
+    };
+  },
+  markAsRead: function (payload: IMarkAsReadAnActivity) {
+    return {
+      type: notificationsTypes.MARK_AS_READ,
       payload,
     };
   },
