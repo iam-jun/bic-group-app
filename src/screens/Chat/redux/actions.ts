@@ -145,6 +145,21 @@ const uploadFile = (payload: IUploadFileAction) => ({
   payload,
 });
 
+const removeMember = (payload: IUser) => ({
+  type: Actions.REMOVE_MEMBER,
+  payload,
+});
+
+const removeMemberSuccess = (payload: IMessage) => ({
+  type: Actions.REMOVE_MEMBER_SUCCESS,
+  payload,
+});
+
+const kickMeOut = (payload: IMessage) => ({
+  type: Actions.KICK_ME_OUT,
+  payload,
+});
+
 //mention
 const setMentionSearchKey = (payload: string) => ({
   type: Actions.SET_MENTION_SEARCH_KEY,
@@ -189,6 +204,9 @@ export default {
   addNewMessage,
   updateConversationName,
   uploadFile,
+  removeMember,
+  removeMemberSuccess,
+  kickMeOut,
   setMentionSearchKey,
   getMentionUsers,
   setMentionUsers,

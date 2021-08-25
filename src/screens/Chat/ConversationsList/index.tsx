@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Divider from '~/components/Divider';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -58,6 +58,10 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.createConversation);
   };
 
+  const renderItemSeparator = () => (
+    <ViewSpacing height={theme.spacing.margin.tiny} />
+  );
+
   return (
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
       <Header
@@ -77,7 +81,7 @@ const ConversationsList = (): React.ReactElement => {
         loading={loading}
         data={data}
         onItemPress={onChatPress}
-        renderItemSeparator={() => <Divider />}
+        renderItemSeparator={renderItemSeparator}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
       />

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
-import MarkdownView from '~/beinComponents/MarkdownView';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
@@ -56,13 +55,16 @@ const ConversationItem: React.FC<IConversation> = ({
     <PrimaryItem
       title={name}
       titleProps={{
+        numberOfLines: 1,
         color: textcolor,
       }}
       subTitleProps={{
+        numberOfLines: 2,
         variant: unreadCount ? 'bodyM' : 'body',
         color: textcolor,
       }}
-      subTitle={<MarkdownView>{lastMessage}</MarkdownView>}
+      subTitle={lastMessage}
+      style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={
         <View style={styles.rightComponent}>
@@ -88,6 +90,9 @@ const createStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
 
   return StyleSheet.create({
+    container: {
+      // marginVertical: spacing.padding.base,
+    },
     rightComponent: {
       marginLeft: spacing.margin.base,
       alignSelf: 'baseline',

@@ -103,12 +103,15 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     </View>
   );
 
-  const EmptyComponent = () => (
-    <View style={styles.empty}>
-      <Text.Body useI18n>chat:text_search_emtpy</Text.Body>
-      <Image style={styles.imageEmtpy} source={images.img_search_empty} />
-    </View>
-  );
+  const EmptyComponent = () => {
+    if (loading) return null;
+    return (
+      <View style={styles.empty}>
+        <Text.Body useI18n>chat:text_search_emtpy</Text.Body>
+        <Image style={styles.imageEmtpy} source={images.img_search_empty} />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>

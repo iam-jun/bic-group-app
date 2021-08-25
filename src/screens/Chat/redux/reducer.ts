@@ -191,18 +191,20 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
                 data: newMessages,
               }
             : messages,
-        groups: {
-          ...groups,
-          data: groups.data.map((item: any) =>
-            item._id === action.payload.room_id
-              ? {
-                  ...item,
-                  lastMessage: action.payload.msg,
-                  _updatedAt: action.payload._updatedAt,
-                }
-              : item,
-          ),
-        },
+        groups: payload.system
+          ? state.groups
+          : {
+              ...groups,
+              data: groups.data.map((item: any) =>
+                item._id === action.payload.room_id
+                  ? {
+                      ...item,
+                      lastMessage: action.payload.msg,
+                      _updatedAt: action.payload._updatedAt,
+                    }
+                  : item,
+              ),
+            },
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>
@@ -322,6 +324,26 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
             item._id === conversation._id
               ? {...item, name: action.payload}
               : item,
+          ),
+        },
+      };
+    case types.REMOVE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        members: {
+          ...state.members,
+          data: state.members.data.filter(
+            (member: IUser) => member.username !== payload.msg,
+          ),
+        },
+      };
+    case types.KICK_ME_OUT:
+      return {
+        ...state,
+        groups: {
+          ...state.groups,
+          data: state.groups.data.filter(
+            (group: IConversation) => group._id !== payload.room_id,
           ),
         },
       };

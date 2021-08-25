@@ -6,6 +6,7 @@ import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
+import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
@@ -45,6 +46,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
 }
 
@@ -262,6 +264,19 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
+function* removeMember({payload}: {type: string; payload: IUser}) {
+  try {
+    const {chat} = yield select();
+    const data = {
+      roomId: chat.conversation._id,
+      userId: payload._id.toString(),
+    };
+    yield makeHttpRequest(apiConfig.Chat.removeMember(data));
+  } catch (err) {
+    console.log('removeMember', err);
+  }
+}
+
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else yield sendMessage({payload, type});
@@ -320,14 +335,14 @@ function* handleNewMessage(data: any) {
     const {chat, auth} = yield select();
     const message = mapMessage(data);
     const existed = chat.groups.data.find(
-      (item: IConversation) => item._id === message.room_id,
+      (item: IConversation) => item._id === message?.room_id,
     );
 
     if (existed) yield put(actions.addNewMessage(message));
     else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({
-          roomId: message.room_id,
+          roomId: message?.room_id,
         }),
       );
       yield put(
@@ -341,6 +356,23 @@ function* handleNewMessage(data: any) {
     console.log('handleNewMessage', err);
   }
 }
+function* handleRemoveUser(data: any) {
+  try {
+    const {auth} = yield select();
+    const message = mapMessage(data);
+    console.log('handleRemoveUser', message, auth.user);
+
+    if (message.msg === auth.user.username) {
+      yield put(actions.kickMeOut(message));
+      navigation.replace(chatStack.conversationList);
+    } else {
+      yield handleNewMessage(data);
+      yield put(actions.removeMemberSuccess(message));
+    }
+  } catch (err) {
+    console.log('handleRemoveUser', err);
+  }
+}
 
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
@@ -351,11 +383,11 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
-      console.log('In development');
-      break;
-    // New message event doesn't have type
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.REMOVE_USER:
+      yield handleRemoveUser(data);
       break;
   }
 }

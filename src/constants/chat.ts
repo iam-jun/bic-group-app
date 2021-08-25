@@ -16,6 +16,7 @@ export const messageEventTypes = {
   ROOM_CHANGED_DESCRIPTION: 'room_changed_description',
   ROOM_CHANGED_ANNOUNCEMENT: 'room_changed_announcement',
   ROOM_CHANGED_TOPIC: 'room_changed_topic',
+  REMOVE_USER: 'ru',
 };
 
 export const messageStatus = {

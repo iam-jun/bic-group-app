@@ -182,6 +182,7 @@ const icons = {
   Save: 'Save',
   File: 'File',
   PlayVideo: iconPlay,
+  Star: 'Star',
   iconStar: iconStar,
   RightArrow: iconRightArrow,
   CommentAltCheck: 'CommentAltCheck',
