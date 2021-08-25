@@ -283,6 +283,12 @@
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
+    "title_group_add_member":{
+      "1":"This person will be added to this group chat and group {0} also. Do you want to continue?",
+      "many":"These people will be added to this group chat and group {0} also. Do you want to continue?"
+    },
+    "button_add_member": "Add member",
+    "title_modal_confirm_add_member":"Add members",
     "placeholder_input_group_chat_name": "Name your group chat (Optional)",
     "label_invite": "Invite",
     "label_notification": "Notifications",
