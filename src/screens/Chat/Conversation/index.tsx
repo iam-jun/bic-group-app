@@ -21,7 +21,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {getAvatar} from '../helper';
-import {MessageContainer, ChatInput, MessageOptionsModal} from './fragments';
+import {ChatInput, MessageContainer, MessageOptionsModal} from './fragments';
 
 const Conversation = () => {
   const {conversation, messages} = useChat();
@@ -136,7 +136,7 @@ const Conversation = () => {
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.recordsPerPage}
         initialNumToRender={appConfig.recordsPerPage}
-        /* means that the component will render the visible screen 
+        /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
         windowSize={5000}
         renderItem={renderItem}
