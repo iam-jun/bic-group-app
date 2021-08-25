@@ -46,7 +46,7 @@ const AddMembersToGroup = (): React.ReactElement => {
         iconName: 'addUser',
         title: i18next.t('chat:title_modal_confirm_add_member'),
         content: i18next
-          .t(`chat:title_group_add_member${type}`)
+          .t(`chat:title_group_add_member:${type}`)
           .replace('{0}', conversation.name),
         cancelBtn: true,
         onConfirm: () => doAddUser(),
