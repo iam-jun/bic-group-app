@@ -1,34 +1,39 @@
-import React, {useState, useRef} from 'react';
-import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
+import i18next from 'i18next';
+import React, {useRef, useState} from 'react';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
-import ImagePicker from 'react-native-image-crop-picker';
-
-import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
-import images from '~/resources/images';
-import useGroups from '~/hooks/groups';
-import {titleCase} from '~/utils/common';
-import privacyTypes from '~/constants/privacyTypes';
-import groupsActions from '~/screens/Groups/redux/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import * as modalActions from '~/store/modal/actions';
-import GroupSectionItem from '../components/GroupSectionItem';
-import {validateFile} from '~/utils/validation';
-import {IFileResponse} from '~/interfaces/common';
-import {groupProfileImageCropRatio} from '~/theme/dimension';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Header from '~/beinComponents/Header';
+import Icon from '~/beinComponents/Icon';
+import Image from '~/beinComponents/Image';
+import ImagePicker from '~/beinComponents/ImagePicker';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ListView from '~/beinComponents/list/ListView';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
-import Image from '~/beinComponents/Image';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
-import BottomSheet from '~/beinComponents/BottomSheet';
-import ListView from '~/beinComponents/list/ListView';
+import privacyTypes from '~/constants/privacyTypes';
+import useGroups from '~/hooks/groups';
+import {useRootNavigation} from '~/hooks/navigation';
+import {IFileResponse} from '~/interfaces/common';
+import images from '~/resources/images';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupsActions from '~/screens/Groups/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {groupProfileImageCropRatio, scaleSize} from '~/theme/dimension';
+
+import {ITheme} from '~/theme/interfaces';
+import {titleCase} from '~/utils/common';
+import {validateFile} from '~/utils/validation';
+import GroupSectionItem from '../components/GroupSectionItem';
 
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
@@ -102,7 +107,8 @@ const GeneralInformation = () => {
       const _error = validateFile(file);
       setError(_error);
       if (_error) return;
-      uploadFile(file, fieldName);
+      // @ts-ignore
+      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
     });
   };
 
