@@ -1,3 +1,4 @@
+export const INIT_CHAT = 'chat/INIT_CHAT';
 export const HANDLE_EVENT = 'chat/HANDLE_EVENT';
 export const GET_DATA = 'chat/GET_DATA';
 export const SET_DATA = 'chat/SET_DATA';

@@ -1,6 +1,6 @@
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
-import {put, select, takeLatest} from 'redux-saga/effects';
+import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
@@ -32,19 +32,26 @@ import * as types from './constants';
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* saga() {
+  yield takeLatest(types.INIT_CHAT, initChat);
   yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
-  yield takeLatest(types.SEND_MESSAGE, sendMessage);
+  yield takeEvery(types.SEND_MESSAGE, sendMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
+}
+
+function* initChat() {
+  yield put(actions.getSubscriptions());
+  yield put(actions.resetData('groups'));
+  yield put(actions.getData('groups'));
 }
 
 function* getData({

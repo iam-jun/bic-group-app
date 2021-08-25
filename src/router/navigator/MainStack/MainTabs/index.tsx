@@ -18,7 +18,8 @@ import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import notificationsActions from '../../../../screens/Notification/redux/actions';
+import notificationsActions from '~/screens/Notification/redux/actions';
+import chatActions from '~/screens/Chat/redux/actions';
 
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
@@ -50,6 +51,7 @@ const MainTabs = () => {
 
   const userId = useUserIdAuth();
   useEffect(() => {
+    dispatch(chatActions.initChat());
     if (streamClient?.currentUser?.token) {
       dispatch(
         notificationsActions.getNotifications({

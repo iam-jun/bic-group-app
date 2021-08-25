@@ -9,6 +9,10 @@ import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
+const initChat = () => ({
+  type: Actions.INIT_CHAT,
+});
+
 const getData = (dataType: string, payload?: any, field?: string) => ({
   type: Actions.GET_DATA,
   dataType,
@@ -158,6 +162,7 @@ const setMentionUsers = (payload: IUser[]) => ({
 });
 
 export default {
+  initChat,
   getData,
   setData,
   setExtraData,
