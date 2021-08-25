@@ -1,4 +1,7 @@
-import {IRemoveMemberReq} from './../interfaces/IChatHttpRequest';
+import {
+  IRemoveMemberReq,
+  IAddUsersToGroupReq,
+} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
@@ -43,6 +46,18 @@ const Chat = {
       method: 'post',
       useRetry: true,
       provider: providers.chat,
+      data,
+    };
+  },
+  addMembersToGroup: (
+    id: string,
+    data: IAddUsersToGroupReq,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}groups/${id}/users/add`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.bein,
       data,
     };
   },

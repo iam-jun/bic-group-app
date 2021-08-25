@@ -9,7 +9,10 @@ import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
-import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
+import {
+  IAddUsersToGroupReq,
+  ICreateRoomReq,
+} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -24,6 +27,8 @@ import {
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
+import * as modalActions from '~/store/modal/actions';
+import i18next from 'i18next';
 
 /**
  * Chat
@@ -47,6 +52,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
 }
@@ -272,6 +278,28 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
     );
   } catch (err) {
     console.log('updateConversationName', err);
+  }
+}
+
+function* addMembersToGroup({
+  payload,
+}: {
+  type: string;
+  payload: IAddUsersToGroupReq;
+}) {
+  try {
+    const {chat} = yield select();
+    yield makeHttpRequest(
+      apiConfig.Chat.addMembersToGroup(chat.conversation?._id, payload),
+    );
+  } catch (err) {
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 

@@ -63,3 +63,7 @@ export interface IRemoveMemberReq {
 export interface IGetMentionUsersReq {
   query: any;
 }
+
+export interface IAddUsersToGroupReq {
+  user_ids: string[];
+}
