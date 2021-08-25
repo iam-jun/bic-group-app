@@ -114,13 +114,15 @@ const Conversation = (): React.ReactElement => {
       <TouchableOpacity onPress={goProfile}>
         <View style={styles.header}>
           {renderAvatar()}
-          <Text.H5 style={styles.name}>
+          <Text.H5 style={styles.name} numberOfLines={2}>
             {conversation.name}
-            <Icon
-              iconStyle={styles.iconTitleRight}
-              size={22}
-              icon="AngleRight"
-            />
+            <Text>
+              <Icon
+                iconStyle={styles.iconTitleRight}
+                size={12}
+                icon="RightArrow"
+              />
+            </Text>
           </Text.H5>
         </View>
       </TouchableOpacity>
@@ -148,7 +150,7 @@ const Conversation = (): React.ReactElement => {
           <Divider />
           <ViewSpacing height={spacing.margin.large} />
 
-          <Text.H5>{i18next.t('common:text_description')}</Text.H5>
+          <Text.H6>{i18next.t('common:text_description')}</Text.H6>
           <ViewSpacing height={spacing.margin.base} />
           <Text>
             <Text.BodyS>
@@ -350,11 +352,13 @@ const createStyles = (theme: IObject<any>) => {
       paddingVertical: spacing.padding.base,
     },
     name: {
-      marginTop: spacing.margin.large,
       textAlign: 'center',
+      alignItems: 'center',
+      marginTop: spacing.margin.large,
     },
     iconTitleRight: {
-      marginTop: spacing.margin.base,
+      marginTop: spacing.margin.small,
+      marginStart: spacing.margin.large,
     },
     description: {
       paddingVertical: spacing.padding.base,

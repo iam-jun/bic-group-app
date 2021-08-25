@@ -83,7 +83,7 @@ const createStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingRight: spacing.padding.big,
+      paddingRight: 52,
       paddingVertical: spacing.padding.base,
     },
     image: {

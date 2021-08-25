@@ -262,7 +262,7 @@ function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
 
 function* getMentionUsers({payload}: {payload: string; type: string}) {
   try {
-    const {chat, auth} = yield select();
+    const {chat} = yield select();
     const {conversation} = chat;
 
     const response: AxiosResponse = yield makeHttpRequest(

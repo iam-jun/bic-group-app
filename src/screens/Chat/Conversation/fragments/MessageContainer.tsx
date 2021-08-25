@@ -1,9 +1,10 @@
+import moment from 'moment';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import MarkdownView from '~/beinComponents/MarkdownView';
-import {Text} from '~/components';
 import {IMessage} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
@@ -29,20 +30,24 @@ const MessageItem = (props: MessageItemProps) => {
   const sameUser = user?.username === previousMessage?.user?.username;
   const sameType = type === previousMessage?.type;
 
-  // && isSameDay(currentMessage, previousMessage);
+  const minutes = moment(_updatedAt).diff(
+    previousMessage._updatedAt,
+    'minutes',
+  );
+  const sameDay = minutes <= 5;
 
   const _onRetryPress = () => {
     dispatch(actions.retrySendMessage(currentMessage));
   };
 
-  const showHeader = (sameUser && sameType) || quoted_message;
+  const hideHeader = previousMessage && sameUser && sameType && sameDay;
 
   if (system) return <SystemMessage {...currentMessage} />;
 
   return (
     <View style={styles.container}>
       {quoted_message && <QuotedMessage {...quoted_message} />}
-      {showHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
+      {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
 
       <View style={styles.message}>
         <AttachmentView {...currentMessage} />

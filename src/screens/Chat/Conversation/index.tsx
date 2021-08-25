@@ -102,7 +102,8 @@ const Conversation = () => {
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
     const props = {
-      previousMessage: index > 1 && messages.data[index - 1],
+      previousMessage:
+        index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
     };
     return <MessageContainer {...props} />;

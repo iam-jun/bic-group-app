@@ -23,6 +23,7 @@ export interface MentionInputProps extends TextInputProps {
   data: any[];
   modalPosition: 'top' | 'bottom';
   isMentionModalVisible: boolean;
+  showMentionAll?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
@@ -44,6 +45,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
+  showMentionAll,
   onPress,
   onChangeText,
   onMentionText,
@@ -79,8 +81,19 @@ const MentionInput: React.FC<MentionInputProps> = ({
     );
   };
 
+  const renderMentionAll = () => {
+    if (!showMentionAll) return null;
+
+    return (
+      <View style={styles.mentionAll}>
+        <Text.ButtonBase style={styles.textMentionAll}>@all</Text.ButtonBase>
+        <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
+      </View>
+    );
+  };
+
   return (
-    <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
+    <View style={[styles.containerWrapper, style]}>
       <ComponentInput
         {...componentInputProps}
         value={children ? undefined : value}
@@ -91,7 +104,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
         {children}
       </ComponentInput>
       {isMentionModalVisible && (
-        <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
+        <View style={[styles.containerModal, modalStyle]}>
+          {renderMentionAll()}
           <FlatList
             keyboardShouldPersistTaps={'always'}
             data={data}
@@ -145,8 +159,18 @@ const createStyles = (theme: ITheme, position: string) => {
       alignItems: 'center',
     },
     avatar: {
-      marginHorizontal: theme.spacing?.margin.base,
-      marginVertical: theme.spacing?.margin.small,
+      marginHorizontal: spacing?.margin.base,
+      marginVertical: spacing?.margin.small,
+    },
+    mentionAll: {
+      flexDirection: 'row',
+      padding: spacing?.padding.base,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.placeholder,
+      alignItems: 'center',
+    },
+    textMentionAll: {
+      marginEnd: spacing?.margin.base,
     },
   });
 };

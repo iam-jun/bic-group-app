@@ -19,8 +19,8 @@ export const formatDate = (
     value = moment(value).format(format);
   } else {
     const days = moment(new Date()).diff(date, 'days'); // today - future < 0
-    if (days < (maxFromDays || 1)) value = moment(value).calendar();
-    else value = moment(value).format('L');
+    if (days < (maxFromDays || 1)) value = moment(value).fromNow(true);
+    else value = moment(value).format('lll');
   }
 
   return value || '';

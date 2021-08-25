@@ -111,7 +111,8 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
   return (
     <MentionInput
       data={mentionUsers}
-      modalPosition={'top'}
+      modalPosition="top"
+      showMentionAll
       isMentionModalVisible={!!text && mentionUsers?.length > 0}
       onChangeText={_onChangeText}
       onMentionText={onMentionText}

@@ -55,6 +55,7 @@ import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconPlay from '../../assets/icons/icon_play.svg';
 import reactionIcons from '~/resources/reactions';
+import iconRightArrow from '../../assets/icons/icon_right_arrow.svg';
 
 const icons = {
   iconTabHome,
@@ -182,6 +183,7 @@ const icons = {
   File: 'File',
   PlayVideo: iconPlay,
   iconStar: iconStar,
+  RightArrow: iconRightArrow,
 };
 
 export default icons;

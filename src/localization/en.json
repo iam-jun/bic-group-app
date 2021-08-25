@@ -49,7 +49,8 @@
       }
     },
     "text_discard_changes": "Discard Changes?",
-    "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?"
+    "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "title_mention_all": "All members in this group"
   },
   "auth": {
     "text_kickout_title": "Notice",
