@@ -340,50 +340,52 @@ const PostView: FC<PostViewProps> = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       {renderImportant()}
-      {renderHeader()}
-      {renderContent()}
-      {!hideMarkAsRead && isImportant && (
-        <View>
-          <Button.Secondary
-            useI18n
-            style={{margin: spacing.margin.base}}
-            disabled={calledMarkAsRead}
-            onPress={onPressMarkAsRead}>
-            {calledMarkAsRead ? 'post:marked_as_read' : 'post:mark_as_read'}
-          </Button.Secondary>
-          <Divider />
+      <View style={styles.container}>
+        {renderHeader()}
+        {renderContent()}
+        {!hideMarkAsRead && isImportant && (
+          <View>
+            <Button.Secondary
+              useI18n
+              style={{margin: spacing.margin.base}}
+              disabled={calledMarkAsRead}
+              onPress={onPressMarkAsRead}>
+              {calledMarkAsRead ? 'post:marked_as_read' : 'post:mark_as_read'}
+            </Button.Secondary>
+            <Divider />
+          </View>
+        )}
+        <ReactionView
+          ownReactions={own_reactions}
+          reactionCounts={reaction_counts}
+          onAddReaction={onAddReaction}
+          onRemoveReaction={onRemoveReaction}
+        />
+        <View style={styles.reactButtonContainer}>
+          {renderReactButtonItem(
+            'post:button_react',
+            'iconReact',
+            onPressReact,
+            onPressReact,
+          )}
+          <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
+          {renderReactButtonItem(
+            labelButtonComment,
+            'CommentAltDots',
+            _onPressComment,
+            _onPressComment,
+            !onPressComment,
+          )}
         </View>
-      )}
-      <ReactionView
-        ownReactions={own_reactions}
-        reactionCounts={reaction_counts}
-        onAddReaction={onAddReaction}
-        onRemoveReaction={onRemoveReaction}
-      />
-      <View style={styles.reactButtonContainer}>
-        {renderReactButtonItem(
-          'post:button_react',
-          'iconReact',
-          onPressReact,
-          onPressReact,
-        )}
-        <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
-        {renderReactButtonItem(
-          labelButtonComment,
-          'CommentAltDots',
-          _onPressComment,
-          _onPressComment,
-          !onPressComment,
-        )}
+        <PostViewMenuBottomSheet
+          modalizeRef={menuSheetRef}
+          postId={postId}
+          isPostDetail={isPostDetail}
+          isActor={actor?.id == userId}
+        />
       </View>
-      <PostViewMenuBottomSheet
-        modalizeRef={menuSheetRef}
-        postId={postId}
-        isPostDetail={isPostDetail}
-        isActor={actor?.id == userId}
-      />
     </View>
   );
 };
