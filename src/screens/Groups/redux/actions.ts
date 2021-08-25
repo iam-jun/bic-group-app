@@ -6,6 +6,7 @@ import {
   IPayloadGetGroupPost,
   IGroupImageUpload,
 } from '~/interfaces/IGroup';
+import {IUser} from '~/interfaces/IAuth';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -73,6 +74,23 @@ const groupsActions = {
       payload,
     };
   },
+  selectUser: (payload: IUser) => ({
+    type: groupsTypes.SELECT_USER,
+    payload,
+  }),
+  clearSelectedUsers: () => ({
+    type: groupsTypes.CLEAR_SELECTED_USERS,
+  }),
+  getUser: () => ({
+    type: groupsTypes.GET_USERS,
+  }),
+  setUser: (payload: IUser[]) => ({
+    type: groupsTypes.SET_USERS,
+    payload,
+  }),
+  resetUser: () => ({
+    type: groupsTypes.RESET_USERS,
+  }),
 
   //for saga
   getJoinedGroups: function (payload?: any) {

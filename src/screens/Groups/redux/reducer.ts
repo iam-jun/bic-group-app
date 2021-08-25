@@ -1,4 +1,6 @@
 import groupsTypes from '~/screens/Groups/redux/types';
+import {IUser} from '~/interfaces/IAuth';
+
 const initGroupsState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
@@ -16,10 +18,21 @@ const initGroupsState = {
   loadingGroupPosts: false,
   groupPosts: [],
   refreshingGroupPosts: false,
+
+  users: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
+  selectedUsers: new Array<IUser>(),
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
   const {type} = action;
+  const {users, selectedUsers} = state;
+
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {
@@ -93,6 +106,42 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
             ...action.payload,
           },
         },
+      };
+    case groupsTypes.SELECT_USER:
+      return {
+        ...state,
+        selectedUsers: !action.payload.selected
+          ? [...selectedUsers, {...action.payload, selected: true}]
+          : selectedUsers.filter(user => user._id !== action.payload._id),
+        users: {
+          ...users,
+          data: users.data.map((item: IUser) =>
+            item._id === action.payload._id
+              ? {
+                  ...item,
+                  selected: !item.selected,
+                }
+              : item,
+          ),
+        },
+      };
+    case groupsTypes.CLEAR_SELECTED_USERS:
+      return {
+        ...state,
+        selectedUsers: [],
+      };
+    case groupsTypes.SET_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          data: action.payload,
+        },
+      };
+    case groupsTypes.RESET_USERS:
+      return {
+        ...state,
+        users: initGroupsState.users,
       };
 
     default:

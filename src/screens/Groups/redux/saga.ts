@@ -13,6 +13,7 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData} from '~/interfaces/common';
+import {mapData} from '../helper';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -22,6 +23,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
   yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
+  yield takeLatest(groupsTypes.GET_USERS, getUsers);
 }
 
 function* getJoinedGroups() {
@@ -238,6 +240,23 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
           i18next.t('common:text_error_message'),
         confirmLabel: i18next.t('common:text_ok'),
       }),
+    );
+  }
+}
+
+function* getUsers() {
+  try {
+    const response: IResponseData = yield groupsDataHelper.getUsers();
+
+    const result = mapData(response.data);
+
+    yield put(groupsActions.setUser(result));
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'getUsers catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
     );
   }
 }

@@ -62,6 +62,12 @@ export const groupsApiConfig = {
     useRetry: false,
     data,
   }),
+  getUsers: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -174,6 +180,18 @@ const groupsDataHelper = {
       const response: any = await makeHttpRequest(
         groupsApiConfig.uploadImage(data),
       );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getUsers: async () => {
+    try {
+      const response: any = await makeHttpRequest(groupsApiConfig.getUsers());
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {

@@ -49,7 +49,9 @@
       }
     },
     "text_discard_changes": "Discard Changes?",
-    "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?"
+    "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "text_invite": "Invite",
+    "text_search_not_found": "Not found"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -361,7 +363,10 @@
   },
   "groups": {
     "search_results": "Search results",
-    "all_groups": "All groups"
+    "all_groups": "All groups",
+    "text_invite_members": "Invite members",
+    "text_search_member": "Search group member",
+    "text_search": "Search people"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
