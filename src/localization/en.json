@@ -214,6 +214,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_edit_post": "Edit post",
+    "title_edit_comment": "Edit comment",
     "button_like": "Like",
     "button_reply": "Reply",
     "button_react": "React",
@@ -249,6 +250,7 @@
     "save": "Save",
     "and": "and",
     "to": "to",
+    "edit_comment_success": "Edit comment success",
     "reply_comment_1": "Reply to ",
     "reply_comment_2": "'s comment",
     "someone": "someone",

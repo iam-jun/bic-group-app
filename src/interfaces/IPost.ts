@@ -105,6 +105,12 @@ export interface IPayloadPutEditPost {
   replaceWithDetail?: boolean;
 }
 
+export interface IPayloadPutEditComment {
+  id: string;
+  comment: IReaction;
+  data: IActivityData;
+}
+
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
 
 export interface IGetStreamUser {

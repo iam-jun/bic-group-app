@@ -186,6 +186,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_edit_post": "Sửa bài viết",
+    "title_edit_comment": "Sửa bình luận",
     "button_like": "Thích",
     "button_reply": "Trả lời",
     "button_react": "Tương tác",
@@ -221,6 +222,7 @@
     "save": "Save",
     "to": "đến",
     "and": "và",
+    "edit_comment_success": "Sửa bình luận thành công",
     "reply_comment_1": "Trả lời bình luận của ",
     "reply_comment_2": "",
     "someone": "ai đó",

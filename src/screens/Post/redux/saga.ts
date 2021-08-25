@@ -6,6 +6,7 @@ import {
   IOwnReaction,
   IParamSearchMentionAudiences,
   IPayloadGetCommentsById,
+  IPayloadPutEditComment,
   IPayloadPutEditPost,
   IPayloadReactToComment,
   IPayloadReactToPost,
@@ -38,6 +39,7 @@ function timeOut(ms: number) {
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
+  yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
   yield takeLatest(
     postTypes.GET_SEARCH_MENTION_AUDIENCES,
@@ -134,6 +136,49 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
       `\x1b[31m🐣️ saga putEditPost error: `,
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
+  }
+}
+
+function* putEditComment({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadPutEditComment;
+}) {
+  const {id, comment, data} = payload;
+  if (!id || !data || !comment) {
+    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
+    return;
+  }
+  try {
+    yield put(postActions.setCreateComment({loading: true}));
+
+    yield postDataHelper.putEditComment(id, data);
+
+    const newComment = {...comment};
+    newComment.data = Object.assign({}, newComment.data, data);
+    yield put(postActions.addToAllComments(newComment));
+    yield put(
+      showHeaderFlashMessage({
+        content: 'post:edit_comment_success',
+        props: {textProps: {useI18n: true}, type: 'success'},
+      }),
+    );
+    yield timeOut(500);
+    navigation.goBack();
+    yield put(postActions.setCreateComment({loading: false}));
+  } catch (e) {
+    console.log(
+      `\x1b[31m🐣️ saga putEditComment error: `,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
+    yield put(postActions.setCreateComment({loading: false}));
+    modalActions.showAlert({
+      title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+      content:
+        e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+      confirmLabel: i18n.t('common:text_ok'),
+    });
   }
 }
 

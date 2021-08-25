@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Keyboard} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -21,6 +21,7 @@ import Button from '~/beinComponents/Button';
 
 export interface CommentViewProps {
   postId: string;
+  groupIds: string;
   parentCommentId?: string;
   commentData: IReaction;
   onPressReply: (data: IReaction) => void;
@@ -29,6 +30,7 @@ export interface CommentViewProps {
 
 const CommentView: React.FC<CommentViewProps> = ({
   postId,
+  groupIds,
   parentCommentId,
   commentData,
   onPressReply,
@@ -108,6 +110,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onLongPress = () => {
+    Keyboard.dismiss();
     menuSheetRef?.current?.open?.();
   };
 
@@ -164,6 +167,7 @@ const CommentView: React.FC<CommentViewProps> = ({
       <CommentViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         commentId={id}
+        groupIds={groupIds}
         isActor={currentUserId === user_id}
         onPressMoreReaction={onPressReact}
         onAddReaction={onAddReaction}

@@ -72,6 +72,7 @@ const PostDetail = (props: any) => {
       <CommentItem
         postId={id}
         commentData={item}
+        groupIds={groupIds}
         onPressReply={(data, isChild) => {
           textInputRef.current?.focus?.();
           if (!isChild) {
@@ -96,7 +97,7 @@ const PostDetail = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSetted) {
       layoutSetted = true;
-      if (focusComment) {
+      if (focusComment && data?.length > 0) {
         setTimeout(() => {
           listRef?.current?.scrollToIndex?.({index: 0, animated: true});
         }, 500);
