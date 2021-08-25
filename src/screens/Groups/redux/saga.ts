@@ -27,18 +27,17 @@ export default function* groupsSaga() {
 function* getJoinedGroups() {
   try {
     yield put(groupsActions.setLoadingJoinedGroups(true));
-
-    const result = yield requestJoinedGroups();
-
-    yield put(groupsActions.setJoinedGroups(result));
+    const response = yield groupsDataHelper.getMyGroups();
+    if (response.data?.length > 0) {
+      yield put(groupsActions.setJoinedGroups(response.data));
+      yield put(groupsActions.setLoadingJoinedGroups(false));
+    }
     yield put(groupsActions.setLoadingJoinedGroups(false));
   } catch (e) {
     yield put(groupsActions.setLoadingJoinedGroups(false));
     console.log(
-      '\x1b[33m',
-      'namanh --- getJoinedGroups | getJoinedGroups : error',
-      e,
-      '\x1b[0m',
+      `\x1b[31m🐣️ saga getJoinedGroups`,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
   }
 }
@@ -133,25 +132,6 @@ function* selectGroupDetail({payload}: {type: string; payload: IGroup}) {
   }
 }
 
-const getGroupChild = (
-  item: any,
-  array: IGroup[],
-  parent: any | undefined,
-  path: string,
-) => {
-  if (parent) {
-    item.parent = {id: parent.id, name: parent.name, parent: parent.parent};
-    path = `${path}${parent.name}/`;
-    item.path = path;
-  }
-  array.push(item);
-  if (item.children && item.children.length > 0) {
-    item.children.map((child: IGroup) =>
-      getGroupChild(child, array, item, path),
-    );
-  }
-};
-
 function* getGroupPosts({
   payload,
 }: {
@@ -187,28 +167,6 @@ const requestGroupDetail = async (userId: number) => {
     console.log(
       '\x1b[33m',
       'requestGroupDetail catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-  }
-};
-
-const requestJoinedGroups = async () => {
-  try {
-    const response = await groupsDataHelper.getMyGroups();
-    if (response.code === 200 && response.data?.length > 0) {
-      const originGroups = response.data;
-      const groups: IGroup[] = [];
-      originGroups.map((item: any) =>
-        getGroupChild(item, groups, undefined, '/'),
-      );
-
-      return groups;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'namanh --- getMygroups | getMygroups catch: ',
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
