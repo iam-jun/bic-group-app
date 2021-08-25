@@ -184,6 +184,7 @@ const icons = {
   PlayVideo: iconPlay,
   iconStar: iconStar,
   RightArrow: iconRightArrow,
+  CommentAltCheck: 'CommentAltCheck',
 };
 
 export default icons;

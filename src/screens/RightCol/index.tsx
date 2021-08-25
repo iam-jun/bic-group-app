@@ -39,6 +39,7 @@ const RightCol = () => {
       <View style={styles.menuRow}>
         {item1 && (
           <TouchableOpacity
+            key={item1.type}
             style={styles.menuItemLeft}
             onPress={() => onItemPress(item1)}>
             <Text.Body style={styles.menuText}>{t(item1.title)}</Text.Body>
@@ -46,6 +47,7 @@ const RightCol = () => {
         )}
         {item2 && (
           <TouchableOpacity
+            key={item2.type}
             style={styles.menuItemRight}
             onPress={() => onItemPress(item2)}>
             <Text.Body style={styles.menuText}>{t(item2.title)}</Text.Body>

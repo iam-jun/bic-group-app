@@ -1,3 +1,5 @@
+import {IGetStreamDispatch} from './common';
+
 import {
   IGetStreamUser,
   IGetStreamPost,
@@ -17,4 +19,8 @@ export interface IGetStreamNotificationActivity {
   time: string;
   verb: string;
   audience: IGetStreamAudience;
+}
+
+export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
+  activityId: string;
 }

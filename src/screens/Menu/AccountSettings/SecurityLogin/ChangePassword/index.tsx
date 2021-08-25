@@ -13,7 +13,6 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import * as validation from '~/constants/commonRegex';
-import {useRootNavigation} from '~/hooks/navigation';
 import {useBaseHook} from '~/hooks';
 import {
   changePassword,
@@ -27,7 +26,6 @@ import useAuth from '~/hooks/auth';
 const ChangePassword = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -266,12 +264,6 @@ const ChangePassword = () => {
           onPress={handleOnSaveChangePassword}>
           {t('common:text_save')}
         </Button.Primary>
-        <Button.Secondary
-          testID="btnCancelChangePassword"
-          style={styles.btnCancel}
-          onPress={() => rootNavigation.goBack()}>
-          {t('common:btn_cancel')}
-        </Button.Secondary>
         <View style={styles.forgotPasswordContainer}>
           <TouchableOpacity
             testID="btnSignInForgotPassword"

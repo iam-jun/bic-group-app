@@ -1,5 +1,5 @@
-import {debounce, isEmpty} from 'lodash';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {isEmpty} from 'lodash';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
@@ -29,6 +29,7 @@ import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import * as actions from '../redux/actions';
+import {setSigningInError} from '../redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 
 const SignIn = () => {
@@ -36,6 +37,7 @@ const SignIn = () => {
   const {t, navigation} = useBaseHook();
   const dispatch = useDispatch();
   const {loading, signingInError} = useAuth();
+  const [disableSignIn, setDisableSignIn] = useState(true);
   const dimensions = useWindowDimensions();
 
   const theme: ITheme = useTheme() as ITheme;
@@ -52,49 +54,68 @@ const SignIn = () => {
   } = useForm();
 
   useEffect(() => {
-    const email = getValues('email');
-    if (email) {
-      trigger().then(() => {
-        // do nothing
-      });
-    }
+    dispatch(setSigningInError(''));
+    checkDisableSignIn();
   }, []);
+
+  useEffect(() => {
+    setDisableSignIn(loading);
+  }, [loading]);
 
   useEffect(() => {
     if (signingInError) {
       setError('password', {
-        type: 'required',
+        type: 'validate',
+        message: signingInError,
+      });
+      setError('email', {
+        type: 'validate',
         message: signingInError,
       });
     } else {
-      clearErrors('password');
+      clearAllErrors();
     }
+    checkDisableSignIn();
   }, [signingInError]);
 
+  const clearAllErrors = () => {
+    clearErrors('email');
+    clearErrors('password');
+  };
+
+  const clearFieldError = (name: 'email' | 'password') => {
+    const error = errors[name];
+    if (!error) return;
+
+    if (error.message === signingInError) clearAllErrors();
+    else clearErrors(name);
+  };
+
   const onSignIn = async () => {
-    if (disableSignIn) {
-      return;
-    }
+    if (disableSignIn) return; // Reject if pressing enter while having invalid inputs
+    setDisableSignIn(true);
+
+    const validInputs = await validateInputs();
+    checkDisableSignIn();
+    if (!validInputs) return;
+
     const email = getValues('email');
     const password = getValues('password');
     dispatch(actions.signIn({email, password}));
   };
 
-  const validateEmail = debounce(async () => {
-    await trigger('email');
-  }, 50);
-
-  const validatePassword = debounce(async () => {
-    await trigger('password');
-  }, 50);
+  const validateInputs = async () => {
+    const validEmail = await trigger('email');
+    const validPassword = await trigger('password');
+    return validEmail && validPassword;
+  };
 
   const checkDisableSignIn = () => {
     const email = getValues('email');
     const password = getValues('password');
-    return !isEmpty(errors) || !email || !password || loading;
+    const result = !isEmpty(errors) || !email || !password || loading;
+    setDisableSignIn(result);
   };
-
-  const disableSignIn = checkDisableSignIn();
 
   // TODO: remove when function signup come back
   const handleSignUpNotFunctioning = () => {
@@ -133,10 +154,16 @@ const SignIn = () => {
                 error={errors.email}
                 onChangeText={text => {
                   onChange(text);
-                  validateEmail();
+                  clearFieldError('email');
+                  checkDisableSignIn();
                 }}
+                onSubmitEditing={() => onSignIn()}
                 helperType={errors.email?.message ? 'error' : undefined}
-                helperContent={errors?.email?.message}
+                helperContent={
+                  errors?.email?.message === signingInError
+                    ? ''
+                    : errors?.email?.message
+                }
                 style={styles.inputEmail}
               />
             )}
@@ -163,8 +190,10 @@ const SignIn = () => {
                 value={value}
                 onChangeText={text => {
                   onChange(text);
-                  validatePassword();
+                  clearFieldError('password');
+                  checkDisableSignIn();
                 }}
+                onSubmitEditing={() => onSignIn()}
                 helperType={errors.password?.message ? 'error' : undefined}
                 helperContent={errors?.password?.message}
                 style={styles.inputPassword}
