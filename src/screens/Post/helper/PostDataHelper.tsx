@@ -1,6 +1,7 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
+  IActivityData,
   IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestPostComment,
@@ -18,6 +19,13 @@ export const postApiConfig = {
   }),
   putPost: (id: string, data: IPostCreatePost): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}posts/${id}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data,
+  }),
+  putEditComment: (id: string, data: IActivityData): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions/comments/${id}`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -145,6 +153,20 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putEditComment: async (id: string, data: IActivityData) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.putEditComment(id, data),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

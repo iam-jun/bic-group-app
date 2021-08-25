@@ -22,13 +22,13 @@ import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import {useUserIdAuth} from '~/hooks/auth';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import * as modalActions from '~/store/modal/actions';
+import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 
 export interface CreatePostProps {
   route?: {
@@ -276,14 +276,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         />
         {!isEditPost && (
           <View>
-            {!!important?.active && (
-              <FlashMessage
-                textProps={{variant: 'h6'}}
-                leftIcon={'InfoCircle'}
-                type={'important'}>
-                {t('common:text_important')}
-              </FlashMessage>
-            )}
+            {!!important?.active && <ImportantStatus notExpired />}
             <CreatePostChosenAudiences />
             <Divider />
           </View>
@@ -300,6 +293,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onMentionText={onMentionText}
           value={content}
           ComponentInput={PostInput}
+          componentInputProps={{
+            blurOnSubmit: true,
+          }}
         />
         {!isEditPost && (
           <PostToolbar

@@ -55,3 +55,11 @@ export interface IUpdateGroupName {
   roomId: string;
   name: string;
 }
+
+export interface IRemoveMemberReq {
+  roomId: string;
+  userId: string;
+}
+export interface IGetMentionUsersReq {
+  query: any;
+}

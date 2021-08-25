@@ -2,6 +2,7 @@ const groupStack = {
   groups: 'group-list',
   groupDetail: 'group-detail',
   createPost: 'create-post',
+  createComment: 'create-comment',
   postDetail: 'post-detail',
   groupAdmin: 'group-admin',
   generalInfo: 'general-info',

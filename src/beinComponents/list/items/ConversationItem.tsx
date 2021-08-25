@@ -8,7 +8,7 @@ import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {getAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
 
 const ConversationItem: React.FC<IConversation> = ({
@@ -37,7 +37,7 @@ const ConversationItem: React.FC<IConversation> = ({
   };
 
   const ItemAvatar = isDirect ? (
-    <Avatar.UltraLarge
+    <Avatar.Large
       style={styles.marginRight}
       source={avatar}
       placeholderSource={images.img_user_avatar_default}
@@ -55,20 +55,23 @@ const ConversationItem: React.FC<IConversation> = ({
     <PrimaryItem
       title={name}
       titleProps={{
+        numberOfLines: 1,
         color: textcolor,
       }}
       subTitleProps={{
+        numberOfLines: 2,
         variant: unreadCount ? 'bodyM' : 'body',
         color: textcolor,
       }}
       subTitle={lastMessage}
+      style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={
         <View style={styles.rightComponent}>
           <Text.Subtitle
             style={styles.textUpdate}
             color={theme.colors.textSecondary}>
-            {formatDate(_updatedAt)}
+            {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
             <View style={styles.unread}>
@@ -87,6 +90,9 @@ const createStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
 
   return StyleSheet.create({
+    container: {
+      // marginVertical: spacing.padding.base,
+    },
     rightComponent: {
       marginLeft: spacing.margin.base,
       alignSelf: 'baseline',

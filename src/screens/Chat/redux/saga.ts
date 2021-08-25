@@ -1,18 +1,27 @@
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
-import {put, select, takeLatest} from 'redux-saga/effects';
+import {Platform} from 'react-native';
+import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
+
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
-import {IConversation, IMessage} from '~/interfaces/IChat';
+import {IUser} from '~/interfaces/IAuth';
+import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {mapConversation, mapData, mapMessage, mapRole} from './../helper';
+import {
+  mapConversation,
+  mapData,
+  mapMessage,
+  mapRole,
+  mapUsers,
+} from './../helper';
 import actions from './actions';
 import * as types from './constants';
 
@@ -25,18 +34,27 @@ import * as types from './constants';
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* saga() {
+  yield takeLatest(types.INIT_CHAT, initChat);
   yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
-  yield takeLatest(types.SEND_MESSAGE, sendMessage);
+  yield takeEvery(types.SEND_MESSAGE, sendMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(types.REMOVE_MEMBER, removeMember);
+  yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
+}
+
+function* initChat() {
+  yield put(actions.getSubscriptions());
+  yield put(actions.resetData('groups'));
+  yield put(actions.getData('groups'));
 }
 
 function* getData({
@@ -184,12 +202,22 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     const {conversation} = chat;
 
     const formData = new FormData();
-    formData.append('file', {
-      type: payload.attachment.type,
-      //@ts-ignore
-      name: payload.attachment.name || 'fileMessage',
-      uri: payload.attachment.uri,
-    });
+    if (Platform.OS === 'web') {
+      formData.append(
+        'file',
+        // @ts-ignore
+        payload.attachment,
+        payload.attachment.name || 'fileMessage',
+      );
+    } else {
+      formData.append('file', {
+        type: payload.attachment.type,
+        //@ts-ignore
+        name: payload.attachment.name || 'fileMessage',
+        uri: payload.attachment.uri,
+      });
+    }
+
     formData.append(
       'description',
       JSON.stringify({
@@ -212,17 +240,14 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
   }
 }
 
-function* sendMessage({payload}: {payload: IMessage; type: string}) {
+function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
   try {
-    const {chat} = yield select();
-    const {conversation} = chat;
-
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.sendMessage({
         message: {
-          _id: payload._id.toString(),
-          rid: conversation._id,
-          msg: payload?.text,
+          _id: payload._id,
+          rid: payload.room_id,
+          msg: payload.text,
         },
       }),
     );
@@ -230,7 +255,6 @@ function* sendMessage({payload}: {payload: IMessage; type: string}) {
     const message = mapMessage(response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
-    console.log('sendMessage', err);
     yield put(actions.sendMessageFailed(payload));
   }
 }
@@ -251,13 +275,48 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
+function* removeMember({payload}: {type: string; payload: IUser}) {
+  try {
+    const {chat} = yield select();
+    const data = {
+      roomId: chat.conversation._id,
+      userId: payload._id.toString(),
+    };
+    yield makeHttpRequest(apiConfig.Chat.removeMember(data));
+  } catch (err) {
+    console.log('removeMember', err);
+  }
+}
+
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else yield sendMessage({payload, type});
 }
 
+function* getMentionUsers({payload}: {payload: string; type: string}) {
+  try {
+    const {chat} = yield select();
+    const {conversation} = chat;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.mentionUsers({
+        query: {
+          $and: [
+            {__rooms: {$eq: conversation._id}},
+            {name: {$regex: payload, $options: 'ig'}},
+          ],
+        },
+      }),
+    );
+
+    const users = mapUsers(response.data.users);
+    yield put(actions.setMentionUsers(users));
+  } catch (err) {
+    console.log('getMentionUsers', err);
+  }
+}
+
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
-  console.log('handleEvent', payload);
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
       [TO-DO] Need to check with BE
@@ -287,13 +346,14 @@ function* handleNewMessage(data: any) {
     const {chat, auth} = yield select();
     const message = mapMessage(data);
     const existed = chat.groups.data.find(
-      (item: IConversation) => item._id === message.room_id,
+      (item: IConversation) => item._id === message?.room_id,
     );
+
     if (existed) yield put(actions.addNewMessage(message));
     else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({
-          roomId: message.room_id,
+          roomId: message?.room_id,
         }),
       );
       yield put(
@@ -307,6 +367,23 @@ function* handleNewMessage(data: any) {
     console.log('handleNewMessage', err);
   }
 }
+function* handleRemoveUser(data: any) {
+  try {
+    const {auth} = yield select();
+    const message = mapMessage(data);
+    console.log('handleRemoveUser', message, auth.user);
+
+    if (message.msg === auth.user.username) {
+      yield put(actions.kickMeOut(message));
+      navigation.replace(chatStack.conversationList);
+    } else {
+      yield handleNewMessage(data);
+      yield put(actions.removeMemberSuccess(message));
+    }
+  } catch (err) {
+    console.log('handleRemoveUser', err);
+  }
+}
 
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
@@ -317,11 +394,11 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
-      console.log('In development');
-      break;
-    // New message event doesn't have type
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.REMOVE_USER:
+      yield handleRemoveUser(data);
       break;
   }
 }

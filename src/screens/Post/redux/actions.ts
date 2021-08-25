@@ -15,6 +15,7 @@ import {
   IPayloadGetCommentsById,
   IAllComments,
   IPayloadReactToComment,
+  IPayloadPutEditComment,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -42,6 +43,10 @@ const postActions = {
   }),
   setCreatePostData: (payload: IActivityData) => ({
     type: postTypes.SET_CREATE_POST_DATA,
+    payload,
+  }),
+  setCreateComment: (payload: {loading: boolean}) => ({
+    type: postTypes.SET_CREATE_COMMENT,
     payload,
   }),
   setCreatePostChosenAudiences: (payload: IAudience[]) => ({
@@ -98,6 +103,10 @@ const postActions = {
   }),
   putEditPost: (payload: IPayloadPutEditPost) => ({
     type: postTypes.PUT_EDIT_POST,
+    payload,
+  }),
+  putEditComment: (payload: IPayloadPutEditComment) => ({
+    type: postTypes.PUT_EDIT_COMMENT,
     payload,
   }),
   deletePost: (payload: string) => ({

@@ -1,8 +1,13 @@
 import appConfig from '~/configs/appConfig';
-import * as types from './constants';
-import {IConversation, IMessage, IReaction} from '~/interfaces/IChat';
-import {IUser} from '~/interfaces/IAuth';
 import {messageStatus} from '~/constants/chat';
+import {IUser} from '~/interfaces/IAuth';
+import {
+  IChatUser,
+  IConversation,
+  IMessage,
+  IReaction,
+} from '~/interfaces/IChat';
+import * as types from './constants';
 
 export const initDataState = {
   groups: {
@@ -45,12 +50,16 @@ export interface IAction {
 const initState = {
   ...initDataState,
   conversation: {} as IConversation,
-  selectedUsers: new Array<IUser>(),
+  selectedUsers: new Array<IChatUser>(),
   roles: {
     loading: false,
     data: [],
   },
   subscriptions: [],
+  mention: {
+    mentionKey: '',
+    mentionUsers: [],
+  },
 };
 
 /**
@@ -182,18 +191,20 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
                 data: newMessages,
               }
             : messages,
-        groups: {
-          ...groups,
-          data: groups.data.map((item: any) =>
-            item._id === action.payload.room_id
-              ? {
-                  ...item,
-                  lastMessage: action.payload.msg,
-                  _updatedAt: action.payload._updatedAt,
-                }
-              : item,
-          ),
-        },
+        groups: payload.system
+          ? state.groups
+          : {
+              ...groups,
+              data: groups.data.map((item: any) =>
+                item._id === action.payload.room_id
+                  ? {
+                      ...item,
+                      lastMessage: action.payload.msg,
+                      _updatedAt: action.payload._updatedAt,
+                    }
+                  : item,
+              ),
+            },
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>
@@ -212,7 +223,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           : selectedUsers.filter(user => user._id !== action.payload._id),
         users: {
           ...users,
-          data: users.data.map((item: IUser) =>
+          data: users.data.map((item: IChatUser) =>
             item._id === action.payload._id
               ? {
                   ...item,
@@ -316,7 +327,43 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
-
+    case types.REMOVE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        members: {
+          ...state.members,
+          data: state.members.data.filter(
+            (member: IUser) => member.username !== payload.msg,
+          ),
+        },
+      };
+    case types.KICK_ME_OUT:
+      return {
+        ...state,
+        groups: {
+          ...state.groups,
+          data: state.groups.data.filter(
+            (group: IConversation) => group._id !== payload.room_id,
+          ),
+        },
+      };
+    //mention
+    case types.SET_MENTION_SEARCH_KEY:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          mentionKey: payload,
+        },
+      };
+    case types.SET_MENTION_USERS:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          mentionUsers: payload,
+        },
+      };
     case types.REACT_MESSAGE:
       return {
         ...state,

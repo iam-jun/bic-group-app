@@ -1,5 +1,6 @@
-import {call, put, select, takeLatest} from 'redux-saga/effects';
 import i18next from 'i18next';
+import {Platform} from 'react-native';
+import {call, put, select, takeLatest} from 'redux-saga/effects';
 
 import {
   IGroup,
@@ -218,12 +219,21 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     const {image, id, fieldName} = payload;
 
     const formData = new FormData();
-    formData.append('file', {
-      type: image.type,
-      // @ts-ignore
-      name: image.name || 'imageName',
-      uri: image.uri,
-    });
+    if (Platform.OS === 'web') {
+      formData.append(
+        'file',
+        // @ts-ignore
+        payload.image,
+        payload.image.name || 'imageName',
+      );
+    } else {
+      formData.append('file', {
+        type: image.type,
+        // @ts-ignore
+        name: image.name || 'imageName',
+        uri: image.uri,
+      });
+    }
     const response: IResponseData = yield groupsDataHelper.uploadImage(
       formData,
     );

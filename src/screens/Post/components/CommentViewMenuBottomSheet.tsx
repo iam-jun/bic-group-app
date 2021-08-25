@@ -11,10 +11,13 @@ import Button from '~/beinComponents/Button';
 import {IReactionProps} from '~/interfaces/IReaction';
 import {reactionDefault} from '~/beinFragments/reaction/reactionConfig';
 import {ReactionType} from '~/constants/reactions';
+import {useRootNavigation} from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 export interface CommentViewMenuBottomSheetProps {
   modalizeRef: any;
   commentId: string;
+  groupIds: string;
   isActor: boolean;
   onPressMoreReaction: () => void;
   onAddReaction: (reactionId: ReactionType) => void;
@@ -22,11 +25,13 @@ export interface CommentViewMenuBottomSheetProps {
 
 const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   modalizeRef,
+  commentId,
+  groupIds,
   isActor,
   onPressMoreReaction,
   onAddReaction,
 }: CommentViewMenuBottomSheetProps) => {
-  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
@@ -39,6 +44,14 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   const _onPressMoreReaction = () => {
     modalizeRef?.current?.close?.();
     onPressMoreReaction?.();
+  };
+
+  const _onPressEdit = () => {
+    modalizeRef?.current?.close?.();
+    rootNavigation.navigate(homeStack.createComment, {
+      commentId: commentId,
+      groupIds: groupIds,
+    });
   };
 
   const renderReactItem = (item: any, index: number) => {
@@ -84,6 +97,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
             leftIcon={'Edit'}
             leftIconProps={{icon: 'Edit', size: 24}}
             title={'Edit Comment'}
+            onPress={_onPressEdit}
           />
         )}
         <PrimaryItem
