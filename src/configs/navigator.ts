@@ -178,6 +178,7 @@ export const linkingConfigFull = {
           },
         },
       },
+      NotFound: '*',
     },
   },
 };

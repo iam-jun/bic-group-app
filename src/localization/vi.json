@@ -287,5 +287,8 @@
     "cryptocurrency": "Cryptocurrency",
     "more": "More...",
     "bein_2021": "Bein @2021"
+  },
+  "web": {
+    "title_not_found": "Page not found / Bein"
   }
 }

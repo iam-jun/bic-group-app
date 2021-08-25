@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import Button from '~/beinComponents/Button';
-import Text from '~/beinComponents/Text';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import NotFoundImg from '../../../assets/images/404_Colored.svg';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
 const NotFound = () => {
   const theme: ITheme = useTheme() as ITheme;
@@ -32,14 +30,14 @@ const NotFound = () => {
         {/* @ts-ignore */}
         <SVGIcon source={NotFoundImg} size={imgSize} />
         <Text.Body style={styles.desc}>{t('error:not_found_desc')}</Text.Body>
-        <Button.Secondary
-          style={styles.button}
-          color={theme.colors.primary7}
-          textColor={theme.colors.background}
-          onPress={() => console.log('Pressed "Go back"')}
-          textVariant="h6">
-          {t('error:button_not_found')}
-        </Button.Secondary>
+        {/*<Button.Secondary*/}
+        {/*  style={styles.button}*/}
+        {/*  color={theme.colors.primary7}*/}
+        {/*  textColor={theme.colors.background}*/}
+        {/*  onPress={() => console.log('Pressed "Go back"')}*/}
+        {/*  textVariant="h6">*/}
+        {/*  {t('error:button_not_found')}*/}
+        {/*</Button.Secondary>*/}
       </View>
     </ScreenWrapper>
   );
