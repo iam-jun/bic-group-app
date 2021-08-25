@@ -40,7 +40,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   onPressGroup,
   onPressItem,
   hidePath = false,
-  initShowTree = false,
+  initShowTree = true,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);

@@ -13,8 +13,9 @@ const homeDataHelper = {
         limit: 10,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
+        // recentReactionsLimit: 10,
         withOwnReactions: true,
-        withOwnChildren: false,
+        withOwnChildren: true, //return own_children of reaction to comment
         withRecentReactions: true,
         withReactionCounts: true,
         enrich: true, //extra data for user & group

@@ -121,33 +121,33 @@ const UserProfile = () => {
             title={'settings:title_name'}
             subtitle={fullname}
             leftIcon={'TextFields'}
-            rightIcon={'Globe'}
+            isTouchDisabled
           />
           <SettingItem
             title={'settings:title_gender'}
             // @ts-ignore
             subtitle={i18next.t(genders[gender])}
             leftIcon={'UserSquare'}
-            rightIcon={'Lock'}
+            isTouchDisabled
           />
           <SettingItem
             title={'settings:title_birthday'}
             subtitle={formatDate(birthday, 'MMM Do, YYYY')}
             leftIcon={'Calender'}
-            rightIcon={'Lock'}
+            isTouchDisabled
           />
           <SettingItem
             title={'settings:title_speaking_languages'}
             subtitle={userLanguages}
             leftIcon={'CommentsAlt'}
-            rightIcon={'Lock'}
+            isTouchDisabled
           />
           <SettingItem
             title={'settings:title_relationship_status'}
             // @ts-ignore
             subtitle={i18next.t(relationshipStatus[relationship_status])}
             leftIcon={'Heart'}
-            rightIcon={'Lock'}
+            isTouchDisabled
           />
         </View>
       </ScrollView>
