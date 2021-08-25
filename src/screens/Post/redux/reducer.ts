@@ -18,6 +18,9 @@ const initState = {
       expiresTime: '',
     },
   },
+  createComment: {
+    loading: false,
+  },
   reactionBottomSheet: {
     show: false,
     title: '',
@@ -81,6 +84,11 @@ function postReducer(state = initState, action: any = {}) {
           ...state.createPost,
           data: payload,
         },
+      };
+    case postTypes.SET_CREATE_COMMENT:
+      return {
+        ...state,
+        createComment: payload,
       };
     case postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES:
       return {

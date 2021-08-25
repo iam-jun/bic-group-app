@@ -10,7 +10,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useBaseHook} from '~/hooks';
 import postActions from '~/screens/Post/redux/actions';
-import {IReaction} from '~/interfaces/IPost';
+import {IActivityData, IReaction} from '~/interfaces/IPost';
 import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 
@@ -43,12 +43,12 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
     useKeySelector(postKeySelector.commentById(commentId)) || {};
   const oldContent = comment?.data?.content;
 
+  const loading = useKeySelector(postKeySelector.createComment.loading);
   const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
   const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
 
   const isEditHasChange = content !== oldContent;
-  const disableButton = content === oldContent;
-  const loading = false;
+  const disableButton = content === oldContent || loading;
 
   useEffect(() => {
     if (oldContent) {
@@ -57,7 +57,18 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   }, [oldContent]);
 
   const onPressComment = () => {
-    alert(groupIds);
+    Keyboard.dismiss();
+    if (commentId && comment) {
+      const newData: IActivityData = {};
+      newData.content = content;
+      dispatch(
+        postActions.putEditComment({
+          id: commentId,
+          comment: comment,
+          data: newData,
+        }),
+      );
+    }
   };
 
   const onMentionText = debounce((textMention: string) => {

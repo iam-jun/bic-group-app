@@ -1,4 +1,7 @@
 const postKeySelector = {
+  createComment: {
+    loading: 'post.createComment.loading',
+  },
   reactionBottomSheet: 'post.reactionBottomSheet',
   mention: {
     searchKey: 'post.mention.searchKey',
