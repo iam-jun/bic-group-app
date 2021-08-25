@@ -74,3 +74,9 @@
     font-weight: normal;
     font-style: normal;
 }
+
+/*Avoid browser auto add eye icon*/
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
