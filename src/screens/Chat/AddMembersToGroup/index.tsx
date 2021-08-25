@@ -6,13 +6,14 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {chatSocketId} from '~/constants/chat';
+import {chatSocketId, roomTypes} from '~/constants/chat';
 import useChat from '~/hooks/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {sendMessage} from '~/services/chatSocket';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
+import * as modalActions from '~/store/modal/actions';
 
 const AddMembersToGroup = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
@@ -33,6 +34,28 @@ const AddMembersToGroup = (): React.ReactElement => {
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onAddPress = () => {
+    if (conversation.type === roomTypes.GROUP) showConfirmations();
+    else doAddUser();
+  };
+
+  const showConfirmations = () => {
+    const type = selectedUsers.length === 1 ? '1' : 'many';
+
+    dispatch(
+      modalActions.showAlert({
+        iconName: 'addUser',
+        title: i18next.t('chat:title_modal_confirm_add_member'),
+        content: i18next
+          .t(`chat:title_group_add_member${type}`)
+          .replace('{0}', conversation.name),
+        cancelBtn: true,
+        onConfirm: () => doAddUser(),
+        confirmLabel: i18next.t('chat:button_add_member'),
+      }),
+    );
+  };
+
+  const doAddUser = () => {
     sendMessage({
       msg: 'method',
       method: 'addUsersToRoom',
