@@ -55,13 +55,16 @@ const ConversationItem: React.FC<IConversation> = ({
     <PrimaryItem
       title={name}
       titleProps={{
+        numberOfLines: 1,
         color: textcolor,
       }}
       subTitleProps={{
+        numberOfLines: 2,
         variant: unreadCount ? 'bodyM' : 'body',
         color: textcolor,
       }}
       subTitle={lastMessage}
+      style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={
         <View style={styles.rightComponent}>
@@ -87,6 +90,9 @@ const createStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
 
   return StyleSheet.create({
+    container: {
+      // marginVertical: spacing.padding.base,
+    },
     rightComponent: {
       marginLeft: spacing.margin.base,
       alignSelf: 'baseline',

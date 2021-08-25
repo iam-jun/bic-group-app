@@ -173,8 +173,6 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         conversation: action.payload,
       };
     case types.ADD_NEW_MESSAGE: {
-      if (payload.system) return state;
-
       const include = messages.data.find(
         (item: IMessage) =>
           item._id === action.payload._id ||
@@ -193,18 +191,20 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
                 data: newMessages,
               }
             : messages,
-        groups: {
-          ...groups,
-          data: groups.data.map((item: any) =>
-            item._id === action.payload.room_id
-              ? {
-                  ...item,
-                  lastMessage: action.payload.msg,
-                  _updatedAt: action.payload._updatedAt,
-                }
-              : item,
-          ),
-        },
+        groups: payload.system
+          ? state.groups
+          : {
+              ...groups,
+              data: groups.data.map((item: any) =>
+                item._id === action.payload.room_id
+                  ? {
+                      ...item,
+                      lastMessage: action.payload.msg,
+                      _updatedAt: action.payload._updatedAt,
+                    }
+                  : item,
+              ),
+            },
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>
