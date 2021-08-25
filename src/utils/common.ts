@@ -19,7 +19,7 @@ export function timeOut(ms?: number) {
   return new Promise(resolve => setTimeout(resolve, ms || 100));
 }
 
-export function titleCase(str: string) {
+export function titleCase(str: string | undefined) {
   if (!str) return str;
   const splitStr = str.toLowerCase().split(' ');
   for (let i = 0; i < splitStr.length; i++) {

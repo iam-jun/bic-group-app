@@ -16,6 +16,7 @@ const groupsTypes = {
   GET_GROUP_MEMBER: 'groups/GET_GROUP_MEMBER',
   GET_GROUP_POSTS: 'groups/GET_GROUP_POSTS',
   EDIT_GROUP_DETAIL: 'groups/EDIT_GROUP_DETAIL',
+  UPLOAD_IMAGE: 'groups/UPLOAD_IMAGE',
 };
 
 export default groupsTypes;

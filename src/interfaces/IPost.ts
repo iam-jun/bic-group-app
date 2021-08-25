@@ -9,7 +9,7 @@ export interface IPostAudience {
 export interface IAudienceUser {
   id?: number | string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     fullname?: string;
   };
 }
@@ -17,7 +17,7 @@ export interface IAudienceUser {
 export interface IAudienceGroup {
   id?: number | string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     name?: string;
   };
 }
@@ -83,6 +83,10 @@ export interface IAllPosts {
   [id: string]: IPostActivity;
 }
 
+export interface IAllComments {
+  [id: string]: IReaction;
+}
+
 export interface IPostCreatePost {
   getstream_id?: string;
   actor?: number;
@@ -108,7 +112,7 @@ export interface IGetStreamUser {
   updated_at?: string;
   id?: string | number;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     fullname?: string;
   };
 }
@@ -132,6 +136,7 @@ export interface IReaction {
   parent?: string;
   latest_children?: any;
   children_counts?: any;
+  own_children?: any;
 }
 
 export interface IGetStreamAudienceUser {
@@ -139,7 +144,7 @@ export interface IGetStreamAudienceUser {
   collection?: string;
   foreign_id: string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     fullname?: string;
   };
   created_at: string;
@@ -151,7 +156,7 @@ export interface IGetStreamAudienceGroup {
   collection?: string;
   foreign_id: string;
   data?: {
-    avatarUrl?: string;
+    avatar?: string;
     name?: string;
   };
   created_at: string;
@@ -192,7 +197,18 @@ export interface IPostAudienceSheet {
 }
 
 export interface IPayloadReactToPost {
-  postId: string;
+  id: string;
+  reactionId: ReactionType;
+  ownReaction: IOwnReaction;
+  reactionCounts: IReactionCounts;
+  userId: number;
+}
+
+export interface IPayloadReactToComment {
+  id: string;
+  comment: IReaction;
+  postId?: string;
+  parentCommentId?: string;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
@@ -203,4 +219,15 @@ export interface IPayloadUpdateReactionOfPostById {
   postId: string;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
+}
+
+export interface IPayloadUpdateCommentsById {
+  id: string;
+  comments: IReaction[];
+  isMerge: boolean;
+}
+
+export interface IPayloadGetCommentsById {
+  id: string;
+  isMerge: boolean;
 }

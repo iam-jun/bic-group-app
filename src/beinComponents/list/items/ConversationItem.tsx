@@ -8,7 +8,7 @@ import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {getAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
-import {formatDate} from '~/utils/formatData';
+import {countTime} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
 
 const ConversationItem: React.FC<IConversation> = ({
@@ -23,8 +23,7 @@ const ConversationItem: React.FC<IConversation> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {text, textReversed, textSecondary} = theme.colors;
-  const [_avatar, setAvatar] = useState<string | undefined>(avatar);
-  const [_avatarGroup, setAvatarGroup] = useState<string[] | undefined>();
+  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textcolor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
 
@@ -33,12 +32,12 @@ const ConversationItem: React.FC<IConversation> = ({
       const avatarGroup = usernames.map((username: string) =>
         getAvatar(username),
       );
-      setAvatarGroup(avatarGroup);
+      setAvatar(avatarGroup);
     } else setAvatar(images.img_group_avatar_default);
   };
 
   const ItemAvatar = isDirect ? (
-    <Avatar.UltraLarge
+    <Avatar.Large
       style={styles.marginRight}
       source={avatar}
       placeholderSource={images.img_user_avatar_default}
@@ -47,8 +46,7 @@ const ConversationItem: React.FC<IConversation> = ({
     <Avatar.Group
       variant="large"
       style={styles.marginRight}
-      source={!_avatarGroup && _avatar}
-      listSource={_avatarGroup}
+      source={_avatar}
       onError={onLoadAvatarError}
     />
   );
@@ -70,7 +68,7 @@ const ConversationItem: React.FC<IConversation> = ({
           <Text.Subtitle
             style={styles.textUpdate}
             color={theme.colors.textSecondary}>
-            {formatDate(_updatedAt)}
+            {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
             <View style={styles.unread}>

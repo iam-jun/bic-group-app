@@ -19,8 +19,8 @@ export const formatDate = (
     value = moment(value).format(format);
   } else {
     const days = moment(new Date()).diff(date, 'days'); // today - future < 0
-    if (days < (maxFromDays || 1)) value = moment(value).calendar();
-    else value = moment(value).format('L');
+    if (days < (maxFromDays || 1)) value = moment(value).fromNow(true);
+    else value = moment(value).format('lll');
   }
 
   return value || '';
@@ -61,12 +61,9 @@ export const timestampToISODate = (date: any): string => {
 
 export const countTime = (timeIso: string) => {
   let result = '';
-  const date = new Date(timeIso);
-  const now = new Date();
-  const deltaSecond = Math.round(
-    Math.max(now.getTime() - date.getTime(), date.getTime() - now.getTime()) /
-      1000,
-  );
+  const time = moment.utc(timeIso).unix();
+  const now = moment().unix();
+  const deltaSecond = Math.max(now - time, time - now);
   if (deltaSecond < 60) {
     result = 'now';
   } else if (deltaSecond < 60 * 60) {

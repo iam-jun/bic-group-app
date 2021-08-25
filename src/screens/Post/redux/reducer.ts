@@ -18,6 +18,11 @@ const initState = {
       expiresTime: '',
     },
   },
+  reactionBottomSheet: {
+    show: false,
+    title: '',
+    callback: undefined,
+  },
   mention: {
     searchKey: '',
     searchResult: [],
@@ -25,6 +30,8 @@ const initState = {
   postDetail: {},
   replyingComment: {},
   allPosts: {},
+  allComments: {},
+  allCommentsByParentIds: {},
   postAudienceSheet: {
     isShow: false,
     data: undefined,
@@ -40,6 +47,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         allPosts: payload,
+      };
+    case postTypes.SET_ALL_COMMENTS:
+      return {
+        ...state,
+        allComments: payload,
       };
     case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
       return {
@@ -138,6 +150,16 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         postAudienceSheet: initState.postAudienceSheet,
+      };
+    case postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS:
+      return {
+        ...state,
+        allCommentsByParentIds: payload,
+      };
+    case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
+      return {
+        ...state,
+        reactionBottomSheet: payload || initState.reactionBottomSheet,
       };
     default:
       return state;

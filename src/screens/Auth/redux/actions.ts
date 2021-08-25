@@ -1,4 +1,5 @@
 import {
+  IChangePasswordError,
   IChangePasswordPayload,
   IForgotPasswordConfirm,
   IForgotPasswordError,
@@ -47,6 +48,20 @@ export function setForgotPasswordStage(payload: string) {
 export function setForgotPasswordError(payload: IForgotPasswordError) {
   return {
     type: types.SET_FORGOT_PASSWORD_ERROR,
+    payload,
+  };
+}
+
+export function setChangePasswordLoading(payload: boolean) {
+  return {
+    type: types.SET_CHANGE_PASSWORD_LOADING,
+    payload,
+  };
+}
+
+export function setChangePasswordError(payload: IChangePasswordError) {
+  return {
+    type: types.SET_CHANGE_PASSWORD_ERROR,
     payload,
   };
 }

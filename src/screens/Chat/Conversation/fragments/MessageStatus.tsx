@@ -8,16 +8,18 @@ import {Text} from '~/components';
 import i18next from 'i18next';
 
 export interface Props {
-  status: IMesssageStatus;
+  status?: IMesssageStatus;
   onRetryPress: () => void;
 }
 
 const MessageStatus: React.FC<Props> = ({
   status,
   onRetryPress,
-}: Props): React.ReactElement => {
+}: Props): React.ReactElement | null => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+
+  if (!status || status !== 'failed') return null;
 
   return (
     <View style={styles.container}>

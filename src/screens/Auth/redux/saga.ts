@@ -1,7 +1,6 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {Platform} from 'react-native';
 import {put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
@@ -12,7 +11,6 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
-import * as appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
@@ -59,12 +57,16 @@ function* changePassword({
   payload: IAuth.IChangePasswordPayload;
 }) {
   try {
+    yield put(actions.setChangePasswordLoading(true));
+
     const {oldPassword, newPassword, global} = payload;
     const user = yield Auth.currentAuthenticatedUser();
     const data = yield Auth.changePassword(user, oldPassword, newPassword);
     if (data === 'SUCCESS' && global) {
       yield Auth.signOut({global});
     }
+    yield put(actions.setChangePasswordLoading(false));
+
     navigation.goBack();
     yield put(
       modalActions.showAlert({
@@ -77,16 +79,21 @@ function* changePassword({
       }),
     );
   } catch (error) {
-    navigation.goBack();
-    yield put(
-      modalActions.showAlert({
-        title: i18n.t('error:alert_title'),
-        content: error.code || error.message,
-        onConfirm: () => put(modalActions.hideAlert()),
-        confirmLabel: i18n.t('error:button_confirm'),
-      }),
-    );
     console.log('changePassword error:', error);
+    let errCurrentPassword = '',
+      errBox = '';
+    switch (error.code) {
+      case authErrors.NOT_AUTHORIZED_EXCEPTION:
+        errCurrentPassword = i18n.t('auth:text_err_wrong_current_password');
+        break;
+      case authErrors.LIMIT_EXCEEDED_EXCEPTION:
+        errBox = i18n.t('auth:text_err_limit_exceeded');
+        break;
+      default:
+        errBox = error?.message || '';
+    }
+    yield put(actions.setChangePasswordLoading(false));
+    yield put(actions.setChangePasswordError({errCurrentPassword, errBox}));
   }
 }
 
@@ -130,7 +137,6 @@ function* onSignInSuccess(user: IUserResponse) {
   };
 
   yield put(actions.setUser(userResponse));
-  navigation.replace(rootSwitch.mainStack);
 
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
@@ -140,11 +146,7 @@ function* onSignInSuccess(user: IUserResponse) {
     return;
   }
 
-  // setup push token
-  if (Platform.OS === 'web') {
-    return;
-  }
-  yield put(appActions.setupPushToken());
+  navigation.replace(rootSwitch.mainStack);
 }
 
 function* onSignInFailed(errorMessage: string) {

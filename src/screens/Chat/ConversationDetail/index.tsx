@@ -21,6 +21,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import {getAvatar} from '../helper';
 import actions from '../redux/actions';
 
 const Conversation = (): React.ReactElement => {
@@ -34,6 +35,9 @@ const Conversation = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
+  const [_avatar, setAvatar] = useState<string | string[] | undefined>(
+    conversation.avatar,
+  );
 
   useEffect(() => {
     if (conversation.description?.length > 100) {
@@ -84,20 +88,23 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
-  const renderAvatar = () => {
-    if (isDirect) {
-      return (
-        <Avatar.UltraLarge
-          source={conversation.avatar}
-          placeholderSource={images.img_user_avatar_default}
-        />
+  const onLoadAvatarError = () => {
+    if (conversation.type === roomTypes.DIRECT) {
+      setAvatar(images.img_user_avatar_default);
+    } else if (conversation.usernames) {
+      const avatarGroup = conversation.usernames.map((username: string) =>
+        getAvatar(username),
       );
-    }
+      setAvatar(avatarGroup);
+    } else setAvatar(images.img_group_avatar_default);
+  };
+
+  const renderAvatar = () => {
     return (
       <Avatar.Group
         variant="ultraLarge"
-        source={conversation.avatar}
-        placeholderSource={images.img_group_avatar_default}
+        source={_avatar}
+        onError={onLoadAvatarError}
       />
     );
   };
@@ -107,13 +114,15 @@ const Conversation = (): React.ReactElement => {
       <TouchableOpacity onPress={goProfile}>
         <View style={styles.header}>
           {renderAvatar()}
-          <Text.H5 style={styles.name}>
+          <Text.H5 style={styles.name} numberOfLines={2}>
             {conversation.name}
-            <Icon
-              iconStyle={styles.iconTitleRight}
-              size={22}
-              icon="AngleRight"
-            />
+            <Text>
+              <Icon
+                iconStyle={styles.iconTitleRight}
+                size={12}
+                icon="RightArrow"
+              />
+            </Text>
           </Text.H5>
         </View>
       </TouchableOpacity>
@@ -141,7 +150,7 @@ const Conversation = (): React.ReactElement => {
           <Divider />
           <ViewSpacing height={spacing.margin.large} />
 
-          <Text.H5>{i18next.t('common:text_description')}</Text.H5>
+          <Text.H6>{i18next.t('common:text_description')}</Text.H6>
           <ViewSpacing height={spacing.margin.base} />
           <Text>
             <Text.BodyS>
@@ -303,13 +312,18 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
+  const onPressMenu =
+    conversation.type === roomTypes.DIRECT
+      ? undefined
+      : () => baseSheetRef.current?.open();
+
   return (
     <ScrollView>
       <ScreenWrapper
         style={styles.wrapper}
         testID="ConversationDetailScreen"
         isFullView>
-        <Header onPressMenu={() => baseSheetRef.current?.open()} />
+        <Header onPressMenu={onPressMenu} />
         <View style={styles.container}>
           <View style={styles.top}>
             {renderHeader()}
@@ -343,11 +357,13 @@ const createStyles = (theme: IObject<any>) => {
       paddingVertical: spacing.padding.base,
     },
     name: {
-      marginTop: spacing.margin.large,
       textAlign: 'center',
+      alignItems: 'center',
+      marginTop: spacing.margin.large,
     },
     iconTitleRight: {
-      marginTop: spacing.margin.base,
+      marginTop: spacing.margin.small,
+      marginStart: spacing.margin.large,
     },
     description: {
       paddingVertical: spacing.padding.base,

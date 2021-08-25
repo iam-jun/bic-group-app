@@ -37,15 +37,27 @@
     "text_show_less": "Show less",
     "text_add": "Add",
     "text_retry": "Retry",
+    "text_done": "Done",
     "text_download": "Download",
-    "text_send": "Send"
+    "text_send": "Send",
+    "label_confirm_send_file": "Send this file?",
+    "label_confirm_send_image": "Send this photo?",
+    "label_confirm_send_video": "Send this video?",
+    "error": {
+      "file": {
+        "over_file_size": "Your file must be less than 10MB"
+      }
+    },
+    "text_discard_changes": "Discard Changes?",
+    "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "title_mention_all": "All members in this group"
   },
   "auth": {
     "text_kickout_title": "Notice",
     "text_kickout_desc": "Your session has expired.",
     "text_kickout_confirm_button": "Got it",
     "text_change_password_success_title": "Notice",
-    "text_change_password_success_desc": "You have changed password success.",
+    "text_change_password_success_desc": "You have changed password successfully.",
     "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Sign In",
     "text_sign_in_desc": "Login with your Bein account",
@@ -89,9 +101,10 @@
     "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",
     "text_err_confirm_password_not_matched": "Password doesn't match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
-    "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting code too many time. Please try again later.",
+    "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
     "text_err_wrong_code": "Wrong Code Input? ",
     "text_err_missing_token": "Oops, something went wrong. ",
+    "text_err_wrong_current_password": "Wrong current password",
     "text_request_new_code": "Resend new code.",
     "text_title_success": "Successfully!",
     "text_sign_up_desc": "Don’t have an account?",
@@ -142,6 +155,8 @@
     "title_notification": "Notification",
     "title_appearance": "Appearance",
     "title_language": "Language",
+    "title_speaking_languages": "Speaking Languages",
+    "title_relationship_status": "Relationship Status",
     "title_currency": "Currency",
     "title_about": "About",
     "title_name": "Name",
@@ -159,10 +174,12 @@
     "title_module_settings": "Module Settings",
     "title_group_name": "Group Name",
     "title_group_description": "Group Description",
+    "text_maximum_character": "Maximum 500 characters",
     "title_group_type": "Group Type",
     "title_avatar": "Avatar",
     "title_cover": "Cover",
     "title_edit": "Edit",
+    "title_basic_info": "Basic Info",
     "title_privacy_type": "Privacy Type",
     "text_info": "Info",
     "text_help_center": "Help center is coming soon 🤗",
@@ -176,7 +193,20 @@
     "title_secret": "Secret",
     "title_secret_subtitle": "Group is invisible to everyone and members are invited.",
     "title_edit_description": "Edit Description",
-    "title_logout_from_all_devices": "Logout from all devices"
+    "title_logout_from_all_devices": "Logout from all devices",
+    "title_edit_basic_info": "Edit Basic Info",
+    "title_edit_name": "Edit Name",
+    "text_not_set": "Not set",
+    "title_choose_gender": "Choose your gender",
+    "text_male": "Male",
+    "text_female": "Female",
+    "text_others": "Others",
+    "text_single": "Single",
+    "text_in_relationship": "In a Relationship",
+    "text_engaged": "Engaged",
+    "text_married": "Married",
+    "title_choose_languages": "Choose Speaking Languages",
+    "title_choose_relationship": "Choose Relationship Status"
   },
   "languages": {
     "title_en": "English",
@@ -352,5 +382,13 @@
     "cryptocurrency": "Cryptocurrency",
     "more": "More...",
     "bein_2021": "Bein @2021"
+  },
+  "web": {
+    "title_not_found": "Page not found / Bein"
+  },
+  "notification": {
+    "mark_all_as_read": "Mark all as read",
+    "mark_all_as_read_success": "All notifications marked as read",
+    "notification_settings": "Notification Settings"
   }
 }

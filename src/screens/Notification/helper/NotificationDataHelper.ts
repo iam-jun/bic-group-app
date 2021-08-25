@@ -7,7 +7,6 @@ const notificationsDataHelper = {
       const streamOptions = {
         offset: 0,
         limit: 10,
-
         user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
         ownReactions: true,
         withOwnReactions: true,
@@ -20,7 +19,7 @@ const notificationsDataHelper = {
       const data = await makeGetStreamRequest(
         streamClient,
         'notification',
-        userId,
+        'u-' + userId,
         'get',
         streamOptions,
       );
@@ -32,6 +31,72 @@ const notificationsDataHelper = {
       //   '\x1b[0m',
       // );
 
+      return data;
+    }
+    return;
+  },
+
+  /**
+   * Send request to getstream to mark notifications as read
+   * @param userId        integer       User id
+   * @param streamClient  StreamClient  Stream Client
+   * @returns
+   */
+  markAsReadAll: async (userId: string, streamClient: StreamClient) => {
+    if (streamClient) {
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'notification',
+        'u-' + userId,
+        'get',
+        {mark_read: true},
+      );
+
+      return data;
+    }
+    return;
+  },
+
+  /**
+   * Send request to getstream to mark notifications as seen
+   * @param userId        integer       User id
+   * @param streamClient  StreamClient  Stream Client
+   * @returns
+   */
+  markAsSeenAll: async (userId: string, streamClient: StreamClient) => {
+    if (streamClient) {
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'notification',
+        'u-' + userId,
+        'get',
+        {mark_seen: true},
+      );
+
+      return data;
+    }
+    return;
+  },
+
+  /**
+   * Send request to getstream to mark notification as seen by activity id
+   * @param userId        integer       User id
+   * @param activityId    integer       Activity id
+   * @param streamClient  StreamClient  Stream Client
+   */
+  markAsRead: async (
+    userId: string,
+    activityId: string,
+    streamClient: StreamClient,
+  ) => {
+    if (streamClient) {
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'notification',
+        'u-' + userId,
+        'get',
+        {mark_read: [activityId]},
+      );
       return data;
     }
     return;

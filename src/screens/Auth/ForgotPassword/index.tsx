@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -13,7 +14,6 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import Icon from '~/beinComponents/Icon';
 
 import {useBaseHook} from '~/hooks';
-import {authStack} from '~/configs/navigator';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import {forgotPasswordStages} from '~/constants/authConstants';
@@ -23,13 +23,17 @@ import {IForgotPasswordError} from '~/interfaces/IAuth';
 import LockImg from '../../../../assets/images/Lock.svg';
 import {ITheme} from '~/theme/interfaces';
 import icons from '~/resources/icons';
+import {deviceDimensions} from '~/theme/dimension';
+import {rootNavigationRef} from '~/router/navigator/refs';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
-  const {t, navigation} = useBaseHook();
-  const styles = themeStyles(theme);
+  const {t} = useBaseHook();
+  const navigation = useNavigation();
   const dimensions = useWindowDimensions();
+  const isPhone = dimensions.width < deviceDimensions.smallTablet;
+  const styles = themeStyles(theme, isPhone);
 
   const {forgotPasswordStage, forgotPasswordError} = useAuth();
   const {errBox}: IForgotPasswordError = forgotPasswordError || {};
@@ -55,7 +59,7 @@ const ForgotPassword = () => {
         // @ts-ignore
         icon={icons.iconBack}
         size={28}
-        onPress={() => navigation.navigate(authStack.login)}
+        onPress={() => navigation.goBack()}
       />
     );
   };
@@ -75,7 +79,7 @@ const ForgotPassword = () => {
         </View>
         <Button.Primary
           testID="btnComplete"
-          onPress={() => navigation.navigate(authStack.login)}>
+          onPress={() => rootNavigationRef?.current?.goBack()}>
           {t('auth:btn_sign_in')}
         </Button.Primary>
       </View>
@@ -83,7 +87,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <ScreenWrapper testID="ForgotPasswordScreen" isFullView>
+    <ScreenWrapper testID="ForgotPasswordScreen" isFullView style={styles.root}>
       <View style={styles.container}>
         {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
           <View style={styles.headerContainer}>{renderBtnBack()}</View>
@@ -96,36 +100,50 @@ const ForgotPassword = () => {
             {errBox}
           </FlashMessage>
         )}
-        {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
-          <ForgotInputId useFormData={useFormData} />
-        )}
-        {!errBox &&
-          forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-            <ForgotInputCodePw useFormData={useFormData} />
+        <View style={styles.contentContainer}>
+          {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
+            <ForgotInputId useFormData={useFormData} />
           )}
-        {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
-          renderComplete()}
+          {!errBox &&
+            forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+              <ForgotInputCodePw useFormData={useFormData} />
+            )}
+          {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
+            renderComplete()}
+        </View>
       </View>
     </ScreenWrapper>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
   const {spacing, colors} = theme;
   return StyleSheet.create({
-    container: {
+    root: {
       flex: 1,
       alignContent: 'center',
+      alignItems: !isPhone ? 'center' : undefined,
       paddingTop: insets.top,
-      // @ts-ignore
-      paddingBottom: insets.bottom + spacing.padding.big,
+      paddingBottom: insets.bottom,
       paddingHorizontal: spacing.padding.big,
       backgroundColor: colors.background,
     },
+    container: {
+      flex: 1,
+      paddingBottom: spacing.padding.big,
+      alignContent: 'center',
+      width: '100%',
+      maxWidth: 375,
+    },
     headerContainer: {
+      alignSelf: 'flex-start',
       marginTop: spacing.margin.small,
       paddingVertical: spacing.padding.small,
+    },
+    contentContainer: {
+      flex: 1,
+      justifyContent: !isPhone ? 'center' : undefined,
     },
     flashMessage: {
       marginTop: theme.spacing.margin.big,

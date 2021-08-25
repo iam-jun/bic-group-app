@@ -60,3 +60,6 @@ export interface IRemoveMemberReq {
   roomId: string;
   userId: string;
 }
+export interface IGetMentionUsersReq {
+  query: any;
+}

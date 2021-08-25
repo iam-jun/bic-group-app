@@ -1,12 +1,12 @@
-import React, {useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
-import * as modalActions from '~/store/modal/actions';
 import images from '~/resources/images';
 import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
@@ -14,6 +14,11 @@ import privacyTypes from '~/constants/privacyTypes';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import * as modalActions from '~/store/modal/actions';
+import GroupSectionItem from '../components/GroupSectionItem';
+import {validateFile} from '~/utils/validation';
+import {IFileResponse} from '~/interfaces/common';
+import {groupProfileImageCropRatio} from '~/theme/dimension';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -24,29 +29,19 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import ListView from '~/beinComponents/list/ListView';
-import GroupSectionItem from '../components/GroupSectionItem';
 
 const GeneralInformation = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const groupData = useGroups();
-  const {groupDetail, isPrivacyModalOpen} = groupData || {};
+  const {groupDetail, isPrivacyModalOpen} = useGroups();
   const {id, name, icon, background_img_url, description, privacy} =
-    groupDetail?.group || {};
+    groupDetail.group;
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
 
-  const popupMessage = () =>
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('settings:text_info'),
-        content: i18next.t('settings:text_popup_message'),
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: i18next.t('settings:text_got_it'),
-      }),
-    );
+  const [error, setError] = useState<string | null>(null);
 
   const helpMessage = () => {
     baseSheetRef.current?.close();
@@ -71,8 +66,49 @@ const GeneralInformation = () => {
     dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
   };
 
-  const editGroudescripton = () =>
+  const editGroupDescripton = () =>
     rootNavigation.navigate(groupStack.editGroupDescription);
+
+  const uploadFile = (
+    file: IFileResponse,
+    fieldName: 'icon' | 'background_img_url',
+  ) => {
+    dispatch(
+      groupsActions.uploadImage({
+        id,
+        image: file,
+        fieldName,
+      }),
+    );
+  };
+
+  // fieldName: field name in group profile to be edited
+  // 'icon' for avatar and 'background_img_url' for cover
+  const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
+    ImagePicker.openPicker({
+      ...groupProfileImageCropRatio[fieldName],
+      cropping: true,
+      mediaType: 'photo',
+      multiple: false,
+    }).then(result => {
+      if (!result) return;
+
+      const file = {
+        name: result.filename,
+        size: result.size,
+        type: result.mime,
+        uri: result.path,
+      };
+      const _error = validateFile(file);
+      setError(_error);
+      if (_error) return;
+      uploadFile(file, fieldName);
+    });
+  };
+
+  const onEditAvatar = () => _openImagePicker('icon');
+
+  const onEditCover = () => _openImagePicker('background_img_url');
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
@@ -116,13 +152,13 @@ const GeneralInformation = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={popupMessage}>
+          <ButtonWrapper onPress={onEditAvatar}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
+        <ButtonWrapper style={styles.imageButton}>
           <Image
             resizeMode="cover"
             style={styles.avatar}
@@ -135,13 +171,13 @@ const GeneralInformation = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={popupMessage}>
+          <ButtonWrapper onPress={onEditCover}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper onPress={popupMessage}>
+        <ButtonWrapper>
           <Image
             resizeMode="cover"
             style={styles.cover}
@@ -160,7 +196,7 @@ const GeneralInformation = () => {
           <GroupSectionItem
             title={'settings:title_group_description'}
             subtitle={description}
-            onPress={editGroudescripton}
+            onPress={editGroupDescripton}
             rightIcon={'AngleRightB'}
           />
 
@@ -207,9 +243,6 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flex: 1,
     },
-    list: {
-      marginTop: spacing.margin.base,
-    },
     avatarHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -222,10 +255,6 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
-    infoHeader: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
     avatar: {
       width: scaleSize(96),
       height: scaleSize(96),
@@ -235,24 +264,15 @@ const themeStyles = (theme: ITheme) => {
     },
     cover: {
       width: scaleSize(375),
-      height: scaleSize(192),
+      height: scaleSize(210),
       maxHeight: 250,
       maxWidth: 525,
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,
     },
-    leftIcon: {
-      marginRight: spacing.margin.extraLarge,
-    },
-    rightEditIcon: {
-      marginLeft: spacing.margin.extraLarge,
-    },
     imageButton: {
       alignItems: 'center',
-    },
-    divider: {
-      marginVertical: spacing.margin.small,
     },
     contentBottomSheet: {
       marginHorizontal: spacing.margin.base,

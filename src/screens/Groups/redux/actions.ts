@@ -1,5 +1,11 @@
 import groupsTypes from '~/screens/Groups/redux/types';
-import {IGroup, IGroupDetail, IGroupDetailEdit} from '~/interfaces/IGroup';
+import {
+  IGroup,
+  IGroupDetail,
+  IGroupDetailEdit,
+  IPayloadGetGroupPost,
+  IGroupImageUpload,
+} from '~/interfaces/IGroup';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -81,7 +87,7 @@ const groupsActions = {
       payload,
     };
   },
-  getGroupPosts: function (payload: number) {
+  getGroupPosts: function (payload: IPayloadGetGroupPost) {
     return {
       type: groupsTypes.GET_GROUP_POSTS,
       payload,
@@ -90,6 +96,12 @@ const groupsActions = {
   editGroupDetail: function (payload: IGroupDetailEdit) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
+      payload,
+    };
+  },
+  uploadImage: function (payload: IGroupImageUpload) {
+    return {
+      type: groupsTypes.UPLOAD_IMAGE,
       payload,
     };
   },

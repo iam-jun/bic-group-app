@@ -39,6 +39,7 @@ import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
 import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
+import iconStar from '../../assets/icons/icon_star_alt.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuBookmark from '../../assets/icons/icon_menu_bookmark.svg';
@@ -54,6 +55,7 @@ import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconPlay from '../../assets/icons/icon_play.svg';
 import reactionIcons from '~/resources/reactions';
+import iconRightArrow from '../../assets/icons/icon_right_arrow.svg';
 
 const icons = {
   iconTabHome,
@@ -92,6 +94,8 @@ const icons = {
   AngleRightB: 'AngleRightB',
   AngleDown: 'AngleDown',
   AngleUp: 'AngleUp',
+  CornerDownRight: 'CornerDownRight',
+  Trash: 'Trash',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
@@ -170,13 +174,18 @@ const icons = {
   EyeSlash: 'EyeSlash',
   Check: 'Check',
   UsersAlt: 'UsersAlt',
+  Heart: 'Heart',
   ...reactionIcons,
   Feedback: 'Feedback',
   ChatBlock: 'CommentBlock',
   ChatPermission: 'KeyholeSquareFull',
+  Save: 'Save',
   File: 'File',
   PlayVideo: iconPlay,
   Star: 'Star',
+  iconStar: iconStar,
+  RightArrow: iconRightArrow,
+  CommentAltCheck: 'CommentAltCheck',
 };
 
 export default icons;

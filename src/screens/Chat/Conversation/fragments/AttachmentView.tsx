@@ -17,6 +17,8 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
   const {attachment, status} = props;
   const {name, size} = attachment || {};
 
+  if (!attachment) return null;
+
   const color =
     status === messageStatus.FAILED ? theme.colors.error : theme.colors.text;
 
@@ -79,11 +81,9 @@ const createStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
-      width: '90%',
       flexDirection: 'row',
       alignItems: 'center',
-      marginStart: 46,
-      paddingRight: spacing.padding.big,
+      paddingRight: 52,
       paddingVertical: spacing.padding.base,
     },
     image: {

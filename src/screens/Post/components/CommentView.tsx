@@ -1,36 +1,54 @@
-import React, {useState, useEffect} from 'react';
+import React, {useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {IReaction} from '~/interfaces/IPost';
+import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {countTime} from '~/utils/formatData';
-import Icon from '~/beinComponents/Icon';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import postActions from '~/screens/Post/redux/actions';
+import {useDispatch} from 'react-redux';
+import {useBaseHook} from '~/hooks';
+import {ReactionType} from '~/constants/reactions';
+import ReactionView from '~/screens/Post/components/ReactionView';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMenuBottomSheet';
+import Button from '~/beinComponents/Button';
 
 export interface CommentViewProps {
+  postId: string;
+  parentCommentId?: string;
   commentData: IReaction;
   onPressReply: (data: IReaction) => void;
   contentBackgroundColor?: string;
 }
 
 const CommentView: React.FC<CommentViewProps> = ({
+  postId,
+  parentCommentId,
   commentData,
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const [contentShowAll, setContentShowAll] = useState(false);
-  const [shortDescription, shortContent] = useState('');
+  const menuSheetRef = useRef<any>();
 
+  const {t} = useBaseHook();
+  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
-  const {data, created_at, user} = commentData || {};
+  const currentUserId = useUserIdAuth();
+
+  const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
+  const {id, user_id, data, created_at, user, children_counts, own_children} =
+    comment || commentData || {};
   const {content} = data || {};
-  const avatar = user?.data?.avatarUrl || '';
+  const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
   let postTime = '';
@@ -38,22 +56,50 @@ const CommentView: React.FC<CommentViewProps> = ({
     postTime = countTime(created_at);
   }
 
-  useEffect(() => {
-    if (content && content?.length > 400) {
-      shortContent(`${content.substr(0, 100)}...`);
-    }
-  }, []);
-
   const onPressUser = () => {
     alert('onPressUser: ' + user?.id);
   };
 
-  const onPressReact = () => {
-    alert('onPressReact');
+  const onAddReaction = (reactionId: ReactionType) => {
+    if (id) {
+      const payload: IPayloadReactToComment = {
+        id,
+        comment: comment || commentData,
+        postId,
+        parentCommentId,
+        reactionId: reactionId,
+        ownReaction: own_children,
+        reactionCounts: children_counts,
+        userId: currentUserId,
+      };
+      dispatch(postActions.postReactToComment(payload));
+    }
   };
 
-  const onLongPressReact = () => {
-    alert('onLongPressReact');
+  const onRemoveReaction = (reactionId: ReactionType) => {
+    if (id) {
+      const payload: IPayloadReactToComment = {
+        id,
+        comment: comment || commentData,
+        postId,
+        parentCommentId,
+        reactionId: reactionId,
+        ownReaction: own_children,
+        reactionCounts: children_counts,
+        userId: currentUserId,
+      };
+      dispatch(postActions.deleteReactToComment(payload));
+    }
+  };
+
+  const onPressReact = () => {
+    dispatch(
+      postActions.setShowReactionBottomSheet({
+        show: true,
+        title: t('post:label_all_reacts'),
+        callback: onAddReaction,
+      }),
+    );
   };
 
   const _onPressReply = () => {
@@ -61,43 +107,50 @@ const CommentView: React.FC<CommentViewProps> = ({
     onPressReply?.(commentData);
   };
 
+  const onLongPress = () => {
+    menuSheetRef?.current?.open?.();
+  };
+
   return (
     <View>
       <View style={styles.container}>
         <Avatar source={avatar} />
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
-          <View
-            style={StyleSheet.flatten([
-              styles.contentContainer,
-              contentBackgroundColor
-                ? {backgroundColor: contentBackgroundColor}
-                : {},
-            ])}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1}}>
-                <ButtonWrapper
-                  style={{alignSelf: 'flex-start'}}
-                  onPress={onPressUser}>
-                  <Text.H6>{name}</Text.H6>
-                </ButtonWrapper>
+          <Button onLongPress={onLongPress}>
+            <View
+              style={StyleSheet.flatten([
+                styles.contentContainer,
+                contentBackgroundColor
+                  ? {backgroundColor: contentBackgroundColor}
+                  : {},
+              ])}>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                  <ButtonWrapper
+                    style={{alignSelf: 'flex-start'}}
+                    onPress={onPressUser}>
+                    <Text.H6>{name}</Text.H6>
+                  </ButtonWrapper>
+                </View>
+                <Text.Subtitle color={colors.textSecondary}>
+                  {postTime}
+                </Text.Subtitle>
               </View>
-              <Text.Subtitle color={colors.textSecondary}>
-                {postTime}
-              </Text.Subtitle>
+              <CollapsibleText
+                useMarkdown
+                limitMarkdownTypes
+                content={content || ''}
+              />
             </View>
-            <CollapsibleText
-              useMarkdown
-              limitMarkdownTypes
-              content={content || ''}
-            />
-          </View>
+          </Button>
           <View style={styles.buttonContainer}>
-            <ButtonWrapper
-              style={styles.buttonReact}
-              onPress={onPressReact}
-              onLongPress={onLongPressReact}>
-              <Icon size={14} icon={'iconReact'} />
-            </ButtonWrapper>
+            <ReactionView
+              ownReactions={own_children}
+              reactionCounts={children_counts}
+              onAddReaction={onAddReaction}
+              onRemoveReaction={onRemoveReaction}
+              onPressSelectReaction={onPressReact}
+            />
             <ButtonWrapper onPress={_onPressReply}>
               <Text.ButtonSmall
                 style={styles.buttonReply}
@@ -108,6 +161,13 @@ const CommentView: React.FC<CommentViewProps> = ({
           </View>
         </View>
       </View>
+      <CommentViewMenuBottomSheet
+        modalizeRef={menuSheetRef}
+        commentId={id}
+        isActor={currentUserId === user_id}
+        onPressMoreReaction={onPressReact}
+        onAddReaction={onAddReaction}
+      />
     </View>
   );
 };
@@ -126,16 +186,8 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.surface,
       borderRadius: spacing?.borderRadius.small,
     },
-    buttonReact: {
-      borderWidth: 1,
-      borderColor: colors.borderCard,
-      borderRadius: spacing?.borderRadius.small,
-      padding: 2,
-    },
     buttonContainer: {
       flexDirection: 'row',
-      // marginTop: spacing?.margin.tiny,
-      justifyContent: 'space-between',
       alignItems: 'center',
     },
     buttonReply: {

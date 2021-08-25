@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {Text} from '~/components';
-import {GMessage} from '~/interfaces/IChat';
+import {IMessage} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 
-const SystemMessage: React.FC<GMessage> = ({text}: GMessage) => {
+const SystemMessage: React.FC<IMessage> = ({text}: IMessage) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 

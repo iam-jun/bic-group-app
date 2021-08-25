@@ -31,6 +31,7 @@ import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
+import {setupPushToken} from '~/store/app/actions';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
@@ -39,7 +40,6 @@ import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
 import {useRootNavigation} from './hooks/navigation';
 import {rootSwitch} from './router/stack';
-import {setupPushToken} from './store/app/actions';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
@@ -64,7 +64,13 @@ export default (): React.ReactElement => {
 
   // Init Get Stream
   const token = useSelector((state: any) => state.auth?.feed?.accessToken);
+  const notiSubscribeToken = useSelector(
+    (state: any) => state.auth?.feed?.notiSubscribeToken,
+  );
+
   const streamClient = useGetStream(token);
+  const streamNotiSubClient = useGetStream(notiSubscribeToken);
+
   const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
@@ -223,6 +229,7 @@ export default (): React.ReactElement => {
                 language: i18n.language,
                 changeLanguage,
                 streamClient,
+                streamNotiSubClient,
               }}>
               <Portal.Host>
                 <RootNavigator />

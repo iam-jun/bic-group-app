@@ -1,4 +1,11 @@
-import {IGetStreamUser, IGetStreamPost, IReaction} from './IPost';
+import {IGetStreamDispatch} from './common';
+
+import {
+  IGetStreamUser,
+  IGetStreamPost,
+  IReaction,
+  IGetStreamAudience,
+} from './IPost';
 
 export interface IGetStreamNotificationActivity {
   actor: IGetStreamUser;
@@ -11,4 +18,9 @@ export interface IGetStreamNotificationActivity {
   target: string;
   time: string;
   verb: string;
+  audience: IGetStreamAudience;
+}
+
+export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
+  activityId: string;
 }

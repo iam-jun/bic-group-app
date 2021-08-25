@@ -1,17 +1,12 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import groupDataMocks from '~/screens/Groups/helper/groupsDataMocks';
+import {StreamClient} from 'getstream';
+import {makeGetStreamRequest} from '~/services/httpApiRequest';
 
 export const groupsApiConfig = {
   getMyGroups: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/my-groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
-  getMyGroupPosts: (groupId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/timeline`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -57,6 +52,16 @@ export const groupsApiConfig = {
       ...data,
     },
   }),
+  uploadImage: (data: FormData): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}files/upload-photos`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    useRetry: false,
+    data,
+  }),
 };
 
 const groupsDataHelper = {
@@ -74,19 +79,39 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getMyGroupPosts: async (groupId: number) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyGroupPosts(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
+  getMyGroupPosts: async (
+    userId: number,
+    groupId: number,
+    streamClient?: StreamClient,
+    offset?: number,
+  ) => {
+    if (streamClient) {
+      const streamOptions = {
+        offset: offset || 0,
+        limit: 10,
+        user_id: `${userId}`, //required for CORRECT own_reactions data
+        ownReactions: true,
+        withOwnReactions: true,
+        withOwnChildren: true,
+        withRecentReactions: true,
+        withReactionCounts: true,
+        enrich: true, //extra data for user & group
+        ranking: 'important_first', //important posts will on top of results
+      };
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'timeline',
+          `g-${groupId}`,
+          'get',
+          streamOptions,
+        );
+        return Promise.resolve(data?.results || []);
+      } catch (e) {
+        return Promise.reject(e);
       }
-    } catch (e) {
-      return Promise.reject(e);
     }
+    return Promise.reject('StreamClient not found');
   },
   getInfoGroups: async (ids: string) => {
     try {
@@ -130,10 +155,24 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  editGroupPrivacy: async (groupId: number, data: IGroupDetailEdit) => {
+  editGroupDetail: async (groupId: number, data: IGroupDetailEdit) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.editGroupDetail(groupId, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  uploadImage: async (data: FormData) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.uploadImage(data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
