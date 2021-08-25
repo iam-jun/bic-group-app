@@ -133,8 +133,8 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       flex: 1,
       paddingBottom: spacing.padding.big,
       alignContent: 'center',
-      width: !isPhone ? '30%' : undefined,
-      maxWidth: 600,
+      width: '100%',
+      maxWidth: 375,
     },
     headerContainer: {
       alignSelf: 'flex-start',
