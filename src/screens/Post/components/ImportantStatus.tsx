@@ -50,29 +50,28 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
       padding: spacing.padding.small,
       borderTopLeftRadius: 6,
       borderTopRightRadius: 6,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.placeholder,
     },
     style,
   ]);
 
   return (
-    <>
-      <View style={containerStyle}>
-        <Icon
-          isButton
-          iconStyle={[styles.iconStyle, {backgroundColor: iconBackgroundColor}]}
-          style={styles.leftIcon}
-          size={14}
-          icon={'iconStar'}
-          tintColor={iconColor}
-        />
-        <View style={styles.textContainer}>
-          <Text.H6 {...textProps} color={textColor}>
-            {i18next.t('common:text_important')}
-          </Text.H6>
-        </View>
+    <View style={containerStyle}>
+      <Icon
+        isButton
+        iconStyle={[styles.iconStyle, {backgroundColor: iconBackgroundColor}]}
+        style={styles.leftIcon}
+        size={14}
+        icon={'iconStar'}
+        tintColor={iconColor}
+      />
+      <View style={styles.textContainer}>
+        <Text.H6 {...textProps} color={textColor}>
+          {i18next.t('common:text_important')}
+        </Text.H6>
       </View>
-      <Divider />
-    </>
+    </View>
   );
 };
 
