@@ -23,11 +23,11 @@ export interface MentionInputProps extends TextInputProps {
   data: any[];
   modalPosition: 'top' | 'bottom';
   isMentionModalVisible: boolean;
-  showMentionAll?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
   onPress?: (item: any) => void;
+  onPressAll?: () => void;
   onChangeText?: (value: string) => void;
   onMentionText?: (textMention: string) => void;
   onContentSizeChange?: (data: any) => void;
@@ -45,8 +45,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
-  showMentionAll,
   onPress,
+  onPressAll,
   onChangeText,
   onMentionText,
   onContentSizeChange,
@@ -82,13 +82,15 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   const renderMentionAll = () => {
-    if (!showMentionAll) return null;
+    if (!onPressAll) return null;
 
     return (
-      <View style={styles.mentionAll}>
-        <Text.ButtonBase style={styles.textMentionAll}>@all</Text.ButtonBase>
-        <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
-      </View>
+      <TouchableOpacity onPress={onPressAll}>
+        <View style={styles.mentionAll}>
+          <Text.ButtonBase style={styles.textMentionAll}>@all</Text.ButtonBase>
+          <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
+        </View>
+      </TouchableOpacity>
     );
   };
 

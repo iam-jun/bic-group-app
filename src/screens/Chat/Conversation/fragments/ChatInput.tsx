@@ -108,16 +108,25 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     dispatch(actions.setMentionSearchKey(''));
   };
 
+  const onPressAll = () => {
+    const mention = `@[u:all:${i18next.t('chat:text_mention_all')}] `;
+    const newText = text.replace(`@${mentionKey}`, mention);
+    setText(newText);
+
+    dispatch(actions.setMentionUsers([]));
+    dispatch(actions.setMentionSearchKey(''));
+  };
+
   return (
     <MentionInput
       data={mentionUsers}
       modalPosition="top"
-      showMentionAll
       isMentionModalVisible={!!text && mentionUsers?.length > 0}
       onChangeText={_onChangeText}
       onMentionText={onMentionText}
       value={text}
       onPress={onPressMentionUser}
+      onPressAll={onPressAll}
       ComponentInput={CommentInput}
       componentInputProps={{
         onPressSend: onSend,
