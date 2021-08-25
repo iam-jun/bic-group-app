@@ -20,6 +20,7 @@ import {
   blacklistDefault,
   blacklistLimit,
 } from '~/beinComponents/MarkdownView/constant';
+import {fontFamilies} from '~/theme/fonts';
 
 export interface MarkdownViewProps {
   style?: StyleProp<ViewStyle>;
@@ -135,12 +136,33 @@ const createStyle = (theme: ITheme) => {
     body: {...textStyles.body},
 
     // Headings
-    heading1: {...textStyles.h3},
-    heading2: {...textStyles.h4},
-    heading3: {...textStyles.h5},
-    heading4: {...textStyles.h6},
-    heading5: {...textStyles.h6},
-    heading6: {...textStyles.h6},
+    heading1: {
+      fontFamily: fontFamilies.SegoeSemibold,
+      fontSize: 20,
+      lineHeight: 32,
+    },
+    heading2: {
+      fontFamily: fontFamilies.SegoeSemibold,
+      fontSize: 18,
+      lineHeight: 32,
+    },
+    heading3: {
+      fontFamily: fontFamilies.SegoeSemibold,
+      fontSize: 16,
+      lineHeight: 28,
+    },
+    heading4: {
+      fontFamily: fontFamilies.SegoeSemibold,
+      fontSize: 16,
+    },
+    heading5: {
+      fontFamily: fontFamilies.SegoeSemibold,
+      fontSize: 16,
+    },
+    heading6: {
+      fontFamily: fontFamilies.SegoeSemibold,
+      fontSize: 16,
+    },
 
     // Horizontal Rule
     hr: {},
