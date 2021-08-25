@@ -8,7 +8,7 @@ import {ITheme} from '~/theme/interfaces';
 import {IconType} from '~/resources/icons';
 
 export interface FlashMessageProps {
-  type?: 'error' | 'success' | 'warning' | 'important';
+  type?: 'error' | 'success' | 'warning';
   children?: React.ReactNode;
   textProps?: TextProps;
   leftIcon?: IconType;
@@ -43,11 +43,6 @@ const FlashMessage: FC<FlashMessageProps> = ({
       iconColor: colors.iconTintReversed,
       textColor: colors.textDanger,
       backgroundColor: colors.error,
-    },
-    important: {
-      iconColor: colors.iconTintReversed,
-      textColor: colors.textReversed,
-      backgroundColor: colors.primary7,
     },
   };
 

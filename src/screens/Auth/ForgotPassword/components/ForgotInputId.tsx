@@ -100,6 +100,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
             helperType={errors.email?.message ? 'error' : undefined}
             helperContent={errors?.email?.message}
             style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
+            onSubmitEditing={() => onRequestForgotPassword()}
           />
         )}
         rules={{

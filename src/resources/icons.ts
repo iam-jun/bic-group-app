@@ -39,6 +39,7 @@ import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
 import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
+import iconStar from '../../assets/icons/icon_star_alt.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuBookmark from '../../assets/icons/icon_menu_bookmark.svg';
@@ -92,6 +93,8 @@ const icons = {
   AngleRightB: 'AngleRightB',
   AngleDown: 'AngleDown',
   AngleUp: 'AngleUp',
+  CornerDownRight: 'CornerDownRight',
+  Trash: 'Trash',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
@@ -178,6 +181,7 @@ const icons = {
   Save: 'Save',
   File: 'File',
   PlayVideo: iconPlay,
+  iconStar: iconStar,
 };
 
 export default icons;
