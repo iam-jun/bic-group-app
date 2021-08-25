@@ -1,3 +1,4 @@
+export const INIT_CHAT = 'chat/INIT_CHAT';
 export const HANDLE_EVENT = 'chat/HANDLE_EVENT';
 export const GET_DATA = 'chat/GET_DATA';
 export const SET_DATA = 'chat/SET_DATA';
@@ -28,3 +29,8 @@ export const ADD_NEW_MESSAGE = 'chat/ADD_NEW_MESSAGE';
 export const UPDATE_CONVERSATION_NAME = 'chat/UPDATE_CONVERSATION_NAME';
 
 export const UPLOAD_FILE = 'chat/UPLOAD_FILE';
+
+//mention
+export const SET_MENTION_SEARCH_KEY = 'post/SET_MENTION_SEARCH_KEY';
+export const GET_MENTION_USERS = 'chat/GET_MENTION_USERS';
+export const SET_MENTION_USERS = 'chat/SET_MENTION_USERS';

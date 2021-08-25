@@ -1,8 +1,13 @@
 import appConfig from '~/configs/appConfig';
-import * as types from './constants';
-import {IConversation, IMessage, IReaction} from '~/interfaces/IChat';
-import {IUser} from '~/interfaces/IAuth';
 import {messageStatus} from '~/constants/chat';
+import {IUser} from '~/interfaces/IAuth';
+import {
+  IChatUser,
+  IConversation,
+  IMessage,
+  IReaction,
+} from '~/interfaces/IChat';
+import * as types from './constants';
 
 export const initDataState = {
   groups: {
@@ -45,12 +50,16 @@ export interface IAction {
 const initState = {
   ...initDataState,
   conversation: {} as IConversation,
-  selectedUsers: new Array<IUser>(),
+  selectedUsers: new Array<IChatUser>(),
   roles: {
     loading: false,
     data: [],
   },
   subscriptions: [],
+  mention: {
+    mentionKey: '',
+    mentionUsers: [],
+  },
 };
 
 /**
@@ -212,7 +221,7 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           : selectedUsers.filter(user => user._id !== action.payload._id),
         users: {
           ...users,
-          data: users.data.map((item: IUser) =>
+          data: users.data.map((item: IChatUser) =>
             item._id === action.payload._id
               ? {
                   ...item,
@@ -316,7 +325,23 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
-
+    //mention
+    case types.SET_MENTION_SEARCH_KEY:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          mentionKey: payload,
+        },
+      };
+    case types.SET_MENTION_USERS:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          mentionUsers: payload,
+        },
+      };
     case types.REACT_MESSAGE:
       return {
         ...state,

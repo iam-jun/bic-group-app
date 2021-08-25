@@ -18,7 +18,8 @@ import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import notificationsActions from '../../../../screens/Notification/redux/actions';
+import notificationsActions from '~/screens/Notification/redux/actions';
+import chatActions from '~/screens/Chat/redux/actions';
 
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
@@ -46,39 +47,41 @@ const MainTabs = () => {
 
   const dispatch = useDispatch();
 
-  const {streamClient} = useContext(AppContext);
+  const {streamClient, streamNotiSubClient} = useContext(AppContext);
 
   const userId = useUserIdAuth();
   useEffect(() => {
-    dispatch(
-      notificationsActions.getNotifications({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
+    dispatch(chatActions.initChat());
+    if (streamClient?.currentUser?.token) {
+      dispatch(
+        notificationsActions.getNotifications({
+          streamClient,
+          userId: userId.toString(),
+        }),
+      );
+
+      streamNotiSubClient &&
+        subscribeGetstreamFeed(
+          streamNotiSubClient,
+          'notification',
+          'u-' + userId,
+          realtimeCallback,
+        );
+    }
   }, []);
 
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
   const realtimeCallback = () => {
-    dispatch(
-      notificationsActions.getNotifications({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
+    streamClient &&
+      dispatch(
+        notificationsActions.getNotifications({
+          streamClient,
+          userId: userId.toString(),
+        }),
+      );
   };
-
-  const {streamNotiSubClient} = useContext(AppContext);
-  useEffect(() => {
-    subscribeGetstreamFeed(
-      streamNotiSubClient,
-      'notification',
-      'u-' + userId,
-      realtimeCallback,
-    );
-  }, []);
 
   return (
     // @ts-ignore
@@ -105,7 +108,13 @@ const MainTabs = () => {
             name={name}
             component={component}
             options={{
-              tabBarIcon: ({focused, color}) => {
+              tabBarIcon: ({
+                focused,
+                color,
+              }: {
+                focused: boolean;
+                color: string;
+              }) => {
                 if (isBigTablet) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
@@ -128,9 +137,11 @@ const MainTabs = () => {
                 );
               },
               tabBarLabel: () => null,
+              // @ts-ignore
               tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name],
               tabBarBadgeStyle: {
                 fontFamily: fontFamilies.SegoeSemibold,
+                // @ts-ignore
                 backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
               },
             }}

@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-
 import {AppConfig} from '~/configs';
 import {IFileResponse} from '~/interfaces/common';
 

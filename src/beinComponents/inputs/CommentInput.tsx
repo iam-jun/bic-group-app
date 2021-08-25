@@ -8,6 +8,8 @@ import {
   ViewStyle,
   Keyboard,
 } from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -16,16 +18,21 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {fontFamilies} from '~/theme/fonts';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/beinComponents/Text';
+import {IFileResponse} from '~/interfaces/common';
 
 export interface CommentInputProps {
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?: (text: string) => void;
   onPressSend?: () => void;
+  onPressSelectImage?: (file: IFileResponse) => void;
+  onPressFile?: (file: IFileResponse) => void;
   autoFocus?: boolean;
+  blurOnSubmit?: boolean;
   value?: string;
   HeaderComponent?: React.ReactNode;
   textInputRef?: any;
+  disableKeyboardSpacer?: boolean;
 }
 
 const CommentInput: React.FC<CommentInputProps> = ({
@@ -33,10 +40,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
   placeholder = 'Aa',
   onChangeText,
   onPressSend,
+  onPressSelectImage,
+  onPressFile,
   autoFocus,
+  blurOnSubmit,
   value,
   HeaderComponent,
   textInputRef,
+  disableKeyboardSpacer,
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
 
@@ -62,12 +73,28 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   }, [text]);
 
-  const onPressSelectImage = () => {
-    alert('onPressSelectImage');
+  const _onPressSelectImage = () => {
+    ImagePicker.openPicker({
+      cropping: false,
+      mediaType: 'any',
+      multiple: false,
+      compressVideoPreset: 'Passthrough',
+    }).then(result => {
+      if (!result) return;
+
+      const file = {
+        name: result.filename,
+        size: result.size,
+        type: result.mime,
+        uri: result.path,
+      };
+      onPressSelectImage?.(file);
+    });
   };
 
-  const onPressFile = () => {
-    alert('onPressFile');
+  const _onPressFile = async () => {
+    const file = await DocumentPicker.pickSingle();
+    onPressFile?.(file);
   };
 
   const onPressSticker = () => {
@@ -79,7 +106,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onPressSend = () => {
-    Keyboard.dismiss();
+    blurOnSubmit && Keyboard.dismiss();
     onPressSend?.();
   };
 
@@ -130,14 +157,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
           }}>
           <ButtonWrapper
             style={styles.iconContainer}
-            onPress={onPressSelectImage}>
+            onPress={_onPressSelectImage}>
             <Icon
               size={13}
               icon={'ImageV'}
               tintColor={theme.colors.iconTintReversed}
             />
           </ButtonWrapper>
-          <ButtonWrapper style={styles.iconContainer} onPress={onPressFile}>
+          <ButtonWrapper style={styles.iconContainer} onPress={_onPressFile}>
             <Icon
               size={13}
               icon={'attachment'}
@@ -163,7 +190,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([styles.root, style])}>
+    <View style={[styles.root, style]}>
       {HeaderComponent}
       <View style={styles.container}>
         {renderButtons()}
@@ -206,7 +233,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           tintColor={theme.colors.primary7}
         />
       </View>
-      <KeyboardSpacer iosOnly />
+      {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>
   );
 };

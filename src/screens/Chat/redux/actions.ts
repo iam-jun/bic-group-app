@@ -1,8 +1,17 @@
 import {IUser} from '~/interfaces/IAuth';
-import {IAttachmentMessage, IConversation, IMessage} from '~/interfaces/IChat';
+import {
+  IConversation,
+  IMessage,
+  ISendMessageAction,
+  IUploadFileAction,
+} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
+
+const initChat = () => ({
+  type: Actions.INIT_CHAT,
+});
 
 const getData = (dataType: string, payload?: any, field?: string) => ({
   type: Actions.GET_DATA,
@@ -76,7 +85,7 @@ const handleEvent = (payload: ISocketEvent) => ({
   payload,
 });
 
-const sendMessage = (payload: IMessage) => ({
+const sendMessage = (payload: ISendMessageAction) => ({
   type: Actions.SEND_MESSAGE,
   payload,
 });
@@ -131,12 +140,29 @@ const updateConversationName = (payload: string) => ({
   payload,
 });
 
-const uploadFile = (payload: IMessage) => ({
+const uploadFile = (payload: IUploadFileAction) => ({
   type: Actions.UPLOAD_FILE,
   payload,
 });
 
+//mention
+const setMentionSearchKey = (payload: string) => ({
+  type: Actions.SET_MENTION_SEARCH_KEY,
+  payload,
+});
+
+const getMentionUsers = (payload: any) => ({
+  type: Actions.GET_MENTION_USERS,
+  payload,
+});
+
+const setMentionUsers = (payload: IUser[]) => ({
+  type: Actions.SET_MENTION_USERS,
+  payload,
+});
+
 export default {
+  initChat,
   getData,
   setData,
   setExtraData,
@@ -163,4 +189,7 @@ export default {
   addNewMessage,
   updateConversationName,
   uploadFile,
+  setMentionSearchKey,
+  getMentionUsers,
+  setMentionUsers,
 };

@@ -30,7 +30,6 @@ const compileNodeModules = [
   'react-hook-form',
   'react-native-fast-image',
   'react-native-vector-icons',
-  'react-native-gifted-chat',
   'react-modal',
   'react-native-video',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));

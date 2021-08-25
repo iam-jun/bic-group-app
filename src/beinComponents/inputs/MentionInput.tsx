@@ -16,12 +16,14 @@ import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import {mentionRegex} from '~/constants/commonRegex';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import images from '~/resources/images';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   data: any[];
   modalPosition: 'top' | 'bottom';
   isMentionModalVisible: boolean;
+  showMentionAll?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
@@ -43,6 +45,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
+  showMentionAll,
   onPress,
   onChangeText,
   onMentionText,
@@ -71,29 +74,43 @@ const MentionInput: React.FC<MentionInputProps> = ({
         <Avatar.Medium
           style={styles.avatar}
           source={item.avatar || item.icon}
+          placeholderSource={images.img_user_avatar_default}
         />
         <Text>{item.name || item.fullname}</Text>
       </TouchableOpacity>
     );
   };
 
+  const renderMentionAll = () => {
+    if (!showMentionAll) return null;
+
+    return (
+      <View style={styles.mentionAll}>
+        <Text.ButtonBase style={styles.textMentionAll}>@all</Text.ButtonBase>
+        <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
+      </View>
+    );
+  };
+
   return (
-    <View style={StyleSheet.flatten([styles.containerWrapper, style])}>
+    <View style={[styles.containerWrapper, style]}>
       <ComponentInput
+        {...componentInputProps}
         value={children ? undefined : value}
         onChangeText={_onChangeText}
         placeholder={placeholderText}
         onContentSizeChange={onContentSizeChange}
-        style={textInputStyle}
-        {...componentInputProps}>
+        style={textInputStyle}>
         {children}
       </ComponentInput>
       {isMentionModalVisible && (
-        <View style={StyleSheet.flatten([styles.containerModal, modalStyle])}>
+        <View style={[styles.containerModal, modalStyle]}>
+          {renderMentionAll()}
           <FlatList
             keyboardShouldPersistTaps={'always'}
             data={data}
             renderItem={_renderItem}
+            keyExtractor={item => item.id || item._id}
           />
         </View>
       )}
@@ -142,8 +159,18 @@ const createStyles = (theme: ITheme, position: string) => {
       alignItems: 'center',
     },
     avatar: {
-      marginHorizontal: theme.spacing?.margin.base,
-      marginVertical: theme.spacing?.margin.small,
+      marginHorizontal: spacing?.margin.base,
+      marginVertical: spacing?.margin.small,
+    },
+    mentionAll: {
+      flexDirection: 'row',
+      padding: spacing?.padding.base,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.placeholder,
+      alignItems: 'center',
+    },
+    textMentionAll: {
+      marginEnd: spacing?.margin.base,
     },
   });
 };
