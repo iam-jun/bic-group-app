@@ -152,8 +152,12 @@ function* putEditComment({
   }
   try {
     yield put(postActions.setCreateComment({loading: true}));
+
     yield postDataHelper.putEditComment(id, data);
 
+    const newComment = {...comment};
+    newComment.data = Object.assign({}, newComment.data, data);
+    yield put(postActions.addToAllComments(newComment));
     yield put(
       showHeaderFlashMessage({
         content: 'post:edit_comment_success',

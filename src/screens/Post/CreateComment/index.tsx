@@ -115,6 +115,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
       );
       return;
     }
+    rootNavigation.goBack();
   };
 
   return (
