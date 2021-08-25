@@ -142,6 +142,14 @@ const updateConversationName = (payload: string) => ({
 
 const uploadFile = (payload: IUploadFileAction) => ({
   type: Actions.UPLOAD_FILE,
+});
+
+const getChatPermissions = () => ({
+  type: Actions.GET_CHAT_PERMISSIONS,
+});
+
+const setChatPermissions = (payload: any) => ({
+  type: Actions.SET_CHAT_PERMISSIONS,
   payload,
 });
 
@@ -210,4 +218,6 @@ export default {
   setMentionSearchKey,
   getMentionUsers,
   setMentionUsers,
+  getChatPermissions,
+  setChatPermissions,
 };

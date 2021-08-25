@@ -364,6 +364,14 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           mentionUsers: payload,
         },
       };
+    case types.SET_CHAT_PERMISSIONS:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          permissions: payload,
+        },
+      };
     case types.REACT_MESSAGE:
       return {
         ...state,

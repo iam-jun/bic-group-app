@@ -136,6 +136,7 @@ export type IMessage = {
   status?: IMesssageStatus;
   system?: boolean;
   attachment?: IFileResponse & IAttachment;
+  permissions?: [x: string];
 };
 
 export interface IAttachmentMessage {

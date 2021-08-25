@@ -12,7 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {ViewSpacing} from '~/components';
-import {roomTypes} from '~/constants/chat';
+import {chatPermissions, roomTypes} from '~/constants/chat';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
@@ -21,6 +21,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import style from '~/theme/style';
 import {getAvatar} from '../helper';
 import actions from '../redux/actions';
 
@@ -38,8 +39,12 @@ const Conversation = (): React.ReactElement => {
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(
     conversation.avatar,
   );
+  const permissions = conversation.permissions || {};
 
   useEffect(() => {
+    dispatch(actions.getChatPermissions());
+    dispatch(actions.clearSelectedUsers());
+
     if (conversation.description?.length > 100) {
       setShortDescription(`${conversation.description.substr(0, 100)}...`);
     }
@@ -179,20 +184,27 @@ const Conversation = (): React.ReactElement => {
     <View style={styles.menuContainer}>
       <Button.Icon
         icon="search"
+        style={styles.marginRight}
         tintColor={colors.primary7}
         label={i18next.t('common:text_search')}
       />
-      <Button.Icon
-        icon="iconPinGroup"
-        tintColor={colors.primary7}
-        label={i18next.t('chat:label_pin_chat')}
-      />
-      <Button.Icon
-        icon="bell"
-        tintColor={colors.primary7}
-        label={i18next.t('chat:label_mute')}
-      />
-      {!isDirect && (
+      {permissions[chatPermissions.CAN_PIN_MESSAGE] && (
+        <Button.Icon
+          icon="iconPinGroup"
+          style={styles.marginRight}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_pin_chat')}
+        />
+      )}
+      {permissions[chatPermissions.CAN_MUTE] && (
+        <Button.Icon
+          icon="bell"
+          style={styles.marginRight}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_mute')}
+        />
+      )}
+      {!isDirect && permissions[chatPermissions.CAN_INVITE] && (
         <Button.Icon
           icon="addUser"
           tintColor={colors.primary7}
@@ -249,10 +261,11 @@ const Conversation = (): React.ReactElement => {
           <>
             {renderActionItem('Feedback', i18next.t('chat:text_feedback'))}
             <ViewSpacing height={spacing.margin.large} />
-            {renderActionItem(
-              'leavesGroup',
-              i18next.t('chat:label_leaves_group'),
-            )}
+            {permissions[chatPermissions.CAN_LEAVE] &&
+              renderActionItem(
+                'leavesGroup',
+                i18next.t('chat:label_leaves_group'),
+              )}
           </>
         )}
       </View>
@@ -375,20 +388,9 @@ const createStyles = (theme: IObject<any>) => {
     },
     menuContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      paddingVertical: spacing.padding.large,
-    },
-    menu: {
-      alignItems: 'center',
-    },
-    menuIcon: {
-      backgroundColor: colors.primary1,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: spacing?.borderRadius.small,
-      marginLeft: spacing?.padding.small,
-      width: 36,
-      height: 36,
+      paddingVertical: spacing.padding.large,
     },
     bottomMenu: {
       marginTop: spacing.margin.base,
@@ -409,6 +411,9 @@ const createStyles = (theme: IObject<any>) => {
     },
     marginStart: {
       marginStart: spacing.margin.large,
+    },
+    marginRight: {
+      marginRight: spacing.margin.big,
     },
   });
 };
