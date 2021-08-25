@@ -35,6 +35,48 @@ const notificationsDataHelper = {
     }
     return;
   },
+
+  /**
+   * Send request to getstream to mark notifications as read
+   * @param userId        integer       User id
+   * @param streamClient  StreamClient  Stream Client
+   * @returns
+   */
+  markAsReadAll: async (userId: string, streamClient: StreamClient) => {
+    if (streamClient) {
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'notification',
+        'u-' + userId,
+        'get',
+        {mark_read: true},
+      );
+
+      return data;
+    }
+    return;
+  },
+
+  /**
+   * Send request to getstream to mark notifications as seen
+   * @param userId        integer       User id
+   * @param streamClient  StreamClient  Stream Client
+   * @returns
+   */
+  markAsSeenAll: async (userId: string, streamClient: StreamClient) => {
+    if (streamClient) {
+      const data = await makeGetStreamRequest(
+        streamClient,
+        'notification',
+        'u-' + userId,
+        'get',
+        {mark_seen: true},
+      );
+
+      return data;
+    }
+    return;
+  },
 };
 
 export default notificationsDataHelper;

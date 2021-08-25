@@ -22,6 +22,18 @@ const notificationsActions = {
       payload,
     };
   },
+  markAsReadAll: function (payload: IGetStreamDispatch) {
+    return {
+      type: notificationsTypes.MARK_AS_READ_ALL,
+      payload,
+    };
+  },
+  markAsSeenAll: function (payload: IGetStreamDispatch) {
+    return {
+      type: notificationsTypes.MARK_AS_SEEN_ALL,
+      payload,
+    };
+  },
 };
 
 export default notificationsActions;

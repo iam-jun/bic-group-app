@@ -182,6 +182,7 @@ const icons = {
   File: 'File',
   PlayVideo: iconPlay,
   iconStar: iconStar,
+  CommentAltCheck: 'CommentAltCheck',
 };
 
 export default icons;

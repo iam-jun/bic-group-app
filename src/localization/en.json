@@ -378,5 +378,10 @@
   },
   "web": {
     "title_not_found": "Page not found / Bein"
+  },
+  "notification": {
+    "mark_all_as_read": "Mark all as read",
+    "mark_all_as_read_success": "All notifications marked as read",
+    "notification_settings": "Notification Settings"
   }
 }
