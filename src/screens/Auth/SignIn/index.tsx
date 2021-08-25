@@ -59,6 +59,10 @@ const SignIn = () => {
   }, []);
 
   useEffect(() => {
+    setDisableSignIn(loading);
+  }, [loading]);
+
+  useEffect(() => {
     if (signingInError) {
       setError('password', {
         type: 'validate',
@@ -68,10 +72,10 @@ const SignIn = () => {
         type: 'validate',
         message: signingInError,
       });
-      checkDisableSignIn();
     } else {
       clearAllErrors();
     }
+    checkDisableSignIn();
   }, [signingInError]);
 
   const clearAllErrors = () => {
@@ -88,7 +92,8 @@ const SignIn = () => {
   };
 
   const onSignIn = async () => {
-    if (disableSignIn) return;
+    if (disableSignIn) return; // Reject if pressing enter while having invalid inputs
+    setDisableSignIn(true);
 
     const validInputs = await validateInputs();
     checkDisableSignIn();
