@@ -52,6 +52,11 @@ const setConversationDetail = (payload: IConversation) => ({
   payload,
 });
 
+const searchConversation = (payload: string) => ({
+  type: Actions.SEARCH_CONVERSATIONS,
+  payload,
+});
+
 const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
@@ -185,6 +190,7 @@ export default {
   resetData,
   getConversationDetail,
   setConversationDetail,
+  searchConversation,
   getGroupRols,
   setGroupRoles,
   getSubscriptions,

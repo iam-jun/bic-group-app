@@ -1,14 +1,19 @@
 import {useIsFocused} from '@react-navigation/native';
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
+import {debounce} from 'lodash';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Text from '~/beinComponents/Text';
+import Image from '~/beinComponents/Image';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -17,6 +22,7 @@ import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import {scaleSize} from '~/theme/dimension';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -28,7 +34,8 @@ const ConversationsList = (): React.ReactElement => {
   const isFocused = useIsFocused();
 
   const {conversations} = useChat();
-  const {data, loading} = conversations;
+  const {data, searchResult, loading} = conversations;
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     isFocused && dispatch(actions.getSubscriptions());
@@ -40,7 +47,14 @@ const ConversationsList = (): React.ReactElement => {
 
   const _getConversations = () => {
     dispatch(actions.resetData('groups'));
-    dispatch(actions.getData('groups', {sort: {_updatedAt: -1}}));
+    dispatch(
+      actions.getData('groups', {
+        // disable pagination because of local searching
+        offset: 0,
+        count: 1000,
+        sort: {_updatedAt: -1},
+      }),
+    );
   };
 
   const loadMore = () => {
@@ -62,6 +76,33 @@ const ConversationsList = (): React.ReactElement => {
     <ViewSpacing height={theme.spacing.margin.tiny} />
   );
 
+  const renderEmpty = () => {
+    if (!searchQuery) return null;
+    return (
+      <View style={styles.emptyView}>
+        <Image
+          source={images.img_search_no_results}
+          style={styles.imageNoResults}
+        />
+        <Text.Body useI18n style={styles.textEmpty}>
+          common:text_search_no_results
+        </Text.Body>
+      </View>
+    );
+  };
+
+  const doSearch = (searchQuery: string) => {
+    dispatch(actions.resetData('members'));
+    dispatch(actions.searchConversation(searchQuery));
+  };
+
+  const seachHandler = useCallback(debounce(doSearch, 1000), []);
+
+  const onQueryChanged = (text: string) => {
+    setSearchQuery(text);
+    seachHandler(text);
+  };
+
   return (
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
       <Header
@@ -74,14 +115,16 @@ const ConversationsList = (): React.ReactElement => {
       <SearchInput
         style={styles.inputSearch}
         placeholder={t('chat:placeholder_search')}
+        onChangeText={onQueryChanged}
       />
       <ListView
         type="conversation"
         isFullView
         loading={loading}
-        data={data}
+        data={searchQuery ? searchResult : data}
         onItemPress={onChatPress}
         renderItemSeparator={renderItemSeparator}
+        ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
       />
@@ -96,10 +139,21 @@ const createStyles = (theme: IObject<any>) => {
     inputSearch: {
       margin: spacing.margin.base,
     },
-
     item: {
       flex: 1,
       flexDirection: 'row',
+    },
+    emptyView: {
+      alignItems: 'center',
+      marginVertical: spacing.margin.base,
+    },
+    imageNoResults: {
+      width: scaleSize(200),
+      height: scaleSize(220),
+    },
+    textEmpty: {
+      textAlign: 'center',
+      width: 241,
     },
   });
 };
