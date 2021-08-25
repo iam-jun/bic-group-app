@@ -312,13 +312,18 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
+  const onPressMenu =
+    conversation.type === roomTypes.DIRECT
+      ? undefined
+      : () => baseSheetRef.current?.open();
+
   return (
     <ScrollView>
       <ScreenWrapper
         style={styles.wrapper}
         testID="ConversationDetailScreen"
         isFullView>
-        <Header onPressMenu={() => baseSheetRef.current?.open()} />
+        <Header onPressMenu={onPressMenu} />
         <View style={styles.container}>
           <View style={styles.top}>
             {renderHeader()}
