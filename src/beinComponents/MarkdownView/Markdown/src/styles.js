@@ -38,8 +38,12 @@ export const styles = {
   },
 
   // Emphasis
-  strong: {},
-  em: {},
+  strong: {
+    fontWeight: 'bold',
+  },
+  em: {
+    fontStyle: 'italic',
+  },
   s: {
     textDecorationLine: 'line-through',
   },
