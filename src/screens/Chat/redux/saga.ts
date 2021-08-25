@@ -1,5 +1,6 @@
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
+import {Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
@@ -204,12 +205,22 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     const {conversation} = chat;
 
     const formData = new FormData();
-    formData.append('file', {
-      type: payload.attachment.type,
-      //@ts-ignore
-      name: payload.attachment.name || 'fileMessage',
-      uri: payload.attachment.uri,
-    });
+    if (Platform.OS === 'web') {
+      formData.append(
+        'file',
+        // @ts-ignore
+        payload.attachment,
+        payload.attachment.name || 'fileMessage',
+      );
+    } else {
+      formData.append('file', {
+        type: payload.attachment.type,
+        //@ts-ignore
+        name: payload.attachment.name || 'fileMessage',
+        uri: payload.attachment.uri,
+      });
+    }
+
     formData.append(
       'description',
       JSON.stringify({
