@@ -58,12 +58,8 @@ export const styles = {
   },
 
   // Lists
-  bullet_list: {
-    color: 'red',
-  },
-  ordered_list: {
-    color: 'blue',
-  },
+  bullet_list: {},
+  ordered_list: {},
   list_item: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
