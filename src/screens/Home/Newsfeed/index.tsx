@@ -18,10 +18,11 @@ import Header from '~/beinComponents/Header';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const Newsfeed = () => {
-  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const dispatch = useDispatch();
@@ -79,6 +80,8 @@ const Newsfeed = () => {
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
         icon={images.logo_bein}
+        menuIcon={'Edit'}
+        onPressMenu={() => rootNavigation.navigate(homeStack.createPost)}
       />
       <ListView
         isFullView
