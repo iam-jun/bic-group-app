@@ -52,6 +52,7 @@ export default function* saga() {
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
+  yield takeLatest(types.GET_CHAT_PERMISSIONS, getChatPermissions);
 }
 
 function* initChat() {
@@ -288,6 +289,19 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
     yield makeHttpRequest(apiConfig.Chat.removeMember(data));
   } catch (err) {
     console.log('removeMember', err);
+  }
+}
+
+function* getChatPermissions() {
+  try {
+    const {chat} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getChatInfo(chat.conversation._id),
+    );
+
+    yield put(actions.setChatPermissions(response.data?.data));
+  } catch (err) {
+    console.log('getChatInfo', err);
   }
 }
 

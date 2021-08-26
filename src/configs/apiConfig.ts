@@ -1,4 +1,3 @@
-import {IRemoveMemberReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
@@ -9,7 +8,9 @@ import {
   IReadSubscription,
   ISendMessageReq,
   IUpdateGroupName,
+  IRemoveMemberReq,
 } from '~/interfaces/IChatHttpRequest';
+import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 
 const providers = {
@@ -156,6 +157,20 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       params,
+    };
+  },
+  getChatInfo: (roomId: string): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/${roomId}/info`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
     };
   },
 };
