@@ -10,6 +10,7 @@ const images = {
   img_search_empty: require('../../assets/images/search_empty.png'),
   img_right_col: require('../../assets/images/img_right_col.png'),
   img_menu_chat: require('../../assets/images/menu_chat.png'),
+  img_search_no_results: require('../../assets/images/search_no_results.png'),
 };
 
 export default images;

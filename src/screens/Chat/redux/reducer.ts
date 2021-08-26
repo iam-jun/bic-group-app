@@ -14,6 +14,7 @@ export const initDataState = {
     loading: false,
     data: [],
     extra: [],
+    searchResult: [],
     offset: 0,
     canLoadMore: true,
   },
@@ -116,6 +117,18 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
       return {
         ...state,
         [dataType]: initDataState[dataType],
+      };
+    case types.SEARCH_CONVERSATIONS:
+      return {
+        ...state,
+        groups: {
+          ...state.groups,
+          searchResult: !payload
+            ? groups.data
+            : groups.data.filter((item: IConversation) =>
+                item.name.toLowerCase().includes(payload.toLowerCase()),
+              ),
+        },
       };
     case types.GET_GROUP_ROLES:
       return {

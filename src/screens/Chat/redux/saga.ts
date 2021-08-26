@@ -2,13 +2,16 @@ import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
-import {IUser} from '~/interfaces/IAuth';
-import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
+import {
+  IChatUser,
+  IConversation,
+  IMessage,
+  ISendMessageAction,
+} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
@@ -275,7 +278,7 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* removeMember({payload}: {type: string; payload: IUser}) {
+function* removeMember({payload}: {type: string; payload: IChatUser}) {
   try {
     const {chat} = yield select();
     const data = {

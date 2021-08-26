@@ -50,7 +50,8 @@
     },
     "text_discard_changes": "Discard Changes?",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
-    "title_mention_all": "All members in this group"
+    "title_mention_all": "All members in this group",
+    "text_search_no_results":"Sorry, we couldn’t find anything related to your search."
   },
   "auth": {
     "text_kickout_title": "Notice",

@@ -7,7 +7,7 @@ export const MERGE_EXTRA_DATA = 'chat/MERGE_EXTRA_DATA';
 export const RESET_DATA = 'chat/RESET_DATA';
 
 export const SELECT_CONVERSATION = 'chat/SELECT_CONVERSATION';
-
+export const SEARCH_CONVERSATIONS = 'chat/SEARCH_CONVERSATIONS';
 export const SEND_MESSAGE = 'chat/SEND_MESSAGE';
 export const SEND_MESSAGE_SUCCESS = 'chat/SEND_MESSAGE_SUCCESS';
 export const SEND_MESSAGE_FAILED = 'chat/SEND_MESSAGE_FAILED';
