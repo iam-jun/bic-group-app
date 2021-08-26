@@ -117,27 +117,24 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     }
     return (
       <View style={styles.commentInputHeader}>
-        <View style={styles.row}>
-          <Text style={styles.flex1}>
-            <Text>
-              {t('post:reply_comment_1')}
-              <Text.BodyM>
-                {replying?.user?.data?.fullname || t('post:someone')}
-              </Text.BodyM>
-              <Text>{t('post:reply_comment_2')}</Text>
-            </Text>
-          </Text>
-          <Button
-            onPress={() =>
-              dispatch(postActions.setPostDetailReplyingComment())
-            }>
-            <Text.BodyS>
-              {'• '}
-              <Text.BodyM useI18n color={colors.primary7}>
+        <View style={styles.headerContent}>
+          <Text color={colors.textSecondary}>
+            {t('post:label_replying_to')}
+            <Text.BodyM>
+              {replying?.user?.data?.fullname || t('post:someone')}
+            </Text.BodyM>
+            <Text.BodyS color={colors.textSecondary}>
+              {'  • '}
+              <Text.BodyM
+                useI18n
+                color={colors.textSecondary}
+                onPress={() =>
+                  dispatch(postActions.setPostDetailReplyingComment())
+                }>
                 common:btn_cancel
               </Text.BodyM>
             </Text.BodyS>
-          </Button>
+          </Text>
         </View>
       </View>
     );
@@ -171,8 +168,13 @@ const createStyle = (theme: ITheme) => {
     flex1: {flex: 1},
     row: {flexDirection: 'row'},
     commentInputHeader: {
+      flexDirection: 'row',
       marginHorizontal: spacing?.margin.base,
       marginTop: spacing?.margin.tiny,
+    },
+    headerContent: {
+      flex: 1,
+      flexDirection: 'row',
     },
   });
 };
