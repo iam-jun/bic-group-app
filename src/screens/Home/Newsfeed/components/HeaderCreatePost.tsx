@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,10 @@ import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {useKeySelector} from '~/hooks/selector';
+import {useDispatch} from 'react-redux';
+import menuActions from '~/screens/Menu/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
 
 export interface HeaderCreatePostProps {
   style?: StyleProp<ViewStyle>;
@@ -23,10 +27,20 @@ export interface HeaderCreatePostProps {
 const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   style,
 }: HeaderCreatePostProps) => {
+  const dispatch = useDispatch();
   const {navigation} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
+
+  const userId = useUserIdAuth();
+  const avatar = useKeySelector('menu.myProfile.avatar');
+
+  useEffect(() => {
+    if (!avatar) {
+      dispatch(menuActions.getMyProfile(userId));
+    }
+  }, [avatar]);
 
   const onPressCreate = () => {
     navigation.navigate(homeStack.createPost);
@@ -34,12 +48,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
 
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
-      <Avatar.Medium
-        isRounded={true}
-        source={
-          'https://cdn.dribbble.com/users/183984/screenshots/2569843/pokemon_3.jpg'
-        }
-      />
+      <Avatar.Medium isRounded={true} source={avatar} />
       <Button
         TouchableComponent={TouchableHighlight}
         onPress={onPressCreate}
