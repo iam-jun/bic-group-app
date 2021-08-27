@@ -1,6 +1,6 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, useWindowDimensions} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -22,6 +22,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {getAvatar} from '../helper';
 import {ChatInput, MessageContainer, MessageOptionsModal} from './fragments';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Conversation = () => {
   const {conversation, messages} = useChat();
@@ -39,6 +40,9 @@ const Conversation = () => {
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
   const isDirect = conversation.type === roomTypes.DIRECT;
+
+  const dimensions = useWindowDimensions();
+  const isBigTablet = dimensions.width >= deviceDimensions.bigTablet;
 
   const onLoadAvatarError = () => {
     if (isDirect) setAvatar(images.img_user_avatar_default);
@@ -120,6 +124,7 @@ const Conversation = () => {
         onPressIcon={onSearchPress}
         menuIcon="ConversationInfo"
         onPressMenu={goConversationDetail}
+        hideBack={isBigTablet}
       />
       {!!error && (
         <FlashMessage type="error" onClose={() => setError('')}>
