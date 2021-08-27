@@ -31,12 +31,12 @@ const MenuItem: React.FC<IOption> = ({
         )}
       </View>
       <View style={styles.rightComponent}>
-        {rightSubTitle && (
+        {!!rightSubTitle && (
           <Text.BodyS color={theme.colors.iconTint} useI18n>
             {rightSubTitle}
           </Text.BodyS>
         )}
-        {rightSubIcon && (
+        {!!rightSubIcon && (
           <Icon icon={rightSubIcon} style={styles.rightSubIcon} />
         )}
       </View>
