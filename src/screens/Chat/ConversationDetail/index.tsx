@@ -234,7 +234,7 @@ const Conversation = (): React.ReactElement => {
           style={styles.actionItem}
           title={label}
           leftIcon={icon}
-          leftIconProps={{icon, size: 20}}
+          leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
           RightComponent={<Icon icon="AngleRight" size={24} />}
         />
       </TouchableOpacity>
@@ -434,6 +434,9 @@ const createStyles = (theme: IObject<any>) => {
     actionItem: {
       paddingHorizontal: 0,
       height: 40,
+    },
+    actionItemIcon: {
+      marginRight: spacing.margin.large,
     },
     bottomSheet: {
       paddingHorizontal: spacing.padding.large,
