@@ -146,7 +146,6 @@ const ChangePassword = () => {
   // };
 
   const handleOnSaveChangePassword = async () => {
-    console.log('pressed SAVE');
     await checkDisableSaveButton();
     if (disableSaveButton) {
       return;
