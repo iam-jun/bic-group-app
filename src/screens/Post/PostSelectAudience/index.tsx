@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
+import {View, StyleSheet, SectionList, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
@@ -22,8 +22,11 @@ import {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IUser} from '~/interfaces/IAuth';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 
 const PostSelectAudience = () => {
+  const [loading, setLoading] = useState(true);
   const [selectingAudiences, setSelectingAudiences] = useState<
     (IGroup | IUser)[]
   >([]);
@@ -38,7 +41,7 @@ const PostSelectAudience = () => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
   const createPostData = useCreatePost();
@@ -76,6 +79,14 @@ const PostSelectAudience = () => {
     });
     setSelectingAudiences(newSelectingAudiences);
   };
+
+  useEffect(() => {
+    if (sectionListData.length === 0) {
+      onSearch('');
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (selectingAudiences?.length === 0) {
@@ -139,6 +150,7 @@ const PostSelectAudience = () => {
   };
 
   const onSearch = debounce((searchText: string) => {
+    setLoading(true);
     postDataHelper
       .getSearchAudiences(searchText)
       .then(response => {
@@ -158,8 +170,10 @@ const PostSelectAudience = () => {
           });
           dispatch(postActions.setSearchResultAudienceUsers(newListUsers));
         }
+        setLoading(false);
       })
       .catch(e => {
+        setLoading(false);
         console.log('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
       });
   }, 500);
@@ -220,9 +234,9 @@ const PostSelectAudience = () => {
       return null;
     }
     return (
-      <Text.H5 style={{marginVertical: spacing?.margin.small}}>
+      <Text.H6 style={{marginVertical: spacing?.margin.small}}>
         Search Results
-      </Text.H5>
+      </Text.H6>
     );
   };
 
@@ -230,6 +244,30 @@ const PostSelectAudience = () => {
     return (
       <View style={styles.sectionHeaderContainer}>
         <Text.H6 style={styles.sectionHeaderText}>{title}</Text.H6>
+      </View>
+    );
+  };
+
+  const renderListFooter = () => {
+    return (
+      <View>
+        {loading && (
+          <ActivityIndicator size={'large'} color={colors.borderDivider} />
+        )}
+      </View>
+    );
+  };
+
+  const renderEmpty = () => {
+    if (loading) {
+      return null;
+    }
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.textEmpty} useI18n>
+          post:text_search_result_empty
+        </Text>
+        <Image style={styles.imgSearchEmpty} source={images.img_search_empty} />
       </View>
     );
   };
@@ -258,6 +296,8 @@ const PostSelectAudience = () => {
         sections={sectionListData}
         keyExtractor={(item, index) => `section_list_${item}_${index}`}
         ListHeaderComponent={renderListHeader}
+        ListFooterComponent={renderListFooter}
+        ListEmptyComponent={renderEmpty}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
         ItemSeparatorComponent={() => (
@@ -284,6 +324,19 @@ const createStyle = (theme: ITheme) => {
     },
     sectionHeaderText: {
       marginVertical: spacing?.margin.small,
+    },
+    emptyContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textEmpty: {
+      marginVertical: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
+      textAlign: 'center',
+    },
+    imgSearchEmpty: {
+      width: 200,
+      height: 200,
     },
   });
 };

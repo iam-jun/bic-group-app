@@ -234,6 +234,7 @@
     "label_users": "Users",
     "label_post_deleted": "Post deleted",
     "label_all_reacts": "All Reacts",
+    "text_search_result_empty": "No matching results! Please try another name...",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
     "alert_title_back_edit_post": "Discard changes",
