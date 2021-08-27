@@ -56,6 +56,10 @@ export default function* postSaga() {
     showPostAudienceBottomSheet,
   );
   yield takeLatest(
+    postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
+    updateAllCommentsByParentIds,
+  );
+  yield takeLatest(
     postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     updateAllCommentsByParentIdsWithComments,
   );
@@ -116,14 +120,14 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
     const response = yield call(postDataHelper.putEditPost, id, data);
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
-      const allPosts = yield select(state => state?.post?.allPosts) || {};
-      const post: IPostActivity = allPosts?.[id] || {};
+      const post = yield select(state =>
+        get(state, postKeySelector.postById(id)),
+      );
       if (post?.object) {
         post.object.data = data?.data || {};
       }
       //todo waiting for backend update response, replace whole object from response instead of local change
-      allPosts[id] = post;
-      yield put(postActions.setAllPosts(allPosts));
+      yield put(postActions.addToAllPosts(post));
       if (replaceWithDetail) {
         yield put(postActions.setPostDetail(post));
         navigation.replace(homeStack.postDetail);
@@ -190,11 +194,11 @@ function* deletePost({payload}: {type: string; payload: string}) {
   try {
     const response = yield call(postDataHelper.deletePost, payload);
     if (response?.data) {
-      const allPosts = yield select(state => state?.post?.allPosts) || {};
-      const post: IPostActivity = allPosts?.[payload] || {};
+      const post = yield select(state =>
+        get(state, postKeySelector.postById(payload)),
+      );
       post.deleted = true;
-      allPosts[payload] = post;
-      yield put(postActions.setAllPosts(allPosts));
+      yield put(postActions.addToAllPosts(post));
       yield timeOut(500);
       const flashMessage: IHeaderFlashMessage = {
         content: 'post:delete_post_complete',
@@ -238,15 +242,23 @@ function* addToAllPosts({
 }) {
   const allPosts = yield select(state => state?.post?.allPosts) || {};
   const newAllPosts = {...allPosts};
+  const newAllCommentByParentId: any = {};
   if (isArray(payload) && payload.length > 0) {
     payload.map((item: IPostActivity) => {
       if (item?.id) {
         newAllPosts[item.id] = item;
+        newAllCommentByParentId[item.id] = sortComments(
+          item?.latest_reactions?.comment || [],
+        );
       }
     });
   } else if (payload && 'id' in payload && payload.id) {
     newAllPosts[payload.id] = payload;
+    newAllCommentByParentId[payload.id] = sortComments(
+      payload?.latest_reactions?.comment || [],
+    );
   }
+  yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
@@ -283,12 +295,12 @@ function* onUpdateReactionOfPostById(
   reactionCounts: IReactionCounts,
 ) {
   try {
-    const allPosts = yield select(state => state?.post?.allPosts) || {};
-    const post: IPostActivity = allPosts?.[postId] || {};
+    const post = yield select(state =>
+      get(state, postKeySelector.postById(postId)),
+    );
     post.reaction_counts = reactionCounts;
     post.own_reactions = ownReaction;
-    allPosts[postId] = post;
-    yield put(postActions.setAllPosts(allPosts));
+    yield put(postActions.addToAllPosts(post));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
   }
@@ -548,6 +560,19 @@ function* showPostAudienceBottomSheet({
   } else {
     console.log(`\x1b[31m🐣️saga showPostAudienceSheet post not found\x1b[0m`);
   }
+}
+
+function* updateAllCommentsByParentIds({
+  payload,
+}: {
+  type: string;
+  payload: {[postId: string]: IReaction[]};
+}) {
+  const allCommentsByParentIds = yield select(
+    state => state?.post?.allCommentsByParentIds,
+  ) || {};
+  const newData = Object.assign({}, allCommentsByParentIds, payload);
+  yield put(postActions.setAllCommentsByParentIds(newData));
 }
 
 function* updateAllCommentsByParentIdsWithComments({

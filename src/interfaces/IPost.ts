@@ -68,6 +68,7 @@ export interface IPostActivity {
   tags?: string[];
   time?: string;
   important?: IActivityImportant;
+  latest_reactions?: any;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
   deleted?: boolean;
