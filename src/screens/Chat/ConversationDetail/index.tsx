@@ -95,6 +95,9 @@ const Conversation = (): React.ReactElement => {
 
   const onSettingPress = (type: string) => {
     switch (type) {
+      case 'members':
+        goGroupMembers();
+        break;
       default:
         dispatch(
           modalActions.showAlert({
@@ -149,19 +152,13 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
-  const renderMembers = () =>
-    !isDirect && (
-      <View style={styles.members}>
-        <Icon
-          icon="users"
-          label={`${i18next.t('chat:title_members')} (${
-            conversation?.usersCount
-          })`}
-          onPress={goGroupMembers}
-        />
-        <Icon icon="AngleRight" />
-      </View>
-    );
+  const renderMembers = () => {
+    if (isDirect) return;
+    const label = `${i18next.t('chat:title_members')} (${
+      conversation?.usersCount
+    })`;
+    return renderActionItem('members', 'users', label);
+  };
 
   const renderDescription = () => {
     return (
@@ -232,10 +229,6 @@ const Conversation = (): React.ReactElement => {
 
   const renderActionItem = (type: string, icon: IconType, label: string) => {
     return (
-      // <View style={styles.actionItem}>
-      //   <Icon icon={icon} label={label} />
-      //   <Icon icon="AngleRight" size={22} />
-      // </View>
       <TouchableOpacity onPress={() => onSettingPress(type)}>
         <PrimaryItem
           style={styles.actionItem}
