@@ -6,7 +6,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
-import NotFoundImg from '../../../assets/images/404_Colored.svg';
+import NotFoundImg from '../../../assets/images/error_404.svg';
 
 const NotFound = () => {
   const theme: ITheme = useTheme() as ITheme;
