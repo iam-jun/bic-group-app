@@ -52,7 +52,17 @@
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
     "text_invite": "Invite",
     "text_search_not_found": "Not found",
-    "title_mention_all": "All members in this group"
+    "title_mention_all": "All members in this group",
+    "title_group_add_member": {
+      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
+      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
+    },
+    "title_modal_confirm_add_member": "Add members",
+    "button_add_member": "Add member",
+    "message_add_member_success": {
+      "1": "{n} member has been added",
+      "many": "{n} members have been added"
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",

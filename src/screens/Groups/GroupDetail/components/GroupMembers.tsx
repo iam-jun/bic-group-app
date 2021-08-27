@@ -9,13 +9,14 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import FlashMessage from '~/beinComponents/FlashMessage';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -31,6 +32,8 @@ const GroupMembers = () => {
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
+  const addSuccess = useKeySelector(groupsKeySelector.addSuccess);
+  const userAddedCount = useKeySelector(groupsKeySelector.userAddedCount);
 
   const getMembers = () => {
     if (groupId) {
@@ -107,8 +110,24 @@ const GroupMembers = () => {
     rootNavigation.navigate(groupStack.inviteMembers);
   };
 
+  const onCloseAddSuccess = () => {
+    dispatch(groupsActions.clearAddMembersMessage());
+  };
+
   return (
     <View style={styles.container}>
+      {addSuccess && (
+        <FlashMessage type="success" onClose={onCloseAddSuccess}>
+          {i18next
+            .t(
+              `common:message_add_member_success:${
+                userAddedCount > 1 ? 'many' : '1'
+              }`,
+            )
+            .replace('{n}', userAddedCount)}
+        </FlashMessage>
+      )}
+
       <View style={styles.searchAndInvite}>
         <SearchInput
           style={styles.inputSearch}
@@ -128,7 +147,6 @@ const GroupMembers = () => {
           </ButtonWrapper>
         )}
       </View>
-
       <SectionList
         style={styles.content}
         sections={sectionList}

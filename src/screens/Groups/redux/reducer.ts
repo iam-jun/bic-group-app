@@ -1,3 +1,4 @@
+import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -27,10 +28,12 @@ const initGroupsState = {
     canLoadMore: true,
   },
   selectedUsers: new Array<IUser>(),
+  addSuccess: false,
+  userAddedCount: 0,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
-  const {type} = action;
+  const {type, payload} = action;
   const {users, selectedUsers} = state;
 
   switch (type) {
@@ -107,16 +110,56 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           },
         },
       };
-    case groupsTypes.SELECT_USER:
+
+    case groupsTypes.GET_JOINABLE_USERS:
       return {
         ...state,
-        selectedUsers: !action.payload.selected
-          ? [...selectedUsers, {...action.payload, selected: true}]
-          : selectedUsers.filter(user => user._id !== action.payload._id),
+        users: {
+          ...state.users,
+          loading: state.users.data.length === 0,
+          params: payload.params,
+        },
+      };
+    case groupsTypes.SET_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          loading: false,
+          data: payload,
+          offset: state.users.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.SET_EXTRA_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          extra: payload,
+          offset: state.users.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.MERGE_EXTRA_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          data: [...state.users.data, ...state.users.extra],
+          extra: [],
+        },
+      };
+    case groupsTypes.SELECT_JOINABLE_USERS:
+      return {
+        ...state,
+        selectedUsers: !payload.selected
+          ? [...selectedUsers, {...payload, selected: true}]
+          : selectedUsers.filter(user => user.id !== payload.id),
         users: {
           ...users,
           data: users.data.map((item: IUser) =>
-            item._id === action.payload._id
+            item.id === payload.id
               ? {
                   ...item,
                   selected: !item.selected,
@@ -130,18 +173,23 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         selectedUsers: [],
       };
-    case groupsTypes.SET_USERS:
-      return {
-        ...state,
-        users: {
-          ...state.users,
-          data: action.payload,
-        },
-      };
-    case groupsTypes.RESET_USERS:
+
+    case groupsTypes.RESET_JOINABLE_USERS:
       return {
         ...state,
         users: initGroupsState.users,
+      };
+    case groupsTypes.SET_ADD_MEMBERS_MESSAGE:
+      return {
+        ...state,
+        userAddedCount: payload,
+        addSuccess: true,
+      };
+    case groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE:
+      return {
+        ...state,
+        userAddedCount: initGroupsState.userAddedCount,
+        addSuccess: initGroupsState.addSuccess,
       };
 
     default:

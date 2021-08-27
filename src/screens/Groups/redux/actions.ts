@@ -5,6 +5,8 @@ import {
   IGroupDetailEdit,
   IPayloadGetGroupPost,
   IGroupImageUpload,
+  IGroupAddMembers,
+  IGroupGetJoinableMembers,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -74,25 +76,40 @@ const groupsActions = {
       payload,
     };
   },
-  selectUser: (payload: IUser) => ({
-    type: groupsTypes.SELECT_USER,
+  selectJoinableUsers: (payload: IUser) => ({
+    type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,
+  }),
+
+  getJoinableUsers: (payload: IGroupGetJoinableMembers) => ({
+    type: groupsTypes.GET_JOINABLE_USERS,
+    payload,
+  }),
+  setJoinableUsers: (payload: IUser[]) => ({
+    type: groupsTypes.SET_JOINABLE_USERS,
+    payload,
+  }),
+  setExtraJoinableUsers: (payload: IUser[]) => ({
+    type: groupsTypes.SET_EXTRA_JOINABLE_USERS,
+    payload,
+  }),
+  mergeExtraJoinableUsers: () => ({
+    type: groupsTypes.MERGE_EXTRA_JOINABLE_USERS,
+  }),
+  resetJoinableUsers: () => ({
+    type: groupsTypes.RESET_JOINABLE_USERS,
   }),
   clearSelectedUsers: () => ({
     type: groupsTypes.CLEAR_SELECTED_USERS,
   }),
-  getUser: () => ({
-    type: groupsTypes.GET_USERS,
-  }),
-  setUser: (payload: IUser[]) => ({
-    type: groupsTypes.SET_USERS,
+  setAddMembersMessage: (payload: number) => ({
+    type: groupsTypes.SET_ADD_MEMBERS_MESSAGE,
     payload,
   }),
-  resetUser: () => ({
-    type: groupsTypes.RESET_USERS,
+  clearAddMembersMessage: () => ({
+    type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
   }),
 
-  //for saga
   getJoinedGroups: function (payload?: any) {
     return {
       type: groupsTypes.GET_JOINED_GROUPS,
@@ -120,6 +137,12 @@ const groupsActions = {
   uploadImage: function (payload: IGroupImageUpload) {
     return {
       type: groupsTypes.UPLOAD_IMAGE,
+      payload,
+    };
+  },
+  addMembers: function (payload: IGroupAddMembers) {
+    return {
+      type: groupsTypes.ADD_MEMBERS,
       payload,
     };
   },

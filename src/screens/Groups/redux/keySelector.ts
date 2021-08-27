@@ -7,6 +7,10 @@ const groupsKeySelector = {
   groupPosts: 'groups.groupPosts',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   groupMember: 'groups.groupMember',
+  selectedUsers: 'groups.selectedUsers',
+  users: 'groups.users',
+  addSuccess: 'groups.addSuccess',
+  userAddedCount: 'groups.userAddedCount',
 };
 
 export default groupsKeySelector;

@@ -1,13 +1,16 @@
 import i18next from 'i18next';
 import {debounce} from 'lodash';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import {IUser} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
 import groupsActions from '../redux/actions';
-import useGroups from '~/hooks/groups';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
 
 import MembersSelection from '~/beinFragments/MembersSelection';
 import Header from '~/beinComponents/Header';
@@ -17,25 +20,35 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 const AddMembersToGroup = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
-  const {selectedUsers, users} = useGroups();
+  const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
+  const users = useKeySelector(groupsKeySelector.users);
+  const group = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {id: groupId, name: groupName} = group;
+
+  const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
-    dispatch(groupsActions.resetUser());
-    dispatch(groupsActions.getUser());
+    dispatch(groupsActions.resetJoinableUsers());
+    dispatch(groupsActions.getJoinableUsers({groupId}));
   }, []);
 
   const loadMoreData = () => {
-    // dispatch(actions.mergeExtraData('users'))
+    dispatch(groupsActions.mergeExtraJoinableUsers());
   };
 
-  const onInvitePress = () => {
-    alert('Invite people...');
+  const _onSelectUser = (user: IUser) => {
+    dispatch(groupsActions.selectJoinableUsers(user));
   };
 
   const searchUsers = (searchQuery: string) => {
-    // dispatch(actions.resetData('users'));
+    setSearchText(searchQuery);
+    dispatch(groupsActions.resetJoinableUsers());
+    dispatch(
+      groupsActions.getJoinableUsers({groupId, params: {key: searchQuery}}),
+    );
   };
 
   const searchHandler = useCallback(debounce(searchUsers, 1000), []);
@@ -44,8 +57,31 @@ const AddMembersToGroup = (): React.ReactElement => {
     searchHandler(text);
   };
 
-  const _onSelectUser = (user: IUser) => {
-    dispatch(groupsActions.selectUser({...user, _id: user.id}));
+  const onInvitePress = () => {
+    showConfirmations();
+  };
+
+  const doAddUsers = () => {
+    const userIds = selectedUsers.map((user: IUser) => user.id);
+    dispatch(groupsActions.addMembers({groupId, userIds}));
+    navigation.goBack();
+  };
+
+  const showConfirmations = () => {
+    const type = selectedUsers.length === 1 ? '1' : 'many';
+
+    dispatch(
+      modalActions.showAlert({
+        iconName: 'addUser',
+        title: i18next.t('common:title_modal_confirm_add_member'),
+        content: i18next
+          .t(`common:title_group_add_member:${type}`)
+          .replace('{0}', groupName),
+        cancelBtn: true,
+        onConfirm: () => doAddUsers(),
+        confirmLabel: i18next.t('common:button_add_member'),
+      }),
+    );
   };
 
   return (
@@ -64,7 +100,7 @@ const AddMembersToGroup = (): React.ReactElement => {
       <MembersSelection
         selectable
         selectedUsers={selectedUsers}
-        title={'common:text_all'}
+        title={!searchText ? 'common:text_all' : 'common:text_search_results'}
         loading={users.loading}
         data={users.data}
         searchInputProps={{

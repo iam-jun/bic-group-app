@@ -4,7 +4,9 @@ import {call, put, select, takeLatest} from 'redux-saga/effects';
 
 import {
   IGroup,
+  IGroupAddMembers,
   IGroupDetailEdit,
+  IGroupGetJoinableMembers,
   IGroupImageUpload,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
@@ -14,7 +16,8 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData} from '~/interfaces/common';
-import {mapData} from '../helper';
+import {mapData} from '../helper/mapper';
+import appConfig from '~/configs/appConfig';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -24,7 +27,12 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
   yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
-  yield takeLatest(groupsTypes.GET_USERS, getUsers);
+  yield takeLatest(groupsTypes.GET_JOINABLE_USERS, getJoinableUsers);
+  yield takeLatest(
+    groupsTypes.MERGE_EXTRA_JOINABLE_USERS,
+    mergeExtraJoinableUsers,
+  );
+  yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
 }
 
 function* getJoinedGroups() {
@@ -254,19 +262,71 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   }
 }
 
-function* getUsers() {
+function* getJoinableUsers({
+  payload,
+}: {
+  type: string;
+  payload: IGroupGetJoinableMembers;
+}) {
   try {
-    const response: IResponseData = yield groupsDataHelper.getUsers();
+    const {groups} = yield select();
+    const {offset, data} = groups.users;
 
+    const {groupId, params} = payload;
+    const response: IResponseData = yield groupsDataHelper.getJoinableUsers(
+      groupId,
+      {offset, limit: appConfig.recordsPerPage, ...params},
+    );
     const result = mapData(response.data);
 
-    yield put(groupsActions.setUser(result));
+    if (data.length === 0) {
+      yield put(groupsActions.setJoinableUsers(result));
+      if (result.length === appConfig.recordsPerPage) {
+        yield put(groupsActions.getJoinableUsers(payload));
+      }
+    } else {
+      yield put(groupsActions.setExtraJoinableUsers(result));
+    }
   } catch (err) {
     console.log(
       '\x1b[33m',
       'getUsers catch: ',
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
+    );
+  }
+}
+
+function* mergeExtraJoinableUsers() {
+  const {groups} = yield select();
+  const {canLoadMore, loading, params} = groups.users;
+  const {id: groupId} = groups?.groupDetail?.group;
+  if (!loading && canLoadMore) {
+    yield put(groupsActions.getJoinableUsers({groupId, params}));
+  }
+}
+
+function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
+  try {
+    const {groupId, userIds} = payload;
+
+    yield groupsDataHelper.addUsers(groupId, userIds);
+
+    const userAddedCount = userIds.length;
+    yield put(groupsActions.setAddMembersMessage(userAddedCount));
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'addMembers catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content: err?.meta?.message || i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
     );
   }
 }

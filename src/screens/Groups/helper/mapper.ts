@@ -10,6 +10,5 @@ export const mapUsers = (data?: []): IUser[] =>
 export const mapUser = (item: any): IUser => ({
   ...item,
   avatar: item.avatar,
-  name: item?.name || item?.fullname || item?.username,
-  _id: item.id,
+  name: item?.fullname || item?.name || item?.username,
 });
