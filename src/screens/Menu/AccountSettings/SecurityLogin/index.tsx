@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 import {useBaseHook} from '~/hooks';
 import * as modalActions from '~/store/modal/actions';
@@ -13,20 +14,19 @@ import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {securityLoginMenu} from '~/constants/settings';
 import {ITheme} from '~/theme/interfaces';
-import {useRootNavigation} from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
 const SecurityLogin = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const navigation = useNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   const onSecurityLoginPress = (item: ISetting) => {
     switch (item.type) {
       case 'changePassword':
-        return rootNavigation.navigate(menuStack.changePassword);
+        return navigation.navigate(menuStack.changePassword);
 
       default:
         dispatch(
