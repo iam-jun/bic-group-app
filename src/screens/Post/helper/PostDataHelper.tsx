@@ -4,6 +4,7 @@ import {
   IActivityData,
   IParamSearchMentionAudiences,
   IPostCreatePost,
+  IRequestGetPostComment,
   IRequestPostComment,
 } from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
@@ -49,14 +50,18 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getCommentsById: (id: string): HttpApiRequestConfig => ({
+  getCommentsByPostId: (
+    data: IRequestGetPostComment,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      post_id: id,
-      kind: 'comment',
+      post_id: data?.postId,
+      kind: data?.kind || 'comment',
+      id_lt: data?.id_lt,
+      limit: data?.limit || 10,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
@@ -220,13 +225,13 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommentsById: async (id: string) => {
-    if (!id) {
-      return Promise.reject('Id not found');
+  getCommentsByPostId: async (data: IRequestGetPostComment) => {
+    if (!data?.postId) {
+      return Promise.reject('Post Id not found');
     }
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getCommentsById(id),
+        postApiConfig.getCommentsByPostId(data),
       );
       if (response?.data?.data) {
         return Promise.resolve(response?.data?.data);

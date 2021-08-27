@@ -272,7 +272,8 @@
     "search_audiences_placeholder": "Search for groups or people",
     "group_manage": "Your Groups",
     "people_search": "People",
-    "show_all": "Show all"
+    "show_all": "Show all",
+    "text_load_more_comments": "Load more comments..."
   },
   "chat": {
     "title": "Chat",

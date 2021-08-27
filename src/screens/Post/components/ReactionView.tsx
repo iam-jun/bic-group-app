@@ -91,6 +91,7 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       alignItems: 'flex-start',
       marginTop: spacing.margin.small,
+      marginLeft: spacing.margin.small,
     },
     container: {
       flex: 1,

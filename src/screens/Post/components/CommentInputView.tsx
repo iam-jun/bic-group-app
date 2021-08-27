@@ -67,7 +67,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
-            dispatch(postActions.getCommentsById({id: postId, isMerge: false}));
+            dispatch(postActions.getCommentsByPostId({postId, isMerge: false}));
           }
         })
         .catch(e => {

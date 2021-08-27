@@ -15,6 +15,8 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import {sortComments} from '../helper/PostUtils';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
+import Button from '~/beinComponents/Button';
+import Text from '~/beinComponents/Text';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -30,6 +32,7 @@ const PostDetail = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+  const styles = createStyle(theme);
 
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
@@ -37,15 +40,14 @@ const PostDetail = (props: any) => {
   const latest_reactions = useKeySelector(
     postKeySelector.postLatestReactionsComments(id),
   );
+  const commentCount = useKeySelector(
+    postKeySelector.postCommentCountsById(id),
+  );
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const data = comments || sortComments(latest_reactions) || [];
 
-  useEffect(() => {
-    if (id) {
-      dispatch(postActions.getCommentsById({id, isMerge: false}));
-    }
-  }, [id]);
+  const commentLeft = commentCount - data.length;
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -60,6 +62,19 @@ const PostDetail = (props: any) => {
       rootNavigation.goBack();
     }
   }, [deleted]);
+
+  const onPressLoadMore = () => {
+    const idLessThan = data?.[0]?.id;
+    if (idLessThan) {
+      dispatch(
+        postActions.getCommentsByPostId({
+          postId: id,
+          id_lt: idLessThan,
+          isMerge: true,
+        }),
+      );
+    }
+  };
 
   const renderCommentItem = ({
     item,
@@ -87,7 +102,18 @@ const PostDetail = (props: any) => {
     if (!id) {
       return null;
     }
-    return <PostView postId={id} isPostDetail />;
+    return (
+      <View style={styles.listHeader}>
+        <PostView postId={id} isPostDetail />
+        {commentLeft > 0 && (
+          <Button onPress={onPressLoadMore}>
+            <Text.H6 style={styles.textLoadMoreComment} useI18n>
+              post:text_load_more_comments
+            </Text.H6>
+          </Button>
+        )}
+      </View>
+    );
   };
 
   const renderFooter = () => {
@@ -131,9 +157,14 @@ const PostDetail = (props: any) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {},
+    listHeader: {backgroundColor: colors.background},
+    textLoadMoreComment: {
+      margin: spacing.margin.small,
+      color: colors.primary7,
+    },
   });
 };
 

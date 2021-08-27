@@ -59,7 +59,7 @@ export default function* postSaga() {
     postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     updateAllCommentsByParentIdsWithComments,
   );
-  yield takeLatest(postTypes.GET_COMMENTS_BY_IDS, getCommentsById);
+  yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
 }
 
 function* postCreateNewPost({
@@ -571,18 +571,18 @@ function* updateAllCommentsByParentIdsWithComments({
   yield put(postActions.setAllCommentsByParentIds(allComments));
 }
 
-function* getCommentsById({
+function* getCommentsByPostId({
   payload,
 }: {
   type: string;
   payload: IPayloadGetCommentsById;
 }) {
-  const {id, isMerge} = payload || {};
+  const {postId, isMerge} = payload || {};
   try {
-    const response = yield call(postDataHelper.getCommentsById, id);
+    const response = yield call(postDataHelper.getCommentsByPostId, payload);
     if (response?.length > 0) {
       yield put(postActions.addToAllComments(response));
-      const p = {id, comments: response, isMerge};
+      const p = {id: postId, comments: response, isMerge};
       yield put(postActions.updateAllCommentsByParentIdsWithComments(p));
     }
   } catch (e) {

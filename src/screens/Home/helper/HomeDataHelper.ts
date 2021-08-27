@@ -13,7 +13,7 @@ const homeDataHelper = {
         limit: 10,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
-        // recentReactionsLimit: 10,
+        recentReactionsLimit: 5,
         withOwnReactions: true,
         withOwnChildren: true, //return own_children of reaction to comment
         withRecentReactions: true,

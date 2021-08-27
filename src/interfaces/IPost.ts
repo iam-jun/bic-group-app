@@ -130,6 +130,17 @@ export interface IRequestPostComment {
   userId: number;
 }
 
+export interface IRequestGetPostComment {
+  postId: string;
+  id_lt?: string; //get comment before this id
+  limit?: number;
+  kind?: string;
+}
+
+export interface IPayloadGetCommentsById extends IRequestGetPostComment {
+  isMerge: boolean;
+}
+
 export interface IReaction {
   created_at?: string;
   updated_at?: string;
@@ -230,10 +241,5 @@ export interface IPayloadUpdateReactionOfPostById {
 export interface IPayloadUpdateCommentsById {
   id: string;
   comments: IReaction[];
-  isMerge: boolean;
-}
-
-export interface IPayloadGetCommentsById {
-  id: string;
   isMerge: boolean;
 }

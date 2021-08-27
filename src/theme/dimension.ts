@@ -118,7 +118,7 @@ export const avatarSizes = {
 
 export const headerHeight = 48;
 export const primaryItemHeight = 64;
-export const commentBarHeight = 36;
+export const commentBarHeight = 44;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
