@@ -93,10 +93,13 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
-  const onSettingPress = (type: string) => {
+  const onItemPress = (type: string) => {
     switch (type) {
       case 'members':
         goGroupMembers();
+        break;
+      case 'editName':
+        showChangeNameModal();
         break;
       default:
         dispatch(
@@ -192,6 +195,7 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
+  // TODO: Fix marginRight, they are pushed to the left, when there is no button invite
   const renderMenu = () => (
     <View style={styles.menuContainer}>
       <Button.Icon
@@ -227,15 +231,24 @@ const Conversation = (): React.ReactElement => {
     </View>
   );
 
-  const renderActionItem = (type: string, icon: IconType, label: string) => {
+  const renderActionItem = (
+    type: string,
+    icon: IconType,
+    label: string,
+    hideRightArrow = false,
+  ) => {
+    const RightComponent = hideRightArrow ? undefined : (
+      <Icon icon="AngleRight" size={24} />
+    );
+
     return (
-      <TouchableOpacity onPress={() => onSettingPress(type)}>
+      <TouchableOpacity onPress={() => onItemPress(type)}>
         <PrimaryItem
           style={styles.actionItem}
           title={label}
           leftIcon={icon}
           leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
-          RightComponent={<Icon icon="AngleRight" size={24} />}
+          RightComponent={RightComponent}
         />
       </TouchableOpacity>
     );
@@ -322,28 +335,24 @@ const Conversation = (): React.ReactElement => {
         modalizeRef={baseSheetRef}
         ContentComponent={
           <View style={styles.bottomSheet}>
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="ImageV"
-              size={22}
-              label={i18next.t('chat:detail_menu:change_avatar')}
-            />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="EditAlt"
-              size={22}
-              label={i18next.t('chat:detail_menu:edit_description')}
-            />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="TextFields"
-              size={22}
-              label={i18next.t('chat:detail_menu:edit_name')}
-              onPress={showChangeNameModal}
-            />
+            {renderActionItem(
+              'changeAvatar',
+              'ImageV',
+              i18next.t('chat:detail_menu:change_avatar'),
+              true,
+            )}
+            {renderActionItem(
+              'editDescription',
+              'EditAlt',
+              i18next.t('chat:detail_menu:edit_description'),
+              true,
+            )}
+            {renderActionItem(
+              'editName',
+              'TextFields',
+              i18next.t('chat:detail_menu:edit_name'),
+              true,
+            )}
           </View>
         }
       />
@@ -438,8 +447,8 @@ const createStyles = (theme: IObject<any>) => {
       marginRight: spacing.margin.large,
     },
     bottomSheet: {
-      paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing?.padding.base,
+      paddingHorizontal: spacing.padding.big,
+      paddingTop: spacing.padding.tiny,
     },
     marginBottom: {
       marginBottom: spacing.margin.large,
