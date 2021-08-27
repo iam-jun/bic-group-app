@@ -1,4 +1,7 @@
+import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
+import {IUser} from '~/interfaces/IAuth';
+
 const initGroupsState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
@@ -16,10 +19,23 @@ const initGroupsState = {
   loadingGroupPosts: false,
   groupPosts: [],
   refreshingGroupPosts: false,
+
+  users: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
+  selectedUsers: new Array<IUser>(),
+  addSuccess: false,
+  userAddedCount: 0,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
-  const {type} = action;
+  const {type, payload} = action;
+  const {users, selectedUsers} = state;
+
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {
@@ -93,6 +109,87 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
             ...action.payload,
           },
         },
+      };
+
+    case groupsTypes.GET_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          loading: state.users.data.length === 0,
+          params: payload.params,
+        },
+      };
+    case groupsTypes.SET_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          loading: false,
+          data: payload,
+          offset: state.users.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.SET_EXTRA_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          extra: payload,
+          offset: state.users.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.MERGE_EXTRA_JOINABLE_USERS:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          data: [...state.users.data, ...state.users.extra],
+          extra: [],
+        },
+      };
+    case groupsTypes.SELECT_JOINABLE_USERS:
+      return {
+        ...state,
+        selectedUsers: !payload.selected
+          ? [...selectedUsers, {...payload, selected: true}]
+          : selectedUsers.filter(user => user.id !== payload.id),
+        users: {
+          ...users,
+          data: users.data.map((item: IUser) =>
+            item.id === payload.id
+              ? {
+                  ...item,
+                  selected: !item.selected,
+                }
+              : item,
+          ),
+        },
+      };
+    case groupsTypes.CLEAR_SELECTED_USERS:
+      return {
+        ...state,
+        selectedUsers: [],
+      };
+
+    case groupsTypes.RESET_JOINABLE_USERS:
+      return {
+        ...state,
+        users: initGroupsState.users,
+      };
+    case groupsTypes.SET_ADD_MEMBERS_MESSAGE:
+      return {
+        ...state,
+        userAddedCount: payload,
+        addSuccess: true,
+      };
+    case groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE:
+      return {
+        ...state,
+        userAddedCount: initGroupsState.userAddedCount,
+        addSuccess: initGroupsState.addSuccess,
       };
 
     default:

@@ -186,6 +186,7 @@ const icons = {
   iconStar: iconStar,
   RightArrow: iconRightArrow,
   CommentAltCheck: 'CommentAltCheck',
+  iconUserPlus: 'UserPlus',
 };
 
 export default icons;

@@ -1,12 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
-import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
+
+import {ITheme} from '~/theme/interfaces';
+import {useKeySelector} from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+
+import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Icon from '~/beinComponents/Icon';
+import FlashMessage from '~/beinComponents/FlashMessage';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -15,9 +25,15 @@ const GroupMembers = () => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
+  const {rootNavigation} = useRootNavigation();
 
-  const groupId = useKeySelector('groups.groupDetail.group.id');
-  const groupMember = useKeySelector('groups.groupMember');
+  const {id: groupId} = useKeySelector(groupsKeySelector.groupDetail.group);
+  const groupMember = useKeySelector(groupsKeySelector.groupMember);
+  const can_manage_member = useKeySelector(
+    groupsKeySelector.groupDetail.can_manage_member,
+  );
+  const addSuccess = useKeySelector(groupsKeySelector.addSuccess);
+  const userAddedCount = useKeySelector(groupsKeySelector.userAddedCount);
 
   const getMembers = () => {
     if (groupId) {
@@ -89,8 +105,48 @@ const GroupMembers = () => {
     );
   };
 
+  const goInviteMembers = () => {
+    dispatch(groupsActions.clearSelectedUsers());
+    rootNavigation.navigate(groupStack.inviteMembers);
+  };
+
+  const onCloseAddSuccess = () => {
+    dispatch(groupsActions.clearAddMembersMessage());
+  };
+
   return (
     <View style={styles.container}>
+      {addSuccess && (
+        <FlashMessage type="success" onClose={onCloseAddSuccess}>
+          {i18next
+            .t(
+              `common:message_add_member_success:${
+                userAddedCount > 1 ? 'many' : '1'
+              }`,
+            )
+            .replace('{n}', userAddedCount)}
+        </FlashMessage>
+      )}
+
+      <View style={styles.searchAndInvite}>
+        <SearchInput
+          style={styles.inputSearch}
+          placeholder={i18next.t('groups:text_search_member')}
+        />
+        {can_manage_member && (
+          <ButtonWrapper style={styles.inviteButton} onPress={goInviteMembers}>
+            <Icon
+              style={styles.iconSmall}
+              icon={'iconUserPlus'}
+              size={22}
+              tintColor={theme.colors.primary7}
+            />
+            <Text.ButtonBase color={theme.colors.primary} useI18n>
+              common:text_invite
+            </Text.ButtonBase>
+          </ButtonWrapper>
+        )}
+      </View>
       <SectionList
         style={styles.content}
         sections={sectionList}
@@ -126,6 +182,27 @@ const createStyle = (theme: ITheme) => {
     },
     content: {
       backgroundColor: colors.background,
+    },
+    searchAndInvite: {
+      flexDirection: 'row',
+      backgroundColor: colors.background,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    inputSearch: {
+      flex: 1,
+      margin: spacing.margin.base,
+      marginTop: spacing.margin.extraLarge,
+    },
+    inviteButton: {
+      backgroundColor: colors.bgButtonSecondary,
+      padding: spacing.padding.small,
+      borderRadius: 6,
+      marginTop: spacing.margin.base,
+      marginRight: spacing.margin.base,
+    },
+    iconSmall: {
+      marginRight: spacing.margin.small,
     },
   });
 };
