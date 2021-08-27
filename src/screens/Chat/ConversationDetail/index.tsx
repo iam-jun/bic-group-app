@@ -21,10 +21,8 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import style from '~/theme/style';
 import {getAvatar} from '../helper';
 import actions from '../redux/actions';
-
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
@@ -278,14 +276,11 @@ const Conversation = (): React.ReactElement => {
       <View style={styles.bottomMenu}>
         <Text>{i18next.t('chat:title_admin_tool')}</Text>
         <ViewSpacing height={spacing.margin.large} />
-        {renderActionItem(
-          'iconPinGroup',
-          i18next.t('chat:label_pin_messagess'),
-        )}
+        {renderActionItem('iconPinGroup', i18next.t('chat:label_pin_messages'))}
         <ViewSpacing height={spacing.margin.large} />
         {renderActionItem(
           'ChatPermission',
-          i18next.t('chat:label_permisstion_management'),
+          i18next.t('chat:label_permission_management'),
         )}
       </View>
     );
@@ -331,7 +326,7 @@ const Conversation = (): React.ReactElement => {
       : () => baseSheetRef.current?.open();
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.root}>
       <ScreenWrapper
         style={styles.wrapper}
         testID="ConversationDetailScreen"
@@ -357,6 +352,9 @@ const Conversation = (): React.ReactElement => {
 const createStyles = (theme: IObject<any>) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
+    root: {
+      backgroundColor: colors.background,
+    },
     wrapper: {},
     container: {
       backgroundColor: colors.bgSecondary,

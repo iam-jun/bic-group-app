@@ -107,7 +107,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     if (loading) return null;
     return (
       <View style={styles.empty}>
-        <Text.Body useI18n>chat:text_search_emtpy</Text.Body>
+        <Text.Body useI18n>chat:text_search_empty</Text.Body>
         <Image style={styles.imageEmtpy} source={images.img_search_empty} />
       </View>
     );
