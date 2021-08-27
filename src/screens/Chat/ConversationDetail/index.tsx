@@ -243,43 +243,39 @@ const Conversation = (): React.ReactElement => {
 
   const renderActions = () => (
     <View style={styles.bottomMenu}>
-      <Text>{i18next.t('chat:title_more_actions')}</Text>
-      <ViewSpacing height={spacing.margin.large} />
+      <Text style={styles.bottomMenuTitle}>
+        {i18next.t('chat:title_more_actions')}
+      </Text>
       {renderActionItem(
         'files',
         'attachment',
         i18next.t('chat:label_attachments'),
       )}
-      <ViewSpacing height={spacing.margin.large} />
       {renderActionItem('gallery', 'images', i18next.t('chat:label_gallery'))}
-      {isDirect && (
-        <>
-          <ViewSpacing height={spacing.margin.large} />
-          {renderActionItem(
-            'users',
-            'users',
-            `${i18next.t('chat:label_create_group_chat_with')} ${
-              conversation.name
-            }`,
-          )}
-        </>
-      )}
+      {isDirect &&
+        renderActionItem(
+          'users',
+          'users',
+          `${i18next.t('chat:label_create_group_chat_with')} ${
+            conversation.name
+          }`,
+        )}
     </View>
   );
 
   const renderPrivacy = () => {
     return (
       <View style={styles.bottomMenu}>
-        <Text>{i18next.t('chat:title_privacy')}</Text>
-        <ViewSpacing height={spacing.margin.large} />
+        <Text style={styles.bottomMenuTitle}>
+          {i18next.t('chat:title_privacy')}
+        </Text>
+
         {isDirect ? (
-          <>
-            {renderActionItem(
-              'block',
-              'ChatBlock',
-              `${i18next.t('chat:text_block')} ${conversation.name}`,
-            )}
-          </>
+          renderActionItem(
+            'block',
+            'ChatBlock',
+            `${i18next.t('chat:text_block')} ${conversation.name}`,
+          )
         ) : (
           <>
             {renderActionItem(
@@ -287,7 +283,6 @@ const Conversation = (): React.ReactElement => {
               'Feedback',
               i18next.t('chat:text_feedback'),
             )}
-            <ViewSpacing height={spacing.margin.large} />
             {permissions[chatPermissions.CAN_LEAVE] &&
               renderActionItem(
                 'leavesGroup',
@@ -304,14 +299,14 @@ const Conversation = (): React.ReactElement => {
     if (isDirect) return null;
     return (
       <View style={styles.bottomMenu}>
-        <Text>{i18next.t('chat:title_admin_tool')}</Text>
-        <ViewSpacing height={spacing.margin.large} />
+        <Text style={styles.bottomMenuTitle}>
+          {i18next.t('chat:title_admin_tool')}
+        </Text>
         {renderActionItem(
           'pinGroup',
           'iconPinGroup',
           i18next.t('chat:label_pin_messages'),
         )}
-        <ViewSpacing height={spacing.margin.large} />
         {renderActionItem(
           'chatPermission',
           'ChatPermission',
@@ -426,14 +421,18 @@ const createStyles = (theme: IObject<any>) => {
       paddingVertical: spacing.padding.large,
     },
     bottomMenu: {
-      marginTop: spacing.margin.base,
-      paddingVertical: spacing?.padding.base,
+      marginTop: spacing.margin.small,
+      paddingTop: spacing.padding.base,
+      paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.background,
     },
+    bottomMenuTitle: {
+      marginBottom: spacing.margin.tiny,
+    },
     actionItem: {
       paddingHorizontal: 0,
-      height: 40,
+      height: 44,
     },
     actionItemIcon: {
       marginRight: spacing.margin.large,
