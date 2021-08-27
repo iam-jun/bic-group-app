@@ -52,7 +52,6 @@
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
     "text_invite": "Invite",
     "text_search_not_found": "Not found",
-    "title_mention_all": "All members in this group",
     "title_group_add_member": {
       "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
       "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
@@ -62,7 +61,9 @@
     "message_add_member_success": {
       "1": "{n} member has been added",
       "many": "{n} members have been added"
-    }
+    },
+    "title_mention_all": "All members in this group",
+    "text_search_no_results": "Sorry, we couldn’t find anything related to your search."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -360,7 +361,8 @@
       "label_set_as_admin": "Set as admin",
       "label_direct_message": "Direct message",
       "label_remove_from_group_chat": "Remove from group chat"
-    }
+    },
+    "text_mention_all": "All"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

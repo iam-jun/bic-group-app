@@ -2,13 +2,16 @@ import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
-import {IUser} from '~/interfaces/IAuth';
-import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
+import {
+  IChatUser,
+  IConversation,
+  IMessage,
+  ISendMessageAction,
+} from '~/interfaces/IChat';
 import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
@@ -49,6 +52,7 @@ export default function* saga() {
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
+  yield takeLatest(types.GET_CHAT_PERMISSIONS, getChatPermissions);
 }
 
 function* initChat() {
@@ -275,7 +279,7 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* removeMember({payload}: {type: string; payload: IUser}) {
+function* removeMember({payload}: {type: string; payload: IChatUser}) {
   try {
     const {chat} = yield select();
     const data = {
@@ -285,6 +289,19 @@ function* removeMember({payload}: {type: string; payload: IUser}) {
     yield makeHttpRequest(apiConfig.Chat.removeMember(data));
   } catch (err) {
     console.log('removeMember', err);
+  }
+}
+
+function* getChatPermissions() {
+  try {
+    const {chat} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getChatInfo(chat.conversation._id),
+    );
+
+    yield put(actions.setChatPermissions(response.data?.data));
+  } catch (err) {
+    console.log('getChatInfo', err);
   }
 }
 

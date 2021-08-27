@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {View, StyleSheet, Keyboard} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -57,6 +57,12 @@ const CommentView: React.FC<CommentViewProps> = ({
   if (created_at) {
     postTime = countTime(created_at);
   }
+
+  useEffect(() => {
+    if (commentData && !comment) {
+      dispatch(postActions.addToAllComments(commentData));
+    }
+  }, [comment, commentData]);
 
   const onPressUser = () => {
     alert('onPressUser: ' + user?.id);

@@ -25,3 +25,11 @@ export const messageStatus = {
   RECEIVED: 'received',
   FAILED: 'failed',
 };
+
+export const chatPermissions = {
+  CAN_PIN_MESSAGE: 'can_pin_message',
+  CAN_INVITE: 'can_invite',
+  CAN_MUTE: 'can_mute',
+  CAN_REMOVE_CHAT_MEMBER: 'can_remove_chat_member',
+  CAN_LEAVE: 'can_leave',
+};

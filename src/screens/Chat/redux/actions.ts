@@ -52,6 +52,11 @@ const setConversationDetail = (payload: IConversation) => ({
   payload,
 });
 
+const searchConversation = (payload: string) => ({
+  type: Actions.SEARCH_CONVERSATIONS,
+  payload,
+});
+
 const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
@@ -142,6 +147,14 @@ const updateConversationName = (payload: string) => ({
 
 const uploadFile = (payload: IUploadFileAction) => ({
   type: Actions.UPLOAD_FILE,
+});
+
+const getChatPermissions = () => ({
+  type: Actions.GET_CHAT_PERMISSIONS,
+});
+
+const setChatPermissions = (payload: any) => ({
+  type: Actions.SET_CHAT_PERMISSIONS,
   payload,
 });
 
@@ -185,6 +198,7 @@ export default {
   resetData,
   getConversationDetail,
   setConversationDetail,
+  searchConversation,
   getGroupRols,
   setGroupRoles,
   getSubscriptions,
@@ -210,4 +224,6 @@ export default {
   setMentionSearchKey,
   getMentionUsers,
   setMentionUsers,
+  getChatPermissions,
+  setChatPermissions,
 };
