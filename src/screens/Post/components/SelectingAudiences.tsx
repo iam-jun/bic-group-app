@@ -6,6 +6,7 @@ import {useTheme} from 'react-native-paper';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Tag from '~/beinComponents/Tag';
 import {IAudience} from '~/interfaces/IPost';
+import Divider from '~/beinComponents/Divider';
 
 export interface SelectingAudiencesProps {
   list: IAudience[];
@@ -19,6 +20,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   const [showAll, setShowAll] = useState(false);
 
   const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const onPressShowAll = () => {
@@ -50,7 +52,9 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
-        <ButtonWrapper onPress={onPressShowAll}>
+        <ButtonWrapper
+          textProps={{color: colors.primary7, variant: 'buttonSmall'}}
+          onPress={onPressShowAll}>
           {showAll ? 'Show less' : `Show all(${list?.length})`}
         </ButtonWrapper>
       </View>
@@ -61,6 +65,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
         }}>
         {list?.map?.(renderItem)}
       </View>
+      <Divider style={styles.divider} />
     </View>
   );
 };
@@ -78,6 +83,9 @@ const createStyle = (theme: ITheme) => {
     item: {
       marginRight: spacing?.margin.small,
       marginBottom: spacing?.margin.small,
+    },
+    divider: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };
