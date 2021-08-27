@@ -15,7 +15,6 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IRequestPostComment} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import Button from '~/beinComponents/Button';
 import {usePostDetailReplyingComment} from '~/hooks/post';
 import {useBaseHook} from '~/hooks';
 
@@ -33,6 +32,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   textInputRef,
 }: CommentInputViewProps) => {
   const [content, setContent] = useState<string>();
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -53,8 +53,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const onPressSend = () => {
     if (postId) {
-      setContent('');
-      dispatch(postActions.setPostDetailReplyingComment());
       const commentData = {content: content?.trim()};
       const replyCmtId = replying?.id;
       const requestData: IRequestPostComment = {
@@ -63,14 +61,19 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         commentData,
         userId,
       };
+      setLoading(true);
       postDataHelper
         .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
             dispatch(postActions.getCommentsById({id: postId, isMerge: false}));
+            setContent('');
+            dispatch(postActions.setPostDetailReplyingComment());
+            setLoading(false);
           }
         })
         .catch(e => {
+          setLoading(false);
           console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
         });
     } else {
@@ -129,6 +132,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
                 useI18n
                 color={colors.textSecondary}
                 onPress={() =>
+                  !loading &&
                   dispatch(postActions.setPostDetailReplyingComment())
                 }>
                 common:btn_cancel
@@ -156,13 +160,14 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         autoFocus: autoFocus,
         onPressSend: onPressSend,
         HeaderComponent: renderCommentInputHeader(),
+        loading: loading,
       }}
     />
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {},
     flex1: {flex: 1},
