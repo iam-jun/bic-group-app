@@ -16,7 +16,7 @@ const Divider: React.FC<DividerProps> = ({
   size = 1,
   style = {},
 }: DividerProps) => {
-  const {colors}: ITheme = useTheme();
+  const {colors}: ITheme = useTheme() as ITheme;
   return (
     <View
       style={StyleSheet.flatten([

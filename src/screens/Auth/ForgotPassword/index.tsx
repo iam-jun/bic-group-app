@@ -20,7 +20,7 @@ import {forgotPasswordStages} from '~/constants/authConstants';
 import useAuth from '~/hooks/auth';
 import * as actions from '~/screens/Auth/redux/actions';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import LockImg from '../../../../assets/images/Lock.svg';
+import LockImg from '../../../../assets/images/auth_forgot_password_complete.svg';
 import {ITheme} from '~/theme/interfaces';
 import icons from '~/resources/icons';
 import {deviceDimensions} from '~/theme/dimension';

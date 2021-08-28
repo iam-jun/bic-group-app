@@ -9,6 +9,7 @@ const groupStack = {
   editGroupDescription: 'edit-group-description',
   myProfile: 'my-profile',
   publicProfile: 'public-profile',
+  inviteMembers: 'invite-members',
 };
 
 export default groupStack;

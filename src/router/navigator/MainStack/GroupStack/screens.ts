@@ -8,6 +8,7 @@ import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/Gener
 import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
 import PrivateView from '~/screens/Menu/UserProfile/PrivateView';
 import PublicView from '~/screens/Menu/UserProfile/PublicView';
+import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 
 export default {
   'group-list': Groups,
@@ -20,4 +21,5 @@ export default {
   'edit-group-description': EditGroupDescription,
   'my-profile': PrivateView,
   'public-profile': PublicView,
+  'invite-members': AddMembersToGroup,
 };
