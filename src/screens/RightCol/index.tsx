@@ -91,12 +91,13 @@ const themeStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
+      paddingHorizontal: spacing.margin.large,
+      paddingVertical: spacing.padding.base,
       backgroundColor: colors.surface,
     },
     img: {
       width: '100%',
-      height: 250,
-      marginTop: spacing.margin.base,
+      height: 223,
     },
     mainContainer: {
       marginVertical: spacing.margin.large,
