@@ -105,7 +105,6 @@ const CommentView: React.FC<CommentViewProps> = ({
   };
 
   const _onPressReply = () => {
-    console.log('\x1b[31m', '🐣️  | _onPressReply : ', '\x1b[0m');
     onPressReply?.(commentData);
   };
 

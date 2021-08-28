@@ -61,7 +61,7 @@ const createStyle = (theme: ITheme) => {
     },
     textLoadMoreComment: {
       margin: spacing.margin.small,
-      color: colors.primary7,
+      color: colors.textPrimary,
     },
   });
 };

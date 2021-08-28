@@ -1,13 +1,11 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, SectionList} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
-import ListView from '~/beinComponents/list/ListView';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import {useDispatch} from 'react-redux';
 import PostView from '~/screens/Post/components/PostView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -42,9 +40,10 @@ const PostDetail = (props: any) => {
   );
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
-  const data = comments || sortComments(latest_reactions) || [];
+  const listComment = comments || sortComments(latest_reactions) || [];
+  const sectionData = getSectionData(listComment) || [];
 
-  const commentLeft = commentCount - data.length;
+  const commentLeft = commentCount - listComment.length;
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -60,23 +59,42 @@ const PostDetail = (props: any) => {
     }
   }, [deleted]);
 
-  const renderCommentItem = ({
-    item,
-    index,
-  }: {
-    item: IReaction;
-    index: number;
-  }) => {
+  const renderSectionHeader = (sectionData: any) => {
+    const {section} = sectionData || {};
+    const {comment, index} = section || {};
+
+    return (
+      <CommentItem
+        postId={id}
+        commentData={comment}
+        groupIds={groupIds}
+        onPressReply={() => {
+          textInputRef.current?.focus?.();
+          listRef?.current?.scrollToLocation?.({
+            itemIndex: 0,
+            sectionIndex: index,
+            animated: true,
+          });
+        }}
+      />
+    );
+  };
+
+  const renderCommentItem = (data: any) => {
+    const {item, index, section} = data || {};
     return (
       <CommentItem
         postId={id}
         commentData={item}
+        commentParent={section?.comment}
         groupIds={groupIds}
-        onPressReply={(data, isChild) => {
+        onPressReply={() => {
           textInputRef.current?.focus?.();
-          if (!isChild) {
-            listRef.current?.scrollToIndex({index: index});
-          }
+          listRef?.current?.scrollToLocation?.({
+            itemIndex: index + 1,
+            sectionIndex: section?.index,
+            animated: true,
+          });
         }}
       />
     );
@@ -93,7 +111,7 @@ const PostDetail = (props: any) => {
           <LoadMoreComment
             title={'post:text_load_more_comments'}
             postId={id}
-            idLessThan={data?.[0]?.id}
+            idLessThan={listComment?.[0]?.id}
           />
         )}
       </View>
@@ -107,9 +125,13 @@ const PostDetail = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSetted) {
       layoutSetted = true;
-      if (focusComment && data?.length > 0) {
+      if (focusComment && listComment?.length > 0) {
         setTimeout(() => {
-          listRef?.current?.scrollToIndex?.({index: 0, animated: true});
+          listRef?.current?.scrollToLocation?.({
+            itemIndex: 0,
+            sectionIndex: 0,
+            animated: true,
+          });
         }, 500);
       }
     }
@@ -118,14 +140,14 @@ const PostDetail = (props: any) => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
       <Header subTitle={'Post detail'} />
-      <ListView
-        listRef={listRef}
-        isFullView
-        data={data}
+      <SectionList
+        ref={listRef}
+        sections={sectionData}
         renderItem={renderCommentItem}
+        renderSectionHeader={renderSectionHeader}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}
-        renderItemSeparator={() => <View />}
+        ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
         onLayout={onLayout}
         onContentSizeChange={onLayout}
@@ -138,6 +160,18 @@ const PostDetail = (props: any) => {
       />
     </ScreenWrapper>
   );
+};
+
+const getSectionData = (listComment: IReaction[]) => {
+  const result: any[] = [];
+  listComment?.map?.((comment, index) => {
+    const item: any = {};
+    item.comment = comment;
+    item.index = index;
+    item.data = comment?.latest_children?.comment || [];
+    result.push(item);
+  });
+  return result;
 };
 
 const createStyle = (theme: ITheme) => {
