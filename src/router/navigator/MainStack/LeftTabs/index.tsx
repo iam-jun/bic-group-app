@@ -42,8 +42,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     );
   }, []);
 
-  // render badget function
-  const renderBadget = name => {
+  const renderBadge = (name: string) => {
     const number = tabBadge[name];
 
     if (number > 0) {
@@ -79,7 +78,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
                       tintColor="none"
                       bold={focused}
                     />
-                    {renderBadget(name)}
+                    {renderBadge(name)}
                   </View>
                 );
               },
@@ -96,7 +95,7 @@ const CreateStyle = () => {
     navigatorContainer: {
       ...Platform.select({
         web: {
-          width: '22%',
+          width: 80,
         },
         default: {
           width: 48,
