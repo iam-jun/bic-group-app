@@ -85,8 +85,10 @@ export const deviceDimensions = {
   bigTablet: 768,
   laptop: 1024,
   desktop: 1280,
+  desktopBigger: 1440,
   totalCols: 10,
-  leftCols: 2.8,
+  leftCols: 3,
+  centerAndRightCol: 7,
   centerCols: 4.7,
   rightCols: 2.5,
 };
