@@ -105,6 +105,25 @@ const GroupMembers = () => {
     );
   };
 
+  const renderInviteMemberButton = () => {
+    // only admin or moderator can see this button
+    return (
+      can_manage_member && (
+        <ButtonWrapper style={styles.inviteButton} onPress={goInviteMembers}>
+          <Icon
+            style={styles.iconSmall}
+            icon={'iconUserPlus'}
+            size={22}
+            tintColor={theme.colors.primary7}
+          />
+          <Text.ButtonBase color={theme.colors.primary} useI18n>
+            common:text_invite
+          </Text.ButtonBase>
+        </ButtonWrapper>
+      )
+    );
+  };
+
   const goInviteMembers = () => {
     dispatch(groupsActions.clearSelectedUsers());
     rootNavigation.navigate(groupStack.inviteMembers);
@@ -114,9 +133,9 @@ const GroupMembers = () => {
     dispatch(groupsActions.clearAddMembersMessage());
   };
 
-  return (
-    <View style={styles.container}>
-      {addSuccess && (
+  const renderAddMemberSuccessMessage = () => {
+    return (
+      addSuccess && (
         <FlashMessage type="success" onClose={onCloseAddSuccess}>
           {i18next
             .t(
@@ -126,27 +145,22 @@ const GroupMembers = () => {
             )
             .replace('{n}', userAddedCount)}
         </FlashMessage>
-      )}
+      )
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderAddMemberSuccessMessage()}
 
       <View style={styles.searchAndInvite}>
         <SearchInput
           style={styles.inputSearch}
           placeholder={i18next.t('groups:text_search_member')}
         />
-        {can_manage_member && (
-          <ButtonWrapper style={styles.inviteButton} onPress={goInviteMembers}>
-            <Icon
-              style={styles.iconSmall}
-              icon={'iconUserPlus'}
-              size={22}
-              tintColor={theme.colors.primary7}
-            />
-            <Text.ButtonBase color={theme.colors.primary} useI18n>
-              common:text_invite
-            </Text.ButtonBase>
-          </ButtonWrapper>
-        )}
+        {renderInviteMemberButton()}
       </View>
+
       <SectionList
         style={styles.content}
         sections={sectionList}

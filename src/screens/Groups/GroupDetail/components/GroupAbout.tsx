@@ -1,22 +1,23 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
+
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import {useKeySelector} from '~/hooks/selector';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
-import {useBaseHook} from '~/hooks';
+import groupsKeySelector from '../../redux/keySelector';
 
 const GroupAbout = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const {t} = useBaseHook();
-  const groupData = useKeySelector('groups.groupDetail.group');
-  const {description, user_count, privacy} = groupData || {};
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {description, user_count, privacy} = groupData;
 
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
   const {icon, title, subtitle}: any = privacyData || {};
@@ -46,7 +47,7 @@ const GroupAbout = () => {
           size: 24,
         }}
         onPress={onPressMember}
-        title={`${user_count} ${t('common:text_member')}`}
+        title={`${user_count} ${i18next.t('common:text_member')}`}
         RightComponent={<Icon icon={'AngleRightB'} />}
       />
       <PrimaryItem
@@ -56,8 +57,8 @@ const GroupAbout = () => {
           icon: icon,
           size: 24,
         }}
-        title={t(title)}
-        subTitle={t(subtitle)}
+        title={i18next.t(title)}
+        subTitle={i18next.t(subtitle)}
       />
     </View>
   );
