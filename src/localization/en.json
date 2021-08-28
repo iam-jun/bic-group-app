@@ -50,6 +50,18 @@
     },
     "text_discard_changes": "Discard Changes?",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "text_invite": "Invite",
+    "text_search_not_found": "Not found",
+    "title_group_add_member": {
+      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
+      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
+    },
+    "title_modal_confirm_add_member": "Add members",
+    "button_add_member": "Add member",
+    "message_add_member_success": {
+      "1": "{n} member has been added",
+      "many": "{n} members have been added"
+    },
     "title_mention_all": "All members in this group",
     "text_search_no_results":"Sorry, we couldn't find anything related to your search."
   },
@@ -284,12 +296,12 @@
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
-    "title_group_add_member":{
-      "1":"This person will be added to this group chat and group {0} also. Do you want to continue?",
-      "many":"These people will be added to this group chat and group {0} also. Do you want to continue?"
+    "title_group_add_member": {
+      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
+      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
     },
     "button_add_member": "Add member",
-    "title_modal_confirm_add_member":"Add members",
+    "title_modal_confirm_add_member": "Add members",
     "placeholder_input_group_chat_name": "Name your group chat (Optional)",
     "label_invite": "Invite",
     "label_notification": "Notifications",
@@ -344,13 +356,13 @@
       }
     },
     "text_search_empty": "No people here to chat",
-    "member_menu":{
-      "label_view_profile":"View profile",
+    "member_menu": {
+      "label_view_profile": "View profile",
       "label_set_as_admin": "Set as admin",
       "label_direct_message": "Direct message",
       "label_remove_from_group_chat": "Remove from group chat"
     },
-    "text_mention_all":"All"
+    "text_mention_all": "All"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -378,7 +390,10 @@
   },
   "groups": {
     "search_results": "Search results",
-    "all_groups": "All groups"
+    "all_groups": "All groups",
+    "text_invite_members": "Invite members",
+    "text_search_member": "Search group member",
+    "text_search": "Search people"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
