@@ -114,11 +114,12 @@ const createStyle = (theme: ITheme) => {
         Platform.OS === 'web' ? colors.surface : colors.background,
     },
     listContainer: {
-      alignSelf: 'center',
       flex: 1,
       backgroundColor: colors.bgSecondary,
       ...Platform.select({
         web: {
+          alignSelf: 'center',
+          width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
           backgroundColor: colors.surface,
         },
