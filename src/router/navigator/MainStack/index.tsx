@@ -26,6 +26,8 @@ const MainStack = (): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const route = useRoute<RouteProp<RootStackParamList, 'MainStack'>>();
+  const showLeftCol = dimensions.width >= deviceDimensions.laptop;
+  const showRightCol = dimensions.width >= deviceDimensions.laptop;
 
   React.useEffect(() => {
     connectChat();
@@ -33,6 +35,8 @@ const MainStack = (): React.ReactElement => {
       closeConnectChat();
     };
   }, []);
+  console.log('Render left col:', showLeftCol);
+  console.log('Render right col:', showRightCol);
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>
@@ -59,11 +63,13 @@ const MainStack = (): React.ReactElement => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {dimensions.width >= deviceDimensions.laptop && renderLeftCol()}
-        <View style={styles.centerCol}>
-          <MainTabs />
+        {showLeftCol && renderLeftCol()}
+        <View style={styles.centerAndRightCol}>
+          <View style={styles.centerCol}>
+            <MainTabs />
+          </View>
+          {showRightCol && renderRightCol()}
         </View>
-        {dimensions.width >= deviceDimensions.desktop && renderRightCol()}
       </View>
       <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
@@ -89,17 +95,23 @@ const createStyles = (theme: ITheme) => {
       alignSelf: 'center',
     },
     leftCol: {
-      flex: deviceDimensions.leftCols,
+      flex: deviceDimensions.leftCol,
       ...Platform.select({
         web: {
           width: '30%',
           borderLeftColor: theme.colors.borderDivider,
           borderLeftWidth: 1,
+          borderRightColor: theme.colors.borderDivider,
+          borderRightWidth: 1,
         },
       }),
     },
+    centerAndRightCol: {
+      flex: deviceDimensions.centerAndRightCol,
+      flexDirection: 'row',
+    },
     centerCol: {
-      flex: deviceDimensions.centerCols,
+      flex: 1,
     },
     rightCol: {
       width: 300,

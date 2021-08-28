@@ -87,13 +87,11 @@ export const deviceDimensions = {
   desktop: 1280,
   desktopBigger: 1440,
   totalCols: 10,
-  leftCols: 3,
+  leftCol: 3,
   centerAndRightCol: 7,
-  centerCols: 4.7,
-  rightCols: 2.5,
 };
 
-/* Used for buton size width (short, medium, long, max) */
+/* Used for button size width (short, medium, long, max) */
 export const sizeButton = {
   short: {
     width: 113,
