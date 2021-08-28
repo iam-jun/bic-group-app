@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image} from '~/components';
+import Image from './FastImage';
 
 const ImageViewer = props => {
   return <Image {...props} />;
