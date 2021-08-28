@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import {debounce} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
@@ -20,6 +21,7 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
+  const [searchText, setSearchText] = useState<string>('');
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -32,14 +34,26 @@ const GroupMembers = () => {
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
   const addSuccess = useKeySelector(groupsKeySelector.addSuccess);
   const userAddedCount = useKeySelector(groupsKeySelector.userAddedCount);
 
   const getMembers = () => {
     if (groupId) {
-      dispatch(groupsActions.getGroupMembers(groupId));
+      dispatch(
+        groupsActions.getGroupMembers({
+          groupId,
+          params: {key: searchText.trim()},
+        }),
+      );
     }
   };
+
+  useEffect(() => {
+    if (refreshingGroupPosts) setSearchText('');
+  }, [refreshingGroupPosts]);
 
   useEffect(() => {
     if (groupMember) {
@@ -133,6 +147,20 @@ const GroupMembers = () => {
     dispatch(groupsActions.clearAddMembersMessage());
   };
 
+  const searchUsers = (searchQuery: string) => {
+    dispatch(groupsActions.clearGroupMembers());
+    setSearchText(searchQuery);
+    dispatch(
+      groupsActions.getGroupMembers({groupId, params: {key: searchQuery}}),
+    );
+  };
+
+  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+
+  const onSearchUser = (text: string) => {
+    searchHandler(text);
+  };
+
   const renderAddMemberSuccessMessage = () => {
     return (
       addSuccess && (
@@ -155,8 +183,10 @@ const GroupMembers = () => {
 
       <View style={styles.searchAndInvite}>
         <SearchInput
+          value={searchText}
           style={styles.inputSearch}
           placeholder={i18next.t('groups:text_search_member')}
+          onChangeText={onSearchUser}
         />
         {renderInviteMemberButton()}
       </View>
