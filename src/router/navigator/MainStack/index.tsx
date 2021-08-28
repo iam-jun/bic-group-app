@@ -114,7 +114,7 @@ const createStyles = (theme: ITheme) => {
       flex: 1,
     },
     rightCol: {
-      width: 300,
+      width: 332,
     },
   });
 };
