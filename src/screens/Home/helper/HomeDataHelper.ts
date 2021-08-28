@@ -7,7 +7,7 @@ const homeDataHelper = {
     streamClient?: StreamClient,
     offset?: number,
   ) => {
-    if (streamClient) {
+    if (streamClient && userId) {
       const streamOptions = {
         offset: offset || 0,
         limit: 10,
@@ -34,7 +34,7 @@ const homeDataHelper = {
         return Promise.reject(e);
       }
     }
-    return Promise.reject('StreamClient not found');
+    return Promise.reject('StreamClient or UserId not found');
   },
 };
 

@@ -2,19 +2,20 @@ import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+
 import Avatar from '~/beinComponents/Avatar';
 import SearchInput, {
   SearchInputProps,
 } from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
-import {Image, Text, ViewSpacing} from '~/components';
-import useChat from '~/hooks/chat';
+import Text from '~/beinComponents/Text';
+import Image from '~/beinComponents/Image';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+
 import {IUser} from '~/interfaces/IAuth';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
-import actions from '../redux/actions';
 
 export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
@@ -28,6 +29,9 @@ export interface MembersSelectionProps {
   loading?: boolean;
   onPressMenu?: (user: IUser) => void;
   onLoadMore: () => void;
+  selectedUsers: IUser[];
+  onSelectUser: (user: IUser) => void;
+  emptyTitle?: string;
 }
 
 const MembersSelection: React.FC<MembersSelectionProps> = ({
@@ -39,17 +43,13 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   loading,
   onPressMenu,
   onLoadMore,
+  selectedUsers,
+  onSelectUser,
+  emptyTitle,
 }: MembersSelectionProps): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {spacing} = theme;
-
-  const dispatch = useDispatch();
-  const {selectedUsers} = useChat();
-
-  const onSelectUser = (user: IUser) => {
-    dispatch(actions.selectUser(user));
-  };
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
     return (
@@ -103,15 +103,12 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     </View>
   );
 
-  const EmptyComponent = () => {
-    if (loading) return null;
-    return (
-      <View style={styles.empty}>
-        <Text.Body useI18n>chat:text_search_empty</Text.Body>
-        <Image style={styles.imageEmtpy} source={images.img_search_empty} />
-      </View>
-    );
-  };
+  const EmptyComponent = () => (
+    <View style={styles.empty}>
+      <Text.Body useI18n>{emptyTitle}</Text.Body>
+      <Image style={styles.imageEmtpy} source={images.img_search_empty} />
+    </View>
+  );
 
   return (
     <View style={styles.container}>

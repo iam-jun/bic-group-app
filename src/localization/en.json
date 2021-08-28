@@ -25,7 +25,7 @@
     "text_ok": "OK",
     "text_error": "Error",
     "text_error_message": "Something went wrong",
-    "text_important_posts": "Important Potst",
+    "text_important_posts": "Important Posts",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_all": "All",
@@ -50,8 +50,20 @@
     },
     "text_discard_changes": "Discard Changes?",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "text_invite": "Invite",
+    "text_search_not_found": "Not found",
+    "title_group_add_member": {
+      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
+      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
+    },
+    "title_modal_confirm_add_member": "Add members",
+    "button_add_member": "Add member",
+    "message_add_member_success": {
+      "1": "{n} member has been added",
+      "many": "{n} members have been added"
+    },
     "title_mention_all": "All members in this group",
-    "text_search_no_results":"Sorry, we couldn’t find anything related to your search."
+    "text_search_no_results":"Sorry, we couldn't find anything related to your search."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -109,7 +121,7 @@
     "text_request_new_code": "Resend new code.",
     "text_title_success": "Successfully!",
     "text_sign_up_desc": "Don’t have an account?",
-    "text_sign_up_success": "Please check your email to comfirm your account.",
+    "text_sign_up_success": "Please check your email to confirm your account.",
     "text_check_email_code": "Code is sending to your email.",
     "text_check_email_description": "You will receive email in a few minute, please check your email and following description.",
     "navigate_sign_in": "Go to Login",
@@ -235,6 +247,7 @@
     "label_users": "Users",
     "label_post_deleted": "Post deleted",
     "label_all_reacts": "All Reacts",
+    "text_search_result_empty": "No matching results! Please try another name...",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
     "alert_title_back_edit_post": "Discard changes",
@@ -253,8 +266,7 @@
     "and": "and",
     "to": "to",
     "edit_comment_success": "Edit comment success",
-    "reply_comment_1": "Reply to ",
-    "reply_comment_2": "'s comment",
+    "label_replying_to": "Replying to ",
     "someone": "someone",
     "other_places": "more",
     "mark_as_read": "Mark as read",
@@ -278,18 +290,18 @@
     "title": "Chat",
     "title_chat_detail": "Group chat info",
     "title_room_members": "Group Chat Members",
-    "title_invite_membesr": "Invite members",
+    "title_invite_members": "Invite members",
     "placeholder_search": "Search...",
     "title_admin": "Admin",
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
-    "title_group_add_member":{
-      "1":"This person will be added to this group chat and group {0} also. Do you want to continue?",
-      "many":"These people will be added to this group chat and group {0} also. Do you want to continue?"
+    "title_group_add_member": {
+      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
+      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
     },
     "button_add_member": "Add member",
-    "title_modal_confirm_add_member":"Add members",
+    "title_modal_confirm_add_member": "Add members",
     "placeholder_input_group_chat_name": "Name your group chat (Optional)",
     "label_invite": "Invite",
     "label_notification": "Notifications",
@@ -322,8 +334,8 @@
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
     "text_feedback": "Feedback this chat",
-    "label_pin_messagess": "Pin Messages",
-    "label_permisstion_management": "Permissions Management",
+    "label_pin_messages": "Pin Messages",
+    "label_permission_management": "Permissions Management",
     "detail_menu": {
       "change_avatar": "Change Group Avatar",
       "edit_description": "Edit Description",
@@ -343,14 +355,14 @@
         "over_file_size": "Your file must be less than 10MB"
       }
     },
-    "text_search_emtpy": "No people here to chat",
-    "member_menu":{
-      "label_view_profile":"View profile",
+    "text_search_empty": "No people here to chat",
+    "member_menu": {
+      "label_view_profile": "View profile",
       "label_set_as_admin": "Set as admin",
       "label_direct_message": "Direct message",
       "label_remove_from_group_chat": "Remove from group chat"
     },
-    "text_mention_all":"All"
+    "text_mention_all": "All"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -378,7 +390,10 @@
   },
   "groups": {
     "search_results": "Search results",
-    "all_groups": "All groups"
+    "all_groups": "All groups",
+    "text_invite_members": "Invite members",
+    "text_search_member": "Search group member",
+    "text_search": "Search people"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

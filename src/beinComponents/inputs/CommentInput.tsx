@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Keyboard,
   Platform,
@@ -10,7 +11,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
@@ -20,6 +20,7 @@ import Text from '~/beinComponents/Text';
 import {IFileResponse} from '~/interfaces/common';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import Button from '~/beinComponents/Button';
 
 export interface CommentInputProps {
   style?: StyleProp<ViewStyle>;
@@ -33,6 +34,7 @@ export interface CommentInputProps {
   value?: string;
   HeaderComponent?: React.ReactNode;
   textInputRef?: any;
+  loading?: boolean;
   disableKeyboardSpacer?: boolean;
 }
 
@@ -48,6 +50,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   value,
   HeaderComponent,
   textInputRef,
+  loading = false,
   disableKeyboardSpacer,
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -57,7 +60,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle(theme, loading);
 
   useEffect(() => {
     if (typeof value === 'string' && value !== text) {
@@ -157,36 +160,44 @@ const CommentInput: React.FC<CommentInputProps> = ({
             marginLeft: buttonsMarginLeft,
             marginRight: spacing?.margin.small,
           }}>
-          <ButtonWrapper
+          <Button
             style={styles.iconContainer}
-            onPress={_onPressSelectImage}>
+            onPress={_onPressSelectImage}
+            disabled={loading}>
             <Icon
               size={13}
               icon={'ImageV'}
               tintColor={theme.colors.iconTintReversed}
             />
-          </ButtonWrapper>
-          <ButtonWrapper style={styles.iconContainer} onPress={_onPressFile}>
+          </Button>
+          <Button
+            style={styles.iconContainer}
+            onPress={_onPressFile}
+            disabled={loading}>
             <Icon
               size={13}
               icon={'attachment'}
               tintColor={theme.colors.iconTintReversed}
             />
-          </ButtonWrapper>
-          <ButtonWrapper style={styles.iconContainer} onPress={onPressSticker}>
+          </Button>
+          <Button
+            style={styles.iconContainer}
+            onPress={onPressSticker}
+            disabled={loading}>
             <Icon
               size={13}
               icon={'iconSticker'}
               tintColor={theme.colors.iconTintReversed}
             />
-          </ButtonWrapper>
+          </Button>
         </Animated.View>
-        <Icon
-          size={24}
-          icon={'AngleRightB'}
-          tintColor={theme.colors.primary7}
-          onPress={() => showButtons(true)}
-        />
+        <Button onPress={() => showButtons(true)} disabled={loading}>
+          <Icon
+            size={24}
+            icon={'AngleRightB'}
+            tintColor={theme.colors.primary7}
+          />
+        </Button>
       </View>
     );
   };
@@ -212,35 +223,49 @@ const CommentInput: React.FC<CommentInputProps> = ({
             autoFocus={autoFocus}
             placeholder={placeholder}
             placeholderTextColor={colors.textSecondary}
+            editable={!loading}
             onChangeText={_onChangeText}>
-            <Text useParseText showRawText={true}>
+            <Text
+              color={loading ? colors.textSecondary : colors.textPrimary}
+              useParseText
+              showRawText={true}>
               {text}
             </Text>
           </TextInput>
-          <ButtonWrapper
+          <Button
             style={{position: 'absolute', right: 10, bottom: 10}}
-            onPress={onPressEmoji}>
+            onPress={onPressEmoji}
+            disabled={loading}>
             <Icon
               size={24}
               icon={'iconSmileSolid'}
               tintColor={theme.colors.iconTintReversed}
             />
-          </ButtonWrapper>
+          </Button>
         </Animated.View>
-        <Icon
-          style={styles.iconSend}
-          onPress={_onPressSend}
-          size={16}
-          icon={'iconSend'}
-          tintColor={theme.colors.primary7}
-        />
+        <Button onPress={_onPressSend} disabled={loading}>
+          {loading ? (
+            <ActivityIndicator
+              style={styles.loadingContainer}
+              size={'small'}
+              color={colors.disabled}
+            />
+          ) : (
+            <Icon
+              style={styles.iconSend}
+              size={16}
+              icon={'iconSend'}
+              tintColor={theme.colors.primary7}
+            />
+          )}
+        </Button>
       </View>
       {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, loading: boolean) => {
   const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     root: {
@@ -277,13 +302,17 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing?.padding.small,
       paddingBottom: spacing?.padding.small,
       paddingLeft: spacing?.padding.base,
-      color: colors.textPrimary,
+      color: loading ? colors.textSecondary : colors.textPrimary,
       backgroundColor: colors.placeholder,
       borderRadius: spacing?.borderRadius.large,
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
     },
     iconSend: {
+      marginBottom: spacing?.margin.base,
+      marginHorizontal: spacing?.margin.large,
+    },
+    loadingContainer: {
       marginBottom: spacing?.margin.base,
       marginHorizontal: spacing?.margin.large,
     },

@@ -13,7 +13,7 @@ import {authStack} from '~/configs/navigator';
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
 import images from '~/resources/images';
-import LandingImg from '../../../../assets/images/landingpage.svg';
+import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
 const Landing = () => {

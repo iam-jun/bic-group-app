@@ -5,5 +5,5 @@ export const emailRegex = /^[A-Za-z\d@.]{3,}$/;
 //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,20}$/;
 export const passwordRegex = /^(?=.*\d)[A-Za-z\d@$!%*?&#^]{8,}$/;
 export const codeRegex = /^[0-9]{1,6}$/;
-export const mentionRegex = /@(?!(?:[a-z0-9.]*\s){3})[._a-z0-9\s]{1,24}/;
+export const mentionRegex = /@(?!(?:[\S]*\s){3})[\S\s]{1,24}/g;
 export const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)]/;
