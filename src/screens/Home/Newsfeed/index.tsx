@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -110,14 +110,19 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.background,
     },
     listContainer: {
+      alignSelf: 'center',
       flex: 1,
-      backgroundColor: colors.bgDisable,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+      maxWidth: 584,
     },
     listStyle: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listFooter: {
       height: 150,
