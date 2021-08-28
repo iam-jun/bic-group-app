@@ -25,7 +25,7 @@
     "text_ok": "OK",
     "text_error": "Error",
     "text_error_message": "Something went wrong",
-    "text_important_posts": "Important Potst",
+    "text_important_posts": "Important Posts",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_all": "All",
@@ -63,7 +63,7 @@
       "many": "{n} members have been added"
     },
     "title_mention_all": "All members in this group",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search."
+    "text_search_no_results":"Sorry, we couldn't find anything related to your search."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -121,7 +121,7 @@
     "text_request_new_code": "Resend new code.",
     "text_title_success": "Successfully!",
     "text_sign_up_desc": "Don’t have an account?",
-    "text_sign_up_success": "Please check your email to comfirm your account.",
+    "text_sign_up_success": "Please check your email to confirm your account.",
     "text_check_email_code": "Code is sending to your email.",
     "text_check_email_description": "You will receive email in a few minute, please check your email and following description.",
     "navigate_sign_in": "Go to Login",
@@ -290,7 +290,7 @@
     "title": "Chat",
     "title_chat_detail": "Group chat info",
     "title_room_members": "Group Chat Members",
-    "title_invite_membesr": "Invite members",
+    "title_invite_members": "Invite members",
     "placeholder_search": "Search...",
     "title_admin": "Admin",
     "title_members": "Members",
@@ -334,8 +334,8 @@
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
     "text_feedback": "Feedback this chat",
-    "label_pin_messagess": "Pin Messages",
-    "label_permisstion_management": "Permissions Management",
+    "label_pin_messages": "Pin Messages",
+    "label_permission_management": "Permissions Management",
     "detail_menu": {
       "change_avatar": "Change Group Avatar",
       "edit_description": "Edit Description",
@@ -355,7 +355,7 @@
         "over_file_size": "Your file must be less than 10MB"
       }
     },
-    "text_search_emtpy": "No people here to chat",
+    "text_search_empty": "No people here to chat",
     "member_menu": {
       "label_view_profile": "View profile",
       "label_set_as_admin": "Set as admin",

@@ -92,7 +92,7 @@ const AddMembersToGroup = (): React.ReactElement => {
   return (
     <ScreenWrapper testID="AddMembersToGroupScreen" isFullView>
       <Header
-        title={i18next.t('chat:title_invite_membesr')}
+        title={i18next.t('chat:title_invite_members')}
         buttonText={i18next.t('common:text_add')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
