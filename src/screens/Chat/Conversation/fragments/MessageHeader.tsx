@@ -20,11 +20,11 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   return (
     <View style={styles.container}>
       <Avatar.Medium
-        source={user.avatar}
+        source={user?.avatar}
         placeholderSource={images.img_user_avatar_default}
       />
       <View style={styles.viewHeaderInfo}>
-        <Text.BodyM style={styles.textName}>{user.name}</Text.BodyM>
+        <Text.BodyM style={styles.textName}>{user?.name}</Text.BodyM>
         <Text.BodyS style={styles.textTime}>
           {formatDate(_updatedAt)}
         </Text.BodyS>
