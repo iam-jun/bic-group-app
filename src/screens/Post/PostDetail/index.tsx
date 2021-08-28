@@ -7,7 +7,6 @@ import Header from '~/beinComponents/Header';
 import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
 import ListView from '~/beinComponents/list/ListView';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 import PostView from '~/screens/Post/components/PostView';
 import {useKeySelector} from '~/hooks/selector';
@@ -15,8 +14,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import {sortComments} from '../helper/PostUtils';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
-import Button from '~/beinComponents/Button';
-import Text from '~/beinComponents/Text';
+import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -28,7 +26,6 @@ const PostDetail = (props: any) => {
   const listRef = useRef<any>();
   let layoutSetted = useRef(false).current;
 
-  const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -63,19 +60,6 @@ const PostDetail = (props: any) => {
     }
   }, [deleted]);
 
-  const onPressLoadMore = () => {
-    const idLessThan = data?.[0]?.id;
-    if (idLessThan) {
-      dispatch(
-        postActions.getCommentsByPostId({
-          postId: id,
-          id_lt: idLessThan,
-          isMerge: true,
-        }),
-      );
-    }
-  };
-
   const renderCommentItem = ({
     item,
     index,
@@ -106,11 +90,11 @@ const PostDetail = (props: any) => {
       <View style={styles.listHeader}>
         <PostView postId={id} isPostDetail />
         {commentLeft > 0 && (
-          <Button onPress={onPressLoadMore}>
-            <Text.H6 style={styles.textLoadMoreComment} useI18n>
-              post:text_load_more_comments
-            </Text.H6>
-          </Button>
+          <LoadMoreComment
+            title={'post:text_load_more_comments'}
+            postId={id}
+            idLessThan={data?.[0]?.id}
+          />
         )}
       </View>
     );
@@ -157,14 +141,9 @@ const PostDetail = (props: any) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
-    container: {},
     listHeader: {backgroundColor: colors.background},
-    textLoadMoreComment: {
-      margin: spacing.margin.small,
-      color: colors.primary7,
-    },
   });
 };
 
