@@ -35,8 +35,6 @@ const MainStack = (): React.ReactElement => {
       closeConnectChat();
     };
   }, []);
-  console.log('Render left col:', showLeftCol);
-  console.log('Render right col:', showRightCol);
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>
