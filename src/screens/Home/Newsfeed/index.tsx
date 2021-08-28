@@ -105,7 +105,7 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
     container: {
@@ -118,7 +118,11 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
-      maxWidth: 584,
+      ...Platform.select({
+        web: {
+          maxWidth: dimension.maxNewsfeedWidth,
+        },
+      }),
     },
     listStyle: {
       backgroundColor:

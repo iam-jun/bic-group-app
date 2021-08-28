@@ -83,6 +83,7 @@ export interface IDimension {
   primaryItemHeight: number;
   avatarSizes: {[key: string]: number};
   commentBarHeight: number;
+  maxNewsfeedWidth: number;
   deviceWidth: number;
   deviceHeight: number;
 }
