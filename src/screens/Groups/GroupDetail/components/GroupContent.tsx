@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import ListView from '~/beinComponents/list/ListView';
@@ -23,6 +23,7 @@ const GroupContent = () => {
   return (
     <ListView
       isFullView
+      style={styles.listContainer}
       listStyle={styles.listStyle}
       data={groupPosts}
       renderItem={renderItem}
@@ -37,11 +38,18 @@ const GroupContent = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing, dimension} = theme;
 
   return StyleSheet.create({
-    listStyle: {
-      backgroundColor: colors.placeholder,
+    listContainer: {
+      flex: 1,
+      ...Platform.select({
+        web: {
+          alignSelf: 'center',
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+        },
+      }),
     },
     listHeaderComponentStyle: {
       marginTop: spacing?.margin.base,
