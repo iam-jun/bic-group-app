@@ -60,10 +60,7 @@ const MainStack = (): React.ReactElement => {
     <View style={styles.container}>
       <View style={styles.content}>
         {dimensions.width >= deviceDimensions.laptop && renderLeftCol()}
-        <View
-          style={{
-            flex: deviceDimensions.centerCols,
-          }}>
+        <View style={styles.centerCol}>
           <MainTabs />
         </View>
         {dimensions.width >= deviceDimensions.desktop && renderRightCol()}
@@ -100,6 +97,9 @@ const createStyles = (theme: ITheme) => {
           borderLeftWidth: 1,
         },
       }),
+    },
+    centerCol: {
+      flex: deviceDimensions.centerCols,
     },
     rightCol: {
       width: 300,
