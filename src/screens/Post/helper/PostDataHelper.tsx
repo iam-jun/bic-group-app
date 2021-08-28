@@ -62,6 +62,7 @@ export const postApiConfig = {
       kind: data?.kind || 'comment',
       id_lt: data?.id_lt,
       limit: data?.limit || 10,
+      recent_reactions_limit: data?.recentReactionsLimit || 1,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({

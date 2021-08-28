@@ -251,6 +251,22 @@ function* addToAllPosts({
         const postComments = sortComments(
           item?.latest_reactions?.comment || [],
         );
+
+        //todo update getstream query to get only 1 child comment
+        //todo @Toan is researching for solution
+        if (postComments.length > 0) {
+          for (let i = 0; i < postComments.length; i++) {
+            const cc = postComments[i]?.latest_children?.comment || [];
+            if (cc.length > 1) {
+              postComments[i].latest_children.comment = cc.slice(
+                cc.length - 1,
+                cc.length,
+              );
+            }
+          }
+        }
+        //todo remove code above later
+
         newAllPosts[item.id] = item;
         newAllCommentByParentId[item.id] = postComments;
         postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));

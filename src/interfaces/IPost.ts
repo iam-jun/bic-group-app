@@ -136,6 +136,7 @@ export interface IRequestGetPostComment {
   id_lt?: string; //get comment before this id
   limit?: number;
   kind?: string;
+  recentReactionsLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
