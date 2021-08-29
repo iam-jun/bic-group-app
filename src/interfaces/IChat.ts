@@ -118,6 +118,7 @@ export type IAttachment = {
   image_url?: string;
   audio_url?: string;
   video_url?: string;
+  title_link?: string;
 };
 
 export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
