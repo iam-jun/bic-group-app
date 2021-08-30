@@ -2,6 +2,7 @@ import React from 'react';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
+import ImageViewer from '~/beinComponents/Image/ImageViewer';
 import Video from '~/beinComponents/Video';
 import {Image, Text} from '~/components';
 import {messageStatus} from '~/constants/chat';
@@ -33,7 +34,11 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
         const url = getMessageAttachmentUrl(attachment?.image_url);
 
         return (
-          <Image style={styles.image} resizeMode="cover" source={{uri: url}} />
+          <ImageViewer
+            style={styles.image}
+            resizeMode="cover"
+            source={{uri: url}}
+          />
         );
       } else if (attachment?.video_url) {
         const url = getMessageAttachmentUrl(attachment?.video_url);
@@ -87,8 +92,8 @@ const createStyles = (theme: ITheme) => {
       paddingVertical: spacing.padding.base,
     },
     image: {
-      width: Platform.OS === 'web' ? 307 : scaleSize(307),
-      height: Platform.OS === 'web' ? 225.5 : scaleSize(225.5),
+      width: Platform.OS === 'web' ? 300 : scaleSize(307),
+      height: Platform.OS === 'web' ? 200 : scaleSize(225.5),
       backgroundColor: colors.placeholder,
     },
     defaultFileContainer: {

@@ -315,7 +315,7 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message_au": "{0} has added {1} to this group",
-    "system_message_ru": "{0} has removed  {1} from the group chat.",
+    "system_message_ru": "{0} has removed {1} from the group chat.",
     "system_message_room_changed_description": "{0} has changed the chat description.",
     "system_message_room_changed_announcement": "{0} has changed the chat announcement.",
     "system_message_room_changed_topic": "{0} has changed the group chat topic to “{1}”",

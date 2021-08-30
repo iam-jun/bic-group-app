@@ -58,7 +58,14 @@ export default function* saga() {
 function* initChat() {
   yield put(actions.getSubscriptions());
   yield put(actions.resetData('groups'));
-  yield put(actions.getData('groups'));
+  yield put(
+    actions.getData('groups', {
+      // disable pagination because of local searching
+      offset: 0,
+      count: 1000,
+      sort: {_updatedAt: -1},
+    }),
+  );
 }
 
 function* getData({
