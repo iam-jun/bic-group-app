@@ -138,7 +138,6 @@ const groupsDataHelper = {
   },
   getGroupMembers: async (groupId: number, params: any) => {
     try {
-      console.log('params:', params);
       const response: any = await makeHttpRequest(
         groupsApiConfig.getGroupMembers(groupId, params),
       );

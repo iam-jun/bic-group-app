@@ -3,7 +3,6 @@ import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
-  IGroup,
   IGroupAddMembers,
   IGroupDetailEdit,
   IGroupGetJoinableMembers,
@@ -25,7 +24,6 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
-  yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
   yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
   yield takeLatest(groupsTypes.GET_JOINABLE_USERS, getJoinableUsers);
@@ -132,24 +130,6 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   }
 }
 
-function* selectGroupDetail({payload}: {type: string; payload: IGroup}) {
-  try {
-    yield put(groupsActions.setLoadingGroupPosts(true));
-
-    // GET MORE INFO FOR GROUP HERE
-    yield put(groupsActions.getGroupDetail(payload.id));
-
-    yield put(groupsActions.setLoadingGroupDetail(false));
-  } catch (error) {
-    console.log(
-      '\x1b[33m',
-      'khanh --- selectGroupDetail | selectGroupDetail : error',
-      error,
-      '\x1b[0m',
-    );
-  }
-}
-
 function* getGroupPosts({
   payload,
 }: {
@@ -176,18 +156,9 @@ function* getGroupPosts({
 }
 
 const requestGroupDetail = async (userId: number) => {
-  try {
-    const response = await groupsDataHelper.getGroupDetail(userId);
-    if (response.code === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestGroupDetail catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
+  const response = await groupsDataHelper.getGroupDetail(userId);
+  if (response.code === 200) {
+    return response.data;
   }
 };
 
