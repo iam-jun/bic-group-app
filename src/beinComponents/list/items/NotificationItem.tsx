@@ -77,10 +77,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     // for notification has a type
     if (act.notificationType !== undefined) {
       switch (act.notificationType) {
-        // noti type 18, 8, 22
+        // noti type 18, 8, 22, 17
         case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
         case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
         case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
+        case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED:
           return renderReplyToCommentNotiContent(act);
 
         // noti type 7, 19, 20, 21
@@ -94,9 +95,13 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST:
           return renderReactionToPostNotiContent(act);
 
-         // noti type 10
+        // noti type 10
         case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT:
           return renderReactionToCommentNotiContent(act);
+
+        // noti type 16
+        case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT:
+          return renderMentionYouInCommentNotiContent(act);
 
         default:
           console.log(
@@ -194,6 +199,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         break;
       case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
         verbText = i18n.t('notification:replied_to_your_comment');
+        break;
+      case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED:
+        verbText = i18n.t('notification:replied_to_comment_you_replied');
         break;
       default:
         break;
@@ -304,6 +312,25 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return (
       <View style={styles.content}>
         {renderNotiTitle(actorName, reactionVerb)}
+        {renderNotiBody(body)}
+      </View>
+    );
+  };
+
+  // render noti content for type 16, 17
+  const renderMentionYouInCommentNotiContent = (
+    act: IGetStreamNotificationActivity,
+  ) => {
+    const actorName = act.actor.data?.fullname || 'Someone';
+    const verbText = i18n.t('notification:mentioned_you_in_a_comment');
+    let body =
+      act.parent_reaction?.data?.content || act.reaction.data?.content || null;
+    if (body) {
+      body = processNotiBody(body);
+    }
+    return (
+      <View style={styles.content}>
+        {renderNotiTitle(actorName, verbText)}
         {renderNotiBody(body)}
       </View>
     );

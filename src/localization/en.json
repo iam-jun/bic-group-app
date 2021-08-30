@@ -427,6 +427,7 @@
     "also_commented_on_a_post": "also commented on a post",
     "commented_on_a_post_you_are_mentioned": "commented on a post you're mentioned",
     "replied_to_your_comment": "replied to your comment",
-    "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned"
+    "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
+    "replied_to_comment_you_replied": "replied to a comment you replied"
   }
 }
