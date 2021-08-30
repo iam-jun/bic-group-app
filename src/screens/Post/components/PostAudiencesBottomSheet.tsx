@@ -14,18 +14,34 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
+import menuActions from '~/screens/Menu/redux/actions';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme, insets);
 
-  const postAudienceSheetRef = useRef();
+  const postAudienceSheetRef = useRef<any>();
   const postAudienceSheet = useKeySelector(postKeySelector.postAudienceSheet);
 
   const {isShow, data, fromStack} = postAudienceSheet || {};
+
+  const onPressItem = (item: any) => {
+    const {id, type} = item || {};
+    if (type === 'user') {
+      dispatch(menuActions.selectedProfile({id: id, isPublic: true}));
+      rootNavigation.navigate(homeStack.publicProfile);
+    } else {
+      rootNavigation.navigate(groupStack.groupDetail, {groupId: id});
+    }
+    postAudienceSheetRef?.current?.close?.();
+  };
 
   const renderSectionHeader = () => null;
 
@@ -65,6 +81,7 @@ const PostAudiencesBottomSheet = () => {
         title={name}
         showAvatar
         avatar={avatar || icon}
+        onPress={() => onPressItem(item)}
         ContentComponent={renderGroupContentComponent(item)}
       />
     );
