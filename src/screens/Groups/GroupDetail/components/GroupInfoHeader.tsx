@@ -118,6 +118,8 @@ const themeStyles = (theme: ITheme) => {
     cover: {
       width: scaleSize(375),
       height: scaleSize(210),
+      maxHeight: 316,
+      maxWidth: 565,
     },
     iconSmall: {
       marginRight: spacing.margin.small,
