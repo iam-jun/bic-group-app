@@ -97,7 +97,7 @@ const themeStyles = (theme: ITheme) => {
     },
     img: {
       width: '100%',
-      height: 223,
+      height: 250,
     },
     mainContainer: {
       marginVertical: spacing.margin.large,
