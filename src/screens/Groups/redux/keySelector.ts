@@ -3,6 +3,7 @@ const groupsKeySelector = {
     group: 'groups.groupDetail.group',
     can_setting: 'groups.groupDetail.can_setting',
     can_manage_member: 'groups.groupDetail.can_manage_member',
+    join_status: 'groups.groupDetail.join_status',
   },
   groupPosts: 'groups.groupPosts',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
