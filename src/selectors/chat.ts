@@ -1,5 +1,4 @@
 /* eslint-disable no-array-constructor */
-import {Platform} from 'react-native';
 import {createSelector} from 'reselect';
 import {IConversation} from '~/interfaces/IChat';
 

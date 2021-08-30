@@ -23,10 +23,9 @@ import actions from '~/screens/Chat/redux/actions';
 import {getAvatar} from '../helper';
 import {ChatInput, MessageContainer, MessageOptionsModal} from './fragments';
 import {deviceDimensions} from '~/theme/dimension';
-import {Platform} from 'react-native';
 
 const Conversation = () => {
-  const {conversation, messages, messagesData} = useChat();
+  const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<Modalize>();
@@ -44,26 +43,6 @@ const Conversation = () => {
 
   const dimensions = useWindowDimensions();
   const isBigTablet = dimensions.width >= deviceDimensions.bigTablet;
-
-  const flatlistRef = React.createRef<FlatList>();
-
-  useEffect(() => {
-    const scrollNode = flatlistRef.current?.getScrollableNode();
-    let listener = null;
-    if (Platform.OS === 'web') {
-      if (!scrollNode) return;
-      listener = scrollNode.addEventListener('wheel', e => {
-        scrollNode.scrollTop -= e.deltaY;
-        e.preventDefault();
-      });
-      flatlistRef.current?.setNativeProps({
-        style: {transform: 'translate3d(0,0,0) scaleY(-1)'},
-      });
-    }
-    return () => {
-      listener && scrollNode.removeEventListener('wheel', listener);
-    };
-  }, [flatlistRef]); // needs to run any time flatlist mounts
 
   const onLoadAvatarError = () => {
     if (isDirect) setAvatar(images.img_user_avatar_default);
@@ -154,15 +133,11 @@ const Conversation = () => {
       )}
       <FlatList
         inverted
-        ref={flatlistRef}
-        // inverted={Platform.OS !== 'web'}
-        contentContainerStyle={styles.list}
         data={messages.data}
         keyboardShouldPersistTaps="handled"
         onEndReached={loadMoreMessages}
         onEndReachedThreshold={0.5}
         removeClippedSubviews={true}
-        showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.recordsPerPage}
         initialNumToRender={appConfig.recordsPerPage}
@@ -194,9 +169,6 @@ const createStyles = (theme: IObject<any>) => {
     },
     headerTitle: {
       marginEnd: spacing.margin.small,
-    },
-    list: {
-      // flexDirection: 'column-reverse',
     },
   });
 };
