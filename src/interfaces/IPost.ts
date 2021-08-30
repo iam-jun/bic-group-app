@@ -248,11 +248,6 @@ export interface IPayloadUpdateCommentsById {
   isMerge: boolean;
 }
 
-export interface IPayloadGetCommentsById {
-  id: string;
-  isMerge: boolean;
-}
-
 export interface ICreatePostParams {
   postId?: string;
   replaceWithDetail?: boolean;
