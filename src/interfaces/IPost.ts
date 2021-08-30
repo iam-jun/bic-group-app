@@ -247,3 +247,9 @@ export interface IPayloadUpdateCommentsById {
   comments: IReaction[];
   isMerge: boolean;
 }
+
+export interface ICreatePostParams {
+  postId?: string;
+  replaceWithDetail?: boolean;
+  initAudience?: any;
+}
