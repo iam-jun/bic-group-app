@@ -43,6 +43,7 @@ import iconStar from '../../assets/icons/icon_star_alt.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuBookmark from '../../assets/icons/icon_menu_bookmark.svg';
+import iconMenuBookmarkRed from '../../assets/icons/icon_menu_bookmark_red.svg';
 import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
 import iconMenuWallet from '../../assets/icons/icon_menu_wallet.svg';
@@ -141,6 +142,7 @@ const icons = {
   iconShieldStar,
   iconMenuMoon,
   iconMenuBookmark,
+  iconMenuBookmarkRed,
   iconMenuMonitor,
   iconMenuSetting,
   iconMenuWallet,

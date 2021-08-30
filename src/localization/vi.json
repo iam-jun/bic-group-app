@@ -183,6 +183,10 @@
     "title_en": "English",
     "title_vi": "Tiếng Việt"
   },
+  "home": {
+    "newsfeed": "Bản tin",
+    "saved_posts": "Bài viết đã lưu"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_edit_post": "Sửa bài viết",

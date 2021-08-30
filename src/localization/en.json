@@ -226,6 +226,10 @@
     "title_en": "English",
     "title_vi": "Tiếng Việt"
   },
+  "home": {
+    "newsfeed": "News feed",
+    "saved_posts": "Saved Posts"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_edit_post": "Edit post",
