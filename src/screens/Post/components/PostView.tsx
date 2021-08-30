@@ -84,7 +84,7 @@ const PostView: FC<PostViewProps> = ({
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
 
-  const commentCount = formatLargeNumber(reaction_counts?.comment || 0);
+  const commentCount = formatLargeNumber(reaction_counts?.comment_count || 0);
   const labelButtonComment = `${t('post:button_comment')}${
     commentCount ? ` (${commentCount})` : ''
   }`;

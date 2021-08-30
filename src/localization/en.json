@@ -285,7 +285,9 @@
     "search_audiences_placeholder": "Search for groups or people",
     "group_manage": "Your Groups",
     "people_search": "People",
-    "show_all": "Show all"
+    "show_all": "Show all",
+    "text_load_more_comments": "View previous comments...",
+    "text_load_more_x_replies": "View %VALUE% replies"
   },
   "chat": {
     "title": "Chat",
@@ -315,7 +317,7 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message_au": "{0} has added {1} to this group",
-    "system_message_ru": "{0} has removed  {1} from the group chat.",
+    "system_message_ru": "{0} has removed {1} from the group chat.",
     "system_message_room_changed_description": "{0} has changed the chat description.",
     "system_message_room_changed_announcement": "{0} has changed the chat announcement.",
     "system_message_room_changed_topic": "{0} has changed the group chat topic to “{1}”",

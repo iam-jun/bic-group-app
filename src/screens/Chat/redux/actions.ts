@@ -147,6 +147,7 @@ const updateConversationName = (payload: string) => ({
 
 const uploadFile = (payload: IUploadFileAction) => ({
   type: Actions.UPLOAD_FILE,
+  payload,
 });
 
 const getChatPermissions = () => ({

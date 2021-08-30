@@ -1,20 +1,18 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, SectionList} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
-import ListView from '~/beinComponents/list/ListView';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import postActions from '~/screens/Post/redux/actions';
-import {useDispatch} from 'react-redux';
 import PostView from '~/screens/Post/components/PostView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import {sortComments} from '../helper/PostUtils';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
+import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -26,10 +24,10 @@ const PostDetail = (props: any) => {
   const listRef = useRef<any>();
   let layoutSetted = useRef(false).current;
 
-  const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+  const styles = createStyle(theme);
 
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
@@ -37,15 +35,15 @@ const PostDetail = (props: any) => {
   const latest_reactions = useKeySelector(
     postKeySelector.postLatestReactionsComments(id),
   );
+  const commentCount = useKeySelector(
+    postKeySelector.postCommentCountsById(id),
+  );
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
-  const data = comments || sortComments(latest_reactions) || [];
+  const listComment = comments || sortComments(latest_reactions) || [];
+  const sectionData = getSectionData(listComment) || [];
 
-  useEffect(() => {
-    if (id) {
-      dispatch(postActions.getCommentsById({id, isMerge: false}));
-    }
-  }, [id]);
+  const commentLeft = commentCount - listComment.length;
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -61,23 +59,42 @@ const PostDetail = (props: any) => {
     }
   }, [deleted]);
 
-  const renderCommentItem = ({
-    item,
-    index,
-  }: {
-    item: IReaction;
-    index: number;
-  }) => {
+  const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
+    listRef?.current?.scrollToLocation?.({
+      itemIndex: itemIndex,
+      sectionIndex: sectionIndex,
+      animated: true,
+    });
+  };
+
+  const renderSectionHeader = (sectionData: any) => {
+    const {section} = sectionData || {};
+    const {comment, index} = section || {};
+
+    return (
+      <CommentItem
+        postId={id}
+        commentData={comment}
+        groupIds={groupIds}
+        onPressReply={() => {
+          textInputRef.current?.focus?.();
+          scrollTo(index, 0);
+        }}
+      />
+    );
+  };
+
+  const renderCommentItem = (data: any) => {
+    const {item, index, section} = data || {};
     return (
       <CommentItem
         postId={id}
         commentData={item}
+        commentParent={section?.comment}
         groupIds={groupIds}
-        onPressReply={(data, isChild) => {
+        onPressReply={() => {
           textInputRef.current?.focus?.();
-          if (!isChild) {
-            listRef.current?.scrollToIndex({index: index});
-          }
+          scrollTo(section?.index, index + 1);
         }}
       />
     );
@@ -87,7 +104,18 @@ const PostDetail = (props: any) => {
     if (!id) {
       return null;
     }
-    return <PostView postId={id} isPostDetail />;
+    return (
+      <View style={styles.listHeader}>
+        <PostView postId={id} isPostDetail />
+        {commentLeft > 0 && (
+          <LoadMoreComment
+            title={'post:text_load_more_comments'}
+            postId={id}
+            idLessThan={listComment?.[0]?.id}
+          />
+        )}
+      </View>
+    );
   };
 
   const renderFooter = () => {
@@ -97,9 +125,9 @@ const PostDetail = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSetted) {
       layoutSetted = true;
-      if (focusComment && data?.length > 0) {
+      if (focusComment && listComment?.length > 0) {
         setTimeout(() => {
-          listRef?.current?.scrollToIndex?.({index: 0, animated: true});
+          scrollTo(0, 0);
         }, 500);
       }
     }
@@ -108,14 +136,15 @@ const PostDetail = (props: any) => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
       <Header subTitle={'Post detail'} />
-      <ListView
-        listRef={listRef}
-        isFullView
-        data={data}
+      <SectionList
+        ref={listRef}
+        sections={sectionData}
         renderItem={renderCommentItem}
+        renderSectionHeader={renderSectionHeader}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}
-        renderItemSeparator={() => <View />}
+        stickySectionHeadersEnabled={false}
+        ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
         onLayout={onLayout}
         onContentSizeChange={onLayout}
@@ -130,10 +159,22 @@ const PostDetail = (props: any) => {
   );
 };
 
+const getSectionData = (listComment: IReaction[]) => {
+  const result: any[] = [];
+  listComment?.map?.((comment, index) => {
+    const item: any = {};
+    item.comment = comment;
+    item.index = index;
+    item.data = comment?.latest_children?.comment || [];
+    result.push(item);
+  });
+  return result;
+};
+
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
-    container: {},
+    listHeader: {backgroundColor: colors.background},
   });
 };
 
