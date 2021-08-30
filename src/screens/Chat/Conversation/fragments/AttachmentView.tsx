@@ -4,13 +4,14 @@ import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import ImageViewer from '~/beinComponents/Image/ImageViewer';
 import Video from '~/beinComponents/Video';
-import {Image, Text} from '~/components';
+import {Text} from '~/components';
 import {messageStatus} from '~/constants/chat';
 import {IMessage} from '~/interfaces/IChat';
 import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import {openLink} from '~/utils/common';
 import {formatBytes} from '~/utils/formatData';
-import {getMessageAttachmentUrl} from '../../helper';
+import {getDownloadUrl, getMessageAttachmentUrl} from '../../helper';
 
 const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
   const theme = useTheme() as ITheme;
@@ -47,6 +48,12 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
       }
     }
 
+    const dowloadFile = () => {
+      const url = getDownloadUrl(attachment?.title_link);
+
+      openLink(url);
+    };
+
     return (
       <View style={styles.defaultFileContainer}>
         <View style={styles.left}>
@@ -71,7 +78,9 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
               <Text.BodyS useI18n>{`chat:upload_status:${status}`}</Text.BodyS>
             )}
             {status === messageStatus.SENT && (
-              <Text.BodySM useI18n>common:text_download</Text.BodySM>
+              <Text.BodySM useI18n onPress={dowloadFile}>
+                common:text_download
+              </Text.BodySM>
             )}
           </View>
         </View>
