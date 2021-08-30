@@ -18,8 +18,8 @@ const Video: React.FC<Props> = ({source, style, controls}: Props) => {
     const attrs = {
       src: source.uri || source,
       controls: controls && 'controls',
-      width: style?.width || 307,
-      height: style?.height || 225.5,
+      width: style?.width || 300,
+      height: style?.height || 200,
     };
 
     return createElement('video', attrs);

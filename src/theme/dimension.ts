@@ -16,6 +16,16 @@ export const groupProfileImageCropRatio = {
   icon: {},
 };
 
+export const userProfileImageCropRatio = {
+  // image crop ratio for cover photo: 16:9
+  background_img_url: {
+    width: DeviceWidth,
+    height: (DeviceWidth / 16) * 9,
+  },
+  // image crop ratio for avatar: 1:1 -> default, no need to define
+  avatar: {},
+};
+
 /* Size config used for Text */
 export const sizes = {
   base: 14,
@@ -118,7 +128,7 @@ export const avatarSizes = {
 
 export const headerHeight = 48;
 export const primaryItemHeight = 64;
-export const commentBarHeight = 36;
+export const commentBarHeight = 44;
 export const maxNewsfeedWidth = 584;
 
 export const scaleSize = (size: number): number =>

@@ -54,6 +54,37 @@ const GroupInfoHeader = () => {
     );
   };
 
+  const renderGroupInfoHeader = () => {
+    return (
+      <View style={styles.nameHeader}>
+        <ButtonWrapper
+          textProps={{
+            variant: 'h5',
+          }}>
+          {name}
+        </ButtonWrapper>
+
+        <View style={styles.groupInfoText}>
+          <Icon
+            style={styles.iconSmall}
+            icon={'iconPrivate'}
+            size={14}
+            tintColor={theme.colors.iconTint}
+          />
+          <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
+          <Text.Subtitle> ⬩ </Text.Subtitle>
+          <Icon
+            style={styles.iconSmall}
+            icon={'UsersAlt'}
+            size={16}
+            tintColor={theme.colors.iconTint}
+          />
+          <Text.BodySM>{user_count}</Text.BodySM>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.coverAndInfoHeader}>
       {/* Cover photo */}
@@ -66,32 +97,7 @@ const GroupInfoHeader = () => {
       <View style={styles.infoContainer}>
         <View style={styles.header}>
           <Avatar.UltraLarge source={icon} style={styles.avatar} />
-          <View style={styles.nameHeader}>
-            <ButtonWrapper
-              textProps={{
-                variant: 'h5',
-              }}>
-              {name}
-            </ButtonWrapper>
-
-            <View style={styles.groupInfoText}>
-              <Icon
-                style={styles.iconSmall}
-                icon={'iconPrivate'}
-                size={14}
-                tintColor={theme.colors.iconTint}
-              />
-              <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
-              <Text.Subtitle> ⬩ </Text.Subtitle>
-              <Icon
-                style={styles.iconSmall}
-                icon={'UsersAlt'}
-                size={16}
-                tintColor={theme.colors.iconTint}
-              />
-              <Text.BodySM>{user_count}</Text.BodySM>
-            </View>
-          </View>
+          {renderGroupInfoHeader()}
           {renderChatButton()}
         </View>
       </View>
@@ -118,6 +124,8 @@ const themeStyles = (theme: ITheme) => {
     cover: {
       width: scaleSize(375),
       height: scaleSize(210),
+      maxHeight: 316,
+      maxWidth: 565,
     },
     iconSmall: {
       marginRight: spacing.margin.small,

@@ -151,3 +151,11 @@ export const getMessageAttachmentUrl = (attachmentUrl: string) => {
     }&rc_token=${auth.accessToken}`,
   );
 };
+
+export const getDownloadUrl = (file?: string) => {
+  const auth = getChatAuthInfo();
+
+  return `${getEnv('ROCKET_CHAT_SERVER')}${file}?download&rc_uid=${
+    auth.userId
+  }&rc_token=${auth.accessToken}`;
+};

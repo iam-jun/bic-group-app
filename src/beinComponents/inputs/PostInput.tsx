@@ -8,11 +8,11 @@ import {
   TextInput,
   TextInputProps,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
-import Text from '~/beinComponents/Text';
 
 export interface PostInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -44,14 +44,17 @@ const PostInput: React.FC<PostInputProps> = ({
   const {colors} = theme;
   const styles = createStyle(theme);
 
+  const inputStyle: any = StyleSheet.flatten([
+    styles.container,
+    isFullScreen ? {flex: 1} : {},
+    Platform.OS === 'web' ? {outlineWidth: 0} : {},
+    style,
+  ]);
+
   return (
     <TextInput
       textAlignVertical={textAlignVertical}
-      style={StyleSheet.flatten([
-        styles.container,
-        isFullScreen ? {flex: 1} : {},
-        style,
-      ])}
+      style={inputStyle}
       selectionColor={colors.textInput}
       placeholder={placeholder}
       multiline={multiline}
@@ -59,11 +62,9 @@ const PostInput: React.FC<PostInputProps> = ({
       keyboardType={keyboardType}
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
-      {...props}>
-      <Text useParseText showRawText>
-        {value}
-      </Text>
-    </TextInput>
+      value={value}
+      {...props}
+    />
   );
 };
 

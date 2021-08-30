@@ -293,9 +293,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onMentionText={onMentionText}
           value={content}
           ComponentInput={PostInput}
-          componentInputProps={{
-            blurOnSubmit: true,
-          }}
         />
         {!isEditPost && (
           <PostToolbar

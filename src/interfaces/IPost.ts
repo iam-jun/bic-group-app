@@ -68,6 +68,7 @@ export interface IPostActivity {
   tags?: string[];
   time?: string;
   important?: IActivityImportant;
+  latest_reactions?: any;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
   deleted?: boolean;
@@ -128,6 +129,20 @@ export interface IRequestPostComment {
   referenceType: 'post' | 'comment';
   commentData: IActivityData;
   userId: number;
+}
+
+export interface IRequestGetPostComment {
+  postId: string;
+  commentId?: string;
+  idLt?: string; //get comment before this id
+  limit?: number;
+  kind?: string;
+  recentReactionsLimit?: number;
+}
+
+export interface IPayloadGetCommentsById extends IRequestGetPostComment {
+  isMerge: boolean;
+  callbackLoading?: (loading: boolean) => void;
 }
 
 export interface IReaction {
@@ -230,10 +245,5 @@ export interface IPayloadUpdateReactionOfPostById {
 export interface IPayloadUpdateCommentsById {
   id: string;
   comments: IReaction[];
-  isMerge: boolean;
-}
-
-export interface IPayloadGetCommentsById {
-  id: string;
   isMerge: boolean;
 }

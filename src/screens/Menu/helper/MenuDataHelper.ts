@@ -18,6 +18,16 @@ export const menuApiConfig = {
       ...data,
     },
   }),
+  uploadImage: (data: FormData): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}files/upload-photos`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    useRetry: false,
+    data,
+  }),
 };
 
 const menuDataHelper = {
@@ -39,6 +49,20 @@ const menuDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.editMyProfile(userId, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  uploadImage: async (data: FormData) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.uploadImage(data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

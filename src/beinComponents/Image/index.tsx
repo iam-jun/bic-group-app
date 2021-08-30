@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {ImageStyle} from 'react-native';
 import {
   Animated,
   Platform,
@@ -15,7 +16,7 @@ export interface ImageProps {
   placeholderStyle?: StyleProp<ViewStyle>;
   PlaceholderComponent?: any;
   containerStyle?: StyleProp<ViewStyle>;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ImageStyle>;
   ImageComponent?: any;
   onError?: (err: any) => void;
   [x: string]: any;
@@ -108,14 +109,6 @@ const Image: React.FC<ImageProps> = ({
         ),
         default: (
           <React.Fragment>
-            <ImageComponent
-              source={_source}
-              {...props}
-              onLoadEnd={onLoadEnd}
-              onError={_onError}
-              style={style}
-            />
-
             <Animated.View
               style={StyleSheet.flatten([
                 styles.placeholderContainer,
@@ -131,6 +124,13 @@ const Image: React.FC<ImageProps> = ({
                 {PlaceholderComponent}
               </View>
             </Animated.View>
+            <ImageComponent
+              source={_source}
+              {...props}
+              onLoadEnd={onLoadEnd}
+              onError={_onError}
+              style={style}
+            />
           </React.Fragment>
         ),
       })}
