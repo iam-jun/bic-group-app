@@ -136,6 +136,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }).start();
   };
 
+  const inputStyle: any = StyleSheet.flatten([
+    styles.textInput,
+    Platform.OS === 'web' ? {outlineWidth: 0} : {},
+  ]);
+
   const buttonsMarginLeft = showButtonsAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [-88, 16],
@@ -217,21 +222,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
           }}>
           <TextInput
             ref={textInputRef}
-            style={styles.textInput}
+            style={inputStyle}
             selectionColor={colors.textInput}
             multiline={true}
             autoFocus={autoFocus}
             placeholder={placeholder}
             placeholderTextColor={colors.textSecondary}
             editable={!loading}
-            onChangeText={_onChangeText}>
-            <Text
-              color={loading ? colors.textSecondary : colors.textPrimary}
-              useParseText
-              showRawText={true}>
-              {text}
-            </Text>
-          </TextInput>
+            value={text}
+            onChangeText={_onChangeText}
+          />
           <Button
             style={{position: 'absolute', right: 10, bottom: 10}}
             onPress={onPressEmoji}
