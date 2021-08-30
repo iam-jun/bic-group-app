@@ -38,7 +38,13 @@ const PostAudiencesBottomSheet = () => {
       dispatch(menuActions.selectedProfile({id: id, isPublic: true}));
       rootNavigation.navigate(homeStack.publicProfile);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {groupId: id});
+      rootNavigation.navigate('groups', {
+        screen: groupStack.groupDetail,
+        params: {
+          groupId: id,
+          initial: false,
+        },
+      });
     }
     postAudienceSheetRef?.current?.close?.();
   };

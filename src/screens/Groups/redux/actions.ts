@@ -71,17 +71,14 @@ const groupsActions = {
       payload,
     };
   },
-  selectGroupDetail: function (payload: IGroup) {
-    return {
-      type: groupsTypes.SELECT_GROUP_DETAIL,
-      payload,
-    };
-  },
+  clearGroupPosts: () => ({
+    type: groupsTypes.CLEAR_GROUP_POSTS,
+  }),
+
   selectJoinableUsers: (payload: IUser) => ({
     type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,
   }),
-
   getJoinableUsers: (payload: IGroupGetJoinableMembers) => ({
     type: groupsTypes.GET_JOINABLE_USERS,
     payload,
