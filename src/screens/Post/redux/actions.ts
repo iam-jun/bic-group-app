@@ -155,14 +155,18 @@ const postActions = {
   hidePostAudiencesBottomSheet: () => ({
     type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
   }),
+  updateAllCommentsByParentIds: (payload: {[postId: string]: IReaction[]}) => ({
+    type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
+    payload,
+  }),
   updateAllCommentsByParentIdsWithComments: (
     payload: IPayloadUpdateCommentsById,
   ) => ({
     type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     payload,
   }),
-  getCommentsById: (payload: IPayloadGetCommentsById) => ({
-    type: postTypes.GET_COMMENTS_BY_IDS,
+  getCommentsByPostId: (payload: IPayloadGetCommentsById) => ({
+    type: postTypes.GET_COMMENTS_BY_POST_ID,
     payload,
   }),
 };

@@ -285,7 +285,9 @@
     "search_audiences_placeholder": "Search for groups or people",
     "group_manage": "Your Groups",
     "people_search": "People",
-    "show_all": "Show all"
+    "show_all": "Show all",
+    "text_load_more_comments": "View previous comments...",
+    "text_load_more_x_replies": "View %VALUE% replies"
   },
   "chat": {
     "title": "Chat",
