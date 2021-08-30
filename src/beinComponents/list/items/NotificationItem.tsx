@@ -9,6 +9,7 @@ import {ITheme} from '~/theme/interfaces';
 import {countTime} from '~/utils/formatData';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 import i18n from '~/localization';
+import {default as reactionsIcons} from '~/constants/reactions';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -49,6 +50,11 @@ const NOTIFICATION_TYPE = {
   NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY: 22,
 };
 
+const COMMENT_TARGET = {
+  POST: 'post',
+  COMMENT: 'comment',
+};
+
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
   verb,
@@ -83,6 +89,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
         case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED:
           return renderCommentToPostNotiContent(act);
+
+        // noti type 9
+        case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST:
+          return renderReactionToPostNotiContent(act);
 
         default:
           console.log(
@@ -232,6 +242,51 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     );
   };
 
+  // render verb text and icon for noti type 9, 10
+  const getReactVerb = (react: string, target: string) => {
+    let targetText;
+    switch (target) {
+      case COMMENT_TARGET.COMMENT:
+        targetText = i18n.t('notification:to_your_comment');
+        break;
+      case COMMENT_TARGET.POST:
+      default:
+        targetText = i18n.t('notification:to_your_post');
+        break;
+    }
+
+    return (
+      <React.Fragment>
+        {i18n.t('reacted') + ' '}
+        {reactionsIcons[react] !== undefined && (
+          <Icon
+            icon={reactionsIcons[react].icon}
+            iconStyle={styles.reactIcon}
+          />
+        )}
+        {' ' + targetText}
+      </React.Fragment>
+    );
+  };
+
+  // render content for noti type 9
+  const renderReactionToPostNotiContent = (
+    act: IGetStreamNotificationActivity,
+  ) => {
+    const actorName = act.actor.data?.fullname || 'Someone';
+    const reactionVerb = getReactVerb(act.verb, COMMENT_TARGET.POST);
+    let body = act.object?.object?.data.content || null;
+    if (body) {
+      body = processNotiBody(body);
+    }
+    return (
+      <View style={styles.content}>
+        {renderNotiTitle(actorName, reactionVerb)}
+        {body && renderNotiBody(body)}
+      </View>
+    );
+  };
+
   // render notification item
   return (
     <View style={styles.container}>
@@ -284,11 +339,15 @@ const createStyles = (theme: ITheme, isRead: boolean) => {
       color: colors.textSecondary,
       zIndex: 99,
     },
+    reactIcon: {
+      transform: [{translateY: 4}],
+    },
   });
 };
 
 // process a text, strip markdown, cut the text off
 const processNotiBody = (text: string) => {
+  text = text.trim();
   text = escapeMarkDown(text);
   text = sliceText(text);
   return text;
