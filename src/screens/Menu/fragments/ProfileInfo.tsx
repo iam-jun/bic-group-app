@@ -127,9 +127,9 @@ const themeStyles = (theme: ITheme) => {
     },
     cover: {
       width: scaleSize(375),
-      height: scaleSize(136),
+      height: scaleSize(210),
       maxHeight: 250,
-      maxWidth: 525,
+      maxWidth: 578,
     },
     imageButton: {
       alignItems: 'center',

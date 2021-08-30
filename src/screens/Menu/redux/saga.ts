@@ -1,11 +1,15 @@
 import {select, put, takeLatest} from 'redux-saga/effects';
+import {Platform} from 'react-native';
+import i18next from 'i18next';
+
 import menuActions from './actions';
 import menuTypes from './types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import {IUserProfile, IUserEdit} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
-import i18next from 'i18next';
 import {mapProfile} from './helper';
+import {IUserImageUpload} from '~/interfaces/IEditUser';
+import {IResponseData} from '~/interfaces/common';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
@@ -13,6 +17,7 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_SELECTED_PROFILE, getSelectedProfile);
   yield takeLatest(menuTypes.SELECTED_PROFILE, selectPublicProfile);
   yield takeLatest(menuTypes.EDIT_MY_PROFILE, editMyProfile);
+  yield takeLatest(menuTypes.UPLOAD_IMAGE, uploadImage);
 }
 
 function* getMyProfile({payload}: {type: string; payload: number}) {
@@ -96,3 +101,41 @@ const requestEditMyProfile = async (data: IUserEdit) => {
 
   return response.data;
 };
+
+function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
+  try {
+    const {image, id, fieldName} = payload;
+
+    const formData = new FormData();
+    if (Platform.OS === 'web') {
+      formData.append(
+        'file',
+        // @ts-ignore
+        image,
+        image.name || 'imageName',
+      );
+    } else {
+      formData.append('file', {
+        type: image.type,
+        // @ts-ignore
+        name: image.name || 'imageName',
+        uri: image.uri,
+      });
+    }
+    const response: IResponseData = yield menuDataHelper.uploadImage(formData);
+    yield put(
+      menuActions.editMyProfile({id, [fieldName]: response?.data?.src}),
+    );
+  } catch (err) {
+    console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
+  }
+}

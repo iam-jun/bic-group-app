@@ -242,7 +242,9 @@
     "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
     "group_manage": "Your Groups",
     "people_search": "People",
-    "show_all": "Show all"
+    "show_all": "Show all",
+    "text_load_more_comments": "Xem bình luận trước đó",
+    "text_load_more_x_replies": "Xem %VALUE% trả lời"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

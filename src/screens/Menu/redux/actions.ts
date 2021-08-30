@@ -1,4 +1,5 @@
 import {IUserEdit, IUserProfile} from '~/interfaces/IAuth';
+import {IUserImageUpload} from '~/interfaces/IEditUser';
 import menuTypes from './types';
 
 const menuActions = {
@@ -38,8 +39,13 @@ const menuActions = {
       payload,
     };
   },
+  uploadImage: function (payload: IUserImageUpload) {
+    return {
+      type: menuTypes.UPLOAD_IMAGE,
+      payload,
+    };
+  },
 
-  // FOR SAGA:
   getMyProfile: (payload: string) => {
     return {
       type: menuTypes.GET_MY_PROFILE,
