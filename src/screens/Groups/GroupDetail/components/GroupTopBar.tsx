@@ -1,5 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {useRootNavigation} from '~/hooks/navigation';
@@ -8,24 +13,31 @@ import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import useGroups from '~/hooks/groups';
+import {deviceDimensions} from '~/theme/dimension';
 
 const GroupTopBar = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {navigation} = useBaseHook();
+  const dimensions = useWindowDimensions();
   const {rootNavigation} = useRootNavigation();
   const groupData = useGroups();
   const {groupDetail} = groupData || {};
   const {can_setting} = groupDetail || {};
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   return (
     <View style={styles.container}>
-      <Icon
-        icon={'iconBack'}
-        size={26}
-        tintColor={theme.colors.iconTint}
-        onPress={() => navigation.goBack()}
-      />
+      <View style={styles.leftComponent}>
+        {!isLaptop && (
+          <Icon
+            icon={'iconBack'}
+            size={26}
+            tintColor={theme.colors.iconTint}
+            onPress={() => navigation.goBack()}
+          />
+        )}
+      </View>
       <View style={styles.rightComponent}>
         <Icon
           icon={'iconSearch'}
@@ -62,6 +74,9 @@ const themeStyles = (theme: ITheme) => {
       justifyContent: 'space-between',
       marginHorizontal: spacing?.margin.large,
       marginVertical: spacing?.margin.small,
+    },
+    leftComponent: {
+      flexDirection: 'row',
     },
     rightComponent: {
       flexDirection: 'row',
