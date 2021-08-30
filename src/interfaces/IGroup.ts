@@ -75,6 +75,11 @@ export interface IGroupGetJoinableMembers {
   params?: any;
 }
 
+export interface IGroupGetMembers {
+  groupId: number;
+  params?: any;
+}
+
 export interface IGroupAddMembers {
   groupId: number;
   userIds: number[];

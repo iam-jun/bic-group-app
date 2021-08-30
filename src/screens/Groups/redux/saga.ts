@@ -1,12 +1,13 @@
 import i18next from 'i18next';
 import {Platform} from 'react-native';
-import {call, put, select, takeLatest} from 'redux-saga/effects';
+import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
   IGroup,
   IGroupAddMembers,
   IGroupDetailEdit,
   IGroupGetJoinableMembers,
+  IGroupGetMembers,
   IGroupImageUpload,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
@@ -86,18 +87,24 @@ function* editGroupDetail({
   }
 }
 
-function* getGroupMember({payload}: {type: string; payload: number}) {
+function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   try {
-    const groupMembers: any = yield select(state => state?.groups?.groupMember);
+    const {groupId, params} = payload;
+
+    const {groups} = yield select();
+    const {groupMembers} = groups;
     const newGroupMembers = Object.assign({}, groupMembers || {});
-    const {skip = 0, take = 20, canLoadMore = true} = newGroupMembers;
+    const {skip = 0, canLoadMore = true} = newGroupMembers;
     if (canLoadMore) {
-      const response = yield call(
-        groupsDataHelper.getGroupMembers,
-        payload,
-        skip,
-        take,
+      const response: IResponseData = yield groupsDataHelper.getGroupMembers(
+        groupId,
+        {
+          offset: skip,
+          limit: appConfig.recordsPerPage,
+          ...params,
+        },
       );
+
       let newSkip = skip;
       let newCanLoadMore = canLoadMore;
       if (response) {

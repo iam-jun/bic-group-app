@@ -7,6 +7,7 @@ import {
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
+  IGroupGetMembers,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -46,7 +47,7 @@ const groupsActions = {
       payload,
     };
   },
-  getGroupMembers: function (payload: number) {
+  getGroupMembers: function (payload: IGroupGetMembers) {
     return {
       type: groupsTypes.GET_GROUP_MEMBER,
       payload,

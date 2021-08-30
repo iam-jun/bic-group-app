@@ -53,7 +53,7 @@ const GroupDetail = (props: any) => {
   const getGroupMembers = () => {
     dispatch(groupsActions.clearGroupMembers());
     if (groupId) {
-      dispatch(groupsActions.getGroupMembers(groupId));
+      dispatch(groupsActions.getGroupMembers({groupId}));
     }
   };
 
@@ -86,7 +86,11 @@ const GroupDetail = (props: any) => {
 
   // visitors cannot see anything of Secret groups
   // => render 404 Not found page
-  if (join_status !== groupJoinStatus.member && privacy === groupPrivacy.secret)
+  if (
+    join_status !== groupJoinStatus.member &&
+    privacy === groupPrivacy.secret &&
+    !refreshingGroupPosts
+  )
     return (
       <ScreenWrapper isFullView>
         <Header title={i18next.t('common:title_page_not_found')} />
