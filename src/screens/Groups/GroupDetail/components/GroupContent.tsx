@@ -16,6 +16,8 @@ const GroupContent = () => {
   const styles = themeStyles(theme);
   const groupPosts = useKeySelector(groupsKeySelector.groupPosts);
 
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group);
+
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
@@ -26,7 +28,7 @@ const GroupContent = () => {
       listStyle={styles.listStyle}
       data={groupPosts}
       renderItem={renderItem}
-      ListHeaderComponent={<HeaderCreatePost />}
+      ListHeaderComponent={<HeaderCreatePost audience={groupData} />}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
       renderItemSeparator={() => (

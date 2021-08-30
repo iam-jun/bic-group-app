@@ -19,12 +19,15 @@ import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
 import menuActions from '~/screens/Menu/redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
+import {ICreatePostParams} from '~/interfaces/IPost';
 
 export interface HeaderCreatePostProps {
+  audience?: any;
   style?: StyleProp<ViewStyle>;
 }
 
 const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
+  audience,
   style,
 }: HeaderCreatePostProps) => {
   const dispatch = useDispatch();
@@ -43,7 +46,11 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   }, [avatar]);
 
   const onPressCreate = () => {
-    navigation.navigate(homeStack.createPost);
+    const params: ICreatePostParams = {};
+    if (audience) {
+      params.initAudience = audience;
+    }
+    navigation.navigate(homeStack.createPost, params);
   };
 
   return (
