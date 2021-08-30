@@ -417,6 +417,8 @@
     "mark_all_as_read_success": "All notifications marked as read",
     "notification_settings": "Notification Settings",
     "created_a_post": "created a post",
-    "mentioned_you_in_a_post": "mentioned you in a post"
+    "mentioned_you_in_a_post": "mentioned you in a post",
+    "replied_to_your_comment": "replied to your comment",
+    "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned"
   }
 }

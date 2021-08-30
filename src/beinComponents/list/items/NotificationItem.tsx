@@ -28,6 +28,27 @@ const VERB = {
 
 const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
 
+const NOTIFICATION_TYPE = {
+  // CREATE_POST: 1,
+  // MENTION: 4,
+  NEW_COMMENT_TO_YOUR_POST: 7,
+  NEW_REPLY_TO_YOUR_COMMENT: 8,
+  NEW_REACTION_TO_YOUR_POST: 9,
+  NEW_REACTION_TO_YOUR_COMMENT: 10,
+  // CREATE_POST_IN_SINGLE_GROUP: 11,
+  // CREATE_POST_IN_MULTI_GROUP: 12,
+  // MENTION_IN_SINGLE_GROUP: 13,
+  // MENTION_IN_MULTI_GROUP: 14,
+  // ADD_COMMENT_TO_POST_NOTICE_AUDIENCE_USER: 15,
+  MENTION_YOU_IN_COMMENT: 16,
+  NEW_REPLY_TO_COMMENT_YOU_REPLIED: 17,
+  NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED: 18,
+  NEW_COMMENT_TO_A_POST: 19,
+  NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT: 20,
+  NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED: 21,
+  NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY: 22,
+};
+
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
   verb,
@@ -50,6 +71,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     // for notification has a type
     if (act.notificationType !== undefined) {
       switch (act.notificationType) {
+        // noti type 18, 8, 22
+        case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
+        case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
+        case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
+          return renderReplyToCommentNotiContent(act);
         default:
           console.log(
             `Notification type ${act.notificationType} have not implemented yet`,
@@ -126,6 +152,39 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return (
       <View style={styles.content}>
         {renderNotiTitle(actorName, verbText, groupText)}
+        {body && renderNotiBody(body)}
+      </View>
+    );
+  };
+
+  // render notification for type 8, 18, 22
+  const renderReplyToCommentNotiContent = (
+    act: IGetStreamNotificationActivity,
+  ) => {
+    const actorName = act.actor.data?.fullname || 'Someone';
+    let verbText = '';
+    switch (act.notificationType) {
+      case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
+      case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
+        verbText = i18n.t(
+          'notification:replied_to_a_comment_you_are_mentioned',
+        );
+        break;
+      case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
+        verbText = i18n.t('notification:replied_to_your_comment');
+        break;
+      default:
+        break;
+    }
+
+    let body = activity.reaction.data?.content || null;
+    if (body) {
+      body = processNotiBody(body);
+    }
+
+    return (
+      <View style={styles.content}>
+        {renderNotiTitle(actorName, verbText)}
         {body && renderNotiBody(body)}
       </View>
     );
