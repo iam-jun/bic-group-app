@@ -76,6 +76,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
         case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
           return renderReplyToCommentNotiContent(act);
+
+        // noti type 7, 19, 20, 21
+        case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
+        case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
+        case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
+        case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED:
+          return renderCommentToPostNotiContent(act);
+
         default:
           console.log(
             `Notification type ${act.notificationType} have not implemented yet`,
@@ -178,6 +186,40 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
 
     let body = activity.reaction.data?.content || null;
+    if (body) {
+      body = processNotiBody(body);
+    }
+
+    return (
+      <View style={styles.content}>
+        {renderNotiTitle(actorName, verbText)}
+        {body && renderNotiBody(body)}
+      </View>
+    );
+  };
+
+  // render content for noti type 7, 19, 20, 21
+  const renderCommentToPostNotiContent = (
+    act: IGetStreamNotificationActivity,
+  ) => {
+    const actorName = act.actor.data?.fullname || 'Someone';
+    let verbText = '';
+    switch (act.notificationType) {
+      case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
+        verbText = i18n.t('notification:commented_on_your_post');
+        break;
+      case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
+        verbText = i18n.t('notification:also_commented_on_a_post');
+        break;
+      case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED:
+      case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
+        verbText = i18n.t('notification:commented_on_a_post_you_are_mentioned');
+        break;
+      default:
+        break;
+    }
+
+    let body = act.reaction.data?.content || null;
     if (body) {
       body = processNotiBody(body);
     }
