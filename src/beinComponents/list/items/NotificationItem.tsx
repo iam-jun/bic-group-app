@@ -94,6 +94,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST:
           return renderReactionToPostNotiContent(act);
 
+         // noti type 10
+        case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT:
+          return renderReactionToCommentNotiContent(act);
+
         default:
           console.log(
             `Notification type ${act.notificationType} have not implemented yet`,
@@ -283,6 +287,24 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       <View style={styles.content}>
         {renderNotiTitle(actorName, reactionVerb)}
         {body && renderNotiBody(body)}
+      </View>
+    );
+  };
+
+  // render content for noti type 10
+  const renderReactionToCommentNotiContent = (
+    act: IGetStreamNotificationActivity,
+  ) => {
+    const actorName = act.actor.data?.fullname || 'Someone';
+    const reactionVerb = getReactVerb(act.verb, COMMENT_TARGET.COMMENT);
+    let body = act.parent_reaction?.data?.content || null;
+    if (body) {
+      body = processNotiBody(body);
+    }
+    return (
+      <View style={styles.content}>
+        {renderNotiTitle(actorName, reactionVerb)}
+        {renderNotiBody(body)}
       </View>
     );
   };
