@@ -250,7 +250,7 @@ const themeStyles = (theme: ITheme) => {
       width: scaleSize(375),
       height: scaleSize(210),
       maxHeight: 250,
-      maxWidth: 525,
+      maxWidth: 565,
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,

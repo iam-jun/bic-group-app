@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import {debounce} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
@@ -20,6 +21,7 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
+  const [searchText, setSearchText] = useState<string>('');
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -32,14 +34,26 @@ const GroupMembers = () => {
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
   const addSuccess = useKeySelector(groupsKeySelector.addSuccess);
   const userAddedCount = useKeySelector(groupsKeySelector.userAddedCount);
 
   const getMembers = () => {
     if (groupId) {
-      dispatch(groupsActions.getGroupMembers(groupId));
+      dispatch(
+        groupsActions.getGroupMembers({
+          groupId,
+          params: {key: searchText.trim()},
+        }),
+      );
     }
   };
+
+  useEffect(() => {
+    if (refreshingGroupPosts) setSearchText('');
+  }, [refreshingGroupPosts]);
 
   useEffect(() => {
     if (groupMember) {
@@ -105,6 +119,25 @@ const GroupMembers = () => {
     );
   };
 
+  const renderInviteMemberButton = () => {
+    // only admin or moderator can see this button
+    return (
+      can_manage_member && (
+        <ButtonWrapper style={styles.inviteButton} onPress={goInviteMembers}>
+          <Icon
+            style={styles.iconSmall}
+            icon={'iconUserPlus'}
+            size={22}
+            tintColor={theme.colors.primary7}
+          />
+          <Text.ButtonBase color={theme.colors.primary} useI18n>
+            common:text_invite
+          </Text.ButtonBase>
+        </ButtonWrapper>
+      )
+    );
+  };
+
   const goInviteMembers = () => {
     dispatch(groupsActions.clearSelectedUsers());
     rootNavigation.navigate(groupStack.inviteMembers);
@@ -114,9 +147,23 @@ const GroupMembers = () => {
     dispatch(groupsActions.clearAddMembersMessage());
   };
 
-  return (
-    <View style={styles.container}>
-      {addSuccess && (
+  const searchUsers = (searchQuery: string) => {
+    dispatch(groupsActions.clearGroupMembers());
+    setSearchText(searchQuery);
+    dispatch(
+      groupsActions.getGroupMembers({groupId, params: {key: searchQuery}}),
+    );
+  };
+
+  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+
+  const onSearchUser = (text: string) => {
+    searchHandler(text);
+  };
+
+  const renderAddMemberSuccessMessage = () => {
+    return (
+      addSuccess && (
         <FlashMessage type="success" onClose={onCloseAddSuccess}>
           {i18next
             .t(
@@ -126,27 +173,24 @@ const GroupMembers = () => {
             )
             .replace('{n}', userAddedCount)}
         </FlashMessage>
-      )}
+      )
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderAddMemberSuccessMessage()}
 
       <View style={styles.searchAndInvite}>
         <SearchInput
+          value={searchText}
           style={styles.inputSearch}
           placeholder={i18next.t('groups:text_search_member')}
+          onChangeText={onSearchUser}
         />
-        {can_manage_member && (
-          <ButtonWrapper style={styles.inviteButton} onPress={goInviteMembers}>
-            <Icon
-              style={styles.iconSmall}
-              icon={'iconUserPlus'}
-              size={22}
-              tintColor={theme.colors.primary7}
-            />
-            <Text.ButtonBase color={theme.colors.primary} useI18n>
-              common:text_invite
-            </Text.ButtonBase>
-          </ButtonWrapper>
-        )}
+        {renderInviteMemberButton()}
       </View>
+
       <SectionList
         style={styles.content}
         sections={sectionList}

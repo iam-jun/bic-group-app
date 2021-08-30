@@ -1,8 +1,9 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
 
 import TabMenu from '~/beinComponents/Tab';
 import {ITheme} from '~/theme/interfaces';
@@ -15,6 +16,11 @@ import {useUserIdAuth} from '~/hooks/auth';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
+import NotFound from '~/screens/NotFound';
+import GroupAbout from './components/GroupAbout';
+import {groupPrivacy} from '~/constants/privacyTypes';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -29,7 +35,8 @@ const GroupDetail = (props: any) => {
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
-  const {id: groupId} = groupInfo;
+  const {id: groupId, privacy} = groupInfo;
+  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
 
   const getGroupPosts = () => {
     if (streamClient && userId && groupId) {
@@ -46,7 +53,7 @@ const GroupDetail = (props: any) => {
   const getGroupMembers = () => {
     dispatch(groupsActions.clearGroupMembers());
     if (groupId) {
-      dispatch(groupsActions.getGroupMembers(groupId));
+      dispatch(groupsActions.getGroupMembers({groupId}));
     }
   };
 
@@ -60,8 +67,39 @@ const GroupDetail = (props: any) => {
     getGroupPosts();
   }, []);
 
+  const renderGroupContent = () => {
+    // visitors can only see "About" of Private group
+    if (
+      join_status !== groupJoinStatus.member &&
+      privacy === groupPrivacy.private
+    ) {
+      return <GroupAbout />;
+    }
+
+    return (
+      <TabMenu
+        data={groupProfileTabs}
+        menuInactiveTintColor={theme.colors.textSecondary}
+      />
+    );
+  };
+
+  // visitors cannot see anything of Secret groups
+  // => render 404 Not found page
+  if (
+    join_status !== groupJoinStatus.member &&
+    privacy === groupPrivacy.secret &&
+    !refreshingGroupPosts
+  )
+    return (
+      <ScreenWrapper isFullView>
+        <Header title={i18next.t('common:title_page_not_found')} />
+        <NotFound />
+      </ScreenWrapper>
+    );
+
   return (
-    <View style={styles.screenContainer}>
+    <ScreenWrapper style={styles.screenContainer} isFullView>
       <Header>
         <GroupTopBar />
       </Header>
@@ -75,12 +113,9 @@ const GroupDetail = (props: any) => {
         }
         style={styles.scrollView}>
         <GroupInfoHeader {...params} />
-        <TabMenu
-          data={groupProfileTabs}
-          menuInactiveTintColor={theme.colors.textSecondary}
-        />
+        {renderGroupContent()}
       </ScrollView>
-    </View>
+    </ScreenWrapper>
   );
 };
 
@@ -90,7 +125,6 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
-      flex: 1,
       backgroundColor: colors.background,
     },
     scrollView: {

@@ -1,16 +1,17 @@
 import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
+
+import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import NotFoundImg from '../../../assets/images/error_404.svg';
 
 const NotFound = () => {
   const theme: ITheme = useTheme() as ITheme;
-  const {t} = useBaseHook();
   const styles = createStyle(theme);
   const dimensions = useWindowDimensions();
 
@@ -29,15 +30,17 @@ const NotFound = () => {
       <View style={styles.contentContainer}>
         {/* @ts-ignore */}
         <SVGIcon source={NotFoundImg} size={imgSize} />
-        <Text.Body style={styles.desc}>{t('error:not_found_desc')}</Text.Body>
-        {/*<Button.Secondary*/}
-        {/*  style={styles.button}*/}
-        {/*  color={theme.colors.primary7}*/}
-        {/*  textColor={theme.colors.background}*/}
-        {/*  onPress={() => console.log('Pressed "Go back"')}*/}
-        {/*  textVariant="h6">*/}
-        {/*  {t('error:button_not_found')}*/}
-        {/*</Button.Secondary>*/}
+        <Text.Body style={styles.desc}>
+          {i18next.t('error:not_found_desc')}
+        </Text.Body>
+        <Button.Secondary
+          style={styles.button}
+          color={theme.colors.primary7}
+          textColor={theme.colors.background}
+          onPress={() => alert('Pressed "Go back"')}
+          textVariant="h6">
+          {i18next.t('error:button_not_found')}
+        </Button.Secondary>
       </View>
     </ScreenWrapper>
   );
@@ -50,7 +53,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.bgSecondary,
     },
     contentContainer: {
       maxWidth: 328,
