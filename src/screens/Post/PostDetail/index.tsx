@@ -143,6 +143,7 @@ const PostDetail = (props: any) => {
         renderSectionHeader={renderSectionHeader}
         ListHeaderComponent={renderPostContent}
         ListFooterComponent={renderFooter}
+        stickySectionHeadersEnabled={false}
         ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
         onLayout={onLayout}
