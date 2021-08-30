@@ -27,7 +27,7 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const route = useRoute<RouteProp<RootStackParamList, 'MainStack'>>();
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
-  const showRightCol = dimensions.width >= deviceDimensions.laptop;
+  const showRightCol = dimensions.width >= deviceDimensions.desktop;
 
   React.useEffect(() => {
     connectChat();
