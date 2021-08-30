@@ -608,14 +608,45 @@ function* updateAllCommentsByParentIdsWithComments({
     get(state, postKeySelector.allCommentsByParentIds),
   ) || {};
   const commentsById = allComments[id] || [];
-  let newComments;
+  let newComments: IReaction[];
   if (isMerge) {
-    newComments = commentsById.concat(comments);
+    newComments = [...new Set([...commentsById, ...comments])];
   } else {
     newComments = comments;
   }
   allComments[id] = sortComments(newComments);
   yield put(postActions.setAllCommentsByParentIds(allComments));
+}
+
+function* addChildCommentToCommentsOfPost({
+  postId,
+  commentId,
+  childComments,
+}: {
+  postId: string;
+  commentId: string;
+  childComments: IReaction[];
+}) {
+  const postComments: IReaction[] = yield select(state =>
+    get(state, postKeySelector.commentsByParentId(postId)),
+  ) || [];
+  for (let i = 0; i < postComments.length; i++) {
+    if (postComments[i].id === commentId) {
+      const latestChildren = postComments[i].latest_children || {};
+      const oldChildComments = latestChildren.comment || [];
+      const newChildComments = oldChildComments.concat(childComments) || [];
+      latestChildren.comment = sortComments(newChildComments);
+      postComments[i].latest_children = latestChildren;
+      yield put(
+        postActions.updateAllCommentsByParentIdsWithComments({
+          id: postId,
+          comments: new Array(postComments[i]),
+          isMerge: true,
+        }),
+      );
+      return;
+    }
+  }
 }
 
 function* getCommentsByPostId({
@@ -624,29 +655,44 @@ function* getCommentsByPostId({
   type: string;
   payload: IPayloadGetCommentsById;
 }) {
-  const {postId, isMerge, callbackLoading} = payload || {};
+  const {postId, commentId, isMerge, callbackLoading} = payload || {};
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
     callbackLoading?.(false);
     if (response?.length > 0) {
-      const payload = {id: postId, comments: response, isMerge};
-      const newAllComments: IReaction[] = [];
-      response.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
+      if (commentId) {
+        //get child comment of comment
+        yield addChildCommentToCommentsOfPost({
+          postId: postId,
+          commentId: commentId,
+          childComments: response,
+        });
+      } else {
+        //get comment of post
+        const payload = {id: postId, comments: response, isMerge};
+        const newAllComments: IReaction[] = [];
+        response.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
 
-      yield put(postActions.addToAllComments(newAllComments));
-      yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
+        yield put(postActions.addToAllComments(newAllComments));
+        yield put(
+          postActions.updateAllCommentsByParentIdsWithComments(payload),
+        );
+      }
     }
   } catch (e) {
     console.log(
       `\x1b[34m🐣️ saga getCommentsById error:`,
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
+    callbackLoading?.(false);
     yield put(
       modalActions.showAlert({
         title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
         content:
-          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+          e?.meta?.message ||
+          e?.meta?.errors?.[0]?.message ||
+          i18n.t('common:text_error_message'),
         confirmLabel: i18n.t('common:text_ok'),
       }),
     );

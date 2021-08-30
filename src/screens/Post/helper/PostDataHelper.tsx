@@ -58,9 +58,10 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      post_id: data?.postId,
+      post_id: data?.commentId ? undefined : data?.postId, //accept only one of post_id, reaction_id or user_id
+      reaction_id: data?.commentId,
       kind: data?.kind || 'comment',
-      id_lt: data?.id_lt,
+      id_lt: data?.idLt,
       limit: data?.limit || 10,
       recent_reactions_limit: data?.recentReactionsLimit || 1,
     },

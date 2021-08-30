@@ -1,5 +1,11 @@
 import React, {FC, useState} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -10,14 +16,18 @@ import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 
 export interface LoadMoreCommentProps {
+  style?: StyleProp<ViewStyle>;
   title: string;
   postId: string;
+  commentId?: string;
   idLessThan: string;
 }
 
 const LoadMoreComment: FC<LoadMoreCommentProps> = ({
+  style,
   title,
   postId,
+  commentId,
   idLessThan,
 }: LoadMoreCommentProps) => {
   const [loadingMore, setLoadingMore] = useState(false);
@@ -32,7 +42,9 @@ const LoadMoreComment: FC<LoadMoreCommentProps> = ({
       dispatch(
         postActions.getCommentsByPostId({
           postId: postId,
-          id_lt: idLessThan,
+          idLt: idLessThan,
+          commentId: commentId,
+          limit: commentId ? 3 : 10,
           isMerge: true,
           callbackLoading: loading => setLoadingMore(loading),
         }),
@@ -41,7 +53,7 @@ const LoadMoreComment: FC<LoadMoreCommentProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={StyleSheet.flatten([styles.container, style])}>
       <Button onPress={onPressLoadMore}>
         <Text.H6 style={styles.textLoadMoreComment} useI18n>
           {title}

@@ -133,7 +133,8 @@ export interface IRequestPostComment {
 
 export interface IRequestGetPostComment {
   postId: string;
-  id_lt?: string; //get comment before this id
+  commentId?: string;
+  idLt?: string; //get comment before this id
   limit?: number;
   kind?: string;
   recentReactionsLimit?: number;

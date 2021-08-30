@@ -59,6 +59,14 @@ const PostDetail = (props: any) => {
     }
   }, [deleted]);
 
+  const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
+    listRef?.current?.scrollToLocation?.({
+      itemIndex: itemIndex,
+      sectionIndex: sectionIndex,
+      animated: true,
+    });
+  };
+
   const renderSectionHeader = (sectionData: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
@@ -70,11 +78,7 @@ const PostDetail = (props: any) => {
         groupIds={groupIds}
         onPressReply={() => {
           textInputRef.current?.focus?.();
-          listRef?.current?.scrollToLocation?.({
-            itemIndex: 0,
-            sectionIndex: index,
-            animated: true,
-          });
+          scrollTo(index, 0);
         }}
       />
     );
@@ -90,11 +94,7 @@ const PostDetail = (props: any) => {
         groupIds={groupIds}
         onPressReply={() => {
           textInputRef.current?.focus?.();
-          listRef?.current?.scrollToLocation?.({
-            itemIndex: index + 1,
-            sectionIndex: section?.index,
-            animated: true,
-          });
+          scrollTo(section?.index, index + 1);
         }}
       />
     );
@@ -127,11 +127,7 @@ const PostDetail = (props: any) => {
       layoutSetted = true;
       if (focusComment && listComment?.length > 0) {
         setTimeout(() => {
-          listRef?.current?.scrollToLocation?.({
-            itemIndex: 0,
-            sectionIndex: 0,
-            animated: true,
-          });
+          scrollTo(0, 0);
         }, 500);
       }
     }
