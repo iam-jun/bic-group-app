@@ -97,6 +97,7 @@ const createStyles = (theme: ITheme) => {
       ...Platform.select({
         web: {
           width: '30%',
+          minWidth: 400,
           borderLeftColor: theme.colors.borderDivider,
           borderLeftWidth: 1,
           borderRightColor: theme.colors.borderDivider,
