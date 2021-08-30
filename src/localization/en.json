@@ -415,6 +415,8 @@
   "notification": {
     "mark_all_as_read": "Mark all as read",
     "mark_all_as_read_success": "All notifications marked as read",
-    "notification_settings": "Notification Settings"
+    "notification_settings": "Notification Settings",
+    "created_a_post": "created a post",
+    "mentioned_you_in_a_post": "mentioned you in a post"
   }
 }

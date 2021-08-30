@@ -182,7 +182,7 @@ export interface IGetStreamPost {
   verb: string;
   type: string;
   data: IActivityData;
-  object?: string;
+  object?: IGetStreamPost | string;
   origin?: string | null;
   target?: string;
   time?: string;
