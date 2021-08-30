@@ -130,7 +130,9 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholderTextColor={colors.textSecondary}
         {...props}
         value={text}
+        style={styles.input}
         onChangeText={_onChangeText}
+        right={<></>}
       />
       {clearText && !!text && (
         <Icon
@@ -154,6 +156,7 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
+    input: {},
     iconClear: {
       position: 'absolute',
       right: spacing.margin.large,

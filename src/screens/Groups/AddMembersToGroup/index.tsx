@@ -58,30 +58,13 @@ const AddMembersToGroup = (): React.ReactElement => {
   };
 
   const onInvitePress = () => {
-    showConfirmations();
+    doAddUsers();
   };
 
   const doAddUsers = () => {
     const userIds = selectedUsers.map((user: IUser) => user.id);
     dispatch(groupsActions.addMembers({groupId, userIds}));
     navigation.goBack();
-  };
-
-  const showConfirmations = () => {
-    const type = selectedUsers.length === 1 ? '1' : 'many';
-
-    dispatch(
-      modalActions.showAlert({
-        iconName: 'addUser',
-        title: i18next.t('common:title_modal_confirm_add_member'),
-        content: i18next
-          .t(`common:title_group_add_member:${type}`)
-          .replace('{0}', groupName),
-        cancelBtn: true,
-        onConfirm: () => doAddUsers(),
-        confirmLabel: i18next.t('common:button_add_member'),
-      }),
-    );
   };
 
   return (

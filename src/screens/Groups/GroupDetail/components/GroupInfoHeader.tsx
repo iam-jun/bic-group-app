@@ -3,12 +3,14 @@ import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
-import useGroups from '~/hooks/groups';
 import {titleCase} from '~/utils/common';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
@@ -19,10 +21,11 @@ import Text from '~/beinComponents/Text';
 const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const groupData = useGroups();
-  const {groupDetail} = groupData || {};
+  const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const {name, user_count, icon, background_img_url, privacy, rocket_chat_id} =
-    groupDetail?.group || {};
+    groupDetail;
+  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+
   const navigation = useNavigation();
 
   const goToGroupChat = () => {
@@ -30,6 +33,25 @@ const GroupInfoHeader = () => {
       screen: chatStack.conversation,
       params: {roomId: rocket_chat_id, initial: false},
     });
+  };
+
+  const renderChatButton = () => {
+    // only members can see this chat button
+    return (
+      join_status === groupJoinStatus.member && (
+        <ButtonWrapper style={styles.chatButton} onPress={goToGroupChat}>
+          <Icon
+            style={styles.iconSmall}
+            icon={'iconMessages'}
+            size={22}
+            tintColor={theme.colors.iconTint}
+          />
+          <Text.ButtonBase color={theme.colors.primary} useI18n>
+            chat:title
+          </Text.ButtonBase>
+        </ButtonWrapper>
+      )
+    );
   };
 
   return (
@@ -70,17 +92,7 @@ const GroupInfoHeader = () => {
               <Text.BodySM>{user_count}</Text.BodySM>
             </View>
           </View>
-          <ButtonWrapper style={styles.chatButton} onPress={goToGroupChat}>
-            <Icon
-              style={styles.iconSmall}
-              icon={'iconMessages'}
-              size={22}
-              tintColor={theme.colors.iconTint}
-            />
-            <Text.ButtonBase color={theme.colors.primary} useI18n>
-              chat:title
-            </Text.ButtonBase>
-          </ButtonWrapper>
+          {renderChatButton()}
         </View>
       </View>
     </View>
