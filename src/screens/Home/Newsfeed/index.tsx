@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -105,19 +105,29 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.background,
     },
     listContainer: {
       flex: 1,
-      backgroundColor: colors.bgDisable,
+      backgroundColor: colors.bgSecondary,
+      ...Platform.select({
+        web: {
+          alignSelf: 'center',
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          backgroundColor: colors.surface,
+        },
+      }),
     },
     listStyle: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listFooter: {
       height: 150,

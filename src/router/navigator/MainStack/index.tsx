@@ -26,6 +26,8 @@ const MainStack = (): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const route = useRoute<RouteProp<RootStackParamList, 'MainStack'>>();
+  const showLeftCol = dimensions.width >= deviceDimensions.laptop;
+  const showRightCol = dimensions.width >= deviceDimensions.desktop;
 
   React.useEffect(() => {
     connectChat();
@@ -34,35 +36,38 @@ const MainStack = (): React.ReactElement => {
     };
   }, []);
 
+  const renderLeftCol = () => (
+    <View style={styles.leftCol}>
+      <NavigationContainer independent ref={leftNavigationRef}>
+        <LeftTabs initialRouteName={route?.params?.initialRouteName} />
+      </NavigationContainer>
+    </View>
+  );
+
+  const renderRightCol = () => (
+    <View style={styles.rightCol}>
+      <NavigationContainer independent ref={rightNavigationRef}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="right-column"
+            component={RightCol}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {dimensions.width >= deviceDimensions.bigTablet && (
-          <View style={styles.leftCol}>
-            <NavigationContainer independent ref={leftNavigationRef}>
-              <LeftTabs initialRouteName={route?.params?.initialRouteName} />
-            </NavigationContainer>
+        {showLeftCol && renderLeftCol()}
+        <View style={styles.centerAndRightCol}>
+          <View style={styles.centerCol}>
+            <MainTabs />
           </View>
-        )}
-        <View
-          style={{
-            flex: deviceDimensions.centerCols,
-          }}>
-          <MainTabs />
+          {showRightCol && renderRightCol()}
         </View>
-        {dimensions.width >= deviceDimensions.laptop && (
-          <View style={styles.rightCol}>
-            <NavigationContainer independent ref={rightNavigationRef}>
-              <Stack.Navigator>
-                <Stack.Screen
-                  name="right-column"
-                  component={RightCol}
-                  options={{headerShown: false}}
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </View>
-        )}
       </View>
       <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
@@ -84,22 +89,31 @@ const createStyles = (theme: ITheme) => {
       height: '100%',
       flexDirection: 'row',
       flexGrow: deviceDimensions.totalCols,
-      maxWidth: deviceDimensions.desktop,
+      maxWidth: deviceDimensions.desktopBigger,
       alignSelf: 'center',
     },
     leftCol: {
-      flex: deviceDimensions.leftCols,
-      paddingEnd: theme.spacing.padding.extraLarge,
+      flex: deviceDimensions.leftCol,
       ...Platform.select({
         web: {
+          width: '30%',
+          minWidth: 400,
           borderLeftColor: theme.colors.borderDivider,
           borderLeftWidth: 1,
+          borderRightColor: theme.colors.borderDivider,
+          borderRightWidth: 1,
         },
       }),
     },
+    centerAndRightCol: {
+      flex: deviceDimensions.centerAndRightCol,
+      flexDirection: 'row',
+    },
+    centerCol: {
+      flex: 1,
+    },
     rightCol: {
-      flex: deviceDimensions.rightCols,
-      paddingStart: theme.spacing.padding.extraLarge,
+      width: 332,
     },
   });
 };

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {StyleSheet, ScrollView, RefreshControl, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -128,7 +128,8 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     scrollView: {
-      backgroundColor: theme.colors.bgDisable,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.bgDisable,
     },
   });
 };
