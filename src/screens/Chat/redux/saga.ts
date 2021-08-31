@@ -12,7 +12,10 @@ import {
   IMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
-import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
+import {
+  IAddUsersToGroupReq,
+  ICreateRoomReq,
+} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -27,6 +30,9 @@ import {
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
+import * as modalActions from '~/store/modal/actions';
+import i18next from 'i18next';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 /**
  * Chat
@@ -50,6 +56,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(types.ADD_USERS_TO_GROUP, addUsersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
   yield takeLatest(types.GET_CHAT_PERMISSIONS, getChatPermissions);
@@ -276,6 +283,34 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
     );
   } catch (err) {
     console.log('updateConversationName', err);
+  }
+}
+
+function* addUsersToGroup({
+  payload,
+}: {
+  type: string;
+  payload: IAddUsersToGroupReq;
+}) {
+  try {
+    const {groupId, userIds} = payload;
+
+    yield groupsDataHelper.addUsers(groupId, userIds);
+    handleAddMember();
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'addMembers catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content: err?.meta?.message || i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 

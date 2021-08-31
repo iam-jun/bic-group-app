@@ -9,6 +9,7 @@ import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {chatPermissions} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -29,6 +30,7 @@ const GroupMembers = (): React.ReactElement => {
   const styles = createStyles(theme);
   const baseSheetRef: any = useRef();
   const {user} = useAuth();
+  const permissions = conversation.permissions || {};
 
   useEffect(() => {
     dispatch(actions.getGroupRols());
@@ -54,10 +56,12 @@ const GroupMembers = (): React.ReactElement => {
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('members'));
 
-  const onAddPress = () => {
-    dispatch(actions.clearSelectedUsers());
-    rootNavigation.navigate(chatStack.addMembers);
-  };
+  const onAddPress = !permissions[chatPermissions.CAN_INVITE]
+    ? undefined
+    : () => {
+        dispatch(actions.clearSelectedUsers());
+        rootNavigation.navigate(chatStack.addMembers);
+      };
 
   const onPressMenu = (user: IUser) => {
     setSelectedMember(user);

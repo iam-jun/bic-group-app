@@ -74,7 +74,7 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     _id,
     name,
     usernames,
-    type: item.customFields?.type,
+    ...item.customFields,
     avatar,
     user: mapUser(item?.u),
     directUser: membersExcludeMe?.length > 0 && membersExcludeMe[0],
@@ -121,6 +121,7 @@ export const mapUser = (item: any): IUser => ({
   ...item,
   avatar: getAvatar(item.username),
   name: item?.name || item?.fullname || item?.username,
+  ...item?.customFields,
 });
 
 export const mapRole = (item: any) => ({

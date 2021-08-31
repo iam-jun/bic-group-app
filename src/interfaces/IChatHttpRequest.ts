@@ -56,6 +56,11 @@ export interface IUpdateGroupName {
   name: string;
 }
 
+export interface IAddUsersToGroupReq {
+  groupId: number;
+  userIds: number[];
+}
+
 export interface IRemoveMemberReq {
   roomId: string;
   userId: string;
