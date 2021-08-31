@@ -63,5 +63,8 @@ amplify/*
 src/aws-exports.js
 android/app/production/
 *.dSYM.zip
-.production.env
+.env.production
+.env.staging
 .bundle/
+GoogleService-Info-Production.plist
+GoogleService-Info-Staging.plist

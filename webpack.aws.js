@@ -5,7 +5,7 @@ const webpack = require('webpack');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const appDirectory = path.resolve(__dirname);
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config({path: './.env.production'});
+require('dotenv').config({path: './.env'});
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const {merge} = require('webpack-merge');
 // eslint-disable-next-line @typescript-eslint/no-var-requires

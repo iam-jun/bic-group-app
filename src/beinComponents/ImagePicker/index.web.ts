@@ -7,7 +7,7 @@ const _Picker = {
       if (!imageSelector) {
         imageSelector = document.createElement('input', {});
         imageSelector.style.display = 'none';
-        imageSelector.setAttribute('name', 'bein-picker');
+        imageSelector.setAttribute('name', 'bein-image-picker');
         imageSelector.setAttribute('type', 'file');
         // imageSelector.setAttribute('multiple', 'multiple');
         imageSelector.setAttribute(
@@ -30,10 +30,10 @@ const _Picker = {
   },
   pickSingle: async () => {
     return new Promise(resolve => {
-      if (fileSelector) {
+      if (!fileSelector) {
         fileSelector = document.createElement('input', {});
         fileSelector.style.display = 'none';
-        fileSelector.setAttribute('name', 'bein-picker');
+        fileSelector.setAttribute('name', 'bein-file-picker');
         fileSelector.setAttribute('type', 'file');
       }
       fileSelector.value = '';
