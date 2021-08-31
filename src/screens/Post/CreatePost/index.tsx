@@ -30,6 +30,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import * as modalActions from '~/store/modal/actions';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 
 export interface CreatePostProps {
   route?: {
@@ -64,12 +65,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {content, images, videos, files} = data || {};
   const actor = useUserIdAuth();
 
-  const mentionLoading = useKeySelector(postKeySelector.mention.searchLoading);
-  const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
-  const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
-
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+
+  const groupIds: any[] = [];
+  chosenAudiences.map((selected: IAudience) => {
+    if (selected.type !== 'user') {
+      groupIds.push(selected.id);
+    }
+  });
+  const strGroupIds = groupIds.join(',');
 
   //Enable  Post button if :
   // + Has at least 1 audience AND
@@ -202,35 +207,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
-  const onMentionText = debounce((textMention: string) => {
-    if (textMention) {
-      const groupIds: any[] = [];
-      chosenAudiences.map((selected: IAudience) => {
-        if (selected.type !== 'user') {
-          groupIds.push(selected.id);
-        }
-      });
-      const strGroupIds = groupIds.join(',');
-      dispatch(postActions.setMentionSearchKey(textMention));
-      dispatch(
-        postActions.getSearchMentionAudiences({
-          key: textMention,
-          group_ids: strGroupIds,
-        }),
-      );
-    } else if (mentionKey || mentionResult?.length > 0) {
-      dispatch(postActions.setMentionSearchResult([]));
-      dispatch(postActions.setMentionSearchKey(''));
-    }
-  }, 300);
-
   const onPressMentionAudience = (audience: any) => {
-    const mention = `@[u:${audience.id}:${
-      audience.fullname || audience.name
-    }] `;
-    const newContent = content.replace(`@${mentionKey}`, mention);
-    dispatch(postActions.setCreatePostData({...data, content: newContent}));
-
     //TEMP DISABLE AUTO ADD USER SELECTED TO AUDIENCE
     // const newChosenAudience = [...chosenAudiences];
     // const mentionUser = {
@@ -249,9 +226,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     //   newChosenAudience.unshift(mentionUser);
     //   dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
     // }
-
-    dispatch(postActions.setMentionSearchResult([]));
-    dispatch(postActions.setMentionSearchKey(''));
   };
 
   const onOpenPostToolbarModal = () => {
@@ -286,21 +260,21 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           </View>
         )}
         <MentionInput
-          data={mentionResult}
           style={styles.flex1}
           textInputStyle={styles.flex1}
           modalStyle={styles.mentionInputModal}
           modalPosition={'top'}
           title={'Can only mention people in your selected audiences'}
           emptyContent={'No people found'}
-          isMentionModalVisible={!!content}
-          // onPressAll={() => alert('all')}
-          loading={mentionLoading}
           onPress={onPressMentionAudience}
           onChangeText={onChangeText}
-          onMentionText={onMentionText}
           value={content}
           ComponentInput={PostInput}
+          getDataPromise={postDataHelper.getSearchMentionAudiences}
+          getDataParam={{
+            group_ids: strGroupIds,
+          }}
+          getDataResponseKey={'data'}
         />
         {!isEditPost && (
           <PostToolbar

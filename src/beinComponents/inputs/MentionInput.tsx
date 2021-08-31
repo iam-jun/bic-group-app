@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {get} from 'lodash';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -24,10 +25,7 @@ export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   title?: string;
   emptyContent?: string;
-  data: any[];
   modalPosition: 'top' | 'bottom';
-  isMentionModalVisible: boolean;
-  loading?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
@@ -36,20 +34,19 @@ export interface MentionInputProps extends TextInputProps {
   onChangeText?: (value: string) => void;
   onMentionText?: (textMention: string) => void;
   onContentSizeChange?: (data: any) => void;
-  value?: string;
   ComponentInput?: any;
   componentInputProps?: any;
-  children?: React.ReactNode;
+
+  getDataPromise?: any;
+  getDataParam?: any;
+  getDataResponseKey?: string;
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
   style,
   title,
   emptyContent,
-  data,
   modalPosition,
-  isMentionModalVisible,
-  loading,
   placeholderText,
   textInputStyle,
   modalStyle,
@@ -58,23 +55,56 @@ const MentionInput: React.FC<MentionInputProps> = ({
   onChangeText,
   onMentionText,
   onContentSizeChange,
-  value,
   ComponentInput = TextInput,
   componentInputProps = {},
-  children,
+
+  getDataPromise,
+  getDataParam,
+  getDataResponseKey = '',
 }: MentionInputProps) => {
   const [mentioning, setMentioning] = useState(false);
+  const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [key, setKey] = useState('');
+  const [content, setContent] = useState('');
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyles(theme, modalPosition);
 
   useEffect(() => {
-    console.log(`\x1b[36m🐣️ MentionInput loading ${loading}\x1b[0m`);
-  }, [loading]);
+    onChangeText?.(content);
+  }, [content]);
+
+  const getData = (mentionKey: string) => {
+    if (getDataPromise && getDataParam) {
+      const param = {...getDataParam, key: mentionKey};
+      setIsLoading(true);
+      getDataPromise?.(param)
+        ?.then?.((response: any) => {
+          setIsLoading(false);
+          const newList = get(response, getDataResponseKey) || [];
+          setList(newList);
+          setKey(mentionKey);
+        })
+        ?.catch((e: any) => {
+          console.log(
+            `\x1b[34m🐣️ MentionInput get data error: `,
+            `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+          );
+          setIsLoading(false);
+          setList([]);
+        });
+    }
+  };
 
   const _onStartMention = () => {
-    console.log(`\x1b[36m🐣️ MentionInput _onStartMention\x1b[0m`);
+    getData('');
+  };
+
+  const _onMentionText = (mentionKey: string) => {
+    onMentionText?.(mentionKey);
+    getData(mentionKey);
   };
 
   const _onChangeText = (text: string) => {
@@ -89,15 +119,30 @@ const MentionInput: React.FC<MentionInputProps> = ({
       _onStartMention();
       isMention = true;
     }
+    if (mentionKey) {
+      _onMentionText(mentionKey);
+    }
     setMentioning(isMention);
-    onMentionText?.(mentionKey);
-    onChangeText?.(text);
+    setContent(text);
   };
 
-  const _onPressItem = (item: any) => {
-    onPress?.(item);
-    setMentioning(false);
-  };
+  const _onPressItem = useCallback(
+    (item: any) => {
+      console.log(`\x1b[36m🐣️ MentionInput \x1b[0m`);
+      const mention = `@[u:${item.id}:${item.fullname || item.name}] `;
+      let newContent;
+      if (key) {
+        newContent = content.replace(`@${key}`, mention);
+      } else {
+        //todo handle cursor position
+        newContent = content.replace(`@${key}`, mention);
+      }
+      setContent(newContent);
+      onPress?.(item);
+      setMentioning(false);
+    },
+    [key, content],
+  );
 
   const _renderItem = ({item}: {item: any}) => {
     return (
@@ -128,7 +173,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const renderEmpty = () => {
     return (
       <View style={styles.emptyContainer}>
-        {loading ? (
+        {isLoading ? (
           <ActivityIndicator color={colors.disabled} />
         ) : (
           <Text.H6 style={styles.textEmpty}>{emptyContent}</Text.H6>
@@ -141,23 +186,22 @@ const MentionInput: React.FC<MentionInputProps> = ({
     <View style={[styles.containerWrapper, style]}>
       <ComponentInput
         {...componentInputProps}
-        value={children ? undefined : value}
+        value={content}
         onChangeText={_onChangeText}
         placeholder={placeholderText}
         onContentSizeChange={onContentSizeChange}
-        style={textInputStyle}>
-        {children}
-      </ComponentInput>
-      {isMentionModalVisible && mentioning && (
+        style={textInputStyle}
+      />
+      {mentioning && (
         <View style={[styles.containerModal, modalStyle]}>
-          {!!title && (
+          {!!title && (!key || list?.length === 0) && (
             <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
           )}
           {renderMentionAll()}
           <Divider margin={spacing.margin.small} />
           <FlatList
             keyboardShouldPersistTaps={'always'}
-            data={data || []}
+            data={list || []}
             ListEmptyComponent={renderEmpty}
             renderItem={_renderItem}
             keyExtractor={item => item.id || item._id}
