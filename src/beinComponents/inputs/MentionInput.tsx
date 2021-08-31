@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {get} from 'lodash';
+import {get, debounce} from 'lodash';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -32,6 +32,8 @@ export interface MentionInputProps extends TextInputProps {
   modalStyle?: StyleProp<ViewStyle>;
   onPress?: (item: any) => void;
   onPressAll?: () => void;
+  showItemAll?: boolean;
+  allReplacer?: string;
   onChangeText?: (value: string) => void;
   onMentionText?: (textMention: string) => void;
   onContentSizeChange?: (data: any) => void;
@@ -54,6 +56,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
   modalStyle,
   onPress,
   onPressAll,
+  showItemAll,
+  allReplacer,
   onChangeText,
   onMentionText,
   onContentSizeChange,
@@ -68,14 +72,16 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [key, setKey] = useState('');
-  const [content, setContent] = useState('');
+  const [content, _setContent] = useState('');
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyles(theme, modalPosition);
 
+  const setContent = debounce(_setContent, 200);
+
   useEffect(() => {
-    if (value && value !== content) {
+    if (value !== undefined && value !== content) {
       setContent(value);
     }
   }, [value]);
@@ -110,10 +116,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
     getData('');
   };
 
-  const _onMentionText = (mentionKey: string) => {
+  const _onMentionText = debounce((mentionKey: string) => {
     onMentionText?.(mentionKey);
     getData(mentionKey);
-  };
+  }, 200);
 
   const _onChangeText = (text: string) => {
     let isMention = false;
@@ -134,23 +140,37 @@ const MentionInput: React.FC<MentionInputProps> = ({
     setContent(text);
   };
 
+  const replaceContent = (
+    content: string,
+    searchValue: string,
+    replacer: string,
+  ) => {
+    if (searchValue) {
+      return content?.replace?.(searchValue, replacer);
+    } else {
+      return content?.replace?.(searchValue, replacer);
+    }
+  };
+
   const _onPressItem = useCallback(
     (item: any) => {
-      console.log(`\x1b[36m🐣️ MentionInput \x1b[0m`);
-      const mention = `@[u:${item.id}:${item.fullname || item.name}] `;
-      let newContent;
-      if (key) {
-        newContent = content.replace(`@${key}`, mention);
-      } else {
-        //todo handle cursor position
-        newContent = content.replace(`@${key}`, mention);
-      }
-      setContent(newContent);
+      const mention = `@[u:${item.id || item._id}:${
+        item.fullname || item.name
+      }] `;
+      setContent(replaceContent(content, `@${key}`, mention));
       onPress?.(item);
       setMentioning(false);
     },
     [key, content],
   );
+
+  const _onPressAll = () => {
+    onPressAll?.();
+    if (allReplacer) {
+      setContent(replaceContent(content, `@${key}`, allReplacer));
+    }
+    setMentioning(false);
+  };
 
   const _renderItem = ({item}: {item: any}) => {
     return (
@@ -166,10 +186,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   const renderMentionAll = () => {
-    if (!onPressAll) return null;
+    if (!onPressAll && !showItemAll) return null;
 
     return (
-      <TouchableOpacity onPress={onPressAll}>
+      <TouchableOpacity onPress={_onPressAll}>
         <View style={styles.mentionAll}>
           <Text.ButtonBase style={styles.textMentionAll}>@all</Text.ButtonBase>
           <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
