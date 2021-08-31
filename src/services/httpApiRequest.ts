@@ -206,7 +206,7 @@ const handleResponseError = async (
       case apiConfig.providers.bein.name:
         return mapResponseSuccessBein(error.response);
       case apiConfig.providers.chat.name:
-        return mapResponseSuccessRocketChat(error.response);
+        return error.response;
       default:
         return mapResponseSuccessBein(error.response);
     }

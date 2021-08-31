@@ -1,5 +1,6 @@
+import {messageStatus} from './../../constants/chat';
 import i18next from 'i18next';
-import {roomTypes} from '~/constants/chat';
+import {roomTypes, messageEventTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IAttachment, IConversation, IMessage} from '~/interfaces/IChat';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
@@ -15,7 +16,7 @@ export const mapData = (user: IUser, dataType: string, data: any) => {
     case 'groups':
       return mapConversations(user, data);
     case 'messages':
-      return mapMessages(data);
+      return mapMessages(user, data);
     default:
       return data;
   }
@@ -24,8 +25,8 @@ export const mapData = (user: IUser, dataType: string, data: any) => {
 export const mapConversations = (user: IUser, data?: []): IConversation[] =>
   (data || []).map((item: any) => mapConversation(user, item));
 
-export const mapMessages = (data?: []): IMessage[] =>
-  (data || []).map((item: any) => mapMessage(item));
+export const mapMessages = (user: IUser, data?: []): IMessage[] =>
+  (data || []).map((item: any) => mapMessage(user, item));
 
 export const mapUsers = (data?: []): IUser[] =>
   (data || []).map((item: any) => mapUser(item));
@@ -83,7 +84,7 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
   };
 };
 
-export const mapMessage = (item: any): IMessage => {
+export const mapMessage = (_user: IUser, item: any): IMessage => {
   const user = mapUser(item?.u);
   let attachment = null;
   if (item.attachments?.length > 0) {
@@ -96,22 +97,31 @@ export const mapMessage = (item: any): IMessage => {
     };
   }
   const type = item.t || attachment?.type;
+  let text = item.msg;
+  const isMyMessage = user.username === _user.username;
+
+  if (item.t) {
+    if (item.t === messageEventTypes.REMOVE_MESSAGE) {
+      text = `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`;
+    } else {
+      text = i18next
+        .t(`chat:system_message:${item.t}`)
+        .replace('{0}', user.name || '')
+        .replace('{1}', item.msg);
+    }
+  }
 
   return {
     ...item,
     room_id: item?.rid,
     user,
     type,
-    system: !!item.t,
+    system: !!item.t && item.t !== messageEventTypes.REMOVE_MESSAGE,
+    removed: !!item.t && item.t === messageEventTypes.REMOVE_MESSAGE,
     createdAt: timestampToISODate(item.ts),
     _updatedAt: timestampToISODate(item._updatedAt),
-    status: 'sent',
-    text: item.t
-      ? i18next
-          .t(`chat:system_message_${item.t}`)
-          .replace('{0}', user.name || '')
-          .replace('{1}', item.msg)
-      : item?.msg,
+    status: messageStatus.SENT,
+    text,
     attachment,
     localId: item.localId || attachment?.localId,
   };
