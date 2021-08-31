@@ -23,6 +23,7 @@ import Divider from '~/beinComponents/Divider';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
+  value?: string;
   title?: string;
   emptyContent?: string;
   modalPosition: 'top' | 'bottom';
@@ -46,6 +47,7 @@ export interface MentionInputProps extends TextInputProps {
 
 const MentionInput: React.FC<MentionInputProps> = ({
   style,
+  value,
   title,
   emptyContent,
   modalPosition,
@@ -76,6 +78,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyles(theme, modalPosition);
+
+  useEffect(() => {
+    if (value !== undefined && value != content) {
+      setContent(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     onChangeText?.(content);
@@ -138,8 +146,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
   ) => {
     if (searchValue === '@') {
       const selectionStart = inputSelection?.start || 0;
-      const head = content?.substring(0, selectionStart);
-      const tail = content?.substring(selectionStart + 1);
+      let head = content?.substr(0, selectionStart) || '';
+      if (head?.[head.length - 1] === '@') {
+        head = head.substr(0, head.length - 1);
+      }
+      const tail = content?.substr(selectionStart + 1);
       return `${head}${replacer}${tail}`;
     } else {
       return content?.replace?.(searchValue, replacer);
