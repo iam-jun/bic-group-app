@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -12,6 +12,7 @@ import images from '~/resources/images';
 import {IUserProfile} from '~/interfaces/IAuth';
 import menuActions from '~/screens/Menu/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
+import {scaleCoverHeight} from '~/theme/dimension';
 
 import Header from '~/beinComponents/Header';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -33,8 +34,10 @@ const ProfileInfo = ({
   phone,
   isPublic,
 }: IUserProfile) => {
+  const [coverHeight, setCoverHeight] = useState<number>(210);
+
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, coverHeight);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -53,20 +56,27 @@ const ProfileInfo = ({
   const onEditProfileButton = () =>
     rootNavigation.navigate(menuStack.userProfile);
 
+  const onCoverLayout = (e: any) => {
+    if (!e?.nativeEvent?.layout?.width) return;
+    const coverWidth = e.nativeEvent.layout.width;
+    const coverHeight = scaleCoverHeight(coverWidth);
+    setCoverHeight(coverHeight);
+  };
+
   return (
     <View>
       <Header />
-      <ButtonWrapper>
+      {/* <ButtonWrapper> */}
+      <View onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
-          resizeMode="cover"
           source={background_img_url || images.img_cover_default}
         />
-      </ButtonWrapper>
+      </View>
+      {/* </ButtonWrapper> */}
       <ButtonWrapper style={styles.imageButton}>
         <Image
           style={styles.avatar}
-          resizeMode="cover"
           source={avatar || images.img_user_avatar_default}
         />
       </ButtonWrapper>
@@ -109,7 +119,7 @@ const ProfileInfo = ({
 
 export default ProfileInfo;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
@@ -126,10 +136,8 @@ const themeStyles = (theme: ITheme) => {
       marginVertical: spacing.margin.small,
     },
     cover: {
-      width: scaleSize(375),
-      height: scaleSize(210),
-      maxHeight: 250,
-      maxWidth: 578,
+      width: '100%',
+      height: coverHeight,
     },
     imageButton: {
       alignItems: 'center',
