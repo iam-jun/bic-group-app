@@ -291,7 +291,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           textInputStyle={styles.flex1}
           modalStyle={styles.mentionInputModal}
           modalPosition={'top'}
-          isMentionModalVisible={!!content && mentionResult?.length > 0}
+          title={'Can only mention people in your selected audiences'}
+          emptyContent={'No people found'}
+          isMentionModalVisible={!!content}
+          // onPressAll={() => alert('all')}
           loading={mentionLoading}
           onPress={onPressMentionAudience}
           onChangeText={onChangeText}
