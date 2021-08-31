@@ -9,6 +9,7 @@ import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import appConfig from '~/configs/appConfig';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -84,7 +85,10 @@ const GroupMembers = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
+  const seachHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);

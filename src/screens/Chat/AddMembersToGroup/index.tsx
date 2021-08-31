@@ -14,6 +14,7 @@ import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import appConfig from '~/configs/appConfig';
 
 const AddMembersToGroup = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
@@ -83,7 +84,10 @@ const AddMembersToGroup = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
+  const seachHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     seachHandler(text);

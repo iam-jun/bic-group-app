@@ -23,6 +23,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {scaleSize} from '~/theme/dimension';
+import appConfig from '~/configs/appConfig';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -96,7 +97,10 @@ const ConversationsList = (): React.ReactElement => {
     dispatch(actions.searchConversation(searchQuery));
   };
 
-  const seachHandler = useCallback(debounce(doSearch, 1000), []);
+  const seachHandler = useCallback(
+    debounce(doSearch, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);
