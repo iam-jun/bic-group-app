@@ -46,7 +46,7 @@ const Conversation = () => {
   const isDirect = conversation.type === roomTypes.DIRECT;
 
   const dimensions = useWindowDimensions();
-  const isBigTablet = dimensions.width >= deviceDimensions.bigTablet;
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const onLoadAvatarError = () => {
     if (isDirect) setAvatar(images.img_user_avatar_default);
@@ -151,7 +151,7 @@ const Conversation = () => {
         onPressIcon={onSearchPress}
         menuIcon="ConversationInfo"
         onPressMenu={goConversationDetail}
-        hideBack={isBigTablet}
+        hideBack={isLaptop}
       />
       {!!error && (
         <FlashMessage type="error" onClose={() => setError('')}>

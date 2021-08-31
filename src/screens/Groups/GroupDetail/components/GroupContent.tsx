@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import ListView from '~/beinComponents/list/ListView';
@@ -16,6 +16,8 @@ const GroupContent = () => {
   const styles = themeStyles(theme);
   const groupPosts = useKeySelector(groupsKeySelector.groupPosts);
 
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group);
+
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
@@ -23,10 +25,11 @@ const GroupContent = () => {
   return (
     <ListView
       isFullView
+      style={styles.listContainer}
       listStyle={styles.listStyle}
       data={groupPosts}
       renderItem={renderItem}
-      ListHeaderComponent={<HeaderCreatePost />}
+      ListHeaderComponent={<HeaderCreatePost audience={groupData} />}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
       renderItemSeparator={() => (
@@ -37,11 +40,18 @@ const GroupContent = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing, dimension} = theme;
 
   return StyleSheet.create({
-    listStyle: {
-      backgroundColor: colors.placeholder,
+    listContainer: {
+      flex: 1,
+      ...Platform.select({
+        web: {
+          alignSelf: 'center',
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+        },
+      }),
     },
     listHeaderComponentStyle: {
       marginTop: spacing?.margin.base,

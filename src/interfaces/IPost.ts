@@ -197,7 +197,7 @@ export interface IGetStreamPost {
   verb: string;
   type: string;
   data: IActivityData;
-  object?: string;
+  object?: IGetStreamPost | string;
   origin?: string | null;
   target?: string;
   time?: string;
@@ -246,4 +246,10 @@ export interface IPayloadUpdateCommentsById {
   id: string;
   comments: IReaction[];
   isMerge: boolean;
+}
+
+export interface ICreatePostParams {
+  postId?: string;
+  replaceWithDetail?: boolean;
+  initAudience?: any;
 }
