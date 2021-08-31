@@ -232,6 +232,8 @@
     "news_feed": "News Feed",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
+    "mention_title": "Can only mention people in your selected audiences",
+    "mention_empty_content": "No people found",
     "button_like": "Like",
     "button_reply": "Reply",
     "button_react": "React",
