@@ -264,16 +264,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           textInputStyle={styles.flex1}
           modalStyle={styles.mentionInputModal}
           modalPosition={'top'}
-          title={'Can only mention people in your selected audiences'}
-          emptyContent={'No people found'}
           onPress={onPressMentionAudience}
           onChangeText={onChangeText}
           value={content}
           ComponentInput={PostInput}
+          title={t('post:mention_title')}
+          emptyContent={t('post:mention_empty_content')}
           getDataPromise={postDataHelper.getSearchMentionAudiences}
-          getDataParam={{
-            group_ids: strGroupIds,
-          }}
+          getDataParam={{group_ids: strGroupIds}}
           getDataResponseKey={'data'}
         />
         {!isEditPost && (

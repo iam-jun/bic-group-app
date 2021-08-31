@@ -24,6 +24,7 @@ import Divider from '~/beinComponents/Divider';
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   title?: string;
+  value?: string;
   emptyContent?: string;
   modalPosition: 'top' | 'bottom';
   placeholderText?: string;
@@ -45,6 +46,7 @@ export interface MentionInputProps extends TextInputProps {
 const MentionInput: React.FC<MentionInputProps> = ({
   style,
   title,
+  value,
   emptyContent,
   modalPosition,
   placeholderText,
@@ -71,6 +73,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyles(theme, modalPosition);
+
+  useEffect(() => {
+    if (value && value !== content) {
+      setContent(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     onChangeText?.(content);
