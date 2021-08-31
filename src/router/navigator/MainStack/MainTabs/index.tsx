@@ -38,11 +38,11 @@ const MainTabs = () => {
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const isBigTablet = dimensions.width >= deviceDimensions.bigTablet;
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const Tab = isPhone ? BottomTab : SideTab;
 
-  const styles = createStyles(theme, isPhone, isBigTablet);
+  const styles = createStyles(theme, isPhone, isLaptop);
   const tabBadge = useTabBadge();
 
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ const MainTabs = () => {
                 focused: boolean;
                 color: string;
               }) => {
-                if (isBigTablet) return null;
+                if (isLaptop) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 const styles = CreateStyle(theme, focused, isPhone, color);
@@ -175,17 +175,13 @@ const CreateStyle = (
   });
 };
 
-const createStyles = (
-  theme: ITheme,
-  isPhone: boolean,
-  isBigTablet: boolean,
-) => {
+const createStyles = (theme: ITheme, isPhone: boolean, isLaptop: boolean) => {
   const {colors} = theme;
   return StyleSheet.create({
     tabBar: isPhone
       ? {}
       : {
-          width: isBigTablet ? 0 : 64,
+          width: isLaptop ? 0 : 80,
           backgroundColor: colors.background,
         },
   });

@@ -14,11 +14,9 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IGroup} from '~/interfaces/IGroup';
 
-interface GroupsProps {}
-
-const Groups: React.FC<GroupsProps> = () => {
+const Groups: React.FC = () => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 

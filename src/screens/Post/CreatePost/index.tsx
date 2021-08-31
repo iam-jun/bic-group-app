@@ -9,6 +9,7 @@ import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
 import {
   IAudience,
+  ICreatePostParams,
   IPayloadPutEditPost,
   IPostActivity,
   IPostCreatePost,
@@ -32,16 +33,13 @@ import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 
 export interface CreatePostProps {
   route?: {
-    params?: {
-      postId?: string;
-      replaceWithDetail?: boolean;
-    };
+    params?: ICreatePostParams;
   };
 }
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
-  const {postId, replaceWithDetail} = route?.params || {};
+  const {postId, replaceWithDetail, initAudience} = route?.params || {};
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -87,6 +85,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     dispatch(postActions.setSearchResultAudienceUsers([]));
     dispatch(postActions.setMentionSearchResult([]));
     dispatch(postActions.setMentionSearchKey(''));
+    if (initAudience?.id) {
+      dispatch(
+        postActions.setCreatePostChosenAudiences(new Array(initAudience)),
+      );
+    }
     return () => {
       dispatch(postActions.clearCreatPostData());
     };

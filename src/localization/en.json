@@ -421,6 +421,19 @@
   "notification": {
     "mark_all_as_read": "Mark all as read",
     "mark_all_as_read_success": "All notifications marked as read",
-    "notification_settings": "Notification Settings"
+    "notification_settings": "Notification Settings",
+    "created_a_post": "created a post",
+    "mentioned_you_in_a_post": "mentioned you in a post",
+    "mentioned_you_in_a_comment": "mentioned you in a comment",
+    "in_group": "in {group_name}",
+    "in_n_groups": "in {group_count} groups",
+    "to_your_post": "to your post",
+    "to_your_comment": "to your comment",
+    "commented_on_your_post": "commented on your post",
+    "also_commented_on_a_post": "also commented on a post",
+    "commented_on_a_post_you_are_mentioned": "commented on a post you're mentioned",
+    "replied_to_your_comment": "replied to your comment",
+    "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
+    "replied_to_comment_you_replied": "replied to a comment you replied"
   }
 }

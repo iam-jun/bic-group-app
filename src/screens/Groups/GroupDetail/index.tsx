@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {StyleSheet, ScrollView, RefreshControl, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -24,6 +24,7 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
+  const groupId = params?.groupId;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -35,37 +36,42 @@ const GroupDetail = (props: any) => {
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
-  const {id: groupId, privacy} = groupInfo;
+  const {privacy} = groupInfo;
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
 
   const getGroupPosts = () => {
-    if (streamClient && userId && groupId) {
-      dispatch(groupsActions.getGroupPosts({streamClient, userId, groupId}));
+    dispatch(groupsActions.clearGroupPosts());
+    if (streamClient && userId) {
+      dispatch(
+        groupsActions.getGroupPosts({
+          streamClient,
+          userId,
+          groupId: groupId,
+        }),
+      );
     }
   };
 
   const getGroupDetail = () => {
-    if (groupId) {
-      dispatch(groupsActions.getGroupDetail(groupId));
-    }
+    dispatch(groupsActions.getGroupDetail(groupId));
   };
 
   const getGroupMembers = () => {
     dispatch(groupsActions.clearGroupMembers());
-    if (groupId) {
-      dispatch(groupsActions.getGroupMembers({groupId}));
-    }
+    dispatch(groupsActions.getGroupMembers({groupId}));
   };
 
   const _onRefresh = () => {
-    getGroupDetail();
-    getGroupPosts();
-    getGroupMembers();
+    if (groupId) {
+      getGroupDetail();
+      getGroupPosts();
+      getGroupMembers();
+    }
   };
 
   useEffect(() => {
-    getGroupPosts();
-  }, []);
+    _onRefresh();
+  }, [groupId]);
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
@@ -112,7 +118,7 @@ const GroupDetail = (props: any) => {
           />
         }
         style={styles.scrollView}>
-        <GroupInfoHeader {...params} />
+        <GroupInfoHeader />
         {renderGroupContent()}
       </ScrollView>
     </ScreenWrapper>
@@ -128,7 +134,8 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     scrollView: {
-      backgroundColor: theme.colors.bgDisable,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.bgDisable,
     },
   });
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
@@ -78,7 +78,8 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     sceneContainerStyle: {
-      backgroundColor: colors.placeholder,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.placeholder,
     },
   });
 };
