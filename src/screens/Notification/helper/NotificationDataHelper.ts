@@ -6,7 +6,7 @@ const notificationsDataHelper = {
     if (streamClient) {
       const streamOptions = {
         offset: 0,
-        limit: 10,
+        limit: 20,
         user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
         ownReactions: true,
         withOwnReactions: true,
@@ -31,6 +31,30 @@ const notificationsDataHelper = {
       //   '\x1b[0m',
       // );
 
+      // because getstream not support check user own noti event
+      // so this is a trick to hide current user's post event
+      let countUnseenCurrentUserPostEvent = 0;
+      data.results = data.results.filter(notiGroup => {
+        if (notiGroup.verb === 'post') {
+          const act = notiGroup.activities[0];
+          if (act.actor.id === userId) {
+            // if this is user own create post event and it is not seen
+            // we must minute unseen count by 1
+            // to make unseen number correct after we hide the noti
+            if (!notiGroup.is_seen) {
+              countUnseenCurrentUserPostEvent++;
+            }
+            return false;
+          }
+        }
+        return true;
+      });
+
+      // update unseen number if there is any noti is hidden
+      data.unseen =
+        data.unseen - countUnseenCurrentUserPostEvent > 0
+          ? data.unseen - countUnseenCurrentUserPostEvent
+          : 0;
       return data;
     }
     return;
