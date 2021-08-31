@@ -23,7 +23,6 @@ import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import {useUserIdAuth} from '~/hooks/auth';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -57,12 +56,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     loading,
     isOpenModal,
     data,
-    tags = [],
     chosenAudiences = [],
     important,
   } = createPostData || {};
   const {content, images, videos, files} = data || {};
-  const actor = useUserIdAuth();
 
   const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
   const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
@@ -188,7 +185,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       dispatch(postActions.putEditPost(payload));
     } else {
-      const payload: IPostCreatePost = {actor, data, audience, tags};
+      const payload: IPostCreatePost = {data, audience, tags};
       if (important?.active) {
         payload.important = important;
       }
