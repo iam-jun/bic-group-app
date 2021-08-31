@@ -133,31 +133,6 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         replyingComment: payload,
       };
-    //mention
-    case postTypes.SET_MENTION_SEARCH_KEY:
-      return {
-        ...state,
-        mention: {
-          ...state.mention,
-          searchKey: payload,
-        },
-      };
-    case postTypes.SET_MENTION_SEARCH_LOADING:
-      return {
-        ...state,
-        mention: {
-          ...state.mention,
-          searchLoading: payload,
-        },
-      };
-    case postTypes.SET_MENTION_SEARCH_RESULT:
-      return {
-        ...state,
-        mention: {
-          ...state.mention,
-          searchResult: payload,
-        },
-      };
     case postTypes.SET_POST_AUDIENCES_BOTTOM_SHEET:
       return {
         ...state,

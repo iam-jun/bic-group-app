@@ -89,8 +89,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     dispatch(postActions.clearCreatPostData());
     dispatch(postActions.setSearchResultAudienceGroups([]));
     dispatch(postActions.setSearchResultAudienceUsers([]));
-    dispatch(postActions.setMentionSearchResult([]));
-    dispatch(postActions.setMentionSearchKey(''));
     if (initAudience?.id) {
       dispatch(
         postActions.setCreatePostChosenAudiences(new Array(initAudience)),
