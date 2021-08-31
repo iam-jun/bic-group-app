@@ -142,13 +142,15 @@ const Conversation = (): React.ReactElement => {
           {renderAvatar()}
           <Text.H5 style={styles.name} numberOfLines={2}>
             {conversation.name}
-            <Text>
-              <Icon
-                iconStyle={styles.iconTitleRight}
-                size={12}
-                icon="RightArrow"
-              />
-            </Text>
+            {conversation.type !== roomTypes.QUICK && (
+              <Text>
+                <Icon
+                  iconStyle={styles.iconTitleRight}
+                  size={12}
+                  icon="RightArrow"
+                />
+              </Text>
+            )}
           </Text.H5>
         </View>
       </TouchableOpacity>
