@@ -73,8 +73,10 @@ const MainTabs = () => {
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
-  const realtimeCallback = () => {
+  const realtimeCallback = data => {
+    const actorId = data.new[0].actor.id;
     streamClient &&
+      actorId != userId &&
       dispatch(
         notificationsActions.getNotifications({
           streamClient,
