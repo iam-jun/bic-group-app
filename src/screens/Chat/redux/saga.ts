@@ -1,10 +1,11 @@
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import {Platform} from 'react-native';
+import i18next from 'i18next';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
-import {chatSocketId, messageEventTypes} from '~/constants/chat';
+import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
 import {
   IChatUser,
@@ -20,6 +21,7 @@ import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   mapConversation,
@@ -31,8 +33,6 @@ import {
 import actions from './actions';
 import * as types from './constants';
 import * as modalActions from '~/store/modal/actions';
-import i18next from 'i18next';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 /**
  * Chat
@@ -317,11 +317,18 @@ function* addUsersToGroup({
 function* removeMember({payload}: {type: string; payload: IChatUser}) {
   try {
     const {chat} = yield select();
-    const data = {
-      roomId: chat.conversation._id,
-      userId: payload._id.toString(),
-    };
-    yield makeHttpRequest(apiConfig.Chat.removeMember(data));
+    const {conversation} = chat;
+    if (conversation.type === roomTypes.GROUP) {
+      yield groupsDataHelper.removeUsers(conversation.beinGroupId, [
+        payload.beinUserId,
+      ]);
+    } else {
+      const data = {
+        roomId: conversation._id,
+        userId: payload._id.toString(),
+      };
+      yield makeHttpRequest(apiConfig.Chat.removeMember(data));
+    }
   } catch (err) {
     console.log('removeMember', err);
   }

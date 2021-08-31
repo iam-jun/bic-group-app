@@ -1,5 +1,5 @@
-import {IUser} from '~/interfaces/IAuth';
 import {
+  IChatUser,
   IConversation,
   IMessage,
   ISendMessageAction,
@@ -64,7 +64,7 @@ const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
 
-const setGroupRoles = (payload: IUser[]) => ({
+const setGroupRoles = (payload: IChatUser[]) => ({
   type: Actions.SET_GROUP_ROLES,
   payload,
 });
@@ -119,7 +119,7 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
   reactionType,
 });
 
-const selectUser = (payload: IUser) => ({
+const selectUser = (payload: IChatUser) => ({
   type: Actions.SELECT_USER,
   payload,
 });
@@ -167,7 +167,7 @@ const addUsersToGroup = (payload: IAddUsersToGroupReq) => ({
   payload,
 });
 
-const removeMember = (payload: IUser) => ({
+const removeMember = (payload: IChatUser) => ({
   type: Actions.REMOVE_MEMBER,
   payload,
 });
@@ -193,7 +193,7 @@ const getMentionUsers = (payload: any) => ({
   payload,
 });
 
-const setMentionUsers = (payload: IUser[]) => ({
+const setMentionUsers = (payload: IChatUser[]) => ({
   type: Actions.SET_MENTION_USERS,
   payload,
 });

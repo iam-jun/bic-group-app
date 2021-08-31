@@ -39,7 +39,7 @@ export interface IChatUser {
   };
   settings?: IUserSettings;
   selected?: boolean;
-  beinUserId: boolean;
+  beinUserId: number;
 }
 interface ILoginToken {
   hashedToken: string;

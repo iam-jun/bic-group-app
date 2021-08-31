@@ -9,15 +9,16 @@ import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {chatPermissions} from '~/constants/chat';
+import {chatPermissions, roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IUser} from '~/interfaces/IAuth';
+import {IChatUser} from '~/interfaces/IChat';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
+import * as modalActions from '~/store/modal/actions';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const GroupMembers = (): React.ReactElement => {
   const {conversation, members, roles} = useChat();
   const {rootNavigation} = useRootNavigation();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedMember, setSelectedMember] = useState<IUser>();
+  const [selectedMember, setSelectedMember] = useState<IChatUser>();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const baseSheetRef: any = useRef();
@@ -63,7 +64,7 @@ const GroupMembers = (): React.ReactElement => {
         rootNavigation.navigate(chatStack.addMembers);
       };
 
-  const onPressMenu = (user: IUser) => {
+  const onPressMenu = (user: IChatUser) => {
     setSelectedMember(user);
 
     baseSheetRef.current?.open();
@@ -95,8 +96,31 @@ const GroupMembers = (): React.ReactElement => {
     seachHandler(text);
   };
 
+  const showConfirmations = (user: IChatUser) => {
+    dispatch(
+      modalActions.showAlert({
+        iconName: 'RemoveUser',
+        title: i18next.t('chat:modal_confirm_remove_member:title'),
+        content: i18next
+          .t(`chat:modal_confirm_remove_member:description`)
+          .replace('{0}', conversation.name),
+        cancelBtn: true,
+        onConfirm: () => doRemoveUser(user),
+        confirmLabel: i18next.t('chat:button_remove_member'),
+      }),
+    );
+  };
+
+  const doRemoveUser = (user: IChatUser) => {
+    dispatch(actions.removeMember(user));
+  };
+
   const onRemovePress = () => {
-    selectedMember && dispatch(actions.removeMember(selectedMember));
+    if (selectedMember) {
+      if (conversation.type === roomTypes.GROUP)
+        showConfirmations(selectedMember);
+      else doRemoveUser(selectedMember);
+    }
     baseSheetRef.current?.close();
   };
 
