@@ -24,7 +24,6 @@ import Divider from '~/beinComponents/Divider';
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   title?: string;
-  value?: string;
   emptyContent?: string;
   modalPosition: 'top' | 'bottom';
   placeholderText?: string;
@@ -48,7 +47,6 @@ export interface MentionInputProps extends TextInputProps {
 const MentionInput: React.FC<MentionInputProps> = ({
   style,
   title,
-  value,
   emptyContent,
   modalPosition,
   placeholderText,
@@ -72,19 +70,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [key, setKey] = useState('');
-  const [content, _setContent] = useState('');
+  const [content, setContent] = useState('');
+  const [inputSelection, setInputSelection] = useState<any>();
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyles(theme, modalPosition);
-
-  const setContent = debounce(_setContent, 200);
-
-  useEffect(() => {
-    if (value !== undefined && value !== content) {
-      setContent(value);
-    }
-  }, [value]);
 
   useEffect(() => {
     onChangeText?.(content);
@@ -145,8 +136,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
     searchValue: string,
     replacer: string,
   ) => {
-    if (searchValue) {
-      return content?.replace?.(searchValue, replacer);
+    if (searchValue === '@') {
+      const selectionStart = inputSelection?.start || 0;
+      const head = content?.substring(0, selectionStart);
+      const tail = content?.substring(selectionStart + 1);
+      return `${head}${replacer}${tail}`;
     } else {
       return content?.replace?.(searchValue, replacer);
     }
@@ -170,6 +164,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
       setContent(replaceContent(content, `@${key}`, allReplacer));
     }
     setMentioning(false);
+  };
+
+  const onSelectionChange = (event: any) => {
+    setInputSelection(event.nativeEvent.selection);
   };
 
   const _renderItem = ({item}: {item: any}) => {
@@ -219,6 +217,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         placeholder={placeholderText}
         onContentSizeChange={onContentSizeChange}
         style={textInputStyle}
+        onSelectionChange={onSelectionChange}
       />
       {mentioning && (
         <View style={[styles.containerModal, modalStyle]}>

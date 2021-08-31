@@ -9,6 +9,8 @@ import {
   TextInputProps,
   ViewStyle,
   Platform,
+  NativeSyntheticEvent,
+  TextInputSelectionChangeEventData,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -24,6 +26,9 @@ export interface PostInputProps extends TextInputProps {
   keyboardType?: KeyboardType;
   returnKeyType?: ReturnKeyType;
   onSubmitEditing?: () => void;
+  onSelectionChange?:
+    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+    | undefined;
   value: string;
 }
 
@@ -37,6 +42,7 @@ const PostInput: React.FC<PostInputProps> = ({
   keyboardType,
   returnKeyType,
   onSubmitEditing = () => Keyboard.dismiss,
+  onSelectionChange,
   value,
   ...props
 }: PostInputProps) => {
@@ -62,6 +68,7 @@ const PostInput: React.FC<PostInputProps> = ({
       keyboardType={keyboardType}
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
+      onSelectionChange={onSelectionChange}
       value={value}
       {...props}
     />
