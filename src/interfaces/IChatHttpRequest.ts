@@ -39,6 +39,11 @@ export interface ISendMessageReq {
   };
 }
 
+export interface IDeleteMessage {
+  roomId: string;
+  msgId: string;
+}
+
 export interface IGetGroupRolesReq {
   roomId: string;
 }
