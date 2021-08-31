@@ -222,6 +222,7 @@ function* getSearchMentionAudiences({
   payload: IParamSearchMentionAudiences;
 }) {
   try {
+    yield put(postActions.setMentionSearchLoading(true));
     const response = yield call(
       postDataHelper.getSearchMentionAudiences,
       payload,
@@ -229,7 +230,9 @@ function* getSearchMentionAudiences({
     if (response?.data) {
       yield put(postActions.setMentionSearchResult(response?.data));
     }
+    yield put(postActions.setMentionSearchLoading(false));
   } catch (e) {
+    yield put(postActions.setMentionSearchLoading(false));
     console.log('\x1b[36m', '🐣️ searchMentionAudiences error:', e, '\x1b[0m');
   }
 }

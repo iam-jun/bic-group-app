@@ -64,6 +64,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {content, images, videos, files} = data || {};
   const actor = useUserIdAuth();
 
+  const mentionLoading = useKeySelector(postKeySelector.mention.searchLoading);
   const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
   const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
 
@@ -291,6 +292,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           modalStyle={styles.mentionInputModal}
           modalPosition={'top'}
           isMentionModalVisible={!!content && mentionResult?.length > 0}
+          loading={mentionLoading}
           onPress={onPressMentionAudience}
           onChangeText={onChangeText}
           onMentionText={onMentionText}

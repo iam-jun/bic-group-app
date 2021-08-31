@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -23,6 +23,7 @@ export interface MentionInputProps extends TextInputProps {
   data: any[];
   modalPosition: 'top' | 'bottom';
   isMentionModalVisible: boolean;
+  loading?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
@@ -42,6 +43,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   data,
   modalPosition,
   isMentionModalVisible,
+  loading,
   placeholderText,
   textInputStyle,
   modalStyle,
@@ -58,11 +60,22 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme, modalPosition);
 
+  useEffect(() => {
+    console.log(`\x1b[36m🐣️ MentionInput loading ${loading}\x1b[0m`);
+  }, [loading]);
+
+  const _onStartMention = () => {
+    console.log(`\x1b[36m🐣️ MentionInput _onStartMention\x1b[0m`);
+  };
+
   const _onChangeText = (text: string) => {
     const matches = text?.match?.(mentionRegex);
     let mentionKey = '';
     if (text && matches && matches.length > 0) {
       mentionKey = matches[matches.length - 1]?.replace('@', '');
+    }
+    if (text?.[text?.length - 1] === '@') {
+      _onStartMention();
     }
     onMentionText?.(mentionKey);
     onChangeText?.(text);

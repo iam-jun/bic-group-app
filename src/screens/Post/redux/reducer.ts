@@ -27,6 +27,7 @@ const initState = {
     callback: undefined,
   },
   mention: {
+    searchLoading: false,
     searchKey: '',
     searchResult: [],
   },
@@ -139,6 +140,14 @@ function postReducer(state = initState, action: any = {}) {
         mention: {
           ...state.mention,
           searchKey: payload,
+        },
+      };
+    case postTypes.SET_MENTION_SEARCH_LOADING:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          searchLoading: payload,
         },
       };
     case postTypes.SET_MENTION_SEARCH_RESULT:

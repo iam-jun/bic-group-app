@@ -4,6 +4,7 @@ const postKeySelector = {
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   mention: {
+    searchLoading: 'post.mention.searchLoading',
     searchKey: 'post.mention.searchKey',
     searchResult: 'post.mention.searchResult',
   },

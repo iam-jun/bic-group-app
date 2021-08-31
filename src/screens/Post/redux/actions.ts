@@ -75,6 +75,10 @@ const postActions = {
     payload,
   }),
   //mention
+  setMentionSearchLoading: (payload: boolean) => ({
+    type: postTypes.SET_MENTION_SEARCH_LOADING,
+    payload,
+  }),
   setMentionSearchKey: (payload: string) => ({
     type: postTypes.SET_MENTION_SEARCH_KEY,
     payload,
