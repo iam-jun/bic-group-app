@@ -63,7 +63,7 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
             <Icon icon="File" size={36} tintColor={theme.colors.primary} />
           )}
         </View>
-        <View>
+        <View style={styles.metaView}>
           <Text.Body numberOfLines={2} style={styles.title} color={color}>
             {name}
           </Text.Body>
@@ -97,7 +97,6 @@ const createStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingRight: 52,
       paddingVertical: spacing.padding.base,
     },
     image: {
@@ -113,6 +112,9 @@ const createStyles = (theme: ITheme) => {
     },
     title: {
       flexShrink: 1,
+    },
+    metaView: {
+      flex: 1,
     },
     metadata: {
       flexDirection: 'row',
