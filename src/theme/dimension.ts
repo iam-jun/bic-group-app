@@ -137,6 +137,9 @@ export const maxNewsfeedWidth = 584;
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
 
+// Cover image ratio -> 25:11
+export const scaleCoverHeight = (widthSize: number) => (widthSize / 25) * 11;
+
 export default {
   sizes,
   lineHeights,
