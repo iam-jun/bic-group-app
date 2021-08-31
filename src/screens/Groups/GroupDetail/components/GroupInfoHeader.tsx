@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
 import {titleCase} from '~/utils/common';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import {scaleCoverHeight} from '~/theme/dimension';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
@@ -19,8 +19,10 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 
 const GroupInfoHeader = () => {
+  const [coverHeight, setCoverHeight] = useState<number>(210);
+
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, coverHeight);
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const {name, user_count, icon, background_img_url, privacy, rocket_chat_id} =
     groupDetail;
@@ -33,6 +35,24 @@ const GroupInfoHeader = () => {
       screen: chatStack.conversation,
       params: {roomId: rocket_chat_id, initial: false},
     });
+  };
+
+  const onCoverLayout = (e: any) => {
+    if (!e?.nativeEvent?.layout?.width) return;
+    const coverWidth = e.nativeEvent.layout.width;
+    const coverHeight = scaleCoverHeight(coverWidth);
+    setCoverHeight(coverHeight);
+  };
+
+  const renderCoverImage = () => {
+    return (
+      <View onLayout={onCoverLayout}>
+        <Image
+          style={styles.cover}
+          source={background_img_url || images.img_cover_default}
+        />
+      </View>
+    );
   };
 
   const renderChatButton = () => {
@@ -87,11 +107,7 @@ const GroupInfoHeader = () => {
 
   return (
     <View style={styles.coverAndInfoHeader}>
-      {/* Cover photo */}
-      <Image
-        style={styles.cover}
-        source={background_img_url || images.img_cover_default}
-      />
+      {renderCoverImage()}
 
       {/* Group info header */}
       <View style={styles.infoContainer}>
@@ -107,7 +123,7 @@ const GroupInfoHeader = () => {
 
 export default GroupInfoHeader;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
     infoContainer: {
@@ -122,10 +138,8 @@ const themeStyles = (theme: ITheme) => {
       marginRight: spacing?.margin.base,
     },
     cover: {
-      width: scaleSize(375),
-      height: scaleSize(210),
-      maxHeight: 316,
-      maxWidth: 565,
+      width: '100%',
+      height: coverHeight,
     },
     iconSmall: {
       marginRight: spacing.margin.small,

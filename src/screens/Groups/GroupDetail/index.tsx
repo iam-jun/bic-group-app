@@ -117,6 +117,7 @@ const GroupDetail = (props: any) => {
             tintColor={theme.colors.borderDisable}
           />
         }
+        showsVerticalScrollIndicator={false}
         style={styles.scrollView}>
         <GroupInfoHeader />
         {renderGroupContent()}
