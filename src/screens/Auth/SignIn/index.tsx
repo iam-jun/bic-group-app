@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
@@ -11,13 +11,13 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-
-import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import Input from '~/beinComponents/inputs/TextInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+
+import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
@@ -26,11 +26,11 @@ import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import images from '~/resources/images';
 import * as modalActions from '~/store/modal/actions';
+import {deviceDimensions} from '~/theme/dimension';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import * as actions from '../redux/actions';
 import {setSigningInError} from '../redux/actions';
-import {deviceDimensions} from '~/theme/dimension';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -175,7 +175,6 @@ const SignIn = () => {
               },
             }}
             name="email"
-            defaultValue={__DEV__ && 'fe.admin'}
           />
           <Controller
             control={control}
@@ -209,7 +208,6 @@ const SignIn = () => {
                 message: t('auth:text_err_password_format'),
               },
             }}
-            defaultValue={__DEV__ && 'ABCxyz123@'}
           />
           <View style={styles.forgotButton}>
             <TouchableOpacity

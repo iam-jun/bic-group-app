@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "husky install",
+    "postinstall": "husky install && npm run setup-dev",
     "precommit": "npm run prettier-format",
     "lint": "npx eslint .",
     "prettier-format": "npx prettier --config .prettierrc.json \"**/*.{js,jsx,ts,tsx}\" --write",
@@ -12,11 +12,16 @@
     "ios": "react-native run-ios",
     "start-android": "adb reverse tcp:8081 tcp:8081 && react-native start --port=8081",
     "build": "rm -rf dist/ && webpack --mode=production --config webpack.prod.js",
+    "build-stag": "rm -rf dist/ && webpack --mode=production --config webpack.staging.js",
+    "build-dev": "rm -rf dist/ && webpack --mode=production --config webpack.aws.js",
     "web": "webpack serve --mode=development --config webpack.dev.js",
     "test android dev": "detox test --configuration android.dev.debug",
     "test android dev-release": "detox test --configuration android.dev.release",
+    "setup-dev": "cd ios && fastlane setup",
     "ios-deploy-dev": "cd ios && fastlane deploy_dev",
+    "ios-deploy-staging": "cd ios && fastlane deploy_staging",
     "android-deploy-dev": "cd android && fastlane deploy_dev",
+    "android-deploy-staging": "cd android && fastlane deploy_staging",
     "test": "detox"
   },
   "jest": {

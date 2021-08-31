@@ -3,7 +3,14 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
+project 'bein_group',
+  'DebugStaging' => :debug,
+  'DebugDevelopment' => :debug,
+  'ReleaseStaging' => :release,
+  'ReleaseDevelopment' => :release
+
 target 'bein_group' do
+  project 'bein_group'
   config = use_native_modules!
 
   use_react_native!(
