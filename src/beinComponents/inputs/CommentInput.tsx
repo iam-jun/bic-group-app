@@ -3,10 +3,12 @@ import {
   ActivityIndicator,
   Animated,
   Keyboard,
+  NativeSyntheticEvent,
   Platform,
   StyleProp,
   StyleSheet,
   TextInput,
+  TextInputSelectionChangeEventData,
   View,
   ViewStyle,
 } from 'react-native';
@@ -16,7 +18,6 @@ import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import Text from '~/beinComponents/Text';
 import {IFileResponse} from '~/interfaces/common';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
@@ -29,6 +30,9 @@ export interface CommentInputProps {
   onPressSend?: () => void;
   onPressSelectImage?: (file: IFileResponse) => void;
   onPressFile?: (file: IFileResponse) => void;
+  onSelectionChange?:
+    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+    | undefined;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;
   value?: string;
@@ -45,6 +49,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   onPressSend,
   onPressSelectImage,
   onPressFile,
+  onSelectionChange,
   autoFocus,
   blurOnSubmit,
   value,
@@ -231,6 +236,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             editable={!loading}
             value={text}
             onChangeText={_onChangeText}
+            onSelectionChange={onSelectionChange}
           />
           <Button
             style={{position: 'absolute', right: 10, bottom: 10}}

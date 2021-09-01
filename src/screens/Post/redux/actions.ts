@@ -74,15 +74,6 @@ const postActions = {
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
   }),
-  //mention
-  setMentionSearchKey: (payload: string) => ({
-    type: postTypes.SET_MENTION_SEARCH_KEY,
-    payload,
-  }),
-  setMentionSearchResult: (payload: any[]) => ({
-    type: postTypes.SET_MENTION_SEARCH_RESULT,
-    payload,
-  }),
   setAllCommentsByParentIds: (payload: {[x: string]: IReaction}) => ({
     type: postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS,
     payload,
@@ -119,10 +110,6 @@ const postActions = {
   }),
   addToAllComments: (payload: IReaction[] | IReaction) => ({
     type: postTypes.ADD_TO_ALL_COMMENTS,
-    payload,
-  }),
-  getSearchMentionAudiences: (payload: IParamSearchMentionAudiences) => ({
-    type: postTypes.GET_SEARCH_MENTION_AUDIENCES,
     payload,
   }),
   postReactToPost: (payload: IPayloadReactToPost) => ({

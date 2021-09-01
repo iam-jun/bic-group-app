@@ -24,7 +24,7 @@ const Image: React.FC<ImageProps> = ({
       style: style,
       width: style?.width,
       height: style?.height,
-      class: className,
+      className,
     };
 
     return createElement('img', attrs);

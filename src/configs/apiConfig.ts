@@ -9,6 +9,7 @@ import {
   ISendMessageReq,
   IUpdateGroupName,
   IRemoveMemberReq,
+  IDeleteMessage,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -105,6 +106,15 @@ const Chat = {
   sendMessage: (data: ISendMessageReq): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}chat.sendMessage`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  deleteMessage: (data: IDeleteMessage): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.delete`,
       method: 'post',
       useRetry: false,
       provider: providers.chat,

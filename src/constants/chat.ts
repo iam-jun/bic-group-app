@@ -17,6 +17,7 @@ export const messageEventTypes = {
   ROOM_CHANGED_ANNOUNCEMENT: 'room_changed_announcement',
   ROOM_CHANGED_TOPIC: 'room_changed_topic',
   REMOVE_USER: 'ru',
+  REMOVE_MESSAGE: 'rm',
 };
 
 export const messageStatus = {
@@ -32,4 +33,52 @@ export const chatPermissions = {
   CAN_MUTE: 'can_mute',
   CAN_REMOVE_CHAT_MEMBER: 'can_remove_chat_member',
   CAN_LEAVE: 'can_leave',
+};
+
+export const messageOptionData = {
+  delete: {
+    icon: 'Trash',
+    label: 'delete',
+  },
+  reply: {
+    icon: 'CornerDownRight',
+    label: 'reply',
+  },
+  copy: {
+    icon: 'Copy',
+    label: 'copy',
+  },
+};
+
+export type MessageOptionType = keyof typeof messageOptionData;
+
+export const myMessageOptions = ['delete', 'reply', 'copy'];
+
+export const messageOptions = ['reply', 'copy'];
+
+export const reactions = {
+  love_hearts: {
+    id: 'love_hearts',
+    icon: 'love_hearts',
+  },
+  stunned_wow: {
+    id: 'stunned_wow',
+    icon: 'stunned_wow',
+  },
+  laugh_rofl: {
+    id: 'laugh_rofl',
+    icon: 'laugh_rofl',
+  },
+  crying_sad: {
+    id: 'crying_sad',
+    icon: 'crying_sad',
+  },
+  angry_furious: {
+    id: 'angry_furious',
+    icon: 'angry_furious',
+  },
+  add_react: {
+    id: 'add_react',
+    icon: 'iconReact',
+  },
 };

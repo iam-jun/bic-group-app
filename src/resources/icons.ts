@@ -24,6 +24,7 @@ import iconTabMenu from '../../assets/icons/icon_menu.svg';
 import iconTabMenuBein from '../../assets/icons/icon_menu_bein.svg';
 import iconMenuBitConvert from '../../assets/icons/icon_menu_bit_convert.svg';
 import iconMenuBookmark from '../../assets/icons/icon_menu_bookmark.svg';
+import iconMenuBookmarkRed from '../../assets/icons/icon_menu_bookmark_red.svg';
 import iconMenuBuyCrypto from '../../assets/icons/icon_menu_buy_crypto.svg';
 import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
 import iconMenuHelp from '../../assets/icons/icon_menu_help.svg';
@@ -142,6 +143,7 @@ const icons = {
   iconShieldStar,
   iconMenuMoon,
   iconMenuBookmark,
+  iconMenuBookmarkRed,
   iconMenuMonitor,
   iconMenuSetting,
   iconMenuWallet,

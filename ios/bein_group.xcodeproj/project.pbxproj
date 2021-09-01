@@ -237,6 +237,7 @@
 			buildPhases = (
 				7395FD036D06F3A912CE12DB /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
+				1B98C1D626DB4B020013DEA6 /* Run Script */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -244,7 +245,6 @@
 				6ED4DE6B03E1342FB74CE9D6 /* [CP] Embed Pods Frameworks */,
 				CFE0E0730F0DD9EDF9989658 /* [CP] Copy Pods Resources */,
 				5856EEB4D1E9681F440FA803 /* [CP-User] [RNFB] Core Configuration */,
-				1B98C1D626DB4B020013DEA6 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -360,6 +360,7 @@
 		};
 		1B98C1D626DB4B020013DEA6 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -589,7 +590,7 @@
 				BEIN_APP_NAME = "Bein Development";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
@@ -720,7 +721,7 @@
 				BEIN_APP_NAME = "Bein Staging";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
@@ -954,7 +955,7 @@
 				BEIN_APP_NAME = "Bein Development";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
