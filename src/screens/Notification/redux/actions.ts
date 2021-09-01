@@ -15,6 +15,12 @@ const notificationsActions = {
       payload,
     };
   },
+  concatNotifications: function (payload: any) {
+    return {
+      type: notificationsTypes.CONCAT_NOTICATIONS,
+      payload,
+    };
+  },
 
   //for saga
   getNotifications: function (payload: IGetStreamDispatch) {
@@ -38,6 +44,24 @@ const notificationsActions = {
   markAsRead: function (payload: IMarkAsReadAnActivity) {
     return {
       type: notificationsTypes.MARK_AS_READ,
+      payload,
+    };
+  },
+  loadmore: function (payload: IGetStreamDispatch) {
+    return {
+      type: notificationsTypes.LOADMORE,
+      payload,
+    };
+  },
+  setIsLoadingMore: function (payload: boolean) {
+    return {
+      type: notificationsTypes.SET_IS_LOADING_MORE,
+      payload,
+    };
+  },
+  setNoMoreNoti: (payload: boolean) => {
+    return {
+      type: notificationsTypes.SET_NO_MORE_NOTIFICATION,
       payload,
     };
   },

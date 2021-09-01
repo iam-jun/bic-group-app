@@ -2,10 +2,13 @@ import {StreamClient} from 'getstream';
 import {makeGetStreamRequest} from '~/services/httpApiRequest';
 
 const notificationsDataHelper = {
-  getNotificationList: async (userId: string, streamClient?: StreamClient) => {
+  getNotificationList: async (
+    userId: string,
+    streamClient?: StreamClient,
+    bottomNotiId?: string,
+  ) => {
     if (streamClient) {
-      const streamOptions = {
-        offset: 0,
+      const streamOptions: any = {
         limit: 20,
         user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
         ownReactions: true,
@@ -16,6 +19,12 @@ const notificationsDataHelper = {
         enrich: true, // giữ liệu sẽ được mở rộng ra, lấy thêm được thông tin user và group
       };
 
+      if (bottomNotiId) {
+        streamOptions.id_lt = bottomNotiId;
+      } else {
+        streamOptions.offset = 0;
+      }
+
       const data = await makeGetStreamRequest(
         streamClient,
         'notification',
@@ -23,13 +32,6 @@ const notificationsDataHelper = {
         'get',
         streamOptions,
       );
-
-      // console.log(
-      //   '\x1b[36m',
-      //   '🐣  | getNotificationData : ',
-      //   JSON.stringify(data, undefined, 2),
-      //   '\x1b[0m',
-      // );
 
       // because getstream not support check user own noti event
       // so this is a trick to hide current user's post event
