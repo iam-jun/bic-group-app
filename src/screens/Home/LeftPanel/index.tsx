@@ -24,8 +24,8 @@ const LeftPanel = () => {
   const onPressSavedPosts = () => {
     dispatch(
       modalActions.showAlert({
-        title: t('settings:text_info'),
-        content: t('settings:text_popup_message'),
+        title: t('common:text_info'),
+        content: t('common:text_popup_message'),
         confirmLabel: t('common:ok'),
       }),
     );
