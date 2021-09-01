@@ -9,7 +9,7 @@ import {IUserProfile, IUserEdit} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
 import {mapProfile} from './helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
-import {IResponseData} from '~/interfaces/common';
+import {IResponseData, IToastMessage} from '~/interfaces/common';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
@@ -79,17 +79,25 @@ function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
   try {
     const result: unknown = yield requestEditMyProfile(payload);
     yield put(menuActions.setMyProfile(mapProfile(result)));
+
+    const toastMessage: IToastMessage = {
+      content: 'common:text_edit_success',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
-    yield put(
-      modalActions.showAlert({
-        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
-        content:
-          err?.meta?.errors?.[0]?.message ||
-          i18next.t('common:text_error_message'),
-        confirmLabel: i18next.t('common:text_ok'),
-      }),
-    );
+    const toastMessage: IToastMessage = {
+      content: 'common:text_edit_fail',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   }
 }
 
