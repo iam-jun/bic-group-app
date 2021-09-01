@@ -176,11 +176,31 @@ function* getConversationDetail() {
 
 function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
   try {
-    const state: IObject<any> = yield select();
-    const {auth} = state;
+    const {auth, chat} = yield select();
     const {user} = auth;
+    const {rooms} = chat;
+
     let response: AxiosResponse | null = null;
     if (payload.length === 1) {
+      const existedRoom = rooms.data.find(
+        (room: IConversation) =>
+          room.type === roomTypes.DIRECT &&
+          room.usernames.includes(payload[0].username),
+      );
+      if (existedRoom) {
+        yield put(
+          modalActions.showAlert({
+            title: i18next.t('common:text_error'),
+            content: i18next.t('chat:error:existing_direct_chat'),
+            confirmLabel: i18next.t('common:text_ok'),
+            onConfirm: () =>
+              navigation.replace(chatStack.conversation, {
+                roomId: existedRoom._id,
+              }),
+          }),
+        );
+        return;
+      }
       response = yield makeHttpRequest(
         apiConfig.Chat.createDirectChat({username: payload[0].username}),
       );
