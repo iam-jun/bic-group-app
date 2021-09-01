@@ -1,15 +1,18 @@
 import {StreamClient} from 'getstream';
 import {makeGetStreamRequest} from '~/services/httpApiRequest';
 
+const LIMIT = 20;
+
 const notificationsDataHelper = {
   getNotificationList: async (
     userId: string,
     streamClient?: StreamClient,
+    limit: number = LIMIT,
     bottomNotiId?: string,
   ) => {
     if (streamClient) {
       const streamOptions: any = {
-        limit: 20,
+        limit: limit || LIMIT,
         user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
         ownReactions: true,
         withOwnReactions: true,

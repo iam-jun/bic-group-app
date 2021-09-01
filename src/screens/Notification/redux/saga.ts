@@ -7,7 +7,10 @@ import notificationSelector from './selector';
 import {get} from 'lodash';
 import {showHeaderFlashMessage} from '~/store/app/actions';
 import {timeOut} from '~/utils/common';
-import {IMarkAsReadAnActivity} from '~/interfaces/INotification';
+import {
+  ILoadNewNotifications,
+  IMarkAsReadAnActivity,
+} from '~/interfaces/INotification';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -15,6 +18,10 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
   yield takeLatest(notificationsTypes.LOADMORE, loadmore);
+  yield takeLatest(
+    notificationsTypes.LOAD_NEW_NOTIFICATIONS,
+    loadNewNotifications,
+  );
 }
 
 function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
@@ -39,6 +46,28 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
       err,
       '\x1b[0m',
     );
+  }
+}
+
+// load new notifications when have realtime event
+function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
+  try {
+    const {userId, streamClient, limit} = payload;
+
+    const response = yield notificationsDataHelper.getNotificationList(
+      userId,
+      streamClient,
+      limit, // only load a number of notifiations equal number of new notifications
+    );
+
+    yield put(
+      notificationsActions.addNewNotifications({
+        notifications: response.results,
+        unseen: response.unseen,
+      }),
+    );
+  } catch (err) {
+    console.log('\x1b[33m', 'loadNewNotifications error:', err, '\x1b[0m');
   }
 }
 
