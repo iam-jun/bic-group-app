@@ -66,7 +66,11 @@
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
     "title_page_not_found": "Page Not Found",
     "text_edit_success": "Updated profile successfully!",
-    "text_edit_fail": "Failed to update profile!"
+    "text_edit_fail": "Failed to update profile!",
+    "text_info": "Info",
+    "text_help_center": "Help center is coming soon 🤗",
+    "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
+    "text_got_it": "Got it"
   },
   "auth": {
     "text_kickout_title": "Notice",
