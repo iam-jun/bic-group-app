@@ -70,6 +70,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
 
   return {
     ...item,
+    ...item.customFields,
     _id,
     name,
     type,
@@ -126,6 +127,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
 
 export const mapUser = (item: any): IChatUser => ({
   ...item,
+  ...item.customFields,
   avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
 });

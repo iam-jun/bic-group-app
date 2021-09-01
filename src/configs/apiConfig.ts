@@ -86,19 +86,20 @@ const Chat = {
       params,
     };
   },
-  joinableUsers: (
-    groupId: number | string,
-    params: any,
-  ): HttpApiRequestConfig => ({
-    url: `${providers.bein.url}groups/${groupId}/joinable-users`,
+  joinableUsers: (params: {
+    groupId: number | string;
+  }): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}groups/${params.groupId}/joinable-users`,
     method: 'get',
     provider: providers.bein,
     useRetry: true,
-    params,
   }),
-  messages: (params: IPaginationParams & {roomId: string}) => {
+  messages: (params: IPaginationParams & {roomId: string; type?: string}) => {
+    const endPoint = params?.type === 'direct' ? 'im' : 'groups';
+    delete params.type;
+
     return {
-      url: `${providers.chat.url}groups.history`,
+      url: `${providers.chat.url}${endPoint}.history`,
       method: 'get',
       useRetry: true,
       provider: providers.chat,

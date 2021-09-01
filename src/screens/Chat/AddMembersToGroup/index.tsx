@@ -21,7 +21,7 @@ const AddMembersToGroup = (): React.ReactElement => {
   const {colors, spacing} = theme;
 
   const dispatch = useDispatch();
-  const {selectedUsers, users, conversation} = useChat();
+  const {selectedUsers, joinableUsers, conversation} = useChat();
 
   useEffect(() => {
     dispatch(actions.resetData('joinableUsers'));
@@ -66,7 +66,7 @@ const AddMembersToGroup = (): React.ReactElement => {
   const doAddUsersToGroupChat = () => {
     dispatch(
       actions.addMembersToGroup(
-        selectedUsers.map((user: IChatUser) => user._id),
+        selectedUsers.map((user: IChatUser) => user.beinUserId),
       ),
     );
   };
@@ -124,8 +124,8 @@ const AddMembersToGroup = (): React.ReactElement => {
       <MembersSelection
         selectable
         title={'common:text_all'}
-        loading={users.loading}
-        data={users.data}
+        loading={joinableUsers.loading}
+        data={joinableUsers.data}
         searchInputProps={{
           onChangeText: onQueryChanged,
         }}

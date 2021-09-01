@@ -6,7 +6,6 @@ import {
   ISendMessageAction,
   IUploadFileAction,
 } from '~/interfaces/IChat';
-import {IAddUsersToGroupReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
@@ -156,7 +155,7 @@ const uploadFile = (payload: IUploadFileAction) => ({
   payload,
 });
 
-const addMembersToGroup = (payload: IAddUsersToGroupReq) => ({
+const addMembersToGroup = (payload: string[]) => ({
   type: Actions.ADD_MEMBERS_TO_GROUP,
   payload,
 });

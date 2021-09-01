@@ -353,17 +353,15 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* addMembersToGroup({
-  payload,
-}: {
-  type: string;
-  payload: IAddUsersToGroupReq;
-}) {
+function* addMembersToGroup({payload}: {type: string; payload: string[]}) {
   try {
     const {chat} = yield select();
     yield makeHttpRequest(
-      apiConfig.Chat.addMembersToGroup(chat.conversation?._id, payload),
+      apiConfig.Chat.addMembersToGroup(chat.conversation?.beinGroupId, {
+        user_ids: payload,
+      }),
     );
+    handleAddMember();
   } catch (err) {
     yield put(
       modalActions.showAlert({
