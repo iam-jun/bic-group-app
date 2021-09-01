@@ -125,9 +125,9 @@ let unauthorizedReqQueue: UnauthorizedReq[] = [];
 const handleRetry = async (error: AxiosError) => {
   // check if error is not 401 or is not unauthorized type
   // check if orgConfig contain Authorization key
-  if (!error.config.headers.Authorization) {
-    return Promise.reject(error);
-  }
+  // if (!error.config.headers.Authorization) {
+  //   return Promise.reject(error);
+  // }
 
   //================== 401 Unauthorized ==================
 
@@ -206,7 +206,7 @@ const handleResponseError = async (
       case apiConfig.providers.bein.name:
         return mapResponseSuccessBein(error.response);
       case apiConfig.providers.chat.name:
-        return mapResponseSuccessRocketChat(error.response);
+        return error.response;
       default:
         return mapResponseSuccessBein(error.response);
     }

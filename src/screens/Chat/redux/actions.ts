@@ -116,6 +116,16 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
   reactionType,
 });
 
+const deleteMessage = (payload: IMessage) => ({
+  type: Actions.DELETE_MESSAGE,
+  payload,
+});
+
+const deleteMessageSuccess = (payload: IMessage) => ({
+  type: Actions.DELETE_MESSAGE_SUCCESS,
+  payload,
+});
+
 const selectUser = (payload: IUser) => ({
   type: Actions.SELECT_USER,
   payload,
@@ -212,6 +222,8 @@ export default {
   sendMessageFailed,
   retrySendMessage,
   reactMessage,
+  deleteMessage,
+  deleteMessageSuccess,
   selectUser,
   clearSelectedUsers,
   createConversation,

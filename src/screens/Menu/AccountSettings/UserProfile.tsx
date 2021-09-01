@@ -18,6 +18,7 @@ import genders from '~/constants/genders';
 import {validateFile} from '~/utils/validation';
 import {IFileResponse} from '~/interfaces/common';
 import menuActions from '../redux/actions';
+import {scaleCoverHeight} from '~/theme/dimension';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -28,8 +29,10 @@ import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
 
 const UserProfile = () => {
+  const [coverHeight, setCoverHeight] = useState<number>(210);
+
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {myProfile} = useMenu();
@@ -96,6 +99,13 @@ const UserProfile = () => {
 
   const onEditCover = () => _openImagePicker('background_img_url');
 
+  const onCoverLayout = (e: any) => {
+    if (!e?.nativeEvent?.layout?.width) return;
+    const coverWidth = e.nativeEvent.layout.width;
+    const coverHeight = scaleCoverHeight(coverWidth);
+    setCoverHeight(coverHeight);
+  };
+
   const renderAvatar = () => {
     return (
       <View>
@@ -109,13 +119,12 @@ const UserProfile = () => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper style={styles.imageButton}>
+        <View style={styles.imageButton}>
           <Image
-            resizeMode="cover"
             style={styles.avatar}
             source={avatar || images.img_user_avatar_default}
           />
-        </ButtonWrapper>
+        </View>
         <Divider style={styles.divider} />
       </View>
     );
@@ -134,13 +143,12 @@ const UserProfile = () => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper>
+        <View onLayout={onCoverLayout}>
           <Image
-            resizeMode="cover"
             style={styles.cover}
             source={background_img_url || images.img_cover_default}
           />
-        </ButtonWrapper>
+        </View>
         <Divider style={styles.divider} />
       </View>
     );
@@ -200,7 +208,7 @@ const UserProfile = () => {
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header title={i18next.t('settings:title_user_profile')} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}
         {renderCover()}
         {renderBasicInfo()}
@@ -211,7 +219,7 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
@@ -247,10 +255,8 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: 8,
     },
     cover: {
-      width: scaleSize(375),
-      height: scaleSize(210),
-      maxHeight: 250,
-      maxWidth: 565,
+      width: '100%',
+      height: coverHeight,
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,

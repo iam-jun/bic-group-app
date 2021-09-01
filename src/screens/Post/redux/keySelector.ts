@@ -3,10 +3,6 @@ const postKeySelector = {
     loading: 'post.createComment.loading',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
-  mention: {
-    searchKey: 'post.mention.searchKey',
-    searchResult: 'post.mention.searchResult',
-  },
   postDetail: {
     id: 'post.postDetail.id',
   },

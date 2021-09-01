@@ -173,6 +173,7 @@
     "title_relationship_status": "Relationship Status",
     "title_currency": "Currency",
     "title_about": "About",
+    "title_about_bein": "About Bein",
     "title_name": "Name",
     "title_gender": "Gender",
     "title_birthday": "Birthday",
@@ -211,6 +212,7 @@
     "title_edit_basic_info": "Edit Basic Info",
     "title_edit_name": "Edit Name",
     "text_not_set": "Not set",
+    "text_version": "Version",
     "title_choose_gender": "Choose your gender",
     "text_male": "Male",
     "text_female": "Female",
@@ -234,6 +236,8 @@
     "news_feed": "News Feed",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
+    "mention_title": "Can only mention people in your selected audiences",
+    "mention_empty_content": "No people found",
     "button_like": "Like",
     "button_reply": "Reply",
     "button_react": "React",
@@ -320,13 +324,20 @@
     "label_create_group_chat_with": "Create group chat with",
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
-    "system_message_au": "{0} has added {1} to this group",
-    "system_message_ru": "{0} has removed {1} from the group chat.",
-    "system_message_room_changed_description": "{0} has changed the chat description.",
-    "system_message_room_changed_announcement": "{0} has changed the chat announcement.",
-    "system_message_room_changed_topic": "{0} has changed the group chat topic to “{1}”",
-    "system_message_room_changed_avatar": "{0} has changed the group avatar",
-    "system_message_r": "{0} has changed the group chat name to “{1}”",
+    "system_message": {
+      "au": "{0} has added {1} to this group",
+      "ru": "{0} has removed {1} from the group chat.",
+      "room_changed_description": "{0} has changed the chat description.",
+      "room_changed_announcement": "{0} has changed the chat announcement.",
+      "room_changed_topic": "{0} has changed the group chat topic to “{1}”",
+      "room_changed_avatar": "{0} has changed the group avatar",
+      "r": "{0} has changed the group chat name to “{1}”",
+      "rm": {
+        "me": "You deleted this message.",
+        "other": "This message has been deleted",
+        "list": "deleted a message"
+      }
+    }, 
     "message_status": {
       "sending": "Sending",
       "sent": "Sent",
@@ -369,7 +380,18 @@
       "label_direct_message": "Direct message",
       "label_remove_from_group_chat": "Remove from group chat"
     },
-    "text_mention_all": "All"
+    "text_mention_all": "All",
+    "message_option":{
+      "delete": "Delete Message",
+      "reply": "Reply",
+      "copy": "Copy Text"
+    },
+    "label_my_message": "You",
+    "label_deleted_message":{
+      "me": "You deleted this message.",
+      "other": "This message has been deleted",
+      "list": "deleted a message"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

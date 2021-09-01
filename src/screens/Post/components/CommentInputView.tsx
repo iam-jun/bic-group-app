@@ -7,11 +7,8 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
-import {debounce} from 'lodash';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IRequestPostComment} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
@@ -41,9 +38,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
-
-  const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
-  const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
 
   const replying = usePostDetailReplyingComment();
 
@@ -85,35 +79,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     setContent(value);
   };
 
-  const onPressMentionAudience = (audience: any) => {
-    if (content) {
-      const mention = `@[u:${audience.id}:${
-        audience.fullname || audience.name
-      }] `;
-      const newContent = content.replace(`@${mentionKey}`, mention);
-      setContent(newContent);
-
-      dispatch(postActions.setMentionSearchResult([]));
-      dispatch(postActions.setMentionSearchKey(''));
-    }
-  };
-
-  const onMentionText = debounce((textMention: string) => {
-    console.log(`\x1b[36m🐣️ CommentInputView ${textMention}\x1b[0m`);
-    if (textMention) {
-      dispatch(postActions.setMentionSearchKey(textMention));
-      dispatch(
-        postActions.getSearchMentionAudiences({
-          key: textMention,
-          group_ids: groupIds,
-        }),
-      );
-    } else if (mentionKey || mentionResult?.length > 0) {
-      dispatch(postActions.setMentionSearchResult([]));
-      dispatch(postActions.setMentionSearchKey(''));
-    }
-  }, 300);
-
   const renderCommentInputHeader = () => {
     if (!replying) {
       return null;
@@ -146,12 +111,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   return (
     <MentionInput
-      data={mentionResult}
       modalPosition={'top'}
-      isMentionModalVisible={!!content && mentionResult?.length > 0}
-      onPress={onPressMentionAudience}
       onChangeText={onChangeText}
-      onMentionText={onMentionText}
       value={content}
       ComponentInput={CommentInput}
       componentInputProps={{
@@ -162,6 +123,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         HeaderComponent: renderCommentInputHeader(),
         loading: loading,
       }}
+      title={t('post:mention_title')}
+      emptyContent={t('post:mention_empty_content')}
+      getDataPromise={postDataHelper.getSearchMentionAudiences}
+      getDataParam={{group_ids: groupIds}}
+      getDataResponseKey={'data'}
     />
   );
 };

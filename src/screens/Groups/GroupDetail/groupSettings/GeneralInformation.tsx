@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Header from '~/beinComponents/Header';
@@ -17,9 +18,9 @@ import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
-
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+
 import privacyTypes from '~/constants/privacyTypes';
 import useGroups from '~/hooks/groups';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -28,16 +29,21 @@ import images from '~/resources/images';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {groupProfileImageCropRatio, scaleSize} from '~/theme/dimension';
-
+import {
+  groupProfileImageCropRatio,
+  scaleSize,
+  scaleCoverHeight,
+} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
 import {validateFile} from '~/utils/validation';
 import GroupSectionItem from '../components/GroupSectionItem';
 
 const GeneralInformation = () => {
+  const [coverHeight, setCoverHeight] = useState<number>(210);
+
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {groupDetail, isPrivacyModalOpen} = useGroups();
   const {id, name, icon, background_img_url, description, privacy} =
@@ -116,6 +122,13 @@ const GeneralInformation = () => {
 
   const onEditCover = () => _openImagePicker('background_img_url');
 
+  const onCoverLayout = (e: any) => {
+    if (!e?.nativeEvent?.layout?.width) return;
+    const coverWidth = e.nativeEvent.layout.width;
+    const coverHeight = scaleCoverHeight(coverWidth);
+    setCoverHeight(coverHeight);
+  };
+
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
       <TouchableOpacity onPress={() => onPrivacyMenuPress(item)}>
@@ -146,14 +159,9 @@ const GeneralInformation = () => {
     );
   };
 
-  return (
-    <ScreenWrapper
-      testID="GeneralInformation"
-      style={styles.container}
-      isFullView>
-      <Header title={i18next.t('settings:title_general_information')} />
-      <ScrollView>
-        {/* --- AVATAR --- */}
+  const renderAvatarImage = () => {
+    return (
+      <View>
         <View style={styles.avatarHeader}>
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
@@ -164,15 +172,19 @@ const GeneralInformation = () => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper style={styles.imageButton}>
+        <View style={styles.imageButton}>
           <Image
-            resizeMode="cover"
             style={styles.avatar}
             source={icon || images.img_user_avatar_default}
           />
-        </ButtonWrapper>
+        </View>
+      </View>
+    );
+  };
 
-        {/* --- COVER --- */}
+  const renderCoverImage = () => {
+    return (
+      <View>
         <View style={styles.coverHeader}>
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
@@ -183,36 +195,52 @@ const GeneralInformation = () => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper>
+        <View onLayout={onCoverLayout}>
           <Image
-            resizeMode="cover"
             style={styles.cover}
             source={background_img_url || images.img_cover_default}
           />
-        </ButtonWrapper>
-
-        {/* --- GROUP INFO --- */}
-        <View style={styles.basicInfoList}>
-          <GroupSectionItem
-            title={'settings:title_group_name'}
-            subtitle={name}
-            rightIcon={'AngleRightB'}
-          />
-
-          <GroupSectionItem
-            title={'settings:title_group_description'}
-            subtitle={description}
-            onPress={editGroupDescripton}
-            rightIcon={'AngleRightB'}
-          />
-
-          <GroupSectionItem
-            title={'settings:title_privacy'}
-            subtitle={titleCase(privacy)}
-            rightIcon={'EditAlt'}
-            onPress={editGroupPrivacy}
-          />
         </View>
+      </View>
+    );
+  };
+
+  const renderGroupInfo = () => {
+    return (
+      <View style={styles.basicInfoList}>
+        <GroupSectionItem
+          title={'settings:title_group_name'}
+          subtitle={name}
+          rightIcon={'AngleRightB'}
+        />
+
+        <GroupSectionItem
+          title={'settings:title_group_description'}
+          subtitle={description}
+          onPress={editGroupDescripton}
+          rightIcon={'AngleRightB'}
+        />
+
+        <GroupSectionItem
+          title={'settings:title_privacy'}
+          subtitle={titleCase(privacy)}
+          rightIcon={'EditAlt'}
+          onPress={editGroupPrivacy}
+        />
+      </View>
+    );
+  };
+
+  return (
+    <ScreenWrapper
+      testID="GeneralInformation"
+      style={styles.container}
+      isFullView>
+      <Header title={i18next.t('settings:title_general_information')} />
+      <ScrollView>
+        {renderAvatarImage()}
+        {renderCoverImage()}
+        {renderGroupInfo()}
 
         <BottomSheet
           isOpen={isPrivacyModalOpen}
@@ -242,7 +270,7 @@ const GeneralInformation = () => {
 
 export default GeneralInformation;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
@@ -269,10 +297,8 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: 8,
     },
     cover: {
-      width: scaleSize(375),
-      height: scaleSize(210),
-      maxHeight: 250,
-      maxWidth: 525,
+      width: '100%',
+      height: coverHeight,
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,

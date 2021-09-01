@@ -208,7 +208,7 @@ const PostView: FC<PostViewProps> = ({
     if (time) {
       const dateUtc = moment.utc(time);
       const localDate = dateUtc.local();
-      postTime = formatDate(localDate, undefined, 1, false) || '';
+      postTime = formatDate(localDate, undefined, 2, false) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };

@@ -2,6 +2,8 @@ import messaging, {
   FirebaseMessagingTypes,
 } from '@react-native-firebase/messaging';
 import moment from 'moment';
+import 'moment/locale/vi';
+
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -165,6 +167,7 @@ export default (): React.ReactElement => {
       if (isSupportLanguage) changeLanguage(systemLocale);
       else changeLanguage(AppConfig.defaultLanguage);
     }
+    moment.locale(language);
   };
 
   const changeLanguage = async (language: string) => {

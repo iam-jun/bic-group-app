@@ -1,5 +1,5 @@
 import appConfig from '~/configs/appConfig';
-import {messageStatus} from '~/constants/chat';
+import {messageStatus, messageEventTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {
   IChatUser,
@@ -324,6 +324,25 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
+    case types.DELETE_MESSAGE_SUCCESS:
+    case types.DELETE_MESSAGE: {
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item._id === action.payload._id
+              ? {
+                  ...item,
+                  type: messageEventTypes.REMOVE_MESSAGE,
+                  removed: true,
+                  text: 'chat:system_message:rm:me',
+                }
+              : item,
+          ),
+        },
+      };
+    }
     case types.UPDATE_CONVERSATION_NAME:
       return {
         ...state,

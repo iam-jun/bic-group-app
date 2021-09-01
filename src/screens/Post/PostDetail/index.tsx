@@ -67,6 +67,11 @@ const PostDetail = (props: any) => {
     });
   };
 
+  const onPressComment = () => {
+    scrollTo(0, 0);
+    textInputRef.current?.focus?.();
+  };
+
   const renderSectionHeader = (sectionData: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
@@ -106,7 +111,7 @@ const PostDetail = (props: any) => {
     }
     return (
       <View style={styles.listHeader}>
-        <PostView postId={id} isPostDetail />
+        <PostView postId={id} isPostDetail onPressComment={onPressComment} />
         {commentLeft > 0 && (
           <LoadMoreComment
             title={'post:text_load_more_comments'}

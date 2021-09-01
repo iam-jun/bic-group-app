@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import appConfig from '~/configs/appConfig';
 import {roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
@@ -74,7 +75,10 @@ const CreateConversation = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
+  const seachHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);

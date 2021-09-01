@@ -27,6 +27,8 @@ import {
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
+import * as modalActions from '~/store/modal/actions';
+import i18next from 'i18next';
 
 /**
  * Chat
@@ -45,6 +47,7 @@ export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
+  yield takeLatest(types.DELETE_MESSAGE, deleteMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
@@ -202,7 +205,7 @@ function* createConversation({
 function* uploadFile({payload}: {payload: IMessage; type: string}) {
   try {
     if (!payload.attachment) return;
-    const {chat} = yield select();
+    const {auth, chat} = yield select();
     const {conversation} = chat;
 
     const formData = new FormData();
@@ -236,7 +239,7 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     );
     console.log('uploadFile', response);
 
-    const message = mapMessage(response.data.message);
+    const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
     console.log('uploadFile', err);
@@ -246,6 +249,8 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
 
 function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
   try {
+    const {auth} = yield select();
+
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.sendMessage({
         message: {
@@ -256,10 +261,29 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
       }),
     );
 
-    const message = mapMessage(response.data.message);
+    const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
     yield put(actions.sendMessageFailed(payload));
+  }
+}
+
+function* deleteMessage({payload}: {payload: IMessage; type: string}) {
+  try {
+    yield makeHttpRequest(
+      apiConfig.Chat.deleteMessage({
+        roomId: payload.room_id,
+        msgId: payload._id,
+      }),
+    );
+  } catch (err) {
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 
@@ -361,7 +385,7 @@ function handleAddMember() {
 function* handleNewMessage(data: any) {
   try {
     const {chat, auth} = yield select();
-    const message = mapMessage(data);
+    const message = mapMessage(auth.user, data);
     const existed = chat.groups.data.find(
       (item: IConversation) => item._id === message?.room_id,
     );
@@ -384,10 +408,11 @@ function* handleNewMessage(data: any) {
     console.log('handleNewMessage', err);
   }
 }
+
 function* handleRemoveUser(data: any) {
   try {
     const {auth} = yield select();
-    const message = mapMessage(data);
+    const message = mapMessage(auth.user, data);
     console.log('handleRemoveUser', message, auth.user);
 
     if (message.msg === auth.user.username) {
@@ -402,6 +427,16 @@ function* handleRemoveUser(data: any) {
   }
 }
 
+function* handleRemoveMessage(data: any) {
+  try {
+    const {auth} = yield select();
+    const message = mapMessage(auth.user, data);
+    yield put(actions.deleteMessageSuccess(message));
+  } catch (err) {
+    console.log('handleRemoveMessage', err);
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
@@ -413,6 +448,9 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.REMOVE_MESSAGE:
+      yield handleRemoveMessage(data);
       break;
     case messageEventTypes.REMOVE_USER:
       yield handleRemoveUser(data);
