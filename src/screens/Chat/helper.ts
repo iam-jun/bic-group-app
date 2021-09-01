@@ -32,10 +32,9 @@ export const mapUsers = (data?: []): IUser[] =>
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
   const _id = item?._id || item?.rid;
-  const {usernames} = item?.customFields || {};
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
-  const membersExcludeMe = (usernames || []).filter(
+  const membersExcludeMe = (item.usernames || []).filter(
     (_username: any) => _username !== user?.username,
   );
 
@@ -64,7 +63,6 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     ...item,
     _id,
     name,
-    usernames,
     type,
     avatar,
     user: item.u && mapUser(item?.u),

@@ -60,7 +60,7 @@ export default function* saga() {
 function* initChat() {
   yield put(actions.getSubscriptions());
   yield put(actions.resetData('rooms'));
-  yield put(actions.getData('rooms', null, 'update'));
+  yield put(actions.getData('rooms', null, 'data'));
 }
 
 function* getData({
@@ -155,18 +155,17 @@ function* readSubcriptions({payload}: {type: string; payload: string}) {
   }
 }
 
-function* getConversationDetail() {
+function* getConversationDetail({payload}: {type: string; payload: string}) {
   try {
     const {auth} = yield select();
 
-    const {chat} = yield select();
     const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.getChatInfo(chat.conversation._id),
+      apiConfig.Chat.getChatInfo(payload),
     );
 
     yield put(
       actions.setConversationDetail(
-        mapConversation(auth.user, response.data?.group),
+        mapConversation(auth.user, response.data?.data),
       ),
     );
   } catch (err) {
@@ -185,7 +184,7 @@ function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
       const existedRoom = rooms.data.find(
         (room: IConversation) =>
           room.type === roomTypes.DIRECT &&
-          room.usernames.includes(payload[0].username),
+          (room.usernames || []).includes(payload[0].username),
       );
       if (existedRoom) {
         yield put(
@@ -193,10 +192,11 @@ function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
             title: i18next.t('common:text_error'),
             content: i18next.t('chat:error:existing_direct_chat'),
             confirmLabel: i18next.t('common:text_ok'),
-            onConfirm: () =>
+            onConfirm: () => {
               navigation.replace(chatStack.conversation, {
                 roomId: existedRoom._id,
-              }),
+              });
+            },
           }),
         );
         return;

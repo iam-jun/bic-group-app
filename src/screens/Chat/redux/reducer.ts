@@ -164,20 +164,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           sub.rid === action.payload ? {...sub, unread: 0} : sub,
         ),
       };
-    case types.GET_CONVERSATION_DETAIL:
-      return {
-        ...state,
-        conversation: {
-          _id: action.payload,
-        },
-      };
     case types.SET_CONVERSATION_DETAIL:
       return {
         ...state,
-        conversation: {
-          ...conversation,
-          ...payload,
-        },
+        conversation: payload,
       };
     case types.ADD_NEW_MESSAGE: {
       const include = messages.data.find(

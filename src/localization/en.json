@@ -372,7 +372,7 @@
       "file": {
         "over_file_size": "Your file must be less than 10MB"
       },
-      "existing_direct_chat": "You have already had a conversation with this person.\nDo you want to go to this conversation?"
+      "existing_direct_chat": "You already have a conversation with this person. Do you want to go to this conversation?"
     },
     "text_search_empty": "No people here to chat",
     "member_menu": {

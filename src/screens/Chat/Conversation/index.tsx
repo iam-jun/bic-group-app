@@ -65,16 +65,13 @@ const Conversation = () => {
   useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
+      _getMessages(route.params.roomId);
     }
   }, [route.params]);
 
-  useEffect(() => {
-    if (conversation?._id) _getMessages();
-  }, [conversation._id]);
-
-  const _getMessages = () => {
+  const _getMessages = (id?: string) => {
     dispatch(actions.resetData('messages'));
-    dispatch(actions.getData('messages', {roomId: conversation?._id}));
+    dispatch(actions.getData('messages', {roomId: id}));
   };
 
   const loadMoreMessages = () => {
