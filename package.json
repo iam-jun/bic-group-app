@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "husky install && npm run setup-dev",
+    "postinstall": "husky install",
     "precommit": "npm run prettier-format",
     "lint": "npx eslint .",
     "prettier-format": "npx prettier --config .prettierrc.json \"**/*.{js,jsx,ts,tsx}\" --write",
