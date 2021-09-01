@@ -25,6 +25,16 @@ function notificationsReducer(
         notificationList: payload.notifications || [],
         unseenNumber: payload.unseen,
       };
+    case notificationsTypes.ADD_NEW_NOTIFICATIONS: {
+      const newNotifications = payload.notifications || [];
+      const newList = state.notificationList;
+      newList.unshift(...newNotifications);
+      return {
+        ...state,
+        notificationList: newList,
+        unseenNumber: state.unseenNumber + payload.unseen,
+      };
+    }
     case notificationsTypes.CONCAT_NOTICATIONS:
       return {
         ...state,

@@ -54,10 +54,10 @@ function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
   try {
     const {userId, streamClient, limit} = payload;
 
-    const response = yield notificationsDataHelper.getNotificationList(
+    const response = yield notificationsDataHelper.loadNewNotification(
       userId,
-      streamClient,
       limit, // only load a number of notifiations equal number of new notifications
+      streamClient,
     );
 
     yield put(
@@ -185,7 +185,6 @@ function* loadmore({payload}: {payload: IGetStreamDispatch}) {
     const response = yield notificationsDataHelper.getNotificationList(
       userId,
       streamClient,
-      null, // let limit is default by 20 or other depends on constant
       bottomNoti.id,
     );
 

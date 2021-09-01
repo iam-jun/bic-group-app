@@ -18,6 +18,12 @@ const notificationsActions = {
       payload,
     };
   },
+  addNewNotifications: function (payload: any) {
+    return {
+      type: notificationsTypes.ADD_NEW_NOTIFICATIONS,
+      payload,
+    };
+  },
   concatNotifications: function (payload: any) {
     return {
       type: notificationsTypes.CONCAT_NOTICATIONS,
