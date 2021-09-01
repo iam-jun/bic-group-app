@@ -22,6 +22,10 @@ export interface CommentInputViewProps {
   groupIds: string;
   autoFocus?: boolean;
   textInputRef?: any;
+  onCommentSuccess?: (data: {
+    newCommentId: string;
+    parentCommentId?: string;
+  }) => void;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
@@ -29,6 +33,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   textInputRef,
+  onCommentSuccess,
 }: CommentInputViewProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -54,6 +59,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         parentCommentId: replying?.id,
         commentData: {content: content?.trim()},
         userId: userId,
+        onSuccess: onCommentSuccess,
       };
       dispatch(postActions.postCreateNewComment(payload));
     }

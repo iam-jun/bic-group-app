@@ -104,6 +104,7 @@ export interface IPayloadCreateComment {
   parentCommentId?: string;
   commentData: IActivityData;
   userId: string | number;
+  onSuccess?: (data: {newCommentId: string; parentCommentId?: string}) => void;
 }
 
 export interface IPayloadPutEditPost {

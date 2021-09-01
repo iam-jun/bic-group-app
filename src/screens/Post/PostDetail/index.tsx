@@ -72,6 +72,35 @@ const PostDetail = (props: any) => {
     textInputRef.current?.focus?.();
   };
 
+  const onCommentSuccess = useCallback(
+    ({
+      newCommentId,
+      parentCommentId,
+    }: {
+      newCommentId: string;
+      parentCommentId?: string;
+    }) => {
+      console.log(`\x1b[36m🐣️ index newCommentId: ${newCommentId}\x1b[0m`);
+      console.log(
+        `\x1b[36m🐣️ index parentCommentId: ${parentCommentId}\x1b[0m`,
+      );
+      let sectionIndex;
+      let itemIndex = 0;
+      if (parentCommentId) {
+        sectionData?.map?.((section, index) => {
+          if (section?.comment?.id === parentCommentId) {
+            sectionIndex = index;
+            itemIndex = (section?.data?.length || 0) + 1;
+          }
+        });
+      } else {
+        sectionIndex = sectionData.length - 1;
+      }
+      scrollTo(sectionIndex, itemIndex);
+    },
+    [sectionData],
+  );
+
   const renderSectionHeader = (sectionData: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
@@ -159,6 +188,7 @@ const PostDetail = (props: any) => {
         groupIds={groupIds}
         autoFocus={focusComment}
         textInputRef={textInputRef}
+        onCommentSuccess={onCommentSuccess}
       />
     </ScreenWrapper>
   );

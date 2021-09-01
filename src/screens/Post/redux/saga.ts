@@ -100,7 +100,8 @@ function* postCreateNewComment({
   type: string;
   payload: IPayloadCreateComment;
 }) {
-  const {postId, parentCommentId, commentData, userId} = payload || {};
+  const {postId, parentCommentId, commentData, userId, onSuccess} =
+    payload || {};
   if (!postId || !commentData || !userId) {
     console.log(`\x1b[31m🐣️ saga postCreateNewComment: invalid param\x1b[0m`);
     return;
@@ -146,6 +147,9 @@ function* postCreateNewComment({
 
     yield put(postActions.setPostDetailReplyingComment());
     yield put(postActions.setCreateComment({loading: false, content: ''}));
+
+    yield timeOut(800);
+    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
   } catch (e) {
     yield put(postActions.setCreateComment({loading: false}));
     yield showError(e);
@@ -605,15 +609,7 @@ function* updateAllCommentsByParentIds({
   const allCommentsByParentIds = yield select(
     state => state?.post?.allCommentsByParentIds,
   ) || {};
-  console.log(
-    `\x1b[34m🐣️ saga old allCommentsByParentIds`,
-    `${JSON.stringify(allCommentsByParentIds, undefined, 2)}\x1b[0m`,
-  );
   const newData = Object.assign({}, allCommentsByParentIds, payload);
-  console.log(
-    `\x1b[34m🐣️ saga new allCommentsByParentIds`,
-    `${JSON.stringify(newData, undefined, 2)}\x1b[0m`,
-  );
   yield put(postActions.setAllCommentsByParentIds({...newData}));
 }
 
