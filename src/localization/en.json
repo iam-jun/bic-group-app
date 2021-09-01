@@ -64,7 +64,9 @@
     },
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
-    "title_page_not_found": "Page Not Found"
+    "title_page_not_found": "Page Not Found",
+    "text_edit_success": "Updated profile successfully!",
+    "text_edit_fail": "Failed to update profile!"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -337,7 +339,7 @@
         "other": "This message has been deleted",
         "list": "deleted a message"
       }
-    }, 
+    },
     "message_status": {
       "sending": "Sending",
       "sent": "Sent",
@@ -381,13 +383,13 @@
       "label_remove_from_group_chat": "Remove from group chat"
     },
     "text_mention_all": "All",
-    "message_option":{
+    "message_option": {
       "delete": "Delete Message",
       "reply": "Reply",
       "copy": "Copy Text"
     },
     "label_my_message": "You",
-    "label_deleted_message":{
+    "label_deleted_message": {
       "me": "You deleted this message.",
       "other": "This message has been deleted",
       "list": "deleted a message"

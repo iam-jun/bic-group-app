@@ -2,7 +2,7 @@ import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
 import {StreamClient} from 'getstream';
 import {FlashMessageProps} from '~/beinComponents/FlashMessage';
-import {ToastMessageProps} from '~/beinComponents/ToastMessage/ToastMessage';
+import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
 
 export interface IObject<T> {
   [key: string]: T;
