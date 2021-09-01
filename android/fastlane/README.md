@@ -20,17 +20,12 @@ or alternatively using `brew install fastlane`
 ```
 fastlane android deploy_dev
 ```
-Submit a new Build to Diawi
-### android develop
+
+### android deploy_staging
 ```
-fastlane android develop
+fastlane android deploy_staging
 ```
-Submit a new Beta Build to Internal App Sharing
-### android deploy
-```
-fastlane android deploy
-```
-Deploy a new version to the Google Play
+
 
 ----
 

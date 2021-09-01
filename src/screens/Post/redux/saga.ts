@@ -4,7 +4,6 @@ import i18n from 'i18next';
 
 import {
   IOwnReaction,
-  IParamSearchMentionAudiences,
   IPayloadGetCommentsById,
   IPayloadPutEditComment,
   IPayloadPutEditPost,
@@ -41,10 +40,6 @@ export default function* postSaga() {
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
-  yield takeLatest(
-    postTypes.GET_SEARCH_MENTION_AUDIENCES,
-    getSearchMentionAudiences,
-  );
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
@@ -212,25 +207,6 @@ function* deletePost({payload}: {type: string; payload: string}) {
     console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
   } catch (e) {
     console.log(`\x1b[35m🐣️ saga deletePost ${payload} failed`, e, `\x1b[0m`);
-  }
-}
-
-function* getSearchMentionAudiences({
-  payload,
-}: {
-  type: string;
-  payload: IParamSearchMentionAudiences;
-}) {
-  try {
-    const response = yield call(
-      postDataHelper.getSearchMentionAudiences,
-      payload,
-    );
-    if (response?.data) {
-      yield put(postActions.setMentionSearchResult(response?.data));
-    }
-  } catch (e) {
-    console.log('\x1b[36m', '🐣️ searchMentionAudiences error:', e, '\x1b[0m');
   }
 }
 

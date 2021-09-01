@@ -23,6 +23,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {scaleSize} from '~/theme/dimension';
+import appConfig from '~/configs/appConfig';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -41,28 +42,12 @@ const ConversationsList = (): React.ReactElement => {
     isFocused && dispatch(actions.getSubscriptions());
   }, [isFocused]);
 
-  useEffect(() => {
-    _getConversations();
-  }, []);
-
-  const _getConversations = () => {
-    dispatch(actions.resetData('groups'));
-    dispatch(
-      actions.getData('groups', {
-        // disable pagination because of local searching
-        offset: 0,
-        count: 1000,
-        sort: {_updatedAt: -1},
-      }),
-    );
-  };
-
   const loadMore = () => {
-    dispatch(actions.mergeExtraData('groups'));
+    dispatch(actions.mergeExtraData('rooms'));
   };
 
   const onChatPress = (item: IConversation) => {
-    dispatch(actions.selectConversation(item));
+    dispatch(actions.setConversationDetail(item));
     dispatch(actions.readSubcriptions(item._id));
     rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
   };
@@ -96,7 +81,10 @@ const ConversationsList = (): React.ReactElement => {
     dispatch(actions.searchConversation(searchQuery));
   };
 
-  const seachHandler = useCallback(debounce(doSearch, 1000), []);
+  const seachHandler = useCallback(
+    debounce(doSearch, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);

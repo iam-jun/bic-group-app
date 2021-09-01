@@ -6,8 +6,8 @@ export const chatState = (state: any) => state.chat;
 
 export const getConversations = createSelector(chatState, data => {
   return {
-    ...data?.groups,
-    data: (data?.groups?.data || [])
+    ...data?.rooms,
+    data: (data?.rooms?.data || [])
       .map((item: IConversation) => {
         const sub: any = (data?.subscriptions || []).find(
           (sub: any) => sub.rid === item._id,
@@ -31,7 +31,7 @@ export const getConversations = createSelector(chatState, data => {
 
 export const getUnreadConversationCount = createSelector(chatState, data => {
   let count = 0;
-  (data?.groups?.data || []).forEach((item: IConversation) => {
+  (data?.rooms?.data || []).forEach((item: IConversation) => {
     const sub: any = (data?.subscriptions || []).find(
       (sub: any) => sub.rid === item._id,
     );

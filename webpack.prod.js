@@ -20,7 +20,7 @@ module.exports = merge(common('production'), {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __DEV__: JSON.stringify(true),
+      __DEV__: JSON.stringify(false),
     }),
   ],
 });

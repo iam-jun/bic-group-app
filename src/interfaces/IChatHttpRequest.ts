@@ -4,6 +4,9 @@ export interface IPaginationParams {
   sort?: {[x: string]: string | number};
 }
 
+export interface ICreateDiretChatReq {
+  username: string;
+}
 export interface ICreateRoomReq {
   name: string;
   members: string[];
@@ -37,6 +40,11 @@ export interface ISendMessageReq {
   */
     avatar?: string;
   };
+}
+
+export interface IDeleteMessage {
+  roomId: string;
+  msgId: string;
 }
 
 export interface IGetGroupRolesReq {

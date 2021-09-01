@@ -1,43 +1,47 @@
 default_platform(:android)
+fastlane_require 'dotenv'
 
 platform :android do
-  desc "Submit a new Build to Diawi"
   lane :deploy_dev do
-    Dotenv.overload '.development.env'
-    gradle(task: "clean assembleProductionRelease")
-    #buildNumber = prompt(
-    #    text: "Please enter your build number:",
-    #    multi_line_end_keyword: "END",
-    #)
+    Dotenv.overload('../../.env.sample', '../../.env')
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+    gradle(task: "clean")
     gradle(
       task: "assemble",
       build_type: "Release",
-      flavor: "Production",
+      flavor: "Development",
       #properties: {
       #  "versionCode" => buildNumber.strip,
       #}
     )
+
     diawi(
       token: ENV['DIAWI_TOKEN'],
-      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][2],
+      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
     rocket_chat(
-      message: "New build version of Android can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+      message: "[DEV] New build version of Android #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
     )
   end
 
-  desc "Submit a new Beta Build to Internal App Sharing"
-  lane :develop do
-    gradle(task: "clean assembleProductionRelease")
-    upload_to_play_store_internal_app_sharing
+  lane :deploy_staging do
+    Dotenv.overload('../../.env.sample', '../../.env.staging')
 
-    # sh "test.sh"
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+    gradle(task: "clean")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Staging",
+    )
+    rocket_chat(
+      message: "[STAGING] New build version of Android #{appVersionText} can be download on Internal Testing",
+    )
+#     upload_to_play_store_internal_app_sharing
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleProductionRelease")
-    upload_to_play_store
-  end
 end

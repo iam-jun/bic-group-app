@@ -42,7 +42,7 @@ const Conversation = (): React.ReactElement => {
   const permissions = conversation.permissions || {};
 
   useEffect(() => {
-    dispatch(actions.getChatPermissions());
+    dispatch(actions.getConversationDetail(conversation._id));
     dispatch(actions.clearSelectedUsers());
 
     if (conversation.description?.length > 100) {
@@ -142,13 +142,15 @@ const Conversation = (): React.ReactElement => {
           {renderAvatar()}
           <Text.H5 style={styles.name} numberOfLines={2}>
             {conversation.name}
-            <Text>
-              <Icon
-                iconStyle={styles.iconTitleRight}
-                size={12}
-                icon="RightArrow"
-              />
-            </Text>
+            {conversation.type !== roomTypes.QUICK && (
+              <Text>
+                <Icon
+                  iconStyle={styles.iconTitleRight}
+                  size={12}
+                  icon="RightArrow"
+                />
+              </Text>
+            )}
           </Text.H5>
         </View>
       </TouchableOpacity>

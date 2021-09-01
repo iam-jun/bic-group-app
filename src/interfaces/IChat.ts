@@ -1,10 +1,16 @@
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
+import {IconType} from '~/resources/icons';
 import {IFileResponse} from './common';
 export interface IReaction {
   type: ReactionType;
   count: number;
   reacted?: boolean;
+}
+
+export interface IMessageMenu {
+  label: string;
+  icon: IconType;
 }
 
 export interface IChatUser {
@@ -13,8 +19,8 @@ export interface IChatUser {
   roles?: string[];
   type: string;
   active: boolean;
-  username?: string;
-  name?: string;
+  username: string;
+  name: string;
   services?: IUserServices;
   emails?: IUserEmail[];
   status?: string;
@@ -137,6 +143,7 @@ export type IMessage = {
   localId?: string;
   status?: IMesssageStatus;
   system?: boolean;
+  removed?: boolean;
   attachment?: IFileResponse & IAttachment;
   permissions?: [x: string];
 };

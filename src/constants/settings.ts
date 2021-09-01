@@ -1,3 +1,7 @@
+import i18n from 'i18next';
+
+import {getEnv} from '~/utils/env';
+
 export const appSettingsMenu = [
   {
     type: 'accountSettings',
@@ -7,6 +11,15 @@ export const appSettingsMenu = [
 ];
 
 export const documentsMenu = [
+  {
+    type: 'aboutBein',
+    title: 'settings:title_about_bein',
+    icon: 'iconMenuInfo',
+    disableClick: true,
+    rightSubTitle: getEnv('APP_VERSION')
+      ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
+      : undefined,
+  },
   {
     type: 'help',
     title: 'settings:title_help',

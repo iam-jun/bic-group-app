@@ -5,10 +5,7 @@ import {
   ISendMessageAction,
   IUploadFileAction,
 } from '~/interfaces/IChat';
-import {
-  IAddUsersToGroupReq,
-  ICreateRoomReq,
-} from '~/interfaces/IChatHttpRequest';
+import {IAddUsersToGroupReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
@@ -83,11 +80,6 @@ const readSubcriptions = (payload: string) => ({
   payload,
 });
 
-const selectConversation = (payload: IConversation) => ({
-  type: Actions.SELECT_CONVERSATION,
-  payload,
-});
-
 const handleEvent = (payload: ISocketEvent) => ({
   type: Actions.HANDLE_EVENT,
   payload,
@@ -119,6 +111,16 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
   reactionType,
 });
 
+const deleteMessage = (payload: IMessage) => ({
+  type: Actions.DELETE_MESSAGE,
+  payload,
+});
+
+const deleteMessageSuccess = (payload: IMessage) => ({
+  type: Actions.DELETE_MESSAGE_SUCCESS,
+  payload,
+});
+
 const selectUser = (payload: IChatUser) => ({
   type: Actions.SELECT_USER,
   payload,
@@ -128,7 +130,7 @@ const clearSelectedUsers = () => ({
   type: Actions.CLEAR_SELECTED_USERS,
 });
 
-const createConversation = (payload: ICreateRoomReq) => ({
+const createConversation = (payload: IChatUser[]) => ({
   type: Actions.CREATE_CONVERSATION,
   payload,
 });
@@ -150,15 +152,6 @@ const updateConversationName = (payload: string) => ({
 
 const uploadFile = (payload: IUploadFileAction) => ({
   type: Actions.UPLOAD_FILE,
-  payload,
-});
-
-const getChatPermissions = () => ({
-  type: Actions.GET_CHAT_PERMISSIONS,
-});
-
-const setChatPermissions = (payload: any) => ({
-  type: Actions.SET_CHAT_PERMISSIONS,
   payload,
 });
 
@@ -214,12 +207,13 @@ export default {
   setSubscriptions,
   readSubcriptions,
   handleEvent,
-  selectConversation,
   sendMessage,
   sendMessageSuccess,
   sendMessageFailed,
   retrySendMessage,
   reactMessage,
+  deleteMessage,
+  deleteMessageSuccess,
   selectUser,
   clearSelectedUsers,
   createConversation,
@@ -234,6 +228,4 @@ export default {
   setMentionSearchKey,
   getMentionUsers,
   setMentionUsers,
-  getChatPermissions,
-  setChatPermissions,
 };

@@ -1,21 +1,21 @@
+import {messageStatus} from './../../constants/chat';
 import i18next from 'i18next';
-import {roomTypes} from '~/constants/chat';
+import {roomTypes, messageEventTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IAttachment, IConversation, IMessage} from '~/interfaces/IChat';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
-import {generateRoomName} from '~/utils/generator';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
     case 'users':
     case 'members':
       return mapUsers(data);
-    case 'groups':
+    case 'rooms':
       return mapConversations(user, data);
     case 'messages':
-      return mapMessages(data);
+      return mapMessages(user, data);
     default:
       return data;
   }
@@ -24,35 +24,25 @@ export const mapData = (user: IUser, dataType: string, data: any) => {
 export const mapConversations = (user: IUser, data?: []): IConversation[] =>
   (data || []).map((item: any) => mapConversation(user, item));
 
-export const mapMessages = (data?: []): IMessage[] =>
-  (data || []).map((item: any) => mapMessage(item));
+export const mapMessages = (user: IUser, data?: []): IMessage[] =>
+  (data || []).map((item: any) => mapMessage(user, item));
 
 export const mapUsers = (data?: []): IUser[] =>
   (data || []).map((item: any) => mapUser(item));
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
   const _id = item?._id || item?.rid;
-  const {type, usernames, members} = item?.customFields || {};
+  const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
-  const membersExcludeMe = (members || []).filter(
-    (member: any) => member?.username !== user?.username,
+  const membersExcludeMe = (item.usernames || []).filter(
+    (_username: any) => _username !== user?.username,
   );
 
-  const name =
-    type === roomTypes.DIRECT
-      ? (members || []).length > 0
-        ? generateRoomName(
-            user,
-            membersExcludeMe.map(
-              (member: any) => member.name || member.username,
-            ),
-          )
-        : item.fname || item.name
-      : item?.fname || item.name;
+  const name = item.fname || item.name;
 
   const avatar =
     type === roomTypes.DIRECT
-      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0]?.username)
+      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0])
       : getRoomAvatar(_id);
 
   const attachment =
@@ -73,17 +63,17 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     ...item,
     _id,
     name,
-    usernames,
     ...item.customFields,
+    type,
     avatar,
-    user: mapUser(item?.u),
+    user: item.u && mapUser(item?.u),
     directUser: membersExcludeMe?.length > 0 && membersExcludeMe[0],
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
   };
 };
 
-export const mapMessage = (item: any): IMessage => {
+export const mapMessage = (_user: IUser, item: any): IMessage => {
   const user = mapUser(item?.u);
   let attachment = null;
   if (item.attachments?.length > 0) {
@@ -96,22 +86,31 @@ export const mapMessage = (item: any): IMessage => {
     };
   }
   const type = item.t || attachment?.type;
+  let text = item.msg;
+  const isMyMessage = user.username === _user.username;
+
+  if (item.t) {
+    if (item.t === messageEventTypes.REMOVE_MESSAGE) {
+      text = `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`;
+    } else {
+      text = i18next
+        .t(`chat:system_message:${item.t}`)
+        .replace('{0}', user.name || '')
+        .replace('{1}', item.msg);
+    }
+  }
 
   return {
     ...item,
     room_id: item?.rid,
     user,
     type,
-    system: !!item.t,
+    system: !!item.t && item.t !== messageEventTypes.REMOVE_MESSAGE,
+    removed: !!item.t && item.t === messageEventTypes.REMOVE_MESSAGE,
     createdAt: timestampToISODate(item.ts),
     _updatedAt: timestampToISODate(item._updatedAt),
-    status: 'sent',
-    text: item.t
-      ? i18next
-          .t(`chat:system_message_${item.t}`)
-          .replace('{0}', user.name || '')
-          .replace('{1}', item.msg)
-      : item?.msg,
+    status: messageStatus.SENT,
+    text,
     attachment,
     localId: item.localId || attachment?.localId,
   };
@@ -119,7 +118,7 @@ export const mapMessage = (item: any): IMessage => {
 
 export const mapUser = (item: any): IUser => ({
   ...item,
-  avatar: getAvatar(item.username),
+  avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
   ...item?.customFields,
 });

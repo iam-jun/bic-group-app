@@ -90,7 +90,6 @@ export interface IAllComments {
 
 export interface IPostCreatePost {
   getstream_id?: string;
-  actor?: number;
   data?: IActivityData;
   audience?: {
     users: number[];
