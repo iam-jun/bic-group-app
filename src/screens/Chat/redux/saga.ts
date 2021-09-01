@@ -6,22 +6,13 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
-import {IObject} from '~/interfaces/common';
-<<<<<<< HEAD
-import {IUser} from '~/interfaces/IAuth';
-import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
-import {
-  IAddUsersToGroupReq,
-  ICreateRoomReq,
-} from '~/interfaces/IChatHttpRequest';
-=======
 import {
   IChatUser,
   IConversation,
   IMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
->>>>>>> BEIN-1225-Chat-chanel-to-direct
+import {} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -38,8 +29,6 @@ import {
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
-import * as modalActions from '~/store/modal/actions';
-import i18next from 'i18next';
 
 /**
  * Chat
@@ -364,7 +353,6 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-<<<<<<< HEAD
 function* addMembersToGroup({
   payload,
 }: {
@@ -387,10 +375,7 @@ function* addMembersToGroup({
   }
 }
 
-function* removeMember({payload}: {type: string; payload: IUser}) {
-=======
 function* removeMember({payload}: {type: string; payload: IChatUser}) {
->>>>>>> BEIN-1225-Chat-chanel-to-direct
   try {
     const {chat} = yield select();
     const data = {

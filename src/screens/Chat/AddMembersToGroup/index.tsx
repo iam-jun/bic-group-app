@@ -24,15 +24,22 @@ const AddMembersToGroup = (): React.ReactElement => {
   const {selectedUsers, users, conversation} = useChat();
 
   useEffect(() => {
-    dispatch(actions.resetData('users'));
+    dispatch(actions.resetData('joinableUsers'));
     dispatch(
-      actions.getData('users', {
-        query: {__rooms: {$nin: [conversation._id]}},
-      }),
+      actions.getData(
+        'joinableUsers',
+        {
+          groupId:
+            conversation.type === roomTypes.QUICK
+              ? conversation._id
+              : conversation.beinGroupId,
+        },
+        'data',
+      ),
     );
   }, []);
 
-  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
+  const loadMoreData = () => dispatch(actions.mergeExtraData('joinableUsers'));
 
   const onAddPress = () => {
     if (conversation.type === roomTypes.GROUP) showConfirmations();

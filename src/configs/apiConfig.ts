@@ -86,6 +86,16 @@ const Chat = {
       params,
     };
   },
+  joinableUsers: (
+    groupId: number | string,
+    params: any,
+  ): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}groups/${groupId}/joinable-users`,
+    method: 'get',
+    provider: providers.bein,
+    useRetry: true,
+    params,
+  }),
   messages: (params: IPaginationParams & {roomId: string}) => {
     return {
       url: `${providers.chat.url}groups.history`,
