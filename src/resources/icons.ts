@@ -191,6 +191,7 @@ const icons = {
   RightArrow: iconRightArrow,
   CommentAltCheck: 'CommentAltCheck',
   iconUserPlus: 'UserPlus',
+  ArrowDown: 'ArrowDown',
 };
 
 export default icons;
