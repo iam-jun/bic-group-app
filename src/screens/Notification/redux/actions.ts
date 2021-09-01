@@ -1,6 +1,9 @@
 import {IGetStreamDispatch} from '~/interfaces/common';
 import notificationsTypes from '~/screens/Notification/redux/types';
-import {IMarkAsReadAnActivity} from '~/interfaces/INotification';
+import {
+  ILoadNewNotifications,
+  IMarkAsReadAnActivity,
+} from '~/interfaces/INotification';
 
 const notificationsActions = {
   setLoadingNotifications: function (payload: boolean) {
@@ -15,6 +18,12 @@ const notificationsActions = {
       payload,
     };
   },
+  addNewNotifications: function (payload: any) {
+    return {
+      type: notificationsTypes.ADD_NEW_NOTIFICATIONS,
+      payload,
+    };
+  },
   concatNotifications: function (payload: any) {
     return {
       type: notificationsTypes.CONCAT_NOTICATIONS,
@@ -26,6 +35,12 @@ const notificationsActions = {
   getNotifications: function (payload: IGetStreamDispatch) {
     return {
       type: notificationsTypes.GET_NOTIFICATIONS,
+      payload,
+    };
+  },
+  loadNewNotifications: function (payload: ILoadNewNotifications) {
+    return {
+      type: notificationsTypes.LOAD_NEW_NOTIFICATIONS,
       payload,
     };
   },
