@@ -42,7 +42,7 @@ const resetData = (dataType: string) => ({
   dataType,
 });
 
-const getConversationDetail = (payload: string) => ({
+const getConversationDetail = () => ({
   type: Actions.GET_CONVERSATION_DETAIL,
   payload,
 });
