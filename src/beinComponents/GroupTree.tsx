@@ -173,9 +173,10 @@ const GroupTree: React.FC<GroupTreeProps> = ({
 
   const renderTree = () => {
     const tree: React.ReactNode[] = [];
-    Object.values(treeData).map(group =>
+    Object.values(treeData).map((group, index) =>
       tree.push(
         <GroupItem
+          key={`tree_item_${index}_${group?.id}`}
           {...group}
           onPressItem={_onPressGroup}
           onToggleItem={onToggleGroup}
