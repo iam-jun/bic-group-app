@@ -75,43 +75,53 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   // then render them with defference content corresponding their type
   const renderNotiContent = (act: IGetStreamNotificationActivity) => {
     // for notification has a type
-    if (act.notificationType !== undefined) {
-      switch (act.notificationType) {
-        // noti type 18, 8, 22, 17
-        case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
-        case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
-        case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
-        case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED:
-          return renderReplyToCommentNotiContent(act);
+    try {
+      if (act.notificationType !== undefined) {
+        switch (act.notificationType) {
+          // noti type 18, 8, 22, 17
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED:
+            return renderReplyToCommentNotiContent(act);
 
-        // noti type 7, 19, 20, 21
-        case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
-        case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
-        case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
-        case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED:
-          return renderCommentToPostNotiContent(act);
+          // noti type 7, 19, 20, 21
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED:
+            return renderCommentToPostNotiContent(act);
 
-        // noti type 9
-        case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST:
-          return renderReactionToPostNotiContent(act);
+          // noti type 9
+          case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST:
+            return renderReactionToPostNotiContent(act);
 
-        // noti type 10
-        case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT:
-          return renderReactionToCommentNotiContent(act);
+          // noti type 10
+          case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT:
+            return renderReactionToCommentNotiContent(act);
 
-        // noti type 16
-        case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT:
-          return renderMentionYouInCommentNotiContent(act);
+          // noti type 16
+          case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT:
+            return renderMentionYouInCommentNotiContent(act);
 
-        default:
-          console.log(
-            `Notification type ${act.notificationType} have not implemented yet`,
-          );
-          return null;
+          default:
+            console.log(
+              `Notification type ${act.notificationType} have not implemented yet`,
+            );
+            return null;
+        }
+      } else {
+        // default, render it as "create post" or "mention" notification
+        return renderPostNotiContent(act);
       }
-    } else {
-      // default, render it as "create post" or "mention" notification
-      return renderPostNotiContent(act);
+    } catch (error) {
+      console.log(
+        '\x1b[33m',
+        '--- render notification item error ---',
+        error,
+        '\x1b[0m',
+      );
+      console.log('\x1b[33m', '--- notification detail ---', act, '\x1b[0m');
     }
   };
 
