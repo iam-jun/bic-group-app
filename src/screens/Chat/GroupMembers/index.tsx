@@ -62,7 +62,6 @@ const GroupMembers = (): React.ReactElement => {
 
   const onPressMenu = (user: IUser) => {
     setSelectedMember(user);
-
     baseSheetRef.current?.open();
   };
 

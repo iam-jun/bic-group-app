@@ -29,7 +29,7 @@ export interface IconProps extends SVGIconProps, UniconsProps {
   label?: string;
   labelColor?: string;
   labelStyle?: StyleProp<TextStyle>;
-  onPress?: () => void;
+  onPress?: (e: any) => void;
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
 }
 
@@ -88,32 +88,34 @@ const Icon: React.FC<IconProps> = ({
       disabled={!onPress}
       onPress={onPress}
       hitSlop={hitSlop}>
-      <View
-        style={[
-          isButton && styles.button,
-          disabled && isButton && styles.disabled,
-          iconStyle,
-        ]}>
-        <IconComponent
-          style={_style}
-          tintColor={_tintColor}
-          size={size}
-          type={type}
-          name={name}
-          source={source}
-        />
-      </View>
-      {label && (
-        <Text.ButtonBase
-          useI18n
+      <Text>
+        <View
           style={[
-            styles.label,
-            {color: labelColor || theme.colors.textPrimary},
-            labelStyle,
+            isButton && styles.button,
+            disabled && isButton && styles.disabled,
+            iconStyle,
           ]}>
-          {label}
-        </Text.ButtonBase>
-      )}
+          <IconComponent
+            style={_style}
+            tintColor={_tintColor}
+            size={size}
+            type={type}
+            name={name}
+            source={source}
+          />
+        </View>
+        {label && (
+          <Text.ButtonBase
+            useI18n
+            style={[
+              styles.label,
+              {color: labelColor || theme.colors.textPrimary},
+              labelStyle,
+            ]}>
+            {label}
+          </Text.ButtonBase>
+        )}
+      </Text>
     </TouchableOpacity>
   );
 };

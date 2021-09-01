@@ -1,9 +1,10 @@
 import moment from 'moment';
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {Platform} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import Clickable from '~/beinComponents/Clickable/Clickable';
+import Div from '~/beinComponents/Div';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
 import {IMessage} from '~/interfaces/IChat';
@@ -25,6 +26,7 @@ const MessageItem = (props: MessageItemProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+  const [menuVisible, setMenuVisible] = useState(false);
   const {previousMessage, currentMessage, onLongPress} = props;
   const {
     text,
@@ -54,17 +56,24 @@ const MessageItem = (props: MessageItemProps) => {
 
   if (system) return <SystemMessage {...currentMessage} />;
 
-  const onRightClick = (x: number, y: number) => {
+  const onMenuPress = (e: any) => {
     if (removed) return;
 
-    onLongPress?.(currentMessage, {x, y});
+    onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
   };
 
   return (
-    <Clickable onRightClick={onRightClick}>
+    <TouchableWithoutFeedback onLongPress={onMenuPress}>
       <View style={styles.container}>
         {quoted_message && <QuotedMessage {...quoted_message} />}
-        {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
+        {!hideHeader && (
+          <MessageHeader
+            user={user}
+            _updatedAt={_updatedAt}
+            menuVisible={Platform.OS === 'web' && !removed}
+            onMenuPress={onMenuPress}
+          />
+        )}
 
         <View style={styles.message}>
           {removed ? (
@@ -80,7 +89,7 @@ const MessageItem = (props: MessageItemProps) => {
         </View>
         <MessageStatus status={status} onRetryPress={_onRetryPress} />
       </View>
-    </Clickable>
+    </TouchableWithoutFeedback>
   );
 };
 
