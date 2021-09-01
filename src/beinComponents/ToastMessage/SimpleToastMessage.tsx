@@ -9,46 +9,57 @@ import {
 import {useTheme} from 'react-native-paper';
 
 import Icon from '~/beinComponents/Icon';
-import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
-import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
+import Text, {TextProps} from '~/beinComponents/Text';
+import {IconType} from '~/resources/icons';
 
-interface ChipProps {
+interface SimpleToastMessageProps {
+  children?: React.ReactNode;
+  textProps?: TextProps;
+  icon?: IconType;
   style?: StyleProp<ViewStyle>;
-  onActionPress: (action: IAction) => void;
+  onActionPress?: () => void;
 }
 
-const Chip: React.FC<ChipProps> = ({style, onActionPress}: ChipProps) => {
-  const theme: ITheme = useTheme();
+const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
+  children,
+  textProps,
+  icon,
+  style,
+  onActionPress,
+}: SimpleToastMessageProps) => {
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {t} = useBaseHook();
 
   return (
-    <TouchableOpacity
-      onPress={() => onActionPress(commonActions.scrollToBottom as IAction)}>
+    <TouchableOpacity onPress={onActionPress}>
       <View style={[styles.container, style]}>
-        <Text.BodyS style={styles.text}>{t('badge:scroll_bottom')}</Text.BodyS>
-        <Icon icon="ArrowDown" size={24} tintColor={theme.colors.primary7} />
+        <Text.BodyS {...textProps} color={theme.colors.primary7}>
+          {children}
+        </Text.BodyS>
+        {!!icon && (
+          <Icon icon={icon} size={24} tintColor={theme.colors.primary7} />
+        )}
       </View>
     </TouchableOpacity>
   );
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      width: 143,
-      height: 32,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(255, 255, 255, 0.92)',
       borderWidth: 1,
       borderRadius: 22,
       borderColor: colors.primary3,
+      alignSelf: 'baseline',
+      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.tiny,
 
       shadowColor: '#000',
       shadowOffset: {
@@ -59,10 +70,7 @@ const createStyles = (theme: ITheme) => {
       shadowRadius: 10.32,
       elevation: 16,
     },
-    text: {
-      color: colors.primary7,
-    },
   });
 };
 
-export default Chip;
+export default SimpleToastMessage;

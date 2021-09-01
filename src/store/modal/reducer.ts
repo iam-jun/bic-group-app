@@ -13,6 +13,10 @@ export const initState = {
     onCancel: () => {},
     isDismissable: true,
   },
+  toastMessage: {
+    content: '',
+    props: {},
+  },
 };
 
 /**
@@ -36,6 +40,18 @@ function commonReducer(state = initState, action: any = {}) {
 
     case actions.HIDE_ALERT:
       return initState;
+
+    case actions.SET_TOAST_MESSAGE:
+      return {
+        ...state,
+        toastMessage: payload,
+      };
+    case actions.CLEAR_TOAST_MESSAGE:
+      return {
+        ...state,
+        toastMessage: initState.toastMessage,
+      };
+
     default:
       return state;
   }

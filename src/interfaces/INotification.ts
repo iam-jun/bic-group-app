@@ -25,3 +25,7 @@ export interface IGetStreamNotificationActivity {
 export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
   activityId: string;
 }
+
+export interface ILoadNewNotifications extends IGetStreamDispatch {
+  limit: string;
+}

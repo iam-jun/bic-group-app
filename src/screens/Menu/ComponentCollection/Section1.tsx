@@ -7,8 +7,13 @@ import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
 import {copyDeviceToken} from '~/store/app/actions';
 import {ITheme} from '~/theme/interfaces';
+import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import {IToastMessage} from '~/interfaces/common';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 const Section1 = () => {
   const {spacing, colors}: ITheme = useTheme() as ITheme;
@@ -101,6 +106,54 @@ const Section1 = () => {
             Your account is deactived in 2 hours for requesting code too many
             time. Please try again later
           </FlashMessage>
+        )}
+      </>,
+    );
+  };
+
+  const renderToastMessage = () => {
+    const toastMessage: IToastMessage = {
+      content: 'Giới Định Tuệ',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+
+    return renderSection(
+      'Toast Message',
+      <>
+        <ButtonWrapper
+          style={{margin: spacing?.margin.base}}
+          onPress={() => dispatch(showHideToastMessage(toastMessage))}>
+          Click to test popup ToastMessage
+        </ButtonWrapper>
+        <SimpleToastMessage
+          icon={'ArrowDown'}
+          textProps={{useI18n: true}}
+          style={{margin: spacing?.margin.base}}>
+          badge:scroll_bottom
+        </SimpleToastMessage>
+        {showError && (
+          <NormalToastMessage
+            type={'error'}
+            style={{margin: spacing.margin.base}}>
+            No Internet Connection
+          </NormalToastMessage>
+        )}
+        {showSuccess && (
+          <NormalToastMessage
+            type={'success'}
+            style={{margin: spacing.margin.base}}>
+            Group Description Saved!
+          </NormalToastMessage>
+        )}
+        {showWarning && (
+          <NormalToastMessage
+            type={'informative'}
+            style={{margin: spacing.margin.base}}>
+            Informative
+          </NormalToastMessage>
         )}
       </>,
     );
@@ -310,6 +363,7 @@ const Section1 = () => {
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
       {renderFlashMessage()}
+      {renderToastMessage()}
       {renderIcon()}
       {renderText()}
       <Button.BottomFixed

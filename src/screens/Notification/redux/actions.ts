@@ -1,6 +1,9 @@
 import {IGetStreamDispatch} from '~/interfaces/common';
 import notificationsTypes from '~/screens/Notification/redux/types';
-import {IMarkAsReadAnActivity} from '~/interfaces/INotification';
+import {
+  ILoadNewNotifications,
+  IMarkAsReadAnActivity,
+} from '~/interfaces/INotification';
 
 const notificationsActions = {
   setLoadingNotifications: function (payload: boolean) {
@@ -15,11 +18,29 @@ const notificationsActions = {
       payload,
     };
   },
+  addNewNotifications: function (payload: any) {
+    return {
+      type: notificationsTypes.ADD_NEW_NOTIFICATIONS,
+      payload,
+    };
+  },
+  concatNotifications: function (payload: any) {
+    return {
+      type: notificationsTypes.CONCAT_NOTICATIONS,
+      payload,
+    };
+  },
 
   //for saga
   getNotifications: function (payload: IGetStreamDispatch) {
     return {
       type: notificationsTypes.GET_NOTIFICATIONS,
+      payload,
+    };
+  },
+  loadNewNotifications: function (payload: ILoadNewNotifications) {
+    return {
+      type: notificationsTypes.LOAD_NEW_NOTIFICATIONS,
       payload,
     };
   },
@@ -38,6 +59,24 @@ const notificationsActions = {
   markAsRead: function (payload: IMarkAsReadAnActivity) {
     return {
       type: notificationsTypes.MARK_AS_READ,
+      payload,
+    };
+  },
+  loadmore: function (payload: IGetStreamDispatch) {
+    return {
+      type: notificationsTypes.LOADMORE,
+      payload,
+    };
+  },
+  setIsLoadingMore: function (payload: boolean) {
+    return {
+      type: notificationsTypes.SET_IS_LOADING_MORE,
+      payload,
+    };
+  },
+  setNoMoreNoti: (payload: boolean) => {
+    return {
+      type: notificationsTypes.SET_NO_MORE_NOTIFICATION,
       payload,
     };
   },
