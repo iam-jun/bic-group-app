@@ -1,6 +1,7 @@
 // flow
 import * as Actions from './constants';
 import {IShowAlert} from '../../interfaces/IModal';
+import {IToastMessage} from '~/interfaces/common';
 
 /**
  * Fetch settings
@@ -34,3 +35,17 @@ export function hideAlert() {
     type: Actions.HIDE_ALERT,
   };
 }
+
+export const showHideToastMessage = (payload: IToastMessage) => ({
+  type: Actions.SHOW_HIDE_TOAST_MESSAGE,
+  payload,
+});
+
+export const setToastMessage = (payload: IToastMessage) => ({
+  type: Actions.SET_TOAST_MESSAGE,
+  payload,
+});
+
+export const clearToastMessage = () => ({
+  type: Actions.CLEAR_TOAST_MESSAGE,
+});

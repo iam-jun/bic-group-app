@@ -2,6 +2,7 @@ import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
 import {StreamClient} from 'getstream';
 import {FlashMessageProps} from '~/beinComponents/FlashMessage';
+import {ToastMessageProps} from '~/beinComponents/ToastMessage/ToastMessage';
 
 export interface IObject<T> {
   [key: string]: T;
@@ -46,4 +47,10 @@ export interface IResponseData {
   code: number;
   data: any;
   meta: any;
+}
+
+export interface IToastMessage {
+  content: string;
+  props: ToastMessageProps;
+  duration?: number;
 }

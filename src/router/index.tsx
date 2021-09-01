@@ -29,6 +29,9 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
+import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
+import {useKeySelector} from '~/hooks/selector';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +45,8 @@ const StackNavigator = (): React.ReactElement => {
   >();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
+
+  const toastMessage = useKeySelector('modal.toastMessage') || {};
 
   const checkAuthKickout = async () => {
     try {
@@ -106,6 +111,22 @@ const StackNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = true;
   };
 
+  const renderToastMessage = () => {
+    if (!toastMessage?.content) return null;
+
+    return Platform.OS === 'web' ? (
+      <NormalToastMessage style={styles.toastStyle} {...toastMessage?.props}>
+        {toastMessage?.content}
+      </NormalToastMessage>
+    ) : (
+      <SimpleToastMessage
+        style={styles.smallToastStyle}
+        {...toastMessage?.props}>
+        {toastMessage?.content}
+      </SimpleToastMessage>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <NavigationContainer
@@ -138,6 +159,8 @@ const StackNavigator = (): React.ReactElement => {
         </Stack.Navigator>
       </NavigationContainer>
       <AlertModal />
+
+      {renderToastMessage()}
     </View>
   );
 };
@@ -153,6 +176,16 @@ const getOptions = (t: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  toastStyle: {
+    position: 'absolute',
+    left: 40,
+    bottom: 40,
+  },
+  smallToastStyle: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 110,
   },
 });
 
