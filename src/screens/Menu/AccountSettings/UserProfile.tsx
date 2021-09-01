@@ -1,14 +1,12 @@
-import React from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, ScrollView, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
-import * as modalActions from '~/store/modal/actions';
+import {scaleSize, userProfileImageCropRatio} from '~/theme/dimension';
 import useMenu from '~/hooks/menu';
 import images from '~/resources/images';
 import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
@@ -17,6 +15,10 @@ import {formatDate} from '~/utils/formatData';
 import speakingLanguages from '~/constants/speakingLanguages';
 import relationshipStatus from '~/constants/relationshipStatus';
 import genders from '~/constants/genders';
+import {validateFile} from '~/utils/validation';
+import {IFileResponse} from '~/interfaces/common';
+import menuActions from '../redux/actions';
+import {scaleCoverHeight} from '~/theme/dimension';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -24,15 +26,18 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
+import ImagePicker from '~/beinComponents/ImagePicker';
 
 const UserProfile = () => {
+  const [coverHeight, setCoverHeight] = useState<number>(210);
+
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
-  const {t} = useBaseHook();
+  const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {myProfile} = useMenu();
   const {
+    id,
     fullname,
     gender,
     avatar,
@@ -42,70 +47,116 @@ const UserProfile = () => {
     relationship_status,
   } = myProfile;
 
+  const [error, setError] = useState<string | null>(null);
+
   const userLanguageList = language.map(
     // @ts-ignore
     (code: string) => speakingLanguages[code].name,
   );
   const userLanguages = userLanguageList.join(', ');
 
-  const popupMessage = () =>
-    dispatch(
-      modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
-      }),
-    );
-
   const goToEditInfo = () => navigation.navigate(menuStack.editBasicInfo);
 
-  return (
-    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header title={t('settings:title_user_profile')} />
-      <ScrollView>
-        {/* --- AVATAR --- */}
+  const uploadFile = (
+    file: IFileResponse,
+    fieldName: 'avatar' | 'background_img_url',
+  ) => {
+    dispatch(
+      menuActions.uploadImage({
+        id,
+        image: file,
+        fieldName,
+      }),
+    );
+  };
+
+  // fieldName: field name in group profile to be edited
+  // 'avatar' for avatar and 'background_img_url' for cover
+  const _openImagePicker = (fieldName: 'avatar' | 'background_img_url') => {
+    ImagePicker.openPicker({
+      ...userProfileImageCropRatio[fieldName],
+      cropping: true,
+      mediaType: 'photo',
+      multiple: false,
+    }).then(result => {
+      if (!result) return;
+
+      const file = {
+        name: result.filename,
+        size: result.size,
+        type: result.mime,
+        uri: result.path,
+      };
+      const _error = validateFile(file);
+      setError(_error);
+      if (_error) return;
+      // @ts-ignore
+      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
+    });
+  };
+
+  const onEditAvatar = () => _openImagePicker('avatar');
+
+  const onEditCover = () => _openImagePicker('background_img_url');
+
+  const onCoverLayout = (e: any) => {
+    if (!e?.nativeEvent?.layout?.width) return;
+    const coverWidth = e.nativeEvent.layout.width;
+    const coverHeight = scaleCoverHeight(coverWidth);
+    setCoverHeight(coverHeight);
+  };
+
+  const renderAvatar = () => {
+    return (
+      <View>
         <View style={styles.avatarHeader}>
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={popupMessage}>
+          <ButtonWrapper onPress={onEditAvatar}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper onPress={popupMessage} style={styles.imageButton}>
+        <View style={styles.imageButton}>
           <Image
-            resizeMode="cover"
             style={styles.avatar}
             source={avatar || images.img_user_avatar_default}
           />
-        </ButtonWrapper>
+        </View>
         <Divider style={styles.divider} />
+      </View>
+    );
+  };
 
-        {/* --- COVER --- */}
+  const renderCover = () => {
+    return (
+      <View>
         <View style={styles.coverHeader}>
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={popupMessage}>
+          <ButtonWrapper onPress={onEditCover}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <ButtonWrapper onPress={popupMessage}>
+        <View onLayout={onCoverLayout}>
           <Image
-            resizeMode="cover"
             style={styles.cover}
             source={background_img_url || images.img_cover_default}
           />
-        </ButtonWrapper>
+        </View>
         <Divider style={styles.divider} />
+      </View>
+    );
+  };
 
-        {/* --- BASIC INFO --- */}
+  const renderBasicInfo = () => {
+    return (
+      <View>
         <View style={styles.infoHeader}>
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_basic_info
@@ -150,6 +201,17 @@ const UserProfile = () => {
             isTouchDisabled
           />
         </View>
+      </View>
+    );
+  };
+
+  return (
+    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+      <Header title={i18next.t('settings:title_user_profile')} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {renderAvatar()}
+        {renderCover()}
+        {renderBasicInfo()}
       </ScrollView>
     </ScreenWrapper>
   );
@@ -157,7 +219,7 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
@@ -193,10 +255,8 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: 8,
     },
     cover: {
-      width: scaleSize(375),
-      height: scaleSize(136),
-      maxHeight: 250,
-      maxWidth: 525,
+      width: '100%',
+      height: coverHeight,
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,

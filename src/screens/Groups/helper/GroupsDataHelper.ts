@@ -11,19 +11,12 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getGroupMembers: (
-    groupId: number,
-    offset?: number,
-    limit?: number,
-  ): HttpApiRequestConfig => ({
+  getGroupMembers: (groupId: number, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: {
-      offset: offset,
-      limit: limit,
-    },
+    params,
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups`,
@@ -61,6 +54,22 @@ export const groupsApiConfig = {
     },
     useRetry: false,
     data,
+  }),
+  getJoinableUsers: (groupId: number, params: any): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joinable-users`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
+  addUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+    data: {
+      user_ids: userIds,
+    },
   }),
 };
 
@@ -127,10 +136,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMembers: async (groupId: number, offset?: number, limit?: number) => {
+  getGroupMembers: async (groupId: number, params: any) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupMembers(groupId, offset, limit),
+        groupsApiConfig.getGroupMembers(groupId, params),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
@@ -173,6 +182,34 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.uploadImage(data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getJoinableUsers: async (groupId: number, params: any) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getJoinableUsers(groupId, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  addUsers: async (groupId: number, userIds: number[]) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.addUsers(groupId, userIds),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

@@ -1,5 +1,5 @@
 import appConfig from '~/configs/appConfig';
-import {messageStatus} from '~/constants/chat';
+import {messageStatus, messageEventTypes} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {
   IChatUser,
@@ -10,10 +10,11 @@ import {
 import * as types from './constants';
 
 export const initDataState = {
-  groups: {
+  rooms: {
     loading: false,
     data: [],
     extra: [],
+    searchResult: [],
     offset: 0,
     canLoadMore: true,
   },
@@ -68,9 +69,9 @@ const initState = {
  * @param action
  * @returns {*}
  */
-function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
+function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
   const {type, dataType, payload} = action;
-  const {groups, conversation, messages, users, selectedUsers} = state;
+  const {rooms, conversation, messages, users, selectedUsers} = state;
 
   switch (type) {
     case types.GET_DATA:
@@ -117,6 +118,18 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
         ...state,
         [dataType]: initDataState[dataType],
       };
+    case types.SEARCH_CONVERSATIONS:
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          searchResult: !payload
+            ? rooms.data
+            : rooms.data.filter((item: IConversation) =>
+                item.name.toLowerCase().includes(payload.toLowerCase()),
+              ),
+        },
+      };
     case types.GET_GROUP_ROLES:
       return {
         ...state,
@@ -151,26 +164,10 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           sub.rid === action.payload ? {...sub, unread: 0} : sub,
         ),
       };
-    case types.SELECT_CONVERSATION:
-      return {
-        ...state,
-        conversation: {
-          ...conversation,
-          ...action.payload,
-        },
-        messages: initState.messages,
-      };
-    case types.GET_CONVERSATION_DETAIL:
-      return {
-        ...state,
-        conversation: {
-          _id: action.payload,
-        },
-      };
     case types.SET_CONVERSATION_DETAIL:
       return {
         ...state,
-        conversation: action.payload,
+        conversation: payload,
       };
     case types.ADD_NEW_MESSAGE: {
       const include = messages.data.find(
@@ -191,11 +188,11 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
                 data: newMessages,
               }
             : messages,
-        groups: payload.system
-          ? state.groups
+        rooms: payload.system
+          ? state.rooms
           : {
-              ...groups,
-              data: groups.data.map((item: any) =>
+              ...rooms,
+              data: rooms.data.map((item: any) =>
                 item._id === action.payload.room_id
                   ? {
                       ...item,
@@ -241,9 +238,9 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
     case types.CREATE_CONVERSATION_SUCCESS:
       return {
         ...state,
-        groups: {
-          ...groups,
-          data: [action.payload, ...groups.data],
+        rooms: {
+          ...rooms,
+          data: [action.payload, ...rooms.data],
         },
       };
     case types.UPLOAD_FILE:
@@ -311,6 +308,25 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ),
         },
       };
+    case types.DELETE_MESSAGE_SUCCESS:
+    case types.DELETE_MESSAGE: {
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item._id === action.payload._id
+              ? {
+                  ...item,
+                  type: messageEventTypes.REMOVE_MESSAGE,
+                  removed: true,
+                  text: 'chat:system_message:rm:me',
+                }
+              : item,
+          ),
+        },
+      };
+    }
     case types.UPDATE_CONVERSATION_NAME:
       return {
         ...state,
@@ -318,9 +334,9 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
           ...state.conversation,
           name: action.payload,
         },
-        groups: {
-          ...state.groups,
-          data: state.groups.data.map((item: IConversation) =>
+        rooms: {
+          ...state.rooms,
+          data: state.rooms.data.map((item: IConversation) =>
             item._id === conversation._id
               ? {...item, name: action.payload}
               : item,
@@ -340,9 +356,9 @@ function reducer(state = initState, action: IAction = {dataType: 'groups'}) {
     case types.KICK_ME_OUT:
       return {
         ...state,
-        groups: {
-          ...state.groups,
-          data: state.groups.data.filter(
+        rooms: {
+          ...state.rooms,
+          data: state.rooms.data.filter(
             (group: IConversation) => group._id !== payload.room_id,
           ),
         },

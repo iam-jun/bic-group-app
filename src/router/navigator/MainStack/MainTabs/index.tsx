@@ -38,11 +38,11 @@ const MainTabs = () => {
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const isBigTablet = dimensions.width >= deviceDimensions.bigTablet;
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const Tab = isPhone ? BottomTab : SideTab;
 
-  const styles = createStyles(theme, isPhone, isBigTablet);
+  const styles = createStyles(theme, isPhone, isLaptop);
   const tabBadge = useTabBadge();
 
   const dispatch = useDispatch();
@@ -73,14 +73,23 @@ const MainTabs = () => {
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
-  const realtimeCallback = () => {
-    streamClient &&
-      dispatch(
-        notificationsActions.getNotifications({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+  const realtimeCallback = (data: any) => {
+    // for now realtime noti include "deleted" and "new"
+    // for delete actitivity event "new" is empty
+    // and we haven't handle "delete" event yet
+    if (data.new.length > 0) {
+      const actorId = data.new[0].actor.id;
+      const limit = data.new.length;
+      streamClient &&
+        actorId != userId &&
+        dispatch(
+          notificationsActions.loadNewNotifications({
+            streamClient,
+            userId: userId.toString(),
+            limit: limit,
+          }),
+        );
+    }
   };
 
   return (
@@ -115,7 +124,7 @@ const MainTabs = () => {
                 focused: boolean;
                 color: string;
               }) => {
-                if (isBigTablet) return null;
+                if (isLaptop) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 const styles = CreateStyle(theme, focused, isPhone, color);
@@ -175,17 +184,13 @@ const CreateStyle = (
   });
 };
 
-const createStyles = (
-  theme: ITheme,
-  isPhone: boolean,
-  isBigTablet: boolean,
-) => {
+const createStyles = (theme: ITheme, isPhone: boolean, isLaptop: boolean) => {
   const {colors} = theme;
   return StyleSheet.create({
     tabBar: isPhone
       ? {}
       : {
-          width: isBigTablet ? 0 : 64,
+          width: isLaptop ? 0 : 80,
           backgroundColor: colors.background,
         },
   });

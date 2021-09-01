@@ -1,18 +1,20 @@
-import {
-  IRemoveMemberReq,
-  IAddUsersToGroupReq,
-} from './../interfaces/IChatHttpRequest';
+import {} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
   IGetGroupReq,
   IGetGroupRolesReq,
+  ICreateDiretChatReq,
   IGetMentionUsersReq,
   IPaginationParams,
   IReadSubscription,
   ISendMessageReq,
   IUpdateGroupName,
+  IRemoveMemberReq,
+  IAddUsersToGroupReq,
+  IDeleteMessage,
 } from '~/interfaces/IChatHttpRequest';
+import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 
 const providers = {
@@ -31,13 +33,27 @@ const providers = {
 };
 
 const Chat = {
-  groups: (params: IPaginationParams): HttpApiRequestConfig => {
+  rooms: (): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
     return {
-      url: `${providers.chat.url}groups.list`,
+      url: `${providers.bein.url}chat`,
       method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+    };
+  },
+  createDirectChat: (data: ICreateDiretChatReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}im.create`,
+      method: 'post',
       useRetry: true,
       provider: providers.chat,
-      params,
+      data,
     };
   },
   createRoom: (data: ICreateRoomReq): HttpApiRequestConfig => {
@@ -125,6 +141,15 @@ const Chat = {
       data,
     };
   },
+  deleteMessage: (data: IDeleteMessage): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.delete`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
   groupInfo: (params: IGetGroupReq): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}groups.info`,
@@ -171,6 +196,20 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       params,
+    };
+  },
+  getChatInfo: (roomId: string): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/${roomId}/info`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
     };
   },
 };

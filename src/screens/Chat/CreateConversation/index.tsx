@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import appConfig from '~/configs/appConfig';
 import {roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
@@ -36,26 +37,7 @@ const CreateConversation = (): React.ReactElement => {
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onCreatePress = () => {
-    const name = generateRoomName(
-      user,
-      selectedUsers.map((user: IUser) => user.name),
-    );
-
-    const type = selectedUsers.length > 1 ? roomTypes.QUICK : roomTypes.DIRECT;
-
-    const members = [...selectedUsers, user];
-
-    dispatch(
-      actions.createConversation({
-        name,
-        members: selectedUsers.map((user: IUser) => user.username),
-        customFields: {
-          type,
-          usernames: members.map((user: IUser) => user.username),
-          members: selectedUsers.length === 1 ? members : null,
-        },
-      }),
-    );
+    dispatch(actions.createConversation(selectedUsers));
   };
 
   const searchUsers = (searchQuery: string) => {
@@ -74,7 +56,10 @@ const CreateConversation = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
+  const seachHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);

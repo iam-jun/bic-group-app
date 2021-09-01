@@ -14,11 +14,11 @@ import settings, {
   logoutMenu,
 } from '~/constants/settings';
 import {useBaseHook} from '~/hooks';
+import {useUserIdAuth} from '~/hooks/auth';
 import useMenu from '~/hooks/menu';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ISetting} from '~/interfaces/common';
 import images from '~/resources/images';
-import {useUserIdAuth} from '~/hooks/auth';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
@@ -123,13 +123,14 @@ const Menu = (): React.ReactElement => {
       />
 
       <Divider size={10} style={styles.divider} />
-      {/* TODO: Will remove this setting section */}
-      <ListView
-        scrollEnabled={false}
-        type="menu"
-        data={settings}
-        onItemPress={onSettingPress}
-      />
+      {__DEV__ && (
+        <ListView
+          scrollEnabled={false}
+          type="menu"
+          data={settings}
+          onItemPress={onSettingPress}
+        />
+      )}
     </ScreenWrapper>
   );
 };

@@ -63,7 +63,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     } else if (toggleOnPress) {
       onToggleGroup(group);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, group as any);
+      rootNavigation.navigate(groupStack.groupDetail, {groupId: group.id});
     }
   };
 

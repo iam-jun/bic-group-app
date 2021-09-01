@@ -23,8 +23,8 @@ const ReactionBottomSheet = () => {
   const {title, show, callback} = data || {};
 
   const _onPressReaction = (reaction: IReactionProps) => {
-    reactionSheetRef?.current?.close?.();
     callback?.(reaction.id);
+    dispatch(postActions.setShowReactionBottomSheet());
   };
 
   const _onClose = () => {

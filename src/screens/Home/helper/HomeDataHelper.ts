@@ -7,13 +7,13 @@ const homeDataHelper = {
     streamClient?: StreamClient,
     offset?: number,
   ) => {
-    if (streamClient) {
+    if (streamClient && userId) {
       const streamOptions = {
         offset: offset || 0,
         limit: 10,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
-        // recentReactionsLimit: 10,
+        recentReactionsLimit: 10,
         withOwnReactions: true,
         withOwnChildren: true, //return own_children of reaction to comment
         withRecentReactions: true,
@@ -34,7 +34,7 @@ const homeDataHelper = {
         return Promise.reject(e);
       }
     }
-    return Promise.reject('StreamClient not found');
+    return Promise.reject('StreamClient or UserId not found');
   },
 };
 

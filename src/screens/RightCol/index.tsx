@@ -34,29 +34,6 @@ const RightCol = () => {
     }
   };
 
-  const renderRowItems = (item1: IRightMenu, item2: IRightMenu) => {
-    return (
-      <View style={styles.menuRow}>
-        {item1 && (
-          <TouchableOpacity
-            key={item1.type}
-            style={styles.menuItemLeft}
-            onPress={() => onItemPress(item1)}>
-            <Text.Body style={styles.menuText}>{t(item1.title)}</Text.Body>
-          </TouchableOpacity>
-        )}
-        {item2 && (
-          <TouchableOpacity
-            key={item2.type}
-            style={styles.menuItemRight}
-            onPress={() => onItemPress(item2)}>
-            <Text.Body style={styles.menuText}>{t(item2.title)}</Text.Body>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
-
   return (
     <ScreenWrapper testID="RightCol" style={styles.container} isFullView>
       <Image
@@ -66,10 +43,30 @@ const RightCol = () => {
       />
       <View style={styles.mainContainer}>
         {rightColMenu.map((item, index) => {
-          if (index % 2 !== 0) return null;
-
           // only render even item, and odd item on the same row
-          return renderRowItems(item, rightColMenu[index + 1]);
+          if (index % 2 !== 0) return null;
+          const nextItem = rightColMenu[index + 1] || undefined;
+
+          return (
+            <View key={index} style={styles.menuRow}>
+              {item && (
+                <TouchableOpacity
+                  style={styles.menuItemLeft}
+                  onPress={() => onItemPress(item)}>
+                  <Text.Body style={styles.menuText}>{t(item.title)}</Text.Body>
+                </TouchableOpacity>
+              )}
+              {nextItem && (
+                <TouchableOpacity
+                  style={styles.menuItemRight}
+                  onPress={() => onItemPress(nextItem)}>
+                  <Text.Body style={styles.menuText}>
+                    {t(nextItem.title)}
+                  </Text.Body>
+                </TouchableOpacity>
+              )}
+            </View>
+          );
         })}
       </View>
       <View style={styles.footerContainer}>
@@ -94,12 +91,13 @@ const themeStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
+      paddingHorizontal: spacing.margin.large,
+      paddingVertical: spacing.padding.base,
       backgroundColor: colors.surface,
     },
     img: {
       width: '100%',
       height: 250,
-      marginTop: spacing.margin.base,
     },
     mainContainer: {
       marginVertical: spacing.margin.large,

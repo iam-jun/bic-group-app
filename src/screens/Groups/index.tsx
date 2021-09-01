@@ -14,18 +14,16 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IGroup} from '~/interfaces/IGroup';
 
-interface GroupsProps {}
-
-const Groups: React.FC<GroupsProps> = () => {
+const Groups: React.FC = () => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
   const groupsData = useGroups();
   const {loadingJoinedGroups, joinedGroups} = groupsData;
 
-  // for groups search - client search
+  // for rooms search - client search
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<IGroup[]>([]);
 

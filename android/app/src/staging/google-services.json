@@ -1,84 +1,40 @@
 {
   "project_info": {
-    "project_number": "984378934676",
-    "project_id": "evol-dev",
-    "storage_bucket": "evol-dev.appspot.com"
+    "project_number": "297061761843",
+    "project_id": "bein-group-development",
+    "storage_bucket": "bein-group-development.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:984378934676:android:8245da2a63f738d97efb81",
-        "android_client_info": {
-          "package_name": "com.evol.bein.chat"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA7jp0QGdRvLrDfT96QJjkZ0pwd2fk4ot8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "984378934676-e2043mopjv2mj7e1lgd4e6v3eea8pjgm.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.evol.bein.chat"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:984378934676:android:fe517a56e945f4357efb81",
+        "mobilesdk_app_id": "1:297061761843:android:f9bfc5575ee3ab19583446",
         "android_client_info": {
           "package_name": "com.evol.bein.group"
         }
       },
       "oauth_client": [
         {
-          "client_id": "984378934676-gtdk9jfdu2bbkl7nnmnjr4gri7m2k08m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.evol.bein.group",
-            "certificate_hash": "bb04fafaabfd95b571b461e9edea052cf7c93ad8"
-          }
-        },
-        {
-          "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
+          "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA7jp0QGdRvLrDfT96QJjkZ0pwd2fk4ot8"
+          "current_key": "AIzaSyD7ptFAkxv_uIyHDSs8TdvSVhvZJMZfCnQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
+              "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "984378934676-e2043mopjv2mj7e1lgd4e6v3eea8pjgm.apps.googleusercontent.com",
+              "client_id": "297061761843-0e3d491dv6vos5uiicdihidjbrgf4pmu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.evol.bein.chat"
+                "bundle_id": "com.evol.bein.group"
               }
             }
           ]
@@ -87,42 +43,42 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:984378934676:android:1813cb0b7b9e5eff7efb81",
+        "mobilesdk_app_id": "1:297061761843:android:74947d963eb857da583446",
         "android_client_info": {
           "package_name": "com.evol.bein.group.development"
         }
       },
       "oauth_client": [
         {
-          "client_id": "984378934676-lvv4dfnucidqv2n3u4tloqde3p3uehvc.apps.googleusercontent.com",
+          "client_id": "297061761843-hb0cnv70961rvlcgklql192rrvne1rsq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.evol.bein.group.development",
-            "certificate_hash": "bb04fafaabfd95b571b461e9edea052cf7c93ad8"
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
+          "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA7jp0QGdRvLrDfT96QJjkZ0pwd2fk4ot8"
+          "current_key": "AIzaSyD7ptFAkxv_uIyHDSs8TdvSVhvZJMZfCnQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
+              "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "984378934676-e2043mopjv2mj7e1lgd4e6v3eea8pjgm.apps.googleusercontent.com",
+              "client_id": "297061761843-0e3d491dv6vos5uiicdihidjbrgf4pmu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.evol.bein.chat"
+                "bundle_id": "com.evol.bein.group"
               }
             }
           ]
@@ -131,42 +87,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:984378934676:android:f7c8ac9c79e202c07efb81",
+        "mobilesdk_app_id": "1:297061761843:android:7be303ce44e986e6583446",
         "android_client_info": {
           "package_name": "com.evol.bein.group.staging"
         }
       },
       "oauth_client": [
         {
-          "client_id": "984378934676-qacqq1jjd3dri9ptkdhhmfrltpic59p4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.evol.bein.group.staging",
-            "certificate_hash": "bb04fafaabfd95b571b461e9edea052cf7c93ad8"
-          }
-        },
-        {
-          "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
+          "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA7jp0QGdRvLrDfT96QJjkZ0pwd2fk4ot8"
+          "current_key": "AIzaSyD7ptFAkxv_uIyHDSs8TdvSVhvZJMZfCnQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "984378934676-a2tb5om20d8lrbpq382t07o83mdjq38d.apps.googleusercontent.com",
+              "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "984378934676-e2043mopjv2mj7e1lgd4e6v3eea8pjgm.apps.googleusercontent.com",
+              "client_id": "297061761843-0e3d491dv6vos5uiicdihidjbrgf4pmu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.evol.bein.chat"
+                "bundle_id": "com.evol.bein.group"
               }
             }
           ]

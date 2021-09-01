@@ -2,14 +2,16 @@ import React from 'react';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
+import ImageViewer from '~/beinComponents/Image/ImageViewer';
 import Video from '~/beinComponents/Video';
-import {Image, Text} from '~/components';
+import {Text} from '~/components';
 import {messageStatus} from '~/constants/chat';
 import {IMessage} from '~/interfaces/IChat';
 import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import {openLink} from '~/utils/common';
 import {formatBytes} from '~/utils/formatData';
-import {getMessageAttachmentUrl} from '../../helper';
+import {getDownloadUrl, getMessageAttachmentUrl} from '../../helper';
 
 const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
   const theme = useTheme() as ITheme;
@@ -33,7 +35,11 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
         const url = getMessageAttachmentUrl(attachment?.image_url);
 
         return (
-          <Image style={styles.image} resizeMode="cover" source={{uri: url}} />
+          <ImageViewer
+            style={styles.image}
+            resizeMode="cover"
+            source={{uri: url}}
+          />
         );
       } else if (attachment?.video_url) {
         const url = getMessageAttachmentUrl(attachment?.video_url);
@@ -41,6 +47,12 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
         return <Video source={{uri: url}} />;
       }
     }
+
+    const dowloadFile = () => {
+      const url = getDownloadUrl(attachment?.title_link);
+
+      openLink(url);
+    };
 
     return (
       <View style={styles.defaultFileContainer}>
@@ -51,7 +63,7 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
             <Icon icon="File" size={36} tintColor={theme.colors.primary} />
           )}
         </View>
-        <View>
+        <View style={styles.metaView}>
           <Text.Body numberOfLines={2} style={styles.title} color={color}>
             {name}
           </Text.Body>
@@ -66,7 +78,9 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
               <Text.BodyS useI18n>{`chat:upload_status:${status}`}</Text.BodyS>
             )}
             {status === messageStatus.SENT && (
-              <Text.BodySM useI18n>common:text_download</Text.BodySM>
+              <Text.BodySM useI18n onPress={dowloadFile}>
+                common:text_download
+              </Text.BodySM>
             )}
           </View>
         </View>
@@ -83,12 +97,11 @@ const createStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingRight: 52,
       paddingVertical: spacing.padding.base,
     },
     image: {
-      width: Platform.OS === 'web' ? 307 : scaleSize(307),
-      height: Platform.OS === 'web' ? 225.5 : scaleSize(225.5),
+      width: Platform.OS === 'web' ? 300 : scaleSize(307),
+      height: Platform.OS === 'web' ? 200 : scaleSize(225.5),
       backgroundColor: colors.placeholder,
     },
     defaultFileContainer: {
@@ -99,6 +112,9 @@ const createStyles = (theme: ITheme) => {
     },
     title: {
       flexShrink: 1,
+    },
+    metaView: {
+      flex: 1,
     },
     metadata: {
       flexDirection: 'row',

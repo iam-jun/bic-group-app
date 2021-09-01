@@ -18,6 +18,7 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 
 export interface CreateCommentProps {
   route?: {
@@ -71,32 +72,6 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
     }
   };
 
-  const onMentionText = debounce((textMention: string) => {
-    if (textMention) {
-      dispatch(postActions.setMentionSearchKey(textMention));
-      dispatch(
-        postActions.getSearchMentionAudiences({
-          key: textMention,
-          group_ids: groupIds,
-        }),
-      );
-    } else if (mentionKey || mentionResult?.length > 0) {
-      dispatch(postActions.setMentionSearchResult([]));
-      dispatch(postActions.setMentionSearchKey(''));
-    }
-  }, 300);
-
-  const onPressMentionAudience = (audience: any) => {
-    const mention = `@[u:${audience.id}:${
-      audience.fullname || audience.name
-    }] `;
-    const newContent = content.replace(`@${mentionKey}`, mention);
-    setContent(newContent);
-
-    dispatch(postActions.setMentionSearchResult([]));
-    dispatch(postActions.setMentionSearchKey(''));
-  };
-
   const onChangeText = (text: string) => {
     setContent(text);
   };
@@ -135,17 +110,18 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         onPressButton={onPressComment}
       />
       <MentionInput
-        data={mentionResult}
         style={styles.flex1}
         textInputStyle={styles.flex1}
         modalStyle={styles.mentionInputModal}
         modalPosition={'top'}
-        isMentionModalVisible={!!content && mentionResult?.length > 0}
-        onPress={onPressMentionAudience}
         onChangeText={onChangeText}
-        onMentionText={onMentionText}
         value={content}
         ComponentInput={PostInput}
+        title={t('post:mention_title')}
+        emptyContent={t('post:mention_empty_content')}
+        getDataPromise={postDataHelper.getSearchMentionAudiences}
+        getDataParam={{group_ids: groupIds}}
+        getDataResponseKey={'data'}
       />
     </ScreenWrapper>
   );

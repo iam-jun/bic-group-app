@@ -8,11 +8,13 @@ import {
   TextInput,
   TextInputProps,
   ViewStyle,
+  Platform,
+  NativeSyntheticEvent,
+  TextInputSelectionChangeEventData,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
-import Text from '~/beinComponents/Text';
 
 export interface PostInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -24,6 +26,9 @@ export interface PostInputProps extends TextInputProps {
   keyboardType?: KeyboardType;
   returnKeyType?: ReturnKeyType;
   onSubmitEditing?: () => void;
+  onSelectionChange?:
+    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+    | undefined;
   value: string;
 }
 
@@ -37,6 +42,7 @@ const PostInput: React.FC<PostInputProps> = ({
   keyboardType,
   returnKeyType,
   onSubmitEditing = () => Keyboard.dismiss,
+  onSelectionChange,
   value,
   ...props
 }: PostInputProps) => {
@@ -44,14 +50,17 @@ const PostInput: React.FC<PostInputProps> = ({
   const {colors} = theme;
   const styles = createStyle(theme);
 
+  const inputStyle: any = StyleSheet.flatten([
+    styles.container,
+    isFullScreen ? {flex: 1} : {},
+    Platform.OS === 'web' ? {outlineWidth: 0} : {},
+    style,
+  ]);
+
   return (
     <TextInput
       textAlignVertical={textAlignVertical}
-      style={StyleSheet.flatten([
-        styles.container,
-        isFullScreen ? {flex: 1} : {},
-        style,
-      ])}
+      style={inputStyle}
       selectionColor={colors.textInput}
       placeholder={placeholder}
       multiline={multiline}
@@ -59,11 +68,10 @@ const PostInput: React.FC<PostInputProps> = ({
       keyboardType={keyboardType}
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
-      {...props}>
-      <Text useParseText showRawText>
-        {value}
-      </Text>
-    </TextInput>
+      onSelectionChange={onSelectionChange}
+      value={value}
+      {...props}
+    />
   );
 };
 

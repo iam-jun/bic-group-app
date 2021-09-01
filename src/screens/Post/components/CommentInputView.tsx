@@ -7,15 +7,11 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
-import {debounce} from 'lodash';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IRequestPostComment} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import Button from '~/beinComponents/Button';
 import {usePostDetailReplyingComment} from '~/hooks/post';
 import {useBaseHook} from '~/hooks';
 
@@ -33,6 +29,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   textInputRef,
 }: CommentInputViewProps) => {
   const [content, setContent] = useState<string>();
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -42,9 +39,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
-  const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
-
   const replying = usePostDetailReplyingComment();
 
   useEffect(() => {
@@ -53,8 +47,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const onPressSend = () => {
     if (postId) {
-      setContent('');
-      dispatch(postActions.setPostDetailReplyingComment());
       const commentData = {content: content?.trim()};
       const replyCmtId = replying?.id;
       const requestData: IRequestPostComment = {
@@ -63,14 +55,19 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         commentData,
         userId,
       };
+      setLoading(true);
       postDataHelper
         .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
-            dispatch(postActions.getCommentsById({id: postId, isMerge: false}));
+            dispatch(postActions.getCommentsByPostId({postId, isMerge: false}));
+            setContent('');
+            dispatch(postActions.setPostDetailReplyingComment());
+            setLoading(false);
           }
         })
         .catch(e => {
+          setLoading(false);
           console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
         });
     } else {
@@ -82,62 +79,31 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     setContent(value);
   };
 
-  const onPressMentionAudience = (audience: any) => {
-    if (content) {
-      const mention = `@[u:${audience.id}:${
-        audience.fullname || audience.name
-      }] `;
-      const newContent = content.replace(`@${mentionKey}`, mention);
-      setContent(newContent);
-
-      dispatch(postActions.setMentionSearchResult([]));
-      dispatch(postActions.setMentionSearchKey(''));
-    }
-  };
-
-  const onMentionText = debounce((textMention: string) => {
-    console.log(`\x1b[36m🐣️ CommentInputView ${textMention}\x1b[0m`);
-    if (textMention) {
-      dispatch(postActions.setMentionSearchKey(textMention));
-      dispatch(
-        postActions.getSearchMentionAudiences({
-          key: textMention,
-          group_ids: groupIds,
-        }),
-      );
-    } else if (mentionKey || mentionResult?.length > 0) {
-      dispatch(postActions.setMentionSearchResult([]));
-      dispatch(postActions.setMentionSearchKey(''));
-    }
-  }, 300);
-
   const renderCommentInputHeader = () => {
     if (!replying) {
       return null;
     }
     return (
       <View style={styles.commentInputHeader}>
-        <View style={styles.row}>
-          <Text style={styles.flex1}>
-            <Text>
-              {t('post:reply_comment_1')}
-              <Text.BodyM>
-                {replying?.user?.data?.fullname || t('post:someone')}
-              </Text.BodyM>
-              <Text>{t('post:reply_comment_2')}</Text>
-            </Text>
-          </Text>
-          <Button
-            onPress={() =>
-              dispatch(postActions.setPostDetailReplyingComment())
-            }>
-            <Text.BodyS>
-              {'• '}
-              <Text.BodyM useI18n color={colors.primary7}>
+        <View style={styles.headerContent}>
+          <Text color={colors.textSecondary}>
+            {t('post:label_replying_to')}
+            <Text.BodyM>
+              {replying?.user?.data?.fullname || t('post:someone')}
+            </Text.BodyM>
+            <Text.BodyS color={colors.textSecondary}>
+              {'  • '}
+              <Text.BodyM
+                useI18n
+                color={colors.textSecondary}
+                onPress={() =>
+                  !loading &&
+                  dispatch(postActions.setPostDetailReplyingComment())
+                }>
                 common:btn_cancel
               </Text.BodyM>
             </Text.BodyS>
-          </Button>
+          </Text>
         </View>
       </View>
     );
@@ -145,12 +111,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   return (
     <MentionInput
-      data={mentionResult}
       modalPosition={'top'}
-      isMentionModalVisible={!!content && mentionResult?.length > 0}
-      onPress={onPressMentionAudience}
       onChangeText={onChangeText}
-      onMentionText={onMentionText}
       value={content}
       ComponentInput={CommentInput}
       componentInputProps={{
@@ -159,20 +121,31 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         autoFocus: autoFocus,
         onPressSend: onPressSend,
         HeaderComponent: renderCommentInputHeader(),
+        loading: loading,
       }}
+      title={t('post:mention_title')}
+      emptyContent={t('post:mention_empty_content')}
+      getDataPromise={postDataHelper.getSearchMentionAudiences}
+      getDataParam={{group_ids: groupIds}}
+      getDataResponseKey={'data'}
     />
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {},
     flex1: {flex: 1},
     row: {flexDirection: 'row'},
     commentInputHeader: {
+      flexDirection: 'row',
       marginHorizontal: spacing?.margin.base,
       marginTop: spacing?.margin.tiny,
+    },
+    headerContent: {
+      flex: 1,
+      flexDirection: 'row',
     },
   });
 };

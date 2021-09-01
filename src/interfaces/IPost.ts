@@ -68,6 +68,7 @@ export interface IPostActivity {
   tags?: string[];
   time?: string;
   important?: IActivityImportant;
+  latest_reactions?: any;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
   deleted?: boolean;
@@ -89,7 +90,6 @@ export interface IAllComments {
 
 export interface IPostCreatePost {
   getstream_id?: string;
-  actor?: number;
   data?: IActivityData;
   audience?: {
     users: number[];
@@ -128,6 +128,20 @@ export interface IRequestPostComment {
   referenceType: 'post' | 'comment';
   commentData: IActivityData;
   userId: number;
+}
+
+export interface IRequestGetPostComment {
+  postId: string;
+  commentId?: string;
+  idLt?: string; //get comment before this id
+  limit?: number;
+  kind?: string;
+  recentReactionsLimit?: number;
+}
+
+export interface IPayloadGetCommentsById extends IRequestGetPostComment {
+  isMerge: boolean;
+  callbackLoading?: (loading: boolean) => void;
 }
 
 export interface IReaction {
@@ -182,7 +196,7 @@ export interface IGetStreamPost {
   verb: string;
   type: string;
   data: IActivityData;
-  object?: string;
+  object?: IGetStreamPost | string;
   origin?: string | null;
   target?: string;
   time?: string;
@@ -233,7 +247,8 @@ export interface IPayloadUpdateCommentsById {
   isMerge: boolean;
 }
 
-export interface IPayloadGetCommentsById {
-  id: string;
-  isMerge: boolean;
+export interface ICreatePostParams {
+  postId?: string;
+  replaceWithDetail?: boolean;
+  initAudience?: any;
 }

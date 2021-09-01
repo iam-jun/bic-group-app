@@ -16,16 +16,21 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
+### ios setup
+```
+fastlane ios setup
+```
+
 ### ios deploy_dev
 ```
 fastlane ios deploy_dev
 ```
-Submit a new Build to Diawi
-### ios develop
+
+### ios deploy_staging
 ```
-fastlane ios develop
+fastlane ios deploy_staging
 ```
-Push a new beta build to TestFlight
+
 
 ----
 

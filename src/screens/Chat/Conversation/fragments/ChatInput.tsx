@@ -14,6 +14,10 @@ import actions from '~/screens/Chat/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {validateFile} from '~/utils/validation';
 
+import {makeHttpRequest} from '~/services/httpApiRequest';
+import apiConfig from '~/configs/apiConfig';
+import {mapUsers} from '~/screens/Chat/helper';
+
 interface Props {
   onError: (err: any) => void;
 }
@@ -23,8 +27,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
   const [text, setText] = useState('');
 
   const {user} = useAuth();
-  const {conversation, mention} = useChat();
-  const {mentionUsers, mentionKey} = mention;
+  const {conversation} = useChat();
 
   const _onChangeText = (value: string) => {
     setText(value);
@@ -89,35 +92,32 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     );
   };
 
-  const onMentionText = debounce((textMention: string) => {
-    if (textMention) {
-      dispatch(actions.setMentionSearchKey(textMention));
-      dispatch(actions.getMentionUsers(textMention));
-    } else if (mentionKey || mentionUsers?.length > 0) {
-      dispatch(actions.setMentionUsers([]));
-      dispatch(actions.setMentionSearchKey(''));
+  const getMentionUsers = async (param: any) => {
+    try {
+      const {key} = param || {};
+      const conversationId = conversation?._id;
+      const response: any = await makeHttpRequest(
+        apiConfig.Chat.mentionUsers({
+          query: {
+            $and: [
+              {__rooms: {$eq: conversationId}},
+              {name: {$regex: key, $options: 'ig'}},
+            ],
+          },
+        }),
+      );
+      const users = mapUsers(response?.data?.users || []);
+      return Promise.resolve({data: users || []});
+    } catch (e) {
+      return Promise.reject();
     }
-  });
-
-  const onPressMentionUser = (user: IChatUser) => {
-    const mention = `@[u:${user._id}:${user.name}] `;
-    const newText = text.replace(`@${mentionKey}`, mention);
-    setText(newText);
-
-    dispatch(actions.setMentionUsers([]));
-    dispatch(actions.setMentionSearchKey(''));
   };
 
   return (
     <MentionInput
-      data={mentionUsers}
       modalPosition="top"
-      showMentionAll
-      isMentionModalVisible={!!text && mentionUsers?.length > 0}
       onChangeText={_onChangeText}
-      onMentionText={onMentionText}
       value={text}
-      onPress={onPressMentionUser}
       ComponentInput={CommentInput}
       componentInputProps={{
         onPressSend: onSend,
@@ -125,6 +125,11 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
         onPressFile,
         onPressSelectImage,
       }}
+      showItemAll
+      allReplacer={`@[u:all:${i18next.t('chat:text_mention_all')}] `}
+      getDataPromise={getMentionUsers}
+      getDataParam={{}}
+      getDataResponseKey={'data'}
     />
   );
 };

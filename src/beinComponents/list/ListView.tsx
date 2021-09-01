@@ -1,26 +1,26 @@
+import _ from 'lodash';
 import React from 'react';
 import {
-  FlatList,
-  TouchableOpacity,
-  View,
   ActivityIndicator,
-  StyleSheet,
+  FlatList,
+  Platform,
   RefreshControl,
   StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
   ViewStyle,
-  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import _ from 'lodash';
+import items, {IListViewItem} from '~/beinComponents/list/items';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Text from '~/beinComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {IAction} from '~/constants/commonActions';
 
 import {spacing} from '~/theme';
-import items, {IListViewItem} from '~/beinComponents/list/items';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import loadings from '../../components/list/loadings';
-import {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
-import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import loadings from '../../components/list/loadings';
 
 export interface ListViewProps {
   data?: Array<any>;
@@ -107,7 +107,7 @@ const ListView: React.FC<ListViewProps> = ({
 
     return (
       <TouchableOpacity
-        disabled={!onItemPress}
+        disabled={!onItemPress || item.disableClick}
         onPress={() => onItemPress && onItemPress(item)}>
         <ItemComponent
           {...item}

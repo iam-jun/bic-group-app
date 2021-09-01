@@ -1,14 +1,12 @@
 import {IUser} from '~/interfaces/IAuth';
 import {
+  IChatUser,
   IConversation,
   IMessage,
   ISendMessageAction,
   IUploadFileAction,
 } from '~/interfaces/IChat';
-import {
-  IAddUsersToGroupReq,
-  ICreateRoomReq,
-} from '~/interfaces/IChatHttpRequest';
+import {IAddUsersToGroupReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
@@ -55,6 +53,11 @@ const setConversationDetail = (payload: IConversation) => ({
   payload,
 });
 
+const searchConversation = (payload: string) => ({
+  type: Actions.SEARCH_CONVERSATIONS,
+  payload,
+});
+
 const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
@@ -75,11 +78,6 @@ const setSubscriptions = (payload: IConversation[]) => ({
 
 const readSubcriptions = (payload: string) => ({
   type: Actions.READ_SUBCRIPTIONS,
-  payload,
-});
-
-const selectConversation = (payload: IConversation) => ({
-  type: Actions.SELECT_CONVERSATION,
   payload,
 });
 
@@ -114,6 +112,16 @@ const reactMessage = (message?: IMessage, reactionType?: string) => ({
   reactionType,
 });
 
+const deleteMessage = (payload: IMessage) => ({
+  type: Actions.DELETE_MESSAGE,
+  payload,
+});
+
+const deleteMessageSuccess = (payload: IMessage) => ({
+  type: Actions.DELETE_MESSAGE_SUCCESS,
+  payload,
+});
+
 const selectUser = (payload: IUser) => ({
   type: Actions.SELECT_USER,
   payload,
@@ -123,7 +131,7 @@ const clearSelectedUsers = () => ({
   type: Actions.CLEAR_SELECTED_USERS,
 });
 
-const createConversation = (payload: ICreateRoomReq) => ({
+const createConversation = (payload: IChatUser[]) => ({
   type: Actions.CREATE_CONVERSATION,
   payload,
 });
@@ -193,18 +201,20 @@ export default {
   resetData,
   getConversationDetail,
   setConversationDetail,
+  searchConversation,
   getGroupRols,
   setGroupRoles,
   getSubscriptions,
   setSubscriptions,
   readSubcriptions,
   handleEvent,
-  selectConversation,
   sendMessage,
   sendMessageSuccess,
   sendMessageFailed,
   retrySendMessage,
   reactMessage,
+  deleteMessage,
+  deleteMessageSuccess,
   selectUser,
   clearSelectedUsers,
   createConversation,

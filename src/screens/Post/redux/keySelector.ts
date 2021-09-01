@@ -3,10 +3,6 @@ const postKeySelector = {
     loading: 'post.createComment.loading',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
-  mention: {
-    searchKey: 'post.mention.searchKey',
-    searchResult: 'post.mention.searchResult',
-  },
   postDetail: {
     id: 'post.postDetail.id',
   },
@@ -24,6 +20,8 @@ const postKeySelector = {
   postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
   postLatestReactionsComments: (id: string) =>
     `post.allPosts.${id}.latest_reactions.comment`,
+  postCommentCountsById: (id: string) =>
+    `post.allPosts.${id}.reaction_counts.comment`,
   allCommentsByParentIds: 'post.allCommentsByParentIds',
   commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
   commentById: (id?: string) => `post.allComments.${id}`,

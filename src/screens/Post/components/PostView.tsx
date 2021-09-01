@@ -84,7 +84,7 @@ const PostView: FC<PostViewProps> = ({
   const textAudiences = getAudiencesText(audience, t);
   const seenCount = '123.456';
 
-  const commentCount = formatLargeNumber(reaction_counts?.comment || 0);
+  const commentCount = formatLargeNumber(reaction_counts?.comment_count || 0);
   const labelButtonComment = `${t('post:button_comment')}${
     commentCount ? ` (${commentCount})` : ''
   }`;
@@ -208,7 +208,7 @@ const PostView: FC<PostViewProps> = ({
     if (time) {
       const dateUtc = moment.utc(time);
       const localDate = dateUtc.local();
-      postTime = formatDate(localDate) || '';
+      postTime = formatDate(localDate, undefined, 2, false) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };
@@ -251,17 +251,17 @@ const PostView: FC<PostViewProps> = ({
           </View>
           <View style={styles.rowCenter}>
             {renderPostTime()}
-            <Icon
-              style={{margin: spacing?.margin.small}}
-              size={3.2}
-              icon={'iconDot'}
-            />
-            <Icon
-              size={16}
-              tintColor={colors.textSecondary}
-              icon={'iconEyeSeen'}
-            />
-            <Text.BodyS color={colors.textSecondary}>{seenCount}</Text.BodyS>
+            {/*<Icon*/}
+            {/*  style={{margin: spacing?.margin.small}}*/}
+            {/*  size={3.2}*/}
+            {/*  icon={'iconDot'}*/}
+            {/*/>*/}
+            {/*<Icon*/}
+            {/*  size={16}*/}
+            {/*  tintColor={colors.textSecondary}*/}
+            {/*  icon={'iconEyeSeen'}*/}
+            {/*/>*/}
+            {/*<Text.BodyS color={colors.textSecondary}>{seenCount}</Text.BodyS>*/}
           </View>
         </View>
         <View style={{marginRight: spacing?.margin.small}}>

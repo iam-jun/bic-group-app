@@ -69,3 +69,18 @@ export interface IGroupImageUpload {
   fieldName: 'icon' | 'background_img_url';
   image: IFileResponse;
 }
+
+export interface IGroupGetJoinableMembers {
+  groupId: number;
+  params?: any;
+}
+
+export interface IGroupGetMembers {
+  groupId: number;
+  params?: any;
+}
+
+export interface IGroupAddMembers {
+  groupId: number;
+  userIds: number[];
+}

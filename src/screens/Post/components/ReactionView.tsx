@@ -87,7 +87,12 @@ const ReactionView: FC<ReactionViewProps> = ({
 const createStyle = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
-    containerButtonOnly: {flex: 1, alignItems: 'flex-start'},
+    containerButtonOnly: {
+      flex: 1,
+      alignItems: 'flex-start',
+      marginTop: spacing.margin.small,
+      marginLeft: spacing.margin.small,
+    },
     container: {
       flex: 1,
       flexDirection: 'row',

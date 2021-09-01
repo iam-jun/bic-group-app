@@ -4,7 +4,6 @@ import i18n from 'i18next';
 
 import {
   IOwnReaction,
-  IParamSearchMentionAudiences,
   IPayloadGetCommentsById,
   IPayloadPutEditComment,
   IPayloadPutEditPost,
@@ -41,10 +40,6 @@ export default function* postSaga() {
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
-  yield takeLatest(
-    postTypes.GET_SEARCH_MENTION_AUDIENCES,
-    getSearchMentionAudiences,
-  );
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
@@ -56,10 +51,14 @@ export default function* postSaga() {
     showPostAudienceBottomSheet,
   );
   yield takeLatest(
+    postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
+    updateAllCommentsByParentIds,
+  );
+  yield takeLatest(
     postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     updateAllCommentsByParentIdsWithComments,
   );
-  yield takeLatest(postTypes.GET_COMMENTS_BY_IDS, getCommentsById);
+  yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
 }
 
 function* postCreateNewPost({
@@ -116,14 +115,14 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
     const response = yield call(postDataHelper.putEditPost, id, data);
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
-      const allPosts = yield select(state => state?.post?.allPosts) || {};
-      const post: IPostActivity = allPosts?.[id] || {};
+      const post = yield select(state =>
+        get(state, postKeySelector.postById(id)),
+      );
       if (post?.object) {
         post.object.data = data?.data || {};
       }
       //todo waiting for backend update response, replace whole object from response instead of local change
-      allPosts[id] = post;
-      yield put(postActions.setAllPosts(allPosts));
+      yield put(postActions.addToAllPosts(post));
       if (replaceWithDetail) {
         yield put(postActions.setPostDetail(post));
         navigation.replace(homeStack.postDetail);
@@ -190,11 +189,11 @@ function* deletePost({payload}: {type: string; payload: string}) {
   try {
     const response = yield call(postDataHelper.deletePost, payload);
     if (response?.data) {
-      const allPosts = yield select(state => state?.post?.allPosts) || {};
-      const post: IPostActivity = allPosts?.[payload] || {};
+      const post = yield select(state =>
+        get(state, postKeySelector.postById(payload)),
+      );
       post.deleted = true;
-      allPosts[payload] = post;
-      yield put(postActions.setAllPosts(allPosts));
+      yield put(postActions.addToAllPosts(post));
       yield timeOut(500);
       const flashMessage: IHeaderFlashMessage = {
         content: 'post:delete_post_complete',
@@ -211,25 +210,6 @@ function* deletePost({payload}: {type: string; payload: string}) {
   }
 }
 
-function* getSearchMentionAudiences({
-  payload,
-}: {
-  type: string;
-  payload: IParamSearchMentionAudiences;
-}) {
-  try {
-    const response = yield call(
-      postDataHelper.getSearchMentionAudiences,
-      payload,
-    );
-    if (response?.data) {
-      yield put(postActions.setMentionSearchResult(response?.data));
-    }
-  } catch (e) {
-    console.log('\x1b[36m', '🐣️ searchMentionAudiences error:', e, '\x1b[0m');
-  }
-}
-
 function* addToAllPosts({
   payload,
 }: {
@@ -238,15 +218,45 @@ function* addToAllPosts({
 }) {
   const allPosts = yield select(state => state?.post?.allPosts) || {};
   const newAllPosts = {...allPosts};
+  const newComments: IReaction[] = [];
+  const newAllCommentByParentId: any = {};
+
   if (isArray(payload) && payload.length > 0) {
     payload.map((item: IPostActivity) => {
       if (item?.id) {
+        const postComments = sortComments(
+          item?.latest_reactions?.comment || [],
+        );
+
+        //todo update getstream query to get only 1 child comment
+        //todo @Toan is researching for solution
+        if (postComments.length > 0) {
+          for (let i = 0; i < postComments.length; i++) {
+            const cc = postComments[i]?.latest_children?.comment || [];
+            if (cc.length > 1) {
+              postComments[i].latest_children.comment = cc.slice(
+                cc.length - 1,
+                cc.length,
+              );
+            }
+          }
+        }
+        //todo remove code above later
+
         newAllPosts[item.id] = item;
+        newAllCommentByParentId[item.id] = postComments;
+        postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
       }
     });
   } else if (payload && 'id' in payload && payload.id) {
+    const postComments = sortComments(payload?.latest_reactions?.comment || []);
     newAllPosts[payload.id] = payload;
+    newAllCommentByParentId[payload.id] = postComments;
+    postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
   }
+
+  yield put(postActions.addToAllComments(newComments));
+  yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
@@ -283,12 +293,12 @@ function* onUpdateReactionOfPostById(
   reactionCounts: IReactionCounts,
 ) {
   try {
-    const allPosts = yield select(state => state?.post?.allPosts) || {};
-    const post: IPostActivity = allPosts?.[postId] || {};
+    const post = yield select(state =>
+      get(state, postKeySelector.postById(postId)),
+    );
     post.reaction_counts = reactionCounts;
     post.own_reactions = ownReaction;
-    allPosts[postId] = post;
-    yield put(postActions.setAllPosts(allPosts));
+    yield put(postActions.addToAllPosts(post));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
   }
@@ -550,6 +560,19 @@ function* showPostAudienceBottomSheet({
   }
 }
 
+function* updateAllCommentsByParentIds({
+  payload,
+}: {
+  type: string;
+  payload: {[postId: string]: IReaction[]};
+}) {
+  const allCommentsByParentIds = yield select(
+    state => state?.post?.allCommentsByParentIds,
+  ) || {};
+  const newData = Object.assign({}, allCommentsByParentIds, payload);
+  yield put(postActions.setAllCommentsByParentIds(newData));
+}
+
 function* updateAllCommentsByParentIdsWithComments({
   payload,
 }: {
@@ -561,9 +584,9 @@ function* updateAllCommentsByParentIdsWithComments({
     get(state, postKeySelector.allCommentsByParentIds),
   ) || {};
   const commentsById = allComments[id] || [];
-  let newComments;
+  let newComments: IReaction[];
   if (isMerge) {
-    newComments = commentsById.concat(comments);
+    newComments = [...new Set([...commentsById, ...comments])];
   } else {
     newComments = comments;
   }
@@ -571,32 +594,92 @@ function* updateAllCommentsByParentIdsWithComments({
   yield put(postActions.setAllCommentsByParentIds(allComments));
 }
 
-function* getCommentsById({
+function* addChildCommentToCommentsOfPost({
+  postId,
+  commentId,
+  childComments,
+}: {
+  postId: string;
+  commentId: string;
+  childComments: IReaction[];
+}) {
+  const postComments: IReaction[] = yield select(state =>
+    get(state, postKeySelector.commentsByParentId(postId)),
+  ) || [];
+  for (let i = 0; i < postComments.length; i++) {
+    if (postComments[i].id === commentId) {
+      const latestChildren = postComments[i].latest_children || {};
+      const oldChildComments = latestChildren.comment || [];
+      const newChildComments = oldChildComments.concat(childComments) || [];
+      latestChildren.comment = sortComments(newChildComments);
+      postComments[i].latest_children = latestChildren;
+      yield put(
+        postActions.updateAllCommentsByParentIdsWithComments({
+          id: postId,
+          comments: new Array(postComments[i]),
+          isMerge: true,
+        }),
+      );
+      return;
+    }
+  }
+}
+
+function* getCommentsByPostId({
   payload,
 }: {
   type: string;
   payload: IPayloadGetCommentsById;
 }) {
-  const {id, isMerge} = payload || {};
+  const {postId, commentId, isMerge, callbackLoading} = payload || {};
   try {
-    const response = yield call(postDataHelper.getCommentsById, id);
+    callbackLoading?.(true);
+    const response = yield call(postDataHelper.getCommentsByPostId, payload);
+    callbackLoading?.(false);
     if (response?.length > 0) {
-      yield put(postActions.addToAllComments(response));
-      const p = {id, comments: response, isMerge};
-      yield put(postActions.updateAllCommentsByParentIdsWithComments(p));
+      if (commentId) {
+        //get child comment of comment
+        yield addChildCommentToCommentsOfPost({
+          postId: postId,
+          commentId: commentId,
+          childComments: response,
+        });
+      } else {
+        //get comment of post
+        const payload = {id: postId, comments: response, isMerge};
+        const newAllComments: IReaction[] = [];
+        response.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
+
+        yield put(postActions.addToAllComments(newAllComments));
+        yield put(
+          postActions.updateAllCommentsByParentIdsWithComments(payload),
+        );
+      }
     }
   } catch (e) {
     console.log(
       `\x1b[34m🐣️ saga getCommentsById error:`,
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
+    callbackLoading?.(false);
     yield put(
       modalActions.showAlert({
         title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
         content:
-          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
+          e?.meta?.message ||
+          e?.meta?.errors?.[0]?.message ||
+          i18n.t('common:text_error_message'),
         confirmLabel: i18n.t('common:text_ok'),
       }),
     );
   }
 }
+
+const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
+  if (comment && list) {
+    list.push(comment);
+    comment?.latest_children?.comment?.map((child: IReaction) =>
+      list.push(child),
+    );
+  }
+};

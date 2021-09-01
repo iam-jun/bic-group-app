@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import _, {isEmpty} from 'lodash';
+import {isEmpty} from 'lodash';
 import debounce from 'lodash/debounce';
 import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -146,7 +146,8 @@ const ChangePassword = () => {
   // };
 
   const handleOnSaveChangePassword = async () => {
-    if (!_.isEmpty(errors)) {
+    await checkDisableSaveButton();
+    if (disableSaveButton) {
       return;
     }
 
@@ -182,6 +183,7 @@ const ChangePassword = () => {
                 onChange(text);
                 validatePassword();
               }}
+              onSubmitEditing={handleOnSaveChangePassword}
               helperType={errors.password?.message ? 'error' : undefined}
               helperContent={errors?.password?.message}
             />
@@ -210,6 +212,7 @@ const ChangePassword = () => {
                 onChange(text);
                 validateNewPassword();
               }}
+              onSubmitEditing={handleOnSaveChangePassword}
               helperType={errors.newPassword?.message ? 'error' : undefined}
               helperContent={errors?.newPassword?.message}
             />
@@ -239,6 +242,7 @@ const ChangePassword = () => {
                 onChange(text);
                 validateConfirmNewPassword();
               }}
+              onSubmitEditing={handleOnSaveChangePassword}
               helperType={
                 errors.confirmNewPassword?.message ? 'error' : undefined
               }

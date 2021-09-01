@@ -1,23 +1,34 @@
 import {StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
+import i18next from 'i18next';
 import {Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
-import {chatSocketId, messageEventTypes} from '~/constants/chat';
+import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
+<<<<<<< HEAD
 import {IUser} from '~/interfaces/IAuth';
 import {IConversation, IMessage, ISendMessageAction} from '~/interfaces/IChat';
 import {
   IAddUsersToGroupReq,
   ICreateRoomReq,
 } from '~/interfaces/IChatHttpRequest';
+=======
+import {
+  IChatUser,
+  IConversation,
+  IMessage,
+  ISendMessageAction,
+} from '~/interfaces/IChat';
+>>>>>>> BEIN-1225-Chat-chanel-to-direct
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {makeHttpRequest} from '~/services/httpApiRequest';
+import * as modalActions from '~/store/modal/actions';
+import {generateRoomName} from './../../../utils/generator';
 import {
   mapConversation,
   mapData,
@@ -47,6 +58,7 @@ export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
+  yield takeLatest(types.DELETE_MESSAGE, deleteMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
@@ -59,8 +71,8 @@ export default function* saga() {
 
 function* initChat() {
   yield put(actions.getSubscriptions());
-  yield put(actions.resetData('groups'));
-  yield put(actions.getData('groups'));
+  yield put(actions.resetData('rooms'));
+  yield put(actions.getData('rooms', null, 'data'));
 }
 
 function* getData({
@@ -100,7 +112,7 @@ function* getData({
       yield put(actions.setExtraData(dataType, result));
     }
   } catch (err) {
-    console.log('getData', dataType, err);
+    console.error('getData', dataType, err);
   }
 }
 
@@ -158,15 +170,14 @@ function* readSubcriptions({payload}: {type: string; payload: string}) {
 function* getConversationDetail({payload}: {type: string; payload: string}) {
   try {
     const {auth} = yield select();
+
     const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.groupInfo({
-        roomId: payload,
-      }),
+      apiConfig.Chat.getChatInfo(payload),
     );
 
     yield put(
       actions.setConversationDetail(
-        mapConversation(auth.user, response.data?.group),
+        mapConversation(auth.user, response.data?.data),
       ),
     );
   } catch (err) {
@@ -174,37 +185,88 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
   }
 }
 
-function* createConversation({
-  payload,
-}: {
-  payload: ICreateRoomReq;
-  type: string;
-}) {
+function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
   try {
-    const state: IObject<any> = yield select();
-    const {auth} = state;
+    const {auth, chat} = yield select();
+    const {user} = auth;
+    const {rooms} = chat;
 
-    const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.createRoom(payload),
+    let response: AxiosResponse | null = null;
+    if (payload.length === 1) {
+      const existedRoom = rooms.data.find(
+        (room: IConversation) =>
+          room.type === roomTypes.DIRECT &&
+          (room.usernames || []).includes(payload[0].username),
+      );
+      if (existedRoom) {
+        yield put(
+          modalActions.showAlert({
+            title: i18next.t('common:text_error'),
+            content: i18next.t('chat:error:existing_direct_chat'),
+            confirmLabel: i18next.t('common:text_ok'),
+            onConfirm: () => {
+              navigation.replace(chatStack.conversation, {
+                roomId: existedRoom._id,
+              });
+            },
+          }),
+        );
+        return;
+      }
+      response = yield makeHttpRequest(
+        apiConfig.Chat.createDirectChat({username: payload[0].username}),
+      );
+    } else {
+      const name = generateRoomName(
+        user,
+        payload.map((_user: IChatUser) => _user?.name),
+      );
+
+      const members = [...payload, user];
+
+      const data = {
+        name,
+        members: payload.map((user: IChatUser) => user.username),
+        customFields: {
+          type: roomTypes.QUICK,
+          usernames: members.map((user: IChatUser) => user.username),
+          members: payload.length === 1 ? members : null,
+        },
+      };
+      response = yield makeHttpRequest(apiConfig.Chat.createRoom(data));
+    }
+
+    const conversation = mapConversation(
+      auth.user,
+      payload.length === 1
+        ? {
+            ...response?.data?.room,
+            name: payload[0].name,
+          }
+        : response?.data?.group,
     );
 
-    const conversation = mapConversation(auth.user, response.data.group);
-
-    yield put(actions.selectConversation(conversation));
+    yield put(actions.setConversationDetail(conversation));
     yield put(actions.createConversationSuccess(conversation));
 
     rootNavigationRef?.current?.dispatch(
       StackActions.replace(chatStack.conversation),
     );
   } catch (err) {
-    console.log('createConversation', err);
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 
 function* uploadFile({payload}: {payload: IMessage; type: string}) {
   try {
     if (!payload.attachment) return;
-    const {chat} = yield select();
+    const {auth, chat} = yield select();
     const {conversation} = chat;
 
     const formData = new FormData();
@@ -238,7 +300,7 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     );
     console.log('uploadFile', response);
 
-    const message = mapMessage(response.data.message);
+    const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
     console.log('uploadFile', err);
@@ -248,6 +310,8 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
 
 function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
   try {
+    const {auth} = yield select();
+
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.sendMessage({
         message: {
@@ -258,10 +322,29 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
       }),
     );
 
-    const message = mapMessage(response.data.message);
+    const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
   } catch (err) {
     yield put(actions.sendMessageFailed(payload));
+  }
+}
+
+function* deleteMessage({payload}: {payload: IMessage; type: string}) {
+  try {
+    yield makeHttpRequest(
+      apiConfig.Chat.deleteMessage({
+        roomId: payload.room_id,
+        msgId: payload._id,
+      }),
+    );
+  } catch (err) {
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 
@@ -281,6 +364,7 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
+<<<<<<< HEAD
 function* addMembersToGroup({
   payload,
 }: {
@@ -304,6 +388,9 @@ function* addMembersToGroup({
 }
 
 function* removeMember({payload}: {type: string; payload: IUser}) {
+=======
+function* removeMember({payload}: {type: string; payload: IChatUser}) {
+>>>>>>> BEIN-1225-Chat-chanel-to-direct
   try {
     const {chat} = yield select();
     const data = {
@@ -372,8 +459,8 @@ function handleAddMember() {
 function* handleNewMessage(data: any) {
   try {
     const {chat, auth} = yield select();
-    const message = mapMessage(data);
-    const existed = chat.groups.data.find(
+    const message = mapMessage(auth.user, data);
+    const existed = chat.rooms.data.find(
       (item: IConversation) => item._id === message?.room_id,
     );
 
@@ -395,10 +482,11 @@ function* handleNewMessage(data: any) {
     console.log('handleNewMessage', err);
   }
 }
+
 function* handleRemoveUser(data: any) {
   try {
     const {auth} = yield select();
-    const message = mapMessage(data);
+    const message = mapMessage(auth.user, data);
     console.log('handleRemoveUser', message, auth.user);
 
     if (message.msg === auth.user.username) {
@@ -413,6 +501,16 @@ function* handleRemoveUser(data: any) {
   }
 }
 
+function* handleRemoveMessage(data: any) {
+  try {
+    const {auth} = yield select();
+    const message = mapMessage(auth.user, data);
+    yield put(actions.deleteMessageSuccess(message));
+  } catch (err) {
+    console.log('handleRemoveMessage', err);
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
@@ -424,6 +522,9 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.REMOVE_MESSAGE:
+      yield handleRemoveMessage(data);
       break;
     case messageEventTypes.REMOVE_USER:
       yield handleRemoveUser(data);

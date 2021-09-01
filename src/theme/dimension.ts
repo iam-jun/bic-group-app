@@ -6,14 +6,27 @@ const guidelineBaseWidth = 375;
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 
+// Cover image ratio -> 25:11
+export const scaleCoverHeight = (widthSize: number) => (widthSize / 25) * 11;
+
 export const groupProfileImageCropRatio = {
-  // image crop ratio for cover photo: 16:9
+  // image crop ratio for cover photo: 25:11
   background_img_url: {
     width: DeviceWidth,
-    height: (DeviceWidth / 16) * 9,
+    height: scaleCoverHeight(DeviceWidth),
   },
   // image crop ratio for avatar: 1:1 -> default, no need to define
   icon: {},
+};
+
+export const userProfileImageCropRatio = {
+  // image crop ratio for cover photo: 25:11
+  background_img_url: {
+    width: DeviceWidth,
+    height: scaleCoverHeight(DeviceWidth),
+  },
+  // image crop ratio for avatar: 1:1 -> default, no need to define
+  avatar: {},
 };
 
 /* Size config used for Text */
@@ -85,13 +98,13 @@ export const deviceDimensions = {
   bigTablet: 768,
   laptop: 1024,
   desktop: 1280,
+  desktopBigger: 1440,
   totalCols: 10,
-  leftCols: 2.8,
-  centerCols: 4.7,
-  rightCols: 2.5,
+  leftCol: 3,
+  centerAndRightCol: 7,
 };
 
-/* Used for buton size width (short, medium, long, max) */
+/* Used for button size width (short, medium, long, max) */
 export const sizeButton = {
   short: {
     width: 113,
@@ -118,7 +131,8 @@ export const avatarSizes = {
 
 export const headerHeight = 48;
 export const primaryItemHeight = 64;
-export const commentBarHeight = 36;
+export const commentBarHeight = 44;
+export const maxNewsfeedWidth = 584;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
@@ -133,6 +147,7 @@ export default {
   primaryItemHeight,
   avatarSizes,
   commentBarHeight,
+  maxNewsfeedWidth,
   deviceWidth: DeviceWidth,
   deviceHeight: DeviceHeight,
 };

@@ -183,10 +183,16 @@
     "title_en": "English",
     "title_vi": "Tiếng Việt"
   },
+  "home": {
+    "newsfeed": "Bản tin",
+    "saved_posts": "Bài viết đã lưu"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
+    "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
+    "mention_empty_content": "Không tìm thấy",
     "button_like": "Thích",
     "button_reply": "Trả lời",
     "button_react": "Tương tác",
@@ -205,6 +211,7 @@
     "label_users": "Users",
     "label_post_deleted": "Bài viết đã xoá",
     "label_all_reacts": "Tất cả tương tác",
+    "text_search_result_empty": "Không có kết quả. Vui lòng thử lại...",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
     "alert_title_back_edit_post": "Huỷ sửa bài viết",
@@ -223,8 +230,7 @@
     "to": "đến",
     "and": "và",
     "edit_comment_success": "Sửa bình luận thành công",
-    "reply_comment_1": "Trả lời bình luận của ",
-    "reply_comment_2": "",
+    "label_replying_to": "Đang trả lời ",
     "someone": "ai đó",
     "other_places": "khác",
     "mark_as_read": "Đánh dấu đã đọc",
@@ -242,7 +248,9 @@
     "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
     "group_manage": "Your Groups",
     "people_search": "People",
-    "show_all": "Show all"
+    "show_all": "Show all",
+    "text_load_more_comments": "Xem bình luận trước đó",
+    "text_load_more_x_replies": "Xem %VALUE% trả lời"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
@@ -294,6 +302,20 @@
   "notification": {
     "mark_all_as_read": "Mark all as read",
     "mark_all_as_read_success": "All notifications marked as read",
-    "notification_settings": "Notification Settings"
+    "notification_settings": "Notification Settings",
+    "created_a_post": "created a post",
+    "mentioned_you_in_a_post": "mentioned you in a post",
+    "mentioned_you_in_a_comment": "mentioned you in a comment",
+    "in_group": "in {group_name}",
+    "in_n_groups": "in {group_count} groups",
+    "to_your_post": "to your post",
+    "to_your_comment": "to your comment",
+    "commented_on_your_post": "commented on your post",
+    "also_commented_on_a_post": "also commented on a post",
+    "commented_on_a_post_you_are_mentioned": "commented on a post you're mentioned",
+    "replied_to_your_comment": "replied to your comment",
+    "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
+    "replied_to_comment_you_replied": "replied to a comment you replied",
+    "no_more_notification": "No more notification"
   }
 }

@@ -10,10 +10,11 @@ import {chatSocketId, roomTypes} from '~/constants/chat';
 import useChat from '~/hooks/chat';
 import {IChatUser} from '~/interfaces/IChat';
 import {sendMessage} from '~/services/chatSocket';
-import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import appConfig from '~/configs/appConfig';
 
 const AddMembersToGroup = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
@@ -91,7 +92,10 @@ const AddMembersToGroup = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(debounce(searchUsers, 1000), []);
+  const seachHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     seachHandler(text);
@@ -100,7 +104,7 @@ const AddMembersToGroup = (): React.ReactElement => {
   return (
     <ScreenWrapper testID="AddMembersToGroupScreen" isFullView>
       <Header
-        title={i18next.t('chat:title_invite_membesr')}
+        title={i18next.t('chat:title_invite_members')}
         buttonText={i18next.t('common:text_add')}
         buttonProps={{
           disabled: selectedUsers.length === 0,

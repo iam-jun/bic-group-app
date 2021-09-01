@@ -1,11 +1,12 @@
 import i18next from 'i18next';
 import {Platform} from 'react-native';
-import {call, put, select, takeLatest} from 'redux-saga/effects';
-import {IResponseData} from '~/interfaces/common';
+import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
-  IGroup,
+  IGroupAddMembers,
   IGroupDetailEdit,
+  IGroupGetJoinableMembers,
+  IGroupGetMembers,
   IGroupImageUpload,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
@@ -14,15 +15,23 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import {IResponseData, IToastMessage} from '~/interfaces/common';
+import {mapData} from '../helper/mapper';
+import appConfig from '~/configs/appConfig';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
-  yield takeLatest(groupsTypes.SELECT_GROUP_DETAIL, selectGroupDetail);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
   yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
+  yield takeLatest(groupsTypes.GET_JOINABLE_USERS, getJoinableUsers);
+  yield takeLatest(
+    groupsTypes.MERGE_EXTRA_JOINABLE_USERS,
+    mergeExtraJoinableUsers,
+  );
+  yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
 }
 
 function* getJoinedGroups() {
@@ -69,25 +78,51 @@ function* editGroupDetail({
   payload: IGroupDetailEdit;
 }) {
   try {
+    // @ts-ignore
     const result = yield requestEditGroupDetail(payload);
+
+    const toastMessage: IToastMessage = {
+      content: 'common:text_edit_success',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+
     yield put(groupsActions.setGroupDetail(result));
   } catch (error) {
     console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
+
+    const toastMessage: IToastMessage = {
+      content: 'common:text_edit_fail',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   }
 }
 
-function* getGroupMember({payload}: {type: string; payload: number}) {
+function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   try {
-    const groupMembers: any = yield select(state => state?.groups?.groupMember);
+    const {groupId, params} = payload;
+
+    const {groups} = yield select();
+    const {groupMembers} = groups;
     const newGroupMembers = Object.assign({}, groupMembers || {});
-    const {skip = 0, take = 20, canLoadMore = true} = newGroupMembers;
+    const {skip = 0, canLoadMore = true} = newGroupMembers;
     if (canLoadMore) {
-      const response = yield call(
-        groupsDataHelper.getGroupMembers,
-        payload,
-        skip,
-        take,
+      const response: IResponseData = yield groupsDataHelper.getGroupMembers(
+        groupId,
+        {
+          offset: skip,
+          limit: appConfig.recordsPerPage,
+          ...params,
+        },
       );
+
       let newSkip = skip;
       let newCanLoadMore = canLoadMore;
       if (response) {
@@ -112,24 +147,6 @@ function* getGroupMember({payload}: {type: string; payload: number}) {
     }
   } catch (e) {
     console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
-  }
-}
-
-function* selectGroupDetail({payload}: {type: string; payload: IGroup}) {
-  try {
-    yield put(groupsActions.setLoadingGroupPosts(true));
-
-    // GET MORE INFO FOR GROUP HERE
-    yield put(groupsActions.getGroupDetail(payload.id));
-
-    yield put(groupsActions.setLoadingGroupDetail(false));
-  } catch (error) {
-    console.log(
-      '\x1b[33m',
-      'khanh --- selectGroupDetail | selectGroupDetail : error',
-      error,
-      '\x1b[0m',
-    );
   }
 }
 
@@ -159,18 +176,9 @@ function* getGroupPosts({
 }
 
 const requestGroupDetail = async (userId: number) => {
-  try {
-    const response = await groupsDataHelper.getGroupDetail(userId);
-    if (response.code === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestGroupDetail catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
+  const response = await groupsDataHelper.getGroupDetail(userId);
+  if (response.code === 200) {
+    return response.data;
   }
 };
 
@@ -194,22 +202,13 @@ function* requestGroupPosts(payload: IPayloadGetGroupPost) {
 }
 
 const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
-  try {
-    const groupId = data.id;
-    delete data.id; // edit data should not contain group's id
+  const groupId = data.id;
+  delete data.id; // edit data should not contain group's id
 
-    const response = await groupsDataHelper.editGroupDetail(groupId, data);
-    if (response.code === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestEditGroupDetail catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-  }
+  // @ts-ignore
+  const response = await groupsDataHelper.editGroupDetail(groupId, data);
+
+  return response.data;
 };
 
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
@@ -246,6 +245,75 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
         content:
           err?.meta?.errors?.[0]?.message ||
           i18next.t('common:text_error_message'),
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
+  }
+}
+
+function* getJoinableUsers({
+  payload,
+}: {
+  type: string;
+  payload: IGroupGetJoinableMembers;
+}) {
+  try {
+    const {groups} = yield select();
+    const {offset, data} = groups.users;
+
+    const {groupId, params} = payload;
+    const response: IResponseData = yield groupsDataHelper.getJoinableUsers(
+      groupId,
+      {offset, limit: appConfig.recordsPerPage, ...params},
+    );
+    const result = mapData(response.data);
+
+    if (data.length === 0) {
+      yield put(groupsActions.setJoinableUsers(result));
+      if (result.length === appConfig.recordsPerPage) {
+        yield put(groupsActions.getJoinableUsers(payload));
+      }
+    } else {
+      yield put(groupsActions.setExtraJoinableUsers(result));
+    }
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'getUsers catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+  }
+}
+
+function* mergeExtraJoinableUsers() {
+  const {groups} = yield select();
+  const {canLoadMore, loading, params} = groups.users;
+  const {id: groupId} = groups?.groupDetail?.group;
+  if (!loading && canLoadMore) {
+    yield put(groupsActions.getJoinableUsers({groupId, params}));
+  }
+}
+
+function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
+  try {
+    const {groupId, userIds} = payload;
+
+    yield groupsDataHelper.addUsers(groupId, userIds);
+
+    const userAddedCount = userIds.length;
+    yield put(groupsActions.setAddMembersMessage(userAddedCount));
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'addMembers catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+    yield put(
+      modalActions.showAlert({
+        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
+        content: err?.meta?.message || i18next.t('common:text_error_message'),
         confirmLabel: i18next.t('common:text_ok'),
       }),
     );

@@ -74,15 +74,6 @@ const postActions = {
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
   }),
-  //mention
-  setMentionSearchKey: (payload: string) => ({
-    type: postTypes.SET_MENTION_SEARCH_KEY,
-    payload,
-  }),
-  setMentionSearchResult: (payload: any[]) => ({
-    type: postTypes.SET_MENTION_SEARCH_RESULT,
-    payload,
-  }),
   setAllCommentsByParentIds: (payload: {[x: string]: IReaction}) => ({
     type: postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS,
     payload,
@@ -121,10 +112,6 @@ const postActions = {
     type: postTypes.ADD_TO_ALL_COMMENTS,
     payload,
   }),
-  getSearchMentionAudiences: (payload: IParamSearchMentionAudiences) => ({
-    type: postTypes.GET_SEARCH_MENTION_AUDIENCES,
-    payload,
-  }),
   postReactToPost: (payload: IPayloadReactToPost) => ({
     type: postTypes.POST_REACT_TO_POST,
     payload,
@@ -155,14 +142,18 @@ const postActions = {
   hidePostAudiencesBottomSheet: () => ({
     type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
   }),
+  updateAllCommentsByParentIds: (payload: {[postId: string]: IReaction[]}) => ({
+    type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
+    payload,
+  }),
   updateAllCommentsByParentIdsWithComments: (
     payload: IPayloadUpdateCommentsById,
   ) => ({
     type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     payload,
   }),
-  getCommentsById: (payload: IPayloadGetCommentsById) => ({
-    type: postTypes.GET_COMMENTS_BY_IDS,
+  getCommentsByPostId: (payload: IPayloadGetCommentsById) => ({
+    type: postTypes.GET_COMMENTS_BY_POST_ID,
     payload,
   }),
 };

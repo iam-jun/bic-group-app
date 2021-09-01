@@ -19,8 +19,13 @@ export interface IGetStreamNotificationActivity {
   time: string;
   verb: string;
   audience: IGetStreamAudience;
+  parent_reaction?: IReaction;
 }
 
 export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
   activityId: string;
+}
+
+export interface ILoadNewNotifications extends IGetStreamDispatch {
+  limit: string;
 }

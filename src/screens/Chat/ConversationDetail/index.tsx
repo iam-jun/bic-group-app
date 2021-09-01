@@ -12,7 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {ViewSpacing} from '~/components';
-import {roomTypes} from '~/constants/chat';
+import {chatPermissions, roomTypes} from '~/constants/chat';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
@@ -23,6 +23,7 @@ import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {getAvatar} from '../helper';
 import actions from '../redux/actions';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -38,8 +39,12 @@ const Conversation = (): React.ReactElement => {
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(
     conversation.avatar,
   );
+  const permissions = conversation.permissions || {};
 
   useEffect(() => {
+    dispatch(actions.getConversationDetail(conversation._id));
+    dispatch(actions.clearSelectedUsers());
+
     if (conversation.description?.length > 100) {
       setShortDescription(`${conversation.description.substr(0, 100)}...`);
     }
@@ -88,6 +93,27 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
+  const onItemPress = (type: string) => {
+    switch (type) {
+      case 'members':
+        goGroupMembers();
+        break;
+      case 'editName':
+        showChangeNameModal();
+        break;
+      default:
+        dispatch(
+          modalActions.showAlert({
+            title: 'Info',
+            content:
+              'Function has not been developed. Stay tuned for further releases 😀',
+            onConfirm: () => dispatch(modalActions.hideAlert()),
+            confirmLabel: 'Got it',
+          }),
+        );
+    }
+  };
+
   const onLoadAvatarError = () => {
     if (conversation.type === roomTypes.DIRECT) {
       setAvatar(images.img_user_avatar_default);
@@ -116,32 +142,28 @@ const Conversation = (): React.ReactElement => {
           {renderAvatar()}
           <Text.H5 style={styles.name} numberOfLines={2}>
             {conversation.name}
-            <Text>
-              <Icon
-                iconStyle={styles.iconTitleRight}
-                size={12}
-                icon="RightArrow"
-              />
-            </Text>
+            {conversation.type !== roomTypes.QUICK && (
+              <Text>
+                <Icon
+                  iconStyle={styles.iconTitleRight}
+                  size={12}
+                  icon="RightArrow"
+                />
+              </Text>
+            )}
           </Text.H5>
         </View>
       </TouchableOpacity>
     );
   };
 
-  const renderMembers = () =>
-    !isDirect && (
-      <View style={styles.members}>
-        <Icon
-          icon="users"
-          label={`${i18next.t('chat:title_members')} (${
-            conversation?.usersCount
-          })`}
-          onPress={goGroupMembers}
-        />
-        <Icon icon="AngleRight" />
-      </View>
-    );
+  const renderMembers = () => {
+    if (isDirect) return;
+    const label = `${i18next.t('chat:title_members')} (${
+      conversation?.usersCount
+    })`;
+    return renderActionItem('members', 'users', label);
+  };
 
   const renderDescription = () => {
     return (
@@ -175,24 +197,32 @@ const Conversation = (): React.ReactElement => {
     );
   };
 
+  // TODO: Fix marginRight, they are pushed to the left, when there is no button invite
   const renderMenu = () => (
     <View style={styles.menuContainer}>
       <Button.Icon
         icon="search"
+        style={styles.marginRight}
         tintColor={colors.primary7}
         label={i18next.t('common:text_search')}
       />
-      <Button.Icon
-        icon="iconPinGroup"
-        tintColor={colors.primary7}
-        label={i18next.t('chat:label_pin_chat')}
-      />
-      <Button.Icon
-        icon="bell"
-        tintColor={colors.primary7}
-        label={i18next.t('chat:label_mute')}
-      />
-      {!isDirect && (
+      {permissions[chatPermissions.CAN_PIN_MESSAGE] && (
+        <Button.Icon
+          icon="iconPinGroup"
+          style={styles.marginRight}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_pin_chat')}
+        />
+      )}
+      {permissions[chatPermissions.CAN_MUTE] && (
+        <Button.Icon
+          icon="bell"
+          style={styles.marginRight}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_mute')}
+        />
+      )}
+      {!isDirect && permissions[chatPermissions.CAN_INVITE] && (
         <Button.Icon
           icon="addUser"
           tintColor={colors.primary7}
@@ -203,56 +233,77 @@ const Conversation = (): React.ReactElement => {
     </View>
   );
 
-  const renderActionItem = (icon: IconType, label: string) => {
+  const renderActionItem = (
+    type: string,
+    icon: IconType,
+    label: string,
+    hideRightArrow = false,
+  ) => {
+    const RightComponent = hideRightArrow ? undefined : (
+      <Icon icon="AngleRight" size={24} />
+    );
+
     return (
-      <View style={styles.actionItem}>
-        <Icon icon={icon} label={label} />
-        <Icon icon="AngleRight" size={22} />
-      </View>
+      <TouchableOpacity onPress={() => onItemPress(type)}>
+        <PrimaryItem
+          style={styles.actionItem}
+          title={label}
+          leftIcon={icon}
+          leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
+          RightComponent={RightComponent}
+        />
+      </TouchableOpacity>
     );
   };
 
   const renderActions = () => (
     <View style={styles.bottomMenu}>
-      <Text>{i18next.t('chat:title_more_actions')}</Text>
-      <ViewSpacing height={spacing.margin.large} />
-      {renderActionItem('attachment', i18next.t('chat:label_attachments'))}
-      <ViewSpacing height={spacing.margin.large} />
-      {renderActionItem('images', i18next.t('chat:label_gallery'))}
-      {isDirect && (
-        <>
-          <ViewSpacing height={spacing.margin.large} />
-          {renderActionItem(
-            'users',
-            `${i18next.t('chat:label_create_group_chat_with')} ${
-              conversation.name
-            }`,
-          )}
-        </>
+      <Text style={styles.bottomMenuTitle}>
+        {i18next.t('chat:title_more_actions')}
+      </Text>
+      {renderActionItem(
+        'files',
+        'attachment',
+        i18next.t('chat:label_attachments'),
       )}
+      {renderActionItem('gallery', 'images', i18next.t('chat:label_gallery'))}
+      {isDirect &&
+        renderActionItem(
+          'users',
+          'users',
+          `${i18next.t('chat:label_create_group_chat_with')} ${
+            conversation.name
+          }`,
+        )}
     </View>
   );
 
   const renderPrivacy = () => {
     return (
       <View style={styles.bottomMenu}>
-        <Text>{i18next.t('chat:title_privacy')}</Text>
-        <ViewSpacing height={spacing.margin.large} />
+        <Text style={styles.bottomMenuTitle}>
+          {i18next.t('chat:title_privacy')}
+        </Text>
+
         {isDirect ? (
-          <>
-            {renderActionItem(
-              'ChatBlock',
-              `${i18next.t('chat:text_block')} ${conversation.name}`,
-            )}
-          </>
+          renderActionItem(
+            'block',
+            'ChatBlock',
+            `${i18next.t('chat:text_block')} ${conversation.name}`,
+          )
         ) : (
           <>
-            {renderActionItem('Feedback', i18next.t('chat:text_feedback'))}
-            <ViewSpacing height={spacing.margin.large} />
             {renderActionItem(
-              'leavesGroup',
-              i18next.t('chat:label_leaves_group'),
+              'feedback',
+              'Feedback',
+              i18next.t('chat:text_feedback'),
             )}
+            {permissions[chatPermissions.CAN_LEAVE] &&
+              renderActionItem(
+                'leavesGroup',
+                'leavesGroup',
+                i18next.t('chat:label_leaves_group'),
+              )}
           </>
         )}
       </View>
@@ -263,16 +314,18 @@ const Conversation = (): React.ReactElement => {
     if (isDirect) return null;
     return (
       <View style={styles.bottomMenu}>
-        <Text>{i18next.t('chat:title_admin_tool')}</Text>
-        <ViewSpacing height={spacing.margin.large} />
+        <Text style={styles.bottomMenuTitle}>
+          {i18next.t('chat:title_admin_tool')}
+        </Text>
         {renderActionItem(
+          'pinGroup',
           'iconPinGroup',
-          i18next.t('chat:label_pin_messagess'),
+          i18next.t('chat:label_pin_messages'),
         )}
-        <ViewSpacing height={spacing.margin.large} />
         {renderActionItem(
+          'chatPermission',
           'ChatPermission',
-          i18next.t('chat:label_permisstion_management'),
+          i18next.t('chat:label_permission_management'),
         )}
       </View>
     );
@@ -284,28 +337,24 @@ const Conversation = (): React.ReactElement => {
         modalizeRef={baseSheetRef}
         ContentComponent={
           <View style={styles.bottomSheet}>
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="ImageV"
-              size={22}
-              label={i18next.t('chat:detail_menu:change_avatar')}
-            />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="EditAlt"
-              size={22}
-              label={i18next.t('chat:detail_menu:edit_description')}
-            />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="TextFields"
-              size={22}
-              label={i18next.t('chat:detail_menu:edit_name')}
-              onPress={showChangeNameModal}
-            />
+            {renderActionItem(
+              'changeAvatar',
+              'ImageV',
+              i18next.t('chat:detail_menu:change_avatar'),
+              true,
+            )}
+            {renderActionItem(
+              'editDescription',
+              'EditAlt',
+              i18next.t('chat:detail_menu:edit_description'),
+              true,
+            )}
+            {renderActionItem(
+              'editName',
+              'TextFields',
+              i18next.t('chat:detail_menu:edit_name'),
+              true,
+            )}
           </View>
         }
       />
@@ -318,7 +367,7 @@ const Conversation = (): React.ReactElement => {
       : () => baseSheetRef.current?.open();
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.root}>
       <ScreenWrapper
         style={styles.wrapper}
         testID="ConversationDetailScreen"
@@ -344,6 +393,9 @@ const Conversation = (): React.ReactElement => {
 const createStyles = (theme: IObject<any>) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
+    root: {
+      backgroundColor: colors.background,
+    },
     wrapper: {},
     container: {
       backgroundColor: colors.bgSecondary,
@@ -375,40 +427,39 @@ const createStyles = (theme: IObject<any>) => {
     },
     menuContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      paddingVertical: spacing.padding.large,
-    },
-    menu: {
-      alignItems: 'center',
-    },
-    menuIcon: {
-      backgroundColor: colors.primary1,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: spacing?.borderRadius.small,
-      marginLeft: spacing?.padding.small,
-      width: 36,
-      height: 36,
+      paddingVertical: spacing.padding.large,
     },
     bottomMenu: {
-      marginTop: spacing.margin.base,
-      paddingVertical: spacing?.padding.base,
+      marginTop: spacing.margin.small,
+      paddingTop: spacing.padding.base,
+      paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.background,
     },
+    bottomMenuTitle: {
+      marginBottom: spacing.margin.tiny,
+    },
     actionItem: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      paddingHorizontal: 0,
+      height: 44,
+    },
+    actionItemIcon: {
+      marginRight: spacing.margin.large,
     },
     bottomSheet: {
-      paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing?.padding.base,
+      paddingHorizontal: spacing.padding.big,
+      paddingTop: spacing.padding.tiny,
     },
     marginBottom: {
       marginBottom: spacing.margin.large,
     },
     marginStart: {
       marginStart: spacing.margin.large,
+    },
+    marginRight: {
+      marginRight: spacing.margin.big,
     },
   });
 };

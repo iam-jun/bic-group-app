@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -18,10 +18,11 @@ import Header from '~/beinComponents/Header';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const Newsfeed = () => {
-  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const dispatch = useDispatch();
@@ -79,6 +80,8 @@ const Newsfeed = () => {
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
         icon={images.logo_bein}
+        menuIcon={'Edit'}
+        onPressMenu={() => rootNavigation.navigate(homeStack.createPost)}
       />
       <ListView
         isFullView
@@ -102,19 +105,29 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.background,
     },
     listContainer: {
       flex: 1,
-      backgroundColor: colors.bgDisable,
+      backgroundColor: colors.bgSecondary,
+      ...Platform.select({
+        web: {
+          alignSelf: 'center',
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          backgroundColor: colors.surface,
+        },
+      }),
     },
     listStyle: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor:
+        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listFooter: {
       height: 150,
