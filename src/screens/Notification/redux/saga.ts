@@ -14,6 +14,7 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_READ_ALL, markAsReadAll);
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
+  yield takeLatest(notificationsTypes.LOADMORE, loadmore);
 }
 
 function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
@@ -134,5 +135,47 @@ function* markAsRead({payload}: {payload: IMarkAsReadAnActivity}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsRead error', err, '\x1b[0m');
+  }
+}
+
+// load more old notifications
+function* loadmore({payload}: {payload: IGetStreamDispatch}) {
+  try {
+    // show loading more spinner, set isLoadingMore = true
+    yield put(notificationsActions.setIsLoadingMore(true));
+
+    const {userId, streamClient} = payload;
+
+    // get all notifications from store
+    const notifications = yield select(state =>
+      get(state, notificationSelector.notifications),
+    ) || [];
+
+    // load more from the last notification
+    const bottomNoti = notifications[notifications.length - 1];
+    const response = yield notificationsDataHelper.getNotificationList(
+      userId,
+      streamClient,
+      null, // let limit is default by 20 or other depends on constant
+      bottomNoti.id,
+    );
+
+    // hide loading more spinner, set isLoadingMore = false
+    yield put(notificationsActions.setIsLoadingMore(false));
+
+    // add loaded notification to bottom of current notification list
+    // set noMoreNotification = true if loaded notification is empty
+    if (response.results.length > 0) {
+      yield put(
+        notificationsActions.concatNotifications({
+          notifications: response.results,
+          unseen: response.unseen,
+        }),
+      );
+    } else {
+      yield put(notificationsActions.setNoMoreNoti(true));
+    }
+  } catch (err) {
+    console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
   }
 }
