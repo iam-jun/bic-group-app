@@ -4,6 +4,7 @@ import i18n from 'i18next';
 
 import {
   IOwnReaction,
+  IPayloadCreateComment,
   IPayloadGetCommentsById,
   IPayloadPutEditComment,
   IPayloadPutEditPost,
@@ -14,6 +15,7 @@ import {
   IPostCreatePost,
   IReaction,
   IReactionCounts,
+  IRequestPostComment,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -37,6 +39,7 @@ function timeOut(ms: number) {
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeLatest(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeLatest(postTypes.DELETE_POST, deletePost);
@@ -86,21 +89,41 @@ function* postCreateNewPost({
       //todo handle post error
     }
   } catch (e) {
-    console.log(
-      '\x1b[33m',
-      'namanh --- postCreateNewPost | postCreateNewPost catch: ',
-      JSON.stringify(e, undefined, 2),
-      '\x1b[0m',
-    );
     yield put(postActions.setLoadingCreatePost(false));
-    yield put(
-      modalActions.showAlert({
-        title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
-        content:
-          e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
-        confirmLabel: i18n.t('common:text_ok'),
-      }),
-    );
+    yield showError(e);
+  }
+}
+
+function* postCreateNewComment({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadCreateComment;
+}) {
+  const {postId, parentCommentId, commentData, userId} = payload || {};
+  if (!postId || !commentData || !userId) {
+    console.log(`\x1b[31m🐣️ saga postCreateNewComment: invalid param\x1b[0m`);
+    return;
+  }
+  try {
+    yield put(postActions.setCreateComment({loading: true}));
+
+    const requestData: IRequestPostComment = {
+      referenceId: parentCommentId || postId,
+      referenceType: parentCommentId ? 'comment' : 'post',
+      commentData,
+      userId: Number(userId),
+    };
+    const resComment = yield call(postDataHelper.postNewComment, requestData);
+
+    //todo update new comment data to state
+    yield put(postActions.getCommentsByPostId({postId, isMerge: false}));
+
+    yield put(postActions.setPostDetailReplyingComment());
+    yield put(postActions.setCreateComment({loading: false, content: ''}));
+  } catch (e) {
+    yield put(postActions.setCreateComment({loading: false}));
+    yield showError(e);
   }
 }
 
@@ -131,10 +154,7 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
       }
     }
   } catch (e) {
-    console.log(
-      `\x1b[31m🐣️ saga putEditPost error: `,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
+    yield showError(e);
   }
 }
 
@@ -167,17 +187,8 @@ function* putEditComment({
     navigation.goBack();
     yield put(postActions.setCreateComment({loading: false, content: ''}));
   } catch (e) {
-    console.log(
-      `\x1b[31m🐣️ saga putEditComment error: `,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
     yield put(postActions.setCreateComment({loading: false}));
-    modalActions.showAlert({
-      title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
-      content:
-        e?.meta?.errors?.[0]?.message || i18n.t('common:text_error_message'),
-      confirmLabel: i18n.t('common:text_ok'),
-    });
+    yield showError(e);
   }
 }
 
@@ -206,7 +217,7 @@ function* deletePost({payload}: {type: string; payload: string}) {
     }
     console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
   } catch (e) {
-    console.log(`\x1b[35m🐣️ saga deletePost ${payload} failed`, e, `\x1b[0m`);
+    yield showError(e);
   }
 }
 
@@ -342,7 +353,7 @@ function* postReactToPost({
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
-    console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
+    yield showError(e);
   }
 }
 
@@ -368,7 +379,7 @@ function* deleteReactToPost({
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
-    console.log(`\x1b[31m🐣️ deleteReactToPost : ${e}\x1b[0m`);
+    yield showError(e);
   }
 }
 
@@ -458,7 +469,7 @@ function* postReactToComment({
       reactionCounts,
       comment,
     );
-    console.log('\x1b[31m', '🐣️ postReactToPost error : ', e, '\x1b[0m');
+    yield showError(e);
   }
 }
 
@@ -495,7 +506,7 @@ function* deleteReactToComment({
       reactionCounts,
       comment,
     );
-    console.log(`\x1b[31m🐣️ deleteReactToComment : ${e}\x1b[0m`);
+    yield showError(e);
   }
 }
 
@@ -662,16 +673,7 @@ function* getCommentsByPostId({
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
     callbackLoading?.(false);
-    yield put(
-      modalActions.showAlert({
-        title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
-        content:
-          e?.meta?.message ||
-          e?.meta?.errors?.[0]?.message ||
-          i18n.t('common:text_error_message'),
-        confirmLabel: i18n.t('common:text_ok'),
-      }),
-    );
+    yield showError(e);
   }
 }
 
@@ -683,3 +685,16 @@ const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
     );
   }
 };
+
+function* showError(e: any) {
+  yield put(
+    modalActions.showAlert({
+      title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+      content:
+        e?.meta?.message ||
+        e?.meta?.errors?.[0]?.message ||
+        i18n.t('common:text_error_message'),
+      confirmLabel: i18n.t('common:text_ok'),
+    }),
+  );
+}

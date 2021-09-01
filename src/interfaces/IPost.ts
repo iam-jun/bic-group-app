@@ -100,7 +100,10 @@ export interface IPostCreatePost {
 }
 
 export interface IPayloadCreateComment {
-
+  postId: string;
+  parentCommentId?: string;
+  commentData: IActivityData;
+  userId: string | number;
 }
 
 export interface IPayloadPutEditPost {

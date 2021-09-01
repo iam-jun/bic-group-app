@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -9,7 +9,7 @@ import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {IRequestPostComment} from '~/interfaces/IPost';
+import {IPayloadCreateComment} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
 import {usePostDetailReplyingComment} from '~/hooks/post';
@@ -49,32 +49,13 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const onPressSend = () => {
     if (postId) {
-      const commentData = {content: content?.trim()};
-      const replyCmtId = replying?.id;
-      const requestData: IRequestPostComment = {
-        referenceId: replyCmtId || postId,
-        referenceType: replyCmtId ? 'comment' : 'post',
-        commentData,
-        userId,
+      const payload: IPayloadCreateComment = {
+        postId,
+        parentCommentId: replying?.id,
+        commentData: {content: content?.trim()},
+        userId: userId,
       };
-      dispatch(postActions.setCreateComment({loading: true}));
-      postDataHelper
-        .postNewComment(requestData)
-        .then(response => {
-          if (response && response.data) {
-            dispatch(postActions.getCommentsByPostId({postId, isMerge: false}));
-            dispatch(postActions.setPostDetailReplyingComment());
-            dispatch(
-              postActions.setCreateComment({loading: false, content: ''}),
-            );
-          }
-        })
-        .catch(e => {
-          dispatch(postActions.setCreateComment({loading: false}));
-          console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
-        });
-    } else {
-      console.log('\x1b[31m', '🐣️  | onPressSend : invalid id ', '\x1b[0m');
+      dispatch(postActions.postCreateNewComment(payload));
     }
   };
 
