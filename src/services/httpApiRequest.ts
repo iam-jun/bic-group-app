@@ -125,8 +125,21 @@ let unauthorizedReqQueue: UnauthorizedReq[] = [];
 const handleRetry = async (error: AxiosError) => {
   // check if error is not 401 or is not unauthorized type
   // check if orgConfig contain Authorization key
-  if (!error.config.headers.Authorization) {
-    return Promise.reject(error);
+  // @ts-ignore
+  switch (error.config?.provider?.name) {
+    case apiConfig.providers.bein.name:
+      if (!error.config.headers.Authorization) {
+        return Promise.reject(error);
+      }
+      break;
+    case apiConfig.providers.chat.name:
+      if (
+        !error.config.headers['X-Auth-Token'] ||
+        !error.config.headers['X-User-Id']
+      ) {
+        return Promise.reject(error);
+      }
+      break;
   }
 
   //================== 401 Unauthorized ==================
@@ -245,17 +258,6 @@ const handleResponseError = async (
 const mapResponseSuccessBein = (
   response: AxiosResponse,
 ): HttpApiResponseFormat => {
-  return {
-    code: response.data.code,
-    data: response.data.data,
-    meta: response.data.meta,
-  };
-};
-
-const mapResponseSuccessRocketChat = (
-  response: AxiosResponse,
-): HttpApiResponseFormat => {
-  // TODO: map data
   return {
     code: response.data.code,
     data: response.data.data,
