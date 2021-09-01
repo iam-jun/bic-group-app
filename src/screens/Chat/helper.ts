@@ -6,14 +6,13 @@ import {IAttachment, IConversation, IMessage} from '~/interfaces/IChat';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
-import {generateRoomName} from '~/utils/generator';
 
 export const mapData = (user: IUser, dataType: string, data: any) => {
   switch (dataType) {
     case 'users':
     case 'members':
       return mapUsers(data);
-    case 'groups':
+    case 'rooms':
       return mapConversations(user, data);
     case 'messages':
       return mapMessages(user, data);
@@ -33,27 +32,18 @@ export const mapUsers = (data?: []): IUser[] =>
 
 export const mapConversation = (user: IUser, item: any): IConversation => {
   const _id = item?._id || item?.rid;
-  const {type, usernames, members} = item?.customFields || {};
+  const {usernames} = item?.customFields || {};
+  const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
-  const membersExcludeMe = (members || []).filter(
-    (member: any) => member?.username !== user?.username,
+  const membersExcludeMe = (usernames || []).filter(
+    (_username: any) => _username !== user?.username,
   );
 
-  const name =
-    type === roomTypes.DIRECT
-      ? (members || []).length > 0
-        ? generateRoomName(
-            user,
-            membersExcludeMe.map(
-              (member: any) => member.name || member.username,
-            ),
-          )
-        : item.fname || item.name
-      : item?.fname || item.name;
+  const name = item.fname || item.name;
 
   const avatar =
     type === roomTypes.DIRECT
-      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0]?.username)
+      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0])
       : getRoomAvatar(_id);
 
   const attachment =
@@ -75,9 +65,9 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
     _id,
     name,
     usernames,
-    type: item.customFields?.type,
+    type,
     avatar,
-    user: mapUser(item?.u),
+    user: item.u && mapUser(item?.u),
     directUser: membersExcludeMe?.length > 0 && membersExcludeMe[0],
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
@@ -129,7 +119,7 @@ export const mapMessage = (_user: IUser, item: any): IMessage => {
 
 export const mapUser = (item: any): IUser => ({
   ...item,
-  avatar: getAvatar(item.username),
+  avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
 });
 

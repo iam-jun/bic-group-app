@@ -42,7 +42,7 @@ const Conversation = (): React.ReactElement => {
   const permissions = conversation.permissions || {};
 
   useEffect(() => {
-    dispatch(actions.getChatPermissions());
+    dispatch(actions.getConversationDetail());
     dispatch(actions.clearSelectedUsers());
 
     if (conversation.description?.length > 100) {
