@@ -116,8 +116,33 @@ function* postCreateNewComment({
     };
     const resComment = yield call(postDataHelper.postNewComment, requestData);
 
-    //todo update new comment data to state
-    yield put(postActions.getCommentsByPostId({postId, isMerge: false}));
+    //update comment_count
+    const allPosts = yield select(state => state?.post?.allPosts) || {};
+    const newAllPosts = {...allPosts};
+    const post = newAllPosts[postId] || {};
+    const newReactionCount = post.reaction_counts || {};
+    newReactionCount.comment_count = (newReactionCount.comment_count || 0) + 1;
+    post.reaction_counts = {...newReactionCount};
+    newAllPosts[postId] = post;
+    yield put(postActions.setAllPosts(newAllPosts));
+
+    //update comments or child comments
+    yield put(postActions.addToAllComments(resComment));
+    if (!parentCommentId) {
+      yield put(
+        postActions.updateAllCommentsByParentIdsWithComments({
+          id: postId,
+          comments: new Array(resComment),
+          isMerge: true,
+        }),
+      );
+    } else {
+      yield addChildCommentToCommentsOfPost({
+        postId: postId,
+        commentId: parentCommentId,
+        childComments: new Array(resComment),
+      });
+    }
 
     yield put(postActions.setPostDetailReplyingComment());
     yield put(postActions.setCreateComment({loading: false, content: ''}));
@@ -580,8 +605,16 @@ function* updateAllCommentsByParentIds({
   const allCommentsByParentIds = yield select(
     state => state?.post?.allCommentsByParentIds,
   ) || {};
+  console.log(
+    `\x1b[34m🐣️ saga old allCommentsByParentIds`,
+    `${JSON.stringify(allCommentsByParentIds, undefined, 2)}\x1b[0m`,
+  );
   const newData = Object.assign({}, allCommentsByParentIds, payload);
-  yield put(postActions.setAllCommentsByParentIds(newData));
+  console.log(
+    `\x1b[34m🐣️ saga new allCommentsByParentIds`,
+    `${JSON.stringify(newData, undefined, 2)}\x1b[0m`,
+  );
+  yield put(postActions.setAllCommentsByParentIds({...newData}));
 }
 
 function* updateAllCommentsByParentIdsWithComments({
