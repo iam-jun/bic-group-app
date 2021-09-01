@@ -42,28 +42,12 @@ const ConversationsList = (): React.ReactElement => {
     isFocused && dispatch(actions.getSubscriptions());
   }, [isFocused]);
 
-  useEffect(() => {
-    _getConversations();
-  }, []);
-
-  const _getConversations = () => {
-    dispatch(actions.resetData('groups'));
-    dispatch(
-      actions.getData('groups', {
-        // disable pagination because of local searching
-        offset: 0,
-        count: 1000,
-        sort: {_updatedAt: -1},
-      }),
-    );
-  };
-
   const loadMore = () => {
-    dispatch(actions.mergeExtraData('groups'));
+    dispatch(actions.mergeExtraData('rooms'));
   };
 
   const onChatPress = (item: IConversation) => {
-    dispatch(actions.selectConversation(item));
+    dispatch(actions.setConversationDetail(item));
     dispatch(actions.readSubcriptions(item._id));
     rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
   };
