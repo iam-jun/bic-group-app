@@ -14,6 +14,8 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
 import {usePostDetailReplyingComment} from '~/hooks/post';
 import {useBaseHook} from '~/hooks';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface CommentInputViewProps {
   postId: string;
@@ -28,9 +30,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   autoFocus,
   textInputRef,
 }: CommentInputViewProps) => {
-  const [content, setContent] = useState<string>();
-  const [loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -40,6 +39,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const userId = useUserIdAuth();
 
   const replying = usePostDetailReplyingComment();
+
+  const content = useKeySelector(postKeySelector.createComment.content) || '';
+  const loading = useKeySelector(postKeySelector.createComment.loading);
 
   useEffect(() => {
     dispatch(postActions.setPostDetailReplyingComment());
@@ -55,19 +57,20 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         commentData,
         userId,
       };
-      setLoading(true);
+      dispatch(postActions.setCreateComment({loading: true}));
       postDataHelper
         .postNewComment(requestData)
         .then(response => {
           if (response && response.data) {
             dispatch(postActions.getCommentsByPostId({postId, isMerge: false}));
-            setContent('');
             dispatch(postActions.setPostDetailReplyingComment());
-            setLoading(false);
+            dispatch(
+              postActions.setCreateComment({loading: false, content: ''}),
+            );
           }
         })
         .catch(e => {
-          setLoading(false);
+          dispatch(postActions.setCreateComment({loading: false}));
           console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
         });
     } else {
@@ -76,7 +79,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   };
 
   const onChangeText = (value: string) => {
-    setContent(value);
+    dispatch(postActions.setCreateComment({content: value}));
   };
 
   const renderCommentInputHeader = () => {

@@ -1,6 +1,7 @@
 const postKeySelector = {
   createComment: {
     loading: 'post.createComment.loading',
+    content: 'post.createComment.content',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   postDetail: {

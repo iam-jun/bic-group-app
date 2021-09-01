@@ -165,7 +165,7 @@ function* putEditComment({
     );
     yield timeOut(500);
     navigation.goBack();
-    yield put(postActions.setCreateComment({loading: false}));
+    yield put(postActions.setCreateComment({loading: false, content: ''}));
   } catch (e) {
     console.log(
       `\x1b[31m🐣️ saga putEditComment error: `,

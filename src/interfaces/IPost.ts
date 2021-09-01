@@ -99,6 +99,10 @@ export interface IPostCreatePost {
   important?: IActivityImportant;
 }
 
+export interface IPayloadCreateComment {
+
+}
+
 export interface IPayloadPutEditPost {
   id: string;
   data: IPostCreatePost;
