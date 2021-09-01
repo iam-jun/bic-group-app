@@ -15,7 +15,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {IResponseData} from '~/interfaces/common';
+import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData} from '../helper/mapper';
 import appConfig from '~/configs/appConfig';
 
@@ -78,10 +78,30 @@ function* editGroupDetail({
   payload: IGroupDetailEdit;
 }) {
   try {
+    // @ts-ignore
     const result = yield requestEditGroupDetail(payload);
+
+    const toastMessage: IToastMessage = {
+      content: 'common:text_edit_success',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+
     yield put(groupsActions.setGroupDetail(result));
   } catch (error) {
     console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
+
+    const toastMessage: IToastMessage = {
+      content: 'common:text_edit_fail',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   }
 }
 
@@ -182,22 +202,13 @@ function* requestGroupPosts(payload: IPayloadGetGroupPost) {
 }
 
 const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
-  try {
-    const groupId = data.id;
-    delete data.id; // edit data should not contain group's id
+  const groupId = data.id;
+  delete data.id; // edit data should not contain group's id
 
-    const response = await groupsDataHelper.editGroupDetail(groupId, data);
-    if (response.code === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestEditGroupDetail catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-  }
+  // @ts-ignore
+  const response = await groupsDataHelper.editGroupDetail(groupId, data);
+
+  return response.data;
 };
 
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
