@@ -26,14 +26,13 @@ const GroupContent = () => {
     <ListView
       isFullView
       style={styles.listContainer}
-      listStyle={styles.listStyle}
       data={groupPosts}
       renderItem={renderItem}
       ListHeaderComponent={<HeaderCreatePost audience={groupData} />}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
       renderItemSeparator={() => (
-        <ViewSpacing height={theme.spacing?.margin.base} />
+        <ViewSpacing height={theme.spacing.margin.base} />
       )}
     />
   );
@@ -54,7 +53,8 @@ const themeStyles = (theme: ITheme) => {
       }),
     },
     listHeaderComponentStyle: {
-      marginTop: spacing?.margin.base,
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.base,
     },
   });
 };
