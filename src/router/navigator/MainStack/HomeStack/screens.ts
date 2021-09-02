@@ -3,8 +3,8 @@ import PostDetail from '~/screens/Post/PostDetail';
 import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
-import PrivateView from '~/screens/Menu/UserProfile/PrivateView';
-import PublicView from '~/screens/Menu/UserProfile/PublicView';
+import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
+import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 
 export default {
   newsfeed: Newsfeed,
@@ -12,6 +12,6 @@ export default {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
-  'my-profile': PrivateView,
-  'public-profile': PublicView,
+  'my-profile': MyProfile,
+  'user-profile': UserProfile,
 };

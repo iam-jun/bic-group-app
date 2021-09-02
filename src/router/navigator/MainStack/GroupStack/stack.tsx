@@ -9,7 +9,7 @@ const groupStack = {
   generalInfo: 'general-info',
   editGroupDescription: 'edit-group-description',
   myProfile: 'my-profile',
-  publicProfile: 'public-profile',
+  publicProfile: 'user-profile',
   inviteMembers: 'invite-members',
 };
 
