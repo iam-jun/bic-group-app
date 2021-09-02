@@ -34,6 +34,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   onPressReply,
 }: CommentViewMenuBottomSheetProps) => {
   const {rootNavigation} = useRootNavigation();
+  const {t} = useBaseHook();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
@@ -90,21 +91,21 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
           style={styles.item}
           leftIcon={'CornerDownRight'}
           leftIconProps={{icon: 'CornerDownRight', size: 24}}
-          title={'Reply this comment'}
+          title={t('post:comment_menu_reply')}
           onPress={_onPressReply}
         />
         <PrimaryItem
           style={styles.item}
           leftIcon={'Copy'}
           leftIconProps={{icon: 'Copy', size: 24}}
-          title={'Copy text'}
+          title={t('post:comment_menu_copy_text')}
         />
         {isActor && (
           <PrimaryItem
             style={styles.item}
             leftIcon={'Edit'}
             leftIconProps={{icon: 'Edit', size: 24}}
-            title={'Edit Comment'}
+            title={t('post:comment_menu_edit')}
             onPress={_onPressEdit}
           />
         )}
@@ -112,14 +113,14 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
           style={styles.item}
           leftIcon={'Redo'}
           leftIconProps={{icon: 'Redo', size: 24}}
-          title={'View Edit History'}
+          title={t('post:comment_menu_history')}
         />
         {isActor && (
           <PrimaryItem
             style={styles.item}
             leftIcon={'Trash'}
             leftIconProps={{icon: 'Trash', size: 24}}
-            title={'Delete Comment'}
+            title={t('post:comment_menu_delete')}
           />
         )}
       </View>
