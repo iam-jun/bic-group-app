@@ -684,6 +684,7 @@ function* getCommentsByPostId({
           commentId: commentId,
           childComments: response,
         });
+        yield put(postActions.addToAllComments(response));
       } else {
         //get comment of post
         const payload = {id: postId, comments: response, isMerge};
