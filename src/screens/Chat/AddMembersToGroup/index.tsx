@@ -8,7 +8,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {chatSocketId, roomTypes} from '~/constants/chat';
 import useChat from '~/hooks/chat';
-import {IUser} from '~/interfaces/IAuth';
+import {IChatUser} from '~/interfaces/IChat';
 import {sendMessage} from '~/services/chatSocket';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
@@ -21,22 +21,29 @@ const AddMembersToGroup = (): React.ReactElement => {
   const {colors, spacing} = theme;
 
   const dispatch = useDispatch();
-  const {selectedUsers, users, conversation} = useChat();
+  const {selectedUsers, joinableUsers, conversation} = useChat();
 
   useEffect(() => {
-    dispatch(actions.resetData('users'));
+    dispatch(actions.resetData('joinableUsers'));
     dispatch(
-      actions.getData('users', {
-        query: {__rooms: {$nin: [conversation._id]}},
-      }),
+      actions.getData(
+        'joinableUsers',
+        {
+          groupId:
+            conversation.type === roomTypes.QUICK
+              ? conversation._id
+              : conversation.beinGroupId,
+        },
+        'data',
+      ),
     );
   }, []);
 
-  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
+  const loadMoreData = () => dispatch(actions.mergeExtraData('joinableUsers'));
 
   const onAddPress = () => {
     if (conversation.type === roomTypes.GROUP) showConfirmations();
-    else doAddUser();
+    else doAddUsersToQuickChat();
   };
 
   const showConfirmations = () => {
@@ -50,13 +57,21 @@ const AddMembersToGroup = (): React.ReactElement => {
           .t(`chat:title_group_add_member:${type}`)
           .replace('{0}', conversation.name),
         cancelBtn: true,
-        onConfirm: () => doAddUser(),
+        onConfirm: () => doAddUsersToGroupChat(),
         confirmLabel: i18next.t('chat:button_add_member'),
       }),
     );
   };
 
-  const doAddUser = () => {
+  const doAddUsersToGroupChat = () => {
+    dispatch(
+      actions.addMembersToGroup(
+        selectedUsers.map((user: IChatUser) => user.beinUserId),
+      ),
+    );
+  };
+
+  const doAddUsersToQuickChat = () => {
     sendMessage({
       msg: 'method',
       method: 'addUsersToRoom',
@@ -64,7 +79,7 @@ const AddMembersToGroup = (): React.ReactElement => {
       params: [
         {
           rid: conversation._id,
-          users: selectedUsers.map((user: IUser) => user.username),
+          users: selectedUsers.map((user: IChatUser) => user.username),
         },
       ],
     });
@@ -109,8 +124,8 @@ const AddMembersToGroup = (): React.ReactElement => {
       <MembersSelection
         selectable
         title={'common:text_all'}
-        loading={users.loading}
-        data={users.data}
+        loading={joinableUsers.loading}
+        data={joinableUsers.data}
         searchInputProps={{
           onChangeText: onQueryChanged,
         }}

@@ -1,5 +1,6 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import {FlatList, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -69,9 +70,18 @@ const Conversation = () => {
     }
   }, [route.params]);
 
-  const _getMessages = (id?: string) => {
+  useEffect(() => {
+    conversation._id && _getMessages();
+  }, [conversation._id]);
+
+  const _getMessages = () => {
     dispatch(actions.resetData('messages'));
-    dispatch(actions.getData('messages', {roomId: id}));
+    dispatch(
+      actions.getData('messages', {
+        roomId: conversation._id,
+        type: conversation.type,
+      }),
+    );
   };
 
   const loadMoreMessages = () => {
@@ -176,7 +186,7 @@ const Conversation = () => {
       />
       <ChatInput onError={setError} />
       <MessageOptionsModal
-        isMyMessage={selectedMessage?.user.username === user.username}
+        isMyMessage={selectedMessage?.user?.username === user.username}
         ref={messageOptionsModalRef}
         {...messageContextMenuPosition}
         onMenuPress={onMenuPress}

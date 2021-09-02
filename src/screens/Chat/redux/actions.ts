@@ -155,6 +155,11 @@ const uploadFile = (payload: IUploadFileAction) => ({
   payload,
 });
 
+const addMembersToGroup = (payload: string[]) => ({
+  type: Actions.ADD_MEMBERS_TO_GROUP,
+  payload,
+});
+
 const removeMember = (payload: IUser) => ({
   type: Actions.REMOVE_MEMBER,
   payload,
@@ -216,6 +221,7 @@ export default {
   addNewMessage,
   updateConversationName,
   uploadFile,
+  addMembersToGroup,
   removeMember,
   removeMemberSuccess,
   kickMeOut,
