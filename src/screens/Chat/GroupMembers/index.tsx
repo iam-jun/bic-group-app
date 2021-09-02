@@ -45,6 +45,7 @@ const GroupMembers = (): React.ReactElement => {
         actions.getData(
           'members',
           {
+            fields: {customFields: 1},
             query: {
               __rooms: {$eq: conversation._id},
               _id: {$nin: roles.data.map((role: any) => role._id)},
@@ -77,6 +78,7 @@ const GroupMembers = (): React.ReactElement => {
       actions.getData(
         'members',
         {
+          fields: {customFields: 1},
           query: {
             $and: [
               {__rooms: {$eq: conversation._id}},
