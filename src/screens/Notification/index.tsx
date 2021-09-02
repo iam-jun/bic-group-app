@@ -22,6 +22,7 @@ import notificationSelector from './redux/selector';
 import {useKeySelector} from '~/hooks/selector';
 import Text from '~/beinComponents/Text';
 import i18n from '~/localization';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 
 const Notfitication = () => {
   const menuSheetRef = useRef<any>();
@@ -61,20 +62,77 @@ const Notfitication = () => {
     // for now make the navigation to be simple by redirect to post detail screen
     // for feature, check notification type to implement more complex requirements
     const act = item.activities[0];
-    const verb = item.verb;
-    const post = act.object;
-    if (post && post.collection && post.collection === 'post') {
-      if (verb === 'comment') {
-        dispatch(postActions.setPostDetail(act));
-        rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+    try {
+      if (act.notificationType !== undefined) {
+        switch (act.notificationType) {
+          case NOTIFICATION_TYPE.MENTION: {
+            const postAct = act.object;
+            dispatch(postActions.setPostDetail(postAct));
+            rootNavigation.navigate(homeStack.postDetail);
+            break;
+          }
+          // noti type 18, 8, 22, 17
+          // TODO, this need to be updated for forcusing comment
+          // for now can not focus comment if the comment hasn't loaded in list yet
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
+          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED: {
+            const postAct = act.object;
+            dispatch(postActions.setPostDetail(postAct));
+            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            break;
+          }
+          // noti type 7, 19, 20, 21
+          // TODO, this need to be updated for forcusing comment
+          // for now can not focus comment if the comment hasn't loaded in list yet
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
+          case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED: {
+            const postAct = act.object;
+            dispatch(postActions.setPostDetail(postAct));
+            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            break;
+          }
+          // noti type 9, this is ok
+          case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST: {
+            const postAct = act.object;
+            dispatch(postActions.setPostDetail(postAct));
+            rootNavigation.navigate(homeStack.postDetail);
+            break;
+          }
+          // noti type 10
+          // TODO, this need to be updated for forcusing comment
+          // for now can not focus comment if the comment hasn't loaded in list yet
+          case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT: {
+            const postAct = act.object;
+            dispatch(postActions.setPostDetail(postAct));
+            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            break;
+          }
+          // noti type 16
+          case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT: {
+            const postAct = act.object;
+            dispatch(postActions.setPostDetail(postAct));
+            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            break;
+          }
+          default:
+            console.log(
+              `Notification type ${act.notificationType} have not implemented yet`,
+            );
+            break;
+        }
       } else {
+        // default, render it as "create post" notification
         dispatch(postActions.setPostDetail(act));
         rootNavigation.navigate(homeStack.postDetail);
       }
-    } else {
+    } catch (error) {
       console.log(
         '\x1b[33m',
-        'this notication not relate to a post',
+        'Navigation for this activity has error',
         act,
         '\x1b[0m',
       );
