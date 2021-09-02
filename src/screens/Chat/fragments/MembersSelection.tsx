@@ -26,7 +26,7 @@ export interface MembersSelectionProps {
     data: IUser[];
   };
   loading?: boolean;
-  onPressMenu?: (user: IUser) => void;
+  onPressMenu?: (e: any, payload: IUser) => void;
   onLoadMore: () => void;
 }
 
@@ -56,7 +56,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
       <PrimaryItem
         title={item.name}
         isChecked={item.selected}
-        onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
+        onPressMenu={onPressMenu ? (e: any) => onPressMenu(e, item) : undefined}
         LeftComponent={
           <Avatar.Large
             style={styles.marginRight}

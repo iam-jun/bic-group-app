@@ -6,6 +6,7 @@ import {
   TextStyle,
   ViewStyle,
   StyleSheet,
+  Platform,
 } from 'react-native';
 
 import Unicons, {UniconsProps} from './Unicons';
@@ -81,14 +82,11 @@ const Icon: React.FC<IconProps> = ({
     _style.height = size;
     _tintColor = undefined;
   }
+  const Wrapper = Platform.OS === 'web' ? Text : View;
 
   return (
-    <TouchableOpacity
-      style={[styles.container, style, {backgroundColor}]}
-      disabled={!onPress}
-      onPress={onPress}
-      hitSlop={hitSlop}>
-      <Text>
+    <TouchableOpacity disabled={!onPress} onPress={onPress} hitSlop={hitSlop}>
+      <Wrapper style={[styles.container, style, {backgroundColor}]}>
         <View
           style={[
             isButton && styles.button,
@@ -115,7 +113,7 @@ const Icon: React.FC<IconProps> = ({
             {label}
           </Text.ButtonBase>
         )}
-      </Text>
+      </Wrapper>
     </TouchableOpacity>
   );
 };
@@ -137,7 +135,7 @@ const createStyles = (theme: ITheme) => {
       backgroundColor: colors.disabled,
     },
     label: {
-      marginStart: spacing.margin.small,
+      marginStart: spacing.margin.base,
     },
   });
 };

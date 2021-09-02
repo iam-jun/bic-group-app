@@ -45,8 +45,8 @@ const BaseBottomSheet: React.FC<Props> = ({
   });
 
   const open = (x: number, y: number) => {
-    let _x = Dimensions.get('window').width / 2 - boxSize.width;
-    let _y = Dimensions.get('window').height / 2 - boxSize.height;
+    let _x = Dimensions.get('window').width / 2 - boxSize.width / 2;
+    let _y = Dimensions.get('window').height / 2 - boxSize.height / 2;
     if (x) _x = side === 'left' ? x - boxSize.width : x;
     if (y)
       _y =
