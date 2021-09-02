@@ -6,6 +6,7 @@ import {
   TextStyle,
   ViewStyle,
   StyleSheet,
+  Platform,
 } from 'react-native';
 
 import Unicons, {UniconsProps} from './Unicons';
@@ -29,7 +30,7 @@ export interface IconProps extends SVGIconProps, UniconsProps {
   label?: string;
   labelColor?: string;
   labelStyle?: StyleProp<TextStyle>;
-  onPress?: () => void;
+  onPress?: (e: any) => void;
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
 }
 
@@ -81,39 +82,38 @@ const Icon: React.FC<IconProps> = ({
     _style.height = size;
     _tintColor = undefined;
   }
+  const Wrapper = Platform.OS === 'web' ? Text : View;
 
   return (
-    <TouchableOpacity
-      style={[styles.container, style, {backgroundColor}]}
-      disabled={!onPress}
-      onPress={onPress}
-      hitSlop={hitSlop}>
-      <View
-        style={[
-          isButton && styles.button,
-          disabled && isButton && styles.disabled,
-          iconStyle,
-        ]}>
-        <IconComponent
-          style={_style}
-          tintColor={_tintColor}
-          size={size}
-          type={type}
-          name={name}
-          source={source}
-        />
-      </View>
-      {label && (
-        <Text.ButtonBase
-          useI18n
+    <TouchableOpacity disabled={!onPress} onPress={onPress} hitSlop={hitSlop}>
+      <Wrapper style={[styles.container, style, {backgroundColor}]}>
+        <View
           style={[
-            styles.label,
-            {color: labelColor || theme.colors.textPrimary},
-            labelStyle,
+            isButton && styles.button,
+            disabled && isButton && styles.disabled,
+            iconStyle,
           ]}>
-          {label}
-        </Text.ButtonBase>
-      )}
+          <IconComponent
+            style={_style}
+            tintColor={_tintColor}
+            size={size}
+            type={type}
+            name={name}
+            source={source}
+          />
+        </View>
+        {label && (
+          <Text.ButtonBase
+            useI18n
+            style={[
+              styles.label,
+              {color: labelColor || theme.colors.textPrimary},
+              labelStyle,
+            ]}>
+            {label}
+          </Text.ButtonBase>
+        )}
+      </Wrapper>
     </TouchableOpacity>
   );
 };
@@ -135,7 +135,7 @@ const createStyles = (theme: ITheme) => {
       backgroundColor: colors.disabled,
     },
     label: {
-      marginStart: spacing.margin.small,
+      marginStart: spacing.margin.base,
     },
   });
 };

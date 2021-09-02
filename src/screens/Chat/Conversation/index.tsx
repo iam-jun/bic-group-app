@@ -39,10 +39,6 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
-  const [messageContextMenuPosition, setMessageContextMenuPosition] = useState<{
-    x: number;
-    y: number;
-  }>({x: -1, y: -1});
 
   const isDirect = conversation.type === roomTypes.DIRECT;
 
@@ -125,15 +121,7 @@ const Conversation = () => {
 
   const onLongPress = (item: IMessage, position: {x: number; y: number}) => {
     setSelectedMessage(item);
-    setMessageContextMenuPosition(position);
-    messageOptionsModalRef.current?.open();
-  };
-
-  const onContextMenu = (item: IMessage, position: {x: number; y: number}) => {
-    console.log('onContextMenu', item);
-    setSelectedMessage(item);
-    setMessageContextMenuPosition(position);
-    messageOptionsModalRef.current?.open();
+    messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
@@ -142,7 +130,6 @@ const Conversation = () => {
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
       onLongPress,
-      onContextMenu,
     };
     return <MessageContainer {...props} />;
   };
@@ -188,7 +175,6 @@ const Conversation = () => {
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user.username}
         ref={messageOptionsModalRef}
-        {...messageContextMenuPosition}
         onMenuPress={onMenuPress}
         onReactionPress={onReactionPress}
         onClosed={onOptionsClosed}
