@@ -26,7 +26,6 @@ const GroupContent = () => {
     <ListView
       isFullView
       style={styles.listContainer}
-      listStyle={styles.listStyle}
       data={groupPosts}
       renderItem={renderItem}
       ListHeaderComponent={<HeaderCreatePost audience={groupData} />}
@@ -54,7 +53,8 @@ const themeStyles = (theme: ITheme) => {
       }),
     },
     listHeaderComponentStyle: {
-      marginTop: spacing?.margin.base,
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.large,
     },
   });
 };

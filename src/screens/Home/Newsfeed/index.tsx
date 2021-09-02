@@ -129,7 +129,7 @@ const createStyle = (theme: ITheme) => {
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
-      marginBottom: spacing?.margin.large,
+      marginBottom: spacing.margin.large,
     },
     importantCount: {
       paddingHorizontal: spacing.padding.large,
