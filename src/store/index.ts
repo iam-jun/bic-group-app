@@ -22,7 +22,15 @@ const persistConfig = {
   // transforms: [immutableTransform()],
   // transforms: [transformCircular],
   storage: AsyncStorage,
-  blacklist: ['auth', 'modal', 'groups', 'chat', 'post', 'home', 'groups'], // temporary block chat until it's stable
+  blacklist: [
+    'auth',
+    'modal',
+    'groups',
+    'chat',
+    'post',
+    'home',
+    'notifications',
+  ], // temporary block chat until it's stable
   // whitelist: ['chat', 'language'],
 };
 

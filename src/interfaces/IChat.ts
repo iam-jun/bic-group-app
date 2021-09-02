@@ -19,8 +19,8 @@ export interface IChatUser {
   roles?: string[];
   type: string;
   active: boolean;
-  username?: string;
-  name?: string;
+  username: string;
+  name: string;
   services?: IUserServices;
   emails?: IUserEmail[];
   status?: string;

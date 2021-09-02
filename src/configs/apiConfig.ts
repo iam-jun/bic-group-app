@@ -1,3 +1,4 @@
+import {ICreateDiretChatReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
@@ -30,13 +31,27 @@ const providers = {
 };
 
 const Chat = {
-  groups: (params: IPaginationParams): HttpApiRequestConfig => {
+  rooms: (): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
     return {
-      url: `${providers.chat.url}groups.list`,
+      url: `${providers.bein.url}chat`,
       method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+    };
+  },
+  createDirectChat: (data: ICreateDiretChatReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}im.create`,
+      method: 'post',
       useRetry: true,
       provider: providers.chat,
-      params,
+      data,
     };
   },
   createRoom: (data: ICreateRoomReq): HttpApiRequestConfig => {

@@ -1,11 +1,11 @@
 import {IUser} from '~/interfaces/IAuth';
 import {
+  IChatUser,
   IConversation,
   IMessage,
   ISendMessageAction,
   IUploadFileAction,
 } from '~/interfaces/IChat';
-import {ICreateRoomReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import * as Actions from './constants';
 
@@ -80,11 +80,6 @@ const readSubcriptions = (payload: string) => ({
   payload,
 });
 
-const selectConversation = (payload: IConversation) => ({
-  type: Actions.SELECT_CONVERSATION,
-  payload,
-});
-
 const handleEvent = (payload: ISocketEvent) => ({
   type: Actions.HANDLE_EVENT,
   payload,
@@ -135,7 +130,7 @@ const clearSelectedUsers = () => ({
   type: Actions.CLEAR_SELECTED_USERS,
 });
 
-const createConversation = (payload: ICreateRoomReq) => ({
+const createConversation = (payload: IChatUser[]) => ({
   type: Actions.CREATE_CONVERSATION,
   payload,
 });
@@ -157,15 +152,6 @@ const updateConversationName = (payload: string) => ({
 
 const uploadFile = (payload: IUploadFileAction) => ({
   type: Actions.UPLOAD_FILE,
-  payload,
-});
-
-const getChatPermissions = () => ({
-  type: Actions.GET_CHAT_PERMISSIONS,
-});
-
-const setChatPermissions = (payload: any) => ({
-  type: Actions.SET_CHAT_PERMISSIONS,
   payload,
 });
 
@@ -216,7 +202,6 @@ export default {
   setSubscriptions,
   readSubcriptions,
   handleEvent,
-  selectConversation,
   sendMessage,
   sendMessageSuccess,
   sendMessageFailed,
@@ -237,6 +222,4 @@ export default {
   setMentionSearchKey,
   getMentionUsers,
   setMentionUsers,
-  getChatPermissions,
-  setChatPermissions,
 };

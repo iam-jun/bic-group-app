@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
-import Chip from '~/beinComponents/Chip';
+
 import {IAction} from '~/constants/commonActions';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Divider from '~/beinComponents/Divider';
@@ -35,10 +35,7 @@ const Section2 = () => {
           Badge
         </Text.H3>
         <Divider style={{margin: spacing?.margin.base}} />
-        <Chip
-          onActionPress={_onActionPress}
-          style={{margin: spacing?.margin.base}}
-        />
+
         <Thread
           label="Learning Crypto"
           isTrending

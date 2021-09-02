@@ -4,6 +4,8 @@ const initNotificationsState = {
   loadingNotifications: false,
   notificationList: [],
   unseenNumber: 0,
+  noMoreNotification: false,
+  isLoadingMore: false,
 };
 
 function notificationsReducer(
@@ -23,6 +25,34 @@ function notificationsReducer(
         notificationList: payload.notifications || [],
         unseenNumber: payload.unseen,
       };
+    case notificationsTypes.ADD_NEW_NOTIFICATIONS: {
+      const newNotifications = payload.notifications || [];
+      const newList = state.notificationList;
+      newList.unshift(...newNotifications);
+      return {
+        ...state,
+        notificationList: newList,
+        unseenNumber: state.unseenNumber + payload.unseen,
+      };
+    }
+    case notificationsTypes.CONCAT_NOTICATIONS:
+      return {
+        ...state,
+        notificationList: state.notificationList.concat(
+          payload.notifications || [],
+        ),
+      };
+    case notificationsTypes.SET_NO_MORE_NOTIFICATION:
+      return {
+        ...state,
+        noMoreNotification: true,
+      };
+    case notificationsTypes.SET_IS_LOADING_MORE: {
+      return {
+        ...state,
+        isLoadingMore: payload,
+      };
+    }
 
     default:
       return state;

@@ -23,7 +23,7 @@ const Groups: React.FC = () => {
   const groupsData = useGroups();
   const {loadingJoinedGroups, joinedGroups} = groupsData;
 
-  // for groups search - client search
+  // for rooms search - client search
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<IGroup[]>([]);
 

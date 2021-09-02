@@ -2,39 +2,36 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
+import {IconType} from '~/resources/icons';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
-import {IconType} from '~/resources/icons';
-import useGroups from '~/hooks/groups';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const GroupAdministration = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const groupData = useGroups();
-  const {groupDetail} = groupData || {};
-  const {name, icon} = groupDetail?.group || {};
+  const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
 
   const onGroupAdminPress = () => {
     dispatch(
       modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
+        title: i18next.t('common:text_info'),
+        content: i18next.t('common:text_popup_message'),
         onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
+        confirmLabel: i18next.t('common:text_got_it'),
       }),
     );
   };
@@ -49,12 +46,13 @@ const GroupAdministration = () => {
   ) => {
     return (
       <TouchableOpacity style={styles.itemContainer} onPress={onActionPress}>
-        <Icon
-          icon={icon}
-          tintColor={theme.colors.primary7}
-          label={title}
-          labelStyle={styles.label}
-        />
+        <Icon icon={icon} tintColor={theme.colors.primary7} size={24} />
+        <View style={styles.titleContainer}>
+          <Text.ButtonBase useI18n style={styles.label}>
+            {title}
+          </Text.ButtonBase>
+        </View>
+
         <View style={styles.rightComponent}>
           {!!rightSubTitle && (
             <View style={styles.rightSubtitle}>
@@ -146,14 +144,15 @@ const themeStyles = (theme: ITheme) => {
       padding: spacing.padding.base,
       backgroundColor: colors.background,
       borderRadius: spacing.borderRadius.base,
-      justifyContent: 'space-between',
     },
     rightComponent: {
       flexDirection: 'row',
     },
-    label: {
-      marginStart: spacing.margin.extraLarge,
+    titleContainer: {
+      flex: 1,
+      marginLeft: spacing.margin.large,
     },
+    label: {},
     rightSubIcon: {
       marginLeft: spacing.margin.base,
     },

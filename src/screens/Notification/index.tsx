@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -18,6 +18,10 @@ import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import notificationSelector from './redux/selector';
+import {useKeySelector} from '~/hooks/selector';
+import Text from '~/beinComponents/Text';
+import i18n from '~/localization';
 
 const Notfitication = () => {
   const menuSheetRef = useRef<any>();
@@ -31,6 +35,11 @@ const Notfitication = () => {
   const isFocused = useIsFocused();
   const {streamClient} = useContext(AppContext);
   const userId = useUserIdAuth();
+  const noMoreNotification = useKeySelector(
+    notificationSelector.noMoreNotification,
+  );
+  const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
+
   useEffect(() => {
     if (isFocused) {
       dispatch(
@@ -81,8 +90,36 @@ const Notfitication = () => {
     );
   };
 
+  // loadmore notification handler
+  const loadmoreNoti = () => {
+    if (streamClient && !noMoreNotification && !isLoadingMore) {
+      dispatch(
+        notificationsActions.loadmore({
+          streamClient,
+          userId: userId.toString(),
+        }),
+      );
+    }
+  };
+
   const theme: ITheme = useTheme();
   const styles = themeStyles(theme);
+
+  const renderListFooter = () => {
+    return (
+      <View style={styles.listFooter}>
+        {!noMoreNotification && isLoadingMore && (
+          <ActivityIndicator color={theme.colors.bgFocus} />
+        )}
+        {noMoreNotification && (
+          <Text.Subtitle color={theme.colors.textSecondary}>
+            {i18n.t('notification:no_more_notification')}
+          </Text.Subtitle>
+        )}
+      </View>
+    );
+  };
+
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <View style={styles.screenContainer}>
@@ -97,6 +134,8 @@ const Notfitication = () => {
           renderItemSeparator={() => <ViewSpacing height={2} />}
           data={notificationList}
           onItemPress={_onItemPress}
+          onLoadMore={() => loadmoreNoti()}
+          ListFooterComponent={renderListFooter}
         />
         <NotificationBottomSheet modalizeRef={menuSheetRef} />
       </View>
@@ -114,6 +153,11 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     list: {},
+    listFooter: {
+      height: 150,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 };
 

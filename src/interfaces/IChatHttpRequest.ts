@@ -4,6 +4,9 @@ export interface IPaginationParams {
   sort?: {[x: string]: string | number};
 }
 
+export interface ICreateDiretChatReq {
+  username: string;
+}
 export interface ICreateRoomReq {
   name: string;
   members: string[];

@@ -37,26 +37,7 @@ const CreateConversation = (): React.ReactElement => {
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onCreatePress = () => {
-    const name = generateRoomName(
-      user,
-      selectedUsers.map((user: IUser) => user.name),
-    );
-
-    const type = selectedUsers.length > 1 ? roomTypes.QUICK : roomTypes.DIRECT;
-
-    const members = [...selectedUsers, user];
-
-    dispatch(
-      actions.createConversation({
-        name,
-        members: selectedUsers.map((user: IUser) => user.username),
-        customFields: {
-          type,
-          usernames: members.map((user: IUser) => user.username),
-          members: selectedUsers.length === 1 ? members : null,
-        },
-      }),
-    );
+    dispatch(actions.createConversation(selectedUsers));
   };
 
   const searchUsers = (searchQuery: string) => {
