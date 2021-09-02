@@ -6,13 +6,13 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
-import {IObject} from '~/interfaces/common';
 import {
   IChatUser,
   IConversation,
   IMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
+import {} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -53,6 +53,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
 }
@@ -349,6 +350,26 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
     );
   } catch (err) {
     console.log('updateConversationName', err);
+  }
+}
+
+function* addMembersToGroup({payload}: {type: string; payload: string[]}) {
+  try {
+    const {chat} = yield select();
+    yield makeHttpRequest(
+      apiConfig.Chat.addMembersToGroup(chat.conversation?.beinGroupId, {
+        user_ids: payload,
+      }),
+    );
+    handleAddMember();
+  } catch (err) {
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
   }
 }
 
