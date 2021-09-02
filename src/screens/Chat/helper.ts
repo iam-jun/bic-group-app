@@ -1,13 +1,17 @@
 import {messageStatus} from './../../constants/chat';
 import i18next from 'i18next';
 import {roomTypes, messageEventTypes} from '~/constants/chat';
-import {IUser} from '~/interfaces/IAuth';
-import {IAttachment, IConversation, IMessage} from '~/interfaces/IChat';
+import {
+  IAttachment,
+  IChatUser,
+  IConversation,
+  IMessage,
+} from '~/interfaces/IChat';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 
-export const mapData = (user: IUser, dataType: string, data: any) => {
+export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
     case 'users':
     case 'members':
@@ -16,21 +20,26 @@ export const mapData = (user: IUser, dataType: string, data: any) => {
       return mapConversations(user, data);
     case 'messages':
       return mapMessages(user, data);
+    case 'joinableUsers':
+      return mapJoinableUsers(data);
     default:
       return data;
   }
 };
 
-export const mapConversations = (user: IUser, data?: []): IConversation[] =>
+export const mapConversations = (user: IChatUser, data?: []): IConversation[] =>
   (data || []).map((item: any) => mapConversation(user, item));
 
-export const mapMessages = (user: IUser, data?: []): IMessage[] =>
+export const mapMessages = (user: IChatUser, data?: []): IMessage[] =>
   (data || []).map((item: any) => mapMessage(user, item));
 
-export const mapUsers = (data?: []): IUser[] =>
+export const mapUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapUser(item));
 
-export const mapConversation = (user: IUser, item: any): IConversation => {
+export const mapJoinableUsers = (data?: []): IChatUser[] =>
+  (data || []).map((item: any) => mapJoinableUser(item));
+
+export const mapConversation = (user: IChatUser, item: any): IConversation => {
   const _id = item?._id || item?.rid;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
@@ -61,6 +70,7 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
 
   return {
     ...item,
+    ...item.customFields,
     _id,
     name,
     type,
@@ -72,7 +82,7 @@ export const mapConversation = (user: IUser, item: any): IConversation => {
   };
 };
 
-export const mapMessage = (_user: IUser, item: any): IMessage => {
+export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   const user = mapUser(item?.u);
   let attachment = null;
   if (item.attachments?.length > 0) {
@@ -115,8 +125,17 @@ export const mapMessage = (_user: IUser, item: any): IMessage => {
   };
 };
 
-export const mapUser = (item: any): IUser => ({
+export const mapUser = (item: any): IChatUser => ({
   ...item,
+  ...item.customFields,
+  avatar: getAvatar(item?.username),
+  name: item?.name || item?.fullname || item?.username,
+});
+
+export const mapJoinableUser = (item: any): IChatUser => ({
+  ...item,
+  _id: item.rocket_chat_id,
+  beinUserId: item.id,
   avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
 });

@@ -60,7 +60,7 @@ const AboutProfile = (props: IUserProfile) => {
       {/* @ts-ignore */}
       {renderItem('UserSquare', genders[gender])}
       {/* @ts-ignore */}
-      {renderItem('UserSquare', relationshipStatus[relationship_status])}
+      {renderItem('Heart', relationshipStatus[relationship_status])}
     </View>
   );
 };
