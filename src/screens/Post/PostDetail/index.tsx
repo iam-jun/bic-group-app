@@ -60,11 +60,13 @@ const PostDetail = (props: any) => {
   }, [deleted]);
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
-    listRef?.current?.scrollToLocation?.({
-      itemIndex: itemIndex,
-      sectionIndex: sectionIndex,
-      animated: true,
-    });
+    if (sectionData.length > 0) {
+      listRef?.current?.scrollToLocation?.({
+        itemIndex: itemIndex,
+        sectionIndex: sectionIndex,
+        animated: true,
+      });
+    }
   };
 
   const onPressComment = () => {

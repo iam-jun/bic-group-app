@@ -79,6 +79,7 @@ const MainTabs = () => {
     // and we haven't handle "delete" event yet
     if (data.new.length > 0) {
       const actorId = data.new[0].actor.id;
+      const notiGroupId = data.new[0].id;
       const limit = data.new.length;
       streamClient &&
         actorId != userId &&
@@ -86,6 +87,7 @@ const MainTabs = () => {
           notificationsActions.loadNewNotifications({
             streamClient,
             userId: userId.toString(),
+            notiGroupId,
             limit: limit,
           }),
         );

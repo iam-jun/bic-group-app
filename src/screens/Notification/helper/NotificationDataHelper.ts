@@ -58,12 +58,14 @@ const notificationsDataHelper = {
 
   loadNewNotification: async (
     userId: string,
+    fromNotiGroupId: string,
     limit: number,
     streamClient?: StreamClient,
   ) => {
     if (streamClient) {
       const streamOptions: any =
         notificationsDataHelper.getDefaultLoadNotiOptions(userId);
+      streamOptions.id_gte = fromNotiGroupId;
       streamOptions.limit = limit;
       streamOptions.offset = 0;
 

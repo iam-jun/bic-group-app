@@ -1,4 +1,4 @@
-import {put, takeLatest, select} from 'redux-saga/effects';
+import {put, takeLatest, takeEvery, select} from 'redux-saga/effects';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import notificationsTypes from '~/screens/Notification/redux/types';
@@ -18,7 +18,7 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
   yield takeLatest(notificationsTypes.LOADMORE, loadmore);
-  yield takeLatest(
+  yield takeEvery(
     notificationsTypes.LOAD_NEW_NOTIFICATIONS,
     loadNewNotifications,
   );
@@ -52,10 +52,10 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
 // load new notifications when have realtime event
 function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
   try {
-    const {userId, streamClient, limit} = payload;
-
+    const {userId, notiGroupId, streamClient, limit} = payload;
     const response = yield notificationsDataHelper.loadNewNotification(
       userId,
+      notiGroupId,
       limit, // only load a number of notifiations equal number of new notifications
       streamClient,
     );

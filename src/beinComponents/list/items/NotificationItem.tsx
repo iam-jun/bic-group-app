@@ -10,6 +10,7 @@ import {countTime} from '~/utils/formatData';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 import i18n from '~/localization';
 import {default as reactionsIcons} from '~/constants/reactions';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -28,27 +29,6 @@ const VERB = {
 };
 
 const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
-
-const NOTIFICATION_TYPE = {
-  // CREATE_POST: 1,
-  // MENTION: 4,
-  NEW_COMMENT_TO_YOUR_POST: 7,
-  NEW_REPLY_TO_YOUR_COMMENT: 8,
-  NEW_REACTION_TO_YOUR_POST: 9,
-  NEW_REACTION_TO_YOUR_COMMENT: 10,
-  // CREATE_POST_IN_SINGLE_GROUP: 11,
-  // CREATE_POST_IN_MULTI_GROUP: 12,
-  // MENTION_IN_SINGLE_GROUP: 13,
-  // MENTION_IN_MULTI_GROUP: 14,
-  // ADD_COMMENT_TO_POST_NOTICE_AUDIENCE_USER: 15,
-  MENTION_YOU_IN_COMMENT: 16,
-  NEW_REPLY_TO_COMMENT_YOU_REPLIED: 17,
-  NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED: 18,
-  NEW_COMMENT_TO_A_POST: 19,
-  NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT: 20,
-  NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED: 21,
-  NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY: 22,
-};
 
 const COMMENT_TARGET = {
   POST: 'post',
@@ -104,6 +84,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT:
             return renderMentionYouInCommentNotiContent(act);
 
+          // noti type 7
+          case NOTIFICATION_TYPE.MENTION:
+            return renderPostNotiContent(act);
+
           default:
             console.log(
               `Notification type ${act.notificationType} have not implemented yet`,
@@ -153,35 +137,43 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   // render content of default notification type
   // such as: create a post, mention a user
   const renderPostNotiContent = (act: IGetStreamNotificationActivity) => {
-    const actorName = act.actor.data?.fullname || 'Someone';
-
-    // create verb text depends on verb of notification
+    let realActivityObject;
     let verbText = '';
+    // create verb text depends on verb of notification
+    // and get real activity object, because with "mention"
+    // real post activity is set to object property like reaction noti type
     switch (act.verb) {
       case VERB.MENTION:
+        realActivityObject = act.object;
         verbText = i18n.t('notification:mentioned_you_in_a_post');
         break;
       case VERB.POST:
       default:
+        realActivityObject = act;
         verbText = i18n.t('notification:created_a_post');
         break;
     }
+    const actorName = realActivityObject.actor.data?.fullname || 'Someone';
 
     // create group text (group name or group count)
     let groupText;
-    if (act.audience?.groups?.length === 1) {
-      const groupName = act.audience.groups[0].data?.name || 'a group';
+    if (realActivityObject.audience?.groups?.length === 1) {
+      const groupName =
+        realActivityObject.audience.groups[0].data?.name || 'a group';
       groupText = i18n
         .t('notification:in_group')
         .replace('{group_name}', groupName);
-    } else if (act.audience?.groups?.length > 1) {
+    } else if (realActivityObject.audience?.groups?.length > 1) {
       groupText = i18n
         .t('notification:in_n_groups')
-        .replace('{group_count}', act.audience.groups.length.toString());
+        .replace(
+          '{group_count}',
+          realActivityObject.audience.groups.length.toString(),
+        );
     }
 
     // get noti body from post content then process it
-    let body = act.object.data.content || null;
+    let body = realActivityObject.object.data.content || null;
     if (body) {
       body = processNotiBody(body);
     }
