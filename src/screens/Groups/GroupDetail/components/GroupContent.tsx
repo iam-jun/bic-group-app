@@ -32,7 +32,7 @@ const GroupContent = () => {
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
       renderItemSeparator={() => (
-        <ViewSpacing height={theme.spacing.margin.large} />
+        <ViewSpacing height={theme.spacing.margin.base} />
       )}
     />
   );
@@ -54,7 +54,7 @@ const themeStyles = (theme: ITheme) => {
     },
     listHeaderComponentStyle: {
       marginTop: spacing.margin.small,
-      marginBottom: spacing.margin.large,
+      marginBottom: spacing.margin.base,
     },
   });
 };
