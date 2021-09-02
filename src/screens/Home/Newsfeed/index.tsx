@@ -85,7 +85,6 @@ const Newsfeed = () => {
       />
       <ListView
         isFullView
-        style={styles.listStyle}
         containerStyle={styles.listContainer}
         data={homePosts}
         refreshing={refreshing}
@@ -111,23 +110,17 @@ const createStyle = (theme: ITheme) => {
     container: {
       flex: 1,
       backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.background,
+        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listContainer: {
       flex: 1,
-      backgroundColor: colors.bgSecondary,
       ...Platform.select({
         web: {
           alignSelf: 'center',
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
-          backgroundColor: colors.surface,
         },
       }),
-    },
-    listStyle: {
-      backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listFooter: {
       height: 150,
