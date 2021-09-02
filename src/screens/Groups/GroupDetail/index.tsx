@@ -24,7 +24,6 @@ import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 const GroupDetail = (props: any) => {
   const params = props.route.params;
   const groupId = params?.groupId;
-  if (!groupId) return <NoGroupFound />;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
