@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {fontFamilies} from '~/theme/fonts';
 import {letterSpacing, lineHeights, sizes} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -15,7 +15,7 @@ export const createTextStyle = (theme: ITheme) => {
    * REMOVE THIS PADDING TOP WHEN REPLACE WITH OTHER FONT
    */
 
-  return StyleSheet.create({
+  const style = {
     h1: {
       fontFamily: fontFamilies.PoppinsSemiBold,
       fontSize: sizes.h1,
@@ -139,5 +139,11 @@ export const createTextStyle = (theme: ITheme) => {
       letterSpacing: letterSpacing.code,
       color: colors.textPrimary,
     },
-  });
+  };
+
+  if (Platform.OS === 'web') {
+    return style;
+  } else {
+    return StyleSheet.create(style);
+  }
 };
