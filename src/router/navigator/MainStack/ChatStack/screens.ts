@@ -6,7 +6,7 @@ import {
   GroupMembers,
   AddMembersToGroup,
 } from '~/screens/Chat';
-import PublicProfile from '~/screens/Menu/UserProfile/PublicView';
+import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 
 export default {
   'conversation-list': ConversationsList,
@@ -15,5 +15,5 @@ export default {
   'create-conversation': CreateConversation,
   'chat-group-members': GroupMembers,
   'add-members': AddMembersToGroup,
-  'user-profile': PublicProfile,
+  'user-profile': UserProfile,
 };

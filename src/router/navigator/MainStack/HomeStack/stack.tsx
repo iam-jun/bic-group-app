@@ -5,7 +5,7 @@ const homeStack = {
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',
   myProfile: 'my-profile',
-  publicProfile: 'public-profile',
+  publicProfile: 'user-profile',
 };
 
 export default homeStack;

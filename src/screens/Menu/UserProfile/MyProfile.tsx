@@ -3,35 +3,26 @@ import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import useMenu from '~/hooks/menu';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../redux/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ProfileInfo from '../fragments/ProfileInfo';
 
-const PublicView = () => {
+const MyProfile = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const menuData = useMenu();
-  const {selectedProfile} = menuData || {};
-  const {fullname, background_img_url, avatar, description, isPublic} =
-    selectedProfile || {};
 
-  const data = {
-    fullname,
-    background_img_url,
-    avatar,
-    description,
-    isPublic,
-  };
+  const profile = useKeySelector(menuKeySelector.myProfile);
 
   return (
-    <ScreenWrapper testID="PublicProfile" style={styles.container}>
-      <ProfileInfo {...data} />
+    <ScreenWrapper testID="MyProfilePage" style={styles.container}>
+      <ProfileInfo {...profile} />
     </ScreenWrapper>
   );
 };
 
-export default PublicView;
+export default MyProfile;
 
 const themeStyles = (theme: ITheme) => {
   const {colors} = theme;

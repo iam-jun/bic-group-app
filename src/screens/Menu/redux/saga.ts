@@ -32,15 +32,8 @@ function* getMyProfile({payload}: {type: string; payload: number}) {
 }
 
 const requestUserProfile = async (userId: number) => {
-  try {
-    const response = await menuDataHelper.getMyProfile(userId);
-
-    if (response.code === 200 && response.data) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log('requestUserProfile error:', err);
-  }
+  const response = await menuDataHelper.getMyProfile(userId);
+  return response.data;
 };
 
 function* selectMyProfile({payload}: {payload: IUserProfile; type: string}) {

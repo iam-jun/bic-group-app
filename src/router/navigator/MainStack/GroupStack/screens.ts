@@ -7,8 +7,8 @@ import PostDetail from '~/screens/Post/PostDetail';
 import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/GroupAdministration';
 import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/GeneralInformation';
 import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
-import PrivateView from '~/screens/Menu/UserProfile/PrivateView';
-import PublicView from '~/screens/Menu/UserProfile/PublicView';
+import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
+import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 
 export default {
@@ -21,7 +21,7 @@ export default {
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
-  'my-profile': PrivateView,
-  'public-profile': PublicView,
+  'my-profile': MyProfile,
+  'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
 };

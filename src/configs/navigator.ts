@@ -100,7 +100,7 @@ export const linkingConfigFull = {
               'my-profile': {
                 path: '/me',
               },
-              'public-profile': {
+              'user-profile': {
                 path: '/profile/:id?',
               },
               'post-detail': {
