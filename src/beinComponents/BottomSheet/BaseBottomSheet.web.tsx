@@ -41,7 +41,7 @@ const BaseBottomSheet: React.FC<Props> = ({
   }>({x: -1, y: -1});
   const [boxSize, setBoxSize] = useState<{width: number; height: number}>({
     width: 250, //For first time, onLayout have not triggered yet
-    height: 300,
+    height: 200,
   });
 
   const open = (x: number, y: number) => {
