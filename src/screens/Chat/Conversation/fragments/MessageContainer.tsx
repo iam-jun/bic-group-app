@@ -1,6 +1,5 @@
 import moment from 'moment';
 import React, {useState} from 'react';
-import {Platform} from 'react-native';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -62,34 +61,44 @@ const MessageItem = (props: MessageItemProps) => {
     onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
   };
 
-  return (
-    <TouchableWithoutFeedback onLongPress={onMenuPress}>
-      <View style={styles.container}>
-        {quoted_message && <QuotedMessage {...quoted_message} />}
-        {!hideHeader && (
-          <MessageHeader
-            user={user}
-            _updatedAt={_updatedAt}
-            menuVisible={Platform.OS === 'web' && !removed}
-            onMenuPress={onMenuPress}
-          />
-        )}
+  const onHover = () => {
+    !menuVisible && setMenuVisible(true);
+  };
 
-        <View style={styles.message}>
-          {removed ? (
-            <Text useI18n style={styles.removedText}>
-              {text}
-            </Text>
-          ) : (
-            <>
-              <AttachmentView {...currentMessage} />
-              <MarkdownView limitMarkdownTypes>{text}</MarkdownView>
-            </>
+  const onBlur = () => {
+    menuVisible && setMenuVisible(false);
+  };
+
+  return (
+    <Div onHover={onHover} onBlur={onBlur}>
+      <TouchableWithoutFeedback onLongPress={onMenuPress}>
+        <View style={styles.container}>
+          {quoted_message && <QuotedMessage {...quoted_message} />}
+          {!hideHeader && (
+            <MessageHeader
+              user={user}
+              _updatedAt={_updatedAt}
+              menuVisible={!removed && menuVisible}
+              onMenuPress={onMenuPress}
+            />
           )}
+
+          <View style={styles.message}>
+            {removed ? (
+              <Text useI18n style={styles.removedText}>
+                {text}
+              </Text>
+            ) : (
+              <>
+                <AttachmentView {...currentMessage} />
+                <MarkdownView limitMarkdownTypes>{text}</MarkdownView>
+              </>
+            )}
+          </View>
+          <MessageStatus status={status} onRetryPress={_onRetryPress} />
         </View>
-        <MessageStatus status={status} onRetryPress={_onRetryPress} />
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </Div>
   );
 };
 

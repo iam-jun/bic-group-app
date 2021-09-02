@@ -36,14 +36,12 @@ const MessageHeader: React.FC<Props> = ({
         <Text.BodyS style={styles.textTime}>
           {formatDate(_updatedAt)}
         </Text.BodyS>
-        {menuVisible && (
-          <Icon
-            icon="EllipsisH"
-            tintColor={theme.colors.textSecondary}
-            style={styles.iconMenu}
-            onPress={onMenuPress}
-          />
-        )}
+        <Icon
+          icon="EllipsisH"
+          tintColor={theme.colors.textSecondary}
+          style={[styles.iconMenu, {opacity: menuVisible ? 1 : 0}]}
+          onPress={onMenuPress}
+        />
       </View>
     </View>
   );
@@ -71,6 +69,7 @@ const createStyles = (theme: ITheme) => {
     },
     iconMenu: {
       marginStart: spacing.margin.small,
+      marginTop: spacing.margin.tiny,
     },
   });
 };

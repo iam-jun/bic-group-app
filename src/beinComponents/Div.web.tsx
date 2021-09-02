@@ -4,17 +4,21 @@ import {createElement} from 'react-native-web';
 export interface Props {
   className?: string;
   onHover?: (event: any) => void;
+  onBlur?: (event: any) => void;
   [x: string]: any;
 }
 
-const Div: React.FC<Props> = ({className, onHover, ...props}: Props) => {
+const Div: React.FC<Props> = ({
+  className,
+  onHover,
+  onBlur,
+  ...props
+}: Props) => {
   const createDiv = () => {
     const attrs = {
       className,
-      onmouseenter: (e: any) => {
-        console.log('onMouseEnter', e);
-        onHover && onHover(e);
-      },
+      onMouseOver: (e: any) => onHover && onHover(e),
+      onMouseLeave: (e: any) => onBlur && onBlur(e),
       ...props,
     };
 
