@@ -96,7 +96,7 @@ const Newsfeed = () => {
         )}
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing?.margin.large} />
+          <ViewSpacing height={theme.spacing.margin.large} />
         )}
       />
     </View>
