@@ -55,6 +55,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   useEffect(() => {
     dispatch(postActions.setPostDetailReplyingComment());
+    return () => {
+      dispatch(postActions.setCreateComment({content: '', loading: false}));
+    };
   }, []);
 
   const onPressSend = () => {
