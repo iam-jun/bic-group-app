@@ -260,3 +260,8 @@ export interface ICreatePostParams {
   replaceWithDetail?: boolean;
   initAudience?: any;
 }
+
+export interface IPayloadReplying {
+  comment: IReaction;
+  parentComment?: IReaction;
+}

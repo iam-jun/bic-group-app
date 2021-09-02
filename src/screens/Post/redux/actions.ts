@@ -16,6 +16,7 @@ import {
   IPayloadReactToComment,
   IPayloadPutEditComment,
   IPayloadCreateComment,
+  IPayloadReplying,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -70,7 +71,7 @@ const postActions = {
     type: postTypes.SET_POST_DETAIL,
     payload,
   }),
-  setPostDetailReplyingComment: (payload?: IReaction) => ({
+  setPostDetailReplyingComment: (payload?: IPayloadReplying) => ({
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
   }),

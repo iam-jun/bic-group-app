@@ -7,6 +7,7 @@ const postKeySelector = {
   postDetail: {
     id: 'post.postDetail.id',
   },
+  replyingComment: 'post.replyingComment',
   postAudienceSheet: 'post.postAudienceSheet',
   allPosts: 'post.allPosts',
   allComments: 'post.allComments',

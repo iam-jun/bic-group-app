@@ -9,10 +9,9 @@ import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {IPayloadCreateComment} from '~/interfaces/IPost';
+import {IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import {usePostDetailReplyingComment} from '~/hooks/post';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -43,7 +42,13 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const replying = usePostDetailReplyingComment();
+  const replying: IPayloadReplying = useKeySelector(
+    postKeySelector.replyingComment,
+  );
+  const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
+  const replyTargetName =
+    replying?.comment?.user?.data?.fullname ||
+    replying?.parentComment?.user?.data?.fullname;
 
   const content = useKeySelector(postKeySelector.createComment.content) || '';
   const loading = useKeySelector(postKeySelector.createComment.loading);
@@ -56,7 +61,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     if (postId) {
       const payload: IPayloadCreateComment = {
         postId,
-        parentCommentId: replying?.id,
+        parentCommentId: replyTargetId,
         commentData: {content: content?.trim()},
         userId: userId,
         onSuccess: onCommentSuccess,
@@ -78,9 +83,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         <View style={styles.headerContent}>
           <Text color={colors.textSecondary}>
             {t('post:label_replying_to')}
-            <Text.BodyM>
-              {replying?.user?.data?.fullname || t('post:someone')}
-            </Text.BodyM>
+            <Text.BodyM>{replyTargetName || t('post:someone')}</Text.BodyM>
             <Text.BodyS color={colors.textSecondary}>
               {'  • '}
               <Text.BodyM
