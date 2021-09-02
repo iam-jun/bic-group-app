@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
@@ -12,15 +12,22 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import NoGroupFoundImg from '~/../assets/images/no_group_found.svg';
+import {deviceDimensions} from '~/theme/dimension';
 
 const NoGroupFound = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const navigation = useNavigation();
 
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
   return (
     <ScreenWrapper style={styles.root} isFullView>
-      <Header title={i18next.t('error:no_group_found_title')} />
+      <Header
+        title={i18next.t('error:no_group_found_title')}
+        hideBack={isLaptop}
+      />
       <View style={styles.mainContainer}>
         <SVGIcon
           // @ts-ignore
@@ -33,9 +40,12 @@ const NoGroupFound = () => {
           <Text.H6>{i18next.t('error:no_group_found_desc')}</Text.H6>
           <Text.Body>{i18next.t('error:no_group_found_second_desc')}</Text.Body>
         </View>
-        <Button.Primary onPress={() => navigation.navigate(groupStack.groups)}>
-          {i18next.t('error:button_back_to_safety')}
-        </Button.Primary>
+        {!isLaptop && (
+          <Button.Primary
+            onPress={() => navigation.navigate(groupStack.groups)}>
+            {i18next.t('error:button_back_to_safety')}
+          </Button.Primary>
+        )}
       </View>
     </ScreenWrapper>
   );
