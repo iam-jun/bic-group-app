@@ -78,7 +78,6 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      marginBottom: spacing?.margin.base,
       paddingTop: spacing?.padding.base,
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,

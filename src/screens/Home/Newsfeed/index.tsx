@@ -135,7 +135,8 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     headerCreatePost: {
-      marginTop: spacing.margin.base,
+      marginTop: spacing.margin.small,
+      marginBottom: spacing?.margin.large,
     },
     importantCount: {
       paddingHorizontal: spacing.padding.large,
