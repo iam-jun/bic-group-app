@@ -21,6 +21,7 @@ export interface CommentViewMenuBottomSheetProps {
   isActor: boolean;
   onPressMoreReaction: () => void;
   onAddReaction: (reactionId: ReactionType) => void;
+  onPressReply: () => void;
 }
 
 const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
@@ -30,6 +31,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   isActor,
   onPressMoreReaction,
   onAddReaction,
+  onPressReply,
 }: CommentViewMenuBottomSheetProps) => {
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
@@ -52,6 +54,11 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
       commentId: commentId,
       groupIds: groupIds,
     });
+  };
+
+  const _onPressReply = () => {
+    modalizeRef?.current?.close?.();
+    onPressReply?.();
   };
 
   const renderReactItem = (item: any, index: number) => {
@@ -84,6 +91,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
           leftIcon={'CornerDownRight'}
           leftIconProps={{icon: 'CornerDownRight', size: 24}}
           title={'Reply this comment'}
+          onPress={_onPressReply}
         />
         <PrimaryItem
           style={styles.item}
