@@ -50,7 +50,6 @@ export default (): React.ReactElement => {
   LogBox.ignoreAllLogs();
 
   const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
-
   /* Localization */
   const {i18n} = useTranslation();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import BaseBottomSheet from '~/beinComponents/BottomSheet/BaseBottomSheet';
+import BottomSheet from '~/beinComponents/BottomSheet';
 import Icon from '~/beinComponents/Icon';
 import {
   messageOptionData,
@@ -61,11 +61,13 @@ const MessageOptionsModal: React.FC<Props> = ({
   };
 
   return (
-    <BaseBottomSheet
+    <BottomSheet
       {...props}
       modalizeRef={modalRef}
+      side="right"
       onClosed={onClosed}
       flatListProps={{
+        style: styles.list,
         data: isMyMessage ? myMessageOptions : messageOptions,
         keyExtractor: (item: MessageOptionType) => `message-menu-${item}`,
         renderItem: renderItem,
@@ -79,8 +81,12 @@ const themeStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
+    list: {
+      minWidth: 250,
+      padding: spacing.padding.large,
+    },
     reactions: {
-      paddingVertical: spacing.padding.large,
+      paddingBottom: spacing.padding.large,
       flexDirection: 'row',
       justifyContent: 'space-around',
       borderBottomWidth: 1,
