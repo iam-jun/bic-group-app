@@ -29,8 +29,10 @@ const NoGroupFound = () => {
           height={200}
           tintColor="none"
         />
-        <Text>{i18next.t('error:no_group_found_desc')}</Text>
-        <Text>{i18next.t('error:no_group_found_second_desc')}</Text>
+        <View style={styles.description}>
+          <Text.H6>{i18next.t('error:no_group_found_desc')}</Text.H6>
+          <Text.Body>{i18next.t('error:no_group_found_second_desc')}</Text.Body>
+        </View>
         <Button.Primary onPress={() => navigation.navigate(groupStack.groups)}>
           {i18next.t('error:button_back_to_safety')}
         </Button.Primary>
@@ -40,7 +42,7 @@ const NoGroupFound = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     root: {
       backgroundColor:
@@ -50,6 +52,10 @@ const themeStyles = (theme: ITheme) => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    description: {
+      marginBottom: spacing.margin.large,
+      alignItems: 'center',
     },
   });
 };
