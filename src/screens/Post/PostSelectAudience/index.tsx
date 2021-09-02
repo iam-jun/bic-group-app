@@ -277,7 +277,7 @@ const PostSelectAudience = () => {
       <Header
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}
-        buttonText={'post:save'}
+        buttonText={'common:btn_done'}
         buttonProps={{useI18n: true}}
         onPressButton={onPressSave}
       />

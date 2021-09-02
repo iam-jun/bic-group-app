@@ -24,7 +24,7 @@ const ReactionBottomSheet = () => {
 
   const _onPressReaction = (reaction: IReactionProps) => {
     callback?.(reaction.id);
-    dispatch(postActions.setShowReactionBottomSheet());
+    reactionSheetRef?.current?.close?.();
   };
 
   const _onClose = () => {

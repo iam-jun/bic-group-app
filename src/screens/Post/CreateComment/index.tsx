@@ -1,7 +1,6 @@
 import React, {FC, useState, useEffect} from 'react';
 import {Keyboard, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {debounce} from 'lodash';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
@@ -31,13 +30,12 @@ export interface CreateCommentProps {
 
 const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const {commentId, groupIds} = route?.params || {};
-  const [content, setContent] = useState('');
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const comment: IReaction =
@@ -45,15 +43,14 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const oldContent = comment?.data?.content;
 
   const loading = useKeySelector(postKeySelector.createComment.loading);
-  const mentionKey = useKeySelector(postKeySelector.mention.searchKey);
-  const mentionResult = useKeySelector(postKeySelector.mention.searchResult);
+  const content = useKeySelector(postKeySelector.createComment.content);
 
   const isEditHasChange = content !== oldContent;
   const disableButton = content === oldContent || loading;
 
   useEffect(() => {
     if (oldContent) {
-      setContent(oldContent);
+      dispatch(postActions.setCreateComment({content: oldContent}));
     }
   }, [oldContent]);
 
@@ -73,7 +70,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   };
 
   const onChangeText = (text: string) => {
-    setContent(text);
+    dispatch(postActions.setCreateComment({content: text}));
   };
 
   const onPressBack = () => {

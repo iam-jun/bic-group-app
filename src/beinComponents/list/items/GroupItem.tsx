@@ -14,6 +14,7 @@ import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, {IAction} from '~/constants/commonActions';
+import {generateUniqueId} from '~/utils/generator';
 
 export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
@@ -73,7 +74,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   const renderLine = (uiLevel: number) => {
-    return <View style={styles.line} />;
+    return <View key={generateUniqueId()} style={styles.line} />;
   };
 
   const renderToggle = () => {

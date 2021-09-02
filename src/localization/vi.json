@@ -15,6 +15,7 @@
     "btn_discard": "Bỏ",
     "btn_edit": "Sửa",
     "btn_save": "Lưu",
+    "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
     "text_important": "Quan trọng",
@@ -250,7 +251,12 @@
     "people_search": "People",
     "show_all": "Show all",
     "text_load_more_comments": "Xem bình luận trước đó",
-    "text_load_more_x_replies": "Xem %VALUE% trả lời"
+    "text_load_more_x_replies": "Xem %VALUE% trả lời",
+    "comment_menu_reply": "Trả lời bình luận này",
+    "comment_menu_copy_text": "Sao chép nội dung",
+    "comment_menu_edit": "Sửa bình luận",
+    "comment_menu_history": "Lịch sử chỉnh sửa",
+    "comment_menu_delete": "Xoá bình luận"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

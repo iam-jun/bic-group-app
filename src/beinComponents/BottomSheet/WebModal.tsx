@@ -33,7 +33,7 @@ const _WebModal = (
   };
 
   const close = () => {
-    setShowModal(false);
+    _onClose();
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const _WebModal = (
   const renderModal = () => {
     return (
       <Portal>
-        <Modal isOpen={showModal} onRequestClose={onClose} style={modalStyles}>
+        <Modal isOpen={showModal} onRequestClose={_onClose} style={modalStyles}>
           {ContentComponent}
           <View style={styles.closeButtonContainer}>
             <Button.Icon

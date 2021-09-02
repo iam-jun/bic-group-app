@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -9,17 +9,22 @@ import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {IRequestPostComment} from '~/interfaces/IPost';
+import {IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {useUserIdAuth} from '~/hooks/auth';
-import {usePostDetailReplyingComment} from '~/hooks/post';
 import {useBaseHook} from '~/hooks';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface CommentInputViewProps {
   postId: string;
   groupIds: string;
   autoFocus?: boolean;
   textInputRef?: any;
+  onCommentSuccess?: (data: {
+    newCommentId: string;
+    parentCommentId?: string;
+  }) => void;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
@@ -27,10 +32,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   textInputRef,
+  onCommentSuccess,
 }: CommentInputViewProps) => {
-  const [content, setContent] = useState<string>();
-  const [loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -39,44 +42,39 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const replying = usePostDetailReplyingComment();
+  const replying: IPayloadReplying = useKeySelector(
+    postKeySelector.replyingComment,
+  );
+  const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
+  const replyTargetName =
+    replying?.comment?.user?.data?.fullname ||
+    replying?.parentComment?.user?.data?.fullname;
+
+  const content = useKeySelector(postKeySelector.createComment.content) || '';
+  const loading = useKeySelector(postKeySelector.createComment.loading);
 
   useEffect(() => {
     dispatch(postActions.setPostDetailReplyingComment());
+    return () => {
+      dispatch(postActions.setCreateComment({content: '', loading: false}));
+    };
   }, []);
 
   const onPressSend = () => {
     if (postId) {
-      const commentData = {content: content?.trim()};
-      const replyCmtId = replying?.id;
-      const requestData: IRequestPostComment = {
-        referenceId: replyCmtId || postId,
-        referenceType: replyCmtId ? 'comment' : 'post',
-        commentData,
-        userId,
+      const payload: IPayloadCreateComment = {
+        postId,
+        parentCommentId: replyTargetId,
+        commentData: {content: content?.trim()},
+        userId: userId,
+        onSuccess: onCommentSuccess,
       };
-      setLoading(true);
-      postDataHelper
-        .postNewComment(requestData)
-        .then(response => {
-          if (response && response.data) {
-            dispatch(postActions.getCommentsByPostId({postId, isMerge: false}));
-            setContent('');
-            dispatch(postActions.setPostDetailReplyingComment());
-            setLoading(false);
-          }
-        })
-        .catch(e => {
-          setLoading(false);
-          console.log('\x1b[33m', '🐣️ postNewComment error : ', e, '\x1b[0m');
-        });
-    } else {
-      console.log('\x1b[31m', '🐣️  | onPressSend : invalid id ', '\x1b[0m');
+      dispatch(postActions.postCreateNewComment(payload));
     }
   };
 
   const onChangeText = (value: string) => {
-    setContent(value);
+    dispatch(postActions.setCreateComment({content: value}));
   };
 
   const renderCommentInputHeader = () => {
@@ -88,9 +86,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         <View style={styles.headerContent}>
           <Text color={colors.textSecondary}>
             {t('post:label_replying_to')}
-            <Text.BodyM>
-              {replying?.user?.data?.fullname || t('post:someone')}
-            </Text.BodyM>
+            <Text.BodyM>{replyTargetName || t('post:someone')}</Text.BodyM>
             <Text.BodyS color={colors.textSecondary}>
               {'  • '}
               <Text.BodyM
