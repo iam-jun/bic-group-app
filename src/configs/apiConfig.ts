@@ -1,15 +1,17 @@
-import {ICreateDiretChatReq} from './../interfaces/IChatHttpRequest';
+import {} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
   IGetGroupReq,
   IGetGroupRolesReq,
+  ICreateDiretChatReq,
   IGetMentionUsersReq,
   IPaginationParams,
   IReadSubscription,
   ISendMessageReq,
   IUpdateGroupName,
   IRemoveMemberReq,
+  IAddUsersToGroupReq,
   IDeleteMessage,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
@@ -63,6 +65,18 @@ const Chat = {
       data,
     };
   },
+  addMembersToGroup: (
+    id: string,
+    data: IAddUsersToGroupReq,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}groups/${id}/users/add`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.bein,
+      data,
+    };
+  },
   users: (params: IPaginationParams & {params: any}) => {
     return {
       url: `${providers.chat.url}users.list`,
@@ -72,9 +86,20 @@ const Chat = {
       params,
     };
   },
-  messages: (params: IPaginationParams & {roomId: string}) => {
+  joinableUsers: (params: {
+    groupId: number | string;
+  }): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}groups/${params.groupId}/joinable-users`,
+    method: 'get',
+    provider: providers.bein,
+    useRetry: true,
+  }),
+  messages: (params: IPaginationParams & {roomId: string; type?: string}) => {
+    const endPoint = params?.type === 'direct' ? 'im' : 'groups';
+    delete params.type;
+
     return {
-      url: `${providers.chat.url}groups.history`,
+      url: `${providers.chat.url}${endPoint}.history`,
       method: 'get',
       useRetry: true,
       provider: providers.chat,
