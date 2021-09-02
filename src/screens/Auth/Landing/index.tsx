@@ -37,7 +37,7 @@ const Landing = () => {
         )}
         <View style={styles.contentContainer}>
           {/* @ts-ignore */}
-          <SVGIcon source={LandingImg} size={imgSize} />
+          <SVGIcon source={LandingImg} size={imgSize} tintColor="none" />
           <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
         </View>
         <Button.Primary

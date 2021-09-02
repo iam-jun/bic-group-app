@@ -415,7 +415,11 @@
       "token_expired": "Token expired"
     },
     "not_found_desc": "We couldn't find the page you are looking for? Sometimes, something oddly happens.",
-    "button_not_found": "Go Back to Safety"
+    "button_not_found": "Go Back to Safety",
+    "no_group_found_title": "No Group Found",
+    "no_group_found_desc": "Ooops, Group not found",
+    "no_group_found_second_desc": "We couldn't find that group page.",
+    "button_back_to_safety": "Back to Safety"
   },
   "badge": {
     "scroll_bottom": "Scroll to bottom"
