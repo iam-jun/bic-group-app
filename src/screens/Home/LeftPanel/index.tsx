@@ -1,14 +1,14 @@
 import React from 'react';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {useBaseHook} from '~/hooks';
-import {useDispatch} from 'react-redux';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const LeftPanel = () => {
   const dispatch = useDispatch();

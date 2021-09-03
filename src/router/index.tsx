@@ -13,12 +13,16 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
 import AlertModal from '~/beinComponents/modals/AlertModal';
+import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
+import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
+import {AppConfig} from '~/configs';
 import {
   linkingConfig,
   linkingConfigFull,
   navigationSetting,
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
+import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {signOut} from '~/screens/Auth/redux/actions';
@@ -29,9 +33,6 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
-import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
-import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
-import {useKeySelector} from '~/hooks/selector';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -133,18 +134,21 @@ const StackNavigator = (): React.ReactElement => {
         linking={user ? linkingConfigFull : linkingConfig}
         ref={rootNavigationRef}
         onReady={onReady}
-        theme={navigationTheme}>
+        theme={navigationTheme}
+        documentTitle={{
+          enabled: false,
+        }}>
         <Stack.Navigator
           initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
           screenOptions={{cardStyle: cardStyleConfig}}>
           <Stack.Screen
-            options={{headerShown: false}}
+            options={AppConfig.defaultScreenOptions}
             //@ts-ignore
             name={rootSwitch.authStack}
             component={screens.AuthStack}
           />
           <Stack.Screen
-            options={{headerShown: false}}
+            options={AppConfig.defaultScreenOptions}
             //@ts-ignore
             name={rootSwitch.mainStack}
             component={screens.MainStack}

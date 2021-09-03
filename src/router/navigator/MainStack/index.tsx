@@ -7,17 +7,18 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
+import {AppConfig} from '~/configs';
 
 import {RootStackParamList} from '~/interfaces/IRouter';
-import RightCol from '~/screens/RightCol';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
+import RightCol from '~/screens/RightCol';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import MainTabs from './MainTabs';
-import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 
 const Stack = createStackNavigator();
 
@@ -38,7 +39,10 @@ const MainStack = (): React.ReactElement => {
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>
-      <NavigationContainer independent ref={leftNavigationRef}>
+      <NavigationContainer
+        independent
+        ref={leftNavigationRef}
+        documentTitle={{enabled: false}}>
         <LeftTabs initialRouteName={route?.params?.initialRouteName} />
       </NavigationContainer>
     </View>
@@ -46,12 +50,15 @@ const MainStack = (): React.ReactElement => {
 
   const renderRightCol = () => (
     <View style={styles.rightCol}>
-      <NavigationContainer independent ref={rightNavigationRef}>
+      <NavigationContainer
+        independent
+        ref={rightNavigationRef}
+        documentTitle={{enabled: false}}>
         <Stack.Navigator>
           <Stack.Screen
             name="right-column"
             component={RightCol}
-            options={{headerShown: false}}
+            options={AppConfig.defaultScreenOptions}
           />
         </Stack.Navigator>
       </NavigationContainer>

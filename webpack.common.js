@@ -140,6 +140,7 @@ module.exports = env => {
     plugins: [
       new HtmlWebpackPlugin({
         template: path.join(__dirname, 'src/public/index.html'),
+        favicon: './favicon.png',
       }),
       new webpack.DefinePlugin({
         'process.env': JSON.stringify(process.env),

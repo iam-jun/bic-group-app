@@ -14,12 +14,12 @@ import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
+import chatActions from '~/screens/Chat/redux/actions';
+import notificationsActions from '~/screens/Notification/redux/actions';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import notificationsActions from '~/screens/Notification/redux/actions';
-import chatActions from '~/screens/Chat/redux/actions';
 
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';

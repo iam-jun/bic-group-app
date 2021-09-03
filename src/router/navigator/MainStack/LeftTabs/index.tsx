@@ -1,19 +1,18 @@
-import React, {useEffect, useContext} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useContext, useEffect} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {View, StyleSheet, Platform} from 'react-native';
+import {useDispatch} from 'react-redux';
 
-import Icon from '~/beinComponents/Icon';
-import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {ITheme} from '~/theme/interfaces';
-import {screens} from './screens';
-import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
-import useTabBadge from '~/hooks/tabBadge';
-
-import {AppContext} from '~/contexts/AppContext';
-import notificationsActions from '../../../../screens/Notification/redux/actions';
-import {useUserIdAuth} from '~/hooks/auth';
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Icon from '~/beinComponents/Icon';
+import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
+import {AppContext} from '~/contexts/AppContext';
+import {useUserIdAuth} from '~/hooks/auth';
+import useTabBadge from '~/hooks/tabBadge';
+import {ITheme} from '~/theme/interfaces';
+import notificationsActions from '../../../../screens/Notification/redux/actions';
+import {createSideTabNavigator} from '../../../components/SideTabNavigator';
+import {screens} from './screens';
 
 const Tab = createSideTabNavigator();
 
