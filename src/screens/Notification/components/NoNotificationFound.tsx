@@ -18,9 +18,9 @@ const NoNotificationFound = () => {
         height={200}
         tintColor="none"
       />
-      <Text.H6>{i18next.t('error:no_group_found_desc')}</Text.H6>
+      <Text.H6>{i18next.t('notification:no_notification_found')}</Text.H6>
       <Text.Subtitle>
-        {i18next.t('error:no_group_found_second_desc')}
+        {i18next.t('notification:no_notification_found_desc')}
       </Text.Subtitle>
     </View>
   );
