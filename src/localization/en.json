@@ -404,7 +404,8 @@
       "me": "You deleted this message.",
       "other": "This message has been deleted",
       "list": "deleted a message"
-    }
+    },
+    "label_no_description": "No Description"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

@@ -32,7 +32,7 @@ export interface HeaderProps {
   buttonProps?: ButtonPrimaryProps;
   onPressButton?: () => void;
   menuIcon?: IconType;
-  onPressMenu?: () => void;
+  onPressMenu?: (e: any) => void;
   hideBack?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;

@@ -19,7 +19,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
-import {generateRoomName} from './../../../utils/generator';
+import {generateRoomName} from '~/utils/generator';
 import {
   mapConversation,
   mapData,
