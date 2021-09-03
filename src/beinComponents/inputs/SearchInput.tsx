@@ -13,7 +13,6 @@ import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
 import {TextInputProps} from './TextInput';
-import Text from '~/beinComponents/Text';
 
 export interface SearchInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -44,12 +43,15 @@ const SearchInput: React.FC<SearchInputProps> = ({
     onChangeText?.(text);
   };
 
-  const Wrapper = Platform.OS === 'web' ? Text : View;
-
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
-      <Wrapper style={styles.itemContainer}>
-        <Icon icon="search" size={16} tintColor={theme.colors.textSecondary} />
+      <View style={styles.itemContainer}>
+        <Icon
+          style={styles.searchIcon}
+          icon="search"
+          size={16}
+          tintColor={theme.colors.textSecondary}
+        />
         <TextInput
           style={styles.textInput}
           value={text}
@@ -67,7 +69,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             onPress={() => _onChangeText('')}
           />
         )}
-      </Wrapper>
+      </View>
     </View>
   );
 };
@@ -81,18 +83,26 @@ const createStyles = (theme: ITheme) => {
       borderRadius: 20,
       backgroundColor: colors.placeholder,
       justifyContent: 'center',
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: 16,
     },
     itemContainer: {
       flexDirection: 'row',
       alignItems: 'center',
     },
+    searchIcon: {
+      ...Platform.select({
+        web: {
+          marginTop: 3,
+        },
+      }),
+      marginRight: spacing.margin.small,
+    },
     textInput: {
+      flex: 1,
+      height: '100%',
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
-      flex: 1,
-      marginHorizontal: spacing.margin.small,
     },
   });
 };
