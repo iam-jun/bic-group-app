@@ -191,6 +191,7 @@ const icons = {
   RightArrow: iconRightArrow,
   CommentAltCheck: 'CommentAltCheck',
   iconUserPlus: 'UserPlus',
+  RemoveUser: 'UserTimes',
   ArrowDown: 'ArrowDown',
 };
 

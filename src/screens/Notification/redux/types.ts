@@ -5,6 +5,7 @@ const notificationsTypes = {
   CONCAT_NOTICATIONS: 'notifications/CONCAT_NOTICATIONS',
   SET_NO_MORE_NOTIFICATION: 'notifications/SET_NO_MORE_NOTIFICATION',
   SET_IS_LOADING_MORE: 'notifications/SET_IS_LOADING_MORE',
+  SHOW_MARKED_AS_READ_TOAST: 'notifications/SHOW_MARKED_AS_READ_TOAST',
   //for saga
   GET_NOTIFICATIONS: 'notifications/GET_NOTIFICATIONS',
   MARK_AS_READ_ALL: 'notifications/MARK_AS_READ_ALL',

@@ -6,6 +6,7 @@ const initNotificationsState = {
   unseenNumber: 0,
   noMoreNotification: false,
   isLoadingMore: false,
+  showMarkedAsReadToast: false,
 };
 
 function notificationsReducer(
@@ -51,6 +52,12 @@ function notificationsReducer(
       return {
         ...state,
         isLoadingMore: payload,
+      };
+    }
+    case notificationsTypes.SHOW_MARKED_AS_READ_TOAST: {
+      return {
+        ...state,
+        showMarkedAsReadToast: payload,
       };
     }
 

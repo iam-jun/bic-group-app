@@ -73,5 +73,5 @@ export interface IGetMentionUsersReq {
 }
 
 export interface IAddUsersToGroupReq {
-  user_ids: string[];
+  user_ids: number[];
 }

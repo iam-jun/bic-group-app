@@ -24,7 +24,7 @@ interface Props {
 const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = CreateStyle();
+  const styles = CreateStyle(theme);
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
   const tabBadge = useTabBadge();
@@ -67,7 +67,7 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             name={name}
             component={component}
             options={{
-              tabBarIcon: ({focused, color}) => {
+              tabBarIcon: ({focused}: {focused: boolean}) => {
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 return (
                   <View style={styles.iconContainer}>
@@ -90,12 +90,16 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   );
 };
 
-const CreateStyle = () => {
+const CreateStyle = (theme: ITheme) => {
+  const {colors} = theme;
+
   return StyleSheet.create({
     navigatorContainer: {
       ...Platform.select({
         web: {
           width: 80,
+          borderRightColor: colors.borderDivider,
+          borderRightWidth: 1,
         },
         default: {
           width: 48,
