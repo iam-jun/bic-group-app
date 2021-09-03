@@ -32,8 +32,6 @@ const Conversation = (): React.ReactElement => {
   const styles = createStyles(theme);
   const {colors, spacing} = theme;
   const {conversation} = useChat();
-  const [descriptionShowAll, setDescriptionShowAll] = useState(false);
-  const [shortDescription, setShortDescription] = useState('');
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
@@ -45,10 +43,6 @@ const Conversation = (): React.ReactElement => {
   useEffect(() => {
     dispatch(actions.getConversationDetail(conversation._id));
     dispatch(actions.clearSelectedUsers());
-
-    if (conversation.description?.length > 100) {
-      setShortDescription(`${conversation.description.substr(0, 100)}...`);
-    }
   }, []);
 
   const goGroupMembers = () => {
