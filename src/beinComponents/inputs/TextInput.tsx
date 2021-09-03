@@ -129,7 +129,6 @@ const TextInput: React.FC<TextInputProps> = ({
         error={error}
         disabled={disabled}
         placeholderTextColor={colors.textSecondary}
-        {...props}
         value={text}
         style={styles.input}
         onChangeText={_onChangeText}
@@ -143,6 +142,7 @@ const TextInput: React.FC<TextInputProps> = ({
             />
           )
         }
+        {...props}
       />
       {!!helperContent && (
         <Text.Subtitle {..._textHelperProps}>
