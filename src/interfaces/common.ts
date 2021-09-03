@@ -1,7 +1,6 @@
 import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
 import {StreamClient} from 'getstream';
-import {FlashMessageProps} from '~/beinComponents/FlashMessage';
 import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
 
 export interface IObject<T> {
@@ -23,12 +22,6 @@ export interface ISetting {
 export interface IGetStreamDispatch {
   streamClient: StreamClient;
   userId: string;
-}
-
-export interface IHeaderFlashMessage {
-  content: string;
-  props: FlashMessageProps;
-  duration?: number;
 }
 
 export interface IRightMenu {

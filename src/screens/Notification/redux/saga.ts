@@ -2,10 +2,9 @@ import {put, takeLatest, takeEvery, select} from 'redux-saga/effects';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import notificationsTypes from '~/screens/Notification/redux/types';
-import {IGetStreamDispatch, IHeaderFlashMessage} from '~/interfaces/common';
+import {IGetStreamDispatch} from '~/interfaces/common';
 import notificationSelector from './selector';
 import {get} from 'lodash';
-import {showHeaderFlashMessage} from '~/store/app/actions';
 import {timeOut} from '~/utils/common';
 import {
   ILoadNewNotifications,

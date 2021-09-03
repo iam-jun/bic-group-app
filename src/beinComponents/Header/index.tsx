@@ -12,9 +12,7 @@ import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {IconType} from '~/resources/icons';
 import {Platform} from 'react-native';
 import {ImageProps} from '../Image';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {useKeySelector} from '~/hooks/selector';
 
 export interface HeaderProps {
   children?: React.ReactNode;
@@ -36,7 +34,6 @@ export interface HeaderProps {
   hideBack?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
-  allowFlashMessage?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -59,7 +56,6 @@ const Header: React.FC<HeaderProps> = ({
   hideBack,
   onPressBack,
   disableInsetTop,
-  allowFlashMessage = true,
 }: HeaderProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -67,8 +63,6 @@ const Header: React.FC<HeaderProps> = ({
   const insets = useSafeAreaInsets();
 
   const {navigation} = useBaseHook();
-
-  const flashMessage = useKeySelector('app.headerFlashMessage') || {};
 
   const _onPressBack = () => {
     if (onPressBack) {
@@ -146,16 +140,7 @@ const Header: React.FC<HeaderProps> = ({
     );
   };
 
-  return (
-    <View>
-      {children ? children : renderContent()}
-      {allowFlashMessage && !!flashMessage?.content && (
-        <FlashMessage style={styles.flashMessage} {...flashMessage?.props}>
-          {flashMessage?.content}
-        </FlashMessage>
-      )}
-    </View>
-  );
+  return <View>{children ? children : renderContent()}</View>;
 };
 
 const createStyle = (theme: ITheme) => {
@@ -173,7 +158,6 @@ const createStyle = (theme: ITheme) => {
       shadowRadius: 1,
       elevation: 2,
     },
-    flashMessage: {},
     avatar: {
       marginHorizontal: spacing?.margin.base,
     },

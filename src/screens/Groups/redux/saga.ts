@@ -286,7 +286,21 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
     yield groupsDataHelper.addUsers(groupId, userIds);
 
     const userAddedCount = userIds.length;
-    yield put(groupsActions.setAddMembersMessage(userAddedCount));
+
+    const toastMessage: IToastMessage = {
+      content: i18next
+        .t(
+          `common:message_add_member_success:${
+            userAddedCount > 1 ? 'many' : '1'
+          }`,
+        )
+        .replace('{n}', userAddedCount.toString()),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log(
       '\x1b[33m',
