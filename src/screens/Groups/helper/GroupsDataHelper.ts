@@ -71,6 +71,15 @@ export const groupsApiConfig = {
       user_ids: userIds,
     },
   }),
+  removeUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/remove`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+    data: {
+      user_ids: userIds,
+    },
+  }),
 };
 
 const groupsDataHelper = {
@@ -210,6 +219,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.addUsers(groupId, userIds),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  removeUsers: async (groupId: number, userIds: number[]) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.removeUsers(groupId, userIds),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

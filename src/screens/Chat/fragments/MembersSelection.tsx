@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image as RNImage} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
@@ -11,7 +11,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import {Image, Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
-import {IUser} from '~/interfaces/IAuth';
+import {IChatUser} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
@@ -20,13 +20,13 @@ export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
   selectable?: boolean;
   title: string;
-  data: IUser[];
+  data: IChatUser[];
   roles?: {
     loading: boolean;
-    data: IUser[];
+    data: IChatUser[];
   };
   loading?: boolean;
-  onPressMenu?: (e: any, payload: IUser) => void;
+  onPressMenu?: (e: any, payload: IChatUser) => void;
   onLoadMore: () => void;
 }
 
@@ -47,11 +47,11 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   const dispatch = useDispatch();
   const {selectedUsers} = useChat();
 
-  const onSelectUser = (user: IUser) => {
+  const onSelectUser = (user: IChatUser) => {
     dispatch(actions.selectUser(user));
   };
 
-  const renderItemUser = ({item}: {item: IUser; index: number}) => {
+  const renderItemUser = ({item}: {item: IChatUser; index: number}) => {
     return (
       <PrimaryItem
         title={item.name}
@@ -61,6 +61,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           <Avatar.Large
             style={styles.marginRight}
             source={item.avatar}
+            ImageComponent={RNImage}
             placeholderSource={images.img_user_avatar_default}
           />
         }
@@ -69,13 +70,14 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     );
   };
 
-  const renderItemSelectedUser = ({item}: {item: IUser; index: number}) => {
+  const renderItemSelectedUser = ({item}: {item: IChatUser; index: number}) => {
     return (
       <View style={styles.itemSelectedUser}>
         <Avatar.Large
           source={item.avatar}
           actionIcon="iconClose"
           placeholderSource={images.img_user_avatar_default}
+          ImageComponent={RNImage}
           onPressAction={() => onSelectUser(item)}
         />
         <ViewSpacing height={spacing?.margin.small} />

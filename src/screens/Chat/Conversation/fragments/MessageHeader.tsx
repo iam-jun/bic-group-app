@@ -1,4 +1,5 @@
 import React from 'react';
+import {Image} from 'react-native';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
@@ -30,6 +31,7 @@ const MessageHeader: React.FC<Props> = ({
       <Avatar.Medium
         source={user?.avatar}
         placeholderSource={images.img_user_avatar_default}
+        ImageComponent={Image}
       />
       <View style={styles.viewHeaderInfo}>
         <Text.BodyM style={styles.textName}>{user?.name}</Text.BodyM>

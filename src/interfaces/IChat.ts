@@ -45,7 +45,7 @@ export interface IChatUser {
   };
   settings?: IUserSettings;
   selected?: boolean;
-  beinUserId: string;
+  beinUserId: number;
 }
 interface ILoginToken {
   hashedToken: string;
@@ -172,6 +172,7 @@ export type IConversation = {
   lastMessage: string;
   _updatedAt: string;
   type: IRoomType;
+  beinGroupId?: number;
 };
 
 export interface ISendMessageAction {

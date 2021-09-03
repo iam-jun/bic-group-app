@@ -1,4 +1,3 @@
-import {IUser} from '~/interfaces/IAuth';
 import {
   IChatUser,
   IConversation,
@@ -61,7 +60,7 @@ const getGroupRols = () => ({
   type: Actions.GET_GROUP_ROLES,
 });
 
-const setGroupRoles = (payload: IUser[]) => ({
+const setGroupRoles = (payload: IChatUser[]) => ({
   type: Actions.SET_GROUP_ROLES,
   payload,
 });
@@ -121,7 +120,7 @@ const deleteMessageSuccess = (payload: IMessage) => ({
   payload,
 });
 
-const selectUser = (payload: IUser) => ({
+const selectUser = (payload: IChatUser) => ({
   type: Actions.SELECT_USER,
   payload,
 });
@@ -155,12 +154,12 @@ const uploadFile = (payload: IUploadFileAction) => ({
   payload,
 });
 
-const addMembersToGroup = (payload: string[]) => ({
+const addMembersToGroup = (payload: number[]) => ({
   type: Actions.ADD_MEMBERS_TO_GROUP,
   payload,
 });
 
-const removeMember = (payload: IUser) => ({
+const removeMember = (payload: IChatUser) => ({
   type: Actions.REMOVE_MEMBER,
   payload,
 });
@@ -186,7 +185,7 @@ const getMentionUsers = (payload: any) => ({
   payload,
 });
 
-const setMentionUsers = (payload: IUser[]) => ({
+const setMentionUsers = (payload: IChatUser[]) => ({
   type: Actions.SET_MENTION_USERS,
   payload,
 });

@@ -324,6 +324,7 @@
       "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
     },
     "button_add_member": "Add member",
+    "button_remove_member": "Remove member",
     "title_modal_confirm_add_member": "Add members",
     "placeholder_input_group_chat_name": "Name your group chat (Optional)",
     "label_invite": "Invite",
@@ -394,6 +395,10 @@
       "label_remove_from_group_chat": "Remove from group chat"
     },
     "text_mention_all": "All",
+    "modal_confirm_remove_member":{
+      "title":"Remove Member",
+      "description":"This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+    },
     "message_option": {
       "delete": "Delete Message",
       "reply": "Reply",

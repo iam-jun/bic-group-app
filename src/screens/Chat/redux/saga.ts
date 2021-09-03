@@ -12,14 +12,13 @@ import {
   IMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
-import {} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import * as modalActions from '~/store/modal/actions';
-import {generateRoomName} from './../../../utils/generator';
+import {generateRoomName} from '~/utils/generator';
 import {
   mapConversation,
   mapData,
@@ -29,6 +28,7 @@ import {
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
+import * as modalActions from '~/store/modal/actions';
 
 /**
  * Chat
@@ -353,11 +353,13 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* addMembersToGroup({payload}: {type: string; payload: string[]}) {
+function* addMembersToGroup({payload}: {type: string; payload: number[]}) {
   try {
     const {chat} = yield select();
+    const {conversation} = chat;
+
     yield makeHttpRequest(
-      apiConfig.Chat.addMembersToGroup(chat.conversation?.beinGroupId, {
+      apiConfig.Chat.addMembersToGroup(conversation?.beinGroupId, {
         user_ids: payload,
       }),
     );
@@ -376,11 +378,18 @@ function* addMembersToGroup({payload}: {type: string; payload: string[]}) {
 function* removeMember({payload}: {type: string; payload: IChatUser}) {
   try {
     const {chat} = yield select();
-    const data = {
-      roomId: chat.conversation._id,
-      userId: payload._id.toString(),
-    };
-    yield makeHttpRequest(apiConfig.Chat.removeMember(data));
+    const {conversation} = chat;
+    if (conversation.type === roomTypes.GROUP) {
+      yield groupsDataHelper.removeUsers(conversation.beinGroupId, [
+        payload.beinUserId,
+      ]);
+    } else {
+      const data = {
+        roomId: conversation._id,
+        userId: payload._id.toString(),
+      };
+      yield makeHttpRequest(apiConfig.Chat.removeMember(data));
+    }
   } catch (err) {
     console.log('removeMember', err);
   }

@@ -73,6 +73,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     ...item.customFields,
     _id,
     name,
+    ...item.customFields,
     type,
     avatar,
     user: item.u && mapUser(item?.u),
@@ -138,6 +139,7 @@ export const mapJoinableUser = (item: any): IChatUser => ({
   beinUserId: item.id,
   avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
+  ...item?.customFields,
 });
 
 export const mapRole = (item: any) => ({
