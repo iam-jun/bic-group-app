@@ -1,17 +1,23 @@
 import React from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
 import i18next from 'i18next';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import NoNotificationFoundImg from '~/../assets/images/no_notification_found.svg';
 
 const NoNotificationFound = () => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles();
 
   return (
     <View style={styles.root}>
+      <SVGIcon
+        // @ts-ignore
+        source={NoNotificationFoundImg}
+        width={250}
+        height={200}
+        tintColor="none"
+      />
       <Text.H6>{i18next.t('error:no_group_found_desc')}</Text.H6>
       <Text.Subtitle>
         {i18next.t('error:no_group_found_second_desc')}
@@ -20,15 +26,12 @@ const NoNotificationFound = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors} = theme;
+const themeStyles = () => {
   return StyleSheet.create({
     root: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.placeholder,
     },
   });
 };
