@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TextInput, StyleProp, ViewStyle} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  StyleProp,
+  ViewStyle,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -40,9 +47,9 @@ const SearchInput: React.FC<SearchInputProps> = ({
     <View style={StyleSheet.flatten([styles.container, style])}>
       <View style={styles.itemContainer}>
         <Icon
+          style={styles.searchIcon}
           icon="search"
-          size={14}
-          style={styles.iconSearch}
+          size={16}
           tintColor={theme.colors.textSecondary}
         />
         <TextInput
@@ -76,22 +83,26 @@ const createStyles = (theme: ITheme) => {
       borderRadius: 20,
       backgroundColor: colors.placeholder,
       justifyContent: 'center',
-      // alignItems: 'center',
-      paddingHorizontal: spacing?.padding.base,
+      paddingHorizontal: 16,
     },
     itemContainer: {
       flexDirection: 'row',
+      alignItems: 'center',
+    },
+    searchIcon: {
+      ...Platform.select({
+        web: {
+          marginTop: 3,
+        },
+      }),
+      marginRight: spacing.margin.small,
     },
     textInput: {
+      flex: 1,
+      height: '100%',
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
-      flex: 1,
-      marginRight: spacing?.margin.small,
-    },
-    iconSearch: {
-      marginLeft: spacing?.margin.small,
-      marginRight: spacing?.margin.tiny,
     },
   });
 };
