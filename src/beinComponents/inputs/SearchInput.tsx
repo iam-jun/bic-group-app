@@ -1,11 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TextInput, StyleProp, ViewStyle} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  StyleProp,
+  ViewStyle,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
 import {TextInputProps} from './TextInput';
+import Text from '~/beinComponents/Text';
 
 export interface SearchInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -36,15 +44,12 @@ const SearchInput: React.FC<SearchInputProps> = ({
     onChangeText?.(text);
   };
 
+  const Wrapper = Platform.OS === 'web' ? Text : View;
+
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
-      <View style={styles.itemContainer}>
-        <Icon
-          icon="search"
-          size={14}
-          style={styles.iconSearch}
-          tintColor={theme.colors.textSecondary}
-        />
+      <Wrapper style={styles.itemContainer}>
+        <Icon icon="search" size={16} tintColor={theme.colors.textSecondary} />
         <TextInput
           style={styles.textInput}
           value={text}
@@ -62,7 +67,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             onPress={() => _onChangeText('')}
           />
         )}
-      </View>
+      </Wrapper>
     </View>
   );
 };
@@ -76,22 +81,18 @@ const createStyles = (theme: ITheme) => {
       borderRadius: 20,
       backgroundColor: colors.placeholder,
       justifyContent: 'center',
-      // alignItems: 'center',
-      paddingHorizontal: spacing?.padding.base,
+      paddingHorizontal: spacing.padding.base,
     },
     itemContainer: {
       flexDirection: 'row',
+      alignItems: 'center',
     },
     textInput: {
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
       flex: 1,
-      marginRight: spacing?.margin.small,
-    },
-    iconSearch: {
-      marginLeft: spacing?.margin.small,
-      marginRight: spacing?.margin.tiny,
+      marginHorizontal: spacing.margin.small,
     },
   });
 };
