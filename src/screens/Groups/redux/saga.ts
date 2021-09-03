@@ -302,7 +302,21 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
     yield groupsDataHelper.addUsers(groupId, userIds);
 
     const userAddedCount = userIds.length;
-    yield put(groupsActions.setAddMembersMessage(userAddedCount));
+
+    const toastMessage: IToastMessage = {
+      content: i18next
+        .t(
+          `common:message_add_member_success:${
+            userAddedCount > 1 ? 'many' : '1'
+          }`,
+        )
+        .replace('{n}', userAddedCount.toString()),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log(
       '\x1b[33m',
@@ -310,12 +324,14 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
-    yield put(
-      modalActions.showAlert({
-        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
-        content: err?.meta?.message || i18next.t('common:text_error_message'),
-        confirmLabel: i18next.t('common:text_ok'),
-      }),
-    );
+
+    const toastMessage: IToastMessage = {
+      content: err?.meta?.message || 'common:text_error_message',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   }
 }

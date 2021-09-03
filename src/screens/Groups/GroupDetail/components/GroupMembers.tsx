@@ -37,8 +37,6 @@ const GroupMembers = () => {
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
-  const addSuccess = useKeySelector(groupsKeySelector.addSuccess);
-  const userAddedCount = useKeySelector(groupsKeySelector.userAddedCount);
 
   const getMembers = () => {
     if (groupId) {
@@ -143,10 +141,6 @@ const GroupMembers = () => {
     rootNavigation.navigate(groupStack.inviteMembers);
   };
 
-  const onCloseAddSuccess = () => {
-    dispatch(groupsActions.clearAddMembersMessage());
-  };
-
   const searchUsers = (searchQuery: string) => {
     dispatch(groupsActions.clearGroupMembers());
     setSearchText(searchQuery);
@@ -161,26 +155,8 @@ const GroupMembers = () => {
     searchHandler(text);
   };
 
-  const renderAddMemberSuccessMessage = () => {
-    return (
-      addSuccess && (
-        <FlashMessage type="success" onClose={onCloseAddSuccess}>
-          {i18next
-            .t(
-              `common:message_add_member_success:${
-                userAddedCount > 1 ? 'many' : '1'
-              }`,
-            )
-            .replace('{n}', userAddedCount)}
-        </FlashMessage>
-      )
-    );
-  };
-
   return (
     <View style={styles.container}>
-      {renderAddMemberSuccessMessage()}
-
       <View style={styles.searchAndInvite}>
         <SearchInput
           value={searchText}

@@ -24,8 +24,6 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ReactionType} from '~/constants/reactions';
-import {showHeaderFlashMessage} from '~/store/app/actions';
-import {IHeaderFlashMessage} from '~/interfaces/common';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -207,7 +205,7 @@ function* putEditComment({
     newComment.data = Object.assign({}, newComment.data, data);
     yield put(postActions.addToAllComments(newComment));
     yield put(
-      showHeaderFlashMessage({
+      modalActions.showHideToastMessage({
         content: 'post:edit_comment_success',
         props: {textProps: {useI18n: true}, type: 'success'},
       }),
@@ -235,14 +233,16 @@ function* deletePost({payload}: {type: string; payload: string}) {
       post.deleted = true;
       yield put(postActions.addToAllPosts(post));
       yield timeOut(500);
-      const flashMessage: IHeaderFlashMessage = {
-        content: 'post:delete_post_complete',
-        props: {
-          textProps: {variant: 'h6', useI18n: true},
-          type: 'error',
-        },
-      };
-      yield put(showHeaderFlashMessage(flashMessage));
+
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:delete_post_complete',
+          props: {
+            textProps: {variant: 'h6', useI18n: true},
+            type: 'error',
+          },
+        }),
+      );
     }
     console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
   } catch (e) {
@@ -718,13 +718,15 @@ const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
 
 function* showError(e: any) {
   yield put(
-    modalActions.showAlert({
-      title: e?.meta?.errors?.[0]?.title || i18n.t('common:text_error'),
+    modalActions.showHideToastMessage({
       content:
         e?.meta?.message ||
         e?.meta?.errors?.[0]?.message ||
-        i18n.t('common:text_error_message'),
-      confirmLabel: i18n.t('common:text_ok'),
+        'common:text_error_message',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
     }),
   );
 }
