@@ -91,17 +91,9 @@ function* editGroupDetail({
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     yield put(groupsActions.setGroupDetail(result));
-  } catch (error) {
-    console.log('\x1b[33m', 'editGroupDetail : error', error, '\x1b[0m');
-
-    const toastMessage: IToastMessage = {
-      content: 'common:text_edit_fail',
-      props: {
-        textProps: {useI18n: true},
-        type: 'error',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    yield showError(err);
   }
 }
 
@@ -239,15 +231,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
-    yield put(
-      modalActions.showAlert({
-        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
-        content:
-          err?.meta?.errors?.[0]?.message ||
-          i18next.t('common:text_error_message'),
-        confirmLabel: i18next.t('common:text_ok'),
-      }),
-    );
+    yield showError(err);
   }
 }
 
@@ -310,12 +294,20 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
-    yield put(
-      modalActions.showAlert({
-        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
-        content: err?.meta?.message || i18next.t('common:text_error_message'),
-        confirmLabel: i18next.t('common:text_ok'),
-      }),
-    );
+    yield showError(err);
   }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }
