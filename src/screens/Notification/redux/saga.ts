@@ -11,6 +11,7 @@ import {
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
 } from '~/interfaces/INotification';
+import notificationActions from '~/constants/notificationActions';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -95,15 +96,10 @@ function* markAsReadAll({payload}: {payload: IGetStreamDispatch}) {
       }),
     );
 
-    const flashMessage: IHeaderFlashMessage = {
-      content: 'notification:mark_all_as_read_success',
-      props: {
-        textProps: {variant: 'h6', useI18n: true},
-        type: 'success',
-      },
-    };
     yield timeOut(500);
-    yield put(showHeaderFlashMessage(flashMessage));
+    yield put(notificationsActions.setShowMarkedAsReadToast(true));
+    yield timeOut(2500); // keep the toast messtion 2s then hide it
+    yield put(notificationsActions.setShowMarkedAsReadToast(false));
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m');
   }

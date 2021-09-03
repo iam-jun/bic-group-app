@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -24,6 +24,7 @@ import Text from '~/beinComponents/Text';
 import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
+import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 
 const Notfitication = () => {
   const menuSheetRef = useRef<any>();
@@ -42,7 +43,9 @@ const Notfitication = () => {
     notificationSelector.noMoreNotification,
   );
   const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
-
+  const showMarkedAsReadToast = useKeySelector(
+    notificationSelector.showMarkedAsReadToast,
+  );
   useEffect(() => {
     if (isFocused) {
       dispatch(
@@ -180,6 +183,19 @@ const Notfitication = () => {
     );
   };
 
+  const renderToastMessage = () => {
+    if (!showMarkedAsReadToast) return null;
+
+    return (
+      <SimpleToastMessage
+        style={
+          Platform.OS === 'web' ? styles.toastStyle : styles.smallToastStyle
+        }>
+        {i18n.t('notification:mark_all_as_read_success')}
+      </SimpleToastMessage>
+    );
+  };
+
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <View style={styles.screenContainer}>
@@ -201,6 +217,7 @@ const Notfitication = () => {
           />
         )}
         <NotificationBottomSheet modalizeRef={menuSheetRef} />
+        {renderToastMessage()}
       </View>
     </ScreenWrapper>
   );
@@ -220,6 +237,16 @@ const themeStyles = (theme: ITheme) => {
       height: 150,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    toastStyle: {
+      position: 'absolute',
+      alignSelf: 'center',
+      bottom: 40,
+    },
+    smallToastStyle: {
+      position: 'absolute',
+      alignSelf: 'center',
+      bottom: 20,
     },
   });
 };
