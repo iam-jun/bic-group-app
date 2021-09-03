@@ -1,3 +1,4 @@
+import {IMessage} from './../interfaces/IChat';
 /* eslint-disable no-array-constructor */
 import {createSelector} from 'reselect';
 import {IConversation} from '~/interfaces/IChat';
@@ -26,6 +27,15 @@ export const getConversations = createSelector(chatState, data => {
         //@ts-ignore
         return new Date(b._updatedAt) - new Date(a._updatedAt);
       }),
+  };
+});
+
+export const getMessages = createSelector(chatState, data => {
+  return {
+    ...data?.messages,
+    data: (data?.messages?.data || []).filter(
+      (item: IMessage) => !item.type?.includes('role'),
+    ),
   };
 });
 
