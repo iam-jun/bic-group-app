@@ -28,8 +28,6 @@ const initGroupsState = {
     canLoadMore: true,
   },
   selectedUsers: new Array<IUser>(),
-  addSuccess: false,
-  userAddedCount: 0,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -175,18 +173,6 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         users: initGroupsState.users,
-      };
-    case groupsTypes.SET_ADD_MEMBERS_MESSAGE:
-      return {
-        ...state,
-        userAddedCount: payload,
-        addSuccess: true,
-      };
-    case groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE:
-      return {
-        ...state,
-        userAddedCount: initGroupsState.userAddedCount,
-        addSuccess: initGroupsState.addSuccess,
       };
 
     default:
