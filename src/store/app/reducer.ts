@@ -2,10 +2,6 @@ import * as types from './constants';
 
 export const initState = {
   configs: {},
-  headerFlashMessage: {
-    content: '',
-    props: {},
-  },
 };
 
 /**
@@ -15,7 +11,7 @@ export const initState = {
  * @returns {*}
  */
 function reducer(state = initState, action: any = {}) {
-  const {type, payload} = action;
+  const {type} = action;
   const {configs} = state;
 
   switch (type) {
@@ -26,16 +22,7 @@ function reducer(state = initState, action: any = {}) {
           ...configs,
         },
       };
-    case types.SET_HEADER_FLASH_MESSAGE:
-      return {
-        ...state,
-        headerFlashMessage: payload,
-      };
-    case types.CLEAR_HEADER_FLASH_MESSAGE:
-      return {
-        ...state,
-        headerFlashMessage: initState.headerFlashMessage,
-      };
+
     default:
       return state;
   }
