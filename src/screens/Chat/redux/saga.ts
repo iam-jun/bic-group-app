@@ -12,11 +12,6 @@ import {
   IMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
-<<<<<<< HEAD
-import {IAddUsersToGroupReq} from '~/interfaces/IChatHttpRequest';
-=======
-import {} from '~/interfaces/IChatHttpRequest';
->>>>>>> develop
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -358,14 +353,14 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* addMembersToGroup({payload}: {type: string; payload:  number[]}) {
+function* addMembersToGroup({payload}: {type: string; payload: number[]}) {
   try {
     const {chat} = yield select();
     const {conversation} = chat;
 
     yield makeHttpRequest(
       apiConfig.Chat.addMembersToGroup(conversation?.beinGroupId, {
-        user_ids:payload
+        user_ids: payload,
       }),
     );
     handleAddMember();
