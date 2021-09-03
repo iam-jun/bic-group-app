@@ -18,6 +18,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {makeHttpRequest} from '~/services/httpApiRequest';
+import * as modalActions from '~/store/modal/actions';
 import {generateRoomName} from '~/utils/generator';
 import {
   mapConversation,
@@ -28,7 +29,6 @@ import {
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
-import * as modalActions from '~/store/modal/actions';
 
 /**
  * Chat

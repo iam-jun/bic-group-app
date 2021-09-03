@@ -24,6 +24,7 @@ import * as modalActions from '~/store/modal/actions';
 import {getAvatar} from '../helper';
 import actions from '../redux/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -31,8 +32,6 @@ const Conversation = (): React.ReactElement => {
   const styles = createStyles(theme);
   const {colors, spacing} = theme;
   const {conversation} = useChat();
-  const [descriptionShowAll, setDescriptionShowAll] = useState(false);
-  const [shortDescription, setShortDescription] = useState('');
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
@@ -44,10 +43,6 @@ const Conversation = (): React.ReactElement => {
   useEffect(() => {
     dispatch(actions.getConversationDetail(conversation._id));
     dispatch(actions.clearSelectedUsers());
-
-    if (conversation.description?.length > 100) {
-      setShortDescription(`${conversation.description.substr(0, 100)}...`);
-    }
   }, []);
 
   const goGroupMembers = () => {
@@ -167,33 +162,19 @@ const Conversation = (): React.ReactElement => {
 
   const renderDescription = () => {
     return (
-      !!conversation.description && (
-        <View style={styles.description}>
-          <Divider />
-          <ViewSpacing height={spacing.margin.large} />
-
-          <Text.H6>{i18next.t('common:text_description')}</Text.H6>
-          <ViewSpacing height={spacing.margin.base} />
-          <Text>
-            <Text.BodyS>
-              {!descriptionShowAll && !!shortDescription
-                ? shortDescription
-                : conversation.description}
-            </Text.BodyS>
-            {!!shortDescription && (
-              <Text.ButtonSmall
-                onPress={() => setDescriptionShowAll(!descriptionShowAll)}
-                color={colors.textInfo}>
-                {` ${
-                  descriptionShowAll
-                    ? i18next.t('common:text_show_less')
-                    : i18next.t('common:text_read_more')
-                }`}
-              </Text.ButtonSmall>
-            )}
-          </Text>
-        </View>
-      )
+      <View style={styles.description}>
+        <Divider />
+        <ViewSpacing height={spacing.margin.large} />
+        <Text.H6>{i18next.t('common:text_description')}</Text.H6>
+        <ViewSpacing height={spacing.margin.base} />
+        {conversation.description ? (
+          <CollapsibleText content={conversation.description} />
+        ) : (
+          <Text.BodyS useI18n color={colors.textSecondary}>
+            chat:label_no_description
+          </Text.BodyS>
+        )}
+      </View>
     );
   };
 
