@@ -1,6 +1,5 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
-import React, {createRef, useEffect, useState} from 'react';
-import {Platform} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -62,7 +61,7 @@ const Conversation = () => {
   useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
-      _getMessages(route.params.roomId);
+      _getMessages();
     }
   }, [route.params]);
 
