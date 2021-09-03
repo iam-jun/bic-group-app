@@ -1,8 +1,9 @@
-import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
+import {AppConfig} from '~/configs';
 import {authStack} from '~/configs/navigator';
-import * as authStacks from './stack';
 import {IObject} from '~/interfaces/common';
+import * as authStacks from './stack';
 
 const Stack = createStackNavigator();
 
@@ -11,22 +12,22 @@ const AuthStack = () => {
   return (
     <Stack.Navigator headerMode="screen" initialRouteName={authStack.landing}>
       <Stack.Screen
-        options={{headerShown: false}}
+        options={AppConfig.defaultScreenOptions}
         name={authStack.landing}
         component={Stacks[authStack.landing]}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={AppConfig.defaultScreenOptions}
         name={authStack.login}
         component={Stacks[authStack.login]}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={AppConfig.defaultScreenOptions}
         name={authStack.signup}
         component={Stacks[authStack.signup]}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={AppConfig.defaultScreenOptions}
         name={authStack.forgotPassword}
         component={Stacks[authStack.forgotPassword]}
       />
