@@ -85,7 +85,6 @@ const Newsfeed = () => {
       />
       <ListView
         isFullView
-        style={styles.listStyle}
         containerStyle={styles.listContainer}
         data={homePosts}
         refreshing={refreshing}
@@ -97,7 +96,7 @@ const Newsfeed = () => {
         )}
         ListFooterComponent={renderFooter}
         renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing?.margin.base} />
+          <ViewSpacing height={theme.spacing.margin.large} />
         )}
       />
     </View>
@@ -111,23 +110,17 @@ const createStyle = (theme: ITheme) => {
     container: {
       flex: 1,
       backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.background,
+        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listContainer: {
       flex: 1,
-      backgroundColor: colors.bgSecondary,
       ...Platform.select({
         web: {
           alignSelf: 'center',
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
-          backgroundColor: colors.surface,
         },
       }),
-    },
-    listStyle: {
-      backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
     listFooter: {
       height: 150,
@@ -135,7 +128,8 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     headerCreatePost: {
-      marginTop: spacing.margin.base,
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.large,
     },
     importantCount: {
       paddingHorizontal: spacing.padding.large,

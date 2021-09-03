@@ -65,8 +65,7 @@ export interface IUpdateGroupName {
 }
 
 export interface IAddUsersToGroupReq {
-  groupId: number;
-  userIds: number[];
+  user_ids: number[];
 }
 
 export interface IRemoveMemberReq {
@@ -75,4 +74,8 @@ export interface IRemoveMemberReq {
 }
 export interface IGetMentionUsersReq {
   query: any;
+}
+
+export interface IAddUsersToGroupReq {
+  user_ids: string[];
 }

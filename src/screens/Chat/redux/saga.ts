@@ -12,7 +12,11 @@ import {
   IMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
+<<<<<<< HEAD
 import {IAddUsersToGroupReq} from '~/interfaces/IChatHttpRequest';
+=======
+import {} from '~/interfaces/IChatHttpRequest';
+>>>>>>> develop
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -54,7 +58,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
-  yield takeLatest(types.ADD_USERS_TO_GROUP, addUsersToGroup);
+  yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
 }
@@ -354,28 +358,22 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* addUsersToGroup({
-  payload,
-}: {
-  type: string;
-  payload: IAddUsersToGroupReq;
-}) {
+function* addMembersToGroup({payload}: {type: string; payload:  number[]}) {
   try {
-    const {groupId, userIds} = payload;
+    const {chat} = yield select();
+    const {conversation} = chat;
 
-    yield groupsDataHelper.addUsers(groupId, userIds);
+    yield makeHttpRequest(
+      apiConfig.Chat.addMembersToGroup(conversation?.beinGroupId, {
+        user_ids:payload
+      }),
+    );
     handleAddMember();
   } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'addMembers catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
     yield put(
       modalActions.showAlert({
-        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
-        content: err?.meta?.message || i18next.t('common:text_error_message'),
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
         confirmLabel: i18next.t('common:text_ok'),
       }),
     );

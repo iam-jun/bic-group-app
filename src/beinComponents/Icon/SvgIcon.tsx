@@ -3,6 +3,8 @@ import React from 'react';
 export interface SVGIconProps {
   source?: SVGElement;
   size?: number;
+  width?: number;
+  height?: number;
   tintColor?: string;
   [x: string]: any;
 }
@@ -10,6 +12,8 @@ export interface SVGIconProps {
 const SvgIcon: React.FC<SVGIconProps> = ({
   source,
   size,
+  width,
+  height,
   tintColor,
   ...props
 }: SVGIconProps) => {
@@ -17,8 +21,15 @@ const SvgIcon: React.FC<SVGIconProps> = ({
 
   if (!SVGIcon) return null;
 
-  // @ts-ignore
-  return <SVGIcon {...props} width={size} height={size} fill={tintColor} />;
+  return (
+    // @ts-ignore
+    <SVGIcon
+      {...props}
+      width={width || size}
+      height={height || size}
+      fill={tintColor}
+    />
+  );
 };
 
 SvgIcon.defaultProps = {

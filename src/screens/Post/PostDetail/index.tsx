@@ -60,17 +60,48 @@ const PostDetail = (props: any) => {
   }, [deleted]);
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
-    listRef?.current?.scrollToLocation?.({
-      itemIndex: itemIndex,
-      sectionIndex: sectionIndex,
-      animated: true,
-    });
+    if (sectionData.length > 0) {
+      listRef?.current?.scrollToLocation?.({
+        itemIndex: itemIndex,
+        sectionIndex: sectionIndex,
+        animated: true,
+      });
+    }
   };
 
   const onPressComment = () => {
     scrollTo(0, 0);
     textInputRef.current?.focus?.();
   };
+
+  const onCommentSuccess = useCallback(
+    ({
+      newCommentId,
+      parentCommentId,
+    }: {
+      newCommentId: string;
+      parentCommentId?: string;
+    }) => {
+      console.log(`\x1b[36m🐣️ index newCommentId: ${newCommentId}\x1b[0m`);
+      console.log(
+        `\x1b[36m🐣️ index parentCommentId: ${parentCommentId}\x1b[0m`,
+      );
+      let sectionIndex;
+      let itemIndex = 0;
+      if (parentCommentId) {
+        sectionData?.map?.((section, index) => {
+          if (section?.comment?.id === parentCommentId) {
+            sectionIndex = index;
+            itemIndex = (section?.data?.length || 0) + 1;
+          }
+        });
+      } else {
+        sectionIndex = sectionData.length - 1;
+      }
+      scrollTo(sectionIndex, itemIndex);
+    },
+    [sectionData],
+  );
 
   const renderSectionHeader = (sectionData: any) => {
     const {section} = sectionData || {};
@@ -159,6 +190,7 @@ const PostDetail = (props: any) => {
         groupIds={groupIds}
         autoFocus={focusComment}
         textInputRef={textInputRef}
+        onCommentSuccess={onCommentSuccess}
       />
     </ScreenWrapper>
   );

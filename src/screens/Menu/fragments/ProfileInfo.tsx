@@ -2,54 +2,41 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import * as modalActions from '~/store/modal/actions';
-import useMenu from '~/hooks/menu';
 import images from '~/resources/images';
 import {IUserProfile} from '~/interfaces/IAuth';
-import menuActions from '~/screens/Menu/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import {scaleCoverHeight} from '~/theme/dimension';
 
 import Header from '~/beinComponents/Header';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
-import AboutProfile from '../MyProfilePage/components/AboutProfile';
+import AboutProfile from './components/AboutProfile';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
-const ProfileInfo = ({
-  fullname,
-  description,
-  avatar,
-  background_img_url,
-  email,
-  address,
-  language,
-  phone,
-  isPublic,
-}: IUserProfile) => {
+const ProfileInfo = (props: IUserProfile) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
+
+  const {fullname, description, avatar, background_img_url, isPublic} = props;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
-  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
   const popupMessage = () =>
     dispatch(
       modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
+        title: i18next.t('common:text_info'),
+        content: i18next.t('common:text_popup_message'),
         onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
+        confirmLabel: i18next.t('common:text_got_it'),
       }),
     );
 
@@ -63,56 +50,70 @@ const ProfileInfo = ({
     setCoverHeight(coverHeight);
   };
 
-  return (
-    <View>
-      <Header />
-      {/* <ButtonWrapper> */}
+  const renderCoverImage = () => {
+    return (
       <View onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
           source={background_img_url || images.img_cover_default}
         />
       </View>
-      {/* </ButtonWrapper> */}
-      <ButtonWrapper style={styles.imageButton}>
+    );
+  };
+
+  const renderAvatar = () => {
+    return (
+      <View style={styles.imageButton}>
         <Image
           style={styles.avatar}
           source={avatar || images.img_user_avatar_default}
         />
-      </ButtonWrapper>
+      </View>
+    );
+  };
+
+  const renderUserHeader = () => {
+    return (
       <View style={styles.headerName}>
         <Text.H5>{fullname}</Text.H5>
         <Text.Body style={styles.subtitleText}>{description}</Text.Body>
       </View>
+    );
+  };
 
-      {isPublic ? (
-        <Button.Secondary
-          style={styles.button}
-          color={theme.colors.primary7}
-          textColor={theme.colors.background}
-          rightIcon={'Message'}
-          onPress={popupMessage}>
-          {t('profile:title_direct_message')}
-        </Button.Secondary>
-      ) : (
-        <Button.Secondary
-          style={styles.button}
-          color={theme.colors.bgButtonSecondary}
-          textColor={theme.colors.primary}
-          rightIcon={'EditAlt'}
-          onPress={onEditProfileButton}>
-          {t('profile:title_edit_profile')}
-        </Button.Secondary>
-      )}
+  const renderButton = () => {
+    return isPublic ? (
+      <Button.Secondary
+        style={styles.button}
+        color={theme.colors.primary7}
+        textColor={theme.colors.background}
+        rightIcon={'Message'}
+        onPress={popupMessage}>
+        {i18next.t('profile:title_direct_message')}
+      </Button.Secondary>
+    ) : (
+      <Button.Secondary
+        style={styles.button}
+        color={theme.colors.bgButtonSecondary}
+        textColor={theme.colors.primary}
+        rightIcon={'EditAlt'}
+        onPress={onEditProfileButton}>
+        {i18next.t('profile:title_edit_profile')}
+      </Button.Secondary>
+    );
+  };
+
+  return (
+    <View>
+      <Header />
+
+      {renderCoverImage()}
+      {renderAvatar()}
+      {renderUserHeader()}
+      {renderButton()}
+
       <Divider style={styles.divider} />
-
-      <AboutProfile
-        email={email}
-        address={address}
-        language={language}
-        phone={phone}
-        isPublic={isPublic}
-      />
+      <AboutProfile {...props} />
     </View>
   );
 };

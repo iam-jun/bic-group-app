@@ -25,6 +25,13 @@ export const initDataState = {
     offset: 0,
     canLoadMore: true,
   },
+  joinableUsers: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
   members: {
     loading: false,
     data: [],

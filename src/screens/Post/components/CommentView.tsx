@@ -170,6 +170,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         isActor={currentUserId === user_id}
         onPressMoreReaction={onPressReact}
         onAddReaction={onAddReaction}
+        onPressReply={_onPressReply}
       />
     </View>
   );

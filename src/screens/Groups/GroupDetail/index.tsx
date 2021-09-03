@@ -3,7 +3,6 @@ import {StyleSheet, ScrollView, RefreshControl, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
 import TabMenu from '~/beinComponents/Tab';
 import {ITheme} from '~/theme/interfaces';
@@ -16,11 +15,11 @@ import {useUserIdAuth} from '~/hooks/auth';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import NotFound from '~/screens/NotFound';
 import GroupAbout from './components/GroupAbout';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -91,18 +90,14 @@ const GroupDetail = (props: any) => {
   };
 
   // visitors cannot see anything of Secret groups
-  // => render 404 Not found page
+  // => render No Group Found
   if (
     join_status !== groupJoinStatus.member &&
     privacy === groupPrivacy.secret &&
     !refreshingGroupPosts
-  )
-    return (
-      <ScreenWrapper isFullView>
-        <Header title={i18next.t('common:title_page_not_found')} />
-        <NotFound />
-      </ScreenWrapper>
-    );
+  ) {
+    return <NoGroupFound />;
+  }
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>

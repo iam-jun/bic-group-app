@@ -38,7 +38,7 @@ export interface PrimaryItemProps {
   toggleChecked?: boolean;
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
-  onPressMenu?: () => void;
+  onPressMenu?: (e: any) => void;
   LeftComponent?: React.ReactNode | React.ReactElement;
   RightComponent?: React.ReactNode | React.ReactElement;
   ContentComponent?: React.ReactNode | React.ReactElement;

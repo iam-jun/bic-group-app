@@ -34,7 +34,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
   const _onPressReply = () => {
     dispatch(
-      postActions.setPostDetailReplyingComment(commentParent || commentData),
+      postActions.setPostDetailReplyingComment({
+        comment: commentData,
+        parentComment: commentParent,
+      }),
     );
     onPressReply?.(commentData);
   };

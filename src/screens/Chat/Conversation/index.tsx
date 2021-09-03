@@ -1,5 +1,6 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import {FlatList, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -38,10 +39,6 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
-  const [messageContextMenuPosition, setMessageContextMenuPosition] = useState<{
-    x: number;
-    y: number;
-  }>({x: -1, y: -1});
 
   const isDirect = conversation.type === roomTypes.DIRECT;
 
@@ -69,9 +66,18 @@ const Conversation = () => {
     }
   }, [route.params]);
 
-  const _getMessages = (id?: string) => {
+  useEffect(() => {
+    conversation._id && _getMessages();
+  }, [conversation._id]);
+
+  const _getMessages = () => {
     dispatch(actions.resetData('messages'));
-    dispatch(actions.getData('messages', {roomId: id}));
+    dispatch(
+      actions.getData('messages', {
+        roomId: conversation._id,
+        type: conversation.type,
+      }),
+    );
   };
 
   const loadMoreMessages = () => {
@@ -115,15 +121,7 @@ const Conversation = () => {
 
   const onLongPress = (item: IMessage, position: {x: number; y: number}) => {
     setSelectedMessage(item);
-    setMessageContextMenuPosition(position);
-    messageOptionsModalRef.current?.open();
-  };
-
-  const onContextMenu = (item: IMessage, position: {x: number; y: number}) => {
-    console.log('onContextMenu', item);
-    setSelectedMessage(item);
-    setMessageContextMenuPosition(position);
-    messageOptionsModalRef.current?.open();
+    messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
@@ -132,7 +130,6 @@ const Conversation = () => {
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
       onLongPress,
-      onContextMenu,
     };
     return <MessageContainer {...props} />;
   };
@@ -176,9 +173,8 @@ const Conversation = () => {
       />
       <ChatInput onError={setError} />
       <MessageOptionsModal
-        isMyMessage={selectedMessage?.user.username === user.username}
+        isMyMessage={selectedMessage?.user?.username === user.username}
         ref={messageOptionsModalRef}
-        {...messageContextMenuPosition}
         onMenuPress={onMenuPress}
         onReactionPress={onReactionPress}
         onClosed={onOptionsClosed}

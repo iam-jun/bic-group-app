@@ -6,7 +6,6 @@ import {
   IActivityData,
   IActivityImportant,
   IReaction,
-  IParamSearchMentionAudiences,
   IAllPosts,
   IPayloadReactToPost,
   IPayloadPutEditPost,
@@ -16,6 +15,8 @@ import {
   IAllComments,
   IPayloadReactToComment,
   IPayloadPutEditComment,
+  IPayloadCreateComment,
+  IPayloadReplying,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -45,7 +46,7 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_DATA,
     payload,
   }),
-  setCreateComment: (payload: {loading: boolean}) => ({
+  setCreateComment: (payload: {loading?: boolean; content?: string}) => ({
     type: postTypes.SET_CREATE_COMMENT,
     payload,
   }),
@@ -70,7 +71,7 @@ const postActions = {
     type: postTypes.SET_POST_DETAIL,
     payload,
   }),
-  setPostDetailReplyingComment: (payload?: IReaction) => ({
+  setPostDetailReplyingComment: (payload?: IPayloadReplying) => ({
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
   }),
@@ -90,6 +91,10 @@ const postActions = {
   //saga
   postCreateNewPost: (payload: IPostCreatePost) => ({
     type: postTypes.POST_CREATE_NEW_POST,
+    payload,
+  }),
+  postCreateNewComment: (payload: IPayloadCreateComment) => ({
+    type: postTypes.POST_CREATE_NEW_COMMENT,
     payload,
   }),
   putEditPost: (payload: IPayloadPutEditPost) => ({

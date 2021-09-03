@@ -99,6 +99,14 @@ export interface IPostCreatePost {
   important?: IActivityImportant;
 }
 
+export interface IPayloadCreateComment {
+  postId: string;
+  parentCommentId?: string;
+  commentData: IActivityData;
+  userId: string | number;
+  onSuccess?: (data: {newCommentId: string; parentCommentId?: string}) => void;
+}
+
 export interface IPayloadPutEditPost {
   id: string;
   data: IPostCreatePost;
@@ -251,4 +259,9 @@ export interface ICreatePostParams {
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
+}
+
+export interface IPayloadReplying {
+  comment: IReaction;
+  parentComment?: IReaction;
 }

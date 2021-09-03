@@ -219,7 +219,7 @@ const handleResponseError = async (
       case apiConfig.providers.bein.name:
         return mapResponseSuccessBein(error.response);
       case apiConfig.providers.chat.name:
-        return Promise.reject(error.response.data.error);
+        return Promise.reject(error.response.data?.error);
       default:
         return mapResponseSuccessBein(error.response);
     }

@@ -364,7 +364,9 @@ const Conversation = (): React.ReactElement => {
   const onPressMenu =
     conversation.type === roomTypes.DIRECT
       ? undefined
-      : () => baseSheetRef.current?.open();
+      : (e: any) => {
+          baseSheetRef.current?.open(e?.pageX, e?.pageY);
+        };
 
   return (
     <ScrollView style={styles.root}>

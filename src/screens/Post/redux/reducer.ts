@@ -20,6 +20,7 @@ const initState = {
   },
   createComment: {
     loading: false,
+    content: '',
   },
   reactionBottomSheet: {
     show: false,
@@ -89,7 +90,10 @@ function postReducer(state = initState, action: any = {}) {
     case postTypes.SET_CREATE_COMMENT:
       return {
         ...state,
-        createComment: payload,
+        createComment: {
+          ...state.createComment,
+          ...payload,
+        },
       };
     case postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES:
       return {

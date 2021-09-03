@@ -66,10 +66,9 @@ const GroupMembers = (): React.ReactElement => {
         rootNavigation.navigate(chatStack.addMembers);
       };
 
-  const onPressMenu = (user: IChatUser) => {
+  const onPressMenu = (e: any, user: IChatUser) => {
     setSelectedMember(user);
-
-    baseSheetRef.current?.open();
+    baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
   const searchUsers = (searchQuery: string) => {

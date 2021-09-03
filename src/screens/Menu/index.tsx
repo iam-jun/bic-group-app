@@ -2,18 +2,20 @@ import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
+
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+
 import settings, {
   appSettingsMenu,
   documentsMenu,
   logoutMenu,
 } from '~/constants/settings';
-import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import useMenu from '~/hooks/menu';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -27,7 +29,6 @@ import {ITheme} from '~/theme/interfaces';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
 
   const theme = useTheme() as ITheme;
@@ -52,12 +53,12 @@ const Menu = (): React.ReactElement => {
       case 'logOut':
         dispatch(
           modalActions.showAlert({
-            title: t('auth:text_sign_out'),
+            title: i18next.t('auth:text_sign_out'),
             content: 'Do you want to Log Out?',
             iconName: 'SignOutAlt',
             cancelBtn: true,
             onConfirm: () => dispatch(authActions.signOut()),
-            confirmLabel: t('auth:text_sign_out'),
+            confirmLabel: i18next.t('auth:text_sign_out'),
           }),
         );
         break;
@@ -65,11 +66,10 @@ const Menu = (): React.ReactElement => {
       default:
         dispatch(
           modalActions.showAlert({
-            title: 'Info',
-            content:
-              'Function has not been developed. Stay tuned for further releases 😀',
+            title: i18next.t('common:text_info'),
+            content: i18next.t('common:text_popup_message'),
             onConfirm: () => dispatch(modalActions.hideAlert()),
-            confirmLabel: 'Got it',
+            confirmLabel: i18next.t('common:text_got_it'),
           }),
         );
     }
@@ -89,7 +89,7 @@ const Menu = (): React.ReactElement => {
   };
 
   return (
-    <ScreenWrapper testID="DrawerComponent" style={styles.container} isFullView>
+    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header hideBack title={'Menu'} />
       <HeaderAvatarView
         firstLabel={fullname}
