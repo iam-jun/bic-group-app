@@ -23,12 +23,14 @@ import {useKeySelector} from '~/hooks/selector';
 import Text from '~/beinComponents/Text';
 import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 
 const Notfitication = () => {
   const menuSheetRef = useRef<any>();
 
   const notificationData = useNotifications();
   const {loadingNotifications, notificationList} = notificationData;
+  const showNoNotification = notificationList.length === 0;
 
   const {rootNavigation} = useRootNavigation();
 
@@ -160,7 +162,7 @@ const Notfitication = () => {
     }
   };
 
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   const renderListFooter = () => {
@@ -184,17 +186,20 @@ const Notfitication = () => {
         <Header>
           <NotificationTopBar onPressMenu={onPressMenu} />
         </Header>
-        <ListView
-          style={styles.list}
-          type="notification"
-          loading={loadingNotifications}
-          isFullView
-          renderItemSeparator={() => <ViewSpacing height={2} />}
-          data={notificationList}
-          onItemPress={_onItemPress}
-          onLoadMore={() => loadmoreNoti()}
-          ListFooterComponent={renderListFooter}
-        />
+        {showNoNotification && <NoNotificationFound />}
+        {!showNoNotification && (
+          <ListView
+            style={styles.list}
+            type="notification"
+            loading={loadingNotifications}
+            isFullView
+            renderItemSeparator={() => <ViewSpacing height={2} />}
+            data={notificationList}
+            onItemPress={_onItemPress}
+            onLoadMore={() => loadmoreNoti()}
+            ListFooterComponent={renderListFooter}
+          />
+        )}
         <NotificationBottomSheet modalizeRef={menuSheetRef} />
       </View>
     </ScreenWrapper>

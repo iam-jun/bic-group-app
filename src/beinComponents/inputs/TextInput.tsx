@@ -121,6 +121,7 @@ const TextInput: React.FC<TextInputProps> = ({
         label={label}
         placeholder={placeholder}
         selectionColor={colors.textInput}
+        // @ts-ignore
         outlineColor={colors.textInput}
         mode={'outlined'}
         theme={customTheme}
@@ -128,20 +129,21 @@ const TextInput: React.FC<TextInputProps> = ({
         error={error}
         disabled={disabled}
         placeholderTextColor={colors.textSecondary}
-        {...props}
         value={text}
         style={styles.input}
         onChangeText={_onChangeText}
-        right={<></>}
+        right={
+          clearText &&
+          !!text && (
+            <TextInputPaper.Icon
+              name={() => (
+                <Icon icon="iconClose" size={14} onPress={_onClearText} />
+              )}
+            />
+          )
+        }
+        {...props}
       />
-      {clearText && !!text && (
-        <Icon
-          style={styles.iconClear}
-          icon="iconClose"
-          size={14}
-          onPress={_onClearText}
-        />
-      )}
       {!!helperContent && (
         <Text.Subtitle {..._textHelperProps}>
           {helperContent}
