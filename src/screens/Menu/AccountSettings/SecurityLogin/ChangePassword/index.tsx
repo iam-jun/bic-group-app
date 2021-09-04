@@ -30,8 +30,7 @@ const ChangePassword = () => {
   const styles = themeStyles(theme);
 
   const {changePasswordError, changePasswordLoading} = useAuth();
-  const {errCurrentPassword, errBox}: IChangePasswordError =
-    changePasswordError || {};
+  const {errCurrentPassword}: IChangePasswordError = changePasswordError || {};
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
   useEffect(() => {
@@ -56,10 +55,6 @@ const ChangePassword = () => {
       clearErrors('password');
     }
   }, [errCurrentPassword]);
-
-  const onClearErrorBox = () => {
-    dispatch(setChangePasswordError({errBox: ''}));
-  };
 
   const {
     control,
@@ -140,11 +135,6 @@ const ChangePassword = () => {
     );
   };
 
-  // const [isCheckLogoutGlobal, setIsCheckLogoutGlobal] = useState(false);
-  // const handleOnCheckLogoutGlobal = () => {
-  //   setIsCheckLogoutGlobal(!isCheckLogoutGlobal);
-  // };
-
   const handleOnSaveChangePassword = async () => {
     await checkDisableSaveButton();
     if (disableSaveButton) {
@@ -160,14 +150,6 @@ const ChangePassword = () => {
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
-        {/* {!!errBox && (
-          <FlashMessage
-            type="error"
-            onClose={onClearErrorBox}
-            style={styles.flashMessage}>
-            {errBox}
-          </FlashMessage>
-        )} */}
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
