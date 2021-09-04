@@ -1,19 +1,8 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-
 import {IMenuItemProps} from '~/interfaces/IMenu';
 import GroupContent from './components/GroupContent';
 import GroupMembers from '~/screens/Groups/GroupDetail/components/GroupMembers';
 import GroupAbout from '~/screens/Groups/GroupDetail/components/GroupAbout';
-
-// Todo: this samplescreen is temporary and will be removed
-const sampleScreen = () => {
-  return (
-    <View>
-      <Text>This is sample screen</Text>
-    </View>
-  );
-};
+import NewFeature from '~/beinFragments/NewFeature';
 
 const groupProfileTabs: IMenuItemProps[] = [
   {
@@ -34,7 +23,7 @@ const groupProfileTabs: IMenuItemProps[] = [
   {
     routeName: 'Files',
     label: 'Files',
-    component: sampleScreen,
+    component: NewFeature,
   },
 ];
 
