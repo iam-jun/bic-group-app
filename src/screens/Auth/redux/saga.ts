@@ -92,6 +92,7 @@ function* changePassword({
     }
     yield put(actions.setChangePasswordLoading(false));
     yield put(actions.setChangePasswordError({errCurrentPassword, errBox}));
+    yield showErrorWithDefinedMessage(errBox);
   }
 }
 
@@ -211,6 +212,7 @@ function* forgotPasswordRequest({payload}: {type: string; payload: string}) {
         errBox = error.message;
     }
 
+    yield showErrorWithDefinedMessage(errBox);
     yield put(
       actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
     );
@@ -256,6 +258,8 @@ function* forgotPasswordConfirm({
         errBox = error?.message || '';
     }
 
+    yield showErrorWithDefinedMessage(errBox);
+
     yield put(
       actions.setForgotPasswordError({errBox, errConfirm, errRequest: ''}),
     );
@@ -279,6 +283,18 @@ function* showError(err: any) {
       err?.meta?.message ||
       err?.meta?.errors?.[0]?.message ||
       'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(actionsCommon.showHideToastMessage(toastMessage));
+}
+
+function* showErrorWithDefinedMessage(mess: string) {
+  if (!mess) return;
+  const toastMessage: IToastMessage = {
+    content: mess,
     props: {
       textProps: {useI18n: true},
       type: 'error',

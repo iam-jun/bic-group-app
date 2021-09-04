@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
-import FlashMessage from '~/beinComponents/FlashMessage';
+// import FlashMessage from '~/beinComponents/FlashMessage';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import * as validation from '~/constants/commonRegex';
@@ -160,14 +160,14 @@ const ChangePassword = () => {
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
-        {!!errBox && (
+        {/* {!!errBox && (
           <FlashMessage
             type="error"
             onClose={onClearErrorBox}
             style={styles.flashMessage}>
             {errBox}
           </FlashMessage>
-        )}
+        )} */}
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
@@ -293,9 +293,9 @@ const themeStyles = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.base,
       alignContent: 'center',
     },
-    flashMessage: {
-      marginBottom: theme.spacing.margin.extraLarge,
-    },
+    // flashMessage: {
+    //   marginBottom: theme.spacing.margin.extraLarge,
+    // },
     logoutFromAllDevices: {
       marginVertical: spacing.margin.tiny,
       height: 40,

@@ -9,7 +9,7 @@ import {useForm} from 'react-hook-form';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import FlashMessage from '~/beinComponents/FlashMessage';
+// import FlashMessage from '~/beinComponents/FlashMessage';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import Icon from '~/beinComponents/Icon';
 
@@ -92,14 +92,14 @@ const ForgotPassword = () => {
         {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
           <View style={styles.headerContainer}>{renderBtnBack()}</View>
         )}
-        {!!errBox && (
+        {/* {!!errBox && (
           <FlashMessage
             type="error"
             onClose={onClearErrorBox}
             style={styles.flashMessage}>
             {errBox}
           </FlashMessage>
-        )}
+        )} */}
         <View style={styles.contentContainer}>
           {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
             <ForgotInputId useFormData={useFormData} />
@@ -145,9 +145,9 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       flex: 1,
       justifyContent: !isPhone ? 'center' : undefined,
     },
-    flashMessage: {
-      marginTop: theme.spacing.margin.big,
-    },
+    // flashMessage: {
+    //   marginTop: theme.spacing.margin.big,
+    // },
     completeContainer: {
       // @ts-ignore
       paddingTop: spacing.padding.big + spacing.padding.large,
