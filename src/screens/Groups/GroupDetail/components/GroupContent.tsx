@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {View, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import ListView from '~/beinComponents/list/ListView';
@@ -10,9 +10,11 @@ import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePos
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
 
 const GroupContent = () => {
   const theme = useTheme() as ITheme;
+  const {spacing} = theme || {};
   const styles = themeStyles(theme);
   const groupPosts = useKeySelector(groupsKeySelector.groupPosts);
 
@@ -22,13 +24,23 @@ const GroupContent = () => {
     return <PostItem postData={item} />;
   };
 
+  const renderHeader = () => {
+    return (
+      <View>
+        <GroupInfoHeader />
+        <ViewSpacing height={spacing.margin.small} />
+        <HeaderCreatePost audience={groupData} />
+      </View>
+    );
+  };
+
   return (
     <ListView
       isFullView
       style={styles.listContainer}
       data={groupPosts}
       renderItem={renderItem}
-      ListHeaderComponent={<HeaderCreatePost audience={groupData} />}
+      ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
       renderItemSeparator={() => (
