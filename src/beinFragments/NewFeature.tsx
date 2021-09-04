@@ -20,10 +20,18 @@ const NewFeature = () => {
   const renderRatingSection = () => {
     return (
       <View style={styles.buttonsContainer}>
-        <Button.Secondary useI18n onPress={onRatingPress}>
+        <Button.Secondary
+          useI18n
+          style={styles.button}
+          onPress={onRatingPress}
+          color={theme.colors.primary3}>
           new_feature:button_I_want_it_now
         </Button.Secondary>
-        <Button.Secondary style={styles.button} useI18n onPress={onRatingPress}>
+        <Button.Secondary
+          style={styles.button}
+          useI18n
+          onPress={onRatingPress}
+          color={theme.colors.primary2}>
           new_feature:button_I_can_wait
         </Button.Secondary>
         <Button.Secondary style={styles.button} useI18n onPress={onRatingPress}>
@@ -74,6 +82,9 @@ const themeStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     buttonsContainer: {
+      flex: 1,
+      width: '100%',
+      maxWidth: 271,
       marginTop: spacing.margin.extraLarge,
     },
     button: {
