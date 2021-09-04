@@ -9,7 +9,6 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
-// import FlashMessage from '~/beinComponents/FlashMessage';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import * as validation from '~/constants/commonRegex';
