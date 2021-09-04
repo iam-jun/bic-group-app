@@ -107,7 +107,7 @@ const MainTabs = () => {
         activeBackgroundColor: colors.bgButtonSecondary,
         style: {
           backgroundColor: colors.background,
-          height: 60 + (!isPhone ? 0 : insets.bottom),
+          height: 64 + (!isPhone ? 0 : insets.bottom),
         },
       }}
       tabBarStyle={styles.tabBar}>
@@ -174,6 +174,7 @@ const CreateStyle = (
   return StyleSheet.create({
     container: {
       flex: 1,
+      width: 75,
       height: isPhone ? '100%' : 64,
       justifyContent: 'center',
       alignItems: 'center',
