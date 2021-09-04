@@ -431,7 +431,10 @@
     "no_group_found_title": "No Group Found",
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
-    "button_back_to_safety": "Back to Safety"
+    "button_back_to_safety": "Back to Safety",
+    "no_profile_found_title": "No User Found",
+    "no_profile_found_desc": "User not found",
+    "no_profile_found_second_desc": "We cannot identify the person you are looking for."
   },
   "badge": {
     "scroll_bottom": "Scroll to bottom"
