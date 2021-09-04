@@ -1,25 +1,27 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import _, {debounce, get} from 'lodash';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleProp,
   StyleSheet,
-  View,
   TextInput,
   TextInputProps,
-  FlatList,
-  StyleProp,
-  ViewStyle,
   TextStyle,
-  ActivityIndicator,
+  View,
+  ViewStyle,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
-import {get, debounce} from 'lodash';
+import Avatar from '~/beinComponents/Avatar';
+import Divider from '~/beinComponents/Divider';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import Avatar from '~/beinComponents/Avatar';
 import {mentionRegex} from '~/constants/commonRegex';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useKeyboardStatus} from '~/hooks/keyboard';
 import images from '~/resources/images';
-import Divider from '~/beinComponents/Divider';
+import {ITheme} from '~/theme/interfaces';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -74,10 +76,17 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [key, setKey] = useState('');
   const [content, setContent] = useState('');
   const [inputSelection, setInputSelection] = useState<any>();
+  const [topPosition, setTopPosition] = useState<number>(0);
+  const [measuredHeight, setMeasuredHeight] = useState(0);
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
-  const styles = createStyles(theme, modalPosition);
+  const styles = createStyles(
+    theme,
+    modalPosition,
+    topPosition,
+    measuredHeight,
+  );
 
   useEffect(() => {
     if (value !== undefined && value != content) {
@@ -181,6 +190,23 @@ const MentionInput: React.FC<MentionInputProps> = ({
     setInputSelection(event.nativeEvent.selection);
   };
 
+  // @ts-ignore
+  const _onContentSizeChange = e => {
+    setTopPosition(e.nativeEvent.contentSize.height);
+  };
+
+  const isKeyboardOpen = useKeyboardStatus();
+  const debounceSetMeasuredHeight = _.debounce(height => {
+    setMeasuredHeight(height);
+  }, 80);
+
+  const _onLayoutContainer = useCallback(
+    e => {
+      debounceSetMeasuredHeight(e.nativeEvent.layout.height);
+    },
+    [isKeyboardOpen],
+  );
+
   const _renderItem = ({item}: {item: any}) => {
     return (
       <TouchableOpacity style={styles.item} onPress={() => _onPressItem(item)}>
@@ -220,13 +246,25 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   return (
-    <View style={[styles.containerWrapper, style]}>
+    <View
+      style={[styles.containerWrapper, style]}
+      onLayout={_onLayoutContainer}>
+      {Platform.OS === 'web' && (
+        <ComponentInput
+          value={content}
+          multiline
+          style={styles.hidden}
+          onContentSizeChange={_onContentSizeChange}
+        />
+      )}
       <ComponentInput
         {...componentInputProps}
         value={content}
         onChangeText={_onChangeText}
         placeholder={placeholderText}
-        onContentSizeChange={onContentSizeChange}
+        onContentSizeChange={
+          Platform.OS === 'web' ? undefined : _onContentSizeChange
+        }
         style={textInputStyle}
         onSelectionChange={onSelectionChange}
       />
@@ -250,8 +288,33 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, position: string) => {
+const createStyles = (
+  theme: ITheme,
+  position: string,
+  topPosition: number,
+  measuredHeight: number,
+) => {
   const {colors, spacing} = theme;
+  const maxTopPosition =
+    Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
+
+  let stylePosition;
+  if (position === 'top') {
+    stylePosition = {
+      bottom: '100%',
+    };
+  } else {
+    if (topPosition > maxTopPosition) {
+      const distance = measuredHeight - topPosition;
+      stylePosition = {
+        bottom: distance <= 20 ? 35 : distance + 10,
+      };
+    } else {
+      stylePosition = {
+        top: topPosition + 20,
+      };
+    }
+  }
 
   return StyleSheet.create({
     containerWrapper: {
@@ -259,7 +322,7 @@ const createStyles = (theme: ITheme, position: string) => {
     },
     containerModal: {
       position: 'absolute',
-      [position === 'top' ? 'bottom' : 'top']: '100%',
+      ...stylePosition,
       width: '85%',
       maxWidth: 355,
       maxHeight: 236,
@@ -315,6 +378,20 @@ const createStyles = (theme: ITheme, position: string) => {
     emptyContainer: {
       minHeight: 40,
       justifyContent: 'center',
+    },
+    hidden: {
+      height: 0,
+      flex: undefined,
+      marginTop: 0,
+      marginBottom: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+      borderWidth: 0,
+      ...Platform.select({
+        web: {
+          border: 'none',
+        },
+      }),
     },
   });
 };
