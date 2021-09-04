@@ -2,11 +2,18 @@ import React, {FC, useEffect, useRef} from 'react';
 import {Keyboard, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {debounce} from 'lodash';
+import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
+import Divider from '~/beinComponents/Divider';
+
+import Header from '~/beinComponents/Header';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
+import PostInput from '~/beinComponents/inputs/PostInput';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
-import {ITheme} from '~/theme/interfaces';
+import {useKeySelector} from '~/hooks/selector';
 import {
   IAudience,
   ICreatePostParams,
@@ -14,22 +21,14 @@ import {
   IPostActivity,
   IPostCreatePost,
 } from '~/interfaces/IPost';
-import {margin, padding} from '~/theme/spacing';
-import postActions from '~/screens/Post/redux/actions';
-
-import Header from '~/beinComponents/Header';
-import Divider from '~/beinComponents/Divider';
-import PostInput from '~/beinComponents/inputs/PostInput';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
-import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import {useRootNavigation} from '~/hooks/navigation';
-import * as modalActions from '~/store/modal/actions';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
+import {margin, padding} from '~/theme/spacing';
+import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 
 export interface CreatePostProps {
   route?: {
@@ -258,7 +257,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           style={styles.flex1}
           textInputStyle={styles.flex1}
           modalStyle={styles.mentionInputModal}
-          modalPosition={'top'}
+          modalPosition={'bottom'}
           onPress={onPressMentionAudience}
           onChangeText={onChangeText}
           value={content}
@@ -320,10 +319,6 @@ const styles = StyleSheet.create({
     marginHorizontal: margin.large,
   },
   mentionInputModal: {
-    position: undefined,
-    top: undefined,
-    bottom: undefined,
-    marginTop: -12,
     maxHeight: 180,
   },
 });

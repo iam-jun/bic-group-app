@@ -1,20 +1,20 @@
 import React, {FC, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-
-import Text from '~/beinComponents/Text';
+import {useDispatch} from 'react-redux';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
-import postActions from '~/screens/Post/redux/actions';
-import {useDispatch} from 'react-redux';
+
+import Text from '~/beinComponents/Text';
+import {useBaseHook} from '~/hooks';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useKeySelector} from '~/hooks/selector';
 import {IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+
+import {ITheme} from '~/theme/interfaces';
 
 export interface CommentInputViewProps {
   postId: string;
