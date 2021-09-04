@@ -329,5 +329,15 @@
     "no_more_notification": "No more notification",
     "no_notification_found": "Your notification box is empty",
     "no_notification_found_desc": "We’ll notify you when something arrives"
+  },
+  "new_feature": {
+    "title": "New feature",
+    "text_we_are_developing_this_feature": "We are developing this feature!",
+    "text_please_rate_how_urgent": "Please rate how urgent this features is for you",
+    "button_I_want_it_now": "🤩 I want it now!",
+    "button_I_can_wait": "🙂 I can wait",
+    "button_not_really_need": "😋 Not really need",
+    "text_thanks_for_your_feedback": "Thanks for your feedback!",
+    "text_we_will_notify_you": "We will notify you when this features is ready."
   }
 }
