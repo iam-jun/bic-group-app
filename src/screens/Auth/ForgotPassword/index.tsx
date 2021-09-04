@@ -41,7 +41,6 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
-    dispatch(actions.setForgotPasswordError({errBox: ''}));
   }, []);
 
   const imgMaxWidth = 500;
