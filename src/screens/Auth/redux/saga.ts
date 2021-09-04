@@ -258,11 +258,10 @@ function* forgotPasswordConfirm({
         errBox = error?.message || '';
     }
 
-    yield showErrorWithDefinedMessage(errBox);
-
     yield put(
       actions.setForgotPasswordError({errBox, errConfirm, errRequest: ''}),
     );
+    if (errBox) yield showErrorWithDefinedMessage(errBox);
     yield put(actions.setForgotPasswordLoading(false));
   }
 }
