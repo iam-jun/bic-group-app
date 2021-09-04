@@ -94,6 +94,7 @@ const CreateStyle = (theme: ITheme) => {
 
   return StyleSheet.create({
     navigatorContainer: {
+      backgroundColor: colors.background,
       ...Platform.select({
         web: {
           width: 80,
