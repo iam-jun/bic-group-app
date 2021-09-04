@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 
 import {IMenuItemProps} from '~/interfaces/IMenu';
 import GroupContent from './components/GroupContent';
 import GroupMembers from '~/screens/Groups/GroupDetail/components/GroupMembers';
 import GroupAbout from '~/screens/Groups/GroupDetail/components/GroupAbout';
+import NewFeature from '~/beinFragments/NewFeature';
 
-// Todo: this samplescreen is temporary and will be removed
-const sampleScreen = () => {
+// TODO: Replace with real File tab
+const GroupFiles = () => {
   return (
-    <View>
-      <Text>This is sample screen</Text>
+    <View style={{height: 415}}>
+      <NewFeature />
     </View>
   );
 };
@@ -34,7 +35,7 @@ const groupProfileTabs: IMenuItemProps[] = [
   {
     routeName: 'Files',
     label: 'Files',
-    component: sampleScreen,
+    component: GroupFiles,
   },
 ];
 
