@@ -10,20 +10,24 @@ import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../redux/keySelector';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
-const GroupAbout = () => {
+const GroupAboutContent = () => {
+  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const groupData = useKeySelector(groupsKeySelector.groupDetail.group);
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const groupId = groupData.id;
   const {description, user_count, privacy} = groupData;
 
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
   const {icon, title, subtitle}: any = privacyData || {};
 
-  const onPressMember = () => {
-    alert('onPress member');
+  const onPressMembers = () => {
+    rootNavigation.navigate(groupStack.groupMembers, {groupId});
   };
 
   return (
@@ -34,6 +38,8 @@ const GroupAbout = () => {
             common:text_description
           </Text.H5>
           <CollapsibleText
+            limitLength={500}
+            shortLength={500}
             textProps={{variant: 'h4', style: styles.descriptionContainer}}
             content={description}
           />
@@ -46,7 +52,7 @@ const GroupAbout = () => {
           icon: 'UsersAlt',
           size: 24,
         }}
-        onPress={onPressMember}
+        onPress={onPressMembers}
         title={`${user_count} ${i18next.t('common:text_member')}`}
         RightComponent={<Icon icon={'AngleRightB'} />}
       />
@@ -72,7 +78,6 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.large,
-      marginTop: spacing.margin.base,
     },
     labelDescription: {
       paddingVertical: spacing.padding.small,
@@ -85,4 +90,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default GroupAbout;
+export default GroupAboutContent;

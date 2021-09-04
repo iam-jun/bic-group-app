@@ -118,24 +118,16 @@ export const linkingConfigFull = {
             path: 'groups',
             screens: {
               'group-detail': {
-                path: '/t/:id?',
-                screens: {
-                  Content: {
-                    path: '',
-                  },
-                  About: {
-                    path: '/about',
-                  },
-                  Members: {
-                    path: '/members',
-                  },
-                  Files: {
-                    path: '/files',
-                  },
-                },
+                path: '/t/:groupId?',
+              },
+              'group-about': {
+                path: '/t/:groupId?/about',
+              },
+              'group-members': {
+                path: '/t/:groupId?/members',
               },
               'group-admin': {
-                path: '/t/:id?/edit',
+                path: '/t/:groupId?/edit',
               },
               'create-post': {
                 path: '/post/new',

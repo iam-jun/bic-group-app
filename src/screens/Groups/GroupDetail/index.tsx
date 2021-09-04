@@ -12,7 +12,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import GroupAbout from './components/GroupAbout';
+import GroupAboutContent from '../components/GroupAboutContent';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -77,7 +77,7 @@ const GroupDetail = (props: any) => {
     join_status !== groupJoinStatus.member &&
     privacy === groupPrivacy.private
   ) {
-    return <GroupAbout />;
+    return <GroupAboutContent />;
   }
 
   return (
