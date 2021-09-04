@@ -76,7 +76,7 @@ const themeStyle = (theme: ITheme) => {
 
   return StyleSheet.create({
     root: {
-      height: 415,
+      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.background,
