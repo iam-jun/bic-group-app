@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -11,22 +11,43 @@ import Button from '~/beinComponents/Button';
 const NewFeature = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyle(theme);
+  const [showRating, setShowRating] = useState<boolean>(true);
+
+  const onRatingPress = () => {
+    setShowRating(false);
+  };
 
   const renderRatingSection = () => {
     return (
       <View style={styles.buttonsContainer}>
-        <Button.Secondary useI18n>
+        <Button.Secondary useI18n onPress={onRatingPress}>
           new_feature:button_I_want_it_now
         </Button.Secondary>
-        <Button.Secondary style={styles.button} useI18n>
+        <Button.Secondary style={styles.button} useI18n onPress={onRatingPress}>
           new_feature:button_I_can_wait
         </Button.Secondary>
-        <Button.Secondary style={styles.button} useI18n>
+        <Button.Secondary style={styles.button} useI18n onPress={onRatingPress}>
           new_feature:button_not_really_need
         </Button.Secondary>
       </View>
     );
   };
+
+  const renderContent = () => {
+    const header = showRating
+      ? 'new_feature:text_we_are_developing_this_feature'
+      : 'new_feature:text_thanks_for_your_feedback';
+    const body = showRating
+      ? 'new_feature:text_please_rate_how_urgent'
+      : 'new_feature:text_we_will_notify_you';
+    return (
+      <>
+        <Text.H6 useI18n>{header}</Text.H6>
+        <Text.Body useI18n>{body}</Text.Body>
+      </>
+    );
+  };
+
   return (
     <View style={styles.root}>
       <SvgIcon
@@ -36,9 +57,8 @@ const NewFeature = () => {
         height={200}
         tintColor="none"
       />
-      <Text.H6 useI18n>new_feature:text_we_are_developing_this_feature</Text.H6>
-      <Text.Body useI18n>new_feature:text_please_rate_how_urgent</Text.Body>
-      {renderRatingSection()}
+      {renderContent()}
+      {showRating && renderRatingSection()}
     </View>
   );
 };
