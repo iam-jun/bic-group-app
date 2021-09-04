@@ -9,7 +9,6 @@ import {useForm} from 'react-hook-form';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-// import FlashMessage from '~/beinComponents/FlashMessage';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import Icon from '~/beinComponents/Icon';
 
@@ -42,11 +41,8 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
-  }, []);
-
-  const onClearErrorBox = () => {
     dispatch(actions.setForgotPasswordError({errBox: ''}));
-  };
+  }, []);
 
   const imgMaxWidth = 500;
   const imgPadding = 67;
@@ -92,14 +88,6 @@ const ForgotPassword = () => {
         {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
           <View style={styles.headerContainer}>{renderBtnBack()}</View>
         )}
-        {/* {!!errBox && (
-          <FlashMessage
-            type="error"
-            onClose={onClearErrorBox}
-            style={styles.flashMessage}>
-            {errBox}
-          </FlashMessage>
-        )} */}
         <View style={styles.contentContainer}>
           {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
             <ForgotInputId useFormData={useFormData} />
