@@ -4,6 +4,7 @@ import {
   Pressable,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -34,20 +35,22 @@ const ImageViewer = ({source, style}: ImageProps) => {
         transparent
         animationType="fade"
         visible={viewerVisible}>
-        <View style={styles.viewer}>
-          <Pressable onPress={() => setZoomIn(!zoomIn)}>
-            <Image
-              source={source}
-              className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
+        <TouchableWithoutFeedback onPress={() => setViewerVisible(false)}>
+          <View style={styles.viewer}>
+            <Pressable onPress={() => setZoomIn(!zoomIn)}>
+              <Image
+                source={source}
+                className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
+              />
+            </Pressable>
+            <Icon
+              style={styles.icon}
+              icon="iconClose"
+              tintColor={colors.textReversed}
+              onPress={onClose}
             />
-          </Pressable>
-          <Icon
-            style={styles.icon}
-            icon="iconClose"
-            tintColor={colors.textReversed}
-            onPress={onClose}
-          />
-        </View>
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
