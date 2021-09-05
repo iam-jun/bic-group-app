@@ -1,6 +1,8 @@
 const groupStack = {
   groups: 'group-list',
   groupDetail: 'group-detail',
+  groupAbout: 'group-about',
+  groupMembers: 'group-members',
   createPost: 'create-post',
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',

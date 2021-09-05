@@ -17,7 +17,8 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
-import FlashMessage from '~/beinComponents/FlashMessage';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Header from '~/beinComponents/Header';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -29,7 +30,10 @@ const GroupMembers = () => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
 
-  const {id: groupId} = useKeySelector(groupsKeySelector.groupDetail.group);
+  //todo handle get data if group data not loaded
+
+  const {id: groupId} =
+    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
@@ -156,7 +160,8 @@ const GroupMembers = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper isFullView backgroundColor={colors.background}>
+      <Header titleTextProps={{useI18n: true}} title={'chat:title_members'} />
       <View style={styles.searchAndInvite}>
         <SearchInput
           value={searchText}
@@ -178,18 +183,13 @@ const GroupMembers = () => {
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{}} />}
       />
-    </View>
+    </ScreenWrapper>
   );
 };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.placeholder,
-      paddingTop: spacing.padding.base,
-    },
     itemContainer: {
       height: undefined,
       paddingHorizontal: spacing.padding.large,
@@ -212,7 +212,6 @@ const createStyle = (theme: ITheme) => {
     inputSearch: {
       flex: 1,
       margin: spacing.margin.base,
-      marginTop: spacing.margin.extraLarge,
     },
     inviteButton: {
       backgroundColor: colors.bgButtonSecondary,

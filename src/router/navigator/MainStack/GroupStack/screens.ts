@@ -1,5 +1,7 @@
 import Groups from '~/screens/Groups';
 import GroupDetail from '~/screens/Groups/GroupDetail';
+import GroupAbout from '~/screens/Groups/GroupAbout';
+import GroupMembers from '~/screens/Groups/GroupMembers';
 import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
@@ -14,6 +16,8 @@ import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 export default {
   'group-list': Groups,
   'group-detail': GroupDetail,
+  'group-about': GroupAbout,
+  'group-members': GroupMembers,
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
