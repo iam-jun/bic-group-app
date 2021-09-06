@@ -10,6 +10,7 @@ import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {ActivityIndicator, useTheme} from 'react-native-paper';
 import Icon, {IconProps} from '~/beinComponents/Icon';
+import {createTextStyle} from '~/beinComponents/Text/textStyle';
 
 export interface ButtonWrapperProps {
   children?: React.ReactNode;
@@ -57,15 +58,21 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
+  const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonBase';
 
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {
+      // In order to fix the title on web is pushed beneath the avg line
+      // @ts-ignore
+      const size = textStyles[textVariant].lineHeight;
+
       return (
         <Icon
           icon={iconSource}
           tintColor={textProps?.color}
           style={styles.icon}
+          size={size}
           {...iconProps}
         />
       );
