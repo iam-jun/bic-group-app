@@ -78,7 +78,7 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.large,
+      paddingVertical: spacing.padding.small,
     },
     labelDescription: {
       paddingVertical: spacing.padding.small,
@@ -89,7 +89,6 @@ const createStyle = (theme: ITheme) => {
     memberItem: {
       height: 44,
       paddingHorizontal: 0,
-      paddingVertical: spacing.padding.base,
     },
     privacyItem: {
       height: 56,
