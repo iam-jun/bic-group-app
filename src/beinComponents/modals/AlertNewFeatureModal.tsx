@@ -1,5 +1,11 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
@@ -9,6 +15,8 @@ import {ITheme} from '~/theme/interfaces';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import Icon from '~/beinComponents/Icon';
+import Button from '~/beinComponents/Button';
+import {deviceDimensions} from '~/theme/dimension';
 
 export interface NewFeatureModalProps {
   style?: StyleProp<ViewStyle>;
@@ -20,6 +28,9 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
 }: NewFeatureModalProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const {alertNewFeature} = useModal();
   const {visible} = alertNewFeature;
@@ -40,12 +51,14 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
       <View style={styles.container}>
         <View style={styles.header}>
           <Text.H6>Upcoming Features</Text.H6>
-          <Icon
-            style={styles.closeIcon}
-            icon={'iconClose'}
-            size={14}
-            onPress={onDismiss}
-          />
+          {isLaptop && (
+            <Icon
+              style={styles.closeIcon}
+              icon={'iconClose'}
+              size={14}
+              onPress={onDismiss}
+            />
+          )}
         </View>
         <View style={styles.body}>
           <SvgIcon
@@ -59,6 +72,18 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
             new_feature:text_we_are_developing_this_feature
           </Text.H6>
           <Text.Body useI18n>new_feature:text_we_will_notify_you</Text.Body>
+
+          {/* Temporary button */}
+          <Button.Secondary
+            style={{
+              marginTop: theme.spacing.margin.large,
+              paddingHorizontal: theme.spacing.padding.large,
+            }}
+            onPress={onDismiss}
+            useI18n
+            color={theme.colors.primary3}>
+            common:text_got_it
+          </Button.Secondary>
         </View>
       </View>
     </Modal>
