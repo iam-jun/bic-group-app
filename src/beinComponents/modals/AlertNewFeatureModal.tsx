@@ -8,6 +8,7 @@ import * as actions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
+import Icon from '~/beinComponents/Icon';
 
 export interface NewFeatureModalProps {
   style?: StyleProp<ViewStyle>;
@@ -25,7 +26,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
 
   const dispatch = useDispatch();
 
-  const onRatingPress = () => {
+  const onDismiss = () => {
     dispatch(actions.hideAlertNewFeature());
   };
 
@@ -33,12 +34,18 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
     <Modal
       visible={visible}
       dismissable
-      onDismiss={onRatingPress}
+      onDismiss={onDismiss}
       contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
       {...props}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text.H6>Upcoming Features</Text.H6>
+          <Icon
+            style={styles.closeIcon}
+            icon={'iconClose'}
+            size={14}
+            onPress={onDismiss}
+          />
         </View>
         <View style={styles.body}>
           <SvgIcon
@@ -75,10 +82,20 @@ const themeStyles = (theme: ITheme) => {
     },
     header: {
       width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingLeft: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
+    },
+    closeIcon: {
+      marginRight: spacing.margin.small,
     },
     body: {
       alignItems: 'center',
       justifyContent: 'center',
+      marginBottom: spacing.margin.large,
+      paddingHorizontal: spacing.padding.small,
     },
   });
 };
