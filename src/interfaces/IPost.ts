@@ -124,6 +124,7 @@ export interface IPayloadGetPostDetail {
   userId: string;
   streamClient: StreamClient;
   postId: string;
+  callbackLoading?: (loading: boolean) => void;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;

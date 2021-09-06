@@ -72,10 +72,6 @@ const postActions = {
     type: postTypes.SET_POST_DETAIL,
     payload,
   }),
-  setPostDetailLoading: (payload: boolean) => ({
-    type: postTypes.SET_POST_DETAIL_LOADING,
-    payload,
-  }),
   setPostDetailReplyingComment: (payload?: IPayloadReplying) => ({
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,

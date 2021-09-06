@@ -713,13 +713,13 @@ function* getPostDetail({
   type: string;
   payload: IPayloadGetPostDetail;
 }) {
-  const {userId, postId, streamClient} = payload || {};
+  const {userId, postId, streamClient, callbackLoading} = payload || {};
   if (!userId || !postId || !streamClient) {
     console.log(`\x1b[31m🐣️ saga getPostDetail invalid params\x1b[0m`);
     return;
   }
   try {
-    yield put(postActions.setPostDetailLoading(true));
+    callbackLoading?.(true);
     const response = yield call(
       postDataHelper.getPostDetail,
       userId,
@@ -727,9 +727,9 @@ function* getPostDetail({
       postId,
     );
     yield put(postActions.addToAllPosts(response));
-    yield put(postActions.setPostDetailLoading(false));
+    callbackLoading?.(false);
   } catch (e) {
-    yield put(postActions.setPostDetailLoading(false));
+    callbackLoading?.(false);
     showError(e);
   }
 }

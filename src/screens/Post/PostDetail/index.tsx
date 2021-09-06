@@ -32,6 +32,7 @@ import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
+  const [refreshing, setRefreshing] = useState(false);
 
   const params = props?.route?.params;
   const {focusComment} = params || {};
@@ -49,7 +50,6 @@ const PostDetail = (props: any) => {
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
-  const loading = useKeySelector(postKeySelector.postDetailLoading);
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -67,6 +67,12 @@ const PostDetail = (props: any) => {
   const commentLeft = commentCount - listComment.length;
 
   useEffect(() => {
+    if (id && userId && streamClient) {
+      getPostDetail();
+    }
+  }, [id, userId, streamClient]);
+
+  useEffect(() => {
     if (audience?.groups?.length > 0) {
       const ids: any = [];
       audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
@@ -80,16 +86,19 @@ const PostDetail = (props: any) => {
     }
   }, [deleted]);
 
-  const onRefresh = () => {
+  const getPostDetail = (callbackLoading?: (loading: boolean) => void) => {
     if (userId && id && streamClient) {
       const payload: IPayloadGetPostDetail = {
         userId,
         postId: id,
         streamClient,
+        callbackLoading,
       };
       dispatch(postActions.getPostDetail(payload));
     }
   };
+
+  const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -218,7 +227,7 @@ const PostDetail = (props: any) => {
         onContentSizeChange={onLayout}
         refreshControl={
           <RefreshControl
-            refreshing={!!loading}
+            refreshing={refreshing}
             onRefresh={onRefresh}
             tintColor={colors.borderDisable}
           />
