@@ -21,16 +21,7 @@ const RightCol = () => {
   const onItemPress = (item: IRightMenu) => {
     switch (item.type) {
       default:
-        dispatch(
-          modalActions.showAlert({
-            title: 'Info',
-            content:
-              'Function has not been developed. Stay tuned for further releases 😀',
-            onConfirm: () => dispatch(modalActions.hideAlert()),
-            confirmLabel: 'Got it',
-          }),
-        );
-        break;
+        dispatch(modalActions.showAlertNewFeature());
     }
   };
 

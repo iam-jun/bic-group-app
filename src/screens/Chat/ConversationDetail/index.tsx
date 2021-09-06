@@ -97,15 +97,8 @@ const Conversation = (): React.ReactElement => {
         showChangeNameModal();
         break;
       default:
-        dispatch(
-          modalActions.showAlert({
-            title: 'Info',
-            content:
-              'Function has not been developed. Stay tuned for further releases 😀',
-            onConfirm: () => dispatch(modalActions.hideAlert()),
-            confirmLabel: 'Got it',
-          }),
-        );
+        baseSheetRef.current?.close();
+        dispatch(modalActions.showAlertNewFeature());
     }
   };
 
