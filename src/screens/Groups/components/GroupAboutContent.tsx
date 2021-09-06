@@ -85,8 +85,13 @@ const createStyle = (theme: ITheme) => {
     descriptionContainer: {
       paddingBottom: spacing.padding.small,
     },
-    memberItem: {height: 44, paddingHorizontal: 0},
-    privacyItem: {height: 56, paddingHorizontal: 0},
+    memberItem: {
+      paddingHorizontal: 0,
+      paddingVertical: spacing.padding.base,
+    },
+    privacyItem: {
+      paddingHorizontal: 0,
+    },
   });
 };
 
