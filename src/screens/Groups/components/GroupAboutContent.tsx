@@ -87,10 +87,12 @@ const createStyle = (theme: ITheme) => {
       paddingBottom: spacing.padding.small,
     },
     memberItem: {
+      height: 44,
       paddingHorizontal: 0,
       paddingVertical: spacing.padding.base,
     },
     privacyItem: {
+      height: 56,
       paddingHorizontal: 0,
     },
   });
