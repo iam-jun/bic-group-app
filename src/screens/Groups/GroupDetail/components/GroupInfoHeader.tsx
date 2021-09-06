@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {titleCase} from '~/utils/common';
@@ -46,11 +46,11 @@ const GroupInfoHeader = () => {
       <View style={styles.nameHeader}>
         <ButtonWrapper textProps={{variant: 'h5'}}>{name}</ButtonWrapper>
 
-        <View style={styles.groupInfoText}>
+        <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
             icon={'iconPrivate'}
-            size={14}
+            size={16}
             tintColor={theme.colors.iconTint}
           />
           <Text.BodySM useI18n>{titleCase(privacy)}</Text.BodySM>
@@ -58,7 +58,7 @@ const GroupInfoHeader = () => {
           <Icon
             style={styles.iconSmall}
             icon={'UsersAlt'}
-            size={16}
+            size={18}
             tintColor={theme.colors.iconTint}
           />
           <Text.BodySM>{user_count}</Text.BodySM>
@@ -104,6 +104,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     iconSmall: {
       marginRight: spacing.margin.tiny,
+      height: 16,
     },
     coverAndInfoHeader: {
       backgroundColor: colors.background,
@@ -119,10 +120,14 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       padding: spacing.padding.small,
       borderRadius: 6,
     },
-    groupInfoText: {
+    groupInfo: {
       flexDirection: 'row',
-      marginTop: spacing.margin.tiny,
       alignItems: 'center',
+      ...Platform.select({
+        web: {
+          marginTop: spacing.margin.small,
+        },
+      }),
     },
     nameHeader: {flex: 1},
   });
