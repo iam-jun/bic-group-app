@@ -71,7 +71,8 @@
     "text_info": "Info",
     "text_help_center": "Help center is coming soon 🤗",
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
-    "text_got_it": "Got it"
+    "text_got_it": "Got it",
+    "text_no_recent_searches": "No recent searches!"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -395,9 +396,9 @@
       "label_remove_from_group_chat": "Remove from group chat"
     },
     "text_mention_all": "All",
-    "modal_confirm_remove_member":{
-      "title":"Remove Member",
-      "description":"This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+    "modal_confirm_remove_member": {
+      "title": "Remove Member",
+      "description": "This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
     },
     "message_option": {
       "delete": "Delete Message",

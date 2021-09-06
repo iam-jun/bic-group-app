@@ -1,65 +1,108 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {debounce} from 'lodash';
+import i18next from 'i18next';
 
-import useGroups from '~/hooks/groups';
 import groupsActions from '~/screens/Groups/redux/actions';
 import ListView from '~/beinComponents/list/ListView';
-import {useBaseHook} from '~/hooks';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Header from '~/beinComponents/Header';
-import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
+import Image from '~/beinComponents/Image';
+
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
-import {IGroup} from '~/interfaces/IGroup';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from './redux/keySelector';
+import {scaleSize} from '~/theme/dimension';
+import appConfig from '~/configs/appConfig';
 
 const Groups: React.FC = () => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
-  const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
-  const groupsData = useGroups();
-  const {loadingJoinedGroups, joinedGroups} = groupsData;
+  const loadingJoinedGroups = useKeySelector(
+    groupsKeySelector.loadingJoinedGroups,
+  );
+  const joinedGroups = useKeySelector(groupsKeySelector.joinedGroups);
 
-  // for rooms search - client search
   const [searchText, setSearchText] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<IGroup[]>([]);
-
-  const onChangeTextSearch = (text: string) => {
-    const newSearchResults = joinedGroups.filter((item: IGroup) =>
-      item.name.toLowerCase().includes(text.toLowerCase()),
-    );
-    setSearchText(text);
-    setSearchResults(newSearchResults);
-  };
 
   useEffect(() => {
     dispatch(groupsActions.getJoinedGroups());
   }, []);
 
+  const searchGroups = (searchQuery: string) => {
+    setSearchText(searchQuery);
+    dispatch(groupsActions.getJoinedGroups({params: {key: searchQuery}}));
+  };
+
+  const searchHandler = useCallback(
+    debounce(searchGroups, appConfig.searchTriggerTime),
+    [],
+  );
+
+  const onQueryChanged = (searchQuery: string) => {
+    searchHandler(searchQuery);
+  };
+
+  const renderEmpty = () => {
+    if (!searchText) return null;
+    return (
+      !loadingJoinedGroups && (
+        <View style={styles.emptyView}>
+          <Image
+            source={images.img_search_empty}
+            style={styles.imageNoResults}
+          />
+          <Text.Body useI18n style={styles.textEmpty}>
+            common:text_search_no_results
+          </Text.Body>
+        </View>
+      )
+    );
+  };
+
+  const renderSearchBar = () => {
+    return (
+      <View style={styles.searchBar}>
+        <SearchInput
+          style={styles.searchInput}
+          onChangeText={onQueryChanged}
+          placeholder={i18next.t('input:search_group')}
+        />
+      </View>
+    );
+  };
+
+  const renderDataList = () => {
+    return (
+      <ListView
+        style={styles.dataList}
+        type={'flatGroups'}
+        loading={loadingJoinedGroups}
+        data={joinedGroups}
+        isFullView
+        ListHeaderComponent={
+          loadingJoinedGroups ? null : (
+            <Text.H5 useI18n>
+              {searchText ? 'groups:search_results' : 'groups:all_groups'}
+            </Text.H5>
+          )
+        }
+        ListEmptyComponent={renderEmpty}
+      />
+    );
+  };
+
   return (
     <View style={styles.containerScreen}>
       <Header hideBack title={'My Groups'} avatar={images.img_groups} />
-      <View style={styles.groupContainer}>
-        <SearchInput
-          style={{marginVertical: 12}}
-          onChangeText={onChangeTextSearch}
-          placeholder={t('input:search_group')}
-        />
-        <ListView
-          type={'flatGroups'}
-          loading={loadingJoinedGroups}
-          data={searchText ? searchResults : joinedGroups}
-          isFullView
-          ListHeaderComponent={
-            <Text.H5>
-              {searchText ? t('groups:search_results') : t('groups:all_groups')}
-            </Text.H5>
-          }
-        />
-      </View>
+      {renderSearchBar()}
+      {renderDataList()}
     </View>
   );
 };
@@ -74,7 +117,32 @@ const themeStyles = (theme: ITheme) => {
     },
     groupContainer: {
       flex: 1,
-      paddingHorizontal: spacing?.padding.large,
+    },
+    searchInput: {
+      flex: 1,
+    },
+    searchBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      margin: spacing.margin.large,
+    },
+    dataList: {
+      marginHorizontal: spacing.margin.large,
+      marginTop: spacing.margin.large,
+    },
+    emptyView: {
+      alignItems: 'center',
+      marginVertical: spacing.margin.base,
+    },
+    imageNoResults: {
+      width: scaleSize(200),
+      height: scaleSize(220),
+      maxWidth: 200,
+      maxHeight: 220,
+    },
+    textEmpty: {
+      textAlign: 'center',
+      width: 241,
     },
   });
 };
