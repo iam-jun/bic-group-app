@@ -58,7 +58,7 @@ const GroupInfoHeader = () => {
           <Icon
             style={styles.iconSmall}
             icon={'UsersAlt'}
-            size={18}
+            size={17}
             tintColor={theme.colors.iconTint}
           />
           <Text.BodySM>{user_count}</Text.BodySM>
