@@ -1,7 +1,7 @@
+import _ from 'lodash';
+import {forgotPasswordStages} from '~/constants/authConstants';
 import {ActionTypes} from '~/utils';
 import * as types from './types';
-import {forgotPasswordStages} from '~/constants/authConstants';
-import _ from 'lodash';
 
 export const initAuthState = {
   user: undefined,
@@ -59,9 +59,6 @@ function authReducer(state = initAuthState, action: any = {}) {
         ...state,
         changePasswordLoading: action.payload,
       };
-    case types.SIGN_OUT:
-    case ActionTypes.UnauthorizedLogout:
-      return initAuthState;
     case ActionTypes.RefreshTokenSuccessBein:
       return _.merge({}, state, {
         user: {
