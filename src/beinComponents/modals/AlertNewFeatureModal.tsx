@@ -20,10 +20,6 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const title = 'Upcoming Features';
-  const header = 'new_feature:text_we_are_developing_this_feature';
-  const body = 'new_feature:text_we_will_notify_you';
-
   const {alertNewFeature} = useModal();
   const {visible} = alertNewFeature;
 
@@ -42,7 +38,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
       {...props}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text.ButtonBase>{title}</Text.ButtonBase>
+          <Text.ButtonBase>Upcoming Features</Text.ButtonBase>
         </View>
         <View style={styles.body}>
           <SvgIcon
@@ -52,8 +48,10 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
             height={200}
             tintColor="none"
           />
-          <Text.H6 useI18n>{header}</Text.H6>
-          <Text.Body useI18n>{body}</Text.Body>
+          <Text.H6 useI18n>
+            new_feature:text_we_are_developing_this_feature
+          </Text.H6>
+          <Text.Body useI18n>new_feature:text_we_will_notify_you</Text.Body>
         </View>
       </View>
     </Modal>
