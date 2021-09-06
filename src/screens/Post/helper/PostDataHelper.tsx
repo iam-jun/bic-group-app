@@ -1,5 +1,5 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
   IParamSearchMentionAudiences,
@@ -9,6 +9,7 @@ import {
 } from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
+import {StreamClient} from 'getstream';
 
 export const postApiConfig = {
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -332,6 +333,44 @@ const postDataHelper = {
     } catch (e) {
       return Promise.reject(e);
     }
+  },
+
+  getPostDetail: async (
+    userId: string,
+    streamClient?: StreamClient,
+    postId?: string,
+  ) => {
+    if (streamClient && userId && postId) {
+      const streamOptions = {
+        limit: 1,
+        id_lte: postId,
+        user_id: `${userId}`, //required for CORRECT own_reactions data
+        ownReactions: true,
+        recentReactionsLimit: 10,
+        withOwnReactions: true,
+        withOwnChildren: true, //return own_children of reaction to comment
+        withRecentReactions: true,
+        withReactionCounts: true,
+        enrich: true, //extra data for user & group
+      };
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'newsfeed',
+          `u-${userId}`,
+          'get',
+          streamOptions,
+        );
+        if (data?.results?.[0]) {
+          return Promise.resolve(data?.results?.[0]);
+        } else {
+          return Promise.reject(data);
+        }
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    }
+    return Promise.reject('StreamClient or UserId not found');
   },
 };
 
