@@ -10,7 +10,13 @@ import {useCreatePost} from '~/hooks/post';
 import {IAudience} from '~/interfaces/IPost';
 import Icon from '~/beinComponents/Icon';
 
-const CreatePostChosenAudiences = () => {
+interface CreatePostChosenAudiencesProps {
+  disabled?: boolean;
+}
+
+const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
+  disabled,
+}: CreatePostChosenAudiencesProps) => {
   const {t, navigation} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -25,7 +31,10 @@ const CreatePostChosenAudiences = () => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressSelectAudience}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={[styles.container, {opacity: disabled ? 0.5 : 1}]}
+      onPress={onPressSelectAudience}>
       <View style={{flex: 1, flexDirection: 'row'}}>
         <Text.BodyS
           color={theme.colors.textSecondary}
