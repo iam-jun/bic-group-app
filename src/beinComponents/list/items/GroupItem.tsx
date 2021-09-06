@@ -149,9 +149,11 @@ const themeStyles = (theme: IObject<any>) => {
     },
     row: {
       flexDirection: 'row',
+      alignItems: 'center',
     },
     textName: {
       maxWidth: 200,
+      paddingTop: 2,
     },
     textInfo: {
       marginHorizontal: spacing.margin.tiny,
