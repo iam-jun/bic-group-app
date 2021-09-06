@@ -42,6 +42,7 @@ export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 }
 
 const PostToolbar = ({
@@ -51,6 +52,7 @@ const PostToolbar = ({
   modalizeRef,
   style,
   containerStyle,
+  disabled,
   ...props
 }: PostToolbarProps) => {
   const [selectingDate, setSelectingDate] = useState<boolean>();
@@ -144,6 +146,7 @@ const PostToolbar = ({
           <TouchableOpacity
             activeOpacity={1}
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
+            disabled={disabled}
             onPress={openModal}>
             <Text.Subtitle style={{flex: 1}}>Add to your post</Text.Subtitle>
             {renderToolbarButton('ImagePlus')}
