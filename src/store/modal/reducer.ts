@@ -17,6 +17,7 @@ export const initState = {
     content: '',
     props: {},
   },
+  searchInputFocus: '',
 };
 
 /**
@@ -51,7 +52,11 @@ function commonReducer(state = initState, action: any = {}) {
         ...state,
         toastMessage: initState.toastMessage,
       };
-
+    case actions.FOCUS_SEARCH_INPUT:
+      return {
+        ...state,
+        searchInputFocus: payload,
+      };
     default:
       return state;
   }

@@ -2,7 +2,7 @@ import {useIsFocused} from '@react-navigation/native';
 import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {TextInput, View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -24,6 +24,8 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {scaleSize} from '~/theme/dimension';
 import appConfig from '~/configs/appConfig';
+import {createRef} from 'react';
+import useModal from '~/hooks/modal';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: IObject<any> = useTheme();
@@ -33,14 +35,20 @@ const ConversationsList = (): React.ReactElement => {
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  const inputRef = createRef<TextInput>();
 
   const {conversations} = useChat();
+  const {searchInputFocus} = useModal();
   const {data, searchResult, loading} = conversations;
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     isFocused && dispatch(actions.getSubscriptions());
   }, [isFocused]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [searchInputFocus]);
 
   const loadMore = () => {
     dispatch(actions.mergeExtraData('rooms'));
@@ -101,6 +109,7 @@ const ConversationsList = (): React.ReactElement => {
         onPressMenu={onMenuPress}
       />
       <SearchInput
+        inputRef={inputRef}
         style={styles.inputSearch}
         placeholder={t('chat:placeholder_search')}
         onChangeText={onQueryChanged}

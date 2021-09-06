@@ -57,6 +57,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   textInputRef,
   loading = false,
   disableKeyboardSpacer,
+  ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
 
@@ -66,6 +67,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme, loading);
+  const [inputSelection, setInputSelection] = useState<any>();
+  const supportedMarkdownKey = {
+    b: '**',
+    i: '*',
+  };
 
   useEffect(() => {
     if (typeof value === 'string' && value !== text) {
@@ -125,6 +131,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
     onChangeText?.(value);
   };
 
+  const _onSelectionChange = (event: any) => {
+    onSelectionChange?.(event);
+    Platform.OS === 'web' && setInputSelection(event.nativeEvent.selection);
+  };
+
   const showButtons = (show: boolean) => {
     Animated.timing(showButtonsAnim, {
       toValue: show ? 1 : 0,
@@ -140,6 +151,35 @@ const CommentInput: React.FC<CommentInputProps> = ({
       useNativeDriver: false,
     }).start();
   };
+
+  const handleKeyEvent = (event: any) => {
+    if (!event?.shiftKey && event?.key === 'Enter') _onPressSend();
+    else if (
+      (event.metaKey || event.ctrlKey) &&
+      Object.keys(supportedMarkdownKey).includes(event.key)
+    ) {
+      //@ts-ignore
+      const format = supportedMarkdownKey[event.key];
+      if (inputSelection) {
+        const {start, end} = inputSelection;
+        if (end - start > 0) {
+          const formattedText = `${format}${text}${format}`;
+          _onChangeText(formattedText);
+        } else {
+          const _text = text;
+          const formattedText = `${_text}${format}${format}`;
+
+          _onChangeText(formattedText);
+          setInputSelection({
+            start: _text.length + format.length,
+            end: _text.length + format.length,
+          });
+        }
+      }
+    }
+  };
+
+  const onKeyPress = Platform.OS !== 'web' ? undefined : handleKeyEvent;
 
   const inputStyle: any = StyleSheet.flatten([
     styles.textInput,
@@ -226,6 +266,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
             marginRight: textInputMarginRight,
           }}>
           <TextInput
+            selection={inputSelection}
+            {...props}
             ref={textInputRef}
             style={inputStyle}
             selectionColor={colors.textInput}
@@ -236,7 +278,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
             editable={!loading}
             value={text}
             onChangeText={_onChangeText}
-            onSelectionChange={onSelectionChange}
+            onSelectionChange={_onSelectionChange}
+            onKeyPress={onKeyPress}
           />
           <Button
             style={{position: 'absolute', right: 10, bottom: 10}}

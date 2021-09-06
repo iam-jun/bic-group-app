@@ -9,6 +9,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {ImageProps} from '.';
+import Div from '../Div.web';
 import Icon from '../Icon';
 import Image from './FastImage';
 
@@ -24,8 +25,15 @@ const ImageViewer = ({source, style}: ImageProps) => {
     setViewerVisible(false);
   };
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    console.log('onKeyDown', event);
+    if (event.keyCode === 27) {
+      setViewerVisible(false);
+    }
+  };
+
   return (
-    <View>
+    <Div tabIndex="0" onKeyDown={onKeyDown}>
       <TouchableOpacity onPress={() => setViewerVisible(true)}>
         <Image source={source} style={style} />
       </TouchableOpacity>
@@ -49,7 +57,7 @@ const ImageViewer = ({source, style}: ImageProps) => {
           />
         </View>
       </Modal>
-    </View>
+    </Div>
   );
 };
 

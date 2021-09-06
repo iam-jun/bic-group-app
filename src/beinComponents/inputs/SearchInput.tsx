@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Ref, useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,6 +15,7 @@ import {fontFamilies} from '~/theme/fonts';
 import {TextInputProps} from './TextInput';
 
 export interface SearchInputProps extends TextInputProps {
+  inputRef?: Ref<TextInput>;
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   autoFocus?: boolean;
@@ -23,6 +24,7 @@ export interface SearchInputProps extends TextInputProps {
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
+  inputRef,
   style,
   placeholder,
   autoFocus,
@@ -53,6 +55,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           tintColor={theme.colors.textSecondary}
         />
         <TextInput
+          ref={inputRef}
           style={styles.textInput}
           value={text}
           autoFocus={autoFocus}

@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import {debounce} from 'lodash';
 import React, {useState} from 'react';
 import {Platform} from 'react-native';
 import uuid from 'react-native-uuid';
@@ -9,7 +8,6 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {IFileResponse} from '~/interfaces/common';
-import {IChatUser} from '~/interfaces/IChat';
 import actions from '~/screens/Chat/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {validateFile} from '~/utils/validation';
@@ -44,11 +42,6 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       }),
     );
     setText('');
-  };
-
-  const onSubmitEditing = () => {
-    if (Platform.OS !== 'web') return;
-    onSend();
   };
 
   const onPressSelectImage = (file: IFileResponse) => {
@@ -120,8 +113,8 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       value={text}
       ComponentInput={CommentInput}
       componentInputProps={{
+        blurOnSubmit: Platform.OS === 'web',
         onPressSend: onSend,
-        onSubmitEditing,
         onPressFile,
         onPressSelectImage,
       }}
