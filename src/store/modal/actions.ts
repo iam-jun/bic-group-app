@@ -1,6 +1,6 @@
 // flow
 import * as Actions from './constants';
-import {IShowAlert} from '../../interfaces/IModal';
+import {IShowAlert} from '~/interfaces/IModal';
 import {IToastMessage} from '~/interfaces/common';
 
 /**
@@ -33,6 +33,18 @@ export function showAlert(payload: IShowAlert) {
 export function hideAlert() {
   return {
     type: Actions.HIDE_ALERT,
+  };
+}
+
+export function showAlertNewFeature() {
+  return {
+    type: Actions.SHOW_ALERT_NEW_FEATURE,
+  };
+}
+
+export function hideAlertNewFeature() {
+  return {
+    type: Actions.HIDE_ALERT_NEW_FEATURE,
   };
 }
 

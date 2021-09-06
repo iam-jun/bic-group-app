@@ -1,20 +1,24 @@
 import React, {useState} from 'react';
-import {Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-
 import {useTheme} from 'react-native-paper';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ITheme} from '~/theme/interfaces';
 import Image, {ImageProps} from '.';
-import FastImage from './FastImage';
 import Icon from '../Icon';
+import FastImage from './FastImage';
 
 const ImagePreviewer: React.FC<ImageProps> = ({
   source,
   ...props
 }: ImageProps) => {
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
   const insets = useSafeAreaInsets();
 
   const styles = createStyles(theme, insets);
@@ -27,12 +31,6 @@ const ImagePreviewer: React.FC<ImageProps> = ({
         <Image {...props} source={source} />
       </TouchableOpacity>
       <Modal visible={visible} transparent={true}>
-        <Icon
-          style={styles.icon}
-          icon="iconClose"
-          tintColor={colors.textReversed}
-          onPress={() => setVisible(false)}
-        />
         <ImageViewer
           renderImage={image => <FastImage {...image} />}
           imageUrls={[
@@ -40,6 +38,17 @@ const ImagePreviewer: React.FC<ImageProps> = ({
               url: source?.uri || source,
             },
           ]}
+          renderHeader={() => (
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => setVisible(false)}>
+              <Icon
+                icon="iconClose"
+                tintColor="#fff"
+                onPress={() => setVisible(false)}
+              />
+            </TouchableOpacity>
+          )}
         />
       </Modal>
     </View>
@@ -47,25 +56,15 @@ const ImagePreviewer: React.FC<ImageProps> = ({
 };
 
 const createStyles = (theme: ITheme, insets: EdgeInsets) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
 
   return StyleSheet.create({
-    modal: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    viewer: {
-      backgroundColor: colors.backdrop,
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     icon: {
       position: 'absolute',
       zIndex: 2,
-      top: insets.top + (spacing?.margin.large || 16),
+      top: insets?.top,
       right: spacing.margin.large,
+      padding: spacing.padding.base,
     },
   });
 };

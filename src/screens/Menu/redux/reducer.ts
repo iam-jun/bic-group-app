@@ -34,7 +34,6 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         selectedProfile: {
-          ...state.selectedProfile,
           ...payload,
         },
       };

@@ -10,7 +10,13 @@ import {useCreatePost} from '~/hooks/post';
 import {IAudience} from '~/interfaces/IPost';
 import Icon from '~/beinComponents/Icon';
 
-const CreatePostChosenAudiences = () => {
+interface CreatePostChosenAudiencesProps {
+  disabled?: boolean;
+}
+
+const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
+  disabled,
+}: CreatePostChosenAudiencesProps) => {
   const {t, navigation} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -25,8 +31,11 @@ const CreatePostChosenAudiences = () => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressSelectAudience}>
-      <View style={{flex: 1, flexDirection: 'row'}}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={[styles.container, {opacity: disabled ? 0.5 : 1}]}
+      onPress={onPressSelectAudience}>
+      <View style={styles.contentContainer}>
         <Text.BodyS
           color={theme.colors.textSecondary}
           style={styles.textSendTo}>
@@ -41,11 +50,7 @@ const CreatePostChosenAudiences = () => {
               color: theme.colors.primary7,
             }}
             borderRadius={theme.spacing?.borderRadius.large}
-            style={{
-              paddingHorizontal: theme.spacing?.padding.large,
-              alignSelf: 'center',
-              paddingVertical: theme.spacing?.padding.tiny,
-            }}
+            style={styles.buttonChoose}
             onPress={onPressSelectAudience}>
             post:choose_group_people
           </Button.Secondary>
@@ -71,16 +76,23 @@ const getNames = (chosenAudiences: IAudience[], t: any) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       paddingHorizontal: spacing?.padding.extraLarge,
-      paddingVertical: spacing?.padding.base,
+      paddingVertical: spacing?.padding.small,
+      alignItems: 'center',
     },
+    contentContainer: {flex: 1, flexDirection: 'row', alignItems: 'center'},
     textSendTo: {
-      marginRight: spacing?.margin.small,
-      marginTop: spacing?.margin.small,
+      marginRight: spacing?.margin.tiny,
+      marginVertical: spacing.margin.small,
+    },
+    buttonChoose: {
+      paddingHorizontal: theme.spacing?.padding.large,
+      alignSelf: 'center',
+      paddingVertical: theme.spacing?.padding.tiny,
     },
   });
 };

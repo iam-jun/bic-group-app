@@ -9,7 +9,6 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import * as validation from '~/constants/commonRegex';
@@ -30,8 +29,7 @@ const ChangePassword = () => {
   const styles = themeStyles(theme);
 
   const {changePasswordError, changePasswordLoading} = useAuth();
-  const {errCurrentPassword, errBox}: IChangePasswordError =
-    changePasswordError || {};
+  const {errCurrentPassword}: IChangePasswordError = changePasswordError || {};
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
   useEffect(() => {
@@ -56,10 +54,6 @@ const ChangePassword = () => {
       clearErrors('password');
     }
   }, [errCurrentPassword]);
-
-  const onClearErrorBox = () => {
-    dispatch(setChangePasswordError({errBox: ''}));
-  };
 
   const {
     control,
@@ -129,21 +123,8 @@ const ChangePassword = () => {
   };
 
   const handleForgotPassword = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
-      }),
-    );
+    dispatch(modalActions.showAlertNewFeature());
   };
-
-  // const [isCheckLogoutGlobal, setIsCheckLogoutGlobal] = useState(false);
-  // const handleOnCheckLogoutGlobal = () => {
-  //   setIsCheckLogoutGlobal(!isCheckLogoutGlobal);
-  // };
 
   const handleOnSaveChangePassword = async () => {
     await checkDisableSaveButton();
@@ -160,14 +141,6 @@ const ChangePassword = () => {
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
-        {!!errBox && (
-          <FlashMessage
-            type="error"
-            onClose={onClearErrorBox}
-            style={styles.flashMessage}>
-            {errBox}
-          </FlashMessage>
-        )}
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
@@ -293,9 +266,9 @@ const themeStyles = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.base,
       alignContent: 'center',
     },
-    flashMessage: {
-      marginBottom: theme.spacing.margin.extraLarge,
-    },
+    // flashMessage: {
+    //   marginBottom: theme.spacing.margin.extraLarge,
+    // },
     logoutFromAllDevices: {
       marginVertical: spacing.margin.tiny,
       height: 40,

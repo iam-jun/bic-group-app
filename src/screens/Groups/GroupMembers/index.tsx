@@ -17,7 +17,8 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
-import FlashMessage from '~/beinComponents/FlashMessage';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Header from '~/beinComponents/Header';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -29,7 +30,10 @@ const GroupMembers = () => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
 
-  const {id: groupId} = useKeySelector(groupsKeySelector.groupDetail.group);
+  //todo handle get data if group data not loaded
+
+  const {id: groupId} =
+    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
@@ -156,7 +160,8 @@ const GroupMembers = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper isFullView backgroundColor={colors.background}>
+      <Header titleTextProps={{useI18n: true}} title={'chat:title_members'} />
       <View style={styles.searchAndInvite}>
         <SearchInput
           value={searchText}
@@ -177,19 +182,16 @@ const GroupMembers = () => {
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{}} />}
+        stickySectionHeadersEnabled={false}
+        showsVerticalScrollIndicator={false}
       />
-    </View>
+    </ScreenWrapper>
   );
 };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.placeholder,
-      paddingTop: spacing.padding.base,
-    },
     itemContainer: {
       height: undefined,
       paddingHorizontal: spacing.padding.large,
@@ -208,18 +210,16 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       justifyContent: 'space-between',
       alignItems: 'center',
+      margin: spacing.margin.base,
     },
     inputSearch: {
       flex: 1,
-      margin: spacing.margin.base,
-      marginTop: spacing.margin.extraLarge,
     },
     inviteButton: {
       backgroundColor: colors.bgButtonSecondary,
       padding: spacing.padding.small,
       borderRadius: 6,
-      marginTop: spacing.margin.base,
-      marginRight: spacing.margin.base,
+      marginLeft: spacing.margin.small,
     },
     iconSmall: {
       marginRight: spacing.margin.small,

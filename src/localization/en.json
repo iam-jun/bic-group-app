@@ -263,7 +263,7 @@
     "label_users": "Users",
     "label_post_deleted": "Post deleted",
     "label_all_reacts": "All Reacts",
-    "text_search_result_empty": "No matching results! Please try another name...",
+    "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
     "alert_title_back_edit_post": "Discard changes",
@@ -395,9 +395,9 @@
       "label_remove_from_group_chat": "Remove from group chat"
     },
     "text_mention_all": "All",
-    "modal_confirm_remove_member":{
-      "title":"Remove Member",
-      "description":"This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+    "modal_confirm_remove_member": {
+      "title": "Remove Member",
+      "description": "This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
     },
     "message_option": {
       "delete": "Delete Message",
@@ -422,7 +422,7 @@
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
-      "unknown": "Unknown http error",
+      "unknown": "Something went wrong. Please try again later.",
       "401": "Unauthorized",
       "token_expired": "Token expired"
     },
@@ -431,7 +431,10 @@
     "no_group_found_title": "No Group Found",
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
-    "button_back_to_safety": "Back to Safety"
+    "button_back_to_safety": "Back to Safety",
+    "no_profile_found_title": "No User Found",
+    "no_profile_found_desc": "User not found",
+    "no_profile_found_second_desc": "We cannot identify the person you are looking for."
   },
   "badge": {
     "scroll_bottom": "Scroll to bottom"
@@ -483,5 +486,15 @@
     "no_more_notification": "No more notification",
     "no_notification_found": "Your notification box is empty",
     "no_notification_found_desc": "We’ll notify you when something arrives"
+  },
+  "new_feature": {
+    "title": "New feature",
+    "text_we_are_developing_this_feature": "We are developing this feature!",
+    "text_please_rate_how_urgent": "Please rate how urgent this features is for you",
+    "button_I_want_it_now": "🤩 I want it now!",
+    "button_I_can_wait": "🙂 I can wait",
+    "button_not_really_need": "😋 Not really need",
+    "text_thanks_for_your_feedback": "Thanks for your feedback!",
+    "text_we_will_notify_you": "We will notify you when this features is ready."
   }
 }

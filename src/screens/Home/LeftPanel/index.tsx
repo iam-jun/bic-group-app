@@ -22,13 +22,7 @@ const LeftPanel = () => {
   };
 
   const onPressSavedPosts = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: t('common:text_info'),
-        content: t('common:text_popup_message'),
-        confirmLabel: t('common:ok'),
-      }),
-    );
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   return (

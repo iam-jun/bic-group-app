@@ -34,6 +34,7 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -173,7 +174,9 @@ const StackNavigator = (): React.ReactElement => {
             />
           </Stack.Navigator>
         </NavigationContainer>
+
         <AlertModal />
+        <AlertNewFeatureModal />
 
         {renderToastMessage()}
       </View>

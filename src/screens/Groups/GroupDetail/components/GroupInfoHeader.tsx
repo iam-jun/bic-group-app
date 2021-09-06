@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
 
 import {titleCase} from '~/utils/common';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import groupJoinStatus from '~/constants/groupJoinStatus';
 import {scaleCoverHeight} from '~/theme/dimension';
 
 import Image from '~/beinComponents/Image';
@@ -24,18 +21,7 @@ const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {name, user_count, icon, background_img_url, privacy, rocket_chat_id} =
-    groupDetail;
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-
-  const navigation = useNavigation();
-
-  const goToGroupChat = () => {
-    navigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: rocket_chat_id, initial: false},
-    });
-  };
+  const {name, user_count, icon, background_img_url, privacy} = groupDetail;
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -55,48 +41,24 @@ const GroupInfoHeader = () => {
     );
   };
 
-  const renderChatButton = () => {
-    // only members can see this chat button
-    return (
-      join_status === groupJoinStatus.member && (
-        <ButtonWrapper style={styles.chatButton} onPress={goToGroupChat}>
-          <Icon
-            style={styles.iconSmall}
-            icon={'iconMessages'}
-            size={22}
-            tintColor={theme.colors.iconTint}
-          />
-          <Text.ButtonBase color={theme.colors.primary} useI18n>
-            chat:title
-          </Text.ButtonBase>
-        </ButtonWrapper>
-      )
-    );
-  };
-
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <ButtonWrapper
-          textProps={{
-            variant: 'h5',
-          }}>
-          {name}
-        </ButtonWrapper>
+        <ButtonWrapper textProps={{variant: 'h5'}}>{name}</ButtonWrapper>
 
-        <View style={styles.groupInfoText}>
+        <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
             icon={'iconPrivate'}
-            size={14}
+            size={16}
             tintColor={theme.colors.iconTint}
           />
-          <Text.BodyS useI18n>{titleCase(privacy)}</Text.BodyS>
-          <Text.Subtitle> ⬩ </Text.Subtitle>
+          <Text.BodySM useI18n>{titleCase(privacy)}</Text.BodySM>
+          <Text.BodySM>{`  ⬩  `}</Text.BodySM>
           <Icon
             style={styles.iconSmall}
             icon={'UsersAlt'}
-            size={16}
+            size={17}
             tintColor={theme.colors.iconTint}
           />
           <Text.BodySM>{user_count}</Text.BodySM>
@@ -114,7 +76,6 @@ const GroupInfoHeader = () => {
         <View style={styles.header}>
           <Avatar.UltraLarge source={icon} style={styles.avatar} />
           {renderGroupInfoHeader()}
-          {renderChatButton()}
         </View>
       </View>
     </View>
@@ -142,7 +103,8 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       height: coverHeight,
     },
     iconSmall: {
-      marginRight: spacing.margin.small,
+      marginRight: spacing.margin.tiny,
+      height: 16,
     },
     coverAndInfoHeader: {
       backgroundColor: colors.background,
@@ -158,9 +120,14 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       padding: spacing.padding.small,
       borderRadius: 6,
     },
-    groupInfoText: {
+    groupInfo: {
       flexDirection: 'row',
-      marginTop: spacing.margin.tiny,
+      alignItems: 'center',
+      ...Platform.select({
+        web: {
+          marginTop: spacing.margin.small,
+        },
+      }),
     },
     nameHeader: {flex: 1},
   });

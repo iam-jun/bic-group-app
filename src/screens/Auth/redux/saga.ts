@@ -5,13 +5,13 @@ import {put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
+import {IToastMessage} from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
-import * as modalActions from '~/store/modal/actions';
 import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import * as actions from './actions';
@@ -68,16 +68,14 @@ function* changePassword({
     yield put(actions.setChangePasswordLoading(false));
 
     navigation.goBack();
-    yield put(
-      modalActions.showAlert({
-        title: i18n.t('auth:text_change_password_success_title'),
-        content: i18n.t('auth:text_change_password_success_desc'),
-        onConfirm: () => put(modalActions.hideAlert()),
-        confirmLabel: i18n.t(
-          'auth:text_change_password_success_confirm_button',
-        ),
-      }),
-    );
+    const toastMessage: IToastMessage = {
+      content: 'auth:text_change_password_success_desc',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(actionsCommon.showHideToastMessage(toastMessage));
   } catch (error) {
     console.log('changePassword error:', error);
     let errCurrentPassword = '',
@@ -94,6 +92,7 @@ function* changePassword({
     }
     yield put(actions.setChangePasswordLoading(false));
     yield put(actions.setChangePasswordError({errCurrentPassword, errBox}));
+    yield showErrorWithDefinedMessage(errBox);
   }
 }
 
@@ -141,8 +140,8 @@ function* onSignInSuccess(user: IUserResponse) {
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
   if (!refreshSuccess) {
-    console.log('TODO: get auth tokens failed');
-    yield onSignInFailed(i18n.t('error:http:token_expired'));
+    yield put(actions.signOut(false));
+    yield onSignInFailed(i18n.t('error:http:unknown'));
     return;
   }
 
@@ -181,12 +180,7 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
   } catch (err) {
     yield put(actions.setLoading(false));
 
-    yield put(
-      actionsCommon.showAlert({
-        title: i18n.t('common:text_error'),
-        content: err.message,
-      }),
-    );
+    yield showError(err);
   }
 }
 
@@ -218,6 +212,7 @@ function* forgotPasswordRequest({payload}: {type: string; payload: string}) {
         errBox = error.message;
     }
 
+    yield showErrorWithDefinedMessage(errBox);
     yield put(
       actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
     );
@@ -266,21 +261,46 @@ function* forgotPasswordConfirm({
     yield put(
       actions.setForgotPasswordError({errBox, errConfirm, errRequest: ''}),
     );
+    if (errBox) yield showErrorWithDefinedMessage(errBox);
     yield put(actions.setForgotPasswordLoading(false));
   }
 }
 
-function* signOut() {
+function* signOut({payload}: any) {
   try {
     yield Auth.signOut();
-
+    if (!payload) {
+      return;
+    }
     navigation.replace(rootSwitch.authStack);
   } catch (err) {
-    yield put(
-      actionsCommon.showAlert({
-        title: i18n.t('common:text_error'),
-        content: err.message,
-      }),
-    );
+    yield showError(err);
+    navigation.replace(rootSwitch.authStack);
   }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(actionsCommon.showHideToastMessage(toastMessage));
+}
+
+function* showErrorWithDefinedMessage(mess: string) {
+  if (!mess) return;
+  const toastMessage: IToastMessage = {
+    content: mess,
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(actionsCommon.showHideToastMessage(toastMessage));
 }

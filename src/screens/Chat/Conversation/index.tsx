@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -26,6 +25,7 @@ import {
   MessageContainer,
   MessageOptionsModal,
 } from './fragments';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -73,6 +73,20 @@ const Conversation = () => {
   useEffect(() => {
     conversation._id && _getMessages();
   }, [conversation._id]);
+
+  useEffect(() => {
+    if (!!error) {
+      dispatch(
+        showHideToastMessage({
+          content: error,
+          props: {
+            textProps: {useI18n: true},
+            type: 'error',
+          },
+        }),
+      );
+    }
+  }, [error]);
 
   const _getMessages = () => {
     dispatch(actions.resetData('messages'));
@@ -159,14 +173,9 @@ const Conversation = () => {
         onPressMenu={goConversationDetail}
         hideBack={isLaptop}
       />
-      {!!error && (
-        <FlashMessage type="error" onClose={() => setError('')}>
-          {error}
-        </FlashMessage>
-      )}
 
       <ListMessages
-        inverted={Platform.OS !== 'web'}
+        inverted
         data={messages.data}
         keyboardShouldPersistTaps="handled"
         onEndReached={loadMoreMessages}

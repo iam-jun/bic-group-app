@@ -59,7 +59,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
       <View style={styles.container}>
         <View style={styles.header}>
           <Text.ButtonBase>{title}</Text.ButtonBase>
-          <Icon icon={iconName} size={20} tintColor={theme.colors.iconTint} />
+          {!!iconName && (
+            <Icon icon={iconName} size={20} tintColor={theme.colors.iconTint} />
+          )}
         </View>
         {!!content && (
           <Text.Subtitle style={styles.content}>{content}</Text.Subtitle>
