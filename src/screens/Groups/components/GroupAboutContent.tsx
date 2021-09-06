@@ -65,6 +65,7 @@ const GroupAboutContent = () => {
         }}
         title={i18next.t(title)}
         subTitle={i18next.t(subtitle)}
+        subTitleProps={{variant: 'subtitle'}}
       />
     </View>
   );
