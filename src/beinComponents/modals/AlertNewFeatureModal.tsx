@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
@@ -55,28 +54,6 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
           />
           <Text.H6 useI18n>{header}</Text.H6>
           <Text.Body useI18n>{body}</Text.Body>
-          <View style={styles.buttonsContainer}>
-            <Button.Secondary
-              useI18n
-              style={styles.button}
-              onPress={onRatingPress}
-              color={theme.colors.primary3}>
-              new_feature:button_I_want_it_now
-            </Button.Secondary>
-            <Button.Secondary
-              style={styles.button}
-              useI18n
-              onPress={onRatingPress}
-              color={theme.colors.primary2}>
-              new_feature:button_I_can_wait
-            </Button.Secondary>
-            <Button.Secondary
-              style={styles.button}
-              useI18n
-              onPress={onRatingPress}>
-              new_feature:button_not_really_need
-            </Button.Secondary>
-          </View>
         </View>
       </View>
     </Modal>
@@ -104,13 +81,6 @@ const themeStyles = (theme: ITheme) => {
     body: {
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    buttonsContainer: {
-      width: '100%',
-      marginTop: spacing.margin.extraLarge,
-    },
-    button: {
-      marginVertical: spacing.margin.tiny,
     },
   });
 };
