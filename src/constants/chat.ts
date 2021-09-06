@@ -1,0 +1,84 @@
+export const chatSocketId = {
+  SUBSCRIBE_ROOMS_MESSAGES: 'chat-socket-subscribe-rooms-messages',
+  ADD_MEMBERS_TO_GROUP: 'chat-socket-add-members-to-groups',
+};
+
+export const roomTypes = {
+  QUICK: 'quick',
+  GROUP: 'group',
+  DIRECT: 'direct',
+};
+
+export const messageEventTypes = {
+  ADD_USER: 'au',
+  USER_JOINED: 'uj',
+  ROOM_CHANGED_NAME: 'r',
+  ROOM_CHANGED_DESCRIPTION: 'room_changed_description',
+  ROOM_CHANGED_ANNOUNCEMENT: 'room_changed_announcement',
+  ROOM_CHANGED_TOPIC: 'room_changed_topic',
+  REMOVE_USER: 'ru',
+  REMOVE_MESSAGE: 'rm',
+};
+
+export const messageStatus = {
+  SENDING: 'sending',
+  SENT: 'sent',
+  RECEIVED: 'received',
+  FAILED: 'failed',
+};
+
+export const chatPermissions = {
+  CAN_PIN_MESSAGE: 'can_pin_message',
+  CAN_INVITE: 'can_invite',
+  CAN_MUTE: 'can_mute',
+  CAN_REMOVE_CHAT_MEMBER: 'can_remove_chat_member',
+  CAN_LEAVE: 'can_leave',
+};
+
+export const messageOptionData = {
+  delete: {
+    icon: 'Trash',
+    label: 'delete',
+  },
+  reply: {
+    icon: 'CornerDownRight',
+    label: 'reply',
+  },
+  copy: {
+    icon: 'Copy',
+    label: 'copy',
+  },
+};
+
+export type MessageOptionType = keyof typeof messageOptionData;
+
+export const myMessageOptions = ['delete', 'reply', 'copy'];
+
+export const messageOptions = ['reply', 'copy'];
+
+export const reactions = {
+  love_hearts: {
+    id: 'love_hearts',
+    icon: 'love_hearts',
+  },
+  stunned_wow: {
+    id: 'stunned_wow',
+    icon: 'stunned_wow',
+  },
+  laugh_rofl: {
+    id: 'laugh_rofl',
+    icon: 'laugh_rofl',
+  },
+  crying_sad: {
+    id: 'crying_sad',
+    icon: 'crying_sad',
+  },
+  angry_furious: {
+    id: 'angry_furious',
+    icon: 'angry_furious',
+  },
+  add_react: {
+    id: 'add_react',
+    icon: 'iconReact',
+  },
+};

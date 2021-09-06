@@ -1,0 +1,47 @@
+default_platform(:android)
+fastlane_require 'dotenv'
+
+platform :android do
+  lane :deploy_dev do
+    Dotenv.overload('../../.env.sample', '../../.env')
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+    gradle(task: "clean")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Development",
+      #properties: {
+      #  "versionCode" => buildNumber.strip,
+      #}
+    )
+
+    diawi(
+      token: ENV['DIAWI_TOKEN'],
+      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+      timeout: 600,
+    )
+    rocket_chat(
+      message: "[DEV] New build version of Android #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+    )
+  end
+
+  lane :deploy_staging do
+    Dotenv.overload('../../.env.sample', '../../.env.staging')
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+    gradle(task: "clean")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Staging",
+    )
+    rocket_chat(
+      message: "[STAGING] New build version of Android #{appVersionText} can be download on Internal Testing",
+    )
+#     upload_to_play_store_internal_app_sharing
+  end
+
+end

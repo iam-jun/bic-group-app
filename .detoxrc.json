@@ -1,0 +1,49 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "e2e/config.json",
+  "apps": {
+    "ios": {
+      "type": "ios.app",
+      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
+    },
+    "android.development.debug": {
+      "type": "android.apk",
+      "binaryPath": "android/app/build/outputs/apk/development/debug/app-development-debug.apk",
+      "testBinaryPath": "android/app/build/outputs/apk/androidTest/development/debug/app-development-debug-androidTest.apk",
+      "build": "cd android && ./gradlew assembleDevelopmentDebug assembleDevelopmentDebugAndroidTest -DtestBuildType=debug && cd .."
+    },
+    "android.development.release": {
+      "type": "android.apk",
+      "binaryPath": "android/app/build/outputs/apk/development/release/app-development-release.apk",
+      "build": "cd android && ./gradlew assembleDevelopmentRelease assembleDevelopmentReleaseAndroidTest -DtestBuildType=release && cd .."
+    }
+  },
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 11"
+      }
+    },
+    "emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_API_28_AOSP"
+      }
+    }
+  },
+  "configurations": {
+    "ios": {
+      "device": "simulator",
+      "app": "ios"
+    },
+    "android.development.debug": {
+      "device": "emulator",
+      "app": "android.development.debug"
+    },
+    "android.development.release": {
+      "device": "emulator",
+      "app": "android.development.release"
+    }
+  }
+}
