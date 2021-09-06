@@ -17,6 +17,7 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {getAvatar} from '../helper';
 import {
@@ -25,7 +26,6 @@ import {
   MessageContainer,
   MessageOptionsModal,
 } from './fragments';
-import {showHideToastMessage} from '~/store/modal/actions';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -173,9 +173,8 @@ const Conversation = () => {
         onPressMenu={goConversationDetail}
         hideBack={isLaptop}
       />
-
       <ListMessages
-        inverted
+        inverted={Platform.OS !== 'web'}
         data={messages.data}
         keyboardShouldPersistTaps="handled"
         onEndReached={loadMoreMessages}
