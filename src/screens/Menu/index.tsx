@@ -65,14 +65,6 @@ const Menu = (): React.ReactElement => {
 
       default:
         dispatch(modalActions.showAlertNewFeature());
-      // dispatch(
-      //   modalActions.showAlert({
-      //     title: i18next.t('common:text_info'),
-      //     content: i18next.t('common:text_popup_message'),
-      //     onConfirm: () => dispatch(modalActions.hideAlert()),
-      //     confirmLabel: i18next.t('common:text_got_it'),
-      //   }),
-      // );
     }
   };
 

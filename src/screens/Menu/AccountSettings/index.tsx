@@ -55,15 +55,7 @@ const GeneralSettings = () => {
         return;
 
       default:
-        dispatch(
-          modalActions.showAlert({
-            title: 'Info',
-            content:
-              'Function has not been developed. Stay tuned for further releases 😀',
-            onConfirm: () => dispatch(modalActions.hideAlert()),
-            confirmLabel: 'Got it',
-          }),
-        );
+        dispatch(modalActions.showAlertNewFeature());
     }
   };
 
