@@ -719,6 +719,7 @@ function* getPostDetail({
     return;
   }
   try {
+    yield put(postActions.setPostDetailLoading(true));
     const response = yield call(
       postDataHelper.getPostDetail,
       userId,
@@ -726,7 +727,9 @@ function* getPostDetail({
       postId,
     );
     yield put(postActions.addToAllPosts(response));
+    yield put(postActions.setPostDetailLoading(false));
   } catch (e) {
+    yield put(postActions.setPostDetailLoading(false));
     showError(e);
   }
 }

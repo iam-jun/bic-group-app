@@ -32,7 +32,7 @@ const initState = {
     searchKey: '',
     searchResult: [],
   },
-  postDetail: {},
+  postDetailLoading: false,
   replyingComment: {},
   allPosts: {},
   allComments: {},
@@ -131,6 +131,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         postDetail: payload,
+      };
+    case postTypes.SET_POST_DETAIL_LOADING:
+      return {
+        ...state,
+        postDetailLoading: payload,
       };
     case postTypes.SET_POST_DETAIL_REPLYING_COMMENT:
       return {

@@ -32,7 +32,6 @@ import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
-  const [refreshing, setRefreshing] = useState(false);
 
   const params = props?.route?.params;
   const {focusComment} = params || {};
@@ -50,6 +49,7 @@ const PostDetail = (props: any) => {
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
+  const loading = useKeySelector(postKeySelector.postDetailLoading);
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -218,7 +218,7 @@ const PostDetail = (props: any) => {
         onContentSizeChange={onLayout}
         refreshControl={
           <RefreshControl
-            refreshing={!!refreshing}
+            refreshing={!!loading}
             onRefresh={onRefresh}
             tintColor={colors.borderDisable}
           />
