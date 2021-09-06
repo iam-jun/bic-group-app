@@ -38,7 +38,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
       {...props}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text.ButtonBase>Upcoming Features</Text.ButtonBase>
+          <Text.H6>Upcoming Features</Text.H6>
         </View>
         <View style={styles.body}>
           <SvgIcon
