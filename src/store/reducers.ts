@@ -1,16 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
+import * as types from '~/screens/Auth/redux/types';
+import groupsReducer from '~/screens/Groups/redux/reducer';
+import homeReducer from '~/screens/Home/redux/reducer';
+import menuReducer from '~/screens/Menu/redux/reducer';
+import notificationsReducer from '~/screens/Notification/redux/reducer';
+import postReducer from '~/screens/Post/redux/reducer';
+
+import {ActionTypes} from '~/utils';
+import auth from '../screens/Auth/redux/reducer';
+import chat from '../screens/Chat/redux/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';
-import auth from '../screens/Auth/redux/reducer';
-import chat from '../screens/Chat/redux/reducer';
-import groupsReducer from '~/screens/Groups/redux/reducer';
-import postReducer from '~/screens/Post/redux/reducer';
-import homeReducer from '~/screens/Home/redux/reducer';
-import notificationsReducer from '~/screens/Notification/redux/reducer';
-import menuReducer from '~/screens/Menu/redux/reducer';
 
 const authPersistConfig = {
   key: 'auth',
@@ -18,7 +21,7 @@ const authPersistConfig = {
   blacklist: ['loading'],
 };
 
-const rootReducers = combineReducers({
+const appReducer = combineReducers({
   app,
   modal,
   auth: persistReducer(authPersistConfig, auth),
@@ -29,5 +32,22 @@ const rootReducers = combineReducers({
   notifications: notificationsReducer,
   menu: menuReducer,
 });
+
+// @ts-ignore
+const rootReducers = (state, action) => {
+  if (
+    action.type === types.SIGN_OUT ||
+    action.type === ActionTypes.UnauthorizedLogout
+  ) {
+    try {
+      AsyncStorage.multiRemove(['persist:root', 'persist:auth']);
+    } catch (e) {
+      console.log('error when logout');
+    }
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
 
 export default rootReducers;
