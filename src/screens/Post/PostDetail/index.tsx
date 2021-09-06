@@ -1,21 +1,38 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useContext,
+} from 'react';
+import {View, StyleSheet, SectionList, RefreshControl} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
-import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
-import CommentItem from '~/beinComponents/list/items/CommentItem';
-import PostView from '~/screens/Post/components/PostView';
+import {useDispatch} from 'react-redux';
+
+import {
+  IAudienceGroup,
+  IPayloadGetPostDetail,
+  IReaction,
+} from '~/interfaces/IPost';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
+import postActions from '~/screens/Post/redux/actions';
+import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import {sortComments} from '../helper/PostUtils';
+
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Header from '~/beinComponents/Header';
+import CommentItem from '~/beinComponents/list/items/CommentItem';
+import PostView from '~/screens/Post/components/PostView';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
+  const [refreshing, setRefreshing] = useState(false);
 
   const params = props?.route?.params;
   const {focusComment} = params || {};
@@ -24,10 +41,14 @@ const PostDetail = (props: any) => {
   const listRef = useRef<any>();
   let layoutSetted = useRef(false).current;
 
+  const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
+
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
 
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
@@ -58,6 +79,17 @@ const PostDetail = (props: any) => {
       rootNavigation.goBack();
     }
   }, [deleted]);
+
+  const onRefresh = () => {
+    if (userId && id && streamClient) {
+      const payload: IPayloadGetPostDetail = {
+        userId,
+        postId: id,
+        streamClient,
+      };
+      dispatch(postActions.getPostDetail(payload));
+    }
+  };
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -184,6 +216,13 @@ const PostDetail = (props: any) => {
         keyboardShouldPersistTaps={'handled'}
         onLayout={onLayout}
         onContentSizeChange={onLayout}
+        refreshControl={
+          <RefreshControl
+            refreshing={!!refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.borderDisable}
+          />
+        }
       />
       <CommentInputView
         postId={id}

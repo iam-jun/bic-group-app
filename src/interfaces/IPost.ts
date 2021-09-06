@@ -1,5 +1,6 @@
 import {IObject} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
+import {StreamClient} from 'getstream';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -117,6 +118,12 @@ export interface IPayloadPutEditComment {
   id: string;
   comment: IReaction;
   data: IActivityData;
+}
+
+export interface IPayloadGetPostDetail {
+  userId: string;
+  streamClient: StreamClient;
+  postId: string;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
