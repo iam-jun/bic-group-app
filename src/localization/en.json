@@ -422,7 +422,7 @@
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
-      "unknown": "Unknown http error",
+      "unknown": "Something went wrong. Please try again later.",
       "401": "Unauthorized",
       "token_expired": "Token expired"
     },

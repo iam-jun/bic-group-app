@@ -249,7 +249,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         {!isEditPost && (
           <View>
             {!!important?.active && <ImportantStatus notExpired />}
-            <CreatePostChosenAudiences />
+            <CreatePostChosenAudiences disabled={loading} />
             <Divider />
           </View>
         )}
@@ -267,6 +267,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           getDataPromise={postDataHelper.getSearchMentionAudiences}
           getDataParam={{group_ids: strGroupIds}}
           getDataResponseKey={'data'}
+          disabled={loading}
         />
         {!isEditPost && (
           <PostToolbar
@@ -274,6 +275,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             onOpenModal={onOpenPostToolbarModal}
             onCloseModal={onClosePostToolbarModal}
             modalizeRef={toolbarModalizeRef}
+            disabled={loading}
           />
         )}
       </ScreenWrapper>

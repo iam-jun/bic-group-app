@@ -29,6 +29,7 @@ export interface MentionInputProps extends TextInputProps {
   title?: string;
   emptyContent?: string;
   modalPosition: 'top' | 'bottom';
+  disabled?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
@@ -53,6 +54,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   title,
   emptyContent,
   modalPosition,
+  disabled,
   placeholderText,
   textInputStyle,
   modalStyle,
@@ -255,6 +257,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           multiline
           style={styles.hidden}
           onContentSizeChange={_onContentSizeChange}
+          editable={!disabled}
         />
       )}
       <ComponentInput
@@ -265,8 +268,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
         onContentSizeChange={
           Platform.OS === 'web' ? undefined : _onContentSizeChange
         }
-        style={textInputStyle}
+        style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
         onSelectionChange={onSelectionChange}
+        editable={!disabled}
       />
       {mentioning && (
         <View style={[styles.containerModal, modalStyle]}>

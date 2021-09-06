@@ -17,6 +17,7 @@ import {
   IPayloadPutEditComment,
   IPayloadCreateComment,
   IPayloadReplying,
+  IPayloadGetPostDetail,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -159,6 +160,10 @@ const postActions = {
   }),
   getCommentsByPostId: (payload: IPayloadGetCommentsById) => ({
     type: postTypes.GET_COMMENTS_BY_POST_ID,
+    payload,
+  }),
+  getPostDetail: (payload: IPayloadGetPostDetail) => ({
+    type: postTypes.GET_POST_DETAIL,
     payload,
   }),
 };

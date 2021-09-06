@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import * as modalActions from '~/store/modal/actions';
@@ -26,14 +25,7 @@ const GroupAdministration = () => {
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
 
   const onGroupAdminPress = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('common:text_info'),
-        content: i18next.t('common:text_popup_message'),
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: i18next.t('common:text_got_it'),
-      }),
-    );
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   const goToGeneralInfo = () => rootNavigation.navigate(groupStack.generalInfo);
