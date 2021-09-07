@@ -20,10 +20,14 @@ export const initState = {
   alertNewFeature: {
     visible: false,
   },
+  loading: {
+    visible: false,
+  },
   toastMessage: {
     content: '',
     props: {},
   },
+  searchInputFocus: '',
 };
 
 /**
@@ -64,6 +68,22 @@ function commonReducer(state = initState, action: any = {}) {
         },
       };
 
+    case actions.SHOW_LOADING:
+      return {
+        ...state,
+        loading: {
+          visible: true,
+        },
+      };
+
+    case actions.HIDE_LOADING:
+      return {
+        ...state,
+        loading: {
+          visible: false,
+        },
+      };
+
     case actions.SET_TOAST_MESSAGE:
       return {
         ...state,
@@ -74,7 +94,11 @@ function commonReducer(state = initState, action: any = {}) {
         ...state,
         toastMessage: initState.toastMessage,
       };
-
+    case actions.FOCUS_SEARCH_INPUT:
+      return {
+        ...state,
+        searchInputFocus: payload,
+      };
     default:
       return state;
   }

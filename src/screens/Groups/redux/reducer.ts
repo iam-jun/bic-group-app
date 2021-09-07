@@ -58,21 +58,23 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         joinedGroups: action.payload || [],
       };
 
-    case groupsTypes.SET_LOADING_GROUP_DETAIL:
+    case groupsTypes.GET_GROUP_DETAIL:
       return {
         ...state,
-        loadingGroupDetail: action.payload,
+        loadingGroupDetail: true,
       };
     case groupsTypes.SET_GROUP_DETAIL:
       return {
         ...state,
         loadingCover: false,
         loadingAvatar: false,
+        loadingGroupDetail: false,
         groupDetail: {
           ...state.groupDetail,
           ...action.payload,
         },
       };
+
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {
         ...state,

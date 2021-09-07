@@ -14,6 +14,7 @@ const groupsKeySelector = {
   userAddedCount: 'groups.userAddedCount',
   joinedGroups: 'groups.joinedGroups',
   loadingJoinedGroups: 'groups.loadingJoinedGroups',
+  loadingGroupDetail: 'groups.loadingGroupDetail',
 };
 
 export default groupsKeySelector;

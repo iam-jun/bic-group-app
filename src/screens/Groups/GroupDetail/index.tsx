@@ -1,23 +1,27 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, Fragment} from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-import GroupTopBar from './components/GroupTopBar';
-import Header from '~/beinComponents/Header';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import GroupAboutContent from '../components/GroupAboutContent';
 import {groupPrivacy} from '~/constants/privacyTypes';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
+
+import GroupAboutContent from '../components/GroupAboutContent';
+import GroupTopBar from './components/GroupTopBar';
+import Header from '~/beinComponents/Header';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -37,6 +41,9 @@ const GroupDetail = (props: any) => {
     groupsKeySelector.refreshingGroupPosts,
   );
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const loadingGroupDetail = useKeySelector(
+    groupsKeySelector.loadingGroupDetail,
+  );
 
   const getGroupDetail = () => dispatch(groupsActions.getGroupDetail(groupId));
   const getGroupPosts = () => {
@@ -50,6 +57,17 @@ const GroupDetail = (props: any) => {
         }),
       );
     }
+  };
+
+  const renderPlaceholder = () => {
+    return (
+      <View>
+        <GroupProfilePlaceholder disableRandom />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder disableRandom />
+        <PostViewPlaceholder disableRandom />
+      </View>
+    );
   };
 
   const _onRefresh = () => {
@@ -82,19 +100,25 @@ const GroupDetail = (props: any) => {
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      <Header>
-        <GroupTopBar />
-      </Header>
-      <View style={styles.contentContainer}>
-        <GroupContent />
-      </View>
+      {refreshingGroupPosts || loadingGroupDetail ? (
+        renderPlaceholder()
+      ) : (
+        <Fragment>
+          <Header>
+            <GroupTopBar />
+          </Header>
+          <View style={styles.contentContainer}>
+            <GroupContent />
+          </View>
+        </Fragment>
+      )}
     </ScreenWrapper>
   );
 };
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
@@ -104,6 +128,10 @@ const themeStyles = (theme: ITheme) => {
       flex: 1,
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+    },
+    headerCreatePost: {
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.large,
     },
   });
 };

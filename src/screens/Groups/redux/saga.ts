@@ -50,14 +50,10 @@ function* getJoinedGroups({payload}: {type: string; payload?: any}) {
 
 function* getGroupDetail({payload}: {type: string; payload: number}) {
   try {
-    yield put(groupsActions.setLoadingGroupDetail(true));
-
     const result = yield requestGroupDetail(payload);
     yield put(groupsActions.setGroupDetail(result));
-
-    yield put(groupsActions.setLoadingGroupDetail(false));
   } catch (e) {
-    yield put(groupsActions.setLoadingGroupDetail(false));
+    yield put(groupsActions.setGroupDetail({}));
     console.log(
       '\x1b[36m',
       'namanh --- getGroupDetail | getGroupDetail : error',

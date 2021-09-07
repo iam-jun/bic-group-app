@@ -15,6 +15,7 @@ export interface CollapsibleTextProps extends TextProps {
   onPress?: () => void;
   toggleOnPress?: boolean;
   useMarkdown?: boolean;
+  onPressAudience?: (audience: any) => any;
   limitMarkdownTypes?: boolean;
   [x: string]: any;
 }
@@ -27,6 +28,7 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   onPress,
   toggleOnPress,
   useMarkdown,
+  onPressAudience,
   limitMarkdownTypes,
   ...textProps
 }: CollapsibleTextProps) => {
@@ -55,7 +57,9 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   const renderContentWithMarkdown = () => {
     return (
       <View style={style}>
-        <MarkdownView limitMarkdownTypes={limitMarkdownTypes}>
+        <MarkdownView
+          limitMarkdownTypes={limitMarkdownTypes}
+          onPressAudience={onPressAudience}>
           {!shortContent ? content : contentShowAll ? content : shortContent}
         </MarkdownView>
         {!!shortContent && (

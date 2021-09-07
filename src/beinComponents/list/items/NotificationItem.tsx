@@ -346,7 +346,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       <Text.Subtitle style={styles.timeCreated}>
         {countTime(`${updated_at}`)}
       </Text.Subtitle>
-      <Icon style={styles.iconOptions} icon="EllipsisH" size={16} />
+      {/*<Icon style={styles.iconOptions} icon="EllipsisH" size={16} />*/}
     </View>
   );
 };
