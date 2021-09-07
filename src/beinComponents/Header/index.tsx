@@ -35,6 +35,7 @@ export interface HeaderProps {
   onPressBack?: () => void;
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
+  removeBorderAndShadow?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -58,6 +59,7 @@ const Header: React.FC<HeaderProps> = ({
   onPressBack,
   disableInsetTop,
   style,
+  removeBorderAndShadow = false,
 }: HeaderProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -85,6 +87,7 @@ const Header: React.FC<HeaderProps> = ({
             paddingTop: disableInsetTop ? undefined : insets.top,
           },
           styles.container,
+          removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
           style,
         ])}>
         <ViewSpacing width={spacing.margin.large} />
@@ -92,6 +95,7 @@ const Header: React.FC<HeaderProps> = ({
           <Icon
             icon="iconBack"
             onPress={_onPressBack}
+            size={28}
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
           />
         )}
@@ -111,9 +115,17 @@ const Header: React.FC<HeaderProps> = ({
             {...leftIconProps}
           />
         )}
-        <View style={{flex: 1, marginLeft: spacing?.margin.base}}>
-          {!!title && <Text.H5 {...titleTextProps}>{title}</Text.H5>}
-          {!!subTitle && <Text.H6 {...subTitleTextProps}>{subTitle}</Text.H6>}
+        <View style={styles.titleContainer}>
+          {!!title && (
+            <Text.H5 style={styles.title} {...titleTextProps}>
+              {title}
+            </Text.H5>
+          )}
+          {!!subTitle && (
+            <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
+              {subTitle}
+            </Text.Subtitle>
+          )}
         </View>
         {!!icon && onPressIcon && (
           <Icon
@@ -153,6 +165,8 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: colors.background,
+    },
+    bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
       borderColor: colors.borderDivider,
       shadowOffset: {width: 0, height: 1},
@@ -162,7 +176,22 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     avatar: {
-      marginHorizontal: spacing?.margin.base,
+      marginHorizontal: spacing.margin.base,
+    },
+    titleContainer: {
+      flex: 1,
+      height: '100%',
+      marginLeft: spacing.margin.base,
+      justifyContent: 'center',
+    },
+    title: {
+      height: 24,
+      lineHeight: 24,
+      paddingTop: 3,
+    },
+    subtitle: {
+      height: 16,
+      lineHeight: 16,
     },
   });
 };
