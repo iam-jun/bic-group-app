@@ -13,6 +13,7 @@ const groupStack = {
   myProfile: 'my-profile',
   publicProfile: 'user-profile',
   inviteMembers: 'invite-members',
+  groupFiles: 'group-files',
 };
 
 export default groupStack;

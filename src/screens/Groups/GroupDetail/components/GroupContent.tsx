@@ -45,7 +45,7 @@ const GroupContent = () => {
   };
 
   const onPressFiles = () => {
-    console.log('[GROUP] Pressed files');
+    rootNavigation.navigate(groupStack.groupFiles);
   };
 
   const renderItem = ({item}: any) => {

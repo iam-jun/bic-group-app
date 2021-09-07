@@ -12,6 +12,7 @@ import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/Edi
 import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
 import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
+import NewFeature from '~/screens/NewFeature';
 
 export default {
   'group-list': Groups,
@@ -28,4 +29,5 @@ export default {
   'my-profile': MyProfile,
   'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
+  'group-files': NewFeature,
 };
