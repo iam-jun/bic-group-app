@@ -106,7 +106,7 @@ const createStyles = (theme: ITheme) => {
       marginRight: spacing.margin.base,
     },
     textUpdate: {
-      paddingTop: spacing.padding.tiny,
+      paddingTop: 0,
     },
     unread: {
       borderRadius: spacing?.borderRadius.large,
