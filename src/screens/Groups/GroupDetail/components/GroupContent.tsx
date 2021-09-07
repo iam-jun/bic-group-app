@@ -55,10 +55,7 @@ const GroupContent = () => {
         <View style={styles.buttonContainer}>
           {join_status === groupJoinStatus.member && (
             <>
-              <Button.Secondary
-                leftIcon={'iconMessages'}
-                useI18n
-                onPress={onPressChat}>
+              <Button.Secondary useI18n onPress={onPressChat}>
                 chat:title
               </Button.Secondary>
               <ViewSpacing width={spacing.margin.base} />
