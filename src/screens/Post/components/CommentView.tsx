@@ -108,9 +108,9 @@ const CommentView: React.FC<CommentViewProps> = ({
     onPressReply?.(commentData);
   };
 
-  const onLongPress = () => {
+  const onLongPress = (e?: any) => {
     Keyboard.dismiss();
-    menuSheetRef?.current?.open?.();
+    menuSheetRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
   return (

@@ -80,6 +80,12 @@ export default (): React.ReactElement => {
     if (colorScheme !== theme) toggleTheme();
   }, [colorScheme]);
 
+  useEffect(() => {
+    if (i18n?.language) {
+      moment.locale(i18n?.language);
+    }
+  }, [i18n?.language]);
+
   const preferences = React.useMemo(
     () => ({
       toggleTheme,
