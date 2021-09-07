@@ -77,6 +77,7 @@ const Newsfeed = () => {
           title={'post:news_feed'}
           titleTextProps={{useI18n: true, variant: 'h5'}}
           style={styles.headerOnLaptop}
+          removeBorderAndShadow
         />
       );
 
@@ -158,8 +159,6 @@ const createStyle = (theme: ITheme) => {
     },
     headerOnLaptop: {
       backgroundColor: colors.surface,
-      borderBottomWidth: 0,
-      shadowOpacity: 0,
     },
     listContainer: {
       flex: 1,

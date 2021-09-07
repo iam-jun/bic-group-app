@@ -210,7 +210,7 @@ const Notification = () => {
       <Header
         title="tabs:notification"
         titleTextProps={{useI18n: true, variant: 'h5'}}
-        style={isLaptop ? styles.headerOnLaptop : {}}
+        removeBorderAndShadow={isLaptop}
         hideBack
         onPressMenu={onPressMenu}
       />
@@ -242,10 +242,6 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: insets.top,
       flex: 1,
       backgroundColor: colors.background,
-    },
-    headerOnLaptop: {
-      borderBottomWidth: 0,
-      shadowOpacity: 0,
     },
     list: {},
     listFooter: {
