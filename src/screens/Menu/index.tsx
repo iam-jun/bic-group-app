@@ -83,7 +83,7 @@ const Menu = (): React.ReactElement => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header hideBack title={'Menu'} />
+      <Header hideBack title={'Menu'} titleTextProps={{variant: 'h5'}} />
       <HeaderAvatarView
         firstLabel={fullname}
         secondLabel={email}

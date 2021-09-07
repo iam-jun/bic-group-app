@@ -75,7 +75,7 @@ const Newsfeed = () => {
         <Header
           hideBack
           title={'post:news_feed'}
-          titleTextProps={{useI18n: true}}
+          titleTextProps={{useI18n: true, variant: 'h5'}}
           style={styles.headerOnLaptop}
         />
       );

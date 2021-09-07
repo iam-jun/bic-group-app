@@ -40,7 +40,7 @@ const Groups: React.FC = () => {
 
   return (
     <View style={styles.containerScreen}>
-      <Header hideBack title={'My Groups'} />
+      <Header hideBack title={'My Groups'} titleTextProps={{variant: 'h5'}} />
       <View style={styles.groupContainer}>
         <SearchInput
           style={{marginVertical: 12}}
