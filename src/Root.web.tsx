@@ -1,4 +1,6 @@
 import moment from 'moment';
+import 'moment/locale/vi';
+
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -67,6 +69,12 @@ export default (): React.ReactElement => {
     if (colorScheme !== theme) toggleTheme();
   }, [colorScheme]);
 
+  useEffect(() => {
+    if (i18n?.language) {
+      moment.locale(i18n?.language);
+    }
+  }, [i18n?.language]);
+
   const preferences = React.useMemo(
     () => ({
       toggleTheme,
@@ -86,6 +94,7 @@ export default (): React.ReactElement => {
     if (language) {
       // @ts-ignore
       i18n.language !== language && i18n.changeLanguage(language);
+      moment.locale(language);
     } else {
       let systemLocale =
         Platform.OS === 'ios'
@@ -101,8 +110,11 @@ export default (): React.ReactElement => {
         (item: string) => item === systemLocale,
       );
 
-      if (isSupportLanguage) changeLanguage(systemLocale);
-      else changeLanguage(AppConfig.defaultLanguage);
+      const newLanguage = isSupportLanguage
+        ? systemLocale
+        : AppConfig.defaultLanguage;
+      changeLanguage(newLanguage);
+      moment.locale(newLanguage);
     }
   };
 
