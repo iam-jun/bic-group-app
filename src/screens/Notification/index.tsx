@@ -1,5 +1,11 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -24,6 +30,7 @@ import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Notification = () => {
   const menuSheetRef = useRef<any>();
@@ -31,6 +38,9 @@ const Notification = () => {
   const notificationData = useNotifications();
   const {loadingNotifications, notificationList} = notificationData;
   const showNoNotification = notificationList.length === 0;
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const {rootNavigation} = useRootNavigation();
 
@@ -200,6 +210,7 @@ const Notification = () => {
       <Header
         title="tabs:notification"
         titleTextProps={{useI18n: true, variant: 'h5'}}
+        style={isLaptop ? styles.headerOnLaptop : {}}
         hideBack
         onPressMenu={onPressMenu}
       />
@@ -231,6 +242,10 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: insets.top,
       flex: 1,
       backgroundColor: colors.background,
+    },
+    headerOnLaptop: {
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
     },
     list: {},
     listFooter: {
