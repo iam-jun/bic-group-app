@@ -146,7 +146,7 @@ const SignIn = () => {
                 placeholder={'sample@email.com'}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                editable={!loading}
+                disabled={loading}
                 value={value}
                 error={errors.email}
                 onChangeText={text => {
@@ -182,7 +182,7 @@ const SignIn = () => {
                 placeholder={t('auth:input_label_password')}
                 error={errors.password}
                 autoCapitalize="none"
-                editable={!loading}
+                disabled={loading}
                 value={value}
                 onChangeText={text => {
                   onChange(text);
