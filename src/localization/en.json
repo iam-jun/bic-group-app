@@ -71,7 +71,8 @@
     "text_info": "Info",
     "text_help_center": "Help center is coming soon 🤗",
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
-    "text_got_it": "Got it"
+    "text_got_it": "Got it",
+    "text_files": "Files"
   },
   "auth": {
     "text_kickout_title": "Notice",

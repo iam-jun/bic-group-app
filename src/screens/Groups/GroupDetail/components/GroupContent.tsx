@@ -44,6 +44,10 @@ const GroupContent = () => {
     rootNavigation.navigate(groupStack.groupMembers, {groupId});
   };
 
+  const onPressFiles = () => {
+    rootNavigation.navigate(groupStack.groupFiles);
+  };
+
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
@@ -67,6 +71,10 @@ const GroupContent = () => {
           <ViewSpacing width={spacing.margin.base} />
           <Button.Secondary useI18n onPress={onPressMembers}>
             chat:title_members
+          </Button.Secondary>
+          <ViewSpacing width={spacing.margin.base} />
+          <Button.Secondary useI18n onPress={onPressFiles}>
+            common:text_files
           </Button.Secondary>
         </View>
         <ViewSpacing height={spacing.margin.small} />
