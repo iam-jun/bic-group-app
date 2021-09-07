@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
@@ -57,6 +57,7 @@ const ConversationItem: React.FC<IConversation> = ({
       titleProps={{
         numberOfLines: 1,
         color: textColor,
+        style: styles.title,
       }}
       subTitleProps={{
         numberOfLines: 2,
@@ -96,6 +97,13 @@ const createStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.base,
       paddingHorizontal: spacing.padding.tiny,
       alignItems: 'flex-start',
+    },
+    title: {
+      ...Platform.select({
+        web: {
+          paddingTop: 0,
+        },
+      }),
     },
     rightComponent: {
       marginLeft: spacing.margin.base,
