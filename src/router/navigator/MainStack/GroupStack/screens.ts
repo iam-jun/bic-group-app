@@ -12,12 +12,14 @@ import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/Edi
 import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
 import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
+import NewFeature from '~/screens/NewFeature';
 
 export default {
   'group-list': Groups,
   'group-detail': GroupDetail,
   'group-about': GroupAbout,
   'group-members': GroupMembers,
+  'group-files': NewFeature,
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
