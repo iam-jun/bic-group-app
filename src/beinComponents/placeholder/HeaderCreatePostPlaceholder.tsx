@@ -5,7 +5,7 @@ import {
   Placeholder,
   PlaceholderMedia,
   PlaceholderLine,
-  Fade,
+  ShineOverlay,
 } from 'rn-placeholder';
 
 import {ITheme} from '~/theme/interfaces';
@@ -22,7 +22,7 @@ const HeaderCreatePostPlaceholder: FC<CreatePostHeaderPlaceholderProps> = ({
 
   return (
     <Placeholder
-      Animation={Fade}
+      Animation={ShineOverlay}
       Left={props => <PlaceholderMedia style={[props.style, styles.left]} />}
       style={StyleSheet.flatten([styles.container, style])}>
       <PlaceholderLine style={styles.content} />
@@ -41,14 +41,12 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     left: {
-      opacity: 0.5,
       width: dimension.avatarSizes.medium,
       height: dimension.avatarSizes.medium,
       borderRadius: 50,
       backgroundColor: colors.borderDivider,
     },
     content: {
-      opacity: 0.5,
       width: '100%',
       height: 40,
       marginBottom: 0,

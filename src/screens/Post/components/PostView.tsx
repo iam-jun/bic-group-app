@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState, useRef} from 'react';
+import React, {FC, useEffect, useState, useRef, useContext} from 'react';
 import {View, StyleSheet, TouchableOpacity, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -11,18 +11,14 @@ import images from '~/resources/images';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {formatDate, formatLargeNumber} from '~/utils/formatData';
-import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
-import {IReactionProps} from '~/interfaces/IReaction';
 import ReactionView from '~/screens/Post/components/ReactionView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -34,6 +30,7 @@ import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
+import {AppContext} from '~/contexts/AppContext';
 
 export interface PostViewProps {
   postId: string;
@@ -52,7 +49,6 @@ const PostView: FC<PostViewProps> = ({
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
-  const reactionSheetRef = useRef<any>();
   const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
@@ -74,6 +70,8 @@ const PostView: FC<PostViewProps> = ({
   const postObjectData = useKeySelector(
     postKeySelector.postObjectDataById(postId),
   );
+
+  const {language} = useContext(AppContext);
 
   const {content} = postObjectData || {};
 
@@ -145,8 +143,14 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressMentionAudience = (audience: any) => {
-    if (audience) {
-      alert(`Show profile of ${audience.name || audience.fullname}`);
+    if (audience?.id) {
+      dispatch(
+        menuActions.selectedProfile({
+          id: audience?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(homeStack.publicProfile);
     }
   };
 
@@ -210,7 +214,7 @@ const PostView: FC<PostViewProps> = ({
     if (time) {
       const dateUtc = moment.utc(time);
       const localDate = dateUtc.local();
-      postTime = formatDate(localDate, undefined, 2, false) || '';
+      postTime = formatDate(localDate, undefined, language, 2, false) || '';
     }
     return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };

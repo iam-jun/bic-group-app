@@ -12,6 +12,7 @@ import {Linking, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
+import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
@@ -114,6 +115,12 @@ const StackNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = true;
   };
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      dispatch(modalActions.focusSearchInput(new Date().getTime().toString()));
+    }
+  };
+
   const renderToastMessage = () => {
     if (!toastMessage?.content) return null;
 
@@ -131,45 +138,51 @@ const StackNavigator = (): React.ReactElement => {
   };
 
   return (
-    <View style={styles.container}>
-      <NavigationContainer
-        linking={user ? linkingConfigFull : linkingConfig}
-        ref={rootNavigationRef}
-        onReady={onReady}
-        theme={navigationTheme}
-        documentTitle={{
-          enabled: false,
-        }}>
-        <Stack.Navigator
-          initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
-          screenOptions={{cardStyle: cardStyleConfig}}>
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
+    <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
+      <View style={styles.container}>
+        <NavigationContainer
+          linking={user ? linkingConfigFull : linkingConfig}
+          ref={rootNavigationRef}
+          onReady={onReady}
+          theme={navigationTheme}
+          documentTitle={{
+            enabled: false,
+          }}>
+          <Stack.Navigator
             //@ts-ignore
-            name={rootSwitch.authStack}
-            component={screens.AuthStack}
-          />
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
-            //@ts-ignore
-            name={rootSwitch.mainStack}
-            component={screens.MainStack}
-            initialParams={{initialRouteName}}
-          />
-          <Stack.Screen
-            options={getOptions(t)}
-            // @ts-ignore
-            name={rootSwitch.notFound}
-            component={screens.NotFound}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <AlertModal />
-      <AlertNewFeatureModal />
-      <LoadingModal />
+            initialRouteName={
+              user ? rootSwitch.mainStack : rootSwitch.authStack
+            }
+            screenOptions={{cardStyle: cardStyleConfig}}>
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              //@ts-ignore
+              name={rootSwitch.authStack}
+              component={screens.AuthStack}
+            />
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              //@ts-ignore
+              name={rootSwitch.mainStack}
+              component={screens.MainStack}
+              initialParams={{initialRouteName}}
+            />
+            <Stack.Screen
+              options={getOptions(t)}
+              // @ts-ignore
+              name={rootSwitch.notFound}
+              component={screens.NotFound}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
 
-      {renderToastMessage()}
-    </View>
+        <AlertModal />
+        <AlertNewFeatureModal />
+        <LoadingModal />
+
+        {renderToastMessage()}
+      </View>
+    </Div>
   );
 };
 
@@ -182,8 +195,12 @@ const getOptions = (t: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
+  },
+  container: {
+    width: '100%',
+    height: '100%',
   },
   toastStyle: {
     position: 'absolute',

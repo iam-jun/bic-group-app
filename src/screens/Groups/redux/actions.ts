@@ -31,13 +31,6 @@ const groupsActions = {
       payload,
     };
   },
-
-  setLoadingGroupDetail: function (payload: boolean) {
-    return {
-      type: groupsTypes.SET_LOADING_GROUP_DETAIL,
-      payload,
-    };
-  },
   clearGroupMembers: function () {
     return {
       type: groupsTypes.CLEAR_GROUP_MEMBER,

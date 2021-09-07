@@ -1,3 +1,4 @@
+export {default as ListMessages} from './ListMessages';
 export {default as MessageContainer} from './MessageContainer';
 export {default as ChatFooter} from './ChatFooter';
 export {default as ChatInput} from './ChatInput';

@@ -1,6 +1,6 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, useWindowDimensions} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -17,10 +17,15 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {getAvatar} from '../helper';
-import {ChatInput, MessageContainer, MessageOptionsModal} from './fragments';
-import {showHideToastMessage} from '~/store/modal/actions';
+import {
+  ChatInput,
+  ListMessages,
+  MessageContainer,
+  MessageOptionsModal,
+} from './fragments';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -137,6 +142,14 @@ const Conversation = () => {
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
+  const onScroll = (event: any) => {
+    const element = event.target;
+
+    if (element.scrollTop <= 100) {
+      loadMoreMessages();
+    }
+  };
+
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
     const props = {
       previousMessage:
@@ -160,8 +173,8 @@ const Conversation = () => {
         onPressMenu={goConversationDetail}
         hideBack={isLaptop}
       />
-      <FlatList
-        inverted
+      <ListMessages
+        inverted={Platform.OS !== 'web'}
         data={messages.data}
         keyboardShouldPersistTaps="handled"
         onEndReached={loadMoreMessages}
@@ -178,10 +191,12 @@ const Conversation = () => {
         ListFooterComponent={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
+        onScroll={onScroll}
       />
+
       <ChatInput onError={setError} />
       <MessageOptionsModal
-        isMyMessage={selectedMessage?.user?.username === user.username}
+        isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}
         onMenuPress={onMenuPress}
         onReactionPress={onReactionPress}
