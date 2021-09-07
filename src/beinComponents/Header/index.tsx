@@ -116,8 +116,16 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         <View style={styles.titleContainer}>
-          {!!title && <Text.H6 {...titleTextProps}>{title}</Text.H6>}
-          {!!subTitle && <Text.H6S {...subTitleTextProps}>{subTitle}</Text.H6S>}
+          {!!title && (
+            <Text.H5 style={styles.title} {...titleTextProps}>
+              {title}
+            </Text.H5>
+          )}
+          {!!subTitle && (
+            <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
+              {subTitle}
+            </Text.Subtitle>
+          )}
         </View>
         {!!icon && onPressIcon && (
           <Icon
@@ -175,6 +183,15 @@ const createStyle = (theme: ITheme) => {
       height: '100%',
       marginLeft: spacing.margin.base,
       justifyContent: 'center',
+    },
+    title: {
+      height: 24,
+      lineHeight: 24,
+      paddingTop: 3,
+    },
+    subtitle: {
+      height: 16,
+      lineHeight: 16,
     },
   });
 };
