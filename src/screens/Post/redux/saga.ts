@@ -1,4 +1,4 @@
-import {put, call, takeLatest, select} from 'redux-saga/effects';
+import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get} from 'lodash';
 import i18n from 'i18next';
 
@@ -43,7 +43,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.DELETE_POST, deletePost);
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
-  yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
+  yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
   yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
   yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
@@ -352,18 +352,22 @@ function* postReactToPost({
 }) {
   const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
+    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+    const cReactionCounts1 = post1.reaction_counts || {};
+    const cOwnReaction1 = post1.own_reactions || {};
+
     const data: ReactionType[] = [];
     data.push(reactionId);
-    const added = ownReaction?.[reactionId]?.length > 0;
+    const added = cOwnReaction1?.[reactionId]?.length > 0;
     if (!added) {
-      const newOwnReaction: IOwnReaction = {...ownReaction};
+      const newOwnReaction1: IOwnReaction = {...cOwnReaction1};
       const reactionArr: IReaction[] = [];
-      reactionArr.push({kind: reactionId});
-      newOwnReaction[reactionId] = reactionArr;
-      const newReactionCounts = {...reactionCounts};
+      reactionArr.push({loading: true});
+      newOwnReaction1[reactionId] = reactionArr;
+      const newReactionCounts = {...cReactionCounts1};
       newReactionCounts[reactionId] =
         (newReactionCounts?.[reactionId] || 0) + 1;
-      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+      yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
       const response = yield call(
         postDataHelper.postReaction,
@@ -373,11 +377,20 @@ function* postReactToPost({
         userId,
       );
       if (response?.data?.[0]) {
+        const cOwnReaction2 = yield select(s =>
+          get(s, postKeySelector.postOwnReactionById(id)),
+        ) || {};
+        const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
+
         const reactionArr2: IReaction[] = [];
         reactionArr2.push({id: response?.data?.[0]});
-        newOwnReaction[reactionId] = reactionArr2;
+        newOwnReaction2[reactionId] = reactionArr2;
 
-        yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+        yield onUpdateReactionOfPostById(
+          id,
+          {...newOwnReaction2},
+          {...newReactionCounts},
+        );
       }
     }
   } catch (e) {
