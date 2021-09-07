@@ -33,12 +33,11 @@ import {deviceDimensions} from '~/theme/dimension';
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
-  const dispatch = useDispatch();
-  const {streamClient} = useContext(AppContext);
-
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+  const styles = createStyle(theme, isLaptop);
+  const dispatch = useDispatch();
+  const {streamClient} = useContext(AppContext);
 
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
@@ -108,6 +107,7 @@ const Newsfeed = () => {
         titleTextProps={{useI18n: true}}
         menuIcon={!isLaptop ? 'Edit' : undefined}
         onPressMenu={!isLaptop ? navigateToCreatePost : undefined}
+        style={styles.header}
       />
       {homePosts.length === 0 && refreshing ? (
         renderPlaceholder()
@@ -133,7 +133,7 @@ const Newsfeed = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, isLaptop: boolean) => {
   const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
@@ -142,6 +142,13 @@ const createStyle = (theme: ITheme) => {
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
+    header: isLaptop
+      ? {
+          backgroundColor: colors.surface,
+          borderBottomWidth: 0,
+          shadowOpacity: 0,
+        }
+      : {},
     listContainer: {
       flex: 1,
       ...Platform.select({
