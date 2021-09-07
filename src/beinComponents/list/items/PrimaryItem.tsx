@@ -18,6 +18,7 @@ import {IAction} from '~/constants/commonActions';
 import {IconType} from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
+import Div from '~/beinComponents/Div';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
@@ -83,66 +84,72 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   ]);
 
   return (
-    <TouchableOpacity
-      disabled={!onPress}
-      onPress={onPress}
-      style={containerStyle}>
-      {LeftComponent}
-      {(showAvatar || !!avatar) && (
-        <Avatar.Medium source={avatar} style={styles.avatar} {...avatarProps} />
-      )}
-      {!!leftIcon && (
-        <Icon
-          size={14}
-          style={styles.iconMarginRight}
-          icon={leftIcon}
-          {...leftIconProps}
-        />
-      )}
-      <View style={styles.contentContainer}>
-        {!!title && (
-          <Text variant="h6" numberOfLines={2} {...titleProps}>
-            {title}
-          </Text>
+    <Div className="menu-item">
+      <TouchableOpacity
+        style={containerStyle}
+        disabled={!onPress}
+        onPress={onPress}>
+        {LeftComponent}
+        {(showAvatar || !!avatar) && (
+          <Avatar.Medium
+            source={avatar}
+            style={styles.avatar}
+            {...avatarProps}
+          />
         )}
-        {!!subTitle && (
-          <Text variant="body" numberOfLines={2} {...subTitleProps}>
-            {subTitle}
-          </Text>
+        {!!leftIcon && (
+          <Icon
+            size={14}
+            style={styles.iconMarginRight}
+            icon={leftIcon}
+            {...leftIconProps}
+          />
         )}
-        {ContentComponent}
-      </View>
-      {onPressCheckbox && (
-        <Checkbox
-          style={styles.iconMarginLeft}
-          isChecked={isChecked}
-          onActionPress={onPressCheckbox}
-          {...checkboxProps}
-        />
-      )}
-      {onPressToggle && (
-        <Toggle
-          style={styles.iconMarginLeft}
-          isChecked={toggleChecked}
-          onActionPress={onPressToggle}
-        />
-      )}
-      {onPressEdit && (
-        <Icon
-          style={styles.iconMarginLeft}
-          icon={'Edit'}
-          onPress={onPressEdit}
-        />
-      )}
-      {onPressMenu && (
-        <Icon
-          style={styles.iconMarginLeft}
-          onPress={onPressMenu}
-          icon={'EllipsisV'}
-        />
-      )}
-      {RightComponent}
-    </TouchableOpacity>
+        <View style={styles.contentContainer}>
+          {!!title && (
+            <Text variant="h6" numberOfLines={2} {...titleProps}>
+              {title}
+            </Text>
+          )}
+          {!!subTitle && (
+            <Text variant="body" numberOfLines={2} {...subTitleProps}>
+              {subTitle}
+            </Text>
+          )}
+          {ContentComponent}
+        </View>
+        {onPressCheckbox && (
+          <Checkbox
+            style={styles.iconMarginLeft}
+            isChecked={isChecked}
+            onActionPress={onPressCheckbox}
+            {...checkboxProps}
+          />
+        )}
+        {onPressToggle && (
+          <Toggle
+            style={styles.iconMarginLeft}
+            isChecked={toggleChecked}
+            onActionPress={onPressToggle}
+          />
+        )}
+        {onPressEdit && (
+          <Icon
+            style={styles.iconMarginLeft}
+            icon={'Edit'}
+            onPress={onPressEdit}
+          />
+        )}
+        {onPressMenu && (
+          <Icon
+            style={styles.iconMarginLeft}
+            onPress={onPressMenu}
+            icon={'EllipsisV'}
+          />
+        )}
+        {RightComponent}
+      </TouchableOpacity>
+    </Div>
   );
 };
 

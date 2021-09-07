@@ -1,8 +1,7 @@
 import {useIsFocused} from '@react-navigation/native';
-import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {useWindowDimensions, View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -20,7 +19,7 @@ import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
-import {scaleSize} from '~/theme/dimension';
+import {deviceDimensions, scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import appConfig from '~/configs/appConfig';
 import Divider from '~/beinComponents/Divider';
@@ -30,6 +29,9 @@ const ConversationsList = (): React.ReactElement => {
   const styles = createStyles(theme);
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -79,24 +81,25 @@ const ConversationsList = (): React.ReactElement => {
     dispatch(actions.searchConversation(searchQuery));
   };
 
-  const seachHandler = useCallback(
+  const searchHandler = useCallback(
     debounce(doSearch, appConfig.searchTriggerTime),
     [],
   );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);
-    seachHandler(text);
+    searchHandler(text);
   };
 
   return (
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
       <Header
-        title={i18next.t('chat:title')}
+        title="chat:title"
+        titleTextProps={{useI18n: true}}
         hideBack
-        avatar={images.img_menu_chat}
         menuIcon="iconCreateChat"
         onPressMenu={onMenuPress}
+        removeBorderAndShadow={isLaptop}
       />
       <SearchInput
         style={styles.inputSearch}

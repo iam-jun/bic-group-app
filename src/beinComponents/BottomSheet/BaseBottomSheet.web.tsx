@@ -1,8 +1,10 @@
-import React, {useImperativeHandle, useState} from 'react';
+import {size} from 'lodash';
+import React, {useEffect, useImperativeHandle, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   FlatListProps,
+  Keyboard,
   LayoutChangeEvent,
   Modal,
   StyleSheet,
@@ -10,7 +12,6 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {MessageOptionType} from '~/constants/chat';
 import {ITheme} from '~/theme/interfaces';
 
 export interface Props {
@@ -18,9 +19,12 @@ export interface Props {
   children?: React.ReactNode;
   flatListProps?: FlatListProps<any>;
   modalizeRef?: any;
-  side?: 'left' | 'right';
+  side?: 'left' | 'right' | 'center';
   ContentComponent?: React.ReactNode;
-  onMenuPress: (item: MessageOptionType) => void;
+  position?: {
+    x: number;
+    y: number;
+  };
   onClose: () => void;
 }
 
@@ -29,25 +33,38 @@ const BaseBottomSheet: React.FC<Props> = ({
   flatListProps,
   ContentComponent,
   side,
-
+  isOpen,
+  position,
   onClose,
 }: Props) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyle(theme);
   const [visible, setVisible] = useState(false);
-  const [position, setPosition] = useState<{
+  const [_position, setPosition] = useState<{
     x: number;
     y: number;
   }>({x: -1, y: -1});
+
   const [boxSize, setBoxSize] = useState<{width: number; height: number}>({
     width: 250, //For first time, onLayout have not triggered yet
     height: 200,
   });
 
-  const open = (x: number, y: number) => {
+  useEffect(() => {
+    if (isOpen) {
+      Keyboard.dismiss();
+      open(position?.x, position?.y);
+    }
+  }, [isOpen]);
+
+  const open = (x?: number, y?: number) => {
     let _x = Dimensions.get('window').width / 2 - boxSize.width / 2;
     let _y = Dimensions.get('window').height / 2 - boxSize.height / 2;
-    if (x) _x = side === 'left' ? x - boxSize.width : x;
+    if (x) {
+      if (side === 'left') _x = x - boxSize.width;
+      else if (side === 'center') _x = x - boxSize.width / 2;
+      else _x = x;
+    }
     if (y)
       _y =
         y + boxSize.height > Dimensions.get('window').height
@@ -77,7 +94,7 @@ const BaseBottomSheet: React.FC<Props> = ({
     setBoxSize({...e.nativeEvent.layout});
   };
 
-  if (position.x < 0 || position.y < 0) return null;
+  if (_position.x < 0 || _position.y < 0) return null;
 
   return (
     <Modal transparent animationType="fade" visible={visible}>
@@ -85,7 +102,7 @@ const BaseBottomSheet: React.FC<Props> = ({
         <View style={styles.container}>
           <View
             onLayout={onLayout}
-            style={[styles.menu, {left: position.x, top: position.y}]}>
+            style={[styles.menu, {left: _position.x, top: _position.y}]}>
             {flatListProps ? <FlatList {...flatListProps} /> : ContentComponent}
           </View>
         </View>
