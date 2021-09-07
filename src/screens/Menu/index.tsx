@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -26,6 +26,7 @@ import * as authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ const Menu = (): React.ReactElement => {
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const {myProfile} = useMenu();
   const {id, fullname, email, avatar} = myProfile;
@@ -83,7 +87,12 @@ const Menu = (): React.ReactElement => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header hideBack title={'Menu'} titleTextProps={{variant: 'h5'}} />
+      <Header
+        hideBack
+        title="tabs:menus"
+        titleTextProps={{useI18n: true, variant: 'h5'}}
+        removeBorderAndShadow={isLaptop}
+      />
       <HeaderAvatarView
         firstLabel={fullname}
         secondLabel={email}

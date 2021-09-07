@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -12,12 +12,16 @@ import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IGroup} from '~/interfaces/IGroup';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Groups: React.FC = () => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const groupsData = useGroups();
   const {loadingJoinedGroups, joinedGroups} = groupsData;
@@ -40,7 +44,12 @@ const Groups: React.FC = () => {
 
   return (
     <View style={styles.containerScreen}>
-      <Header hideBack title={'My Groups'} titleTextProps={{variant: 'h5'}} />
+      <Header
+        hideBack
+        title="tabs:groups"
+        titleTextProps={{useI18n: true, variant: 'h5'}}
+        removeBorderAndShadow={isLaptop}
+      />
       <View style={styles.groupContainer}>
         <SearchInput
           style={{marginVertical: 12}}
