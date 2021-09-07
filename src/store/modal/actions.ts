@@ -61,3 +61,8 @@ export const setToastMessage = (payload: IToastMessage) => ({
 export const clearToastMessage = () => ({
   type: Actions.CLEAR_TOAST_MESSAGE,
 });
+
+export const focusSearchInput = (payload: string) => ({
+  type: Actions.FOCUS_SEARCH_INPUT,
+  payload,
+});

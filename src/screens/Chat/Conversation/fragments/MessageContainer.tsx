@@ -70,7 +70,7 @@ const MessageItem = (props: MessageItemProps) => {
   };
 
   return (
-    <Div onHover={onHover} onBlur={onBlur}>
+    <Div className="chat-message" onMouseOver={onHover} onMouseLeave={onBlur}>
       <TouchableWithoutFeedback onLongPress={onMenuPress}>
         <View style={styles.container}>
           {quoted_message && <QuotedMessage {...quoted_message} />}
