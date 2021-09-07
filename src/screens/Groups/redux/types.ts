@@ -28,6 +28,9 @@ const groupsTypes = {
   GET_GROUP_POSTS: 'groups/GET_GROUP_POSTS',
   EDIT_GROUP_DETAIL: 'groups/EDIT_GROUP_DETAIL',
   UPLOAD_IMAGE: 'groups/UPLOAD_IMAGE',
+
+  SET_LOADING_AVATAR: 'groups/SET_LOADING_AVATAR',
+  SET_LOADING_COVER: 'groups/SET_LOADING_COVER',
 };
 
 export default groupsTypes;

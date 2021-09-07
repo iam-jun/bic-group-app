@@ -140,6 +140,15 @@ const groupsActions = {
       payload,
     };
   },
+
+  setLoadingAvatar: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_AVATAR,
+    payload,
+  }),
+  setLoadingCover: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_COVER,
+    payload,
+  }),
 };
 
 export default groupsActions;
