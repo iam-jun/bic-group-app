@@ -394,6 +394,8 @@ const createStyles = (
       ...Platform.select({
         web: {
           border: 'none',
+          marginTop: '0px important',
+          marginBottom: '0px important',
         },
       }),
     },
