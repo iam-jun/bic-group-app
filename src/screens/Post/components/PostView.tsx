@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState, useRef, useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
@@ -137,8 +137,9 @@ const PostView: FC<PostViewProps> = ({
     );
   };
 
-  const onPressMenu = () => {
-    menuSheetRef.current?.open?.();
+  const onPressMenu = (e: any) => {
+    Keyboard.dismiss();
+    menuSheetRef.current?.open?.(e?.pageX, e?.pageY);
   };
 
   const onPressMentionAudience = (audience: any) => {
