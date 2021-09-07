@@ -190,6 +190,11 @@ const setMentionUsers = (payload: IChatUser[]) => ({
   payload,
 });
 
+const setHoverMessage = (payload?: IMessage | null) => ({
+  type: Actions.SET_HOVER_MESSAGE,
+  payload,
+});
+
 export default {
   initChat,
   getData,
@@ -227,4 +232,5 @@ export default {
   setMentionSearchKey,
   getMentionUsers,
   setMentionUsers,
+  setHoverMessage,
 };

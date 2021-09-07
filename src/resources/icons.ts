@@ -193,6 +193,8 @@ const icons = {
   iconUserPlus: 'UserPlus',
   RemoveUser: 'UserTimes',
   ArrowDown: 'ArrowDown',
+  CreateThread: 'CommentAltPlus',
+  Smile: 'Smile',
 };
 
 export default icons;
