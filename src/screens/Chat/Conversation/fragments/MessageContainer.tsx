@@ -112,6 +112,8 @@ const createStyles = (theme: ITheme) => {
     message: {
       marginStart: 48,
       marginTop: -16,
+      minHeight: 24,
+      paddingVertical: 2,
     },
     removedText: {
       color: colors.textSecondary,

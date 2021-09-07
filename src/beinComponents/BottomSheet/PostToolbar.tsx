@@ -182,7 +182,7 @@ const PostToolbar = ({
 
     if (expiresTime) {
       date = formatDate(expiresTime, 'MMM Do, YYYY');
-      time = formatDate(expiresTime, 'hh:mm A', 9999);
+      time = formatDate(expiresTime, 'hh:mm A', undefined, 9999);
     }
 
     return (

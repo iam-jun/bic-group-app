@@ -1,20 +1,18 @@
 import i18next from 'i18next';
 import React, {useState} from 'react';
-import {Platform} from 'react-native';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
+import apiConfig from '~/configs/apiConfig';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {IFileResponse} from '~/interfaces/common';
+import {mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
+import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {validateFile} from '~/utils/validation';
-
-import {makeHttpRequest} from '~/services/httpApiRequest';
-import apiConfig from '~/configs/apiConfig';
-import {mapUsers} from '~/screens/Chat/helper';
 
 interface Props {
   onError: (err: any) => void;
@@ -118,6 +116,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
         onPressSelectImage,
       }}
       showItemAll
+      emptyContent={i18next.t('post:mention_empty_content')}
       allReplacer={`@[u:all:${i18next.t('chat:text_mention_all')}] `}
       getDataPromise={getMentionUsers}
       getDataParam={{}}

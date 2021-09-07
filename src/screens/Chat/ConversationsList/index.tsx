@@ -1,9 +1,7 @@
 import {useIsFocused} from '@react-navigation/native';
-import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {TextInput, View} from 'react-native';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TextInput, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -11,27 +9,30 @@ import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
-import {scaleSize} from '~/theme/dimension';
+import {deviceDimensions, scaleSize} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 import appConfig from '~/configs/appConfig';
 import {createRef} from 'react';
 import useModal from '~/hooks/modal';
+import Divider from '~/beinComponents/Divider';
 
 const ConversationsList = (): React.ReactElement => {
-  const theme: IObject<any> = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -65,9 +66,7 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.createConversation);
   };
 
-  const renderItemSeparator = () => (
-    <ViewSpacing height={theme.spacing.margin.tiny} />
-  );
+  const renderItemSeparator = () => <Divider style={styles.itemSeparator} />;
 
   const renderEmpty = () => {
     if (!searchQuery) return null;
@@ -89,24 +88,25 @@ const ConversationsList = (): React.ReactElement => {
     dispatch(actions.searchConversation(searchQuery));
   };
 
-  const seachHandler = useCallback(
+  const searchHandler = useCallback(
     debounce(doSearch, appConfig.searchTriggerTime),
     [],
   );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);
-    seachHandler(text);
+    searchHandler(text);
   };
 
   return (
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
       <Header
-        title={i18next.t('chat:title')}
+        title="chat:title"
+        titleTextProps={{useI18n: true}}
         hideBack
-        avatar={images.img_menu_chat}
         menuIcon="iconCreateChat"
         onPressMenu={onMenuPress}
+        removeBorderAndShadow={isLaptop}
       />
       <SearchInput
         inputRef={inputRef}
@@ -129,7 +129,7 @@ const ConversationsList = (): React.ReactElement => {
   );
 };
 
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {},
@@ -139,6 +139,11 @@ const createStyles = (theme: IObject<any>) => {
     item: {
       flex: 1,
       flexDirection: 'row',
+    },
+    itemSeparator: {
+      marginLeft: 72,
+      marginRight: spacing.margin.large,
+      marginBottom: spacing.margin.small,
     },
     emptyView: {
       alignItems: 'center',

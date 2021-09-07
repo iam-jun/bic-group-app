@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
@@ -24,7 +24,7 @@ const ConversationItem: React.FC<IConversation> = ({
   const styles = createStyles(theme);
   const {text, textReversed, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
-  const textcolor = unreadCount ? text : textSecondary;
+  const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
@@ -56,12 +56,13 @@ const ConversationItem: React.FC<IConversation> = ({
       title={name}
       titleProps={{
         numberOfLines: 1,
-        color: textcolor,
+        color: textColor,
+        style: styles.title,
       }}
       subTitleProps={{
         numberOfLines: 2,
         variant: unreadCount ? 'bodyM' : 'body',
-        color: textcolor,
+        color: textColor,
       }}
       subTitle={lastMessage}
       style={styles.container}
@@ -91,7 +92,18 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
-      // marginVertical: spacing.padding.base,
+      height: 64, // = 60 + paddingBottom
+      paddingBottom: spacing.margin.tiny,
+      marginHorizontal: spacing.margin.base,
+      paddingHorizontal: spacing.padding.tiny,
+      alignItems: 'flex-start',
+    },
+    title: {
+      ...Platform.select({
+        web: {
+          paddingTop: 0,
+        },
+      }),
     },
     rightComponent: {
       marginLeft: spacing.margin.base,
@@ -102,7 +114,7 @@ const createStyles = (theme: ITheme) => {
       marginRight: spacing.margin.base,
     },
     textUpdate: {
-      paddingTop: spacing.padding.tiny,
+      paddingTop: 0,
     },
     unread: {
       borderRadius: spacing?.borderRadius.large,

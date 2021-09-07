@@ -83,6 +83,7 @@ const postActions = {
   setShowReactionBottomSheet: (payload?: {
     show?: boolean;
     title?: string;
+    position?: {x: number; y: number};
     callback?: (reactionId: ReactionType) => void;
   }) => ({
     type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,

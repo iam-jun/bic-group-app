@@ -20,7 +20,7 @@ const ReactionBottomSheet = () => {
   const {spacing, colors} = theme;
 
   const data = useKeySelector(postKeySelector.reactionBottomSheet);
-  const {title, show, callback} = data || {};
+  const {title, show, position, callback} = data || {};
 
   const _onPressReaction = (reaction: IReactionProps) => {
     callback?.(reaction.id);
@@ -35,6 +35,8 @@ const ReactionBottomSheet = () => {
     <BottomSheet
       modalizeRef={reactionSheetRef}
       isOpen={show}
+      position={position}
+      side="center"
       onClose={_onClose}
       ContentComponent={
         <View>
