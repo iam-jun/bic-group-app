@@ -94,9 +94,10 @@ export function signUp(payload: ISignUp) {
   };
 }
 
-export function signOut() {
+export function signOut(shouldNavigate = true) {
   return {
     type: types.SIGN_OUT,
+    payload: shouldNavigate,
   };
 }
 

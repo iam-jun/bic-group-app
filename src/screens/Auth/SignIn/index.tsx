@@ -119,15 +119,7 @@ const SignIn = () => {
 
   // TODO: remove when function signup come back
   const handleSignUpNotFunctioning = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function sign up has not been developed. Stay tuned for further releases 😀',
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
-      }),
-    );
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   return (

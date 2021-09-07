@@ -108,7 +108,7 @@ const getBeinIdToken = (): string => {
   );
 };
 
-export const getChatAuthInfo = () => {
+const getChatAuthInfo = () => {
   return _.get(Store.getCurrentAuth(), 'chat', {});
 };
 
@@ -168,7 +168,7 @@ const handleRetry = async (error: AxiosError) => {
   });
 
   // create request to refresh token
-  await getTokenAndCallBackBein();
+  await getTokenAndCallBackBein(error.config.headers.Authorization);
 
   // next
   return newReqPromise;
@@ -176,18 +176,17 @@ const handleRetry = async (error: AxiosError) => {
 
 // get refresh token
 let isRefreshingToken = false;
-const getTokenAndCallBackBein = async (): Promise<void> => {
+const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   if (!isRefreshingToken) {
     isRefreshingToken = true;
     let isSuccess = true;
 
     try {
-      const oldToken = getBeinIdToken();
       const sessionData = await Auth.currentSession();
       const newToken = sessionData?.getAccessToken().getJwtToken();
       const refreshToken = sessionData?.getRefreshToken().getToken();
       const idToken = sessionData?.getIdToken().getJwtToken();
-      if (idToken === oldToken) {
+      if (idToken === oldBeinToken) {
         await Auth.currentAuthenticatedUser(); // TODO: verify
         _dispatchLogout();
         _dispatchSessionExpire();

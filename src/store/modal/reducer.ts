@@ -9,9 +9,16 @@ export const initState = {
     cancelBtn: false,
     iconName: '',
     confirmLabel: '',
-    onConfirm: () => {},
-    onCancel: () => {},
+    onConfirm: () => {
+      // do something
+    },
+    onCancel: () => {
+      // do something
+    },
     isDismissable: true,
+  },
+  alertNewFeature: {
+    visible: false,
   },
   toastMessage: {
     content: '',
@@ -40,6 +47,22 @@ function commonReducer(state = initState, action: any = {}) {
 
     case actions.HIDE_ALERT:
       return initState;
+
+    case actions.SHOW_ALERT_NEW_FEATURE:
+      return {
+        ...state,
+        alertNewFeature: {
+          visible: true,
+        },
+      };
+
+    case actions.HIDE_ALERT_NEW_FEATURE:
+      return {
+        ...state,
+        alertNewFeature: {
+          visible: false,
+        },
+      };
 
     case actions.SET_TOAST_MESSAGE:
       return {

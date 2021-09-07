@@ -140,8 +140,8 @@ function* onSignInSuccess(user: IUserResponse) {
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
   if (!refreshSuccess) {
-    console.log('TODO: get auth tokens failed');
-    yield onSignInFailed(i18n.t('error:http:token_expired'));
+    yield put(actions.signOut(false));
+    yield onSignInFailed(i18n.t('error:http:unknown'));
     return;
   }
 
@@ -266,13 +266,16 @@ function* forgotPasswordConfirm({
   }
 }
 
-function* signOut() {
+function* signOut({payload}: any) {
   try {
     yield Auth.signOut();
-
+    if (!payload) {
+      return;
+    }
     navigation.replace(rootSwitch.authStack);
   } catch (err) {
     yield showError(err);
+    navigation.replace(rootSwitch.authStack);
   }
 }
 

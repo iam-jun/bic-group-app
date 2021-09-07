@@ -32,7 +32,6 @@ const initState = {
     searchKey: '',
     searchResult: [],
   },
-  postDetail: {},
   replyingComment: {},
   allPosts: {},
   allComments: {},

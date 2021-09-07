@@ -182,6 +182,8 @@ const GroupMembers = () => {
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{}} />}
+        stickySectionHeadersEnabled={false}
+        showsVerticalScrollIndicator={false}
       />
     </ScreenWrapper>
   );
@@ -208,17 +210,16 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       justifyContent: 'space-between',
       alignItems: 'center',
+      margin: spacing.margin.base,
     },
     inputSearch: {
       flex: 1,
-      margin: spacing.margin.base,
     },
     inviteButton: {
       backgroundColor: colors.bgButtonSecondary,
       padding: spacing.padding.small,
       borderRadius: 6,
-      marginTop: spacing.margin.base,
-      marginRight: spacing.margin.base,
+      marginLeft: spacing.margin.small,
     },
     iconSmall: {
       marginRight: spacing.margin.small,

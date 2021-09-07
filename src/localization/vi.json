@@ -272,7 +272,7 @@
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
-      "unknown": "Unknown http error",
+      "unknown": "Đã có lỗi xảy ra. Vui lòng thử lại sau ít phút.",
       "401": "Unauthorized",
       "token_expired": "Token expired"
     },

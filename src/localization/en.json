@@ -263,7 +263,7 @@
     "label_users": "Users",
     "label_post_deleted": "Post deleted",
     "label_all_reacts": "All Reacts",
-    "text_search_result_empty": "No matching results! Please try another name...",
+    "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
     "alert_title_back_edit_post": "Discard changes",
@@ -395,9 +395,9 @@
       "label_remove_from_group_chat": "Remove from group chat"
     },
     "text_mention_all": "All",
-    "modal_confirm_remove_member":{
-      "title":"Remove Member",
-      "description":"This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+    "modal_confirm_remove_member": {
+      "title": "Remove Member",
+      "description": "This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
     },
     "message_option": {
       "delete": "Delete Message",
@@ -422,7 +422,7 @@
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
-      "unknown": "Unknown http error",
+      "unknown": "Something went wrong. Please try again later.",
       "401": "Unauthorized",
       "token_expired": "Token expired"
     },

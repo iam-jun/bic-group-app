@@ -264,10 +264,10 @@ const PostSelectAudience = () => {
     }
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.textEmpty} useI18n>
+        <Image style={styles.imgSearchEmpty} source={images.img_search_empty} />
+        <Text color={colors.textSecondary} style={styles.textEmpty} useI18n>
           post:text_search_result_empty
         </Text>
-        <Image style={styles.imgSearchEmpty} source={images.img_search_empty} />
       </View>
     );
   };

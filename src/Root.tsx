@@ -31,8 +31,10 @@ import {fontConfig} from '~/configs/fonts';
 import notificationsActions from '~/constants/notificationActions';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
+import {IUserResponse} from '~/interfaces/IAuth';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
+import Store from '~/store';
 import {setupPushToken} from '~/store/app/actions';
 import {fetchSetting} from '~/store/modal/actions';
 
@@ -180,7 +182,10 @@ export default (): React.ReactElement => {
       loaded: false,
     };
     try {
-      dispatch(setupPushToken());
+      const user: IUserResponse | boolean = Store.getCurrentUser();
+      if (user) {
+        dispatch(setupPushToken());
+      }
       /*Fetch setting*/
       dispatch(fetchSetting());
 

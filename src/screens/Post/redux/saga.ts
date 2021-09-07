@@ -6,6 +6,7 @@ import {
   IOwnReaction,
   IPayloadCreateComment,
   IPayloadGetCommentsById,
+  IPayloadGetPostDetail,
   IPayloadPutEditComment,
   IPayloadPutEditPost,
   IPayloadReactToComment,
@@ -60,6 +61,7 @@ export default function* postSaga() {
     updateAllCommentsByParentIdsWithComments,
   );
   yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
+  yield takeLatest(postTypes.GET_POST_DETAIL, getPostDetail);
 }
 
 function* postCreateNewPost({
@@ -261,39 +263,37 @@ function* addToAllPosts({
   const newComments: IReaction[] = [];
   const newAllCommentByParentId: any = {};
 
+  let posts: IPostActivity[] = [];
   if (isArray(payload) && payload.length > 0) {
-    payload.map((item: IPostActivity) => {
-      if (item?.id) {
-        const postComments = sortComments(
-          item?.latest_reactions?.comment || [],
-        );
+    posts = posts.concat(payload);
+  } else {
+    posts = new Array(payload) as IPostActivity[];
+  }
 
-        //todo update getstream query to get only 1 child comment
-        //todo @Toan is researching for solution
-        if (postComments.length > 0) {
-          for (let i = 0; i < postComments.length; i++) {
-            const cc = postComments[i]?.latest_children?.comment || [];
-            if (cc.length > 1) {
-              postComments[i].latest_children.comment = cc.slice(
-                cc.length - 1,
-                cc.length,
-              );
-            }
+  posts.map((item: IPostActivity) => {
+    if (item?.id) {
+      const postComments = sortComments(item?.latest_reactions?.comment || []);
+
+      //todo update getstream query to get only 1 child comment
+      //todo @Toan is researching for solution
+      if (postComments.length > 0) {
+        for (let i = 0; i < postComments.length; i++) {
+          const cc = postComments[i]?.latest_children?.comment || [];
+          if (cc.length > 1) {
+            postComments[i].latest_children.comment = cc.slice(
+              cc.length - 1,
+              cc.length,
+            );
           }
         }
-        //todo remove code above later
-
-        newAllPosts[item.id] = item;
-        newAllCommentByParentId[item.id] = postComments;
-        postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
       }
-    });
-  } else if (payload && 'id' in payload && payload.id) {
-    const postComments = sortComments(payload?.latest_reactions?.comment || []);
-    newAllPosts[payload.id] = payload;
-    newAllCommentByParentId[payload.id] = postComments;
-    postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
-  }
+      //todo remove code above later
+
+      newAllPosts[item.id] = item;
+      newAllCommentByParentId[item.id] = postComments;
+      postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
+    }
+  });
 
   yield put(postActions.addToAllComments(newComments));
   yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
@@ -717,6 +717,33 @@ function* getCommentsByPostId({
     );
     callbackLoading?.(false);
     yield showError(e);
+  }
+}
+
+function* getPostDetail({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetPostDetail;
+}) {
+  const {userId, postId, streamClient, callbackLoading} = payload || {};
+  if (!userId || !postId || !streamClient) {
+    console.log(`\x1b[31m🐣️ saga getPostDetail invalid params\x1b[0m`);
+    return;
+  }
+  try {
+    callbackLoading?.(true);
+    const response = yield call(
+      postDataHelper.getPostDetail,
+      userId,
+      streamClient,
+      postId,
+    );
+    yield put(postActions.addToAllPosts(response));
+    callbackLoading?.(false);
+  } catch (e) {
+    callbackLoading?.(false);
+    showError(e);
   }
 }
 

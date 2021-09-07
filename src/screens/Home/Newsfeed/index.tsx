@@ -20,6 +20,8 @@ import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePos
 import Text from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
@@ -31,7 +33,7 @@ const Newsfeed = () => {
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
-  const homePosts = useKeySelector(homeKeySelector.homePosts);
+  const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
@@ -72,6 +74,17 @@ const Newsfeed = () => {
     );
   };
 
+  const renderPlaceholder = () => {
+    return (
+      <View>
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder />
+        <PostViewPlaceholder />
+        <PostViewPlaceholder />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -83,22 +96,26 @@ const Newsfeed = () => {
         menuIcon={'Edit'}
         onPressMenu={() => rootNavigation.navigate(homeStack.createPost)}
       />
-      <ListView
-        isFullView
-        containerStyle={styles.listContainer}
-        data={homePosts}
-        refreshing={refreshing}
-        onRefresh={() => getData(true)}
-        onLoadMore={() => getData()}
-        renderItem={renderItem}
-        ListHeaderComponent={() => (
-          <HeaderCreatePost style={styles.headerCreatePost} />
-        )}
-        ListFooterComponent={renderFooter}
-        renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
-        )}
-      />
+      {homePosts.length === 0 && refreshing ? (
+        renderPlaceholder()
+      ) : (
+        <ListView
+          isFullView
+          containerStyle={styles.listContainer}
+          data={homePosts}
+          refreshing={refreshing}
+          onRefresh={() => getData(true)}
+          onLoadMore={() => getData()}
+          renderItem={renderItem}
+          ListHeaderComponent={() => (
+            <HeaderCreatePost style={styles.headerCreatePost} />
+          )}
+          ListFooterComponent={renderFooter}
+          renderItemSeparator={() => (
+            <ViewSpacing height={theme.spacing.margin.large} />
+          )}
+        />
+      )}
     </View>
   );
 };
