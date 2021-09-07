@@ -1,8 +1,9 @@
-import React, {useImperativeHandle, useState} from 'react';
+import React, {useEffect, useImperativeHandle, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   FlatListProps,
+  Keyboard,
   LayoutChangeEvent,
   Modal,
   StyleSheet,
@@ -10,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {MessageOptionType} from '~/constants/chat';
 import {ITheme} from '~/theme/interfaces';
 
 export interface Props {
@@ -20,7 +20,6 @@ export interface Props {
   modalizeRef?: any;
   side?: 'left' | 'right';
   ContentComponent?: React.ReactNode;
-  onMenuPress: (item: MessageOptionType) => void;
   onClose: () => void;
 }
 
@@ -29,7 +28,7 @@ const BaseBottomSheet: React.FC<Props> = ({
   flatListProps,
   ContentComponent,
   side,
-
+  isOpen,
   onClose,
 }: Props) => {
   const theme = useTheme() as ITheme;
@@ -39,10 +38,18 @@ const BaseBottomSheet: React.FC<Props> = ({
     x: number;
     y: number;
   }>({x: -1, y: -1});
+
   const [boxSize, setBoxSize] = useState<{width: number; height: number}>({
     width: 250, //For first time, onLayout have not triggered yet
     height: 200,
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      Keyboard.dismiss();
+      modalizeRef?.current?.open?.();
+    }
+  }, [isOpen]);
 
   const open = (x: number, y: number) => {
     let _x = Dimensions.get('window').width / 2 - boxSize.width / 2;
