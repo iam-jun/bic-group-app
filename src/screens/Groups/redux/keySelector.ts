@@ -12,6 +12,7 @@ const groupsKeySelector = {
   users: 'groups.users',
   addSuccess: 'groups.addSuccess',
   userAddedCount: 'groups.userAddedCount',
+  loadingGroupDetail: 'groups.loadingGroupDetail',
 };
 
 export default groupsKeySelector;
