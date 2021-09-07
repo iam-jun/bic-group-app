@@ -153,8 +153,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const handleKeyEvent = (event: any) => {
-    if (!event?.shiftKey && event?.key === 'Enter') _onPressSend();
-    else if (
+    if (!event?.shiftKey && event?.key === 'Enter') {
+      event.preventDefault();
+      _onPressSend();
+    } else if (
       (event.metaKey || event.ctrlKey) &&
       Object.keys(supportedMarkdownKey).includes(event.key)
     ) {

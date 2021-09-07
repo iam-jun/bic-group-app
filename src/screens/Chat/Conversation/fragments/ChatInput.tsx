@@ -113,7 +113,6 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       value={text}
       ComponentInput={CommentInput}
       componentInputProps={{
-        blurOnSubmit: Platform.OS === 'web',
         onPressSend: onSend,
         onPressFile,
         onPressSelectImage,
