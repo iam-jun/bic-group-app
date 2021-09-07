@@ -9,6 +9,9 @@ const menuTypes = {
 
   GET_MY_PROFILE: 'menu/GET_MY_PROFILE',
   GET_SELECTED_PROFILE: 'menu/GET_SELECTED_PROFILE',
+
+  SET_LOADING_AVATAR: 'menu/SET_LOADING_AVATAR',
+  SET_LOADING_COVER: 'menu/SET_LOADING_COVER',
 };
 
 export default menuTypes;

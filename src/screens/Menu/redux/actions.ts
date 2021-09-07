@@ -58,6 +58,15 @@ const menuActions = {
       payload,
     };
   },
+
+  setLoadingAvatar: (payload: boolean) => ({
+    type: menuTypes.SET_LOADING_AVATAR,
+    payload,
+  }),
+  setLoadingCover: (payload: boolean) => ({
+    type: menuTypes.SET_LOADING_COVER,
+    payload,
+  }),
 };
 
 export default menuActions;
