@@ -37,7 +37,7 @@ const CommentItem: React.FC<IComment> = ({
           <HorizontalView style={styles.bottomBar}>
             <HorizontalView style={styles.commentReaction}>
               <Text style={styles.commentReactionItem}>
-                {formatDate(createdAt, 'll', 3)}
+                {formatDate(createdAt, 'll', undefined, 3)}
               </Text>
               <TouchableOpacity
                 onPress={() => onActionPress(commonActions.emojiCommentReact)}>
