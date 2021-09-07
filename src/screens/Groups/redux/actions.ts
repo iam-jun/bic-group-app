@@ -18,9 +18,10 @@ const groupsActions = {
       payload,
     };
   },
-  setLoadingJoinedGroups: function (payload: boolean) {
+
+  getJoinedGroups: function (payload?: any) {
     return {
-      type: groupsTypes.SET_LOADING_JOINED_GROUPS,
+      type: groupsTypes.GET_JOINED_GROUPS,
       payload,
     };
   },
@@ -102,12 +103,6 @@ const groupsActions = {
     type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
   }),
 
-  getJoinedGroups: function (payload?: any) {
-    return {
-      type: groupsTypes.GET_JOINED_GROUPS,
-      payload,
-    };
-  },
   getGroupDetail: function (payload: number) {
     return {
       type: groupsTypes.GET_GROUP_DETAIL,

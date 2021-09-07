@@ -6,6 +6,7 @@ const initGroupsState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
+
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
@@ -40,14 +41,17 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         isPrivacyModalOpen: action.payload,
       };
-    case groupsTypes.SET_LOADING_JOINED_GROUPS:
+
+    case groupsTypes.GET_JOINED_GROUPS:
       return {
         ...state,
-        loadingJoinedGroups: action.payload,
+        loadingJoinedGroups: true,
+        joinedGroups: initGroupsState.joinedGroups,
       };
     case groupsTypes.SET_JOINED_GROUPS:
       return {
         ...state,
+        loadingJoinedGroups: false,
         joinedGroups: action.payload || [],
       };
 
