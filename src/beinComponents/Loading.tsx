@@ -14,7 +14,7 @@ const Loading: React.FC<LoadingProps> = ({
   size,
   color,
 }: LoadingProps) => {
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   return (
