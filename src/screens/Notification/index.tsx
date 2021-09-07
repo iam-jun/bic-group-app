@@ -76,7 +76,7 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail);
             break;
           }
-          // noti type 18, 8, 22, 17
+          // notification type 18, 8, 22, 17
           // TODO, this need to be updated for forcusing comment
           // for now can not focus comment if the comment hasn't loaded in list yet
           case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
@@ -88,7 +88,7 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
             break;
           }
-          // noti type 7, 19, 20, 21
+          // notification type 7, 19, 20, 21
           // TODO, this need to be updated for forcusing comment
           // for now can not focus comment if the comment hasn't loaded in list yet
           case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
@@ -100,14 +100,14 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
             break;
           }
-          // noti type 9, this is ok
+          // notification type 9, this is ok
           case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST: {
             const postAct = act.object;
             dispatch(postActions.setPostDetail(postAct));
             rootNavigation.navigate(homeStack.postDetail);
             break;
           }
-          // noti type 10
+          // notification type 10
           // TODO, this need to be updated for forcusing comment
           // for now can not focus comment if the comment hasn't loaded in list yet
           case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT: {
@@ -153,8 +153,8 @@ const Notification = () => {
     );
   };
 
-  // loadmore notification handler
-  const loadmoreNoti = () => {
+  // load more notification handler
+  const loadMoreNotifications = () => {
     if (streamClient && !noMoreNotification && !isLoadingMore) {
       dispatch(
         notificationsActions.loadmore({
@@ -212,7 +212,7 @@ const Notification = () => {
             renderItemSeparator={() => <ViewSpacing height={2} />}
             data={notificationList}
             onItemPress={_onItemPress}
-            onLoadMore={() => loadmoreNoti()}
+            onLoadMore={() => loadMoreNotifications()}
             ListFooterComponent={renderListFooter}
           />
         )}
