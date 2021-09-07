@@ -19,6 +19,7 @@ import Input from '~/beinComponents/inputs/TextInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
@@ -220,7 +221,7 @@ const SignIn = () => {
             disabled={disableSignIn}
             onPress={onSignIn}
             useI18n>
-            auth:btn_sign_in
+            {loading ? <LoadingIndicator /> : 'auth:btn_sign_in'}
           </Button.Primary>
         </View>
         {/*<Text.H5 style={styles.orText} useI18n>auth:text_or</Text.H5>*/}
