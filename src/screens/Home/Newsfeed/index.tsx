@@ -69,6 +69,27 @@ const Newsfeed = () => {
     dispatch(postActions.addToAllPosts(homePosts));
   }, [homePosts]);
 
+  const renderHeader = () => {
+    if (isLaptop)
+      return (
+        <Header
+          hideBack
+          title={'post:news_feed'}
+          titleTextProps={{useI18n: true}}
+          style={styles.headerOnLaptop}
+        />
+      );
+
+    return (
+      <Header
+        avatar={images.logo_bein}
+        hideBack
+        menuIcon={'Edit'}
+        onPressMenu={navigateToCreatePost}
+      />
+    );
+  };
+
   const renderFooter = () => {
     return (
       <View style={styles.listFooter}>
@@ -101,15 +122,7 @@ const Newsfeed = () => {
 
   return (
     <View style={styles.container}>
-      <Header
-        avatar={!isLaptop ? images.logo_bein : undefined}
-        hideBack
-        title={'post:news_feed'}
-        titleTextProps={{useI18n: true}}
-        menuIcon={!isLaptop ? 'Edit' : undefined}
-        onPressMenu={!isLaptop ? navigateToCreatePost : undefined}
-        style={isLaptop ? styles.headerOnLaptop : {}}
-      />
+      {renderHeader()}
       {homePosts.length === 0 && refreshing ? (
         renderPlaceholder()
       ) : (
