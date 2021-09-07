@@ -402,12 +402,7 @@
     "message_option": {
       "delete": "Delete Message",
       "reply": "Reply",
-      "copy": "Copy Text",
-      "pin_message": "Pin this message",
-      "create_thread": "Create Thread",
-      "edit_message": "Edit Message",
-      "get_link": "Get Link",
-      "reactions": "Reactions"
+      "copy": "Copy Text"
     },
     "label_my_message": "You",
     "label_deleted_message": {

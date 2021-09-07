@@ -68,7 +68,6 @@ const initState = {
     mentionKey: '',
     mentionUsers: [],
   },
-  hoverMessage: null,
 };
 
 /**
@@ -387,11 +386,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ...state.mention,
           mentionUsers: payload,
         },
-      };
-    case types.SET_HOVER_MESSAGE:
-      return {
-        ...state,
-        hoverMessage: payload,
       };
     case types.REACT_MESSAGE:
       return {

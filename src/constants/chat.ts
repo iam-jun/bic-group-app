@@ -36,18 +36,6 @@ export const chatPermissions = {
 };
 
 export const messageOptionData = {
-  edit: {
-    icon: 'EditAlt',
-    label: 'edit_message',
-  },
-  create_thread: {
-    icon: 'CreateThread',
-    label: 'create_thread',
-  },
-  pin: {
-    icon: 'iconPinGroup',
-    label: 'pin_message',
-  },
   delete: {
     icon: 'Trash',
     label: 'delete',
@@ -60,29 +48,13 @@ export const messageOptionData = {
     icon: 'Copy',
     label: 'copy',
   },
-  get_link: {
-    icon: 'Link',
-    label: 'get_link',
-  },
-  reactions: {
-    icon: 'Smile',
-    label: 'reactions',
-  },
 };
 
 export type MessageOptionType = keyof typeof messageOptionData;
 
-export const myMessageOptions = [
-  'edit',
-  'create_thread',
-  'reply',
-  'copy',
-  'get_link',
-  'delete',
-  'reactions',
-];
+export const myMessageOptions = ['delete', 'reply', 'copy'];
 
-export const messageOptions = ['reply', 'copy', 'get_link', 'reactions'];
+export const messageOptions = ['reply', 'copy'];
 
 export const reactions = {
   love_hearts: {

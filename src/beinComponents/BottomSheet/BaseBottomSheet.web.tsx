@@ -12,7 +12,6 @@ import {
 import {useTheme} from 'react-native-paper';
 import {MessageOptionType} from '~/constants/chat';
 import {ITheme} from '~/theme/interfaces';
-import Div from '../Div';
 
 export interface Props {
   isOpen?: boolean;
@@ -51,7 +50,7 @@ const BaseBottomSheet: React.FC<Props> = ({
     if (x) _x = side === 'left' ? x - boxSize.width : x;
     if (y)
       _y =
-        y + boxSize.height + 100 > Dimensions.get('window').height
+        y + boxSize.height > Dimensions.get('window').height
           ? y - boxSize.height
           : y;
 
@@ -71,13 +70,7 @@ const BaseBottomSheet: React.FC<Props> = ({
   const _onClosed = () => {
     if (!visible) return;
     setVisible(false);
-    onClose?.();
-  };
-
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
-      _onClosed();
-    }
+    onClose();
   };
 
   const onLayout = (e: LayoutChangeEvent) => {
@@ -89,20 +82,20 @@ const BaseBottomSheet: React.FC<Props> = ({
   return (
     <Modal transparent animationType="fade" visible={visible}>
       <TouchableWithoutFeedback onPress={_onClosed}>
-        <Div onKeyDown={onKeyDown} style={styles.container}>
+        <View style={styles.container}>
           <View
             onLayout={onLayout}
             style={[styles.menu, {left: position.x, top: position.y}]}>
             {flatListProps ? <FlatList {...flatListProps} /> : ContentComponent}
           </View>
-        </Div>
+        </View>
       </TouchableWithoutFeedback>
     </Modal>
   );
 };
 
 const themeStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
@@ -111,7 +104,6 @@ const themeStyle = (theme: ITheme) => {
     },
     menu: {
       position: 'absolute',
-      borderRadius: spacing.borderRadius.base,
       backgroundColor: colors.background,
       shadowColor: '#000',
       shadowOffset: {
