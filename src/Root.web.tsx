@@ -3,13 +3,7 @@ import 'moment/locale/vi';
 
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  LogBox,
-  NativeModules,
-  Platform,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import {LogBox, StatusBar, useColorScheme} from 'react-native';
 
 /* Theme */
 import {
@@ -24,6 +18,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
 import {useDispatch, useSelector} from 'react-redux';
+import {AppConfig, languages} from '~/configs';
 import {fontConfig} from '~/configs/fonts';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
@@ -32,7 +27,6 @@ import localStorage from '~/services/localStorage';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
-import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
 
@@ -96,10 +90,7 @@ export default (): React.ReactElement => {
       i18n.language !== language && i18n.changeLanguage(language);
       moment.locale(language);
     } else {
-      let systemLocale =
-        Platform.OS === 'ios'
-          ? NativeModules.SettingsManager.settings.AppleLocale
-          : NativeModules.I18nManager.localeIdentifier;
+      let systemLocale = window?.navigator?.language;
 
       if (systemLocale && systemLocale.includes('_'))
         systemLocale = systemLocale.split('_')[0];
