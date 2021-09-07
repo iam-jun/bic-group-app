@@ -34,6 +34,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
+  let countRetryScrollToBottom = useRef(0).current;
 
   const params = props?.route?.params;
   const {focusComment} = params || {};
@@ -104,6 +105,13 @@ const PostDetail = (props: any) => {
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
+      if (sectionIndex === -1) {
+        sectionIndex = sectionData.length - 1;
+      }
+      if (itemIndex === -1) {
+        itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
+      }
+
       listRef?.current?.scrollToLocation?.({
         itemIndex: itemIndex,
         sectionIndex: sectionIndex,
@@ -112,8 +120,17 @@ const PostDetail = (props: any) => {
     }
   };
 
+  const onScrollToIndexFailed = () => {
+    countRetryScrollToBottom = countRetryScrollToBottom + 1;
+    if (countRetryScrollToBottom < 20) {
+      setTimeout(() => {
+        scrollTo(-1, -1);
+      }, 100);
+    }
+  };
+
   const onPressComment = () => {
-    scrollTo(0, 0);
+    scrollTo(-1, -1);
     textInputRef.current?.focus?.();
   };
 
@@ -205,9 +222,7 @@ const PostDetail = (props: any) => {
     if (!layoutSetted) {
       layoutSetted = true;
       if (focusComment && listComment?.length > 0) {
-        setTimeout(() => {
-          scrollTo(0, 0);
-        }, 500);
+        scrollTo(-1, -1);
       }
     }
   }, [layoutSetted]);
@@ -231,6 +246,7 @@ const PostDetail = (props: any) => {
             keyboardShouldPersistTaps={'handled'}
             onLayout={onLayout}
             onContentSizeChange={onLayout}
+            onScrollToIndexFailed={onScrollToIndexFailed}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
