@@ -387,6 +387,7 @@ const PostView: FC<PostViewProps> = ({
         <PostViewMenuBottomSheet
           modalizeRef={menuSheetRef}
           postId={postId}
+          content={content}
           isPostDetail={isPostDetail}
           isActor={actor?.id == userId}
         />
