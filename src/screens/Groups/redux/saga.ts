@@ -98,8 +98,8 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
     const {groupId, params} = payload;
 
     const {groups} = yield select();
-    const {groupMembers} = groups;
-    const newGroupMembers = Object.assign({}, groupMembers || {});
+    const {groupMember} = groups;
+    const newGroupMembers = Object.assign({}, groupMember || {});
     const {skip = 0, canLoadMore = true} = newGroupMembers;
     if (canLoadMore) {
       const response: IResponseData = yield groupsDataHelper.getGroupMembers(

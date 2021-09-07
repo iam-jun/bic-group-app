@@ -89,7 +89,7 @@ const Groups: React.FC = () => {
         ListHeaderComponent={
           loadingJoinedGroups ? null : (
             <Text.H5 useI18n>
-              {searchText ? 'groups:search_results' : 'groups:all_groups'}
+              {searchText ? 'groups:search_results' : null}
             </Text.H5>
           )
         }
@@ -128,7 +128,6 @@ const themeStyles = (theme: ITheme) => {
     },
     dataList: {
       marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.large,
     },
     emptyView: {
       alignItems: 'center',

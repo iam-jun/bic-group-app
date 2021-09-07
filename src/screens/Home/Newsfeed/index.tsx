@@ -1,5 +1,11 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -20,6 +26,9 @@ import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePos
 import Text from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
@@ -28,10 +37,13 @@ const Newsfeed = () => {
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
 
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
-  const homePosts = useKeySelector(homeKeySelector.homePosts);
+  const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
@@ -72,33 +84,52 @@ const Newsfeed = () => {
     );
   };
 
+  const renderPlaceholder = () => {
+    return (
+      <View>
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder />
+        <PostViewPlaceholder />
+        <PostViewPlaceholder />
+      </View>
+    );
+  };
+
+  const navigateToCreatePost = () => {
+    rootNavigation.navigate(homeStack.createPost);
+  };
+
   return (
     <View style={styles.container}>
       <Header
-        avatar={images.logo_bein}
+        avatar={!isLaptop ? images.logo_bein : undefined}
         hideBack
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
-        icon={images.logo_bein}
-        menuIcon={'Edit'}
-        onPressMenu={() => rootNavigation.navigate(homeStack.createPost)}
+        menuIcon={!isLaptop ? 'Edit' : undefined}
+        onPressMenu={!isLaptop ? navigateToCreatePost : undefined}
+        style={isLaptop ? styles.headerOnLaptop : {}}
       />
-      <ListView
-        isFullView
-        containerStyle={styles.listContainer}
-        data={homePosts}
-        refreshing={refreshing}
-        onRefresh={() => getData(true)}
-        onLoadMore={() => getData()}
-        renderItem={renderItem}
-        ListHeaderComponent={() => (
-          <HeaderCreatePost style={styles.headerCreatePost} />
-        )}
-        ListFooterComponent={renderFooter}
-        renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
-        )}
-      />
+      {homePosts.length === 0 && refreshing ? (
+        renderPlaceholder()
+      ) : (
+        <ListView
+          isFullView
+          containerStyle={styles.listContainer}
+          data={homePosts}
+          refreshing={refreshing}
+          onRefresh={() => getData(true)}
+          onLoadMore={() => getData()}
+          renderItem={renderItem}
+          ListHeaderComponent={() => (
+            <HeaderCreatePost style={styles.headerCreatePost} />
+          )}
+          ListFooterComponent={renderFooter}
+          renderItemSeparator={() => (
+            <ViewSpacing height={theme.spacing.margin.large} />
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -111,6 +142,11 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+    },
+    headerOnLaptop: {
+      backgroundColor: colors.surface,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
     },
     listContainer: {
       flex: 1,

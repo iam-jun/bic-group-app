@@ -65,11 +65,11 @@ const ConversationsList = (): React.ReactElement => {
     if (!searchQuery) return null;
     return (
       <View style={styles.emptyView}>
-        <Image
-          source={images.img_search_no_results}
-          style={styles.imageNoResults}
-        />
-        <Text.Body useI18n style={styles.textEmpty}>
+        <Image source={images.img_search_empty} style={styles.imageNoResults} />
+        <Text.Body
+          color={theme.colors.textSecondary}
+          useI18n
+          style={styles.textEmpty}>
           common:text_search_no_results
         </Text.Body>
       </View>
