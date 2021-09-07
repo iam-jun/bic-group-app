@@ -176,6 +176,7 @@ const CommentView: React.FC<CommentViewProps> = ({
       <CommentViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         commentId={id}
+        content={content}
         groupIds={groupIds}
         isActor={currentUserId === user_id}
         onPressMoreReaction={onPressReact}
