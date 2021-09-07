@@ -35,6 +35,7 @@ export interface HeaderProps {
   onPressBack?: () => void;
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
+  removeBorderAndShadow?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -58,6 +59,7 @@ const Header: React.FC<HeaderProps> = ({
   onPressBack,
   disableInsetTop,
   style,
+  removeBorderAndShadow = false,
 }: HeaderProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -85,6 +87,7 @@ const Header: React.FC<HeaderProps> = ({
             paddingTop: disableInsetTop ? undefined : insets.top,
           },
           styles.container,
+          removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
           style,
         ])}>
         <ViewSpacing width={spacing.margin.large} />
@@ -153,6 +156,8 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: colors.background,
+    },
+    bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
       borderColor: colors.borderDivider,
       shadowOffset: {width: 0, height: 1},
