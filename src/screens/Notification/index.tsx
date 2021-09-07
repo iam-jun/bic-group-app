@@ -209,7 +209,7 @@ const Notification = () => {
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
         title="tabs:notification"
-        titleTextProps={{useI18n: true, variant: 'h5'}}
+        titleTextProps={{useI18n: true}}
         removeBorderAndShadow={isLaptop}
         hideBack
         onPressMenu={onPressMenu}

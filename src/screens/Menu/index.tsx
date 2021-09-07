@@ -90,7 +90,7 @@ const Menu = (): React.ReactElement => {
       <Header
         hideBack
         title="tabs:menus"
-        titleTextProps={{useI18n: true, variant: 'h5'}}
+        titleTextProps={{useI18n: true}}
         removeBorderAndShadow={isLaptop}
       />
       <HeaderAvatarView

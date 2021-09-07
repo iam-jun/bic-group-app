@@ -95,7 +95,7 @@ const ConversationsList = (): React.ReactElement => {
     <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
       <Header
         title="chat:title"
-        titleTextProps={{useI18n: true, variant: 'h5'}}
+        titleTextProps={{useI18n: true}}
         hideBack
         menuIcon="iconCreateChat"
         onPressMenu={onMenuPress}

@@ -47,7 +47,7 @@ const Groups: React.FC = () => {
       <Header
         hideBack
         title="tabs:groups"
-        titleTextProps={{useI18n: true, variant: 'h5'}}
+        titleTextProps={{useI18n: true}}
         removeBorderAndShadow={isLaptop}
       />
       <View style={styles.groupContainer}>
