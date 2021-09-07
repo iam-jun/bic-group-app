@@ -9,7 +9,6 @@ import ListView from '~/beinComponents/list/ListView';
 import {useBaseHook} from '~/hooks';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Header from '~/beinComponents/Header';
-import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IGroup} from '~/interfaces/IGroup';
@@ -41,7 +40,7 @@ const Groups: React.FC = () => {
 
   return (
     <View style={styles.containerScreen}>
-      <Header hideBack title={'My Groups'} avatar={images.img_groups} />
+      <Header hideBack title={'My Groups'} />
       <View style={styles.groupContainer}>
         <SearchInput
           style={{marginVertical: 12}}

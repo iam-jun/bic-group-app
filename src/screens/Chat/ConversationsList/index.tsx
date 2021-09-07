@@ -94,7 +94,6 @@ const ConversationsList = (): React.ReactElement => {
       <Header
         title={i18next.t('chat:title')}
         hideBack
-        avatar={images.img_menu_chat}
         menuIcon="iconCreateChat"
         onPressMenu={onMenuPress}
       />
