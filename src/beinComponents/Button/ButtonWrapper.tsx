@@ -18,7 +18,7 @@ export interface ButtonWrapperProps {
   contentStyle?: StyleProp<ViewStyle>;
   disabled?: boolean;
   onPress?: () => void;
-  onLongPress?: () => void;
+  onLongPress?: (e: any) => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
   useI18n?: boolean;

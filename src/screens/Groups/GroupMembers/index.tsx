@@ -65,7 +65,7 @@ const GroupMembers = () => {
         const section: any = {};
         const {name, data} = roleData || {};
         if (name && data) {
-          section.title = `${roleData.name} (${roleData.user_count})`;
+          section.title = `${roleData.name}s (${roleData.user_count})`;
           section.data = roleData.data;
           newSectionList.push(section);
         }
@@ -116,7 +116,7 @@ const GroupMembers = () => {
   const renderSectionHeader = ({section: {title}}: any) => {
     return (
       <View style={styles.sectionHeader}>
-        <Text.H6S color={colors.textSecondary}>{title}</Text.H6S>
+        <Text.H5 color={colors.textSecondary}>{title}</Text.H5>
       </View>
     );
   };
@@ -198,6 +198,7 @@ const createStyle = (theme: ITheme) => {
       paddingVertical: spacing.padding.tiny,
     },
     sectionHeader: {
+      marginTop: spacing.margin.small,
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.base,
@@ -210,7 +211,8 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       justifyContent: 'space-between',
       alignItems: 'center',
-      margin: spacing.margin.base,
+      marginHorizontal: spacing.margin.base,
+      marginTop: spacing.margin.base,
     },
     inputSearch: {
       flex: 1,

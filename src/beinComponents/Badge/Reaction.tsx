@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Icon from '../Icon';
@@ -14,6 +20,7 @@ interface ReactionProps {
   onActionPress: (action: IAction) => void;
   style?: StyleProp<ViewStyle>;
   disableUpdateState?: boolean;
+  loading?: boolean;
 }
 
 const Reaction: React.FC<ReactionProps> = ({
@@ -23,6 +30,7 @@ const Reaction: React.FC<ReactionProps> = ({
   onActionPress,
   style,
   disableUpdateState,
+  loading,
 }: ReactionProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ITheme = useTheme() as ITheme;
@@ -49,14 +57,24 @@ const Reaction: React.FC<ReactionProps> = ({
 
   return (
     <TouchableOpacity
+      disabled={loading}
       style={[styles.container, style]}
       onPress={_onChangeValue}>
-      <Icon icon={icon} size={16} />
-      <Text.BodySM
-        color={isSelected ? colors.primary7 : colors.textPrimary}
-        style={styles.textInput}>
-        {value}
-      </Text.BodySM>
+      {loading ? (
+        <ActivityIndicator
+          color={colors.borderDisable}
+          style={styles.indicator}
+        />
+      ) : (
+        <>
+          <Icon icon={icon} size={16} />
+          <Text.BodySM
+            color={isSelected ? colors.primary7 : colors.textPrimary}
+            style={styles.textInput}>
+            {value}
+          </Text.BodySM>
+        </>
+      )}
     </TouchableOpacity>
   );
 };
@@ -78,6 +96,9 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
     },
     textInput: {
       marginStart: spacing?.margin.tiny,
+    },
+    indicator: {
+      marginHorizontal: spacing.margin.tiny,
     },
   });
 };
