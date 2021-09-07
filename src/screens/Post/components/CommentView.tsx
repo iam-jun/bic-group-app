@@ -63,14 +63,10 @@ const CommentView: React.FC<CommentViewProps> = ({
     postTime = countTime(created_at);
   }
 
-  const onPressUser = () => {
-    if (user?.id) {
-      dispatch(
-        menuActions.selectedProfile({
-          id: user?.id?.toString(),
-          isPublic: true,
-        }),
-      );
+  const onPressUser = (audience?: any) => {
+    const id = user?.id || audience?.id;
+    if (id) {
+      dispatch(menuActions.selectedProfile({id: id, isPublic: true}));
       rootNavigation.navigate(homeStack.publicProfile);
     }
   };
@@ -155,6 +151,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                 useMarkdown
                 limitMarkdownTypes
                 content={content || ''}
+                onPressAudience={(audience: any) => onPressUser(audience)}
               />
             </View>
           </Button>

@@ -143,8 +143,14 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressMentionAudience = (audience: any) => {
-    if (audience) {
-      alert(`Show profile of ${audience.name || audience.fullname}`);
+    if (audience?.id) {
+      dispatch(
+        menuActions.selectedProfile({
+          id: audience?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(homeStack.publicProfile);
     }
   };
 
