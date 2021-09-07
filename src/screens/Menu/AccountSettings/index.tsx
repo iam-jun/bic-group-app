@@ -17,8 +17,6 @@ import {accountSettingsMenu} from '~/constants/settings';
 import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import useMenu from '~/hooks/menu';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
@@ -32,17 +30,12 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
-  const {isLanguageModalOpen} = useMenu();
-
-  const onLanguageModalClose = () => {
-    dispatch(menuActions.setLanguageModalOpen(false));
-  };
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
   };
 
-  const onAccountSettingsPress = (item: ISetting) => {
+  const onAccountSettingsPress = (item: ISetting, e: any) => {
     switch (item.type) {
       case 'userProfile':
         return rootNavigation.navigate(menuStack.userProfile);
@@ -51,7 +44,7 @@ const GeneralSettings = () => {
         return rootNavigation.navigate(menuStack.securityLogin);
 
       case 'language':
-        dispatch(menuActions.setLanguageModalOpen(true));
+        baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
         return;
 
       default:
@@ -89,8 +82,6 @@ const GeneralSettings = () => {
         onItemPress={onAccountSettingsPress}
       />
       <BottomSheet
-        isOpen={isLanguageModalOpen}
-        onClose={onLanguageModalClose}
         modalizeRef={baseSheetRef}
         ContentComponent={
           <View style={styles.contentComponent}>
