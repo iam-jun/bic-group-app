@@ -118,7 +118,6 @@ function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
 
 function* onSignInSuccess(user: IUserResponse) {
   yield put(modalActions.showLoading());
-  yield put(actions.setLoading(false));
 
   const name =
     user?.attributes?.name?.length < 50
@@ -147,6 +146,7 @@ function* onSignInSuccess(user: IUserResponse) {
     return;
   }
 
+  yield put(actions.setLoading(false));
   navigation.replace(rootSwitch.mainStack);
   yield put(modalActions.hideLoading());
 }
