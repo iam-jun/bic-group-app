@@ -146,8 +146,8 @@ function* onSignInSuccess(user: IUserResponse) {
     return;
   }
 
-  yield put(actions.setLoading(false));
   navigation.replace(rootSwitch.mainStack);
+  yield put(actions.setLoading(false));
 
   yield delay(500); // Delay to avoid showing authStack
   yield put(modalActions.hideLoading());
