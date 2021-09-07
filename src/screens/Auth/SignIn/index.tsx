@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+
 import Button from '~/beinComponents/Button';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import Input from '~/beinComponents/inputs/TextInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-
 import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 
@@ -34,7 +35,8 @@ import {setSigningInError} from '../redux/actions';
 
 const SignIn = () => {
   useAuthAmplifyHub();
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {loading, signingInError} = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
@@ -131,7 +133,9 @@ const SignIn = () => {
             style={styles.logo}
             source={images.logo_bein}
           />
-          <Text.H6 style={styles.title}>{t('auth:text_sign_in_desc')}</Text.H6>
+          <Text.H6 style={styles.title} useI18n>
+            auth:text_sign_in_desc
+          </Text.H6>
           <Controller
             control={control}
             render={({field: {onChange, value}}) => (
@@ -205,8 +209,8 @@ const SignIn = () => {
             <TouchableOpacity
               testID="btnSignInForgotPassword"
               onPress={() => navigation.navigate(authStack.forgotPassword)}>
-              <Text.H6 style={styles.transparentButton}>
-                {t('auth:btn_forgot_password')}
+              <Text.H6 style={styles.transparentButton} useI18n>
+                auth:btn_forgot_password
               </Text.H6>
             </TouchableOpacity>
           </View>
@@ -214,20 +218,21 @@ const SignIn = () => {
             testID="btnLogin"
             style={styles.btnSignIn}
             disabled={disableSignIn}
-            onPress={onSignIn}>
-            {t('auth:btn_sign_in')}
+            onPress={onSignIn}
+            useI18n>
+            auth:btn_sign_in
           </Button.Primary>
         </View>
-        {/*<Text.H5 style={styles.orText}>{t('auth:text_or')}</Text.H5>*/}
+        {/*<Text.H5 style={styles.orText} useI18n>auth:text_or</Text.H5>*/}
         {/*<SignInOAuth />*/}
         <View style={styles.signUpContainer}>
-          <Text.H6>{t('auth:text_sign_up_desc')} </Text.H6>
+          <Text.H6 useI18n>auth:text_sign_up_desc</Text.H6>
           <TouchableOpacity
             testID="btnSignInForgotPassword"
             // onPress={() => navigation.navigate(authStack.signup)}
             onPress={handleSignUpNotFunctioning}>
-            <Text.H6 style={styles.transparentButton}>
-              {t('auth:btn_sign_up_now')}
+            <Text.H6 style={styles.transparentButton} useI18n>
+              auth:btn_sign_up_now
             </Text.H6>
           </TouchableOpacity>
         </View>
@@ -279,6 +284,7 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       color: colors.primary7,
     },
     transparentButton: {
+      marginLeft: spacing.margin.tiny,
       color: colors.primary7,
     },
     orText: {
