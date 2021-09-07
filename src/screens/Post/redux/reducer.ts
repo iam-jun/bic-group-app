@@ -25,6 +25,7 @@ const initState = {
   reactionBottomSheet: {
     show: false,
     title: '',
+    position: {x: -1, y: -1},
     callback: undefined,
   },
   mention: {
