@@ -26,7 +26,7 @@ import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 
-const Notfitication = () => {
+const Notification = () => {
   const menuSheetRef = useRef<any>();
 
   const notificationData = useNotifications();
@@ -251,4 +251,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default Notfitication;
+export default Notification;
