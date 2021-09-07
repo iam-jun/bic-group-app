@@ -46,7 +46,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeEvery(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
-  yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
+  yield takeEvery(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
   yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
@@ -484,20 +484,24 @@ function* postReactToComment({
     return;
   }
   try {
+    const cComment1 = yield select(s =>
+      get(s, postKeySelector.commentById(id)),
+    ) || {};
+    const cReactionCount1 = cComment1.children_counts || {};
+    const cOwnReactions1 = cComment1.own_children || {};
+
     const data: ReactionType[] = [];
     data.push(reactionId);
-    const added = ownReaction?.[reactionId]?.length > 0;
+    const added = cOwnReactions1?.[reactionId]?.length > 0;
     if (!added) {
-      const newChildrenCounts = {...reactionCounts};
-      newChildrenCounts[reactionId] = (newChildrenCounts[reactionId] || 0) + 1;
-      const newOwnChildren = {...ownReaction};
+      const newOwnChildren1 = {...cOwnReactions1};
       const reactionArr: IReaction[] = [];
-      reactionArr.push({kind: reactionId});
-      newOwnChildren[reactionId] = reactionArr;
+      reactionArr.push({loading: true});
+      newOwnChildren1[reactionId] = reactionArr;
       yield onUpdateReactionOfCommentById(
         id,
-        newOwnChildren,
-        newChildrenCounts,
+        newOwnChildren1,
+        {...cReactionCount1},
         comment,
       );
 
@@ -509,13 +513,23 @@ function* postReactToComment({
         userId,
       );
       if (response?.data?.[0]) {
+        const cComment2 = yield select(s =>
+          get(s, postKeySelector.commentById(id)),
+        ) || {};
+        const cReactionCount2 = cComment2.children_counts || {};
+        const cOwnReactions2 = cComment2.own_children || {};
+        const newOwnChildren2 = {...cOwnReactions2};
+        const newChildrenCounts2 = {...cReactionCount2};
+        newChildrenCounts2[reactionId] =
+          (newChildrenCounts2[reactionId] || 0) + 1;
+
         const reactionArr2: IReaction[] = [];
         reactionArr2.push({id: response?.data?.[0]});
-        newOwnChildren[reactionId] = reactionArr2;
+        newOwnChildren2[reactionId] = reactionArr2;
         yield onUpdateReactionOfCommentById(
           id,
-          newOwnChildren,
-          newChildrenCounts,
+          newOwnChildren2,
+          newChildrenCounts2,
           comment,
         );
       }
