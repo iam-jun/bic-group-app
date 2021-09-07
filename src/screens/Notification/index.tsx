@@ -57,8 +57,8 @@ const Notfitication = () => {
     }
   }, [isFocused]);
 
-  const onPressMenu = () => {
-    menuSheetRef.current?.open?.();
+  const onPressMenu = (e: any) => {
+    menuSheetRef.current?.open?.(e?.pageX, e?.pageY);
   };
 
   const _onItemPress = (item?: any) => {
