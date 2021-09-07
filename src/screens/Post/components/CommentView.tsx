@@ -19,6 +19,10 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMenuBottomSheet';
 import Button from '~/beinComponents/Button';
 
+import menuActions from '~/screens/Menu/redux/actions';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
+
 export interface CommentViewProps {
   postId: string;
   groupIds: string;
@@ -39,6 +43,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -59,7 +64,15 @@ const CommentView: React.FC<CommentViewProps> = ({
   }
 
   const onPressUser = () => {
-    alert('onPressUser: ' + user?.id);
+    if (user?.id) {
+      dispatch(
+        menuActions.selectedProfile({
+          id: user?.id?.toString(),
+          isPublic: true,
+        }),
+      );
+      rootNavigation.navigate(homeStack.publicProfile);
+    }
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
