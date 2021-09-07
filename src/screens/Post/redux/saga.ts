@@ -1,6 +1,5 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get} from 'lodash';
-import i18n from 'i18next';
 
 import {
   IOwnReaction,
@@ -47,7 +46,7 @@ export default function* postSaga() {
   yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
   yield takeEvery(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
   yield takeEvery(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
-  yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
+  yield takeEvery(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
     showPostAudienceBottomSheet,
@@ -555,21 +554,44 @@ function* deleteReactToComment({
   try {
     const rId = ownReaction?.[reactionId]?.[0]?.id;
     if (rId) {
-      const newChildrenCounts = {...reactionCounts};
-      newChildrenCounts[reactionId] = Math.max(
-        0,
-        (newChildrenCounts[reactionId] || 0) - 1,
-      );
-      const newOwnChildren = {...ownReaction};
-      newOwnChildren[reactionId] = [];
+      const cComment1 = yield select(s =>
+        get(s, postKeySelector.commentById(id)),
+      ) || {};
+      const cReactionCount1 = cComment1.children_counts || {};
+      const cOwnReactions1 = cComment1.own_children || {};
+
+      const newOwnChildren1 = {...cOwnReactions1};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({loading: true});
+      newOwnChildren1[reactionId] = reactionArr;
       yield onUpdateReactionOfCommentById(
         id,
-        newOwnChildren,
-        newChildrenCounts,
+        newOwnChildren1,
+        {...cReactionCount1},
         comment,
       );
 
       yield call(postDataHelper.deleteReaction, rId);
+
+      const cComment2 = yield select(s =>
+        get(s, postKeySelector.commentById(id)),
+      ) || {};
+      const cReactionCount2 = cComment2.children_counts || {};
+      const cOwnReactions2 = cComment2.own_children || {};
+
+      const newChildrenCounts2 = {...cReactionCount2};
+      newChildrenCounts2[reactionId] = Math.max(
+        0,
+        (newChildrenCounts2[reactionId] || 0) - 1,
+      );
+      const newOwnChildren2 = {...cOwnReactions2};
+      newOwnChildren2[reactionId] = [];
+      yield onUpdateReactionOfCommentById(
+        id,
+        newOwnChildren2,
+        newChildrenCounts2,
+        comment,
+      );
     }
   } catch (e) {
     yield onUpdateReactionOfCommentById(
