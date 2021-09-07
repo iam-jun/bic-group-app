@@ -64,7 +64,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   }
 
   const onPressUser = (audience?: any) => {
-    const id = user?.id || audience?.id;
+    const id = audience?.id || user?.id;
     if (id) {
       dispatch(menuActions.selectedProfile({id: id, isPublic: true}));
       rootNavigation.navigate(homeStack.publicProfile);
