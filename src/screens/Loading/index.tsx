@@ -55,7 +55,7 @@ const themeStyles = (theme: ITheme) => {
     },
     loadingIndicator: {
       position: 'absolute',
-      top: -12,
+      top: -12, // = -IndicatorSize / 6, to make it center
       left: -12,
     },
   });
