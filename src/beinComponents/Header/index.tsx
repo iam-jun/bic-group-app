@@ -95,6 +95,7 @@ const Header: React.FC<HeaderProps> = ({
           <Icon
             icon="iconBack"
             onPress={_onPressBack}
+            size={28}
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
           />
         )}
@@ -114,9 +115,9 @@ const Header: React.FC<HeaderProps> = ({
             {...leftIconProps}
           />
         )}
-        <View style={{flex: 1, marginLeft: spacing?.margin.base}}>
-          {!!title && <Text.H5 {...titleTextProps}>{title}</Text.H5>}
-          {!!subTitle && <Text.H6 {...subTitleTextProps}>{subTitle}</Text.H6>}
+        <View style={styles.titleContainer}>
+          {!!title && <Text.H6 {...titleTextProps}>{title}</Text.H6>}
+          {!!subTitle && <Text.H6S {...subTitleTextProps}>{subTitle}</Text.H6S>}
         </View>
         {!!icon && onPressIcon && (
           <Icon
@@ -167,7 +168,13 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     avatar: {
-      marginHorizontal: spacing?.margin.base,
+      marginHorizontal: spacing.margin.base,
+    },
+    titleContainer: {
+      flex: 1,
+      height: '100%',
+      marginLeft: spacing.margin.base,
+      justifyContent: 'center',
     },
   });
 };
