@@ -91,7 +91,8 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
-      // marginVertical: spacing.padding.base,
+      marginHorizontal: spacing.margin.base,
+      paddingHorizontal: spacing.padding.tiny,
     },
     rightComponent: {
       marginLeft: spacing.margin.base,
