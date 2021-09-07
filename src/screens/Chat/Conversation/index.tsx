@@ -20,7 +20,7 @@ import actions from '~/screens/Chat/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {getAvatar} from '../helper';
 import {ChatInput, MessageContainer, MessageOptionsModal} from './fragments';
-import {showHideToastMessage} from '~/store/modal/actions';
+import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -114,11 +114,11 @@ const Conversation = () => {
 
   const onMenuPress = async (menu: MessageOptionType) => {
     switch (menu) {
-      case 'reply':
-        setReplyingMessage(selectedMessage);
-        break;
       case 'delete':
         deleteMessage();
+        break;
+      default:
+        dispatch(showAlertNewFeature());
         break;
     }
     messageOptionsModalRef.current?.close();
@@ -142,6 +142,8 @@ const Conversation = () => {
       previousMessage:
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
+      onReactPress: () => onMenuPress('reactions'),
+      onReplyPress: () => onMenuPress('reply'),
       onLongPress,
     };
     return <MessageContainer {...props} />;

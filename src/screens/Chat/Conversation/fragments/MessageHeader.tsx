@@ -1,9 +1,7 @@
 import React from 'react';
-import {Image} from 'react-native';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
-import Icon from '~/beinComponents/Icon';
 import {Text} from '~/components';
 import {IChatUser} from '~/interfaces/IChat';
 import images from '~/resources/images';
@@ -13,16 +11,9 @@ import {formatDate} from '~/utils/formatData';
 interface Props {
   user: IChatUser;
   _updatedAt: string;
-  menuVisible: boolean;
-  onMenuPress: (e: any) => void;
 }
 
-const MessageHeader: React.FC<Props> = ({
-  user,
-  _updatedAt,
-  menuVisible,
-  onMenuPress,
-}: Props) => {
+const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
@@ -38,12 +29,6 @@ const MessageHeader: React.FC<Props> = ({
         <Text.BodyS style={styles.textTime}>
           {formatDate(_updatedAt)}
         </Text.BodyS>
-        <Icon
-          icon="EllipsisH"
-          tintColor={theme.colors.textSecondary}
-          style={[styles.iconMenu, {opacity: menuVisible ? 1 : 0}]}
-          onPress={onMenuPress}
-        />
       </View>
     </View>
   );
@@ -53,6 +38,7 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
+      paddingTop: spacing.padding.tiny,
       flexDirection: 'row',
       alignItems: 'flex-start',
     },
@@ -68,10 +54,6 @@ const createStyles = (theme: ITheme) => {
     textTime: {
       color: colors.textSecondary,
       marginStart: spacing.margin.small,
-    },
-    iconMenu: {
-      marginStart: spacing.margin.small,
-      marginTop: spacing.margin.tiny,
     },
   });
 };
