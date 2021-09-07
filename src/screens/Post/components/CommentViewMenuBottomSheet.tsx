@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -13,10 +14,14 @@ import {reactionDefault} from '~/beinFragments/reaction/reactionConfig';
 import {ReactionType} from '~/constants/reactions';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import * as modalActions from '~/store/modal/actions';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 export interface CommentViewMenuBottomSheetProps {
   modalizeRef: any;
   commentId: string;
+  content: string;
   groupIds: string;
   isActor: boolean;
   onPressMoreReaction: () => void;
@@ -27,12 +32,14 @@ export interface CommentViewMenuBottomSheetProps {
 const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   modalizeRef,
   commentId,
+  content,
   groupIds,
   isActor,
   onPressMoreReaction,
   onAddReaction,
   onPressReply,
 }: CommentViewMenuBottomSheetProps) => {
+  const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const insets = useSafeAreaInsets();
@@ -57,9 +64,30 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
     });
   };
 
+  const _onPress = () => {
+    modalizeRef?.current?.close?.();
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
   const _onPressReply = () => {
     modalizeRef?.current?.close?.();
     onPressReply?.();
+  };
+
+  const _onPressCopy = () => {
+    modalizeRef?.current?.close?.();
+    if (content) {
+      Clipboard.setString(content);
+      dispatch(
+        showHideToastMessage({
+          content: 'common:text_copied_to_clipboard',
+          props: {
+            textProps: {useI18n: true},
+            type: 'success',
+          },
+        }),
+      );
+    }
   };
 
   const renderReactItem = (item: any, index: number) => {
@@ -99,6 +127,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
           leftIcon={'Copy'}
           leftIconProps={{icon: 'Copy', size: 24}}
           title={t('post:comment_menu_copy_text')}
+          onPress={_onPressCopy}
         />
         {isActor && (
           <PrimaryItem
@@ -114,6 +143,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
           leftIcon={'Redo'}
           leftIconProps={{icon: 'Redo', size: 24}}
           title={t('post:comment_menu_history')}
+          onPress={_onPress}
         />
         {isActor && (
           <PrimaryItem
@@ -121,6 +151,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
             leftIcon={'Trash'}
             leftIconProps={{icon: 'Trash', size: 24}}
             title={t('post:comment_menu_delete')}
+            onPress={_onPress}
           />
         )}
       </View>
