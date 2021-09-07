@@ -29,6 +29,7 @@ import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostView from '~/screens/Post/components/PostView';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -52,6 +53,7 @@ const PostDetail = (props: any) => {
 
   const id = useKeySelector(postKeySelector.postDetail.id);
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
+  const postTime = useKeySelector(postKeySelector.postTimeById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
   const latest_reactions = useKeySelector(
     postKeySelector.postLatestReactionsComments(id),
@@ -213,33 +215,39 @@ const PostDetail = (props: any) => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
       <Header subTitle={'Post detail'} />
-      <SectionList
-        ref={listRef}
-        sections={sectionData}
-        renderItem={renderCommentItem}
-        renderSectionHeader={renderSectionHeader}
-        ListHeaderComponent={renderPostContent}
-        ListFooterComponent={renderFooter}
-        stickySectionHeadersEnabled={false}
-        ItemSeparatorComponent={() => <View />}
-        keyboardShouldPersistTaps={'handled'}
-        onLayout={onLayout}
-        onContentSizeChange={onLayout}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor={colors.borderDisable}
+      {!postTime ? (
+        <PostViewPlaceholder />
+      ) : (
+        <>
+          <SectionList
+            ref={listRef}
+            sections={sectionData}
+            renderItem={renderCommentItem}
+            renderSectionHeader={renderSectionHeader}
+            ListHeaderComponent={renderPostContent}
+            ListFooterComponent={renderFooter}
+            stickySectionHeadersEnabled={false}
+            ItemSeparatorComponent={() => <View />}
+            keyboardShouldPersistTaps={'handled'}
+            onLayout={onLayout}
+            onContentSizeChange={onLayout}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                tintColor={colors.borderDisable}
+              />
+            }
           />
-        }
-      />
-      <CommentInputView
-        postId={id}
-        groupIds={groupIds}
-        autoFocus={focusComment}
-        textInputRef={textInputRef}
-        onCommentSuccess={onCommentSuccess}
-      />
+          <CommentInputView
+            postId={id}
+            groupIds={groupIds}
+            autoFocus={focusComment}
+            textInputRef={textInputRef}
+            onCommentSuccess={onCommentSuccess}
+          />
+        </>
+      )}
     </ScreenWrapper>
   );
 };
