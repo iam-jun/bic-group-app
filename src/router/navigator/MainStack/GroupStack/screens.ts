@@ -19,6 +19,7 @@ export default {
   'group-detail': GroupDetail,
   'group-about': GroupAbout,
   'group-members': GroupMembers,
+  'group-files': NewFeature,
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
@@ -29,5 +30,4 @@ export default {
   'my-profile': MyProfile,
   'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
-  'group-files': NewFeature,
 };

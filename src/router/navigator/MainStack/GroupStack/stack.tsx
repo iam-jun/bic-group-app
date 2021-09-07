@@ -3,6 +3,7 @@ const groupStack = {
   groupDetail: 'group-detail',
   groupAbout: 'group-about',
   groupMembers: 'group-members',
+  groupFiles: 'group-files',
   createPost: 'create-post',
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',
@@ -13,7 +14,6 @@ const groupStack = {
   myProfile: 'my-profile',
   publicProfile: 'user-profile',
   inviteMembers: 'invite-members',
-  groupFiles: 'group-files',
 };
 
 export default groupStack;
