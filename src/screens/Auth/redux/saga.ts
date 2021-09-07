@@ -16,6 +16,7 @@ import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import * as actions from './actions';
 import * as types from './types';
+import * as modalActions from '~/store/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -116,6 +117,7 @@ function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
 }
 
 function* onSignInSuccess(user: IUserResponse) {
+  yield put(modalActions.showLoading());
   yield put(actions.setLoading(false));
 
   const name =
@@ -146,6 +148,7 @@ function* onSignInSuccess(user: IUserResponse) {
   }
 
   navigation.replace(rootSwitch.mainStack);
+  yield put(modalActions.hideLoading());
 }
 
 function* onSignInFailed(errorMessage: string) {
