@@ -173,6 +173,7 @@ export interface IReaction {
   latest_children?: any;
   children_counts?: any;
   own_children?: any;
+  loading?: boolean;
 }
 
 export interface IGetStreamAudienceUser {

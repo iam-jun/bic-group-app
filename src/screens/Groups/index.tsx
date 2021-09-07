@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
@@ -18,6 +18,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
 import {scaleSize} from '~/theme/dimension';
 import appConfig from '~/configs/appConfig';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Groups: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const Groups: React.FC = () => {
     groupsKeySelector.loadingJoinedGroups,
   );
   const joinedGroups = useKeySelector(groupsKeySelector.joinedGroups);
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const [searchText, setSearchText] = useState<string>('');
 
@@ -100,7 +104,12 @@ const Groups: React.FC = () => {
 
   return (
     <View style={styles.containerScreen}>
-      <Header hideBack title={'My Groups'} avatar={images.img_groups} />
+      <Header
+        hideBack
+        title="tabs:groups"
+        titleTextProps={{useI18n: true}}
+        removeBorderAndShadow={isLaptop}
+      />
       {renderSearchBar()}
       {renderDataList()}
     </View>
