@@ -1,20 +1,23 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ActivityIndicator, useTheme} from 'react-native-paper';
+import {ActivityIndicator, Modal, useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
+import useModal from '~/hooks/modal';
 
-const LoadingScreen = () => {
+const LoadingModal = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
+  const {loading} = useModal();
+  const {visible} = loading;
+
   return (
-    <ScreenWrapper isFullView style={styles.root}>
+    <Modal visible={visible} contentContainerStyle={styles.root}>
       <View style={styles.logoContainer}>
         <Image
           resizeMode="contain"
@@ -28,7 +31,7 @@ const LoadingScreen = () => {
         />
       </View>
       <Text.ButtonSmall>Loading...</Text.ButtonSmall>
-    </ScreenWrapper>
+    </Modal>
   );
 };
 
@@ -61,4 +64,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default LoadingScreen;
+export default LoadingModal;
