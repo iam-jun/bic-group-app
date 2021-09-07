@@ -8,7 +8,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useNotifications from '~/hooks/notifications';
-import NotificationTopBar from './components/NotificationTopBar';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import {useIsFocused} from '@react-navigation/native';
 import notificationsActions from './redux/actions';
@@ -198,27 +197,28 @@ const Notification = () => {
 
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
-      <View style={styles.screenContainer}>
-        <Header>
-          <NotificationTopBar onPressMenu={onPressMenu} />
-        </Header>
-        {showNoNotification && <NoNotificationFound />}
-        {!showNoNotification && (
-          <ListView
-            style={styles.list}
-            type="notification"
-            loading={loadingNotifications}
-            isFullView
-            renderItemSeparator={() => <ViewSpacing height={2} />}
-            data={notificationList}
-            onItemPress={_onItemPress}
-            onLoadMore={() => loadMoreNotifications()}
-            ListFooterComponent={renderListFooter}
-          />
-        )}
-        <NotificationBottomSheet modalizeRef={menuSheetRef} />
-        {renderToastMessage()}
-      </View>
+      <Header
+        title="tabs:notification"
+        titleTextProps={{useI18n: true, variant: 'h5'}}
+        hideBack
+        onPressMenu={onPressMenu}
+      />
+      {showNoNotification && <NoNotificationFound />}
+      {!showNoNotification && (
+        <ListView
+          style={styles.list}
+          type="notification"
+          loading={loadingNotifications}
+          isFullView
+          renderItemSeparator={() => <ViewSpacing height={2} />}
+          data={notificationList}
+          onItemPress={_onItemPress}
+          onLoadMore={() => loadMoreNotifications()}
+          ListFooterComponent={renderListFooter}
+        />
+      )}
+      <NotificationBottomSheet modalizeRef={menuSheetRef} />
+      {renderToastMessage()}
     </ScreenWrapper>
   );
 };
