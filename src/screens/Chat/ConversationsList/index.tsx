@@ -11,22 +11,22 @@ import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IObject} from '~/interfaces/common';
 import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {scaleSize} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 import appConfig from '~/configs/appConfig';
+import Divider from '~/beinComponents/Divider';
 
 const ConversationsList = (): React.ReactElement => {
-  const theme: IObject<any> = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
@@ -57,9 +57,7 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.createConversation);
   };
 
-  const renderItemSeparator = () => (
-    <ViewSpacing height={theme.spacing.margin.tiny} />
-  );
+  const renderItemSeparator = () => <Divider style={styles.itemSeparator} />;
 
   const renderEmpty = () => {
     if (!searchQuery) return null;
@@ -120,7 +118,7 @@ const ConversationsList = (): React.ReactElement => {
   );
 };
 
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {},
@@ -130,6 +128,11 @@ const createStyles = (theme: IObject<any>) => {
     item: {
       flex: 1,
       flexDirection: 'row',
+    },
+    itemSeparator: {
+      marginLeft: 72,
+      marginRight: spacing.margin.large,
+      marginBottom: spacing.margin.small,
     },
     emptyView: {
       alignItems: 'center',
