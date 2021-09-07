@@ -1,5 +1,11 @@
 import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -22,6 +28,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import {deviceDimensions} from '~/theme/dimension';
 
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
@@ -29,6 +36,9 @@ const Newsfeed = () => {
   const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
+
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
@@ -85,16 +95,20 @@ const Newsfeed = () => {
     );
   };
 
+  const navigateToCreatePost = () => {
+    rootNavigation.navigate(homeStack.createPost);
+  };
+
   return (
     <View style={styles.container}>
       <Header
-        avatar={images.logo_bein}
+        avatar={!isLaptop ? images.logo_bein : undefined}
         hideBack
         title={'post:news_feed'}
         titleTextProps={{useI18n: true}}
-        icon={images.logo_bein}
-        menuIcon={'Edit'}
-        onPressMenu={() => rootNavigation.navigate(homeStack.createPost)}
+        menuIcon={!isLaptop ? 'Edit' : undefined}
+        onPressMenu={!isLaptop ? navigateToCreatePost : undefined}
+        style={isLaptop ? styles.headerOnLaptop : {}}
       />
       {homePosts.length === 0 && refreshing ? (
         renderPlaceholder()
@@ -128,6 +142,11 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+    },
+    headerOnLaptop: {
+      backgroundColor: colors.surface,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
     },
     listContainer: {
       flex: 1,
