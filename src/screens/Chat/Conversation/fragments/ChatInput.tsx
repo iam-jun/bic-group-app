@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import React, {useState} from 'react';
-import {Platform} from 'react-native';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
@@ -41,11 +40,6 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       }),
     );
     setText('');
-  };
-
-  const onSubmitEditing = () => {
-    if (Platform.OS !== 'web') return;
-    onSend();
   };
 
   const onPressSelectImage = (file: IFileResponse) => {
@@ -118,7 +112,6 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       ComponentInput={CommentInput}
       componentInputProps={{
         onPressSend: onSend,
-        onSubmitEditing,
         onPressFile,
         onPressSelectImage,
       }}

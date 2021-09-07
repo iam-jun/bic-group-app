@@ -35,6 +35,29 @@
       span {
         overflow-wrap: anywhere !important;
       }
+      #chat-wrapper {
+        transform: rotate(180deg);
+        flex: 1 1 0%;
+        overflow-y: scroll;
+        direction: rtl;
+
+      }
+      #chat-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+      }
+      .chat-message {
+        transform: rotate(180deg);
+        direction: ltr; 
+      }
       .menu-item:hover {
         opacity: 0.7;
       }
@@ -43,4 +66,5 @@
   <body>
     <div id="app-root"></div>
   </body>
+  </script>
 </html>

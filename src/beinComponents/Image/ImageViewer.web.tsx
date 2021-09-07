@@ -10,6 +10,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {ImageProps} from '.';
+import Div from '../Div.web';
 import Icon from '../Icon';
 import Image from './FastImage';
 
@@ -25,8 +26,14 @@ const ImageViewer = ({source, style}: ImageProps) => {
     setViewerVisible(false);
   };
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.keyCode === 27) {
+      setViewerVisible(false);
+    }
+  };
+
   return (
-    <View>
+    <Div tabIndex="0" onKeyDown={onKeyDown}>
       <TouchableOpacity onPress={() => setViewerVisible(true)}>
         <Image source={source} style={style} />
       </TouchableOpacity>
@@ -43,16 +50,17 @@ const ImageViewer = ({source, style}: ImageProps) => {
                 className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
               />
             </Pressable>
-            <Icon
-              style={styles.icon}
-              icon="iconClose"
-              tintColor={colors.textReversed}
-              onPress={onClose}
-            />
+            <Div tabIndex="1" style={styles.icon}>
+              <Icon
+                icon="iconClose"
+                tintColor={colors.textReversed}
+                onPress={onClose}
+              />
+            </Div>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    </View>
+    </Div>
   );
 };
 
@@ -70,6 +78,7 @@ const createStyles = (theme: ITheme) => {
       height: '100%',
       alignItems: 'center',
       justifyContent: 'center',
+      position: 'relative',
     },
     icon: {
       position: 'absolute',
