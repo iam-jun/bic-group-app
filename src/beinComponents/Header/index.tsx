@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewProps} from 'react-native';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -34,6 +34,7 @@ export interface HeaderProps {
   hideBack?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
+  style?: StyleProp<ViewProps>;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -56,6 +57,7 @@ const Header: React.FC<HeaderProps> = ({
   hideBack,
   onPressBack,
   disableInsetTop,
+  style,
 }: HeaderProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -83,6 +85,7 @@ const Header: React.FC<HeaderProps> = ({
             paddingTop: disableInsetTop ? undefined : insets.top,
           },
           styles.container,
+          style,
         ])}>
         <ViewSpacing width={spacing.margin.large} />
         {!hideBack && (
