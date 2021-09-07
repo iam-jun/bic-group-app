@@ -45,7 +45,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
-  yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
+  yield takeEvery(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
   yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
   yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
@@ -377,9 +377,9 @@ function* postReactToPost({
         userId,
       );
       if (response?.data?.[0]) {
-        const cOwnReaction2 = yield select(s =>
-          get(s, postKeySelector.postOwnReactionById(id)),
-        ) || {};
+        const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+        const cReactionCounts2 = post2.reaction_counts || {};
+        const cOwnReaction2 = post2.own_reactions || {};
         const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
 
         const reactionArr2: IReaction[] = [];
@@ -389,7 +389,7 @@ function* postReactToPost({
         yield onUpdateReactionOfPostById(
           id,
           {...newOwnReaction2},
-          {...newReactionCounts},
+          {...cReactionCounts2},
         );
       }
     }
@@ -407,17 +407,33 @@ function* deleteReactToPost({
 }) {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
-    const rId = ownReaction?.[reactionId]?.[0]?.id;
+    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+    const cReactionCounts1 = post1.reaction_counts || {};
+    const cOwnReaction1 = post1.own_reactions || {};
+
+    const rId = cOwnReaction1?.[reactionId]?.[0]?.id;
     if (rId) {
-      const newOwnReaction = {...ownReaction};
-      newOwnReaction[reactionId] = [];
-      const newReactionCounts = {...reactionCounts};
-      newReactionCounts[reactionId] = Math.max(
-        0,
-        (newReactionCounts[reactionId] || 0) - 1,
-      );
-      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+      const newOwnReaction1: IOwnReaction = {...cOwnReaction1};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({loading: true});
+      newOwnReaction1[reactionId] = reactionArr;
+      yield onUpdateReactionOfPostById(id, newOwnReaction1, {
+        ...cReactionCounts1,
+      });
+
       yield call(postDataHelper.deleteReaction, rId);
+
+      const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+      const cReactionCounts2 = post2.reaction_counts || {};
+      const cOwnReaction2 = post2.own_reactions || {};
+      const newOwnReaction2 = {...cOwnReaction2};
+      newOwnReaction2[reactionId] = [];
+      const newReactionCounts2 = {...cReactionCounts2};
+      newReactionCounts2[reactionId] = Math.max(
+        0,
+        (newReactionCounts2[reactionId] || 0) - 1,
+      );
+      yield onUpdateReactionOfPostById(id, newOwnReaction2, newReactionCounts2);
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
