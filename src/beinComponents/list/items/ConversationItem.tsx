@@ -24,7 +24,7 @@ const ConversationItem: React.FC<IConversation> = ({
   const styles = createStyles(theme);
   const {text, textReversed, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
-  const textcolor = unreadCount ? text : textSecondary;
+  const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
@@ -56,12 +56,12 @@ const ConversationItem: React.FC<IConversation> = ({
       title={name}
       titleProps={{
         numberOfLines: 1,
-        color: textcolor,
+        color: textColor,
       }}
       subTitleProps={{
         numberOfLines: 2,
         variant: unreadCount ? 'bodyM' : 'body',
-        color: textcolor,
+        color: textColor,
       }}
       subTitle={lastMessage}
       style={styles.container}
