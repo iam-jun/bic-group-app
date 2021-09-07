@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, StyleProp, ViewProps} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -34,7 +34,7 @@ export interface HeaderProps {
   hideBack?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
-  style?: StyleProp<ViewProps>;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Header: React.FC<HeaderProps> = ({
