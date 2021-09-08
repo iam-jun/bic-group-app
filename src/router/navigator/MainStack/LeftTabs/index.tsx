@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
@@ -13,6 +14,7 @@ import {ITheme} from '~/theme/interfaces';
 import notificationsActions from '../../../../screens/Notification/redux/actions';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
+import images from '~/resources/images';
 
 const Tab = createSideTabNavigator();
 
@@ -51,6 +53,30 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     }
   };
 
+  const renderIcon = (name: string, focused: boolean) => {
+    if (name === 'home') {
+      return (
+        <Image
+          source={focused ? images.logo_bein : images.logo_bein_black_white}
+          resizeMode="contain"
+          style={styles.logoBein}
+        />
+      );
+    }
+
+    const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
+
+    return (
+      <Icon
+        //@ts-ignore
+        icon={icon[name]}
+        size={24}
+        tintColor="none"
+        bold={focused}
+      />
+    );
+  };
+
   return (
     // @ts-ignore
     <Tab.Navigator
@@ -67,16 +93,9 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             component={component}
             options={{
               tabBarIcon: ({focused}: {focused: boolean}) => {
-                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 return (
                   <View style={styles.iconContainer}>
-                    <Icon
-                      //@ts-ignore
-                      icon={icon[name]}
-                      size={24}
-                      tintColor="none"
-                      bold={focused}
-                    />
+                    {renderIcon(name, focused)}
                     {renderBadge(name)}
                   </View>
                 );
@@ -105,6 +124,10 @@ const CreateStyle = (theme: ITheme) => {
           width: 48,
         },
       }),
+    },
+    logoBein: {
+      width: 26.67,
+      height: 26.67,
     },
     iconContainer: {
       flex: 1,

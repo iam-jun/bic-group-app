@@ -53,6 +53,7 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
+      paddingTop: spacing.padding.tiny,
       flexDirection: 'row',
       alignItems: 'flex-start',
     },

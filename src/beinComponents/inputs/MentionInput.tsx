@@ -22,6 +22,7 @@ import {mentionRegex} from '~/constants/commonRegex';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
+import Div from '../Div';
 
 export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -39,7 +40,6 @@ export interface MentionInputProps extends TextInputProps {
   allReplacer?: string;
   onChangeText?: (value: string) => void;
   onMentionText?: (textMention: string) => void;
-  onContentSizeChange?: (data: any) => void;
   ComponentInput?: any;
   componentInputProps?: any;
 
@@ -64,7 +64,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
   allReplacer,
   onChangeText,
   onMentionText,
-  onContentSizeChange,
   ComponentInput = TextInput,
   componentInputProps = {},
 
@@ -80,6 +79,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [inputSelection, setInputSelection] = useState<any>();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
+  const [hoverItem, setHoverItem] = useState<any>('');
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -210,28 +210,49 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 
   const _renderItem = ({item}: {item: any}) => {
+    const backgroundColor =
+      (hoverItem?.id && item?.id === hoverItem?.id) ||
+      (hoverItem?._id && item?._id === hoverItem?._id)
+        ? colors.placeholder
+        : colors.background;
+
     return (
-      <TouchableOpacity style={styles.item} onPress={() => _onPressItem(item)}>
-        <Avatar.Medium
-          style={styles.avatar}
-          source={item.avatar || item.icon}
-          placeholderSource={images.img_user_avatar_default}
-        />
-        <Text>{item.name || item.fullname}</Text>
-      </TouchableOpacity>
+      <Div
+        style={{backgroundColor}}
+        onMouseOver={() => setHoverItem(item)}
+        onMouseLeave={() => setHoverItem(null)}>
+        <TouchableOpacity
+          style={[styles.item]}
+          onPress={() => _onPressItem(item)}>
+          <Avatar.Medium
+            style={styles.avatar}
+            source={item.avatar || item.icon}
+            placeholderSource={images.img_user_avatar_default}
+          />
+          <Text>{item.name || item.fullname}</Text>
+        </TouchableOpacity>
+      </Div>
     );
   };
 
   const renderMentionAll = () => {
     if (!onPressAll && !showItemAll) return null;
+    const backgroundColor =
+      hoverItem?.id === 'all' ? colors.placeholder : colors.background;
 
     return (
-      <TouchableOpacity onPress={_onPressAll}>
-        <View style={styles.mentionAll}>
-          <Text.ButtonBase style={styles.textMentionAll}>@all</Text.ButtonBase>
-          <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
-        </View>
-      </TouchableOpacity>
+      <Div
+        onMouseOver={() => setHoverItem({id: 'all'})}
+        onMouseLeave={() => setHoverItem(null)}>
+        <TouchableOpacity onPress={_onPressAll}>
+          <View style={[styles.mentionAll, {backgroundColor}]}>
+            <Text.ButtonBase style={styles.textMentionAll}>
+              @all
+            </Text.ButtonBase>
+            <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
+          </View>
+        </TouchableOpacity>
+      </Div>
     );
   };
 
