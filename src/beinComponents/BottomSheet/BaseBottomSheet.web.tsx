@@ -94,7 +94,7 @@ const BaseBottomSheet: React.FC<Props> = ({
   const _onClosed = () => {
     if (!visible) return;
     setVisible(false);
-    onClose();
+    onClose?.();
   };
 
   const onLayout = (e: LayoutChangeEvent) => {
