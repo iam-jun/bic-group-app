@@ -271,7 +271,8 @@
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
-    "title_members": "Thành viên"
+    "title_members": "Thành viên",
+    "label_init_group_message": "Say hello to your group"
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
