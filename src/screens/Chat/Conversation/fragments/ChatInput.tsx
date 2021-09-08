@@ -89,6 +89,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       const conversationId = conversation?._id;
       const response: any = await makeHttpRequest(
         apiConfig.Chat.mentionUsers({
+          fields: {customFields: 1},
           query: {
             $and: [
               {__rooms: {$eq: conversationId}},
@@ -110,6 +111,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
       onChangeText={_onChangeText}
       value={text}
       ComponentInput={CommentInput}
+      mentionField="beinUserId"
       componentInputProps={{
         onPressSend: onSend,
         onPressFile,

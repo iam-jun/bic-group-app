@@ -42,6 +42,7 @@ export interface MentionInputProps extends TextInputProps {
   onMentionText?: (textMention: string) => void;
   ComponentInput?: any;
   componentInputProps?: any;
+  mentionField?: string;
 
   getDataPromise?: any;
   getDataParam?: any;
@@ -66,6 +67,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   onMentionText,
   ComponentInput = TextInput,
   componentInputProps = {},
+  mentionField = 'id',
 
   getDataPromise,
   getDataParam,
@@ -170,7 +172,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const _onPressItem = useCallback(
     (item: any) => {
-      const mention = `@[u:${item.id || item._id}:${
+      const mention = `@[u:${item[mentionField]}:${
         item.fullname || item.name
       }] `;
       setContent(replaceContent(content, `@${key}`, mention));
@@ -211,8 +213,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const _renderItem = ({item}: {item: any}) => {
     const backgroundColor =
-      (hoverItem?.id && item?.id === hoverItem?.id) ||
-      (hoverItem?._id && item?._id === hoverItem?._id)
+      hoverItem?.[mentionField] &&
+      item?.[mentionField] === hoverItem?.[mentionField]
         ? colors.placeholder
         : colors.background;
 
