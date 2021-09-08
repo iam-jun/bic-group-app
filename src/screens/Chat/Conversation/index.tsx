@@ -1,4 +1,5 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -26,6 +27,7 @@ import {
   MessageContainer,
   MessageOptionsModal,
 } from './fragments';
+import GroupChatWelcome from './fragments/GroupChatWelcome';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -161,20 +163,11 @@ const Conversation = () => {
     };
     return <MessageContainer {...props} />;
   };
+  const renderChatMessages = () => {
+    if (!messages.loading && isEmpty(messages.data))
+      return <GroupChatWelcome />;
 
-  return (
-    <ScreenWrapper isFullView testID="MessageScreen">
-      <Header
-        avatar={_avatar}
-        avatarProps={{variant: 'default', onError: onLoadAvatarError}}
-        title={conversation.name}
-        titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
-        icon="search"
-        onPressIcon={onSearchPress}
-        menuIcon="ConversationInfo"
-        onPressMenu={goConversationDetail}
-        hideBack={isLaptop}
-      />
+    return (
       <ListMessages
         inverted={Platform.OS !== 'web'}
         data={messages.data}
@@ -195,6 +188,23 @@ const Conversation = () => {
         )}
         onScroll={onScroll}
       />
+    );
+  };
+
+  return (
+    <ScreenWrapper isFullView testID="MessageScreen">
+      <Header
+        avatar={_avatar}
+        avatarProps={{variant: 'default', onError: onLoadAvatarError}}
+        title={conversation.name}
+        titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
+        icon="search"
+        onPressIcon={onSearchPress}
+        menuIcon="ConversationInfo"
+        onPressMenu={goConversationDetail}
+        hideBack={isLaptop}
+      />
+      {renderChatMessages()}
 
       <ChatInput onError={setError} />
       <MessageOptionsModal
