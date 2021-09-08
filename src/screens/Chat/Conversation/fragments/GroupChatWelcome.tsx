@@ -21,7 +21,9 @@ const GroupChatWelcome = () => {
         tintColor="none"
       />
       <View style={styles.textContainer}>
-        <Text.Body useI18n>chat:label_init_group_message:full</Text.Body>
+        <Text.Body style={styles.text} useI18n>
+          chat:label_init_group_message:full
+        </Text.Body>
       </View>
     </View>
   );
@@ -41,6 +43,9 @@ const themeStyles = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.bgButtonSecondary,
       borderRadius: 100,
+    },
+    text: {
+      color: colors.primary7,
     },
   });
 };
