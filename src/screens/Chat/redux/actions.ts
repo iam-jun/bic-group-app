@@ -129,9 +129,15 @@ const clearSelectedUsers = () => ({
   type: Actions.CLEAR_SELECTED_USERS,
 });
 
-const createConversation = (payload: IChatUser[]) => ({
+const createConversation = (
+  payload: IChatUser[],
+  hideConfirmation?: boolean,
+  callBack?: (roomId: string) => void,
+) => ({
   type: Actions.CREATE_CONVERSATION,
   payload,
+  hideConfirmation,
+  callBack,
 });
 
 const createConversationSuccess = (payload: IConversation) => ({

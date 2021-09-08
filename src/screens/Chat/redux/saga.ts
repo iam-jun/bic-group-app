@@ -174,7 +174,16 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
   }
 }
 
-function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
+function* createConversation({
+  payload,
+  hideConfirmation,
+  callBack,
+}: {
+  payload: IChatUser[];
+  type: string;
+  hideConfirmation?: boolean;
+  callBack?: (roomId: string) => void;
+}) {
   try {
     const {auth, chat} = yield select();
     const {user} = auth;
@@ -188,18 +197,26 @@ function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
           (room.usernames || []).includes(payload[0].username),
       );
       if (existedRoom) {
-        yield put(
-          modalActions.showAlert({
-            title: i18next.t('common:text_error'),
-            content: i18next.t('chat:error:existing_direct_chat'),
-            confirmLabel: i18next.t('common:text_ok'),
-            onConfirm: () => {
-              navigation.replace(chatStack.conversation, {
-                roomId: existedRoom._id,
-              });
-            },
-          }),
-        );
+        if (callBack) return callBack(existedRoom._id);
+        if (hideConfirmation) {
+          navigation.replace(chatStack.conversation, {
+            roomId: existedRoom._id,
+          });
+        } else {
+          yield put(
+            modalActions.showAlert({
+              title: i18next.t('common:text_error'),
+              content: i18next.t('chat:error:existing_direct_chat'),
+              confirmLabel: i18next.t('common:text_ok'),
+              onConfirm: () => {
+                navigation.replace(chatStack.conversation, {
+                  roomId: existedRoom._id,
+                });
+              },
+            }),
+          );
+        }
+
         return;
       }
       response = yield makeHttpRequest(
@@ -237,6 +254,8 @@ function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
 
     yield put(actions.setConversationDetail(conversation));
     yield put(actions.createConversationSuccess(conversation));
+
+    if (callBack) return callBack(conversation._id);
 
     rootNavigationRef?.current?.dispatch(
       StackActions.replace(chatStack.conversation),
