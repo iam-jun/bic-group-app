@@ -1,7 +1,8 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import {
   messageOptionData,
@@ -30,9 +31,13 @@ const MessageOptionsModal: React.FC<Props> = ({
   ...props
 }: Props) => {
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = themeStyle(theme);
+  const [hoverItem, setHoverItem] = useState<string | null>(null);
 
   const renderReactions = () => {
+    if (Platform.OS === 'web') return null;
+
     return (
       <View style={styles.reactions}>
         {Object.keys(reactions).map(key => (
@@ -47,28 +52,37 @@ const MessageOptionsModal: React.FC<Props> = ({
   };
 
   const renderItem = ({item}: {item: MessageOptionType; index: number}) => {
-    const menu: IMessageMenu = messageOptionData[item];
+    const menu = messageOptionData[item] as IMessageMenu;
+    const backgroundColor =
+      item === hoverItem ? colors.placeholder : colors.background;
 
     return (
-      <Icon
-        style={styles.itemMenu}
-        icon={menu.icon}
-        label={`chat:message_option:${menu.label}`}
-        labelStyle={styles.label}
-        onPress={() => onMenuPress(item)}
-      />
+      <Div
+        onMouseOver={() => setHoverItem(item)}
+        onMouseLeave={() => setHoverItem(null)}>
+        <Icon
+          style={styles.itemMenu}
+          icon={menu.icon}
+          backgroundColor={backgroundColor}
+          label={`chat:message_option:${menu.label}`}
+          labelStyle={styles.label}
+          onPress={() => onMenuPress(item)}
+        />
+      </Div>
     );
   };
+
+  const data = isMyMessage ? myMessageOptions : messageOptions;
 
   return (
     <BottomSheet
       {...props}
       modalizeRef={modalRef}
-      side="right"
+      side="left"
       onClosed={onClosed}
       flatListProps={{
         style: styles.list,
-        data: isMyMessage ? myMessageOptions : messageOptions,
+        data: data,
         keyExtractor: (item: MessageOptionType) => `message-menu-${item}`,
         renderItem: renderItem,
         ListHeaderComponent: renderReactions,
@@ -93,8 +107,7 @@ const themeStyle = (theme: ITheme) => {
       borderBottomColor: colors.placeholder,
     },
     itemMenu: {
-      marginTop: spacing.margin.large,
-      marginHorizontal: spacing.margin.large,
+      padding: spacing.padding.base,
     },
     label: {
       marginStart: spacing.margin.large,

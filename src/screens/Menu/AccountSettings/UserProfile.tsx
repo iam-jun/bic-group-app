@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, ScrollView, Platform} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -32,10 +38,11 @@ const UserProfile = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {myProfile} = useMenu();
+  const {myProfile, loadingAvatar, loadingCover} = useMenu();
   const {
     id,
     fullname,
@@ -113,17 +120,25 @@ const UserProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={onEditAvatar}>
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+            <Text.H6
+              color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View style={styles.imageButton}>
-          <Image
-            style={styles.avatar}
-            source={avatar || images.img_user_avatar_default}
-          />
+          {!loadingAvatar ? (
+            <Image
+              style={styles.avatar}
+              source={avatar || images.img_user_avatar_default}
+            />
+          ) : (
+            <View style={[styles.avatar, styles.imageLoading]}>
+              <ActivityIndicator />
+            </View>
+          )}
         </View>
         <Divider style={styles.divider} />
       </View>
@@ -137,17 +152,25 @@ const UserProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={onEditCover}>
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+            <Text.H6
+              color={!loadingCover ? colors.primary7 : colors.textDisabled}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View onLayout={onCoverLayout}>
-          <Image
-            style={styles.cover}
-            source={background_img_url || images.img_cover_default}
-          />
+          {!loadingCover ? (
+            <Image
+              style={styles.cover}
+              source={background_img_url || images.img_cover_default}
+            />
+          ) : (
+            <View style={[styles.cover, styles.imageLoading]}>
+              <ActivityIndicator />
+            </View>
+          )}
         </View>
         <Divider style={styles.divider} />
       </View>
@@ -220,7 +243,7 @@ const UserProfile = () => {
 export default UserProfile;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     container: {
@@ -253,6 +276,10 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       maxHeight: 125,
       maxWidth: 125,
       borderRadius: 8,
+    },
+    imageLoading: {
+      backgroundColor: colors.bgDisable,
+      justifyContent: 'center',
     },
     cover: {
       width: '100%',

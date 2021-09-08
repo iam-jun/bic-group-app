@@ -77,7 +77,9 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     type,
     avatar,
     user: item.u && mapUser(item?.u),
-    directUser: membersExcludeMe?.length > 0 && membersExcludeMe[0],
+    directUser: item.t === 'd' && {
+      beinUserId: item.bein_user_id,
+    },
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
   };

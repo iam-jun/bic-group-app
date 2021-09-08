@@ -142,7 +142,7 @@ const SignIn = () => {
             render={({field: {onChange, value}}) => (
               <Input
                 testID="inputEmail"
-                label={t('auth:input_label_email')}
+                label={!loading ? t('auth:input_label_email') : undefined}
                 placeholder={'sample@email.com'}
                 keyboardType="email-address"
                 autoCapitalize="none"
@@ -178,7 +178,7 @@ const SignIn = () => {
             render={({field: {onChange, value}}) => (
               <PasswordInput
                 testID="inputPassword"
-                label={t('auth:input_label_password')}
+                label={!loading ? t('auth:input_label_password') : undefined}
                 placeholder={t('auth:input_label_password')}
                 error={errors.password}
                 autoCapitalize="none"

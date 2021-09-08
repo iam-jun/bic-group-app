@@ -25,6 +25,8 @@ import {getAvatar} from '../helper';
 import actions from '../redux/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import mainStack from '~/router/navigator/MainStack/stack';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -58,11 +60,18 @@ const Conversation = (): React.ReactElement => {
     if (conversation.type === roomTypes.DIRECT) {
       dispatch(
         menuActions.selectedProfile({
-          id: conversation.directUser._id,
+          id: conversation.directUser.beinUserId,
           isPublic: true,
         }),
       );
-      rootNavigation.navigate(chatStack.userProfile);
+      rootNavigation.navigate(mainStack.userProfile);
+    } else if (conversation.type === roomTypes.GROUP) {
+      rootNavigation.navigate('groups', {
+        screen: groupStack.groupDetail,
+        params: {
+          groupId: conversation.beinGroupId,
+        },
+      });
     }
   };
 
@@ -336,11 +345,11 @@ const Conversation = (): React.ReactElement => {
   };
 
   const onPressMenu =
-    conversation.type === roomTypes.DIRECT
-      ? undefined
-      : (e: any) => {
+    conversation.type === roomTypes.QUICK
+      ? (e: any) => {
           baseSheetRef.current?.open(e?.pageX, e?.pageY);
-        };
+        }
+      : undefined;
 
   return (
     <ScrollView style={styles.root}>

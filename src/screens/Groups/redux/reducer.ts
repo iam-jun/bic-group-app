@@ -29,6 +29,9 @@ const initGroupsState = {
     canLoadMore: true,
   },
   selectedUsers: new Array<IUser>(),
+
+  loadingAvatar: false,
+  loadingCover: false,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -63,6 +66,8 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.SET_GROUP_DETAIL:
       return {
         ...state,
+        loadingCover: false,
+        loadingAvatar: false,
         loadingGroupDetail: false,
         groupDetail: {
           ...state.groupDetail,
@@ -180,6 +185,17 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         users: initGroupsState.users,
+      };
+
+    case groupsTypes.SET_LOADING_AVATAR:
+      return {
+        ...state,
+        loadingAvatar: payload,
+      };
+    case groupsTypes.SET_LOADING_COVER:
+      return {
+        ...state,
+        loadingCover: payload,
       };
 
     default:
