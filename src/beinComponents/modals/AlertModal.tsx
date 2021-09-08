@@ -1,6 +1,13 @@
 import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -56,47 +63,54 @@ const AlertModal: React.FC<AlertModalProps> = ({
       onDismiss={_onDismiss}
       contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
       {...props}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text.ButtonBase>{title}</Text.ButtonBase>
-          {!!iconName && (
-            <Icon icon={iconName} size={20} tintColor={theme.colors.iconTint} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.modalContainer}>
+          <View style={styles.header}>
+            <Text.ButtonBase>{title}</Text.ButtonBase>
+            {!!iconName && (
+              <Icon
+                icon={iconName}
+                size={20}
+                tintColor={theme.colors.iconTint}
+              />
+            )}
+          </View>
+          {!!content && (
+            <Text.Subtitle style={styles.content}>{content}</Text.Subtitle>
           )}
-        </View>
-        {!!content && (
-          <Text.Subtitle style={styles.content}>{content}</Text.Subtitle>
-        )}
-        {input && (
-          <TextInput
-            {...inputProps}
-            onChangeText={(value: string) => setText(value)}
-          />
-        )}
-        <View style={styles.displayBtn}>
-          {!!cancelBtn && (
-            <Button.Secondary
-              style={{marginEnd: theme.spacing?.margin.base}}
-              textColor={theme.colors.primary7}
-              color={theme.colors.primary2}
-              onPress={_onDismiss}>
-              {i18next.t('common:btn_cancel')}
-            </Button.Secondary>
+          {input && (
+            <TextInput
+              {...inputProps}
+              onChangeText={(value: string) => setText(value)}
+            />
           )}
+          <View style={styles.displayBtn}>
+            {!!cancelBtn && (
+              <Button.Secondary
+                style={{marginEnd: theme.spacing?.margin.base}}
+                textColor={theme.colors.primary7}
+                color={theme.colors.primary2}
+                onPress={_onDismiss}>
+                {i18next.t('common:btn_cancel')}
+              </Button.Secondary>
+            )}
 
-          {!!confirmLabel && (
-            <Button.Secondary
-              textColor={theme.colors.background}
-              color={theme.colors.primary7}
-              disabled={input && !text}
-              onPress={() => {
-                dispatch(actions.hideAlert());
-                onConfirm && onConfirm(text);
-              }}>
-              {confirmLabel}
-            </Button.Secondary>
-          )}
+            {!!confirmLabel && (
+              <Button.Secondary
+                textColor={theme.colors.background}
+                color={theme.colors.primary7}
+                disabled={input && !text}
+                onPress={() => {
+                  dispatch(actions.hideAlert());
+                  onConfirm && onConfirm(text);
+                }}>
+                {confirmLabel}
+              </Button.Secondary>
+            )}
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -105,6 +119,9 @@ const themeStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
+    root: {
+      flex: 1,
+    },
     modal: {
       width: 320,
       backgroundColor: colors.background,
@@ -113,7 +130,7 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: 6,
       alignSelf: 'center',
     },
-    container: {
+    modalContainer: {
       paddingHorizontal: spacing?.padding.extraLarge,
       paddingVertical: spacing?.padding.large,
     },
