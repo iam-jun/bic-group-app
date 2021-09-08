@@ -81,8 +81,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
           )}
           {input && (
             <TextInput
-              {...inputProps}
               onChangeText={(value: string) => setText(value)}
+              autoFocus
+              {...inputProps}
             />
           )}
           <View style={styles.displayBtn}>
