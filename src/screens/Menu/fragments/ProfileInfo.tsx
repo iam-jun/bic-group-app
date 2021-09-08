@@ -6,41 +6,59 @@ import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
-import * as modalActions from '~/store/modal/actions';
 import images from '~/resources/images';
 import {IUserProfile} from '~/interfaces/IAuth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {scaleCoverHeight} from '~/theme/dimension';
+import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import chatActions from '~/screens/Chat/redux/actions';
 
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import AboutProfile from './components/AboutProfile';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const ProfileInfo = (props: IUserProfile) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
-  const {fullname, description, avatar, background_img_url, isPublic} = props;
+  const {
+    fullname,
+    description,
+    avatar,
+    background_img_url,
+    isPublic,
+    username,
+  } = props;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const popupMessage = () =>
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('common:text_info'),
-        content: i18next.t('common:text_popup_message'),
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: i18next.t('common:text_got_it'),
-      }),
-    );
+  const navigateToChatScreen = (roomId: string) =>
+    rootNavigation.navigate('chat', {
+      screen: chatStack.conversation,
+      params: {roomId},
+    });
+
+  const onPressChat = () => {
+    if (!!username)
+      dispatch(
+        chatActions.createConversation(
+          // @ts-ignore
+          [{username, name: fullname}],
+          true,
+          navigateToChatScreen,
+        ),
+      );
+  };
 
   const onEditProfileButton = () =>
-    rootNavigation.navigate(menuStack.userProfile);
+    rootNavigation.navigate('menus', {
+      screen: menuStack.userProfile,
+    });
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -87,7 +105,7 @@ const ProfileInfo = (props: IUserProfile) => {
         color={theme.colors.primary7}
         textColor={theme.colors.background}
         rightIcon={'Message'}
-        onPress={popupMessage}>
+        onPress={onPressChat}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
     ) : (

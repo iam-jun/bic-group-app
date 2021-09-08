@@ -27,6 +27,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import mainStack from '~/router/navigator/MainStack/stack';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const Conversation = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const Conversation = (): React.ReactElement => {
     conversation.avatar,
   );
   const permissions = conversation.permissions || {};
+  const currentUserId = useUserIdAuth();
 
   useEffect(() => {
     dispatch(actions.getConversationDetail(conversation._id));
@@ -61,7 +63,7 @@ const Conversation = (): React.ReactElement => {
       dispatch(
         menuActions.selectedProfile({
           id: conversation.directUser.beinUserId,
-          isPublic: true,
+          isPublic: conversation.directUser.beinUserId !== currentUserId,
         }),
       );
       rootNavigation.navigate(mainStack.userProfile);
