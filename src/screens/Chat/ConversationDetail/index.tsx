@@ -191,7 +191,7 @@ const Conversation = (): React.ReactElement => {
       />
       {permissions[chatPermissions.CAN_PIN_MESSAGE] && (
         <Button.Icon
-          icon="iconPinGroup"
+          icon="iconPin"
           style={styles.marginRight}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_pin_chat')}
@@ -302,7 +302,7 @@ const Conversation = (): React.ReactElement => {
         </Text>
         {renderActionItem(
           'pinGroup',
-          'iconPinGroup',
+          'iconPin',
           i18next.t('chat:label_pin_messages'),
         )}
         {renderActionItem(

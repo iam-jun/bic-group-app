@@ -39,6 +39,7 @@ import iconMenuSwitch from '../../assets/icons/icon_menu_switch.svg';
 import iconMenuWallet from '../../assets/icons/icon_menu_wallet.svg';
 import iconTabNotification from '../../assets/icons/icon_notification.svg';
 import iconTabNotificationBein from '../../assets/icons/icon_notification_bein.svg';
+import iconPin from '../../assets/icons/icon_pin_outline.svg';
 import iconPinGroup from '../../assets/icons/icon_pin_group.svg';
 import iconPlay from '../../assets/icons/icon_play.svg';
 import iconReact from '../../assets/icons/icon_react.svg';
@@ -131,6 +132,7 @@ const icons = {
   search: 'Search',
   addUser: 'UserPlus',
   bell: 'Bell',
+  iconPin,
   iconPinGroup,
   attachment: 'Paperclip',
   images: 'Images',
