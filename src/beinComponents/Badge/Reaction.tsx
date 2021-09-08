@@ -4,6 +4,7 @@ import {
   StyleProp,
   StyleSheet,
   TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -67,7 +68,9 @@ const Reaction: React.FC<ReactionProps> = ({
         />
       ) : (
         <>
-          <Icon icon={icon} size={16} />
+          <View style={{width: 16, height: 16}}>
+            <Icon icon={icon} size={16} />
+          </View>
           <Text.BodySM
             color={isSelected ? colors.primary7 : colors.textPrimary}
             style={styles.textInput}>
