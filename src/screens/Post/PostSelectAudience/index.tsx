@@ -294,7 +294,9 @@ const PostSelectAudience = () => {
       <SectionList
         style={{paddingHorizontal: spacing?.padding.large}}
         sections={sectionListData}
-        keyExtractor={(item, index) => `section_list_${item}_${index}`}
+        keyExtractor={(item, index) =>
+          item?.unique || `section_list_${item}_${index}`
+        }
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderEmpty}
