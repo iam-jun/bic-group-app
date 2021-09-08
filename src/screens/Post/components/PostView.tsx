@@ -121,7 +121,7 @@ const PostView: FC<PostViewProps> = ({
       dispatch(
         menuActions.selectedProfile({
           id: actor?.id?.toString(),
-          isPublic: true,
+          isPublic: userId !== actor?.id,
         }),
       );
       rootNavigation.navigate(homeStack.publicProfile);
@@ -147,7 +147,7 @@ const PostView: FC<PostViewProps> = ({
       dispatch(
         menuActions.selectedProfile({
           id: audience?.id?.toString(),
-          isPublic: true,
+          isPublic: userId !== audience?.id,
         }),
       );
       rootNavigation.navigate(homeStack.publicProfile);

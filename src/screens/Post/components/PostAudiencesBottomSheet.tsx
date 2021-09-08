@@ -19,6 +19,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import menuActions from '~/screens/Menu/redux/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import {useUserIdAuth} from '~/hooks/auth';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
@@ -32,11 +33,14 @@ const PostAudiencesBottomSheet = () => {
   const postAudienceSheet = useKeySelector(postKeySelector.postAudienceSheet);
 
   const {isShow, data, fromStack} = postAudienceSheet || {};
+  const currentUserId = useUserIdAuth();
 
   const onPressItem = (item: any) => {
     const {id, type} = item || {};
     if (type === 'user') {
-      dispatch(menuActions.selectedProfile({id: id, isPublic: true}));
+      dispatch(
+        menuActions.selectedProfile({id: id, isPublic: id !== currentUserId}),
+      );
       rootNavigation.navigate(homeStack.publicProfile);
     } else {
       rootNavigation.navigate('groups', {

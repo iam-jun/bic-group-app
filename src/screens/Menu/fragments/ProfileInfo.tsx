@@ -56,7 +56,9 @@ const ProfileInfo = (props: IUserProfile) => {
   };
 
   const onEditProfileButton = () =>
-    rootNavigation.navigate(menuStack.userProfile);
+    rootNavigation.navigate('menus', {
+      screen: menuStack.userProfile,
+    });
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
