@@ -83,7 +83,7 @@ const BaseBottomSheet: React.FC<Props> = ({
   };
 
   const close = () => {
-    setVisible(false);
+    _onClosed();
   };
 
   useImperativeHandle(modalizeRef, () => ({

@@ -37,6 +37,7 @@ const ReactionBottomSheet = () => {
       isOpen={show}
       position={position}
       side="center"
+      menuMinWidth={375}
       onClose={_onClose}
       ContentComponent={
         <View>
