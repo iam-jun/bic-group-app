@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
+import {ITheme} from '~/theme/interfaces';
 
 interface Props {
   onReactPress: (event: any) => void;
@@ -15,27 +16,31 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
   const {colors} = theme;
   const styles = createStyles(theme);
 
+  if (Platform.OS !== 'web') return null;
+
   return (
-    <View style={styles.container}>
-      <Icon
-        icon="iconReact"
-        tintColor={colors.textSecondary}
-        style={styles.icon}
-        onPress={onReactPress}
-      />
-      <Icon
-        icon="CornerDownRight"
-        tintColor={colors.textSecondary}
-        style={styles.icon}
-        onPress={onReplyPress}
-      />
-      <Icon
-        icon="iconSettings"
-        tintColor={colors.textSecondary}
-        style={styles.icon}
-        onPress={onMenuPress}
-      />
-    </View>
+    <Div className="chat-message-menu">
+      <View style={styles.container}>
+        <Icon
+          icon="iconReact"
+          tintColor={colors.textSecondary}
+          style={styles.icon}
+          onPress={onReactPress}
+        />
+        <Icon
+          icon="CornerDownRight"
+          tintColor={colors.textSecondary}
+          style={styles.icon}
+          onPress={onReplyPress}
+        />
+        <Icon
+          icon="iconSettings"
+          tintColor={colors.textSecondary}
+          style={styles.icon}
+          onPress={onMenuPress}
+        />
+      </View>
+    </Div>
   );
 };
 

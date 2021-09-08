@@ -40,7 +40,11 @@ export interface CommentInputProps {
   textInputRef?: any;
   loading?: boolean;
   disableKeyboardSpacer?: boolean;
+  onContentSizeChange?: (event: any) => void;
 }
+
+const DEFAULT_HEIGHT = 44;
+const LIMIT_HEIGHT = 100;
 
 const CommentInput: React.FC<CommentInputProps> = ({
   style,
@@ -57,9 +61,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   textInputRef,
   loading = false,
   disableKeyboardSpacer,
+  onContentSizeChange,
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
+  const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
 
   const showSendAnim = useRef(new Animated.Value(0)).current;
   const showButtonsAnim = useRef(new Animated.Value(1)).current;
@@ -181,6 +187,22 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
+  const _onContentSizeChange = (e: any) => {
+    onContentSizeChange?.(e);
+    let newHeight = Math.min(
+      Math.max(DEFAULT_HEIGHT, e.nativeEvent.contentSize.height),
+      LIMIT_HEIGHT,
+    );
+    if (value?.length === 0) {
+      newHeight = DEFAULT_HEIGHT;
+    }
+    Animated.timing(heightAnimated, {
+      toValue: newHeight,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  };
+
   const onKeyPress = Platform.OS !== 'web' ? undefined : handleKeyEvent;
 
   const inputStyle: any = StyleSheet.flatten([
@@ -267,22 +289,25 @@ const CommentInput: React.FC<CommentInputProps> = ({
             marginLeft: textInputMarginLeft,
             marginRight: textInputMarginRight,
           }}>
-          <TextInput
-            selection={inputSelection}
-            {...props}
-            ref={textInputRef}
-            style={inputStyle}
-            selectionColor={colors.textInput}
-            multiline={true}
-            autoFocus={autoFocus}
-            placeholder={placeholder}
-            placeholderTextColor={colors.textSecondary}
-            editable={!loading}
-            value={text}
-            onChangeText={_onChangeText}
-            onSelectionChange={_onSelectionChange}
-            onKeyPress={onKeyPress}
-          />
+          <Animated.View style={{flex: 1, height: heightAnimated}}>
+            <TextInput
+              selection={inputSelection}
+              {...props}
+              onContentSizeChange={_onContentSizeChange}
+              ref={textInputRef}
+              style={inputStyle}
+              selectionColor={colors.textInput}
+              multiline={true}
+              autoFocus={autoFocus}
+              placeholder={placeholder}
+              placeholderTextColor={colors.textSecondary}
+              editable={!loading}
+              value={text}
+              onChangeText={_onChangeText}
+              onSelectionChange={_onSelectionChange}
+              onKeyPress={onKeyPress}
+            />
+          </Animated.View>
           <Button
             style={{position: 'absolute', right: 10, bottom: 10}}
             onPress={onPressEmoji}
@@ -346,8 +371,6 @@ const createStyle = (theme: ITheme, loading: boolean) => {
     },
     textInput: {
       flex: 1,
-      minHeight: 42,
-      maxHeight: 90,
       lineHeight: 22,
       paddingRight: 36,
       paddingTop: spacing?.padding.small,
