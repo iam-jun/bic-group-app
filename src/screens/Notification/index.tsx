@@ -56,7 +56,7 @@ const Notification = () => {
     notificationSelector.showMarkedAsReadToast,
   );
   useEffect(() => {
-    if (isFocused) {
+    if (isFocused && streamClient) {
       dispatch(
         notificationsActions.markAsSeenAll({
           streamClient,
@@ -153,13 +153,15 @@ const Notification = () => {
     }
 
     // finally mark the notification as read
-    dispatch(
-      notificationsActions.markAsRead({
-        userId: userId,
-        activityId: item.id,
-        streamClient: streamClient,
-      }),
-    );
+    if (streamClient) {
+      dispatch(
+        notificationsActions.markAsRead({
+          userId: userId,
+          activityId: item.id,
+          streamClient: streamClient,
+        }),
+      );
+    }
   };
 
   // load more notification handler

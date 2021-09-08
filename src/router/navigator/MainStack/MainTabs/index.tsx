@@ -149,7 +149,7 @@ const MainTabs = () => {
               },
               tabBarLabel: () => null,
               // @ts-ignore
-              tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name],
+              tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name] || '',
               tabBarBadgeStyle: {
                 fontFamily: fontFamilies.SegoeSemibold,
                 // @ts-ignore
