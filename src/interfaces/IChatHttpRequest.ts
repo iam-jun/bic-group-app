@@ -69,6 +69,7 @@ export interface IRemoveMemberReq {
   userId: string;
 }
 export interface IGetMentionUsersReq {
+  fields: any;
   query: any;
 }
 

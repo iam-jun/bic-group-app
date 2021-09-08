@@ -16,6 +16,9 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
+import menuActions from '~/screens/Menu/redux/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -27,6 +30,8 @@ export interface MessageItemProps {
 
 const MessageItem = (props: MessageItemProps) => {
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
+
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const hoverMessage = useKeySelector('chat.hoverMessage');
@@ -71,6 +76,16 @@ const MessageItem = (props: MessageItemProps) => {
     onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
   };
 
+  const onMentionPress = (user: any) => {
+    dispatch(
+      menuActions.selectedProfile({
+        id: user?.id,
+        isPublic: true,
+      }),
+    );
+    rootNavigation.navigate(mainStack.userProfile);
+  };
+
   const onHover = () => {
     dispatch(actions.setHoverMessage(currentMessage));
   };
@@ -82,7 +97,7 @@ const MessageItem = (props: MessageItemProps) => {
   const menuVisible = currentMessage._id === hoverMessage?._id;
 
   return (
-    <Div className="chat-message" onMouseOver={onHover} onMouseLeave={onBlur}>
+    <Div className="chat-message">
       <TouchableWithoutFeedback onLongPress={onMenuPress}>
         <View style={styles.container}>
           {quoted_message && <QuotedMessage {...quoted_message} />}
@@ -104,14 +119,16 @@ const MessageItem = (props: MessageItemProps) => {
             ) : (
               <>
                 <AttachmentView {...currentMessage} />
-                <MarkdownView limitMarkdownTypes>{text}</MarkdownView>
-                {menuVisible && (
-                  <MessageMenu
-                    onReactPress={() => onReactPress(currentMessage)}
-                    onReplyPress={() => onReplyPress(currentMessage)}
-                    onMenuPress={onMenuPress}
-                  />
-                )}
+                <MarkdownView
+                  limitMarkdownTypes
+                  onPressAudience={onMentionPress}>
+                  {text}
+                </MarkdownView>
+                <MessageMenu
+                  onReactPress={() => onReactPress(currentMessage)}
+                  onReplyPress={() => onReplyPress(currentMessage)}
+                  onMenuPress={onMenuPress}
+                />
               </>
             )}
           </View>
