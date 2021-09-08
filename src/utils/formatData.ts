@@ -9,6 +9,7 @@ export const formatNumber = (n: number) => {
 export const formatDate = (
   value: string | number | Date | moment.Moment,
   format?: string,
+  locale?: string,
   maxFromDays?: number,
   fromNow = true,
 ) => {
@@ -16,16 +17,27 @@ export const formatDate = (
   const date = moment(value, formats, true);
   if (!date.isValid()) return '';
 
+  let momentValue = moment(value);
+  if (locale) {
+    momentValue = momentValue.locale(locale);
+  }
+
   if (format) {
-    value = moment(value).format(format);
+    value = momentValue.format(format);
   } else {
     const days = moment(new Date()).diff(date, 'days'); // today - future < 0
     if (fromNow) {
-      if (days < (maxFromDays || 1)) value = moment(value).fromNow(true);
-      else value = moment(value).format('lll');
+      if (days < (maxFromDays || 1)) {
+        value = momentValue.fromNow(true);
+      } else {
+        value = momentValue.format('lll');
+      }
     } else {
-      if (days < (maxFromDays || 1)) value = moment(value).calendar();
-      else value = moment(value).format('L');
+      if (days < (maxFromDays || 1)) {
+        value = momentValue.calendar();
+      } else {
+        value = momentValue.format('L');
+      }
     }
   }
 

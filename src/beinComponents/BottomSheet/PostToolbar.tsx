@@ -32,6 +32,7 @@ import {formatDate} from '~/utils/formatData';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
+import * as modalActions from '~/store/modal/actions';
 
 const MAX_DAYS = 7;
 
@@ -182,7 +183,7 @@ const PostToolbar = ({
 
     if (expiresTime) {
       date = formatDate(expiresTime, 'MMM Do, YYYY');
-      time = formatDate(expiresTime, 'hh:mm A', 9999);
+      time = formatDate(expiresTime, 'hh:mm A', undefined, 9999);
     }
 
     return (
@@ -249,7 +250,7 @@ const PostToolbar = ({
             tintColor: colors.primary7,
             style: {marginRight: spacing?.margin.base},
           }}
-          onPress={onPressSelectImage}
+          // onPress={onPressSelectImage}
         />
         <PrimaryItem
           height={48}
@@ -261,7 +262,7 @@ const PostToolbar = ({
             tintColor: colors.primary7,
             style: {marginRight: spacing?.margin.base},
           }}
-          onPress={onPressSelectFile}
+          // onPress={onPressSelectFile}
         />
         <View style={{position: 'absolute', alignSelf: 'center'}}>
           {selectingDate && (
@@ -307,6 +308,8 @@ const PostToolbar = ({
       panGestureAnimatedValue={animated}
       overlayStyle={{backgroundColor: 'transparent'}}
       onClose={onCloseModal}
+      menuMinWidth={500}
+      menuMinHeight={300}
       {...props}>
       {renderToolbar()}
     </BaseBottomSheet>

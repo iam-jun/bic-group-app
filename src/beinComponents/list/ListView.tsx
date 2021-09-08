@@ -108,7 +108,7 @@ const ListView: React.FC<ListViewProps> = ({
     return (
       <TouchableOpacity
         disabled={!onItemPress || item.disableClick}
-        onPress={() => onItemPress && onItemPress(item)}>
+        onPress={e => onItemPress && onItemPress(item, e)}>
         <ItemComponent
           {...item}
           title={item[titleField || 'title']}

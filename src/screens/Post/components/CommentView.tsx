@@ -19,6 +19,10 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMenuBottomSheet';
 import Button from '~/beinComponents/Button';
 
+import menuActions from '~/screens/Menu/redux/actions';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
+
 export interface CommentViewProps {
   postId: string;
   groupIds: string;
@@ -39,6 +43,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -58,8 +63,12 @@ const CommentView: React.FC<CommentViewProps> = ({
     postTime = countTime(created_at);
   }
 
-  const onPressUser = () => {
-    alert('onPressUser: ' + user?.id);
+  const onPressUser = (audience?: any) => {
+    const id = audience?.id || user?.id;
+    if (id) {
+      dispatch(menuActions.selectedProfile({id: id, isPublic: true}));
+      rootNavigation.navigate(homeStack.publicProfile);
+    }
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
@@ -108,9 +117,9 @@ const CommentView: React.FC<CommentViewProps> = ({
     onPressReply?.(commentData);
   };
 
-  const onLongPress = () => {
+  const onLongPress = (e?: any) => {
     Keyboard.dismiss();
-    menuSheetRef?.current?.open?.();
+    menuSheetRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
   return (
@@ -142,6 +151,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                 useMarkdown
                 limitMarkdownTypes
                 content={content || ''}
+                onPressAudience={(audience: any) => onPressUser(audience)}
               />
             </View>
           </Button>
@@ -166,6 +176,7 @@ const CommentView: React.FC<CommentViewProps> = ({
       <CommentViewMenuBottomSheet
         modalizeRef={menuSheetRef}
         commentId={id}
+        content={content}
         groupIds={groupIds}
         isActor={currentUserId === user_id}
         onPressMoreReaction={onPressReact}

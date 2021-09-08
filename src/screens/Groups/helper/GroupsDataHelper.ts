@@ -5,11 +5,12 @@ import {StreamClient} from 'getstream';
 import {makeGetStreamRequest} from '~/services/httpApiRequest';
 
 export const groupsApiConfig = {
-  getMyGroups: (): HttpApiRequestConfig => ({
+  getMyGroups: (params?: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/my-groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params,
   }),
   getGroupMembers: (groupId: number, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
@@ -83,10 +84,10 @@ export const groupsApiConfig = {
 };
 
 const groupsDataHelper = {
-  getMyGroups: async () => {
+  getMyGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyGroups(),
+        groupsApiConfig.getMyGroups(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

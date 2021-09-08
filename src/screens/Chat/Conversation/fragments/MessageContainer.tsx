@@ -70,7 +70,7 @@ const MessageItem = (props: MessageItemProps) => {
   };
 
   return (
-    <Div onHover={onHover} onBlur={onBlur}>
+    <Div className="chat-message" onMouseOver={onHover} onMouseLeave={onBlur}>
       <TouchableWithoutFeedback onLongPress={onMenuPress}>
         <View style={styles.container}>
           {quoted_message && <QuotedMessage {...quoted_message} />}
@@ -112,6 +112,8 @@ const createStyles = (theme: ITheme) => {
     message: {
       marginStart: 48,
       marginTop: -16,
+      minHeight: 24,
+      paddingVertical: 2,
     },
     removedText: {
       color: colors.textSecondary,

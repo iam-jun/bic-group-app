@@ -68,6 +68,7 @@ const initState = {
     mentionKey: '',
     mentionUsers: [],
   },
+  searchInputFocus: '',
 };
 
 /**

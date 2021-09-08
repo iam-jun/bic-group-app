@@ -4,8 +4,6 @@ import {View} from 'react-native';
 
 export interface Props extends ViewProps {
   className?: string;
-  onHover?: (event: any) => void;
-  onBlur?: (event: any) => void;
   [x: string]: any;
 }
 

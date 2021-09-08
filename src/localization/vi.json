@@ -9,6 +9,7 @@
     "text_show_all": "Tất cả",
     "text_see_all": "Xem tất cả",
     "text_member": "Thành viên",
+    "text_copied_to_clipboard": "Đã sao chép",
     "text_description": "Giới thiệu",
     "btn_cancel": "Huỷ",
     "btn_delete": "Xoá",
@@ -29,7 +30,8 @@
     "text_retry": "Thử lại",
     "text_done": "Xong",
     "text_error_message": "Có gì đó sai sai",
-    "text_important_posts": "Bài viết quan trọng"
+    "text_important_posts": "Bài viết quan trọng",
+    "text_files": "Files"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -256,7 +258,15 @@
     "comment_menu_copy_text": "Sao chép nội dung",
     "comment_menu_edit": "Sửa bình luận",
     "comment_menu_history": "Lịch sử chỉnh sửa",
-    "comment_menu_delete": "Xoá bình luận"
+    "comment_menu_delete": "Xoá bình luận",
+    "post_menu_edit": "Sửa bài viết",
+    "post_menu_copy": "Sao chép nội dung",
+    "post_menu_save": "Lưu bài viết",
+    "post_menu_view_insights": "Xem thông tin",
+    "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
+    "post_menu_history": "Xem lịch sử chỉnh sửa",
+    "post_menu_delete": "Xoá bài viết",
+    "post_menu_report": "Báo cáo"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

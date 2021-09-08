@@ -12,11 +12,15 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   children?: React.ReactNode;
 
   adjustToContentHeight?: boolean;
+  side?: 'left' | 'right' | 'center';
   handlePosition?: 'inside' | 'outside';
   snapPoint?: number;
   modalHeight?: number;
-
+  position: {x: number; y: number};
   ContentComponent?: React.ReactNode;
+
+  menuMinWidth?: number;
+  menuMinHeight?: number;
 
   handleStyle?: StyleProp<ViewStyle>;
   modalStyle?: StyleProp<ViewStyle>;

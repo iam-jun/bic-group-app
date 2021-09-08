@@ -34,17 +34,13 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
 }
 
-function* getJoinedGroups() {
+function* getJoinedGroups({payload}: {type: string; payload?: any}) {
   try {
-    yield put(groupsActions.setLoadingJoinedGroups(true));
-    const response = yield groupsDataHelper.getMyGroups();
-    if (response.data?.length > 0) {
-      yield put(groupsActions.setJoinedGroups(response.data));
-      yield put(groupsActions.setLoadingJoinedGroups(false));
-    }
-    yield put(groupsActions.setLoadingJoinedGroups(false));
+    // @ts-ignore
+    const response = yield groupsDataHelper.getMyGroups(payload?.params);
+    yield put(groupsActions.setJoinedGroups(response.data));
   } catch (e) {
-    yield put(groupsActions.setLoadingJoinedGroups(false));
+    yield put(groupsActions.setJoinedGroups([]));
     console.log(
       `\x1b[31m🐣️ saga getJoinedGroups`,
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
@@ -54,14 +50,10 @@ function* getJoinedGroups() {
 
 function* getGroupDetail({payload}: {type: string; payload: number}) {
   try {
-    yield put(groupsActions.setLoadingGroupDetail(true));
-
     const result = yield requestGroupDetail(payload);
     yield put(groupsActions.setGroupDetail(result));
-
-    yield put(groupsActions.setLoadingGroupDetail(false));
   } catch (e) {
-    yield put(groupsActions.setLoadingGroupDetail(false));
+    yield put(groupsActions.setGroupDetail({}));
     console.log(
       '\x1b[36m',
       'namanh --- getGroupDetail | getGroupDetail : error',

@@ -3,18 +3,18 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {ActivityIndicator, useTheme} from 'react-native-paper';
 
-export interface LoadingProps {
+export interface LoadingIndicatorProps {
   style?: StyleProp<ViewStyle>;
   size?: number | 'small' | 'large';
   color?: 'string';
 }
 
-const Loading: React.FC<LoadingProps> = ({
+const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
   style,
   size,
   color,
-}: LoadingProps) => {
-  const theme: ITheme = useTheme();
+}: LoadingIndicatorProps) => {
+  const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   return (
@@ -26,4 +26,4 @@ const Loading: React.FC<LoadingProps> = ({
   );
 };
 
-export default Loading;
+export default LoadingIndicator;

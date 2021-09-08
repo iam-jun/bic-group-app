@@ -48,6 +48,18 @@ export function hideAlertNewFeature() {
   };
 }
 
+export function showLoading() {
+  return {
+    type: Actions.SHOW_LOADING,
+  };
+}
+
+export function hideLoading() {
+  return {
+    type: Actions.HIDE_LOADING,
+  };
+}
+
 export const showHideToastMessage = (payload: IToastMessage) => ({
   type: Actions.SHOW_HIDE_TOAST_MESSAGE,
   payload,
@@ -60,4 +72,9 @@ export const setToastMessage = (payload: IToastMessage) => ({
 
 export const clearToastMessage = () => ({
   type: Actions.CLEAR_TOAST_MESSAGE,
+});
+
+export const focusSearchInput = (payload: string) => ({
+  type: Actions.FOCUS_SEARCH_INPUT,
+  payload,
 });

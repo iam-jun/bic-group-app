@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import {
-  Fade,
+  ShineOverlay,
   Placeholder,
   PlaceholderLine,
   PlaceholderMedia,
@@ -17,10 +17,12 @@ import Divider from '~/beinComponents/Divider';
 
 export interface PostViewPlaceholderProps {
   style?: StyleProp<ViewStyle>;
+  disableRandom?: boolean;
 }
 
 const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
   style,
+  disableRandom,
 }: PostViewPlaceholderProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -29,40 +31,48 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
     <View style={StyleSheet.flatten([styles.container, style])}>
       <View style={styles.importantContainer}>
         <Image style={styles.iconStar} source={images.ic_star_white} />
-        <Placeholder Animation={Fade} style={styles.flex1}>
+        <Placeholder Animation={ShineOverlay} style={styles.flex1}>
           <PlaceholderMedia style={styles.importantTitle} />
         </Placeholder>
       </View>
       <Placeholder
-        Animation={Fade}
+        Animation={ShineOverlay}
         Left={p => <PlaceholderMedia style={[p.style, styles.avatar]} />}
         style={styles.infoContainer}>
         <PlaceholderLine
-          width={getRandomInt(30, 60)}
+          width={disableRandom ? 50 : getRandomInt(30, 60)}
           style={styles.marginBottomSmall}
         />
         <PlaceholderLine
-          width={getRandomInt(30, 80)}
+          width={disableRandom ? 60 : getRandomInt(30, 80)}
           style={styles.marginBottomSmall}
         />
-        <PlaceholderLine width={getRandomInt(30, 50)} style={styles.margin0} />
+        <PlaceholderLine
+          width={disableRandom ? 40 : getRandomInt(30, 50)}
+          style={styles.margin0}
+        />
       </Placeholder>
-      <Placeholder Animation={Fade} style={styles.contentContainer}>
-        {Array.from(Array(getRandomInt(1, 5)).keys()).map(item => (
-          <PlaceholderLine
-            key={`line_${item}`}
-            style={styles.marginBottomSmall}
-          />
-        ))}
-        <PlaceholderLine width={getRandomInt(20, 80)} style={styles.margin0} />
+      <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
+        {Array.from(Array(disableRandom ? 3 : getRandomInt(1, 5)).keys()).map(
+          item => (
+            <PlaceholderLine
+              key={`line_${item}`}
+              style={styles.marginBottomSmall}
+            />
+          ),
+        )}
+        <PlaceholderLine
+          width={disableRandom ? 45 : getRandomInt(20, 80)}
+          style={styles.margin0}
+        />
       </Placeholder>
-      <Placeholder Animation={Fade}>
+      <Placeholder Animation={ShineOverlay}>
         <PlaceholderMedia style={styles.image} />
       </Placeholder>
       <View style={styles.buttonWrapper}>
         <View style={styles.buttonContainer}>
           <Placeholder
-            Animation={Fade}
+            Animation={ShineOverlay}
             style={styles.buttonContent}
             Left={p => <PlaceholderMedia style={[p.style, styles.icon]} />}>
             <PlaceholderLine style={styles.margin0} height={14} />
@@ -71,7 +81,7 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
         <Divider horizontal style={styles.divider} />
         <View style={styles.buttonContainer}>
           <Placeholder
-            Animation={Fade}
+            Animation={ShineOverlay}
             style={styles.buttonContent}
             Left={p => <PlaceholderMedia style={[p.style, styles.icon]} />}>
             <PlaceholderLine style={styles.margin0} height={14} />
@@ -100,20 +110,17 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.base,
     },
     importantTitle: {
-      opacity: 0.7,
       marginLeft: spacing.margin.large,
       width: 135,
       height: 15,
     },
     iconStar: {width: 28, height: 28},
     infoContainer: {
-      opacity: 0.5,
       paddingTop: spacing.padding.small,
       paddingHorizontal: spacing.padding.base,
       paddingBottom: spacing.padding.base,
     },
     content: {
-      opacity: 0.5,
       height: 40,
       marginBottom: 0,
       marginTop: 0,
@@ -125,12 +132,10 @@ const createStyle = (theme: ITheme) => {
       marginRight: 8,
     },
     contentContainer: {
-      opacity: 0.5,
       paddingHorizontal: spacing.padding.base,
       paddingBottom: 0,
     },
     image: {
-      opacity: 0.5,
       borderRadius: 0,
       height: 200,
       width: '100%',
