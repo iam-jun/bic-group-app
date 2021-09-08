@@ -1,11 +1,10 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import {IPostActivity} from '~/interfaces/IPost';
 import {useDispatch} from 'react-redux';
-import postActions from '~/screens/Post/redux/actions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import {IPostActivity} from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import PostView from '~/screens/Post/components/PostView';
+import postActions from '~/screens/Post/redux/actions';
 
 export interface PostItemProps {
   postData: IPostActivity;
@@ -17,7 +16,7 @@ const PostItem = ({postData}: any) => {
 
   const onPress = () => {
     dispatch(postActions.setPostDetail(postData));
-    rootNavigation.navigate(homeStack.postDetail);
+    rootNavigation.navigate(homeStack.postDetail, {id: postData.id});
   };
 
   const onPressComment = () => {

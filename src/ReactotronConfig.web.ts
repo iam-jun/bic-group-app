@@ -6,7 +6,9 @@ import sagaPlugin from 'reactotron-redux-saga';
 const reactotron = Reactotron.configure()
   .use(reactotronRedux())
   // @ts-ignore
-  .use(sagaPlugin())
-  .connect();
+  .use(sagaPlugin());
+if (__DEV__) {
+  reactotron.connect();
+}
 
 export default reactotron;
