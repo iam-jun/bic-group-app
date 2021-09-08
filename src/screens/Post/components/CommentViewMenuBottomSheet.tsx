@@ -159,7 +159,11 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   };
 
   return (
-    <BottomSheet modalizeRef={modalizeRef} ContentComponent={renderContent()} />
+    <BottomSheet
+      modalizeRef={modalizeRef}
+      ContentComponent={renderContent()}
+      menuMinWidth={375}
+    />
   );
 };
 
