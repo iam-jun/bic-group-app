@@ -117,6 +117,7 @@ const StackNavigator = (): React.ReactElement => {
 
   const onKeyDown = (event: KeyboardEvent) => {
     if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      event.preventDefault();
       dispatch(modalActions.focusSearchInput(new Date().getTime().toString()));
     }
   };

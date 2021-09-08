@@ -413,9 +413,14 @@
       "description": "This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
     },
     "message_option": {
-      "delete": "Delete Message",
+      "pin": "Pin this message",
+      "edit_message": "Edit message",
+      "create_thread": "Create thread",
+      "copy": "Copy Text",
       "reply": "Reply",
-      "copy": "Copy Text"
+      "get_link": "Get link",
+      "delete": "Delete Message",
+      "reactions": "Reactions"
     },
     "label_my_message": "You",
     "label_deleted_message": {

@@ -1,16 +1,18 @@
 import moment from 'moment';
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
+import {useKeySelector} from '~/hooks/selector';
 import {IMessage} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import AttachmentView from './AttachmentView';
 import MessageHeader from './MessageHeader';
+import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
@@ -18,6 +20,8 @@ import SystemMessage from './SystemMessage';
 export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
+  onReactPress: (item: IMessage) => void;
+  onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
 }
 
@@ -25,8 +29,14 @@ const MessageItem = (props: MessageItemProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const {previousMessage, currentMessage, onLongPress} = props;
+  const hoverMessage = useKeySelector('chat.hoverMessage');
+  const {
+    previousMessage,
+    currentMessage,
+    onReactPress,
+    onReplyPress,
+    onLongPress,
+  } = props;
   const {
     text,
     system,
@@ -62,12 +72,14 @@ const MessageItem = (props: MessageItemProps) => {
   };
 
   const onHover = () => {
-    !menuVisible && setMenuVisible(true);
+    dispatch(actions.setHoverMessage(currentMessage));
   };
 
   const onBlur = () => {
-    menuVisible && setMenuVisible(false);
+    dispatch(actions.setHoverMessage(null));
   };
+
+  const menuVisible = currentMessage._id === hoverMessage?._id;
 
   return (
     <Div className="chat-message" onMouseOver={onHover} onMouseLeave={onBlur}>
@@ -83,7 +95,8 @@ const MessageItem = (props: MessageItemProps) => {
             />
           )}
 
-          <View style={styles.message}>
+          <View
+            style={[styles.message, !hideHeader && styles.messgageWithHeader]}>
             {removed ? (
               <Text useI18n style={styles.removedText}>
                 {text}
@@ -92,6 +105,13 @@ const MessageItem = (props: MessageItemProps) => {
               <>
                 <AttachmentView {...currentMessage} />
                 <MarkdownView limitMarkdownTypes>{text}</MarkdownView>
+                {menuVisible && (
+                  <MessageMenu
+                    onReactPress={() => onReactPress(currentMessage)}
+                    onReplyPress={() => onReplyPress(currentMessage)}
+                    onMenuPress={onMenuPress}
+                  />
+                )}
               </>
             )}
           </View>
@@ -109,9 +129,11 @@ const createStyles = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.base,
       marginBottom: spacing.margin.base,
     },
+    messgageWithHeader: {
+      marginTop: -16,
+    },
     message: {
       marginStart: 48,
-      marginTop: -16,
       minHeight: 24,
       paddingVertical: 2,
     },

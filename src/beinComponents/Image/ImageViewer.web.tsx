@@ -10,7 +10,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {ImageProps} from '.';
-import Div from '../Div.web';
+import Div from '../Div';
 import Icon from '../Icon';
 import Image from './FastImage';
 

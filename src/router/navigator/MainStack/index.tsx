@@ -11,6 +11,7 @@ import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {AppConfig} from '~/configs';
 
 import {RootStackParamList} from '~/interfaces/IRouter';
+import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
 import {closeConnectChat, connectChat} from '~/services/chatSocket';
@@ -18,7 +19,8 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
-import MainTabs from './MainTabs';
+import stack from './stack';
+import screens from './screens';
 
 const Stack = createStackNavigator();
 
@@ -71,7 +73,7 @@ const MainStack = (): React.ReactElement => {
         {showLeftCol && renderLeftCol()}
         <View style={styles.centerAndRightCol}>
           <View style={styles.centerCol}>
-            <MainTabs />
+            <BaseStackNavigator stack={stack} screens={screens} />
           </View>
           {showRightCol && renderRightCol()}
         </View>
