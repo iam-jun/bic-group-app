@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
@@ -15,6 +15,8 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
+
+  if (Platform.OS !== 'web') return null;
 
   return (
     <Div className="chat-message-menu">
