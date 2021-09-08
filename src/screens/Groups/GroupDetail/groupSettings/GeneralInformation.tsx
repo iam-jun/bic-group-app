@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -43,9 +44,11 @@ const GeneralInformation = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const {groupDetail, isPrivacyModalOpen} = useGroups();
+  const {groupDetail, isPrivacyModalOpen, loadingAvatar, loadingCover} =
+    useGroups();
   const {id, name, icon, background_img_url, description, privacy} =
     groupDetail.group;
 
@@ -137,7 +140,7 @@ const GeneralInformation = () => {
           subTitle={
             <Text>
               {`${i18next.t(item.subtitle)} `}
-              <Text onPress={helpMessage} color={theme.colors.link} useI18n>
+              <Text onPress={helpMessage} color={colors.link} useI18n>
                 settings:text_learn_more
               </Text>
             </Text>
@@ -147,11 +150,7 @@ const GeneralInformation = () => {
           }
           RightComponent={
             privacy === item.type ? (
-              <Icon
-                icon={'Check'}
-                size={24}
-                tintColor={theme.colors.primary7}
-              />
+              <Icon icon={'Check'} size={24} tintColor={colors.primary7} />
             ) : undefined
           }
         />
@@ -163,20 +162,28 @@ const GeneralInformation = () => {
     return (
       <View>
         <View style={styles.avatarHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={onEditAvatar}>
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+            <Text.H6
+              color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View style={styles.imageButton}>
-          <Image
-            style={styles.avatar}
-            source={icon || images.img_user_avatar_default}
-          />
+          {!loadingAvatar ? (
+            <Image
+              style={styles.avatar}
+              source={icon || images.img_user_avatar_default}
+            />
+          ) : (
+            <View style={[styles.avatar, styles.imageLoading]}>
+              <ActivityIndicator />
+            </View>
+          )}
         </View>
       </View>
     );
@@ -186,20 +193,28 @@ const GeneralInformation = () => {
     return (
       <View>
         <View style={styles.coverHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={onEditCover}>
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+            <Text.H6
+              color={!loadingCover ? colors.primary7 : colors.textDisabled}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View onLayout={onCoverLayout}>
-          <Image
-            style={styles.cover}
-            source={background_img_url || images.img_cover_default}
-          />
+          {!loadingCover ? (
+            <Image
+              style={styles.cover}
+              source={background_img_url || images.img_cover_default}
+            />
+          ) : (
+            <View style={[styles.cover, styles.imageLoading]}>
+              <ActivityIndicator />
+            </View>
+          )}
         </View>
       </View>
     );
@@ -249,7 +264,7 @@ const GeneralInformation = () => {
           ContentComponent={
             <View style={styles.contentBottomSheet}>
               <Text.H5
-                color={theme.colors.iconTint}
+                color={colors.iconTint}
                 style={styles.privacyTypeText}
                 useI18n>
                 settings:title_privacy_type
@@ -271,7 +286,7 @@ const GeneralInformation = () => {
 export default GeneralInformation;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     container: {
@@ -295,6 +310,10 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       maxHeight: 125,
       maxWidth: 125,
       borderRadius: 8,
+    },
+    imageLoading: {
+      backgroundColor: colors.bgDisable,
+      justifyContent: 'center',
     },
     cover: {
       width: '100%',

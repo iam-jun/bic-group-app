@@ -71,16 +71,30 @@ function* selectPublicProfile({
 function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
   try {
     const result: unknown = yield requestEditMyProfile(payload);
-    yield put(menuActions.setMyProfile(mapProfile(result)));
+
+    // checking if uploading avatar/cover image
+    // to use different toast message content
+    const {avatar, background_img_url} = payload;
+    let toastContent: string;
+
+    if (!!avatar) {
+      toastContent = 'common:avatar_changed';
+    } else if (!!background_img_url) {
+      toastContent = 'common:cover_changed';
+    } else {
+      toastContent = 'common:text_edit_success';
+    }
 
     const toastMessage: IToastMessage = {
-      content: 'common:text_edit_success',
+      content: toastContent,
       props: {
         textProps: {useI18n: true},
         type: 'success',
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
+
+    yield put(menuActions.setMyProfile(mapProfile(result)));
   } catch (err) {
     console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
     const toastMessage: IToastMessage = {
@@ -91,6 +105,9 @@ function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
+    // just in case there is some error regarding editing images url
+    yield put(menuActions.setLoadingAvatar(false));
+    yield put(menuActions.setLoadingCover(false));
   }
 }
 
@@ -98,6 +115,7 @@ const requestEditMyProfile = async (data: IUserEdit) => {
   const userId = data.id;
   delete data.id; // edit data should not contain user's id
 
+  // @ts-ignore
   const response = await menuDataHelper.editMyProfile(userId, data);
 
   return response.data;
@@ -106,6 +124,7 @@ const requestEditMyProfile = async (data: IUserEdit) => {
 function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
   try {
     const {image, id, fieldName} = payload;
+    yield updateLoadingImageState(fieldName, true);
 
     const formData = new FormData();
     if (Platform.OS === 'web') {
@@ -129,14 +148,32 @@ function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
-    yield put(
-      modalActions.showAlert({
-        title: err?.meta?.errors?.[0]?.title || i18next.t('common:text_error'),
-        content:
-          err?.meta?.errors?.[0]?.message ||
-          i18next.t('common:text_error_message'),
-        confirmLabel: i18next.t('common:text_ok'),
-      }),
-    );
+    yield updateLoadingImageState(payload.fieldName, false);
+    yield showError(err);
+  }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
+}
+
+function* updateLoadingImageState(
+  fieldName: 'avatar' | 'background_img_url',
+  value: boolean,
+) {
+  if (fieldName === 'avatar') {
+    yield put(menuActions.setLoadingAvatar(value));
+  } else {
+    yield put(menuActions.setLoadingCover(value));
   }
 }

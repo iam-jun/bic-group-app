@@ -6,6 +6,9 @@ const initMenuState = {
   isLanguageModalOpen: false,
   myProfile: {} as IUserProfile,
   selectedProfile: {} as IUserProfile,
+
+  loadingAvatar: false,
+  loadingCover: false,
 };
 
 const menuReducer = (state = initMenuState, action: any = {}) => {
@@ -17,6 +20,8 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         loadingMyProfile: false,
+        loadingCover: false,
+        loadingAvatar: false,
         myProfile: {
           ...state.myProfile,
           ...payload,
@@ -42,6 +47,17 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         isLanguageModalOpen: payload,
+      };
+
+    case menuTypes.SET_LOADING_AVATAR:
+      return {
+        ...state,
+        loadingAvatar: payload,
+      };
+    case menuTypes.SET_LOADING_COVER:
+      return {
+        ...state,
+        loadingCover: payload,
       };
 
     default:

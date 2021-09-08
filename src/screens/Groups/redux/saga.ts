@@ -73,8 +73,21 @@ function* editGroupDetail({
     // @ts-ignore
     const result = yield requestEditGroupDetail(payload);
 
+    // checking if uploading avatar/cover image
+    // to use different toast message content
+    const {icon, background_img_url} = payload;
+    let toastContent: string;
+
+    if (!!icon) {
+      toastContent = 'common:avatar_changed';
+    } else if (!!background_img_url) {
+      toastContent = 'common:cover_changed';
+    } else {
+      toastContent = 'common:text_edit_success';
+    }
+
     const toastMessage: IToastMessage = {
-      content: 'common:text_edit_success',
+      content: toastContent,
       props: {
         textProps: {useI18n: true},
         type: 'success',
@@ -86,6 +99,9 @@ function* editGroupDetail({
   } catch (err) {
     console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
     yield showError(err);
+    // just in case there is some error regarding editing images url
+    yield put(groupsActions.setLoadingAvatar(false));
+    yield put(groupsActions.setLoadingCover(false));
   }
 }
 
@@ -198,6 +214,7 @@ const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   try {
     const {image, id, fieldName} = payload;
+    yield updateLoadingImageState(fieldName, true);
 
     const formData = new FormData();
     if (Platform.OS === 'web') {
@@ -223,6 +240,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
+    yield updateLoadingImageState(payload.fieldName, false);
     yield showError(err);
   }
 }
@@ -316,4 +334,15 @@ function* showError(err: any) {
     },
   };
   yield put(modalActions.showHideToastMessage(toastMessage));
+}
+
+function* updateLoadingImageState(
+  fieldName: 'icon' | 'background_img_url',
+  value: boolean,
+) {
+  if (fieldName === 'icon') {
+    yield put(groupsActions.setLoadingAvatar(value));
+  } else {
+    yield put(groupsActions.setLoadingCover(value));
+  }
 }
