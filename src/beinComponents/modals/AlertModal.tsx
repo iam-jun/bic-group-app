@@ -24,7 +24,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
   const {alert} = useModal();
   const {
-    isDismissable,
+    isDismissible,
     visible,
     title,
     content,
@@ -32,7 +32,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     inputProps,
     iconName,
     onConfirm,
-    onDissmiss,
+    onDismiss,
     confirmLabel,
     cancelBtn,
   } = alert;
@@ -45,14 +45,14 @@ const AlertModal: React.FC<AlertModalProps> = ({
   }, [inputProps]);
 
   const _onDismiss = () => {
-    onDissmiss && onDissmiss();
+    onDismiss && onDismiss();
     dispatch(actions.hideAlert());
   };
 
   return (
     <Modal
       visible={visible}
-      dismissable={isDismissable}
+      dismissable={isDismissible}
       onDismiss={_onDismiss}
       contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
       {...props}>
@@ -73,7 +73,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
           />
         )}
         <View style={styles.displayBtn}>
-          {cancelBtn && (
+          {!!cancelBtn && (
             <Button.Secondary
               style={{marginEnd: theme.spacing?.margin.base}}
               textColor={theme.colors.primary7}
@@ -83,14 +83,14 @@ const AlertModal: React.FC<AlertModalProps> = ({
             </Button.Secondary>
           )}
 
-          {confirmLabel && (
+          {!!confirmLabel && (
             <Button.Secondary
               textColor={theme.colors.background}
               color={theme.colors.primary7}
               disabled={input && !text}
               onPress={() => {
                 dispatch(actions.hideAlert());
-                onConfirm(text);
+                onConfirm && onConfirm(text);
               }}>
               {confirmLabel}
             </Button.Secondary>
