@@ -1,6 +1,8 @@
 const images = {
   logo: require('../../assets/images/logo.png'),
   logo_bein: require('../../assets/images/bein_logo.png'),
+  logo_bein_simple: require('../../assets/images/bein_logo_simple.png'),
+  logo_bein_black_white: require('../../assets/images/bein_logo_black_white.png'),
   img_auth_forgot_password_complete: require('../../assets/images/img_auth_forgot_password_complete.png'),
   img_cover_default: require('../../assets/images/cover_default.png'),
   img_groups: require('../../assets/images/groups.png'),
