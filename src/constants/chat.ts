@@ -53,7 +53,7 @@ export const messageOptionData = {
     label: 'delete',
   },
   reply: {
-    icon: 'CornerDownRight',
+    icon: 'iconReply',
     label: 'reply',
   },
   copy: {
