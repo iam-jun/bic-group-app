@@ -21,7 +21,8 @@ export default function* menuSaga() {
 }
 
 function* getMyProfile({payload}: {type: string; payload: number}) {
-  const {myProfile} = yield select();
+  const {menu} = yield select();
+  const myProfile = menu;
   try {
     const result: unknown = yield requestUserProfile(payload);
     yield put(menuActions.setMyProfile(mapProfile(result)));
@@ -45,10 +46,11 @@ function* selectMyProfile({payload}: {payload: IUserProfile; type: string}) {
 }
 
 function* getSelectedProfile({payload}: {type: string; payload: number}) {
-  const {selectedProfile} = yield select();
+  const {menu} = yield select();
+  const {selectedProfile} = menu;
   try {
     const result: IUserProfile = yield requestUserProfile(payload);
-    yield put(menuActions.setSelectedProfile(result));
+    yield put(menuActions.setSelectedProfile({...selectedProfile, ...result}));
   } catch (err) {
     yield put(menuActions.setSelectedProfile(selectedProfile));
     console.log('getMyProfile error:', err);

@@ -10,6 +10,7 @@ import menuKeySelector from '../redux/keySelector';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ProfileInfo from '../fragments/ProfileInfo';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
+import Header from '~/beinComponents/Header';
 
 const UserProfile = () => {
   const theme = useTheme() as ITheme;
@@ -20,7 +21,8 @@ const UserProfile = () => {
   if (isEmpty(profile)) return <NoUserFound />;
 
   return (
-    <ScreenWrapper testID="UserProfile" style={styles.container}>
+    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+      <Header />
       <ProfileInfo {...profile} />
     </ScreenWrapper>
   );
