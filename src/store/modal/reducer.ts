@@ -20,6 +20,9 @@ export const initState = {
   alertNewFeature: {
     visible: false,
   },
+  loading: {
+    visible: false,
+  },
   toastMessage: {
     content: '',
     props: {},
@@ -61,6 +64,22 @@ function commonReducer(state = initState, action: any = {}) {
       return {
         ...state,
         alertNewFeature: {
+          visible: false,
+        },
+      };
+
+    case actions.SHOW_LOADING:
+      return {
+        ...state,
+        loading: {
+          visible: true,
+        },
+      };
+
+    case actions.HIDE_LOADING:
+      return {
+        ...state,
+        loading: {
           visible: false,
         },
       };

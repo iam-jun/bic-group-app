@@ -25,16 +25,21 @@ export interface Props {
     x: number;
     y: number;
   };
+  menuMinWidth?: number;
+  menuMinHeight?: number;
   onClose: () => void;
 }
 
 const BaseBottomSheet: React.FC<Props> = ({
+  children,
   modalizeRef,
   flatListProps,
   ContentComponent,
   side,
   isOpen,
   position,
+  menuMinWidth,
+  menuMinHeight,
   onClose,
 }: Props) => {
   const theme = useTheme() as ITheme;
@@ -49,6 +54,8 @@ const BaseBottomSheet: React.FC<Props> = ({
     width: 250, //For first time, onLayout have not triggered yet
     height: 200,
   });
+
+  const hideModal = _position.x < 0 || _position.y < 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -94,20 +101,31 @@ const BaseBottomSheet: React.FC<Props> = ({
     setBoxSize({...e.nativeEvent.layout});
   };
 
-  if (_position.x < 0 || _position.y < 0) return null;
-
   return (
-    <Modal transparent animationType="fade" visible={visible}>
-      <TouchableWithoutFeedback onPress={_onClosed}>
-        <View style={styles.container}>
-          <View
-            onLayout={onLayout}
-            style={[styles.menu, {left: _position.x, top: _position.y}]}>
-            {flatListProps ? <FlatList {...flatListProps} /> : ContentComponent}
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </Modal>
+    <>
+      {children}
+      {!hideModal && (
+        <Modal transparent animationType="fade" visible={visible}>
+          <TouchableWithoutFeedback onPress={_onClosed}>
+            <View style={styles.container}>
+              <View
+                onLayout={onLayout}
+                style={[
+                  styles.menu,
+                  {left: _position.x, top: _position.y},
+                  {minWidth: menuMinWidth, minHeight: menuMinHeight},
+                ]}>
+                {flatListProps ? (
+                  <FlatList {...flatListProps} />
+                ) : (
+                  ContentComponent
+                )}
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      )}
+    </>
   );
 };
 

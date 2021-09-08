@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -11,10 +12,12 @@ import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 export interface PostViewMenuBottomSheetProps {
   modalizeRef: any;
   postId: string;
+  content: string;
   isPostDetail: boolean;
   isActor: boolean;
 }
@@ -22,6 +25,7 @@ export interface PostViewMenuBottomSheetProps {
 const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   modalizeRef,
   postId,
+  content,
   isPostDetail,
   isActor,
 }: PostViewMenuBottomSheetProps) => {
@@ -31,6 +35,11 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
+
+  const onPress = () => {
+    modalizeRef?.current?.close?.();
+    dispatch(modalActions.showAlertNewFeature());
+  };
 
   const onPressDelete = () => {
     modalizeRef?.current?.close?.();
@@ -54,62 +63,75 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
     });
   };
 
+  const onPressCopy = () => {
+    modalizeRef?.current?.close?.();
+    if (content) {
+      Clipboard.setString(content);
+      dispatch(
+        showHideToastMessage({
+          content: 'common:text_copied_to_clipboard',
+          props: {
+            textProps: {useI18n: true},
+            type: 'success',
+          },
+        }),
+      );
+    }
+  };
+
   const renderContent = () => {
     return (
       <View style={styles.container}>
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'TachometerFastAlt'}
-          leftIconProps={{icon: 'TachometerFastAlt', size: 24}}
-          title={'View Post Statistics'}
-        />
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'Bookmark'}
-          leftIconProps={{icon: 'Bookmark', size: 24}}
-          title={'Save Post'}
-        />
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'Copy'}
-          leftIconProps={{icon: 'Copy', size: 24}}
-          title={'Copy Post Link'}
-        />
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'Bell'}
-          leftIconProps={{icon: 'Bell', size: 24}}
-          title={'Turn off notification for this post'}
-        />
         {isActor && (
           <PrimaryItem
             style={styles.item}
             leftIcon={'Edit'}
             leftIconProps={{icon: 'Edit', size: 24}}
-            title={'Edit Post'}
+            title={t('post:post_menu_edit')}
             onPress={onPressEdit}
-          />
-        )}
-        {!isActor && (
-          <PrimaryItem
-            style={styles.item}
-            leftIcon={'CommentSlash'}
-            leftIconProps={{icon: 'CommentSlash', size: 24}}
-            title={'Remove Mentioned'}
           />
         )}
         <PrimaryItem
           style={styles.item}
+          leftIcon={'Copy'}
+          leftIconProps={{icon: 'Copy', size: 24}}
+          title={t('post:post_menu_copy')}
+          onPress={onPressCopy}
+        />
+        <PrimaryItem
+          style={styles.item}
+          leftIcon={'Bookmark'}
+          leftIconProps={{icon: 'Bookmark', size: 24}}
+          title={t('post:post_menu_save')}
+          onPress={onPress}
+        />
+        <PrimaryItem
+          style={styles.item}
+          leftIcon={'TachometerFastAlt'}
+          leftIconProps={{icon: 'TachometerFastAlt', size: 24}}
+          title={t('post:post_menu_view_insights')}
+          onPress={onPress}
+        />
+        <PrimaryItem
+          style={styles.item}
+          leftIcon={'Bell'}
+          leftIconProps={{icon: 'Bell', size: 24}}
+          title={t('post:post_menu_turn_off_noti')}
+          onPress={onPress}
+        />
+        <PrimaryItem
+          style={styles.item}
           leftIcon={'Redo'}
           leftIconProps={{icon: 'Redo', size: 24}}
-          title={'View Edit History'}
+          title={t('post:post_menu_history')}
+          onPress={onPress}
         />
         {isActor && (
           <PrimaryItem
             style={styles.item}
             leftIcon={'TrashAlt'}
             leftIconProps={{icon: 'TrashAlt', size: 24}}
-            title={t('post:label_menu_delete')}
+            title={t('post:post_menu_delete')}
             onPress={onPressDelete}
           />
         )}
@@ -118,7 +140,8 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
             style={styles.item}
             leftIcon={'InfoCircle'}
             leftIconProps={{icon: 'InfoCircle', size: 24}}
-            title={'Report to group Admin'}
+            title={t('post:post_menu_report')}
+            onPress={onPress}
           />
         )}
       </View>
