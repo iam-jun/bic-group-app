@@ -1,49 +1,53 @@
 import React from 'react';
-import {Image} from 'react-native';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
-import Icon from '~/beinComponents/Icon';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {Text} from '~/components';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IChatUser} from '~/interfaces/IChat';
 import images from '~/resources/images';
+import mainStack from '~/router/navigator/MainStack/stack';
+import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
 
 interface Props {
   user: IChatUser;
   _updatedAt: string;
-  menuVisible: boolean;
-  onMenuPress: (e: any) => void;
 }
 
-const MessageHeader: React.FC<Props> = ({
-  user,
-  _updatedAt,
-  menuVisible,
-  onMenuPress,
-}: Props) => {
+const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
+  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+  const {rootNavigation} = useRootNavigation();
+
+  const goProfile = () => {
+    dispatch(
+      menuActions.selectedProfile({
+        id: user.username,
+        isPublic: true,
+      }),
+    );
+    rootNavigation.navigate(mainStack.userProfile);
+  };
 
   return (
     <View style={styles.container}>
-      <Avatar.Medium
-        source={user?.avatar}
-        placeholderSource={images.img_user_avatar_default}
-        ImageComponent={Image}
-      />
+      <ButtonWrapper onPress={goProfile}>
+        <Avatar.Medium
+          source={user?.avatar}
+          placeholderSource={images.img_user_avatar_default}
+          ImageComponent={Image}
+        />
+      </ButtonWrapper>
       <View style={styles.viewHeaderInfo}>
         <Text.BodyM style={styles.textName}>{user?.name}</Text.BodyM>
         <Text.BodyS style={styles.textTime}>
           {formatDate(_updatedAt)}
         </Text.BodyS>
-        <Icon
-          icon="EllipsisH"
-          tintColor={theme.colors.textSecondary}
-          style={[styles.iconMenu, {opacity: menuVisible ? 1 : 0}]}
-          onPress={onMenuPress}
-        />
       </View>
     </View>
   );
