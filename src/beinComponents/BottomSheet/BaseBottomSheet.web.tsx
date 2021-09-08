@@ -130,7 +130,7 @@ const BaseBottomSheet: React.FC<Props> = ({
 };
 
 const themeStyle = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     container: {
@@ -139,6 +139,7 @@ const themeStyle = (theme: ITheme) => {
     },
     menu: {
       position: 'absolute',
+      borderRadius: spacing.borderRadius.base,
       backgroundColor: colors.background,
       shadowColor: '#000',
       shadowOffset: {

@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Modal,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {useTheme} from 'react-native-paper';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
