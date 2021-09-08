@@ -57,7 +57,9 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     if (name === 'home') {
       return (
         <Image
-          source={focused ? images.logo_bein : images.logo_bein_black_white}
+          source={
+            focused ? images.logo_bein_simple : images.logo_bein_black_white
+          }
           resizeMode="contain"
           style={styles.logoBein}
         />
