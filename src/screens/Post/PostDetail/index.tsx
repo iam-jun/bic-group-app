@@ -229,7 +229,10 @@ const PostDetail = (props: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
-      <Header subTitle={'Post detail'} />
+      <Header
+        titleTextProps={{useI18n: true}}
+        title={'post:title_post_detail'}
+      />
       {!postTime ? (
         <PostViewPlaceholder />
       ) : (

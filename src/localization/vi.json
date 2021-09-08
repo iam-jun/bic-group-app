@@ -192,6 +192,7 @@
   },
   "post": {
     "news_feed": "News Feed",
+    "title_post_detail": "Chi tiết bài viết",
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
