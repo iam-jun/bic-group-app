@@ -83,16 +83,18 @@ const AlertModal: React.FC<AlertModalProps> = ({
             </Button.Secondary>
           )}
 
-          <Button.Secondary
-            textColor={theme.colors.background}
-            color={theme.colors.primary7}
-            disabled={input && !text}
-            onPress={() => {
-              dispatch(actions.hideAlert());
-              onConfirm(text);
-            }}>
-            {confirmLabel}
-          </Button.Secondary>
+          {confirmLabel && (
+            <Button.Secondary
+              textColor={theme.colors.background}
+              color={theme.colors.primary7}
+              disabled={input && !text}
+              onPress={() => {
+                dispatch(actions.hideAlert());
+                onConfirm(text);
+              }}>
+              {confirmLabel}
+            </Button.Secondary>
+          )}
         </View>
       </View>
     </Modal>
