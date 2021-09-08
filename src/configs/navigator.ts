@@ -65,6 +65,7 @@ export const linkingConfig = {
           },
         },
       },
+      NotFound: '*',
     },
   },
 };
@@ -73,101 +74,133 @@ export const linkingConfigFull = {
   prefixes: ['https://bein.group', 'bein://'],
   config: {
     screens: {
-      AuthStack: {
-        screens: {
-          Landing: {
-            path: 'welcome',
-          },
-          SignIn: {
-            path: 'login',
-          },
-          SignUp: {
-            path: 'register',
-          },
-          ForgotPassword: {
-            path: 'reset-password',
-          },
-        },
-      },
+      // AuthStack: {
+      //   screens: {
+      //     Landing: {
+      //       path: 'welcome',
+      //     },
+      //     SignIn: {
+      //       path: 'login',
+      //     },
+      //     SignUp: {
+      //       path: 'register',
+      //     },
+      //     ForgotPassword: {
+      //       path: 'reset-password',
+      //     },
+      //   },
+      // },
       MainStack: {
         screens: {
-          home: {
-            path: '',
+          main: {
             screens: {
-              newsfeed: {
-                path: '',
+              home: {
+                screens: {
+                  newsfeed: {
+                    path: 'newsfeed',
+                  },
+                  'post-detail': {
+                    path: 'post/t/:id?',
+                  },
+                  'create-post': {
+                    path: 'post/create',
+                  },
+                  'post-select-audience': {
+                    path: 'post/create/audiences',
+                  },
+                  'user-profile': {
+                    // TODO: make profile and my profile use the same screen.
+                    path: 'profile/:id?',
+                  },
+                },
               },
-              'my-profile': {
-                path: '/me',
+              groups: {
+                screens: {
+                  'group-detail': {
+                    path: 'groups/:groupId?',
+                  },
+                  'group-about': {
+                    path: 'groups/:groupId/about',
+                  },
+                  'group-members': {
+                    path: 'groups/:groupId/members',
+                  },
+                  'group-files': {
+                    path: 'groups/:groupId/files',
+                  },
+                  'group-admin': {
+                    path: 'groups/:groupId/admin',
+                  },
+                  'general-info': {
+                    path: 'groups/:groupId/general-info',
+                  },
+                  'invite-members': {
+                    path: 'groups/:groupId/invite',
+                  },
+                  'post-detail': {
+                    path: 'groups/:groupId/post/:postId?',
+                  },
+                  'edit-group-description': {
+                    path: 'groups/:groupId/edit/description',
+                  },
+                },
               },
-              'user-profile': {
-                path: '/profile/:id?',
+              chat: {
+                screens: {
+                  conversation: {
+                    path: 'chat/:roomId?',
+                  },
+                  'conversation-detail': {
+                    path: 'chat/:roomId/info',
+                  },
+                  'create-conversation': {
+                    path: 'chat/create',
+                  },
+                  'chat-group-members': {
+                    path: 'chat/:roomId/members',
+                  },
+                  'add-members': {
+                    path: 'chat/:roomId/invite',
+                  },
+                },
               },
-              'post-detail': {
-                path: '/post/:id?',
+              notification: {
+                screens: {
+                  'not-select-notification': {
+                    path: 'notifications',
+                  },
+                  'post-detail': {
+                    path: 'post/n/:id?',
+                  },
+                },
               },
-              'create-post': {
-                path: '/post/new',
-              },
-              'create-comment': {
-                path: '/post/comment/new',
+              menus: {
+                screens: {
+                  'account-settings': {
+                    path: 'settings',
+                  },
+                  'user-settings': {
+                    path: 'settings/account',
+                  },
+                  'edit-basic-info': {
+                    path: 'settings/account/edit',
+                  },
+                  'my-profile': {
+                    path: 'me',
+                  },
+                  'change-password': {
+                    path: 'settings/security/change-password',
+                  },
+                  'security-and-login': {
+                    path: 'settings/security',
+                  },
+                },
               },
             },
           },
-          groups: {
-            path: 'groups',
-            screens: {
-              'group-detail': {
-                path: '/t/:groupId?',
-              },
-              'group-about': {
-                path: '/t/:groupId?/about',
-              },
-              'group-members': {
-                path: '/t/:groupId?/members',
-              },
-              'group-admin': {
-                path: '/t/:groupId?/edit',
-              },
-              'create-post': {
-                path: '/post/new',
-              },
-              'create-comment': {
-                path: '/post/comment/new',
-              },
-              'post-detail': {
-                path: '/post/:id?',
-              },
-            },
-          },
-          chat: {
-            path: 'chat',
-            screens: {
-              conversation: {
-                path: '/t/:roomId?',
-              },
-              'create-conversation': {
-                path: '/new',
-              },
-            },
-          },
-          menus: {
-            path: 'settings',
-            screens: {
-              'account-settings': {
-                path: '',
-              },
-              'component-collection': {
-                path: '/component-collection',
-              },
-              'change-password': {
-                path: '/change-password',
-              },
-              'security-and-login': {
-                path: '/security-and-login',
-              },
-            },
-          },
+          // 'user-profile': {
+          //   path: 'me',
+          // },
         },
       },
       NotFound: '*',

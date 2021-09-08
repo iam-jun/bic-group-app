@@ -1,9 +1,9 @@
 import React from 'react';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import {useKeySelector} from '~/hooks/selector';
 import GroupAboutContent from '../components/GroupAboutContent';
+import groupsKeySelector from '../redux/keySelector';
 
 const GroupAbout = () => {
   //todo handle get data if group data not loaded

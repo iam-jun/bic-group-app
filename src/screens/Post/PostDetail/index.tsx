@@ -1,35 +1,35 @@
 import React, {
-  useState,
-  useEffect,
-  useRef,
   useCallback,
   useContext,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
-import {View, StyleSheet, SectionList, RefreshControl} from 'react-native';
+import {RefreshControl, SectionList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import Header from '~/beinComponents/Header';
+import CommentItem from '~/beinComponents/list/items/CommentItem';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import {AppContext} from '~/contexts/AppContext';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 
 import {
   IAudienceGroup,
   IPayloadGetPostDetail,
   IReaction,
 } from '~/interfaces/IPost';
-import {useUserIdAuth} from '~/hooks/auth';
-import {AppContext} from '~/contexts/AppContext';
-import postActions from '~/screens/Post/redux/actions';
-import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import {useRootNavigation} from '~/hooks/navigation';
-import {sortComments} from '../helper/PostUtils';
-
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
-import CommentItem from '~/beinComponents/list/items/CommentItem';
-import PostView from '~/screens/Post/components/PostView';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostView from '~/screens/Post/components/PostView';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import {ITheme} from '~/theme/interfaces';
+import {sortComments} from '../helper/PostUtils';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');

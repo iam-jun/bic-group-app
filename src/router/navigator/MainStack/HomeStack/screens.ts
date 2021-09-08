@@ -1,10 +1,10 @@
 import Newsfeed from '~/screens/Home/Newsfeed';
-import PostDetail from '~/screens/Post/PostDetail';
-import CreatePost from '~/screens/Post/CreatePost';
-import CreateComment from '~/screens/Post/CreateComment';
-import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
 import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
+import CreateComment from '~/screens/Post/CreateComment';
+import CreatePost from '~/screens/Post/CreatePost';
+import PostDetail from '~/screens/Post/PostDetail';
+import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 
 export default {
   newsfeed: Newsfeed,
@@ -12,6 +12,6 @@ export default {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
-  'my-profile': MyProfile,
-  'user-profile': UserProfile,
+  'my-profile': MyProfile, //TODO
+  'user-profile': UserProfile, //TODO
 };

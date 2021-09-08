@@ -19,8 +19,8 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
-import stack from './stack';
 import screens from './screens';
+import stack from './stack';
 
 const Stack = createStackNavigator();
 
