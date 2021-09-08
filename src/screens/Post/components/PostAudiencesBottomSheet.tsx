@@ -18,6 +18,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import menuActions from '~/screens/Menu/redux/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
@@ -93,6 +94,10 @@ const PostAudiencesBottomSheet = () => {
     );
   };
 
+  const renderEmpty = () => {
+    return <LoadingIndicator />;
+  };
+
   const renderContent = () => {
     return (
       <View style={styles.container}>
@@ -105,6 +110,7 @@ const PostAudiencesBottomSheet = () => {
           sections={data || []}
           keyExtractor={(item, index) => `section_list_${item}_${index}`}
           renderSectionHeader={renderSectionHeader}
+          ListEmptyComponent={renderEmpty}
           renderItem={renderItem}
         />
       </View>
