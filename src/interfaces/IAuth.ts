@@ -58,7 +58,7 @@ export interface IChangePasswordError {
 export type ISignUpResponse = ISignUpResult;
 
 export interface IUserProfile {
-  id: string;
+  id: string | number;
   email?: string;
   fullname?: string;
   username?: string;
