@@ -345,11 +345,11 @@ const Conversation = (): React.ReactElement => {
   };
 
   const onPressMenu =
-    conversation.type === roomTypes.DIRECT
-      ? undefined
-      : (e: any) => {
+    conversation.type === roomTypes.QUICK
+      ? (e: any) => {
           baseSheetRef.current?.open(e?.pageX, e?.pageY);
-        };
+        }
+      : undefined;
 
   return (
     <ScrollView style={styles.root}>
