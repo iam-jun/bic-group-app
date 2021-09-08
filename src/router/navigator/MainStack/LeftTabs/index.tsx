@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
@@ -53,6 +54,16 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   };
 
   const renderIcon = (name: string, focused: boolean) => {
+    if (name === 'home') {
+      return (
+        <Image
+          source={images.logo_bein}
+          resizeMode="contain"
+          style={styles.logoBein}
+        />
+      );
+    }
+
     const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
 
     return (
@@ -113,6 +124,10 @@ const CreateStyle = (theme: ITheme) => {
           width: 48,
         },
       }),
+    },
+    logoBein: {
+      width: 26.67,
+      height: 26.67,
     },
     iconContainer: {
       flex: 1,
