@@ -352,12 +352,12 @@ const Conversation = (): React.ReactElement => {
       : undefined;
 
   return (
-    <ScrollView style={styles.root}>
-      <ScreenWrapper
-        style={styles.wrapper}
-        testID="ConversationDetailScreen"
-        isFullView>
-        <Header onPressMenu={onPressMenu} />
+    <ScreenWrapper
+      style={styles.wrapper}
+      testID="ConversationDetailScreen"
+      isFullView>
+      <Header onPressMenu={onPressMenu} />
+      <ScrollView style={styles.root}>
         <View style={styles.container}>
           <View style={styles.top}>
             {renderHeader()}
@@ -370,8 +370,8 @@ const Conversation = (): React.ReactElement => {
           {renderPrivacy()}
         </View>
         {renderBottomSheet()}
-      </ScreenWrapper>
-    </ScrollView>
+      </ScrollView>
+    </ScreenWrapper>
   );
 };
 
