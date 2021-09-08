@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -64,7 +65,7 @@ const ConversationItem: React.FC<IConversation> = ({
         variant: unreadCount ? 'bodyM' : 'body',
         color: textColor,
       }}
-      subTitle={lastMessage}
+      subTitle={lastMessage || i18next.t('chat:label_init_group_message:short')}
       style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={
