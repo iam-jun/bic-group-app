@@ -8,6 +8,7 @@ import menuKeySelector from '../redux/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ProfileInfo from '../fragments/ProfileInfo';
+import Header from '~/beinComponents/Header';
 
 const MyProfile = () => {
   const theme = useTheme() as ITheme;
@@ -16,7 +17,8 @@ const MyProfile = () => {
   const profile = useKeySelector(menuKeySelector.myProfile);
 
   return (
-    <ScreenWrapper testID="MyProfilePage" style={styles.container}>
+    <ScreenWrapper testID="MyProfilePage" style={styles.container} isFullView>
+      <Header />
       <ProfileInfo {...profile} />
     </ScreenWrapper>
   );

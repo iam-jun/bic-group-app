@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -12,7 +12,6 @@ import {IUserProfile} from '~/interfaces/IAuth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {scaleCoverHeight} from '~/theme/dimension';
 
-import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
@@ -104,9 +103,7 @@ const ProfileInfo = (props: IUserProfile) => {
   };
 
   return (
-    <View>
-      <Header />
-
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {renderCoverImage()}
       {renderAvatar()}
       {renderUserHeader()}
@@ -114,7 +111,7 @@ const ProfileInfo = (props: IUserProfile) => {
 
       <Divider style={styles.divider} />
       <AboutProfile {...props} />
-    </View>
+    </ScrollView>
   );
 };
 
