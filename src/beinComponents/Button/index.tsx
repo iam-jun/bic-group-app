@@ -12,8 +12,8 @@ export interface ButtonProps extends ButtonWrapperProps {
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
-  onPress?: () => void;
-  onLongPress?: () => void;
+  onPress?: (e: any) => void;
+  onLongPress?: (e: any) => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
 }

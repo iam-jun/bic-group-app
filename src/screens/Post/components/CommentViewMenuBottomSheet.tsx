@@ -24,7 +24,7 @@ export interface CommentViewMenuBottomSheetProps {
   content: string;
   groupIds: string;
   isActor: boolean;
-  onPressMoreReaction: () => void;
+  onPressMoreReaction: (e: any) => void;
   onAddReaction: (reactionId: ReactionType) => void;
   onPressReply: () => void;
 }
@@ -51,9 +51,9 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
     onAddReaction?.(item.id);
   };
 
-  const _onPressMoreReaction = () => {
+  const _onPressMoreReaction = (e?: any) => {
     modalizeRef?.current?.close?.();
-    onPressMoreReaction?.();
+    onPressMoreReaction?.(e);
   };
 
   const _onPressEdit = () => {

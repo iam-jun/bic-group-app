@@ -106,11 +106,12 @@ const CommentView: React.FC<CommentViewProps> = ({
     }
   };
 
-  const onPressReact = () => {
+  const onPressReact = (event: any) => {
     dispatch(
       postActions.setShowReactionBottomSheet({
         show: true,
         title: t('post:label_all_reacts'),
+        position: {x: event?.pageX, y: event?.pageY},
         callback: onAddReaction,
       }),
     );

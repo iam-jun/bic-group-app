@@ -121,6 +121,7 @@ const PostAudiencesBottomSheet = () => {
     <BottomSheet
       modalizeRef={postAudienceSheetRef}
       isOpen={isShow}
+      menuMinWidth={500}
       ContentComponent={renderContent()}
       onClose={() => dispatch(postActions.hidePostAudiencesBottomSheet())}
     />
