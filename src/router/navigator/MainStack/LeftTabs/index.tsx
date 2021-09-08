@@ -13,6 +13,7 @@ import {ITheme} from '~/theme/interfaces';
 import notificationsActions from '../../../../screens/Notification/redux/actions';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
+import images from '~/resources/images';
 
 const Tab = createSideTabNavigator();
 
@@ -51,6 +52,20 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     }
   };
 
+  const renderIcon = (name: string, focused: boolean) => {
+    const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
+
+    return (
+      <Icon
+        //@ts-ignore
+        icon={icon[name]}
+        size={24}
+        tintColor="none"
+        bold={focused}
+      />
+    );
+  };
+
   return (
     // @ts-ignore
     <Tab.Navigator
@@ -67,16 +82,9 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             component={component}
             options={{
               tabBarIcon: ({focused}: {focused: boolean}) => {
-                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 return (
                   <View style={styles.iconContainer}>
-                    <Icon
-                      //@ts-ignore
-                      icon={icon[name]}
-                      size={24}
-                      tintColor="none"
-                      bold={focused}
-                    />
+                    {renderIcon(name, focused)}
                     {renderBadge(name)}
                   </View>
                 );
