@@ -385,6 +385,10 @@
       "edit_description": "Edit Description",
       "edit_name": "Edit Group Chat Name"
     },
+    "label_init_group_message": {
+      "short": "Say hello to your group",
+      "full": "🤗 Say hello to your group!"
+    },
     "label_last_message": {
       "my_attachment": "You sent an attachment",
       "other_attachment": "{0} sent an attachment",
