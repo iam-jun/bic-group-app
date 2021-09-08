@@ -66,7 +66,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
             .t('chat:label_last_message:other_attachment')
             .replace('{0}', item.lastMessage.u?.name)
       : `${item.lastMessage.u?.name}: ${item?.lastMessage?.msg}`
-    : i18next.t('chat:label_init_group_message');
+    : i18next.t('chat:label_init_group_message:short');
 
   return {
     ...item,
