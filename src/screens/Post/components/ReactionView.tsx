@@ -14,7 +14,7 @@ export interface ReactionViewProps {
   reactionCounts: IReactionCounts;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
-  onPressSelectReaction?: () => void;
+  onPressSelectReaction?: (event: any) => void;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({

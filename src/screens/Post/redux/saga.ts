@@ -240,7 +240,7 @@ function* deletePost({payload}: {type: string; payload: string}) {
           content: 'post:delete_post_complete',
           props: {
             textProps: {variant: 'h6', useI18n: true},
-            type: 'error',
+            type: 'success',
           },
         }),
       );

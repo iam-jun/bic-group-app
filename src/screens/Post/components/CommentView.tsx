@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, Keyboard} from 'react-native';
+import {Animated, View, StyleSheet, Keyboard, Platform} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -22,6 +22,8 @@ import Button from '~/beinComponents/Button';
 import menuActions from '~/screens/Menu/redux/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import Div from '~/beinComponents/Div';
+import Icon from '~/beinComponents/Icon';
 
 export interface CommentViewProps {
   postId: string;
@@ -41,6 +43,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   contentBackgroundColor,
 }: CommentViewProps) => {
   const menuSheetRef = useRef<any>();
+  const animated = useRef(new Animated.Value(0)).current;
 
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
@@ -103,11 +106,12 @@ const CommentView: React.FC<CommentViewProps> = ({
     }
   };
 
-  const onPressReact = () => {
+  const onPressReact = (event: any) => {
     dispatch(
       postActions.setShowReactionBottomSheet({
         show: true,
         title: t('post:label_all_reacts'),
+        position: {x: event?.pageX, y: event?.pageY},
         callback: onAddReaction,
       }),
     );
@@ -122,8 +126,43 @@ const CommentView: React.FC<CommentViewProps> = ({
     menuSheetRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
+  const onMouseOver = () => {
+    Animated.timing(animated, {
+      toValue: 1,
+      duration: 0,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const onMouseLeave = () => {
+    Animated.timing(animated, {
+      toValue: 0,
+      duration: 0,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const renderWebMenuButton = () => {
+    if (Platform.OS !== 'web') {
+      return null;
+    }
+
+    return (
+      <Animated.View style={[styles.webMenuButton, {opacity: animated}]}>
+        <Button>
+          <Icon
+            style={{}}
+            onPress={onLongPress}
+            icon={'EllipsisH'}
+            tintColor={colors.textSecondary}
+          />
+        </Button>
+      </Animated.View>
+    );
+  };
+
   return (
-    <View>
+    <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       <View style={styles.container}>
         <Avatar source={avatar} />
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
@@ -172,6 +211,7 @@ const CommentView: React.FC<CommentViewProps> = ({
             </ButtonWrapper>
           </View>
         </View>
+        {renderWebMenuButton()}
       </View>
       <CommentViewMenuBottomSheet
         modalizeRef={menuSheetRef}
@@ -183,7 +223,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         onAddReaction={onAddReaction}
         onPressReply={_onPressReply}
       />
-    </View>
+    </Div>
   );
 };
 
@@ -207,6 +247,15 @@ const createStyle = (theme: ITheme) => {
     buttonReply: {
       marginRight: spacing?.margin.tiny,
       marginTop: spacing?.margin.large,
+    },
+    webMenuButton: {
+      width: 32,
+      height: 32,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: spacing.borderRadius.small,
+      backgroundColor: colors.placeholder,
+      marginLeft: spacing.margin.base,
     },
   });
 };
