@@ -497,10 +497,13 @@ function* postReactToComment({
       const reactionArr: IReaction[] = [];
       reactionArr.push({loading: true});
       newOwnChildren1[reactionId] = reactionArr;
+      const newChildrenCounts1 = {...cReactionCount1};
+      newChildrenCounts1[reactionId] =
+        (newChildrenCounts1[reactionId] || 0) + 1;
       yield onUpdateReactionOfCommentById(
         id,
         newOwnChildren1,
-        {...cReactionCount1},
+        newChildrenCounts1,
         comment,
       );
 
@@ -518,17 +521,13 @@ function* postReactToComment({
         const cReactionCount2 = cComment2.children_counts || {};
         const cOwnReactions2 = cComment2.own_children || {};
         const newOwnChildren2 = {...cOwnReactions2};
-        const newChildrenCounts2 = {...cReactionCount2};
-        newChildrenCounts2[reactionId] =
-          (newChildrenCounts2[reactionId] || 0) + 1;
-
         const reactionArr2: IReaction[] = [];
         reactionArr2.push({id: response?.data?.[0]});
         newOwnChildren2[reactionId] = reactionArr2;
         yield onUpdateReactionOfCommentById(
           id,
           newOwnChildren2,
-          newChildrenCounts2,
+          {...cReactionCount2},
           comment,
         );
       }
