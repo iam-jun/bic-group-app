@@ -41,7 +41,7 @@ const ConversationItem: React.FC<IConversation> = ({
     <Avatar.Large
       style={styles.marginRight}
       source={avatar}
-      placeholderSource={{uri: getDefaultAvatar(name)}}
+      placeholderSource={getDefaultAvatar(name)}
     />
   ) : (
     <Avatar.Group

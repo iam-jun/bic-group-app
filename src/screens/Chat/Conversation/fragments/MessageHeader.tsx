@@ -12,6 +12,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
+import {getDefaultAvatar} from '../../helper';
 
 interface Props {
   user: IChatUser;
@@ -39,7 +40,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
       <ButtonWrapper onPress={goProfile}>
         <Avatar.Medium
           source={user?.avatar}
-          placeholderSource={images.img_user_avatar_default}
+          placeholderSource={getDefaultAvatar(user.name)}
           ImageComponent={Image}
         />
       </ButtonWrapper>
