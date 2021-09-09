@@ -171,14 +171,11 @@ function* getGroupPosts({
 }
 
 const requestGroupDetail = async (userId: number) => {
-  console.log('[requestGroupDetail] Start');
   const response = await groupsDataHelper.getGroupDetail(userId);
   if (response.code === 200) {
-    console.log('[requestGroupDetail] Success');
     return response.data;
   }
 
-  console.log('[requestGroupDetail] Throw error');
   throw new Error('Error when fetching group detail');
 };
 

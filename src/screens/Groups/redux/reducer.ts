@@ -64,7 +64,6 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         loadingGroupDetail: true,
       };
     case groupsTypes.SET_GROUP_DETAIL:
-      console.log('[REDUCER] Setting group detail');
       return {
         ...state,
         loadingCover: false,
