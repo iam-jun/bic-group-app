@@ -59,6 +59,8 @@ buck-out/
 /ios/Pods/
 
 # for my personal AWS development
+production/google-services.json
+staging/google-services.json
 amplify/*
 src/aws-exports.js
 android/app/production/
