@@ -333,7 +333,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               size={16}
               icon={'iconSend'}
               tintColor={theme.colors.primary7}
-              disabled={!text.trimStart().trimEnd()}
+              disabled={!text.trim()}
             />
           )}
         </Button>
