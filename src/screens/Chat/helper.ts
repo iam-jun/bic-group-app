@@ -182,5 +182,5 @@ export const getDownloadUrl = (file?: string) => {
 };
 
 export const getDefaultAvatar = (name: string) => {
-  return `${getEnv('ROCKET_CHAT_SERVER')}/avatar/${name}?format=png`;
+  return `${getEnv('ROCKET_CHAT_SERVER')}avatar/${name}?format=png`;
 };
