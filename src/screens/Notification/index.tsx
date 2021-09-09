@@ -77,8 +77,9 @@ const Notification = () => {
         switch (act.notificationType) {
           case NOTIFICATION_TYPE.MENTION: {
             const postAct = act.object;
-            dispatch(postActions.setPostDetail(postAct));
-            rootNavigation.navigate(homeStack.postDetail);
+            rootNavigation.navigate(homeStack.postDetail, {
+              post_id: postAct?.id,
+            });
             break;
           }
           // notification type 18, 8, 22, 17
@@ -89,8 +90,10 @@ const Notification = () => {
           case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
           case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED: {
             const postAct = act.object;
-            dispatch(postActions.setPostDetail(postAct));
-            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            rootNavigation.navigate(homeStack.postDetail, {
+              post_id: postAct?.id,
+              focus_comment: true,
+            });
             break;
           }
           // notification type 7, 19, 20, 21
@@ -101,15 +104,18 @@ const Notification = () => {
           case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
           case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED: {
             const postAct = act.object;
-            dispatch(postActions.setPostDetail(postAct));
-            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            rootNavigation.navigate(homeStack.postDetail, {
+              post_id: postAct?.id,
+              focus_comment: true,
+            });
             break;
           }
           // notification type 9, this is ok
           case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST: {
             const postAct = act.object;
-            dispatch(postActions.setPostDetail(postAct));
-            rootNavigation.navigate(homeStack.postDetail);
+            rootNavigation.navigate(homeStack.postDetail, {
+              post_id: postAct?.id,
+            });
             break;
           }
           // notification type 10
@@ -117,15 +123,19 @@ const Notification = () => {
           // for now can not focus comment if the comment hasn't loaded in list yet
           case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT: {
             const postAct = act.object;
-            dispatch(postActions.setPostDetail(postAct));
-            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            rootNavigation.navigate(homeStack.postDetail, {
+              post_id: postAct?.id,
+              focus_comment: true,
+            });
             break;
           }
           // noti type 16
           case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT: {
             const postAct = act.object;
-            dispatch(postActions.setPostDetail(postAct));
-            rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+            rootNavigation.navigate(homeStack.postDetail, {
+              post_id: postAct?.id,
+              focus_comment: true,
+            });
             break;
           }
           default:
@@ -136,8 +146,7 @@ const Notification = () => {
         }
       } else {
         // default, render it as "create post" notification
-        dispatch(postActions.setPostDetail(act));
-        rootNavigation.navigate(homeStack.postDetail);
+        rootNavigation.navigate(homeStack.postDetail, {post_id: act?.id});
       }
     } catch (error) {
       console.log(

@@ -82,8 +82,7 @@ function* postCreateNewPost({
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts(postData));
-      yield put(postActions.setPostDetail(postData));
-      navigation.replace(homeStack.postDetail);
+      navigation.replace(homeStack.postDetail, {post_id: postData?.id});
     } else {
       //todo handle post error
     }
@@ -175,8 +174,7 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
       //todo waiting for backend update response, replace whole object from response instead of local change
       yield put(postActions.addToAllPosts(post));
       if (replaceWithDetail) {
-        yield put(postActions.setPostDetail(post));
-        navigation.replace(homeStack.postDetail);
+        navigation.replace(homeStack.postDetail, {post_id: post?.id});
       } else {
         navigation.goBack();
       }

@@ -4,9 +4,6 @@ const postKeySelector = {
     content: 'post.createComment.content',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
-  postDetail: {
-    id: 'post.postDetail.id',
-  },
   replyingComment: 'post.replyingComment',
   postAudienceSheet: 'post.postAudienceSheet',
   allPosts: 'post.allPosts',
