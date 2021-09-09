@@ -173,7 +173,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
 
     // get noti body from post content then process it
-    let body = realActivityObject.object.data.content || null;
+    let body =
+      realActivityObject?.object?.data?.content ||
+      realActivityObject?.data?.content;
     if (body) {
       body = processNotiBody(body);
     }
@@ -181,7 +183,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return (
       <View style={styles.content}>
         {renderNotiTitle(actorName, verbText, groupText)}
-        {body && renderNotiBody(body)}
+        {!!body && renderNotiBody(body)}
       </View>
     );
   };
@@ -217,7 +219,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return (
       <View style={styles.content}>
         {renderNotiTitle(actorName, verbText)}
-        {body && renderNotiBody(body)}
+        {!!body && renderNotiBody(body)}
       </View>
     );
   };
@@ -251,7 +253,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return (
       <View style={styles.content}>
         {renderNotiTitle(actorName, verbText)}
-        {body && renderNotiBody(body)}
+        {!!body && renderNotiBody(body)}
       </View>
     );
   };
@@ -296,7 +298,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return (
       <View style={styles.content}>
         {renderNotiTitle(actorName, reactionVerb)}
-        {body && renderNotiBody(body)}
+        {!!body && renderNotiBody(body)}
       </View>
     );
   };
@@ -342,7 +344,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   return (
     <View style={styles.container}>
       <Avatar.Large source={avatar} />
-      {renderNotiContent(activity)}
+      <View style={styles.flex1}>{renderNotiContent(activity)}</View>
       <Text.Subtitle style={styles.timeCreated}>
         {countTime(`${updated_at}`)}
       </Text.Subtitle>
@@ -355,6 +357,7 @@ const createStyles = (theme: ITheme, isRead: boolean) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flexDirection: 'row',
       alignItems: 'center',
