@@ -107,7 +107,7 @@ const Image: React.FC<ImageProps> = ({
             />
           </React.Fragment>
         ),
-        default: (
+        ios: (
           <React.Fragment>
             <Animated.View
               style={StyleSheet.flatten([
@@ -133,6 +133,7 @@ const Image: React.FC<ImageProps> = ({
             />
           </React.Fragment>
         ),
+        web: <ImageComponent source={_source} {...props} style={style} />,
       })}
     </View>
   );

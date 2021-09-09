@@ -68,10 +68,6 @@ const postActions = {
     payload,
   }),
   //post detail
-  setPostDetail: (payload: IPostActivity) => ({
-    type: postTypes.SET_POST_DETAIL,
-    payload,
-  }),
   setPostDetailReplyingComment: (payload?: IPayloadReplying) => ({
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,

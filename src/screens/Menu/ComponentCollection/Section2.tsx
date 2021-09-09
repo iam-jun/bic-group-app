@@ -145,6 +145,12 @@ const Section2 = () => {
         </Text.H3>
         <Divider style={{margin: spacing?.margin.base}} />
         <TouchableOpacity
+          onPress={() => dispatch(modalActions.showAlertNewFeature())}>
+          <Text.H6 style={{marginHorizontal: spacing?.margin.base}}>
+            Click to show new feature modal
+          </Text.H6>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() =>
             dispatch(
               modalActions.showAlert({
@@ -162,7 +168,6 @@ const Section2 = () => {
           </Text.H6>
         </TouchableOpacity>
 
-        <AlertModal dismissable={true} />
         <MentionInput
           data={userData}
           modalPosition={'bottom'}

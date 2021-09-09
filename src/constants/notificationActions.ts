@@ -17,13 +17,7 @@ export default {
       screen: 'post-detail',
     },
   },
-  '5': {
-    screen: 'home',
-    params: {
-      screen: 'post-detail',
-    },
-  },
-  '6': {
+  '4': {
     screen: 'home',
     params: {
       screen: 'post-detail',
@@ -48,6 +42,72 @@ export default {
     },
   },
   '10': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '11': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '12': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '13': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '14': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '16': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '17': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '18': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '19': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '20': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '21': {
+    screen: 'home',
+    params: {
+      screen: 'post-detail',
+    },
+  },
+  '22': {
     screen: 'home',
     params: {
       screen: 'post-detail',

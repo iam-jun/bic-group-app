@@ -143,3 +143,13 @@ export function formatBytes(bytes: number, decimals = 1) {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
+export const escapeMarkDown = (text: string) => {
+  const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
+
+  let match;
+  while ((match = MENTION_USER_REG.exec(text))) {
+    text = text.replace(match[0], match[2]);
+    MENTION_USER_REG.lastIndex = 0;
+  }
+  return text;
+};

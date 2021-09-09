@@ -14,6 +14,7 @@ import useChat from '~/hooks/chat';
 import {IChatUser} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
+import {getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
 
 export interface MembersSelectionProps {
@@ -62,7 +63,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
             style={styles.marginRight}
             source={item.avatar}
             ImageComponent={RNImage}
-            placeholderSource={images.img_user_avatar_default}
+            placeholderSource={getDefaultAvatar(item.name)}
           />
         }
         onPressCheckbox={selectable ? () => onSelectUser(item) : undefined}
@@ -76,7 +77,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         <Avatar.Large
           source={item.avatar}
           actionIcon="iconClose"
-          placeholderSource={images.img_user_avatar_default}
+          placeholderSource={getDefaultAvatar(item.name)}
           ImageComponent={RNImage}
           onPressAction={() => onSelectUser(item)}
         />

@@ -1,7 +1,7 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {put, takeLatest, delay} from 'redux-saga/effects';
+import {delay, put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
@@ -13,10 +13,10 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
+import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import * as actions from './actions';
 import * as types from './types';
-import * as modalActions from '~/store/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -274,6 +274,7 @@ function* forgotPasswordConfirm({
 function* signOut({payload}: any) {
   try {
     yield Auth.signOut();
+    // yield messaging().deleteToken();
     if (!payload) {
       return;
     }

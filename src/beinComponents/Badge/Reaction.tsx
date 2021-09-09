@@ -91,14 +91,15 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
       borderWidth: 1,
       borderColor: isSelected ? colors.primary6 : colors.placeholder,
       borderRadius: 6,
-      paddingVertical: spacing?.padding.tiny,
       paddingHorizontal: 6,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
+      height: 28,
     },
     textInput: {
       marginStart: spacing?.margin.tiny,
+      marginBottom: 2,
     },
     indicator: {
       marginHorizontal: spacing.margin.tiny,

@@ -52,6 +52,7 @@ import iconReactionSad from '../../assets/icons/icon_reaction_sad.svg';
 import iconReactionShocked from '../../assets/icons/icon_reaction_shocked.svg';
 import iconReactionSmile from '../../assets/icons/icon_reaction_smile.svg';
 import iconReply from '../../assets/icons/icon_reply.svg';
+import iconReplyGrey from '../../assets/icons/icon_reply_grey.svg';
 import iconReport from '../../assets/icons/icon_report.svg';
 import iconRightArrow from '../../assets/icons/icon_right_arrow.svg';
 import iconSearch from '../../assets/icons/icon_search.svg';
@@ -87,6 +88,7 @@ const icons = {
   iconReactionSmile,
   iconArrowDown,
   iconReply,
+  iconReplyGrey,
   iconCopy,
   iconReport,
   iconSettings: 'EllipsisH',
