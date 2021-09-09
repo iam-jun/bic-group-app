@@ -28,7 +28,7 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
           onPress={onReactPress}
         />
         <Icon
-          icon="iconReply"
+          icon={'iconReplyGrey'}
           tintColor={colors.textSecondary}
           style={styles.icon}
           onPress={onReplyPress}
