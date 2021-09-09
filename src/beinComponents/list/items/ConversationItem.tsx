@@ -7,9 +7,9 @@ import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
-import {getAvatar} from '~/screens/Chat/helper';
+import {getAvatar, getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
-import {countTime} from '~/utils/formatData';
+import {countTime, escapeMarkDown} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
 
 const ConversationItem: React.FC<IConversation> = ({
@@ -34,14 +34,14 @@ const ConversationItem: React.FC<IConversation> = ({
         getAvatar(username),
       );
       setAvatar(avatarGroup);
-    } else setAvatar(images.img_group_avatar_default);
+    } else setAvatar(getDefaultAvatar(name));
   };
 
   const ItemAvatar = isDirect ? (
     <Avatar.Large
       style={styles.marginRight}
       source={avatar}
-      placeholderSource={images.img_user_avatar_default}
+      placeholderSource={{uri: getDefaultAvatar(name)}}
     />
   ) : (
     <Avatar.Group
@@ -65,7 +65,10 @@ const ConversationItem: React.FC<IConversation> = ({
         variant: unreadCount ? 'bodyM' : 'body',
         color: textColor,
       }}
-      subTitle={lastMessage || i18next.t('chat:label_init_group_message:short')}
+      subTitle={
+        escapeMarkDown(lastMessage) ||
+        i18next.t('chat:label_init_group_message:short')
+      }
       style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={

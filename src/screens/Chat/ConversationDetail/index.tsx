@@ -21,7 +21,7 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {getAvatar} from '../helper';
+import {getAvatar, getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
@@ -114,14 +114,12 @@ const Conversation = (): React.ReactElement => {
   };
 
   const onLoadAvatarError = () => {
-    if (conversation.type === roomTypes.DIRECT) {
-      setAvatar(images.img_user_avatar_default);
-    } else if (conversation.usernames) {
+    if (conversation.type !== roomTypes.DIRECT && conversation.usernames) {
       const avatarGroup = conversation.usernames.map((username: string) =>
         getAvatar(username),
       );
       setAvatar(avatarGroup);
-    } else setAvatar(images.img_group_avatar_default);
+    } else setAvatar(getDefaultAvatar(conversation.name));
   };
 
   const renderAvatar = () => {

@@ -1,6 +1,5 @@
-import {messageStatus} from './../../constants/chat';
 import i18next from 'i18next';
-import {roomTypes, messageEventTypes} from '~/constants/chat';
+import {messageEventTypes, roomTypes} from '~/constants/chat';
 import {
   IAttachment,
   IChatUser,
@@ -10,6 +9,7 @@ import {
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
+import {messageStatus} from './../../constants/chat';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -179,4 +179,8 @@ export const getDownloadUrl = (file?: string) => {
   return `${getEnv('ROCKET_CHAT_SERVER')}${file}?download&rc_uid=${
     auth.userId
   }&rc_token=${auth.accessToken}`;
+};
+
+export const getDefaultAvatar = (name: string) => {
+  return `${getEnv('ROCKET_CHAT_SERVER')}avatar/${name}?format=png`;
 };

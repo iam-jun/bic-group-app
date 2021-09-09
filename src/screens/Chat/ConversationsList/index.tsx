@@ -1,7 +1,13 @@
 import {useIsFocused} from '@react-navigation/native';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, TextInput, useWindowDimensions, View} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -48,7 +54,7 @@ const ConversationsList = (): React.ReactElement => {
   }, [isFocused]);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    Platform.OS === 'web' && inputRef.current?.focus();
   }, [searchInputFocus]);
 
   const loadMore = () => {
@@ -111,6 +117,7 @@ const ConversationsList = (): React.ReactElement => {
       <SearchInput
         inputRef={inputRef}
         style={styles.inputSearch}
+        autoFocus={false}
         placeholder={t('chat:placeholder_search')}
         onChangeText={onQueryChanged}
       />

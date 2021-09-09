@@ -9,6 +9,7 @@ export interface Props {
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
   goBack: () => void;
+  popToTop: () => void;
   nestedNavigate: (
     parentName: string,
     name: string,
@@ -43,6 +44,10 @@ export const withNavigation = (
     navigationRef?.current?.canGoBack && navigationRef?.current?.goBack();
   };
 
+  const popToTop = () => {
+    navigationRef?.current?.dispatch(StackActions.popToTop());
+  };
+
   const nestedNavigate = (
     parentName: string,
     name: string,
@@ -58,6 +63,7 @@ export const withNavigation = (
     navigate,
     replace,
     goBack,
+    popToTop,
     nestedNavigate,
   };
 };
