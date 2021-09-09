@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  Platform,
   useWindowDimensions,
 } from 'react-native';
 import {ITheme} from '~/theme/interfaces';
@@ -29,7 +28,6 @@ import Text from '~/beinComponents/Text';
 import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
-import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import {deviceDimensions} from '~/theme/dimension';
 
 const Notification = () => {
@@ -52,9 +50,7 @@ const Notification = () => {
     notificationSelector.noMoreNotification,
   );
   const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
-  const showMarkedAsReadToast = useKeySelector(
-    notificationSelector.showMarkedAsReadToast,
-  );
+
   useEffect(() => {
     if (isFocused && streamClient) {
       dispatch(
@@ -194,19 +190,6 @@ const Notification = () => {
     );
   };
 
-  const renderToastMessage = () => {
-    if (!showMarkedAsReadToast) return null;
-
-    return (
-      <SimpleToastMessage
-        style={
-          Platform.OS === 'web' ? styles.toastStyle : styles.smallToastStyle
-        }>
-        {i18n.t('notification:mark_all_as_read_success')}
-      </SimpleToastMessage>
-    );
-  };
-
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
@@ -231,7 +214,6 @@ const Notification = () => {
         />
       )}
       <NotificationBottomSheet modalizeRef={menuSheetRef} />
-      {renderToastMessage()}
     </ScreenWrapper>
   );
 };
@@ -250,16 +232,6 @@ const themeStyles = (theme: ITheme) => {
       height: 150,
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    toastStyle: {
-      position: 'absolute',
-      alignSelf: 'center',
-      bottom: 40,
-    },
-    smallToastStyle: {
-      position: 'absolute',
-      alignSelf: 'center',
-      bottom: 20,
     },
   });
 };

@@ -54,12 +54,6 @@ function notificationsReducer(
         isLoadingMore: payload,
       };
     }
-    case notificationsTypes.SHOW_MARKED_AS_READ_TOAST: {
-      return {
-        ...state,
-        showMarkedAsReadToast: payload,
-      };
-    }
 
     default:
       return state;
