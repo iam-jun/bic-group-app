@@ -291,11 +291,11 @@ const makeGetStreamRequest = async (
   feedSlug: 'notification' | 'newsfeed' | 'timeline',
   feedId: string,
   funcName: string,
-  params: any,
+  ...params: any
 ) => {
   const user = streamClient.feed(feedSlug, feedId);
   // @ts-ignore
-  return user[funcName](params)
+  return user[funcName](...params)
     .then((getStreamResponse: any) => getStreamResponse)
     .catch(async (activitiesError: FeedResponseError) => {
       return handleResponseFailFeedActivity(
@@ -304,7 +304,7 @@ const makeGetStreamRequest = async (
         feedSlug,
         feedId,
         funcName,
-        params,
+        ...params,
       );
     });
 };
@@ -316,7 +316,7 @@ const handleResponseFailFeedActivity = async (
   feedSlug: 'notification' | 'newsfeed' | 'timeline',
   feedId: string,
   funcName: any,
-  params: any,
+  ...params: any
 ) => {
   if (activitiesError.error.status_code === 403) {
     const newReqPromise = new Promise((resolve, reject) => {
@@ -336,7 +336,7 @@ const handleResponseFailFeedActivity = async (
             feedSlug,
             feedId,
             funcName,
-            params,
+            ...params,
           );
           return resolve(resp);
         } catch (e) {
