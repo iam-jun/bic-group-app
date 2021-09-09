@@ -98,20 +98,27 @@ const GroupDetail = (props: any) => {
     return <GroupAboutContent />;
   }
 
+  const renderGroupDetail = () => {
+    return (
+      <Fragment>
+        <Header>
+          <GroupTopBar />
+        </Header>
+        <View style={styles.contentContainer}>
+          <GroupContent />
+        </View>
+      </Fragment>
+    );
+  };
+  console.log(
+    `[DEBUG] refrestGroupPosts || loadingGroupDetail = ${refreshingGroupPosts} || ${loadingGroupDetail}`,
+  );
+
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      {refreshingGroupPosts || loadingGroupDetail ? (
-        renderPlaceholder()
-      ) : (
-        <Fragment>
-          <Header>
-            <GroupTopBar />
-          </Header>
-          <View style={styles.contentContainer}>
-            <GroupContent />
-          </View>
-        </Fragment>
-      )}
+      {refreshingGroupPosts || loadingGroupDetail
+        ? renderPlaceholder()
+        : renderGroupDetail()}
     </ScreenWrapper>
   );
 };

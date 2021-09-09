@@ -48,7 +48,7 @@ const groupsActions = {
       payload,
     };
   },
-  setGroupDetail: function (payload: IGroupDetail) {
+  setGroupDetail: function (payload: IGroupDetail | null) {
     return {
       type: groupsTypes.SET_GROUP_DETAIL,
       payload,
