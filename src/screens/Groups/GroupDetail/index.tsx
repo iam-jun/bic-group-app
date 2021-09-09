@@ -22,6 +22,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
+import {isEmpty} from 'lodash';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -46,6 +47,7 @@ const GroupDetail = (props: any) => {
   );
 
   const getGroupDetail = () => dispatch(groupsActions.getGroupDetail(groupId));
+
   const getGroupPosts = () => {
     dispatch(groupsActions.clearGroupPosts());
     if (streamClient && userId) {
@@ -73,7 +75,11 @@ const GroupDetail = (props: any) => {
   const _onRefresh = () => {
     if (groupId) {
       getGroupDetail();
-      getGroupPosts();
+
+      // Avoid getting group posts of the nonexisting group, which will lead to endless fetching group posts in httpApiRequest > makeGetStreamRequest
+      if (!loadingGroupDetail && !isEmpty(groupInfo)) {
+        getGroupPosts();
+      }
     }
   };
 
@@ -99,6 +105,7 @@ const GroupDetail = (props: any) => {
   }
 
   const renderGroupDetail = () => {
+    if (isEmpty(groupInfo)) return <NoGroupFound />;
     return (
       <Fragment>
         <Header>
@@ -110,9 +117,6 @@ const GroupDetail = (props: any) => {
       </Fragment>
     );
   };
-  console.log(
-    `[DEBUG] refrestGroupPosts || loadingGroupDetail = ${refreshingGroupPosts} || ${loadingGroupDetail}`,
-  );
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
