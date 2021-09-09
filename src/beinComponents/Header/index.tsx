@@ -183,11 +183,11 @@ const createStyle = (theme: ITheme) => {
       height: '100%',
       marginLeft: spacing.margin.base,
       justifyContent: 'center',
+      paddingTop: 1.5,
     },
     title: {
       height: 24,
       lineHeight: 24,
-      paddingTop: 3,
     },
     subtitle: {
       height: 16,
