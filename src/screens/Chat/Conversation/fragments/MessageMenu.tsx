@@ -22,19 +22,19 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
     <Div className="chat-message-menu">
       <View style={styles.container}>
         <Icon
-          icon="iconReact"
+          icon={'iconReact'}
           tintColor={colors.textSecondary}
           style={styles.icon}
           onPress={onReactPress}
         />
         <Icon
-          icon="iconReply"
+          icon={'iconReplyGrey'}
           tintColor={colors.textSecondary}
           style={styles.icon}
           onPress={onReplyPress}
         />
         <Icon
-          icon="iconSettings"
+          icon={'iconSettings'}
           tintColor={colors.textSecondary}
           style={styles.icon}
           onPress={onMenuPress}
