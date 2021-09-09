@@ -35,7 +35,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
         _id: uuid.v4().toString(),
         room_id: conversation._id,
         _updatedAt: new Date().toISOString(),
-        text,
+        text: text.trim(),
         user,
       }),
     );

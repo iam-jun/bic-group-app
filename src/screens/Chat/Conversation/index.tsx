@@ -141,7 +141,9 @@ const Conversation = () => {
   };
 
   const goConversationDetail = () => {
-    rootNavigation.navigate(chatStack.conversationDetail);
+    rootNavigation.navigate(chatStack.conversationDetail, {
+      roomId: conversation._id,
+    });
   };
 
   const onLongPress = (item: IMessage, position: {x: number; y: number}) => {

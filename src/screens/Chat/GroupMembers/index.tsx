@@ -63,7 +63,9 @@ const GroupMembers = (): React.ReactElement => {
     ? undefined
     : () => {
         dispatch(actions.clearSelectedUsers());
-        rootNavigation.navigate(chatStack.addMembers);
+        rootNavigation.navigate(chatStack.addMembers, {
+          roomId: conversation._id,
+        });
       };
 
   const onPressMenu = (e: any, user: IChatUser) => {

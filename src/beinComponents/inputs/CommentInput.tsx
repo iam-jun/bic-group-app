@@ -160,6 +160,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const handleKeyEvent = (event: any) => {
     if (!event?.shiftKey && event?.key === 'Enter') {
+      if (!text.trim()) return;
       event.preventDefault();
       _onPressSend();
     } else if (
@@ -319,7 +320,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
         </Animated.View>
-        <Button onPress={_onPressSend} disabled={loading}>
+        <Button onPress={_onPressSend} disabled={!text.trim() || loading}>
           {loading ? (
             <ActivityIndicator
               style={styles.loadingContainer}
@@ -332,6 +333,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               size={16}
               icon={'iconSend'}
               tintColor={theme.colors.primary7}
+              disabled={!text.trim()}
             />
           )}
         </Button>
