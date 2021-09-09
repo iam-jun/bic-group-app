@@ -1,5 +1,11 @@
 import React, {FC, useEffect, useState, useRef, useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity, Keyboard} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Keyboard,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
@@ -348,7 +354,11 @@ const PostView: FC<PostViewProps> = ({
   return (
     <View>
       {renderImportant()}
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          Platform.OS === 'web' && !isPostDetail ? styles.containerWeb : {},
+        ]}>
         {renderHeader()}
         {renderContent()}
         {!hideMarkAsRead && isImportant && (
@@ -421,6 +431,19 @@ const createStyle = (theme: ITheme) => {
     rowCenter: {flexDirection: 'row', alignItems: 'center'},
     container: {
       backgroundColor: colors.background,
+    },
+    containerWeb: {
+      borderTopWidth: 0.5,
+      borderRightWidth: 0.5,
+      borderLeftWidth: 0.5,
+      borderBottomWidth: 0.5,
+      borderRadius: 6,
+      borderColor: colors.borderDivider,
+      shadowOffset: {width: 0, height: 1},
+      shadowColor: '#000',
+      shadowOpacity: 0.15,
+      shadowRadius: 1,
+      elevation: 2,
     },
     deletedContainer: {
       flexDirection: 'row',
