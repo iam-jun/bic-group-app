@@ -20,7 +20,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
-import {getAvatar} from '../helper';
+import {getAvatar, getDefaultAvatar} from '../helper';
 import {
   ChatInput,
   ListMessages,
@@ -45,7 +45,6 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
-
   const isDirect = conversation.type === roomTypes.DIRECT;
 
   const dimensions = useWindowDimensions();
@@ -57,7 +56,7 @@ const Conversation = () => {
       const {usernames} = conversation;
       if (usernames)
         setAvatar(usernames.map((username: string) => getAvatar(username)));
-      else setAvatar(images.img_group_avatar_default);
+      else setAvatar(getDefaultAvatar(conversation?.name));
     }
   };
 
@@ -117,6 +116,10 @@ const Conversation = () => {
   const deleteMessage = () => {
     selectedMessage && dispatch(actions.deleteMessage(selectedMessage));
     setSelectedMessage(undefined);
+  };
+
+  const onPressBack = async () => {
+    rootNavigation.popToTop();
   };
 
   const onMenuPress = async (menu: MessageOptionType) => {
@@ -202,6 +205,7 @@ const Conversation = () => {
         onPressIcon={onSearchPress}
         menuIcon="ConversationInfo"
         onPressMenu={goConversationDetail}
+        onPressBack={onPressBack}
         hideBack={isLaptop}
       />
       {renderChatMessages()}
