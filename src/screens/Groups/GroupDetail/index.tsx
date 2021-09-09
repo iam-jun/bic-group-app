@@ -22,6 +22,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
+import {isEmpty} from 'lodash';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -45,9 +46,17 @@ const GroupDetail = (props: any) => {
     groupsKeySelector.loadingGroupDetail,
   );
 
-  const getGroupDetail = () => dispatch(groupsActions.getGroupDetail(groupId));
+  const getGroupDetail = async () => {
+    await dispatch(groupsActions.getGroupDetail(groupId));
+  };
+
   const getGroupPosts = () => {
+    // Avoid getting group posts of the nonexisting group, which will lead to endless fetching group posts in httpApiRequest > makeGetStreamRequest
+    if (loadingGroupDetail || isEmpty(groupInfo)) {
+      return;
+    }
     dispatch(groupsActions.clearGroupPosts());
+
     if (streamClient && userId) {
       dispatch(
         groupsActions.getGroupPosts({
@@ -59,6 +68,14 @@ const GroupDetail = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    getGroupDetail();
+  }, [groupId]);
+
+  useEffect(() => {
+    getGroupPosts();
+  }, [groupInfo]);
+
   const renderPlaceholder = () => {
     return (
       <View>
@@ -69,17 +86,6 @@ const GroupDetail = (props: any) => {
       </View>
     );
   };
-
-  const _onRefresh = () => {
-    if (groupId) {
-      getGroupDetail();
-      getGroupPosts();
-    }
-  };
-
-  useEffect(() => {
-    _onRefresh();
-  }, [groupId]);
 
   // visitors cannot see anything of Secret groups
   // => render No Group Found
@@ -98,20 +104,25 @@ const GroupDetail = (props: any) => {
     return <GroupAboutContent />;
   }
 
+  const renderGroupDetail = () => {
+    if (isEmpty(groupInfo)) return <NoGroupFound />;
+    return (
+      <Fragment>
+        <Header>
+          <GroupTopBar />
+        </Header>
+        <View style={styles.contentContainer}>
+          <GroupContent />
+        </View>
+      </Fragment>
+    );
+  };
+
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      {refreshingGroupPosts || loadingGroupDetail ? (
-        renderPlaceholder()
-      ) : (
-        <Fragment>
-          <Header>
-            <GroupTopBar />
-          </Header>
-          <View style={styles.contentContainer}>
-            <GroupContent />
-          </View>
-        </Fragment>
-      )}
+      {refreshingGroupPosts || loadingGroupDetail
+        ? renderPlaceholder()
+        : renderGroupDetail()}
     </ScreenWrapper>
   );
 };

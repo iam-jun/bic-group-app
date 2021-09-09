@@ -70,7 +70,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         loadingAvatar: false,
         loadingGroupDetail: false,
         groupDetail: {
-          ...state.groupDetail,
+          group: {}, // init state
           ...action.payload,
         },
       };

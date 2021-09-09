@@ -53,13 +53,8 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
     const result = yield requestGroupDetail(payload);
     yield put(groupsActions.setGroupDetail(result));
   } catch (e) {
-    yield put(groupsActions.setGroupDetail({}));
-    console.log(
-      '\x1b[36m',
-      'namanh --- getGroupDetail | getGroupDetail : error',
-      e,
-      '\x1b[0m',
-    );
+    console.log('[getGroupDetail]', e);
+    yield put(groupsActions.setGroupDetail(null));
   }
 }
 
@@ -180,6 +175,8 @@ const requestGroupDetail = async (userId: number) => {
   if (response.code === 200) {
     return response.data;
   }
+
+  throw new Error('Error when fetching group detail');
 };
 
 function* requestGroupPosts(payload: IPayloadGetGroupPost) {
