@@ -19,7 +19,7 @@ const PostItem = ({postData}: any) => {
   };
 
   const onPressComment = () => {
-    rootNavigation.navigate(homeStack.postDetail, {focus_comment: true});
+    rootNavigation.navigate(homeStack.postDetail, {post_id: postData.id, focus_comment: true});
   };
 
   return (
