@@ -232,6 +232,7 @@ const PostDetail = (props: any) => {
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_post_detail'}
+        hideBackWeb
       />
       {!postTime ? (
         <PostViewPlaceholder />

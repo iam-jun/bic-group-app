@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -10,7 +10,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
 import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {IconType} from '~/resources/icons';
-import {Platform} from 'react-native';
 import {ImageProps} from '../Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
@@ -32,6 +31,7 @@ export interface HeaderProps {
   menuIcon?: IconType;
   onPressMenu?: (e: any) => void;
   hideBack?: boolean;
+  hideBackWeb?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -56,6 +56,7 @@ const Header: React.FC<HeaderProps> = ({
   menuIcon,
   onPressMenu,
   hideBack,
+  hideBackWeb,
   onPressBack,
   disableInsetTop,
   style,
@@ -91,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({
           style,
         ])}>
         <ViewSpacing width={spacing.margin.large} />
-        {!hideBack && (
+        {!hideBack && !(hideBackWeb && Platform.OS === 'web') && (
           <Icon
             icon="iconBack"
             onPress={_onPressBack}
