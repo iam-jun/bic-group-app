@@ -30,12 +30,6 @@ const notificationsActions = {
       payload,
     };
   },
-  setShowMarkedAsReadToast: function (payload: boolean) {
-    return {
-      type: notificationsTypes.SHOW_MARKED_AS_READ_TOAST,
-      payload,
-    };
-  },
 
   //for saga
   getNotifications: function (payload: IGetStreamDispatch) {

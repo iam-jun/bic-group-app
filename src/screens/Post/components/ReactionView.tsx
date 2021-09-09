@@ -106,7 +106,7 @@ const createStyle = (theme: ITheme) => {
       borderColor: colors.borderCard,
       borderRadius: spacing?.borderRadius.small,
       paddingHorizontal: spacing.padding.small,
-      paddingVertical: 6,
+      paddingVertical: 4,
       justifyContent: 'center',
       alignItems: 'center',
     },

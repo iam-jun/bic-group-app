@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -8,10 +8,13 @@ import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import NewFeatureImg from '~/../assets/images/new_feeature_grey.svg';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import {deviceDimensions} from '~/theme/dimension';
 
 const NewFeature = () => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyle(theme);
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+  const styles = themeStyle(theme, isLaptop);
   // const [showRating, setShowRating] = useState<boolean>(true);
   //
   // const onRatingPress = () => {
@@ -92,7 +95,7 @@ const NewFeature = () => {
   // );
 };
 
-const themeStyle = (theme: ITheme) => {
+const themeStyle = (theme: ITheme, isLaptop: boolean) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
@@ -102,7 +105,8 @@ const themeStyle = (theme: ITheme) => {
     body: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: isLaptop ? 'flex-start' : 'center',
+      paddingTop: isLaptop ? 80 : undefined,
     },
     buttonsContainer: {
       flex: 1,

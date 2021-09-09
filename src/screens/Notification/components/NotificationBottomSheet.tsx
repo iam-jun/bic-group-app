@@ -9,6 +9,7 @@ import notificationsActions from '../redux/actions';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import i18n from 'i18next';
+import * as modalActions from '~/store/modal/actions';
 
 export interface NotificationBottomSheetProps {
   modalizeRef: any;
@@ -23,6 +24,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
   const userId = useUserIdAuth();
+
   const markReadAllNotifications = () => {
     dispatch(
       notificationsActions.markAsReadAll({
@@ -32,6 +34,12 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
     );
     modalizeRef.current?.close();
   };
+
+  const showUpcommingFeature = () => {
+    modalizeRef.current?.close();
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
   const renderContent = () => {
     return (
       <View style={styles.container}>
@@ -47,6 +55,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
           leftIcon={'Cog'}
           leftIconProps={{icon: 'Cog', size: 24}}
           title={i18n.t('notification:notification_settings')}
+          onPress={showUpcommingFeature}
         />
       </View>
     );

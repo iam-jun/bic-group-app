@@ -2,7 +2,7 @@ import {put, takeLatest, takeEvery, select} from 'redux-saga/effects';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import notificationsTypes from '~/screens/Notification/redux/types';
-import {IGetStreamDispatch} from '~/interfaces/common';
+import {IGetStreamDispatch, IToastMessage} from '~/interfaces/common';
 import notificationSelector from './selector';
 import {get} from 'lodash';
 import {timeOut} from '~/utils/common';
@@ -11,6 +11,7 @@ import {
   IMarkAsReadAnActivity,
 } from '~/interfaces/INotification';
 import notificationActions from '~/constants/notificationActions';
+import * as modalActions from '~/store/modal/actions';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -95,12 +96,18 @@ function* markAsReadAll({payload}: {payload: IGetStreamDispatch}) {
       }),
     );
 
-    yield timeOut(500);
-    yield put(notificationsActions.setShowMarkedAsReadToast(true));
-    yield timeOut(2500); // keep the toast messtion 2s then hide it
-    yield put(notificationsActions.setShowMarkedAsReadToast(false));
+    yield put(
+      modalActions.showHideToastMessage({
+        content: 'notification:mark_all_as_read_success',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m');
+    yield showError(err);
   }
 }
 
@@ -129,6 +136,7 @@ function* markAsSeenAll({payload}: {payload: IGetStreamDispatch}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsSeenAll error', err, '\x1b[0m');
+    yield showError(err);
   }
 }
 
@@ -201,4 +209,18 @@ function* loadmore({payload}: {payload: IGetStreamDispatch}) {
   } catch (err) {
     console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
   }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }

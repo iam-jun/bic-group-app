@@ -245,6 +245,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           }}
           onPressBack={onPressBack}
           onPressButton={onPressPost}
+          hideBackWeb
         />
         {!isEditPost && (
           <View>

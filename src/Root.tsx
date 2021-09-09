@@ -124,7 +124,11 @@ export default (): React.ReactElement => {
     remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
   ) => {
     const data = handleMessageData(remoteMessage);
-    if (data) rootNavigation.navigate(rootSwitch.mainStack, data);
+    if (data)
+      rootNavigation.navigate(rootSwitch.mainStack, {
+        screen: 'main',
+        params: {...data, initial: false},
+      });
   };
 
   const handleMessageData = (

@@ -127,11 +127,6 @@ function postReducer(state = initState, action: any = {}) {
           searchResultAudienceUsers: payload,
         },
       };
-    case postTypes.SET_POST_DETAIL:
-      return {
-        ...state,
-        postDetail: payload,
-      };
     case postTypes.SET_POST_DETAIL_REPLYING_COMMENT:
       return {
         ...state,

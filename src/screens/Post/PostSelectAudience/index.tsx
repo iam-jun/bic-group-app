@@ -280,6 +280,7 @@ const PostSelectAudience = () => {
         buttonText={'common:btn_done'}
         buttonProps={{useI18n: true}}
         onPressButton={onPressSave}
+        hideBackWeb
       />
       <SearchInput
         autoFocus
