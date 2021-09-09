@@ -6,8 +6,11 @@ import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
-import {useKeySelector} from '~/hooks/selector';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
+import mainStack from '~/router/navigator/MainStack/stack';
+import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import AttachmentView from './AttachmentView';
@@ -16,9 +19,6 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
-import menuActions from '~/screens/Menu/redux/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -34,7 +34,7 @@ const MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const hoverMessage = useKeySelector('chat.hoverMessage');
+  const currentUserId = useUserIdAuth();
   const {
     previousMessage,
     currentMessage,
@@ -80,35 +80,18 @@ const MessageItem = (props: MessageItemProps) => {
     dispatch(
       menuActions.selectedProfile({
         id: user?.id,
-        isPublic: true,
+        isPublic: user?.id !== currentUserId,
       }),
     );
     rootNavigation.navigate(mainStack.userProfile);
   };
-
-  const onHover = () => {
-    dispatch(actions.setHoverMessage(currentMessage));
-  };
-
-  const onBlur = () => {
-    dispatch(actions.setHoverMessage(null));
-  };
-
-  const menuVisible = currentMessage._id === hoverMessage?._id;
 
   return (
     <Div className="chat-message">
       <TouchableWithoutFeedback onLongPress={onMenuPress}>
         <View style={styles.container}>
           {quoted_message && <QuotedMessage {...quoted_message} />}
-          {!hideHeader && (
-            <MessageHeader
-              user={user}
-              _updatedAt={_updatedAt}
-              menuVisible={!removed && menuVisible}
-              onMenuPress={onMenuPress}
-            />
-          )}
+          {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
 
           <View
             style={[styles.message, !hideHeader && styles.messgageWithHeader]}>

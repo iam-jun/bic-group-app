@@ -85,7 +85,10 @@ const Icon: React.FC<IconProps> = ({
   const Wrapper = Platform.OS === 'web' ? Text : View;
 
   return (
-    <TouchableOpacity disabled={!onPress} onPress={onPress} hitSlop={hitSlop}>
+    <TouchableOpacity
+      disabled={disabled || !onPress}
+      onPress={onPress}
+      hitSlop={hitSlop}>
       <Wrapper style={[styles.container, style, {backgroundColor}]}>
         <View
           style={[

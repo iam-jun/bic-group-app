@@ -9,27 +9,26 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {ViewSpacing} from '~/components';
 import {chatPermissions, roomTypes} from '~/constants/chat';
+import {useUserIdAuth} from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {IconType} from '~/resources/icons';
-import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {getAvatar, getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import mainStack from '~/router/navigator/MainStack/stack';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useUserIdAuth} from '~/hooks/auth';
 
-const Conversation = (): React.ReactElement => {
+const ConversationDetail = ({route}: {route: any}): React.ReactElement => {
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
   const styles = createStyles(theme);
@@ -45,9 +44,9 @@ const Conversation = (): React.ReactElement => {
   const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    dispatch(actions.getConversationDetail(conversation._id));
+    dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.clearSelectedUsers());
-  }, []);
+  }, [route?.params?.roomId]);
 
   const goGroupMembers = () => {
     rootNavigation.navigate(chatStack.chatGroupMembers);
@@ -55,7 +54,7 @@ const Conversation = (): React.ReactElement => {
 
   const goAddMembers = () => {
     dispatch(actions.clearSelectedUsers());
-    rootNavigation.navigate(chatStack.addMembers);
+    rootNavigation.navigate(chatStack.addMembers, {roomId: conversation._id});
   };
 
   const goProfile = () => {
@@ -449,4 +448,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default Conversation;
+export default ConversationDetail;

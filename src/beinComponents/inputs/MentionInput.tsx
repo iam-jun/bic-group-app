@@ -1,5 +1,5 @@
 import _, {debounce, get} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -73,6 +73,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   getDataParam,
   getDataResponseKey = '',
 }: MentionInputProps) => {
+  const inputRef = useRef<TextInput>();
   const [mentioning, setMentioning] = useState(false);
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -175,6 +176,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
       const mention = `@[u:${item[mentionField]}:${
         item.fullname || item.name
       }] `;
+      inputRef.current?.focus();
       setContent(replaceContent(content, `@${key}`, mention));
       onPress?.(item);
       setMentioning(false);
@@ -183,6 +185,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 
   const _onPressAll = () => {
+    inputRef.current?.focus();
     onPressAll?.();
     if (allReplacer) {
       setContent(replaceContent(content, `@${key}`, allReplacer));
@@ -286,6 +289,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
       <ComponentInput
         {...componentInputProps}
         value={content}
+        textInputRef={inputRef}
         onChangeText={_onChangeText}
         placeholder={placeholderText}
         onContentSizeChange={
