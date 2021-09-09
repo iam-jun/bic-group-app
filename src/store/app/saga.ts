@@ -29,6 +29,7 @@ function* getConfigs() {
 function* setupPushToken() {
   try {
     // Get Firebase token
+    // yield messaging().deleteToken(); TODO
     const deviceToken: string = yield messaging().getToken();
     // Push token firebase
     yield makePushTokenRequest(deviceToken);
