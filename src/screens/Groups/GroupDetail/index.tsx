@@ -46,10 +46,17 @@ const GroupDetail = (props: any) => {
     groupsKeySelector.loadingGroupDetail,
   );
 
-  const getGroupDetail = () => dispatch(groupsActions.getGroupDetail(groupId));
+  const getGroupDetail = async () => {
+    await dispatch(groupsActions.getGroupDetail(groupId));
+  };
 
   const getGroupPosts = () => {
+    // Avoid getting group posts of the nonexisting group, which will lead to endless fetching group posts in httpApiRequest > makeGetStreamRequest
+    if (loadingGroupDetail || isEmpty(groupInfo)) {
+      return;
+    }
     dispatch(groupsActions.clearGroupPosts());
+
     if (streamClient && userId) {
       dispatch(
         groupsActions.getGroupPosts({
@@ -61,6 +68,14 @@ const GroupDetail = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    getGroupDetail();
+  }, [groupId]);
+
+  useEffect(() => {
+    getGroupPosts();
+  }, [groupInfo]);
+
   const renderPlaceholder = () => {
     return (
       <View>
@@ -71,21 +86,6 @@ const GroupDetail = (props: any) => {
       </View>
     );
   };
-
-  const _onRefresh = () => {
-    if (groupId) {
-      getGroupDetail();
-
-      // Avoid getting group posts of the nonexisting group, which will lead to endless fetching group posts in httpApiRequest > makeGetStreamRequest
-      if (!loadingGroupDetail && !isEmpty(groupInfo)) {
-        getGroupPosts();
-      }
-    }
-  };
-
-  useEffect(() => {
-    _onRefresh();
-  }, [groupId]);
 
   // visitors cannot see anything of Secret groups
   // => render No Group Found
