@@ -119,7 +119,9 @@ const Conversation = () => {
   };
 
   const onPressBack = async () => {
-    rootNavigation.popToTop();
+    if (route.params?.initial === false)
+      rootNavigation.replace(chatStack.conversationList);
+    else rootNavigation.goBack();
   };
 
   const onMenuPress = async (menu: MessageOptionType) => {

@@ -4,5 +4,6 @@ export type RootStackParamList = {
   };
   Conversation: {
     roomId?: string;
+    initial?: boolean;
   };
 };
