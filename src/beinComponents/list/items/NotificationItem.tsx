@@ -153,7 +153,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         verbText = i18n.t('notification:created_a_post');
         break;
     }
-    const actorName = realActivityObject.actor.data?.fullname || 'Someone';
+    const actorName =
+      realActivityObject?.actor?.data?.fullname ||
+      act?.actor?.data?.fullname ||
+      'Someone';
 
     // create group text (group name or group count)
     let groupText;

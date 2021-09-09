@@ -343,7 +343,7 @@ const postDataHelper = {
     if (streamClient && userId && postId) {
       const streamOptions = {
         limit: 1,
-        id_lte: postId,
+        // id_lte: postId,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
         recentReactionsLimit: 10,
@@ -358,7 +358,8 @@ const postDataHelper = {
           streamClient,
           'newsfeed',
           `u-${userId}`,
-          'get',
+          'getActivityDetail',
+          postId,
           streamOptions,
         );
         if (data?.results?.[0]) {
