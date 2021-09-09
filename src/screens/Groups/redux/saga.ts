@@ -181,17 +181,14 @@ const requestGroupDetail = async (userId: number) => {
 
 function* requestGroupPosts(payload: IPayloadGetGroupPost) {
   try {
-    console.log('[requestGroupPosts] Start');
     const {userId, groupId, streamClient} = payload;
     const result: unknown = yield groupsDataHelper.getMyGroupPosts(
       userId,
       groupId,
       streamClient,
     );
-    console.log('[requestGroupPosts] End');
     return result;
   } catch (err) {
-    console.log('[requestGroupPosts] Error');
     console.log(
       '\x1b[33m',
       'requestGroupPosts catch: ',
