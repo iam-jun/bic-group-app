@@ -15,13 +15,14 @@ const PostItem = ({postData}: any) => {
   const dispatch = useDispatch();
 
   const onPress = () => {
-    dispatch(postActions.setPostDetail(postData));
-    rootNavigation.navigate(homeStack.postDetail, {id: postData.id});
+    rootNavigation.navigate(homeStack.postDetail, {post_id: postData.id});
   };
 
   const onPressComment = () => {
-    dispatch(postActions.setPostDetail(postData));
-    rootNavigation.navigate(homeStack.postDetail, {focusComment: true});
+    rootNavigation.navigate(homeStack.postDetail, {
+      post_id: postData.id,
+      focus_comment: true,
+    });
   };
 
   return (

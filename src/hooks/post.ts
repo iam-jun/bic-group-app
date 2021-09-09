@@ -9,10 +9,6 @@ export const useCreatePost = () => {
   return useSelector((state: IObject<any>) => state.post.createPost);
 };
 
-export const usePostDetail = () => {
-  return useSelector((state: IObject<any>) => state.post.postDetail);
-};
-
 export const usePostDetailReplyingComment = () => {
   return useSelector((state: IObject<any>) => state.post.replyingComment);
 };

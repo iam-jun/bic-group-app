@@ -37,7 +37,7 @@ const PostDetail = (props: any) => {
   let countRetryScrollToBottom = useRef(0).current;
 
   const params = props?.route?.params;
-  const {focusComment} = params || {};
+  const {post_id, focus_comment} = params || {};
 
   const textInputRef = useRef<any>();
   const listRef = useRef<any>();
@@ -52,7 +52,7 @@ const PostDetail = (props: any) => {
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
-  const id = useKeySelector(postKeySelector.postDetail.id);
+  const id = post_id;
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const postTime = useKeySelector(postKeySelector.postTimeById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -221,7 +221,7 @@ const PostDetail = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSetted) {
       layoutSetted = true;
-      if (focusComment && listComment?.length > 0) {
+      if (focus_comment && listComment?.length > 0) {
         scrollTo(-1, -1);
       }
     }
@@ -262,7 +262,7 @@ const PostDetail = (props: any) => {
           <CommentInputView
             postId={id}
             groupIds={groupIds}
-            autoFocus={focusComment}
+            autoFocus={focus_comment}
             textInputRef={textInputRef}
             onCommentSuccess={onCommentSuccess}
           />
