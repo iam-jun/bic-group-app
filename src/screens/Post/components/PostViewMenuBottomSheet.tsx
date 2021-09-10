@@ -5,7 +5,6 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
 import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
@@ -32,9 +31,8 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(theme);
 
   const onPress = () => {
     modalizeRef?.current?.close?.();
@@ -153,7 +151,7 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
+const createStyle = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {
