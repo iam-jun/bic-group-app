@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -107,12 +108,20 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         )}
         <View style={styles.contentContainer}>
           {!!title && (
-            <Text variant="h6" numberOfLines={2} {...titleProps}>
+            <Text
+              variant="h6"
+              numberOfLines={2}
+              style={styles.text}
+              {...titleProps}>
               {title}
             </Text>
           )}
           {!!subTitle && (
-            <Text variant="body" numberOfLines={2} {...subTitleProps}>
+            <Text
+              variant="body"
+              numberOfLines={2}
+              style={styles.text}
+              {...subTitleProps}>
               {subTitle}
             </Text>
           )}
@@ -165,6 +174,13 @@ const createStyle = (theme: ITheme) => {
     },
     avatar: {
       marginRight: spacing?.margin.base,
+    },
+    text: {
+      ...Platform.select({
+        web: {
+          paddingTop: 0,
+        },
+      }),
     },
   });
 };
