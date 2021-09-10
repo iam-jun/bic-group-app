@@ -30,6 +30,7 @@ const groupsTypes = {
 
   SET_LOADING_AVATAR: 'groups/SET_LOADING_AVATAR',
   SET_LOADING_COVER: 'groups/SET_LOADING_COVER',
+  SET_LOADING_PAGE: 'groups/SET_LOADING_PAGE',
 };
 
 export default groupsTypes;

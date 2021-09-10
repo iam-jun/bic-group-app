@@ -142,6 +142,10 @@ const groupsActions = {
     type: groupsTypes.SET_LOADING_COVER,
     payload,
   }),
+  setLoadingPage: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_PAGE,
+    payload,
+  }),
 };
 
 export default groupsActions;

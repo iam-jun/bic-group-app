@@ -54,6 +54,7 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
     yield put(groupsActions.setGroupDetail(result));
   } catch (e) {
     console.log('[getGroupDetail]', e);
+    yield put(groupsActions.setLoadingPage(false));
     yield put(groupsActions.setGroupDetail(null));
   }
 }
@@ -159,8 +160,10 @@ function* getGroupPosts({
     yield put(postActions.addToAllPosts(result));
     yield put(groupsActions.setGroupPosts(result));
     yield put(groupsActions.setLoadingGroupPosts(false));
+    yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
     yield put(groupsActions.setLoadingGroupPosts(false));
+    yield put(groupsActions.setLoadingPage(false));
     console.log(
       '\x1b[33m',
       'namanh --- getGroupPosts | getGroupPosts : error',

@@ -7,6 +7,7 @@ const initGroupsState = {
   loadingJoinedGroups: false,
   joinedGroups: [],
 
+  loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
@@ -196,6 +197,11 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         loadingCover: payload,
+      };
+    case groupsTypes.SET_LOADING_PAGE:
+      return {
+        ...state,
+        loadingPage: payload,
       };
 
     default:

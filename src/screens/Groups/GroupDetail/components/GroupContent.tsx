@@ -17,7 +17,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
-const GroupContent = () => {
+const GroupContent = ({getGroupPosts}: {getGroupPosts: () => void}) => {
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
   const {spacing} = theme || {};
@@ -28,6 +28,9 @@ const GroupContent = () => {
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const {rocket_chat_id} = groupData;
   const groupId = groupData.id;
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
 
   const onPressChat = () => {
     rootNavigation.navigate('chat', {
@@ -50,6 +53,10 @@ const GroupContent = () => {
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
+  };
+
+  const _onRefresh = () => {
+    getGroupPosts();
   };
 
   const renderHeader = () => {
@@ -88,6 +95,8 @@ const GroupContent = () => {
       isFullView
       style={styles.listContainer}
       data={groupPosts}
+      refreshing={refreshingGroupPosts}
+      onRefresh={_onRefresh}
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
