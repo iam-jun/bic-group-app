@@ -157,10 +157,13 @@ const createStyle = (theme: ITheme, insets: any) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.tiny,
       paddingBottom: spacing.padding.base + insets.bottom,
     },
-    item: {height: 44},
+    item: {
+      height: 44,
+      paddingHorizontal: spacing.padding.large,
+    },
   });
 };
 
