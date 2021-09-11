@@ -100,7 +100,7 @@ export const linkingConfigFull = {
                     path: 'newsfeed',
                   },
                   'post-detail': {
-                    path: 'post/t/:id?',
+                    path: 'post/t/:post_id?',
                   },
                   'create-post': {
                     path: 'post/create',
@@ -138,7 +138,7 @@ export const linkingConfigFull = {
                     path: 'groups/:groupId/invite',
                   },
                   'post-detail': {
-                    path: 'groups/:groupId/post/:postId?',
+                    path: 'groups/:groupId/post/:post_id?',
                   },
                   'edit-group-description': {
                     path: 'groups/:groupId/edit/description',
@@ -170,7 +170,7 @@ export const linkingConfigFull = {
                     path: 'notifications',
                   },
                   'post-detail': {
-                    path: 'post/n/:id?',
+                    path: 'post/n/:post_id?',
                   },
                 },
               },
