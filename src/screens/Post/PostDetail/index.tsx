@@ -215,7 +215,7 @@ const PostDetail = (props: any) => {
   };
 
   const renderFooter = () => {
-    return null;
+    return <View style={styles.footer} />;
   };
 
   const onLayout = useCallback(() => {
@@ -285,9 +285,13 @@ const getSectionData = (listComment: IReaction[]) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
-    listHeader: {backgroundColor: colors.background},
+    listHeader: {
+      backgroundColor: colors.background,
+      paddingBottom: spacing.padding.tiny,
+    },
+    footer: {height: spacing.margin.base, backgroundColor: colors.background},
   });
 };
 

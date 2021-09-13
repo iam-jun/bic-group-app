@@ -176,15 +176,13 @@ const CommentView: React.FC<CommentViewProps> = ({
                   ? {backgroundColor: contentBackgroundColor}
                   : {},
               ])}>
-              <View style={{flexDirection: 'row'}}>
-                <View style={{flex: 1}}>
-                  <ButtonWrapper
-                    style={{alignSelf: 'flex-start'}}
-                    onPress={onPressUser}>
-                    <Text.H6>{name}</Text.H6>
-                  </ButtonWrapper>
-                </View>
-                <Text.Subtitle color={colors.textSecondary}>
+              <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+                <ButtonWrapper onPress={onPressUser}>
+                  <Text.H6>{name}</Text.H6>
+                </ButtonWrapper>
+                <Text.Subtitle
+                  color={colors.textSecondary}
+                  style={styles.textTime}>
                   {postTime}
                 </Text.Subtitle>
               </View>
@@ -240,7 +238,7 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing?.padding.tiny,
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.small,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.placeholder,
       borderRadius: spacing?.borderRadius.small,
     },
     buttonContainer: {
@@ -248,7 +246,7 @@ const createStyle = (theme: ITheme) => {
     },
     buttonReply: {
       marginRight: spacing?.margin.tiny,
-      marginTop: spacing?.margin.large,
+      paddingTop: spacing?.margin.small,
     },
     webMenuButton: {
       width: 32,
@@ -258,6 +256,9 @@ const createStyle = (theme: ITheme) => {
       borderRadius: spacing.borderRadius.small,
       backgroundColor: colors.placeholder,
       marginLeft: spacing.margin.base,
+    },
+    textTime: {
+      marginLeft: spacing.margin.small,
     },
   });
 };

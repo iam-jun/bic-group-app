@@ -68,7 +68,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           idLessThan={idLessThan}
         />
       ) : (
-        <ViewSpacing height={12} />
+        <ViewSpacing height={0} />
       )}
     </View>
   );
