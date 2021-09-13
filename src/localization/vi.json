@@ -31,7 +31,8 @@
     "text_done": "Xong",
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
-    "text_files": "Files"
+    "text_files": "Files",
+    "text_search_no_results": "Sorry, we couldn’t find anything related to your search."
   },
   "auth": {
     "text_kickout_title": "Notice",

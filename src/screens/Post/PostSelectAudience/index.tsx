@@ -24,6 +24,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IUser} from '~/interfaces/IAuth';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const PostSelectAudience = () => {
   const [loading, setLoading] = useState(true);
@@ -262,14 +263,7 @@ const PostSelectAudience = () => {
     if (loading) {
       return null;
     }
-    return (
-      <View style={styles.emptyContainer}>
-        <Image style={styles.imgSearchEmpty} source={images.img_search_empty} />
-        <Text color={colors.textSecondary} style={styles.textEmpty} useI18n>
-          post:text_search_result_empty
-        </Text>
-      </View>
-    );
+    return <NoSearchResult />;
   };
 
   return (
@@ -327,19 +321,6 @@ const createStyle = (theme: ITheme) => {
     },
     sectionHeaderText: {
       marginVertical: spacing?.margin.small,
-    },
-    emptyContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    textEmpty: {
-      marginVertical: spacing.margin.large,
-      marginHorizontal: spacing.margin.large,
-      textAlign: 'center',
-    },
-    imgSearchEmpty: {
-      width: 200,
-      height: 200,
     },
   });
 };

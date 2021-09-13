@@ -30,6 +30,7 @@ import appConfig from '~/configs/appConfig';
 import {createRef} from 'react';
 import useModal from '~/hooks/modal';
 import Divider from '~/beinComponents/Divider';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
@@ -76,17 +77,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const renderEmpty = () => {
     if (!searchQuery) return null;
-    return (
-      <View style={styles.emptyView}>
-        <Image source={images.img_search_empty} style={styles.imageNoResults} />
-        <Text.Body
-          color={theme.colors.textSecondary}
-          useI18n
-          style={styles.textEmpty}>
-          common:text_search_no_results
-        </Text.Body>
-      </View>
-    );
+    return <NoSearchResult />;
   };
 
   const doSearch = (searchQuery: string) => {
@@ -151,18 +142,6 @@ const createStyles = (theme: ITheme) => {
       marginLeft: 72,
       marginRight: spacing.margin.large,
       marginBottom: spacing.margin.small,
-    },
-    emptyView: {
-      alignItems: 'center',
-      marginVertical: spacing.margin.base,
-    },
-    imageNoResults: {
-      width: scaleSize(200),
-      height: scaleSize(220),
-    },
-    textEmpty: {
-      textAlign: 'center',
-      width: 241,
     },
   });
 };

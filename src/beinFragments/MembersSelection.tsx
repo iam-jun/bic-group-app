@@ -16,6 +16,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {IUser} from '~/interfaces/IAuth';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
+import NoSearchResult from './NoSearchResult';
 
 export interface MembersSelectionProps {
   searchInputProps?: SearchInputProps;
@@ -103,12 +104,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     </View>
   );
 
-  const EmptyComponent = () => (
-    <View style={styles.empty}>
-      <Text.Body useI18n>{emptyTitle}</Text.Body>
-      <Image style={styles.imageEmtpy} source={images.img_search_empty} />
-    </View>
-  );
+  const EmptyComponent = () => <NoSearchResult />;
 
   return (
     <View style={styles.container}>
@@ -163,13 +159,6 @@ const createStyles = (theme: ITheme) => {
     },
     itemSelectedUser: {
       width: dimension?.avatarSizes.large,
-    },
-    empty: {
-      alignItems: 'center',
-    },
-    imageEmtpy: {
-      width: '100%',
-      aspectRatio: 1,
     },
   });
 };
