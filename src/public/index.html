@@ -1,77 +1,101 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bein</title>
-    
-    <style>
-      #app-root {
-        display: flex;
-        flex: 1 1 100%;
-        height: 100vh;
-      }
-      textarea, input {
-        outline: none !important;
-      }
-      img {
-        object-fit: cover !important;
-      }
-      .image-zoom-in {
-        cursor: -moz-zoom-in; 
-        cursor: -webkit-zoom-in; 
-        cursor: zoom-in;
-        max-width: 80vw;
-        max-height: 90vh;
-      }
-       .image-zoom-out {
-        cursor: -moz-zoom-out; 
-        cursor: -webkit-zoom-out; 
-        cursor: zoom-out;
-        width: 100%;
-        height: 100%;
-      }
-      span {
-        overflow-wrap: anywhere !important;
-      }
-      #chat-wrapper {
-        transform: rotate(180deg);
-        flex: 1 1 0%;
-        overflow-y: scroll;
-        direction: rtl;
 
-      }
-      #chat-container {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column-reverse;
-        flex-direction: column-reverse;
-        -webkit-box-pack: end;
-        -ms-flex-pack: end;
-        justify-content: flex-end;
-      }
-      .chat-message {
-        transform: rotate(180deg);
-        direction: ltr; 
-      }
-      .chat-message:hover {
-        background: #f0f0f0
-      }
-      .chat-message-menu{
-        display: none;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Bein</title>
 
-      }
-      .chat-message:hover .chat-message-menu{
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app-root"></div>
-  </body>
-  </script>
+  <style>
+    #app-root {
+      display: flex;
+      flex: 1 1 100%;
+      height: 100vh;
+    }
+
+    textarea,
+    input {
+      outline: none !important;
+    }
+
+    img {
+      object-fit: cover !important;
+    }
+
+    .image-zoom-in {
+      cursor: -moz-zoom-in;
+      cursor: -webkit-zoom-in;
+      cursor: zoom-in;
+      max-width: 80vw;
+      max-height: 90vh;
+    }
+
+    .image-zoom-out {
+      cursor: -moz-zoom-out;
+      cursor: -webkit-zoom-out;
+      cursor: zoom-out;
+      width: 100%;
+      height: 100%;
+    }
+
+    span {
+      overflow-wrap: anywhere !important;
+    }
+
+    #chat-wrapper {
+      transform: rotate(180deg);
+      flex: 1 1 0%;
+      overflow-y: scroll;
+      direction: rtl;
+
+    }
+
+    #chat-container {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column-reverse;
+      flex-direction: column-reverse;
+      -webkit-box-pack: end;
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+    }
+
+    .chat-message {
+      transform: rotate(180deg);
+      direction: ltr;
+    }
+
+    .chat-message:hover {
+      background: #f0f0f0
+    }
+
+    .chat-message-menu {
+      display: none;
+
+    }
+
+    .chat-message:hover .chat-message-menu {
+      display: block;
+    }
+
+    .menu-item {
+      display: block;
+      border-radius: 6px;
+    }
+
+    .menu-item:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app-root"></div>
+</body>
+</script>
+
 </html>
