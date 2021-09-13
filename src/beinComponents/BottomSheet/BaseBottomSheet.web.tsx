@@ -131,6 +131,7 @@ const BaseBottomSheet: React.FC<Props> = ({
                 onLayout={onLayout}
                 style={[
                   styles.menu,
+                  {opacity: boxSize.width > 0 ? 1 : 0},
                   {left: _position.x, top: _position.y},
                   {minWidth: menuMinWidth, minHeight: menuMinHeight},
                 ]}>
