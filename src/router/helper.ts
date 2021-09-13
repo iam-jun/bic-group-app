@@ -6,6 +6,7 @@ import {IObject} from '~/interfaces/common';
 export const isNavigationRefReady = React.createRef();
 
 export interface Props {
+  canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
   goBack: () => void;
@@ -20,6 +21,8 @@ export interface Props {
 export const withNavigation = (
   navigationRef: RefObject<NavigationContainerRef> | null | undefined,
 ): Props => {
+  const canGoBack = navigationRef?.current?.canGoBack();
+
   const navigate = (name: string, params?: IObject<unknown>): void => {
     if (isNavigationRefReady?.current && navigationRef?.current) {
       navigationRef?.current?.navigate(name, params);
@@ -41,7 +44,7 @@ export const withNavigation = (
   };
 
   const goBack = () => {
-    navigationRef?.current?.canGoBack && navigationRef?.current?.goBack();
+    navigationRef?.current?.canGoBack() && navigationRef?.current?.goBack();
   };
 
   const popToTop = () => {
@@ -60,6 +63,7 @@ export const withNavigation = (
   };
 
   return {
+    canGoBack,
     navigate,
     replace,
     goBack,

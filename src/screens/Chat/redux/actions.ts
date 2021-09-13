@@ -56,8 +56,9 @@ const searchConversation = (payload: string) => ({
   payload,
 });
 
-const getGroupRols = () => ({
+const getGroupRoles = (payload: string) => ({
   type: Actions.GET_GROUP_ROLES,
+  payload,
 });
 
 const setGroupRoles = (payload: IChatUser[]) => ({
@@ -180,27 +181,6 @@ const kickMeOut = (payload: IMessage) => ({
   payload,
 });
 
-//mention
-const setMentionSearchKey = (payload: string) => ({
-  type: Actions.SET_MENTION_SEARCH_KEY,
-  payload,
-});
-
-const getMentionUsers = (payload: any) => ({
-  type: Actions.GET_MENTION_USERS,
-  payload,
-});
-
-const setMentionUsers = (payload: IChatUser[]) => ({
-  type: Actions.SET_MENTION_USERS,
-  payload,
-});
-
-const setHoverMessage = (payload?: IMessage | null) => ({
-  type: Actions.SET_HOVER_MESSAGE,
-  payload,
-});
-
 export default {
   initChat,
   getData,
@@ -211,7 +191,7 @@ export default {
   getConversationDetail,
   setConversationDetail,
   searchConversation,
-  getGroupRols,
+  getGroupRoles,
   setGroupRoles,
   getSubscriptions,
   setSubscriptions,
@@ -235,8 +215,4 @@ export default {
   removeMember,
   removeMemberSuccess,
   kickMeOut,
-  setMentionSearchKey,
-  getMentionUsers,
-  setMentionUsers,
-  setHoverMessage,
 };

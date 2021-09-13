@@ -6,4 +6,10 @@ export type RootStackParamList = {
     roomId?: string;
     initial?: boolean;
   };
+  ConversationDetail: {
+    roomId?: string;
+  };
+  GroupMembers: {
+    roomId?: string;
+  };
 };
