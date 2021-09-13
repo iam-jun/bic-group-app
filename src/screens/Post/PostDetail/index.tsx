@@ -262,7 +262,7 @@ const PostDetail = (props: any) => {
           <CommentInputView
             postId={id}
             groupIds={groupIds}
-            autoFocus={focus_comment}
+            autoFocus={!!focus_comment}
             textInputRef={textInputRef}
             onCommentSuccess={onCommentSuccess}
           />

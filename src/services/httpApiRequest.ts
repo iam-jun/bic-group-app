@@ -69,6 +69,17 @@ const dispatchStoreAuthTokens = (
   );
 };
 
+const refreshFailKickOut = () => {
+  _dispatchLogout();
+  _dispatchSessionExpire();
+  // bein
+  unauthorizedReqQueue = [];
+  isRefreshingToken = false;
+  // get stream
+  unauthorizedGetStreamReqQueue = [];
+  isRefreshingAuthTokens = false;
+};
+
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
   console.log(
     '%c ================ REQUEST ================',
@@ -187,15 +198,16 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       const refreshToken = sessionData?.getRefreshToken().getToken();
       const idToken = sessionData?.getIdToken().getJwtToken();
       if (idToken === oldBeinToken) {
-        await Auth.currentAuthenticatedUser(); // TODO: verify
-        _dispatchLogout();
-        _dispatchSessionExpire();
+        await Auth.currentAuthenticatedUser(); // TODO: verify when change password kickout
+        refreshFailKickOut();
         isSuccess = false;
+        return;
+      } else {
+        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
       }
-      _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
     } catch (e) {
-      _dispatchLogout();
-      _dispatchSessionExpire();
+      refreshFailKickOut();
+      return;
     }
 
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
@@ -362,7 +374,10 @@ const refreshAuthTokensAndRetry = async () => {
   if (!isRefreshingAuthTokens) {
     isRefreshingAuthTokens = true;
     const isRefreshSuccess = await refreshAuthTokens();
-    // TODO: handle when cannot refresh token
+    if (!isRefreshSuccess) {
+      refreshFailKickOut();
+      return;
+    }
     unauthorizedGetStreamReqQueue.forEach(callback =>
       callback(isRefreshSuccess),
     );
