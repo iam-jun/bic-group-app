@@ -1,4 +1,3 @@
-import {size} from 'lodash';
 import React, {useEffect, useImperativeHandle, useState} from 'react';
 import {
   Dimensions,
@@ -25,6 +24,8 @@ export interface Props {
     x: number;
     y: number;
   };
+  deltaX?: number;
+  deltaY?: number;
   menuMinWidth?: number;
   menuMinHeight?: number;
   onClose: () => void;
@@ -38,6 +39,8 @@ const BaseBottomSheet: React.FC<Props> = ({
   side,
   isOpen,
   position,
+  deltaX = 0,
+  deltaY = 0,
   menuMinWidth,
   menuMinHeight,
   onClose,
@@ -45,14 +48,18 @@ const BaseBottomSheet: React.FC<Props> = ({
   const theme = useTheme() as ITheme;
   const styles = themeStyle(theme);
   const [visible, setVisible] = useState(false);
+  const [initPosition, setInitPosition] = useState<{
+    x: number;
+    y: number;
+  }>({x: -1, y: -1});
   const [_position, setPosition] = useState<{
     x: number;
     y: number;
   }>({x: -1, y: -1});
 
   const [boxSize, setBoxSize] = useState<{width: number; height: number}>({
-    width: 250, //For first time, onLayout have not triggered yet
-    height: 200,
+    width: -1, //For first time, onLayout have not triggered yet
+    height: -1,
   });
 
   const hideModal = _position.x < 0 || _position.y < 0;
@@ -60,13 +67,20 @@ const BaseBottomSheet: React.FC<Props> = ({
   useEffect(() => {
     if (isOpen) {
       Keyboard.dismiss();
+      setInitPosition({x: position?.x || -1, y: position?.y || -1});
+
       open(position?.x, position?.y);
     }
   }, [isOpen]);
 
-  const open = (x?: number, y?: number) => {
-    let _x = Dimensions.get('window').width / 2 - boxSize.width / 2;
-    let _y = Dimensions.get('window').height / 2 - boxSize.height / 2;
+  useEffect(() => {
+    // recalculate and update position
+    calculatePosition(initPosition?.x, initPosition?.y);
+  }, [boxSize]);
+
+  const calculatePosition = (x?: number, y?: number) => {
+    let _x = (Dimensions.get('window').width - boxSize.width) / 2;
+    let _y = (Dimensions.get('window').height - boxSize.height) / 2;
     if (x) {
       if (side === 'left') _x = x - boxSize.width;
       else if (side === 'center') _x = x - boxSize.width / 2;
@@ -78,8 +92,13 @@ const BaseBottomSheet: React.FC<Props> = ({
           ? y - boxSize.height
           : y;
 
-    setPosition({x: _x, y: _y});
-    setVisible(true);
+    setPosition({x: _x + deltaX, y: _y + deltaY});
+  };
+
+  const open = (x?: number, y?: number) => {
+    setInitPosition({x: x || -1, y: y || -1});
+    calculatePosition(x, y);
+    !visible && setVisible(true);
   };
 
   const close = () => {
@@ -112,6 +131,7 @@ const BaseBottomSheet: React.FC<Props> = ({
                 onLayout={onLayout}
                 style={[
                   styles.menu,
+                  {opacity: boxSize.width > 0 ? 1 : 0},
                   {left: _position.x, top: _position.y},
                   {minWidth: menuMinWidth, minHeight: menuMinHeight},
                 ]}>
