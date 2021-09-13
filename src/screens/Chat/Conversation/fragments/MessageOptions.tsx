@@ -1,9 +1,11 @@
+import i18next from 'i18next';
 import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {
   messageOptionData,
   messageOptions,
@@ -57,18 +59,13 @@ const MessageOptionsModal: React.FC<Props> = ({
       item === hoverItem ? colors.placeholder : colors.background;
 
     return (
-      <Div
-        onMouseOver={() => setHoverItem(item)}
-        onMouseLeave={() => setHoverItem(null)}>
-        <Icon
-          style={styles.itemMenu}
-          icon={menu.icon}
-          backgroundColor={backgroundColor}
-          label={`chat:message_option:${menu.label}`}
-          labelStyle={styles.label}
-          onPress={() => onMenuPress(item)}
-        />
-      </Div>
+      <PrimaryItem
+        style={styles.itemMenu}
+        leftIcon={menu.icon}
+        leftIconProps={{icon: menu.icon, size: 24}}
+        title={i18next.t(`chat:message_option:${menu.label}`)}
+        onPress={() => onMenuPress(item)}
+      />
     );
   };
 
@@ -97,7 +94,7 @@ const themeStyle = (theme: ITheme) => {
   return StyleSheet.create({
     list: {
       minWidth: 250,
-      padding: spacing.padding.large,
+      paddingVertical: spacing.padding.tiny,
     },
     reactions: {
       paddingBottom: spacing.padding.large,
@@ -107,7 +104,8 @@ const themeStyle = (theme: ITheme) => {
       borderBottomColor: colors.placeholder,
     },
     itemMenu: {
-      padding: spacing.padding.base,
+      height: 44,
+      paddingHorizontal: spacing.padding.large,
     },
     label: {
       marginStart: spacing.margin.large,

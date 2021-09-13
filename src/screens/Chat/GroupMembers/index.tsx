@@ -4,6 +4,9 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {RouteProp, useRoute} from '@react-navigation/core';
+import {RootStackParamList} from '~/interfaces/IRouter';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
@@ -23,6 +26,8 @@ import * as modalActions from '~/store/modal/actions';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
+  const route = useRoute<RouteProp<RootStackParamList, 'GroupMembers'>>();
+
   const {spacing} = useTheme() as ITheme;
   const {conversation, members, roles} = useChat();
   const {rootNavigation} = useRootNavigation();
@@ -35,8 +40,9 @@ const GroupMembers = (): React.ReactElement => {
   const permissions = conversation.permissions || {};
 
   useEffect(() => {
-    dispatch(actions.getGroupRols());
-  }, []);
+    route.params?.roomId &&
+      dispatch(actions.getGroupRoles(route?.params?.roomId));
+  }, [route.params?.roomId]);
 
   useEffect(() => {
     if (roles.data.length > 0) {
@@ -47,7 +53,7 @@ const GroupMembers = (): React.ReactElement => {
           {
             fields: {customFields: 1},
             query: {
-              __rooms: {$eq: conversation._id},
+              __rooms: {$eq: route?.params?.roomId},
               _id: {$nin: roles.data.map((role: any) => role._id)},
             },
           },
@@ -67,6 +73,14 @@ const GroupMembers = (): React.ReactElement => {
           roomId: conversation._id,
         });
       };
+
+  const onPressBack = () => {
+    if (rootNavigation.canGoBack) rootNavigation.goBack();
+    else
+      rootNavigation.replace(chatStack.conversationDetail, {
+        roomId: route?.params?.roomId,
+      });
+  };
 
   const onPressMenu = (e: any, user: IChatUser) => {
     setSelectedMember(user);
@@ -183,6 +197,7 @@ const GroupMembers = (): React.ReactElement => {
         title={i18next.t('chat:title_room_members')}
         menuIcon="addUser"
         onPressMenu={onAddPress}
+        onPressBack={onPressBack}
       />
       <ViewSpacing height={spacing.margin.base} />
       <MembersSelection

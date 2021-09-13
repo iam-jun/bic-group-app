@@ -158,15 +158,18 @@ const themeStyle = (theme: ITheme) => {
     },
     menu: {
       position: 'absolute',
-      borderRadius: spacing.borderRadius.base,
+      overflow: 'hidden',
+      borderWidth: 1,
+      borderColor: colors.bgSecondary,
+      borderRadius: spacing.borderRadius.small,
       backgroundColor: colors.background,
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
-        height: 12,
+        height: 4,
       },
       shadowOpacity: 0.12,
-      shadowRadius: 10.32,
+      shadowRadius: 12,
       elevation: 16,
     },
   });

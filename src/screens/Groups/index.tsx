@@ -19,6 +19,7 @@ import groupsKeySelector from './redux/keySelector';
 import {scaleSize} from '~/theme/dimension';
 import appConfig from '~/configs/appConfig';
 import {deviceDimensions} from '~/theme/dimension';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const Groups: React.FC = () => {
   const dispatch = useDispatch();
@@ -55,19 +56,7 @@ const Groups: React.FC = () => {
 
   const renderEmpty = () => {
     if (!searchText) return null;
-    return (
-      !loadingJoinedGroups && (
-        <View style={styles.emptyView}>
-          <Image
-            source={images.img_search_empty}
-            style={styles.imageNoResults}
-          />
-          <Text.Body useI18n style={styles.textEmpty}>
-            common:text_search_no_results
-          </Text.Body>
-        </View>
-      )
-    );
+    return !loadingJoinedGroups && <NoSearchResult />;
   };
 
   const renderSearchBar = () => {
@@ -137,20 +126,6 @@ const themeStyles = (theme: ITheme) => {
     },
     dataList: {
       marginHorizontal: spacing.margin.large,
-    },
-    emptyView: {
-      alignItems: 'center',
-      marginVertical: spacing.margin.base,
-    },
-    imageNoResults: {
-      width: scaleSize(200),
-      height: scaleSize(220),
-      maxWidth: 200,
-      maxHeight: 220,
-    },
-    textEmpty: {
-      textAlign: 'center',
-      width: 241,
     },
   });
 };
