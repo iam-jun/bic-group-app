@@ -9,6 +9,7 @@ import SearchInput, {
 } from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {Image, Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
 import {IChatUser} from '~/interfaces/IChat';
@@ -108,12 +109,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
 
   const EmptyComponent = () => {
     if (loading) return null;
-    return (
-      <View style={styles.empty}>
-        <Text.Body useI18n>chat:text_search_empty</Text.Body>
-        <Image style={styles.imageEmtpy} source={images.img_search_empty} />
-      </View>
-    );
+    return <NoSearchResult />;
   };
 
   return (
@@ -169,13 +165,6 @@ const createStyles = (theme: ITheme) => {
     },
     itemSelectedUser: {
       width: dimension?.avatarSizes.large,
-    },
-    empty: {
-      alignItems: 'center',
-    },
-    imageEmtpy: {
-      width: '100%',
-      aspectRatio: 1,
     },
   });
 };
