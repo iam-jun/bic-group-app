@@ -55,7 +55,6 @@ export default function* saga() {
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
-  yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
 }
 
 function* initChat() {
@@ -113,14 +112,11 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   }
 }
 
-function* getGroupRoles() {
+function* getGroupRoles({payload}: {type: string; payload: string}) {
   try {
-    const {chat} = yield select();
-    const {conversation} = chat;
-
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.roles({
-        roomId: conversation._id,
+        roomId: payload,
       }),
     );
 
@@ -260,7 +256,7 @@ function* createConversation({
     rootNavigationRef?.current?.dispatch(
       StackActions.replace(chatStack.conversation),
     );
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -345,7 +341,7 @@ function* deleteMessage({payload}: {payload: IMessage; type: string}) {
         msgId: payload._id,
       }),
     );
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -383,7 +379,7 @@ function* addMembersToGroup({payload}: {type: string; payload: number[]}) {
       }),
     );
     handleAddMember();
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -417,29 +413,6 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else yield sendMessage({payload, type});
-}
-
-function* getMentionUsers({payload}: {payload: string; type: string}) {
-  try {
-    const {chat} = yield select();
-    const {conversation} = chat;
-
-    const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.mentionUsers({
-        query: {
-          $and: [
-            {__rooms: {$eq: conversation._id}},
-            {name: {$regex: payload, $options: 'ig'}},
-          ],
-        },
-      }),
-    );
-
-    const users = mapUsers(response.data.users);
-    yield put(actions.setMentionUsers(users));
-  } catch (err) {
-    console.log('getMentionUsers', err);
-  }
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {

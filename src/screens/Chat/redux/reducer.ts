@@ -142,6 +142,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
     case types.GET_GROUP_ROLES:
       return {
         ...state,
+        conversation: conversation?._id ? conversation : {_id: payload},
         roles: {
           ...state.roles,
           loading: true,
@@ -371,28 +372,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
             (group: IConversation) => group._id !== payload.room_id,
           ),
         },
-      };
-    //mention
-    case types.SET_MENTION_SEARCH_KEY:
-      return {
-        ...state,
-        mention: {
-          ...state.mention,
-          mentionKey: payload,
-        },
-      };
-    case types.SET_MENTION_USERS:
-      return {
-        ...state,
-        mention: {
-          ...state.mention,
-          mentionUsers: payload,
-        },
-      };
-    case types.SET_HOVER_MESSAGE:
-      return {
-        ...state,
-        hoverMessage: payload,
       };
     case types.REACT_MESSAGE:
       return {
