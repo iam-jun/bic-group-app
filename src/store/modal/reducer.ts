@@ -28,6 +28,9 @@ export const initState = {
     props: {},
   },
   searchInputFocus: '',
+  reactionDetailBottomSheet: {
+    isOpen: false,
+  },
 };
 
 /**
@@ -98,6 +101,16 @@ function commonReducer(state = initState, action: any = {}) {
       return {
         ...state,
         searchInputFocus: payload,
+      };
+    case actions.SHOW_REACTION_DETAIL_BOTTOM_SHEET:
+      return {
+        ...state,
+        reactionDetailBottomSheet: payload,
+      };
+    case actions.CLEAR_REACTION_DETAIL_BOTTOM_SHEET:
+      return {
+        ...state,
+        reactionDetailBottomSheet: initState.reactionDetailBottomSheet,
       };
     default:
       return state;

@@ -37,6 +37,8 @@ import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBotto
 import MarkdownView from '~/beinComponents/MarkdownView';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import {AppContext} from '~/contexts/AppContext';
+import {showReactionDetailBottomSheet} from '~/store/modal/actions';
+import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 
 export interface PostViewProps {
   postId: string;
@@ -212,6 +214,18 @@ const PostView: FC<PostViewProps> = ({
     dispatch(postActions.deleteReactToPost(payload));
   };
 
+  const onLongPressReaction = (reactionType: ReactionType) => {
+    const payload: IPayloadReactionDetailBottomSheet = {
+      isOpen: true,
+      reactionCounts: reaction_counts,
+      postId: postId,
+      commentId: undefined,
+
+      getDataPromise: undefined,
+    };
+    dispatch(showReactionDetailBottomSheet(payload));
+  };
+
   const renderPostTime = () => {
     if (!time) {
       return null;
@@ -378,6 +392,7 @@ const PostView: FC<PostViewProps> = ({
           reactionCounts={reaction_counts}
           onAddReaction={onAddReaction}
           onRemoveReaction={onRemoveReaction}
+          onLongPressReaction={onLongPressReaction}
         />
         <View style={styles.reactButtonContainer}>
           {renderReactButtonItem(

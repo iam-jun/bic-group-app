@@ -19,6 +19,7 @@ interface ReactionProps {
   icon: any;
   selected: boolean;
   onActionPress: (action: IAction) => void;
+  onLongPress?: () => void;
   style?: StyleProp<ViewStyle>;
   disableUpdateState?: boolean;
   loading?: boolean;
@@ -29,6 +30,7 @@ const Reaction: React.FC<ReactionProps> = ({
   icon,
   selected,
   onActionPress,
+  onLongPress,
   style,
   disableUpdateState,
   loading,
@@ -56,11 +58,16 @@ const Reaction: React.FC<ReactionProps> = ({
     }
   };
 
+  const _onLongPress = () => {
+    onLongPress?.();
+  };
+
   return (
     <TouchableOpacity
       disabled={loading}
       style={[styles.container, style]}
-      onPress={_onChangeValue}>
+      onPress={_onChangeValue}
+      onLongPress={_onLongPress}>
       {loading ? (
         <ActivityIndicator
           color={colors.borderDisable}

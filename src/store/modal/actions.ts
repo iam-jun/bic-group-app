@@ -1,6 +1,9 @@
 // flow
 import * as Actions from './constants';
-import {IShowAlert} from '~/interfaces/IModal';
+import {
+  IPayloadReactionDetailBottomSheet,
+  IShowAlert,
+} from '~/interfaces/IModal';
 import {IToastMessage} from '~/interfaces/common';
 
 /**
@@ -77,4 +80,15 @@ export const clearToastMessage = () => ({
 export const focusSearchInput = (payload: string) => ({
   type: Actions.FOCUS_SEARCH_INPUT,
   payload,
+});
+
+export const showReactionDetailBottomSheet = (
+  payload: IPayloadReactionDetailBottomSheet,
+) => ({
+  type: Actions.SHOW_REACTION_DETAIL_BOTTOM_SHEET,
+  payload,
+});
+
+export const clearReactionDetailBottomSheet = () => ({
+  type: Actions.CLEAR_REACTION_DETAIL_BOTTOM_SHEET,
 });
