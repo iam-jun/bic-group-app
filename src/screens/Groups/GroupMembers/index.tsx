@@ -20,6 +20,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -169,6 +170,16 @@ const GroupMembers = () => {
     }
   };
 
+  const checkingEmptyData = (): any[] => {
+    return sectionList.filter((item: any) => item?.data.length > 0).length === 0
+      ? []
+      : sectionList;
+  };
+
+  const renderEmpty = () => {
+    return !loadingGroupMember ? <NoSearchResult /> : null;
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
       <Header titleTextProps={{useI18n: true}} title={'chat:title_members'} />
@@ -186,11 +197,12 @@ const GroupMembers = () => {
 
       <SectionList
         style={styles.content}
-        sections={sectionList}
+        sections={checkingEmptyData()}
         keyExtractor={(item, index) => `section_list_${item}_${index}`}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
         ListHeaderComponent={renderListHeader}
+        ListEmptyComponent={renderEmpty}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{}} />}
