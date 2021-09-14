@@ -31,6 +31,11 @@ const groupsActions = {
       payload,
     };
   },
+
+  setLoadingGroupMembers: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_GROUP_MEMBER,
+    payload,
+  }),
   clearGroupMembers: function () {
     return {
       type: groupsTypes.CLEAR_GROUP_MEMBER,

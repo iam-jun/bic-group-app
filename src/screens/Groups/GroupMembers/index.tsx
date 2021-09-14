@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
+import {View, StyleSheet, SectionList, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -11,6 +11,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import appConfig from '~/configs/appConfig';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -38,8 +39,8 @@ const GroupMembers = () => {
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
+  const loadingGroupMember = useKeySelector(
+    groupsKeySelector.loadingGroupMember,
   );
 
   const getMembers = () => {
@@ -52,10 +53,6 @@ const GroupMembers = () => {
       );
     }
   };
-
-  useEffect(() => {
-    if (refreshingGroupPosts) setSearchText('');
-  }, [refreshingGroupPosts]);
 
   useEffect(() => {
     if (groupMember) {
@@ -153,10 +150,23 @@ const GroupMembers = () => {
     );
   };
 
-  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+  const searchHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onSearchUser = (text: string) => {
     searchHandler(text);
+  };
+
+  const _renderLoading = () => {
+    if (loadingGroupMember) {
+      return (
+        <View style={styles.loadingMember}>
+          <ActivityIndicator color={colors.borderDisable} />
+        </View>
+      );
+    }
   };
 
   return (
@@ -171,6 +181,8 @@ const GroupMembers = () => {
         />
         {renderInviteMemberButton()}
       </View>
+
+      {_renderLoading()}
 
       <SectionList
         style={styles.content}
@@ -225,6 +237,9 @@ const createStyle = (theme: ITheme) => {
     },
     iconSmall: {
       marginRight: spacing.margin.small,
+    },
+    loadingMember: {
+      marginTop: spacing.margin.large,
     },
   });
 };

@@ -6,6 +6,7 @@ const groupsKeySelector = {
     join_status: 'groups.groupDetail.join_status',
   },
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
+  loadingGroupMember: 'groups.loadingGroupMember',
   groupMember: 'groups.groupMember',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
