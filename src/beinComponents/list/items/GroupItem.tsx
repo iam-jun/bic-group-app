@@ -57,7 +57,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (onPressItem) {
       onPressItem(props);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {groupId: id});
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: id,
+        initial: true,
+      });
     }
   };
 
