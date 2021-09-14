@@ -470,7 +470,13 @@
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
     "text_search_member": "Search group member",
-    "text_search": "Search people"
+    "text_search": "Search people",
+    "member_menu": {
+      "label_view_profile": "View profile",
+      "label_direct_message": "Direct message",
+      "label_set_as_admin": "Set as admin",
+      "label_remove_from_group": "Remove from this group"
+    }
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

@@ -23,6 +23,8 @@ import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../fragments/MembersSelection';
 import actions from '../redux/actions';
 import * as modalActions from '~/store/modal/actions';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import {showAlertNewFeature} from '~/store/modal/actions';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -87,6 +89,24 @@ const GroupMembers = (): React.ReactElement => {
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
+  const onPressMenuOption = (
+    type:
+      | 'view-profile'
+      | 'send-direct-message'
+      | 'set-admin'
+      | 'remove-member',
+  ) => {
+    baseSheetRef.current?.close();
+    switch (type) {
+      case 'remove-member':
+        onRemovePress();
+        break;
+      default:
+        dispatch(showAlertNewFeature());
+        break;
+    }
+  };
+
   const searchUsers = (searchQuery: string) => {
     dispatch(actions.resetData('members'));
     dispatch(
@@ -142,7 +162,6 @@ const GroupMembers = (): React.ReactElement => {
         showConfirmations(selectedMember);
       else doRemoveUser(selectedMember);
     }
-    baseSheetRef.current?.close();
   };
 
   const renderBottomSheet = () => {
@@ -152,37 +171,36 @@ const GroupMembers = (): React.ReactElement => {
         onClosed={() => setSelectedMember(undefined)}
         ContentComponent={
           <View style={styles.bottomSheet}>
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="UsersAlt"
-              size={22}
-              label={i18next.t('chat:member_menu:label_view_profile')}
+            <PrimaryItem
+              style={styles.menuOption}
+              leftIcon="UsersAlt"
+              leftIconProps={{icon: 'UsersAlt', size: 24}}
+              title={i18next.t('chat:member_menu:label_view_profile')}
+              onPress={() => onPressMenuOption('view-profile')}
             />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="Star"
-              size={22}
-              label={i18next.t('chat:member_menu:label_set_as_admin')}
+            <PrimaryItem
+              style={styles.menuOption}
+              leftIcon="Star"
+              leftIconProps={{icon: 'Star', size: 24}}
+              title={i18next.t('chat:member_menu:label_set_as_admin')}
+              onPress={() => onPressMenuOption('set-admin')}
             />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="iconSend"
-              size={22}
-              label={i18next.t('chat:member_menu:label_direct_message')}
+            <PrimaryItem
+              style={styles.menuOption}
+              leftIcon="iconSend"
+              leftIconProps={{icon: 'iconSend', size: 24}}
+              title={i18next.t('chat:member_menu:label_direct_message')}
+              onPress={() => onPressMenuOption('send-direct-message')}
             />
             {selectedMember?.username !== user.username && (
-              <Icon
-                style={styles.marginBottom}
-                labelStyle={styles.marginStart}
-                icon="TrashAlt"
-                size={22}
-                label={i18next.t(
+              <PrimaryItem
+                style={styles.menuOption}
+                leftIcon="TrashAlt"
+                leftIconProps={{icon: 'TrashAlt', size: 24}}
+                title={i18next.t(
                   'chat:member_menu:label_remove_from_group_chat',
                 )}
-                onPress={onRemovePress}
+                onPress={() => onPressMenuOption('remove-member')}
               />
             )}
           </View>
@@ -221,14 +239,11 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     bottomSheet: {
+      paddingVertical: spacing.padding.tiny,
+    },
+    menuOption: {
+      height: 44,
       paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing?.padding.base,
-    },
-    marginBottom: {
-      marginBottom: spacing.margin.large,
-    },
-    marginStart: {
-      marginStart: spacing.margin.large,
     },
   });
 };
