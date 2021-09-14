@@ -1,34 +1,33 @@
+import {useIsFocused} from '@react-navigation/native';
 import React, {useContext, useEffect, useRef} from 'react';
 import {
-  View,
-  StyleSheet,
   ActivityIndicator,
+  StyleSheet,
   useWindowDimensions,
+  View,
 } from 'react-native';
-import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
+import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import useNotifications from '~/hooks/notifications';
-import NotificationBottomSheet from './components/NotificationBottomSheet';
-import {useIsFocused} from '@react-navigation/native';
-import notificationsActions from './redux/actions';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useDispatch} from 'react-redux';
-import postActions from '~/screens/Post/redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import notificationSelector from './redux/selector';
+import useNotifications from '~/hooks/notifications';
 import {useKeySelector} from '~/hooks/selector';
-import Text from '~/beinComponents/Text';
 import i18n from '~/localization';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import {deviceDimensions} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import NotificationBottomSheet from './components/NotificationBottomSheet';
+import notificationsActions from './redux/actions';
+import notificationSelector from './redux/selector';
 
 const Notification = () => {
   const menuSheetRef = useRef<any>();
@@ -79,6 +78,7 @@ const Notification = () => {
             const postAct = act.object;
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: postAct?.id,
+              noti_id: item.id,
             });
             break;
           }
@@ -93,6 +93,7 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: postAct?.id,
               focus_comment: true,
+              noti_id: item.id,
             });
             break;
           }
@@ -107,6 +108,7 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: postAct?.id,
               focus_comment: true,
+              noti_id: item.id,
             });
             break;
           }
@@ -115,6 +117,7 @@ const Notification = () => {
             const postAct = act.object;
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: postAct?.id,
+              noti_id: item.id,
             });
             break;
           }
@@ -126,6 +129,7 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: postAct?.id,
               focus_comment: true,
+              noti_id: item.id,
             });
             break;
           }
@@ -135,6 +139,7 @@ const Notification = () => {
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: postAct?.id,
               focus_comment: true,
+              noti_id: item.id,
             });
             break;
           }
@@ -146,7 +151,10 @@ const Notification = () => {
         }
       } else {
         // default, render it as "create post" notification
-        rootNavigation.navigate(homeStack.postDetail, {post_id: act?.id});
+        rootNavigation.navigate(homeStack.postDetail, {
+          post_id: act?.id,
+          noti_id: item.id,
+        });
       }
     } catch (error) {
       console.log(
