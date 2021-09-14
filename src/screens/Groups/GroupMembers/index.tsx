@@ -166,17 +166,30 @@ const GroupMembers = () => {
             <Icon
               style={styles.marginBottom}
               labelStyle={styles.marginStart}
-              icon="Star"
-              size={22}
-              label={i18next.t('chat:member_menu:label_set_as_admin')}
-            />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
               icon="iconSend"
               size={22}
               label={i18next.t('chat:member_menu:label_direct_message')}
             />
+            {can_manage_member && (
+              <>
+                <Icon
+                  style={styles.marginBottom}
+                  labelStyle={styles.marginStart}
+                  icon="Star"
+                  size={22}
+                  label={i18next.t('chat:member_menu:label_set_as_admin')}
+                />
+                <Icon
+                  style={styles.marginBottom}
+                  labelStyle={styles.marginStart}
+                  icon="TrashAlt"
+                  size={22}
+                  label={i18next.t(
+                    'chat:member_menu:label_remove_from_group_chat',
+                  )}
+                />
+              </>
+            )}
           </View>
         }
       />
