@@ -195,6 +195,8 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           action.payload.room_id === conversation._id
             ? {
                 ...messages,
+                // Update offset when add new item
+                offset: messages.offset + 1,
                 data: newMessages,
               }
             : messages,
@@ -289,6 +291,8 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
+          // Update offset when add new item
+          offset: messages.offset + 1,
           data: messages.data.map((item: IMessage) =>
             (item._id === action.payload._id ||
               (item.localId && item.localId === action.payload.localId)) &&
