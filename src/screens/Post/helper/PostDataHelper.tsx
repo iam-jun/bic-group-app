@@ -136,6 +136,23 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getReactionOfPost: (
+    reactionType: ReactionType,
+    postId: string,
+    idLessThan?: string,
+    limit?: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}/reactions`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      kind: reactionType,
+      post_id: postId,
+      id_lt: idLessThan,
+      limit: limit || 20,
+    },
+  }),
 };
 
 const postDataHelper = {
@@ -327,6 +344,30 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getReactionOfPost: async (
+    reactionType: ReactionType,
+    postId: string,
+    idLessThan?: string,
+    limit?: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getReactionOfPost(
+          reactionType,
+          postId,
+          idLessThan,
+          limit,
+        ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }
