@@ -1,3 +1,5 @@
+import {getEnv} from '~/utils/env';
+
 export const authStack = {
   landing: 'Landing',
   login: 'SignIn',
@@ -71,7 +73,7 @@ export const linkingConfig = {
 };
 
 export const linkingConfigFull = {
-  prefixes: ['https://bein.group', 'bein://'],
+  prefixes: [getEnv('SELF_DOMAIN'), 'bein://'],
   config: {
     screens: {
       // AuthStack: {
@@ -168,9 +170,6 @@ export const linkingConfigFull = {
                 screens: {
                   'not-select-notification': {
                     path: 'notifications',
-                  },
-                  'post-detail': {
-                    path: 'post/n/:post_id?',
                   },
                 },
               },

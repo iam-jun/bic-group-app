@@ -4,17 +4,17 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import RedDot from '~/beinComponents/Badge/RedDot';
-import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
+import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import notificationsActions from '../../../../screens/Notification/redux/actions';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
-import images from '~/resources/images';
 
 const Tab = createSideTabNavigator();
 
@@ -22,7 +22,7 @@ interface Props {
   initialRouteName?: string;
 }
 
-const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
+const LeftTabs: React.FC<Props> = (): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = CreateStyle(theme);
@@ -82,7 +82,6 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
   return (
     // @ts-ignore
     <Tab.Navigator
-      initialRouteName={initialRouteName}
       activeBackgroundColor={colors.bgButtonSecondary}
       backBehavior={'history'}
       tabBarStyle={styles.navigatorContainer}>

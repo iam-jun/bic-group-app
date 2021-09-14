@@ -1,16 +1,10 @@
-import {
-  NavigationContainer,
-  RouteProp,
-  useRoute,
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import {AppConfig} from '~/configs';
-
-import {RootStackParamList} from '~/interfaces/IRouter';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
@@ -28,7 +22,6 @@ const MainStack = (): React.ReactElement => {
   const dimensions = useWindowDimensions();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const route = useRoute<RouteProp<RootStackParamList, 'MainStack'>>();
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
 
@@ -45,7 +38,7 @@ const MainStack = (): React.ReactElement => {
         independent
         ref={leftNavigationRef}
         documentTitle={{enabled: false}}>
-        <LeftTabs initialRouteName={route?.params?.initialRouteName} />
+        <LeftTabs />
       </NavigationContainer>
     </View>
   );

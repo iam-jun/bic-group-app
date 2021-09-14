@@ -14,6 +14,8 @@ import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
 import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
+import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
+import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import {AppConfig} from '~/configs';
@@ -23,6 +25,7 @@ import {
   navigationSetting,
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
@@ -34,19 +37,13 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
-import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
-import LoadingModal from '~/beinComponents/modals/LoadingModal';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const StackNavigator = (): React.ReactElement => {
+const StackNavigator = ({initialLeftTab}: any): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-
-  const [initialRouteName, setInitialRouteName] = React.useState<
-    string | undefined
-  >();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
@@ -79,24 +76,43 @@ const StackNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = false;
     checkAuthKickout();
     handleDeepLink();
-    /*Deep link*/
-    Linking.addEventListener('url', handleOpenURL);
+    // Linking.addEventListener('url', handleOpenURL);
   }, []);
 
-  /*Deep link*/
   /*Handle when app killed*/
   const handleDeepLink = async () => {
+    if (Platform.OS !== 'web') {
+      return;
+    }
+    const {leftNavigation} = useRootNavigation();
     const initialUrl = await Linking.getInitialURL();
-    console.log('handleDeepLink', {initialUrl});
-    // TODO:
-    // const navigation = withNavigation(rootNavigationRef);
-    // navigation.replace(rootSwitch.mainStack);
-
-    //[TO-DO] replace url with config url
-    const path = initialUrl?.replace('http://0.0.0.0:8080/', '') || '';
-    const route =
-      path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
-    setInitialRouteName(route || '');
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const parse = require('url-parse');
+    const url = parse(initialUrl, true);
+    const paths = url.pathname.split('/');
+    const route = paths.length > 0 ? paths[1] : '';
+    let navigateRoute = '';
+    switch (route) {
+      case 'chat':
+      case 'groups':
+      case 'menus':
+        navigateRoute = route;
+        break;
+      case 'settings':
+        navigateRoute = 'menus';
+        break;
+      case 'notifications':
+        navigateRoute = 'notification';
+        break;
+      case 'post':
+        navigateRoute = 'home';
+        if (url.query?.noti_id) navigateRoute = 'notification';
+        break;
+      default:
+        navigateRoute = '';
+        break;
+    }
+    if (navigateRoute) leftNavigation.navigate(navigateRoute);
   };
 
   /*Handle when app in background*/
@@ -166,7 +182,6 @@ const StackNavigator = (): React.ReactElement => {
               //@ts-ignore
               name={rootSwitch.mainStack}
               component={screens.MainStack}
-              initialParams={{initialRouteName}}
             />
             <Stack.Screen
               options={getOptions(t)}

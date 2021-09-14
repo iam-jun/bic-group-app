@@ -1,9 +1,9 @@
 import {withNavigation} from '~/router/helper';
 import {
-  rootNavigationRef,
   leftNavigationRef,
   rightNavigationRef,
-} from '../router/navigator/refs';
+  rootNavigationRef,
+} from '~/router/navigator/refs';
 
 export const useRootNavigation = () => {
   const rootNavigation = withNavigation(rootNavigationRef);
