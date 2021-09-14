@@ -1,8 +1,5 @@
-import {createSelector} from 'reselect';
+const modalKeySelector = {
+  reactionDetailBottomSheet: 'modal.reactionDetailBottomSheet',
+};
 
-export const rootCommon = (state: any) => state.common;
-
-export const getStatusLoaded = createSelector(
-  rootCommon,
-  data => data.get('loaded') || false,
-);
+export default modalKeySelector;

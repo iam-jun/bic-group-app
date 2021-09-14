@@ -15,6 +15,7 @@ export interface ReactionViewProps {
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
   onPressSelectReaction?: (event: any) => void;
+  onLongPressReaction?: (reactionType: ReactionType) => void;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
@@ -23,6 +24,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   onAddReaction,
   onRemoveReaction,
   onPressSelectReaction,
+  onLongPressReaction,
 }: ReactionViewProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -33,6 +35,10 @@ const ReactionView: FC<ReactionViewProps> = ({
     } else {
       onRemoveReaction?.(reactionId);
     }
+  };
+
+  const _onLongPressItem = (reactionType: ReactionType) => {
+    onLongPressReaction?.(reactionType);
   };
 
   const renderReactions = () => {
@@ -47,6 +53,7 @@ const ReactionView: FC<ReactionViewProps> = ({
             value={reactionCounts[key]}
             icon={key}
             disableUpdateState
+            onLongPress={() => _onLongPressItem(react)}
             loading={ownReactions?.[react]?.[0]?.loading}
             selected={!!ownReactions?.[react]?.[0]?.id}
             onActionPress={action => onActionReaction(react, action)}

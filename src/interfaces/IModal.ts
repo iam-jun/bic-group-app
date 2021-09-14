@@ -13,3 +13,9 @@ export interface IShowAlert {
   confirmLabel: string;
   isDismissable?: boolean;
 }
+
+export interface IPayloadReactionDetailBottomSheet {
+  isOpen: boolean;
+  getDataPromise?: any;
+  [x: string]: any;
+}

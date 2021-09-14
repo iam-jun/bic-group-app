@@ -21,6 +21,7 @@ import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
+import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +81,7 @@ const MainStack = (): React.ReactElement => {
       </View>
       <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
+      <ReactionDetailBottomSheet />
     </View>
   );
 };
