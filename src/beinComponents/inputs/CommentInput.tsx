@@ -78,6 +78,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     b: '**',
     i: '*',
   };
+  const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
     if (typeof value === 'string' && value !== text) {
@@ -232,7 +233,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <Animated.View
           style={{
             flexDirection: 'row',
-            marginLeft: buttonsMarginLeft,
+            marginLeft: isWeb ? 16 : buttonsMarginLeft,
             marginRight: spacing?.margin.small,
           }}>
           <Button
@@ -256,7 +257,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
           <Button
-            style={styles.iconContainer}
+            style={[styles.iconContainer, isWeb && {marginRight: 0}]}
             onPress={onPressSticker}
             disabled={loading}>
             <Icon
@@ -266,13 +267,15 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
         </Animated.View>
-        <Button onPress={() => showButtons(true)} disabled={loading}>
-          <Icon
-            size={24}
-            icon={'AngleRightB'}
-            tintColor={theme.colors.primary7}
-          />
-        </Button>
+        {!isWeb && (
+          <Button onPress={() => showButtons(true)} disabled={loading}>
+            <Icon
+              size={24}
+              icon={'AngleRightB'}
+              tintColor={theme.colors.primary7}
+            />
+          </Button>
+        )}
       </View>
     );
   };
@@ -287,8 +290,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
             flexDirection: 'row',
             flex: 1,
             zIndex: 1,
-            marginLeft: textInputMarginLeft,
-            marginRight: textInputMarginRight,
+            marginLeft: isWeb ? 0 : textInputMarginLeft,
+            marginRight: isWeb ? 0 : textInputMarginRight,
           }}>
           <Animated.View style={{flex: 1, height: heightAnimated}}>
             <TextInput
