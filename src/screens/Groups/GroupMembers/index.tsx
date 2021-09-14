@@ -173,14 +173,14 @@ const GroupMembers = () => {
               style={styles.menuOption}
               leftIcon={'UsersAlt'}
               leftIconProps={{icon: 'UsersAlt', size: 24}}
-              title={i18next.t('chat:member_menu:label_view_profile')}
+              title={i18next.t('groups:member_menu:label_view_profile')}
               onPress={() => onPressMenuOption('view-profile')}
             />
             <PrimaryItem
               style={styles.menuOption}
               leftIcon={'iconSend'}
               leftIconProps={{icon: 'iconSend', size: 24}}
-              title={i18next.t('chat:member_menu:label_direct_message')}
+              title={i18next.t('groups:member_menu:label_direct_message')}
               onPress={() => onPressMenuOption('send-message')}
             />
             {can_manage_member && (
@@ -189,7 +189,7 @@ const GroupMembers = () => {
                   style={styles.menuOption}
                   leftIcon={'Star'}
                   leftIconProps={{icon: 'Star', size: 24}}
-                  title={i18next.t('chat:member_menu:label_set_as_admin')}
+                  title={i18next.t('groups:member_menu:label_set_as_admin')}
                   onPress={() => onPressMenuOption('set-admin')}
                 />
                 <PrimaryItem
@@ -197,7 +197,7 @@ const GroupMembers = () => {
                   leftIcon={'TrashAlt'}
                   leftIconProps={{icon: 'TrashAlt', size: 24}}
                   title={i18next.t(
-                    'chat:member_menu:label_remove_from_group_chat',
+                    'groups:member_menu:label_remove_from_group',
                   )}
                   onPress={() => onPressMenuOption('remove-member')}
                 />
