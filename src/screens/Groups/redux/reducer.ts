@@ -7,6 +7,7 @@ const initGroupsState = {
   loadingJoinedGroups: false,
   joinedGroups: [],
 
+  loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
@@ -17,9 +18,14 @@ const initGroupsState = {
     canLoadMore: true,
     //type admin, member...
   },
-  loadingGroupPosts: false,
-  groupPosts: [],
   refreshingGroupPosts: false,
+  posts: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
 
   users: {
     loading: false,
@@ -85,27 +91,55 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         groupMember: action.payload,
       };
-    case groupsTypes.SET_LOADING_GROUP_POSTS:
-      return {
-        ...state,
-        loadingGroupPosts: action.payload,
-      };
-    case groupsTypes.SET_GROUP_POSTS:
-      return {
-        ...state,
-        groupPosts: action.payload || [],
-        refreshingGroupPosts: false,
-      };
-    case groupsTypes.CLEAR_GROUP_POSTS:
-      return {
-        ...state,
-        groupPosts: initGroupsState.groupPosts,
-      };
+
     case groupsTypes.GET_GROUP_POSTS:
       return {
         ...state,
         refreshingGroupPosts: true,
+        posts: {
+          ...state.posts,
+          loading: state.posts.data.length === 0,
+          params: payload.params,
+        },
       };
+    case groupsTypes.SET_GROUP_POSTS:
+      return {
+        ...state,
+        refreshingGroupPosts: false,
+        posts: {
+          ...state.posts,
+          loading: false,
+          data: payload,
+          offset: state.posts.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.SET_EXTRA_GROUP_POSTS:
+      return {
+        ...state,
+        refreshingGroupPosts: false,
+        posts: {
+          ...state.posts,
+          extra: payload,
+          offset: state.posts.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.MERGE_EXTRA_GROUP_POSTS:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          data: [...state.posts.data, ...state.posts.extra],
+          extra: [],
+        },
+      };
+    case groupsTypes.CLEAR_GROUP_POSTS:
+      return {
+        ...state,
+        posts: initGroupsState.posts,
+      };
+
     case groupsTypes.EDIT_GROUP_DETAIL:
       return {
         ...state,
@@ -196,6 +230,11 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         loadingCover: payload,
+      };
+    case groupsTypes.SET_LOADING_PAGE:
+      return {
+        ...state,
+        loadingPage: payload,
       };
 
     default:

@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {StreamClient} from 'getstream';
 
 import ListView from '~/beinComponents/list/ListView';
 import PostItem from '~/beinComponents/list/items/PostItem';
@@ -16,18 +18,30 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupsActions from '~/screens/Groups/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
 
-const GroupContent = () => {
+const GroupContent = ({
+  getGroupPosts,
+  streamClient,
+}: {
+  getGroupPosts: () => void;
+  streamClient: StreamClient;
+}) => {
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
   const {spacing} = theme || {};
   const styles = themeStyles(theme);
+  const dispatch = useDispatch();
 
-  const groupPosts = useKeySelector(groupsKeySelector.groupPosts) || [];
+  const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-  const {rocket_chat_id} = groupData;
-  const groupId = groupData.id;
+  const {rocket_chat_id, id: groupId} = groupData;
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
+  const userId = useUserIdAuth();
 
   const onPressChat = () => {
     rootNavigation.navigate('chat', {
@@ -48,8 +62,20 @@ const GroupContent = () => {
     rootNavigation.navigate(groupStack.groupFiles);
   };
 
+  const loadMoreData = () => {
+    if (posts.extra.length !== 0) {
+      dispatch(
+        groupsActions.mergeExtraGroupPosts({streamClient, userId, groupId}),
+      );
+    }
+  };
+
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
+  };
+
+  const _onRefresh = () => {
+    getGroupPosts();
   };
 
   const renderHeader = () => {
@@ -87,7 +113,11 @@ const GroupContent = () => {
     <ListView
       isFullView
       style={styles.listContainer}
-      data={groupPosts}
+      data={posts.data}
+      refreshing={refreshingGroupPosts}
+      onRefresh={_onRefresh}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.5}
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}

@@ -24,6 +24,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
+  yield takeLatest(groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
   yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
   yield takeLatest(groupsTypes.GET_JOINABLE_USERS, getJoinableUsers);
@@ -54,6 +55,7 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
     yield put(groupsActions.setGroupDetail(result));
   } catch (e) {
     console.log('[getGroupDetail]', e);
+    yield put(groupsActions.setLoadingPage(false));
     yield put(groupsActions.setGroupDetail(null));
   }
 }
@@ -152,21 +154,52 @@ function* getGroupPosts({
   payload: IPayloadGetGroupPost;
 }) {
   try {
-    yield put(groupsActions.setLoadingGroupPosts(true));
+    const {groups} = yield select();
+    const {offset, data} = groups.posts;
 
+    const {userId, groupId, streamClient} = payload;
     // @ts-ignore
-    const result = yield requestGroupPosts(payload);
-    yield put(postActions.addToAllPosts(result));
-    yield put(groupsActions.setGroupPosts(result));
-    yield put(groupsActions.setLoadingGroupPosts(false));
+    const result = yield groupsDataHelper.getMyGroupPosts(
+      userId,
+      groupId,
+      streamClient,
+      offset,
+    );
+
+    if (data.length === 0) {
+      yield put(postActions.addToAllPosts(result));
+      yield put(groupsActions.setGroupPosts(result));
+      if (result.length === appConfig.recordsPerPage) {
+        yield put(groupsActions.getGroupPosts(payload));
+      }
+    } else {
+      yield put(postActions.addToAllPosts(result));
+      yield put(groupsActions.setExtraGroupPosts(result));
+    }
+
+    yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
-    yield put(groupsActions.setLoadingGroupPosts(false));
+    yield put(groupsActions.setLoadingPage(false));
     console.log(
       '\x1b[33m',
       'namanh --- getGroupPosts | getGroupPosts : error',
       e,
       '\x1b[0m',
     );
+  }
+}
+
+function* mergeExtraGroupPosts({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetGroupPost;
+}) {
+  const {groups} = yield select();
+  const {canLoadMore, loading} = groups.posts;
+  if (!loading && canLoadMore) {
+    const {userId, groupId, streamClient} = payload;
+    yield put(groupsActions.getGroupPosts({streamClient, groupId, userId}));
   }
 }
 
@@ -178,25 +211,6 @@ const requestGroupDetail = async (userId: number) => {
 
   throw new Error('Error when fetching group detail');
 };
-
-function* requestGroupPosts(payload: IPayloadGetGroupPost) {
-  try {
-    const {userId, groupId, streamClient} = payload;
-    const result: unknown = yield groupsDataHelper.getMyGroupPosts(
-      userId,
-      groupId,
-      streamClient,
-    );
-    return result;
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'requestGroupPosts catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-  }
-}
 
 const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
   const groupId = data.id;

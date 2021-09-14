@@ -3,6 +3,7 @@ import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+import {isEmpty} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 import {AppContext} from '~/contexts/AppContext';
@@ -22,7 +23,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import {isEmpty} from 'lodash';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -38,25 +38,25 @@ const GroupDetail = (props: any) => {
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const {privacy} = groupInfo;
 
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
-  );
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
+  const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
 
-  const getGroupDetail = async () => {
-    await dispatch(groupsActions.getGroupDetail(groupId));
+  const getGroupDetail = () => {
+    dispatch(groupsActions.getGroupDetail(groupId));
   };
 
   const getGroupPosts = () => {
-    // Avoid getting group posts of the nonexisting group, which will lead to endless fetching group posts in httpApiRequest > makeGetStreamRequest
+    /* Avoid getting group posts of the nonexisting group, 
+    which will lead to endless fetching group posts in 
+    httpApiRequest > makeGetStreamRequest */
     if (loadingGroupDetail || isEmpty(groupInfo)) {
       return;
     }
-    dispatch(groupsActions.clearGroupPosts());
 
+    dispatch(groupsActions.clearGroupPosts());
     if (streamClient && userId) {
       dispatch(
         groupsActions.getGroupPosts({
@@ -69,12 +69,28 @@ const GroupDetail = (props: any) => {
   };
 
   useEffect(() => {
+    dispatch(groupsActions.setLoadingPage(true));
     getGroupDetail();
   }, [groupId]);
 
   useEffect(() => {
     getGroupPosts();
   }, [groupInfo]);
+
+  const renderGroupContent = () => {
+    // visitors can only see "About" of Private group
+    if (
+      join_status !== groupJoinStatus.member &&
+      privacy === groupPrivacy.private &&
+      !loadingPage
+    ) {
+      return <GroupAboutContent />;
+    }
+
+    return (
+      <GroupContent getGroupPosts={getGroupPosts} streamClient={streamClient} />
+    );
+  };
 
   const renderPlaceholder = () => {
     return (
@@ -92,16 +108,9 @@ const GroupDetail = (props: any) => {
   if (
     join_status !== groupJoinStatus.member &&
     privacy === groupPrivacy.secret &&
-    !refreshingGroupPosts
+    !loadingPage
   ) {
     return <NoGroupFound />;
-  }
-
-  if (
-    join_status !== groupJoinStatus.member &&
-    privacy === groupPrivacy.private
-  ) {
-    return <GroupAboutContent />;
   }
 
   const renderGroupDetail = () => {
@@ -111,18 +120,14 @@ const GroupDetail = (props: any) => {
         <Header>
           <GroupTopBar />
         </Header>
-        <View style={styles.contentContainer}>
-          <GroupContent />
-        </View>
+        <View style={styles.contentContainer}>{renderGroupContent()}</View>
       </Fragment>
     );
   };
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      {refreshingGroupPosts || loadingGroupDetail
-        ? renderPlaceholder()
-        : renderGroupDetail()}
+      {loadingPage ? renderPlaceholder() : renderGroupDetail()}
     </ScreenWrapper>
   );
 };
