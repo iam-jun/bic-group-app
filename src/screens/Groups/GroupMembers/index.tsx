@@ -20,7 +20,7 @@ import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import BottomSheet from '~/beinComponents/BottomSheet';
-import {IUser} from '~/interfaces/IAuth';
+import {showAlertNewFeature} from '~/store/modal/actions';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -94,8 +94,21 @@ const GroupMembers = () => {
   // };
 
   const onPressMenu = (e: any, userId: string) => {
+    if (!userId) return;
+
     setSelectedMember(userId);
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
+  };
+
+  const onPressMenuOption = (
+    type: 'view-profile' | 'send-message' | 'set-admin' | 'remove-member',
+  ) => {
+    baseSheetRef.current?.close();
+    switch (type) {
+      default:
+        dispatch(showAlertNewFeature());
+        break;
+    }
   };
 
   const onLoadMore = () => {
@@ -161,12 +174,14 @@ const GroupMembers = () => {
               leftIcon={'UsersAlt'}
               leftIconProps={{icon: 'UsersAlt', size: 24}}
               title={i18next.t('chat:member_menu:label_view_profile')}
+              onPress={() => onPressMenuOption('view-profile')}
             />
             <PrimaryItem
               style={styles.menuOption}
               leftIcon={'iconSend'}
               leftIconProps={{icon: 'iconSend', size: 24}}
               title={i18next.t('chat:member_menu:label_direct_message')}
+              onPress={() => onPressMenuOption('send-message')}
             />
             {can_manage_member && (
               <>
@@ -175,6 +190,7 @@ const GroupMembers = () => {
                   leftIcon={'Star'}
                   leftIconProps={{icon: 'Star', size: 24}}
                   title={i18next.t('chat:member_menu:label_set_as_admin')}
+                  onPress={() => onPressMenuOption('set-admin')}
                 />
                 <PrimaryItem
                   style={styles.menuOption}
@@ -183,6 +199,7 @@ const GroupMembers = () => {
                   title={i18next.t(
                     'chat:member_menu:label_remove_from_group_chat',
                   )}
+                  onPress={() => onPressMenuOption('remove-member')}
                 />
               </>
             )}
