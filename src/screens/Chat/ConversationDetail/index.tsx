@@ -3,6 +3,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {RouteProp, useRoute} from '@react-navigation/core';
+import {RootStackParamList} from '~/interfaces/IRouter';
+
 import Avatar from '~/beinComponents/Avatar';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
@@ -27,10 +30,13 @@ import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {getAvatar, getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
+import {ITheme} from '~/theme/interfaces';
 
-const ConversationDetail = ({route}: {route: any}): React.ReactElement => {
+const ConversationDetail = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const theme: IObject<any> = useTheme();
+  const route = useRoute<RouteProp<RootStackParamList, 'GroupMembers'>>();
+
+  const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {colors, spacing} = theme;
   const {conversation} = useChat();
@@ -44,12 +50,23 @@ const ConversationDetail = ({route}: {route: any}): React.ReactElement => {
   const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    dispatch(actions.getConversationDetail(route?.params?.roomId));
+    if (route?.params?.roomId)
+      dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.clearSelectedUsers());
   }, [route?.params?.roomId]);
 
+  const onPressBack = () => {
+    if (rootNavigation.canGoBack) rootNavigation.goBack();
+    else
+      rootNavigation.replace(chatStack.conversation, {
+        roomId: route?.params?.roomId,
+      });
+  };
+
   const goGroupMembers = () => {
-    rootNavigation.navigate(chatStack.chatGroupMembers);
+    rootNavigation.navigate(chatStack.chatGroupMembers, {
+      roomId: conversation._id,
+    });
   };
 
   const goAddMembers = () => {
@@ -355,7 +372,7 @@ const ConversationDetail = ({route}: {route: any}): React.ReactElement => {
       style={styles.wrapper}
       testID="ConversationDetailScreen"
       isFullView>
-      <Header onPressMenu={onPressMenu} />
+      <Header onPressMenu={onPressMenu} onPressBack={onPressBack} />
       <ScrollView style={styles.root}>
         <View style={styles.container}>
           <View style={styles.top}>

@@ -70,9 +70,12 @@ const createStyle = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {
+      paddingVertical: spacing.padding.tiny,
+    },
+    item: {
+      height: 44,
       paddingHorizontal: spacing.padding.large,
     },
-    item: {height: 44},
   });
 };
 

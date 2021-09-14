@@ -129,10 +129,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
     getData('');
   };
 
-  const _onMentionText = debounce((mentionKey: string) => {
-    onMentionText?.(mentionKey);
-    getData(mentionKey);
-  }, 200);
+  const _onMentionText = useRef(
+    debounce((mentionKey: string) => {
+      onMentionText?.(mentionKey);
+      getData(mentionKey);
+    }, 200),
+  ).current;
 
   const _onChangeText = (text: string) => {
     let isMention = false;
