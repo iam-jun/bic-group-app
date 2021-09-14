@@ -220,6 +220,7 @@ const PostView: FC<PostViewProps> = ({
       reactionCounts: reaction_counts,
       postId: postId,
       commentId: undefined,
+      initReaction: reactionType,
 
       getDataPromise: undefined,
     };

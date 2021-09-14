@@ -1,17 +1,9 @@
 import React, {FC, useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  Dimensions,
-  FlatList,
-} from 'react-native';
+import {View, StyleSheet, Dimensions, FlatList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {ReactionType} from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -22,6 +14,7 @@ export interface ReactionDetailTabProps {
   postId: string;
   commentId?: string;
   limit?: number;
+  height?: number;
   onPressItem?: (item: any) => void;
 }
 
@@ -33,6 +26,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   postId,
   commentId,
   limit = 100,
+  height = contentBarHeight,
   onPressItem,
 }: ReactionDetailTabProps) => {
   const [data, setData] = useState([]);
@@ -42,8 +36,8 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const styles = createStyle(theme);
 
   const getData = () => {
-    setLoading(true);
     if (reactionType && postId) {
+      setLoading(true);
       postDataHelper
         .getReactionOfPost(reactionType, postId, undefined, limit)
         .then(response => {
@@ -60,8 +54,9 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   };
 
   useEffect(() => {
+    setData([]);
     getData();
-  }, []);
+  }, [reactionType]);
 
   const _onPressItem = (item: any) => {
     onPressItem?.(item);
@@ -86,13 +81,17 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     return null;
   };
 
+  const renderHeader = () => {
+    return <View style={styles.header} />;
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>{reactionType}</Text>
+    <View style={{height}}>
       <FlatList
         style={styles.listContainer}
         data={data}
         renderItem={renderItem}
+        ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
       />
     </View>
@@ -102,10 +101,10 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
 const createStyle = (theme: ITheme) => {
   const {spacing} = theme;
   return StyleSheet.create({
-    container: {
-      height: contentBarHeight,
-    },
     listContainer: {
+      paddingTop: spacing.padding.tiny,
+    },
+    header: {
       paddingTop: spacing.padding.tiny,
     },
   });
