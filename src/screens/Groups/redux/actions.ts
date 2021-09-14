@@ -54,9 +54,10 @@ const groupsActions = {
       payload,
     };
   },
-  setLoadingGroupPosts: function (payload: boolean) {
+
+  getGroupPosts: (payload: IPayloadGetGroupPost) => {
     return {
-      type: groupsTypes.SET_LOADING_GROUP_POSTS,
+      type: groupsTypes.GET_GROUP_POSTS,
       payload,
     };
   },
@@ -66,6 +67,15 @@ const groupsActions = {
       payload,
     };
   },
+  setExtraGroupPosts: (payload: IGroup[]) => ({
+    type: groupsTypes.SET_EXTRA_GROUP_POSTS,
+    payload,
+  }),
+  mergeExtraGroupPosts: (payload: IPayloadGetGroupPost) => ({
+    type: groupsTypes.MERGE_EXTRA_GROUP_POSTS,
+    payload,
+  }),
+
   clearGroupPosts: () => ({
     type: groupsTypes.CLEAR_GROUP_POSTS,
   }),
@@ -109,12 +119,7 @@ const groupsActions = {
       payload,
     };
   },
-  getGroupPosts: function (payload: IPayloadGetGroupPost) {
-    return {
-      type: groupsTypes.GET_GROUP_POSTS,
-      payload,
-    };
-  },
+
   editGroupDetail: function (payload: IGroupDetailEdit) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,

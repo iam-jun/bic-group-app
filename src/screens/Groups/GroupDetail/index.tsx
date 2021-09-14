@@ -49,12 +49,14 @@ const GroupDetail = (props: any) => {
   };
 
   const getGroupPosts = () => {
-    // Avoid getting group posts of the nonexisting group, which will lead to endless fetching group posts in httpApiRequest > makeGetStreamRequest
+    /* Avoid getting group posts of the nonexisting group, 
+    which will lead to endless fetching group posts in 
+    httpApiRequest > makeGetStreamRequest */
     if (loadingGroupDetail || isEmpty(groupInfo)) {
       return;
     }
-    dispatch(groupsActions.clearGroupPosts());
 
+    dispatch(groupsActions.clearGroupPosts());
     if (streamClient && userId) {
       dispatch(
         groupsActions.getGroupPosts({
@@ -85,7 +87,9 @@ const GroupDetail = (props: any) => {
       return <GroupAboutContent />;
     }
 
-    return <GroupContent getGroupPosts={getGroupPosts} />;
+    return (
+      <GroupContent getGroupPosts={getGroupPosts} streamClient={streamClient} />
+    );
   };
 
   const renderPlaceholder = () => {

@@ -3,6 +3,7 @@ import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {StreamClient} from 'getstream';
 import {makeGetStreamRequest} from '~/services/httpApiRequest';
+import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
   getMyGroups: (params?: any): HttpApiRequestConfig => ({
@@ -107,7 +108,7 @@ const groupsDataHelper = {
     if (streamClient) {
       const streamOptions = {
         offset: offset || 0,
-        limit: 10,
+        limit: appConfig.recordsPerPage,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
         withOwnReactions: true,
