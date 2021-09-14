@@ -156,35 +156,31 @@ const GroupMembers = () => {
         onClosed={() => setSelectedMember('')}
         ContentComponent={
           <View style={styles.bottomSheet}>
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="UsersAlt"
-              size={22}
-              label={i18next.t('chat:member_menu:label_view_profile')}
+            <PrimaryItem
+              style={styles.menuOption}
+              leftIcon={'UsersAlt'}
+              leftIconProps={{icon: 'UsersAlt', size: 24}}
+              title={i18next.t('chat:member_menu:label_view_profile')}
             />
-            <Icon
-              style={styles.marginBottom}
-              labelStyle={styles.marginStart}
-              icon="iconSend"
-              size={22}
-              label={i18next.t('chat:member_menu:label_direct_message')}
+            <PrimaryItem
+              style={styles.menuOption}
+              leftIcon={'iconSend'}
+              leftIconProps={{icon: 'iconSend', size: 24}}
+              title={i18next.t('chat:member_menu:label_direct_message')}
             />
             {can_manage_member && (
               <>
-                <Icon
-                  style={styles.marginBottom}
-                  labelStyle={styles.marginStart}
-                  icon="Star"
-                  size={22}
-                  label={i18next.t('chat:member_menu:label_set_as_admin')}
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon={'Star'}
+                  leftIconProps={{icon: 'Star', size: 24}}
+                  title={i18next.t('chat:member_menu:label_set_as_admin')}
                 />
-                <Icon
-                  style={styles.marginBottom}
-                  labelStyle={styles.marginStart}
-                  icon="TrashAlt"
-                  size={22}
-                  label={i18next.t(
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon={'TrashAlt'}
+                  leftIconProps={{icon: 'TrashAlt', size: 24}}
+                  title={i18next.t(
                     'chat:member_menu:label_remove_from_group_chat',
                   )}
                 />
@@ -284,14 +280,11 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing.margin.small,
     },
     bottomSheet: {
+      paddingVertical: spacing.padding.tiny,
+    },
+    menuOption: {
+      height: 44,
       paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing?.padding.base,
-    },
-    marginBottom: {
-      marginBottom: spacing.margin.large,
-    },
-    marginStart: {
-      marginStart: spacing.margin.large,
     },
   });
 };
