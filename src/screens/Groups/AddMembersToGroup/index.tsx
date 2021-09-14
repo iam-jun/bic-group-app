@@ -11,6 +11,7 @@ import groupsActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
+import appConfig from '~/configs/appConfig';
 
 import MembersSelection from '~/beinFragments/MembersSelection';
 import Header from '~/beinComponents/Header';
@@ -51,7 +52,10 @@ const AddMembersToGroup = (): React.ReactElement => {
     );
   };
 
-  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+  const searchHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     searchHandler(text);

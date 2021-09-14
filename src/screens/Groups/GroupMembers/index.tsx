@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
+import {View, StyleSheet, SectionList, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -11,6 +11,8 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import appConfig from '~/configs/appConfig';
+import {showAlertNewFeature} from '~/store/modal/actions';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -19,8 +21,8 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
-import {showAlertNewFeature} from '~/store/modal/actions';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
@@ -42,8 +44,8 @@ const GroupMembers = () => {
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
+  const loadingGroupMember = useKeySelector(
+    groupsKeySelector.loadingGroupMember,
   );
 
   const getMembers = () => {
@@ -56,10 +58,6 @@ const GroupMembers = () => {
       );
     }
   };
-
-  useEffect(() => {
-    if (refreshingGroupPosts) setSearchText('');
-  }, [refreshingGroupPosts]);
 
   useEffect(() => {
     if (groupMember) {
@@ -222,10 +220,33 @@ const GroupMembers = () => {
     );
   };
 
-  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+  const searchHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onSearchUser = (text: string) => {
     searchHandler(text);
+  };
+
+  const _renderLoading = () => {
+    if (loadingGroupMember) {
+      return (
+        <View style={styles.loadingMember}>
+          <ActivityIndicator color={colors.borderDisable} />
+        </View>
+      );
+    }
+  };
+
+  const checkingEmptyData = (): any[] => {
+    return sectionList.filter((item: any) => item?.data.length > 0).length === 0
+      ? []
+      : sectionList;
+  };
+
+  const renderEmpty = () => {
+    return !loadingGroupMember ? <NoSearchResult /> : null;
   };
 
   return (
@@ -241,13 +262,16 @@ const GroupMembers = () => {
         {renderInviteMemberButton()}
       </View>
 
+      {_renderLoading()}
+
       <SectionList
         style={styles.content}
-        sections={sectionList}
+        sections={checkingEmptyData()}
         keyExtractor={(item, index) => `section_list_${item}_${index}`}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
         ListHeaderComponent={renderListHeader}
+        ListEmptyComponent={renderEmpty}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{}} />}
@@ -295,6 +319,9 @@ const createStyle = (theme: ITheme) => {
     },
     iconSmall: {
       marginRight: spacing.margin.small,
+    },
+    loadingMember: {
+      marginTop: spacing.margin.large,
     },
     bottomSheet: {
       paddingVertical: spacing.padding.tiny,

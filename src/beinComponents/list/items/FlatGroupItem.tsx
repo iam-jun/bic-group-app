@@ -112,7 +112,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     } else if (onPressItem) {
       onPressItem(group);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, group as any);
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: group.id,
+        initial: true,
+      });
     }
   };
 
