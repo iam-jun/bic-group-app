@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -19,16 +19,20 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import {IUser} from '~/interfaces/IAuth';
 
 const GroupMembers = () => {
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
+  const [selectedMember, setSelectedMember] = useState<string>('');
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
+  const baseSheetRef: any = useRef();
 
   //todo handle get data if group data not loaded
 
@@ -85,8 +89,13 @@ const GroupMembers = () => {
     };
   }, []);
 
-  const onPressUser = (userId: string) => {
-    alert('onPress userId: ' + userId);
+  // const onPressUser = (userId: string) => {
+  //   alert('onPress userId: ' + userId);
+  // };
+
+  const onPressMenu = (e: any, userId: string) => {
+    setSelectedMember(userId);
+    baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
   const onLoadMore = () => {
@@ -102,7 +111,7 @@ const GroupMembers = () => {
         style={styles.itemContainer}
         avatar={avatar}
         title={fullname}
-        onPressMenu={() => onPressUser(id)}
+        onPressMenu={(e: any) => onPressMenu(e, id)}
         subTitle={title}
         subTitleProps={{variant: 'subtitle', color: colors.textSecondary}}
       />
@@ -137,6 +146,40 @@ const GroupMembers = () => {
           </Text.ButtonBase>
         </ButtonWrapper>
       )
+    );
+  };
+
+  const renderBottomSheet = () => {
+    return (
+      <BottomSheet
+        modalizeRef={baseSheetRef}
+        onClosed={() => setSelectedMember('')}
+        ContentComponent={
+          <View style={styles.bottomSheet}>
+            <Icon
+              style={styles.marginBottom}
+              labelStyle={styles.marginStart}
+              icon="UsersAlt"
+              size={22}
+              label={i18next.t('chat:member_menu:label_view_profile')}
+            />
+            <Icon
+              style={styles.marginBottom}
+              labelStyle={styles.marginStart}
+              icon="Star"
+              size={22}
+              label={i18next.t('chat:member_menu:label_set_as_admin')}
+            />
+            <Icon
+              style={styles.marginBottom}
+              labelStyle={styles.marginStart}
+              icon="iconSend"
+              size={22}
+              label={i18next.t('chat:member_menu:label_direct_message')}
+            />
+          </View>
+        }
+      />
     );
   };
 
@@ -185,6 +228,7 @@ const GroupMembers = () => {
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
       />
+      {renderBottomSheet()}
     </ScreenWrapper>
   );
 };
@@ -225,6 +269,16 @@ const createStyle = (theme: ITheme) => {
     },
     iconSmall: {
       marginRight: spacing.margin.small,
+    },
+    bottomSheet: {
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing?.padding.base,
+    },
+    marginBottom: {
+      marginBottom: spacing.margin.large,
+    },
+    marginStart: {
+      marginStart: spacing.margin.large,
     },
   });
 };
