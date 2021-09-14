@@ -6,8 +6,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
-import images from '~/resources/images';
-import {getAvatar, getDefaultAvatar} from '~/screens/Chat/helper';
+import {getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
@@ -15,7 +14,6 @@ import PrimaryItem from './PrimaryItem';
 const ConversationItem: React.FC<IConversation> = ({
   name,
   lastMessage,
-  usernames,
   avatar,
   _updatedAt,
   unreadCount,
@@ -29,12 +27,7 @@ const ConversationItem: React.FC<IConversation> = ({
   const isDirect = type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
-    if (usernames) {
-      const avatarGroup = usernames.map((username: string) =>
-        getAvatar(username),
-      );
-      setAvatar(avatarGroup);
-    } else setAvatar(getDefaultAvatar(name));
+    setAvatar(getDefaultAvatar(name));
   };
 
   const ItemAvatar = isDirect ? (

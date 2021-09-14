@@ -28,7 +28,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {getAvatar, getDefaultAvatar} from '../helper';
+import {getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
 import {ITheme} from '~/theme/interfaces';
 
@@ -130,12 +130,7 @@ const ConversationDetail = (): React.ReactElement => {
   };
 
   const onLoadAvatarError = () => {
-    if (conversation.type !== roomTypes.DIRECT && conversation.usernames) {
-      const avatarGroup = conversation.usernames.map((username: string) =>
-        getAvatar(username),
-      );
-      setAvatar(avatarGroup);
-    } else setAvatar(getDefaultAvatar(conversation.name));
+    setAvatar(getDefaultAvatar(conversation.name));
   };
 
   const renderAvatar = () => {
@@ -465,4 +460,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default ConversationDetail;
+export default React.memo(ConversationDetail);
