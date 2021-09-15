@@ -132,8 +132,7 @@ const MainTabs = () => {
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
                 const styles = tabBarIconStyles(theme, focused, isPhone, color);
                 // @ts-ignore
-                // const unreadCount = tabBadge[name] || undefined;
-                const unreadCount = 9;
+                const unreadCount = tabBadge[name] || undefined;
 
                 return (
                   <View style={styles.container}>
@@ -187,7 +186,7 @@ const tabBarIconStyles = (
     badge: {
       position: 'absolute',
       top: isPhone ? '6%' : '18%',
-      right: isPhone ? '24%' : '26%',
+      left: '54%',
     },
   });
 };
