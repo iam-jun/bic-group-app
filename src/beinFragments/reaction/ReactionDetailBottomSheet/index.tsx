@@ -75,6 +75,7 @@ const ReactionDetailBottomSheet = () => {
           <ReactionDetailTab
             reactionType={selectingReaction}
             postId={postId}
+            commentId={commentId}
             height={contentBarHeight}
             onPressItem={onPressItem}
           />
