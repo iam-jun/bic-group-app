@@ -153,8 +153,6 @@ const CommentView: React.FC<CommentViewProps> = ({
       postId: postId,
       commentId: id,
       initReaction: reactionType,
-
-      getDataPromise: undefined,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };

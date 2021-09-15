@@ -1,4 +1,5 @@
 import {TextInputProps} from '~/beinComponents/inputs/TextInput';
+import {ReactionType} from '~/constants/reactions';
 
 export interface IShowAlert {
   title?: string;
@@ -16,6 +17,8 @@ export interface IShowAlert {
 
 export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
-  getDataPromise?: any;
-  [x: string]: any;
+  reactionCounts: {[x: string]: number};
+  postId?: string;
+  commentId?: string;
+  initReaction: ReactionType;
 }
