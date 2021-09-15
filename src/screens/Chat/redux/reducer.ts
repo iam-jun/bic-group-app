@@ -373,7 +373,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         rooms: {
           ...state.rooms,
           data: state.rooms.data.filter(
-            (group: IConversation) => group._id !== payload.room_id,
+            (group: IConversation) => group._id !== payload.rid,
           ),
         },
       };

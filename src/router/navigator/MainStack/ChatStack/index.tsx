@@ -7,9 +7,11 @@ import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import actions from '~/screens/Chat/redux/actions';
 import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
 import {chatSocketId} from '~/constants/chat';
+import {getChatAuthInfo} from '~/services/httpApiRequest';
 
 const ChatStack = (): React.ReactElement => {
   const dispatch = useDispatch();
+  const auth = getChatAuthInfo();
 
   React.useEffect(() => {
     const removeOnMessageCallback = addOnMessageCallback(
@@ -36,8 +38,9 @@ const ChatStack = (): React.ReactElement => {
     });
     sendMessage({
       msg: 'sub',
-      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
+      id: chatSocketId.SUBSCRIBE_NOTIFY_USER,
       name: 'stream-notify-user',
+      params: [`${auth?.userId}/subscriptions-changed`, false],
     });
   };
 

@@ -16,4 +16,8 @@ export type RootStackParamList = {
     groupId?: number;
     initial?: boolean;
   };
+
+  AddMembersToGroup: {
+    roomId?: string;
+  };
 };
