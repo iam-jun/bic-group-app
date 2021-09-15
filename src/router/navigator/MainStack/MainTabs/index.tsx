@@ -186,8 +186,8 @@ const tabBarIconStyles = (
     },
     badge: {
       position: 'absolute',
-      top: '9%',
-      right: '25%',
+      top: isPhone ? '6%' : '18%',
+      right: isPhone ? '24%' : '26%',
     },
   });
 };
