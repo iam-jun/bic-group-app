@@ -101,7 +101,12 @@ const GroupDetail = (props: any) => {
     }
 
     return (
-      <GroupContent getGroupPosts={getGroupPosts} streamClient={streamClient} />
+      !!streamClient && (
+        <GroupContent
+          getGroupPosts={getGroupPosts}
+          streamClient={streamClient}
+        />
+      )
     );
   };
 
