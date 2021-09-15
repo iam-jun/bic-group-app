@@ -27,6 +27,7 @@ const ConversationItem: React.FC<IConversation> = ({
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
+  const unreadCountInText = unreadCount <= 9 ? `${unreadCount}` : '9+';
 
   const onLoadAvatarError = () => {
     if (usernames) {
@@ -79,9 +80,9 @@ const ConversationItem: React.FC<IConversation> = ({
             {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
-            <View style={styles.unread}>
+            <View style={styles.unreadBadgeContainer}>
               <Text.ButtonSmall color={textReversed}>
-                {unreadCount}
+                {unreadCountInText}
               </Text.ButtonSmall>
             </View>
           )}
@@ -120,14 +121,18 @@ const createStyles = (theme: ITheme) => {
     textUpdate: {
       paddingTop: 0,
     },
-    unread: {
-      borderRadius: spacing?.borderRadius.large,
-      width: spacing?.lineHeight.base,
-      height: spacing?.lineHeight.base,
-      marginTop: spacing?.margin.base,
+    unreadBadgeContainer: {
+      borderRadius: spacing.borderRadius.large,
+      paddingHorizontal: spacing.padding.tiny,
+      minWidth: spacing.lineHeight.base,
+      height: spacing.lineHeight.base,
+      marginTop: spacing.margin.base,
       backgroundColor: colors.error,
       alignItems: 'center',
-      justifyContent: 'center',
+    },
+    unreadBadgeText: {
+      lineHeight: spacing.lineHeight.base,
+      color: colors.textReversed,
     },
   });
 };
