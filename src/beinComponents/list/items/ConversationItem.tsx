@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import RedDot from '~/beinComponents/Badge/RedDot';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
-import images from '~/resources/images';
 import {getAvatar, getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
@@ -23,11 +23,10 @@ const ConversationItem: React.FC<IConversation> = ({
 }: IConversation): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {text, textReversed, textSecondary} = theme.colors;
+  const {text, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
-  const unreadCountInText = unreadCount <= 9 ? `${unreadCount}` : '9+';
 
   const onLoadAvatarError = () => {
     if (usernames) {
@@ -80,11 +79,11 @@ const ConversationItem: React.FC<IConversation> = ({
             {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
-            <View style={styles.unreadBadgeContainer}>
-              <Text.ButtonSmall color={textReversed}>
-                {unreadCountInText}
-              </Text.ButtonSmall>
-            </View>
+            <RedDot
+              style={styles.unreadBadge}
+              number={unreadCount}
+              maxNumber={9}
+            />
           )}
         </View>
       }
@@ -93,7 +92,7 @@ const ConversationItem: React.FC<IConversation> = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {spacing} = theme;
 
   return StyleSheet.create({
     container: {
@@ -121,18 +120,8 @@ const createStyles = (theme: ITheme) => {
     textUpdate: {
       paddingTop: 0,
     },
-    unreadBadgeContainer: {
-      borderRadius: spacing.borderRadius.large,
-      paddingHorizontal: spacing.padding.tiny,
-      minWidth: spacing.lineHeight.base,
-      height: spacing.lineHeight.base,
+    unreadBadge: {
       marginTop: spacing.margin.base,
-      backgroundColor: colors.error,
-      alignItems: 'center',
-    },
-    unreadBadgeText: {
-      lineHeight: spacing.lineHeight.base,
-      color: colors.textReversed,
     },
   });
 };
