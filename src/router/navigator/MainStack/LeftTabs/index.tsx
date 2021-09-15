@@ -43,16 +43,6 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
     );
   }, []);
 
-  const renderBadge = (name: string) => {
-    const number = tabBadge[name];
-
-    if (number > 0) {
-      return <RedDot style={{top: 15, left: 45}} number={number} />;
-    } else {
-      return null;
-    }
-  };
-
   const renderIcon = (name: string, focused: boolean) => {
     if (name === 'home') {
       return (
@@ -94,10 +84,15 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
             component={component}
             options={{
               tabBarIcon: ({focused}: {focused: boolean}) => {
+                // @ts-ignore
+                const unreadCount = tabBadge[name] || undefined;
+
                 return (
                   <View style={styles.iconContainer}>
                     {renderIcon(name, focused)}
-                    {renderBadge(name)}
+                    {!!unreadCount && (
+                      <RedDot style={styles.badge} number={unreadCount} />
+                    )}
                   </View>
                 );
               },
@@ -136,6 +131,11 @@ const CreateStyle = (theme: ITheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
+    },
+    badge: {
+      position: 'absolute',
+      top: '16%',
+      left: '54%',
     },
   });
 };
