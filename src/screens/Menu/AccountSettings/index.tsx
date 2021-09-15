@@ -1,10 +1,5 @@
 import React, {useContext, useRef} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -26,7 +21,6 @@ import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -36,8 +30,6 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
@@ -81,10 +73,7 @@ const GeneralSettings = () => {
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
-      <Header
-        title={t('settings:title_account_settings')}
-        hideBack={isLaptop}
-      />
+      <Header title={t('settings:title_account_settings')} hideBackOnLaptop />
       <ListView
         type="menu"
         data={accountSettingsMenu}
