@@ -79,11 +79,7 @@ const ConversationItem: React.FC<IConversation> = ({
             {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
-            <RedDot
-              style={styles.unreadBadge}
-              number={unreadCount}
-              maxNumber={9}
-            />
+            <RedDot style={styles.unreadBadge} number={unreadCount} />
           )}
         </View>
       }

@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {Text} from '~/components';
 import {ITheme} from '~/theme/interfaces';
 
-const MAX_NUMBER = 99;
+const MAX_NUMBER = 9;
 
 interface RedDotProps {
   style?: StyleProp<ViewStyle>;
