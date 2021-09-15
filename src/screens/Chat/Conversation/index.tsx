@@ -129,6 +129,9 @@ const Conversation = () => {
       case 'delete':
         deleteMessage();
         break;
+      case 'reply':
+        setReplyingMessage(selectedMessage);
+        break;
       default:
         dispatch(showAlertNewFeature());
         break;
@@ -214,7 +217,11 @@ const Conversation = () => {
       />
       {renderChatMessages()}
 
-      <ChatInput onError={setError} />
+      <ChatInput
+        replyingMessage={replyingMessage}
+        onCancelReplying={() => setReplyingMessage(undefined)}
+        onError={setError}
+      />
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}
