@@ -59,9 +59,12 @@ const Conversation = () => {
   useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
-      _getMessages();
     }
-  }, [route.params]);
+  }, [route.params?.roomId]);
+
+  useEffect(() => {
+    _getMessages();
+  }, [conversation?._id]);
 
   useEffect(() => {
     if (!!error) {
@@ -167,7 +170,7 @@ const Conversation = () => {
         inverted={Platform.OS !== 'web'}
         data={messages.data}
         keyboardShouldPersistTaps="handled"
-        onEndReached={loadMoreMessages}
+        onEndReached={Platform.OS !== 'web' ? loadMoreMessages : null}
         onEndReachedThreshold={0.5}
         removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
