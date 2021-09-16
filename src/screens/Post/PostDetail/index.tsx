@@ -57,8 +57,8 @@ const PostDetail = (props: any) => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const windowDimension = useWindowDimensions();
-  const isPhone = windowDimension.width < deviceDimensions.smallTablet;
-  const styles = createStyle(theme, isPhone);
+  const isLaptop = windowDimension.width >= deviceDimensions.laptop;
+  const styles = createStyle(theme, isLaptop);
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
@@ -297,7 +297,7 @@ const getSectionData = (listComment: IReaction[]) => {
   return result;
 };
 
-const createStyle = (theme: ITheme, isPhone: boolean) => {
+const createStyle = (theme: ITheme, isLaptop: boolean) => {
   const {colors, dimension, spacing} = theme;
 
   return StyleSheet.create({
@@ -311,11 +311,11 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
       }),
     },
     postDetailContainer: {
-      flex: Platform.OS !== 'web' ? 1 : undefined,
+      flex: !isLaptop ? 1 : undefined,
 
       ...Platform.select({
         web: {
-          marginTop: isPhone ? 0 : spacing.margin.base,
+          marginTop: isLaptop ? spacing.margin.base : 0,
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
         },
