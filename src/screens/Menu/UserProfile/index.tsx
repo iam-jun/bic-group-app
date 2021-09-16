@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  ActivityIndicator,
-  useWindowDimensions,
-} from 'react-native';
+import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -18,7 +12,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import {ITheme} from '~/theme/interfaces';
-import {scaleSize, scaleCoverHeight, deviceDimensions} from '~/theme/dimension';
+import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatActions from '~/screens/Chat/redux/actions';
@@ -42,8 +36,6 @@ const UserProfile = (props: any) => {
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
@@ -153,7 +145,7 @@ const UserProfile = (props: any) => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header hideBack={isLaptop} />
+      <Header hideBackOnLaptop />
 
       {loadingUserProfile ? (
         renderLoading()

@@ -1,10 +1,5 @@
 import React, {useContext, useRef} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -26,7 +21,6 @@ import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 const GeneralSettings = () => {
@@ -37,8 +31,6 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
@@ -65,7 +57,10 @@ const GeneralSettings = () => {
     return (
       <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
         <PrimaryItem
+          style={styles.item}
           title={t(item.title)}
+          leftIcon={item.icon}
+          leftIconProps={{icon: item.icon, size: 24}}
           RightComponent={
             language === item.code ? (
               <Icon
@@ -82,10 +77,7 @@ const GeneralSettings = () => {
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
-      <Header
-        title={t('settings:title_account_settings')}
-        hideBack={isLaptop}
-      />
+      <Header title={t('settings:title_account_settings')} hideBackOnLaptop />
       <ListView
         type="menu"
         data={accountSettingsMenu}
@@ -128,10 +120,19 @@ const themeStyles = (theme: ITheme) => {
       marginTop: spacing.margin.base,
     },
     contentComponent: {
-      marginHorizontal: spacing.margin.base,
+      paddingVertical: spacing.padding.tiny,
+      ...Platform.select({
+        web: {
+          width: 200,
+        },
+      }),
     },
     chooseLanguageText: {
       margin: spacing.margin.base,
+    },
+    item: {
+      height: 44,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };

@@ -211,8 +211,6 @@ const PostView: FC<PostViewProps> = ({
       postId: postId,
       commentId: undefined,
       initReaction: reactionType,
-
-      getDataPromise: undefined,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };
