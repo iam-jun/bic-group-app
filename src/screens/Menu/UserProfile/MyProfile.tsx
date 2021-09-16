@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
+import {deviceDimensions} from '~/theme/dimension';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ProfileInfo from '../fragments/ProfileInfo';
@@ -14,11 +15,14 @@ const MyProfile = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
   const profile = useKeySelector(menuKeySelector.myProfile);
 
   return (
     <ScreenWrapper testID="MyProfilePage" style={styles.container} isFullView>
-      <Header />
+      <Header hideBack={isLaptop} />
       <ProfileInfo {...profile} />
     </ScreenWrapper>
   );
