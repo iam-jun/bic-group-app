@@ -1,23 +1,22 @@
 import React from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {RouteProp, useRoute} from '@react-navigation/native';
 
 import {useRootNavigation} from '~/hooks/navigation';
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import useGroups from '~/hooks/groups';
 import {deviceDimensions} from '~/theme/dimension';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import {RootStackParamList} from '~/interfaces/IRouter';
 
 const GroupTopBar = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const {navigation} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
 
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
@@ -25,6 +24,14 @@ const GroupTopBar = () => {
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
+  const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
+
+  const onPressBack = () => {
+    if (route.params?.initial === false)
+      rootNavigation.replace(groupStack.groups);
+    else rootNavigation.goBack();
+  };
 
   const renderAdminButton = () => {
     // only admin can see this button
@@ -75,7 +82,7 @@ const GroupTopBar = () => {
             icon={'iconBack'}
             size={26}
             tintColor={theme.colors.iconTint}
-            onPress={() => navigation.goBack()}
+            onPress={onPressBack}
           />
         )}
       </View>

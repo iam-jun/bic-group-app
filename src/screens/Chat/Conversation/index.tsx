@@ -1,7 +1,7 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -18,7 +18,6 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import {getDefaultAvatar} from '../helper';
 import {
   ChatInput,
@@ -44,9 +43,6 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
-
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
@@ -201,7 +197,7 @@ const Conversation = () => {
         menuIcon="ConversationInfo"
         onPressMenu={goConversationDetail}
         onPressBack={onPressBack}
-        hideBack={isLaptop}
+        hideBackOnLaptop
       />
       {renderChatMessages()}
 

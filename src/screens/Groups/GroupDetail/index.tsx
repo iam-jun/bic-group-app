@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import {isEmpty} from 'lodash';
+import {RouteProp, useRoute} from '@react-navigation/native';
 
 import {ITheme} from '~/theme/interfaces';
 import {AppContext} from '~/contexts/AppContext';
@@ -15,6 +16,9 @@ import {groupPrivacy} from '~/constants/privacyTypes';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
+import {RootStackParamList} from '~/interfaces/IRouter';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import GroupAboutContent from '../components/GroupAboutContent';
 import GroupTopBar from './components/GroupTopBar';
@@ -43,6 +47,15 @@ const GroupDetail = (props: any) => {
     groupsKeySelector.loadingGroupDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
+
+  const {rootNavigation} = useRootNavigation();
+  const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
+
+  const onPressBack = () => {
+    if (route.params?.initial === false)
+      rootNavigation.replace(groupStack.groups);
+    else rootNavigation.goBack();
+  };
 
   const getGroupDetail = () => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -88,7 +101,12 @@ const GroupDetail = (props: any) => {
     }
 
     return (
-      <GroupContent getGroupPosts={getGroupPosts} streamClient={streamClient} />
+      !!streamClient && (
+        <GroupContent
+          getGroupPosts={getGroupPosts}
+          streamClient={streamClient}
+        />
+      )
     );
   };
 
@@ -117,7 +135,7 @@ const GroupDetail = (props: any) => {
     if (isEmpty(groupInfo)) return <NoGroupFound />;
     return (
       <Fragment>
-        <Header>
+        <Header onPressBack={onPressBack}>
           <GroupTopBar />
         </Header>
         <View style={styles.contentContainer}>{renderGroupContent()}</View>

@@ -6,6 +6,7 @@ import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+import RedDot from '~/beinComponents/Badge/RedDot';
 
 import Icon from '~/beinComponents/Icon';
 import {Text} from '~/components';
@@ -129,7 +130,9 @@ const MainTabs = () => {
                 if (isLaptop) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
-                const styles = CreateStyle(theme, focused, isPhone, color);
+                const styles = tabBarIconStyles(theme, focused, isPhone, color);
+                // @ts-ignore
+                const unreadCount = tabBadge[name] || undefined;
 
                 return (
                   <View style={styles.container}>
@@ -144,17 +147,13 @@ const MainTabs = () => {
                         {i18next.t(`tabs:${name}`)}
                       </Text.Subtitle>
                     )}
+                    {!!unreadCount && (
+                      <RedDot style={styles.badge} number={unreadCount} />
+                    )}
                   </View>
                 );
               },
               tabBarLabel: () => null,
-              // @ts-ignore
-              tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name] || '',
-              tabBarBadgeStyle: {
-                fontFamily: fontFamilies.SegoeSemibold,
-                // @ts-ignore
-                backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
-              },
             }}
           />
         );
@@ -163,7 +162,7 @@ const MainTabs = () => {
   );
 };
 
-const CreateStyle = (
+const tabBarIconStyles = (
   theme: ITheme,
   focused: boolean,
   isPhone: boolean,
@@ -183,6 +182,11 @@ const CreateStyle = (
     label: {
       color: color,
       textAlign: 'center',
+    },
+    badge: {
+      position: 'absolute',
+      top: isPhone ? '6%' : '18%',
+      left: '54%',
     },
   });
 };

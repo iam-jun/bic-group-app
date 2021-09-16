@@ -104,6 +104,7 @@ function* editGroupDetail({
 
 function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   try {
+    yield put(groupsActions.setLoadingGroupMembers(true));
     const {groupId, params} = payload;
 
     const {groups} = yield select();
@@ -142,6 +143,7 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
         yield put(groupsActions.setGroupMembers(newGroupMembers));
       }
     }
+    yield put(groupsActions.setLoadingGroupMembers(false));
   } catch (e) {
     console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
   }

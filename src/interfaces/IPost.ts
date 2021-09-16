@@ -227,6 +227,14 @@ export interface IParamSearchMentionAudiences {
   take?: number;
 }
 
+export interface IParamGetReactionDetail {
+  reactionType: ReactionType;
+  postId?: string;
+  commentId?: string;
+  limit?: number;
+  idLessThan?: string;
+}
+
 export interface IPostAudienceSheet {
   isShow: boolean;
   data: any[];
