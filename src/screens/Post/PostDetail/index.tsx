@@ -315,9 +315,16 @@ const createStyle = (theme: ITheme, isLaptop: boolean) => {
 
       ...Platform.select({
         web: {
-          marginTop: isLaptop ? spacing.margin.base : 0,
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
+          marginTop: isLaptop ? spacing.margin.base : 0,
+          overflow: 'hidden',
+          borderRadius: isLaptop ? 6 : 0,
+          shadowOffset: {width: 0, height: 1},
+          shadowColor: '#120F22',
+          shadowOpacity: 0.2,
+          shadowRadius: 2,
+          elevation: 2,
         },
       }),
     },
