@@ -8,10 +8,8 @@ import modalKeySelector from '~/store/modal/selectors';
 import {clearReactionDetailBottomSheet} from '~/store/modal/actions';
 import ReactionTabBar from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import ReactionDetailTab from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionDetailTab';
-import menuActions from '~/screens/Menu/redux/actions';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const screenHeight = Dimensions.get('window').height;
 const contentBarHeight = 0.6 * screenHeight;
@@ -23,7 +21,6 @@ const ReactionDetailBottomSheet = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const userId = useUserIdAuth();
   const data = useKeySelector(modalKeySelector.reactionDetailBottomSheet);
   const {isOpen, reactionCounts, postId, commentId, initReaction} = data || {};
 
@@ -47,13 +44,7 @@ const ReactionDetailBottomSheet = () => {
   const onPressItem = (item: any) => {
     const itemUserId = item?.item?.user?.id;
     if (itemUserId) {
-      dispatch(
-        menuActions.selectedProfile({
-          id: itemUserId,
-          isPublic: userId !== itemUserId,
-        }),
-      );
-      rootNavigation.navigate(homeStack.publicProfile);
+      rootNavigation.navigate(mainStack.userProfile, {userId: itemUserId});
     }
     reactionSheetRef?.current?.close?.();
   };

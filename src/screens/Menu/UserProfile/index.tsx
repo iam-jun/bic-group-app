@@ -1,47 +1,71 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
-
-import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
-import images from '~/resources/images';
-import {IUserProfile} from '~/interfaces/IAuth';
-import {useRootNavigation} from '~/hooks/navigation';
-import {scaleCoverHeight} from '~/theme/dimension';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import chatActions from '~/screens/Chat/redux/actions';
 
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Header from '~/beinComponents/Header';
+
+import {ITheme} from '~/theme/interfaces';
+import {scaleSize, scaleCoverHeight, deviceDimensions} from '~/theme/dimension';
+import images from '~/resources/images';
+import {useRootNavigation} from '~/hooks/navigation';
+import chatActions from '~/screens/Chat/redux/actions';
 import AboutProfile from './components/AboutProfile';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import menuActions from '../redux/actions';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../redux/keySelector';
+import {useUserIdAuth} from '~/hooks/auth';
+import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
+import mainStack from '~/router/navigator/MainStack/stack';
 
-const ProfileInfo = (props: IUserProfile) => {
+const UserProfile = (props: any) => {
+  const {userId} = props?.route?.params || {};
+
+  const userProfileData = useKeySelector(menuKeySelector.userProfile);
+
+  const {fullname, description, avatar, background_img_url, username} =
+    userProfileData || {};
+  const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
+  const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
+
   const [coverHeight, setCoverHeight] = useState<number>(210);
-
-  const {
-    fullname,
-    description,
-    avatar,
-    background_img_url,
-    isPublic,
-    username,
-  } = props;
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
+  const currentUserId = useUserIdAuth();
+
   const navigateToChatScreen = (roomId: string) =>
     rootNavigation.navigate('chat', {
       screen: chatStack.conversation,
-      params: {roomId},
+      params: {roomId, initial: false},
     });
+
+  const getUserProfile = () => {
+    dispatch(menuActions.clearUserProfile());
+    if (!!userId) dispatch(menuActions.getUserProfile({userId}));
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, [userId]);
 
   const onPressChat = () => {
     if (!!username)
@@ -55,10 +79,7 @@ const ProfileInfo = (props: IUserProfile) => {
       );
   };
 
-  const onEditProfileButton = () =>
-    rootNavigation.navigate('menus', {
-      screen: menuStack.userProfile,
-    });
+  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -99,7 +120,7 @@ const ProfileInfo = (props: IUserProfile) => {
   };
 
   const renderButton = () => {
-    return isPublic ? (
+    return userId != currentUserId ? (
       <Button.Secondary
         style={styles.button}
         color={theme.colors.primary7}
@@ -120,20 +141,40 @@ const ProfileInfo = (props: IUserProfile) => {
     );
   };
 
-  return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {renderCoverImage()}
-      {renderAvatar()}
-      {renderUserHeader()}
-      {renderButton()}
+  const renderLoading = () => {
+    return (
+      <View style={styles.loadingProfile}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  };
 
-      <Divider style={styles.divider} />
-      <AboutProfile {...props} />
-    </ScrollView>
+  if (showUserNotFound) return <NoUserFound />;
+
+  return (
+    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+      <Header hideBack={isLaptop} />
+
+      {loadingUserProfile ? (
+        renderLoading()
+      ) : (
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}>
+          {renderCoverImage()}
+          {renderAvatar()}
+          {renderUserHeader()}
+          {renderButton()}
+
+          <Divider style={styles.divider} />
+          <AboutProfile {...userProfileData} />
+        </ScrollView>
+      )}
+    </ScreenWrapper>
   );
 };
 
-export default ProfileInfo;
+export default UserProfile;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {colors, spacing} = theme;
@@ -175,6 +216,9 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     button: {
       marginHorizontal: spacing.margin.large,
+    },
+    loadingProfile: {
+      marginTop: spacing.margin.extraLarge,
     },
   });
 };

@@ -110,10 +110,6 @@ export const linkingConfigFull = {
                   'post-select-audience': {
                     path: 'post/create/audiences',
                   },
-                  'user-profile': {
-                    // TODO: make profile and my profile use the same screen.
-                    path: 'profile/:id?',
-                  },
                 },
               },
               groups: {
@@ -178,14 +174,11 @@ export const linkingConfigFull = {
                   'account-settings': {
                     path: 'settings',
                   },
-                  'user-settings': {
+                  'user-edit': {
                     path: 'settings/account',
                   },
                   'edit-basic-info': {
                     path: 'settings/account/edit',
-                  },
-                  'my-profile': {
-                    path: 'me',
                   },
                   'change-password': {
                     path: 'settings/security/change-password',
@@ -197,9 +190,9 @@ export const linkingConfigFull = {
               },
             },
           },
-          // 'user-profile': {
-          //   path: 'me',
-          // },
+          'user-profile': {
+            path: 'profile/:userId?',
+          },
         },
       },
       NotFound: '*',

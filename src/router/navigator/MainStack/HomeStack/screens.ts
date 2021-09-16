@@ -1,6 +1,4 @@
 import Newsfeed from '~/screens/Home/Newsfeed';
-import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
-import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 import CreateComment from '~/screens/Post/CreateComment';
 import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
@@ -12,6 +10,4 @@ export default {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
-  'my-profile': MyProfile, //TODO
-  'user-profile': UserProfile, //TODO
 };

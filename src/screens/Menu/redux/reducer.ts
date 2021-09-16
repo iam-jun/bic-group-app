@@ -4,8 +4,12 @@ import menuTypes from './types';
 const initMenuState = {
   loadingMyProfile: false,
   isLanguageModalOpen: false,
+
+  loadingUserProfile: false,
+  userProfile: {} as IUserProfile,
+  showUserNotFound: false,
+
   myProfile: {} as IUserProfile,
-  selectedProfile: {} as IUserProfile,
 
   loadingAvatar: false,
   loadingCover: false,
@@ -15,7 +19,39 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
   const {type, payload} = action;
 
   switch (type) {
-    case menuTypes.SELECT_MY_PROFILE:
+    case menuTypes.GET_USER_PROFILE:
+      return {
+        ...state,
+        loadingUserProfile: true,
+      };
+    case menuTypes.SET_USER_PROFILE:
+      return {
+        ...state,
+        loadingUserProfile: false,
+        loadingCover: false,
+        loadingAvatar: false,
+        userProfile: {
+          ...state.userProfile,
+          ...payload,
+        },
+      };
+    case menuTypes.SET_SHOW_USER_NOT_FOUND:
+      return {
+        ...state,
+        showUserNotFound: true,
+      };
+    case menuTypes.CLEAR_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: initMenuState.userProfile,
+        showUserNotFound: initMenuState.showUserNotFound,
+      };
+
+    case menuTypes.GET_MY_PROFILE:
+      return {
+        ...state,
+        loadingMyProfile: true,
+      };
     case menuTypes.SET_MY_PROFILE:
       return {
         ...state,
@@ -24,21 +60,6 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
         loadingAvatar: false,
         myProfile: {
           ...state.myProfile,
-          ...payload,
-        },
-      };
-
-    case menuTypes.GET_MY_PROFILE:
-      return {
-        ...state,
-        loadingMyProfile: true,
-      };
-
-    case menuTypes.SELECTED_PROFILE:
-    case menuTypes.SET_SELECTED_PROFILE:
-      return {
-        ...state,
-        selectedProfile: {
           ...payload,
         },
       };

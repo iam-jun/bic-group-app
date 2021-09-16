@@ -20,10 +20,10 @@ import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMen
 import Button from '~/beinComponents/Button';
 
 import menuActions from '~/screens/Menu/redux/actions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface CommentViewProps {
   postId: string;
@@ -69,10 +69,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const onPressUser = (audience?: any) => {
     const id = audience?.id || user?.id;
     if (id) {
-      dispatch(
-        menuActions.selectedProfile({id: id, isPublic: id !== currentUserId}),
-      );
-      rootNavigation.navigate(homeStack.publicProfile);
+      rootNavigation.navigate(mainStack.userProfile, {userId: id});
     }
   };
 

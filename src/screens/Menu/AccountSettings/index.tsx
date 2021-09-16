@@ -27,6 +27,7 @@ import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -46,7 +47,7 @@ const GeneralSettings = () => {
   const onAccountSettingsPress = (item: ISetting, e: any) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(menuStack.userProfile);
+        return rootNavigation.navigate(mainStack.userEdit);
 
       case 'securityLogin':
         return rootNavigation.navigate(menuStack.securityLogin);

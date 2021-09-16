@@ -30,7 +30,6 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {ReactionType} from '~/constants/reactions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {IconType} from '~/resources/icons';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
@@ -39,6 +38,7 @@ import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import {AppContext} from '~/contexts/AppContext';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface PostViewProps {
   postId: string;
@@ -126,13 +126,9 @@ const PostView: FC<PostViewProps> = ({
 
   const onPressActor = () => {
     if (actor?.id) {
-      dispatch(
-        menuActions.selectedProfile({
-          id: actor?.id?.toString(),
-          isPublic: userId !== actor?.id,
-        }),
-      );
-      rootNavigation.navigate(homeStack.publicProfile);
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: actor?.id,
+      });
     }
   };
 
@@ -152,13 +148,7 @@ const PostView: FC<PostViewProps> = ({
 
   const onPressMentionAudience = (audience: any) => {
     if (audience?.id) {
-      dispatch(
-        menuActions.selectedProfile({
-          id: audience?.id?.toString(),
-          isPublic: userId !== audience?.id,
-        }),
-      );
-      rootNavigation.navigate(homeStack.publicProfile);
+      rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
     }
   };
 

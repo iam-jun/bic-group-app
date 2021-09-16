@@ -17,7 +17,6 @@ import settings, {
   logoutMenu,
 } from '~/constants/settings';
 import {useUserIdAuth} from '~/hooks/auth';
-import useMenu from '~/hooks/menu';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ISetting} from '~/interfaces/common';
 import images from '~/resources/images';
@@ -27,6 +26,9 @@ import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -38,12 +40,13 @@ const Menu = (): React.ReactElement => {
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
-  const {myProfile} = useMenu();
-  const {id, fullname, email, avatar} = myProfile;
+  const {id, fullname, email, avatar} =
+    useKeySelector(menuKeySelector.myProfile) || {};
   const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    dispatch(menuActions.getMyProfile(currentUserId));
+    if (!!currentUserId)
+      dispatch(menuActions.getMyProfile({userId: currentUserId}));
   }, []);
 
   const onSettingPress = (item: ISetting) => {
@@ -73,16 +76,7 @@ const Menu = (): React.ReactElement => {
   };
 
   const goToMyProfile = () => {
-    dispatch(
-      menuActions.selectMyProfile({
-        id,
-        fullname,
-        email,
-        avatar,
-        isPublic: false,
-      }),
-    );
-    rootNavigation.navigate(menuStack.myProfile);
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
   return (

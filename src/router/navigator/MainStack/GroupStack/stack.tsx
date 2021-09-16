@@ -11,8 +11,6 @@ const groupStack = {
   groupAdmin: 'group-admin',
   generalInfo: 'general-info',
   editGroupDescription: 'edit-group-description',
-  myProfile: 'my-profile',
-  publicProfile: 'user-profile',
   inviteMembers: 'invite-members',
 };
 
