@@ -1,5 +1,5 @@
 import React, {useContext, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -56,7 +56,10 @@ const GeneralSettings = () => {
     return (
       <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
         <PrimaryItem
+          style={styles.item}
           title={t(item.title)}
+          leftIcon={item.icon}
+          leftIconProps={{icon: item.icon, size: 24}}
           RightComponent={
             language === item.code ? (
               <Icon
@@ -116,10 +119,19 @@ const themeStyles = (theme: ITheme) => {
       marginTop: spacing.margin.base,
     },
     contentComponent: {
-      marginHorizontal: spacing.margin.base,
+      paddingVertical: spacing.padding.tiny,
+      ...Platform.select({
+        web: {
+          width: 200,
+        },
+      }),
     },
     chooseLanguageText: {
       margin: spacing.margin.base,
+    },
+    item: {
+      height: 44,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };
