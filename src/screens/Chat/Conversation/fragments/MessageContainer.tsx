@@ -77,13 +77,11 @@ const MessageItem = (props: MessageItemProps) => {
   };
 
   const onMentionPress = (user: any) => {
-    dispatch(
-      menuActions.selectedProfile({
-        id: user?.id,
-        isPublic: user?.id !== currentUserId,
-      }),
-    );
-    rootNavigation.navigate(mainStack.userProfile);
+    if (!!user?.id) {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: user.id,
+      });
+    }
   };
 
   return (

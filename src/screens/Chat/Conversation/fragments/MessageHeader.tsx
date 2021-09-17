@@ -26,13 +26,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   const {rootNavigation} = useRootNavigation();
 
   const goProfile = () => {
-    dispatch(
-      menuActions.selectedProfile({
-        id: user.username,
-        isPublic: true,
-      }),
-    );
-    rootNavigation.navigate(mainStack.userProfile);
+    rootNavigation.navigate(mainStack.userProfile, {userId: user.username});
   };
 
   return (

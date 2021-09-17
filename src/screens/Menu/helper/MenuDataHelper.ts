@@ -3,11 +3,12 @@ import {IUserEdit} from '~/interfaces/IAuth';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
-  getMyProfile: (userId: number): HttpApiRequestConfig => ({
+  getUserProfile: (userId: number, params?: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params,
   }),
   editMyProfile: (userId: number, data: IUserEdit): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
@@ -31,10 +32,10 @@ export const menuApiConfig = {
 };
 
 const menuDataHelper = {
-  getMyProfile: async (userId: number) => {
+  getUserProfile: async (userId: number, params?: any) => {
     try {
       const response: any = await makeHttpRequest(
-        menuApiConfig.getMyProfile(userId),
+        menuApiConfig.getUserProfile(userId, params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

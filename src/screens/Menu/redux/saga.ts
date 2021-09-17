@@ -1,72 +1,51 @@
 import {select, put, takeLatest} from 'redux-saga/effects';
 import {Platform} from 'react-native';
-import i18next from 'i18next';
 
 import menuActions from './actions';
 import menuTypes from './types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {IUserProfile, IUserEdit} from '~/interfaces/IAuth';
+import {IUserEdit, IGetUserProfile} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
 import {mapProfile} from './helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 
 export default function* menuSaga() {
+  yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
-  yield takeLatest(menuTypes.SELECT_MY_PROFILE, selectMyProfile);
-  yield takeLatest(menuTypes.GET_SELECTED_PROFILE, getSelectedProfile);
-  yield takeLatest(menuTypes.SELECTED_PROFILE, selectPublicProfile);
   yield takeLatest(menuTypes.EDIT_MY_PROFILE, editMyProfile);
   yield takeLatest(menuTypes.UPLOAD_IMAGE, uploadImage);
 }
 
-function* getMyProfile({payload}: {type: string; payload: number}) {
-  const {menu} = yield select();
-  const myProfile = menu;
+function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
+  const {userId, params} = payload;
   try {
-    const result: unknown = yield requestUserProfile(payload);
-    yield put(menuActions.setMyProfile(mapProfile(result)));
+    const response: IResponseData = yield menuDataHelper.getUserProfile(
+      userId,
+      params,
+    );
+
+    yield put(menuActions.setUserProfile(mapProfile(response.data)));
+  } catch (err) {
+    yield put(menuActions.setUserProfile(null));
+    yield put(menuActions.setShowUserNotFound());
+    console.log('getUserProfile error:', err);
+  }
+}
+
+function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
+  const {menu} = yield select();
+  const {myProfile} = menu;
+  const {userId, params} = payload;
+  try {
+    const response: IResponseData = yield menuDataHelper.getUserProfile(
+      userId,
+      params,
+    );
+    yield put(menuActions.setMyProfile(mapProfile(response.data)));
   } catch (err) {
     yield put(menuActions.setMyProfile(myProfile));
     console.log('getMyProfile error:', err);
-  }
-}
-
-const requestUserProfile = async (userId: number) => {
-  const response = await menuDataHelper.getMyProfile(userId);
-  return response.data;
-};
-
-function* selectMyProfile({payload}: {payload: IUserProfile; type: string}) {
-  try {
-    yield put(menuActions.getMyProfile(payload.id));
-  } catch (err) {
-    console.log('selectMyProfile error ---> ', err);
-  }
-}
-
-function* getSelectedProfile({payload}: {type: string; payload: number}) {
-  const {menu} = yield select();
-  const {selectedProfile} = menu;
-  try {
-    const result: IUserProfile = yield requestUserProfile(payload);
-    yield put(menuActions.setSelectedProfile({...selectedProfile, ...result}));
-  } catch (err) {
-    yield put(menuActions.setSelectedProfile(selectedProfile));
-    console.log('getMyProfile error:', err);
-  }
-}
-
-function* selectPublicProfile({
-  payload,
-}: {
-  payload: IUserProfile;
-  type: string;
-}) {
-  try {
-    yield put(menuActions.getSelectedProfile(payload.id));
-  } catch (err) {
-    console.log('selectPublicProfile error ---> ', err);
   }
 }
 
