@@ -107,8 +107,8 @@ const EditBasicInfo = () => {
     if (isChanged) {
       dispatch(
         modalActions.showAlert({
-          title: i18next.t('common:text_discard_changes'),
-          iconName: 'Save',
+          title: i18next.t('common:label_discard_changes'),
+          showCloseButton: true,
           cancelBtn: true,
           isDismissable: false,
           onConfirm: () => navigation.goBack(),

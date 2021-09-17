@@ -17,6 +17,7 @@ export const initState = {
       // do something
     },
     isDismissable: true,
+    showCloseButton: false,
   },
   alertNewFeature: {
     visible: false,

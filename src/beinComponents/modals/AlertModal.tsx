@@ -43,6 +43,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     confirmLabel,
     cancelBtn,
     cancelLabel,
+    showCloseButton,
   } = alert;
   const _cancelLabel = cancelLabel
     ? cancelLabel
@@ -78,6 +79,16 @@ const AlertModal: React.FC<AlertModalProps> = ({
                 size={20}
                 tintColor={theme.colors.iconTint}
               />
+            )}
+            {showCloseButton && (
+              <View style={styles.closeButton}>
+                <Icon
+                  icon={'iconClose'}
+                  size={12}
+                  tintColor={theme.colors.iconTint}
+                  onPress={_onDismiss}
+                />
+              </View>
             )}
           </View>
           {!!content && (
@@ -149,6 +160,14 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    closeButton: {
+      width: 24,
+      height: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.placeholder,
+      borderRadius: 6,
     },
     content: {},
   });

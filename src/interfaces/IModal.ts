@@ -14,6 +14,7 @@ export interface IShowAlert {
   onDissmiss?: () => void;
   confirmLabel: string;
   isDismissable?: boolean;
+  showCloseButton?: boolean;
 }
 
 export interface IPayloadReactionDetailBottomSheet {
