@@ -18,6 +18,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import i18n from '~/localization';
 
 export interface CreateCommentProps {
   route?: {
@@ -75,14 +76,18 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
+
     if (isEditHasChange) {
       dispatch(
         modalActions.showAlert({
-          title: t('post:alert_title_back_edit_post'),
-          content: t('post:alert_content_back_edit_post'),
+          title: i18n.t('common:label_discard_changes'),
+          content: i18n.t('common:text_discard_warning'),
+          showCloseButton: true,
           cancelBtn: true,
-          confirmLabel: t('common:btn_discard'),
+          cancelLabel: i18n.t('common:btn_continue_editing'),
+          confirmLabel: i18n.t('common:btn_discard'),
           onConfirm: () => rootNavigation.goBack(),
+          stretchOnWeb: true,
         }),
       );
       return;
