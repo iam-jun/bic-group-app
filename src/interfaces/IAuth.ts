@@ -81,6 +81,11 @@ export interface IUserProfile {
   isPublic?: boolean;
 }
 
+export interface IGetUserProfile {
+  userId: number;
+  params?: any;
+}
+
 export interface IUserEdit {
   id?: number;
   email?: string;

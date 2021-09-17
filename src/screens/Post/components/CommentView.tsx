@@ -19,11 +19,12 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMenuBottomSheet';
 import Button from '~/beinComponents/Button';
 
-import menuActions from '~/screens/Menu/redux/actions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
+import mainStack from '~/router/navigator/MainStack/stack';
+import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 
 export interface CommentViewProps {
   postId: string;
@@ -69,10 +70,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const onPressUser = (audience?: any) => {
     const id = audience?.id || user?.id;
     if (id) {
-      dispatch(
-        menuActions.selectedProfile({id: id, isPublic: id !== currentUserId}),
-      );
-      rootNavigation.navigate(homeStack.publicProfile);
+      rootNavigation.navigate(mainStack.userProfile, {userId: id});
     }
   };
 
@@ -144,6 +142,17 @@ const CommentView: React.FC<CommentViewProps> = ({
     }).start();
   };
 
+  const onLongPressReaction = (reactionType: ReactionType) => {
+    const payload: IPayloadReactionDetailBottomSheet = {
+      isOpen: true,
+      reactionCounts: children_counts,
+      postId: postId,
+      commentId: id,
+      initReaction: reactionType,
+    };
+    dispatch(showReactionDetailBottomSheet(payload));
+  };
+
   const renderWebMenuButton = () => {
     if (Platform.OS !== 'web') {
       return null;
@@ -201,6 +210,7 @@ const CommentView: React.FC<CommentViewProps> = ({
               onAddReaction={onAddReaction}
               onRemoveReaction={onRemoveReaction}
               onPressSelectReaction={onPressReact}
+              onLongPressReaction={onLongPressReaction}
             />
             <ButtonWrapper onPress={_onPressReply}>
               <Text.ButtonSmall

@@ -25,7 +25,7 @@ const NoUserFound = () => {
     <ScreenWrapper style={styles.root} isFullView>
       <Header
         title={i18next.t('error:no_profile_found_title')}
-        hideBack={isLaptop}
+        hideBackOnLaptop
       />
       <View style={styles.mainContainer}>
         <SVGIcon

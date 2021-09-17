@@ -2,6 +2,7 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamGetReactionDetail,
   IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestGetPostComment,
@@ -136,9 +137,10 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getReactionOfPost: (
+  getReactionDetail: (
     reactionType: ReactionType,
-    postId: string,
+    postId?: string,
+    commentId?: string,
     idLessThan?: string,
     limit?: number,
   ): HttpApiRequestConfig => ({
@@ -148,7 +150,8 @@ export const postApiConfig = {
     useRetry: true,
     params: {
       kind: reactionType,
-      post_id: postId,
+      reaction_id: commentId,
+      post_id: commentId ? undefined : postId,
       id_lt: idLessThan,
       limit: limit || 20,
     },
@@ -351,28 +354,29 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getReactionOfPost: async (
-    reactionType: ReactionType,
-    postId: string,
-    idLessThan?: string,
-    limit?: number,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getReactionOfPost(
-          reactionType,
-          postId,
-          idLessThan,
-          limit,
-        ),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
+  getReactionDetail: async (param: IParamGetReactionDetail) => {
+    const {reactionType, postId, commentId, idLessThan, limit} = param;
+    if (reactionType && (postId || commentId)) {
+      try {
+        const response: any = await makeHttpRequest(
+          postApiConfig.getReactionDetail(
+            reactionType,
+            postId,
+            commentId,
+            idLessThan,
+            limit,
+          ),
+        );
+        if (response && response?.data) {
+          return Promise.resolve(response?.data?.data);
+        } else {
+          return Promise.reject(response);
+        }
+      } catch (e) {
+        return Promise.reject(e);
       }
-    } catch (e) {
-      return Promise.reject(e);
+    } else {
+      return Promise.reject('Invalid param');
     }
   },
 

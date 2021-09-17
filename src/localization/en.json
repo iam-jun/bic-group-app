@@ -351,8 +351,8 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message": {
-      "au": "{0} has added {1} to this group",
-      "ru": "{0} has removed {1} from the group chat.",
+      "au": "{1}  joined to this group",
+      "ru": "{1} was removed from the group.",
       "room_changed_description": "{0} has changed the chat description.",
       "room_changed_announcement": "{0} has changed the chat announcement.",
       "room_changed_topic": "{0} has changed the group chat topic to “{1}”",
