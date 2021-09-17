@@ -10,7 +10,6 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
-import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
@@ -21,13 +20,14 @@ import {
   IPostActivity,
   IPostCreatePost,
 } from '~/interfaces/IPost';
+import i18n from '~/localization';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
-import {margin, padding} from '~/theme/spacing';
+import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 
 export interface CreatePostProps {
@@ -42,9 +42,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+  const styles = themeStyles(theme);
 
   let initPostData: IPostActivity = {};
   if (postId) {
@@ -126,15 +126,22 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
+    const title = i18n.t('common:label_discard_changes');
+    const cancelLabel = i18n.t('common:btn_continue_editing');
+    const confirmLabel = i18n.t('common:btn_discard');
+
     if (isEditPost) {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            title: t('post:alert_title_back_edit_post'),
-            content: t('post:alert_content_back_edit_post'),
+            title: title,
+            content: i18n.t('post:alert_content_back_edit_post'),
+            showCloseButton: true,
             cancelBtn: true,
-            confirmLabel: t('common:btn_discard'),
+            cancelLabel: cancelLabel,
+            confirmLabel: confirmLabel,
             onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
@@ -143,11 +150,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (content) {
         dispatch(
           modalActions.showAlert({
-            title: t('post:alert_title_back_create_post'),
-            content: t('post:alert_content_back_create_post'),
+            title: title,
+            content: i18n.t('post:alert_content_back_create_post'),
+            showCloseButton: true,
             cancelBtn: true,
-            confirmLabel: t('common:btn_discard'),
+            cancelLabel: cancelLabel,
+            confirmLabel: confirmLabel,
             onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
@@ -262,8 +272,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onChangeText={onChangeText}
           value={content}
           ComponentInput={PostInput}
-          title={t('post:mention_title')}
-          emptyContent={t('post:mention_empty_content')}
+          title={i18n.t('post:mention_title')}
+          emptyContent={i18n.t('post:mention_empty_content')}
           getDataPromise={postDataHelper.getSearchMentionAudiences}
           getDataParam={{group_ids: strGroupIds}}
           getDataResponseKey={'data'}
@@ -283,46 +293,50 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  flex1: {flex: 1},
-  container: {
-    flex: 1,
-  },
-  header: {
-    justifyContent: 'space-between',
-  },
-  sendTo: {
-    marginHorizontal: margin.big,
-    marginVertical: margin.base,
-  },
-  chooseAudience: {
-    marginHorizontal: margin.small,
-    marginVertical: margin.base,
-    borderRadius: 50,
-    paddingHorizontal: padding.base,
-    paddingVertical: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textContent: {
-    minHeight: 500,
-    marginVertical: margin.base,
-    marginHorizontal: margin.big,
-  },
-  button: {
-    height: 35,
-  },
-  actionList: {
-    justifyContent: 'flex-end',
-    marginVertical: margin.big,
-  },
-  audienceList: {
-    marginBottom: margin.large,
-    marginHorizontal: margin.large,
-  },
-  mentionInputModal: {
-    maxHeight: 180,
-  },
-});
+const themeStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+
+  return StyleSheet.create({
+    flex1: {flex: 1},
+    container: {
+      flex: 1,
+    },
+    header: {
+      justifyContent: 'space-between',
+    },
+    sendTo: {
+      marginHorizontal: spacing.margin.big,
+      marginVertical: spacing.margin.base,
+    },
+    chooseAudience: {
+      marginHorizontal: spacing.margin.small,
+      marginVertical: spacing.margin.base,
+      borderRadius: 50,
+      paddingHorizontal: padding.base,
+      paddingVertical: 3,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    textContent: {
+      minHeight: 500,
+      marginVertical: spacing.margin.base,
+      marginHorizontal: spacing.margin.big,
+    },
+    button: {
+      height: 35,
+    },
+    actionList: {
+      justifyContent: 'flex-end',
+      marginVertical: spacing.margin.big,
+    },
+    audienceList: {
+      marginBottom: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
+    },
+    mentionInputModal: {
+      maxHeight: 180,
+    },
+  });
+};
 
 export default CreatePost;

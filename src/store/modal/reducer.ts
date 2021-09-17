@@ -7,6 +7,7 @@ export const initState = {
     title: '',
     content: '',
     cancelBtn: false,
+    cancelLabel: '',
     iconName: '',
     confirmLabel: '',
     onConfirm: () => {
@@ -15,7 +16,10 @@ export const initState = {
     onCancel: () => {
       // do something
     },
-    isDismissable: true,
+    isDismissible: true,
+    showCloseButton: false,
+    style: {},
+    stretchOnWeb: false,
   },
   alertNewFeature: {
     visible: false,

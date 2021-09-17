@@ -144,7 +144,7 @@ export const postApiConfig = {
     idLessThan?: string,
     limit?: number,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}/reactions`,
+    url: `${ApiConfig.providers.bein.url}reactions`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
