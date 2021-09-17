@@ -9,6 +9,7 @@ export interface IShowAlert {
   inputProps?: TextInputProps;
   onConfirm?: (text: string) => void;
   cancelBtn?: boolean;
+  cancelLabel?: string;
   onCancel?: () => void;
   onDissmiss?: () => void;
   confirmLabel: string;

@@ -42,7 +42,11 @@ const AlertModal: React.FC<AlertModalProps> = ({
     onDismiss,
     confirmLabel,
     cancelBtn,
+    cancelLabel,
   } = alert;
+  const _cancelLabel = cancelLabel
+    ? cancelLabel
+    : i18next.t('common:btn_cancel');
 
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
@@ -93,7 +97,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
                 textColor={theme.colors.primary7}
                 color={theme.colors.primary2}
                 onPress={_onDismiss}>
-                {i18next.t('common:btn_cancel')}
+                {_cancelLabel}
               </Button.Secondary>
             )}
 

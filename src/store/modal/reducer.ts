@@ -7,6 +7,7 @@ export const initState = {
     title: '',
     content: '',
     cancelBtn: false,
+    cancelLabel: '',
     iconName: '',
     confirmLabel: '',
     onConfirm: () => {
