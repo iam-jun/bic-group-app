@@ -25,12 +25,14 @@ import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import * as modalActions from '~/store/modal/actions';
 
 import {
   IAudienceGroup,
   IPayloadGetPostDetail,
   IReaction,
 } from '~/interfaces/IPost';
+import i18n from '~/localization';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import PostView from '~/screens/Post/components/PostView';
@@ -73,6 +75,8 @@ const PostDetail = (props: any) => {
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
+  const newCommentInput =
+    useKeySelector(postKeySelector.createComment.content) || '';
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
@@ -113,6 +117,25 @@ const PostDetail = (props: any) => {
   };
 
   const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
+
+  const onPressBack = () => {
+    if (newCommentInput !== '') {
+      dispatch(
+        modalActions.showAlert({
+          title: i18n.t('common:label_discard_changes'),
+          content: i18n.t('common:text_discard_warning'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: i18n.t('common:btn_continue_editing'),
+          confirmLabel: i18n.t('common:btn_discard'),
+          onConfirm: () => rootNavigation.goBack(),
+          stretchOnWeb: true,
+        }),
+      );
+      return;
+    }
+    rootNavigation.goBack();
+  };
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -244,6 +267,7 @@ const PostDetail = (props: any) => {
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_post_detail'}
+        onPressBack={onPressBack}
       />
       {!postTime ? (
         <PostViewPlaceholder />

@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import {ActivityIndicator, StyleProp, ViewStyle} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
-import {ActivityIndicator, useTheme} from 'react-native-paper';
+import {useTheme} from 'react-native-paper';
 
 export interface LoadingIndicatorProps {
   style?: StyleProp<ViewStyle>;
