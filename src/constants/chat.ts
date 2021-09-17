@@ -1,5 +1,6 @@
 export const chatSocketId = {
   SUBSCRIBE_ROOMS_MESSAGES: 'chat-socket-subscribe-rooms-messages',
+  SUBSCRIBE_NOTIFY_USER: 'chat-socket-subscribe-stream-notify-user',
   ADD_MEMBERS_TO_GROUP: 'chat-socket-add-members-to-groups',
 };
 

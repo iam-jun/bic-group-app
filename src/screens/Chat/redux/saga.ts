@@ -421,11 +421,11 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
       [TO-DO] Need to check with BE
   */
 
-  if (
-    payload.msg === 'changed' &&
-    payload.collection === 'stream-room-messages'
-  ) {
-    yield handleRoomsMessage(payload);
+  if (payload.msg === 'changed') {
+    if (payload.collection === 'stream-room-messages')
+      yield handleRoomsMessage(payload);
+    else if (payload.collection === 'stream-notify-user')
+      yield handleNotifyUser(payload);
   }
 
   if (payload.msg !== 'result') return;
@@ -471,15 +471,9 @@ function* handleRemoveUser(data: any) {
   try {
     const {auth} = yield select();
     const message = mapMessage(auth.user, data);
-    console.log('handleRemoveUser', message, auth.user);
 
-    if (message.msg === auth.user.username) {
-      yield put(actions.kickMeOut(message));
-      navigation.replace(chatStack.conversationList);
-    } else {
-      yield handleNewMessage(data);
-      yield put(actions.removeMemberSuccess(message));
-    }
+    yield handleNewMessage(data);
+    yield put(actions.removeMemberSuccess(message));
   } catch (err) {
     console.log('handleRemoveUser', err);
   }
@@ -513,5 +507,13 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.REMOVE_USER:
       yield handleRemoveUser(data);
       break;
+  }
+}
+
+function* handleNotifyUser(payload?: any) {
+  const data = payload.fields.args || [];
+  if (data[0] === 'removed') {
+    yield put(actions.kickMeOut(data[1]));
+    navigation.replace(chatStack.conversationList);
   }
 }

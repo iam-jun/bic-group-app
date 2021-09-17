@@ -3,19 +3,29 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
+import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
+import {chatSocketId} from '~/constants/chat';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
+import chatActions from '~/screens/Chat/redux/actions';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
-import {closeConnectChat, connectChat} from '~/services/chatSocket';
+import {
+  addOnMessageCallback,
+  closeConnectChat,
+  connectChat,
+  sendMessage,
+} from '~/services/chatSocket';
+import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
-import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 
 const Stack = createStackNavigator();
 
@@ -25,13 +35,48 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
+  const auth = getChatAuthInfo();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     connectChat();
+    const removeOnMessageCallback = addOnMessageCallback(
+      'callbackoflistchatscreen',
+      event => {
+        dispatch(chatActions.handleEvent(JSON.parse(event.data)));
+      },
+    );
+
+    subscribeRoomsMessages();
+
     return () => {
       closeConnectChat();
+      removeOnMessageCallback();
+      unsubscribeRoomsMessages();
     };
   }, []);
+
+  const subscribeRoomsMessages = () => {
+    sendMessage({
+      msg: 'sub',
+      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
+      name: 'streamroommessages',
+      params: ['__my_messages__', false],
+    });
+    sendMessage({
+      msg: 'sub',
+      id: chatSocketId.SUBSCRIBE_NOTIFY_USER,
+      name: 'streamnotifyuser',
+      params: [`${auth?.userId}/subscriptionschanged`, false],
+    });
+  };
+
+  const unsubscribeRoomsMessages = () => {
+    sendMessage({
+      msg: 'unsub',
+      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
+    });
+  };
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>

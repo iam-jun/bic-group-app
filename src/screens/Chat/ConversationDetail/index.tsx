@@ -34,7 +34,7 @@ import {ITheme} from '~/theme/interfaces';
 
 const ConversationDetail = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const route = useRoute<RouteProp<RootStackParamList, 'GroupMembers'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'ConversationDetail'>>();
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);

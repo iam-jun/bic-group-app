@@ -93,6 +93,7 @@ const Chat = {
     method: 'get',
     provider: providers.bein,
     useRetry: true,
+    params,
   }),
   messages: (params: IPaginationParams & {roomId: string; type?: string}) => {
     const endPoint = params?.type === 'direct' ? 'im' : 'groups';

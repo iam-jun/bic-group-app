@@ -2,29 +2,21 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import i18next from 'i18next';
 import React, {useContext, useEffect} from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
-
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import RedDot from '~/beinComponents/Badge/RedDot';
-
 import Icon from '~/beinComponents/Icon';
 import {Text} from '~/components';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
-import {chatSocketId} from '~/constants/chat';
-
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
-import actions from '~/screens/Chat/redux/actions';
-import chatActions from '~/screens/Chat/redux/actions';
+import {default as chatActions} from '~/screens/Chat/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
-import {addOnMessageCallback, sendMessage} from '~/services/chatSocket';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
 
@@ -96,43 +88,6 @@ const MainTabs = () => {
           }),
         );
     }
-  };
-
-  React.useEffect(() => {
-    const removeOnMessageCallback = addOnMessageCallback(
-      'callback-of-list-chat-screen',
-      event => {
-        dispatch(actions.handleEvent(JSON.parse(event.data)));
-      },
-    );
-
-    subscribeRoomsMessages();
-
-    return () => {
-      removeOnMessageCallback();
-      unsubscribeRoomsMessages();
-    };
-  }, []);
-
-  const subscribeRoomsMessages = () => {
-    sendMessage({
-      msg: 'sub',
-      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
-      name: 'stream-room-messages',
-      params: ['__my_messages__', false],
-    });
-    sendMessage({
-      msg: 'sub',
-      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
-      name: 'stream-notify-user',
-    });
-  };
-
-  const unsubscribeRoomsMessages = () => {
-    sendMessage({
-      msg: 'unsub',
-      id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
-    });
   };
 
   const screensMap =
