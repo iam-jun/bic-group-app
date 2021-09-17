@@ -19,6 +19,7 @@ export const initState = {
     isDismissible: true,
     showCloseButton: false,
     style: {},
+    stretchOnWeb: false,
   },
   alertNewFeature: {
     visible: false,

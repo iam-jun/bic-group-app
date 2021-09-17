@@ -14,6 +14,7 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
@@ -45,6 +46,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     cancelLabel,
     showCloseButton,
     style: alertModalStyle,
+    stretchOnWeb,
   } = alert;
   const _cancelLabel = cancelLabel
     ? cancelLabel
@@ -69,6 +71,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
       onDismiss={_onDismiss}
       contentContainerStyle={StyleSheet.flatten([
         styles.modal,
+        stretchOnWeb && Platform.OS === 'web' && styles.stretchModal,
         style,
         alertModalStyle,
       ])}
@@ -137,19 +140,26 @@ const AlertModal: React.FC<AlertModalProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, dimension, spacing} = theme;
+  const defaultAlertWidth = 320;
+  const alertWidth = (100 * defaultAlertWidth) / deviceDimensions.phone;
 
   return StyleSheet.create({
     root: {
       flex: 1,
     },
     modal: {
-      width: 320,
+      width: defaultAlertWidth,
       backgroundColor: colors.background,
       borderWidth: 1,
       borderColor: colors.borderCard,
       borderRadius: 6,
       alignSelf: 'center',
+    },
+    stretchModal: {
+      width: alertWidth + '%',
+      minWidth: defaultAlertWidth,
+      maxWidth: dimension.maxNewsfeedWidth,
     },
     modalContainer: {
       paddingHorizontal: spacing?.padding.extraLarge,
