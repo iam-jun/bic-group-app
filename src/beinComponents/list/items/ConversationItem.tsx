@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import RedDot from '~/beinComponents/Badge/RedDot';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
-import images from '~/resources/images';
 import {getAvatar, getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
@@ -23,7 +23,7 @@ const ConversationItem: React.FC<IConversation> = ({
 }: IConversation): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {text, textReversed, textSecondary} = theme.colors;
+  const {text, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
@@ -79,11 +79,7 @@ const ConversationItem: React.FC<IConversation> = ({
             {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
-            <View style={styles.unread}>
-              <Text.ButtonSmall color={textReversed}>
-                {unreadCount}
-              </Text.ButtonSmall>
-            </View>
+            <RedDot style={styles.unreadBadge} number={unreadCount} />
           )}
         </View>
       }
@@ -92,7 +88,7 @@ const ConversationItem: React.FC<IConversation> = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {spacing} = theme;
 
   return StyleSheet.create({
     container: {
@@ -120,14 +116,8 @@ const createStyles = (theme: ITheme) => {
     textUpdate: {
       paddingTop: 0,
     },
-    unread: {
-      borderRadius: spacing?.borderRadius.large,
-      width: spacing?.lineHeight.base,
-      height: spacing?.lineHeight.base,
-      marginTop: spacing?.margin.base,
-      backgroundColor: colors.error,
-      alignItems: 'center',
-      justifyContent: 'center',
+    unreadBadge: {
+      marginTop: spacing.margin.base,
     },
   });
 };

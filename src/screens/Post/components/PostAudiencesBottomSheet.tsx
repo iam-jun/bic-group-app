@@ -17,9 +17,9 @@ import privacyTypes from '~/constants/privacyTypes';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import menuActions from '~/screens/Menu/redux/actions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import {useUserIdAuth} from '~/hooks/auth';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
@@ -38,10 +38,7 @@ const PostAudiencesBottomSheet = () => {
   const onPressItem = (item: any) => {
     const {id, type} = item || {};
     if (type === 'user') {
-      dispatch(
-        menuActions.selectedProfile({id: id, isPublic: id !== currentUserId}),
-      );
-      rootNavigation.navigate(homeStack.publicProfile);
+      rootNavigation.navigate(mainStack.userProfile, {userId: id});
     } else {
       rootNavigation.navigate('groups', {
         screen: groupStack.groupDetail,

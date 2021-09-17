@@ -76,13 +76,9 @@ const ConversationDetail = (): React.ReactElement => {
 
   const goProfile = () => {
     if (conversation.type === roomTypes.DIRECT) {
-      dispatch(
-        menuActions.selectedProfile({
-          id: conversation.directUser.beinUserId,
-          isPublic: conversation.directUser.beinUserId !== currentUserId,
-        }),
-      );
-      rootNavigation.navigate(mainStack.userProfile);
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: conversation.directUser.beinUserId,
+      });
     } else if (conversation.type === roomTypes.GROUP) {
       rootNavigation.navigate('groups', {
         screen: groupStack.groupDetail,

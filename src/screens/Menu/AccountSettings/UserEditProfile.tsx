@@ -16,7 +16,6 @@ import {scaleSize, userProfileImageCropRatio} from '~/theme/dimension';
 import useMenu from '~/hooks/menu';
 import images from '~/resources/images';
 import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import {formatDate} from '~/utils/formatData';
 import speakingLanguages from '~/constants/speakingLanguages';
 import relationshipStatus from '~/constants/relationshipStatus';
@@ -33,8 +32,9 @@ import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
+import mainStack from '~/router/navigator/MainStack/stack';
 
-const UserProfile = () => {
+const UserEditProfile = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme = useTheme() as ITheme;
@@ -62,7 +62,7 @@ const UserProfile = () => {
   );
   const userLanguages = userLanguageList.join(', ');
 
-  const goToEditInfo = () => navigation.navigate(menuStack.editBasicInfo);
+  const goToEditInfo = () => navigation.navigate(mainStack.editBasicInfo);
 
   const uploadFile = (
     file: IFileResponse,
@@ -229,7 +229,7 @@ const UserProfile = () => {
   };
 
   return (
-    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+    <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header title={i18next.t('settings:title_user_profile')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}
@@ -240,7 +240,7 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserEditProfile;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {spacing, colors} = theme;
