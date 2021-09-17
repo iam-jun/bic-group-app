@@ -108,7 +108,7 @@ const Newsfeed = () => {
 
   const renderPlaceholder = () => {
     return (
-      <View>
+      <View style={styles.listContainer}>
         <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
         <PostViewPlaceholder />
         <PostViewPlaceholder />

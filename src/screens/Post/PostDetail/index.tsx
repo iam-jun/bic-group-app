@@ -5,9 +5,17 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {RefreshControl, SectionList, StyleSheet, View} from 'react-native';
+import {useWindowDimensions} from 'react-native';
+import {
+  Platform,
+  RefreshControl,
+  SectionList,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
@@ -28,6 +36,7 @@ import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
 
@@ -47,7 +56,9 @@ const PostDetail = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyle(theme);
+  const windowDimension = useWindowDimensions();
+  const isLaptop = windowDimension.width >= deviceDimensions.laptop;
+  const styles = createStyle(theme, isLaptop);
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
@@ -201,7 +212,7 @@ const PostDetail = (props: any) => {
       return null;
     }
     return (
-      <View style={styles.listHeader}>
+      <>
         <PostView postId={id} isPostDetail onPressComment={onPressComment} />
         {commentLeft > 0 && (
           <LoadMoreComment
@@ -210,7 +221,8 @@ const PostDetail = (props: any) => {
             idLessThan={listComment?.[0]?.id}
           />
         )}
-      </View>
+        <Divider />
+      </>
     );
   };
 
@@ -236,36 +248,38 @@ const PostDetail = (props: any) => {
       {!postTime ? (
         <PostViewPlaceholder />
       ) : (
-        <>
-          <SectionList
-            ref={listRef}
-            sections={sectionData}
-            renderItem={renderCommentItem}
-            renderSectionHeader={renderSectionHeader}
-            ListHeaderComponent={renderPostContent}
-            ListFooterComponent={renderFooter}
-            stickySectionHeadersEnabled={false}
-            ItemSeparatorComponent={() => <View />}
-            keyboardShouldPersistTaps={'handled'}
-            onLayout={onLayout}
-            onContentSizeChange={onLayout}
-            onScrollToIndexFailed={onScrollToIndexFailed}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                tintColor={colors.borderDisable}
-              />
-            }
-          />
-          <CommentInputView
-            postId={id}
-            groupIds={groupIds}
-            autoFocus={!!focus_comment}
-            textInputRef={textInputRef}
-            onCommentSuccess={onCommentSuccess}
-          />
-        </>
+        <View style={styles.container}>
+          <View style={styles.postDetailContainer}>
+            <SectionList
+              ref={listRef}
+              sections={sectionData}
+              renderItem={renderCommentItem}
+              renderSectionHeader={renderSectionHeader}
+              ListHeaderComponent={renderPostContent}
+              ListFooterComponent={renderFooter}
+              stickySectionHeadersEnabled={false}
+              ItemSeparatorComponent={() => <View />}
+              keyboardShouldPersistTaps={'handled'}
+              onLayout={onLayout}
+              onContentSizeChange={onLayout}
+              onScrollToIndexFailed={onScrollToIndexFailed}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  tintColor={colors.borderDisable}
+                />
+              }
+            />
+            <CommentInputView
+              postId={id}
+              groupIds={groupIds}
+              autoFocus={!!focus_comment}
+              textInputRef={textInputRef}
+              onCommentSuccess={onCommentSuccess}
+            />
+          </View>
+        </View>
       )}
     </ScreenWrapper>
   );
@@ -283,12 +297,32 @@ const getSectionData = (listComment: IReaction[]) => {
   return result;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ITheme, isLaptop: boolean) => {
+  const {colors, dimension, spacing} = theme;
+
   return StyleSheet.create({
-    listHeader: {
-      backgroundColor: colors.background,
-      paddingBottom: spacing.padding.tiny,
+    container: {
+      flex: 1,
+      ...Platform.select({
+        web: {
+          backgroundColor: colors.surface,
+          alignItems: 'center',
+        },
+      }),
+    },
+    postDetailContainer: {
+      flex: 1,
+
+      ...Platform.select({
+        web: {
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          marginTop: isLaptop ? spacing.margin.base : 0,
+          overflow: 'hidden',
+          borderTopLeftRadius: isLaptop ? 6 : 0,
+          borderTopRightRadius: isLaptop ? 6 : 0,
+        },
+      }),
     },
     footer: {height: spacing.margin.base, backgroundColor: colors.background},
   });

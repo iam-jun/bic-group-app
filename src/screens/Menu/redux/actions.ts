@@ -1,4 +1,4 @@
-import {IUserEdit, IUserProfile} from '~/interfaces/IAuth';
+import {IGetUserProfile, IUserEdit, IUserProfile} from '~/interfaces/IAuth';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import menuTypes from './types';
 
@@ -9,30 +9,43 @@ const menuActions = {
       payload,
     };
   },
-  setMyProfile: (payload: IUserProfile) => {
+
+  getUserProfile: (payload: IGetUserProfile) => {
+    return {
+      type: menuTypes.GET_USER_PROFILE,
+      payload,
+    };
+  },
+  setUserProfile: (payload: IUserProfile | null) => {
+    return {
+      type: menuTypes.SET_USER_PROFILE,
+      payload,
+    };
+  },
+  setShowUserNotFound: () => {
+    return {
+      type: menuTypes.SET_SHOW_USER_NOT_FOUND,
+    };
+  },
+  clearUserProfile: () => {
+    return {
+      type: menuTypes.CLEAR_USER_PROFILE,
+    };
+  },
+
+  getMyProfile: (payload: IGetUserProfile) => {
+    return {
+      type: menuTypes.GET_MY_PROFILE,
+      payload,
+    };
+  },
+  setMyProfile: (payload: IUserProfile | null) => {
     return {
       type: menuTypes.SET_MY_PROFILE,
       payload,
     };
   },
-  selectMyProfile: (payload: IUserProfile) => {
-    return {
-      type: menuTypes.SELECT_MY_PROFILE,
-      payload,
-    };
-  },
-  setSelectedProfile: (payload: IUserProfile) => {
-    return {
-      type: menuTypes.SET_SELECTED_PROFILE,
-      payload,
-    };
-  },
-  selectedProfile: (payload: IUserProfile) => {
-    return {
-      type: menuTypes.SELECTED_PROFILE,
-      payload,
-    };
-  },
+
   editMyProfile: function (payload: IUserEdit) {
     return {
       type: menuTypes.EDIT_MY_PROFILE,
@@ -42,19 +55,6 @@ const menuActions = {
   uploadImage: function (payload: IUserImageUpload) {
     return {
       type: menuTypes.UPLOAD_IMAGE,
-      payload,
-    };
-  },
-
-  getMyProfile: (payload: string) => {
-    return {
-      type: menuTypes.GET_MY_PROFILE,
-      payload,
-    };
-  },
-  getSelectedProfile: (payload: string) => {
-    return {
-      type: menuTypes.GET_SELECTED_PROFILE,
       payload,
     };
   },
