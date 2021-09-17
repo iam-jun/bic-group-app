@@ -10,7 +10,6 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
-import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
@@ -21,6 +20,7 @@ import {
   IPostActivity,
   IPostCreatePost,
 } from '~/interfaces/IPost';
+import i18n from '~/localization';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
@@ -42,7 +42,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
@@ -126,14 +125,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
+    const title = i18n.t('common:label_discard_changes');
+    const cancelLabel = i18n.t('common:btn_continue_editing');
+    const confirmLabel = i18n.t('common:btn_discard');
+
     if (isEditPost) {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            title: t('post:alert_title_back_edit_post'),
-            content: t('post:alert_content_back_edit_post'),
+            title: title,
+            content: i18n.t('post:alert_content_back_edit_post'),
+            showCloseButton: true,
             cancelBtn: true,
-            confirmLabel: t('common:btn_discard'),
+            cancelLabel: cancelLabel,
+            confirmLabel: confirmLabel,
             onConfirm: () => rootNavigation.goBack(),
           }),
         );
@@ -143,10 +148,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (content) {
         dispatch(
           modalActions.showAlert({
-            title: t('post:alert_title_back_create_post'),
-            content: t('post:alert_content_back_create_post'),
+            title: title,
+            content: i18n.t('post:alert_content_back_create_post'),
+            showCloseButton: true,
             cancelBtn: true,
-            confirmLabel: t('common:btn_discard'),
+            cancelLabel: cancelLabel,
+            confirmLabel: confirmLabel,
             onConfirm: () => rootNavigation.goBack(),
           }),
         );
@@ -262,8 +269,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           onChangeText={onChangeText}
           value={content}
           ComponentInput={PostInput}
-          title={t('post:mention_title')}
-          emptyContent={t('post:mention_empty_content')}
+          title={i18n.t('post:mention_title')}
+          emptyContent={i18n.t('post:mention_empty_content')}
           getDataPromise={postDataHelper.getSearchMentionAudiences}
           getDataParam={{group_ids: strGroupIds}}
           getDataResponseKey={'data'}
