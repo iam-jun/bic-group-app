@@ -84,7 +84,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               <View style={styles.closeButton}>
                 <Icon
                   icon={'iconClose'}
-                  size={12}
+                  size={14}
                   tintColor={theme.colors.iconTint}
                   onPress={_onDismiss}
                 />
