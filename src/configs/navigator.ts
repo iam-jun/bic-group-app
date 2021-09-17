@@ -82,6 +82,22 @@ export const linkingConfigFull = {
   ],
   config: {
     screens: {
+      AuthStack: {
+        screens: {
+          Landing: {
+            path: 'welcome',
+          },
+          SignIn: {
+            path: 'login',
+          },
+          SignUp: {
+            path: 'register',
+          },
+          ForgotPassword: {
+            path: 'reset-password',
+          },
+        },
+      },
       MainStack: {
         screens: {
           main: {
@@ -194,6 +210,22 @@ export const linkingConfigFullLaptop = {
   ],
   config: {
     screens: {
+      AuthStack: {
+        screens: {
+          Landing: {
+            path: 'welcome',
+          },
+          SignIn: {
+            path: 'login',
+          },
+          SignUp: {
+            path: 'register',
+          },
+          ForgotPassword: {
+            path: 'reset-password',
+          },
+        },
+      },
       MainStack: {
         screens: {
           main: {
