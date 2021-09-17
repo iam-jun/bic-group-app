@@ -27,8 +27,9 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {dimension} from '~/theme';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {margin, padding} from '~/theme/spacing';
+import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 
 export interface CreatePostProps {
@@ -45,6 +46,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+  const styles = themeStyles(theme);
 
   let initPostData: IPostActivity = {};
   if (postId) {
@@ -134,7 +136,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            style: styles.alertModal,
+            style: styles.alertDiscard,
             title: title,
             content: i18n.t('post:alert_content_back_edit_post'),
             showCloseButton: true,
@@ -150,7 +152,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (content) {
         dispatch(
           modalActions.showAlert({
-            style: styles.alertModal,
+            style: styles.alertDiscard,
             title: title,
             content: i18n.t('post:alert_content_back_create_post'),
             showCloseButton: true,
@@ -293,56 +295,63 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  flex1: {flex: 1},
-  container: {
-    flex: 1,
-  },
-  header: {
-    justifyContent: 'space-between',
-  },
-  sendTo: {
-    marginHorizontal: margin.big,
-    marginVertical: margin.base,
-  },
-  chooseAudience: {
-    marginHorizontal: margin.small,
-    marginVertical: margin.base,
-    borderRadius: 50,
-    paddingHorizontal: padding.base,
-    paddingVertical: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textContent: {
-    minHeight: 500,
-    marginVertical: margin.base,
-    marginHorizontal: margin.big,
-  },
-  button: {
-    height: 35,
-  },
-  actionList: {
-    justifyContent: 'flex-end',
-    marginVertical: margin.big,
-  },
-  audienceList: {
-    marginBottom: margin.large,
-    marginHorizontal: margin.large,
-  },
-  mentionInputModal: {
-    maxHeight: 180,
-  },
-  alertModal: {
-    ...Platform.select({
-      web: {
-        width: '100%',
-        minWidth: 320,
-        maxWidth: dimension.maxNewsfeedWidth,
-        marginHorizontal: margin.big,
-      },
-    }),
-  },
-});
+const themeStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+  const defaultAlertDiscardWidth = 320;
+  const alertDiscardWidth =
+    (100 * defaultAlertDiscardWidth) / deviceDimensions.phone;
+
+  return StyleSheet.create({
+    flex1: {flex: 1},
+    container: {
+      flex: 1,
+    },
+    header: {
+      justifyContent: 'space-between',
+    },
+    sendTo: {
+      marginHorizontal: spacing.margin.big,
+      marginVertical: spacing.margin.base,
+    },
+    chooseAudience: {
+      marginHorizontal: spacing.margin.small,
+      marginVertical: spacing.margin.base,
+      borderRadius: 50,
+      paddingHorizontal: padding.base,
+      paddingVertical: 3,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    textContent: {
+      minHeight: 500,
+      marginVertical: spacing.margin.base,
+      marginHorizontal: spacing.margin.big,
+    },
+    button: {
+      height: 35,
+    },
+    actionList: {
+      justifyContent: 'flex-end',
+      marginVertical: spacing.margin.big,
+    },
+    audienceList: {
+      marginBottom: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
+    },
+    mentionInputModal: {
+      maxHeight: 180,
+    },
+    alertDiscard: {
+      ...Platform.select({
+        web: {
+          width: alertDiscardWidth + '%',
+          minWidth: 320,
+          maxWidth: dimension.maxNewsfeedWidth,
+          height: 148,
+        },
+      }),
+    },
+  });
+};
 
 export default CreatePost;
