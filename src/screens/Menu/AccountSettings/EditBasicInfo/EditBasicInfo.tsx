@@ -114,6 +114,7 @@ const EditBasicInfo = () => {
           onConfirm: () => navigation.goBack(),
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
+          stretchOnWeb: true,
         }),
       );
     } else {
