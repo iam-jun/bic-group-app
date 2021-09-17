@@ -50,7 +50,7 @@
         "over_file_size": "Your file must be less than 10MB"
       }
     },
-    "text_discard_changes": "Discard Changes?",
+    "label_discard_changes": "Discard Changes",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
     "text_invite": "Invite",
     "text_search_not_found": "Not found",
