@@ -259,6 +259,7 @@
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",
     "label_post_audiences": "Post Audiences",
+    "label_desc_post_audiences": "Members of group(s) below will be able to see the post, create comments and send reactions.",
     "label_like": "Like",
     "label_comment": "Comment",
     "label_share": "Share",

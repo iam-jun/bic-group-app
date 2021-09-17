@@ -206,6 +206,7 @@
     "label_view_more_replies": "Xem thêm {0} trả lời",
     "label_likes_with_me": "Bạn và {0} người khác",
     "label_post_audiences": "Đối tượng bài viết",
+    "label_desc_post_audiences": "Thành viên trong những nhóm dưới đây có thể xem, bình luận và tương tác với bài viết.",
     "label_like": "Thích",
     "label_comment": "Bình luận",
     "label_share": "Chia sẻ",

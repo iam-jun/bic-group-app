@@ -6,11 +6,13 @@ import {
   Keyboard,
   LayoutChangeEvent,
   Modal,
+  StyleProp,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
+  ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {useTheme, Modal as PaperModal} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 export interface Props {
@@ -24,10 +26,15 @@ export interface Props {
     x: number;
     y: number;
   };
+
   deltaX?: number;
   deltaY?: number;
   menuMinWidth?: number;
   menuMinHeight?: number;
+  isContextMenu?: boolean;
+  modalStyle?: StyleProp<ViewStyle>;
+  webModalStyle?: StyleProp<ViewStyle>;
+
   onClose: () => void;
 }
 
@@ -43,6 +50,8 @@ const BaseBottomSheet: React.FC<Props> = ({
   deltaY = 0,
   menuMinWidth,
   menuMinHeight,
+  isContextMenu = true,
+  webModalStyle,
   onClose,
 }: Props) => {
   const theme = useTheme() as ITheme;
@@ -123,28 +132,40 @@ const BaseBottomSheet: React.FC<Props> = ({
   return (
     <>
       {children}
-      {!hideModal && (
-        <Modal transparent animationType="fade" visible={visible}>
-          <TouchableWithoutFeedback onPress={_onClosed}>
-            <View style={styles.container}>
-              <View
-                onLayout={onLayout}
-                style={[
-                  styles.menu,
-                  {opacity: boxSize.width > 0 ? 1 : 0},
-                  {left: _position.x, top: _position.y},
-                  {minWidth: menuMinWidth, minHeight: menuMinHeight},
-                ]}>
-                {flatListProps ? (
-                  <FlatList {...flatListProps} />
-                ) : (
-                  ContentComponent
-                )}
+      {!hideModal &&
+        (isContextMenu ? (
+          <Modal transparent animationType="fade" visible={visible}>
+            <TouchableWithoutFeedback onPress={_onClosed}>
+              <View style={styles.menuContainer}>
+                <View
+                  onLayout={onLayout}
+                  style={[
+                    styles.menu,
+                    {opacity: boxSize.width > 0 ? 1 : 0},
+                    {left: _position.x, top: _position.y},
+                    {minWidth: menuMinWidth, minHeight: menuMinHeight},
+                  ]}>
+                  {flatListProps ? (
+                    <FlatList {...flatListProps} />
+                  ) : (
+                    ContentComponent
+                  )}
+                </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-      )}
+            </TouchableWithoutFeedback>
+          </Modal>
+        ) : (
+          <PaperModal
+            visible={visible}
+            dismissable
+            onDismiss={_onClosed}
+            contentContainerStyle={StyleSheet.flatten([
+              styles.modalContainer,
+              webModalStyle,
+            ])}>
+            {flatListProps ? <FlatList {...flatListProps} /> : ContentComponent}
+          </PaperModal>
+        ))}
     </>
   );
 };
@@ -153,9 +174,18 @@ const themeStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    container: {
+    menuContainer: {
       width: '100%',
       height: '100%',
+    },
+    modalContainer: {
+      minWidth: 320,
+      minHeight: 400,
+      backgroundColor: colors.background,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      borderRadius: spacing.borderRadius.small,
+      alignSelf: 'center',
     },
     menu: {
       position: 'absolute',
