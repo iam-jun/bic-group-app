@@ -8,18 +8,17 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import {MessageOptionType, roomTypes} from '~/constants/chat';
+import {MessageOptionType} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
 import {RootStackParamList} from '~/interfaces/IRouter';
-import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
-import {getAvatar, getDefaultAvatar} from '../helper';
+import {getDefaultAvatar} from '../helper';
 import {
   ChatInput,
   ListMessages,
@@ -44,16 +43,9 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
-  const isDirect = conversation.type === roomTypes.DIRECT;
 
   const onLoadAvatarError = () => {
-    if (isDirect) setAvatar(images.img_user_avatar_default);
-    else {
-      const {usernames} = conversation;
-      if (usernames)
-        setAvatar(usernames.map((username: string) => getAvatar(username)));
-      else setAvatar(getDefaultAvatar(conversation?.name));
-    }
+    setAvatar(getDefaultAvatar(conversation?.name));
   };
 
   useEffect(() => {
@@ -63,13 +55,12 @@ const Conversation = () => {
   useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
-      _getMessages();
     }
-  }, [route.params]);
+  }, [route.params?.roomId]);
 
   useEffect(() => {
-    conversation._id && _getMessages();
-  }, [conversation._id]);
+    _getMessages();
+  }, [conversation?._id]);
 
   useEffect(() => {
     if (!!error) {
@@ -175,7 +166,7 @@ const Conversation = () => {
         inverted={Platform.OS !== 'web'}
         data={messages.data}
         keyboardShouldPersistTaps="handled"
-        onEndReached={loadMoreMessages}
+        onEndReached={Platform.OS !== 'web' ? loadMoreMessages : null}
         onEndReachedThreshold={0.5}
         removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
@@ -234,4 +225,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default Conversation;
+export default React.memo(Conversation);
