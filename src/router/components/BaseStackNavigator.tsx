@@ -22,7 +22,7 @@ const BaseStackNavigator = ({
             name={component} // TODO: refactor
             component={screens[component]}
             options={{
-              animationEnabled: true,
+              // animationEnabled: true,
               headerShown: false,
               title: name,
             }}
