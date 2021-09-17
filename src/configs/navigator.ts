@@ -258,7 +258,7 @@ export const linkingConfigFullLaptop = {
               'account-settings': {
                 path: 'settings',
               },
-              'user-settings': {
+              'user-edit': {
                 path: 'settings/account',
               },
               'edit-basic-info': {

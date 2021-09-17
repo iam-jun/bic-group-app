@@ -15,10 +15,8 @@ import AccoutSettings from '~/screens/Menu/AccountSettings';
 import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasicInfo';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
-import UserSettings from '~/screens/Menu/AccountSettings/UserProfile';
 import ComponentCollection from '~/screens/Menu/ComponentCollection';
-import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
-import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
+import UserProfile from '~/screens/Menu/UserProfile';
 import NewFeature from '~/screens/NewFeature';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import CreateComment from '~/screens/Post/CreateComment';
@@ -59,13 +57,11 @@ export const screensWebLaptop = {
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
-  'my-profile': MyProfile,
   'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
   // menu: Menu,
   'component-collection': ComponentCollection,
   'account-settings': AccoutSettings,
-  'user-settings': UserSettings,
   'security-and-login': SecurityLogin,
   'change-password': ChangePassword,
   'edit-basic-info': EditBasicInfo,
