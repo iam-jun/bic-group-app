@@ -489,6 +489,19 @@ function* handleRemoveMessage(data: any) {
   }
 }
 
+function* handleAddNewRoom(data: any) {
+  try {
+    const {chat, auth} = yield select();
+
+    yield put(
+      actions.createConversationSuccess(mapConversation(auth.user, data)),
+    );
+    yield getSubscriptions();
+  } catch (err) {
+    console.log('handleAddNewRoom', err);
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
@@ -512,8 +525,13 @@ function* handleRoomsMessage(payload?: any) {
 
 function* handleNotifyUser(payload?: any) {
   const data = payload.fields.args || [];
-  if (data[0] === 'removed') {
-    yield put(actions.kickMeOut(data[1]));
-    navigation.replace(chatStack.conversationList);
+  switch (data[0]) {
+    case 'removed':
+      yield put(actions.kickMeOut(data[1]));
+      navigation.replace(chatStack.conversationList);
+      break;
+    case 'inserted':
+      yield handleAddNewRoom(data[1]);
+      break;
   }
 }
