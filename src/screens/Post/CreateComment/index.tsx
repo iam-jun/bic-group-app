@@ -7,7 +7,6 @@ import {ITheme} from '~/theme/interfaces';
 
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {useBaseHook} from '~/hooks';
 import postActions from '~/screens/Post/redux/actions';
 import {IActivityData, IReaction} from '~/interfaces/IPost';
 import * as modalActions from '~/store/modal/actions';
@@ -34,7 +33,6 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
@@ -119,8 +117,8 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         onChangeText={onChangeText}
         value={content}
         ComponentInput={PostInput}
-        title={t('post:mention_title')}
-        emptyContent={t('post:mention_empty_content')}
+        title={i18n.t('post:mention_title')}
+        emptyContent={i18n.t('post:mention_empty_content')}
         getDataPromise={postDataHelper.getSearchMentionAudiences}
         getDataParam={{group_ids: groupIds}}
         getDataResponseKey={'data'}
