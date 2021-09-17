@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {Keyboard, Platform, StyleSheet, View} from 'react-native';
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
@@ -26,8 +26,6 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
-import {dimension} from '~/theme';
-import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
@@ -136,7 +134,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            style: styles.alertDiscard,
             title: title,
             content: i18n.t('post:alert_content_back_edit_post'),
             showCloseButton: true,
@@ -144,6 +141,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             cancelLabel: cancelLabel,
             confirmLabel: confirmLabel,
             onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
@@ -152,7 +150,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (content) {
         dispatch(
           modalActions.showAlert({
-            style: styles.alertDiscard,
             title: title,
             content: i18n.t('post:alert_content_back_create_post'),
             showCloseButton: true,
@@ -160,6 +157,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             cancelLabel: cancelLabel,
             confirmLabel: confirmLabel,
             onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
@@ -297,9 +295,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
 const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
-  const defaultAlertDiscardWidth = 320;
-  const alertDiscardWidth =
-    (100 * defaultAlertDiscardWidth) / deviceDimensions.phone;
 
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -340,16 +335,6 @@ const themeStyles = (theme: ITheme) => {
     },
     mentionInputModal: {
       maxHeight: 180,
-    },
-    alertDiscard: {
-      ...Platform.select({
-        web: {
-          width: alertDiscardWidth + '%',
-          minWidth: 320,
-          maxWidth: dimension.maxNewsfeedWidth,
-          height: 148,
-        },
-      }),
     },
   });
 };
