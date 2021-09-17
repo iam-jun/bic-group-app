@@ -11,9 +11,9 @@ export interface IShowAlert {
   cancelBtn?: boolean;
   cancelLabel?: string;
   onCancel?: () => void;
-  onDissmiss?: () => void;
+  onDismiss?: () => void;
   confirmLabel: string;
-  isDismissable?: boolean;
+  isDismissible?: boolean;
   showCloseButton?: boolean;
 }
 

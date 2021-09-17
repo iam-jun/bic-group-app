@@ -16,7 +16,7 @@ export const initState = {
     onCancel: () => {
       // do something
     },
-    isDismissable: true,
+    isDismissible: true,
     showCloseButton: false,
   },
   alertNewFeature: {
