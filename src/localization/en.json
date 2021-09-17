@@ -12,6 +12,7 @@
     "text_copied_to_clipboard": "Copied to clipboard",
     "btn_cancel": "Cancel",
     "btn_delete": "Delete",
+    "btn_continue_editing": "Continue Editing",
     "btn_discard": "Discard",
     "btn_edit": "Edit",
     "btn_save": "Save",
@@ -50,8 +51,9 @@
         "over_file_size": "Your file must be less than 10MB"
       }
     },
-    "text_discard_changes": "Discard Changes?",
+    "label_discard_changes": "Discard Changes",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "text_discard_warning": "If you discard now, you'll lose any changes that you've made",
     "text_invite": "Invite",
     "text_search_not_found": "Not found",
     "title_group_add_member": {
