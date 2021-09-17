@@ -311,7 +311,7 @@ const createStyle = (theme: ITheme, isLaptop: boolean) => {
       }),
     },
     postDetailContainer: {
-      flex: !isLaptop ? 1 : undefined,
+      flex: 1,
 
       ...Platform.select({
         web: {
