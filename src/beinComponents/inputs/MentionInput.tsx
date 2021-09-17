@@ -103,7 +103,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
     onChangeText?.(content);
   }, [content]);
 
-  const getData = (mentionKey: string) => {
+  const getData = (mentionKey: string, getDataParam: any) => {
     if (getDataPromise && getDataParam) {
       const param = {...getDataParam, key: mentionKey};
       setIsLoading(true);
@@ -126,13 +126,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   const _onStartMention = () => {
-    getData('');
+    getData('', getDataParam);
   };
 
   const _onMentionText = useRef(
-    debounce((mentionKey: string) => {
+    debounce((mentionKey: string, getDataParam: any) => {
       onMentionText?.(mentionKey);
-      getData(mentionKey);
+      getData(mentionKey, getDataParam);
     }, 200),
   ).current;
 
@@ -149,7 +149,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
       isMention = true;
     }
     if (mentionKey) {
-      _onMentionText(mentionKey);
+      _onMentionText(mentionKey, getDataParam);
     }
     setMentioning(isMention);
     setContent(text);
