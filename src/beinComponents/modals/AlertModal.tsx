@@ -44,6 +44,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     cancelBtn,
     cancelLabel,
     showCloseButton,
+    style: alertModalStyle,
   } = alert;
   const _cancelLabel = cancelLabel
     ? cancelLabel
@@ -66,7 +67,11 @@ const AlertModal: React.FC<AlertModalProps> = ({
       visible={visible}
       dismissable={isDismissible}
       onDismiss={_onDismiss}
-      contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
+      contentContainerStyle={StyleSheet.flatten([
+        styles.modal,
+        style,
+        alertModalStyle,
+      ])}
       {...props}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>

@@ -18,6 +18,7 @@ export const initState = {
     },
     isDismissible: true,
     showCloseButton: false,
+    style: {},
   },
   alertNewFeature: {
     visible: false,

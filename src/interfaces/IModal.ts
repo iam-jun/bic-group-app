@@ -1,3 +1,4 @@
+import {StyleProp, ViewStyle} from 'react-native';
 import {TextInputProps} from '~/beinComponents/inputs/TextInput';
 import {ReactionType} from '~/constants/reactions';
 
@@ -15,6 +16,7 @@ export interface IShowAlert {
   confirmLabel: string;
   isDismissible?: boolean;
   showCloseButton?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 export interface IPayloadReactionDetailBottomSheet {
