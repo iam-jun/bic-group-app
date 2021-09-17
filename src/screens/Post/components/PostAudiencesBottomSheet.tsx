@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
+import {View, StyleSheet, SectionList, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -20,13 +20,15 @@ import menuActions from '~/screens/Menu/redux/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import {useUserIdAuth} from '~/hooks/auth';
+import Button from '~/beinComponents/Button';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   const styles = createStyle(theme, insets);
 
   const postAudienceSheetRef = useRef<any>();
@@ -34,6 +36,10 @@ const PostAudiencesBottomSheet = () => {
 
   const {isShow, data, fromStack} = postAudienceSheet || {};
   const currentUserId = useUserIdAuth();
+
+  const onPressClose = () => {
+    postAudienceSheetRef?.current?.close?.();
+  };
 
   const onPressItem = (item: any) => {
     const {id, type} = item || {};
@@ -51,7 +57,7 @@ const PostAudiencesBottomSheet = () => {
         },
       });
     }
-    postAudienceSheetRef?.current?.close?.();
+    onPressClose();
   };
 
   const renderSectionHeader = () => null;
@@ -102,18 +108,37 @@ const PostAudiencesBottomSheet = () => {
     return <LoadingIndicator />;
   };
 
-  const renderContent = () => {
+  const renderHeader = () => {
     return (
-      <View style={styles.container}>
+      <View style={styles.headerContainer}>
         <Text.H6 style={styles.header} useI18n>
           post:label_post_audiences
         </Text.H6>
+        <Text.Subtitle useI18n color={colors.textSecondary}>
+          post:label_desc_post_audiences
+        </Text.Subtitle>
+        {Platform.OS === 'web' && (
+          <Button style={styles.icClose} onPress={onPressClose}>
+            <Icon icon={'iconClose'} />
+          </Button>
+        )}
+      </View>
+    );
+  };
+
+  const renderContent = () => {
+    return (
+      <View style={styles.container}>
+        {renderHeader()}
         <SectionList
           style={styles.sectionContainer}
           showsVerticalScrollIndicator={false}
           sections={data || []}
           keyExtractor={(item, index) => `section_list_${item}_${index}`}
           renderSectionHeader={renderSectionHeader}
+          ListHeaderComponent={() => (
+            <ViewSpacing height={spacing.margin.small} />
+          )}
           ListEmptyComponent={renderEmpty}
           renderItem={renderItem}
         />
@@ -125,7 +150,9 @@ const PostAudiencesBottomSheet = () => {
     <BottomSheet
       modalizeRef={postAudienceSheetRef}
       isOpen={isShow}
-      menuMinWidth={500}
+      menuMinWidth={375}
+      isContextMenu={false}
+      webModalStyle={{width: 375}}
       ContentComponent={renderContent()}
       onClose={() => dispatch(postActions.hidePostAudiencesBottomSheet())}
     />
@@ -133,19 +160,26 @@ const PostAudiencesBottomSheet = () => {
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, dimension} = theme;
+  const {spacing, dimension, colors} = theme;
   return StyleSheet.create({
     container: {
-      height: 0.7 * dimension?.deviceHeight,
-      paddingHorizontal: spacing.padding.large,
+      height:
+        Platform.select({web: 0.55, default: 0.7}) * dimension?.deviceHeight,
+      paddingHorizontal: 0,
       paddingBottom: 0,
+    },
+    headerContainer: {
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.small,
+      paddingTop: Platform.select({web: spacing.padding.small, default: 0}),
+      borderBottomWidth: 1,
+      borderColor: colors.borderDivider,
     },
     sectionContainer: {
       paddingBottom: spacing.padding.base + insets.bottom,
     },
     header: {
       paddingTop: spacing.padding.small,
-      paddingBottom: spacing.padding.large,
     },
     itemGroupContent: {
       flexDirection: 'row',
@@ -155,6 +189,11 @@ const createStyle = (theme: ITheme, insets: any) => {
     },
     diamond: {
       marginHorizontal: spacing.margin.tiny,
+    },
+    icClose: {
+      position: 'absolute',
+      top: spacing.margin.base,
+      right: spacing.margin.base,
     },
   });
 };
