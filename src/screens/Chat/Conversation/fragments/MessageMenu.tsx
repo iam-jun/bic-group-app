@@ -34,18 +34,24 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
     },
   };
 
-  const renderOption = (option: any) => {
-    return (
-      <ButtonWrapper onPress={option.onPress} style={styles.option}>
-        <Icon icon={option.icon} tintColor={colors.textSecondary} size={16} />
-      </ButtonWrapper>
-    );
-  };
-
   return (
     <Div className="chat-message-menu">
       <View style={styles.container}>
-        {Object.values(options).map(option => renderOption(option))}
+        {Object.values(options).map(option => {
+          return (
+            <ButtonWrapper
+              key={option.icon}
+              onPress={option.onPress}
+              style={styles.option}>
+              <Icon
+                // @ts-ignore
+                icon={option.icon}
+                tintColor={colors.textSecondary}
+                size={16}
+              />
+            </ButtonWrapper>
+          );
+        })}
       </View>
     </Div>
   );
