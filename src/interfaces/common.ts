@@ -29,18 +29,6 @@ export interface IRightMenu {
   title: string;
 }
 
-export type IUploadType =
-  | 'userAvatar'
-  | 'userCover'
-  | 'groupAvatar'
-  | 'groupCover'
-  | 'postImage'
-  | 'postVideo'
-  | 'postFile'
-  | 'chatImage'
-  | 'chatVideo'
-  | 'chatFile';
-
 export interface IFilePicked {
   name: string;
   filename: string;

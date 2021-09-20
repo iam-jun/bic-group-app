@@ -16,7 +16,6 @@ import {
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
-import {IUploadType} from '~/interfaces/common';
 
 const providers = {
   bein: {
@@ -34,8 +33,12 @@ const providers = {
 };
 
 const Upload = {
-  uploadFile: (type: IUploadType, data: FormData): HttpApiRequestConfig => {
-    const uploadEndPoint = {
+  uploadFile: (
+    type: any,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+  ): HttpApiRequestConfig => {
+    const uploadEndPoint: any = {
       userAvatar: '/upload/user-avatar',
       userCover: '/upload/user-cover',
       groupAvatar: '/upload/group-avatar',
@@ -57,6 +60,7 @@ const Upload = {
       },
       useRetry: false,
       provider: providers.bein,
+      onUploadProgress: onUploadProgress,
       data,
     };
   },
