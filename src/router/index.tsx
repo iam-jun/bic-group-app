@@ -48,7 +48,7 @@ import {rootSwitch} from './stack';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const StackNavigator = ({initialLeftTab}: any): React.ReactElement => {
+const StackNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();

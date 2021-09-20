@@ -25,7 +25,7 @@ const createStyles = (theme: ITheme) => {
     container: {
       alignItems: 'center',
       paddingHorizontal: spacing.padding.big,
-      paddingBottom: spacing.padding.big,
+      paddingBottom: spacing.padding.small,
     },
     text: {
       color: colors.textSecondary,

@@ -16,7 +16,7 @@ interface SettingItemProps {
   leftIcon?: IconType;
   privacyIcon?: IconType;
   isTouchDisabled?: boolean;
-  onPress?: () => void;
+  onPress?: (...params: any) => void;
 }
 
 const SettingItem = ({

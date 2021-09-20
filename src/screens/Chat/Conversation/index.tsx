@@ -1,6 +1,6 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
-import React, {createRef, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -32,7 +32,6 @@ const Conversation = () => {
   const {user} = useAuth();
   const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
-  const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
@@ -45,7 +44,7 @@ const Conversation = () => {
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
-  const listRef = createRef<FlatList>();
+  const listRef = useRef<FlatList>(null);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 50,
@@ -147,13 +146,6 @@ const Conversation = () => {
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
-  const onScroll = (event: any) => {
-    const element = event.target;
-    if (element.scrollTop <= 100) {
-      loadMoreMessages();
-    }
-  };
-
   const onViewableItemsChanged = React.useRef(({changed}: {changed: any[]}) => {
     if (changed && changed.length > 0) {
       setDownButtonVisible(changed[0].index > 20);
@@ -182,11 +174,12 @@ const Conversation = () => {
     return (
       <ListMessages
         listRef={listRef}
-        inverted={Platform.OS !== 'web'}
+        nativeID={'list-messages'}
+        inverted
         data={messages.data}
         keyboardShouldPersistTaps="handled"
-        onEndReached={Platform.OS !== 'web' ? loadMoreMessages : null}
-        onEndReachedThreshold={0.5}
+        onEndReached={loadMoreMessages}
+        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
         removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.recordsPerPage}
@@ -199,7 +192,6 @@ const Conversation = () => {
         ListFooterComponent={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
-        onScroll={onScroll}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current}
       />

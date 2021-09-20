@@ -280,7 +280,7 @@ const PostDetail = (props: any) => {
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
               ListHeaderComponent={renderPostContent}
-              ListFooterComponent={renderFooter}
+              ListFooterComponent={commentCount && renderFooter}
               stickySectionHeadersEnabled={false}
               ItemSeparatorComponent={() => <View />}
               keyboardShouldPersistTaps={'handled'}
