@@ -17,6 +17,7 @@ const initState = {
       active: 0,
       expiresTime: '',
     },
+    images: [],
   },
   createComment: {
     loading: false,
@@ -57,14 +58,6 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         allComments: payload,
-      };
-    case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          isOpenModal: payload,
-        },
       };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
@@ -109,6 +102,14 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           important: payload || initState.createPost.important,
+        },
+      };
+    case postTypes.SET_CREATE_POST_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          images: payload || [],
         },
       };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:

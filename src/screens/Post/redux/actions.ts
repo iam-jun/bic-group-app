@@ -18,6 +18,7 @@ import {
   IPayloadCreateComment,
   IPayloadReplying,
   IPayloadGetPostDetail,
+  ICreatePostImage,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -53,6 +54,10 @@ const postActions = {
   }),
   setCreatePostImportant: (payload?: IActivityImportant) => ({
     type: postTypes.SET_CREATE_POST_IMPORTANT,
+    payload,
+  }),
+  setCreatePostImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES,
     payload,
   }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({

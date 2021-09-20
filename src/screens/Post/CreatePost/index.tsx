@@ -86,6 +86,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
     return () => {
       dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setCreatePostImages([]));
     };
   }, []);
 

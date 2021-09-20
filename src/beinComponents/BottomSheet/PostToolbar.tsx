@@ -33,11 +33,9 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import ImagePicker from '~/beinComponents/ImagePicker';
-import FileUploader, {uploadTypes} from '~/services/fileUploader';
-import {rootNavigationRef} from '~/router/navigator/refs';
 import {useRootNavigation} from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {ICreatePostImage} from '~/interfaces/IPost';
 
 const MAX_DAYS = 7;
 
@@ -92,39 +90,12 @@ const PostToolbar = ({
 
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
-    // ImagePicker.openPickerSingle().then(file => {
-    //   FileUploader.getInstance()
-    //     .upload({
-    //       uploadType: uploadTypes.postImage,
-    //       file: file,
-    //     })
-    //     .then(url => {
-    //       console.log(`\x1b[32m🐣️ PostToolbar upload success: ${url}\x1b[0m`);
-    //     })
-    //     .catch(error => {
-    //       console.log(`\x1b[31m🐣️ PostToolbar upload Error ${error}\x1b[0m`);
-    //     });
-    //   const result = FileUploader.getInstance().getFile(
-    //     file.name,
-    //     url => {
-    //       console.log(`\x1b[32m🐣️ PostToolbar get success: ${url}\x1b[0m`);
-    //     },
-    //     percent => {
-    //       console.log(
-    //         `\x1b[34m🐣️ PostToolbar get percent: ${percent} \x1b[0m`,
-    //       );
-    //     },
-    //   );
-    //   console.log(
-    //     `\x1b[34m🐣️ PostToolbar result: `,
-    //     `${JSON.stringify(result, undefined, 2)}\x1b[0m`,
-    //   );
-    // });
     ImagePicker.openPickerMultiple().then(images => {
-      console.log(
-        `\x1b[34m🐣️ PostToolbar openPickerMultiple result`,
-        `${JSON.stringify(images, undefined, 2)}\x1b[0m`,
-      );
+      const selectedImages: ICreatePostImage[] = [];
+      images.map(item => {
+        selectedImages.push({fileName: item.filename, file: item});
+      });
+      dispatch(postActions.setCreatePostImages(selectedImages));
       rootNavigation.navigate(homeStack.postSelectImage);
     });
   };

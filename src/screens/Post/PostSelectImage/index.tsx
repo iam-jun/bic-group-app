@@ -11,6 +11,8 @@ import {useRootNavigation} from '~/hooks/navigation';
 import * as modalActions from '~/store/modal/actions';
 import i18n from '~/localization';
 import {useDispatch} from 'react-redux';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface PostSelectImageProps {
   style?: StyleProp<ViewStyle>;
@@ -24,6 +26,9 @@ const PostSelectImage: FC<PostSelectImageProps> = ({
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const selectedImages =
+    useKeySelector(postKeySelector.createPost.images) || [];
 
   const onPressBack = () => {
     dispatch(
@@ -55,6 +60,7 @@ const PostSelectImage: FC<PostSelectImageProps> = ({
         onPressBack={onPressBack}
         onPressButton={onPressSave}
       />
+      <Text>{JSON.stringify(selectedImages)}</Text>
     </ScreenWrapper>
   );
 };
