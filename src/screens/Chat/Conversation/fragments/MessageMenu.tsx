@@ -1,6 +1,7 @@
 import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -35,11 +36,9 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
 
   const renderOption = (option: any) => {
     return (
-      <Icon
-        icon={option.icon}
-        tintColor={colors.textSecondary}
-        onPress={option.onPress}
-      />
+      <ButtonWrapper onPress={option.onPress} style={styles.option}>
+        <Icon icon={option.icon} tintColor={colors.textSecondary} size={16} />
+      </ButtonWrapper>
     );
   };
 
@@ -58,16 +57,18 @@ const createStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       backgroundColor: colors.background,
-      borderRadius: spacing.borderRadius.base,
+      borderRadius: spacing.borderRadius.small,
       borderColor: colors.placeholder,
       borderWidth: 1,
-      // padding: spacing.padding.small,
       position: 'absolute',
       top: -16,
       right: 0,
     },
-    icon: {
-      // marginRight: spacing.margin.small,
+    option: {
+      width: 24,
+      height: 24,
+      alignContent: 'center',
+      justifyContent: 'center',
     },
   });
 };
