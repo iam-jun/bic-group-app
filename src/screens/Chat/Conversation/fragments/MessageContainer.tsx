@@ -127,11 +127,10 @@ const createStyles = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.base,
     },
     messageWithHeader: {
-      marginTop: -18, // push message up so that it is right below the user's name
+      marginTop: -20, // push message up so that it is right below the user's name
     },
     message: {
       marginStart: 48,
-      paddingBottom: spacing.padding.tiny,
       lineHeight: 20,
     },
     removedText: {
