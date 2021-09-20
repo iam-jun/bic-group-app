@@ -52,7 +52,7 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      marginTop: spacing.margin.small,
+      marginTop: spacing.margin.tiny,
       flexDirection: 'row',
       alignItems: 'flex-start',
     },
@@ -63,7 +63,6 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingLeft: spacing.padding.base,
-      marginBottom: spacing.margin.base,
     },
     textName: {
       textTransform: 'capitalize',
