@@ -78,7 +78,7 @@ const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    contentComponent: {marginHorizontal: spacing.margin.base},
+    contentComponent: {},
     chooseText: {
       margin: spacing.margin.base,
     },
