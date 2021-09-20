@@ -1,22 +1,24 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 
 interface Props {
+  visible: boolean;
   onDownPress: () => void;
 }
 
-const DownButton = ({onDownPress}: Props) => {
+const DownButton = ({visible, onDownPress}: Props) => {
+  if (Platform.OS === 'web' || !visible) return null;
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   return (
     <Icon
       iconStyle={styles.container}
-      backgroundColor={theme.colors.background}
-      icon="AngleDown"
+      tintColor={theme.colors.accent}
+      icon="ArrowDown"
       onPress={onDownPress}
     />
   );
@@ -30,9 +32,10 @@ const createStyle = (theme: ITheme) => {
       bottom: 24,
       right: 24,
       borderWidth: 1,
-      padding: 6,
-      borderColor: colors.accent,
-      borderRadius: 99,
+      padding: spacing.padding.small,
+      backgroundColor: colors.background,
+      borderColor: colors.primary3,
+      borderRadius: spacing.borderRadius.large,
       shadowColor: '#000',
       shadowOffset: {
         width: 0,

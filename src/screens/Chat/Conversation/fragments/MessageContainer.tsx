@@ -10,7 +10,6 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import AttachmentView from './AttachmentView';
