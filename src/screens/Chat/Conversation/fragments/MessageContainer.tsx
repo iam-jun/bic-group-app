@@ -92,7 +92,7 @@ const MessageItem = (props: MessageItemProps) => {
           {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
 
           <View
-            style={[styles.message, !hideHeader && styles.messgageWithHeader]}>
+            style={[styles.message, !hideHeader && styles.messageWithHeader]}>
             {removed ? (
               <Text useI18n style={styles.removedText}>
                 {text}
@@ -125,15 +125,12 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
-      marginBottom: spacing.margin.base,
     },
-    messgageWithHeader: {
-      marginTop: -16,
+    messageWithHeader: {
+      marginTop: -20, // push message up so that it is right below the user's name
     },
     message: {
       marginStart: 48,
-      minHeight: 24,
-      paddingVertical: 2,
     },
     removedText: {
       color: colors.textSecondary,
