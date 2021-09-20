@@ -31,7 +31,6 @@ const Conversation = () => {
   const {user} = useAuth();
   const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
-  const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
@@ -138,14 +137,6 @@ const Conversation = () => {
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
-  const onScroll = (event: any) => {
-    const element = event.target;
-
-    if (element.scrollTop <= 100) {
-      loadMoreMessages();
-    }
-  };
-
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
     const props = {
       previousMessage:
@@ -157,17 +148,19 @@ const Conversation = () => {
     };
     return <MessageContainer {...props} />;
   };
+
   const renderChatMessages = () => {
     if (!messages.loading && isEmpty(messages.data))
       return <GroupChatWelcome />;
 
     return (
       <ListMessages
-        inverted={Platform.OS !== 'web'}
+        nativeID={'list-messages'}
+        inverted
         data={messages.data}
         keyboardShouldPersistTaps="handled"
-        onEndReached={Platform.OS !== 'web' ? loadMoreMessages : null}
-        onEndReachedThreshold={0.5}
+        onEndReached={loadMoreMessages}
+        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
         removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.recordsPerPage}
@@ -180,7 +173,6 @@ const Conversation = () => {
         ListFooterComponent={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
-        onScroll={onScroll}
       />
     );
   };
