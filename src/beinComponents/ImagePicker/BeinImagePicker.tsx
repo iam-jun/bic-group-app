@@ -33,8 +33,30 @@ const openPickerSingle = async (option = {}) => {
   }
 };
 
+const openPickerMultiple = async (option = {}) => {
+  try {
+    const images = await ImagePicker.openPicker({
+      cropping: false,
+      mediaType: 'any',
+      multiple: true,
+      compressVideoPreset: 'Passthrough',
+      ...option,
+    });
+    if (images?.length > 0) {
+      const result: IFilePicked[] = [];
+      images?.map(image => result.push(formatImage(image)));
+      return Promise.resolve(result);
+    } else {
+      return Promise.reject('images not found');
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 const BeinImagePicker = {
   openPickerSingle,
+  openPickerMultiple,
 };
 
 export default BeinImagePicker;
