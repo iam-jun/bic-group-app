@@ -16,6 +16,7 @@ import {
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
+import {IUploadType} from '~/interfaces/common';
 
 const providers = {
   bein: {
@@ -29,6 +30,35 @@ const providers = {
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
+  },
+};
+
+const Upload = {
+  uploadFile: (type: IUploadType, data: FormData): HttpApiRequestConfig => {
+    const uploadEndPoint = {
+      userAvatar: '/upload/user-avatar',
+      userCover: '/upload/user-cover',
+      groupAvatar: '/upload/group-avatar',
+      groupCover: '/upload/group-cover',
+      postImage: 'upload/post-image',
+      postVideo: '/upload/post-video',
+      postFile: '/upload/post-file',
+      chatImage: '/upload/chat-image',
+      chatVideo: '/upload/chat-video',
+      chatFile: '/upload/chat-file',
+    };
+
+    const url = `${providers.bein.url}${uploadEndPoint[type]}`;
+    return {
+      url,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: false,
+      provider: providers.bein,
+      data,
+    };
   },
 };
 
@@ -306,4 +336,5 @@ export default {
 
   App,
   Chat,
+  Upload,
 };

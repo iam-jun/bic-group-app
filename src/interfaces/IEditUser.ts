@@ -1,4 +1,4 @@
-import {IFileResponse} from './common';
+import {IFilePicked} from './common';
 
 export type GENDER_TYPE = 'MALE' | 'FEMALE' | 'OTHERS';
 export type RELATIONSHIP_TYPE =
@@ -10,7 +10,7 @@ export type RELATIONSHIP_TYPE =
 export interface IUserImageUpload {
   id: number;
   fieldName: 'avatar' | 'background_img_url';
-  image: IFileResponse;
+  image: IFilePicked;
 }
 
 export interface IGenderItem {

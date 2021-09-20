@@ -267,10 +267,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           disabled={loading}
         />
         {!isEditPost && (
-          <PostToolbar
-            modalizeRef={toolbarModalizeRef}
-            disabled={loading}
-          />
+          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
         )}
       </ScreenWrapper>
     </View>

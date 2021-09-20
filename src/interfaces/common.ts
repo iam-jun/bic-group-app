@@ -29,11 +29,26 @@ export interface IRightMenu {
   title: string;
 }
 
-export interface IFileResponse {
-  name?: string;
-  uri: string;
-  size: number;
+export type IUploadType =
+  | 'userAvatar'
+  | 'userCover'
+  | 'groupAvatar'
+  | 'groupCover'
+  | 'postImage'
+  | 'postVideo'
+  | 'postFile'
+  | 'chatImage'
+  | 'chatVideo'
+  | 'chatFile';
+
+export interface IFilePicked {
+  name: string;
+  filename: string;
   type: string;
+  mime: string;
+  size: number;
+  uri: string; //app
+  [x: string]: any;
 }
 
 export interface IResponseData {

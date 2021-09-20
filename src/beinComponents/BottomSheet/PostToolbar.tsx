@@ -33,6 +33,7 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import ImagePicker from '~/beinComponents/ImagePicker';
+import FileUploader from '~/services/fileUploader';
 
 const MAX_DAYS = 7;
 
@@ -86,16 +87,8 @@ const PostToolbar = ({
 
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
-    ImagePicker.openPicker({
-      cropping: false,
-      mediaType: 'any',
-      multiple: true,
-      compressVideoPreset: 'Passthrough',
-    }).then(result => {
-      console.log(
-        `\x1b[34m🐣️ PostToolbar result`,
-        `${JSON.stringify(result, undefined, 2)}\x1b[0m`,
-      );
+    ImagePicker.openPickerSingle().then(file => {
+      FileUploader.getInstance().upload(file);
     });
   };
 
