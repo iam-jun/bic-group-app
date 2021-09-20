@@ -1,6 +1,8 @@
 import ApiConfig from '~/configs/apiConfig';
 import {IFilePicked} from '~/interfaces/common';
 import {makeHttpRequest} from '~/services/httpApiRequest';
+import {AppConfig} from '~/configs';
+import i18next from 'i18next';
 
 export const uploadTypes = {
   userAvatar: 'userAvatar',
@@ -21,6 +23,14 @@ export interface IGetFile {
   fileName: string;
   url?: string;
   uploading?: boolean;
+}
+
+export interface IUploadParam {
+  uploadType: IUploadType | string;
+  file: IFilePicked;
+  onSuccess?: (url: string) => void;
+  onProgress?: (percent: number) => void;
+  onError?: (e: any) => void;
 }
 
 export default class FileUploader {
@@ -61,13 +71,8 @@ export default class FileUploader {
     return result;
   }
 
-  upload(
-    uploadType: IUploadType | string,
-    file: IFilePicked,
-    onSuccess: (url: string) => void,
-    onProgress: (percent: number) => void,
-    onError: (e: any) => void,
-  ) {
+  upload(params: IUploadParam) {
+    const {file, uploadType, onSuccess, onProgress, onError} = params || {};
     if (!file) {
       console.log(`\x1b[31m🐣️ fileUploader upload: file not found!\x1b[0m`);
       onError?.('input file not found');
@@ -75,6 +80,12 @@ export default class FileUploader {
     }
     if (this.fileUploaded[file.name]) {
       onSuccess?.(this.fileUploaded[file.name]);
+      return;
+    }
+    if (file.size > AppConfig.maxFileSize) {
+      const error = i18next.t('common:error:file:over_file_size');
+      console.log(`\x1b[31m🐣️ fileUploader upload error: ${error}\x1b[0m`);
+      onError?.(error);
       return;
     }
 
@@ -112,13 +123,13 @@ export default class FileUploader {
           onSuccess?.(url);
           this.callbackSuccess?.[file.name]?.(url);
         } else {
-          onError(response?.data);
+          onError?.(response?.data);
         }
       })
       .catch(e => {
         this.fileUploading[file.name] = false;
         console.log(`\x1b[31m🐣️ fileUploader error `, e, `\x1b[0m`);
-        onError(e);
+        onError?.(e);
       });
   }
 
