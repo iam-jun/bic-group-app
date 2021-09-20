@@ -52,13 +52,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }
 
   const createPostData = useCreatePost();
-  const {
-    loading,
-    isOpenModal,
-    data,
-    chosenAudiences = [],
-    important,
-  } = createPostData || {};
+  const {loading, data, chosenAudiences = [], important} = createPostData || {};
   const {content, images, videos, files} = data || {};
 
   const isEditPost = !!initPostData?.id;
@@ -232,13 +226,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     // }
   };
 
-  const onOpenPostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(true));
-  };
-  const onClosePostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(false));
-  };
-
   return (
     <View style={styles.container}>
       <ScreenWrapper isFullView testID={'CreatePostScreen'}>
@@ -281,9 +268,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         />
         {!isEditPost && (
           <PostToolbar
-            isOpenModal={isOpenModal}
-            onOpenModal={onOpenPostToolbarModal}
-            onCloseModal={onClosePostToolbarModal}
             modalizeRef={toolbarModalizeRef}
             disabled={loading}
           />

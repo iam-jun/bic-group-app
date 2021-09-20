@@ -32,10 +32,6 @@ const postActions = {
     type: postTypes.SET_ALL_COMMENTS,
     payload,
   }),
-  setOpenPostToolBarModal: (payload: boolean) => ({
-    type: postTypes.SET_OPEN_POST_TOOLBAR_MODAL,
-    payload,
-  }),
   setLoadingCreatePost: (payload: boolean) => ({
     type: postTypes.SET_LOADING_CREATE_POST,
     payload,
