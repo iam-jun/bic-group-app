@@ -23,6 +23,7 @@ import CreateComment from '~/screens/Post/CreateComment';
 import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
+import PostSelectImage from '~/screens/Post/PostSelectImage';
 import ChatStack from '../ChatStack';
 import GroupStack from '../GroupStack';
 import HomeStack from '../HomeStack';
@@ -53,6 +54,7 @@ export const screensWebLaptop = {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
+  'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
