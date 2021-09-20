@@ -31,7 +31,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
 
   return (
     <View style={styles.container}>
-      <ButtonWrapper onPress={goProfile}>
+      <ButtonWrapper style={styles.avatarContainer} onPress={goProfile}>
         <Avatar.Medium
           source={user?.avatar}
           placeholderSource={getDefaultAvatar(user.name)}
@@ -52,9 +52,12 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingTop: spacing.padding.tiny,
+      marginTop: spacing.margin.small,
       flexDirection: 'row',
       alignItems: 'flex-start',
+    },
+    avatarContainer: {
+      paddingTop: spacing.margin.tiny,
     },
     viewHeaderInfo: {
       flexDirection: 'row',
