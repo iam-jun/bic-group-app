@@ -131,7 +131,6 @@ const createStyles = (theme: ITheme) => {
     },
     message: {
       marginStart: 48,
-      lineHeight: 20,
     },
     removedText: {
       color: colors.textSecondary,
