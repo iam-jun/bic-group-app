@@ -18,27 +18,35 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
 
   if (Platform.OS !== 'web') return null;
 
+  const options = {
+    react: {
+      icon: 'iconReact',
+      onPress: onReactPress,
+    },
+    reply: {
+      icon: 'iconReplyGrey',
+      onPress: onReplyPress,
+    },
+    settings: {
+      icon: 'iconSettings',
+      onPress: onMenuPress,
+    },
+  };
+
+  const renderOption = (option: any) => {
+    return (
+      <Icon
+        icon={option.icon}
+        tintColor={colors.textSecondary}
+        onPress={option.onPress}
+      />
+    );
+  };
+
   return (
     <Div className="chat-message-menu">
       <View style={styles.container}>
-        <Icon
-          icon={'iconReact'}
-          tintColor={colors.textSecondary}
-          style={styles.icon}
-          onPress={onReactPress}
-        />
-        <Icon
-          icon={'iconReplyGrey'}
-          tintColor={colors.textSecondary}
-          style={styles.icon}
-          onPress={onReplyPress}
-        />
-        <Icon
-          icon={'iconSettings'}
-          tintColor={colors.textSecondary}
-          style={styles.icon}
-          onPress={onMenuPress}
-        />
+        {Object.values(options).map(option => renderOption(option))}
       </View>
     </Div>
   );
@@ -53,13 +61,13 @@ const createStyles = (theme: ITheme) => {
       borderRadius: spacing.borderRadius.base,
       borderColor: colors.placeholder,
       borderWidth: 1,
-      padding: spacing.padding.small,
+      // padding: spacing.padding.small,
       position: 'absolute',
       top: -16,
       right: 0,
     },
     icon: {
-      marginRight: spacing.margin.small,
+      // marginRight: spacing.margin.small,
     },
   });
 };
