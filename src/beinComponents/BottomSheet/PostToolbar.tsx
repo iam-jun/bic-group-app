@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {
   Animated,
+  Keyboard,
   Platform,
   StyleProp,
   StyleSheet,
@@ -14,9 +15,8 @@ import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import {useDispatch} from 'react-redux';
 
-import BaseBottomSheet, {
-  BaseBottomSheetProps,
-} from '~/beinComponents/BottomSheet/BaseBottomSheet';
+import BottomSheet from '~/beinComponents/BottomSheet/index';
+import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
@@ -32,14 +32,11 @@ import {formatDate} from '~/utils/formatData';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
-import * as modalActions from '~/store/modal/actions';
+import ImagePicker from '~/beinComponents/ImagePicker';
 
 const MAX_DAYS = 7;
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
-  isOpenModal: boolean;
-  onOpenModal: () => void;
-  onCloseModal: () => void;
   modalizeRef: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
@@ -47,9 +44,6 @@ export interface PostToolbarProps extends BaseBottomSheetProps {
 }
 
 const PostToolbar = ({
-  isOpenModal,
-  onOpenModal,
-  onCloseModal,
   modalizeRef,
   style,
   containerStyle,
@@ -69,10 +63,9 @@ const PostToolbar = ({
   const createPostData = useCreatePost();
   const {important} = createPostData || {};
 
-  const openModal = throttle(() => {
-    onOpenModal && onOpenModal();
-    // Keyboard.dismiss();
-    // modalizeRef?.current?.open?.();
+  const openModal = throttle((e?: any) => {
+    Keyboard.dismiss();
+    modalizeRef?.current?.open?.(e?.pageX, e?.pageY);
   }, 500);
 
   const handleGesture = (event: GestureEvent<any>) => {
@@ -91,8 +84,19 @@ const PostToolbar = ({
     dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
-  const onPressSelectImage = () => {
-    alert('select image');
+  const _onPressSelectImage = () => {
+    modalizeRef?.current?.close?.();
+    ImagePicker.openPicker({
+      cropping: false,
+      mediaType: 'any',
+      multiple: true,
+      compressVideoPreset: 'Passthrough',
+    }).then(result => {
+      console.log(
+        `\x1b[34m🐣️ PostToolbar result`,
+        `${JSON.stringify(result, undefined, 2)}\x1b[0m`,
+      );
+    });
   };
 
   const onPressSelectFile = () => {
@@ -250,7 +254,7 @@ const PostToolbar = ({
             tintColor: colors.primary7,
             style: {marginRight: spacing?.margin.base},
           }}
-          // onPress={onPressSelectImage}
+          onPress={_onPressSelectImage}
         />
         <PrimaryItem
           height={48}
@@ -301,18 +305,17 @@ const PostToolbar = ({
   };
 
   return (
-    <BaseBottomSheet
-      isOpen={isOpenModal}
+    <BottomSheet
       modalizeRef={modalizeRef}
       ContentComponent={renderContent()}
       panGestureAnimatedValue={animated}
       overlayStyle={{backgroundColor: 'transparent'}}
-      onClose={onCloseModal}
-      menuMinWidth={500}
+      side={'center'}
+      menuMinWidth={400}
       menuMinHeight={300}
       {...props}>
       {renderToolbar()}
-    </BaseBottomSheet>
+    </BottomSheet>
   );
 };
 
@@ -356,8 +359,12 @@ const createStyle = (theme: ITheme) => {
       paddingBottom: spacing?.padding.base,
     },
     importantContainer: {
+      paddingVertical: Platform.select({
+        web: spacing.padding.big,
+        default: spacing.padding.small,
+      }),
+      paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
-      minHeight: 52,
       justifyContent: 'center',
     },
     importantButtons: {
