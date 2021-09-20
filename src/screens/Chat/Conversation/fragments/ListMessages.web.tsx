@@ -1,9 +1,13 @@
 import _ from 'lodash';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 
-const ListMessages = (props: FlatListProps<any>) => {
-  const listRef = useRef(null);
+interface Props extends FlatListProps<any> {
+  listRef?: React.MutableRefObject<FlatList> | null;
+}
+
+const ListMessages = ({listRef, ...props}: Props) => {
+  // const listRef = useRef(null);
   useEffect(() => {
     // @ts-ignore
     const scroll = listRef.current && listRef.current.getScrollableNode();
