@@ -71,22 +71,22 @@ export default class FileUploader {
     return result;
   }
 
-  upload(params: IUploadParam) {
+  async upload(params: IUploadParam) {
     const {file, uploadType, onSuccess, onProgress, onError} = params || {};
     if (!file) {
       console.log(`\x1b[31m🐣️ fileUploader upload: file not found!\x1b[0m`);
       onError?.('input file not found');
-      return;
+      return Promise.reject('input file not found');
     }
     if (this.fileUploaded[file.name]) {
       onSuccess?.(this.fileUploaded[file.name]);
-      return;
+      return Promise.resolve(this.fileUploaded[file.name]);
     }
     if (file.size > AppConfig.maxFileSize) {
       const error = i18next.t('common:error:file:over_file_size');
       console.log(`\x1b[31m🐣️ fileUploader upload error: ${error}\x1b[0m`);
       onError?.(error);
-      return;
+      return Promise.reject(error);
     }
 
     const formData = new FormData();
@@ -109,28 +109,30 @@ export default class FileUploader {
     };
 
     this.fileUploading[file.name] = true;
-    makeHttpRequest(
-      ApiConfig.Upload.uploadFile(uploadType, formData, _onUploadProgress),
-    )
-      .then((response: any) => {
-        console.log(
-          `\x1b[32m🐣️ fileUploader response url: ${response?.data?.data?.src} \x1b[0m`,
-        );
-        this.fileUploading[file.name] = false;
-        if (response?.data?.data?.src) {
-          const url = response?.data?.data?.src;
-          this.fileUploaded[file.name] = url;
-          onSuccess?.(url);
-          this.callbackSuccess?.[file.name]?.(url);
-        } else {
-          onError?.(response?.data);
-        }
-      })
-      .catch(e => {
-        this.fileUploading[file.name] = false;
-        console.log(`\x1b[31m🐣️ fileUploader error `, e, `\x1b[0m`);
-        onError?.(e);
-      });
+    try {
+      const response: any = await makeHttpRequest(
+        ApiConfig.Upload.uploadFile(uploadType, formData, _onUploadProgress),
+      );
+      console.log(
+        `\x1b[32m🐣️ fileUploader response url: ${response?.data?.data?.src} \x1b[0m`,
+      );
+      this.fileUploading[file.name] = false;
+      if (response?.data?.data?.src) {
+        const url = response?.data?.data?.src;
+        this.fileUploaded[file.name] = url;
+        onSuccess?.(url);
+        this.callbackSuccess?.[file.name]?.(url);
+        return Promise.resolve(url);
+      } else {
+        onError?.(response?.data);
+        return Promise.reject(response?.data);
+      }
+    } catch (e) {
+      this.fileUploading[file.name] = false;
+      console.log(`\x1b[31m🐣️ fileUploader error `, e, `\x1b[0m`);
+      onError?.(e);
+      return Promise.reject(e);
+    }
   }
 
   delete() {
