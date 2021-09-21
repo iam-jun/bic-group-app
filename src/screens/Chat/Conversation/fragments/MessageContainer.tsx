@@ -6,11 +6,9 @@ import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import AttachmentView from './AttachmentView';
@@ -34,7 +32,6 @@ const MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const currentUserId = useUserIdAuth();
   const {
     previousMessage,
     currentMessage,

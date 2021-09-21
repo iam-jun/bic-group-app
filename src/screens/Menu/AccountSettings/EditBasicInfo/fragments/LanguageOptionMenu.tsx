@@ -85,7 +85,8 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const onLanguageEditOpen = () => languageSheetRef?.current?.open?.();
+  const onLanguageEditOpen = (e: any) =>
+    languageSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   return (
     <View>
@@ -99,7 +100,7 @@ const LanguageOptionMenu = ({
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}
-        onPress={onLanguageEditOpen}
+        onPress={e => onLanguageEditOpen(e)}
       />
 
       <BottomSheet
@@ -127,7 +128,7 @@ const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    contentComponent: {marginHorizontal: spacing.margin.base},
+    contentComponent: {},
     chooseText: {
       margin: spacing.margin.base,
     },

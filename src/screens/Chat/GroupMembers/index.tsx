@@ -192,7 +192,7 @@ const GroupMembers = (): React.ReactElement => {
               title={i18next.t('chat:member_menu:label_direct_message')}
               onPress={() => onPressMenuOption('send-direct-message')}
             />
-            {selectedMember?.username !== user.username && (
+            {selectedMember?.username !== user?.username && (
               <PrimaryItem
                 style={styles.menuOption}
                 leftIcon="TrashAlt"

@@ -1,7 +1,7 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
-import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -25,13 +25,13 @@ import {
   MessageContainer,
   MessageOptionsModal,
 } from './fragments';
+import DownButton from './fragments/DownButton';
 import GroupChatWelcome from './fragments/GroupChatWelcome';
 
 const Conversation = () => {
   const {user} = useAuth();
   const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
-  const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
@@ -43,6 +43,14 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
+  const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
+  const listRef = useRef<FlatList>(null);
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+    waitForInteraction: true,
+    minimumViewTime: 5,
+  });
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
@@ -138,12 +146,13 @@ const Conversation = () => {
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
-  const onScroll = (event: any) => {
-    const element = event.target;
-
-    if (element.scrollTop <= 100) {
-      loadMoreMessages();
+  const onViewableItemsChanged = React.useRef(({changed}: {changed: any[]}) => {
+    if (changed && changed.length > 0) {
+      setDownButtonVisible(changed[0].index > 20);
     }
+  });
+  const onDownPress = () => {
+    listRef.current?.scrollToOffset({offset: 0, animated: true});
   };
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
@@ -157,17 +166,20 @@ const Conversation = () => {
     };
     return <MessageContainer {...props} />;
   };
+
   const renderChatMessages = () => {
     if (!messages.loading && isEmpty(messages.data))
       return <GroupChatWelcome />;
 
     return (
       <ListMessages
-        inverted={Platform.OS !== 'web'}
+        listRef={listRef}
+        nativeID={'list-messages'}
+        inverted
         data={messages.data}
         keyboardShouldPersistTaps="handled"
-        onEndReached={Platform.OS !== 'web' ? loadMoreMessages : null}
-        onEndReachedThreshold={0.5}
+        onEndReached={loadMoreMessages}
+        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
         removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.recordsPerPage}
@@ -180,7 +192,8 @@ const Conversation = () => {
         ListFooterComponent={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
-        onScroll={onScroll}
+        onViewableItemsChanged={onViewableItemsChanged.current}
+        viewabilityConfig={viewabilityConfig.current}
       />
     );
   };
@@ -200,7 +213,7 @@ const Conversation = () => {
         hideBackOnLaptop
       />
       {renderChatMessages()}
-
+      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       <ChatInput onError={setError} />
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
