@@ -122,12 +122,14 @@ const EditBasicInfo = () => {
     }
   };
 
-  const onGenderEditOpen = () => genderSheetRef?.current?.open?.();
+  const onGenderEditOpen = (e: any) =>
+    genderSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   const onDateEditOpen = () => setSelectingDate(true);
   const onDateEditClose = () => setSelectingDate(false);
 
-  const onRelationshipEditOpen = () => relationshipSheetRef?.current?.open?.();
+  const onRelationshipEditOpen = (e: any) =>
+    relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
@@ -154,7 +156,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'UserSquare'}
           rightIcon={'EditAlt'}
-          onPress={onGenderEditOpen}
+          onPress={e => onGenderEditOpen(e)}
         />
         <SettingItem
           title={'settings:title_birthday'}
@@ -178,7 +180,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}
-          onPress={onRelationshipEditOpen}
+          onPress={e => onRelationshipEditOpen(e)}
         />
       </View>
 

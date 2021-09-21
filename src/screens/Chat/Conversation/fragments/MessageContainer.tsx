@@ -6,11 +6,9 @@ import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import AttachmentView from './AttachmentView';
@@ -34,7 +32,6 @@ const MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const currentUserId = useUserIdAuth();
   const {
     previousMessage,
     currentMessage,
@@ -92,7 +89,7 @@ const MessageItem = (props: MessageItemProps) => {
           {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
 
           <View
-            style={[styles.message, !hideHeader && styles.messgageWithHeader]}>
+            style={[styles.message, !hideHeader && styles.messageWithHeader]}>
             {removed ? (
               <Text useI18n style={styles.removedText}>
                 {text}
@@ -125,15 +122,12 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
-      marginBottom: spacing.margin.base,
     },
-    messgageWithHeader: {
-      marginTop: -16,
+    messageWithHeader: {
+      marginTop: -20, // push message up so that it is right below the user's name
     },
     message: {
       marginStart: 48,
-      minHeight: 24,
-      paddingVertical: 2,
     },
     removedText: {
       color: colors.textSecondary,
