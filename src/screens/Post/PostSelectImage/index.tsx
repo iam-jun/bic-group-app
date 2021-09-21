@@ -146,7 +146,7 @@ const PostSelectImage = () => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.background}>
+    <ScreenWrapper isFullView backgroundColor={colors.surface}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_edit_images'}
@@ -158,6 +158,7 @@ const PostSelectImage = () => {
       <FlatList
         data={currentImages || []}
         renderItem={renderItem}
+        contentContainerStyle={styles.container}
         ListFooterComponent={renderFooter}
         keyExtractor={(item, index) =>
           `create_post_image_${index}_${item?.fileName}`
@@ -168,9 +169,9 @@ const PostSelectImage = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {backgroundColor: colors.background},
   });
 };
 
