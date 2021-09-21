@@ -12,16 +12,46 @@ const createImageSelector = (multiple = false) => {
   return imageSelector;
 };
 
+const getImageDimension = (file: any) => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = function (e: any) {
+      const data = e.target.result;
+      const img = new Image();
+      img.src = data;
+      img.onload = function () {
+        resolve({
+          width: img.width,
+          height: img.height,
+        });
+      };
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const formatImage = async (image: any) => {
+  let data: any = {};
+  try {
+    data = await getImageDimension(image);
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ BeinImagePicker.web getImage info `, e, `\x1b[0m`);
+  }
+  image.filename = image?.name;
+  image.mime = image?.type;
+  image.width = data?.width;
+  image.height = data?.height;
+  return image;
+};
+
 const openPickerSingle = () => {
   return new Promise(resolve => {
     const imageSelector = createImageSelector();
     imageSelector.value = '';
-    imageSelector.addEventListener('change', () => {
+    imageSelector.addEventListener('change', async () => {
       if (imageSelector?.files && imageSelector?.files?.length > 0) {
-        const result: any = imageSelector.files[0];
-        result.filename = result.name;
-        result.mime = result.type;
-        resolve(result as IFilePicked);
+        const result = await formatImage(imageSelector.files[0]);
+        resolve(result);
       }
     });
     imageSelector.click();
@@ -32,15 +62,13 @@ const openPickerMultiple = () => {
   return new Promise(resolve => {
     const imageSelector = createImageSelector(true);
     imageSelector.value = '';
-    imageSelector.addEventListener('change', () => {
+    imageSelector.addEventListener('change', async () => {
       if (imageSelector?.files && imageSelector.files.length > 0) {
-        const result: any = [];
-        // @ts-ignore
-        imageSelector.files.map?.((image: any) => {
-          image.filename = image.name;
-          image.mime = image.type;
+        const result: IFilePicked[] = [];
+        for (let i = 0; i < imageSelector.files.length; i++) {
+          const image = await formatImage(imageSelector.files[i]);
           result.push(image);
-        });
+        }
         resolve(result);
       }
     });

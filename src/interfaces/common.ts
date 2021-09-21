@@ -36,6 +36,8 @@ export interface IFilePicked {
   mime: string;
   size: number;
   uri: string; //app
+  width: number;
+  height: number;
   [x: string]: any;
 }
 

@@ -10,6 +10,8 @@ const formatImage = (image: any) => {
     mime: image?.mime,
     size: image?.size,
     uri: image?.path,
+    width: image?.width,
+    height: image?.height,
   };
 };
 
