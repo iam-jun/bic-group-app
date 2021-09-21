@@ -279,10 +279,8 @@ const Section1 = () => {
             onLongPress={() => alert('onLongPress')}>
             Default
           </Button.Secondary>
-          <Button.Secondary
-            color={colors.primary2}
-            onPress={() => alert('onPress')}>
-            Hover
+          <Button.Secondary highEmphasis onPress={() => alert('onPress')}>
+            high emphasis
           </Button.Secondary>
           <Button.Secondary
             disabled
