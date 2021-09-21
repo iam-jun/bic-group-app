@@ -20,7 +20,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   ...props
 }: ButtonPrimaryProps) => {
   const {colors}: ITheme = useTheme() as ITheme;
-  let className = 'button--secondary';
+  let className = 'button--primary';
 
   const _colorHover = colorHover || colors.iconTint;
   let _textColor = textColor || colors.textReversed;
