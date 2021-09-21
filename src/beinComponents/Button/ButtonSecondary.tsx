@@ -7,23 +7,35 @@ import ButtonPrimary, {
 } from '~/beinComponents/Button/ButtonPrimary';
 import {ITheme} from '~/theme/interfaces';
 
-const ButtonSecondary: React.FC<ButtonPrimaryProps> = ({
+export interface ButtonSecondaryProps extends ButtonPrimaryProps {
+  highEmphasis?: boolean;
+}
+
+const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   color,
   colorHover,
   colorDisabled,
   textColor,
   textColorDisabled,
   style,
+  highEmphasis = false,
   ...props
-}: ButtonPrimaryProps) => {
+}: ButtonSecondaryProps) => {
   const {colors, spacing}: ITheme = useTheme() as ITheme;
+
+  let _backgroundColor = color || colors.bgButtonSecondary;
+  let _textColor = textColor || colors.primary;
+  if (highEmphasis) {
+    _backgroundColor = colors.primary7;
+    _textColor = colors.background;
+  }
 
   return (
     <ButtonPrimary
-      color={color || colors.bgButtonSecondary}
+      color={_backgroundColor}
       colorHover={colorHover || colors.primary2}
       colorDisabled={colorDisabled}
-      textColor={textColor || colors.primary}
+      textColor={_textColor}
       textColorDisabled={textColorDisabled}
       style={StyleSheet.flatten([{padding: spacing?.padding.small}, style])}
       {...props}
