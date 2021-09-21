@@ -101,22 +101,27 @@
 
     .group-item {
       border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .group-item__toggle {
-      background-color: #FFFFFF;
     }
 
     .group-item:hover,
-    .group-item:focus,
-    .group-item:hover .group-item__toggle {
-      background-color: #f0f0f0;
+    .group-item:focus {
+      background-color: #F0F0F0;
     }
 
-    .group-item__toggle:hover,
-    .group-item__toggle:focus {
-      background-color: #BDBDBD;
+    .group-item__toggle {
+      display: flex;
+      flex-direction: row;
+      width: 0.125rem;
+      height: 100%;
+      margin: 0.75rem 0;
+      background-color: #F0F0F0;
+    }
+
+    .group-item__line {
+      width: 0.125rem;
+      height: auto;
+      background-color: #F0F0F0;
+      margin: 0 0.75rem;
     }
   </style>
 </head>
