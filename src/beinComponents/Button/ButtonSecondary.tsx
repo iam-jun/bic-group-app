@@ -31,13 +31,14 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
 }: ButtonSecondaryProps) => {
   const {colors, spacing}: ITheme = useTheme() as ITheme;
 
-  const _colorHover = colorHover || colors.primary2;
+  let _colorHover = colorHover || colors.primary2;
   let _backgroundColor = color || colors.bgButtonSecondary;
   let _textColor = textColor || colors.primary;
 
   if (highEmphasis) {
     _backgroundColor = colors.primary7;
     _textColor = colors.background;
+    _colorHover = colors.primary6;
   } else if (disabled) {
     _backgroundColor = colorDisabled || colors.bgDisable;
     // @ts-ignore
