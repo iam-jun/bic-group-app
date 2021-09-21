@@ -80,7 +80,6 @@ const ConversationItem: React.FC<IConversation> = ({
           {unreadCount && (
             <RedDot style={styles.unreadBadge} number={unreadCount} />
           )}
-          <RedDot style={styles.unreadBadge} number={20} />
         </View>
       }
     />
