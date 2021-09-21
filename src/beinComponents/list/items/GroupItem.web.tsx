@@ -15,6 +15,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {generateUniqueId} from '~/utils/generator';
+import Div from '~/beinComponents/Div';
 
 export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
@@ -77,7 +78,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   const renderLine = (uiLevel: number) => {
-    return <View key={generateUniqueId()} style={styles.line} />;
+    return <Div key={generateUniqueId()} className="group-item__line" />;
   };
 
   const renderToggle = () => {
@@ -94,9 +95,14 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={styles.toggleContainer}>
         {hasChild && (
-          <View style={styles.toggleContent}>
-            <Icon size={18} icon={isCollapsing ? 'AngleRight' : 'AngleDown'} />
-          </View>
+          <Div className="group-item__toggle">
+            <View style={styles.toggleContent}>
+              <Icon
+                size={18}
+                icon={isCollapsing ? 'AngleRight' : 'AngleDown'}
+              />
+            </View>
+          </Div>
         )}
       </ButtonWrapper>
     );
@@ -111,35 +117,39 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   return (
-    <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
-      <View style={{flexDirection: 'row'}}>
-        {renderUiLevelLines()}
-        {renderToggle()}
-        <View style={styles.itemContainer}>
-          <View style={styles.avatarContainer}>
-            <Avatar.Medium source={icon} />
-            {onCheckedItem && (
-              <Checkbox
-                style={styles.checkbox}
-                isChecked={isChecked}
-                onActionPress={_onCheckedItem}
-              />
-            )}
-          </View>
-          <View style={styles.textContainer}>
-            <Text.H6 style={styles.textName} numberOfLines={2}>
-              {name}
-            </Text.H6>
-            <View style={styles.row}>
-              <Icon icon="users" size={16} tintColor={colors.textSecondary} />
-              <Text.BodyS color={colors.textSecondary} style={styles.textInfo}>
-                {user_count}
-              </Text.BodyS>
+    <Div className="group-item">
+      <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
+        <View style={{flexDirection: 'row'}}>
+          {renderUiLevelLines()}
+          {renderToggle()}
+          <View style={styles.itemContainer}>
+            <View style={styles.avatarContainer}>
+              <Avatar.Medium source={icon} />
+              {onCheckedItem && (
+                <Checkbox
+                  style={styles.checkbox}
+                  isChecked={isChecked}
+                  onActionPress={_onCheckedItem}
+                />
+              )}
+            </View>
+            <View style={styles.textContainer}>
+              <Text.H6 style={styles.textName} numberOfLines={2}>
+                {name}
+              </Text.H6>
+              <View style={styles.row}>
+                <Icon icon="users" size={16} tintColor={colors.textSecondary} />
+                <Text.BodyS
+                  color={colors.textSecondary}
+                  style={styles.textInfo}>
+                  {user_count}
+                </Text.BodyS>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Div>
   );
 };
 
@@ -170,14 +180,12 @@ const themeStyles = (theme: IObject<any>) => {
     toggleContainer: {
       width: 2,
       height: '100%',
-      backgroundColor: colors.borderDivider,
       marginHorizontal: spacing?.margin.base,
       flexDirection: 'row',
     },
     toggleContent: {
       marginLeft: -7,
       alignSelf: 'center',
-      backgroundColor: colors.background,
       paddingVertical: spacing?.padding.tiny,
     },
     itemContainer: {
