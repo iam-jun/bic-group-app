@@ -36,11 +36,13 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     dot: {
       borderRadius: spacing.borderRadius.large,
-      paddingHorizontal: spacing.padding.tiny,
+      paddingBottom: 2,
+      paddingHorizontal: 5,
       minWidth: spacing.lineHeight.base,
-      height: spacing.lineHeight.base,
+      height: 20,
       backgroundColor: colors.error,
       alignItems: 'center',
+      justifyContent: 'center',
     },
     text: {
       lineHeight: spacing.lineHeight.base,
