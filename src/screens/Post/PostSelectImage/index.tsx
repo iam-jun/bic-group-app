@@ -19,6 +19,8 @@ import postActions from '~/screens/Post/redux/actions';
 import Button from '~/beinComponents/Button';
 import {useBaseHook} from '~/hooks';
 import ImagePicker from '~/beinComponents/ImagePicker';
+import appConfig from '~/configs/appConfig';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
@@ -88,7 +90,21 @@ const PostSelectImage = () => {
       images.map(item => {
         newImages.push({fileName: item.filename, file: item});
       });
-      setCurrentImages([...currentImages, ...newImages]);
+      let newCurrentImages = [...currentImages, ...newImages];
+      if (newCurrentImages.length > appConfig.postPhotoLimit) {
+        newCurrentImages = newCurrentImages.slice(0, appConfig.postPhotoLimit);
+        const errorContent = t('post:error_reach_upload_photo_limit').replace(
+          '%LIMIT%',
+          appConfig.postPhotoLimit,
+        );
+        dispatch(
+          showHideToastMessage({
+            content: errorContent,
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      }
+      setCurrentImages(newCurrentImages);
     });
   };
 
@@ -119,6 +135,9 @@ const PostSelectImage = () => {
   };
 
   const renderFooter = () => {
+    if (currentImages?.length >= appConfig.postPhotoLimit) {
+      return null;
+    }
     return (
       <Button.Secondary leftIcon={'ImagePlus'} onPress={onPressAddImage}>
         {t('post:add_photo')}

@@ -298,8 +298,8 @@
     "marked_as_read": "Marked as read",
     "mark_as_important": "Mark as Important",
     "expire_on": "Expire on:",
-    "choose_group_people": "Choose group or people",
-    "placeholder_audience_search": "Search for groups or people",
+    "choose_group_people": "Choose group",
+    "placeholder_audience_search": "Search for groups",
     "audience_selected": "Selected audiences",
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
@@ -312,6 +312,7 @@
     "show_all": "Show all",
     "text_load_more_comments": "View previous comments...",
     "text_load_more_x_replies": "View %VALUE% replies",
+    "text_add_to_post": "Add to your post",
     "comment_menu_reply": "Reply this comment",
     "comment_menu_copy_text": "Copy text",
     "comment_menu_edit": "Edit Comment",
@@ -327,7 +328,8 @@
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
-    "error_upload_photo_failed": "Upload photo failed!"
+    "error_upload_photo_failed": "Upload photo failed!",
+    "error_reach_upload_photo_limit": "Post limit %LIMIT% photos"
   },
   "chat": {
     "title": "Chat",

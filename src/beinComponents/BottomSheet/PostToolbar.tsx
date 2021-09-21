@@ -38,6 +38,8 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ICreatePostImage} from '~/interfaces/IPost';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import appConfig from '~/configs/appConfig';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 const MAX_DAYS = 7;
 
@@ -101,9 +103,21 @@ const PostToolbar = ({
       images.map(item => {
         newImages.push({fileName: item.filename, file: item});
       });
-      dispatch(
-        postActions.setCreatePostImagesDraft([...newImages, ...selectedImage]),
-      );
+      let newImageDraft = [...selectedImage, ...newImages];
+      if (newImageDraft.length > appConfig.postPhotoLimit) {
+        newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
+        const errorContent = t('post:error_reach_upload_photo_limit').replace(
+          '%LIMIT%',
+          appConfig.postPhotoLimit,
+        );
+        dispatch(
+          showHideToastMessage({
+            content: errorContent,
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      }
+      dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
       rootNavigation.navigate(homeStack.postSelectImage);
     });
   };
@@ -162,7 +176,9 @@ const PostToolbar = ({
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
             disabled={disabled}
             onPress={openModal}>
-            <Text.Subtitle style={{flex: 1}}>Add to your post</Text.Subtitle>
+            <Text.Subtitle style={{flex: 1}} useI18n>
+              post:text_add_to_post
+            </Text.Subtitle>
             {renderToolbarButton('ImagePlus')}
             {renderToolbarButton('Link')}
             <View
