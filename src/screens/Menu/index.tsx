@@ -97,6 +97,7 @@ const Menu = (): React.ReactElement => {
       <ViewSpacing height={theme.spacing.margin.large} />
 
       <ListView
+        itemStyle={styles.itemStyle}
         type="menu"
         data={appSettingsMenu}
         scrollEnabled={false}
@@ -104,6 +105,7 @@ const Menu = (): React.ReactElement => {
       />
       <Divider size={10} style={styles.divider} />
       <ListView
+        itemStyle={styles.itemStyle}
         type="menu"
         data={documentsMenu}
         scrollEnabled={false}
@@ -112,6 +114,7 @@ const Menu = (): React.ReactElement => {
 
       <Divider size={10} style={styles.divider} />
       <ListView
+        itemStyle={styles.itemStyle}
         type="menu"
         data={logoutMenu}
         scrollEnabled={false}
@@ -121,6 +124,7 @@ const Menu = (): React.ReactElement => {
       <Divider size={10} style={styles.divider} />
       {__DEV__ && (
         <ListView
+          itemStyle={styles.itemStyle}
           scrollEnabled={false}
           type="menu"
           data={settings}
@@ -140,6 +144,9 @@ const themeStyles = (theme: ITheme) => {
       marginTop: spacing.margin.large,
     },
     divider: {},
+    itemStyle: {
+      paddingHorizontal: spacing.padding.extraLarge,
+    },
   });
 };
 

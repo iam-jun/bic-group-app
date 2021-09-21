@@ -41,7 +41,7 @@ const SecurityLogin = () => {
         data={securityLoginMenu.password}
         scrollEnabled={false}
         onItemPress={onSecurityLoginPress}
-        style={styles.firstMenuGroup}
+        style={[styles.firstMenuGroup, styles.menuGroup]}
       />
       <Divider style={styles.divider} />
       <ListView
@@ -49,6 +49,7 @@ const SecurityLogin = () => {
         data={securityLoginMenu.security}
         scrollEnabled={false}
         onItemPress={onSecurityLoginPress}
+        style={styles.menuGroup}
       />
     </ScreenWrapper>
   );
@@ -62,6 +63,9 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     firstMenuGroup: {
       marginTop: spacing.margin.base,
+    },
+    menuGroup: {
+      marginHorizontal: spacing.margin.base,
     },
     divider: {
       marginVertical: spacing.margin.small,
