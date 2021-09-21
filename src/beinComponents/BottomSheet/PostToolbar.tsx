@@ -36,6 +36,8 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {ICreatePostImage} from '~/interfaces/IPost';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const MAX_DAYS = 7;
 
@@ -67,6 +69,10 @@ const PostToolbar = ({
   const createPostData = useCreatePost();
   const {important} = createPostData || {};
 
+  const selectedImage: ICreatePostImage[] = useKeySelector(
+    postKeySelector.createPost.images,
+  );
+
   const openModal = throttle((e?: any) => {
     Keyboard.dismiss();
     modalizeRef?.current?.open?.(e?.pageX, e?.pageY);
@@ -91,11 +97,13 @@ const PostToolbar = ({
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
     ImagePicker.openPickerMultiple().then(images => {
-      const selectedImages: ICreatePostImage[] = [];
+      const newImages: ICreatePostImage[] = [];
       images.map(item => {
-        selectedImages.push({fileName: item.filename, file: item});
+        newImages.push({fileName: item.filename, file: item});
       });
-      dispatch(postActions.setCreatePostImagesDraft(selectedImages));
+      dispatch(
+        postActions.setCreatePostImagesDraft([...newImages, ...selectedImage]),
+      );
       rootNavigation.navigate(homeStack.postSelectImage);
     });
   };

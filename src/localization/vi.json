@@ -32,7 +32,12 @@
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search."
+    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "error": {
+      "file": {
+        "over_file_size": "Dung lượng file tối đa 10MB"
+      }
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -226,8 +231,8 @@
     "alert_title_back_create_post": "Huỷ đăng bài",
     "alert_content_back_create_post": "Nếu huỷ, bạn sẽ mất những nội dung đã nhập.",
     "btn_menu_delete": "Xoá bài viết",
-    "add_photo": "Add Photo",
-    "add_file": "Add Files",
+    "add_photo": "Thêm Ảnh",
+    "add_file": "Thêm File",
     "placeholder_write_post": "Writing your post...",
     "create_post": "Create Post",
     "create_new_post": "Tạo bài viết",
@@ -272,7 +277,8 @@
     "post_menu_delete": "Xoá bài viết",
     "post_menu_report": "Báo cáo",
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
-    "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại"
+    "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
+    "error_upload_photo_failed": "Tải ảnh lên thất bại!"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

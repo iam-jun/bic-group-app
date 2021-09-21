@@ -326,7 +326,8 @@
     "post_menu_delete": "Delete post",
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
-    "error_upload_failed": "Please remove file upload failed or retry"
+    "error_upload_failed": "Please remove file upload failed or retry",
+    "error_upload_photo_failed": "Upload photo failed!"
   },
   "chat": {
     "title": "Chat",

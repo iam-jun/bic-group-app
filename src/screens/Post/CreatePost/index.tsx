@@ -309,7 +309,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           getDataResponseKey={'data'}
           disabled={loading}
         />
-        <View>
+        <View style={{padding: 8}}>
           <Text>selected {selectingImages.length} image</Text>
         </View>
         {!isEditPost && (

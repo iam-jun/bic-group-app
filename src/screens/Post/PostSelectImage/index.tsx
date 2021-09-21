@@ -16,13 +16,17 @@ import {ICreatePostImage} from '~/interfaces/IPost';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import {uploadTypes} from '~/services/fileUploader';
 import postActions from '~/screens/Post/redux/actions';
+import Button from '~/beinComponents/Button';
+import {useBaseHook} from '~/hooks';
+import ImagePicker from '~/beinComponents/ImagePicker';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, dimension, spacing} = theme;
   const styles = createStyle(theme);
 
   const selectedImages: ICreatePostImage[] =
@@ -32,12 +36,14 @@ const PostSelectImage = () => {
 
   useEffect(() => {
     if (currentImages?.length === 0) {
-      if (selectedImagesDraft?.length > 0) {
-        setCurrentImages(selectedImagesDraft);
-      }
+      let data: any = [];
       if (selectedImages.length > 0) {
-        setCurrentImages(selectedImages);
+        data = selectedImages;
       }
+      if (selectedImagesDraft?.length > 0) {
+        data = selectedImagesDraft;
+      }
+      setCurrentImages(data);
     }
   }, [selectedImages, selectedImagesDraft]);
 
@@ -60,6 +66,7 @@ const PostSelectImage = () => {
   };
 
   const onPressSave = () => {
+    dispatch(postActions.setCreatePostImagesDraft(currentImages));
     dispatch(postActions.setCreatePostImages(currentImages));
     rootNavigation.goBack();
   };
@@ -68,16 +75,54 @@ const PostSelectImage = () => {
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${fileName}: ${url}\x1b[0m`);
   };
 
-  const renderItem = ({item}: {item: ICreatePostImage}) => {
+  const onPressRemoveImage = (item: ICreatePostImage, index: number) => {
+    const newList = currentImages.filter(
+      (image, i) => image.fileName !== item.fileName || index !== i,
+    );
+    setCurrentImages(newList);
+  };
+
+  const onPressAddImage = () => {
+    ImagePicker.openPickerMultiple().then(images => {
+      const newImages: ICreatePostImage[] = [];
+      images.map(item => {
+        newImages.push({fileName: item.filename, file: item});
+      });
+      setCurrentImages([...currentImages, ...newImages]);
+    });
+  };
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: ICreatePostImage;
+    index: number;
+  }) => {
     const {file, fileName, url} = item || {};
+    const {width = 1, height = 1} = file || {};
+    const ratio = height / width;
+
     return (
       <UploadingImage
         uploadType={uploadTypes.postImage}
+        style={{marginBottom: spacing.margin.large}}
         file={file}
         fileName={fileName}
         url={url}
+        width={dimension.deviceWidth}
+        height={dimension.deviceWidth * ratio}
         onUploadSuccess={onUploadSuccess}
+        onPressRemove={() => onPressRemoveImage(item, index)}
       />
+    );
+  };
+
+  const renderFooter = () => {
+    return (
+      <Button.Secondary leftIcon={'ImagePlus'} onPress={onPressAddImage}>
+        {t('post:add_photo')}
+      </Button.Secondary>
     );
   };
 
@@ -94,7 +139,10 @@ const PostSelectImage = () => {
       <FlatList
         data={currentImages || []}
         renderItem={renderItem}
-        keyExtractor={(item, index) => `create_post_image_${index}`}
+        ListFooterComponent={renderFooter}
+        keyExtractor={(item, index) =>
+          `create_post_image_${index}_${item?.fileName}`
+        }
       />
     </ScreenWrapper>
   );
