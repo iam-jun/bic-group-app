@@ -171,12 +171,6 @@ const themeStyles = (theme: IObject<any>) => {
     textInfo: {
       marginHorizontal: spacing.margin.tiny,
     },
-    line: {
-      width: 2,
-      height: '100%',
-      backgroundColor: colors.borderDivider,
-      marginHorizontal: spacing?.margin.base,
-    },
     toggleContainer: {
       width: 2,
       height: '100%',
