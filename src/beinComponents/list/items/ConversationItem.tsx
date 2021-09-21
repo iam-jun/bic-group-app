@@ -89,12 +89,16 @@ const ConversationItem: React.FC<IConversation> = ({
 const createStyles = (theme: ITheme, twoLineLastMessage: boolean) => {
   const {spacing} = theme;
 
+  const defaultPaddingTop = spacing.padding.small || 8;
+  const defaultPaddingBottom = spacing.padding.tiny || 4;
+  const defaultHeight = 60 + defaultPaddingTop + defaultPaddingBottom;
   const unreadBadgeMarginTop = !twoLineLastMessage ? 0 : spacing.margin.base;
 
   return StyleSheet.create({
     container: {
-      height: 64, // = 60 + paddingBottom
-      paddingBottom: spacing.margin.tiny,
+      height: defaultHeight,
+      paddingTop: defaultPaddingTop,
+      paddingBottom: defaultPaddingBottom,
       marginHorizontal: spacing.margin.base,
       paddingHorizontal: spacing.padding.tiny,
       alignItems: 'flex-start',

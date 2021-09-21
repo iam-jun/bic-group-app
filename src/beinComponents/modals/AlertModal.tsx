@@ -113,8 +113,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
             {!!cancelBtn && (
               <Button.Secondary
                 style={{marginEnd: theme.spacing?.margin.base}}
-                textColor={theme.colors.primary7}
-                color={theme.colors.primary2}
                 onPress={_onDismiss}>
                 {_cancelLabel}
               </Button.Secondary>
@@ -122,8 +120,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
             {!!confirmLabel && (
               <Button.Secondary
-                textColor={theme.colors.background}
-                color={theme.colors.primary7}
+                highEmphasis
                 disabled={input && !text}
                 onPress={() => {
                   dispatch(actions.hideAlert());

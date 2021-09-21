@@ -29,7 +29,6 @@ const LeftPanel = () => {
     <ScreenWrapper testID="VipScreen" disabledDarkMode isFullView>
       <PrimaryItem
         height={48}
-        style={styles.activeItem}
         leftIconProps={{
           icon: 'iconTabHomeBein',
           size: 24,
@@ -60,9 +59,6 @@ const createStyle = (theme: ITheme) => {
     leftIcon: {
       marginLeft: spacing.margin.base,
       marginRight: spacing.margin.extraLarge,
-    },
-    activeItem: {
-      backgroundColor: colors.placeholder,
     },
   });
 };

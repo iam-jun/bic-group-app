@@ -105,7 +105,11 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       style={StyleSheet.flatten([style])}>
       <View
         style={StyleSheet.flatten([
-          {flexDirection: 'row', alignItems: 'center'},
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
           contentStyle,
         ])}>
         {renderLoading()}

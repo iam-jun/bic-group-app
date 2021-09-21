@@ -53,11 +53,11 @@ const GeneralSettings = () => {
     }
   };
 
-  const renderItem = ({item}: {item: ILanguage}) => {
+  const renderLanguageOption = ({item}: {item: ILanguage}) => {
     return (
       <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
         <PrimaryItem
-          style={styles.item}
+          style={styles.languageOption}
           title={t(item.title)}
           leftIcon={item.icon}
           leftIconProps={{icon: item.icon, size: 24}}
@@ -99,7 +99,7 @@ const GeneralSettings = () => {
             <ListView
               type="primary"
               data={languages}
-              renderItem={renderItem}
+              renderItem={renderLanguageOption}
               onItemPress={onLanguageMenuPress}
             />
           </View>
@@ -118,9 +118,9 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     menuList: {
       marginTop: spacing.margin.base,
+      marginHorizontal: spacing.margin.base,
     },
     contentComponent: {
-      paddingVertical: spacing.padding.tiny,
       ...Platform.select({
         web: {
           width: 200,
@@ -129,10 +129,11 @@ const themeStyles = (theme: ITheme) => {
     },
     chooseLanguageText: {
       margin: spacing.margin.base,
+      marginHorizontal: spacing.margin.extraLarge,
     },
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
+    languageOption: {
+      height: 48,
+      paddingHorizontal: spacing.padding.extraLarge,
     },
   });
 };

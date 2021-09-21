@@ -85,7 +85,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   ]);
 
   return (
-    <Div className="menu-item">
+    <Div className="button">
       <TouchableOpacity
         style={containerStyle}
         disabled={!onPress}
