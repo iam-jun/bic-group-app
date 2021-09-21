@@ -17,6 +17,8 @@ const initState = {
       active: 0,
       expiresTime: '',
     },
+    images: [],
+    imagesDraft: [],
   },
   createComment: {
     loading: false,
@@ -58,14 +60,6 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         allComments: payload,
       };
-    case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          isOpenModal: payload,
-        },
-      };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
         ...state,
@@ -85,6 +79,17 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           data: payload,
+        },
+      };
+    case postTypes.SET_CREATE_POST_DATA_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          data: {
+            ...state.createPost.data,
+            images: payload,
+          },
         },
       };
     case postTypes.SET_CREATE_COMMENT:
@@ -109,6 +114,22 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           important: payload || initState.createPost.important,
+        },
+      };
+    case postTypes.SET_CREATE_POST_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          images: payload || [],
+        },
+      };
+    case postTypes.SET_CREATE_POST_IMAGES_DRAFT:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          imagesDraft: payload || [],
         },
       };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:

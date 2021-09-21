@@ -1,4 +1,4 @@
-export default {
+const appConfig = {
   dataMode: 'mock',
   defaultLanguage: 'en',
   recordsPerPage: 25,
@@ -7,4 +7,7 @@ export default {
   defaultScreenOptions: {
     headerShown: false,
   },
+  postPhotoLimit: 10,
 };
+
+export default appConfig;

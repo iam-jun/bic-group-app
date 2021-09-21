@@ -18,7 +18,7 @@ import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import Button from '~/beinComponents/Button';
@@ -28,8 +28,8 @@ export interface CommentInputProps {
   placeholder?: string;
   onChangeText?: (text: string) => void;
   onPressSend?: () => void;
-  onPressSelectImage?: (file: IFileResponse) => void;
-  onPressFile?: (file: IFileResponse) => void;
+  onPressSelectImage?: (file: IFilePicked) => void;
+  onPressFile?: (file: IFilePicked) => void;
   onSelectionChange?:
     | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
     | undefined;
@@ -96,27 +96,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [text]);
 
   const _onPressSelectImage = () => {
-    ImagePicker.openPicker({
-      cropping: false,
-      mediaType: 'any',
-      multiple: false,
-      compressVideoPreset: 'Passthrough',
-    }).then(result => {
-      if (!result) return;
-
-      const file = {
-        name: result.filename,
-        size: result.size,
-        type: result.mime,
-        uri: result.path,
-      };
-      // @ts-ignore
-      onPressSelectImage?.(Platform.OS === 'web' ? result : file);
+    ImagePicker.openPickerSingle().then(file => {
+      if (!file) return;
+      onPressSelectImage?.(file);
     });
   };
 
   const _onPressFile = async () => {
-    const file = await DocumentPicker.pickSingle();
+    const file: any = await DocumentPicker.openPickerSingle();
     onPressFile?.(file);
   };
 
