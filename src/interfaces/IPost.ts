@@ -46,9 +46,8 @@ export interface IActivityImportant {
 }
 
 export interface ICreatePostImage {
-  fileName: string;
+  fileName?: string;
   file?: IFilePicked;
-  uploading?: boolean;
   url?: string;
 }
 

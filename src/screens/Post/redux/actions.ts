@@ -44,6 +44,10 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_DATA,
     payload,
   }),
+  setCreatePostDataImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_DATA_IMAGES,
+    payload,
+  }),
   setCreateComment: (payload: {loading?: boolean; content?: string}) => ({
     type: postTypes.SET_CREATE_COMMENT,
     payload,
@@ -56,8 +60,8 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMPORTANT,
     payload,
   }),
-  setCreatePostImages: (payload: ICreatePostImage[]) => ({
-    type: postTypes.SET_CREATE_POST_IMAGES,
+  setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
     payload,
   }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({

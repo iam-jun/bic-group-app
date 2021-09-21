@@ -29,6 +29,7 @@ import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import Text from '~/beinComponents/Text';
 
 export interface CreatePostProps {
   route?: {
@@ -86,7 +87,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
     return () => {
       dispatch(postActions.clearCreatPostData());
-      dispatch(postActions.setCreatePostImages([]));
+      dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);
 
@@ -267,6 +268,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           getDataResponseKey={'data'}
           disabled={loading}
         />
+        <View>
+          <Text>selected {images.length} image</Text>
+        </View>
         {!isEditPost && (
           <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
         )}

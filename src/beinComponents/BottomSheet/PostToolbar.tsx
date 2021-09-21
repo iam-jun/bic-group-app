@@ -95,7 +95,7 @@ const PostToolbar = ({
       images.map(item => {
         selectedImages.push({fileName: item.filename, file: item});
       });
-      dispatch(postActions.setCreatePostImages(selectedImages));
+      dispatch(postActions.setCreatePostImagesDraft(selectedImages));
       rootNavigation.navigate(homeStack.postSelectImage);
     });
   };

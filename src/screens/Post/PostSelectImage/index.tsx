@@ -1,10 +1,9 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import React, {FC, useState, useEffect} from 'react';
+import {StyleSheet, StyleProp, ViewStyle, FlatList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -13,22 +12,34 @@ import i18n from '~/localization';
 import {useDispatch} from 'react-redux';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {ICreatePostImage} from '~/interfaces/IPost';
+import UploadingImage from '~/beinComponents/UploadingImage';
+import {uploadTypes} from '~/services/fileUploader';
+import postActions from '~/screens/Post/redux/actions';
 
-export interface PostSelectImageProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-const PostSelectImage: FC<PostSelectImageProps> = ({
-  style,
-}: PostSelectImageProps) => {
+const PostSelectImage = () => {
+  const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
-  const selectedImages =
-    useKeySelector(postKeySelector.createPost.images) || [];
+  const dataImages: ICreatePostImage[] =
+    useKeySelector(postKeySelector.createPost.data.images) || [];
+  const selectedImagesDraft: ICreatePostImage[] =
+    useKeySelector(postKeySelector.createPost.imagesDraft) || [];
+
+  useEffect(() => {
+    if (currentImages?.length === 0) {
+      if (selectedImagesDraft?.length > 0) {
+        setCurrentImages(selectedImagesDraft);
+      }
+      if (dataImages.length > 0) {
+        setCurrentImages(dataImages);
+      }
+    }
+  }, [dataImages, selectedImagesDraft]);
 
   const onPressBack = () => {
     dispatch(
@@ -39,15 +50,35 @@ const PostSelectImage: FC<PostSelectImageProps> = ({
         cancelBtn: true,
         cancelLabel: i18n.t('common:btn_continue_editing'),
         confirmLabel: i18n.t('common:btn_discard'),
-        onConfirm: () => rootNavigation.goBack(),
+        onConfirm: () => {
+          dispatch(postActions.setCreatePostImagesDraft([]));
+          rootNavigation.goBack();
+        },
         stretchOnWeb: true,
       }),
     );
   };
 
   const onPressSave = () => {
-    //todo save image
+    dispatch(postActions.setCreatePostDataImages(currentImages));
     rootNavigation.goBack();
+  };
+
+  const onUploadSuccess = (url: string, fileName: string) => {
+    console.log(`\x1b[36m🐣️ index onUploadSuccess ${fileName}: ${url}\x1b[0m`);
+  };
+
+  const renderItem = ({item}: {item: ICreatePostImage}) => {
+    const {file, fileName, url} = item || {};
+    return (
+      <UploadingImage
+        uploadType={uploadTypes.postImage}
+        file={file}
+        fileName={fileName}
+        url={url}
+        onUploadSuccess={onUploadSuccess}
+      />
+    );
   };
 
   return (
@@ -60,7 +91,11 @@ const PostSelectImage: FC<PostSelectImageProps> = ({
         onPressBack={onPressBack}
         onPressButton={onPressSave}
       />
-      <Text>{JSON.stringify(selectedImages)}</Text>
+      <FlatList
+        data={currentImages || []}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => `create_post_image_${index}`}
+      />
     </ScreenWrapper>
   );
 };

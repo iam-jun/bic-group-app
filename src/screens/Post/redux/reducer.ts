@@ -18,6 +18,7 @@ const initState = {
       expiresTime: '',
     },
     images: [],
+    imagesDraft: [],
   },
   createComment: {
     loading: false,
@@ -80,6 +81,17 @@ function postReducer(state = initState, action: any = {}) {
           data: payload,
         },
       };
+    case postTypes.SET_CREATE_POST_DATA_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          data: {
+            ...state.createPost.data,
+            images: payload,
+          },
+        },
+      };
     case postTypes.SET_CREATE_COMMENT:
       return {
         ...state,
@@ -104,12 +116,12 @@ function postReducer(state = initState, action: any = {}) {
           important: payload || initState.createPost.important,
         },
       };
-    case postTypes.SET_CREATE_POST_IMAGES:
+    case postTypes.SET_CREATE_POST_IMAGES_DRAFT:
       return {
         ...state,
         createPost: {
           ...state.createPost,
-          images: payload || [],
+          imagesDraft: payload || [],
         },
       };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:
