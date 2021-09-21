@@ -271,7 +271,7 @@ const PostToolbar = ({
         {renderImportant()}
         <PrimaryItem
           height={48}
-          title={'Add Photo'}
+          title={t('post:add_photo')}
           leftIcon={'ImagePlus'}
           leftIconProps={{
             icon: 'ImagePlus',
@@ -283,7 +283,7 @@ const PostToolbar = ({
         />
         <PrimaryItem
           height={48}
-          title={'Add Files'}
+          title={t('post:add_file')}
           leftIcon={'Link'}
           leftIconProps={{
             icon: 'Link',
