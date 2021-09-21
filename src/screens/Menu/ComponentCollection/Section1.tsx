@@ -280,7 +280,7 @@ const Section1 = () => {
             Default
           </Button.Secondary>
           <Button.Secondary highEmphasis onPress={() => alert('onPress')}>
-            high emphasis
+            High emphasis
           </Button.Secondary>
           <Button.Secondary
             disabled
