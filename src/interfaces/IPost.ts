@@ -33,9 +33,16 @@ export interface IAudience {
   isGroup?: boolean;
 }
 
+export interface IActivityDataImage {
+  name: string;
+  origin_name?: string;
+  width?: number;
+  height?: number;
+}
+
 export interface IActivityData {
   content?: string;
-  images?: string[];
+  images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
 }

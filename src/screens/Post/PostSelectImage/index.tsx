@@ -25,8 +25,8 @@ const PostSelectImage = () => {
   const {colors} = theme;
   const styles = createStyle(theme);
 
-  const dataImages: ICreatePostImage[] =
-    useKeySelector(postKeySelector.createPost.data.images) || [];
+  const selectedImages: ICreatePostImage[] =
+    useKeySelector(postKeySelector.createPost.images) || [];
   const selectedImagesDraft: ICreatePostImage[] =
     useKeySelector(postKeySelector.createPost.imagesDraft) || [];
 
@@ -35,11 +35,11 @@ const PostSelectImage = () => {
       if (selectedImagesDraft?.length > 0) {
         setCurrentImages(selectedImagesDraft);
       }
-      if (dataImages.length > 0) {
-        setCurrentImages(dataImages);
+      if (selectedImages.length > 0) {
+        setCurrentImages(selectedImages);
       }
     }
-  }, [dataImages, selectedImagesDraft]);
+  }, [selectedImages, selectedImagesDraft]);
 
   const onPressBack = () => {
     dispatch(
@@ -60,7 +60,7 @@ const PostSelectImage = () => {
   };
 
   const onPressSave = () => {
-    dispatch(postActions.setCreatePostDataImages(currentImages));
+    dispatch(postActions.setCreatePostImages(currentImages));
     rootNavigation.goBack();
   };
 

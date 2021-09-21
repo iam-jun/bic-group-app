@@ -51,8 +51,8 @@ export default class FileUploader {
 
   getFile(
     fileName: string,
-    onSuccess: (url: string) => void,
-    onProgress: (percent: number) => void,
+    onSuccess?: (url: string) => void,
+    onProgress?: (percent: number) => void,
   ) {
     if (!fileName) {
       return;

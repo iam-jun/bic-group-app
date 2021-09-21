@@ -4,9 +4,7 @@ const postKeySelector = {
     content: 'post.createComment.content',
   },
   createPost: {
-    data: {
-      images: 'post.createPost.data.images',
-    },
+    images: 'post.createPost.images',
     imagesDraft: 'post.createPost.imagesDraft',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',

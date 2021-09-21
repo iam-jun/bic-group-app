@@ -116,6 +116,14 @@ function postReducer(state = initState, action: any = {}) {
           important: payload || initState.createPost.important,
         },
       };
+    case postTypes.SET_CREATE_POST_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          images: payload || [],
+        },
+      };
     case postTypes.SET_CREATE_POST_IMAGES_DRAFT:
       return {
         ...state,

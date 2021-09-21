@@ -60,6 +60,10 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMPORTANT,
     payload,
   }),
+  setCreatePostImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES,
+    payload,
+  }),
   setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({
     type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
     payload,
