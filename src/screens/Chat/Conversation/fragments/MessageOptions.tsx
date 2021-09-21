@@ -94,7 +94,6 @@ const themeStyle = (theme: ITheme) => {
   return StyleSheet.create({
     list: {
       minWidth: 250,
-      paddingVertical: spacing.padding.tiny,
     },
     reactions: {
       paddingBottom: spacing.padding.large,
