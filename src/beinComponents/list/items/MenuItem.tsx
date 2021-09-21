@@ -14,13 +14,14 @@ const MenuItem: React.FC<IOption> = ({
   rightSubTitle,
   rightSubIcon,
   subTitle,
+  style,
 }: IOption) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   return (
     <Div className="button">
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         <Icon icon={icon} size={24} />
         <View style={styles.titleContainer}>
           <Text.ButtonBase useI18n>{title}</Text.ButtonBase>

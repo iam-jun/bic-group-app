@@ -83,6 +83,7 @@ const GeneralSettings = () => {
         data={accountSettingsMenu}
         scrollEnabled={false}
         listStyle={styles.menuList}
+        itemStyle={styles.menuOption}
         onItemPress={onAccountSettingsPress}
       />
       <BottomSheet
@@ -119,6 +120,9 @@ const themeStyles = (theme: ITheme) => {
     menuList: {
       marginTop: spacing.margin.base,
       marginHorizontal: spacing.margin.base,
+    },
+    menuOption: {
+      paddingHorizontal: spacing.padding.base,
     },
     contentComponent: {
       ...Platform.select({
