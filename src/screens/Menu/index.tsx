@@ -121,15 +121,17 @@ const Menu = (): React.ReactElement => {
         onItemPress={onSettingPress}
       />
 
-      <Divider size={10} style={styles.divider} />
       {__DEV__ && (
-        <ListView
-          itemStyle={styles.itemStyle}
-          scrollEnabled={false}
-          type="menu"
-          data={settings}
-          onItemPress={onSettingPress}
-        />
+        <>
+          <Divider size={10} style={styles.divider} />
+          <ListView
+            itemStyle={styles.itemStyle}
+            scrollEnabled={false}
+            type="menu"
+            data={settings}
+            onItemPress={onSettingPress}
+          />
+        </>
       )}
     </ScreenWrapper>
   );
