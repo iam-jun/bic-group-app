@@ -2,14 +2,10 @@ import React from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {ITheme} from '~/theme/interfaces';
 import Div from '../Div';
+import {ButtonSecondaryProps} from './ButtonSecondary';
 import ButtonWrapper from './ButtonWrapper';
-
-export interface ButtonSecondaryProps extends ButtonPrimaryProps {
-  highEmphasis?: boolean;
-}
 
 const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   color,
