@@ -52,7 +52,7 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       padding: spacing.padding.base,
-      paddingHorizontal: spacing.padding.big,
+      paddingHorizontal: spacing.padding.extraLarge,
       borderRadius: spacing.borderRadius.small,
       alignItems: 'center',
     },
