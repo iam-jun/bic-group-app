@@ -78,17 +78,28 @@
 
     }
 
-    .chat-message:hover .chat-message-menu {
+    .chat-message:hover,
+    .chat-message-menu {
       display: block;
     }
 
-    .menu-item {
+    .button {
       display: block;
       border-radius: 6px;
     }
 
-    .menu-item:hover {
+    .button:hover,
+    .button:focus {
       background-color: #f0f0f0;
+    }
+
+    .button--hover-shadow:hover,
+    .button--hover-shadow:focus {
+      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
+    }
+
+    .button--hover-shadow:active {
+      box-shadow: inset 0px -2px 8px rgba(0, 0, 0, 0.125);
     }
   </style>
 </head>
