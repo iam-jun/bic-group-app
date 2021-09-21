@@ -118,9 +118,9 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     menuList: {
       marginTop: spacing.margin.base,
+      marginHorizontal: spacing.margin.base,
     },
     contentComponent: {
-      paddingVertical: spacing.padding.tiny,
       ...Platform.select({
         web: {
           width: 200,
