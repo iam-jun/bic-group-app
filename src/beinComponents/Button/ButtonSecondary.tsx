@@ -1,11 +1,15 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableHighlight,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import ButtonPrimary, {
-  ButtonPrimaryProps,
-} from '~/beinComponents/Button/ButtonPrimary';
+import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {ITheme} from '~/theme/interfaces';
+import ButtonWrapper from './ButtonWrapper';
 
 export interface ButtonSecondaryProps extends ButtonPrimaryProps {
   highEmphasis?: boolean;
@@ -17,29 +21,49 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   colorDisabled,
   textColor,
   textColorDisabled,
+  useI18n,
+  borderRadius,
+  children,
   style,
+  disabled,
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
   const {colors, spacing}: ITheme = useTheme() as ITheme;
 
+  const _colorHover = colorHover || colors.primary2;
   let _backgroundColor = color || colors.bgButtonSecondary;
   let _textColor = textColor || colors.primary;
+
   if (highEmphasis) {
     _backgroundColor = colors.primary7;
     _textColor = colors.background;
+  } else if (disabled) {
+    _backgroundColor = colorDisabled || colors.bgDisable;
+    // @ts-ignore
+    _textColor = textColorDisabled || colors.textDisabled;
   }
 
+  const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
+    {
+      backgroundColor: _backgroundColor,
+      padding: spacing?.padding.base,
+      borderRadius: borderRadius || spacing?.borderRadius.small,
+      alignItems: 'center',
+    },
+    style,
+  ]);
+
   return (
-    <ButtonPrimary
-      color={_backgroundColor}
-      colorHover={colorHover || colors.primary2}
-      colorDisabled={colorDisabled}
-      textColor={_textColor}
-      textColorDisabled={textColorDisabled}
-      style={StyleSheet.flatten([{padding: spacing?.padding.small}, style])}
-      {...props}
-    />
+    <ButtonWrapper
+      disabled={disabled}
+      style={containerStyle}
+      textProps={{color: _textColor, useI18n}}
+      underlayColor={_colorHover}
+      TouchableComponent={TouchableHighlight}
+      {...props}>
+      {children}
+    </ButtonWrapper>
   );
 };
 
