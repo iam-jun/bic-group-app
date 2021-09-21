@@ -20,8 +20,13 @@ const ConversationItem: React.FC<IConversation> = ({
   unreadCount,
   type,
 }: IConversation): React.ReactElement => {
+  const AVG_CHAR_ON_ONE_LINE = 32;
+  let twoLineLastMessage = false;
+  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
+    twoLineLastMessage = true;
+
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const styles = createStyles(theme, twoLineLastMessage);
   const {text, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
@@ -81,8 +86,10 @@ const ConversationItem: React.FC<IConversation> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ITheme, twoLineLastMessage: boolean) => {
   const {spacing} = theme;
+
+  const unreadBadgeMarginTop = !twoLineLastMessage ? 0 : spacing.margin.base;
 
   return StyleSheet.create({
     container: {
@@ -111,7 +118,7 @@ const createStyles = (theme: ITheme) => {
       paddingTop: 0,
     },
     unreadBadge: {
-      marginTop: spacing.margin.base,
+      marginTop: unreadBadgeMarginTop,
     },
   });
 };
