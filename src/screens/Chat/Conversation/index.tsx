@@ -67,7 +67,10 @@ const Conversation = () => {
   }, [route.params?.roomId]);
 
   useEffect(() => {
-    _getMessages();
+    if (conversation?._id) {
+      setAvatar(conversation?.avatar);
+      _getMessages();
+    }
   }, [conversation?._id]);
 
   useEffect(() => {
