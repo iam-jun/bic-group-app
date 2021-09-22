@@ -29,7 +29,9 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   if (highEmphasis) {
     _textColor = colors.background;
     className = className + ' button--secondary--high-emphasis';
-  } else if (disabled) {
+  }
+
+  if (disabled) {
     // @ts-ignore
     _textColor = textColorDisabled || colors.textDisabled;
     className = 'button--disable';
