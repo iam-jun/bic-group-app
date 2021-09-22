@@ -288,6 +288,10 @@
     "label_init_group_message": {
       "short": "Say hello to your group",
       "full": "🤗 Say hello to your group!"
+    },
+    "label_init_direct_message": {
+      "short": "Say hello to your friend",
+      "full": "🤗 Say hello to your friend!"
     }
   },
   "comment": {
