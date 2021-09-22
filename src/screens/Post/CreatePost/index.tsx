@@ -279,9 +279,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           buttonProps={{
             loading: loading,
             disabled: disableButtonPost,
-            color: colors.primary7,
-            textColor: colors.textReversed,
             useI18n: true,
+            highEmphasis: true,
           }}
           onPressBack={onPressBack}
           onPressButton={onPressPost}

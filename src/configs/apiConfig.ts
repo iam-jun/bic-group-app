@@ -169,7 +169,7 @@ const Chat = {
       provider: providers.chat,
     };
   },
-  readSubcriptions: (data: IReadSubscription): HttpApiRequestConfig => {
+  readSubscriptions: (data: IReadSubscription): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}subscriptions.read`,
       method: 'post',

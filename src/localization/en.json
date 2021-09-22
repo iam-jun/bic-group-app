@@ -398,6 +398,10 @@
       "short": "Say hello to your group",
       "full": "🤗 Say hello to your group!"
     },
+    "label_init_direct_message": {
+      "short": "Say hello to your friend",
+      "full": "🤗 Say hello to your friend!"
+    },
     "label_last_message": {
       "my_attachment": "You sent an attachment",
       "other_attachment": "{0} sent an attachment",
