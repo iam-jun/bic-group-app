@@ -14,13 +14,13 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {ICreatePostImage} from '~/interfaces/IPost';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import {uploadTypes} from '~/services/fileUploader';
 import postActions from '~/screens/Post/redux/actions';
 import Button from '~/beinComponents/Button';
 import {useBaseHook} from '~/hooks';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
+import {uploadTypes} from '~/configs/resourceConfig';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
@@ -28,7 +28,7 @@ const PostSelectImage = () => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, dimension, spacing} = theme;
+  const {colors, dimension} = theme;
   const styles = createStyle(theme);
 
   const selectedImages: ICreatePostImage[] =
@@ -118,16 +118,17 @@ const PostSelectImage = () => {
     const {file, fileName, url} = item || {};
     const {width = 1, height = 1} = file || {};
     const ratio = height / width;
+    const dfWidth = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
 
     return (
       <UploadingImage
         uploadType={uploadTypes.postImage}
-        style={{marginBottom: spacing.margin.large}}
+        style={styles.item}
         file={file}
         fileName={fileName}
         url={url}
-        width={dimension.deviceWidth}
-        height={dimension.deviceWidth * ratio}
+        width={dfWidth}
+        height={dfWidth * ratio}
         onUploadSuccess={onUploadSuccess}
         onPressRemove={() => onPressRemoveImage(item, index)}
       />
@@ -146,7 +147,7 @@ const PostSelectImage = () => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.background}>
+    <ScreenWrapper isFullView backgroundColor={colors.surface}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_edit_images'}
@@ -158,6 +159,7 @@ const PostSelectImage = () => {
       <FlatList
         data={currentImages || []}
         renderItem={renderItem}
+        contentContainerStyle={styles.container}
         ListFooterComponent={renderFooter}
         keyExtractor={(item, index) =>
           `create_post_image_${index}_${item?.fileName}`
@@ -170,7 +172,8 @@ const PostSelectImage = () => {
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {backgroundColor: colors.background},
+    item: {marginBottom: spacing.margin.large, alignSelf: 'center'},
   });
 };
 

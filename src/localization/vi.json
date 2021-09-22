@@ -280,7 +280,8 @@
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
     "error_upload_photo_failed": "Tải ảnh lên thất bại!",
-    "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh"
+    "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh",
+    "placeholder_create_post": "Bạn đang nghĩ gì..."
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

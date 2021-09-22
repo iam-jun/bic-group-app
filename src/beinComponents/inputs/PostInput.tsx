@@ -15,6 +15,7 @@ import {
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
+import {useBaseHook} from '~/hooks';
 
 export interface PostInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -47,6 +48,7 @@ const PostInput: React.FC<PostInputProps> = ({
   ...props
 }: PostInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
+  const {t} = useBaseHook();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -62,7 +64,8 @@ const PostInput: React.FC<PostInputProps> = ({
       textAlignVertical={textAlignVertical}
       style={inputStyle}
       selectionColor={colors.textInput}
-      placeholder={placeholder}
+      placeholder={placeholder || t('post:placeholder_create_post')}
+      placeholderTextColor={colors.textSecondary}
       multiline={multiline}
       onChangeText={onChangeText}
       keyboardType={keyboardType}

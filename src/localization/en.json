@@ -329,7 +329,8 @@
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
     "error_upload_photo_failed": "Upload photo failed!",
-    "error_reach_upload_photo_limit": "Post limit %LIMIT% photos"
+    "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
+    "placeholder_create_post": "Write your post here..."
   },
   "chat": {
     "title": "Chat",

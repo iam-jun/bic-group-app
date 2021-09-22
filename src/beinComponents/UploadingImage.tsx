@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import FileUploader, {IUploadParam, IUploadType} from '~/services/fileUploader';
+import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
 import {IFilePicked} from '~/interfaces/common';
 import Image from '~/beinComponents/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -12,6 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
+import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -19,8 +20,8 @@ export interface UploadingImageProps {
   file?: IFilePicked;
   fileName?: string;
   url?: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   onUploadSuccess?: (url: string, fileName: string) => void;
   onPressRemove?: () => void;
 }
@@ -41,18 +42,26 @@ const UploadingImage: FC<UploadingImageProps> = ({
 
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
+
+  const _setImageUrl = (url: string) => {
+    if (url.includes('http')) {
+      setImageUrl(url);
+    } else {
+      setImageUrl(getResourceUrl(uploadType, url));
+    }
+  };
 
   const upload = async () => {
     if (url) {
-      setImageUrl(url);
+      _setImageUrl(url);
     } else if (file) {
       const param: IUploadParam = {
         uploadType,
         file,
         onSuccess: uploadedUrl => {
-          setImageUrl(uploadedUrl);
+          _setImageUrl(uploadedUrl);
           onUploadSuccess?.(uploadedUrl, fileName || '');
         },
         onError: e => {
@@ -66,14 +75,34 @@ const UploadingImage: FC<UploadingImageProps> = ({
       } catch (e) {
         console.log(`\x1b[35m🐣️ UploadingImage upload error:`, e, `\x1b[0m`);
       }
+    } else if (fileName) {
+      const result: IGetFile = FileUploader.getInstance().getFile(
+        fileName,
+        uploadedUrl => {
+          _setImageUrl(uploadedUrl);
+          onUploadSuccess?.(uploadedUrl, fileName || '');
+        },
+        undefined,
+        e => {
+          setError(
+            typeof e === 'string' ? e : t('common:error_upload_photo_failed'),
+          );
+        },
+      );
+      if (result?.url) {
+        _setImageUrl(result?.url);
+      }
     }
   };
 
   useEffect(() => {
     upload();
-  }, []);
+  }, [url, fileName, file]);
 
   const renderRemove = () => {
+    if (!onPressRemove) {
+      return null;
+    }
     return (
       <Button style={styles.icRemove} onPress={onPressRemove}>
         <Icon size={12} icon={'iconCloseSmall'} />
