@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {Keyboard, StyleSheet, View} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
@@ -30,11 +30,12 @@ import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import Text from '~/beinComponents/Text';
 import {IFilePicked} from '~/interfaces/common';
 import {showHideToastMessage} from '~/store/modal/actions';
 import FileUploader from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 export interface CreatePostProps {
   route?: {
@@ -63,6 +64,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {content} = data || {};
 
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
+  const {images} = validateImages(selectingImages, t);
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
@@ -170,35 +172,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.goBack();
   };
 
-  const validateImages = (selectingImages: IFilePicked[]) => {
-    let imageError = '';
-    const images: IActivityDataImage[] = [];
-    selectingImages?.map?.(item => {
-      const {file, fileName} = item || {};
-      const {url, uploading} =
-        FileUploader.getInstance().getFile(fileName) || {};
-      if (uploading) {
-        imageError = t('post:error_wait_uploading');
-      } else if (!url) {
-        imageError = t('error_upload_failed');
-      } else {
-        images.push({
-          name: url,
-          origin_name: fileName,
-          width: file?.width,
-          height: file?.height,
-        });
-      }
-    });
-    return {imageError, images};
-  };
-
   const onPressPost = async () => {
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
 
-    const {imageError, images} = validateImages(selectingImages);
+    const {imageError, images} = validateImages(selectingImages, t);
 
     if (imageError) {
       dispatch(
@@ -269,6 +248,38 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     // }
   };
 
+  const renderContent = () => {
+    const shouldScroll = selectingImages?.length > 0;
+    const Container = shouldScroll ? ScrollView : View;
+
+    return (
+      <Container style={shouldScroll ? {} : styles.flex1}>
+        <View style={shouldScroll ? {} : styles.flex1}>
+          <MentionInput
+            style={shouldScroll ? {} : styles.flex1}
+            textInputStyle={shouldScroll ? {} : styles.flex1}
+            modalStyle={styles.mentionInputModal}
+            modalPosition={'bottom'}
+            onPress={onPressMentionAudience}
+            onChangeText={onChangeText}
+            value={content}
+            ComponentInput={PostInput}
+            title={i18n.t('post:mention_title')}
+            emptyContent={i18n.t('post:mention_empty_content')}
+            getDataPromise={postDataHelper.getSearchMentionAudiences}
+            getDataParam={{group_ids: strGroupIds}}
+            getDataResponseKey={'data'}
+            disabled={loading}
+          />
+          <PostPhotoPreview
+            data={images || []}
+            onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
+          />
+        </View>
+      </Container>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScreenWrapper isFullView testID={'CreatePostScreen'}>
@@ -293,31 +304,34 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             <Divider />
           </View>
         )}
-        <MentionInput
-          style={styles.flex1}
-          textInputStyle={styles.flex1}
-          modalStyle={styles.mentionInputModal}
-          modalPosition={'bottom'}
-          onPress={onPressMentionAudience}
-          onChangeText={onChangeText}
-          value={content}
-          ComponentInput={PostInput}
-          title={i18n.t('post:mention_title')}
-          emptyContent={i18n.t('post:mention_empty_content')}
-          getDataPromise={postDataHelper.getSearchMentionAudiences}
-          getDataParam={{group_ids: strGroupIds}}
-          getDataResponseKey={'data'}
-          disabled={loading}
-        />
-        <View style={{padding: 8}}>
-          <Text>selected {selectingImages.length} image</Text>
-        </View>
+        {renderContent()}
         {!isEditPost && (
           <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
         )}
       </ScreenWrapper>
     </View>
   );
+};
+
+const validateImages = (selectingImages: IFilePicked[], t: any) => {
+  let imageError = '';
+  const images: IActivityDataImage[] = [];
+  selectingImages?.map?.(item => {
+    const {file, fileName} = item || {};
+    const {url, uploading} = FileUploader.getInstance().getFile(fileName) || {};
+    if (uploading) {
+      imageError = t('post:error_wait_uploading');
+    } else if (!url) {
+      imageError = t('error_upload_failed');
+    }
+    images.push({
+      name: url || '',
+      origin_name: fileName,
+      width: file?.width,
+      height: file?.height,
+    });
+  });
+  return {imageError, images};
 };
 
 const themeStyles = (theme: ITheme) => {

@@ -118,6 +118,7 @@ const PostSelectImage = () => {
     const {file, fileName, url} = item || {};
     const {width = 1, height = 1} = file || {};
     const ratio = height / width;
+    const dfWidth = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
 
     return (
       <UploadingImage
@@ -126,8 +127,8 @@ const PostSelectImage = () => {
         file={file}
         fileName={fileName}
         url={url}
-        width={dimension.deviceWidth}
-        height={dimension.deviceWidth * ratio}
+        width={dfWidth}
+        height={dfWidth * ratio}
         onUploadSuccess={onUploadSuccess}
         onPressRemove={() => onPressRemoveImage(item, index)}
       />
