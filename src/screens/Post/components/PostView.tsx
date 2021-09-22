@@ -39,6 +39,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Div from '~/beinComponents/Div';
 
 export interface PostViewProps {
   postId: string;
@@ -98,6 +99,25 @@ const PostView: FC<PostViewProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
+  const reactButtonPosition = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  };
+  const findReactButtonDimension = (layout: any) => {
+    reactButtonPosition.x = layout.x;
+    reactButtonPosition.y = layout.y;
+    reactButtonPosition.width = layout.width;
+    reactButtonPosition.height = layout.height;
+  };
+  const logPosition = () => {
+    console.log('[DEBUG] X', reactButtonPosition.x);
+    console.log('[DEBUG] Y', reactButtonPosition.y);
+    console.log('[DEBUG] Width', reactButtonPosition.width);
+    console.log('[DEBUG] Height', reactButtonPosition.height);
+  };
+
   /**
    * Check Important
    * - important active = true
@@ -153,6 +173,7 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = (event: any) => {
+    logPosition();
     dispatch(
       postActions.setShowReactionBottomSheet({
         show: true,
@@ -298,24 +319,32 @@ const PostView: FC<PostViewProps> = ({
     disabled?: boolean,
   ) => {
     return (
-      <Button
-        useI18n
-        onPress={onPress}
-        onLongPress={onLongPress}
-        disabled={disabled}
-        leftIcon={icon}
-        leftIconProps={{
-          icon: icon,
-          size: 14,
-          tintColor: colors.textSecondary,
-        }}
-        textProps={{
-          variant: 'bodyM',
-          color: colors.textSecondary,
-        }}
-        style={styles.buttonReact}>
-        {title}
-      </Button>
+      <Div
+        className="button-react"
+        onLayout={event =>
+          icon === 'iconReact' &&
+          findReactButtonDimension(event.nativeEvent.layout)
+        }
+        style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
+        <Button
+          useI18n
+          onPress={onPress}
+          onLongPress={onLongPress}
+          disabled={disabled}
+          leftIcon={icon}
+          leftIconProps={{
+            icon: icon,
+            size: 14,
+            tintColor: colors.textSecondary,
+          }}
+          textProps={{
+            variant: 'bodySM',
+            color: colors.textSecondary,
+          }}
+          style={styles.buttonReact}>
+          {title}
+        </Button>
+      </Div>
     );
   };
 
@@ -383,7 +412,7 @@ const PostView: FC<PostViewProps> = ({
           onRemoveReaction={onRemoveReaction}
           onLongPressReaction={onLongPressReaction}
         />
-        <View style={styles.reactButtonContainer}>
+        <View style={styles.reactButtons}>
           {renderReactButtonItem(
             'post:button_react',
             'iconReact',
@@ -466,7 +495,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing?.margin.tiny,
       // fontFamily: fontFamilies.Poppins,
     },
-    reactButtonContainer: {
+    reactButtons: {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
       borderTopWidth: 1,
@@ -476,6 +505,10 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       marginVertical: spacing?.margin.small,
       marginHorizontal: spacing?.margin.large,
+    },
+    buttonReactContainer: {
+      flex: 1,
+      height: 'auto',
     },
     buttonReact: {
       flex: 1,
