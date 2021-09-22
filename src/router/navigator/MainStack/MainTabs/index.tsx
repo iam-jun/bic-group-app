@@ -133,7 +133,9 @@ const MainTabs = () => {
                 // @ts-ignore
                 const unreadCount = tabBadge[name] || undefined;
 
-                let className = 'tab-bar__menu tab-bar--bottom__menu';
+                let className = 'tab-bar__menu';
+
+                if (isPhone) className = className + ' tab-bar--bottom__menu';
                 if (focused) className = className + ' tab-bar__menu--active';
 
                 return (
