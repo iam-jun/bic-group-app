@@ -31,6 +31,12 @@ const ConversationItem: React.FC<IConversation> = ({
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
+  console.log('[DEBUG] name', name);
+  console.log('[DEBUG] type', type);
+  const welcomeText =
+    type === 'direct'
+      ? 'chat:label_init_direct_message:short'
+      : 'chat:label_init_group_message:short';
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(name));
@@ -64,10 +70,7 @@ const ConversationItem: React.FC<IConversation> = ({
         variant: unreadCount ? 'bodyM' : 'body',
         color: textColor,
       }}
-      subTitle={
-        escapeMarkDown(lastMessage) ||
-        i18next.t('chat:label_init_group_message:short')
-      }
+      subTitle={escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
       style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={

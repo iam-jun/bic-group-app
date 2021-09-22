@@ -168,7 +168,8 @@ const Conversation = () => {
   };
 
   const renderChatMessages = () => {
-    if (!messages.loading && isEmpty(messages.data)) return <ChatWelcome />;
+    if (!messages.loading && isEmpty(messages.data))
+      return <ChatWelcome type={conversation.type} />;
 
     return (
       <ListMessages

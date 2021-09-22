@@ -6,10 +6,22 @@ import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import ChatWelcomeImg from '~/../assets/images/chat_welcome.svg';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import {roomTypes} from '~/constants/chat';
 
-const ChatWelcome = () => {
+type roomTypeKeys = keyof typeof roomTypes;
+type chatTypes = typeof roomTypes[roomTypeKeys];
+
+interface ChatWelcomeProps {
+  type?: chatTypes;
+}
+
+const ChatWelcome: React.FC<ChatWelcomeProps> = ({type = 'direct'}) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+  const welcomeText =
+    type === 'direct'
+      ? 'chat:label_init_direct_message:full'
+      : 'chat:label_init_group_message:full';
 
   return (
     <View style={styles.container}>
@@ -22,7 +34,7 @@ const ChatWelcome = () => {
       />
       <View style={styles.textContainer}>
         <Text.Body style={styles.text} useI18n>
-          chat:label_init_group_message:full
+          {welcomeText}
         </Text.Body>
       </View>
     </View>
