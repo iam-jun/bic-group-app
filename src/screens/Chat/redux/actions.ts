@@ -75,7 +75,7 @@ const setSubscriptions = (payload: IConversation[]) => ({
   payload,
 });
 
-const readSubcriptions = (payload: string) => ({
+const readSubscriptions = (payload: string) => ({
   type: Actions.READ_SUBCRIPTIONS,
   payload,
 });
@@ -195,7 +195,7 @@ export default {
   setGroupRoles,
   getSubscriptions,
   setSubscriptions,
-  readSubcriptions,
+  readSubscriptions,
   handleEvent,
   sendMessage,
   sendMessageSuccess,

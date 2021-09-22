@@ -51,7 +51,7 @@ export default function* saga() {
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
-  yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
+  yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
@@ -140,15 +140,15 @@ function* getSubscriptions() {
   }
 }
 
-function* readSubcriptions({payload}: {type: string; payload: string}) {
+function* readSubscriptions({payload}: {type: string; payload: string}) {
   try {
     yield makeHttpRequest(
-      apiConfig.Chat.readSubcriptions({
+      apiConfig.Chat.readSubscriptions({
         rid: payload,
       }),
     );
   } catch (err) {
-    console.log('readSubcriptions', err);
+    console.log('readSubscriptions', err);
   }
 }
 

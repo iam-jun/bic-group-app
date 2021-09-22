@@ -116,6 +116,9 @@ export const linkingConfigFull = {
                   'post-select-audience': {
                     path: 'post/create/audiences',
                   },
+                  'post-select-image': {
+                    path: 'post/create/image',
+                  },
                 },
               },
               groups: {
@@ -241,6 +244,9 @@ export const linkingConfigFullLaptop = {
               },
               'post-select-audience': {
                 path: 'post/create/audiences',
+              },
+              'post-select-image': {
+                path: 'post/create/image',
               },
               'user-profile': {
                 path: 'profile/:userId?',

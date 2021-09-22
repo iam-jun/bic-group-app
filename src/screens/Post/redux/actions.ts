@@ -18,6 +18,7 @@ import {
   IPayloadCreateComment,
   IPayloadReplying,
   IPayloadGetPostDetail,
+  ICreatePostImage,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -32,10 +33,6 @@ const postActions = {
     type: postTypes.SET_ALL_COMMENTS,
     payload,
   }),
-  setOpenPostToolBarModal: (payload: boolean) => ({
-    type: postTypes.SET_OPEN_POST_TOOLBAR_MODAL,
-    payload,
-  }),
   setLoadingCreatePost: (payload: boolean) => ({
     type: postTypes.SET_LOADING_CREATE_POST,
     payload,
@@ -45,6 +42,10 @@ const postActions = {
   }),
   setCreatePostData: (payload: IActivityData) => ({
     type: postTypes.SET_CREATE_POST_DATA,
+    payload,
+  }),
+  setCreatePostDataImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_DATA_IMAGES,
     payload,
   }),
   setCreateComment: (payload: {loading?: boolean; content?: string}) => ({
@@ -57,6 +58,14 @@ const postActions = {
   }),
   setCreatePostImportant: (payload?: IActivityImportant) => ({
     type: postTypes.SET_CREATE_POST_IMPORTANT,
+    payload,
+  }),
+  setCreatePostImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES,
+    payload,
+  }),
+  setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
     payload,
   }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({

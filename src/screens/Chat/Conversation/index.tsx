@@ -26,7 +26,7 @@ import {
   MessageOptionsModal,
 } from './fragments';
 import DownButton from './fragments/DownButton';
-import GroupChatWelcome from './fragments/GroupChatWelcome';
+import ChatWelcome from './fragments/ChatWelcome';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -57,7 +57,7 @@ const Conversation = () => {
   };
 
   useEffect(() => {
-    !isFocused && dispatch(actions.readSubcriptions(conversation._id));
+    !isFocused && dispatch(actions.readSubscriptions(conversation._id));
   }, [isFocused]);
 
   useEffect(() => {
@@ -67,7 +67,10 @@ const Conversation = () => {
   }, [route.params?.roomId]);
 
   useEffect(() => {
-    _getMessages();
+    if (conversation?._id) {
+      setAvatar(conversation?.avatar);
+      _getMessages();
+    }
   }, [conversation?._id]);
 
   useEffect(() => {
@@ -169,7 +172,7 @@ const Conversation = () => {
 
   const renderChatMessages = () => {
     if (!messages.loading && isEmpty(messages.data))
-      return <GroupChatWelcome />;
+      return <ChatWelcome type={conversation.type} />;
 
     return (
       <ListMessages
