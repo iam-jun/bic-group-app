@@ -64,7 +64,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.setConversationDetail(item));
-    dispatch(actions.readSubcriptions(item._id));
+    dispatch(actions.readSubscriptions(item._id));
     rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
   };
 

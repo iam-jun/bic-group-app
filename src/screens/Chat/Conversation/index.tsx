@@ -57,7 +57,7 @@ const Conversation = () => {
   };
 
   useEffect(() => {
-    !isFocused && dispatch(actions.readSubcriptions(conversation._id));
+    !isFocused && dispatch(actions.readSubscriptions(conversation._id));
   }, [isFocused]);
 
   useEffect(() => {
