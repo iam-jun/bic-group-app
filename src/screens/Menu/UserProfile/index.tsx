@@ -115,8 +115,7 @@ const UserProfile = (props: any) => {
     return userId != currentUserId ? (
       <Button.Secondary
         style={styles.button}
-        color={theme.colors.primary7}
-        textColor={theme.colors.background}
+        highEmphasis
         rightIcon={'Message'}
         onPress={onPressChat}>
         {i18next.t('profile:title_direct_message')}
@@ -124,8 +123,6 @@ const UserProfile = (props: any) => {
     ) : (
       <Button.Secondary
         style={styles.button}
-        color={theme.colors.bgButtonSecondary}
-        textColor={theme.colors.primary}
         rightIcon={'EditAlt'}
         onPress={onEditProfileButton}>
         {i18next.t('profile:title_edit_profile')}
