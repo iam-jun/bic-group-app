@@ -32,14 +32,15 @@ const RedDot: React.FC<RedDotProps> = ({
 
 const themeStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
+  const defaultWidth = 20;
 
   return StyleSheet.create({
     dot: {
       borderRadius: spacing.borderRadius.large,
       paddingBottom: 2,
       paddingHorizontal: 5,
-      minWidth: spacing.lineHeight.base,
-      height: 20,
+      minWidth: defaultWidth,
+      height: defaultWidth,
       backgroundColor: colors.error,
       alignItems: 'center',
       justifyContent: 'center',
