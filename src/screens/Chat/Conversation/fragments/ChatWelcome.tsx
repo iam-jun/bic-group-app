@@ -3,11 +3,11 @@ import {StyleSheet, View} from 'react-native';
 
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
-import GroupChatWelcomeImg from '~/../assets/images/group_chat_welcome.svg';
+import ChatWelcomeImg from '~/../assets/images/chat_welcome.svg';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 
-const GroupChatWelcome = () => {
+const ChatWelcome = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -15,7 +15,7 @@ const GroupChatWelcome = () => {
     <View style={styles.container}>
       <SvgIcon
         // @ts-ignore
-        source={GroupChatWelcomeImg}
+        source={ChatWelcomeImg}
         width={250}
         height={200}
         tintColor="none"
@@ -50,4 +50,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default GroupChatWelcome;
+export default ChatWelcome;

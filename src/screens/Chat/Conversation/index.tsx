@@ -26,7 +26,7 @@ import {
   MessageOptionsModal,
 } from './fragments';
 import DownButton from './fragments/DownButton';
-import GroupChatWelcome from './fragments/GroupChatWelcome';
+import ChatWelcome from './fragments/ChatWelcome';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -168,8 +168,7 @@ const Conversation = () => {
   };
 
   const renderChatMessages = () => {
-    if (!messages.loading && isEmpty(messages.data))
-      return <GroupChatWelcome />;
+    if (!messages.loading && isEmpty(messages.data)) return <ChatWelcome />;
 
     return (
       <ListMessages
