@@ -14,13 +14,13 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {ICreatePostImage} from '~/interfaces/IPost';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import {uploadTypes} from '~/services/fileUploader';
 import postActions from '~/screens/Post/redux/actions';
 import Button from '~/beinComponents/Button';
 import {useBaseHook} from '~/hooks';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
+import {uploadTypes} from '~/configs/resourceConfig';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
