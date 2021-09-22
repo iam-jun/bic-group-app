@@ -6,6 +6,7 @@ import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import {Text} from '~/components';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
@@ -132,8 +133,13 @@ const MainTabs = () => {
                 // @ts-ignore
                 const unreadCount = tabBadge[name] || undefined;
 
+                let className = 'tab-bar__menu tab-bar--bottom__menu';
+                if (focused) className = className + ' tab-bar__menu--active';
+
                 return (
-                  <View style={styles.container}>
+                  <Div
+                    className={className}
+                    style={Platform.OS !== 'web' ? styles.container : {}}>
                     <Icon
                       //@ts-ignore
                       icon={icon[name]}
@@ -148,7 +154,7 @@ const MainTabs = () => {
                     {!!unreadCount && (
                       <RedDot style={styles.badge} number={unreadCount} />
                     )}
-                  </View>
+                  </Div>
                 );
               },
               tabBarLabel: () => null,
