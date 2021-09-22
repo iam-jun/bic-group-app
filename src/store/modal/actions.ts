@@ -5,6 +5,7 @@ import {
   IShowAlert,
 } from '~/interfaces/IModal';
 import {IToastMessage} from '~/interfaces/common';
+import {ReactionType} from '~/constants/reactions';
 
 /**
  * Fetch settings
@@ -91,4 +92,15 @@ export const showReactionDetailBottomSheet = (
 
 export const clearReactionDetailBottomSheet = () => ({
   type: Actions.CLEAR_REACTION_DETAIL_BOTTOM_SHEET,
+});
+
+export const setShowReactionBottomSheet = (payload?: {
+  show?: boolean;
+  title?: string;
+  position?: {x: number; y: number};
+  side?: 'left' | 'right' | 'center';
+  callback?: (reactionId: ReactionType) => void;
+}) => ({
+  type: Actions.SET_SHOW_REACTION_BOTTOM_SHEET,
+  payload,
 });

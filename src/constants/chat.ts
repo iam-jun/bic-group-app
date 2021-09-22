@@ -86,9 +86,9 @@ export const myMessageOptions = [
 export const messageOptions = ['copy', 'reply', 'get_link', 'reactions'];
 
 export const reactions = {
-  love_hearts: {
-    id: 'love_hearts',
-    icon: 'love_hearts',
+  crazy_love_heart: {
+    id: 'crazy_love_heart',
+    icon: 'crazy_love_heart',
   },
   stunned_wow: {
     id: 'stunned_wow',

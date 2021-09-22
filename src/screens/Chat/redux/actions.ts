@@ -2,6 +2,7 @@ import {
   IChatUser,
   IConversation,
   IMessage,
+  IPayloadReactMessage,
   ISendMessageAction,
   IUploadFileAction,
 } from '~/interfaces/IChat';
@@ -105,10 +106,9 @@ const sendMessageFailed = (payload: IMessage) => ({
   payload,
 });
 
-const reactMessage = (message?: IMessage, reactionType?: string) => ({
+const reactMessage = (payload: IPayloadReactMessage) => ({
   type: Actions.REACT_MESSAGE,
-  message,
-  reactionType,
+  payload,
 });
 
 const deleteMessage = (payload: IMessage) => ({

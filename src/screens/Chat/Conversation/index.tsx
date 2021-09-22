@@ -4,6 +4,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
+
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -27,6 +29,8 @@ import {
 } from './fragments';
 import DownButton from './fragments/DownButton';
 import ChatWelcome from './fragments/ChatWelcome';
+import * as modalActions from '~/store/modal/actions';
+import {ReactionType} from '~/constants/reactions';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -105,8 +109,43 @@ const Conversation = () => {
     setSelectedMessage(undefined);
   };
 
+  const onAddReaction = (reactionId: ReactionType, messageId: string) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId,
+        shouldReact: true,
+      }),
+    );
+  };
+
+  const onPressReact = (event: any, item: IMessage) => {
+    dispatch(
+      modalActions.setShowReactionBottomSheet({
+        show: true,
+        title: i18next.t('post:label_all_reacts'),
+        position: {x: event?.pageX, y: event?.pageY},
+        side: 'left',
+        callback: (reactionId: ReactionType) =>
+          onAddReaction(reactionId, item._id),
+      }),
+    );
+  };
+
   const onReactionPress = async (type: string) => {
-    dispatch(actions.reactMessage(selectedMessage, type));
+    if (!!selectedMessage) {
+      if (type === 'add_react') {
+        onPressReact(null, selectedMessage);
+      } else {
+        dispatch(
+          actions.reactMessage({
+            emoji: type,
+            messageId: selectedMessage._id,
+            shouldReact: true,
+          }),
+        );
+      }
+    }
 
     messageOptionsModalRef.current?.close();
   };
@@ -163,9 +202,11 @@ const Conversation = () => {
       previousMessage:
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
-      onReactPress: () => onMenuPress('reactions'),
+      onReactPress: (event: any) => onPressReact(event, item),
       onReplyPress: () => onMenuPress('reply'),
       onLongPress,
+      onAddReaction: (reactionId: ReactionType) =>
+        onAddReaction(reactionId, item._id),
     };
     return <MessageContainer {...props} />;
   };

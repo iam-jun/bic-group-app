@@ -22,7 +22,6 @@ import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {formatDate, formatLargeNumber} from '~/utils/formatData';
 import ReactionView from '~/screens/Post/components/ReactionView';
@@ -40,6 +39,7 @@ import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import * as modalActions from '~/store/modal/actions';
 
 export interface PostViewProps {
   postId: string;
@@ -155,7 +155,7 @@ const PostView: FC<PostViewProps> = ({
 
   const onPressReact = (event: any) => {
     dispatch(
-      postActions.setShowReactionBottomSheet({
+      modalActions.setShowReactionBottomSheet({
         show: true,
         title: t('post:label_all_reacts'),
         position: {x: event?.pageX, y: event?.pageY},

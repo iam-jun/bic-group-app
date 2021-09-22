@@ -1,3 +1,4 @@
+import {IReactionCounts, IOwnReaction} from '~/interfaces/IPost';
 import i18next from 'i18next';
 import {messageEventTypes, roomTypes} from '~/constants/chat';
 import {
@@ -10,6 +11,7 @@ import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 import {messageStatus} from './../../constants/chat';
+import reactionIcons from '~/resources/reactions';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -112,6 +114,24 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     }
   }
 
+  let reaction_counts: IReactionCounts = {};
+  let own_reactions: IOwnReaction = {};
+  if (item?.reactions) {
+    Object.keys(item?.reactions)
+      .filter(emoji => {
+        const emojiName = emoji.replace(/:/g, '');
+        return Object.keys(reactionIcons).includes(emojiName);
+      })
+      .map(emoji => {
+        const emojiName = emoji.replace(/:/g, '');
+        const count = item.reactions[emoji].usernames.length;
+        if (item.reactions[emoji].usernames.includes(_user.username)) {
+          own_reactions = {...own_reactions, [emojiName]: [{id: emojiName}]};
+        }
+        reaction_counts = {...reaction_counts, [emojiName]: count};
+      });
+  }
+
   return {
     ...item,
     room_id: item?.rid,
@@ -125,6 +145,8 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     text,
     attachment,
     localId: item.localId || attachment?.localId,
+    reaction_counts,
+    own_reactions,
   };
 };
 
