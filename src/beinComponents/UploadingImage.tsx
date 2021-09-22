@@ -4,11 +4,7 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import FileUploader, {
-  IGetFile,
-  IUploadParam,
-  IUploadType,
-} from '~/services/fileUploader';
+import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
 import {IFilePicked} from '~/interfaces/common';
 import Image from '~/beinComponents/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -16,6 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
+import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -48,15 +45,23 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const {colors} = theme;
   const styles = createStyle(theme);
 
+  const _setImageUrl = (url: string) => {
+    if (url.includes('http')) {
+      setImageUrl(url);
+    } else {
+      setImageUrl(getResourceUrl(uploadType, url));
+    }
+  };
+
   const upload = async () => {
     if (url) {
-      setImageUrl(url);
+      _setImageUrl(url);
     } else if (file) {
       const param: IUploadParam = {
         uploadType,
         file,
         onSuccess: uploadedUrl => {
-          setImageUrl(uploadedUrl);
+          _setImageUrl(uploadedUrl);
           onUploadSuccess?.(uploadedUrl, fileName || '');
         },
         onError: e => {
@@ -74,7 +79,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       const result: IGetFile = FileUploader.getInstance().getFile(
         fileName,
         uploadedUrl => {
-          setImageUrl(uploadedUrl);
+          _setImageUrl(uploadedUrl);
           onUploadSuccess?.(uploadedUrl, fileName || '');
         },
         undefined,
@@ -85,7 +90,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
         },
       );
       if (result?.url) {
-        setImageUrl(result?.url);
+        _setImageUrl(result?.url);
       }
     }
   };

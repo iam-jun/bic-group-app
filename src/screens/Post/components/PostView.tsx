@@ -39,6 +39,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import mainStack from '~/router/navigator/MainStack/stack';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 
 export interface PostViewProps {
   postId: string;
@@ -81,7 +82,7 @@ const PostView: FC<PostViewProps> = ({
 
   const {language} = useContext(AppContext);
 
-  const {content} = postObjectData || {};
+  const {content, images} = postObjectData || {};
 
   const userId = useUserIdAuth();
 
@@ -321,26 +322,29 @@ const PostView: FC<PostViewProps> = ({
 
   const renderContent = () => {
     return (
-      <View style={styles.contentContainer}>
-        {isPostDetail ? (
-          <MarkdownView
-            onPressAudience={(audience: any) =>
-              onPressMentionAudience(audience)
-            }>
-            {content}
-          </MarkdownView>
-        ) : (
-          <CollapsibleText
-            content={content}
-            limitLength={400}
-            shortLength={400}
-            useMarkdown
-            toggleOnPress
-            onPressAudience={(audience: any) =>
-              onPressMentionAudience(audience)
-            }
-          />
-        )}
+      <View>
+        <View style={styles.contentContainer}>
+          {isPostDetail ? (
+            <MarkdownView
+              onPressAudience={(audience: any) =>
+                onPressMentionAudience(audience)
+              }>
+              {content}
+            </MarkdownView>
+          ) : (
+            <CollapsibleText
+              content={content}
+              limitLength={400}
+              shortLength={400}
+              useMarkdown
+              toggleOnPress
+              onPressAudience={(audience: any) =>
+                onPressMentionAudience(audience)
+              }
+            />
+          )}
+        </View>
+        <PostPhotoPreview data={images} />
       </View>
     );
   };

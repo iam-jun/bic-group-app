@@ -3,21 +3,7 @@ import {IFilePicked} from '~/interfaces/common';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {AppConfig} from '~/configs';
 import i18next from 'i18next';
-
-export const uploadTypes = {
-  userAvatar: 'userAvatar',
-  userCover: 'userCover',
-  groupAvatar: 'groupAvatar',
-  groupCover: 'groupCover',
-  postImage: 'postImage',
-  postVideo: 'postVideo',
-  postFile: 'postFile',
-  chatImage: 'chatImage',
-  chatVideo: 'chatVideo',
-  chatFile: 'chatFile',
-};
-
-export type IUploadType = keyof typeof uploadTypes;
+import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IGetFile {
   fileName: string;

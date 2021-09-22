@@ -57,6 +57,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
   const renderSmallImage = (
     fileName?: string,
+    url?: string,
     separate?: boolean,
     isRenderMore?: boolean,
   ) => {
@@ -73,6 +74,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             width={'100%'}
             height={'100%'}
             fileName={fileName}
+            url={url}
           />
           {isRenderMore && renderMore()}
         </View>
@@ -93,6 +95,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             width={'100%'}
             height={'100%'}
             fileName={data[0].origin_name}
+            url={data[0].name}
           />
         </View>
         {data?.length > 1 && (
@@ -100,9 +103,14 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             <ViewSpacing width={4} height={4} />
             <View
               style={{flex: 1, flexDirection: isVertical ? 'column' : 'row'}}>
-              {renderSmallImage(data?.[1]?.origin_name)}
-              {renderSmallImage(data?.[2]?.origin_name, true)}
-              {renderSmallImage(data?.[3]?.origin_name, true, data?.length > 4)}
+              {renderSmallImage(data?.[1]?.origin_name, data?.[1]?.name)}
+              {renderSmallImage(data?.[2]?.origin_name, data?.[2]?.name, true)}
+              {renderSmallImage(
+                data?.[3]?.origin_name,
+                data?.[3]?.name,
+                true,
+                data?.length > 4,
+              )}
             </View>
           </>
         )}
