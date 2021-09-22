@@ -58,6 +58,12 @@ const PostView: FC<PostViewProps> = ({
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
+  const [reactButtonPosition, setReactButtonPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  });
   const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
@@ -99,23 +105,13 @@ const PostView: FC<PostViewProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const reactButtonPosition = {
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  };
   const findReactButtonDimension = (layout: any) => {
-    reactButtonPosition.x = layout.x;
-    reactButtonPosition.y = layout.y;
-    reactButtonPosition.width = layout.width;
-    reactButtonPosition.height = layout.height;
-  };
-  const logPosition = () => {
-    console.log('[DEBUG] X', reactButtonPosition.x);
-    console.log('[DEBUG] Y', reactButtonPosition.y);
-    console.log('[DEBUG] Width', reactButtonPosition.width);
-    console.log('[DEBUG] Height', reactButtonPosition.height);
+    setReactButtonPosition({
+      top: layout.top,
+      left: layout.left,
+      width: layout.width,
+      height: layout.height,
+    });
   };
 
   /**
@@ -172,13 +168,18 @@ const PostView: FC<PostViewProps> = ({
     }
   };
 
-  const onPressReact = (event: any) => {
-    logPosition();
+  const onPressReact = () => {
+    const x = reactButtonPosition.left + reactButtonPosition.width / 2;
+    const buttonPaddingBottom = spacing?.padding.tiny || 4;
+    const y =
+      reactButtonPosition.top +
+      reactButtonPosition.height +
+      buttonPaddingBottom;
     dispatch(
       postActions.setShowReactionBottomSheet({
         show: true,
         title: t('post:label_all_reacts'),
-        position: {x: event?.pageX, y: event?.pageY},
+        position: {x, y},
         callback: onAddReaction,
       }),
     );
@@ -321,29 +322,33 @@ const PostView: FC<PostViewProps> = ({
     return (
       <Div
         className="button-react"
-        onLayout={event =>
-          icon === 'iconReact' &&
-          findReactButtonDimension(event.nativeEvent.layout)
-        }
         style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
-        <Button
-          useI18n
-          onPress={onPress}
-          onLongPress={onLongPress}
-          disabled={disabled}
-          leftIcon={icon}
-          leftIconProps={{
-            icon: icon,
-            size: 14,
-            tintColor: colors.textSecondary,
-          }}
-          textProps={{
-            variant: 'bodySM',
-            color: colors.textSecondary,
-          }}
-          style={styles.buttonReact}>
-          {title}
-        </Button>
+        <View
+          onLayout={event =>
+            Platform.OS === 'web' &&
+            icon === 'iconReact' &&
+            findReactButtonDimension(event.nativeEvent.layout)
+          }
+          style={styles.buttonReactContainer}>
+          <Button
+            useI18n
+            onPress={onPress}
+            onLongPress={onLongPress}
+            disabled={disabled}
+            leftIcon={icon}
+            leftIconProps={{
+              icon: icon,
+              size: 14,
+              tintColor: colors.textSecondary,
+            }}
+            textProps={{
+              variant: 'bodySM',
+              color: colors.textSecondary,
+            }}
+            style={styles.buttonReact}>
+            {title}
+          </Button>
+        </View>
       </Div>
     );
   };
