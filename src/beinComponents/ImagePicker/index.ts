@@ -1,3 +1,3 @@
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from './BeinImagePicker';
 
 export default ImagePicker;

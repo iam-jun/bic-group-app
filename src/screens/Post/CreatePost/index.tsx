@@ -14,6 +14,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
 import {
+  IActivityDataImage,
   IAudience,
   ICreatePostParams,
   IPayloadPutEditPost,
@@ -29,6 +30,11 @@ import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import Text from '~/beinComponents/Text';
+import {IFilePicked} from '~/interfaces/common';
+import {showHideToastMessage} from '~/store/modal/actions';
+import FileUploader from '~/services/fileUploader';
+import {useBaseHook} from '~/hooks';
 
 export interface CreatePostProps {
   route?: {
@@ -41,6 +47,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {postId, replaceWithDetail, initAudience} = route?.params || {};
 
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -52,14 +59,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }
 
   const createPostData = useCreatePost();
-  const {
-    loading,
-    isOpenModal,
-    data,
-    chosenAudiences = [],
-    important,
-  } = createPostData || {};
-  const {content, images, videos, files} = data || {};
+  const {loading, data, chosenAudiences = [], important} = createPostData || {};
+  const {content} = data || {};
+
+  const selectingImages = useKeySelector(postKeySelector.createPost.images);
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
@@ -92,6 +95,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
     return () => {
       dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);
 
@@ -166,12 +170,45 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.goBack();
   };
 
-  const onPressPost = async () => {
-    const tags: any = []; //todo remove default
+  const validateImages = (selectingImages: IFilePicked[]) => {
+    let imageError = '';
+    const images: IActivityDataImage[] = [];
+    selectingImages?.map?.(item => {
+      const {file, fileName} = item || {};
+      const {url, uploading} =
+        FileUploader.getInstance().getFile(fileName) || {};
+      if (uploading) {
+        imageError = t('post:error_wait_uploading');
+      } else if (!url) {
+        imageError = t('error_upload_failed');
+      } else {
+        images.push({
+          name: url,
+          origin_name: fileName,
+          width: file?.width,
+          height: file?.height,
+        });
+      }
+    });
+    return {imageError, images};
+  };
 
+  const onPressPost = async () => {
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
+
+    const {imageError, images} = validateImages(selectingImages);
+
+    if (imageError) {
+      dispatch(
+        showHideToastMessage({
+          content: imageError,
+          props: {textProps: {useI18n: true}, type: 'error'},
+        }),
+      );
+      return;
+    }
 
     chosenAudiences.map((selected: IAudience) => {
       if (selected.type === 'user') {
@@ -186,7 +223,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         getstream_id: initPostData.id,
         data,
         audience,
-        tags,
       };
       if (important?.active) {
         newEditData.important = important;
@@ -198,7 +234,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       dispatch(postActions.putEditPost(payload));
     } else {
-      const payload: IPostCreatePost = {data, audience, tags};
+      const postData = {content, images, videos: [], files: []};
+      const payload: IPostCreatePost = {data: postData, audience};
       if (important?.active) {
         payload.important = important;
       }
@@ -230,13 +267,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     //   newChosenAudience.unshift(mentionUser);
     //   dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
     // }
-  };
-
-  const onOpenPostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(true));
-  };
-  const onClosePostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(false));
   };
 
   return (
@@ -279,14 +309,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           getDataResponseKey={'data'}
           disabled={loading}
         />
+        <View style={{padding: 8}}>
+          <Text>selected {selectingImages.length} image</Text>
+        </View>
         {!isEditPost && (
-          <PostToolbar
-            isOpenModal={isOpenModal}
-            onOpenModal={onOpenPostToolbarModal}
-            onCloseModal={onClosePostToolbarModal}
-            modalizeRef={toolbarModalizeRef}
-            disabled={loading}
-          />
+          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
         )}
       </ScreenWrapper>
     </View>

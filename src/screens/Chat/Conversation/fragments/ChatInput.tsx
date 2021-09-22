@@ -7,7 +7,7 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import apiConfig from '~/configs/apiConfig';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import {mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
@@ -42,7 +42,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     setText('');
   };
 
-  const onPressSelectImage = (file: IFileResponse) => {
+  const onPressSelectImage = (file: IFilePicked) => {
     const _error = validateFile(file);
     onError(_error);
     if (_error) return;
@@ -50,14 +50,14 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     showUploadConfirmation(file, type);
   };
 
-  const onPressFile = (file: IFileResponse) => {
+  const onPressFile = (file: IFilePicked) => {
     const _error = validateFile(file);
     onError(_error);
     if (_error) return;
     showUploadConfirmation(file, 'file');
   };
 
-  const showUploadConfirmation = (file: IFileResponse, type: string) => {
+  const showUploadConfirmation = (file: IFilePicked, type: string) => {
     dispatch(
       modalActions.showAlert({
         title: i18next.t(`chat:label_confirm_send_${type}`),
@@ -69,7 +69,7 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     );
   };
 
-  const uploadFile = (file: IFileResponse) => {
+  const uploadFile = (file: IFilePicked) => {
     const _id = uuid.v4().toString();
     dispatch(
       actions.uploadFile({

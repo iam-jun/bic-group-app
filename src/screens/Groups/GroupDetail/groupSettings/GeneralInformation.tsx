@@ -25,7 +25,7 @@ import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
 import useGroups from '~/hooks/groups';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import images from '~/resources/images';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -84,7 +84,7 @@ const GeneralInformation = () => {
     rootNavigation.navigate(groupStack.editGroupDescription);
 
   const uploadFile = (
-    file: IFileResponse,
+    file: IFilePicked,
     fieldName: 'icon' | 'background_img_url',
   ) => {
     dispatch(
@@ -99,20 +99,11 @@ const GeneralInformation = () => {
   // fieldName: field name in group profile to be edited
   // 'icon' for avatar and 'background_img_url' for cover
   const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
-    ImagePicker.openPicker({
+    ImagePicker.openPickerSingle({
       ...groupProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
-      multiple: false,
-    }).then(result => {
-      if (!result) return;
-
-      const file = {
-        name: result.filename,
-        size: result.size,
-        type: result.mime,
-        uri: result.path,
-      };
+    }).then(file => {
       const _error = validateFile(file);
       setError(_error);
       if (_error) return;

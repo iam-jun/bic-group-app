@@ -35,8 +35,7 @@ const NotFound = () => {
         </Text.Body>
         <Button.Secondary
           style={styles.button}
-          color={theme.colors.primary7}
-          textColor={theme.colors.background}
+          highEmphasis
           onPress={() => alert('Pressed "Go back"')}
           textVariant="h6">
           {i18next.t('error:button_not_found')}

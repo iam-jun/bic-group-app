@@ -39,17 +39,16 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
       <View style={styles.container}>
         {Object.values(options).map(option => {
           return (
-            <ButtonWrapper
-              key={option.icon}
-              onPress={option.onPress}
-              style={styles.option}>
-              <Icon
-                // @ts-ignore
-                icon={option.icon}
-                tintColor={colors.textSecondary}
-                size={16}
-              />
-            </ButtonWrapper>
+            <Div key={option.icon} className="button">
+              <ButtonWrapper onPress={option.onPress} style={styles.option}>
+                <Icon
+                  // @ts-ignore
+                  icon={option.icon}
+                  tintColor={colors.textSecondary}
+                  size={16}
+                />
+              </ButtonWrapper>
+            </Div>
           );
         })}
       </View>

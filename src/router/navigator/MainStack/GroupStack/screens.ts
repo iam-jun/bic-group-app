@@ -5,6 +5,7 @@ import GroupMembers from '~/screens/Groups/GroupMembers';
 import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
+import PostSelectImage from '~/screens/Post/PostSelectImage';
 import PostDetail from '~/screens/Post/PostDetail';
 import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/GroupAdministration';
 import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/GeneralInformation';
@@ -21,6 +22,7 @@ export default {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
+  'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,

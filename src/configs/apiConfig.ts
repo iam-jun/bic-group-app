@@ -32,6 +32,40 @@ const providers = {
   },
 };
 
+const Upload = {
+  uploadFile: (
+    type: any,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+  ): HttpApiRequestConfig => {
+    const uploadEndPoint: any = {
+      userAvatar: '/upload/user-avatar',
+      userCover: '/upload/user-cover',
+      groupAvatar: '/upload/group-avatar',
+      groupCover: '/upload/group-cover',
+      postImage: 'upload/post-image',
+      postVideo: '/upload/post-video',
+      postFile: '/upload/post-file',
+      chatImage: '/upload/chat-image',
+      chatVideo: '/upload/chat-video',
+      chatFile: '/upload/chat-file',
+    };
+
+    const url = `${providers.bein.url}${uploadEndPoint[type]}`;
+    return {
+      url,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: false,
+      provider: providers.bein,
+      onUploadProgress: onUploadProgress,
+      data,
+    };
+  },
+};
+
 const Chat = {
   rooms: (): HttpApiRequestConfig => {
     const auth = getChatAuthInfo();
@@ -306,4 +340,5 @@ export default {
 
   App,
   Chat,
+  Upload,
 };

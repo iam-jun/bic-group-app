@@ -21,7 +21,7 @@ import speakingLanguages from '~/constants/speakingLanguages';
 import relationshipStatus from '~/constants/relationshipStatus';
 import genders from '~/constants/genders';
 import {validateFile} from '~/utils/validation';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import menuActions from '../redux/actions';
 import {scaleCoverHeight} from '~/theme/dimension';
 
@@ -65,7 +65,7 @@ const UserEditProfile = () => {
   const goToEditInfo = () => navigation.navigate(mainStack.editBasicInfo);
 
   const uploadFile = (
-    file: IFileResponse,
+    file: IFilePicked,
     fieldName: 'avatar' | 'background_img_url',
   ) => {
     dispatch(
@@ -80,25 +80,17 @@ const UserEditProfile = () => {
   // fieldName: field name in group profile to be edited
   // 'avatar' for avatar and 'background_img_url' for cover
   const _openImagePicker = (fieldName: 'avatar' | 'background_img_url') => {
-    ImagePicker.openPicker({
+    ImagePicker.openPickerSingle({
       ...userProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
-      multiple: false,
-    }).then(result => {
-      if (!result) return;
-
-      const file = {
-        name: result.filename,
-        size: result.size,
-        type: result.mime,
-        uri: result.path,
-      };
+    }).then(file => {
+      if (!file) return;
       const _error = validateFile(file);
       setError(_error);
       if (_error) return;
       // @ts-ignore
-      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
+      uploadFile(file, fieldName);
     });
   };
 
