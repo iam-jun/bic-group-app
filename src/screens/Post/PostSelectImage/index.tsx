@@ -28,7 +28,7 @@ const PostSelectImage = () => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, dimension, spacing} = theme;
+  const {colors, dimension} = theme;
   const styles = createStyle(theme);
 
   const selectedImages: ICreatePostImage[] =
@@ -123,7 +123,7 @@ const PostSelectImage = () => {
     return (
       <UploadingImage
         uploadType={uploadTypes.postImage}
-        style={{marginBottom: spacing.margin.large}}
+        style={styles.item}
         file={file}
         fileName={fileName}
         url={url}
@@ -170,9 +170,10 @@ const PostSelectImage = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {backgroundColor: colors.background},
+    item: {marginBottom: spacing.margin.large, alignSelf: 'center'},
   });
 };
 

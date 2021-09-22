@@ -273,6 +273,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           />
           <PostPhotoPreview
             data={images || []}
+            style={{alignSelf: 'center'}}
             onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
           />
         </View>

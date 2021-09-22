@@ -31,8 +31,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
   const isVertical = imageRatio <= 0.5;
   const dfSize = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
-  const width = data?.length === 1 ? imageRatio * dfSize : dfSize;
-  const height = data?.length === 1 ? dfSize : dfSize;
+  const width = data?.length === 1 ? dfSize : dfSize;
+  const height = data?.length === 1 ? dfSize / imageRatio : dfSize;
 
   const containerStyle: any = {
     flexDirection: isVertical ? 'row' : 'column',
