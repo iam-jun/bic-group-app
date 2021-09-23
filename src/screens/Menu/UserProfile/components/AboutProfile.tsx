@@ -79,6 +79,7 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: spacing.margin.small,
+      marginRight: spacing.margin.base,
     },
     about: {
       marginBottom: spacing.margin.base,
