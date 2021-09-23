@@ -155,14 +155,39 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = (event: any) => {
-    dispatch(
-      postActions.setShowReactionBottomSheet({
-        show: true,
-        title: t('post:label_all_reacts'),
-        position: {x: event?.pageX, y: event?.pageY},
-        callback: onAddReaction,
-      }),
-    );
+    const payload = {
+      show: true,
+      position: {x: event?.pageX, y: event?.pageY},
+      callback: onAddReaction,
+    };
+
+    if (Platform.OS !== 'web') {
+      dispatch(postActions.setShowReactionBottomSheet(payload));
+      return;
+    }
+
+    // Handling show reaction bottom sheet on web
+    // @ts-ignore
+    event.target.measure((fx, fy, width, height, px, py) => {
+      const buttonReactPaddingBottom = spacing.padding.tiny || 4;
+      let x = px;
+      let y = py + height + buttonReactPaddingBottom;
+
+      /*
+      As target may be the label, not the whole button itself,
+      which causes the bottom sheet will render in the middle.
+      If pressing on the label, the childElementCount will equal 0.
+      */
+      if (event.target.childElementCount !== 0) {
+        x = x + width / 2;
+      } else {
+        // Move menu further down when pressing on label
+        y = y + buttonReactPaddingBottom * 1.5;
+      }
+      payload.position = {x, y};
+
+      dispatch(postActions.setShowReactionBottomSheet(payload));
+    });
   };
 
   const _onPressComment = () => {
@@ -303,26 +328,24 @@ const PostView: FC<PostViewProps> = ({
       <Div
         className="button-react"
         style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
-        <View style={styles.buttonReactContainer}>
-          <Button
-            useI18n
-            onPress={onPress}
-            onLongPress={onLongPress}
-            disabled={disabled}
-            leftIcon={icon}
-            leftIconProps={{
-              icon: icon,
-              size: 14,
-              tintColor: colors.textSecondary,
-            }}
-            textProps={{
-              variant: 'bodySM',
-              color: colors.textSecondary,
-            }}
-            style={styles.buttonReact}>
-            {title}
-          </Button>
-        </View>
+        <Button
+          useI18n
+          onPress={onPress}
+          onLongPress={onLongPress}
+          disabled={disabled}
+          leftIcon={icon}
+          leftIconProps={{
+            icon: icon,
+            size: 14,
+            tintColor: colors.textSecondary,
+          }}
+          textProps={{
+            variant: 'bodySM',
+            color: colors.textSecondary,
+          }}
+          style={styles.buttonReact}>
+          {title}
+        </Button>
       </Div>
     );
   };
