@@ -3,6 +3,7 @@ import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import {useIsFocused} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
@@ -43,6 +44,7 @@ const UserProfile = (props: any) => {
   const {rootNavigation} = useRootNavigation();
 
   const currentUserId = useUserIdAuth();
+  const isFocused = useIsFocused();
 
   const navigateToChatScreen = (roomId: string) =>
     rootNavigation.navigate('chat', {
@@ -56,8 +58,8 @@ const UserProfile = (props: any) => {
   };
 
   useEffect(() => {
-    getUserProfile();
-  }, [userId]);
+    isFocused && getUserProfile();
+  }, [isFocused]);
 
   const onPressChat = () => {
     if (!!username)
