@@ -17,13 +17,16 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
+import ReactionView from '~/beinComponents/ReactionView';
+import {ReactionType} from '~/constants/reactions';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
-  onReactPress: (item: IMessage) => void;
+  onReactPress: (event: any) => void;
   onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
+  onAddReaction: (reaction: ReactionType) => void;
 }
 
 const MessageItem = (props: MessageItemProps) => {
@@ -38,6 +41,7 @@ const MessageItem = (props: MessageItemProps) => {
     onReactPress,
     onReplyPress,
     onLongPress,
+    onAddReaction,
   } = props;
   const {
     text,
@@ -48,6 +52,8 @@ const MessageItem = (props: MessageItemProps) => {
     _updatedAt,
     status,
     type,
+    reaction_counts,
+    own_reactions,
   } = currentMessage;
 
   const sameUser = user?.username === previousMessage?.user?.username;
@@ -103,13 +109,23 @@ const MessageItem = (props: MessageItemProps) => {
                   {text}
                 </MarkdownView>
                 <MessageMenu
-                  onReactPress={() => onReactPress(currentMessage)}
+                  onReactPress={(event: any) => onReactPress(event)}
                   onReplyPress={() => onReplyPress(currentMessage)}
                   onMenuPress={onMenuPress}
                 />
               </>
             )}
           </View>
+          <View style={styles.reactionView}>
+            <ReactionView
+              ownReactions={own_reactions || {}}
+              reactionCounts={reaction_counts || {}}
+              onAddReaction={onAddReaction}
+              onRemoveReaction={() => {}}
+              onLongPressReaction={() => {}}
+            />
+          </View>
+
           <MessageStatus status={status} onRetryPress={_onRetryPress} />
         </View>
       </TouchableWithoutFeedback>
@@ -132,6 +148,9 @@ const createStyles = (theme: ITheme) => {
     removedText: {
       color: colors.textSecondary,
       fontStyle: 'italic',
+    },
+    reactionView: {
+      marginStart: 36,
     },
   });
 };

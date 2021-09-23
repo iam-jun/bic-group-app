@@ -25,6 +25,7 @@ import Icon from '~/beinComponents/Icon';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
+import * as modalActions from '~/store/modal/actions';
 
 export interface CommentViewProps {
   postId: string;
@@ -108,7 +109,7 @@ const CommentView: React.FC<CommentViewProps> = ({
 
   const onPressReact = (event: any) => {
     dispatch(
-      postActions.setShowReactionBottomSheet({
+      modalActions.setShowReactionBottomSheet({
         show: true,
         title: t('post:label_all_reacts'),
         position: {x: event?.pageX, y: event?.pageY},

@@ -41,7 +41,7 @@ const MainStack = (): React.ReactElement => {
   React.useEffect(() => {
     connectChat();
     const removeOnMessageCallback = addOnMessageCallback(
-      'callbackoflistchatscreen',
+      'callback-of-list-chat-screen',
       event => {
         dispatch(chatActions.handleEvent(JSON.parse(event.data)));
       },
@@ -60,14 +60,14 @@ const MainStack = (): React.ReactElement => {
     sendMessage({
       msg: 'sub',
       id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
-      name: 'streamroommessages',
+      name: 'stream-room-messages',
       params: ['__my_messages__', false],
     });
     sendMessage({
       msg: 'sub',
       id: chatSocketId.SUBSCRIBE_NOTIFY_USER,
-      name: 'streamnotifyuser',
-      params: [`${auth?.userId}/subscriptionschanged`, false],
+      name: 'stream-notify-user',
+      params: [`${auth?.userId}/subscriptions-changed`, false],
     });
   };
 

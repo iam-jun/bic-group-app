@@ -2,6 +2,7 @@ import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IconType} from '~/resources/icons';
 import {IFilePicked} from './common';
+import {IOwnReaction, IReactionCounts} from './IPost';
 export interface IReaction {
   type: ReactionType;
   count: number;
@@ -146,6 +147,8 @@ export type IMessage = {
   removed?: boolean;
   attachment?: IFilePicked & IAttachment;
   permissions?: [x: string];
+  reaction_counts?: IReactionCounts;
+  own_reactions?: IOwnReaction;
 };
 
 export interface IAttachmentMessage {
@@ -190,4 +193,10 @@ export interface IUploadFileAction {
   room_id: string;
   _updatedAt: string;
   attachment: IFilePicked;
+}
+
+export interface IPayloadReactMessage {
+  emoji: string;
+  messageId: string;
+  shouldReact: boolean;
 }

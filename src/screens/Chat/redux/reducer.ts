@@ -187,7 +187,12 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       );
       const newMessages = !include
         ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
-        : messages.data;
+        : messages.data.map((item: IMessage) =>
+            item._id === action.payload._id ||
+            (item.localId && item.localId === action.payload.localId)
+              ? {...item, ...payload}
+              : item,
+          );
 
       return {
         ...state,
@@ -377,42 +382,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ),
         },
       };
-    case types.REACT_MESSAGE:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          data: messages.data.map((message: IMessage) =>
-            message._id === action.message._id
-              ? {
-                  ...message,
-                  reactions: (message?.reactions || []).find(
-                    item => item.type === action.reactionType,
-                  )
-                    ? (message.reactions || []).map((reaction: IReaction) =>
-                        reaction.type === action.reactionType
-                          ? {
-                              ...reaction,
-                              reacted: !reaction.reacted,
-                              count: reaction.reacted // TODO: The count number should be return by API
-                                ? reaction.count - 1
-                                : reaction.count + 1,
-                            }
-                          : reaction,
-                      )
-                    : [
-                        ...(message.reactions || []),
-                        {
-                          type: action.reactionType,
-                          count: 1,
-                          reacted: true,
-                        },
-                      ],
-                }
-              : message,
-          ),
-        },
-      };
+
     default:
       return state;
   }

@@ -6,10 +6,12 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
+import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
   IConversation,
   IMessage,
+  IPayloadReactMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
@@ -55,6 +57,7 @@ export default function* saga() {
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
+  yield takeLatest(types.REACT_MESSAGE, reactMessage);
 }
 
 function* initChat() {
@@ -410,6 +413,20 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
   }
 }
 
+function* reactMessage({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactMessage;
+}) {
+  try {
+    yield makeHttpRequest(apiConfig.Chat.reactMessage(payload));
+  } catch (err) {
+    console.log('reactMessage:', err);
+    yield showError(err);
+  }
+}
+
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else yield sendMessage({payload, type});
@@ -534,4 +551,18 @@ function* handleNotifyUser(payload?: any) {
       yield handleAddNewRoom(data[1]);
       break;
   }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }

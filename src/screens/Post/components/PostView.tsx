@@ -22,7 +22,6 @@ import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {formatDate, formatLargeNumber} from '~/utils/formatData';
 import ReactionView from '~/screens/Post/components/ReactionView';
@@ -41,6 +40,7 @@ import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Div from '~/beinComponents/Div';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import * as modalActions from '~/store/modal/actions';
 
 export interface PostViewProps {
   postId: string;
@@ -162,7 +162,7 @@ const PostView: FC<PostViewProps> = ({
     };
 
     if (Platform.OS !== 'web') {
-      dispatch(postActions.setShowReactionBottomSheet(payload));
+      dispatch(modalActions.setShowReactionBottomSheet(payload));
       return;
     }
 
@@ -186,7 +186,7 @@ const PostView: FC<PostViewProps> = ({
       }
       payload.position = {x, y};
 
-      dispatch(postActions.setShowReactionBottomSheet(payload));
+      dispatch(modalActions.setShowReactionBottomSheet(payload));
     });
   };
 
