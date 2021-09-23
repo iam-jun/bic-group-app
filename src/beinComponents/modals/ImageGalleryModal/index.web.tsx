@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -19,14 +19,22 @@ import {ImageGalleryModalProps} from '~/beinComponents/modals/ImageGalleryModal/
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
   source,
-  zoomIn,
   onPressClose,
-  onPressZoom,
 }: ImageGalleryModalProps) => {
+  const [zoomIn, setZoomIn] = useState(false);
+
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme, insets);
+
+  const getSource = () => {
+    if (source?.length > 0) {
+      return source?.[0]?.uri || source?.[0];
+    } else {
+      return source?.uri || source;
+    }
+  };
 
   return (
     <Modal
@@ -36,9 +44,9 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       visible={visible}>
       <TouchableWithoutFeedback onPress={onPressClose}>
         <View style={styles.viewer}>
-          <Pressable onPress={onPressZoom}>
+          <Pressable onPress={() => setZoomIn(!zoomIn)}>
             <Image
-              source={source}
+              source={getSource()}
               className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
             />
           </Pressable>

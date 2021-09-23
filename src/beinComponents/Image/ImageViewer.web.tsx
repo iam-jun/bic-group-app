@@ -24,8 +24,6 @@ const ImageViewer = ({source, style}: ImageProps) => {
         visible={viewerVisible}
         source={source}
         onPressClose={() => setViewerVisible(false)}
-        onPressZoom={() => setZoomIn(!zoomIn)}
-        zoomIn={zoomIn}
       />
     </Div>
   );

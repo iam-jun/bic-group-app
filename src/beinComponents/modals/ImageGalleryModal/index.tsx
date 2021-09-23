@@ -1,9 +1,6 @@
 import React, {FC} from 'react';
 import {
-  View,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   TouchableOpacity,
   Modal,
 } from 'react-native';
@@ -26,15 +23,23 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
 
+  const getImageUrls = () => {
+    const result: {url: string}[] = [];
+    if (source?.length > 0) {
+      source?.map?.((item: any) => {
+        result.push({url: item?.uri || item});
+      });
+    } else {
+      result.push({url: source?.uri || source});
+    }
+    return result;
+  };
+
   return (
     <Modal visible={visible} transparent={true}>
       <ImageViewer
         renderImage={image => <FastImage {...image} />}
-        imageUrls={[
-          {
-            url: source?.uri || source,
-          },
-        ]}
+        imageUrls={getImageUrls()}
         renderHeader={() => (
           <TouchableOpacity style={styles.icon} onPress={onPressClose}>
             <Icon icon="iconClose" tintColor="#fff" onPress={onPressClose} />
@@ -46,7 +51,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 };
 
 const createStyle = (theme: ITheme, insets: EdgeInsets) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {},
     icon: {

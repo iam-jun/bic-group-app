@@ -6,6 +6,4 @@ export interface ImageGalleryModalProps {
   onPressClose: () => void;
 
   //web
-  zoomIn?: boolean;
-  onPressZoom?: () => void;
 }

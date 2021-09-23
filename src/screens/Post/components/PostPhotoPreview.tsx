@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -9,18 +9,28 @@ import {IActivityDataImage} from '~/interfaces/IPost';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Button from '~/beinComponents/Button';
+import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
+import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 
 export interface PostPhotoPreviewProps {
   style?: StyleProp<ViewStyle>;
   data: IActivityDataImage[];
   onPress?: () => void;
+  disabled?: boolean;
+  enableGalleryModal?: boolean;
+  uploadType: IUploadType | string;
 }
 
 const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   style,
   data = [],
   onPress,
+  disabled = false,
+  enableGalleryModal = false,
+  uploadType,
 }: PostPhotoPreviewProps) => {
+  const [galleryVisible, setGalleryVisible] = useState(false);
+
   const theme = useTheme() as ITheme;
   const {colors, dimension} = theme;
   const styles = createStyle(theme);
@@ -47,10 +57,32 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       data?.length === 1 ? colors.borderFocus : colors.background,
   };
 
+  const _onPress = () => {
+    if (onPress) {
+      onPress();
+    } else {
+      setGalleryVisible(true);
+    }
+  };
+
+  const getImageUrls = () => {
+    const result: string[] = [];
+    data.map(item => {
+      if (item.name) {
+        result.push(
+          item.name.includes('http')
+            ? item.name
+            : getResourceUrl(uploadType, item.name),
+        );
+      }
+    });
+    return result;
+  };
+
   const renderMore = () => {
     return (
       <View style={styles.moreContainer}>
-        <Text.H5 color={colors.background}>+ {data.length - 4}</Text.H5>
+        <Text.H4 color={colors.background}>+ {data.length - 4}</Text.H4>
       </View>
     );
   };
@@ -84,8 +116,9 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
   return (
     <Button
-      disabled={!onPress}
-      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.8}
+      onPress={_onPress}
       style={StyleSheet.flatten([wrapperStyle, style])}>
       <View style={StyleSheet.flatten([styles.container, containerStyle])}>
         <View style={{flex: data?.length === 2 ? 1 : 2}}>
@@ -115,6 +148,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           </>
         )}
       </View>
+      {enableGalleryModal && (
+        <ImageGalleryModal
+          visible={galleryVisible}
+          source={getImageUrls()}
+          onPressClose={() => setGalleryVisible(false)}
+        />
+      )}
     </Button>
   );
 };

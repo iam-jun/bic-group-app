@@ -344,7 +344,11 @@ const PostView: FC<PostViewProps> = ({
             />
           )}
         </View>
-        <PostPhotoPreview data={images} />
+        <PostPhotoPreview
+          data={images}
+          uploadType={'postImage'}
+          enableGalleryModal
+        />
       </View>
     );
   };
