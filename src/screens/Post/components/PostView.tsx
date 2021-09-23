@@ -171,7 +171,7 @@ const PostView: FC<PostViewProps> = ({
     event.target.measure((fx, fy, width, height, px, py) => {
       const buttonReactPaddingBottom = spacing.padding.tiny || 4;
       let x = px;
-      const y = py + height + buttonReactPaddingBottom;
+      let y = py + height + buttonReactPaddingBottom;
 
       /*
       As target may be the label, not the whole button itself,
@@ -180,6 +180,9 @@ const PostView: FC<PostViewProps> = ({
       */
       if (event.target.childElementCount !== 0) {
         x = x + width / 2;
+      } else {
+        // Move menu further down when pressing on label
+        y = y + buttonReactPaddingBottom * 1.5;
       }
       payload.position = {x, y};
 
