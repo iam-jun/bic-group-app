@@ -12,6 +12,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import genders from '~/constants/genders';
 import relationshipStatus from '~/constants/relationshipStatus';
 import speakingLanguages from '~/constants/speakingLanguages';
@@ -28,7 +29,6 @@ import {
 
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
-import {validateFile} from '~/utils/validation';
 import menuActions from '../redux/actions';
 
 const UserEditProfile = () => {
@@ -51,8 +51,6 @@ const UserEditProfile = () => {
     relationship_status,
   } = myProfile;
 
-  const [error, setError] = useState<string | null>(null);
-
   const userLanguageList = language?.map(
     // @ts-ignore
     (code: string) => speakingLanguages[code].name,
@@ -64,36 +62,37 @@ const UserEditProfile = () => {
   const uploadFile = (
     file: IFilePicked,
     fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
   ) => {
     dispatch(
       menuActions.uploadImage({
         id,
-        image: file,
+        file,
         fieldName,
+        uploadType,
       }),
     );
   };
 
   // fieldName: field name in group profile to be edited
   // 'avatar' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (fieldName: 'avatar' | 'background_img_url') => {
+  const _openImagePicker = (
+    fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
     ImagePicker.openPickerSingle({
       ...userProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
     }).then(file => {
-      if (!file) return;
-      const _error = validateFile(file);
-      setError(_error);
-      if (_error) return;
-      // @ts-ignore
-      uploadFile(file, fieldName);
+      uploadFile(file, fieldName, uploadType);
     });
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar');
+  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
 
-  const onEditCover = () => _openImagePicker('background_img_url');
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
