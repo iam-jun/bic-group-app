@@ -1,6 +1,7 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
 import {StreamClient} from 'getstream';
 import {IFilePicked} from './common';
+import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IGroup {
   id: number;
@@ -67,7 +68,8 @@ export interface IPayloadGetGroupPost {
 export interface IGroupImageUpload {
   id: number;
   fieldName: 'icon' | 'background_img_url';
-  image: IFilePicked;
+  file: IFilePicked;
+  uploadType: IUploadType;
 }
 
 export interface IGroupGetJoinableMembers {

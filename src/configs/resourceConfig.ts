@@ -20,7 +20,7 @@ export const uploadTypes = {
   chatFile: 'chatFile',
 };
 
-export type IUploadType = keyof typeof uploadTypes;
+export type IUploadType = typeof uploadTypes[keyof typeof uploadTypes];
 
 export const uploadEndpoints: any = {
   userAvatar: 'user/avatar/images/',
