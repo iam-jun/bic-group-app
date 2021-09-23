@@ -3,21 +3,7 @@ import {IFilePicked} from '~/interfaces/common';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {AppConfig} from '~/configs';
 import i18next from 'i18next';
-
-export const uploadTypes = {
-  userAvatar: 'userAvatar',
-  userCover: 'userCover',
-  groupAvatar: 'groupAvatar',
-  groupCover: 'groupCover',
-  postImage: 'postImage',
-  postVideo: 'postVideo',
-  postFile: 'postFile',
-  chatImage: 'chatImage',
-  chatVideo: 'chatVideo',
-  chatFile: 'chatFile',
-};
-
-export type IUploadType = keyof typeof uploadTypes;
+import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IGetFile {
   fileName: string;
@@ -41,6 +27,7 @@ export default class FileUploader {
 
   callbackProgress: any = {};
   callbackSuccess: any = {};
+  callbackError: any = {};
 
   static getInstance() {
     if (!FileUploader.INSTANCE) {
@@ -53,15 +40,16 @@ export default class FileUploader {
     fileName: string,
     onSuccess?: (url: string) => void,
     onProgress?: (percent: number) => void,
-  ) {
-    if (!fileName) {
-      return;
-    }
+    onError?: (e: any) => void,
+  ): IGetFile {
     if (onSuccess) {
       this.callbackSuccess[fileName] = onSuccess;
     }
     if (onProgress) {
       this.callbackProgress[fileName] = onProgress;
+    }
+    if (onError) {
+      this.callbackError[fileName] = onProgress;
     }
     const result: IGetFile = {
       fileName: fileName,
@@ -125,12 +113,14 @@ export default class FileUploader {
         return Promise.resolve(url);
       } else {
         onError?.(response?.data);
+        this.callbackError?.[file.name]?.(response?.data);
         return Promise.reject(response?.data);
       }
     } catch (e) {
       this.fileUploading[file.name] = false;
       console.log(`\x1b[31m🐣️ fileUploader error `, e, `\x1b[0m`);
       onError?.(e);
+      this.callbackError?.[file.name]?.(e);
       return Promise.reject(e);
     }
   }
