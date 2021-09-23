@@ -39,6 +39,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Div from '~/beinComponents/Div';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 
 export interface PostViewProps {
@@ -299,24 +300,30 @@ const PostView: FC<PostViewProps> = ({
     disabled?: boolean,
   ) => {
     return (
-      <Button
-        useI18n
-        onPress={onPress}
-        onLongPress={onLongPress}
-        disabled={disabled}
-        leftIcon={icon}
-        leftIconProps={{
-          icon: icon,
-          size: 14,
-          tintColor: colors.textSecondary,
-        }}
-        textProps={{
-          variant: 'bodyM',
-          color: colors.textSecondary,
-        }}
-        style={styles.buttonReact}>
-        {title}
-      </Button>
+      <Div
+        className="button-react"
+        style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
+        <View style={styles.buttonReactContainer}>
+          <Button
+            useI18n
+            onPress={onPress}
+            onLongPress={onLongPress}
+            disabled={disabled}
+            leftIcon={icon}
+            leftIconProps={{
+              icon: icon,
+              size: 14,
+              tintColor: colors.textSecondary,
+            }}
+            textProps={{
+              variant: 'bodySM',
+              color: colors.textSecondary,
+            }}
+            style={styles.buttonReact}>
+            {title}
+          </Button>
+        </View>
+      </Div>
     );
   };
 
@@ -387,7 +394,7 @@ const PostView: FC<PostViewProps> = ({
           onRemoveReaction={onRemoveReaction}
           onLongPressReaction={onLongPressReaction}
         />
-        <View style={styles.reactButtonContainer}>
+        <View style={styles.reactButtons}>
           {renderReactButtonItem(
             'post:button_react',
             'iconReact',
@@ -470,7 +477,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing?.margin.tiny,
       // fontFamily: fontFamilies.Poppins,
     },
-    reactButtonContainer: {
+    reactButtons: {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
       borderTopWidth: 1,
@@ -480,6 +487,10 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       marginVertical: spacing?.margin.small,
       marginHorizontal: spacing?.margin.large,
+    },
+    buttonReactContainer: {
+      flex: 1,
+      height: 'auto',
     },
     buttonReact: {
       flex: 1,
