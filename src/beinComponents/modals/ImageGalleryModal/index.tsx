@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState, useRef} from 'react';
 import {StyleSheet, Modal, View, FlatList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import PagerView from 'react-native-pager-view';
@@ -17,7 +17,12 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
   source,
   onPressClose,
+  initIndex = 0,
 }: ImageGalleryModalProps) => {
+  const [activeIndex, setActiveIndex] = useState(initIndex);
+  const pagerRef = useRef<any>();
+  const footerListRef = useRef<any>();
+
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -27,6 +32,20 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const onPressShare = () => {
     alert('share');
+  };
+
+  const _setActiveIndex = (index: number) => {
+    setActiveIndex(index);
+    footerListRef?.current?.scrollToIndex({index: index, viewPosition: 0.5});
+  };
+
+  const onPageSelected = (e: any) => {
+    const newIndex = e?.nativeEvent?.position || 0;
+    _setActiveIndex(newIndex);
+  };
+
+  const onScrollToIndexFailed = () => {
+    console.log(`\x1b[31m🐣️ ImageGalleryModal onScrollToIndexFailed\x1b[0m`);
   };
 
   const renderHeader = () => (
@@ -51,12 +70,12 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const renderFooterItem = ({item, index}: any) => {
     return (
-      <Button onPress={() => alert('index: ' + index)}>
+      <Button onPress={() => _setActiveIndex(index)}>
         <Image
           style={[
             styles.footerItem,
             {
-              borderWidth: 1,
+              borderWidth: index === activeIndex ? 1 : 0,
               marginLeft: index === 0 ? 20 : 0,
               marginRight:
                 index === imageUrls?.length - 1 ? 20 : spacing.margin.tiny,
@@ -70,14 +89,21 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const renderFooter = () => (
     <View style={styles.footerContainer}>
-      <Text.H6 style={styles.textFileName} color={colors.textReversed}>
-        FILENAME.JPG
-      </Text.H6>
+      <View style={styles.fileNameContainer}>
+        <Text.H6 color={colors.textReversed}>
+          {imageUrls?.[activeIndex]?.name?.toUpperCase?.() ||
+            imageUrls?.[activeIndex]?.url
+              ?.replace?.(/(.+)\/(.+)$/, '$2')
+              ?.toUpperCase?.()}
+        </Text.H6>
+      </View>
       <FlatList
+        ref={footerListRef}
         horizontal
         data={imageUrls}
         renderItem={renderFooterItem}
         showsHorizontalScrollIndicator={false}
+        onScrollToIndexFailed={onScrollToIndexFailed}
         keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
       />
     </View>
@@ -98,7 +124,11 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       <View style={styles.container}>
         {renderHeader()}
         <View style={{flex: 1}}>
-          <PagerView style={{flex: 1}} initialPage={0}>
+          <PagerView
+            ref={pagerRef}
+            style={{flex: 1}}
+            initialPage={activeIndex}
+            onPageSelected={onPageSelected}>
             {imageUrls.map(renderScreen)}
           </PagerView>
         </View>
@@ -112,10 +142,10 @@ const getImageUrls = (source: any) => {
   const result: {url: string; name: string}[] = [];
   if (source?.length > 0) {
     source?.map?.((item: any) => {
-      result.push({url: item?.uri || item, name: item?.uri || item});
+      result.push({url: item?.uri || item, name: item?.name});
     });
   } else {
-    result.push({url: source?.uri || source, name: source?.uri || source});
+    result.push({url: source?.uri || source, name: source?.name});
   }
   return result;
 };
@@ -137,8 +167,7 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
       right: spacing.margin.large,
       padding: spacing.padding.base,
     },
-    textFileName: {
-      color: colors.textReversed,
+    fileNameContainer: {
       margin: spacing.margin.base,
     },
     screenImage: {
