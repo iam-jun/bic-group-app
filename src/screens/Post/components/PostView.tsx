@@ -59,12 +59,6 @@ const PostView: FC<PostViewProps> = ({
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
-  const [reactButtonPosition, setReactButtonPosition] = useState({
-    top: 0,
-    left: 0,
-    width: 0,
-    height: 0,
-  });
   const menuSheetRef = useRef<any>();
 
   const {t} = useBaseHook();
@@ -105,15 +99,6 @@ const PostView: FC<PostViewProps> = ({
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-
-  const findReactButtonDimension = (layout: any) => {
-    setReactButtonPosition({
-      top: layout.top,
-      left: layout.left,
-      width: layout.width,
-      height: layout.height,
-    });
-  };
 
   /**
    * Check Important
@@ -169,18 +154,12 @@ const PostView: FC<PostViewProps> = ({
     }
   };
 
-  const onPressReact = () => {
-    const x = reactButtonPosition.left + reactButtonPosition.width / 2;
-    const buttonPaddingBottom = spacing?.padding.tiny || 4;
-    const y =
-      reactButtonPosition.top +
-      reactButtonPosition.height +
-      buttonPaddingBottom;
+  const onPressReact = (event: any) => {
     dispatch(
       postActions.setShowReactionBottomSheet({
         show: true,
         title: t('post:label_all_reacts'),
-        position: {x, y},
+        position: {x: event?.pageX, y: event?.pageY},
         callback: onAddReaction,
       }),
     );
@@ -324,13 +303,7 @@ const PostView: FC<PostViewProps> = ({
       <Div
         className="button-react"
         style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
-        <View
-          onLayout={event =>
-            Platform.OS === 'web' &&
-            icon === 'iconReact' &&
-            findReactButtonDimension(event.nativeEvent.layout)
-          }
-          style={styles.buttonReactContainer}>
+        <View style={styles.buttonReactContainer}>
           <Button
             useI18n
             onPress={onPress}
