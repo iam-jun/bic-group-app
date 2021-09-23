@@ -118,6 +118,7 @@ const icons = {
   Copy: 'Copy',
   Bell: 'Bell',
   TrashAlt: 'TrashAlt',
+  ShareAlt: 'ShareAlt',
   InfoCircle: 'InfoCircle',
   CalendarAlt: 'CalendarAlt',
   Clock: 'Clock',
