@@ -8,9 +8,9 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useDispatch} from 'react-redux';
-import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import commonKeySelector from '~/store/modal/keySelector';
 
 const ReactionBottomSheet = () => {
   const reactionSheetRef: any = useRef();
@@ -19,8 +19,8 @@ const ReactionBottomSheet = () => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
 
-  const data = useKeySelector(postKeySelector.reactionBottomSheet);
-  const {title, show, position, callback} = data || {};
+  const data = useKeySelector(commonKeySelector.reactionBottomSheet);
+  const {title, show, position, callback, side} = data || {};
 
   const _onPressReaction = (reaction: IReactionProps) => {
     callback?.(reaction.id);
@@ -28,7 +28,7 @@ const ReactionBottomSheet = () => {
   };
 
   const _onClose = () => {
-    dispatch(postActions.setShowReactionBottomSheet());
+    dispatch(modalActions.setShowReactionBottomSheet());
   };
 
   return (
@@ -36,7 +36,7 @@ const ReactionBottomSheet = () => {
       modalizeRef={reactionSheetRef}
       isOpen={show}
       position={position}
-      side="center"
+      side={side || 'center'}
       menuMinWidth={375}
       onClose={_onClose}
       ContentComponent={

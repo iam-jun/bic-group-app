@@ -16,6 +16,7 @@ import {
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
+import {IPayloadReactMessage} from '~/interfaces/IChat';
 
 const providers = {
   bein: {
@@ -256,6 +257,15 @@ const Chat = {
         'X-Auth-Token': auth.accessToken,
         'X-User-Id': auth.userId,
       },
+    };
+  },
+  reactMessage: (data: IPayloadReactMessage): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.react`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
     };
   },
 };

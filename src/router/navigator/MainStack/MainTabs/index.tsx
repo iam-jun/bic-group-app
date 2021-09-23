@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import i18next from 'i18next';
 import React, {useContext, useEffect} from 'react';
-import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -13,6 +13,8 @@ import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
+import BaseStackNavigator from '~/router/components/BaseStackNavigator';
+import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import {default as chatActions} from '~/screens/Chat/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
@@ -91,8 +93,12 @@ const MainTabs = () => {
     }
   };
 
-  const screensMap =
-    Platform.OS === 'web' && isLaptop ? screensWebLaptop : screens;
+  const isWebLaptop = Platform.OS === 'web' && isLaptop;
+  if (isWebLaptop) {
+    return (
+      <BaseStackNavigator stack={mainTabStack} screens={screensWebLaptop} />
+    );
+  }
 
   return (
     // @ts-ignore
@@ -111,7 +117,7 @@ const MainTabs = () => {
         },
       }}
       tabBarStyle={styles.tabBar}>
-      {Object.entries(screensMap).map(([name, component]) => {
+      {Object.entries(screens).map(([name, component]) => {
         return (
           // @ts-ignore
           <Tab.Screen
