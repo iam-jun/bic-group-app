@@ -23,10 +23,11 @@ import {ReactionType} from '~/constants/reactions';
 export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
-  onReactPress: (event: any) => void;
+  onReactPress: (event: any, side: 'left' | 'right' | 'center') => void;
   onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
   onAddReaction: (reaction: ReactionType) => void;
+  onRemoveReaction: (reaction: ReactionType) => void;
 }
 
 const MessageItem = (props: MessageItemProps) => {
@@ -42,6 +43,7 @@ const MessageItem = (props: MessageItemProps) => {
     onReplyPress,
     onLongPress,
     onAddReaction,
+    onRemoveReaction,
   } = props;
   const {
     text,
@@ -109,7 +111,7 @@ const MessageItem = (props: MessageItemProps) => {
                   {text}
                 </MarkdownView>
                 <MessageMenu
-                  onReactPress={(event: any) => onReactPress(event)}
+                  onReactPress={(event: any) => onReactPress(event, 'left')}
                   onReplyPress={() => onReplyPress(currentMessage)}
                   onMenuPress={onMenuPress}
                   hideHeader={hideHeader}
@@ -122,8 +124,12 @@ const MessageItem = (props: MessageItemProps) => {
               ownReactions={own_reactions || {}}
               reactionCounts={reaction_counts || {}}
               onAddReaction={onAddReaction}
-              onRemoveReaction={() => {}}
+              onRemoveReaction={onRemoveReaction}
               onLongPressReaction={() => {}}
+              onPressSelectReaction={(event: any) =>
+                onReactPress(event, 'center')
+              }
+              showSelectReactionWhenEmpty={false}
             />
           </View>
 

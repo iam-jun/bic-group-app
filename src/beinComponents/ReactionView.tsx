@@ -18,6 +18,7 @@ export interface ReactionViewProps {
   onRemoveReaction: (reaction: ReactionType) => void;
   onPressSelectReaction?: (event: any) => void;
   onLongPressReaction?: (reactionType: ReactionType) => void;
+  showSelectReactionWhenEmpty?: boolean;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
@@ -27,6 +28,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   onRemoveReaction,
   onPressSelectReaction,
   onLongPressReaction,
+  showSelectReactionWhenEmpty = true,
 }: ReactionViewProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -71,7 +73,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   if (renderedReactions.length === 0) {
     return (
       <View style={styles.containerButtonOnly}>
-        {!!onPressSelectReaction && (
+        {!!onPressSelectReaction && showSelectReactionWhenEmpty && (
           <Button style={styles.buttonReact} onPress={onPressSelectReaction}>
             <Icon size={16} icon={'iconReact'} />
           </Button>
