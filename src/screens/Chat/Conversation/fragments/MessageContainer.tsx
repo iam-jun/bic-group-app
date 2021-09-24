@@ -112,6 +112,7 @@ const MessageItem = (props: MessageItemProps) => {
                   onReactPress={(event: any) => onReactPress(event)}
                   onReplyPress={() => onReplyPress(currentMessage)}
                   onMenuPress={onMenuPress}
+                  hideHeader={hideHeader}
                 />
               </>
             )}

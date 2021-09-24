@@ -123,7 +123,6 @@ const Conversation = () => {
     dispatch(
       modalActions.setShowReactionBottomSheet({
         show: true,
-        title: i18next.t('post:label_all_reacts'),
         position: {x: event?.pageX, y: event?.pageY},
         side: 'left',
         callback: (reactionId: ReactionType) =>

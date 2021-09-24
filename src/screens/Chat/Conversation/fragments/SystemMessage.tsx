@@ -11,11 +11,9 @@ const SystemMessage: React.FC<IMessage> = ({text}: IMessage) => {
   const styles = createStyles(theme);
 
   return (
-    <Div className="chat-message">
-      <View style={styles.container}>
-        <Text.BodyS style={styles.text}>{text}</Text.BodyS>
-      </View>
-    </Div>
+    <View style={styles.container}>
+      <Text.BodyS style={styles.text}>{text}</Text.BodyS>
+    </View>
   );
 };
 

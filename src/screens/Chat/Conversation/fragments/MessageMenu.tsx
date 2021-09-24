@@ -10,14 +10,20 @@ interface Props {
   onReactPress: (event: any) => void;
   onReplyPress: (event: any) => void;
   onMenuPress: (event: any) => void;
+  hideHeader?: boolean;
 }
 
-const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
+const MessageMenu = ({
+  onReactPress,
+  onReplyPress,
+  onMenuPress,
+  hideHeader = true,
+}: Props) => {
+  if (Platform.OS !== 'web') return null;
+
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
-
-  if (Platform.OS !== 'web') return null;
 
   const options = {
     react: {
@@ -34,12 +40,15 @@ const MessageMenu = ({onReactPress, onReplyPress, onMenuPress}: Props) => {
     },
   };
 
+  let className = 'chat-message-menu';
+  if (!hideHeader) className = className + ' chat-message-menu--with-header';
+
   return (
-    <Div className="chat-message-menu">
+    <Div className={className}>
       <View style={styles.container}>
         {Object.values(options).map(option => {
           return (
-            <Div key={option.icon} className="button">
+            <Div key={option.icon} className="chat-message-menu__option">
               <ButtonWrapper onPress={option.onPress} style={styles.option}>
                 <Icon
                   // @ts-ignore
@@ -65,9 +74,6 @@ const createStyles = (theme: ITheme) => {
       borderRadius: spacing.borderRadius.small,
       borderColor: colors.placeholder,
       borderWidth: 1,
-      position: 'absolute',
-      top: -16,
-      right: 0,
     },
     option: {
       width: 24,

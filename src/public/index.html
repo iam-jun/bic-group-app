@@ -7,6 +7,47 @@
   <title>Bein</title>
 
   <style>
+    :root {
+      --primary: #3F2885;
+      --primary-1: #F9F7FD;
+      --primary-2: #ECE7F8;
+      --primary-3: #CBC0EC;
+      --primary-4: #AB99E0;
+      --primary-5: #917AD7;
+      --primary-6: #7052CB;
+      --primary-7: #5234AD;
+
+      --background: #FFFFFF;
+      --bg-secondary: #F5F5F5;
+      --bg-focus: #BDBDBD;
+      --bg-hover: #BDBDBD;
+      --bg-disable: #E0E0E0;
+      --bg-button-primary: #0C0D0E;
+      --bg-button-secondary: #F9F7FD;
+      --border-focus: #29272A;
+      --border-disable: #BDBDBD;
+      --border-card: #E0E0E0;
+      --border-divider: #F0F0F0;
+      --text-input: #524F55;
+      --placeholder: #F0F0F0;
+      --surface: #FAFAFA;
+      --icon-tint: #0C0D0E;
+      --icon-tint-reversed: #FFFFFF;
+
+      --text-primary: #29272A;
+      --text-secondary: #828085;
+      --text-success: #29272A;
+      --text-danger: #FFFFFF;
+      --text-warning: #29272A;
+      --text-info: #174BE2;
+      --text-disabled: #BDBDBD;
+      --text-reversed: #FFFFFF;
+
+      --border-radius--default: 0.375rem;
+
+      --shadow--default: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
+    }
+
     #app-root {
       display: flex;
       flex: 1 1 100%;
@@ -29,11 +70,11 @@
 
     .tab-bar__menu:hover,
     .tab-bar__menu:focus {
-      background-color: #f0f0f0;
+      background-color: var(--placeholder);
     }
 
     .tab-bar__menu--active {
-      background-color: #F9F7FD;
+      background-color: var(--bg-button-secondary);
     }
 
     .tab-bar--bottom__menu {
@@ -103,27 +144,39 @@
     /*}*/
 
     .chat-message:hover {
-      background: #f0f0f0
+      background: var(--surface);
     }
 
     .chat-message-menu {
       display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .chat-message-menu--with-header {
+      top: -1.5rem;
     }
 
     .chat-message:hover .chat-message-menu {
       display: block;
     }
 
+    .chat-message-menu__option:hover {
+      background-color: var(--primary-3);
+      border-radius: var(--border-radius--default);
+    }
+
     .button {
       display: block;
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
     .button:hover,
     .button:focus,
     .button-react:hover,
     .button-react:focus {
-      background-color: #f0f0f0;
+      background-color: var(--placeholder);
     }
 
 
@@ -132,79 +185,60 @@
       flex: 1;
       height: 80%;
       margin: 0 0.25rem;
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
-    .button--hover-shadow:hover,
-    .button--hover-shadow:focus {
-      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
-    }
-
-    .button--hover-shadow:active {
-      box-shadow: inset 0px -2px 8px rgba(0, 0, 0, 0.125);
-    }
-
-    .button--disable {
+    .button--primary,
+    .button--primary:active {
       padding: 0.5rem;
-      background-color: #E0E0E0;
-      color: #BDBDBD;
-      border-radius: 0.375rem;
-    }
-
-    .button--primary {
-      padding: 0.5rem;
-      background-color: #29272A;
-      color: #ffffff;
-      border-radius: 0.375rem;
+      background-color: var(--bg-button-primary);
+      color: var(--text-reversed);
+      border-radius: var(--border-radius--default);
       cursor: pointer;
     }
 
     .button--primary:hover,
     .button--primary:focus {
-      background: #0C0D0E;
-      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
-    }
-
-    .button--primary:active {
-      background-color: #29272A;
+      background: var(--border-focus);
+      box-shadow: var(--shadow--default);
     }
 
     .button--secondary {
       padding: 0.5rem;
-      background-color: #F9F7FD;
-      color: #3F2885;
-      border-radius: 0.375rem;
+      background-color: var(--bg-button-secondary);
+      color: var(--primary);
+      border-radius: var(--border-radius--default);
       cursor: pointer;
     }
 
     .button--secondary:hover,
     .button--secondary:focus {
-      background-color: #EFEBF9;
-      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
+      background-color: var(--primary-2);
+      box-shadow: var(--shadow--default);
     }
 
     .button--secondary:active {
-      background-color: #CBC0EC;
+      background-color: var(--primary-3);
       box-shadow: none;
     }
 
     .button--secondary--high-emphasis,
     .button--secondary--high-emphasis:hover,
     .button--secondary--high-emphasis:focus {
-      background-color: #3F2885;
+      background-color: var(--primary);
     }
 
     .button--secondary--high-emphasis:active {
-      background-color: #7052CB;
+      background-color: var(--primary-6);
     }
 
     .group-item {
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
     .group-item:hover,
     .group-item:focus {
-      background-color: #F0F0F0;
+      background-color: var(--placeholder);
     }
 
     .group-item__toggle {
@@ -213,13 +247,13 @@
       width: 0.125rem;
       height: 100%;
       margin: 0.75rem 0;
-      background-color: #F0F0F0;
+      background-color: var(--placeholder);
     }
 
     .group-item__line {
       width: 0.125rem;
       height: auto;
-      background-color: #F0F0F0;
+      background-color: var(--placeholder);
       margin: 0 0.75rem;
     }
   </style>
