@@ -66,14 +66,15 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   };
 
   const getImageUrls = () => {
-    const result: string[] = [];
+    const result: any = [];
     data.map(item => {
       if (item.name) {
-        result.push(
-          item.name.includes('http')
+        result.push({
+          name: item.origin_name || item.name,
+          uri: item.name.includes('http')
             ? item.name
             : getResourceUrl(uploadType, item.name),
-        );
+        });
       }
     });
     return result;
