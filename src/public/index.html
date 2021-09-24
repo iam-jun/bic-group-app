@@ -44,6 +44,8 @@
       --text-reversed: #FFFFFF;
 
       --border-radius--default: 0.375rem;
+
+      --shadow--default: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
     }
 
     #app-root {
@@ -186,22 +188,6 @@
       border-radius: var(--border-radius--default);
     }
 
-    .button--hover-shadow:hover,
-    .button--hover-shadow:focus {
-      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
-    }
-
-    .button--hover-shadow:active {
-      box-shadow: inset 0px -2px 8px rgba(0, 0, 0, 0.125);
-    }
-
-    .button--disable {
-      padding: 0.5rem;
-      background-color: var(--bg-disable);
-      color: var(--text-disabled);
-      border-radius: var(--border-radius--default);
-    }
-
     .button--primary,
     .button--primary:active {
       padding: 0.5rem;
@@ -214,7 +200,7 @@
     .button--primary:hover,
     .button--primary:focus {
       background: var(--border-focus);
-      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
+      box-shadow: var(--shadow--default);
     }
 
     .button--secondary {
@@ -228,7 +214,7 @@
     .button--secondary:hover,
     .button--secondary:focus {
       background-color: var(--primary-2);
-      box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
+      box-shadow: var(--shadow--default);
     }
 
     .button--secondary:active {
