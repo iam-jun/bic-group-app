@@ -1,5 +1,11 @@
 import React, {FC, useState, useRef} from 'react';
-import {StyleSheet, Modal, View, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  Modal,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import PagerView from 'react-native-pager-view';
 import ImageZoom from 'react-native-image-pan-zoom';
@@ -20,12 +26,14 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   initIndex = 0,
 }: ImageGalleryModalProps) => {
   const [activeIndex, _setActiveIndex] = useState(initIndex);
+  const [isFocus, setIsFocus] = useState(false);
+
   const pagerRef = useRef<any>();
   const footerListRef = useRef<any>();
 
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
   const styles = createStyle(theme, insets);
 
   const imageUrls = getImageUrls(source);
@@ -125,13 +133,16 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   );
 
   const renderScreen = (item: any, index: number) => (
-    <View key={`${index}`}>
+    <TouchableOpacity
+      key={`${index}`}
+      activeOpacity={0.8}
+      onPress={() => setIsFocus(true)}>
       <Image
         style={styles.screenImage}
         source={{uri: item?.url}}
         resizeMode={'contain'}
       />
-    </View>
+    </TouchableOpacity>
   );
 
   const renderControlButton = () => {
@@ -155,6 +166,29 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     );
   };
 
+  const renderFocusScreen = () => {
+    return (
+      <View style={styles.focusScreenContainer}>
+        <ImageZoom
+          cropWidth={dimension.deviceWidth}
+          cropHeight={dimension.deviceHeight}
+          imageWidth={dimension.deviceWidth}
+          imageHeight={dimension.deviceHeight}
+          onClick={() => setIsFocus(false)}>
+          <Image
+            resizeMode={'contain'}
+            style={{
+              width: dimension.deviceWidth,
+              height: dimension.deviceHeight,
+              resizeMode: 'contain',
+            }}
+            source={{uri: imageUrls?.[activeIndex]?.url}}
+          />
+        </ImageZoom>
+      </View>
+    );
+  };
+
   return (
     <Modal visible={visible} transparent={true}>
       <View style={styles.container}>
@@ -170,6 +204,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
           {renderControlButton()}
         </View>
         {renderFooter()}
+        {isFocus && renderFocusScreen()}
       </View>
     </Modal>
   );
@@ -239,6 +274,12 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(41, 39, 42, 0.2)',
+    },
+    focusScreenContainer: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      backgroundColor: colors.borderFocus,
     },
   });
 };
