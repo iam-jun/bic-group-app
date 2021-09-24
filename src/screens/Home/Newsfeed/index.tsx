@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -33,7 +33,10 @@ import {deviceDimensions} from '~/theme/dimension';
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
+    deviceDimensions.phone,
+  );
+  const styles = createStyle(theme, newsfeedWidth);
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
 
@@ -122,7 +125,9 @@ const Newsfeed = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {renderHeader()}
       {homePosts.length === 0 && refreshing ? (
         renderPlaceholder()
@@ -148,8 +153,8 @@ const Newsfeed = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ITheme, newsfeedWidth: number) => {
+  const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
     container: {
@@ -171,6 +176,14 @@ const createStyle = (theme: ITheme) => {
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
+      ...Platform.select({
+        web: {
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
+          borderRadius: newsfeedWidth > dimension.maxNewsfeedWidth ? 6 : 0,
+        },
+      }),
     },
     importantCount: {
       paddingHorizontal: spacing.padding.large,
