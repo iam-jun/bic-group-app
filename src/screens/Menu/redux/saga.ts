@@ -9,6 +9,7 @@ import * as modalActions from '~/store/modal/actions';
 import {mapProfile} from './helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
+import FileUploader from '~/services/fileUploader';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
@@ -104,29 +105,15 @@ const requestEditMyProfile = async (data: IUserEdit) => {
 
 function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
   try {
-    const {image, id, fieldName} = payload;
+    const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const formData = new FormData();
-    if (Platform.OS === 'web') {
-      formData.append(
-        'file',
-        // @ts-ignore
-        image,
-        image.name || 'imageName',
-      );
-    } else {
-      formData.append('file', {
-        type: image.type,
-        // @ts-ignore
-        name: image.name || 'imageName',
-        uri: image.uri,
-      });
-    }
-    const response: IResponseData = yield menuDataHelper.uploadImage(formData);
-    yield put(
-      menuActions.editMyProfile({id, [fieldName]: response?.data?.src}),
-    );
+    const data: string = yield FileUploader.getInstance().upload({
+      file,
+      uploadType,
+    });
+
+    yield put(menuActions.editMyProfile({id, [fieldName]: data}));
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);

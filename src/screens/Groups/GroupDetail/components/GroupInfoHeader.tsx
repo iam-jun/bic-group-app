@@ -12,7 +12,6 @@ import {scaleCoverHeight} from '~/theme/dimension';
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 
 const GroupInfoHeader = () => {
@@ -44,7 +43,7 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <ButtonWrapper textProps={{variant: 'h5'}}>{name}</ButtonWrapper>
+        <Text.H5 style={styles.nameHeader}>{name}</Text.H5>
 
         <View style={styles.groupInfo}>
           <Icon
@@ -129,6 +128,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
         },
       }),
     },
-    nameHeader: {flex: 1},
+    nameHeader: {},
   });
 };

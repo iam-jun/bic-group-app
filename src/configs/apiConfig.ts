@@ -40,16 +40,16 @@ const Upload = {
     onUploadProgress?: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
     const uploadEndPoint: any = {
-      userAvatar: '/upload/user-avatar',
-      userCover: '/upload/user-cover',
-      groupAvatar: '/upload/group-avatar',
-      groupCover: '/upload/group-cover',
+      userAvatar: 'upload/user-avatar',
+      userCover: 'upload/user-cover',
+      groupAvatar: 'upload/group-avatar',
+      groupCover: 'upload/group-cover',
       postImage: 'upload/post-image',
-      postVideo: '/upload/post-video',
-      postFile: '/upload/post-file',
-      chatImage: '/upload/chat-image',
-      chatVideo: '/upload/chat-video',
-      chatFile: '/upload/chat-file',
+      postVideo: 'upload/post-video',
+      postFile: 'upload/post-file',
+      chatImage: 'upload/chat-image',
+      chatVideo: 'upload/chat-video',
+      chatFile: 'upload/chat-file',
     };
 
     const url = `${providers.bein.url}${uploadEndPoint[type]}`;
