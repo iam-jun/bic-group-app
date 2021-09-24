@@ -149,7 +149,7 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     container: {
@@ -162,13 +162,6 @@ const createStyle = (theme: ITheme) => {
     },
     listContainer: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          alignSelf: 'center',
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-        },
-      }),
     },
     listFooter: {
       height: 150,
