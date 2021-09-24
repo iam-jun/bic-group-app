@@ -48,7 +48,7 @@ const MessageMenu = ({
       <View style={styles.container}>
         {Object.values(options).map(option => {
           return (
-            <Div key={option.icon} className="button">
+            <Div key={option.icon} className="chat-message-menu__option">
               <ButtonWrapper onPress={option.onPress} style={styles.option}>
                 <Icon
                   // @ts-ignore
