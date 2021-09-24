@@ -24,6 +24,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   source,
   onPressClose,
   initIndex = 0,
+  alwaysShowFileName,
 }: ImageGalleryModalProps) => {
   const [activeIndex, _setActiveIndex] = useState(initIndex);
   const [isFocus, setIsFocus] = useState(false);
@@ -45,7 +46,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const setActiveIndex = (index: number) => {
     if (index !== activeIndex) {
       _setActiveIndex(index);
-      pagerRef?.current?.setPage?.(index); //bug onPageSelected call infinity
+      pagerRef?.current?.setPage?.(index);
       footerListRef?.current?.scrollToIndex({index: index, viewPosition: 0.5});
     }
   };
@@ -110,27 +111,35 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     );
   };
 
-  const renderFooter = () => (
-    <View style={styles.footerContainer}>
-      <View style={styles.fileNameContainer}>
-        <Text.H6 color={colors.textReversed} numberOfLines={1}>
-          {imageUrls?.[activeIndex]?.name?.toUpperCase?.() ||
-            imageUrls?.[activeIndex]?.url
-              ?.replace?.(/(.+)\/(.+)$/, '$2')
-              ?.toUpperCase?.()}
-        </Text.H6>
+  const renderFooter = () => {
+    let fileName = imageUrls?.[activeIndex]?.name?.toUpperCase?.();
+    if (!fileName && alwaysShowFileName) {
+      fileName = imageUrls?.[activeIndex]?.url
+        ?.replace?.(/(.+)\/(.+)$/, '$2')
+        ?.toUpperCase?.();
+    }
+
+    return (
+      <View style={styles.footerContainer}>
+        <View style={styles.fileNameContainer}>
+          {!!fileName && (
+            <Text.H6 color={colors.textReversed} numberOfLines={1}>
+              {fileName}
+            </Text.H6>
+          )}
+        </View>
+        <FlatList
+          ref={footerListRef}
+          horizontal
+          data={imageUrls}
+          renderItem={renderFooterItem}
+          showsHorizontalScrollIndicator={false}
+          onScrollToIndexFailed={onScrollToIndexFailed}
+          keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
+        />
       </View>
-      <FlatList
-        ref={footerListRef}
-        horizontal
-        data={imageUrls}
-        renderItem={renderFooterItem}
-        showsHorizontalScrollIndicator={false}
-        onScrollToIndexFailed={onScrollToIndexFailed}
-        keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
-      />
-    </View>
-  );
+    );
+  };
 
   const renderScreen = (item: any, index: number) => (
     <TouchableOpacity
