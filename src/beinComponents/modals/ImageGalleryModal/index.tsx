@@ -19,7 +19,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   onPressClose,
   initIndex = 0,
 }: ImageGalleryModalProps) => {
-  const [activeIndex, setActiveIndex] = useState(initIndex);
+  const [activeIndex, _setActiveIndex] = useState(initIndex);
   const pagerRef = useRef<any>();
   const footerListRef = useRef<any>();
 
@@ -34,18 +34,33 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     alert('share');
   };
 
-  const _setActiveIndex = (index: number) => {
-    setActiveIndex(index);
-    footerListRef?.current?.scrollToIndex({index: index, viewPosition: 0.5});
+  const setActiveIndex = (index: number) => {
+    if (index !== activeIndex) {
+      _setActiveIndex(index);
+      pagerRef?.current?.setPage?.(index); //bug onPageSelected call infinity
+      footerListRef?.current?.scrollToIndex({index: index, viewPosition: 0.5});
+    }
   };
 
   const onPageSelected = (e: any) => {
     const newIndex = e?.nativeEvent?.position || 0;
-    _setActiveIndex(newIndex);
+    setActiveIndex(newIndex);
   };
 
   const onScrollToIndexFailed = () => {
     console.log(`\x1b[31m🐣️ ImageGalleryModal onScrollToIndexFailed\x1b[0m`);
+  };
+
+  const onPressNext = () => {
+    if (activeIndex < imageUrls.length - 1) {
+      setActiveIndex(activeIndex + 1);
+    }
+  };
+
+  const onPressBack = () => {
+    if (activeIndex > 0) {
+      setActiveIndex(activeIndex - 1);
+    }
   };
 
   const renderHeader = () => (
@@ -70,7 +85,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const renderFooterItem = ({item, index}: any) => {
     return (
-      <Button onPress={() => _setActiveIndex(index)}>
+      <Button onPress={() => setActiveIndex(index)}>
         <Image
           style={[
             styles.footerItem,
@@ -90,7 +105,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const renderFooter = () => (
     <View style={styles.footerContainer}>
       <View style={styles.fileNameContainer}>
-        <Text.H6 color={colors.textReversed}>
+        <Text.H6 color={colors.textReversed} numberOfLines={1}>
           {imageUrls?.[activeIndex]?.name?.toUpperCase?.() ||
             imageUrls?.[activeIndex]?.url
               ?.replace?.(/(.+)\/(.+)$/, '$2')
@@ -119,18 +134,40 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     </View>
   );
 
+  const renderControlButton = () => {
+    return (
+      <View style={styles.buttonControlContainer}>
+        <View>
+          {activeIndex > 0 && (
+            <Button style={styles.buttonControl} onPress={onPressBack}>
+              <Icon icon={'iconBack'} tintColor={colors.iconTintReversed} />
+            </Button>
+          )}
+        </View>
+        <View>
+          {activeIndex < imageUrls.length - 1 && (
+            <Button onPress={onPressNext}>
+              <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
+            </Button>
+          )}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <Modal visible={visible} transparent={true}>
       <View style={styles.container}>
         {renderHeader()}
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
           <PagerView
             ref={pagerRef}
             style={{flex: 1}}
-            initialPage={activeIndex}
+            initialPage={initIndex}
             onPageSelected={onPageSelected}>
             {imageUrls.map(renderScreen)}
           </PagerView>
+          {renderControlButton()}
         </View>
         {renderFooter()}
       </View>
@@ -185,6 +222,23 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
       height: 48,
       borderColor: colors.background,
       borderRadius: spacing.borderRadius.small,
+    },
+    buttonControlContainer: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      alignSelf: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    buttonControl: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      margin: spacing.margin.tiny,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(41, 39, 42, 0.2)',
     },
   });
 };

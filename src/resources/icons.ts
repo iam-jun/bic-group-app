@@ -73,6 +73,7 @@ const icons = {
   iconTabMenu,
   iconSearch,
   iconBack: 'AngleLeftB',
+  iconNext: 'AngleRightB',
   iconEye: 'Eye',
   iconEyeOff: 'EyeSlash',
   iconClose: 'Multiply',
