@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Share,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import PagerView from 'react-native-pager-view';
@@ -40,7 +41,16 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const imageUrls = getImageUrls(source);
 
   const onPressShare = () => {
-    alert('share');
+    try {
+      Share.share({
+        message: imageUrls?.[activeIndex]?.url,
+        url: imageUrls?.[activeIndex]?.url,
+      }).then(result => {
+        console.log(`\x1b[35m🐣️ Gallery share result: `, result, `\x1b[0m`);
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const setActiveIndex = (index: number) => {

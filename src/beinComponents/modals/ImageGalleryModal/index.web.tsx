@@ -10,6 +10,9 @@ import {ImageGalleryModalProps} from '~/beinComponents/modals/ImageGalleryModal/
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
+import {useDispatch} from 'react-redux';
+import * as modalActions from '~/store/modal/actions';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
@@ -23,6 +26,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const footerListRef = useRef<any>();
 
+  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const {colors, spacing, dimension} = theme;
@@ -31,7 +35,8 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const imageUrls = getImageUrls(source);
 
   const onPressShare = () => {
-    alert('share');
+    onPressClose?.();
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   const setActiveIndex = (index: number) => {
