@@ -42,6 +42,8 @@
       --text-info: #174BE2;
       --text-disabled: #BDBDBD;
       --text-reversed: #FFFFFF;
+
+      --border-radius--default: 0.375rem;
     }
 
     #app-root {
@@ -160,12 +162,12 @@
 
     .chat-message-menu__option:hover {
       background-color: var(--primary-3);
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
     .button {
       display: block;
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
     .button:hover,
@@ -181,7 +183,7 @@
       flex: 1;
       height: 80%;
       margin: 0 0.25rem;
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
     .button--hover-shadow:hover,
@@ -197,7 +199,7 @@
       padding: 0.5rem;
       background-color: var(--bg-disable);
       color: var(--text-disabled);
-      border-radius: 0.375rem;
+      border-radius: var(--border-radius--default);
     }
 
     .button--primary,
@@ -205,7 +207,7 @@
       padding: 0.5rem;
       background-color: var(--bg-button-primary);
       color: var(--text-reversed);
-      border-radius: 0.375rem;
+      border-radius: var(--border-radius--default);
       cursor: pointer;
     }
 
@@ -219,7 +221,7 @@
       padding: 0.5rem;
       background-color: var(--bg-button-secondary);
       color: var(--primary);
-      border-radius: 0.375rem;
+      border-radius: var(--border-radius--default);
       cursor: pointer;
     }
 
@@ -245,7 +247,7 @@
     }
 
     .group-item {
-      border-radius: 6px;
+      border-radius: var(--border-radius--default);
     }
 
     .group-item:hover,
