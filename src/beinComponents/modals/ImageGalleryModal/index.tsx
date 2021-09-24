@@ -166,7 +166,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         </View>
         <View>
           {activeIndex < imageUrls.length - 1 && (
-            <Button onPress={onPressNext}>
+            <Button style={styles.buttonControl} onPress={onPressNext}>
               <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
             </Button>
           )}

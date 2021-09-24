@@ -59,21 +59,13 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <Icon
-        icon="iconBack"
-        onPress={onPressClose}
-        size={28}
-        tintColor={colors.iconTintReversed}
-        hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-      />
       <View style={{flex: 1}} />
-      <Icon
-        icon="ShareAlt"
-        onPress={onPressShare}
-        size={20}
-        tintColor={colors.iconTintReversed}
-        hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-      />
+      <Button style={styles.buttonControlHeader} onPress={onPressShare}>
+        <Icon icon={'ShareAlt'} tintColor={colors.iconTintReversed} />
+      </Button>
+      <Button style={styles.buttonControlHeader} onPress={onPressClose}>
+        <Icon icon={'iconClose'} tintColor={colors.iconTintReversed} />
+      </Button>
     </View>
   );
 
@@ -141,7 +133,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         </View>
         <View>
           {activeIndex < imageUrls.length - 1 && (
-            <Button onPress={onPressNext}>
+            <Button style={styles.buttonControl} onPress={onPressNext}>
               <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
             </Button>
           )}
@@ -186,10 +178,10 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
   return StyleSheet.create({
     container: {flex: 1, backgroundColor: 'rgba(12, 13, 14, 0.8)'},
     headerContainer: {
-      height: dimension?.headerHeight || 44,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.extraLarge,
+      paddingRight: spacing.padding.extraLarge,
     },
     imageContainer: {
       width: '100%',
@@ -233,13 +225,22 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
       justifyContent: 'space-between',
     },
     buttonControl: {
-      width: 32,
-      height: 32,
-      borderRadius: 16,
-      margin: spacing.margin.tiny,
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      margin: spacing.margin.extraLarge,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(41, 39, 42, 0.2)',
+    },
+    buttonControlHeader: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      marginLeft: spacing.margin.base,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.textSecondary,
     },
     focusScreenContainer: {
       position: 'absolute',
