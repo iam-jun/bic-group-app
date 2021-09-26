@@ -2,14 +2,16 @@ import React, {FC, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import CommentInput from '~/beinComponents/inputs/CommentInput';
+import CommentInput, {
+  ICommentInputSendParam,
+} from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
-import {IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
+import {IActivityDataImage, IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -60,12 +62,16 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     };
   }, []);
 
-  const onPressSend = () => {
+  const onPressSend = (sendData?: ICommentInputSendParam) => {
     if (postId) {
+      const images: IActivityDataImage[] = [];
+      if (sendData?.image) {
+        images.push(sendData?.image);
+      }
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId,
-        commentData: {content: content?.trim()},
+        commentData: {content: content?.trim(), images},
         userId: userId,
         onSuccess: onCommentSuccess,
       };
@@ -118,6 +124,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         onPressSend: onPressSend,
         HeaderComponent: renderCommentInputHeader(),
         loading: loading,
+        isHandleUpload: true,
       }}
       title={t('post:mention_title')}
       emptyContent={t('post:mention_empty_content')}
