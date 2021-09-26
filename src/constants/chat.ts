@@ -74,11 +74,11 @@ export const messageOptionData = {
 export type MessageOptionType = keyof typeof messageOptionData;
 
 export const myMessageOptions = [
-  'edit',
+  'reply',
   'create_thread',
   'copy',
-  'reply',
   'get_link',
+  'edit',
   'delete',
   'reactions',
 ];
