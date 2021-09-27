@@ -140,7 +140,7 @@ const GroupMembers = (): React.ReactElement => {
   const showConfirmations = (user: IChatUser) => {
     let content = '';
     switch (conversation.type) {
-      case 'group':
+      case roomTypes.GROUP:
         content = i18next.t(
           `chat:modal_confirm_remove_member:description_group_chat`,
         );
@@ -151,7 +151,6 @@ const GroupMembers = (): React.ReactElement => {
         content = i18next.t(`chat:modal_confirm_remove_member:description`);
         break;
     }
-    console.log('[DEBUG] content', content);
 
     dispatch(
       modalActions.showAlert({
