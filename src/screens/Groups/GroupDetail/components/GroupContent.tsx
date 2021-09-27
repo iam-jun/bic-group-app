@@ -20,18 +20,21 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
+import {deviceDimensions} from '~/theme/dimension';
 
 const GroupContent = ({
   getGroupPosts,
   streamClient,
+  parentWidth,
 }: {
   getGroupPosts: () => void;
   streamClient: StreamClient;
+  parentWidth?: number;
 }) => {
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
   const {spacing} = theme || {};
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, parentWidth);
   const dispatch = useDispatch();
 
   const posts = useKeySelector(groupsKeySelector.posts);
@@ -80,32 +83,37 @@ const GroupContent = ({
 
   const renderHeader = () => {
     return (
-      <View>
-        <GroupInfoHeader />
-        <View style={styles.buttonContainer}>
-          {join_status === groupJoinStatus.member && (
-            <>
-              <Button.Secondary useI18n onPress={onPressChat}>
-                chat:title
-              </Button.Secondary>
-              <ViewSpacing width={spacing.margin.base} />
-            </>
-          )}
-          <Button.Secondary useI18n onPress={onPressAbout}>
-            settings:title_about
-          </Button.Secondary>
-          <ViewSpacing width={spacing.margin.base} />
-          <Button.Secondary useI18n onPress={onPressMembers}>
-            chat:title_members
-          </Button.Secondary>
-          <ViewSpacing width={spacing.margin.base} />
-          <Button.Secondary useI18n onPress={onPressFiles}>
-            common:text_files
-          </Button.Secondary>
+      <>
+        <View style={styles.groupInfo}>
+          <GroupInfoHeader />
+          <View style={styles.buttonContainer}>
+            {join_status === groupJoinStatus.member && (
+              <>
+                <Button.Secondary useI18n onPress={onPressChat}>
+                  chat:title
+                </Button.Secondary>
+                <ViewSpacing width={spacing.margin.base} />
+              </>
+            )}
+            <Button.Secondary useI18n onPress={onPressAbout}>
+              settings:title_about
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.base} />
+            <Button.Secondary useI18n onPress={onPressMembers}>
+              chat:title_members
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.base} />
+            <Button.Secondary useI18n onPress={onPressFiles}>
+              common:text_files
+            </Button.Secondary>
+          </View>
         </View>
-        <ViewSpacing height={spacing.margin.small} />
-        <HeaderCreatePost audience={groupData} />
-      </View>
+        <HeaderCreatePost
+          audience={groupData}
+          parentWidth={parentWidth}
+          style={styles.createPost}
+        />
+      </>
     );
   };
 
@@ -129,19 +137,25 @@ const GroupContent = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
   const {spacing, dimension, colors} = theme;
 
   return StyleSheet.create({
-    listContainer: {
+    groupInfo: {
       flex: 1,
       ...Platform.select({
         web: {
-          alignSelf: 'center',
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
+          // borderRadius: parentWidth > dimension.maxNewsfeedWidth ? 6 : 0,
+          // overflow: 'hidden',
+          borderWidth: 1,
         },
       }),
+    },
+    listContainer: {
+      flex: 1,
     },
     listHeaderComponentStyle: {
       marginTop: spacing.margin.small,
@@ -153,6 +167,9 @@ const themeStyles = (theme: ITheme) => {
       paddingBottom: spacing.padding.base,
       paddingHorizontal: spacing.padding.base,
       backgroundColor: colors.background,
+    },
+    createPost: {
+      marginTop: spacing.margin.small,
     },
   });
 };

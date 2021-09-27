@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, Fragment} from 'react';
+import React, {useEffect, useContext, Fragment, useState} from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -27,11 +27,13 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
+import {deviceDimensions} from '~/theme/dimension';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
   const groupId = params?.groupId;
 
+  const [viewWidth, setViewWidth] = useState<number>(deviceDimensions.phone);
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -105,6 +107,7 @@ const GroupDetail = (props: any) => {
         <GroupContent
           getGroupPosts={getGroupPosts}
           streamClient={streamClient}
+          parentWidth={viewWidth}
         />
       )
     );
@@ -138,7 +141,11 @@ const GroupDetail = (props: any) => {
         <Header onPressBack={onPressBack}>
           <GroupTopBar />
         </Header>
-        <View style={styles.contentContainer}>{renderGroupContent()}</View>
+        <View
+          style={styles.contentContainer}
+          onLayout={event => setViewWidth(event.nativeEvent.layout.width)}>
+          {renderGroupContent()}
+        </View>
       </Fragment>
     );
   };
