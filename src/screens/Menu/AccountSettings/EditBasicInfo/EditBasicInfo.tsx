@@ -138,9 +138,8 @@ const EditBasicInfo = () => {
         title={'settings:title_edit_basic_info'}
         buttonText={'common:text_save'}
         buttonProps={{
-          color: theme.colors.primary7,
-          textColor: theme.colors.background,
           useI18n: true,
+          highEmphasis: true,
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}

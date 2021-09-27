@@ -73,8 +73,7 @@ const CreateConversation = (): React.ReactElement => {
         buttonText={i18next.t('common:btn_create')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
-          color: colors.primary7,
-          textColor: colors.textReversed,
+          highEmphasis: true,
         }}
         onPressButton={onCreatePress}
       />
