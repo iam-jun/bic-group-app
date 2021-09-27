@@ -73,7 +73,7 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.createConversation);
   };
 
-  const renderItemSeparator = () => <Divider style={styles.itemSeparator} />;
+  const renderItemSeparator = () => <View style={styles.itemSeparator} />;
 
   const renderEmpty = () => {
     if (!searchQuery) return null;
@@ -128,7 +128,7 @@ const ConversationsList = (): React.ReactElement => {
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {},
     inputSearch: {
@@ -139,8 +139,12 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
     },
     itemSeparator: {
-      marginLeft: 72,
-      marginRight: spacing.margin.large,
+      position: 'absolute',
+      left: '21%',
+      bottom: 8,
+      backgroundColor: colors.borderDivider,
+      width: '75%',
+      height: 1,
     },
   });
 };
