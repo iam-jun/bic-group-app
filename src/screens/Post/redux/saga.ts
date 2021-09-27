@@ -737,21 +737,23 @@ function* getCommentsByPostId({
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
-    callbackLoading?.(false);
-    if (response?.length > 0) {
+    const newList = response?.results;
+    const canLoadMore = !!response?.next;
+    callbackLoading?.(false, canLoadMore);
+    if (newList?.length > 0) {
       if (commentId) {
         //get child comment of comment
         yield addChildCommentToCommentsOfPost({
           postId: postId,
           commentId: commentId,
-          childComments: response,
+          childComments: newList,
         });
-        yield put(postActions.addToAllComments(response));
+        yield put(postActions.addToAllComments(newList));
       } else {
         //get comment of post
-        const payload = {id: postId, comments: response, isMerge};
+        const payload = {id: postId, comments: newList, isMerge};
         const newAllComments: IReaction[] = [];
-        response.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
+        newList.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
 
         yield put(postActions.addToAllComments(newAllComments));
         yield put(
@@ -760,10 +762,7 @@ function* getCommentsByPostId({
       }
     }
   } catch (e) {
-    console.log(
-      `\x1b[34m🐣️ saga getCommentsById error:`,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
+    console.log(`\x1b[31m🐣️ saga getCommentsByPostId error: `, e, `\x1b[0m`);
     callbackLoading?.(false);
     yield showError(e);
   }

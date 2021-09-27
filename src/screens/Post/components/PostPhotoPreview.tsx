@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -12,10 +12,14 @@ import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 
+const DeviceWidth = Dimensions.get('window').width;
+
 export interface PostPhotoPreviewProps {
   style?: StyleProp<ViewStyle>;
   data: IActivityDataImage[];
-  onPress?: () => void;
+  width?: number;
+  onPress?: (e?: any) => void;
+  onLongPress?: (e?: any) => void;
   disabled?: boolean;
   enableGalleryModal?: boolean;
   uploadType: IUploadType | string;
@@ -24,7 +28,9 @@ export interface PostPhotoPreviewProps {
 const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   style,
   data = [],
+  width = DeviceWidth,
   onPress,
+  onLongPress,
   disabled = false,
   enableGalleryModal = false,
   uploadType,
@@ -40,14 +46,14 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   }
   const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
   const isVertical = imageRatio <= 0.5;
-  const dfSize = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
-  const width = data?.length === 1 ? dfSize : dfSize;
-  const height = data?.length === 1 ? dfSize / imageRatio : dfSize;
+  const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
+  const _width = data?.length === 1 ? dfSize : dfSize;
+  const _height = data?.length === 1 ? dfSize / imageRatio : dfSize;
 
   const containerStyle: any = {
     flexDirection: isVertical ? 'row' : 'column',
-    width,
-    height,
+    width: _width,
+    height: _height,
   };
 
   const wrapperStyle: any = {
@@ -57,12 +63,16 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       data?.length === 1 ? colors.borderFocus : colors.background,
   };
 
-  const _onPress = () => {
+  const _onPress = (e: any) => {
     if (onPress) {
-      onPress();
+      onPress(e);
     } else {
       setGalleryVisible(true);
     }
+  };
+
+  const _onLongPress = (e: any) => {
+    onLongPress?.(e);
   };
 
   const getImageUrls = () => {
@@ -103,7 +113,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
         <View style={styles.flex1}>
           <UploadingImage
             style={styles.image}
-            uploadType={'postImage'}
+            uploadType={uploadType}
             width={'100%'}
             height={'100%'}
             fileName={fileName}
@@ -120,12 +130,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       disabled={disabled}
       activeOpacity={0.8}
       onPress={_onPress}
+      onLongPress={_onLongPress}
       style={StyleSheet.flatten([wrapperStyle, style])}>
       <View style={StyleSheet.flatten([styles.container, containerStyle])}>
         <View style={{flex: data?.length === 2 ? 1 : 2}}>
           <UploadingImage
             style={styles.image}
-            uploadType={'postImage'}
+            uploadType={uploadType}
             width={'100%'}
             height={'100%'}
             fileName={data[0].origin_name}

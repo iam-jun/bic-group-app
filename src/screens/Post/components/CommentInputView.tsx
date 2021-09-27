@@ -1,15 +1,21 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import CommentInput from '~/beinComponents/inputs/CommentInput';
+import CommentInput, {
+  ICommentInputSendParam,
+} from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
-import {IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
+import {
+  IActivityDataImage,
+  IPayloadCreateComment,
+  IPayloadReplying,
+} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -21,6 +27,7 @@ export interface CommentInputViewProps {
   groupIds: string;
   autoFocus?: boolean;
   textInputRef?: any;
+  commentInputRef?: any;
   onCommentSuccess?: (data: {
     newCommentId: string;
     parentCommentId?: string;
@@ -32,8 +39,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   textInputRef,
+  commentInputRef,
   onCommentSuccess,
 }: CommentInputViewProps) => {
+  const _commentInputRef = commentInputRef || useRef<any>();
+
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -60,12 +70,22 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     };
   }, []);
 
-  const onPressSend = () => {
+  useEffect(() => {
+    if (!content) {
+      _commentInputRef?.current?.clear?.();
+    }
+  }, [content]);
+
+  const onPressSend = (sendData?: ICommentInputSendParam) => {
     if (postId) {
+      const images: IActivityDataImage[] = [];
+      if (sendData?.image) {
+        images.push(sendData?.image);
+      }
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId,
-        commentData: {content: content?.trim()},
+        commentData: {content: content?.trim(), images},
         userId: userId,
         onSuccess: onCommentSuccess,
       };
@@ -112,12 +132,14 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       value={content}
       ComponentInput={CommentInput}
       componentInputProps={{
+        commentInputRef: _commentInputRef,
         textInputRef: textInputRef,
         value: content,
         autoFocus: autoFocus,
         onPressSend: onPressSend,
         HeaderComponent: renderCommentInputHeader(),
         loading: loading,
+        isHandleUpload: true,
       }}
       title={t('post:mention_title')}
       emptyContent={t('post:mention_empty_content')}
