@@ -447,7 +447,9 @@
       "other": "This message has been deleted",
       "list": "deleted a message"
     },
-    "label_no_description": "No Description"
+    "label_no_description": "No Description",
+    "text_editing_message": "Editing message",
+    "text_edited": "edited"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
