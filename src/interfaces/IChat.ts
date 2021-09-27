@@ -175,6 +175,7 @@ export type IConversation = {
   usernames: string[];
   usersCount: number;
   unreadCount: number;
+  unreadCountText?: string;
   lastMessage: string;
   _updatedAt: string;
   type: IRoomType;
