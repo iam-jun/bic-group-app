@@ -15,21 +15,17 @@ import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
-import Image from '~/beinComponents/Image';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IConversation} from '~/interfaces/IChat';
-import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
-import {deviceDimensions, scaleSize} from '~/theme/dimension';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import appConfig from '~/configs/appConfig';
 import {createRef} from 'react';
 import useModal from '~/hooks/modal';
-import Divider from '~/beinComponents/Divider';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const ConversationsList = (): React.ReactElement => {
