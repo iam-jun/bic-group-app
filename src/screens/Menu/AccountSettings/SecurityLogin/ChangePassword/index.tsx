@@ -148,7 +148,6 @@ const ChangePassword = () => {
               testID="inputPassword"
               label={t('auth:input_label_current_password')}
               placeholder={t('auth:input_label_current_password')}
-              hideEyeIcon
               autoCompleteType="off"
               error={errors.password}
               autoCapitalize="none"
@@ -179,7 +178,6 @@ const ChangePassword = () => {
               testID="inputNewPassword"
               label={t('auth:input_label_new_password')}
               placeholder={t('auth:input_label_new_password')}
-              hideEyeIcon
               // @ts-ignore
               autoCompleteType="new-password"
               error={errors.newPassword}
@@ -212,7 +210,6 @@ const ChangePassword = () => {
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
               placeholder={t('auth:input_label_confirm_new_password')}
-              hideEyeIcon
               autoCompleteType="off"
               error={errors.confirmNewPassword}
               autoCapitalize="none"
