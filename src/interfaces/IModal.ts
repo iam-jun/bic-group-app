@@ -23,7 +23,7 @@ export interface IShowAlert {
 export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
   reactionCounts: {[x: string]: number};
-  postId?: string;
-  commentId?: string;
   initReaction: ReactionType;
+  getDataPromise?: any;
+  getDataParam?: any;
 }

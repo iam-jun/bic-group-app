@@ -26,6 +26,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 
 export interface CommentViewProps {
   postId: string;
@@ -143,13 +144,29 @@ const CommentView: React.FC<CommentViewProps> = ({
     }).start();
   };
 
+  const getReactionStatistics = async (param: any) => {
+    try {
+      const response = await postDataHelper.getReactionDetail(param);
+      const data = await response?.results;
+      const users = data.map((item: any) => ({
+        id: item?.user?.id,
+        avatar: item?.user?.data?.avatar,
+        fullname: item?.user?.data?.fullname,
+      }));
+
+      return Promise.resolve(users || []);
+    } catch (err) {
+      return Promise.reject();
+    }
+  };
+
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: children_counts,
-      postId: postId,
-      commentId: id,
       initReaction: reactionType,
+      getDataParam: {postId, commentId: id},
+      getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };

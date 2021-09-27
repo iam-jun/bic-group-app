@@ -231,13 +231,29 @@ const PostView: FC<PostViewProps> = ({
     dispatch(postActions.deleteReactToPost(payload));
   };
 
+  const getReactionStatistics = async (param: any) => {
+    try {
+      const response = await postDataHelper.getReactionDetail(param);
+      const data = await response?.results;
+      const users = data.map((item: any) => ({
+        id: item?.user?.id,
+        avatar: item?.user?.data?.avatar,
+        fullname: item?.user?.data?.fullname,
+      }));
+
+      return Promise.resolve(users || []);
+    } catch (err) {
+      return Promise.reject();
+    }
+  };
+
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: reaction_counts,
-      postId: postId,
-      commentId: undefined,
       initReaction: reactionType,
+      getDataParam: {postId, commentId: undefined},
+      getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };
