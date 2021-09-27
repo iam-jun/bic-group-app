@@ -55,3 +55,8 @@ export interface IToastMessage {
   props: ToastMessageProps;
   duration?: number;
 }
+
+export interface IPayloadShowModal {
+  isOpen: boolean;
+  ContentComponent: any;
+}
