@@ -119,12 +119,26 @@ const Conversation = () => {
     );
   };
 
-  const onPressReact = (event: any, item: IMessage) => {
+  const onRemoveReaction = (reactionId: ReactionType, messageId: string) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId,
+        shouldReact: false,
+      }),
+    );
+  };
+
+  const onPressReact = (
+    event: any,
+    item: IMessage,
+    side: 'left' | 'right' | 'center',
+  ) => {
     dispatch(
       modalActions.setShowReactionBottomSheet({
         show: true,
         position: {x: event?.pageX, y: event?.pageY},
-        side: 'left',
+        side: side,
         callback: (reactionId: ReactionType) =>
           onAddReaction(reactionId, item._id),
       }),
@@ -134,7 +148,7 @@ const Conversation = () => {
   const onReactionPress = async (type: string) => {
     if (!!selectedMessage) {
       if (type === 'add_react') {
-        onPressReact(null, selectedMessage);
+        onPressReact(null, selectedMessage, 'left');
       } else {
         dispatch(
           actions.reactMessage({
@@ -201,11 +215,14 @@ const Conversation = () => {
       previousMessage:
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
-      onReactPress: (event: any) => onPressReact(event, item),
+      onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
+        onPressReact(event, item, side),
       onReplyPress: () => onMenuPress('reply'),
       onLongPress,
       onAddReaction: (reactionId: ReactionType) =>
         onAddReaction(reactionId, item._id),
+      onRemoveReaction: (reactionId: ReactionType) =>
+        onRemoveReaction(reactionId, item._id),
     };
     return <MessageContainer {...props} />;
   };

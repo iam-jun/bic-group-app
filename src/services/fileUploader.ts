@@ -63,8 +63,8 @@ export default class FileUploader {
     const {file, uploadType, onSuccess, onProgress, onError} = params || {};
     if (!file) {
       console.log(`\x1b[31m🐣️ fileUploader upload: file not found!\x1b[0m`);
-      onError?.('input file not found');
-      return Promise.reject('input file not found');
+      onError?.('Input file not found');
+      return Promise.reject({meta: {message: 'Input file not found'}});
     }
     if (this.fileUploaded[file.name]) {
       onSuccess?.(this.fileUploaded[file.name]);
@@ -74,7 +74,7 @@ export default class FileUploader {
       const error = i18next.t('common:error:file:over_file_size');
       console.log(`\x1b[31m🐣️ fileUploader upload error: ${error}\x1b[0m`);
       onError?.(error);
-      return Promise.reject(error);
+      return Promise.reject({meta: {message: error}});
     }
 
     const formData = new FormData();

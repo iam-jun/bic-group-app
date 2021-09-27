@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import React, {useRef, useState} from 'react';
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -37,8 +36,8 @@ import {
 } from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
-import {validateFile} from '~/utils/validation';
 import GroupSectionItem from '../components/GroupSectionItem';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 
 const GeneralInformation = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -54,8 +53,6 @@ const GeneralInformation = () => {
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
-
-  const [error, setError] = useState<string | null>(null);
 
   const helpMessage = () => {
     baseSheetRef.current?.close();
@@ -86,35 +83,37 @@ const GeneralInformation = () => {
   const uploadFile = (
     file: IFilePicked,
     fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
   ) => {
     dispatch(
       groupsActions.uploadImage({
         id,
-        image: file,
+        file,
         fieldName,
+        uploadType,
       }),
     );
   };
 
   // fieldName: field name in group profile to be edited
   // 'icon' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
+  const _openImagePicker = (
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
     ImagePicker.openPickerSingle({
       ...groupProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
     }).then(file => {
-      const _error = validateFile(file);
-      setError(_error);
-      if (_error) return;
-      // @ts-ignore
-      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
+      uploadFile(file, fieldName, uploadType);
     });
   };
 
-  const onEditAvatar = () => _openImagePicker('icon');
+  const onEditAvatar = () => _openImagePicker('icon', uploadTypes.groupAvatar);
 
-  const onEditCover = () => _openImagePicker('background_img_url');
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.groupCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -229,7 +228,7 @@ const GeneralInformation = () => {
 
         <GroupSectionItem
           title={'settings:title_privacy'}
-          subtitle={titleCase(privacy)}
+          subtitle={titleCase(privacy) || ''}
           rightIcon={'EditAlt'}
           onPress={editGroupPrivacy}
         />

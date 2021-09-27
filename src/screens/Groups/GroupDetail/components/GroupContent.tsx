@@ -1,26 +1,26 @@
+import {StreamClient} from 'getstream';
 import React from 'react';
-import {View, Platform, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {StreamClient} from 'getstream';
+import Button from '~/beinComponents/Button';
+import PostItem from '~/beinComponents/list/items/PostItem';
 
 import ListView from '~/beinComponents/list/ListView';
-import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
+import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
-import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
-import Button from '~/beinComponents/Button';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import groupsActions from '~/screens/Groups/redux/actions';
-import {useUserIdAuth} from '~/hooks/auth';
 import {deviceDimensions} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 
 const GroupContent = ({
   getGroupPosts,
@@ -45,8 +45,16 @@ const GroupContent = ({
     groupsKeySelector.refreshingGroupPosts,
   );
   const userId = useUserIdAuth();
-
+  const dimensions = useWindowDimensions();
   const onPressChat = () => {
+    const isLaptop = dimensions.width >= deviceDimensions.laptop;
+    const isLaptopWeb = Platform.OS === 'web' && isLaptop;
+    if (isLaptopWeb) {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: rocket_chat_id,
+      });
+      return;
+    }
     rootNavigation.navigate('chat', {
       screen: chatStack.conversation,
       params: {roomId: rocket_chat_id, initial: false},
