@@ -112,7 +112,10 @@ const Newsfeed = () => {
   const renderPlaceholder = () => {
     return (
       <View style={styles.placeholder}>
-        <HeaderCreatePostPlaceholder />
+        <HeaderCreatePostPlaceholder
+          style={styles.headerCreatePost}
+          parentWidth={newsfeedWidth}
+        />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
