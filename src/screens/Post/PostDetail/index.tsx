@@ -237,6 +237,7 @@ const PostDetail = (props: any) => {
     return (
       <>
         <PostView postId={id} isPostDetail onPressComment={onPressComment} />
+        <Divider />
         {commentLeft > 0 && (
           <LoadMoreComment
             title={'post:text_load_more_comments'}
@@ -244,7 +245,6 @@ const PostDetail = (props: any) => {
             idLessThan={listComment?.[0]?.id}
           />
         )}
-        <Divider />
       </>
     );
   };
