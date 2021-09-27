@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
@@ -35,6 +35,8 @@ const ChatInput: React.FC<Props> = ({
   onChangeMessage,
   onError,
 }: Props) => {
+  const commentInputRef = useRef<any>();
+
   const dispatch = useDispatch();
   const [text, setText] = useState(editingMessage?.text || '');
   const theme = useTheme() as ITheme;
@@ -43,6 +45,12 @@ const ChatInput: React.FC<Props> = ({
 
   const {user} = useAuth();
   const {conversation} = useChat();
+
+  useEffect(() => {
+    if (!text) {
+      commentInputRef?.current?.setText?.('');
+    }
+  }, [text]);
 
   useEffect(() => {
     setText(editingMessage?.text || '');
@@ -169,11 +177,11 @@ const ChatInput: React.FC<Props> = ({
     <MentionInput
       modalPosition="top"
       onChangeText={_onChangeText}
-      value={text}
       ComponentInput={CommentInput}
       mentionField="beinUserId"
       componentInputProps={{
         HeaderComponent: renderCommentInputHeader(),
+        commentInputRef: commentInputRef,
         onPressSend: onSend,
         onPressFile,
         onPressSelectImage,

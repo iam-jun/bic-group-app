@@ -35,9 +35,12 @@ export interface IFilePicked {
   type: string;
   mime: string;
   size: number;
-  uri: string; //app
   width: number;
   height: number;
+  //app
+  uri: string;
+  //web
+  base64?: string;
   [x: string]: any;
 }
 

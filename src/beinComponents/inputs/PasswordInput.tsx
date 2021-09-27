@@ -4,24 +4,29 @@ import TextInput, {TextInputProps} from './TextInput';
 import Icon from '~/beinComponents/Icon';
 import {View} from 'react-native';
 
-const InputPassword: React.FC<TextInputProps> = ({...props}) => {
+interface Props extends TextInputProps {
+  hideEyeIcon?: boolean;
+}
+
+const InputPassword: React.FC<Props> = ({hideEyeIcon = false, ...props}) => {
   const [hidePassword, setHidePassword] = React.useState(true);
+  const EyeIcon = (
+    <TextInputPaper.Icon
+      name={() => (
+        <Icon
+          icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
+          size={20}
+          onPress={() => setHidePassword(!hidePassword)}
+        />
+      )}
+    />
+  );
 
   return (
     <View>
       <TextInput
         secureTextEntry={hidePassword}
-        right={
-          <TextInputPaper.Icon
-            name={() => (
-              <Icon
-                icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
-                size={20}
-                onPress={() => setHidePassword(!hidePassword)}
-              />
-            )}
-          />
-        }
+        right={!hideEyeIcon && EyeIcon}
         {...props}
       />
     </View>

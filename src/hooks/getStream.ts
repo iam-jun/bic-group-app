@@ -14,6 +14,9 @@ const useGetStream = (token: string): StreamClient | undefined => {
         {location: 'singapore'},
       ),
     );
+    return () => {
+      setClient(undefined);
+    };
   }, [token]);
 
   return client;

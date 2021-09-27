@@ -5,6 +5,7 @@ import {
   TouchableHighlight,
   StyleProp,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -24,16 +25,18 @@ import {ICreatePostParams} from '~/interfaces/IPost';
 export interface HeaderCreatePostProps {
   audience?: any;
   style?: StyleProp<ViewStyle>;
+  parentWidth?: number;
 }
 
 const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   audience,
   style,
+  parentWidth,
 }: HeaderCreatePostProps) => {
   const dispatch = useDispatch();
   const {navigation} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, dimension} = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
@@ -54,7 +57,14 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
+    <View
+      style={StyleSheet.flatten([
+        styles.container,
+        parentWidth && parentWidth > dimension.maxNewsfeedWidth
+          ? styles.containerForBigParent
+          : {},
+        style,
+      ])}>
       <Avatar.Medium isRounded={true} source={avatar} />
       <Button
         TouchableComponent={TouchableHighlight}
@@ -74,7 +84,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {spacing, colors, dimension} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -86,6 +96,16 @@ const createStyle = (theme: ITheme) => {
       // shadowOpacity: 0.1,
       // shadowRadius: 1,
       // elevation: 2,
+    },
+    containerForBigParent: {
+      ...Platform.select({
+        web: {
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
+          borderRadius: 6,
+        },
+      }),
     },
     buttonContainer: {
       flex: 1,
