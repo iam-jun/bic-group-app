@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {useKeySelector} from '~/hooks/selector';
@@ -7,12 +7,18 @@ import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 
 const CommonModal = () => {
-  const modalizeRef = useRef();
+  const modalizeRef = useRef<any>();
 
   const dispatch = useDispatch();
 
   const modal = useKeySelector(modalKeySelector.modal);
   const {isOpen, ContentComponent} = modal || {};
+
+  useEffect(() => {
+    if (!isOpen) {
+      modalizeRef?.current?.close?.();
+    }
+  }, [isOpen]);
 
   const _onClose = () => {
     dispatch(modalActions.hideModal());

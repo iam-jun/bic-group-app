@@ -330,7 +330,10 @@
     "error_upload_failed": "Please remove file upload failed or retry",
     "error_upload_photo_failed": "Upload photo failed!",
     "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
-    "placeholder_create_post": "Write your post here..."
+    "placeholder_create_post": "Write your post here...",
+    "post_exit_option_save": "Save as Draft",
+    "post_exit_option_discard": "Discard Post",
+    "post_exit_option_continue": "Continue Editing"
   },
   "chat": {
     "title": "Chat",

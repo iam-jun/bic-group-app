@@ -281,7 +281,10 @@
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
     "error_upload_photo_failed": "Tải ảnh lên thất bại!",
     "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh",
-    "placeholder_create_post": "Bạn đang nghĩ gì..."
+    "placeholder_create_post": "Bạn đang nghĩ gì...",
+    "post_exit_option_save": "Lưu bản nháp",
+    "post_exit_option_discard": "Huỷ bài viết",
+    "post_exit_option_continue": "Tiếp tục viết bài"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
