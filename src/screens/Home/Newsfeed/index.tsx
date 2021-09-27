@@ -111,8 +111,8 @@ const Newsfeed = () => {
 
   const renderPlaceholder = () => {
     return (
-      <View style={styles.listContainer}>
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+      <View style={styles.placeholder}>
+        <HeaderCreatePostPlaceholder />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
@@ -164,6 +164,16 @@ const createStyle = (theme: ITheme, newsfeedWidth: number) => {
     },
     headerOnLaptop: {
       backgroundColor: colors.surface,
+    },
+    placeholder: {
+      flex: 1,
+      ...Platform.select({
+        web: {
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
+        },
+      }),
     },
     listContainer: {
       flex: 1,
