@@ -27,6 +27,10 @@ import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import Image from '~/beinComponents/Image';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 
 export interface CommentViewProps {
   postId: string;
@@ -60,7 +64,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
   const {id, user_id, data, created_at, user, children_counts, own_children} =
     comment || commentData || {};
-  const {content} = data || {};
+  const {content, images} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
@@ -196,29 +200,32 @@ const CommentView: React.FC<CommentViewProps> = ({
         <Avatar source={avatar} />
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
           <Button onLongPress={onLongPress}>
-            <View
-              style={StyleSheet.flatten([
-                styles.contentContainer,
-                contentBackgroundColor
-                  ? {backgroundColor: contentBackgroundColor}
-                  : {},
-              ])}>
-              <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                <ButtonWrapper onPress={onPressUser}>
-                  <Text.H6>{name}</Text.H6>
-                </ButtonWrapper>
-                <Text.Subtitle
-                  color={colors.textSecondary}
-                  style={styles.textTime}>
-                  {postTime}
-                </Text.Subtitle>
+            <View style={{flex: 1}}>
+              <View
+                style={StyleSheet.flatten([
+                  styles.contentContainer,
+                  contentBackgroundColor
+                    ? {backgroundColor: contentBackgroundColor}
+                    : {},
+                ])}>
+                <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+                  <ButtonWrapper onPress={onPressUser}>
+                    <Text.H6>{name}</Text.H6>
+                  </ButtonWrapper>
+                  <Text.Subtitle
+                    color={colors.textSecondary}
+                    style={styles.textTime}>
+                    {postTime}
+                  </Text.Subtitle>
+                </View>
+                <CollapsibleText
+                  useMarkdown
+                  limitMarkdownTypes
+                  content={content || ''}
+                  onPressAudience={(audience: any) => onPressUser(audience)}
+                />
               </View>
-              <CollapsibleText
-                useMarkdown
-                limitMarkdownTypes
-                content={content || ''}
-                onPressAudience={(audience: any) => onPressUser(audience)}
-              />
+              <CommentMediaView data={data} onLongPress={onLongPress} />
             </View>
           </Button>
           <View style={styles.buttonContainer}>
