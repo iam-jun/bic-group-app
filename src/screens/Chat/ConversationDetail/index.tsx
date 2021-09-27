@@ -28,13 +28,13 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {getAvatar, getDefaultAvatar} from '../helper';
+import {getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
 import {ITheme} from '~/theme/interfaces';
 
 const ConversationDetail = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const route = useRoute<RouteProp<RootStackParamList, 'GroupMembers'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'ConversationDetail'>>();
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -76,13 +76,9 @@ const ConversationDetail = (): React.ReactElement => {
 
   const goProfile = () => {
     if (conversation.type === roomTypes.DIRECT) {
-      dispatch(
-        menuActions.selectedProfile({
-          id: conversation.directUser.beinUserId,
-          isPublic: conversation.directUser.beinUserId !== currentUserId,
-        }),
-      );
-      rootNavigation.navigate(mainStack.userProfile);
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: conversation.directUser.beinUserId,
+      });
     } else if (conversation.type === roomTypes.GROUP) {
       rootNavigation.navigate('groups', {
         screen: groupStack.groupDetail,
@@ -130,12 +126,7 @@ const ConversationDetail = (): React.ReactElement => {
   };
 
   const onLoadAvatarError = () => {
-    if (conversation.type !== roomTypes.DIRECT && conversation.usernames) {
-      const avatarGroup = conversation.usernames.map((username: string) =>
-        getAvatar(username),
-      );
-      setAvatar(avatarGroup);
-    } else setAvatar(getDefaultAvatar(conversation.name));
+    setAvatar(getDefaultAvatar(conversation.name));
   };
 
   const renderAvatar = () => {
@@ -465,4 +456,4 @@ const createStyles = (theme: IObject<any>) => {
   });
 };
 
-export default ConversationDetail;
+export default React.memo(ConversationDetail);

@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import React, {useRef, useState} from 'react';
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -25,7 +24,7 @@ import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
 import useGroups from '~/hooks/groups';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import images from '~/resources/images';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -37,8 +36,8 @@ import {
 } from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
-import {validateFile} from '~/utils/validation';
 import GroupSectionItem from '../components/GroupSectionItem';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 
 const GeneralInformation = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -54,8 +53,6 @@ const GeneralInformation = () => {
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
-
-  const [error, setError] = useState<string | null>(null);
 
   const helpMessage = () => {
     baseSheetRef.current?.close();
@@ -84,46 +81,39 @@ const GeneralInformation = () => {
     rootNavigation.navigate(groupStack.editGroupDescription);
 
   const uploadFile = (
-    file: IFileResponse,
+    file: IFilePicked,
     fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
   ) => {
     dispatch(
       groupsActions.uploadImage({
         id,
-        image: file,
+        file,
         fieldName,
+        uploadType,
       }),
     );
   };
 
   // fieldName: field name in group profile to be edited
   // 'icon' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
-    ImagePicker.openPicker({
+  const _openImagePicker = (
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
       ...groupProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
-      multiple: false,
-    }).then(result => {
-      if (!result) return;
-
-      const file = {
-        name: result.filename,
-        size: result.size,
-        type: result.mime,
-        uri: result.path,
-      };
-      const _error = validateFile(file);
-      setError(_error);
-      if (_error) return;
-      // @ts-ignore
-      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
     });
   };
 
-  const onEditAvatar = () => _openImagePicker('icon');
+  const onEditAvatar = () => _openImagePicker('icon', uploadTypes.groupAvatar);
 
-  const onEditCover = () => _openImagePicker('background_img_url');
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.groupCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -238,7 +228,7 @@ const GeneralInformation = () => {
 
         <GroupSectionItem
           title={'settings:title_privacy'}
-          subtitle={titleCase(privacy)}
+          subtitle={titleCase(privacy) || ''}
           rightIcon={'EditAlt'}
           onPress={editGroupPrivacy}
         />

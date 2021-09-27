@@ -107,13 +107,14 @@ const EditBasicInfo = () => {
     if (isChanged) {
       dispatch(
         modalActions.showAlert({
-          title: i18next.t('common:text_discard_changes'),
-          iconName: 'Save',
+          title: i18next.t('common:label_discard_changes'),
+          showCloseButton: true,
           cancelBtn: true,
-          isDismissable: false,
+          isDismissible: false,
           onConfirm: () => navigation.goBack(),
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
+          stretchOnWeb: true,
         }),
       );
     } else {
@@ -121,12 +122,14 @@ const EditBasicInfo = () => {
     }
   };
 
-  const onGenderEditOpen = () => genderSheetRef?.current?.open?.();
+  const onGenderEditOpen = (e: any) =>
+    genderSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   const onDateEditOpen = () => setSelectingDate(true);
   const onDateEditClose = () => setSelectingDate(false);
 
-  const onRelationshipEditOpen = () => relationshipSheetRef?.current?.open?.();
+  const onRelationshipEditOpen = (e: any) =>
+    relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
@@ -153,7 +156,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'UserSquare'}
           rightIcon={'EditAlt'}
-          onPress={onGenderEditOpen}
+          onPress={e => onGenderEditOpen(e)}
         />
         <SettingItem
           title={'settings:title_birthday'}
@@ -177,7 +180,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}
-          onPress={onRelationshipEditOpen}
+          onPress={e => onRelationshipEditOpen(e)}
         />
       </View>
 

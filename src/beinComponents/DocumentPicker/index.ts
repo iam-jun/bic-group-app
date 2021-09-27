@@ -1,3 +1,3 @@
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from './BeinDocumentPicker';
 
 export default DocumentPicker;

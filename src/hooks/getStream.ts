@@ -7,7 +7,12 @@ const useGetStream = (token: string): StreamClient | undefined => {
 
   useEffect(() => {
     setClient(
-      connect(getEnv('GET_STREAM_API_KEY'), token, getEnv('GET_STREAM_APP_ID')),
+      connect(
+        getEnv('GET_STREAM_API_KEY'),
+        token,
+        getEnv('GET_STREAM_APP_ID'),
+        {location: 'singapore'},
+      ),
     );
   }, [token]);
 

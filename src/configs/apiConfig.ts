@@ -13,9 +13,11 @@ import {
   IRemoveMemberReq,
   IAddUsersToGroupReq,
   IDeleteMessage,
+  IEditMessageReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
+import {IPayloadReactMessage} from '~/interfaces/IChat';
 
 const providers = {
   bein: {
@@ -29,6 +31,40 @@ const providers = {
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
+  },
+};
+
+const Upload = {
+  uploadFile: (
+    type: any,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+  ): HttpApiRequestConfig => {
+    const uploadEndPoint: any = {
+      userAvatar: 'upload/user-avatar',
+      userCover: 'upload/user-cover',
+      groupAvatar: 'upload/group-avatar',
+      groupCover: 'upload/group-cover',
+      postImage: 'upload/post-image',
+      postVideo: 'upload/post-video',
+      postFile: 'upload/post-file',
+      chatImage: 'upload/chat-image',
+      chatVideo: 'upload/chat-video',
+      chatFile: 'upload/chat-file',
+    };
+
+    const url = `${providers.bein.url}${uploadEndPoint[type]}`;
+    return {
+      url,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: false,
+      provider: providers.bein,
+      onUploadProgress: onUploadProgress,
+      data,
+    };
   },
 };
 
@@ -93,6 +129,7 @@ const Chat = {
     method: 'get',
     provider: providers.bein,
     useRetry: true,
+    params,
   }),
   messages: (params: IPaginationParams & {roomId: string; type?: string}) => {
     const endPoint = params?.type === 'direct' ? 'im' : 'groups';
@@ -134,7 +171,7 @@ const Chat = {
       provider: providers.chat,
     };
   },
-  readSubcriptions: (data: IReadSubscription): HttpApiRequestConfig => {
+  readSubscriptions: (data: IReadSubscription): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}subscriptions.read`,
       method: 'post',
@@ -223,6 +260,24 @@ const Chat = {
       },
     };
   },
+  reactMessage: (data: IPayloadReactMessage): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.react`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  editMessage: (data: IEditMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.update`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
 };
 
 const App = {
@@ -305,4 +360,5 @@ export default {
 
   App,
   Chat,
+  Upload,
 };

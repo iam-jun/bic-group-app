@@ -1,4 +1,4 @@
-import {IObject} from '~/interfaces/common';
+import {IFilePicked, IObject} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
 import {StreamClient} from 'getstream';
 
@@ -33,9 +33,16 @@ export interface IAudience {
   isGroup?: boolean;
 }
 
+export interface IActivityDataImage {
+  name: string;
+  origin_name?: string;
+  width?: number;
+  height?: number;
+}
+
 export interface IActivityData {
   content?: string;
-  images?: string[];
+  images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
 }
@@ -43,6 +50,12 @@ export interface IActivityData {
 export interface IActivityImportant {
   active?: 0 | 1;
   expiresTime?: string;
+}
+
+export interface ICreatePostImage {
+  fileName?: string;
+  file?: IFilePicked;
+  url?: string;
 }
 
 /**
@@ -225,6 +238,14 @@ export interface IParamSearchMentionAudiences {
   user_ids?: string;
   skip?: number;
   take?: number;
+}
+
+export interface IParamGetReactionDetail {
+  reactionType: ReactionType;
+  postId?: string;
+  commentId?: string;
+  limit?: number;
+  idLessThan?: string;
 }
 
 export interface IPostAudienceSheet {

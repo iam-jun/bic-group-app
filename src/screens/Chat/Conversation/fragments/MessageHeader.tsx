@@ -26,18 +26,12 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   const {rootNavigation} = useRootNavigation();
 
   const goProfile = () => {
-    dispatch(
-      menuActions.selectedProfile({
-        id: user.username,
-        isPublic: true,
-      }),
-    );
-    rootNavigation.navigate(mainStack.userProfile);
+    rootNavigation.navigate(mainStack.userProfile, {userId: user.username});
   };
 
   return (
     <View style={styles.container}>
-      <ButtonWrapper onPress={goProfile}>
+      <ButtonWrapper style={styles.avatarContainer} onPress={goProfile}>
         <Avatar.Medium
           source={user?.avatar}
           placeholderSource={getDefaultAvatar(user.name)}
@@ -58,15 +52,17 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingTop: spacing.padding.tiny,
+      marginTop: spacing.margin.tiny,
       flexDirection: 'row',
       alignItems: 'flex-start',
+    },
+    avatarContainer: {
+      paddingTop: spacing.margin.tiny,
     },
     viewHeaderInfo: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingLeft: spacing.padding.base,
-      marginBottom: spacing.margin.base,
     },
     textName: {
       textTransform: 'capitalize',

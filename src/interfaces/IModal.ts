@@ -1,4 +1,6 @@
+import {StyleProp, ViewStyle} from 'react-native';
 import {TextInputProps} from '~/beinComponents/inputs/TextInput';
+import {ReactionType} from '~/constants/reactions';
 
 export interface IShowAlert {
   title?: string;
@@ -8,14 +10,20 @@ export interface IShowAlert {
   inputProps?: TextInputProps;
   onConfirm?: (text: string) => void;
   cancelBtn?: boolean;
+  cancelLabel?: string;
   onCancel?: () => void;
-  onDissmiss?: () => void;
+  onDismiss?: () => void;
   confirmLabel: string;
-  isDismissable?: boolean;
+  isDismissible?: boolean;
+  showCloseButton?: boolean;
+  style?: StyleProp<ViewStyle>;
+  stretchOnWeb?: boolean;
 }
 
 export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
-  getDataPromise?: any;
-  [x: string]: any;
+  reactionCounts: {[x: string]: number};
+  postId?: string;
+  commentId?: string;
+  initReaction: ReactionType;
 }

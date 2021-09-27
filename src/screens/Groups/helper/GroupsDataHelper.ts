@@ -47,16 +47,6 @@ export const groupsApiConfig = {
       ...data,
     },
   }),
-  uploadImage: (data: FormData): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}files/upload-photos`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    useRetry: false,
-    data,
-  }),
   getJoinableUsers: (groupId: number, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joinable-users`,
     method: 'get',
@@ -179,20 +169,6 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.editGroupDetail(groupId, data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  uploadImage: async (data: FormData) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.uploadImage(data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

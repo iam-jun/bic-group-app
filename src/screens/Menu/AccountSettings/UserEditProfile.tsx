@@ -1,40 +1,37 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Platform,
-  ActivityIndicator,
-} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
-
-import {ITheme} from '~/theme/interfaces';
-import {scaleSize, userProfileImageCropRatio} from '~/theme/dimension';
-import useMenu from '~/hooks/menu';
-import images from '~/resources/images';
-import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import {formatDate} from '~/utils/formatData';
-import speakingLanguages from '~/constants/speakingLanguages';
-import relationshipStatus from '~/constants/relationshipStatus';
-import genders from '~/constants/genders';
-import {validateFile} from '~/utils/validation';
-import {IFileResponse} from '~/interfaces/common';
-import menuActions from '../redux/actions';
-import {scaleCoverHeight} from '~/theme/dimension';
-
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
+import React, {useState} from 'react';
+import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
+import Header from '~/beinComponents/Header';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
 
-const UserProfile = () => {
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import genders from '~/constants/genders';
+import relationshipStatus from '~/constants/relationshipStatus';
+import speakingLanguages from '~/constants/speakingLanguages';
+import useMenu from '~/hooks/menu';
+import {IFilePicked} from '~/interfaces/common';
+import images from '~/resources/images';
+import mainStack from '~/router/navigator/MainStack/stack';
+import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
+import {
+  scaleCoverHeight,
+  scaleSize,
+  userProfileImageCropRatio,
+} from '~/theme/dimension';
+
+import {ITheme} from '~/theme/interfaces';
+import {formatDate} from '~/utils/formatData';
+import menuActions from '../redux/actions';
+
+const UserEditProfile = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme = useTheme() as ITheme;
@@ -54,57 +51,48 @@ const UserProfile = () => {
     relationship_status,
   } = myProfile;
 
-  const [error, setError] = useState<string | null>(null);
-
-  const userLanguageList = language.map(
+  const userLanguageList = language?.map(
     // @ts-ignore
     (code: string) => speakingLanguages[code].name,
   );
-  const userLanguages = userLanguageList.join(', ');
+  const userLanguages = userLanguageList?.join(', ');
 
-  const goToEditInfo = () => navigation.navigate(menuStack.editBasicInfo);
+  const goToEditInfo = () => navigation.navigate(mainStack.editBasicInfo);
 
   const uploadFile = (
-    file: IFileResponse,
+    file: IFilePicked,
     fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
   ) => {
     dispatch(
       menuActions.uploadImage({
         id,
-        image: file,
+        file,
         fieldName,
+        uploadType,
       }),
     );
   };
 
   // fieldName: field name in group profile to be edited
   // 'avatar' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (fieldName: 'avatar' | 'background_img_url') => {
-    ImagePicker.openPicker({
+  const _openImagePicker = (
+    fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
       ...userProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
-      multiple: false,
-    }).then(result => {
-      if (!result) return;
-
-      const file = {
-        name: result.filename,
-        size: result.size,
-        type: result.mime,
-        uri: result.path,
-      };
-      const _error = validateFile(file);
-      setError(_error);
-      if (_error) return;
-      // @ts-ignore
-      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
     });
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar');
+  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
 
-  const onEditCover = () => _openImagePicker('background_img_url');
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -229,7 +217,7 @@ const UserProfile = () => {
   };
 
   return (
-    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+    <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header title={i18next.t('settings:title_user_profile')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}
@@ -240,7 +228,7 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserEditProfile;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {spacing, colors} = theme;

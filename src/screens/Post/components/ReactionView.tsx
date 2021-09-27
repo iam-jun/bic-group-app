@@ -98,14 +98,13 @@ const createStyle = (theme: ITheme) => {
     containerButtonOnly: {
       flex: 1,
       alignItems: 'flex-start',
-      marginTop: spacing.margin.tiny,
       marginLeft: spacing.margin.small,
     },
     container: {
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
-      paddingTop: spacing.padding.tiny,
+      paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.small,
     },

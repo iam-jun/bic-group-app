@@ -7,7 +7,13 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking, Platform, StyleSheet, View} from 'react-native';
+import {
+  Linking,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -22,6 +28,7 @@ import {AppConfig} from '~/configs';
 import {
   linkingConfig,
   linkingConfigFull,
+  linkingConfigFullLaptop,
   navigationSetting,
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
@@ -32,6 +39,7 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import {signOut} from '~/screens/Auth/redux/actions';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
+import {deviceDimensions} from '~/theme/dimension';
 import {isNavigationRefReady} from './helper';
 /*import config navigation*/
 import * as screens from './navigator';
@@ -40,7 +48,7 @@ import {rootSwitch} from './stack';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const StackNavigator = ({initialLeftTab}: any): React.ReactElement => {
+const StackNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -154,11 +162,18 @@ const StackNavigator = ({initialLeftTab}: any): React.ReactElement => {
     );
   };
 
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+  const configLinkFull =
+    Platform.OS === 'web' && isLaptop
+      ? linkingConfigFullLaptop
+      : linkingConfigFull;
+
   return (
     <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
       <View style={styles.container}>
         <NavigationContainer
-          linking={user ? linkingConfigFull : linkingConfig}
+          linking={user ? configLinkFull : linkingConfig}
           ref={rootNavigationRef}
           onReady={onReady}
           theme={navigationTheme}

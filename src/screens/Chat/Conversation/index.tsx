@@ -1,33 +1,37 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
-import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
+
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import {MessageOptionType, roomTypes} from '~/constants/chat';
+import {MessageOptionType} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
 import {RootStackParamList} from '~/interfaces/IRouter';
-import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
-import {getAvatar, getDefaultAvatar} from '../helper';
+import {getDefaultAvatar} from '../helper';
 import {
   ChatInput,
   ListMessages,
   MessageContainer,
   MessageOptionsModal,
 } from './fragments';
-import GroupChatWelcome from './fragments/GroupChatWelcome';
+import DownButton from './fragments/DownButton';
+import ChatWelcome from './fragments/ChatWelcome';
+import * as modalActions from '~/store/modal/actions';
+import {ReactionType} from '~/constants/reactions';
+import Text from '~/beinComponents/Text';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -45,35 +49,36 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [error, setError] = useState<string | null>(null);
-  const isDirect = conversation.type === roomTypes.DIRECT;
+  const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
+  const listRef = useRef<FlatList>(null);
+  const [editingMessage, setEditingMessage] = useState<IMessage>();
 
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+    waitForInteraction: true,
+    minimumViewTime: 5,
+  });
 
   const onLoadAvatarError = () => {
-    if (isDirect) setAvatar(images.img_user_avatar_default);
-    else {
-      const {usernames} = conversation;
-      if (usernames)
-        setAvatar(usernames.map((username: string) => getAvatar(username)));
-      else setAvatar(getDefaultAvatar(conversation?.name));
-    }
+    setAvatar(getDefaultAvatar(conversation?.name));
   };
 
   useEffect(() => {
-    !isFocused && dispatch(actions.readSubcriptions(conversation._id));
+    !isFocused && dispatch(actions.readSubscriptions(conversation._id));
   }, [isFocused]);
 
   useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
-      _getMessages();
     }
-  }, [route.params]);
+  }, [route.params?.roomId]);
 
   useEffect(() => {
-    conversation._id && _getMessages();
-  }, [conversation._id]);
+    if (conversation?._id) {
+      setAvatar(conversation?.avatar);
+      _getMessages();
+    }
+  }, [conversation?._id]);
 
   useEffect(() => {
     if (!!error) {
@@ -107,8 +112,56 @@ const Conversation = () => {
     setSelectedMessage(undefined);
   };
 
+  const onAddReaction = (reactionId: ReactionType, messageId: string) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId,
+        shouldReact: true,
+      }),
+    );
+  };
+
+  const onRemoveReaction = (reactionId: ReactionType, messageId: string) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId,
+        shouldReact: false,
+      }),
+    );
+  };
+
+  const onPressReact = (
+    event: any,
+    item: IMessage,
+    side: 'left' | 'right' | 'center',
+  ) => {
+    dispatch(
+      modalActions.setShowReactionBottomSheet({
+        show: true,
+        position: {x: event?.pageX, y: event?.pageY},
+        side: side,
+        callback: (reactionId: ReactionType) =>
+          onAddReaction(reactionId, item._id),
+      }),
+    );
+  };
+
   const onReactionPress = async (type: string) => {
-    dispatch(actions.reactMessage(selectedMessage, type));
+    if (!!selectedMessage) {
+      if (type === 'add_react') {
+        onPressReact(null, selectedMessage, 'left');
+      } else {
+        dispatch(
+          actions.reactMessage({
+            emoji: type,
+            messageId: selectedMessage._id,
+            shouldReact: true,
+          }),
+        );
+      }
+    }
 
     messageOptionsModalRef.current?.close();
   };
@@ -116,6 +169,14 @@ const Conversation = () => {
   const deleteMessage = () => {
     selectedMessage && dispatch(actions.deleteMessage(selectedMessage));
     setSelectedMessage(undefined);
+  };
+
+  const editMessage = () => {
+    selectedMessage && setEditingMessage(selectedMessage);
+  };
+
+  const onEditMessage = (message: IMessage | undefined) => {
+    setEditingMessage(message);
   };
 
   const onPressBack = async () => {
@@ -131,6 +192,9 @@ const Conversation = () => {
         break;
       case 'reply':
         setReplyingMessage(selectedMessage);
+        break;
+      case 'edit':
+        editMessage();
         break;
       default:
         dispatch(showAlertNewFeature());
@@ -154,12 +218,38 @@ const Conversation = () => {
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
-  const onScroll = (event: any) => {
-    const element = event.target;
-
-    if (element.scrollTop <= 100) {
-      loadMoreMessages();
+  const onViewableItemsChanged = React.useRef(({changed}: {changed: any[]}) => {
+    if (changed && changed.length > 0) {
+      setDownButtonVisible(changed[0].index > 20);
     }
+  });
+  const onDownPress = () => {
+    listRef.current?.scrollToOffset({offset: 0, animated: true});
+  };
+
+  const onCancelEdit = () => setEditingMessage(undefined);
+
+  const renderEditingMessage = () => {
+    if (!editingMessage) return null;
+
+    return (
+      <View style={styles.editMessageHeader}>
+        <View style={styles.headerContent}>
+          <Text.BodySM color={theme.colors.primary6}>
+            {i18next.t('chat:text_editing_message')}
+            <Text.BodySM color={theme.colors.textSecondary}>
+              {'  • '}
+              <Text.BodySM
+                useI18n
+                color={theme.colors.textSecondary}
+                onPress={onCancelEdit}>
+                common:btn_cancel
+              </Text.BodySM>
+            </Text.BodySM>
+          </Text.BodySM>
+        </View>
+      </View>
+    );
   };
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
@@ -167,23 +257,31 @@ const Conversation = () => {
       previousMessage:
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
-      onReactPress: () => onMenuPress('reactions'),
+      onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
+        onPressReact(event, item, side),
       onReplyPress: () => onMenuPress('reply'),
       onLongPress,
+      onAddReaction: (reactionId: ReactionType) =>
+        onAddReaction(reactionId, item._id),
+      onRemoveReaction: (reactionId: ReactionType) =>
+        onRemoveReaction(reactionId, item._id),
     };
     return <MessageContainer {...props} />;
   };
+
   const renderChatMessages = () => {
     if (!messages.loading && isEmpty(messages.data))
-      return <GroupChatWelcome />;
+      return <ChatWelcome type={conversation.type} />;
 
     return (
       <ListMessages
-        inverted={Platform.OS !== 'web'}
+        listRef={listRef}
+        nativeID={'list-messages'}
+        inverted
         data={messages.data}
         keyboardShouldPersistTaps="handled"
         onEndReached={loadMoreMessages}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
         removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.recordsPerPage}
@@ -196,7 +294,8 @@ const Conversation = () => {
         ListFooterComponent={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
-        onScroll={onScroll}
+        onViewableItemsChanged={onViewableItemsChanged.current}
+        viewabilityConfig={viewabilityConfig.current}
       />
     );
   };
@@ -213,15 +312,20 @@ const Conversation = () => {
         menuIcon="ConversationInfo"
         onPressMenu={goConversationDetail}
         onPressBack={onPressBack}
-        hideBack={isLaptop}
+        hideBackOnLaptop
       />
       {renderChatMessages()}
-
       <ChatInput
+        editingMessage={editingMessage}
+        onChangeMessage={onEditMessage}
         replyingMessage={replyingMessage}
         onCancelReplying={() => setReplyingMessage(undefined)}
         onError={setError}
       />
+
+      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
+      {renderEditingMessage()}
+
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}
@@ -234,7 +338,7 @@ const Conversation = () => {
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
@@ -242,7 +346,18 @@ const createStyles = (theme: IObject<any>) => {
     headerTitle: {
       marginEnd: spacing.margin.small,
     },
+    editMessageHeader: {
+      flexDirection: 'row',
+      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.base,
+      borderTopWidth: 1,
+      borderTopColor: colors.borderDivider,
+    },
+    headerContent: {
+      flex: 1,
+      flexDirection: 'row',
+    },
   });
 };
 
-export default Conversation;
+export default React.memo(Conversation);

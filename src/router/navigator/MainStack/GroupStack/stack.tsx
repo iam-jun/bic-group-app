@@ -7,12 +7,11 @@ const groupStack = {
   createPost: 'create-post',
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',
+  postSelectImage: 'post-select-image',
   postDetail: 'post-detail',
   groupAdmin: 'group-admin',
   generalInfo: 'general-info',
   editGroupDescription: 'edit-group-description',
-  myProfile: 'my-profile',
-  publicProfile: 'user-profile',
   inviteMembers: 'invite-members',
 };
 

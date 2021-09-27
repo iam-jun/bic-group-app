@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
@@ -11,28 +11,32 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import apiConfig from '~/configs/apiConfig';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
+import {IMessage} from '~/interfaces/IChat';
 import {mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {validateFile} from '~/utils/validation';
 import {ITheme} from '~/theme/interfaces';
-import {IMessage} from '~/interfaces/IChat';
 
 interface Props {
   replyingMessage?: IMessage;
+  editingMessage?: IMessage;
   onCancelReplying: () => void;
+  onChangeMessage?: (value: IMessage | undefined) => void;
   onError: (err: any) => void;
 }
 
 const ChatInput: React.FC<Props> = ({
+  editingMessage,
   replyingMessage,
   onCancelReplying,
+  onChangeMessage,
   onError,
 }: Props) => {
   const dispatch = useDispatch();
-  const [text, setText] = useState('');
+  const [text, setText] = useState(editingMessage?.text || '');
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
@@ -40,24 +44,38 @@ const ChatInput: React.FC<Props> = ({
   const {user} = useAuth();
   const {conversation} = useChat();
 
+  useEffect(() => {
+    setText(editingMessage?.text || '');
+  }, [editingMessage?.text]);
+
   const _onChangeText = (value: string) => {
     setText(value);
   };
 
   const onSend = () => {
-    dispatch(
-      actions.sendMessage({
-        _id: uuid.v4().toString(),
-        room_id: conversation._id,
-        _updatedAt: new Date().toISOString(),
-        text: text.trim(),
-        user,
-      }),
-    );
+    if (!editingMessage) {
+      dispatch(
+        actions.sendMessage({
+          _id: uuid.v4().toString(),
+          room_id: conversation._id,
+          _updatedAt: new Date().toISOString(),
+          text: text.trim(),
+          user,
+        }),
+      );
+    } else {
+      dispatch(
+        actions.editMessage({
+          ...editingMessage,
+          text: text.trim(),
+        }),
+      );
+    }
     setText('');
+    onChangeMessage?.(undefined);
   };
 
-  const onPressSelectImage = (file: IFileResponse) => {
+  const onPressSelectImage = (file: IFilePicked) => {
     const _error = validateFile(file);
     onError(_error);
     if (_error) return;
@@ -65,14 +83,14 @@ const ChatInput: React.FC<Props> = ({
     showUploadConfirmation(file, type);
   };
 
-  const onPressFile = (file: IFileResponse) => {
+  const onPressFile = (file: IFilePicked) => {
     const _error = validateFile(file);
     onError(_error);
     if (_error) return;
     showUploadConfirmation(file, 'file');
   };
 
-  const showUploadConfirmation = (file: IFileResponse, type: string) => {
+  const showUploadConfirmation = (file: IFilePicked, type: string) => {
     dispatch(
       modalActions.showAlert({
         title: i18next.t(`chat:label_confirm_send_${type}`),
@@ -84,7 +102,7 @@ const ChatInput: React.FC<Props> = ({
     );
   };
 
-  const uploadFile = (file: IFileResponse) => {
+  const uploadFile = (file: IFilePicked) => {
     const _id = uuid.v4().toString();
     dispatch(
       actions.uploadFile({

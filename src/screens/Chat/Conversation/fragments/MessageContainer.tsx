@@ -6,11 +6,9 @@ import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import AttachmentView from './AttachmentView';
@@ -19,13 +17,18 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
+import ReactionView from '~/beinComponents/ReactionView';
+import {ReactionType} from '~/constants/reactions';
+import i18next from 'i18next';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
-  onReactPress: (item: IMessage) => void;
+  onReactPress: (event: any, side: 'left' | 'right' | 'center') => void;
   onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
+  onAddReaction: (reaction: ReactionType) => void;
+  onRemoveReaction: (reaction: ReactionType) => void;
 }
 
 const MessageItem = (props: MessageItemProps) => {
@@ -34,13 +37,14 @@ const MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const currentUserId = useUserIdAuth();
   const {
     previousMessage,
     currentMessage,
     onReactPress,
     onReplyPress,
     onLongPress,
+    onAddReaction,
+    onRemoveReaction,
   } = props;
   const {
     text,
@@ -51,6 +55,8 @@ const MessageItem = (props: MessageItemProps) => {
     _updatedAt,
     status,
     type,
+    reaction_counts,
+    own_reactions,
   } = currentMessage;
 
   const sameUser = user?.username === previousMessage?.user?.username;
@@ -77,13 +83,11 @@ const MessageItem = (props: MessageItemProps) => {
   };
 
   const onMentionPress = (user: any) => {
-    dispatch(
-      menuActions.selectedProfile({
-        id: user?.id,
-        isPublic: user?.id !== currentUserId,
-      }),
-    );
-    rootNavigation.navigate(mainStack.userProfile);
+    if (!!user?.id) {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: user.id,
+      });
+    }
   };
 
   return (
@@ -94,7 +98,7 @@ const MessageItem = (props: MessageItemProps) => {
           {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
 
           <View
-            style={[styles.message, !hideHeader && styles.messgageWithHeader]}>
+            style={[styles.message, !hideHeader && styles.messageWithHeader]}>
             {removed ? (
               <Text useI18n style={styles.removedText}>
                 {text}
@@ -102,19 +106,45 @@ const MessageItem = (props: MessageItemProps) => {
             ) : (
               <>
                 <AttachmentView {...currentMessage} />
-                <MarkdownView
-                  limitMarkdownTypes
-                  onPressAudience={onMentionPress}>
-                  {text}
-                </MarkdownView>
+                <View style={styles.messageLineWithEdit}>
+                  <MarkdownView
+                    limitMarkdownTypes
+                    onPressAudience={onMentionPress}>
+                    {text}
+                  </MarkdownView>
+                  {currentMessage.editedBy && (
+                    <View style={styles.edited}>
+                      <Text.Subtitle
+                        color={theme.colors.textSecondary}
+                        style={styles.editedText}>
+                        ({i18next.t('chat:text_edited')})
+                      </Text.Subtitle>
+                    </View>
+                  )}
+                </View>
                 <MessageMenu
-                  onReactPress={() => onReactPress(currentMessage)}
+                  onReactPress={(event: any) => onReactPress(event, 'left')}
                   onReplyPress={() => onReplyPress(currentMessage)}
                   onMenuPress={onMenuPress}
+                  hideHeader={hideHeader}
                 />
               </>
             )}
           </View>
+          <View style={styles.reactionView}>
+            <ReactionView
+              ownReactions={own_reactions || {}}
+              reactionCounts={reaction_counts || {}}
+              onAddReaction={onAddReaction}
+              onRemoveReaction={onRemoveReaction}
+              onLongPressReaction={() => {}}
+              onPressSelectReaction={(event: any) =>
+                onReactPress(event, 'center')
+              }
+              showSelectReactionWhenEmpty={false}
+            />
+          </View>
+
           <MessageStatus status={status} onRetryPress={_onRetryPress} />
         </View>
       </TouchableWithoutFeedback>
@@ -127,20 +157,25 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
-      marginBottom: spacing.margin.base,
     },
-    messgageWithHeader: {
-      marginTop: -16,
+    messageWithHeader: {
+      marginTop: -20, // push message up so that it is right below the user's name
     },
     message: {
       marginStart: 48,
-      minHeight: 24,
-      paddingVertical: 2,
     },
     removedText: {
       color: colors.textSecondary,
       fontStyle: 'italic',
     },
+    reactionView: {
+      marginStart: 36,
+    },
+    messageLineWithEdit: {flexDirection: 'row', alignItems: 'baseline'},
+    edited: {
+      marginStart: spacing.margin.tiny,
+    },
+    editedText: {fontStyle: 'italic'},
   });
 };
 

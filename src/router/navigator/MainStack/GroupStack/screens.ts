@@ -5,12 +5,11 @@ import GroupMembers from '~/screens/Groups/GroupMembers';
 import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
+import PostSelectImage from '~/screens/Post/PostSelectImage';
 import PostDetail from '~/screens/Post/PostDetail';
 import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/GroupAdministration';
 import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/GeneralInformation';
 import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
-import MyProfile from '~/screens/Menu/UserProfile/MyProfile';
-import UserProfile from '~/screens/Menu/UserProfile/UserProfile';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 import NewFeature from '~/screens/NewFeature';
 
@@ -23,11 +22,10 @@ export default {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
+  'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
-  'my-profile': MyProfile,
-  'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
 };

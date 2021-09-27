@@ -1,19 +1,19 @@
-import React, {useState, useEffect, useRef} from 'react';
+import i18next from 'i18next';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import i18next from 'i18next';
-
-import {ITheme} from '~/theme/interfaces';
-import useMenu from '~/hooks/menu';
-import speakingLanguages from '~/constants/speakingLanguages';
-import SettingItem from './SettingItem';
-import {ILanguageItem} from '~/interfaces/IEditUser';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import speakingLanguages from '~/constants/speakingLanguages';
+import useMenu from '~/hooks/menu';
+import {ILanguageItem} from '~/interfaces/IEditUser';
+
+import {ITheme} from '~/theme/interfaces';
+import SettingItem from './SettingItem';
 
 interface LanguageOptionMenuProps {
   title: string;
@@ -46,7 +46,7 @@ const LanguageOptionMenu = ({
     setLanguages(
       languages.map(lang => ({
         ...lang,
-        selected: userLanguages.includes(lang.code),
+        selected: userLanguages?.includes(lang.code),
       })),
     );
   }, [userLanguages]);
@@ -85,7 +85,8 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const onLanguageEditOpen = () => languageSheetRef?.current?.open?.();
+  const onLanguageEditOpen = (e: any) =>
+    languageSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   return (
     <View>
@@ -94,12 +95,12 @@ const LanguageOptionMenu = ({
         subtitle={
           selectedLanguages
             // @ts-ignore
-            .map(language => speakingLanguages[language]?.name)
+            ?.map(language => speakingLanguages[language]?.name)
             .join(', ') || i18next.t('settings:text_not_set')
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}
-        onPress={onLanguageEditOpen}
+        onPress={e => onLanguageEditOpen(e)}
       />
 
       <BottomSheet
@@ -127,7 +128,7 @@ const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    contentComponent: {marginHorizontal: spacing.margin.base},
+    contentComponent: {},
     chooseText: {
       margin: spacing.margin.base,
     },

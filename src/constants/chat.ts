@@ -1,5 +1,6 @@
 export const chatSocketId = {
   SUBSCRIBE_ROOMS_MESSAGES: 'chat-socket-subscribe-rooms-messages',
+  SUBSCRIBE_NOTIFY_USER: 'chat-socket-subscribe-stream-notify-user',
   ADD_MEMBERS_TO_GROUP: 'chat-socket-add-members-to-groups',
 };
 
@@ -73,11 +74,11 @@ export const messageOptionData = {
 export type MessageOptionType = keyof typeof messageOptionData;
 
 export const myMessageOptions = [
-  'edit',
+  'reply',
   'create_thread',
   'copy',
-  'reply',
   'get_link',
+  'edit',
   'delete',
   'reactions',
 ];
@@ -85,9 +86,9 @@ export const myMessageOptions = [
 export const messageOptions = ['copy', 'reply', 'get_link', 'reactions'];
 
 export const reactions = {
-  love_hearts: {
-    id: 'love_hearts',
-    icon: 'love_hearts',
+  crazy_love_heart: {
+    id: 'crazy_love_heart',
+    icon: 'crazy_love_heart',
   },
   stunned_wow: {
     id: 'stunned_wow',

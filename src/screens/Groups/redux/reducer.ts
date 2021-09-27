@@ -12,6 +12,8 @@ const initGroupsState = {
   groupDetail: {
     group: {},
   },
+
+  loadingGroupMember: false,
   groupMember: {
     skip: 0,
     take: 20,
@@ -81,6 +83,11 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         },
       };
 
+    case groupsTypes.SET_LOADING_GROUP_MEMBER:
+      return {
+        ...state,
+        loadingGroupMember: payload,
+      };
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {
         ...state,

@@ -3,11 +3,11 @@ import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import RedDot from '~/beinComponents/Badge/RedDot';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
-import images from '~/resources/images';
-import {getAvatar, getDefaultAvatar} from '~/screens/Chat/helper';
+import {getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
 import PrimaryItem from './PrimaryItem';
@@ -15,26 +15,29 @@ import PrimaryItem from './PrimaryItem';
 const ConversationItem: React.FC<IConversation> = ({
   name,
   lastMessage,
-  usernames,
   avatar,
   _updatedAt,
   unreadCount,
   type,
 }: IConversation): React.ReactElement => {
+  const AVG_CHAR_ON_ONE_LINE = 32;
+  let twoLineLastMessage = false;
+  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
+    twoLineLastMessage = true;
+
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
-  const {text, textReversed, textSecondary} = theme.colors;
+  const styles = createStyles(theme, twoLineLastMessage);
+  const {text, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
+  const welcomeText =
+    type === 'direct'
+      ? 'chat:label_init_direct_message:short'
+      : 'chat:label_init_group_message:short';
 
   const onLoadAvatarError = () => {
-    if (usernames) {
-      const avatarGroup = usernames.map((username: string) =>
-        getAvatar(username),
-      );
-      setAvatar(avatarGroup);
-    } else setAvatar(getDefaultAvatar(name));
+    setAvatar(getDefaultAvatar(name));
   };
 
   const ItemAvatar = isDirect ? (
@@ -65,10 +68,7 @@ const ConversationItem: React.FC<IConversation> = ({
         variant: unreadCount ? 'bodyM' : 'body',
         color: textColor,
       }}
-      subTitle={
-        escapeMarkDown(lastMessage) ||
-        i18next.t('chat:label_init_group_message:short')
-      }
+      subTitle={escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
       style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={
@@ -79,11 +79,7 @@ const ConversationItem: React.FC<IConversation> = ({
             {countTime(_updatedAt)}
           </Text.Subtitle>
           {unreadCount && (
-            <View style={styles.unread}>
-              <Text.ButtonSmall color={textReversed}>
-                {unreadCount}
-              </Text.ButtonSmall>
-            </View>
+            <RedDot style={styles.unreadBadge} number={unreadCount} />
           )}
         </View>
       }
@@ -91,13 +87,19 @@ const ConversationItem: React.FC<IConversation> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyles = (theme: ITheme, twoLineLastMessage: boolean) => {
+  const {spacing} = theme;
+
+  const defaultPaddingTop = spacing.padding.small || 8;
+  const defaultPaddingBottom = spacing.padding.tiny || 4;
+  const defaultHeight = 60 + defaultPaddingTop + defaultPaddingBottom;
+  const unreadBadgeMarginTop = !twoLineLastMessage ? 0 : spacing.margin.base;
 
   return StyleSheet.create({
     container: {
-      height: 64, // = 60 + paddingBottom
-      paddingBottom: spacing.margin.tiny,
+      height: defaultHeight,
+      paddingTop: defaultPaddingTop,
+      paddingBottom: defaultPaddingBottom,
       marginHorizontal: spacing.margin.base,
       paddingHorizontal: spacing.padding.tiny,
       alignItems: 'flex-start',
@@ -120,14 +122,8 @@ const createStyles = (theme: ITheme) => {
     textUpdate: {
       paddingTop: 0,
     },
-    unread: {
-      borderRadius: spacing?.borderRadius.large,
-      width: spacing?.lineHeight.base,
-      height: spacing?.lineHeight.base,
-      marginTop: spacing?.margin.base,
-      backgroundColor: colors.error,
-      alignItems: 'center',
-      justifyContent: 'center',
+    unreadBadge: {
+      marginTop: unreadBadgeMarginTop,
     },
   });
 };

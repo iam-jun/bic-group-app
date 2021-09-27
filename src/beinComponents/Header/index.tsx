@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -8,10 +15,11 @@ import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
-import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {IconType} from '~/resources/icons';
 import {ImageProps} from '../Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {deviceDimensions} from '~/theme/dimension';
+import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 
 export interface HeaderProps {
   children?: React.ReactNode;
@@ -25,13 +33,14 @@ export interface HeaderProps {
   leftIconProps?: IconProps;
   icon?: IconType;
   onPressIcon?: () => void;
+  buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;
-  buttonProps?: ButtonPrimaryProps;
+  buttonProps?: ButtonSecondaryProps; // as it contains the ButtonPrimaryProps
   onPressButton?: () => void;
   menuIcon?: IconType;
   onPressMenu?: (e: any) => void;
   hideBack?: boolean;
-  hideBackWeb?: boolean;
+  hideBackOnLaptop?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -56,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({
   menuIcon,
   onPressMenu,
   hideBack,
-  hideBackWeb,
+  hideBackOnLaptop,
   onPressBack,
   disableInsetTop,
   style,
@@ -66,6 +75,8 @@ const Header: React.FC<HeaderProps> = ({
   const {spacing, dimension} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
+  const windowDimension = useWindowDimensions();
+  const isLaptop = windowDimension.width >= deviceDimensions.laptop;
 
   const {navigation} = useBaseHook();
 
@@ -92,7 +103,7 @@ const Header: React.FC<HeaderProps> = ({
           style,
         ])}>
         <ViewSpacing width={spacing.margin.large} />
-        {!hideBack && !(hideBackWeb && Platform.OS === 'web') && (
+        {!hideBack && !(hideBackOnLaptop && isLaptop) && (
           <Icon
             icon="iconBack"
             onPress={_onPressBack}

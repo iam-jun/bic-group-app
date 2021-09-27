@@ -42,6 +42,12 @@ export interface ISendMessageReq {
   };
 }
 
+export interface IEditMessageReq {
+  roomId: string;
+  msgId: string;
+  text: string;
+}
+
 export interface IDeleteMessage {
   roomId: string;
   msgId: string;

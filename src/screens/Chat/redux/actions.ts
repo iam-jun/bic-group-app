@@ -2,6 +2,7 @@ import {
   IChatUser,
   IConversation,
   IMessage,
+  IPayloadReactMessage,
   ISendMessageAction,
   IUploadFileAction,
 } from '~/interfaces/IChat';
@@ -75,7 +76,7 @@ const setSubscriptions = (payload: IConversation[]) => ({
   payload,
 });
 
-const readSubcriptions = (payload: string) => ({
+const readSubscriptions = (payload: string) => ({
   type: Actions.READ_SUBCRIPTIONS,
   payload,
 });
@@ -87,6 +88,11 @@ const handleEvent = (payload: ISocketEvent) => ({
 
 const sendMessage = (payload: ISendMessageAction) => ({
   type: Actions.SEND_MESSAGE,
+  payload,
+});
+
+const editMessage = (payload: IMessage) => ({
+  type: Actions.EDIT_MESSAGE,
   payload,
 });
 
@@ -105,10 +111,9 @@ const sendMessageFailed = (payload: IMessage) => ({
   payload,
 });
 
-const reactMessage = (message?: IMessage, reactionType?: string) => ({
+const reactMessage = (payload: IPayloadReactMessage) => ({
   type: Actions.REACT_MESSAGE,
-  message,
-  reactionType,
+  payload,
 });
 
 const deleteMessage = (payload: IMessage) => ({
@@ -195,9 +200,10 @@ export default {
   setGroupRoles,
   getSubscriptions,
   setSubscriptions,
-  readSubcriptions,
+  readSubscriptions,
   handleEvent,
   sendMessage,
+  editMessage,
   sendMessageSuccess,
   sendMessageFailed,
   retrySendMessage,

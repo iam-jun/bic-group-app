@@ -1,10 +1,5 @@
 import React, {useContext, useRef} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -26,7 +21,7 @@ import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -36,8 +31,6 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
@@ -46,7 +39,7 @@ const GeneralSettings = () => {
   const onAccountSettingsPress = (item: ISetting, e: any) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(menuStack.userProfile);
+        return rootNavigation.navigate(mainStack.userEdit);
 
       case 'securityLogin':
         return rootNavigation.navigate(menuStack.securityLogin);
@@ -60,11 +53,14 @@ const GeneralSettings = () => {
     }
   };
 
-  const renderItem = ({item}: {item: ILanguage}) => {
+  const renderLanguageOption = ({item}: {item: ILanguage}) => {
     return (
       <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
         <PrimaryItem
+          style={styles.languageOption}
           title={t(item.title)}
+          leftIcon={item.icon}
+          leftIconProps={{icon: item.icon, size: 24}}
           RightComponent={
             language === item.code ? (
               <Icon
@@ -81,10 +77,7 @@ const GeneralSettings = () => {
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
-      <Header
-        title={t('settings:title_account_settings')}
-        hideBack={isLaptop}
-      />
+      <Header title={t('settings:title_account_settings')} hideBackOnLaptop />
       <ListView
         type="menu"
         data={accountSettingsMenu}
@@ -106,7 +99,7 @@ const GeneralSettings = () => {
             <ListView
               type="primary"
               data={languages}
-              renderItem={renderItem}
+              renderItem={renderLanguageOption}
               onItemPress={onLanguageMenuPress}
             />
           </View>
@@ -125,12 +118,22 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     menuList: {
       marginTop: spacing.margin.base,
+      marginHorizontal: spacing.margin.base,
     },
     contentComponent: {
-      marginHorizontal: spacing.margin.base,
+      ...Platform.select({
+        web: {
+          width: 200,
+        },
+      }),
     },
     chooseLanguageText: {
       margin: spacing.margin.base,
+      marginHorizontal: spacing.margin.extraLarge,
+    },
+    languageOption: {
+      height: 48,
+      paddingHorizontal: spacing.padding.extraLarge,
     },
   });
 };

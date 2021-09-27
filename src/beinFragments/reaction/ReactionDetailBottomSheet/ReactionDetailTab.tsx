@@ -38,11 +38,12 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const getData = () => {
     if (reactionType && postId) {
       setLoading(true);
+      const param = {reactionType, commentId, postId, limit};
       postDataHelper
-        .getReactionOfPost(reactionType, postId, undefined, limit)
+        .getReactionDetail(param)
         .then(response => {
-          if (response?.length > 0) {
-            setData(response);
+          if (response?.results?.length > 0) {
+            setData(response?.results);
           }
           setLoading(false);
         })

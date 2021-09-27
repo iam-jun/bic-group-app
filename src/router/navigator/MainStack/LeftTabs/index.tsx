@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
@@ -42,16 +43,6 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
       }),
     );
   }, []);
-
-  const renderBadge = (name: string) => {
-    const number = tabBadge[name];
-
-    if (number > 0) {
-      return <RedDot style={{top: 15, left: 45}} number={number} />;
-    } else {
-      return null;
-    }
-  };
 
   const renderIcon = (name: string, focused: boolean) => {
     if (name === 'home') {
@@ -94,11 +85,18 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
             component={component}
             options={{
               tabBarIcon: ({focused}: {focused: boolean}) => {
+                // @ts-ignore
+                const unreadCount = tabBadge[name] || undefined;
+
                 return (
-                  <View style={styles.iconContainer}>
+                  <Div
+                    className="tab-bar__menu"
+                    style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
                     {renderIcon(name, focused)}
-                    {renderBadge(name)}
-                  </View>
+                    {!!unreadCount && (
+                      <RedDot style={styles.badge} number={unreadCount} />
+                    )}
+                  </Div>
                 );
               },
             }}
@@ -136,6 +134,11 @@ const CreateStyle = (theme: ITheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
+    },
+    badge: {
+      position: 'absolute',
+      top: '16%',
+      left: '54%',
     },
   });
 };

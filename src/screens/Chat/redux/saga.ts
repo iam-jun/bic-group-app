@@ -6,10 +6,12 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
+import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
   IConversation,
   IMessage,
+  IPayloadReactMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
@@ -47,14 +49,16 @@ export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
+  yield takeEvery(types.EDIT_MESSAGE, editMessage);
   yield takeLatest(types.DELETE_MESSAGE, deleteMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
-  yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
+  yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
+  yield takeLatest(types.REACT_MESSAGE, reactMessage);
 }
 
 function* initChat() {
@@ -140,15 +144,15 @@ function* getSubscriptions() {
   }
 }
 
-function* readSubcriptions({payload}: {type: string; payload: string}) {
+function* readSubscriptions({payload}: {type: string; payload: string}) {
   try {
     yield makeHttpRequest(
-      apiConfig.Chat.readSubcriptions({
+      apiConfig.Chat.readSubscriptions({
         rid: payload,
       }),
     );
   } catch (err) {
-    console.log('readSubcriptions', err);
+    console.log('readSubscriptions', err);
   }
 }
 
@@ -333,6 +337,25 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
   }
 }
 
+function* editMessage({payload}: {payload: IMessage; type: string}) {
+  try {
+    const {auth} = yield select();
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.editMessage({
+        roomId: payload.room_id,
+        msgId: payload._id,
+        text: payload.text || '',
+      }),
+    );
+
+    const message = mapMessage(auth.user, response.data.message);
+    yield put(actions.sendMessageSuccess({...payload, ...message}));
+  } catch (err) {
+    yield put(actions.sendMessageFailed(payload));
+  }
+}
+
 function* deleteMessage({payload}: {payload: IMessage; type: string}) {
   try {
     yield makeHttpRequest(
@@ -410,8 +433,23 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
   }
 }
 
+function* reactMessage({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactMessage;
+}) {
+  try {
+    yield makeHttpRequest(apiConfig.Chat.reactMessage(payload));
+  } catch (err) {
+    console.log('reactMessage:', err);
+    yield showError(err);
+  }
+}
+
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
+  else if (payload.createdAt) yield editMessage({payload, type});
   else yield sendMessage({payload, type});
 }
 
@@ -421,11 +459,11 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
       [TO-DO] Need to check with BE
   */
 
-  if (
-    payload.msg === 'changed' &&
-    payload.collection === 'stream-room-messages'
-  ) {
-    yield handleRoomsMessage(payload);
+  if (payload.msg === 'changed') {
+    if (payload.collection === 'stream-room-messages')
+      yield handleRoomsMessage(payload);
+    else if (payload.collection === 'stream-notify-user')
+      yield handleNotifyUser(payload);
   }
 
   if (payload.msg !== 'result') return;
@@ -471,15 +509,9 @@ function* handleRemoveUser(data: any) {
   try {
     const {auth} = yield select();
     const message = mapMessage(auth.user, data);
-    console.log('handleRemoveUser', message, auth.user);
 
-    if (message.msg === auth.user.username) {
-      yield put(actions.kickMeOut(message));
-      navigation.replace(chatStack.conversationList);
-    } else {
-      yield handleNewMessage(data);
-      yield put(actions.removeMemberSuccess(message));
-    }
+    yield handleNewMessage(data);
+    yield put(actions.removeMemberSuccess(message));
   } catch (err) {
     console.log('handleRemoveUser', err);
   }
@@ -492,6 +524,19 @@ function* handleRemoveMessage(data: any) {
     yield put(actions.deleteMessageSuccess(message));
   } catch (err) {
     console.log('handleRemoveMessage', err);
+  }
+}
+
+function* handleAddNewRoom(data: any) {
+  try {
+    const {chat, auth} = yield select();
+
+    yield put(
+      actions.createConversationSuccess(mapConversation(auth.user, data)),
+    );
+    yield getSubscriptions();
+  } catch (err) {
+    console.log('handleAddNewRoom', err);
   }
 }
 
@@ -514,4 +559,31 @@ function* handleRoomsMessage(payload?: any) {
       yield handleRemoveUser(data);
       break;
   }
+}
+
+function* handleNotifyUser(payload?: any) {
+  const data = payload.fields.args || [];
+  switch (data[0]) {
+    case 'removed':
+      yield put(actions.kickMeOut(data[1]));
+      navigation.replace(chatStack.conversationList);
+      break;
+    case 'inserted':
+      yield handleAddNewRoom(data[1]);
+      break;
+  }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }

@@ -3,6 +3,9 @@ import {debounce} from 'lodash';
 import React, {useCallback, useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {RouteProp, useRoute} from '@react-navigation/core';
+
+import {RootStackParamList} from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -17,6 +20,8 @@ import * as modalActions from '~/store/modal/actions';
 import appConfig from '~/configs/appConfig';
 
 const AddMembersToGroup = (): React.ReactElement => {
+  const route = useRoute<RouteProp<RootStackParamList, 'AddMembersToGroup'>>();
+
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
 
@@ -24,20 +29,20 @@ const AddMembersToGroup = (): React.ReactElement => {
   const {selectedUsers, joinableUsers, conversation} = useChat();
 
   useEffect(() => {
+    if (!conversation._id && route?.params?.roomId)
+      dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.resetData('joinableUsers'));
     dispatch(
       actions.getData(
         'joinableUsers',
         {
-          groupId:
-            conversation.type === roomTypes.QUICK
-              ? conversation._id
-              : conversation.beinGroupId,
+          groupId: route?.params?.roomId,
+          limit: appConfig.recordsPerPage,
         },
         'data',
       ),
     );
-  }, []);
+  }, [route?.params?.roomId]);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('joinableUsers'));
 
@@ -78,7 +83,7 @@ const AddMembersToGroup = (): React.ReactElement => {
       id: chatSocketId.ADD_MEMBERS_TO_GROUP,
       params: [
         {
-          rid: conversation._id,
+          rid: route?.params?.roomId,
           users: selectedUsers.map((user: IChatUser) => user.username),
         },
       ],
@@ -86,16 +91,18 @@ const AddMembersToGroup = (): React.ReactElement => {
   };
 
   const searchUsers = (searchQuery: string) => {
-    dispatch(actions.resetData('users'));
+    dispatch(actions.resetData('joinableUsers'));
     dispatch(
-      actions.getData('users', {
-        query: {
-          $and: [
-            {__rooms: {$nin: [conversation._id]}},
-            {name: {$regex: searchQuery, $options: 'ig'}},
-          ],
+      actions.getData(
+        'joinableUsers',
+        {
+          groupId: route?.params?.roomId,
+          offset: 0,
+          limit: appConfig.recordsPerPage,
+          key: searchQuery,
         },
-      }),
+        'data',
+      ),
     );
   };
 

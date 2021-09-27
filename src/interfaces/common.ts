@@ -29,11 +29,16 @@ export interface IRightMenu {
   title: string;
 }
 
-export interface IFileResponse {
-  name?: string;
-  uri: string;
-  size: number;
+export interface IFilePicked {
+  name: string;
+  filename: string;
   type: string;
+  mime: string;
+  size: number;
+  uri: string; //app
+  width: number;
+  height: number;
+  [x: string]: any;
 }
 
 export interface IResponseData {

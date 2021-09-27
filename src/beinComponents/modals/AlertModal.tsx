@@ -14,6 +14,7 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
@@ -42,7 +43,14 @@ const AlertModal: React.FC<AlertModalProps> = ({
     onDismiss,
     confirmLabel,
     cancelBtn,
+    cancelLabel,
+    showCloseButton,
+    style: alertModalStyle,
+    stretchOnWeb,
   } = alert;
+  const _cancelLabel = cancelLabel
+    ? cancelLabel
+    : i18next.t('common:btn_cancel');
 
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
@@ -61,7 +69,12 @@ const AlertModal: React.FC<AlertModalProps> = ({
       visible={visible}
       dismissable={isDismissible}
       onDismiss={_onDismiss}
-      contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
+      contentContainerStyle={StyleSheet.flatten([
+        styles.modal,
+        stretchOnWeb && Platform.OS === 'web' && styles.stretchModal,
+        style,
+        alertModalStyle,
+      ])}
       {...props}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -74,6 +87,16 @@ const AlertModal: React.FC<AlertModalProps> = ({
                 size={20}
                 tintColor={theme.colors.iconTint}
               />
+            )}
+            {showCloseButton && (
+              <View style={styles.closeButton}>
+                <Icon
+                  icon={'iconClose'}
+                  size={14}
+                  tintColor={theme.colors.iconTint}
+                  onPress={_onDismiss}
+                />
+              </View>
             )}
           </View>
           {!!content && (
@@ -90,17 +113,14 @@ const AlertModal: React.FC<AlertModalProps> = ({
             {!!cancelBtn && (
               <Button.Secondary
                 style={{marginEnd: theme.spacing?.margin.base}}
-                textColor={theme.colors.primary7}
-                color={theme.colors.primary2}
                 onPress={_onDismiss}>
-                {i18next.t('common:btn_cancel')}
+                {_cancelLabel}
               </Button.Secondary>
             )}
 
             {!!confirmLabel && (
               <Button.Secondary
-                textColor={theme.colors.background}
-                color={theme.colors.primary7}
+                highEmphasis
                 disabled={input && !text}
                 onPress={() => {
                   dispatch(actions.hideAlert());
@@ -117,19 +137,26 @@ const AlertModal: React.FC<AlertModalProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, dimension, spacing} = theme;
+  const defaultAlertWidth = 320;
+  const alertWidth = (100 * defaultAlertWidth) / deviceDimensions.phone;
 
   return StyleSheet.create({
     root: {
       flex: 1,
     },
     modal: {
-      width: 320,
+      width: defaultAlertWidth,
       backgroundColor: colors.background,
       borderWidth: 1,
       borderColor: colors.borderCard,
       borderRadius: 6,
       alignSelf: 'center',
+    },
+    stretchModal: {
+      width: alertWidth + '%',
+      minWidth: defaultAlertWidth,
+      maxWidth: dimension.maxNewsfeedWidth,
     },
     modalContainer: {
       paddingHorizontal: spacing?.padding.extraLarge,
@@ -145,6 +172,14 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    closeButton: {
+      width: 24,
+      height: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.placeholder,
+      borderRadius: 6,
     },
     content: {},
   });

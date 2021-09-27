@@ -1,28 +1,27 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import i18next from 'i18next';
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
-
+import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-
+import RedDot from '~/beinComponents/Badge/RedDot';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import {Text} from '~/components';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
-
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
-import chatActions from '~/screens/Chat/redux/actions';
+import BaseStackNavigator from '~/router/components/BaseStackNavigator';
+import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
+import {default as chatActions} from '~/screens/Chat/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {screens} from './screens';
+import {screens, screensWebLaptop} from './screens';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -94,6 +93,13 @@ const MainTabs = () => {
     }
   };
 
+  const isWebLaptop = Platform.OS === 'web' && isLaptop;
+  if (isWebLaptop) {
+    return (
+      <BaseStackNavigator stack={mainTabStack} screens={screensWebLaptop} />
+    );
+  }
+
   return (
     // @ts-ignore
     <Tab.Navigator
@@ -129,10 +135,19 @@ const MainTabs = () => {
                 if (isLaptop) return null;
 
                 const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
-                const styles = CreateStyle(theme, focused, isPhone, color);
+                const styles = tabBarIconStyles(theme, focused, isPhone, color);
+                // @ts-ignore
+                const unreadCount = tabBadge[name] || undefined;
+
+                let className = 'tab-bar__menu';
+
+                if (isPhone) className = className + ' tab-bar--bottom__menu';
+                if (focused) className = className + ' tab-bar__menu--active';
 
                 return (
-                  <View style={styles.container}>
+                  <Div
+                    className={className}
+                    style={Platform.OS !== 'web' ? styles.container : {}}>
                     <Icon
                       //@ts-ignore
                       icon={icon[name]}
@@ -144,17 +159,13 @@ const MainTabs = () => {
                         {i18next.t(`tabs:${name}`)}
                       </Text.Subtitle>
                     )}
-                  </View>
+                    {!!unreadCount && (
+                      <RedDot style={styles.badge} number={unreadCount} />
+                    )}
+                  </Div>
                 );
               },
               tabBarLabel: () => null,
-              // @ts-ignore
-              tabBarBadge: tabBadge[name] > 99 ? '99+' : tabBadge[name] || '',
-              tabBarBadgeStyle: {
-                fontFamily: fontFamilies.SegoeSemibold,
-                // @ts-ignore
-                backgroundColor: tabBadge[name] > 0 ? '#EC2626' : 'transparent',
-              },
             }}
           />
         );
@@ -163,7 +174,7 @@ const MainTabs = () => {
   );
 };
 
-const CreateStyle = (
+const tabBarIconStyles = (
   theme: ITheme,
   focused: boolean,
   isPhone: boolean,
@@ -183,6 +194,11 @@ const CreateStyle = (
     label: {
       color: color,
       textAlign: 'center',
+    },
+    badge: {
+      position: 'absolute',
+      top: isPhone ? '6%' : '18%',
+      left: '54%',
     },
   });
 };
