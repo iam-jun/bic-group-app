@@ -11,7 +11,11 @@ import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
-import {IActivityDataImage, IPayloadCreateComment, IPayloadReplying} from '~/interfaces/IPost';
+import {
+  IActivityDataImage,
+  IPayloadCreateComment,
+  IPayloadReplying,
+} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
