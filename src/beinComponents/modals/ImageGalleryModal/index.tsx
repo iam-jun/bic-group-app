@@ -6,10 +6,12 @@ import {
   FlatList,
   TouchableOpacity,
   Share,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import PagerView from 'react-native-pager-view';
 import ImageZoom from 'react-native-image-pan-zoom';
+import {debounce} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -53,13 +55,19 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     }
   };
 
-  const setActiveIndex = (index: number) => {
-    if (index !== activeIndex) {
-      _setActiveIndex(index);
-      pagerRef?.current?.setPage?.(index);
-      footerListRef?.current?.scrollToIndex({index: index, viewPosition: 0.5});
-    }
-  };
+  const setActiveIndex = debounce(
+    (index: number) => {
+      if (index !== activeIndex) {
+        _setActiveIndex(index);
+        pagerRef?.current?.setPage?.(index);
+        footerListRef?.current?.scrollToIndex({
+          index: index,
+          viewPosition: 0.5,
+        });
+      }
+    },
+    Platform.OS === 'ios' ? 300 : 50,
+  );
 
   const onPageSelected = (e: any) => {
     const newIndex = e?.nativeEvent?.position || 0;
@@ -244,7 +252,11 @@ const getImageUrls = (source: any) => {
 const createStyle = (theme: ITheme, insets: EdgeInsets) => {
   const {spacing, dimension, colors} = theme;
   return StyleSheet.create({
-    container: {flex: 1, backgroundColor: 'rgba(82, 79, 85, 0.95)'},
+    container: {
+      flex: 1,
+      backgroundColor: 'rgba(82, 79, 85, 0.95)',
+      paddingTop: Platform.OS === 'android' ? 0 : insets.top,
+    },
     headerContainer: {
       height: dimension?.headerHeight || 44,
       flexDirection: 'row',

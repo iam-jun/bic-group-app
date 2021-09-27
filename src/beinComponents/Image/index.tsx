@@ -19,6 +19,7 @@ export interface ImageProps {
   style?: StyleProp<ImageStyle>;
   ImageComponent?: any;
   onError?: (err: any) => void;
+  useOnLayoutSize?: boolean;
   [x: string]: any;
 }
 
@@ -31,8 +32,11 @@ const Image: React.FC<ImageProps> = ({
   style,
   ImageComponent = FastImage,
   onError,
+  useOnLayoutSize,
   ...props
 }: ImageProps) => {
+  const [layoutSizeStyle, setLayoutSizeStyle] = useState({width: 0, height: 0});
+
   const placeholderContainerOpacity = React.useRef(
     new Animated.Value(1),
   ).current;
@@ -73,6 +77,17 @@ const Image: React.FC<ImageProps> = ({
     );
   };
 
+  const onLayout = (e: any) => {
+    const {width, height} = e?.nativeEvent?.layout || {};
+    if (width) {
+      setLayoutSizeStyle({width, height});
+    }
+  };
+
+  if (useOnLayoutSize && !layoutSizeStyle.width) {
+    return <View style={{width: '100%', height: '100%'}} onLayout={onLayout} />;
+  }
+
   return (
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>
       {Platform.select({
@@ -102,7 +117,10 @@ const Image: React.FC<ImageProps> = ({
             <ImageComponent
               source={_source}
               {...props}
-              style={style}
+              style={StyleSheet.flatten([
+                useOnLayoutSize ? layoutSizeStyle : {},
+                style,
+              ])}
               onError={_onError}
             />
           </React.Fragment>
@@ -129,11 +147,23 @@ const Image: React.FC<ImageProps> = ({
               {...props}
               onLoadEnd={onLoadEnd}
               onError={_onError}
-              style={style}
+              style={StyleSheet.flatten([
+                useOnLayoutSize ? layoutSizeStyle : {},
+                style,
+              ])}
             />
           </React.Fragment>
         ),
-        web: <ImageComponent source={_source} {...props} style={style} />,
+        web: (
+          <ImageComponent
+            source={_source}
+            {...props}
+            style={StyleSheet.flatten([
+              useOnLayoutSize ? layoutSizeStyle : {},
+              style,
+            ])}
+          />
+        ),
       })}
     </View>
   );

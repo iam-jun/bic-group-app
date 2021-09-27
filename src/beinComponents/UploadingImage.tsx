@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -129,7 +129,11 @@ const UploadingImage: FC<UploadingImageProps> = ({
     <View
       style={StyleSheet.flatten([styles.container, {width, height}, style])}>
       {imageUrl ? (
-        <Image style={styles.image} source={imageUrl} />
+        <Image
+          source={imageUrl}
+          useOnLayoutSize={Platform.OS === 'web'}
+          style={Platform.OS === 'web' ? {} : styles.image}
+        />
       ) : (
         <View style={styles.contentContainer}>
           <LoadingIndicator size={'large'} />
