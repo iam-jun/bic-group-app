@@ -141,7 +141,10 @@ const Newsfeed = () => {
           onLoadMore={() => getData()}
           renderItem={renderItem}
           ListHeaderComponent={() => (
-            <HeaderCreatePost style={styles.headerCreatePost} />
+            <HeaderCreatePost
+              style={styles.headerCreatePost}
+              parentWidth={newsfeedWidth}
+            />
           )}
           ListFooterComponent={renderFooter}
           renderItemSeparator={() => (
@@ -186,14 +189,6 @@ const createStyle = (theme: ITheme, newsfeedWidth: number) => {
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          alignSelf: 'center',
-          borderRadius: newsfeedWidth > dimension.maxNewsfeedWidth ? 6 : 0,
-        },
-      }),
     },
     importantCount: {
       paddingHorizontal: spacing.padding.large,
