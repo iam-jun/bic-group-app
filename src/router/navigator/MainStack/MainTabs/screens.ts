@@ -15,6 +15,7 @@ import AccoutSettings from '~/screens/Menu/AccountSettings';
 import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasicInfo';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
+import UserEdit from '~/screens/Menu/AccountSettings/UserEditProfile';
 import ComponentCollection from '~/screens/Menu/ComponentCollection';
 import UserProfile from '~/screens/Menu/UserProfile';
 import NewFeature from '~/screens/NewFeature';
@@ -23,6 +24,7 @@ import CreateComment from '~/screens/Post/CreateComment';
 import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
+import PostSelectImage from '~/screens/Post/PostSelectImage';
 import ChatStack from '../ChatStack';
 import GroupStack from '../GroupStack';
 import HomeStack from '../HomeStack';
@@ -53,12 +55,14 @@ export const screensWebLaptop = {
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
+  'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
   'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
+  'user-edit': UserEdit,
   // menu: Menu,
   'component-collection': ComponentCollection,
   'account-settings': AccoutSettings,

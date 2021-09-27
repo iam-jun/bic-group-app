@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {Keyboard, StyleSheet, View} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
@@ -14,6 +14,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
 import {
+  IActivityDataImage,
   IAudience,
   ICreatePostParams,
   IPayloadPutEditPost,
@@ -29,6 +30,12 @@ import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import {IFilePicked} from '~/interfaces/common';
+import {showHideToastMessage} from '~/store/modal/actions';
+import FileUploader from '~/services/fileUploader';
+import {useBaseHook} from '~/hooks';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 export interface CreatePostProps {
   route?: {
@@ -41,6 +48,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {postId, replaceWithDetail, initAudience} = route?.params || {};
 
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -52,14 +60,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }
 
   const createPostData = useCreatePost();
-  const {
-    loading,
-    isOpenModal,
-    data,
-    chosenAudiences = [],
-    important,
-  } = createPostData || {};
-  const {content, images, videos, files} = data || {};
+  const {loading, data, chosenAudiences = [], important} = createPostData || {};
+  const {content} = data || {};
+
+  const selectingImages = useKeySelector(postKeySelector.createPost.images);
+  const {images} = validateImages(selectingImages, t);
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
@@ -92,6 +97,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
     return () => {
       dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);
 
@@ -167,11 +173,21 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onPressPost = async () => {
-    const tags: any = []; //todo remove default
-
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
+
+    const {imageError, images} = validateImages(selectingImages, t);
+
+    if (imageError) {
+      dispatch(
+        showHideToastMessage({
+          content: imageError,
+          props: {textProps: {useI18n: true}, type: 'error'},
+        }),
+      );
+      return;
+    }
 
     chosenAudiences.map((selected: IAudience) => {
       if (selected.type === 'user') {
@@ -186,7 +202,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         getstream_id: initPostData.id,
         data,
         audience,
-        tags,
       };
       if (important?.active) {
         newEditData.important = important;
@@ -198,7 +213,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       dispatch(postActions.putEditPost(payload));
     } else {
-      const payload: IPostCreatePost = {data, audience, tags};
+      const postData = {content, images, videos: [], files: []};
+      const payload: IPostCreatePost = {data: postData, audience};
       if (important?.active) {
         payload.important = important;
       }
@@ -232,11 +248,37 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     // }
   };
 
-  const onOpenPostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(true));
-  };
-  const onClosePostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(false));
+  const renderContent = () => {
+    const shouldScroll = selectingImages?.length > 0;
+    const Container = shouldScroll ? ScrollView : View;
+
+    return (
+      <Container style={shouldScroll ? {} : styles.flex1}>
+        <View style={shouldScroll ? {} : styles.flex1}>
+          <MentionInput
+            style={shouldScroll ? {} : styles.flex1}
+            textInputStyle={shouldScroll ? {} : styles.flex1}
+            modalStyle={styles.mentionInputModal}
+            modalPosition={'bottom'}
+            onPress={onPressMentionAudience}
+            onChangeText={onChangeText}
+            value={content}
+            ComponentInput={PostInput}
+            title={i18n.t('post:mention_title')}
+            emptyContent={i18n.t('post:mention_empty_content')}
+            getDataPromise={postDataHelper.getSearchMentionAudiences}
+            getDataParam={{group_ids: strGroupIds}}
+            getDataResponseKey={'data'}
+            disabled={loading}
+          />
+          <PostPhotoPreview
+            data={images || []}
+            style={{alignSelf: 'center'}}
+            onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
+          />
+        </View>
+      </Container>
+    );
   };
 
   return (
@@ -249,9 +291,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           buttonProps={{
             loading: loading,
             disabled: disableButtonPost,
-            color: colors.primary7,
-            textColor: colors.textReversed,
             useI18n: true,
+            highEmphasis: true,
           }}
           onPressBack={onPressBack}
           onPressButton={onPressPost}
@@ -263,34 +304,34 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             <Divider />
           </View>
         )}
-        <MentionInput
-          style={styles.flex1}
-          textInputStyle={styles.flex1}
-          modalStyle={styles.mentionInputModal}
-          modalPosition={'bottom'}
-          onPress={onPressMentionAudience}
-          onChangeText={onChangeText}
-          value={content}
-          ComponentInput={PostInput}
-          title={i18n.t('post:mention_title')}
-          emptyContent={i18n.t('post:mention_empty_content')}
-          getDataPromise={postDataHelper.getSearchMentionAudiences}
-          getDataParam={{group_ids: strGroupIds}}
-          getDataResponseKey={'data'}
-          disabled={loading}
-        />
+        {renderContent()}
         {!isEditPost && (
-          <PostToolbar
-            isOpenModal={isOpenModal}
-            onOpenModal={onOpenPostToolbarModal}
-            onCloseModal={onClosePostToolbarModal}
-            modalizeRef={toolbarModalizeRef}
-            disabled={loading}
-          />
+          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
         )}
       </ScreenWrapper>
     </View>
   );
+};
+
+const validateImages = (selectingImages: IFilePicked[], t: any) => {
+  let imageError = '';
+  const images: IActivityDataImage[] = [];
+  selectingImages?.map?.(item => {
+    const {file, fileName} = item || {};
+    const {url, uploading} = FileUploader.getInstance().getFile(fileName) || {};
+    if (uploading) {
+      imageError = t('post:error_wait_uploading');
+    } else if (!url) {
+      imageError = t('error_upload_failed');
+    }
+    images.push({
+      name: url || '',
+      origin_name: fileName,
+      width: file?.width,
+      height: file?.height,
+    });
+  });
+  return {imageError, images};
 };
 
 const themeStyles = (theme: ITheme) => {

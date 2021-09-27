@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
@@ -18,6 +17,7 @@ import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData} from '../helper/mapper';
 import appConfig from '~/configs/appConfig';
+import FileUploader from '~/services/fileUploader';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -226,31 +226,15 @@ const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
 
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   try {
-    const {image, id, fieldName} = payload;
+    const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const formData = new FormData();
-    if (Platform.OS === 'web') {
-      formData.append(
-        'file',
-        // @ts-ignore
-        payload.image,
-        payload.image.name || 'imageName',
-      );
-    } else {
-      formData.append('file', {
-        type: image.type,
-        // @ts-ignore
-        name: image.name || 'imageName',
-        uri: image.uri,
-      });
-    }
-    const response: IResponseData = yield groupsDataHelper.uploadImage(
-      formData,
-    );
-    yield put(
-      groupsActions.editGroupDetail({id, [fieldName]: response?.data?.src}),
-    );
+    const data: string = yield FileUploader.getInstance().upload({
+      file,
+      uploadType,
+    });
+
+    yield put(groupsActions.editGroupDetail({id, [fieldName]: data}));
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);

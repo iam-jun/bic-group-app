@@ -20,12 +20,21 @@ const ConversationItem: React.FC<IConversation> = ({
   unreadCount,
   type,
 }: IConversation): React.ReactElement => {
+  const AVG_CHAR_ON_ONE_LINE = 32;
+  let twoLineLastMessage = false;
+  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
+    twoLineLastMessage = true;
+
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const styles = createStyles(theme, twoLineLastMessage);
   const {text, textSecondary} = theme.colors;
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const textColor = unreadCount ? text : textSecondary;
   const isDirect = type === roomTypes.DIRECT;
+  const welcomeText =
+    type === 'direct'
+      ? 'chat:label_init_direct_message:short'
+      : 'chat:label_init_group_message:short';
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(name));
@@ -59,10 +68,7 @@ const ConversationItem: React.FC<IConversation> = ({
         variant: unreadCount ? 'bodyM' : 'body',
         color: textColor,
       }}
-      subTitle={
-        escapeMarkDown(lastMessage) ||
-        i18next.t('chat:label_init_group_message:short')
-      }
+      subTitle={escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
       style={styles.container}
       LeftComponent={ItemAvatar}
       RightComponent={
@@ -81,13 +87,19 @@ const ConversationItem: React.FC<IConversation> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ITheme, twoLineLastMessage: boolean) => {
   const {spacing} = theme;
+
+  const defaultPaddingTop = spacing.padding.small || 8;
+  const defaultPaddingBottom = spacing.padding.tiny || 4;
+  const defaultHeight = 60 + defaultPaddingTop + defaultPaddingBottom;
+  const unreadBadgeMarginTop = !twoLineLastMessage ? 0 : spacing.margin.base;
 
   return StyleSheet.create({
     container: {
-      height: 64, // = 60 + paddingBottom
-      paddingBottom: spacing.margin.tiny,
+      height: defaultHeight,
+      paddingTop: defaultPaddingTop,
+      paddingBottom: defaultPaddingBottom,
       marginHorizontal: spacing.margin.base,
       paddingHorizontal: spacing.padding.tiny,
       alignItems: 'flex-start',
@@ -111,7 +123,7 @@ const createStyles = (theme: ITheme) => {
       paddingTop: 0,
     },
     unreadBadge: {
-      marginTop: spacing.margin.base,
+      marginTop: unreadBadgeMarginTop,
     },
   });
 };

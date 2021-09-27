@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
@@ -88,12 +89,14 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
                 const unreadCount = tabBadge[name] || undefined;
 
                 return (
-                  <View style={styles.iconContainer}>
+                  <Div
+                    className="tab-bar__menu"
+                    style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
                     {renderIcon(name, focused)}
                     {!!unreadCount && (
                       <RedDot style={styles.badge} number={unreadCount} />
                     )}
-                  </View>
+                  </Div>
                 );
               },
             }}

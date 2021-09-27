@@ -134,7 +134,6 @@ const createStyles = (theme: ITheme) => {
     itemSeparator: {
       marginLeft: 72,
       marginRight: spacing.margin.large,
-      marginBottom: spacing.margin.small,
     },
   });
 };

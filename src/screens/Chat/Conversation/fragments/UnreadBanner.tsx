@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const UnreadBanner = ({visible, count, time, onClosePress, onPress}: Props) => {
-  if (!visible) return null;
+  if (Platform.OS === 'web' || !visible) return null;
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);

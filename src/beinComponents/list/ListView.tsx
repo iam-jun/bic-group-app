@@ -51,6 +51,7 @@ export interface ListViewProps {
   ListHeaderComponent: any;
   ListFooterComponent: any;
   ListEmptyComponent: any;
+  itemStyle?: StyleProp<ViewStyle>;
 
   horizontal?: boolean;
   loading?: boolean;
@@ -85,6 +86,7 @@ const ListView: React.FC<ListViewProps> = ({
   ListHeaderComponent,
   ListFooterComponent,
   ListEmptyComponent,
+  itemStyle,
 
   horizontal,
   loading,
@@ -113,6 +115,7 @@ const ListView: React.FC<ListViewProps> = ({
           {...item}
           title={item[titleField || 'title']}
           subTitle={item[subTitleField || 'subTitle']}
+          style={itemStyle}
           onActionPress={
             onActionPress
               ? (action: IAction) => onActionPress(action, item)

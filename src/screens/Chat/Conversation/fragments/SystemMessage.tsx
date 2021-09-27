@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import Div from '~/beinComponents/Div';
 import {Text} from '~/components';
 import {IMessage} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
@@ -11,11 +10,9 @@ const SystemMessage: React.FC<IMessage> = ({text}: IMessage) => {
   const styles = createStyles(theme);
 
   return (
-    <Div className="chat-message">
-      <View style={styles.container}>
-        <Text.BodyS style={styles.text}>{text}</Text.BodyS>
-      </View>
-    </Div>
+    <View style={styles.container}>
+      <Text.BodyS style={styles.text}>{text}</Text.BodyS>
+    </View>
   );
 };
 

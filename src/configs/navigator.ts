@@ -47,6 +47,65 @@ export const bottomTabIconsFocused = {
   menus: 'iconTabMenuBein',
 };
 
+export const appScreens = {
+  // Stacks
+  mainStack: 'MainStack',
+  authStack: 'AuthStack',
+  notFound: 'NotFound',
+  home: 'home',
+  groups: 'groups',
+  chat: 'chat',
+  notification: 'notification',
+  menus: 'menus',
+
+  // Auth
+  login: 'SignIn',
+  signup: 'SignUp',
+  forgotPassword: 'ForgotPassword',
+
+  // Feed
+  newsfeed: 'newsfeed',
+  postDetail: 'post-detail',
+  postCreate: 'create-post',
+  postCreateComment: 'create-comment',
+  postSelectImage: 'post-select-image',
+  postSelectAudience: 'post-select-audience',
+
+  // Chat
+  chatConversationList: 'conversation-list',
+  chatConversation: 'conversation',
+  chatConversationDetail: 'conversation-detail',
+  chatCreateConversation: 'create-conversation',
+  chatGroupMembers: 'chat-group-members',
+  chatAddMembers: 'add-members',
+
+  // Group
+  groupList: 'group-list',
+  groupDetail: 'group-detail',
+  groupMembers: 'group-members',
+  groupAbout: 'group-about',
+  groupFiles: 'group-files',
+  groupAdmin: 'group-admin',
+  groupGeneralInfo: 'general-info',
+  groupEditDescription: 'edit-group-description',
+  groupInviteMembers: 'invite-members',
+
+  // Menu, settings
+  menu: 'menu',
+  settings: 'account-settings',
+  settingAccount: 'user-edit',
+  settingSecurityLogin: 'security-and-login',
+  settingChangePassword: 'change-password',
+  settingEditBasicInfo: 'edit-basic-info',
+  userProfile: 'user-profile',
+
+  // Notification
+  notificationEmpty: 'not-select-notification',
+
+  // Components
+  componentCollection: 'component-collection',
+};
+
 export const linkingConfig = {
   prefixes: [
     __DEV__ ? 'http://localhost:8088' : getEnv('SELF_DOMAIN'),
@@ -70,6 +129,21 @@ export const linkingConfig = {
           },
         },
       },
+      // MainStack: {
+      //   screens: {
+      //     main: {
+      //       screens: {
+      //         home: {
+      //           screens: {
+      //             'post-detail': {
+      //               path: 'post/t/:post_id?',
+      //             },
+      //           },
+      //         },
+      //       },
+      //     },
+      //   },
+      // },
       NotFound: '*',
     },
   },
@@ -115,6 +189,9 @@ export const linkingConfigFull = {
                   },
                   'post-select-audience': {
                     path: 'post/create/audiences',
+                  },
+                  'post-select-image': {
+                    path: 'post/create/image',
                   },
                 },
               },
@@ -241,6 +318,9 @@ export const linkingConfigFullLaptop = {
               },
               'post-select-audience': {
                 path: 'post/create/audiences',
+              },
+              'post-select-image': {
+                path: 'post/create/image',
               },
               'user-profile': {
                 path: 'profile/:userId?',

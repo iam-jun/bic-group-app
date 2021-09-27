@@ -22,7 +22,6 @@ import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import menuActions from '~/screens/Menu/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {formatDate, formatLargeNumber} from '~/utils/formatData';
 import ReactionView from '~/screens/Post/components/ReactionView';
@@ -39,6 +38,9 @@ import {AppContext} from '~/contexts/AppContext';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Div from '~/beinComponents/Div';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import * as modalActions from '~/store/modal/actions';
 
 export interface PostViewProps {
   postId: string;
@@ -81,7 +83,7 @@ const PostView: FC<PostViewProps> = ({
 
   const {language} = useContext(AppContext);
 
-  const {content} = postObjectData || {};
+  const {content, images} = postObjectData || {};
 
   const userId = useUserIdAuth();
 
@@ -153,14 +155,39 @@ const PostView: FC<PostViewProps> = ({
   };
 
   const onPressReact = (event: any) => {
-    dispatch(
-      postActions.setShowReactionBottomSheet({
-        show: true,
-        title: t('post:label_all_reacts'),
-        position: {x: event?.pageX, y: event?.pageY},
-        callback: onAddReaction,
-      }),
-    );
+    const payload = {
+      show: true,
+      position: {x: event?.pageX, y: event?.pageY},
+      callback: onAddReaction,
+    };
+
+    if (Platform.OS !== 'web') {
+      dispatch(modalActions.setShowReactionBottomSheet(payload));
+      return;
+    }
+
+    // Handling show reaction bottom sheet on web
+    // @ts-ignore
+    event.target.measure((fx, fy, width, height, px, py) => {
+      const buttonReactPaddingBottom = spacing.padding.tiny || 4;
+      let x = px;
+      let y = py + height + buttonReactPaddingBottom;
+
+      /*
+      As target may be the label, not the whole button itself,
+      which causes the bottom sheet will render in the middle.
+      If pressing on the label, the childElementCount will equal 0.
+      */
+      if (event.target.childElementCount !== 0) {
+        x = x + width / 2;
+      } else {
+        // Move menu further down when pressing on label
+        y = y + buttonReactPaddingBottom * 1.5;
+      }
+      payload.position = {x, y};
+
+      dispatch(modalActions.setShowReactionBottomSheet(payload));
+    });
   };
 
   const _onPressComment = () => {
@@ -298,49 +325,60 @@ const PostView: FC<PostViewProps> = ({
     disabled?: boolean,
   ) => {
     return (
-      <Button
-        useI18n
-        onPress={onPress}
-        onLongPress={onLongPress}
-        disabled={disabled}
-        leftIcon={icon}
-        leftIconProps={{
-          icon: icon,
-          size: 14,
-          tintColor: colors.textSecondary,
-        }}
-        textProps={{
-          variant: 'bodyM',
-          color: colors.textSecondary,
-        }}
-        style={styles.buttonReact}>
-        {title}
-      </Button>
+      <Div
+        className="button-react"
+        style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
+        <Button
+          useI18n
+          onPress={onPress}
+          onLongPress={onLongPress}
+          disabled={disabled}
+          leftIcon={icon}
+          leftIconProps={{
+            icon: icon,
+            size: 14,
+            tintColor: colors.textSecondary,
+          }}
+          textProps={{
+            variant: 'bodySM',
+            color: colors.textSecondary,
+          }}
+          style={styles.buttonReact}>
+          {title}
+        </Button>
+      </Div>
     );
   };
 
   const renderContent = () => {
     return (
-      <View style={styles.contentContainer}>
-        {isPostDetail ? (
-          <MarkdownView
-            onPressAudience={(audience: any) =>
-              onPressMentionAudience(audience)
-            }>
-            {content}
-          </MarkdownView>
-        ) : (
-          <CollapsibleText
-            content={content}
-            limitLength={400}
-            shortLength={400}
-            useMarkdown
-            toggleOnPress
-            onPressAudience={(audience: any) =>
-              onPressMentionAudience(audience)
-            }
-          />
-        )}
+      <View>
+        <View style={styles.contentContainer}>
+          {isPostDetail ? (
+            <MarkdownView
+              onPressAudience={(audience: any) =>
+                onPressMentionAudience(audience)
+              }>
+              {content}
+            </MarkdownView>
+          ) : (
+            <CollapsibleText
+              content={content}
+              limitLength={400}
+              shortLength={400}
+              useMarkdown
+              toggleOnPress
+              onPressAudience={(audience: any) =>
+                onPressMentionAudience(audience)
+              }
+            />
+          )}
+        </View>
+        <PostPhotoPreview
+          data={images}
+          uploadType={'postImage'}
+          enableGalleryModal
+        />
       </View>
     );
   };
@@ -383,7 +421,7 @@ const PostView: FC<PostViewProps> = ({
           onRemoveReaction={onRemoveReaction}
           onLongPressReaction={onLongPressReaction}
         />
-        <View style={styles.reactButtonContainer}>
+        <View style={styles.reactButtons}>
           {renderReactButtonItem(
             'post:button_react',
             'iconReact',
@@ -466,7 +504,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing?.margin.tiny,
       // fontFamily: fontFamilies.Poppins,
     },
-    reactButtonContainer: {
+    reactButtons: {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
       borderTopWidth: 1,
@@ -476,6 +514,10 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       marginVertical: spacing?.margin.small,
       marginHorizontal: spacing?.margin.large,
+    },
+    buttonReactContainer: {
+      flex: 1,
+      height: 'auto',
     },
     buttonReact: {
       flex: 1,

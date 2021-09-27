@@ -1,15 +1,15 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
-import {debounce, isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet, View} from 'react-native';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import {MessageOptionType} from '~/constants/chat';
+import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -18,6 +18,7 @@ import {IMessage} from '~/interfaces/IChat';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
 import {getDefaultAvatar} from '../helper';
@@ -27,8 +28,8 @@ import {
   MessageContainer,
   MessageOptionsModal,
 } from './fragments';
+import ChatWelcome from './fragments/ChatWelcome';
 import DownButton from './fragments/DownButton';
-import GroupChatWelcome from './fragments/GroupChatWelcome';
 import UnreadBanner from './fragments/UnreadBanner';
 
 const Conversation = () => {
@@ -58,7 +59,7 @@ const Conversation = () => {
   };
 
   useEffect(() => {
-    !isFocused && dispatch(actions.readSubcriptions(conversation._id));
+    !isFocused && dispatch(actions.readSubscriptions(conversation._id));
   }, [isFocused]);
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const Conversation = () => {
       setUnreadBannerVisible(
         conversation.unreadCount > appConfig.unreadMessageOffset,
       );
+      setAvatar(conversation?.avatar);
     }
   }, [conversation?._id]);
 
@@ -148,8 +150,56 @@ const Conversation = () => {
     setSelectedMessage(undefined);
   };
 
+  const onAddReaction = (reactionId: ReactionType, messageId: string) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId,
+        shouldReact: true,
+      }),
+    );
+  };
+
+  const onRemoveReaction = (reactionId: ReactionType, messageId: string) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId,
+        shouldReact: false,
+      }),
+    );
+  };
+
+  const onPressReact = (
+    event: any,
+    item: IMessage,
+    side: 'left' | 'right' | 'center',
+  ) => {
+    dispatch(
+      modalActions.setShowReactionBottomSheet({
+        show: true,
+        position: {x: event?.pageX, y: event?.pageY},
+        side: side,
+        callback: (reactionId: ReactionType) =>
+          onAddReaction(reactionId, item._id),
+      }),
+    );
+  };
+
   const onReactionPress = async (type: string) => {
-    dispatch(actions.reactMessage(selectedMessage, type));
+    if (!!selectedMessage) {
+      if (type === 'add_react') {
+        onPressReact(null, selectedMessage, 'left');
+      } else {
+        dispatch(
+          actions.reactMessage({
+            emoji: type,
+            messageId: selectedMessage._id,
+            shouldReact: true,
+          }),
+        );
+      }
+    }
 
     messageOptionsModalRef.current?.close();
   };
@@ -193,6 +243,8 @@ const Conversation = () => {
   };
 
   const onMomentumScrollEnd = (event: any) => {
+    if (Platform.OS === 'web') return;
+
     const offsetY = event.nativeEvent?.contentOffset.y;
     // 2 screens
     setDownButtonVisible(
@@ -243,15 +295,21 @@ const Conversation = () => {
         index < messages.data.length - 1 && messages.data[index + 1],
       currentMessage: item,
       index: index,
-      onReactPress: () => onMenuPress('reactions'),
+      onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
+        onPressReact(event, item, side),
       onReplyPress: () => onMenuPress('reply'),
       onLongPress,
+      onAddReaction: (reactionId: ReactionType) =>
+        onAddReaction(reactionId, item._id),
+      onRemoveReaction: (reactionId: ReactionType) =>
+        onRemoveReaction(reactionId, item._id),
     };
     return <MessageContainer {...props} />;
   };
 
   const onViewableItemsChanged = useRef(({changed}: {changed: any[]}) => {
     if (
+      Platform.OS !== 'web' &&
       conversation.unreadCount > appConfig.unreadMessageOffset &&
       changed &&
       changed.length > 0
@@ -281,7 +339,7 @@ const Conversation = () => {
 
   const renderChatMessages = () => {
     if (!messages.loading && isEmpty(messages.data))
-      return <GroupChatWelcome />;
+      return <ChatWelcome type={conversation.type} />;
 
     return (
       <ListMessages

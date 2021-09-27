@@ -3,6 +3,10 @@ const postKeySelector = {
     loading: 'post.createComment.loading',
     content: 'post.createComment.content',
   },
+  createPost: {
+    images: 'post.createPost.images',
+    imagesDraft: 'post.createPost.imagesDraft',
+  },
   reactionBottomSheet: 'post.reactionBottomSheet',
   replyingComment: 'post.replyingComment',
   postAudienceSheet: 'post.postAudienceSheet',

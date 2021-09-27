@@ -1,12 +1,7 @@
 import appConfig from '~/configs/appConfig';
-import {messageStatus, messageEventTypes} from '~/constants/chat';
+import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
-import {
-  IChatUser,
-  IConversation,
-  IMessage,
-  IReaction,
-} from '~/interfaces/IChat';
+import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
 import * as types from './constants';
 
 export const initDataState = {
@@ -236,7 +231,12 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       const newMessages =
         !haveUnreadMessages && !include
           ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
-          : messages.data;
+          : messages.data.map((item: IMessage) =>
+              item._id === action.payload._id ||
+              (item.localId && item.localId === action.payload.localId)
+                ? {...item, ...payload}
+                : item,
+            );
 
       return {
         ...state,
@@ -430,42 +430,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ),
         },
       };
-    case types.REACT_MESSAGE:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          data: messages.data.map((message: IMessage) =>
-            message._id === action.message._id
-              ? {
-                  ...message,
-                  reactions: (message?.reactions || []).find(
-                    item => item.type === action.reactionType,
-                  )
-                    ? (message.reactions || []).map((reaction: IReaction) =>
-                        reaction.type === action.reactionType
-                          ? {
-                              ...reaction,
-                              reacted: !reaction.reacted,
-                              count: reaction.reacted // TODO: The count number should be return by API
-                                ? reaction.count - 1
-                                : reaction.count + 1,
-                            }
-                          : reaction,
-                      )
-                    : [
-                        ...(message.reactions || []),
-                        {
-                          type: action.reactionType,
-                          count: 1,
-                          reacted: true,
-                        },
-                      ],
-                }
-              : message,
-          ),
-        },
-      };
+
     default:
       return state;
   }

@@ -54,6 +54,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
     },
     style,
   ]);
+
   return (
     <ButtonWrapper
       disabled={disabled}

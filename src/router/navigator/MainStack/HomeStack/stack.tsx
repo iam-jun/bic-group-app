@@ -4,6 +4,7 @@ const homeStack = {
   createPost: 'create-post',
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',
+  postSelectImage: 'post-select-image',
 };
 
 export default homeStack;

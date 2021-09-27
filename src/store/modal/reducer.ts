@@ -35,6 +35,13 @@ export const initState = {
   reactionDetailBottomSheet: {
     isOpen: false,
   },
+
+  reactionBottomSheet: {
+    show: false,
+    title: '',
+    position: {x: -1, y: -1},
+    callback: undefined,
+  },
 };
 
 /**
@@ -115,6 +122,12 @@ function commonReducer(state = initState, action: any = {}) {
       return {
         ...state,
         reactionDetailBottomSheet: initState.reactionDetailBottomSheet,
+      };
+
+    case actions.SET_SHOW_REACTION_BOTTOM_SHEET:
+      return {
+        ...state,
+        reactionBottomSheet: payload || initState.reactionBottomSheet,
       };
     default:
       return state;
