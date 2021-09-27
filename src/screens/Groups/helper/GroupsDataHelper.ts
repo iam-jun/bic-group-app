@@ -13,6 +13,18 @@ export const groupsApiConfig = {
     useRetry: true,
     params,
   }),
+  getUserInnerGroups: (
+    groupId: number,
+    userId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      user: userId,
+    },
+  }),
   getGroupMembers: (groupId: number, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
     method: 'get',
@@ -79,6 +91,21 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getMyGroups(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getUserInnerGroup: async (groupId: number, userId: number) => {
+    try {
+      console.log('[Helper] starting', groupId, userId);
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getUserInnerGroups(groupId, userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

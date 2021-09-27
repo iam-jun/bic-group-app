@@ -21,6 +21,7 @@ import FileUploader from '~/services/fileUploader';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
+  yield takeLatest(groupsTypes.GET_USER_INNER_GROUPS, getUserInnerGroups);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
@@ -44,6 +45,24 @@ function* getJoinedGroups({payload}: {type: string; payload?: any}) {
     yield put(groupsActions.setJoinedGroups([]));
     console.log(
       `\x1b[31m🐣️ saga getJoinedGroups`,
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
+  }
+}
+
+function* getUserInnerGroups({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; userId: number};
+}) {
+  try {
+    // @ts-ignore
+    const response = yield groupsDataHelper.getUserInnerGroup(payload);
+    return response;
+  } catch (e) {
+    console.log(
+      `\x1b[31m🐣️ saga getUserInnerGroups`,
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
   }

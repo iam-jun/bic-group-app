@@ -32,6 +32,13 @@ const groupsActions = {
     };
   },
 
+  getUserInnerGroups: function (payload: {groupId: number; userId: number}) {
+    return {
+      type: groupsTypes.GET_USER_INNER_GROUPS,
+      payload,
+    };
+  },
+
   setLoadingGroupMembers: (payload: boolean) => ({
     type: groupsTypes.SET_LOADING_GROUP_MEMBER,
     payload,

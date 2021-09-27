@@ -25,6 +25,7 @@ import actions from '../redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {showAlertNewFeature} from '~/store/modal/actions';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -138,30 +139,35 @@ const GroupMembers = (): React.ReactElement => {
   };
 
   const showConfirmations = (user: IChatUser) => {
-    let content = '';
-    switch (conversation.type) {
-      case roomTypes.GROUP:
-        content = i18next.t(
-          `chat:modal_confirm_remove_member:description_group_chat`,
-        );
-        content = content.replace('{0}', conversation.name);
-        break;
+    console.log('[DEBUG] conversation', conversation.beinGroupId);
+    console.log('[DEBUG] user', user);
+    const alertPayload = {
+      iconName: 'RemoveUser',
+      title: i18next.t('chat:modal_confirm_remove_member:title'),
+      content: i18next.t(`chat:modal_confirm_remove_member:description`),
+      cancelBtn: true,
+      onConfirm: () => doRemoveUser(user),
+      confirmLabel: i18next.t('chat:button_remove_member'),
+    };
 
-      default:
-        content = i18next.t(`chat:modal_confirm_remove_member:description`);
-        break;
+    if (conversation.type !== roomTypes.GROUP) {
+      dispatch(modalActions.showAlert(alertPayload));
+      return;
     }
 
-    dispatch(
-      modalActions.showAlert({
-        iconName: 'RemoveUser',
-        title: i18next.t('chat:modal_confirm_remove_member:title'),
-        content: content,
-        cancelBtn: true,
-        onConfirm: () => doRemoveUser(user),
-        confirmLabel: i18next.t('chat:button_remove_member'),
+    // Handling remove user from group chat and other inner groups
+    const res = dispatch(
+      groupsActions.getUserInnerGroups({
+        groupId: conversation.beinGroupId,
+        userId: user.beinUserId,
       }),
     );
+    console.log('[DEBUG] res', res);
+
+    alertPayload.content = i18next
+      .t(`chat:modal_confirm_remove_member:description_group_chat`)
+      .replace('{0}', conversation.name);
+    dispatch(modalActions.showAlert(alertPayload));
   };
 
   const doRemoveUser = (user: IChatUser) => {
