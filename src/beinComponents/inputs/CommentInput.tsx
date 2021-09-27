@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -36,6 +36,7 @@ export interface ICommentInputSendParam {
 }
 
 export interface CommentInputProps {
+  commentInputRef?: any;
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?: (text: string) => void;
@@ -47,7 +48,7 @@ export interface CommentInputProps {
     | undefined;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;
-  value?: string;
+  value?: string; //work only on init, not handle change
   HeaderComponent?: React.ReactNode;
   textInputRef?: any;
   loading?: boolean;
@@ -63,6 +64,7 @@ const DEFAULT_HEIGHT = 44;
 const LIMIT_HEIGHT = 100;
 
 const CommentInput: React.FC<CommentInputProps> = ({
+  commentInputRef,
   style,
   placeholder = 'Aa',
   onChangeText,
@@ -107,12 +109,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
     i: '*',
   };
   const isWeb = Platform.OS === 'web';
-
-  useEffect(() => {
-    if (typeof value === 'string' && value !== text) {
-      setText(value);
-    }
-  }, [value]);
 
   useEffect(() => {
     if (text?.length > 0) {
@@ -263,6 +259,21 @@ const CommentInput: React.FC<CommentInputProps> = ({
       useNativeDriver: false,
     }).start();
   };
+
+  const getText = () => text;
+
+  const clear = () => {
+    setText('');
+    setUploadError('');
+    setUploading(false);
+    setSelectedImage(undefined);
+  };
+
+  useImperativeHandle(commentInputRef, () => ({
+    setText,
+    getText,
+    clear,
+  }));
 
   const onKeyPress = Platform.OS !== 'web' ? undefined : handleKeyEvent;
 

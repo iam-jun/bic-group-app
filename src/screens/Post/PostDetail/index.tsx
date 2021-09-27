@@ -46,6 +46,7 @@ const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
+  const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
   const {post_id, focus_comment} = params || {};
@@ -75,8 +76,6 @@ const PostDetail = (props: any) => {
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
-  const newCommentInput =
-    useKeySelector(postKeySelector.createComment.content) || '';
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
@@ -119,6 +118,7 @@ const PostDetail = (props: any) => {
   const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
 
   const onPressBack = () => {
+    const newCommentInput = commentInputRef?.current?.getText?.() || '';
     if (newCommentInput !== '') {
       dispatch(
         modalActions.showAlert({
@@ -296,6 +296,7 @@ const PostDetail = (props: any) => {
               }
             />
             <CommentInputView
+              commentInputRef={commentInputRef}
               postId={id}
               groupIds={groupIds}
               autoFocus={!!focus_comment}

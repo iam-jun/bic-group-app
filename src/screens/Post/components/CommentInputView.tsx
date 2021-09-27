@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -27,6 +27,7 @@ export interface CommentInputViewProps {
   groupIds: string;
   autoFocus?: boolean;
   textInputRef?: any;
+  commentInputRef?: any;
   onCommentSuccess?: (data: {
     newCommentId: string;
     parentCommentId?: string;
@@ -38,8 +39,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   textInputRef,
+  commentInputRef,
   onCommentSuccess,
 }: CommentInputViewProps) => {
+  const _commentInputRef = commentInputRef || useRef<any>();
+
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -65,6 +69,12 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       dispatch(postActions.setCreateComment({content: '', loading: false}));
     };
   }, []);
+
+  useEffect(() => {
+    if (!content) {
+      _commentInputRef?.current?.clear?.();
+    }
+  }, [content]);
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
     if (postId) {
@@ -122,6 +132,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       value={content}
       ComponentInput={CommentInput}
       componentInputProps={{
+        commentInputRef: _commentInputRef,
         textInputRef: textInputRef,
         value: content,
         autoFocus: autoFocus,
