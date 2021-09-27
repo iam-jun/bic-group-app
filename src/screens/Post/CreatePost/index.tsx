@@ -36,6 +36,7 @@ import FileUploader from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {uploadTypes} from '~/configs/resourceConfig';
 
 export interface CreatePostProps {
   route?: {
@@ -45,6 +46,7 @@ export interface CreatePostProps {
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
+  const mentionInputRef = useRef<any>();
   const {postId, replaceWithDetail, initAudience} = route?.params || {};
 
   const dispatch = useDispatch();
@@ -129,6 +131,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.setCreatePostImportant(initImportant));
     }
   }, [initPostData?.id]);
+
+  useEffect(() => {
+    if (content && !mentionInputRef?.current?.getContent?.()) {
+      mentionInputRef?.current?.setContent?.(content);
+    }
+  }, [content, images]);
 
   const onPressBack = () => {
     Keyboard.dismiss();
@@ -256,13 +264,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       <Container style={shouldScroll ? {} : styles.flex1}>
         <View style={shouldScroll ? {} : styles.flex1}>
           <MentionInput
+            mentionInputRef={mentionInputRef}
             style={shouldScroll ? {} : styles.flex1}
             textInputStyle={shouldScroll ? {} : styles.flex1}
             modalStyle={styles.mentionInputModal}
             modalPosition={'bottom'}
             onPress={onPressMentionAudience}
             onChangeText={onChangeText}
-            value={content}
             ComponentInput={PostInput}
             title={i18n.t('post:mention_title')}
             emptyContent={i18n.t('post:mention_empty_content')}
@@ -274,6 +282,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           <PostPhotoPreview
             data={images || []}
             style={{alignSelf: 'center'}}
+            uploadType={uploadTypes.postImage}
             onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
           />
         </View>

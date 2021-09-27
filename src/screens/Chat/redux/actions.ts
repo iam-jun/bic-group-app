@@ -91,6 +91,11 @@ const sendMessage = (payload: ISendMessageAction) => ({
   payload,
 });
 
+const editMessage = (payload: IMessage) => ({
+  type: Actions.EDIT_MESSAGE,
+  payload,
+});
+
 const sendMessageSuccess = (payload: IMessage) => ({
   type: Actions.SEND_MESSAGE_SUCCESS,
   payload,
@@ -220,6 +225,7 @@ export default {
   readSubscriptions,
   handleEvent,
   sendMessage,
+  editMessage,
   sendMessageSuccess,
   sendMessageFailed,
   retrySendMessage,

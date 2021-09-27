@@ -308,6 +308,21 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           data: [action.payload, ...rooms.data],
         },
       };
+    case types.EDIT_MESSAGE: {
+      const editingMsgInd = messages.data.findIndex(
+        (msg: IMessage) => msg._id === action.payload._id,
+      );
+      const newEditedMsgList: IMessage[] = [...messages.data];
+      newEditedMsgList[editingMsgInd] = action.payload;
+
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: [...newEditedMsgList],
+        },
+      };
+    }
     case types.UPLOAD_FILE:
     case types.SEND_MESSAGE:
       return {

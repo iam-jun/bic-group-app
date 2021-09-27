@@ -393,13 +393,10 @@ const PostView: FC<PostViewProps> = ({
   }
 
   return (
-    <View>
+    <View
+      style={Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {}}>
       {renderImportant()}
-      <View
-        style={[
-          styles.container,
-          Platform.OS === 'web' && !isPostDetail ? styles.containerWeb : {},
-        ]}>
+      <View style={[styles.container]}>
         {renderHeader()}
         {renderContent()}
         {!hideMarkAsRead && isImportant && (
@@ -471,19 +468,20 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     rowCenter: {flexDirection: 'row', alignItems: 'center'},
-    container: {
-      backgroundColor: colors.background,
-    },
-    containerWeb: {
+    rootOnWeb: {
+      alignSelf: 'center',
       overflow: 'hidden',
-      borderWidth: 1,
+      width: '100%',
+      maxWidth: Platform.OS === 'web' ? dimension.maxNewsfeedWidth : undefined,
       borderRadius: 6,
-      borderColor: colors.borderDivider,
       shadowOffset: {width: 0, height: 1},
       shadowColor: '#120F22',
       shadowOpacity: 0.2,
       shadowRadius: 2,
       elevation: 2,
+    },
+    container: {
+      backgroundColor: colors.background,
     },
     deletedContainer: {
       flexDirection: 'row',

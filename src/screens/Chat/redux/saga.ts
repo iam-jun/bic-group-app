@@ -50,6 +50,7 @@ export default function* saga() {
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
+  yield takeEvery(types.EDIT_MESSAGE, editMessage);
   yield takeLatest(types.DELETE_MESSAGE, deleteMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
@@ -365,6 +366,25 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
   }
 }
 
+function* editMessage({payload}: {payload: IMessage; type: string}) {
+  try {
+    const {auth} = yield select();
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.editMessage({
+        roomId: payload.room_id,
+        msgId: payload._id,
+        text: payload.text || '',
+      }),
+    );
+
+    const message = mapMessage(auth.user, response.data.message);
+    yield put(actions.sendMessageSuccess({...payload, ...message}));
+  } catch (err) {
+    yield put(actions.sendMessageFailed(payload));
+  }
+}
+
 function* deleteMessage({payload}: {payload: IMessage; type: string}) {
   try {
     yield makeHttpRequest(
@@ -458,6 +478,7 @@ function* reactMessage({
 
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
+  else if (payload.createdAt) yield editMessage({payload, type});
   else yield sendMessage({payload, type});
 }
 

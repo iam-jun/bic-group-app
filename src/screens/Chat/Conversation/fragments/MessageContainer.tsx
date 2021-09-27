@@ -22,6 +22,7 @@ import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
 import ReactionView from '~/beinComponents/ReactionView';
 import {ReactionType} from '~/constants/reactions';
+import i18next from 'i18next';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -108,7 +109,6 @@ const MessageItem = (props: MessageItemProps) => {
             {!hideHeader && (
               <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
-
             <View
               style={[styles.message, !hideHeader && styles.messageWithHeader]}>
               {removed ? (
@@ -118,11 +118,22 @@ const MessageItem = (props: MessageItemProps) => {
               ) : (
                 <>
                   <AttachmentView {...currentMessage} />
-                  <MarkdownView
-                    limitMarkdownTypes
-                    onPressAudience={onMentionPress}>
-                    {text}
-                  </MarkdownView>
+                  <View style={styles.messageLineWithEdit}>
+                    <MarkdownView
+                      limitMarkdownTypes
+                      onPressAudience={onMentionPress}>
+                      {text}
+                    </MarkdownView>
+                    {currentMessage.editedBy && (
+                      <View style={styles.edited}>
+                        <Text.Subtitle
+                          color={theme.colors.textSecondary}
+                          style={styles.editedText}>
+                          ({i18next.t('chat:text_edited')})
+                        </Text.Subtitle>
+                      </View>
+                    )}
+                  </View>
                   <MessageMenu
                     onReactPress={(event: any) => onReactPress(event, 'left')}
                     onReplyPress={() => onReplyPress(currentMessage)}
@@ -131,8 +142,8 @@ const MessageItem = (props: MessageItemProps) => {
                   />
                 </>
               )}
-              <MessageStatus status={status} onRetryPress={_onRetryPress} />
             </View>
+            <MessageStatus status={status} onRetryPress={_onRetryPress} />
             <View style={styles.reactionView}>
               <ReactionView
                 ownReactions={own_reactions || {}}
@@ -204,6 +215,11 @@ const createStyles = (theme: ITheme) => {
     reactionView: {
       marginStart: 36,
     },
+    messageLineWithEdit: {flexDirection: 'row', alignItems: 'baseline'},
+    edited: {
+      marginStart: spacing.margin.tiny,
+    },
+    editedText: {fontStyle: 'italic'},
   });
 };
 

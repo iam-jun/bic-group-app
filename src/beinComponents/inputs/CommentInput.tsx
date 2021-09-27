@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -22,12 +22,25 @@ import {IFilePicked} from '~/interfaces/common';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import Button from '~/beinComponents/Button';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import Image from '~/beinComponents/Image';
+import FileUploader from '~/services/fileUploader';
+import {IActivityDataImage} from '~/interfaces/IPost';
+import {useBaseHook} from '~/hooks';
+import {showHideToastMessage} from '~/store/modal/actions';
+import {useDispatch} from 'react-redux';
+
+export interface ICommentInputSendParam {
+  content: string;
+  image?: IActivityDataImage;
+}
 
 export interface CommentInputProps {
+  commentInputRef?: any;
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?: (text: string) => void;
-  onPressSend?: () => void;
+  onPressSend?: (data?: ICommentInputSendParam) => void;
   onPressSelectImage?: (file: IFilePicked) => void;
   onPressFile?: (file: IFilePicked) => void;
   onSelectionChange?:
@@ -35,18 +48,23 @@ export interface CommentInputProps {
     | undefined;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;
-  value?: string;
+  value?: string; //work only on init, not handle change
   HeaderComponent?: React.ReactNode;
   textInputRef?: any;
   loading?: boolean;
   disableKeyboardSpacer?: boolean;
   onContentSizeChange?: (event: any) => void;
+  isHandleUpload?: boolean;
+  uploadImageType?: IUploadType;
+  uploadVideoType?: IUploadType;
+  uploadFileType?: IUploadType;
 }
 
 const DEFAULT_HEIGHT = 44;
 const LIMIT_HEIGHT = 100;
 
 const CommentInput: React.FC<CommentInputProps> = ({
+  commentInputRef,
   style,
   placeholder = 'Aa',
   onChangeText,
@@ -62,29 +80,35 @@ const CommentInput: React.FC<CommentInputProps> = ({
   loading = false,
   disableKeyboardSpacer,
   onContentSizeChange,
+  isHandleUpload,
+  uploadImageType = uploadTypes.commentImage,
+  uploadVideoType = uploadTypes.commentVideo,
+  uploadFileType = uploadTypes.commentFile,
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
 
+  const [selectedImage, setSelectedImage] = useState<IFilePicked>();
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+
   const showSendAnim = useRef(new Animated.Value(0)).current;
   const showButtonsAnim = useRef(new Animated.Value(1)).current;
 
+  const _loading = loading || uploading;
+
+  const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
-  const styles = createStyle(theme, loading);
+  const styles = createStyle(theme, _loading);
   const [inputSelection, setInputSelection] = useState<any>();
   const supportedMarkdownKey = {
     b: '**',
     i: '*',
   };
   const isWeb = Platform.OS === 'web';
-
-  useEffect(() => {
-    if (typeof value === 'string' && value !== text) {
-      setText(value);
-    }
-  }, [value]);
 
   useEffect(() => {
     if (text?.length > 0) {
@@ -98,7 +122,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onPressSelectImage = () => {
     ImagePicker.openPickerSingle().then(file => {
       if (!file) return;
-      onPressSelectImage?.(file);
+      if (!isHandleUpload) {
+        onPressSelectImage?.(file);
+      } else {
+        setSelectedImage(file);
+      }
     });
   };
 
@@ -115,9 +143,49 @@ const CommentInput: React.FC<CommentInputProps> = ({
     alert('onPressEmoji');
   };
 
+  const handleUpload = () => {
+    if (selectedImage) {
+      console.log(`\x1b[36m🐣️ CommentInput handleUpload upload now\x1b[0m`);
+      setUploading(true);
+      FileUploader.getInstance()
+        .upload({file: selectedImage, uploadType: uploadImageType})
+        .then(result => {
+          setUploading(false);
+          const imageData: IActivityDataImage = {
+            name: result,
+            origin_name: selectedImage.filename,
+            width: selectedImage.width,
+            height: selectedImage.height,
+          };
+          onPressSend?.({content: text, image: imageData});
+        })
+        .catch(e => {
+          console.log(`\x1b[31m🐣️ CommentInput upload Error:`, e, `\x1b[0m`);
+          const errorMessage =
+            typeof e === 'string'
+              ? e
+              : e?.meta?.message || t('common:error_upload_photo_failed');
+          setUploading(false);
+          setUploadError(errorMessage);
+          dispatch(
+            showHideToastMessage({
+              content: errorMessage,
+              props: {textProps: {useI18n: true}, type: 'error'},
+            }),
+          );
+        });
+    } else {
+      onPressSend?.({content: text});
+    }
+  };
+
   const _onPressSend = () => {
     blurOnSubmit && Keyboard.dismiss();
-    onPressSend?.();
+    if (!isHandleUpload) {
+      onPressSend?.({content: text});
+    } else {
+      handleUpload();
+    }
   };
 
   const _onChangeText = (value: string) => {
@@ -192,6 +260,21 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }).start();
   };
 
+  const getText = () => text;
+
+  const clear = () => {
+    setText('');
+    setUploadError('');
+    setUploading(false);
+    setSelectedImage(undefined);
+  };
+
+  useImperativeHandle(commentInputRef, () => ({
+    setText,
+    getText,
+    clear,
+  }));
+
   const onKeyPress = Platform.OS !== 'web' ? undefined : handleKeyEvent;
 
   const inputStyle: any = StyleSheet.flatten([
@@ -226,7 +309,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <Button
             style={styles.iconContainer}
             onPress={_onPressSelectImage}
-            disabled={loading}>
+            disabled={_loading}>
             <Icon
               size={13}
               icon={'ImageV'}
@@ -236,7 +319,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <Button
             style={styles.iconContainer}
             onPress={_onPressFile}
-            disabled={loading}>
+            disabled={_loading}>
             <Icon
               size={13}
               icon={'attachment'}
@@ -246,7 +329,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <Button
             style={[styles.iconContainer, isWeb && {marginRight: 0}]}
             onPress={onPressSticker}
-            disabled={loading}>
+            disabled={_loading}>
             <Icon
               size={13}
               icon={'iconSticker'}
@@ -255,7 +338,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           </Button>
         </Animated.View>
         {!isWeb && (
-          <Button onPress={() => showButtons(true)} disabled={loading}>
+          <Button onPress={() => showButtons(true)} disabled={_loading}>
             <Icon
               size={24}
               icon={'AngleRightB'}
@@ -267,9 +350,35 @@ const CommentInput: React.FC<CommentInputProps> = ({
     );
   };
 
+  const renderSelectedImage = () => {
+    if (!selectedImage || !isHandleUpload) {
+      return null;
+    }
+    return (
+      <View style={styles.selectedImageWrapper}>
+        <View style={styles.selectedImageContainer}>
+          <Image
+            style={styles.selectedImage}
+            source={
+              selectedImage?.uri
+                ? {uri: selectedImage?.uri}
+                : selectedImage?.base64
+            }
+          />
+        </View>
+        <Button
+          style={styles.iconCloseSelectedImage}
+          onPress={() => setSelectedImage(undefined)}>
+          <Icon size={12} icon={'iconCloseSmall'} />
+        </Button>
+      </View>
+    );
+  };
+
   return (
     <View style={[styles.root, style]}>
       {HeaderComponent}
+      {renderSelectedImage()}
       <View style={styles.container}>
         {renderButtons()}
         <Animated.View
@@ -292,7 +401,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               autoFocus={autoFocus}
               placeholder={placeholder}
               placeholderTextColor={colors.textSecondary}
-              editable={!loading}
+              editable={!_loading}
               value={text}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
@@ -302,7 +411,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <Button
             style={{position: 'absolute', right: 10, bottom: 10}}
             onPress={onPressEmoji}
-            disabled={loading}>
+            disabled={_loading}>
             <Icon
               size={24}
               icon={'iconSmileSolid'}
@@ -310,8 +419,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
         </Animated.View>
-        <Button onPress={_onPressSend} disabled={!text.trim() || loading}>
-          {loading ? (
+        <Button onPress={_onPressSend} disabled={!text.trim() || _loading}>
+          {_loading ? (
             <ActivityIndicator
               style={styles.loadingContainer}
               size={'small'}
@@ -383,6 +492,34 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       marginHorizontal: spacing?.margin.large,
     },
     buttonEmoji: {position: 'absolute', right: 10, bottom: 10},
+    selectedImageWrapper: {
+      alignSelf: 'flex-start',
+      marginTop: spacing.margin.base,
+      marginHorizontal: spacing.margin.small,
+      paddingTop: spacing.padding.tiny,
+      paddingHorizontal: spacing.padding.tiny,
+    },
+    selectedImageContainer: {
+      borderRadius: spacing.borderRadius.small,
+      overflow: 'hidden',
+    },
+    selectedImage: {width: 64, height: 64},
+    iconCloseSelectedImage: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: 16,
+      height: 16,
+      borderRadius: 8,
+      backgroundColor: colors.background,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: colors.iconTint,
+      shadowOffset: {width: 0, height: 4},
+      shadowOpacity: 0.3,
+      shadowRadius: 4.65,
+      elevation: 8,
+    },
   });
 };
 

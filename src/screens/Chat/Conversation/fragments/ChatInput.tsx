@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
@@ -8,6 +8,7 @@ import apiConfig from '~/configs/apiConfig';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {IFilePicked} from '~/interfaces/common';
+import {IMessage} from '~/interfaces/IChat';
 import {mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
@@ -15,31 +16,59 @@ import * as modalActions from '~/store/modal/actions';
 import {validateFile} from '~/utils/validation';
 
 interface Props {
+  editingMessage?: IMessage;
+  onChangeMessage?: (value: IMessage | undefined) => void;
   onError: (err: any) => void;
 }
 
-const ChatInput: React.FC<Props> = ({onError}: Props) => {
+const ChatInput: React.FC<Props> = ({
+  editingMessage,
+  onChangeMessage,
+  onError,
+}: Props) => {
+  const commentInputRef = useRef<any>();
+
   const dispatch = useDispatch();
-  const [text, setText] = useState('');
+  const [text, setText] = useState(editingMessage?.text || '');
 
   const {user} = useAuth();
   const {conversation} = useChat();
+
+  useEffect(() => {
+    if (!text) {
+      commentInputRef?.current?.setText?.('');
+    }
+  }, [text]);
+
+  useEffect(() => {
+    setText(editingMessage?.text || '');
+  }, [editingMessage?.text]);
 
   const _onChangeText = (value: string) => {
     setText(value);
   };
 
   const onSend = () => {
-    dispatch(
-      actions.sendMessage({
-        _id: uuid.v4().toString(),
-        room_id: conversation._id,
-        _updatedAt: new Date().toISOString(),
-        text: text.trim(),
-        user,
-      }),
-    );
+    if (!editingMessage) {
+      dispatch(
+        actions.sendMessage({
+          _id: uuid.v4().toString(),
+          room_id: conversation._id,
+          _updatedAt: new Date().toISOString(),
+          text: text.trim(),
+          user,
+        }),
+      );
+    } else {
+      dispatch(
+        actions.editMessage({
+          ...editingMessage,
+          text: text.trim(),
+        }),
+      );
+    }
     setText('');
+    onChangeMessage?.(undefined);
   };
 
   const onPressSelectImage = (file: IFilePicked) => {
@@ -109,10 +138,10 @@ const ChatInput: React.FC<Props> = ({onError}: Props) => {
     <MentionInput
       modalPosition="top"
       onChangeText={_onChangeText}
-      value={text}
       ComponentInput={CommentInput}
       mentionField="beinUserId"
       componentInputProps={{
+        commentInputRef: commentInputRef,
         onPressSend: onSend,
         onPressFile,
         onPressSelectImage,

@@ -13,6 +13,7 @@ import {
   IRemoveMemberReq,
   IAddUsersToGroupReq,
   IDeleteMessage,
+  IEditMessageReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -47,6 +48,9 @@ const Upload = {
       postImage: 'upload/post-image',
       postVideo: 'upload/post-video',
       postFile: 'upload/post-file',
+      commentImage: 'upload/comment-image',
+      commentVideo: 'upload/comment-video',
+      commentFile: 'upload/comment-file',
       chatImage: 'upload/chat-image',
       chatVideo: 'upload/chat-video',
       chatFile: 'upload/chat-file',
@@ -262,6 +266,15 @@ const Chat = {
   reactMessage: (data: IPayloadReactMessage): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}chat.react`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  editMessage: (data: IEditMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.update`,
       method: 'post',
       useRetry: false,
       provider: providers.chat,

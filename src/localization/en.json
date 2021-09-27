@@ -448,7 +448,9 @@
     },
     "label_no_description": "No Description",
     "label_unread_messages_banner": "Unread messages since",
-    "label_unread_messages" : "Unread messages"
+    "label_unread_messages" : "Unread messages",
+    "text_editing_message": "Editing message",
+    "text_edited": "edited"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

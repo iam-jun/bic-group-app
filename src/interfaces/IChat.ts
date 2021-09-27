@@ -149,6 +149,9 @@ export type IMessage = {
   permissions?: [x: string];
   reaction_counts?: IReactionCounts;
   own_reactions?: IOwnReaction;
+  editedAt?: any;
+  editedBy?: any;
+  createdAt?: string;
 };
 
 export interface IAttachmentMessage {

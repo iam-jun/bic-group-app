@@ -1,7 +1,7 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet} from 'react-native';
+import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -31,6 +31,7 @@ import {
 import ChatWelcome from './fragments/ChatWelcome';
 import DownButton from './fragments/DownButton';
 import UnreadBanner from './fragments/UnreadBanner';
+import Text from '~/beinComponents/Text';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -53,6 +54,7 @@ const Conversation = () => {
   const listRef = useRef<FlatList>(null);
   let initiated = false;
   let countRetryScrollToBottom = useRef(0).current;
+  const [editingMessage, setEditingMessage] = useState<IMessage>();
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
@@ -209,6 +211,14 @@ const Conversation = () => {
     setSelectedMessage(undefined);
   };
 
+  const editMessage = () => {
+    selectedMessage && setEditingMessage(selectedMessage);
+  };
+
+  const onEditMessage = (message: IMessage | undefined) => {
+    setEditingMessage(message);
+  };
+
   const onPressBack = async () => {
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
@@ -219,6 +229,9 @@ const Conversation = () => {
     switch (menu) {
       case 'delete':
         deleteMessage();
+        break;
+      case 'edit':
+        editMessage();
         break;
       default:
         dispatch(showAlertNewFeature());
@@ -287,6 +300,31 @@ const Conversation = () => {
     dispatch(actions.readConversation());
     setUnreadBannerVisible(false);
     setDownButtonVisible(false);
+  };
+
+  const onCancelEdit = () => setEditingMessage(undefined);
+
+  const renderEditingMessage = () => {
+    if (!editingMessage) return null;
+
+    return (
+      <View style={styles.editMessageHeader}>
+        <View style={styles.headerContent}>
+          <Text.BodySM color={theme.colors.primary6}>
+            {i18next.t('chat:text_editing_message')}
+            <Text.BodySM color={theme.colors.textSecondary}>
+              {'  • '}
+              <Text.BodySM
+                useI18n
+                color={theme.colors.textSecondary}
+                onPress={onCancelEdit}>
+                common:btn_cancel
+              </Text.BodySM>
+            </Text.BodySM>
+          </Text.BodySM>
+        </View>
+      </View>
+    );
   };
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
@@ -402,7 +440,12 @@ const Conversation = () => {
       />
       {renderChatMessages()}
       <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
-      <ChatInput onError={setError} />
+      {renderEditingMessage()}
+      <ChatInput
+        editingMessage={editingMessage}
+        onChangeMessage={onEditMessage}
+        onError={setError}
+      />
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}
@@ -415,13 +458,24 @@ const Conversation = () => {
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
     },
     headerTitle: {
       marginEnd: spacing.margin.small,
+    },
+    editMessageHeader: {
+      flexDirection: 'row',
+      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.base,
+      borderTopWidth: 1,
+      borderTopColor: colors.borderDivider,
+    },
+    headerContent: {
+      flex: 1,
+      flexDirection: 'row',
     },
   });
 };
