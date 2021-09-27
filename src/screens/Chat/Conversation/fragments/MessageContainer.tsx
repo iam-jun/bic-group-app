@@ -4,8 +4,11 @@ import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
+import Divider from '~/beinComponents/Divider';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import {Text} from '~/components';
+import appConfig from '~/configs/appConfig';
+import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
@@ -21,6 +24,8 @@ import SystemMessage from './SystemMessage';
 export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
+  index: number;
+  unreadPoint: number;
   onReactPress: (item: IMessage) => void;
   onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
@@ -32,9 +37,11 @@ const MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+  const {messages} = useChat();
   const {
     previousMessage,
     currentMessage,
+    index,
     onReactPress,
     onReplyPress,
     onLongPress,
@@ -63,9 +70,12 @@ const MessageItem = (props: MessageItemProps) => {
     dispatch(actions.retrySendMessage(currentMessage));
   };
 
-  const hideHeader = previousMessage && sameUser && sameType && sameDay;
-
-  if (system) return <SystemMessage {...currentMessage} />;
+  const hideHeader =
+    previousMessage &&
+    sameUser &&
+    sameType &&
+    sameDay &&
+    index !== messages.unreadPoint + 2;
 
   const onMenuPress = (e: any) => {
     if (removed) return;
@@ -81,39 +91,64 @@ const MessageItem = (props: MessageItemProps) => {
     }
   };
 
-  return (
-    <Div className="chat-message">
-      <TouchableWithoutFeedback onLongPress={onMenuPress}>
-        <View style={styles.container}>
-          {quoted_message && <QuotedMessage {...quoted_message} />}
-          {!hideHeader && <MessageHeader user={user} _updatedAt={_updatedAt} />}
-
-          <View
-            style={[styles.message, !hideHeader && styles.messageWithHeader]}>
-            {removed ? (
-              <Text useI18n style={styles.removedText}>
-                {text}
-              </Text>
-            ) : (
-              <>
-                <AttachmentView {...currentMessage} />
-                <MarkdownView
-                  limitMarkdownTypes
-                  onPressAudience={onMentionPress}>
-                  {text}
-                </MarkdownView>
-                <MessageMenu
-                  onReactPress={() => onReactPress(currentMessage)}
-                  onReplyPress={() => onReplyPress(currentMessage)}
-                  onMenuPress={onMenuPress}
-                />
-              </>
+  const renderMessage = () => {
+    return (
+      <Div className="chat-message">
+        <TouchableWithoutFeedback onLongPress={onMenuPress}>
+          <View style={styles.container}>
+            {quoted_message && <QuotedMessage {...quoted_message} />}
+            {!hideHeader && (
+              <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
+
+            <View
+              style={[styles.message, !hideHeader && styles.messageWithHeader]}>
+              {removed ? (
+                <Text useI18n style={styles.removedText}>
+                  {text}
+                </Text>
+              ) : (
+                <>
+                  <AttachmentView {...currentMessage} />
+                  <MarkdownView
+                    limitMarkdownTypes
+                    onPressAudience={onMentionPress}>
+                    {text}
+                  </MarkdownView>
+                  <MessageMenu
+                    onReactPress={() => onReactPress(currentMessage)}
+                    onReplyPress={() => onReplyPress(currentMessage)}
+                    onMenuPress={onMenuPress}
+                  />
+                </>
+              )}
+            </View>
+            <MessageStatus status={status} onRetryPress={_onRetryPress} />
           </View>
-          <MessageStatus status={status} onRetryPress={_onRetryPress} />
-        </View>
-      </TouchableWithoutFeedback>
-    </Div>
+        </TouchableWithoutFeedback>
+      </Div>
+    );
+  };
+
+  const renderDivider = () => {
+    return (
+      <View style={styles.divider}>
+        <Divider style={styles.dividerLine} color={theme.colors.primary6} />
+        <Text style={styles.unreadText} color={theme.colors.primary6} useI18n>
+          chat:label_unread_messages
+        </Text>
+        <Divider style={styles.dividerLine} color={theme.colors.primary6} />
+      </View>
+    );
+  };
+
+  return (
+    <View>
+      {messages.unreadPoint > appConfig.unreadMessageOffset &&
+        index === messages.unreadPoint + appConfig.unreadMessageOffset &&
+        renderDivider()}
+      {system ? <SystemMessage {...currentMessage} /> : renderMessage()}
+    </View>
   );
 };
 
@@ -122,6 +157,17 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
+    },
+    divider: {
+      flexDirection: 'row',
+      marginVertical: spacing.margin.base,
+    },
+    dividerLine: {
+      flex: 1,
+      marginTop: 10,
+    },
+    unreadText: {
+      paddingHorizontal: spacing.padding.small,
     },
     messageWithHeader: {
       marginTop: -20, // push message up so that it is right below the user's name

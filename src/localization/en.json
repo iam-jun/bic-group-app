@@ -435,7 +435,9 @@
       "other": "This message has been deleted",
       "list": "deleted a message"
     },
-    "label_no_description": "No Description"
+    "label_no_description": "No Description",
+    "label_unread_messages_banner": "Unread messages since",
+    "label_unread_messages" : "Unread messages"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

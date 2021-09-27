@@ -1,36 +1,30 @@
 import {useIsFocused} from '@react-navigation/native';
 import {debounce} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {createRef, useCallback, useEffect, useState} from 'react';
 import {
   Platform,
   StyleSheet,
   TextInput,
   useWindowDimensions,
-  View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
+import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
-import Image from '~/beinComponents/Image';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
+import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
+import useModal from '~/hooks/modal';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IConversation} from '~/interfaces/IChat';
-import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
-import {deviceDimensions, scaleSize} from '~/theme/dimension';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import appConfig from '~/configs/appConfig';
-import {createRef} from 'react';
-import useModal from '~/hooks/modal';
-import Divider from '~/beinComponents/Divider';
-import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const ConversationsList = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
@@ -64,7 +58,6 @@ const ConversationsList = (): React.ReactElement => {
 
   const onChatPress = (item: IConversation) => {
     dispatch(actions.setConversationDetail(item));
-    dispatch(actions.readSubcriptions(item._id));
     rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
   };
 

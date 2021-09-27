@@ -41,9 +41,12 @@ export const initDataState = {
   },
   messages: {
     loading: false,
+    loadingDown: false,
     data: [],
     extra: [],
-    offset: 0,
+    offset: -1,
+    downOffset: 0,
+    unreadPoint: 0,
     canLoadMore: true,
   },
 };
@@ -89,7 +92,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         [dataType]: {
           ...state[dataType],
           loading: state[dataType].data.length === 0,
-          params: action.payload,
+          params: payload,
+          offset:
+            state[dataType].offset > 0
+              ? state[dataType].offset
+              : payload?.offset,
         },
       };
     case types.SET_DATA:
@@ -126,6 +133,38 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       return {
         ...state,
         [dataType]: initDataState[dataType],
+      };
+    case types.GET_MORE_DOWN_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          downOffset: payload?.offset,
+          loadingDown: true,
+        },
+      };
+    case types.SET_MORE_DOWN_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          downOffset: messages.downOffset - payload.length,
+          unreadPoint: messages.unreadPoint + payload.length,
+          loadingDown: false,
+          data: [...payload, ...messages.data],
+        },
+      };
+    case types.READ_CONVERSATION:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          unreadCount: 0,
+        },
+        messages: {
+          ...messages,
+          unreadPoint: 0,
+        },
       };
     case types.SEARCH_CONVERSATIONS:
       return {
@@ -177,7 +216,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
     case types.SET_CONVERSATION_DETAIL:
       return {
         ...state,
-        conversation: payload,
+        conversation: {
+          ...conversation,
+          ...payload,
+        },
       };
     case types.ADD_NEW_MESSAGE: {
       const include = messages.data.find(
@@ -185,9 +227,16 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           item._id === action.payload._id ||
           (item.localId && item.localId === action.payload.localId),
       );
-      const newMessages = !include
-        ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
-        : messages.data;
+
+      const haveUnreadMessages =
+        messages.unreadPoint > 0 &&
+        messages.unreadPoint !==
+          conversation.unreadCount - appConfig.unreadMessageOffset;
+
+      const newMessages =
+        !haveUnreadMessages && !include
+          ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
+          : messages.data;
 
       return {
         ...state,
@@ -214,6 +263,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   : item,
               ),
             },
+        conversation: {
+          ...conversation,
+          unreadCount: conversation.unreadCount + 1,
+        },
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>

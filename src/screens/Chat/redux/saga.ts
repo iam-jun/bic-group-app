@@ -24,8 +24,8 @@ import {
   mapConversation,
   mapData,
   mapMessage,
+  mapMessages,
   mapRole,
-  mapUsers,
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
@@ -42,6 +42,7 @@ export default function* saga() {
   yield takeLatest(types.INIT_CHAT, initChat);
   yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
+  yield takeLatest(types.GET_MORE_DOWN_MESSAGES, getMoreDownMessages);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
@@ -92,10 +93,12 @@ function* getData({
       response.data[field || dataType],
     );
 
+    delete payload?.offset;
+
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
-      if (result.length === appConfig.recordsPerPage)
-        yield put(actions.getData(dataType, payload));
+      const page = payload?.count || appConfig.recordsPerPage;
+      if (result.length === page) yield put(actions.getData(dataType, payload));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -109,6 +112,32 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
     yield put(actions.getData(dataType, params));
+  }
+}
+
+function* getMoreDownMessages({
+  payload,
+}: {
+  type: string;
+  payload: {offset: number; count: number};
+}) {
+  try {
+    const {auth, chat} = yield select();
+    const {_id} = chat.conversation;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      //@ts-ignore
+      apiConfig.Chat.messages({
+        roomId: _id,
+        ...payload,
+      }),
+    );
+
+    const result = mapMessages(auth.user, response.data?.messages);
+
+    yield put(actions.setMoreDownMessages(result));
+  } catch (err) {
+    console.error('getMoreDownMessages', err);
   }
 }
 
