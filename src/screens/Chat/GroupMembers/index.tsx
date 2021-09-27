@@ -138,13 +138,26 @@ const GroupMembers = (): React.ReactElement => {
   };
 
   const showConfirmations = (user: IChatUser) => {
+    let content = '';
+    switch (conversation.type) {
+      case 'group':
+        content = i18next.t(
+          `chat:modal_confirm_remove_member:description_group_chat`,
+        );
+        content = content.replace('{0}', conversation.name);
+        break;
+
+      default:
+        content = i18next.t(`chat:modal_confirm_remove_member:description`);
+        break;
+    }
+    console.log('[DEBUG] content', content);
+
     dispatch(
       modalActions.showAlert({
         iconName: 'RemoveUser',
         title: i18next.t('chat:modal_confirm_remove_member:title'),
-        content: i18next
-          .t(`chat:modal_confirm_remove_member:description`)
-          .replace('{0}', conversation.name),
+        content: content,
         cancelBtn: true,
         onConfirm: () => doRemoveUser(user),
         confirmLabel: i18next.t('chat:button_remove_member'),
@@ -158,9 +171,7 @@ const GroupMembers = (): React.ReactElement => {
 
   const onRemovePress = () => {
     if (selectedMember) {
-      if (conversation.type === roomTypes.GROUP)
-        showConfirmations(selectedMember);
-      else doRemoveUser(selectedMember);
+      showConfirmations(selectedMember);
     }
   };
 

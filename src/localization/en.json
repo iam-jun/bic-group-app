@@ -428,7 +428,8 @@
     "text_mention_all": "All",
     "modal_confirm_remove_member": {
       "title": "Remove Member",
-      "description": "This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+      "description": "This member will be removed from this chat conversation. Do you want to continue?",
+      "description_group_chat": "This member will be removed from groups: {0}. Do you want to continue?"
     },
     "message_option": {
       "pin": "Pin this message",
