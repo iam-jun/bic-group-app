@@ -115,11 +115,13 @@ const GroupDetail = (props: any) => {
 
   const renderPlaceholder = () => {
     return (
-      <View>
-        <GroupProfilePlaceholder disableRandom />
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
-        <PostViewPlaceholder disableRandom />
-        <PostViewPlaceholder disableRandom />
+      <View style={styles.contentContainer}>
+        <View style={styles.placeholder}>
+          <GroupProfilePlaceholder disableRandom />
+          <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+          <PostViewPlaceholder disableRandom />
+          <PostViewPlaceholder disableRandom />
+        </View>
       </View>
     );
   };
@@ -159,7 +161,7 @@ const GroupDetail = (props: any) => {
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {colors, dimension, spacing} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
@@ -173,6 +175,15 @@ const themeStyles = (theme: ITheme) => {
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
+    },
+    placeholder: {
+      ...Platform.select({
+        web: {
+          width: '100%',
+          maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
+        },
+      }),
     },
   });
 };
