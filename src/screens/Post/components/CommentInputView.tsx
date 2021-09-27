@@ -129,7 +129,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     <MentionInput
       modalPosition={'top'}
       onChangeText={onChangeText}
-      value={content}
       ComponentInput={CommentInput}
       componentInputProps={{
         commentInputRef: _commentInputRef,
