@@ -4,6 +4,7 @@ import {
   IActivityData,
   IParamGetReactionDetail,
   IParamSearchMentionAudiences,
+  IPayloadGetDraftPosts,
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
@@ -412,6 +413,39 @@ const postDataHelper = {
         } else {
           return Promise.reject(data);
         }
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    }
+    return Promise.reject('StreamClient or UserId not found');
+  },
+  getDraftPosts: async (payload: IPayloadGetDraftPosts) => {
+    const {userId, streamClient, offset = 0} = payload || {};
+    if (streamClient && userId) {
+      const streamOptions = {
+        offset: offset || 0,
+        limit: 10,
+        user_id: `${userId}`, //required for CORRECT own_reactions data
+        ownReactions: true,
+        recentReactionsLimit: 10,
+        withOwnReactions: true,
+        withOwnChildren: true, //return own_children of reaction to comment
+        withRecentReactions: true,
+        withReactionCounts: true,
+        enrich: true, //extra data for user & group
+      };
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'draft',
+          `u-${userId}`,
+          'get',
+          streamOptions,
+        );
+        return Promise.resolve({
+          data: data?.results || [],
+          canLoadMore: !!data?.next,
+        });
       } catch (e) {
         return Promise.reject(e);
       }

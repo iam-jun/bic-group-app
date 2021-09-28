@@ -296,3 +296,15 @@ export interface IPayloadReplying {
   comment: IReaction;
   parentComment?: IReaction;
 }
+
+export interface IPayloadSetDraftPosts {
+  data?: IActivityData[];
+  canLoadMore?: boolean;
+}
+
+export interface IPayloadGetDraftPosts {
+  userId: string;
+  streamClient?: StreamClient;
+  isRefresh?: boolean;
+  offset?: number;
+}

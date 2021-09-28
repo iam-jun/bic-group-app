@@ -5,6 +5,7 @@ import {
   IOwnReaction,
   IPayloadCreateComment,
   IPayloadGetCommentsById,
+  IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
   IPayloadPutEditComment,
   IPayloadPutEditPost,
@@ -61,6 +62,7 @@ export default function* postSaga() {
   );
   yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
   yield takeLatest(postTypes.GET_POST_DETAIL, getPostDetail);
+  yield takeLatest(postTypes.GET_DRAFT_POSTS, getDraftPosts);
 }
 
 function* postCreateNewPost({
@@ -724,6 +726,36 @@ function* addChildCommentToCommentsOfPost({
       );
       return;
     }
+  }
+}
+
+function* getDraftPosts({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetDraftPosts;
+}) {
+  const {userId, streamClient, isRefresh = true} = payload;
+  const draftPosts = yield select(s => get(s, postKeySelector.draftPosts));
+  const canLoadMore = yield select(s =>
+    get(s, postKeySelector.draftCanLoadMore),
+  );
+  try {
+    if (isRefresh || canLoadMore) {
+      const offset = isRefresh ? 0 : draftPosts?.length || 0;
+      const p = {userId, streamClient, offset: offset};
+      const response = yield call(postDataHelper.getDraftPosts, p);
+      yield put(
+        postActions.setDraftPosts({
+          data: response?.data || [],
+          canLoadMore: response?.canLoadMore,
+        }),
+      );
+    } else {
+      console.log(`\x1b[31m🐣️ saga getDraftPosts cant load more\x1b[0m`);
+    }
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ saga getDraftPosts error: `, e, `\x1b[0m`);
   }
 }
 

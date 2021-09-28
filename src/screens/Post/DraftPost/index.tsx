@@ -4,8 +4,9 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -17,6 +18,12 @@ const DraftPost = () => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
+
+  //get draft post called from MainTabs
+  const draftPosts = useKeySelector(postKeySelector.draftPosts) || [];
+  const canLoadMore = useKeySelector(postKeySelector.draftCanLoadMore);
+
+  console.log(`\x1b[35m🐣️ index DraftPost `, draftPosts, `\x1b[0m`);
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>

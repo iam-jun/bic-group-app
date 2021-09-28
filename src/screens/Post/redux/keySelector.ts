@@ -12,6 +12,8 @@ const postKeySelector = {
   postAudienceSheet: 'post.postAudienceSheet',
   allPosts: 'post.allPosts',
   allComments: 'post.allComments',
+  draftPosts: 'post.draftPosts.data',
+  draftCanLoadMore: 'post.draftPosts.canLoadMore',
   postById: (id: string) => `post.allPosts.${id}`,
   postObjectDataById: (id: string) => `post.allPosts.${id}.object.data`,
   postActorById: (id: string) => `post.allPosts.${id}.actor`,

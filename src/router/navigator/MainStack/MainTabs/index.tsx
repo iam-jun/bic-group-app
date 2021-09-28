@@ -22,6 +22,7 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
+import postActions from '~/screens/Post/redux/actions';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -67,6 +68,7 @@ const MainTabs = () => {
           realtimeCallback,
         );
     }
+    dispatch(postActions.getDraftPosts({userId, streamClient}));
   }, []);
 
   // callback function when client receive realtime activity in notification feed
