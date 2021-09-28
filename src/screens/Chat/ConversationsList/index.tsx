@@ -89,7 +89,7 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   return (
-    <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
+    <ScreenWrapper testID="ChatScreen" isFullView>
       <Header
         title="chat:title"
         titleTextProps={{useI18n: true}}
@@ -123,13 +123,8 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    container: {},
     inputSearch: {
       margin: spacing.margin.base,
-    },
-    item: {
-      flex: 1,
-      flexDirection: 'row',
     },
   });
 };
