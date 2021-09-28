@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TextInput,
   useWindowDimensions,
-  View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -69,8 +68,6 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.createConversation);
   };
 
-  const renderItemSeparator = () => <View style={styles.itemSeparator} />;
-
   const renderEmpty = () => {
     if (!searchQuery) return null;
     return <NoSearchResult />;
@@ -114,7 +111,6 @@ const ConversationsList = (): React.ReactElement => {
         loading={loading}
         data={searchQuery ? searchResult : data}
         onItemPress={onChatPress}
-        renderItemSeparator={renderItemSeparator}
         ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
@@ -124,7 +120,8 @@ const ConversationsList = (): React.ReactElement => {
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
+
   return StyleSheet.create({
     container: {},
     inputSearch: {
@@ -133,14 +130,6 @@ const createStyles = (theme: ITheme) => {
     item: {
       flex: 1,
       flexDirection: 'row',
-    },
-    itemSeparator: {
-      position: 'absolute',
-      left: '21%',
-      bottom: 8,
-      backgroundColor: colors.borderDivider,
-      width: '75%',
-      height: 1,
     },
   });
 };
