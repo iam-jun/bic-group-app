@@ -2,9 +2,10 @@ import React, {FC, useEffect, useRef} from 'react';
 import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useBackHandler} from '@react-native-community/hooks';
+
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
-
 import Header from '~/beinComponents/Header';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
@@ -88,6 +89,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange);
 
+  useBackHandler(() => {
+    onPressBack();
+    return true;
+  });
+
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
     dispatch(postActions.setSearchResultAudienceGroups([]));
@@ -140,28 +146,19 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
-    const title = i18n.t('common:label_discard_changes');
-    const cancelLabel = i18n.t('common:btn_continue_editing');
-    const confirmLabel = i18n.t('common:btn_discard');
 
     if (isEditPost) {
       if (isEditPostHasChange) {
         dispatch(
-          modalActions.showAlert({
-            title: title,
-            content: i18n.t('post:alert_content_back_edit_post'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: cancelLabel,
-            confirmLabel: confirmLabel,
-            onConfirm: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
+          modalActions.showModal({
+            isOpen: true,
+            ContentComponent: <CreatePostExitOptions />,
           }),
         );
         return;
       }
     } else {
-      if (content) {
+      if (content || chosenAudiences?.length > 0) {
         dispatch(
           modalActions.showModal({
             isOpen: true,

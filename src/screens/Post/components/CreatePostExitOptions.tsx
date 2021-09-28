@@ -36,9 +36,9 @@ const CreatePostExitOptions = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text.H6>Want to finish your post later?</Text.H6>
-        <Text.Subtitle color={colors.textSecondary}>
-          You can save it as a draft for later editing
+        <Text.H6 useI18n>post:post_exit_title</Text.H6>
+        <Text.Subtitle color={colors.textSecondary} useI18n>
+          post:post_exit_desc
         </Text.Subtitle>
       </View>
       <PrimaryItem
