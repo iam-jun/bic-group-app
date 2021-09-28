@@ -43,6 +43,7 @@ const Conversation = () => {
   const {user} = useAuth();
   const {conversation, messages} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
+  const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
   const dispatch = useDispatch();
   const theme: IObject<any> = useTheme();
@@ -251,6 +252,9 @@ const Conversation = () => {
       case 'delete':
         deleteMessage();
         break;
+      case 'reply':
+        setReplyingMessage(selectedMessage);
+        break;
       case 'edit':
         editMessage();
         break;
@@ -401,7 +405,7 @@ const Conversation = () => {
       index: index,
       onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
         onPressReact(event, item, side),
-      onReplyPress: () => onMenuPress('reply'),
+      onReplyPress: () => setReplyingMessage(item),
       onLongPress,
       onAddReaction: (reactionId: ReactionType) =>
         onAddReaction(reactionId, item._id),
@@ -507,13 +511,18 @@ const Conversation = () => {
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}
-      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       {renderEditingMessage()}
+
       <ChatInput
         editingMessage={editingMessage}
         onChangeMessage={onEditMessage}
+        replyingMessage={replyingMessage}
+        onCancelReplying={() => setReplyingMessage(undefined)}
         onError={setError}
       />
+
+      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
+
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}

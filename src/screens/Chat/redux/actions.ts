@@ -208,6 +208,16 @@ const readConversation = () => ({
   type: Actions.READ_CONVERSATION,
 });
 
+const getMessageDetail = (payload: string) => ({
+  type: Actions.GET_MESSAGE_DETAIL,
+  payload,
+});
+
+const setMessageDetail = (payload: IMessage) => ({
+  type: Actions.SET_MESSAGE_DETAIL,
+  payload,
+});
+
 export default {
   initChat,
   getData,
@@ -248,4 +258,6 @@ export default {
   setExtraDownMessages,
   mergeExtraDownMessages,
   readConversation,
+  getMessageDetail,
+  setMessageDetail,
 };

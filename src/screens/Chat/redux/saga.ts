@@ -60,6 +60,7 @@ export default function* saga() {
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
+  yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
 }
 
 function* initChat() {
@@ -335,7 +336,6 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.uploadFile(conversation._id, formData),
     );
-    console.log('uploadFile', response);
 
     const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
@@ -355,6 +355,15 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
           _id: payload._id,
           rid: payload.room_id,
           msg: payload.text,
+          attachments: payload.quotedMessage && [
+            {
+              description: JSON.stringify({
+                type: 'reply',
+                msgId: payload.quotedMessage._id,
+                author: payload.quotedMessage.user.username,
+              }),
+            },
+          ],
         },
       }),
     );
@@ -480,6 +489,22 @@ function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else if (payload.createdAt) yield editMessage({payload, type});
   else yield sendMessage({payload, type});
+}
+
+function* getMessageDetail({payload}: {payload: string; type: string}) {
+  try {
+    const {auth} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getMessageDetail({
+        msgId: payload,
+      }),
+    );
+    yield put(
+      actions.setMessageDetail(mapMessage(auth.user, response.data.message)),
+    );
+  } catch (err) {
+    console.error('getMessageDetail', err);
+  }
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {

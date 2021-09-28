@@ -29,7 +29,7 @@ export interface MessageItemProps {
   currentMessage: IMessage;
   index: number;
   onReactPress: (event: any, side: 'left' | 'right' | 'center') => void;
-  onReplyPress: (item: IMessage) => void;
+  onReplyPress: () => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
@@ -58,7 +58,7 @@ const MessageItem = (props: MessageItemProps) => {
     text,
     system,
     removed,
-    quoted_message,
+    quotedMessage,
     user,
     _updatedAt,
     status,
@@ -81,6 +81,7 @@ const MessageItem = (props: MessageItemProps) => {
   };
 
   const hideHeader =
+    !quotedMessage &&
     previousMessage &&
     sameUser &&
     sameType &&
@@ -106,7 +107,7 @@ const MessageItem = (props: MessageItemProps) => {
       <Div className="chat-message">
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
           <View style={styles.container}>
-            {quoted_message && <QuotedMessage {...quoted_message} />}
+            {quotedMessage && <QuotedMessage {...quotedMessage} />}
             {!hideHeader && (
               <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
@@ -119,14 +120,14 @@ const MessageItem = (props: MessageItemProps) => {
               ) : (
                 <>
                   <AttachmentView {...currentMessage} />
-                  <View style={styles.messageLineWithEdit}>
+                  <Text>
                     <MarkdownView
                       limitMarkdownTypes
                       onPressAudience={onMentionPress}>
                       {text}
                     </MarkdownView>
                     {currentMessage.editedBy && (
-                      <View style={styles.edited}>
+                      <View>
                         <Text.Subtitle
                           color={theme.colors.textSecondary}
                           style={styles.editedText}>
@@ -134,10 +135,10 @@ const MessageItem = (props: MessageItemProps) => {
                         </Text.Subtitle>
                       </View>
                     )}
-                  </View>
+                  </Text>
                   <MessageMenu
                     onReactPress={(event: any) => onReactPress(event, 'left')}
-                    onReplyPress={() => onReplyPress(currentMessage)}
+                    onReplyPress={() => onReplyPress()}
                     onMenuPress={onMenuPress}
                     hideHeader={hideHeader}
                   />
@@ -216,11 +217,12 @@ const createStyles = (theme: ITheme) => {
     reactionView: {
       marginStart: 36,
     },
-    messageLineWithEdit: {flexDirection: 'row', alignItems: 'baseline'},
-    edited: {
+    editedText: {
       marginStart: spacing.margin.tiny,
+      fontStyle: 'italic',
+      alignSelf: 'center',
+      marginBottom: 2,
     },
-    editedText: {fontStyle: 'italic'},
   });
 };
 

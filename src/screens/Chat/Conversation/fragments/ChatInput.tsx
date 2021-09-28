@@ -1,7 +1,11 @@
 import i18next from 'i18next';
+import {StyleSheet, View} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
+import {useTheme} from 'react-native-paper';
+
+import Text from '~/beinComponents/Text';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import apiConfig from '~/configs/apiConfig';
@@ -14,15 +18,20 @@ import actions from '~/screens/Chat/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {validateFile} from '~/utils/validation';
+import {ITheme} from '~/theme/interfaces';
 
 interface Props {
+  replyingMessage?: IMessage;
   editingMessage?: IMessage;
+  onCancelReplying: () => void;
   onChangeMessage?: (value: IMessage | undefined) => void;
   onError: (err: any) => void;
 }
 
 const ChatInput: React.FC<Props> = ({
   editingMessage,
+  replyingMessage,
+  onCancelReplying,
   onChangeMessage,
   onError,
 }: Props) => {
@@ -30,6 +39,9 @@ const ChatInput: React.FC<Props> = ({
 
   const dispatch = useDispatch();
   const [text, setText] = useState(editingMessage?.text || '');
+  const theme = useTheme() as ITheme;
+  const {colors} = theme;
+  const styles = createStyles(theme);
 
   const {user} = useAuth();
   const {conversation} = useChat();
@@ -39,6 +51,15 @@ const ChatInput: React.FC<Props> = ({
       commentInputRef?.current?.setText?.('');
     }
   }, [text]);
+
+  useEffect(() => {
+    if (
+      !commentInputRef?.current?.isFocused() &&
+      (editingMessage || replyingMessage)
+    ) {
+      commentInputRef?.current?.focus();
+    }
+  }, [editingMessage, replyingMessage]);
 
   useEffect(() => {
     commentInputRef?.current?.setText?.(editingMessage?.text || '');
@@ -57,8 +78,10 @@ const ChatInput: React.FC<Props> = ({
           _updatedAt: new Date().toISOString(),
           text: text.trim(),
           user,
+          quotedMessage: replyingMessage,
         }),
       );
+      onCancelReplying();
     } else {
       dispatch(
         actions.editMessage({
@@ -134,6 +157,33 @@ const ChatInput: React.FC<Props> = ({
     }
   };
 
+  const renderCommentInputHeader = () => {
+    if (!replyingMessage) {
+      return null;
+    }
+    return (
+      <View style={styles.commentInputHeader}>
+        <View style={styles.headerContent}>
+          <Text color={colors.textSecondary}>
+            {i18next.t('post:label_replying_to')}
+            <Text.BodyM>
+              {replyingMessage.user.name || i18next.t('post:someone')}
+            </Text.BodyM>
+            <Text.BodyS color={colors.textSecondary}>
+              {'  • '}
+              <Text.BodyM
+                useI18n
+                color={colors.textSecondary}
+                onPress={onCancelReplying}>
+                common:btn_cancel
+              </Text.BodyM>
+            </Text.BodyS>
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <MentionInput
       modalPosition="top"
@@ -141,6 +191,7 @@ const ChatInput: React.FC<Props> = ({
       ComponentInput={CommentInput}
       mentionField="beinUserId"
       componentInputProps={{
+        HeaderComponent: renderCommentInputHeader(),
         commentInputRef: commentInputRef,
         onPressSend: onSend,
         onPressFile,
@@ -154,6 +205,22 @@ const ChatInput: React.FC<Props> = ({
       getDataResponseKey={'data'}
     />
   );
+};
+
+const createStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+
+  return StyleSheet.create({
+    commentInputHeader: {
+      flexDirection: 'row',
+      marginHorizontal: spacing?.margin.base,
+      marginTop: spacing?.margin.tiny,
+    },
+    headerContent: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+  });
 };
 
 export default ChatInput;
