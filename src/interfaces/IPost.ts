@@ -111,6 +111,7 @@ export interface IPostCreatePost {
   };
   tags?: number[];
   important?: IActivityImportant;
+  is_draft?: boolean;
 }
 
 export interface IPayloadCreateComment {
