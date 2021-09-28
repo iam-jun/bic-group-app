@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, useWindowDimensions} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -12,6 +12,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import settings, {
+  postFeatureMenu,
   appSettingsMenu,
   documentsMenu,
   logoutMenu,
@@ -29,6 +30,7 @@ import {deviceDimensions} from '~/theme/dimension';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -51,6 +53,9 @@ const Menu = (): React.ReactElement => {
 
   const onSettingPress = (item: ISetting) => {
     switch (item.type) {
+      case 'draftPost':
+        return rootNavigation.navigate(homeStack.draftPost);
+
       case 'accountSettings':
         return rootNavigation.navigate(menuStack.accountSettings);
 
@@ -96,6 +101,19 @@ const Menu = (): React.ReactElement => {
       />
       <ViewSpacing height={theme.spacing.margin.large} />
 
+      {Platform.OS !== 'web' && (
+        <>
+          <Divider style={styles.divider} />
+          <ListView
+            itemStyle={styles.itemStyle}
+            type="menu"
+            data={postFeatureMenu}
+            scrollEnabled={false}
+            onItemPress={onSettingPress}
+          />
+        </>
+      )}
+      <Divider style={styles.divider} />
       <ListView
         itemStyle={styles.itemStyle}
         type="menu"
@@ -103,7 +121,7 @@ const Menu = (): React.ReactElement => {
         scrollEnabled={false}
         onItemPress={onSettingPress}
       />
-      <Divider size={10} style={styles.divider} />
+      <Divider style={styles.divider} />
       <ListView
         itemStyle={styles.itemStyle}
         type="menu"
@@ -112,7 +130,7 @@ const Menu = (): React.ReactElement => {
         onItemPress={onSettingPress}
       />
 
-      <Divider size={10} style={styles.divider} />
+      <Divider style={styles.divider} />
       <ListView
         itemStyle={styles.itemStyle}
         type="menu"
@@ -123,7 +141,7 @@ const Menu = (): React.ReactElement => {
 
       {__DEV__ && (
         <>
-          <Divider size={10} style={styles.divider} />
+          <Divider style={styles.divider} />
           <ListView
             itemStyle={styles.itemStyle}
             scrollEnabled={false}
@@ -145,7 +163,10 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.small,
       marginTop: spacing.margin.large,
     },
-    divider: {},
+    divider: {
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.small,
+    },
     itemStyle: {
       paddingHorizontal: spacing.padding.extraLarge,
     },

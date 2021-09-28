@@ -167,6 +167,7 @@
   "settings": {
     "title_app_language": "App language",
     "title_app_theme": "App theme",
+    "title_post_feature_draft": "Draft Posts",
     "title_account_settings": "Account Settings",
     "title_help": "Help",
     "title_app_policies": "App Policies",
