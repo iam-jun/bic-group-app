@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
@@ -66,8 +65,6 @@ const ConversationsList = (): React.ReactElement => {
     rootNavigation.navigate(chatStack.createConversation);
   };
 
-  const renderItemSeparator = () => <Divider style={styles.itemSeparator} />;
-
   const renderEmpty = () => {
     if (!searchQuery) return null;
     return <NoSearchResult />;
@@ -89,7 +86,7 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   return (
-    <ScreenWrapper style={styles.container} testID="ChatScreen" isFullView>
+    <ScreenWrapper testID="ChatScreen" isFullView>
       <Header
         title="chat:title"
         titleTextProps={{useI18n: true}}
@@ -111,10 +108,10 @@ const ConversationsList = (): React.ReactElement => {
         loading={loading}
         data={searchQuery ? searchResult : data}
         onItemPress={onChatPress}
-        renderItemSeparator={renderItemSeparator}
         ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
+        showItemSeparator={false}
       />
     </ScreenWrapper>
   );
@@ -122,18 +119,10 @@ const ConversationsList = (): React.ReactElement => {
 
 const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
+
   return StyleSheet.create({
-    container: {},
     inputSearch: {
       margin: spacing.margin.base,
-    },
-    item: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    itemSeparator: {
-      marginLeft: 72,
-      marginRight: spacing.margin.large,
     },
   });
 };

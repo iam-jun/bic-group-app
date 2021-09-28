@@ -30,6 +30,7 @@ import GroupStack from '../GroupStack';
 import HomeStack from '../HomeStack';
 import MenuStack from '../MenuStack';
 import NotiStack from '../NotiStack';
+import DraftPost from '~/screens/Post/DraftPost';
 
 export const screens = {
   home: HomeStack,
@@ -40,35 +41,45 @@ export const screens = {
 };
 
 export const screensWebLaptop = {
+  //HOME STACK
   newsfeed: Newsfeed,
-  // 'conversation-list': ConversationsList,
-  conversation: Conversation,
-  'conversation-detail': ConversationDetail,
-  'create-conversation': CreateConversation,
-  'chat-group-members': GroupMembers,
-  'add-members': AddMembersToGroup,
-  // 'group-list': Groups,
-  'group-detail': GroupDetail,
-  'group-about': GroupAbout,
-  'group-members': GroupMembers,
-  'group-files': NewFeature,
   'create-post': CreatePost,
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
+  'draft-post': DraftPost,
+
+  //CHAT STACK
+  // 'conversation-list': ConversationsList,
+  conversation: Conversation,
+  'conversation-detail': ConversationDetail,
+  'create-conversation': CreateConversation,
+
+  //GROUP STACK
+  // 'group-list': Groups,
+  'chat-group-members': GroupMembers,
+  'add-members': AddMembersToGroup,
+  'group-detail': GroupDetail,
+  'group-about': GroupAbout,
+  'group-members': GroupMembers,
+  'group-files': NewFeature,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
-  'user-profile': UserProfile,
   'invite-members': AddMembersToGroup,
-  'user-edit': UserEdit,
+
+  //MENU STACK
   // menu: Menu,
+  'user-profile': UserProfile,
+  'user-edit': UserEdit,
   'component-collection': ComponentCollection,
   'account-settings': AccoutSettings,
   'security-and-login': SecurityLogin,
   'change-password': ChangePassword,
   'edit-basic-info': EditBasicInfo,
+
+  //NOTIFICATION STACK
   // notification: Notification,
   'not-select-notification': NoNotificationFound,
 };

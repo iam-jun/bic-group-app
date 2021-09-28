@@ -12,6 +12,7 @@ import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/Gener
 import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 import NewFeature from '~/screens/NewFeature';
+import DraftPost from '~/screens/Post/DraftPost';
 
 export default {
   'group-list': Groups,
@@ -24,6 +25,7 @@ export default {
   'post-select-audience': PostSelectAudience,
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
+  'draft-post': DraftPost,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,

@@ -47,6 +47,7 @@ export interface ListViewProps {
     index: number;
   }) => React.ReactElement;
   renderItemSeparator?: any;
+  showItemSeparator?: boolean;
   renderLoading?: any;
   ListHeaderComponent: any;
   ListFooterComponent: any;
@@ -82,6 +83,7 @@ const ListView: React.FC<ListViewProps> = ({
 
   renderItem,
   renderItemSeparator,
+  showItemSeparator = true,
   renderLoading,
   ListHeaderComponent,
   ListFooterComponent,
@@ -121,13 +123,18 @@ const ListView: React.FC<ListViewProps> = ({
               ? (action: IAction) => onActionPress(action, item)
               : undefined
           }
+          // eslint-disable-next-line react/prop-types
+          total={data && data?.length}
+          index={index}
         />
       </TouchableOpacity>
     );
   };
 
   const _renderItemSeparator = () => {
-    if (renderItemSeparator) {
+    if (!showItemSeparator) {
+      return null;
+    } else if (renderItemSeparator) {
       return renderItemSeparator();
     }
     return (
