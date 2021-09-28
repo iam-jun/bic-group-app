@@ -50,35 +50,33 @@ const ConversationItem: React.FC<IConversation> = ({
   );
 
   return (
-    <>
-      <Div style={styles.container}>
-        <View>{ItemAvatar}</View>
-        <Div style={styles.contentContainer}>
-          <View style={styles.header}>
-            <Text.H6 style={styles.title} numberOfLines={1}>
-              {name}
-            </Text.H6>
-            <Text.Subtitle
-              style={styles.textUpdate}
-              color={theme.colors.textSecondary}>
-              {countTime(_updatedAt)}
-            </Text.Subtitle>
-          </View>
-          <View style={styles.body}>
-            <Text
-              variant={unreadCount ? 'bodyM' : 'body'}
-              numberOfLines={2}
-              style={styles.lastMessage}>
-              {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
-            </Text>
-            {!!unreadCount && (
-              <RedDot style={styles.redDot} number={unreadCount} />
-            )}
-          </View>
-          <Div style={styles.divider} />
-        </Div>
+    <Div style={styles.container}>
+      <View>{ItemAvatar}</View>
+      <Div style={styles.contentContainer}>
+        <View style={styles.header}>
+          <Text.H6 style={styles.title} numberOfLines={1}>
+            {name}
+          </Text.H6>
+          <Text.Subtitle
+            style={styles.textUpdate}
+            color={theme.colors.textSecondary}>
+            {countTime(_updatedAt)}
+          </Text.Subtitle>
+        </View>
+        <View style={styles.body}>
+          <Text
+            variant={unreadCount ? 'bodyM' : 'body'}
+            numberOfLines={2}
+            style={styles.lastMessage}>
+            {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
+          </Text>
+          {!!unreadCount && (
+            <RedDot style={styles.redDot} number={unreadCount} />
+          )}
+        </View>
+        <Div style={styles.divider} />
       </Div>
-    </>
+    </Div>
   );
 };
 
