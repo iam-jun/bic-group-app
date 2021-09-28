@@ -2,6 +2,7 @@ import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
 import {StreamClient} from 'getstream';
 import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
+import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 
 export interface IObject<T> {
   [key: string]: T;
@@ -35,9 +36,12 @@ export interface IFilePicked {
   type: string;
   mime: string;
   size: number;
-  uri: string; //app
   width: number;
   height: number;
+  //app
+  uri: string;
+  //web
+  base64?: string;
   [x: string]: any;
 }
 
@@ -51,4 +55,10 @@ export interface IToastMessage {
   content: string;
   props: ToastMessageProps;
   duration?: number;
+}
+
+export interface IPayloadShowModal {
+  isOpen: boolean;
+  ContentComponent: any;
+  props?: BaseBottomSheetProps | any;
 }

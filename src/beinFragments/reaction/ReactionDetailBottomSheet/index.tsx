@@ -4,12 +4,12 @@ import {Dimensions, View} from 'react-native';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
-import modalKeySelector from '~/store/modal/selectors';
 import {clearReactionDetailBottomSheet} from '~/store/modal/actions';
 import ReactionTabBar from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import ReactionDetailTab from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionDetailTab';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import modalKeySelector from '~/store/modal/keySelector';
 
 const screenHeight = Dimensions.get('window').height;
 const contentBarHeight = 0.6 * screenHeight;
@@ -22,7 +22,8 @@ const ReactionDetailBottomSheet = () => {
   const {rootNavigation} = useRootNavigation();
 
   const data = useKeySelector(modalKeySelector.reactionDetailBottomSheet);
-  const {isOpen, reactionCounts, postId, commentId, initReaction} = data || {};
+  const {isOpen, reactionCounts, initReaction, getDataPromise, getDataParam} =
+    data || {};
 
   useEffect(() => {
     //reset
@@ -42,9 +43,16 @@ const ReactionDetailBottomSheet = () => {
   };
 
   const onPressItem = (item: any) => {
-    const itemUserId = item?.item?.user?.id;
+    const itemUserId = item?.item?.id;
     if (itemUserId) {
       rootNavigation.navigate(mainStack.userProfile, {userId: itemUserId});
+    } else {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: item?.item.username,
+        params: {
+          type: 'username',
+        },
+      });
     }
     reactionSheetRef?.current?.close?.();
   };
@@ -65,11 +73,11 @@ const ReactionDetailBottomSheet = () => {
             initReaction={initReaction}
           />
           <ReactionDetailTab
-            reactionType={selectingReaction}
-            postId={postId}
-            commentId={commentId}
+            reactionType={selectingReaction || initReaction}
             height={contentBarHeight}
             onPressItem={onPressItem}
+            getDataPromise={getDataPromise}
+            getDataParam={getDataParam}
           />
         </View>
       }

@@ -26,6 +26,7 @@ import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
+import CommonModal from '~/beinFragments/CommonModal';
 
 const Stack = createStackNavigator();
 
@@ -120,6 +121,7 @@ const MainStack = (): React.ReactElement => {
       <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />
+      <CommonModal />
     </View>
   );
 };

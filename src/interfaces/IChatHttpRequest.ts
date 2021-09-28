@@ -82,3 +82,8 @@ export interface IGetMentionUsersReq {
 export interface IAddUsersToGroupReq {
   user_ids: number[];
 }
+
+export interface IGetReactionStatisticsReq {
+  message_id: string;
+  reaction_name: string;
+}

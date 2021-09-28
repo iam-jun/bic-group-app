@@ -1,6 +1,5 @@
 import BaseBottomSheet from '~/beinComponents/BottomSheet/BaseBottomSheet';
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 
-const BottomSheet = Object.assign(BaseBottomSheet, {PostToolbar});
+const BottomSheet = BaseBottomSheet;
 
 export default BottomSheet;

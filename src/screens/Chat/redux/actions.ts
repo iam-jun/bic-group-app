@@ -186,6 +186,28 @@ const kickMeOut = (payload: IMessage) => ({
   payload,
 });
 
+const getMoreDownMessages = (payload: {offset: number; count: number}) => ({
+  type: Actions.GET_MORE_DOWN_MESSAGES,
+  payload,
+});
+
+const setMoreDownMessages = (payload: any) => ({
+  type: Actions.SET_MORE_DOWN_MESSAGES,
+  payload,
+});
+
+const setExtraDownMessages = () => ({
+  type: Actions.SET_EXTRA_DOWN_MESSAGES,
+});
+
+const mergeExtraDownMessages = () => ({
+  type: Actions.MERGE_EXTRA_DOWN_MESSAGES,
+});
+
+const readConversation = () => ({
+  type: Actions.READ_CONVERSATION,
+});
+
 export default {
   initChat,
   getData,
@@ -221,4 +243,9 @@ export default {
   removeMember,
   removeMemberSuccess,
   kickMeOut,
+  getMoreDownMessages,
+  setMoreDownMessages,
+  setExtraDownMessages,
+  mergeExtraDownMessages,
+  readConversation,
 };

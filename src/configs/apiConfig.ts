@@ -1,4 +1,3 @@
-import {} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
@@ -14,6 +13,7 @@ import {
   IAddUsersToGroupReq,
   IDeleteMessage,
   IEditMessageReq,
+  IGetReactionStatisticsReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -48,6 +48,9 @@ const Upload = {
       postImage: 'upload/post-image',
       postVideo: 'upload/post-video',
       postFile: 'upload/post-file',
+      commentImage: 'upload/comment-image',
+      commentVideo: 'upload/comment-video',
+      commentFile: 'upload/comment-file',
       chatImage: 'upload/chat-image',
       chatVideo: 'upload/chat-video',
       chatFile: 'upload/chat-file',
@@ -276,6 +279,23 @@ const Chat = {
       useRetry: false,
       provider: providers.chat,
       data,
+    };
+  },
+  getReactionStatistics: (
+    params: IGetReactionStatisticsReq,
+  ): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/reactions`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      params,
     };
   },
 };

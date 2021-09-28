@@ -46,6 +46,7 @@ const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
+  const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
   const {post_id, focus_comment} = params || {};
@@ -75,8 +76,6 @@ const PostDetail = (props: any) => {
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
-  const newCommentInput =
-    useKeySelector(postKeySelector.createComment.content) || '';
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
@@ -119,6 +118,7 @@ const PostDetail = (props: any) => {
   const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
 
   const onPressBack = () => {
+    const newCommentInput = commentInputRef?.current?.getText?.() || '';
     if (newCommentInput !== '') {
       dispatch(
         modalActions.showAlert({
@@ -237,6 +237,7 @@ const PostDetail = (props: any) => {
     return (
       <>
         <PostView postId={id} isPostDetail onPressComment={onPressComment} />
+        <Divider />
         {commentLeft > 0 && (
           <LoadMoreComment
             title={'post:text_load_more_comments'}
@@ -244,7 +245,6 @@ const PostDetail = (props: any) => {
             idLessThan={listComment?.[0]?.id}
           />
         )}
-        <Divider />
       </>
     );
   };
@@ -258,6 +258,9 @@ const PostDetail = (props: any) => {
       layoutSetted = true;
       if (focus_comment && listComment?.length > 0) {
         scrollTo(-1, -1);
+      }
+      if (focus_comment && Platform.OS === 'web') {
+        textInputRef.current?.focus?.();
       }
     }
   }, [layoutSetted]);
@@ -296,6 +299,7 @@ const PostDetail = (props: any) => {
               }
             />
             <CommentInputView
+              commentInputRef={commentInputRef}
               postId={id}
               groupIds={groupIds}
               autoFocus={!!focus_comment}

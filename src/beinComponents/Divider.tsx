@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, StyleProp, View, ViewStyle} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
+import {StyleProp, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {ITheme} from '~/theme/interfaces';
 
 export interface DividerProps {
   color?: string;
@@ -21,7 +21,7 @@ const Divider: React.FC<DividerProps> = ({
   const {colors}: ITheme = useTheme() as ITheme;
   return (
     <View
-      style={StyleSheet.flatten([
+      style={[
         {
           height: horizontal ? undefined : size,
           width: horizontal ? size : undefined,
@@ -30,7 +30,7 @@ const Divider: React.FC<DividerProps> = ({
           backgroundColor: color || colors.borderDivider,
         },
         style,
-      ])}
+      ]}
     />
   );
 };

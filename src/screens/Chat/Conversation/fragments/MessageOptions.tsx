@@ -2,6 +2,8 @@ import i18next from 'i18next';
 import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {isEmpty} from 'lodash';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
@@ -13,12 +15,13 @@ import {
   myMessageOptions,
   reactions,
 } from '~/constants/chat';
-import {IMessageMenu} from '~/interfaces/IChat';
+import {IMessage, IMessageMenu} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 
 export interface Props {
   isMyMessage: boolean;
   modalRef?: any;
+  selectedMessage?: IMessage;
   onMenuPress: (item: MessageOptionType) => void;
   onReactionPress: (item: any) => void;
   onClosed: () => void;
@@ -27,6 +30,7 @@ export interface Props {
 const MessageOptionsModal: React.FC<Props> = ({
   isMyMessage,
   modalRef,
+  selectedMessage,
   onMenuPress,
   onReactionPress,
   onClosed,
@@ -69,7 +73,10 @@ const MessageOptionsModal: React.FC<Props> = ({
     );
   };
 
-  const data = isMyMessage ? myMessageOptions : messageOptions;
+  let data = isMyMessage ? myMessageOptions : messageOptions;
+  data = isEmpty(selectedMessage?.reaction_counts)
+    ? data
+    : [...data, 'reactions'];
 
   return (
     <BottomSheet

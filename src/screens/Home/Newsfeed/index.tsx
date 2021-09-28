@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -33,7 +33,10 @@ import {deviceDimensions} from '~/theme/dimension';
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
+    deviceDimensions.phone,
+  );
+  const styles = createStyle(theme, newsfeedWidth);
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
 
@@ -108,8 +111,11 @@ const Newsfeed = () => {
 
   const renderPlaceholder = () => {
     return (
-      <View style={styles.listContainer}>
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+      <View style={styles.placeholder}>
+        <HeaderCreatePostPlaceholder
+          style={styles.headerCreatePost}
+          parentWidth={newsfeedWidth}
+        />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
@@ -122,7 +128,9 @@ const Newsfeed = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {renderHeader()}
       {homePosts.length === 0 && refreshing ? (
         renderPlaceholder()
@@ -136,7 +144,10 @@ const Newsfeed = () => {
           onLoadMore={() => getData()}
           renderItem={renderItem}
           ListHeaderComponent={() => (
-            <HeaderCreatePost style={styles.headerCreatePost} />
+            <HeaderCreatePost
+              style={styles.headerCreatePost}
+              parentWidth={newsfeedWidth}
+            />
           )}
           ListFooterComponent={renderFooter}
           renderItemSeparator={() => (
@@ -148,7 +159,7 @@ const Newsfeed = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, newsfeedWidth: number) => {
   const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
@@ -160,15 +171,18 @@ const createStyle = (theme: ITheme) => {
     headerOnLaptop: {
       backgroundColor: colors.surface,
     },
-    listContainer: {
+    placeholder: {
       flex: 1,
       ...Platform.select({
         web: {
-          alignSelf: 'center',
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
         },
       }),
+    },
+    listContainer: {
+      flex: 1,
     },
     listFooter: {
       height: 150,

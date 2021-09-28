@@ -4,18 +4,18 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {ReactionType} from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;
-  postId: string;
-  commentId?: string;
   limit?: number;
   height?: number;
   onPressItem?: (item: any) => void;
+
+  getDataPromise?: any;
+  getDataParam?: any;
 }
 
 const screenHeight = Dimensions.get('window').height;
@@ -23,11 +23,11 @@ const contentBarHeight = 0.6 * screenHeight;
 
 const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   reactionType,
-  postId,
-  commentId,
   limit = 100,
   height = contentBarHeight,
   onPressItem,
+  getDataPromise,
+  getDataParam,
 }: ReactionDetailTabProps) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,18 +36,15 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const styles = createStyle(theme);
 
   const getData = () => {
-    if (reactionType && postId) {
+    if (getDataPromise && getDataParam) {
       setLoading(true);
-      const param = {reactionType, commentId, postId, limit};
-      postDataHelper
-        .getReactionDetail(param)
-        .then(response => {
-          if (response?.results?.length > 0) {
-            setData(response?.results);
-          }
+      const param = {...getDataParam, reactionType, limit};
+      getDataPromise?.(param)
+        ?.then?.((data: any) => {
+          setData(data || []);
           setLoading(false);
         })
-        .catch(e => {
+        .catch((e: any) => {
           console.log(`\x1b[31m🐣️ ReactionDetailTab get error ${e}\x1b[0m`);
           setLoading(false);
         });
@@ -69,8 +66,8 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
         showAvatar
         height={44}
         onPress={() => _onPressItem(item)}
-        avatar={item?.item?.user?.data?.avatar}
-        title={item?.item?.user?.data?.fullname}
+        avatar={item?.item?.avatar}
+        title={item?.item?.fullname}
       />
     );
   };

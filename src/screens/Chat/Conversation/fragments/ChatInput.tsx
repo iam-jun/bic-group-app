@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import CommentInput from '~/beinComponents/inputs/CommentInput';
@@ -26,6 +26,8 @@ const ChatInput: React.FC<Props> = ({
   onChangeMessage,
   onError,
 }: Props) => {
+  const commentInputRef = useRef<any>();
+
   const dispatch = useDispatch();
   const [text, setText] = useState(editingMessage?.text || '');
 
@@ -33,7 +35,13 @@ const ChatInput: React.FC<Props> = ({
   const {conversation} = useChat();
 
   useEffect(() => {
-    setText(editingMessage?.text || '');
+    if (!text) {
+      commentInputRef?.current?.setText?.('');
+    }
+  }, [text]);
+
+  useEffect(() => {
+    commentInputRef?.current?.setText?.(editingMessage?.text || '');
   }, [editingMessage?.text]);
 
   const _onChangeText = (value: string) => {
@@ -130,10 +138,10 @@ const ChatInput: React.FC<Props> = ({
     <MentionInput
       modalPosition="top"
       onChangeText={_onChangeText}
-      value={text}
       ComponentInput={CommentInput}
       mentionField="beinUserId"
       componentInputProps={{
+        commentInputRef: commentInputRef,
         onPressSend: onSend,
         onPressFile,
         onPressSelectImage,
