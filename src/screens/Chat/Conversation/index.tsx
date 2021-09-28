@@ -32,6 +32,11 @@ import ChatWelcome from './fragments/ChatWelcome';
 import DownButton from './fragments/DownButton';
 import UnreadBanner from './fragments/UnreadBanner';
 import Text from '~/beinComponents/Text';
+import {IReactionCounts} from '~/interfaces/IPost';
+import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import {makeHttpRequest} from '~/services/httpApiRequest';
+import apiConfig from '~/configs/apiConfig';
+import {IGetReactionStatisticsReq} from '~/interfaces/IChatHttpRequest';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -215,6 +220,21 @@ const Conversation = () => {
     selectedMessage && setEditingMessage(selectedMessage);
   };
 
+  const viewReactions = () => {
+    if (selectedMessage?.reaction_counts) {
+      const payload: IPayloadReactionDetailBottomSheet = {
+        isOpen: true,
+        reactionCounts: selectedMessage.reaction_counts,
+        initReaction: Object.keys(
+          selectedMessage.reaction_counts,
+        )[0] as ReactionType, // get the first emoji by default
+        getDataParam: {messageId: selectedMessage._id},
+        getDataPromise: getReactionStatistics,
+      };
+      dispatch(modalActions.showReactionDetailBottomSheet(payload));
+    }
+  };
+
   const onEditMessage = (message: IMessage | undefined) => {
     setEditingMessage(message);
   };
@@ -232,6 +252,9 @@ const Conversation = () => {
         break;
       case 'edit':
         editMessage();
+        break;
+      case 'reactions':
+        viewReactions();
         break;
       default:
         dispatch(showAlertNewFeature());
@@ -302,6 +325,48 @@ const Conversation = () => {
     setDownButtonVisible(false);
   };
 
+  const getReactionStatistics = async (param: {
+    reactionType: ReactionType;
+    messageId: string;
+  }) => {
+    try {
+      const {reactionType, messageId} = param || {};
+      const response: any = await makeHttpRequest(
+        apiConfig.Chat.getReactionStatistics({
+          message_id: messageId,
+          reaction_name: reactionType,
+        }),
+      );
+      const data = response?.data?.data;
+      const users = data.map((item: {username: string; fullname: string}) => ({
+        avatar: getDefaultAvatar(item.username),
+        username: item.username,
+        fullname: item.fullname,
+      }));
+
+      return Promise.resolve(users || []);
+    } catch (err) {
+      return Promise.reject();
+    }
+  };
+
+  const onLongPressReaction = (
+    messageId: string,
+    reactionType: ReactionType,
+    reactionCounts?: IReactionCounts,
+  ) => {
+    if (reactionCounts) {
+      const payload: IPayloadReactionDetailBottomSheet = {
+        isOpen: true,
+        reactionCounts: reactionCounts,
+        initReaction: reactionType,
+        getDataParam: {messageId},
+        getDataPromise: getReactionStatistics,
+      };
+      dispatch(modalActions.showReactionDetailBottomSheet(payload));
+    }
+  };
+
   const onCancelEdit = () => setEditingMessage(undefined);
 
   const renderEditingMessage = () => {
@@ -341,6 +406,8 @@ const Conversation = () => {
         onAddReaction(reactionId, item._id),
       onRemoveReaction: (reactionId: ReactionType) =>
         onRemoveReaction(reactionId, item._id),
+      onLongPressReaction: (reactionType: ReactionType) =>
+        onLongPressReaction(item._id, reactionType, item?.reaction_counts),
     };
     return <MessageContainer {...props} />;
   };
@@ -449,6 +516,7 @@ const Conversation = () => {
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}
+        selectedMessage={selectedMessage}
         onMenuPress={onMenuPress}
         onReactionPress={onReactionPress}
         onClosed={onOptionsClosed}

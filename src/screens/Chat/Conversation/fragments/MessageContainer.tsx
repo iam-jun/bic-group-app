@@ -34,6 +34,7 @@ export interface MessageItemProps {
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
+  onLongPressReaction: (reactionType: ReactionType) => void;
 }
 
 const MessageItem = (props: MessageItemProps) => {
@@ -52,6 +53,7 @@ const MessageItem = (props: MessageItemProps) => {
     onLongPress,
     onAddReaction,
     onRemoveReaction,
+    onLongPressReaction,
   } = props;
   const {
     text,
@@ -150,7 +152,7 @@ const MessageItem = (props: MessageItemProps) => {
                 reactionCounts={reaction_counts || {}}
                 onAddReaction={onAddReaction}
                 onRemoveReaction={onRemoveReaction}
-                onLongPressReaction={() => {}}
+                onLongPressReaction={onLongPressReaction}
                 onPressSelectReaction={(event: any) =>
                   onReactPress(event, 'center')
                 }
