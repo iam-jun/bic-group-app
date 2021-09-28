@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React, {useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
@@ -20,8 +20,13 @@ const ConversationItem: React.FC<IConversation> = ({
   unreadCount,
   type,
 }: IConversation): React.ReactElement => {
+  const AVG_CHAR_ON_ONE_LINE = 32;
+  let twoLineLastMessage = false;
+  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
+    twoLineLastMessage = true;
+
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme, unreadCount > 0);
+  const styles = createStyles(theme, unreadCount > 0, twoLineLastMessage);
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const isDirect = type === roomTypes.DIRECT;
   const welcomeText =
@@ -81,7 +86,11 @@ const ConversationItem: React.FC<IConversation> = ({
   );
 };
 
-const createStyles = (theme: ITheme, unreadMessage: boolean) => {
+const createStyles = (
+  theme: ITheme,
+  unreadMessage: boolean,
+  twoLineLastMessage: boolean,
+) => {
   const {colors, spacing} = theme;
   const headerHeight = 20;
   const bodyHeight = 40;
@@ -123,7 +132,7 @@ const createStyles = (theme: ITheme, unreadMessage: boolean) => {
     body: {
       flex: 1,
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: twoLineLastMessage ? 'center' : 'flex-start',
       height: '100%',
       maxHeight: bodyHeight,
     },
