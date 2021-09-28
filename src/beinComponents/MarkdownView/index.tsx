@@ -49,12 +49,14 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     return null;
   }
 
+  const _children = children?.replace?.(/(?:\r\n|\r|\n)/g, '<br>');
   const markdownIt = MarkdownIt({typographer: true})
     .use(emojiPlugin, {
       defs: emojiDefs,
       shortcuts: emojiShortcuts,
     })
     .use(regexPlugin, 'audience', audienceRegex, '@')
+    .use(regexPlugin, 'linebreak', /<br>/, '<')
     .disable(limitMarkdownTypes ? blacklistLimit : blacklistDefault);
 
   if (debugPrintTree) {
@@ -96,6 +98,9 @@ const MarkdownView: FC<MarkdownViewProps> = ({
         </Text>
       );
     },
+    regex_linebreak: (node: any) => {
+      return <Text key={node.key}>{'\n'}</Text>;
+    },
   };
 
   return (
@@ -107,7 +112,7 @@ const MarkdownView: FC<MarkdownViewProps> = ({
         onLinkPress={onLinkPress}
         markdownit={markdownIt}
         debugPrintTree={debugPrintTree}>
-        {children}
+        {_children}
       </Markdown>
     </View>
   );
@@ -131,6 +136,7 @@ const createStyle = (theme: ITheme) => {
       ...textStyles.bodyM,
       color: colors.link,
     },
+    regex_linebreak: {},
 
     // The main container
     body: {...textStyles.body},
