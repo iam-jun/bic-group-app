@@ -405,7 +405,7 @@ const Conversation = () => {
       index: index,
       onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
         onPressReact(event, item, side),
-      onReplyPress: () => onMenuPress('reply'),
+      onReplyPress: () => setReplyingMessage(item),
       onLongPress,
       onAddReaction: (reactionId: ReactionType) =>
         onAddReaction(reactionId, item._id),
@@ -511,6 +511,8 @@ const Conversation = () => {
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}
+      {renderEditingMessage()}
+
       <ChatInput
         editingMessage={editingMessage}
         onChangeMessage={onEditMessage}
@@ -520,7 +522,6 @@ const Conversation = () => {
       />
 
       <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
-      {renderEditingMessage()}
 
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}

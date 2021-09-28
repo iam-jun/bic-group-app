@@ -53,6 +53,15 @@ const ChatInput: React.FC<Props> = ({
   }, [text]);
 
   useEffect(() => {
+    if (
+      !commentInputRef?.current?.isFocused() &&
+      (editingMessage || replyingMessage)
+    ) {
+      commentInputRef?.current?.focus();
+    }
+  }, [editingMessage, replyingMessage]);
+
+  useEffect(() => {
     commentInputRef?.current?.setText?.(editingMessage?.text || '');
   }, [editingMessage?.text]);
 
@@ -69,8 +78,10 @@ const ChatInput: React.FC<Props> = ({
           _updatedAt: new Date().toISOString(),
           text: text.trim(),
           user,
+          quotedMessage: replyingMessage,
         }),
       );
+      onCancelReplying();
     } else {
       dispatch(
         actions.editMessage({

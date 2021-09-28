@@ -14,6 +14,7 @@ import {
   IDeleteMessage,
   IEditMessageReq,
   IGetReactionStatisticsReq,
+  IGetMessageReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -295,6 +296,15 @@ const Chat = {
         'X-Auth-Token': auth.accessToken,
         'X-User-Id': auth.userId,
       },
+      params,
+    };
+  },
+  getMessageDetail: (params: IGetMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.getMessage`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
       params,
     };
   },

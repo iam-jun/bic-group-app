@@ -1,57 +1,82 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {IObject} from '~/interfaces/common';
-import {IMessage} from '~/interfaces/IChat';
-import {Text} from '~/components';
-import Avatar from '~/components/Avatar';
+import Text from '~/beinComponents/Text';
+import Avatar from '~/beinComponents/Avatar';
+import {IQuotedMessage} from '~/interfaces/IChat';
 import {spacing} from '~/theme';
-import {generateAvatar} from '~/utils/common';
+import {ITheme} from '~/theme/interfaces';
+import {getAvatar} from '../../helper';
+import {useDispatch} from 'react-redux';
+import actions from '../../redux/actions';
+import {useKeySelector} from '~/hooks/selector';
+import i18next from 'i18next';
+import images from '~/resources/images';
 
-const QuotedMessage: React.FC<IMessage> = ({user, text, attachments}) => {
-  const theme: IObject<any> = useTheme();
+const QuotedMessage: React.FC<IQuotedMessage> = ({msgId, author}) => {
+  const dispatch = useDispatch();
+  const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+  const message = useKeySelector(`chat.quotedMessages.${msgId}`);
+
+  useEffect(() => {
+    !message && dispatch(actions.getMessageDetail(msgId));
+  }, [message]);
+
+  if (!message) return null;
 
   return (
     <View style={styles.container}>
       <View style={styles.connector} />
-      <View style={styles.right}>
-        <Avatar style={styles.avatar} size="small" user={user} />
-        <Text style={styles.textWrapper} bold>
-          {`${user?.name}  `}
-        </Text>
-        <Text h6 numberOfLines={1} ellipsizeMode="tail" style={styles.quote}>
-          {text ||
-            ((attachments || []).length > 0 ? 'tap to see attachment' : '')}
-        </Text>
-      </View>
+      <Text
+        style={styles.right}
+        numberOfLines={Platform.OS === 'web' ? 1 : 2}
+        ellipsizeMode="tail">
+        <Avatar.Tiny
+          style={styles.avatar}
+          source={getAvatar(author)}
+          placeholderSource={images.img_user_avatar_default}
+        />
+        <Text.BodySM style={styles.textWrapper}>
+          {`${message?.user?.name}  `}
+        </Text.BodySM>
+        <Text.BodyS style={styles.quote}>
+          {message?.text ||
+            ((message?.attachments || []).length > 0
+              ? i18next.t('chat:label_replied_messsage_attachment')
+              : '')}
+        </Text.BodyS>
+      </Text>
     </View>
   );
 };
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (theme: ITheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-end',
+      marginTop: spacing.margin.base,
     },
     connector: {
-      height: 16,
+      height: Platform.OS === 'web' ? 18 : '80%',
       width: 20,
       marginLeft: 20,
-      borderColor: colors.grey4,
+      borderColor: colors.borderDisable,
       borderTopWidth: 2,
       borderLeftWidth: 2,
-      borderTopLeftRadius: 10,
+      borderTopLeftRadius: spacing.borderRadius.small,
     },
     right: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: spacing.margin.small,
+      marginBottom: spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
       flexShrink: 1,
     },
     avatar: {
       marginLeft: spacing.margin.small,
+      paddingTop: 2,
     },
     textWrapper: {
       marginLeft: spacing.margin.small,
@@ -59,7 +84,7 @@ const createStyles = (theme: IObject<any>) => {
     },
     text: {},
     quote: {
-      color: colors.grey4,
+      color: colors.textSecondary,
       flexShrink: 1,
     },
   });
