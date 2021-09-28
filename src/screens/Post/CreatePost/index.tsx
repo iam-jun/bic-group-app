@@ -2,9 +2,10 @@ import React, {FC, useEffect, useRef} from 'react';
 import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useBackHandler} from '@react-native-community/hooks';
+
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
-
 import Header from '~/beinComponents/Header';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
@@ -26,17 +27,17 @@ import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import {IFilePicked} from '~/interfaces/common';
-import {showHideToastMessage} from '~/store/modal/actions';
+import modalActions from '~/store/modal/actions';
 import FileUploader from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {uploadTypes} from '~/configs/resourceConfig';
+import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 
 export interface CreatePostProps {
   route?: {
@@ -87,6 +88,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     content?.length === 0 ||
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange);
+
+  useBackHandler(() => {
+    onPressBack();
+    return true;
+  });
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -140,38 +146,25 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
-    const title = i18n.t('common:label_discard_changes');
-    const cancelLabel = i18n.t('common:btn_continue_editing');
-    const confirmLabel = i18n.t('common:btn_discard');
 
     if (isEditPost) {
       if (isEditPostHasChange) {
         dispatch(
-          modalActions.showAlert({
-            title: title,
-            content: i18n.t('post:alert_content_back_edit_post'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: cancelLabel,
-            confirmLabel: confirmLabel,
-            onConfirm: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
+          modalActions.showModal({
+            isOpen: true,
+            ContentComponent: <CreatePostExitOptions />,
+            props: {webModalStyle: {minHeight: undefined}},
           }),
         );
         return;
       }
     } else {
-      if (content) {
+      if (content || chosenAudiences?.length > 0) {
         dispatch(
-          modalActions.showAlert({
-            title: title,
-            content: i18n.t('post:alert_content_back_create_post'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: cancelLabel,
-            confirmLabel: confirmLabel,
-            onConfirm: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
+          modalActions.showModal({
+            isOpen: true,
+            ContentComponent: <CreatePostExitOptions />,
+            props: {webModalStyle: {minHeight: undefined}},
           }),
         );
         return;
@@ -189,7 +182,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
     if (imageError) {
       dispatch(
-        showHideToastMessage({
+        modalActions.showHideToastMessage({
           content: imageError,
           props: {textProps: {useI18n: true}, type: 'error'},
         }),
@@ -291,34 +284,32 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScreenWrapper isFullView testID={'CreatePostScreen'}>
-        <Header
-          titleTextProps={{useI18n: true}}
-          title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
-          buttonText={isEditPost ? 'common:btn_save' : 'post:post_button'}
-          buttonProps={{
-            loading: loading,
-            disabled: disableButtonPost,
-            useI18n: true,
-            highEmphasis: true,
-          }}
-          onPressBack={onPressBack}
-          onPressButton={onPressPost}
-        />
-        {!isEditPost && (
-          <View>
-            {!!important?.active && <ImportantStatus notExpired />}
-            <CreatePostChosenAudiences disabled={loading} />
-            <Divider />
-          </View>
-        )}
-        {renderContent()}
-        {!isEditPost && (
-          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-        )}
-      </ScreenWrapper>
-    </View>
+    <ScreenWrapper isFullView testID={'CreatePostScreen'}>
+      <Header
+        titleTextProps={{useI18n: true}}
+        title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
+        buttonText={isEditPost ? 'common:btn_save' : 'post:post_button'}
+        buttonProps={{
+          loading: loading,
+          disabled: disableButtonPost,
+          useI18n: true,
+          highEmphasis: true,
+        }}
+        onPressBack={onPressBack}
+        onPressButton={onPressPost}
+      />
+      {!isEditPost && (
+        <View>
+          {!!important?.active && <ImportantStatus notExpired />}
+          <CreatePostChosenAudiences disabled={loading} />
+          <Divider />
+        </View>
+      )}
+      {renderContent()}
+      {!isEditPost && (
+        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+      )}
+    </ScreenWrapper>
   );
 };
 

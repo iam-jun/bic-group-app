@@ -4,23 +4,34 @@ import {
   IPayloadReactionDetailBottomSheet,
   IShowAlert,
 } from '~/interfaces/IModal';
-import {IToastMessage} from '~/interfaces/common';
+import {IPayloadShowModal, IToastMessage} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
 
-/**
- * Fetch settings
- * @returns {{type: string}}
- */
+export function setModal(payload: IPayloadShowModal) {
+  return {
+    type: Actions.SET_MODAL,
+    payload,
+  };
+}
+
+export function showModal(payload: IPayloadShowModal) {
+  return {
+    type: Actions.SHOW_MODAL,
+    payload,
+  };
+}
+
+export function hideModal() {
+  return {
+    type: Actions.HIDE_MODAL,
+  };
+}
+
 export function fetchSetting() {
   return {
     type: Actions.FETCH_SETTING,
   };
 }
-
-/**
- * Show Alert
- * @returns {{type: string}}
- */
 
 export function showAlert(payload: IShowAlert) {
   return {
@@ -28,11 +39,6 @@ export function showAlert(payload: IShowAlert) {
     payload,
   };
 }
-
-/**
- * Hide Alert
- * @returns {{type: string}}
- */
 
 export function hideAlert() {
   return {
@@ -104,3 +110,24 @@ export const setShowReactionBottomSheet = (payload?: {
   type: Actions.SET_SHOW_REACTION_BOTTOM_SHEET,
   payload,
 });
+
+const modalActions = {
+  setModal,
+  showModal,
+  hideModal,
+  fetchSetting,
+  showAlert,
+  hideAlert,
+  showAlertNewFeature,
+  hideAlertNewFeature,
+  showLoading,
+  hideLoading,
+  showHideToastMessage,
+  setToastMessage,
+  clearToastMessage,
+  focusSearchInput,
+  showReactionDetailBottomSheet,
+  clearReactionDetailBottomSheet,
+  setShowReactionBottomSheet,
+};
+export default modalActions;

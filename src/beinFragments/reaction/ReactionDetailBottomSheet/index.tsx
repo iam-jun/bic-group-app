@@ -4,12 +4,12 @@ import {Dimensions, View} from 'react-native';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
-import modalKeySelector from '~/store/modal/selectors';
 import {clearReactionDetailBottomSheet} from '~/store/modal/actions';
 import ReactionTabBar from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import ReactionDetailTab from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionDetailTab';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import modalKeySelector from '~/store/modal/keySelector';
 
 const screenHeight = Dimensions.get('window').height;
 const contentBarHeight = 0.6 * screenHeight;

@@ -2,6 +2,10 @@ import * as actions from './constants';
 
 export const initState = {
   loaded: false,
+  modal: {
+    isOpen: false,
+    ContentComponent: undefined,
+  },
   alert: {
     visible: false,
     title: '',
@@ -44,15 +48,19 @@ export const initState = {
   },
 };
 
-/**
- * Common reducer
- * @param state
- * @param action
- * @returns {*}
- */
 function commonReducer(state = initState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
+    case actions.SET_MODAL:
+      return {
+        ...state,
+        modal: payload,
+      };
+    case actions.HIDE_MODAL:
+      return {
+        ...state,
+        modal: initState.modal,
+      };
     case actions.SHOW_ALERT:
       return {
         ...state,
