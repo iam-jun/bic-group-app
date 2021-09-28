@@ -259,6 +259,9 @@ const PostDetail = (props: any) => {
       if (focus_comment && listComment?.length > 0) {
         scrollTo(-1, -1);
       }
+      if (focus_comment && Platform.OS === 'web') {
+        textInputRef.current?.focus?.();
+      }
     }
   }, [layoutSetted]);
 
