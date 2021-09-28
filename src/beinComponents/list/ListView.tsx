@@ -123,6 +123,9 @@ const ListView: React.FC<ListViewProps> = ({
               ? (action: IAction) => onActionPress(action, item)
               : undefined
           }
+          // eslint-disable-next-line react/prop-types
+          total={data && data?.length}
+          index={index}
         />
       </TouchableOpacity>
     );

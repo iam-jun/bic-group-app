@@ -12,14 +12,21 @@ import {getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
 
-const ConversationItem: React.FC<IConversation> = ({
+interface Props extends IConversation {
+  total?: number;
+  index?: number;
+}
+
+const ConversationItem: React.FC<Props> = ({
   name,
   lastMessage,
   avatar,
   _updatedAt,
   unreadCount,
   type,
-}: IConversation): React.ReactElement => {
+  total,
+  index,
+}: Props): React.ReactElement => {
   const AVG_CHAR_ON_ONE_LINE = 32;
   let twoLineLastMessage = false;
   if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
@@ -33,6 +40,9 @@ const ConversationItem: React.FC<IConversation> = ({
     type === 'direct'
       ? 'chat:label_init_direct_message:short'
       : 'chat:label_init_group_message:short';
+
+  let showDivider = true;
+  if (index && total && index + 1 === total) showDivider = false;
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(name));
@@ -79,7 +89,7 @@ const ConversationItem: React.FC<IConversation> = ({
               <RedDot style={styles.redDot} number={unreadCount} />
             )}
           </View>
-          <Div style={styles.divider} />
+          {showDivider && <Div style={styles.divider} />}
         </Div>
       </View>
     </Div>
