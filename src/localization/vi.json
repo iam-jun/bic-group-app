@@ -194,7 +194,8 @@
   },
   "home": {
     "newsfeed": "Bản tin",
-    "saved_posts": "Bài viết đã lưu"
+    "saved_posts": "Bài viết đã lưu",
+    "draft_post": "Bài nháp"
   },
   "post": {
     "news_feed": "News Feed",

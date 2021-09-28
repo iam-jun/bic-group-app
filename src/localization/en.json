@@ -244,7 +244,8 @@
   },
   "home": {
     "newsfeed": "News feed",
-    "saved_posts": "Saved Posts"
+    "saved_posts": "Saved Posts",
+    "draft_post": "Draft Posts"
   },
   "post": {
     "news_feed": "News Feed",

@@ -4,6 +4,7 @@ import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import PostSelectImage from '~/screens/Post/PostSelectImage';
+import DraftPost from '~/screens/Post/DraftPost';
 
 export default {
   newsfeed: Newsfeed,
@@ -12,4 +13,5 @@ export default {
   'create-comment': CreateComment,
   'post-select-audience': PostSelectAudience,
   'post-select-image': PostSelectImage,
+  'draft-post': DraftPost,
 };

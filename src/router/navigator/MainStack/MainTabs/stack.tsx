@@ -1,33 +1,43 @@
 const mainTabStack = {
+  //HOME
   newsfeed: 'newsfeed',
-  // 'conversation-list': ConversationsList,
-  conversation: 'conversation',
-  'conversation-detail': 'conversation-detail',
-  'create-conversation': 'create-conversation',
-  'chat-group-members': 'chat-group-members',
-  'add-members': 'add-members',
-  // 'group-list': Groups,
-  'group-detail': 'group-detail',
-  'group-about': 'group-about',
-  'group-members': 'group-members',
-  'group-files': 'group-files',
   'create-post': 'create-post',
   'create-comment': 'create-comment',
   'post-select-audience': 'post-select-audience',
   'post-select-image': 'post-select-image',
   'post-detail': 'post-detail',
+  'draft-post': 'draft-post',
+
+  //CHAT
+  // 'conversation-list': ConversationsList,
+  conversation: 'conversation',
+  'conversation-detail': 'conversation-detail',
+  'create-conversation': 'create-conversation',
+
+  //GROUP
+  // 'group-list': Groups,
+  'chat-group-members': 'chat-group-members',
+  'add-members': 'add-members',
+  'group-detail': 'group-detail',
+  'group-about': 'group-about',
+  'group-members': 'group-members',
+  'group-files': 'group-files',
   'group-admin': 'group-admin',
   'general-info': 'general-info',
   'edit-group-description': 'edit-group-description',
-  'user-profile': 'user-profile',
   'invite-members': 'invite-members',
-  'user-edit': 'user-edit',
+
+  //MENU
   // menu: Menu,
+  'user-profile': 'user-profile',
+  'user-edit': 'user-edit',
   'component-collection': 'component-collection',
   'account-settings': 'account-settings',
   'security-and-login': 'security-and-login',
   'change-password': 'change-password',
   'edit-basic-info': 'edit-basic-info',
+
+  //NOTIFICATION
   // notification: Notification,
   'not-select-notification': 'not-select-notification',
 };
