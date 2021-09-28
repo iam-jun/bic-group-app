@@ -2,6 +2,7 @@ import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
 import {StreamClient} from 'getstream';
 import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
+import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 
 export interface IObject<T> {
   [key: string]: T;
@@ -54,4 +55,10 @@ export interface IToastMessage {
   content: string;
   props: ToastMessageProps;
   duration?: number;
+}
+
+export interface IPayloadShowModal {
+  isOpen: boolean;
+  ContentComponent: any;
+  props?: BaseBottomSheetProps | any;
 }

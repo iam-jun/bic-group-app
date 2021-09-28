@@ -14,11 +14,11 @@ import commonActions, {IAction} from '~/constants/commonActions';
 export interface ReactionViewProps {
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
+  showSelectReactionWhenEmpty?: boolean;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
   onPressSelectReaction?: (event: any) => void;
   onLongPressReaction?: (reactionType: ReactionType) => void;
-  showSelectReactionWhenEmpty?: boolean;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({

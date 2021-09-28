@@ -27,13 +27,15 @@ import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 const UserProfile = (props: any) => {
-  const {userId} = props?.route?.params || {};
+  const {userId, params} = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-
   const {fullname, description, avatar, background_img_url, username} =
     userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
+
+  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const {username: currentUsername} = myProfileData || {};
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -54,7 +56,7 @@ const UserProfile = (props: any) => {
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) dispatch(menuActions.getUserProfile({userId}));
+    if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
   };
 
   useEffect(() => {
@@ -114,20 +116,20 @@ const UserProfile = (props: any) => {
   };
 
   const renderButton = () => {
-    return userId != currentUserId ? (
+    return userId == currentUserId || userId == currentUsername ? (
+      <Button.Secondary
+        style={styles.button}
+        rightIcon={'EditAlt'}
+        onPress={onEditProfileButton}>
+        {i18next.t('profile:title_edit_profile')}
+      </Button.Secondary>
+    ) : (
       <Button.Secondary
         style={styles.button}
         highEmphasis
         rightIcon={'Message'}
         onPress={onPressChat}>
         {i18next.t('profile:title_direct_message')}
-      </Button.Secondary>
-    ) : (
-      <Button.Secondary
-        style={styles.button}
-        rightIcon={'EditAlt'}
-        onPress={onEditProfileButton}>
-        {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
     );
   };

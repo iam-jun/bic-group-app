@@ -32,6 +32,7 @@ import Div from '../Div';
 
 export interface MentionInputProps extends TextInputProps {
   mentionInputRef?: any;
+  textInputRef?: any;
   style?: StyleProp<ViewStyle>;
   title?: string;
   emptyContent?: string;
@@ -57,6 +58,7 @@ export interface MentionInputProps extends TextInputProps {
 
 const MentionInput: React.FC<MentionInputProps> = ({
   mentionInputRef,
+  textInputRef,
   style,
   title,
   emptyContent,
@@ -80,7 +82,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   getDataResponseKey = '',
 }: MentionInputProps) => {
   const _mentionInputRef = mentionInputRef || useRef<any>();
-  const inputRef = useRef<TextInput>();
+  const inputRef = textInputRef || useRef<TextInput>();
   const [mentioning, setMentioning] = useState(false);
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

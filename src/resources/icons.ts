@@ -104,6 +104,7 @@ const icons = {
   AngleUp: 'AngleUp',
   CornerDownRight: 'CornerDownRight',
   Trash: 'Trash',
+  FileEditAlt: 'FileEditAlt',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
