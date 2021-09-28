@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {useEffect} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 
@@ -29,13 +28,14 @@ const ListMessages = ({listRef, ...props}: Props) => {
 
   useEffect(() => {
     const lM = document.getElementById('list-messages');
-    const lClass = _.filter(lM?.classList, item => {
-      return item.includes('scrollbarWidth');
-    });
-    if (lClass.length > 0) {
-      lM?.classList.remove(lClass[0]);
+    // const lClass = _.filter(lM?.classList, item => {
+    //   return item.includes('scrollbarWidth');
+    // });
+    const classList = lM?.classList;
+    if (classList && classList.length > 0) {
+      lM?.classList.remove(classList[classList.length - 2]);
     }
-  });
+  }, []);
 
   return (
     // <Div nativeID="chat-wrapper" onScroll={props.onScroll}>
