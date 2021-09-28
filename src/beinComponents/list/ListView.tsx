@@ -47,6 +47,7 @@ export interface ListViewProps {
     index: number;
   }) => React.ReactElement;
   renderItemSeparator?: any;
+  showItemSeparator?: boolean;
   renderLoading?: any;
   ListHeaderComponent: any;
   ListFooterComponent: any;
@@ -82,6 +83,7 @@ const ListView: React.FC<ListViewProps> = ({
 
   renderItem,
   renderItemSeparator,
+  showItemSeparator = true,
   renderLoading,
   ListHeaderComponent,
   ListFooterComponent,
@@ -127,7 +129,9 @@ const ListView: React.FC<ListViewProps> = ({
   };
 
   const _renderItemSeparator = () => {
-    if (renderItemSeparator) {
+    if (!showItemSeparator) {
+      return null;
+    } else if (renderItemSeparator) {
       return renderItemSeparator();
     }
     return (

@@ -114,6 +114,7 @@ const ConversationsList = (): React.ReactElement => {
         ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
+        showItemSeparator={false}
       />
     </ScreenWrapper>
   );
