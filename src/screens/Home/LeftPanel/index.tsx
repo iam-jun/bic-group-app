@@ -25,6 +25,10 @@ const LeftPanel = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
+  const onPressDraftPost = () => {
+    rootNavigation.navigate(homeStack.draftPost);
+  };
+
   return (
     <ScreenWrapper testID="VipScreen" disabledDarkMode isFullView>
       <PrimaryItem
@@ -48,6 +52,17 @@ const LeftPanel = () => {
         }}
         title={t('home:saved_posts')}
         onPress={onPressSavedPosts}
+      />
+      <PrimaryItem
+        height={48}
+        leftIcon={'iconMenuDraft'}
+        leftIconProps={{
+          icon: 'iconMenuDraft',
+          size: 24,
+          style: styles.leftIcon,
+        }}
+        title={t('home:draft_post')}
+        onPress={onPressDraftPost}
       />
     </ScreenWrapper>
   );

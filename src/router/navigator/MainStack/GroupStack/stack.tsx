@@ -9,6 +9,7 @@ const groupStack = {
   postSelectAudience: 'post-select-audience',
   postSelectImage: 'post-select-image',
   postDetail: 'post-detail',
+  draftPost: 'draft-post',
   groupAdmin: 'group-admin',
   generalInfo: 'general-info',
   editGroupDescription: 'edit-group-description',

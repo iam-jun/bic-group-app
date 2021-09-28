@@ -70,6 +70,7 @@ export const appScreens = {
   postCreateComment: 'create-comment',
   postSelectImage: 'post-select-image',
   postSelectAudience: 'post-select-audience',
+  draftPost: 'draft-post',
 
   // Chat
   chatConversationList: 'conversation-list',
@@ -180,6 +181,9 @@ export const linkingConfigFull = {
                 screens: {
                   newsfeed: {
                     path: 'newsfeed',
+                  },
+                  'draft-post': {
+                    path: 'draft-post',
                   },
                   'post-detail': {
                     path: 'post/t/:post_id?',
@@ -309,6 +313,9 @@ export const linkingConfigFullLaptop = {
             screens: {
               newsfeed: {
                 path: 'newsfeed',
+              },
+              'draft-post': {
+                path: 'draft-post',
               },
               'post-detail': {
                 path: 'post/t/:post_id?',
