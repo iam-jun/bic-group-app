@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
@@ -20,7 +20,6 @@ const ConversationItem: React.FC<IConversation> = ({
   unreadCount,
   type,
 }: IConversation): React.ReactElement => {
-  unreadCount = 10;
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme, unreadCount > 0);
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
@@ -50,32 +49,34 @@ const ConversationItem: React.FC<IConversation> = ({
   );
 
   return (
-    <Div style={styles.container}>
-      <View>{ItemAvatar}</View>
-      <Div style={styles.contentContainer}>
-        <View style={styles.header}>
-          <Text.H6 style={styles.title} numberOfLines={1}>
-            {name}
-          </Text.H6>
-          <Text.Subtitle
-            style={styles.textUpdate}
-            color={theme.colors.textSecondary}>
-            {countTime(_updatedAt)}
-          </Text.Subtitle>
-        </View>
-        <View style={styles.body}>
-          <Text
-            variant={unreadCount ? 'bodyM' : 'body'}
-            numberOfLines={2}
-            style={styles.lastMessage}>
-            {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
-          </Text>
-          {!!unreadCount && (
-            <RedDot style={styles.redDot} number={unreadCount} />
-          )}
-        </View>
-        <Div style={styles.divider} />
-      </Div>
+    <Div className="chat__conversation-item">
+      <View style={styles.container}>
+        <View>{ItemAvatar}</View>
+        <Div style={styles.contentContainer}>
+          <View style={styles.header}>
+            <Text.H6 style={styles.title} numberOfLines={1}>
+              {name}
+            </Text.H6>
+            <Text.Subtitle
+              style={styles.textUpdate}
+              color={theme.colors.textSecondary}>
+              {countTime(_updatedAt)}
+            </Text.Subtitle>
+          </View>
+          <View style={styles.body}>
+            <Text
+              variant={unreadCount ? 'bodyM' : 'body'}
+              numberOfLines={2}
+              style={styles.lastMessage}>
+              {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
+            </Text>
+            {!!unreadCount && (
+              <RedDot style={styles.redDot} number={unreadCount} />
+            )}
+          </View>
+          <Div style={styles.divider} />
+        </Div>
+      </View>
     </Div>
   );
 };
@@ -96,6 +97,7 @@ const createStyles = (theme: ITheme, unreadMessage: boolean) => {
       height: 84,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
+      borderRadius: 6,
     },
     avatar: {
       marginRight: spacing.margin.base,
@@ -103,6 +105,7 @@ const createStyles = (theme: ITheme, unreadMessage: boolean) => {
     contentContainer: {
       flex: 1,
       height: contentHeight,
+      overflow: 'hidden',
     },
     header: {
       flex: 1,
