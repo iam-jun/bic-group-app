@@ -153,6 +153,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           modalActions.showModal({
             isOpen: true,
             ContentComponent: <CreatePostExitOptions />,
+            props: {webModalStyle: {minHeight: undefined}},
           }),
         );
         return;
@@ -163,6 +164,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           modalActions.showModal({
             isOpen: true,
             ContentComponent: <CreatePostExitOptions />,
+            props: {webModalStyle: {minHeight: undefined}},
           }),
         );
         return;

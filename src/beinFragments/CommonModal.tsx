@@ -12,7 +12,7 @@ const CommonModal = () => {
   const dispatch = useDispatch();
 
   const modal = useKeySelector(modalKeySelector.modal);
-  const {isOpen, ContentComponent} = modal || {};
+  const {isOpen, ContentComponent, props} = modal || {};
 
   useEffect(() => {
     if (!isOpen) {
@@ -31,6 +31,7 @@ const CommonModal = () => {
       isOpen={isOpen}
       onClose={_onClose}
       ContentComponent={ContentComponent}
+      {...props}
     />
   );
 };
