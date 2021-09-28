@@ -41,7 +41,7 @@ const ChatInput: React.FC<Props> = ({
   }, [text]);
 
   useEffect(() => {
-    setText(editingMessage?.text || '');
+    commentInputRef?.current?.setText?.(editingMessage?.text || '');
   }, [editingMessage?.text]);
 
   const _onChangeText = (value: string) => {

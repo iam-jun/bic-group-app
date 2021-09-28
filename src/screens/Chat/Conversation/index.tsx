@@ -4,6 +4,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
+
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -36,7 +38,6 @@ import {IReactionCounts} from '~/interfaces/IPost';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import apiConfig from '~/configs/apiConfig';
-import {IGetReactionStatisticsReq} from '~/interfaces/IChatHttpRequest';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -220,6 +221,10 @@ const Conversation = () => {
     selectedMessage && setEditingMessage(selectedMessage);
   };
 
+  const onEditMessage = (message: IMessage | undefined) => {
+    setEditingMessage(message);
+  };
+
   const viewReactions = () => {
     if (selectedMessage?.reaction_counts) {
       const payload: IPayloadReactionDetailBottomSheet = {
@@ -233,10 +238,6 @@ const Conversation = () => {
       };
       dispatch(modalActions.showReactionDetailBottomSheet(payload));
     }
-  };
-
-  const onEditMessage = (message: IMessage | undefined) => {
-    setEditingMessage(message);
   };
 
   const onPressBack = async () => {

@@ -28,7 +28,6 @@ export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
   index: number;
-  unreadPoint: number;
   onReactPress: (event: any, side: 'left' | 'right' | 'center') => void;
   onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
