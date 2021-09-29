@@ -92,7 +92,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           loading: state[dataType].data.length === 0,
           params: payload,
           offset:
-            payload?.offset && state[dataType].offset <= 0
+            state[dataType].offset <= 0
               ? payload?.offset
               : state[dataType].offset,
         },

@@ -20,7 +20,7 @@ const getData = (dataType: string, payload?: any, field?: string) => ({
   field,
 });
 
-const setData = (dataType: string, payload: []) => ({
+const setData = (dataType: string, payload: any[]) => ({
   type: Actions.SET_DATA,
   payload,
   dataType,
@@ -191,7 +191,7 @@ const getMoreDownMessages = (payload: {offset: number; count: number}) => ({
   payload,
 });
 
-const setMoreDownMessages = (payload: any) => ({
+const setMoreDownMessages = (payload: IMessage[]) => ({
   type: Actions.SET_MORE_DOWN_MESSAGES,
   payload,
 });
@@ -215,6 +215,11 @@ const getMessageDetail = (payload: string) => ({
 
 const setMessageDetail = (payload: IMessage) => ({
   type: Actions.SET_MESSAGE_DETAIL,
+  payload,
+});
+
+const getSurroundingMessages = (payload: string) => ({
+  type: Actions.GET_SURROUNDING_MESSAGES,
   payload,
 });
 
@@ -260,4 +265,5 @@ export default {
   readConversation,
   getMessageDetail,
   setMessageDetail,
+  getSurroundingMessages,
 };

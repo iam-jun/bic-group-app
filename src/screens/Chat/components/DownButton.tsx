@@ -44,6 +44,7 @@ const createStyle = (theme: ITheme) => {
       shadowOpacity: 0.12,
       shadowRadius: 10.32,
       elevation: 16,
+      zIndex: 999,
     },
   });
 };

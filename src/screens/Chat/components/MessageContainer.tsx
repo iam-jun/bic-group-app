@@ -34,6 +34,7 @@ export interface MessageItemProps {
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
   onLongPressReaction: (reactionType: ReactionType) => void;
+  onQuotedMessagePress: () => void;
 }
 
 const MessageItem = (props: MessageItemProps) => {
@@ -53,6 +54,7 @@ const MessageItem = (props: MessageItemProps) => {
     onAddReaction,
     onRemoveReaction,
     onLongPressReaction,
+    onQuotedMessagePress,
   } = props;
   const {
     text,
@@ -107,7 +109,12 @@ const MessageItem = (props: MessageItemProps) => {
       <Div className="chat-message">
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
           <View style={styles.container}>
-            {quotedMessage && <QuotedMessage {...quotedMessage} />}
+            {quotedMessage && (
+              <QuotedMessage
+                message={quotedMessage}
+                onPress={onQuotedMessagePress}
+              />
+            )}
             {!hideHeader && (
               <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
@@ -146,19 +153,21 @@ const MessageItem = (props: MessageItemProps) => {
               )}
             </View>
             <MessageStatus status={status} onRetryPress={_onRetryPress} />
-            <View style={styles.reactionView}>
-              <ReactionView
-                ownReactions={own_reactions || {}}
-                reactionCounts={reaction_counts || {}}
-                onAddReaction={onAddReaction}
-                onRemoveReaction={onRemoveReaction}
-                onLongPressReaction={onLongPressReaction}
-                onPressSelectReaction={(event: any) =>
-                  onReactPress(event, 'center')
-                }
-                showSelectReactionWhenEmpty={false}
-              />
-            </View>
+            {!removed && (
+              <View style={styles.reactionView}>
+                <ReactionView
+                  ownReactions={own_reactions || {}}
+                  reactionCounts={reaction_counts || {}}
+                  onAddReaction={onAddReaction}
+                  onRemoveReaction={onRemoveReaction}
+                  onLongPressReaction={onLongPressReaction}
+                  onPressSelectReaction={(event: any) =>
+                    onReactPress(event, 'center')
+                  }
+                  showSelectReactionWhenEmpty={false}
+                />
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
       </Div>
@@ -192,6 +201,9 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
+    },
+    marginTop: {
+      marginTop: spacing.margin.base,
     },
     divider: {
       flexDirection: 'row',

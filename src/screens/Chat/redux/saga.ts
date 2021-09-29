@@ -61,6 +61,7 @@ export default function* saga() {
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
+  yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
 }
 
 function* initChat() {
@@ -355,12 +356,12 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
           _id: payload._id,
           rid: payload.room_id,
           msg: payload.text,
-          attachments: payload.quotedMessage && [
+          attachments: payload.replyingMessage && [
             {
               description: JSON.stringify({
                 type: 'reply',
-                msgId: payload.quotedMessage._id,
-                author: payload.quotedMessage.user.username,
+                msgId: payload.replyingMessage._id,
+                author: payload.replyingMessage.user.username,
               }),
             },
           ],
@@ -369,7 +370,7 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
     );
 
     const message = mapMessage(auth.user, response.data.message);
-    yield put(actions.sendMessageSuccess({...payload, ...message}));
+    yield put(actions.sendMessageSuccess({...payload, ...message} as IMessage));
   } catch (err) {
     yield put(actions.sendMessageFailed(payload));
   }
@@ -504,6 +505,25 @@ function* getMessageDetail({payload}: {payload: string; type: string}) {
     );
   } catch (err) {
     console.error('getMessageDetail', err);
+  }
+}
+
+function* getSurroundingMessages({payload}: {type: string; payload: string}) {
+  try {
+    const {auth, chat} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getSurroundingMessages({
+        room_id: chat.conversation?._id,
+        message_id: payload,
+        count: appConfig.messagesPerPage,
+      }),
+    );
+
+    const result = mapMessages(auth.user, response.data.data);
+
+    yield put(actions.setData('messages', result));
+  } catch (err) {
+    console.log('getSurroundingMessages', err);
   }
 }
 

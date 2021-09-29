@@ -15,6 +15,7 @@ import {
   IEditMessageReq,
   IGetReactionStatisticsReq,
   IGetMessageReq,
+  IGetSurroundingMessages,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -305,6 +306,23 @@ const Chat = {
       method: 'get',
       useRetry: true,
       provider: providers.chat,
+      params,
+    };
+  },
+  getSurroundingMessages: (
+    params: IGetSurroundingMessages,
+  ): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/surrounding-messages`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.bein,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
       params,
     };
   },

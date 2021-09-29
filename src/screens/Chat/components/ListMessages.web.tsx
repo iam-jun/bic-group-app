@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 
 interface Props extends FlatListProps<any> {
-  listRef?: React.MutableRefObject<FlatList> | null;
+  listRef?: React.RefObject<FlatList> | null;
 }
 
 const ListMessages = ({listRef, ...props}: Props) => {

@@ -193,7 +193,7 @@ export interface ISendMessageAction {
   user: IChatUser;
   room_id: string;
   _updatedAt: string;
-  quotedMessage?: IMessage;
+  replyingMessage?: IMessage;
 }
 
 export interface IUploadFileAction {

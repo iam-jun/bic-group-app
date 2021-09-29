@@ -16,7 +16,7 @@ import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
-import {IMessage} from '~/interfaces/IChat';
+import {IMessage, IQuotedMessage} from '~/interfaces/IChat';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
@@ -241,6 +241,20 @@ const Conversation = () => {
     }
   };
 
+  const jumpToRepliedMessage = (message?: IQuotedMessage) => {
+    if (!message) return;
+
+    const index = messages.data.findIndex(
+      (item: IMessage) => item._id === message.msgId,
+    );
+    if (index >= 0) {
+      listRef.current?.scrollToIndex({index, animated: true});
+    } else {
+      // dispatch(actions.resetData('messages'));
+      dispatch(actions.getSurroundingMessages(message.msgId));
+    }
+  };
+
   const onPressBack = async () => {
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
@@ -287,10 +301,11 @@ const Conversation = () => {
     if (Platform.OS === 'web') return;
 
     const offsetY = event.nativeEvent?.contentOffset.y;
+
     // 2 screens
     setDownButtonVisible(
-      messages.unreadPoint > appConfig.unreadMessageOffset ||
-        offsetY >= dimension.deviceHeight * 2,
+      offsetY >= dimension.deviceHeight * 2 ||
+        messages.unreadPoint > appConfig.unreadMessageOffset,
     );
     if (
       conversation.unreadCount > appConfig.unreadMessageOffset &&
@@ -413,6 +428,7 @@ const Conversation = () => {
         onRemoveReaction(reactionId, item._id),
       onLongPressReaction: (reactionType: ReactionType) =>
         onLongPressReaction(item._id, reactionType, item?.reaction_counts),
+      onQuotedMessagePress: () => jumpToRepliedMessage(item.quotedMessage),
     };
     return <MessageContainer {...props} />;
   };
@@ -465,6 +481,7 @@ const Conversation = () => {
         showsHorizontalScrollIndicator={false}
         maxToRenderPerBatch={appConfig.messagesPerPage}
         initialNumToRender={appConfig.messagesPerPage}
+        contentContainerStyle={{paddingBottom: 16}}
         /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
         windowSize={5000}
@@ -511,8 +528,8 @@ const Conversation = () => {
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}
+      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       {renderEditingMessage()}
-
       <ChatInput
         editingMessage={editingMessage}
         onChangeMessage={onEditMessage}
@@ -520,8 +537,6 @@ const Conversation = () => {
         onCancelReplying={() => setReplyingMessage(undefined)}
         onError={setError}
       />
-
-      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
 
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}

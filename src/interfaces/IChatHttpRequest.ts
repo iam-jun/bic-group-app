@@ -91,3 +91,9 @@ export interface IGetReactionStatisticsReq {
 export interface IGetMessageReq {
   msgId: string;
 }
+
+export interface IGetSurroundingMessages {
+  message_id: string;
+  room_id: string;
+  count: number;
+}

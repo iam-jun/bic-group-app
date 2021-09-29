@@ -2,8 +2,7 @@ import React from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 
 interface Props extends FlatListProps<any> {
-  listRef?: React.MutableRefObject<FlatList> | null;
-  onScroll: (event: any) => void;
+  listRef?: React.RefObject<FlatList> | null;
 }
 
 const ListMessages = ({listRef, ...props}: Props) => {
