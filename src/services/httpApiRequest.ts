@@ -408,6 +408,7 @@ const refreshAuthTokens = async () => {
   }
   try {
     const messaging = await initPushTokenMessage();
+    await messaging().deleteToken();
     const deviceToken = await messaging().getToken();
     await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
     return true;

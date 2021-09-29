@@ -35,6 +35,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
       <ButtonWrapper style={styles.avatarContainer} onPress={goProfile}>
         <Avatar.Medium
           source={user?.avatar}
+          cache={false}
           placeholderSource={getDefaultAvatar(user.name)}
           ImageComponent={Image}
         />
