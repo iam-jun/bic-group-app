@@ -758,9 +758,12 @@ function* getDraftPosts({
       const offset = isRefresh ? 0 : draftPosts?.length || 0;
       const p = {userId, streamClient, offset: offset};
       const response = yield call(postDataHelper.getDraftPosts, p);
+      const newPosts = isRefresh
+        ? response?.data || []
+        : draftPosts.concat(response?.data || []);
       yield put(
         postActions.setDraftPosts({
-          posts: response?.data || [],
+          posts: newPosts,
           canLoadMore: response?.canLoadMore,
           loading: false,
           refreshing: false,

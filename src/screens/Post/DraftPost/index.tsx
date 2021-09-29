@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -47,7 +47,18 @@ const DraftPost = () => {
   };
 
   const renderFooter = () => {
-    return <ViewSpacing height={theme.spacing.margin.large} />;
+    return (
+      <View>
+        {canLoadMore && !refreshing && (
+          <View style={styles.listFooter}>
+            <ActivityIndicator color={theme.colors.bgFocus} />
+          </View>
+        )}
+        {!refreshing && !canLoadMore && (
+          <ViewSpacing height={theme.spacing.margin.large} />
+        )}
+      </View>
+    );
   };
 
   return (
@@ -73,7 +84,7 @@ const DraftPost = () => {
         ListFooterComponent={renderFooter}
         refreshing={refreshing}
         onRefresh={() => getData(true)}
-        onLoadMore={() => getData()}
+        onLoadMore={() => getData(false)}
       />
     </View>
   );
