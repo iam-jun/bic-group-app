@@ -80,7 +80,7 @@ const MessageItem = (props: MessageItemProps) => {
     previousMessage._updatedAt,
     'minutes',
   );
-  const sameDay = minutes <= 5;
+  const within5Mins = minutes <= 5;
 
   const _onRetryPress = () => {
     dispatch(actions.retrySendMessage(currentMessage));
@@ -91,7 +91,7 @@ const MessageItem = (props: MessageItemProps) => {
     previousMessage &&
     sameUser &&
     sameType &&
-    sameDay &&
+    within5Mins &&
     index !== messages.unreadPoint + 2;
 
   const onMenuPress = (e: any) => {
