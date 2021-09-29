@@ -101,7 +101,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getUserInnerGroup: async (groupId: number, userId: number) => {
+  getUserInnerGroups: async (groupId: number, userId: number) => {
     try {
       console.log('[Helper] starting', groupId, userId);
       const response: any = await makeHttpRequest(

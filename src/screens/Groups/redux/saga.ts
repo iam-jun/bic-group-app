@@ -58,7 +58,7 @@ function* getUserInnerGroups({
 }) {
   try {
     // @ts-ignore
-    const response = yield groupsDataHelper.getUserInnerGroup(
+    const response = yield groupsDataHelper.getUserInnerGroups(
       payload.groupId,
       payload.userId,
     );
