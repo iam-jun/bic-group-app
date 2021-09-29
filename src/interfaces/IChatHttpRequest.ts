@@ -39,7 +39,14 @@ export interface ISendMessageReq {
     If provided, this will make the avatar use the provided image url.
   */
     avatar?: string;
+    attachments?: any;
   };
+}
+
+export interface IEditMessageReq {
+  roomId: string;
+  msgId: string;
+  text: string;
 }
 
 export interface IDeleteMessage {
@@ -75,4 +82,12 @@ export interface IGetMentionUsersReq {
 
 export interface IAddUsersToGroupReq {
   user_ids: number[];
+}
+
+export interface IGetReactionStatisticsReq {
+  message_id: string;
+  reaction_name: string;
+}
+export interface IGetMessageReq {
+  msgId: string;
 }

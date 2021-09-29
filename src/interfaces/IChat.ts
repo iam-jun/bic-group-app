@@ -131,12 +131,17 @@ export type IAttachment = {
 
 export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
 
+export interface IQuotedMessage {
+  msgId: string;
+  author: string;
+}
+
 export type IMessage = {
   _id: string;
   room_id: string;
   user: IChatUser;
   text?: string;
-  quoted_message?: IMessage;
+  quotedMessage?: IQuotedMessage;
   reactions?: IReaction[];
   attachments?: IAttachment[];
   _updatedAt: string;
@@ -149,6 +154,9 @@ export type IMessage = {
   permissions?: [x: string];
   reaction_counts?: IReactionCounts;
   own_reactions?: IOwnReaction;
+  editedAt?: any;
+  editedBy?: any;
+  createdAt?: string;
 };
 
 export interface IAttachmentMessage {
@@ -172,6 +180,7 @@ export type IConversation = {
   usernames: string[];
   usersCount: number;
   unreadCount: number;
+  unreadCountText?: string;
   lastMessage: string;
   _updatedAt: string;
   type: IRoomType;
@@ -184,6 +193,7 @@ export interface ISendMessageAction {
   user: IChatUser;
   room_id: string;
   _updatedAt: string;
+  quotedMessage?: IMessage;
 }
 
 export interface IUploadFileAction {

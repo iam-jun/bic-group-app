@@ -1,4 +1,3 @@
-import {} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   ICreateRoomReq,
@@ -13,6 +12,9 @@ import {
   IRemoveMemberReq,
   IAddUsersToGroupReq,
   IDeleteMessage,
+  IEditMessageReq,
+  IGetReactionStatisticsReq,
+  IGetMessageReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -269,6 +271,41 @@ const Chat = {
       useRetry: false,
       provider: providers.chat,
       data,
+    };
+  },
+  editMessage: (data: IEditMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.update`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  getReactionStatistics: (
+    params: IGetReactionStatisticsReq,
+  ): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/reactions`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      params,
+    };
+  },
+  getMessageDetail: (params: IGetMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.getMessage`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
     };
   },
 };

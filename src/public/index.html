@@ -138,6 +138,14 @@
       justify-content: flex-end;
     }
 
+    .chat__conversation-item {
+      border-radius: var(--border-radius--default);
+    }
+
+    .chat__conversation-item:hover {
+      background-color: var(--border-divider);
+    }
+
     /*.chat-message {*/
     /*  transform: rotate(180deg);*/
     /*  direction: ltr;*/
@@ -230,6 +238,13 @@
 
     .button--secondary--high-emphasis:active {
       background-color: var(--primary-6);
+    }
+
+    .button--disable {
+      padding: 0.5rem;
+      background-color: var(--bg-disable);
+      color: var(--text-disabled);
+      border-radius: var(--border-radius--default);
     }
 
     .group-item {

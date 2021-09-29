@@ -60,13 +60,19 @@ const MainTabs = () => {
         }),
       );
 
-      streamNotiSubClient &&
-        subscribeGetstreamFeed(
-          streamNotiSubClient,
-          'notification',
-          'u-' + userId,
-          realtimeCallback,
-        );
+      if (!streamNotiSubClient) {
+        return;
+      }
+
+      const subscription = subscribeGetstreamFeed(
+        streamNotiSubClient,
+        'notification',
+        'u-' + userId,
+        realtimeCallback,
+      );
+      return () => {
+        subscription && subscription.cancel();
+      };
     }
     dispatch(postActions.getDraftPosts({userId, streamClient}));
   }, []);

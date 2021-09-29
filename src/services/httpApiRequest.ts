@@ -342,6 +342,7 @@ const handleResponseFailFeedActivity = async (
             getEnv('GET_STREAM_API_KEY'),
             getFeedAccessToken(),
             getEnv('GET_STREAM_APP_ID'),
+            {location: 'singapore'},
           );
           const resp = await makeGetStreamRequest(
             newStreamClient,
@@ -530,10 +531,9 @@ const subscribeGetstreamFeed = (
   };
 
   // subscribe notification feed to get realtime activity
-  streamClient
-    .feed(feedSlug, feedId)
-    .subscribe(callback)
-    .then(subscribeSuccessCallback, subscribeFailCallback);
+  const subscription = streamClient.feed(feedSlug, feedId).subscribe(callback);
+  subscription.then(subscribeSuccessCallback, subscribeFailCallback);
+  return subscription;
 };
 
 export {

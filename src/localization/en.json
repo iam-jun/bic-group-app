@@ -446,12 +446,12 @@
     "message_option": {
       "pin": "Pin this message",
       "edit_message": "Edit message",
-      "create_thread": "Create thread",
+      "create_thread": "Create Thread",
       "copy": "Copy Text",
       "reply": "Reply",
-      "get_link": "Get link",
+      "get_link": "Copy Message Link",
       "delete": "Delete Message",
-      "reactions": "Reactions"
+      "reactions": "View Reactions"
     },
     "label_my_message": "You",
     "label_deleted_message": {
@@ -459,7 +459,12 @@
       "other": "This message has been deleted",
       "list": "deleted a message"
     },
-    "label_no_description": "No Description"
+    "label_no_description": "No Description",
+    "label_unread_messages_banner": "Unread messages since",
+    "label_unread_messages" : "Unread messages",
+    "text_editing_message": "Editing message",
+    "text_edited": "edited",
+    "label_replied_messsage_attachment":"Tap to view attachment"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

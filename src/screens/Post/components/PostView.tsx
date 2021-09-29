@@ -144,13 +144,29 @@ const PostView: FC<PostViewProps> = ({
     dispatch(postActions.deleteReactToPost(payload));
   };
 
+  const getReactionStatistics = async (param: any) => {
+    try {
+      const response = await postDataHelper.getReactionDetail(param);
+      const data = await response?.results;
+      const users = data.map((item: any) => ({
+        id: item?.user?.id,
+        avatar: item?.user?.data?.avatar,
+        fullname: item?.user?.data?.fullname,
+      }));
+
+      return Promise.resolve(users || []);
+    } catch (err) {
+      return Promise.reject();
+    }
+  };
+
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: reaction_counts,
-      postId: postId,
-      commentId: undefined,
       initReaction: reactionType,
+      getDataParam: {postId, commentId: undefined},
+      getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };
@@ -165,16 +181,13 @@ const PostView: FC<PostViewProps> = ({
   }
 
   return (
-    <View>
+    <View
+      style={Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {}}>
       <PostViewImportant
         isImportant={isImportant}
         expireTime={important?.expiresTime}
       />
-      <View
-        style={[
-          styles.container,
-          Platform.OS === 'web' && !isPostDetail ? styles.containerWeb : {},
-        ]}>
+      <View style={[styles.container]}>
         <PostViewHeader
           audience={audience}
           actor={actor}
@@ -225,21 +238,23 @@ const PostView: FC<PostViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
-    container: {
-      backgroundColor: colors.background,
-    },
-    containerWeb: {
+    rowCenter: {flexDirection: 'row', alignItems: 'center'},
+    rootOnWeb: {
+      alignSelf: 'center',
       overflow: 'hidden',
-      borderWidth: 1,
+      width: '100%',
+      maxWidth: Platform.OS === 'web' ? dimension.maxNewsfeedWidth : undefined,
       borderRadius: 6,
-      borderColor: colors.borderDivider,
       shadowOffset: {width: 0, height: 1},
       shadowColor: '#120F22',
       shadowOpacity: 0.2,
       shadowRadius: 2,
       elevation: 2,
+    },
+    container: {
+      backgroundColor: colors.background,
     },
     deletedContainer: {
       flexDirection: 'row',

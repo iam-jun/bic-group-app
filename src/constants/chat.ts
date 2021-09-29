@@ -74,16 +74,15 @@ export const messageOptionData = {
 export type MessageOptionType = keyof typeof messageOptionData;
 
 export const myMessageOptions = [
-  'edit',
+  'reply',
   'create_thread',
   'copy',
-  'reply',
   'get_link',
+  'edit',
   'delete',
-  'reactions',
 ];
 
-export const messageOptions = ['copy', 'reply', 'get_link', 'reactions'];
+export const messageOptions = ['copy', 'reply', 'get_link'];
 
 export const reactions = {
   crazy_love_heart: {

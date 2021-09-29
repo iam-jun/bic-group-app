@@ -269,10 +269,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
     setSelectedImage(undefined);
   };
 
+  const focus = () => textInputRef.current?.focus();
+
+  const isFocused = () => textInputRef.current?.isFocused();
+
   useImperativeHandle(commentInputRef, () => ({
     setText,
     getText,
     clear,
+    focus,
+    isFocused,
   }));
 
   const onKeyPress = Platform.OS !== 'web' ? undefined : handleKeyEvent;
