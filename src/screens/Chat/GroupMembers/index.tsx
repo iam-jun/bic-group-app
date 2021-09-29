@@ -154,19 +154,29 @@ const GroupMembers = (): React.ReactElement => {
     }
 
     // Handling remove user from group chat and other inner groups
+    alertPayload.content = i18next.t(
+      `chat:modal_confirm_remove_member:description_group_chat`,
+    );
+
     groupsDataHelper
       .getUserInnerGroups(conversation.beinGroupId, user.beinUserId)
       .then(res => {
         const innerGroups = res.data.inner_groups.map(
           (group: IGroup) => group.name,
         );
-        const groupsRemovedFrom = [conversation.name, ...innerGroups].join(
-          ', ',
+        const groupsRemovedFrom = [conversation.name, ...innerGroups];
+        if (groupsRemovedFrom.length === 1) {
+          alertPayload.content = alertPayload.content.replace(
+            'groups',
+            'group',
+          );
+        }
+        const groupsRemovedFromToString = groupsRemovedFrom.join(', ');
+        alertPayload.content = alertPayload.content.replace(
+          '{0}',
+          groupsRemovedFromToString,
         );
 
-        alertPayload.content = i18next
-          .t(`chat:modal_confirm_remove_member:description_group_chat`)
-          .replace('{0}', groupsRemovedFrom);
         dispatch(modalActions.showAlert(alertPayload));
       })
       .catch(err => {
