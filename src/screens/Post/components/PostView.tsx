@@ -9,6 +9,7 @@ import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
+import resourceImages from '~/resources/images';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
@@ -174,7 +175,7 @@ const PostView: FC<PostViewProps> = ({
   if (deleted) {
     return (
       <View style={styles.deletedContainer}>
-        <Image style={styles.imageDelete} source={images.img_delete} />
+        <Image style={styles.imageDelete} source={resourceImages.img_delete} />
         <Text.H6 useI18n>post:label_post_deleted</Text.H6>
       </View>
     );

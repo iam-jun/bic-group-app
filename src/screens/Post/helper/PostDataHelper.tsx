@@ -157,6 +157,12 @@ export const postApiConfig = {
       limit: limit || 20,
     },
   }),
+  postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/public/${draftPostId}`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const postDataHelper = {
@@ -451,6 +457,20 @@ const postDataHelper = {
       }
     }
     return Promise.reject('StreamClient or UserId not found');
+  },
+  postPublishDraftPost: async (draftPostId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postPublishDraftPost(draftPostId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
   },
 };
 

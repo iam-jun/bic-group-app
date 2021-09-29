@@ -79,7 +79,18 @@ function* postCreateNewPost({
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts(postData));
-      navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+
+      if (payload?.is_draft) {
+        yield put(
+          modalActions.showHideToastMessage({
+            content: 'post:draft:text_draft_saved',
+            props: {textProps: {useI18n: true}, type: 'success'},
+          }),
+        );
+        navigation?.goBack?.();
+      } else {
+        navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+      }
 
       if (payload?.is_draft && userId && streamClient) {
         yield put(postActions.getDraftPosts({userId, streamClient}));

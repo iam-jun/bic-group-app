@@ -1,15 +1,22 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
+import {useDispatch} from 'react-redux';
+import {useBaseHook} from '~/hooks';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postActions from '~/screens/Post/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
+import {useRootNavigation} from '~/hooks/navigation';
 
-import {IPostActivity} from '~/interfaces/IPost';
+import {IPayloadGetDraftPosts, IPostActivity} from '~/interfaces/IPost';
 import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
 import Button from '~/beinComponents/Button';
-import {useBaseHook} from '~/hooks';
+import {showHideToastMessage} from '~/store/modal/actions';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -23,15 +30,25 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   isPostDetail = false,
 }: PostViewDraftProps) => {
   const [isImportant, setIsImportant] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
+  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
-  const {actor, audience, object, important, own_reactions, time} = data || {};
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
+
+  const {id, actor, audience, object, important, own_reactions} = data || {};
 
   const {content, images} = object?.data || {};
+
+  const disableButtonPost =
+    publishing ||
+    !content ||
+    (audience?.groups?.length === 0 && audience?.users?.length === 0);
 
   const checkImportant = () => {
     const {active = false} = important || {};
@@ -48,8 +65,51 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     }
   }, [important]);
 
+  const showError = (e: any) => {
+    dispatch(
+      showHideToastMessage({
+        content:
+          e?.meta?.message ||
+          e?.meta?.errors?.[0]?.message ||
+          'common:text_error_message',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+  };
+
   const onPressPost = () => {
-    alert('post');
+    if (id) {
+      setPublishing(true);
+      postDataHelper
+        .postPublishDraftPost(id)
+        .then(response => {
+          setPublishing(false);
+          if (response?.data?.id) {
+            dispatch(postActions.addToAllPosts(response.data));
+            dispatch(
+              showHideToastMessage({
+                content: 'post:draft:text_draft_published',
+                props: {textProps: {useI18n: true}, type: 'success'},
+              }),
+            );
+            if (userId && streamClient) {
+              const payload: IPayloadGetDraftPosts = {
+                userId: userId,
+                streamClient: streamClient,
+                isRefresh: true,
+              };
+              dispatch(postActions.getDraftPosts(payload));
+            }
+          } else {
+            showError(response?.data || response);
+          }
+        })
+        .catch(e => {
+          setPublishing(false);
+          showError(e);
+          console.log(`\x1b[35m🐣️ PostViewDraft e `, e, `\x1b[0m`);
+        });
+    }
   };
 
   const onPressEdit = () => {
@@ -85,7 +145,11 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           isPostDetail={isPostDetail}
         />
         <View style={styles.footerButtonContainer}>
-          <Button.Secondary style={styles.footerButton} onPress={onPressPost}>
+          <Button.Secondary
+            loading={publishing}
+            disabled={disableButtonPost}
+            style={styles.footerButton}
+            onPress={onPressPost}>
             {t('post:draft:btn_post_now')}
           </Button.Secondary>
           <Button.Secondary style={styles.footerButton} onPress={onPressEdit}>
