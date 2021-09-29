@@ -17,6 +17,7 @@ const DraftPost = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
   //get draft post called from MainTabs
@@ -46,6 +47,11 @@ const DraftPost = () => {
         renderItemSeparator={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
+        ListHeaderComponent={() => (
+          <ViewSpacing
+            height={Platform.OS === 'web' ? spacing.margin.extraLarge : 0}
+          />
+        )}
         ListFooterComponent={renderFooter}
         // refreshing={refreshing}
         // onRefresh={() => getData(true)}
@@ -62,9 +68,6 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
-    },
-    headerOnLaptop: {
-      backgroundColor: colors.surface,
     },
     listContainer: {
       flex: 1,
