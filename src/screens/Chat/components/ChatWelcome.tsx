@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {useTheme} from 'react-native-paper';
 
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import ChatWelcomeImg from '~/../assets/images/chat_welcome.svg';
 import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import {roomTypes} from '~/constants/chat';
 
 type roomTypeKeys = keyof typeof roomTypes;

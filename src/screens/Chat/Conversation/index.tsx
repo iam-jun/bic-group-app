@@ -29,10 +29,10 @@ import {
   ListMessages,
   MessageContainer,
   MessageOptionsModal,
-} from './fragments';
-import ChatWelcome from './fragments/ChatWelcome';
-import DownButton from './fragments/DownButton';
-import UnreadBanner from './fragments/UnreadBanner';
+  ChatWelcome,
+  DownButton,
+  UnreadBanner,
+} from '~/screens/Chat/components';
 import Text from '~/beinComponents/Text';
 import {IReactionCounts} from '~/interfaces/IPost';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';

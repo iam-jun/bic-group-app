@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Text} from '~/components';
+import Text from '~/beinComponents/Text';
 import {IMessage} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 

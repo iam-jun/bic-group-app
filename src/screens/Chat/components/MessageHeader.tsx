@@ -3,13 +3,13 @@ import {Image, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {Text} from '~/components';
+import Text from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IChatUser} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
-import {getDefaultAvatar} from '../../helper';
+import {getDefaultAvatar} from '../helper';
 
 interface Props {
   user: IChatUser;
