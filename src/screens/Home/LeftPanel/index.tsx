@@ -20,7 +20,7 @@ const LeftPanel = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const draftPost = useKeySelector(postKeySelector.draftPosts) || [];
+  const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
 
   const onPressNewsfeed = () => {
     rootNavigation.navigate(homeStack.newsfeed);

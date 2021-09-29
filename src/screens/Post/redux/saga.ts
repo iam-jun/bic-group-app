@@ -736,25 +736,42 @@ function* getDraftPosts({
   payload: IPayloadGetDraftPosts;
 }) {
   const {userId, streamClient, isRefresh = true} = payload;
-  const draftPosts = yield select(s => get(s, postKeySelector.draftPosts));
-  const canLoadMore = yield select(s =>
-    get(s, postKeySelector.draftCanLoadMore),
+  const draftPostsData = yield select(s =>
+    get(s, postKeySelector.draftPostsData),
   );
+  const {
+    posts: draftPosts,
+    canLoadMore,
+    refreshing,
+    loading,
+  } = draftPostsData || {};
   try {
-    if (isRefresh || canLoadMore) {
+    if (!refreshing && !loading && (isRefresh || canLoadMore)) {
+      if (isRefresh) {
+        const newData = {...draftPostsData, refreshing: true};
+        yield put(postActions.setDraftPosts(newData));
+      } else {
+        const newData = {...draftPostsData, loading: true};
+        yield put(postActions.setDraftPosts(newData));
+      }
+
       const offset = isRefresh ? 0 : draftPosts?.length || 0;
       const p = {userId, streamClient, offset: offset};
       const response = yield call(postDataHelper.getDraftPosts, p);
       yield put(
         postActions.setDraftPosts({
-          data: response?.data || [],
+          posts: response?.data || [],
           canLoadMore: response?.canLoadMore,
+          loading: false,
+          refreshing: false,
         }),
       );
     } else {
       console.log(`\x1b[31m🐣️ saga getDraftPosts cant load more\x1b[0m`);
     }
   } catch (e) {
+    const newData = {...draftPostsData, loading: false, refreshing: false};
+    yield put(postActions.setDraftPosts(newData));
     console.log(`\x1b[31m🐣️ saga getDraftPosts error: `, e, `\x1b[0m`);
   }
 }

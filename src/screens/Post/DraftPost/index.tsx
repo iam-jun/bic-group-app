@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -12,6 +12,10 @@ import Header from '~/beinComponents/Header';
 import PostViewDraft from '~/screens/Post/components/PostViewDraft';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ListView from '~/beinComponents/list/ListView';
+import postActions from '~/screens/Post/redux/actions';
+import {IPayloadGetDraftPosts} from '~/interfaces/IPost';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
 
 const DraftPost = () => {
   const dispatch = useDispatch();
@@ -20,9 +24,23 @@ const DraftPost = () => {
   const {spacing} = theme;
   const styles = createStyle(theme);
 
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
+
   //get draft post called from MainTabs
-  const draftPosts = useKeySelector(postKeySelector.draftPosts) || [];
-  const canLoadMore = useKeySelector(postKeySelector.draftCanLoadMore);
+  const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
+  const {posts: draftPosts, canLoadMore, refreshing, loading} = draftPostsData;
+
+  const getData = (isRefreshing?: boolean) => {
+    if (userId && streamClient) {
+      const payload: IPayloadGetDraftPosts = {
+        userId: userId,
+        streamClient: streamClient,
+        isRefresh: isRefreshing,
+      };
+      dispatch(postActions.getDraftPosts(payload));
+    }
+  };
 
   const renderItem = ({item, index}: any) => {
     return <PostViewDraft data={item} />;
@@ -53,9 +71,9 @@ const DraftPost = () => {
           />
         )}
         ListFooterComponent={renderFooter}
-        // refreshing={refreshing}
-        // onRefresh={() => getData(true)}
-        // onLoadMore={() => getData()}
+        refreshing={refreshing}
+        onRefresh={() => getData(true)}
+        onLoadMore={() => getData()}
       />
     </View>
   );

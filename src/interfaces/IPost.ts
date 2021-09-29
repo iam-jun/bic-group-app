@@ -299,8 +299,10 @@ export interface IPayloadReplying {
 }
 
 export interface IPayloadSetDraftPosts {
-  data?: IActivityData[];
+  posts?: IActivityData[];
   canLoadMore?: boolean;
+  loading?: boolean;
+  refreshing?: boolean;
 }
 
 export interface IPayloadGetDraftPosts {

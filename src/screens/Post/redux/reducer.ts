@@ -40,8 +40,10 @@ const initState = {
   allComments: {},
   allCommentsByParentIds: {},
   draftPosts: {
-    data: [],
+    posts: [],
     canLoadMore: true,
+    loading: false,
+    refreshing: false,
   },
   postAudienceSheet: {
     isShow: false,
