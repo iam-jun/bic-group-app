@@ -91,28 +91,25 @@ const DraftPost = () => {
         title={'home:draft_post'}
         hideBackOnLaptop
       />
-      {draftPosts?.length === 0 ? (
-        renderEmpty()
-      ) : (
-        <ListView
-          isFullView
-          containerStyle={styles.listContainer}
-          data={draftPosts}
-          renderItem={renderItem}
-          renderItemSeparator={() => (
-            <ViewSpacing height={theme.spacing.margin.large} />
-          )}
-          ListHeaderComponent={() => (
-            <ViewSpacing
-              height={Platform.OS === 'web' ? spacing.margin.extraLarge : 0}
-            />
-          )}
-          ListFooterComponent={renderFooter}
-          refreshing={refreshing}
-          onRefresh={() => getData(true)}
-          onLoadMore={() => getData(false)}
-        />
-      )}
+      <ListView
+        isFullView
+        containerStyle={styles.listContainer}
+        data={draftPosts}
+        renderItem={renderItem}
+        renderItemSeparator={() => (
+          <ViewSpacing height={theme.spacing.margin.large} />
+        )}
+        ListHeaderComponent={() => (
+          <ViewSpacing
+            height={Platform.OS === 'web' ? spacing.margin.extraLarge : 0}
+          />
+        )}
+        ListFooterComponent={renderFooter}
+        ListEmptyComponent={renderEmpty}
+        refreshing={refreshing}
+        onRefresh={() => getData(true)}
+        onLoadMore={() => getData(false)}
+      />
     </View>
   );
 };
@@ -141,7 +138,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     emptyContainer: {
-      flex: 1,
+      height: dimension.deviceHeight * 0.8,
       justifyContent: 'center',
       alignItems: 'center',
     },

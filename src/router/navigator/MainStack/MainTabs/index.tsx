@@ -52,6 +52,7 @@ const MainTabs = () => {
   const userId = useUserIdAuth();
   useEffect(() => {
     dispatch(chatActions.initChat());
+    dispatch(postActions.getDraftPosts({userId, streamClient}));
     if (streamClient?.currentUser?.token) {
       dispatch(
         notificationsActions.getNotifications({
@@ -74,7 +75,6 @@ const MainTabs = () => {
         subscription && subscription.cancel();
       };
     }
-    dispatch(postActions.getDraftPosts({userId, streamClient}));
   }, []);
 
   // callback function when client receive realtime activity in notification feed

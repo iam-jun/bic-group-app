@@ -78,7 +78,7 @@ const LeftPanel = () => {
           size: 24,
           style: styles.leftIcon,
         }}
-        title={t('home:draft_post') + '????'}
+        title={t('home:draft_post')}
         onPress={onPressDraftPost}
         RightComponent={renderBadgeNumber(draftPost?.length || 0)}
       />
