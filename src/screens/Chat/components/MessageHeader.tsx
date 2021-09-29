@@ -53,13 +53,13 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      marginTop: spacing.margin.tiny,
       flexDirection: 'row',
       alignItems: 'flex-start',
     },
     avatarContainer: {
       paddingTop:
         Platform.OS !== 'web' ? spacing.padding.small : spacing.padding.tiny,
+      paddingBottom: Platform.OS !== 'web' ? 0 : 2,
     },
     viewHeaderInfo: {
       flexDirection: 'row',
