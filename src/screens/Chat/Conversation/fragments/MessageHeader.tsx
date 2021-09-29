@@ -1,15 +1,12 @@
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {Text} from '~/components';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IChatUser} from '~/interfaces/IChat';
-import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
 import {getDefaultAvatar} from '../../helper';
@@ -20,13 +17,17 @@ interface Props {
 }
 
 const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
-  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
   const goProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, {userId: user.username});
+    rootNavigation.navigate(mainStack.userProfile, {
+      userId: user.username,
+      params: {
+        type: 'username',
+      },
+    });
   };
 
   return (
