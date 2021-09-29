@@ -1,6 +1,11 @@
 import moment from 'moment';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -23,6 +28,7 @@ import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
 import ReactionView from '~/beinComponents/ReactionView';
 import {ReactionType} from '~/constants/reactions';
+import {isEmpty} from 'lodash';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -106,7 +112,11 @@ const MessageItem = (props: MessageItemProps) => {
     return (
       <Div className="chat-message">
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
-          <View style={styles.container}>
+          <View
+            style={[
+              styles.container,
+              !hideHeader && styles.containerWithHeader,
+            ]}>
             {quotedMessage && <QuotedMessage {...quotedMessage} />}
             {!hideHeader && (
               <MessageHeader user={user} _updatedAt={_updatedAt} />
@@ -147,7 +157,7 @@ const MessageItem = (props: MessageItemProps) => {
               )}
             </View>
             <MessageStatus status={status} onRetryPress={_onRetryPress} />
-            {reaction_counts && (
+            {!isEmpty(reaction_counts) && (
               <View style={styles.reactionView}>
                 <ReactionView
                   ownReactions={own_reactions || {}}
@@ -193,10 +203,12 @@ const MessageItem = (props: MessageItemProps) => {
 const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
+    containerWithHeader: {
+      marginTop:
+        Platform.OS !== 'web' ? spacing.margin.small : spacing.margin.base,
+    },
     container: {
       paddingHorizontal: spacing.padding.base,
-      // backgroundColor: 'pink',
-      // borderWidth: 1,
     },
     divider: {
       flexDirection: 'row',
@@ -214,23 +226,19 @@ const createStyles = (theme: ITheme) => {
     },
     messageContainer: {
       marginStart: 48,
-      // backgroundColor: 'cyan',
     },
     removedText: {
       color: colors.textSecondary,
       fontStyle: 'italic',
     },
     textContainer: {
-      // backgroundColor: 'orange',
       alignItems: 'flex-start',
     },
     reactionView: {
       marginStart: 38,
-      // backgroundColor: 'cadetblue',
     },
     editedText: {
       fontStyle: 'italic',
-      // backgroundColor: 'yellow',
     },
   });
 };
