@@ -75,7 +75,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         <PostViewHeader
           audience={audience}
           actor={actor}
-          time={time}
           onPressMenu={onPressMenu}
           // onPressHeader={() => onPressHeader?.(postId)}
           // onPressShowAudiences={onPressShowAudiences}
