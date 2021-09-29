@@ -3,6 +3,7 @@ import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import i18next from 'i18next';
 import Div from '~/beinComponents/Div';
 import Divider from '~/beinComponents/Divider';
 import MarkdownView from '~/beinComponents/MarkdownView';
@@ -13,7 +14,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {ITheme} from '~/theme/interfaces';
-import actions from '../../redux/actions';
+import actions from '../redux/actions';
 import AttachmentView from './AttachmentView';
 import MessageHeader from './MessageHeader';
 import MessageMenu from './MessageMenu';
@@ -22,7 +23,6 @@ import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
 import ReactionView from '~/beinComponents/ReactionView';
 import {ReactionType} from '~/constants/reactions';
-import i18next from 'i18next';
 
 export interface MessageItemProps {
   previousMessage: IMessage;

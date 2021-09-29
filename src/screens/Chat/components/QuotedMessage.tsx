@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import {IQuotedMessage} from '~/interfaces/IChat';
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
-import {getAvatar} from '../../helper';
+import {getAvatar} from '../helper';
 import {useDispatch} from 'react-redux';
-import actions from '../../redux/actions';
+import actions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
-import i18next from 'i18next';
 import images from '~/resources/images';
 
 const QuotedMessage: React.FC<IQuotedMessage> = ({msgId, author}) => {
