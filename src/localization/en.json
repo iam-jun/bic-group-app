@@ -341,10 +341,13 @@
     "draft": {
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
+      "btn_menu_schedule": "Schedule to Post",
+      "btn_menu_delete": "Delete Draft Post",
       "title_no_draft_posts": "No Draft Post",
       "text_no_draft_posts": "You have no draft post left",
       "text_draft_published": "Your post has been published",
-      "text_draft_saved": "Your draft has been saved"
+      "text_draft_saved": "Your draft has been saved",
+      "text_draft_deleted": "Your draft has been deleted"
     }
   },
   "chat": {

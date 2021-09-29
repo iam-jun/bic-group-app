@@ -62,7 +62,7 @@ export default function* postSaga() {
   );
   yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
   yield takeLatest(postTypes.GET_POST_DETAIL, getPostDetail);
-  yield takeLatest(postTypes.GET_DRAFT_POSTS, getDraftPosts);
+  yield takeEvery(postTypes.GET_DRAFT_POSTS, getDraftPosts);
 }
 
 function* postCreateNewPost({

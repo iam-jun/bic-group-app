@@ -16,7 +16,8 @@ import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
 import Button from '~/beinComponents/Button';
-import {showHideToastMessage} from '~/store/modal/actions';
+import modalActions, {showHideToastMessage} from '~/store/modal/actions';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -77,6 +78,17 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     );
   };
 
+  const refreshDraftPosts = () => {
+    if (userId && streamClient) {
+      const payload: IPayloadGetDraftPosts = {
+        userId: userId,
+        streamClient: streamClient,
+        isRefresh: true,
+      };
+      dispatch(postActions.getDraftPosts(payload));
+    }
+  };
+
   const onPressPost = () => {
     if (id) {
       setPublishing(true);
@@ -92,14 +104,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
                 props: {textProps: {useI18n: true}, type: 'success'},
               }),
             );
-            if (userId && streamClient) {
-              const payload: IPayloadGetDraftPosts = {
-                userId: userId,
-                streamClient: streamClient,
-                isRefresh: true,
-              };
-              dispatch(postActions.getDraftPosts(payload));
-            }
+            refreshDraftPosts();
           } else {
             showError(response?.data || response);
           }
@@ -107,7 +112,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         .catch(e => {
           setPublishing(false);
           showError(e);
-          console.log(`\x1b[35m🐣️ PostViewDraft e `, e, `\x1b[0m`);
         });
     }
   };
@@ -116,8 +120,58 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     alert('edit');
   };
 
+  const onPressDelete = () => {
+    dispatch(modalActions.hideModal());
+    if (id) {
+      postDataHelper
+        .deletePost(id)
+        .then(response => {
+          if (response?.data) {
+            dispatch(
+              showHideToastMessage({
+                content: 'post:draft:text_draft_deleted',
+                props: {textProps: {useI18n: true}, type: 'success'},
+              }),
+            );
+            refreshDraftPosts();
+          }
+        })
+        .catch(e => {
+          showError(e);
+        });
+    }
+  };
+
+  const onPressCalendar = () => {
+    dispatch(modalActions.hideModal());
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
   const onPressMenu = () => {
-    alert('menu');
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <View>
+            <PrimaryItem
+              height={48}
+              leftIconProps={{icon: 'CalendarAlt', size: 20}}
+              leftIcon={'CalendarAlt'}
+              title={t('post:draft:btn_menu_schedule')}
+              onPress={onPressCalendar}
+            />
+            <PrimaryItem
+              height={48}
+              leftIconProps={{icon: 'TrashAlt', size: 20}}
+              leftIcon={'TrashAlt'}
+              title={t('post:draft:btn_menu_delete')}
+              onPress={onPressDelete}
+            />
+          </View>
+        ),
+        props: {webModalStyle: {minHeight: undefined}},
+      }),
+    );
   };
 
   return (
