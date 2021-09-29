@@ -112,7 +112,10 @@ const MessageItem = (props: MessageItemProps) => {
               <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
             <View
-              style={[styles.message, !hideHeader && styles.messageWithHeader]}>
+              style={[
+                styles.messageContainer,
+                !hideHeader && styles.messageWithHeader,
+              ]}>
               {removed ? (
                 <Text useI18n style={styles.removedText}>
                   {text}
@@ -120,22 +123,20 @@ const MessageItem = (props: MessageItemProps) => {
               ) : (
                 <>
                   <AttachmentView {...currentMessage} />
-                  <Text>
+                  <View style={styles.textContainer}>
                     <MarkdownView
                       limitMarkdownTypes
                       onPressAudience={onMentionPress}>
                       {text}
                     </MarkdownView>
                     {currentMessage.editedBy && (
-                      <View>
-                        <Text.Subtitle
-                          color={theme.colors.textSecondary}
-                          style={styles.editedText}>
-                          ({i18next.t('chat:text_edited')})
-                        </Text.Subtitle>
-                      </View>
+                      <Text.Subtitle
+                        color={theme.colors.textSecondary}
+                        style={styles.editedText}>
+                        ({i18next.t('chat:text_edited')})
+                      </Text.Subtitle>
                     )}
-                  </Text>
+                  </View>
                   <MessageMenu
                     onReactPress={(event: any) => onReactPress(event, 'left')}
                     onReplyPress={() => onReplyPress()}
@@ -146,19 +147,21 @@ const MessageItem = (props: MessageItemProps) => {
               )}
             </View>
             <MessageStatus status={status} onRetryPress={_onRetryPress} />
-            <View style={styles.reactionView}>
-              <ReactionView
-                ownReactions={own_reactions || {}}
-                reactionCounts={reaction_counts || {}}
-                onAddReaction={onAddReaction}
-                onRemoveReaction={onRemoveReaction}
-                onLongPressReaction={onLongPressReaction}
-                onPressSelectReaction={(event: any) =>
-                  onReactPress(event, 'center')
-                }
-                showSelectReactionWhenEmpty={false}
-              />
-            </View>
+            {reaction_counts && (
+              <View style={styles.reactionView}>
+                <ReactionView
+                  ownReactions={own_reactions || {}}
+                  reactionCounts={reaction_counts || {}}
+                  onAddReaction={onAddReaction}
+                  onRemoveReaction={onRemoveReaction}
+                  onLongPressReaction={onLongPressReaction}
+                  onPressSelectReaction={(event: any) =>
+                    onReactPress(event, 'center')
+                  }
+                  showSelectReactionWhenEmpty={false}
+                />
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
       </Div>
@@ -192,6 +195,8 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.base,
+      // backgroundColor: 'pink',
+      // borderWidth: 1,
     },
     divider: {
       flexDirection: 'row',
@@ -207,21 +212,25 @@ const createStyles = (theme: ITheme) => {
     messageWithHeader: {
       marginTop: -20, // push message up so that it is right below the user's name
     },
-    message: {
+    messageContainer: {
       marginStart: 48,
+      // backgroundColor: 'cyan',
     },
     removedText: {
       color: colors.textSecondary,
       fontStyle: 'italic',
     },
+    textContainer: {
+      // backgroundColor: 'orange',
+      alignItems: 'flex-start',
+    },
     reactionView: {
-      marginStart: 36,
+      marginStart: 38,
+      // backgroundColor: 'cadetblue',
     },
     editedText: {
-      marginStart: spacing.margin.tiny,
       fontStyle: 'italic',
-      alignSelf: 'center',
-      marginBottom: 2,
+      // backgroundColor: 'yellow',
     },
   });
 };
