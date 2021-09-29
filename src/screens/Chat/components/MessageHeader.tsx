@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -53,12 +53,13 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      marginTop: spacing.margin.tiny,
       flexDirection: 'row',
       alignItems: 'flex-start',
     },
     avatarContainer: {
-      paddingTop: spacing.margin.tiny,
+      paddingTop:
+        Platform.OS !== 'web' ? spacing.padding.small : spacing.padding.tiny,
+      paddingBottom: Platform.OS !== 'web' ? 0 : 2,
     },
     viewHeaderInfo: {
       flexDirection: 'row',

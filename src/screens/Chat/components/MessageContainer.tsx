@@ -1,6 +1,11 @@
 import moment from 'moment';
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -23,6 +28,7 @@ import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
 import ReactionView from '~/beinComponents/ReactionView';
 import {ReactionType} from '~/constants/reactions';
+import {isEmpty} from 'lodash';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -74,7 +80,7 @@ const MessageItem = (props: MessageItemProps) => {
     previousMessage._updatedAt,
     'minutes',
   );
-  const sameDay = minutes <= 5;
+  const within5Mins = minutes <= 5;
 
   const _onRetryPress = () => {
     dispatch(actions.retrySendMessage(currentMessage));
@@ -85,7 +91,7 @@ const MessageItem = (props: MessageItemProps) => {
     previousMessage &&
     sameUser &&
     sameType &&
-    sameDay &&
+    within5Mins &&
     index !== messages.unreadPoint + 2;
 
   const onMenuPress = (e: any) => {
@@ -106,13 +112,20 @@ const MessageItem = (props: MessageItemProps) => {
     return (
       <Div className="chat-message">
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
-          <View style={styles.container}>
+          <View
+            style={[
+              styles.container,
+              !hideHeader && styles.containerWithHeader,
+            ]}>
             {quotedMessage && <QuotedMessage {...quotedMessage} />}
             {!hideHeader && (
               <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
             <View
-              style={[styles.message, !hideHeader && styles.messageWithHeader]}>
+              style={[
+                styles.messageContainer,
+                !hideHeader && styles.messageWithHeader,
+              ]}>
               {removed ? (
                 <Text useI18n style={styles.removedText}>
                   {text}
@@ -120,22 +133,20 @@ const MessageItem = (props: MessageItemProps) => {
               ) : (
                 <>
                   <AttachmentView {...currentMessage} />
-                  <Text>
+                  <View style={styles.textContainer}>
                     <MarkdownView
                       limitMarkdownTypes
                       onPressAudience={onMentionPress}>
                       {text}
                     </MarkdownView>
                     {currentMessage.editedBy && (
-                      <View>
-                        <Text.Subtitle
-                          color={theme.colors.textSecondary}
-                          style={styles.editedText}>
-                          ({i18next.t('chat:text_edited')})
-                        </Text.Subtitle>
-                      </View>
+                      <Text.Subtitle
+                        color={theme.colors.textSecondary}
+                        style={styles.editedText}>
+                        ({i18next.t('chat:text_edited')})
+                      </Text.Subtitle>
                     )}
-                  </Text>
+                  </View>
                   <MessageMenu
                     onReactPress={(event: any) => onReactPress(event, 'left')}
                     onReplyPress={() => onReplyPress()}
@@ -146,19 +157,21 @@ const MessageItem = (props: MessageItemProps) => {
               )}
             </View>
             <MessageStatus status={status} onRetryPress={_onRetryPress} />
-            <View style={styles.reactionView}>
-              <ReactionView
-                ownReactions={own_reactions || {}}
-                reactionCounts={reaction_counts || {}}
-                onAddReaction={onAddReaction}
-                onRemoveReaction={onRemoveReaction}
-                onLongPressReaction={onLongPressReaction}
-                onPressSelectReaction={(event: any) =>
-                  onReactPress(event, 'center')
-                }
-                showSelectReactionWhenEmpty={false}
-              />
-            </View>
+            {!isEmpty(reaction_counts) && (
+              <View style={styles.reactionView}>
+                <ReactionView
+                  ownReactions={own_reactions || {}}
+                  reactionCounts={reaction_counts || {}}
+                  onAddReaction={onAddReaction}
+                  onRemoveReaction={onRemoveReaction}
+                  onLongPressReaction={onLongPressReaction}
+                  onPressSelectReaction={(event: any) =>
+                    onReactPress(event, 'center')
+                  }
+                  showSelectReactionWhenEmpty={false}
+                />
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
       </Div>
@@ -190,6 +203,10 @@ const MessageItem = (props: MessageItemProps) => {
 const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
+    containerWithHeader: {
+      marginTop:
+        Platform.OS !== 'web' ? spacing.margin.small : spacing.margin.base,
+    },
     container: {
       paddingHorizontal: spacing.padding.base,
     },
@@ -207,21 +224,23 @@ const createStyles = (theme: ITheme) => {
     messageWithHeader: {
       marginTop: -20, // push message up so that it is right below the user's name
     },
-    message: {
+    messageContainer: {
       marginStart: 48,
+      minHeight: 28,
     },
     removedText: {
+      paddingTop: spacing.padding.tiny,
       color: colors.textSecondary,
       fontStyle: 'italic',
     },
+    textContainer: {
+      alignItems: 'flex-start',
+    },
     reactionView: {
-      marginStart: 36,
+      marginStart: 38,
     },
     editedText: {
-      marginStart: spacing.margin.tiny,
       fontStyle: 'italic',
-      alignSelf: 'center',
-      marginBottom: 2,
     },
   });
 };
