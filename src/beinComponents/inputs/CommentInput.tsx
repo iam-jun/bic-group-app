@@ -262,6 +262,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const getText = () => text;
 
+  const getSelectedImage = () => selectedImage;
+
   const clear = () => {
     setText('');
     setUploadError('');
@@ -276,6 +278,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   useImperativeHandle(commentInputRef, () => ({
     setText,
     getText,
+    getSelectedImage,
     clear,
     focus,
     isFocused,
