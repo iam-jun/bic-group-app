@@ -164,7 +164,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           const errorMessage =
             typeof e === 'string'
               ? e
-              : e?.meta?.message || t('common:error_upload_photo_failed');
+              : e?.meta?.message || t('post:error_upload_photo_failed');
           setUploading(false);
           setUploadError(errorMessage);
           dispatch(
