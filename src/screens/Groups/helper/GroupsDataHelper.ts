@@ -103,7 +103,6 @@ const groupsDataHelper = {
   },
   getUserInnerGroups: async (groupId: number, userId: number) => {
     try {
-      console.log('[Helper] starting', groupId, userId);
       const response: any = await makeHttpRequest(
         groupsApiConfig.getUserInnerGroups(groupId, userId),
       );
