@@ -71,20 +71,19 @@ function* postCreateNewPost({
   type: string;
   payload: IPostCreatePost;
 }) {
-  console.log(
-    '\x1b[36m',
-    'namanh --- postCreateNewPost | postCreateNewPost : ',
-    '\x1b[0m',
-    payload,
-  );
+  const {userId, streamClient, ...postPayload} = payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.postCreateNewPost, payload);
+    const response = yield call(postDataHelper.postCreateNewPost, postPayload);
     yield put(postActions.setLoadingCreatePost(false));
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts(postData));
       navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+
+      if (payload?.is_draft && userId && streamClient) {
+        yield put(postActions.getDraftPosts({userId, streamClient}));
+      }
     } else {
       //todo handle post error
     }

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useContext, useEffect, useRef} from 'react';
 import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -38,6 +38,8 @@ import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
 
 export interface CreatePostProps {
   route?: {
@@ -61,6 +63,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
+
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
 
   const createPostData = useCreatePost();
   const {loading, data, chosenAudiences = [], important} = createPostData || {};
@@ -230,6 +235,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         data: postData,
         audience,
         is_draft: isDraft,
+        userId,
+        streamClient,
       };
       if (important?.active) {
         payload.important = important;

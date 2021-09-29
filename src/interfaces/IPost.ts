@@ -113,6 +113,9 @@ export interface IPostCreatePost {
   tags?: number[];
   important?: IActivityImportant;
   is_draft?: boolean;
+
+  userId?: string;
+  streamClient?: StreamClient;
 }
 
 export interface IPayloadCreateComment {
