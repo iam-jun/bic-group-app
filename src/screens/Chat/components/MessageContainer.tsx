@@ -226,8 +226,10 @@ const createStyles = (theme: ITheme) => {
     },
     messageContainer: {
       marginStart: 48,
+      minHeight: 28,
     },
     removedText: {
+      paddingTop: spacing.padding.tiny,
       color: colors.textSecondary,
       fontStyle: 'italic',
     },
