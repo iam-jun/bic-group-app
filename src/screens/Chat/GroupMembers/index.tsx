@@ -9,7 +9,6 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
-import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {chatPermissions, roomTypes} from '~/constants/chat';
@@ -25,7 +24,8 @@ import actions from '../redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {showAlertNewFeature} from '~/store/modal/actions';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -139,8 +139,6 @@ const GroupMembers = (): React.ReactElement => {
   };
 
   const showConfirmations = (user: IChatUser) => {
-    console.log('[DEBUG] conversation', conversation.beinGroupId);
-    console.log('[DEBUG] user', user);
     const alertPayload = {
       iconName: 'RemoveUser',
       title: i18next.t('chat:modal_confirm_remove_member:title'),
@@ -156,18 +154,30 @@ const GroupMembers = (): React.ReactElement => {
     }
 
     // Handling remove user from group chat and other inner groups
-    const res = dispatch(
-      groupsActions.getUserInnerGroups({
-        groupId: conversation.beinGroupId,
-        userId: user.beinUserId,
-      }),
-    );
-    console.log('[DEBUG] res', res);
+    groupsDataHelper
+      .getUserInnerGroups(conversation.beinGroupId, user.beinUserId)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        const groupsRemovedFrom = [conversation.name, ...innerGroups].join(
+          ', ',
+        );
 
-    alertPayload.content = i18next
-      .t(`chat:modal_confirm_remove_member:description_group_chat`)
-      .replace('{0}', conversation.name);
-    dispatch(modalActions.showAlert(alertPayload));
+        alertPayload.content = i18next
+          .t(`chat:modal_confirm_remove_member:description_group_chat`)
+          .replace('{0}', groupsRemovedFrom);
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.log('[ERROR] error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
   };
 
   const doRemoveUser = (user: IChatUser) => {
