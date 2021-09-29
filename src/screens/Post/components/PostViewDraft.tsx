@@ -120,7 +120,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     alert('edit');
   };
 
-  const onPressDelete = () => {
+  const onDelete = () => {
     dispatch(modalActions.hideModal());
     if (id) {
       postDataHelper
@@ -140,6 +140,22 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           showError(e);
         });
     }
+  };
+
+  const onPressDelete = () => {
+    dispatch(modalActions.hideModal());
+    dispatch(
+      modalActions.showAlert({
+        title: t('post:draft:title_delete_draft_post'),
+        content: t('post:draft:text_delete_draft_post'),
+        showCloseButton: true,
+        cancelBtn: true,
+        cancelLabel: t('common:btn_cancel'),
+        confirmLabel: t('common:btn_delete'),
+        onConfirm: onDelete,
+        stretchOnWeb: true,
+      }),
+    );
   };
 
   const onPressCalendar = () => {
