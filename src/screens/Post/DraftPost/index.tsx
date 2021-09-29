@@ -16,11 +16,15 @@ import postActions from '~/screens/Post/redux/actions';
 import {IPayloadGetDraftPosts} from '~/interfaces/IPost';
 import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
+import Text from '~/beinComponents/Text';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 
 const DraftPost = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const {spacing} = theme;
   const styles = createStyle(theme);
 
@@ -29,7 +33,12 @@ const DraftPost = () => {
 
   //get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
-  const {posts: draftPosts, canLoadMore, refreshing, loading} = draftPostsData;
+  const {
+    posts: draftPosts = [],
+    canLoadMore,
+    refreshing,
+    loading,
+  } = draftPostsData;
 
   const getData = (isRefreshing?: boolean) => {
     if (userId && streamClient) {
@@ -61,6 +70,20 @@ const DraftPost = () => {
     );
   };
 
+  const renderEmpty = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Image source={images.img_empty_draft} style={styles.imgEmpty} />
+        <Text.H6 useI18n color={colors.textSecondary}>
+          post:draft:title_no_draft_posts
+        </Text.H6>
+        <Text useI18n color={colors.textSecondary}>
+          post:draft:text_no_draft_posts
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -68,24 +91,28 @@ const DraftPost = () => {
         title={'home:draft_post'}
         hideBackOnLaptop
       />
-      <ListView
-        isFullView
-        containerStyle={styles.listContainer}
-        data={draftPosts}
-        renderItem={renderItem}
-        renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
-        )}
-        ListHeaderComponent={() => (
-          <ViewSpacing
-            height={Platform.OS === 'web' ? spacing.margin.extraLarge : 0}
-          />
-        )}
-        ListFooterComponent={renderFooter}
-        refreshing={refreshing}
-        onRefresh={() => getData(true)}
-        onLoadMore={() => getData(false)}
-      />
+      {draftPosts?.length === 0 ? (
+        renderEmpty()
+      ) : (
+        <ListView
+          isFullView
+          containerStyle={styles.listContainer}
+          data={draftPosts}
+          renderItem={renderItem}
+          renderItemSeparator={() => (
+            <ViewSpacing height={theme.spacing.margin.large} />
+          )}
+          ListHeaderComponent={() => (
+            <ViewSpacing
+              height={Platform.OS === 'web' ? spacing.margin.extraLarge : 0}
+            />
+          )}
+          ListFooterComponent={renderFooter}
+          refreshing={refreshing}
+          onRefresh={() => getData(true)}
+          onLoadMore={() => getData(false)}
+        />
+      )}
     </View>
   );
 };
@@ -112,6 +139,15 @@ const createStyle = (theme: ITheme) => {
       height: 150,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    emptyContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    imgEmpty: {
+      width: 250,
+      height: 200,
     },
   });
 };
