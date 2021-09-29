@@ -1,5 +1,10 @@
-import _, {debounce, get} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useImperativeHandle,
+} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -12,6 +17,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import _, {debounce, get} from 'lodash';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
@@ -25,8 +31,9 @@ import {ITheme} from '~/theme/interfaces';
 import Div from '../Div';
 
 export interface MentionInputProps extends TextInputProps {
+  mentionInputRef?: any;
+  textInputRef?: any;
   style?: StyleProp<ViewStyle>;
-  value?: string;
   title?: string;
   emptyContent?: string;
   modalPosition: 'top' | 'bottom';
@@ -50,8 +57,9 @@ export interface MentionInputProps extends TextInputProps {
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
+  mentionInputRef,
+  textInputRef,
   style,
-  value,
   title,
   emptyContent,
   modalPosition,
@@ -73,7 +81,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
   getDataParam,
   getDataResponseKey = '',
 }: MentionInputProps) => {
-  const inputRef = useRef<TextInput>();
+  const _mentionInputRef = mentionInputRef || useRef<any>();
+  const inputRef = textInputRef || useRef<TextInput>();
   const [mentioning, setMentioning] = useState(false);
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,14 +103,15 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 
   useEffect(() => {
-    if (value !== undefined && value != content) {
-      setContent(value);
-    }
-  }, [value]);
-
-  useEffect(() => {
     onChangeText?.(content);
   }, [content]);
+
+  const getContent = () => content;
+
+  useImperativeHandle(_mentionInputRef, () => ({
+    setContent,
+    getContent,
+  }));
 
   const getData = (mentionKey: string, getDataParam: any) => {
     if (getDataPromise && getDataParam) {

@@ -26,8 +26,8 @@ import {
   mapConversation,
   mapData,
   mapMessage,
+  mapMessages,
   mapRole,
-  mapUsers,
 } from './../helper';
 import actions from './actions';
 import * as types from './constants';
@@ -44,6 +44,7 @@ export default function* saga() {
   yield takeLatest(types.INIT_CHAT, initChat);
   yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
+  yield takeLatest(types.GET_MORE_DOWN_MESSAGES, getMoreDownMessages);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
@@ -59,6 +60,7 @@ export default function* saga() {
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
+  yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
 }
 
 function* initChat() {
@@ -96,10 +98,12 @@ function* getData({
       response.data[field || dataType],
     );
 
+    delete payload?.offset;
+
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
-      if (result.length === appConfig.recordsPerPage)
-        yield put(actions.getData(dataType, payload));
+      const page = payload?.count || appConfig.recordsPerPage;
+      if (result.length === page) yield put(actions.getData(dataType, payload));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -113,6 +117,32 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
     yield put(actions.getData(dataType, params));
+  }
+}
+
+function* getMoreDownMessages({
+  payload,
+}: {
+  type: string;
+  payload: {offset: number; count: number};
+}) {
+  try {
+    const {auth, chat} = yield select();
+    const {_id} = chat.conversation;
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      //@ts-ignore
+      apiConfig.Chat.messages({
+        roomId: _id,
+        ...payload,
+      }),
+    );
+
+    const result = mapMessages(auth.user, response.data?.messages);
+
+    yield put(actions.setMoreDownMessages(result));
+  } catch (err) {
+    console.error('getMoreDownMessages', err);
   }
 }
 
@@ -306,7 +336,6 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.uploadFile(conversation._id, formData),
     );
-    console.log('uploadFile', response);
 
     const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
@@ -326,6 +355,15 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
           _id: payload._id,
           rid: payload.room_id,
           msg: payload.text,
+          attachments: payload.quotedMessage && [
+            {
+              description: JSON.stringify({
+                type: 'reply',
+                msgId: payload.quotedMessage._id,
+                author: payload.quotedMessage.user.username,
+              }),
+            },
+          ],
         },
       }),
     );
@@ -451,6 +489,22 @@ function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else if (payload.createdAt) yield editMessage({payload, type});
   else yield sendMessage({payload, type});
+}
+
+function* getMessageDetail({payload}: {payload: string; type: string}) {
+  try {
+    const {auth} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getMessageDetail({
+        msgId: payload,
+      }),
+    );
+    yield put(
+      actions.setMessageDetail(mapMessage(auth.user, response.data.message)),
+    );
+  } catch (err) {
+    console.error('getMessageDetail', err);
+  }
 }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {

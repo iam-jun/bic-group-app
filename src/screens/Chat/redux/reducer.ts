@@ -1,12 +1,8 @@
+import i18next from 'i18next';
 import appConfig from '~/configs/appConfig';
-import {messageStatus, messageEventTypes} from '~/constants/chat';
+import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
-import {
-  IChatUser,
-  IConversation,
-  IMessage,
-  IReaction,
-} from '~/interfaces/IChat';
+import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
 import * as types from './constants';
 
 export const initDataState = {
@@ -41,9 +37,12 @@ export const initDataState = {
   },
   messages: {
     loading: false,
+    loadingDown: false,
     data: [],
     extra: [],
-    offset: 0,
+    offset: -1,
+    downOffset: 0,
+    unreadPoint: 0,
     canLoadMore: true,
   },
 };
@@ -70,6 +69,7 @@ const initState = {
   },
   searchInputFocus: '',
   hoverMessage: null,
+  quotedMessages: {},
 };
 
 /**
@@ -80,7 +80,8 @@ const initState = {
  */
 function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
   const {type, dataType, payload} = action;
-  const {rooms, conversation, messages, users, selectedUsers} = state;
+  const {rooms, conversation, messages, selectedUsers, users, quotedMessages} =
+    state;
 
   switch (type) {
     case types.GET_DATA:
@@ -89,7 +90,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         [dataType]: {
           ...state[dataType],
           loading: state[dataType].data.length === 0,
-          params: action.payload,
+          params: payload,
+          offset:
+            payload?.offset && state[dataType].offset <= 0
+              ? payload?.offset
+              : state[dataType].offset,
         },
       };
     case types.SET_DATA:
@@ -126,6 +131,38 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       return {
         ...state,
         [dataType]: initDataState[dataType],
+      };
+    case types.GET_MORE_DOWN_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          downOffset: payload?.offset,
+          loadingDown: true,
+        },
+      };
+    case types.SET_MORE_DOWN_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          downOffset: messages.downOffset - payload.length,
+          unreadPoint: messages.unreadPoint + payload.length,
+          loadingDown: false,
+          data: [...payload, ...messages.data],
+        },
+      };
+    case types.READ_CONVERSATION:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          unreadCount: 0,
+        },
+        messages: {
+          ...messages,
+          unreadPoint: 0,
+        },
       };
     case types.SEARCH_CONVERSATIONS:
       return {
@@ -177,7 +214,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
     case types.SET_CONVERSATION_DETAIL:
       return {
         ...state,
-        conversation: payload,
+        conversation: {
+          ...conversation,
+          ...payload,
+        },
       };
     case types.ADD_NEW_MESSAGE: {
       const include = messages.data.find(
@@ -185,14 +225,21 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           item._id === action.payload._id ||
           (item.localId && item.localId === action.payload.localId),
       );
-      const newMessages = !include
-        ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
-        : messages.data.map((item: IMessage) =>
-            item._id === action.payload._id ||
-            (item.localId && item.localId === action.payload.localId)
-              ? {...item, ...payload}
-              : item,
-          );
+
+      const haveUnreadMessages =
+        messages.unreadPoint > 0 &&
+        messages.unreadPoint !==
+          conversation.unreadCount - appConfig.unreadMessageOffset;
+
+      const newMessages =
+        !haveUnreadMessages && !include
+          ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
+          : messages.data.map((item: IMessage) =>
+              item._id === action.payload._id ||
+              (item.localId && item.localId === action.payload.localId)
+                ? {...item, ...payload}
+                : item,
+            );
 
       return {
         ...state,
@@ -219,6 +266,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   : item,
               ),
             },
+        conversation: {
+          ...conversation,
+          unreadCount: conversation.unreadCount + 1,
+        },
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>
@@ -227,6 +278,17 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   : sub,
               )
             : state.subscriptions,
+        //@ts-ignore
+        quotedMessages: quotedMessages[payload._id]
+          ? {
+              ...quotedMessages,
+              [payload._id]: {
+                //@ts-ignore
+                ...quotedMessages[payload._id],
+                ...payload,
+              },
+            }
+          : quotedMessages,
       };
     }
     case types.SELECT_USER:
@@ -283,12 +345,18 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ...messages,
           data: [
             {
-              ...action.payload,
+              ...payload,
               status: messageStatus.SENDING,
             },
             ...messages.data,
           ],
         },
+        quotedMessages: payload.quotedMessage
+          ? {
+              ...state.quotedMessages,
+              [payload.quotedMessage._id]: payload.quotedMessage,
+            }
+          : state.quotedMessages,
       };
     case types.RETRY_SEND_MESSAGE:
       return {
@@ -354,7 +422,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   ...item,
                   type: messageEventTypes.REMOVE_MESSAGE,
                   removed: true,
-                  text: 'chat:system_message:rm:me',
+                  text: i18next.t('chat:system_message:rm:me'),
                 }
               : item,
           ),
@@ -397,7 +465,14 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ),
         },
       };
-
+    case types.SET_MESSAGE_DETAIL:
+      return {
+        ...state,
+        quotedMessages: {
+          ...state.quotedMessages,
+          [payload._id]: payload,
+        },
+      };
     default:
       return state;
   }

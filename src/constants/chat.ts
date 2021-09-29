@@ -80,10 +80,9 @@ export const myMessageOptions = [
   'get_link',
   'edit',
   'delete',
-  'reactions',
 ];
 
-export const messageOptions = ['copy', 'reply', 'get_link', 'reactions'];
+export const messageOptions = ['copy', 'reply', 'get_link'];
 
 export const reactions = {
   crazy_love_heart: {

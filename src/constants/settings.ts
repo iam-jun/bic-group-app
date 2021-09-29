@@ -2,6 +2,14 @@ import i18n from 'i18next';
 
 import {getEnv} from '~/utils/env';
 
+export const postFeatureMenu = [
+  {
+    type: 'draftPost',
+    title: 'settings:title_post_feature_draft',
+    icon: 'iconMenuDraft',
+  },
+];
+
 export const appSettingsMenu = [
   {
     type: 'accountSettings',

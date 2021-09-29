@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect} from 'react';
+import React, {FC, useRef, useEffect} from 'react';
 import {Keyboard, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -29,6 +29,7 @@ export interface CreateCommentProps {
 }
 
 const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
+  const mentionInputRef = useRef<any>();
   const {commentId, groupIds} = route?.params || {};
 
   const dispatch = useDispatch();
@@ -50,6 +51,9 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   useEffect(() => {
     if (oldContent) {
       dispatch(postActions.setCreateComment({content: oldContent}));
+    }
+    if (oldContent && !mentionInputRef?.current?.getContent?.()) {
+      mentionInputRef?.current?.setContent?.(oldContent);
     }
   }, [oldContent]);
 
@@ -109,12 +113,12 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         onPressButton={onPressComment}
       />
       <MentionInput
+        mentionInputRef={mentionInputRef}
         style={styles.flex1}
         textInputStyle={styles.flex1}
         modalStyle={styles.mentionInputModal}
         modalPosition={'top'}
         onChangeText={onChangeText}
-        value={content}
         ComponentInput={PostInput}
         title={i18n.t('post:mention_title')}
         emptyContent={i18n.t('post:mention_empty_content')}

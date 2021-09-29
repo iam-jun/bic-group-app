@@ -125,6 +125,7 @@
   "settings": {
     "title_app_language": "Ngôn ngữ",
     "title_app_theme": "Giao diện",
+    "title_post_feature_draft": "Bài nháp",
     "title_account_settings": "Thiết lập tài khoản",
     "title_help": "Trợ giúp",
     "title_app_policies": "App Policies",
@@ -194,7 +195,8 @@
   },
   "home": {
     "newsfeed": "Bản tin",
-    "saved_posts": "Bài viết đã lưu"
+    "saved_posts": "Bài viết đã lưu",
+    "draft_post": "Bài nháp"
   },
   "post": {
     "news_feed": "News Feed",
@@ -281,7 +283,12 @@
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
     "error_upload_photo_failed": "Tải ảnh lên thất bại!",
     "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh",
-    "placeholder_create_post": "Bạn đang nghĩ gì..."
+    "placeholder_create_post": "Bạn đang nghĩ gì...",
+    "post_exit_title": "Bạn muốn hoàn thiện bài viết sau?",
+    "post_exit_desc": "Bạn có thể lưu bản nháp để hoàn thiện sau",
+    "post_exit_option_save": "Lưu bản nháp",
+    "post_exit_option_discard": "Huỷ bài viết",
+    "post_exit_option_continue": "Tiếp tục viết bài"
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

@@ -59,9 +59,14 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
   const attachment =
     item.lastMessage?.attachments?.length > 0 &&
     item.lastMessage.attachments[0];
-
+  let extraData = null;
+  try {
+    extraData = JSON.parse(attachment.description || '{}');
+  } catch (e: any) {
+    console.log(e);
+  }
   const lastMessage = item.lastMessage
-    ? attachment
+    ? attachment && extraData?.type !== 'reply'
       ? item.lastMessage.u?.username === user?.username
         ? i18next.t('chat:label_last_message:my_attachment')
         : i18next
@@ -90,14 +95,24 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
 export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   const user = mapUser(item?.u);
   let attachment = null;
+  let quotedMessage = null;
   if (item.attachments?.length > 0) {
     const _attachment: IAttachment = item.attachments[0];
-    const extraData = JSON.parse(_attachment.description || '{}');
-    attachment = {
-      ..._attachment,
-      name: _attachment.title,
-      ...extraData,
-    };
+    let extraData = null;
+    try {
+      extraData = JSON.parse(_attachment.description || '{}');
+    } catch (e: any) {
+      console.log(e);
+    }
+    if (extraData?.type === 'reply') {
+      quotedMessage = extraData;
+    } else {
+      attachment = {
+        ..._attachment,
+        name: _attachment.title,
+        ...extraData,
+      };
+    }
   }
   const type = item.t || attachment?.type;
   let text = item.msg;
@@ -105,7 +120,9 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
 
   if (item.t) {
     if (item.t === messageEventTypes.REMOVE_MESSAGE) {
-      text = `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`;
+      text = i18next.t(
+        `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`,
+      );
     } else {
       text = i18next
         .t(`chat:system_message:${item.t}`)
@@ -144,6 +161,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     status: messageStatus.SENT,
     text,
     attachment,
+    quotedMessage,
     localId: item.localId || attachment?.localId,
     reaction_counts,
     own_reactions,
@@ -172,10 +190,10 @@ export const mapRole = (item: any) => ({
 });
 
 export const getAvatar = (username: string) =>
-  `${getEnv('ROCKET_CHAT_SERVER')}avatar/${username}`;
+  `${getEnv('ROCKET_CHAT_SERVER')}avatar/${username}?format=png`;
 
 export const getRoomAvatar = (roomId: string) =>
-  `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}`;
+  `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}?format=png`;
 
 export const getMessageAttachmentUrl = (attachmentUrl: string) => {
   const auth = getChatAuthInfo();

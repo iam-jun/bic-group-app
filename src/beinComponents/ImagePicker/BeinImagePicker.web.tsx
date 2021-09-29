@@ -23,6 +23,7 @@ const getImageDimension = (file: any) => {
         resolve({
           width: img.width,
           height: img.height,
+          base64: data,
         });
       };
     };
@@ -41,6 +42,7 @@ const formatImage = async (image: any) => {
   image.mime = image?.type;
   image.width = data?.width;
   image.height = data?.height;
+  image.base64 = data?.base64;
   return image;
 };
 

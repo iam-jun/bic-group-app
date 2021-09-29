@@ -46,7 +46,7 @@ const LoadMoreComment: FC<LoadMoreCommentProps> = ({
           commentId: commentId,
           limit: commentId ? 3 : 10,
           isMerge: true,
-          callbackLoading: loading => setLoadingMore(loading),
+          callbackLoading: (loading, canLoadMore) => setLoadingMore(loading),
         }),
       );
     }
@@ -70,6 +70,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       alignItems: 'center',
+      backgroundColor: colors.background,
     },
     textLoadMoreComment: {
       margin: spacing.margin.small,
