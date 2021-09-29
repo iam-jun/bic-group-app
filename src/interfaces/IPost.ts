@@ -86,6 +86,7 @@ export interface IPostActivity {
   own_reactions?: any;
   reaction_counts?: IObject<number>;
   deleted?: boolean;
+  is_draft?: boolean;
 }
 
 export interface IOwnReaction {

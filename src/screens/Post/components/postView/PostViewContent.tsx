@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -12,14 +12,14 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
 export interface PostViewContentProps {
-  content: string;
-  images: IActivityDataImage[];
+  content?: string;
+  images?: IActivityDataImage[];
   isPostDetail: boolean;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
-  content,
-  images,
+  content = '',
+  images = [],
   isPostDetail,
 }: PostViewContentProps) => {
   const {rootNavigation} = useRootNavigation();
@@ -53,7 +53,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         )}
       </View>
       <PostPhotoPreview
-        data={images}
+        data={images || []}
         uploadType={'postImage'}
         enableGalleryModal
       />

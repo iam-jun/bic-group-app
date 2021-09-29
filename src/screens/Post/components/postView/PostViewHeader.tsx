@@ -16,9 +16,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
 export interface PostViewHeaderProps {
-  avatar: string;
-  actorName: string;
-  audience: IPostAudience;
+  audience?: IPostAudience;
   time: any;
   actor: any;
   onPressHeader?: () => void;
@@ -27,8 +25,6 @@ export interface PostViewHeaderProps {
 }
 
 const PostViewHeader: FC<PostViewHeaderProps> = ({
-  avatar,
-  actorName,
   audience,
   time,
   actor,
@@ -45,6 +41,9 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const {language} = useContext(AppContext);
 
   const textAudiences = getAudiencesText(audience, t);
+
+  const avatar = actor?.data?.avatar;
+  const actorName = actor?.data?.fullname;
 
   const onPressActor = () => {
     if (actor?.id) {

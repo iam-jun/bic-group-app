@@ -70,9 +70,6 @@ const PostView: FC<PostViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const avatar = actor?.data?.avatar;
-  const actorName = actor?.data?.fullname;
-
   const commentCount = formatLargeNumber(reaction_counts?.comment_count || 0);
   const labelButtonComment = `${t('post:button_comment')}${
     commentCount ? ` (${commentCount})` : ''
@@ -179,8 +176,6 @@ const PostView: FC<PostViewProps> = ({
           Platform.OS === 'web' && !isPostDetail ? styles.containerWeb : {},
         ]}>
         <PostViewHeader
-          avatar={avatar}
-          actorName={actorName}
           audience={audience}
           actor={actor}
           time={time}
