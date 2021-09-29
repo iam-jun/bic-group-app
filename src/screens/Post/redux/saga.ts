@@ -5,6 +5,7 @@ import {
   IOwnReaction,
   IPayloadCreateComment,
   IPayloadGetCommentsById,
+  IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
   IPayloadPutEditComment,
   IPayloadPutEditPost,
@@ -61,6 +62,7 @@ export default function* postSaga() {
   );
   yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
   yield takeLatest(postTypes.GET_POST_DETAIL, getPostDetail);
+  yield takeLatest(postTypes.GET_DRAFT_POSTS, getDraftPosts);
 }
 
 function* postCreateNewPost({
@@ -69,20 +71,19 @@ function* postCreateNewPost({
   type: string;
   payload: IPostCreatePost;
 }) {
-  console.log(
-    '\x1b[36m',
-    'namanh --- postCreateNewPost | postCreateNewPost : ',
-    '\x1b[0m',
-    payload,
-  );
+  const {userId, streamClient, ...postPayload} = payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.postCreateNewPost, payload);
+    const response = yield call(postDataHelper.postCreateNewPost, postPayload);
     yield put(postActions.setLoadingCreatePost(false));
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts(postData));
       navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+
+      if (payload?.is_draft && userId && streamClient) {
+        yield put(postActions.getDraftPosts({userId, streamClient}));
+      }
     } else {
       //todo handle post error
     }
@@ -724,6 +725,56 @@ function* addChildCommentToCommentsOfPost({
       );
       return;
     }
+  }
+}
+
+function* getDraftPosts({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetDraftPosts;
+}) {
+  const {userId, streamClient, isRefresh = true} = payload;
+  const draftPostsData = yield select(s =>
+    get(s, postKeySelector.draftPostsData),
+  );
+  const {
+    posts: draftPosts,
+    canLoadMore,
+    refreshing,
+    loading,
+  } = draftPostsData || {};
+  try {
+    if (!refreshing && !loading && (isRefresh || canLoadMore)) {
+      if (isRefresh) {
+        const newData = {...draftPostsData, refreshing: true};
+        yield put(postActions.setDraftPosts(newData));
+      } else {
+        const newData = {...draftPostsData, loading: true};
+        yield put(postActions.setDraftPosts(newData));
+      }
+
+      const offset = isRefresh ? 0 : draftPosts?.length || 0;
+      const p = {userId, streamClient, offset: offset};
+      const response = yield call(postDataHelper.getDraftPosts, p);
+      const newPosts = isRefresh
+        ? response?.data || []
+        : draftPosts.concat(response?.data || []);
+      yield put(
+        postActions.setDraftPosts({
+          posts: newPosts,
+          canLoadMore: response?.canLoadMore,
+          loading: false,
+          refreshing: false,
+        }),
+      );
+    } else {
+      console.log(`\x1b[31m🐣️ saga getDraftPosts cant load more\x1b[0m`);
+    }
+  } catch (e) {
+    const newData = {...draftPostsData, loading: false, refreshing: false};
+    yield put(postActions.setDraftPosts(newData));
+    console.log(`\x1b[31m🐣️ saga getDraftPosts error: `, e, `\x1b[0m`);
   }
 }
 

@@ -1,46 +1,30 @@
-import React, {FC, useEffect, useState, useRef, useContext} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Keyboard,
-  Platform,
-} from 'react-native';
+import React, {FC, useEffect, useState, useRef} from 'react';
+import {View, StyleSheet, Keyboard, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import moment from 'moment';
 
 import {ITheme} from '~/theme/interfaces';
-import {IPayloadReactToPost, IPostAudience} from '~/interfaces/IPost';
+import {IPayloadReactToPost} from '~/interfaces/IPost';
 import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
-import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button/';
 import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {formatDate, formatLargeNumber} from '~/utils/formatData';
+import {formatLargeNumber} from '~/utils/formatData';
 import ReactionView from '~/screens/Post/components/ReactionView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {ReactionType} from '~/constants/reactions';
-import {IconType} from '~/resources/icons';
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
-import MarkdownView from '~/beinComponents/MarkdownView';
-import ImportantStatus from '~/screens/Post/components/ImportantStatus';
-import {AppContext} from '~/contexts/AppContext';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import mainStack from '~/router/navigator/MainStack/stack';
-import Div from '~/beinComponents/Div';
-import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
-import * as modalActions from '~/store/modal/actions';
+import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
+import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
+import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
+import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
 
 export interface PostViewProps {
   postId: string;
@@ -61,9 +45,10 @@ const PostView: FC<PostViewProps> = ({
   const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
   const menuSheetRef = useRef<any>();
 
+  const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const actor = useKeySelector(postKeySelector.postActorById(postId));
@@ -81,24 +66,14 @@ const PostView: FC<PostViewProps> = ({
     postKeySelector.postObjectDataById(postId),
   );
 
-  const {language} = useContext(AppContext);
-
   const {content, images} = postObjectData || {};
 
   const userId = useUserIdAuth();
-
-  const avatar = actor?.data?.avatar;
-  const actorName = actor?.data?.fullname;
-  const textAudiences = getAudiencesText(audience, t);
-  const seenCount = '123.456';
 
   const commentCount = formatLargeNumber(reaction_counts?.comment_count || 0);
   const labelButtonComment = `${t('post:button_comment')}${
     commentCount ? ` (${commentCount})` : ''
   }`;
-
-  const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
 
   /**
    * Check Important
@@ -110,10 +85,6 @@ const PostView: FC<PostViewProps> = ({
   const checkImportant = () => {
     const {active = false} = important || {};
     let notMarkAsRead = true;
-    // if (expiresTime) {
-    //   const now = new Date();
-    //   notExpired = now.getTime() < new Date(expiresTime).getTime();
-    // }
     if (own_reactions?.mark_as_read?.length > 0) {
       notMarkAsRead = false;
     }
@@ -126,72 +97,14 @@ const PostView: FC<PostViewProps> = ({
     }
   }, [important]);
 
-  const onPressActor = () => {
-    if (actor?.id) {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: actor?.id,
-      });
-    }
-  };
-
   const onPressShowAudiences = () => {
-    dispatch(
-      postActions.showPostAudiencesBottomSheet({
-        postId,
-        fromStack: 'somewhere',
-      }),
-    );
+    const payload = {postId, fromStack: 'somewhere'};
+    dispatch(postActions.showPostAudiencesBottomSheet(payload));
   };
 
   const onPressMenu = (e: any) => {
     Keyboard.dismiss();
     menuSheetRef.current?.open?.(e?.pageX, e?.pageY);
-  };
-
-  const onPressMentionAudience = (audience: any) => {
-    if (audience?.id) {
-      rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
-    }
-  };
-
-  const onPressReact = (event: any) => {
-    const payload = {
-      show: true,
-      position: {x: event?.pageX, y: event?.pageY},
-      callback: onAddReaction,
-    };
-
-    if (Platform.OS !== 'web') {
-      dispatch(modalActions.setShowReactionBottomSheet(payload));
-      return;
-    }
-
-    // Handling show reaction bottom sheet on web
-    // @ts-ignore
-    event.target.measure((fx, fy, width, height, px, py) => {
-      const buttonReactPaddingBottom = spacing.padding.tiny || 4;
-      let x = px;
-      let y = py + height + buttonReactPaddingBottom;
-
-      /*
-      As target may be the label, not the whole button itself,
-      which causes the bottom sheet will render in the middle.
-      If pressing on the label, the childElementCount will equal 0.
-      */
-      if (event.target.childElementCount !== 0) {
-        x = x + width / 2;
-      } else {
-        // Move menu further down when pressing on label
-        y = y + buttonReactPaddingBottom * 1.5;
-      }
-      payload.position = {x, y};
-
-      dispatch(modalActions.setShowReactionBottomSheet(payload));
-    });
-  };
-
-  const _onPressComment = () => {
-    onPressComment?.(postId);
   };
 
   const onPressMarkAsRead = () => {
@@ -258,147 +171,6 @@ const PostView: FC<PostViewProps> = ({
     dispatch(showReactionDetailBottomSheet(payload));
   };
 
-  const renderPostTime = () => {
-    if (!time) {
-      return null;
-    }
-    let postTime = '';
-    if (time) {
-      const dateUtc = moment.utc(time);
-      const localDate = dateUtc.local();
-      postTime = formatDate(localDate, undefined, language, 2, false) || '';
-    }
-    return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
-  };
-
-  const renderImportant = () => {
-    if (!isImportant) {
-      return null;
-    }
-
-    const expireTime = important?.expiresTime;
-    if (expireTime) {
-      const now = new Date();
-      const notExpired = now.getTime() < new Date(expireTime).getTime();
-
-      return <ImportantStatus notExpired={notExpired} />;
-    }
-  };
-
-  const renderHeader = () => {
-    return (
-      <TouchableOpacity
-        disabled={!onPressHeader}
-        onPress={() => onPressHeader?.(postId)}
-        style={styles.headerContainer}>
-        <Avatar.UltraLarge source={avatar} style={styles.avatar} />
-        <View style={{flex: 1}}>
-          <TouchableOpacity
-            onPress={onPressActor}
-            style={{alignSelf: 'flex-start'}}>
-            <Text.H6>{actorName}</Text.H6>
-          </TouchableOpacity>
-          <View style={{flexDirection: 'row'}}>
-            <Text.H6S
-              useI18n
-              color={colors.textSecondary}
-              style={styles.textTo}>
-              post:to
-            </Text.H6S>
-            <Text.H6 onPress={onPressShowAudiences}>{textAudiences}</Text.H6>
-          </View>
-          <View style={styles.rowCenter}>
-            {renderPostTime()}
-            {/*<Icon*/}
-            {/*  style={{margin: spacing?.margin.small}}*/}
-            {/*  size={3.2}*/}
-            {/*  icon={'iconDot'}*/}
-            {/*/>*/}
-            {/*<Icon*/}
-            {/*  size={16}*/}
-            {/*  tintColor={colors.textSecondary}*/}
-            {/*  icon={'iconEyeSeen'}*/}
-            {/*/>*/}
-            {/*<Text.BodyS color={colors.textSecondary}>{seenCount}</Text.BodyS>*/}
-          </View>
-        </View>
-        <View style={{marginRight: spacing?.margin.small}}>
-          <Icon
-            style={{alignSelf: 'auto'}}
-            icon={'EllipsisH'}
-            onPress={onPressMenu}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderReactButtonItem = (
-    title: string,
-    icon: IconType,
-    onPress: any,
-    onLongPress: any,
-    disabled?: boolean,
-  ) => {
-    return (
-      <Div
-        className="button-react"
-        style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
-        <Button
-          useI18n
-          onPress={onPress}
-          onLongPress={onLongPress}
-          disabled={disabled}
-          leftIcon={icon}
-          leftIconProps={{
-            icon: icon,
-            size: 14,
-            tintColor: colors.textSecondary,
-          }}
-          textProps={{
-            variant: 'bodySM',
-            color: colors.textSecondary,
-          }}
-          style={styles.buttonReact}>
-          {title}
-        </Button>
-      </Div>
-    );
-  };
-
-  const renderContent = () => {
-    return (
-      <View>
-        <View style={styles.contentContainer}>
-          {isPostDetail ? (
-            <MarkdownView
-              onPressAudience={(audience: any) =>
-                onPressMentionAudience(audience)
-              }>
-              {content}
-            </MarkdownView>
-          ) : (
-            <CollapsibleText
-              content={content}
-              limitLength={400}
-              shortLength={400}
-              useMarkdown
-              toggleOnPress
-              onPressAudience={(audience: any) =>
-                onPressMentionAudience(audience)
-              }
-            />
-          )}
-        </View>
-        <PostPhotoPreview
-          data={images}
-          uploadType={'postImage'}
-          enableGalleryModal
-        />
-      </View>
-    );
-  };
-
   if (deleted) {
     return (
       <View style={styles.deletedContainer}>
@@ -411,10 +183,24 @@ const PostView: FC<PostViewProps> = ({
   return (
     <View
       style={Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {}}>
-      {renderImportant()}
+      <PostViewImportant
+        isImportant={isImportant}
+        expireTime={important?.expiresTime}
+      />
       <View style={[styles.container]}>
-        {renderHeader()}
-        {renderContent()}
+        <PostViewHeader
+          audience={audience}
+          actor={actor}
+          time={time}
+          onPressHeader={() => onPressHeader?.(postId)}
+          onPressMenu={onPressMenu}
+          onPressShowAudiences={onPressShowAudiences}
+        />
+        <PostViewContent
+          content={content}
+          images={images}
+          isPostDetail={isPostDetail}
+        />
         {!hideMarkAsRead && isImportant && (
           <View>
             <Button.Secondary
@@ -434,22 +220,11 @@ const PostView: FC<PostViewProps> = ({
           onRemoveReaction={onRemoveReaction}
           onLongPressReaction={onLongPressReaction}
         />
-        <View style={styles.reactButtons}>
-          {renderReactButtonItem(
-            'post:button_react',
-            'iconReact',
-            onPressReact,
-            onPressReact,
-          )}
-          <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
-          {renderReactButtonItem(
-            labelButtonComment,
-            'CommentAltDots',
-            _onPressComment,
-            _onPressComment,
-            !onPressComment,
-          )}
-        </View>
+        <PostViewFooter
+          labelButtonComment={labelButtonComment}
+          onAddReaction={onAddReaction}
+          onPressComment={() => onPressComment?.(postId)}
+        />
         <PostViewMenuBottomSheet
           modalizeRef={menuSheetRef}
           postId={postId}
@@ -460,24 +235,6 @@ const PostView: FC<PostViewProps> = ({
       </View>
     </View>
   );
-};
-
-const getAudiencesText = (aud?: IPostAudience, t?: any) => {
-  const limitLength = 25;
-  let result = '';
-  const {groups = [], users = []} = aud || {};
-  const total = groups.length + users.length;
-  result = groups?.[0]?.data?.name || users?.[0]?.data?.fullname || '';
-  const left = total - 1;
-  if (result?.length > limitLength) {
-    result = `${result.substr(0, limitLength)}...`;
-  } else if (left > 0) {
-    result = `${result},...`;
-  }
-  if (left > 0) {
-    result = `${result} +${left} ${t?.('post:other_places')}`;
-  }
-  return result;
 };
 
 const createStyle = (theme: ITheme) => {
@@ -506,38 +263,6 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
-    headerContainer: {
-      flexDirection: 'row',
-      paddingTop: spacing?.margin.small,
-    },
-    avatar: {
-      marginLeft: spacing?.margin.large,
-      marginRight: spacing?.margin.base,
-    },
-    textTo: {
-      marginRight: spacing?.margin.tiny,
-      // fontFamily: fontFamilies.Poppins,
-    },
-    reactButtons: {
-      flexDirection: 'row',
-      height: dimension?.commentBarHeight,
-      borderTopWidth: 1,
-      borderColor: colors.borderDivider,
-      alignItems: 'center',
-    },
-    contentContainer: {
-      marginVertical: spacing?.margin.small,
-      marginHorizontal: spacing?.margin.large,
-    },
-    buttonReactContainer: {
-      flex: 1,
-      height: 'auto',
-    },
-    buttonReact: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
   });
 };
 

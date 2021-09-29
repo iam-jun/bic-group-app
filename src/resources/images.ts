@@ -12,6 +12,7 @@ const images = {
   img_right_col: require('../../assets/images/img_right_col.png'),
   img_menu_chat: require('../../assets/images/menu_chat.png'),
   ic_star_white: require('../../assets/images/ic_star_white.png'),
+  img_empty_draft: require('../../assets/images/img_empty_draft.png'),
 };
 
 export default images;
