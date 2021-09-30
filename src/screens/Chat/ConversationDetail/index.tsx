@@ -55,6 +55,12 @@ const ConversationDetail = (): React.ReactElement => {
     dispatch(actions.clearSelectedUsers());
   }, [route?.params?.roomId]);
 
+  useEffect(() => {
+    if (conversation?._id) {
+      setAvatar(conversation?.avatar);
+    }
+  }, [conversation?._id]);
+
   const onPressBack = () => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
     else

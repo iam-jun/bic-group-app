@@ -300,7 +300,7 @@ const interceptorsResponseError = async (error: AxiosError) => {
  */
 const makeGetStreamRequest = async (
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   funcName: string,
   ...params: any
@@ -325,7 +325,7 @@ let unauthorizedGetStreamReqQueue: UnauthorizedReq[] = [];
 const handleResponseFailFeedActivity = async (
   activitiesError: FeedResponseError,
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   funcName: any,
   ...params: any
@@ -408,6 +408,7 @@ const refreshAuthTokens = async () => {
   }
   try {
     const messaging = await initPushTokenMessage();
+    await messaging().deleteToken();
     const deviceToken = await messaging().getToken();
     await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
     return true;
@@ -515,7 +516,7 @@ const makePushTokenRequest = async (
 // helper function to make subscription to get stream and run callback when client receive new activity
 const subscribeGetstreamFeed = (
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   callback,
 ) => {

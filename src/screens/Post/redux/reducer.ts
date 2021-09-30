@@ -39,6 +39,12 @@ const initState = {
   allPosts: {},
   allComments: {},
   allCommentsByParentIds: {},
+  draftPosts: {
+    posts: [],
+    canLoadMore: true,
+    loading: false,
+    refreshing: false,
+  },
   postAudienceSheet: {
     isShow: false,
     data: undefined,
@@ -59,6 +65,11 @@ function postReducer(state = initState, action: any = {}) {
       return {
         ...state,
         allComments: payload,
+      };
+    case postTypes.SET_DRAFT_POSTS:
+      return {
+        ...state,
+        draftPosts: payload || initState.draftPosts,
       };
     case postTypes.SET_LOADING_CREATE_POST:
       return {

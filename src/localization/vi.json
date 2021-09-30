@@ -288,7 +288,13 @@
     "post_exit_desc": "Bạn có thể lưu bản nháp để hoàn thiện sau",
     "post_exit_option_save": "Lưu bản nháp",
     "post_exit_option_discard": "Huỷ bài viết",
-    "post_exit_option_continue": "Tiếp tục viết bài"
+    "post_exit_option_continue": "Tiếp tục viết bài",
+    "draft": {
+      "btn_post_now": "Đăng ngay",
+      "btn_edit": "Sửa",
+      "title_no_draft_posts": "Không có bài nháp",
+      "text_no_draft_posts": "Bạn không còn bài nháp nào"
+    }
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",

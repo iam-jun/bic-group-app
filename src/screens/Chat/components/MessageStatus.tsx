@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import {IMesssageStatus} from '~/interfaces/IChat';
-import {Text} from '~/components';
-import i18next from 'i18next';
+import Text from '~/beinComponents/Text';
 
 export interface Props {
   status?: IMesssageStatus;

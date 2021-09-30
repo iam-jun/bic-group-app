@@ -7,6 +7,8 @@ import Icon from '~/beinComponents/Icon';
 import {IOption} from '~/interfaces/IOption';
 import Text from '~/beinComponents/Text';
 import Div from '~/beinComponents/Div';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const MenuItem: React.FC<IOption> = ({
   title,
@@ -15,9 +17,19 @@ const MenuItem: React.FC<IOption> = ({
   rightSubIcon,
   subTitle,
   style,
+  type,
 }: IOption) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+
+  let badgeNumber;
+  if (type === 'draftPost') {
+    const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
+    badgeNumber = draftPost?.length || 0;
+    if (badgeNumber > 9) {
+      badgeNumber = '9+';
+    }
+  }
 
   return (
     <Div className="button">
@@ -41,6 +53,13 @@ const MenuItem: React.FC<IOption> = ({
             <Icon icon={rightSubIcon} style={styles.rightSubIcon} />
           )}
         </View>
+        {!!badgeNumber && (
+          <View style={styles.badgeNumberContainer}>
+            <Text.Subtitle style={styles.badgeNumber}>
+              {badgeNumber}
+            </Text.Subtitle>
+          </View>
+        )}
       </View>
     </Div>
   );
@@ -67,6 +86,18 @@ const themeStyles = (theme: ITheme) => {
     label: {},
     rightSubIcon: {
       marginLeft: spacing.margin.base,
+    },
+    badgeNumberContainer: {
+      minWidth: 20,
+      minHeight: 20,
+      backgroundColor: colors.error,
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    badgeNumber: {
+      color: colors.textReversed,
+      marginTop: -2,
     },
   });
 };

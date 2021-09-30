@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useBackHandler} from '@react-native-community/hooks';
+
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
@@ -119,7 +121,9 @@ const PostDetail = (props: any) => {
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
-    if (newCommentInput !== '') {
+    const newCommentSelectedImage =
+      commentInputRef?.current?.getSelectedImage?.();
+    if (newCommentInput !== '' || newCommentSelectedImage) {
       dispatch(
         modalActions.showAlert({
           title: i18n.t('common:label_discard_changes'),
@@ -136,6 +140,11 @@ const PostDetail = (props: any) => {
     }
     rootNavigation.goBack();
   };
+
+  useBackHandler(() => {
+    onPressBack();
+    return true;
+  });
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {

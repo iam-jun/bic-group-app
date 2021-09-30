@@ -111,13 +111,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
-    if (text?.length > 0) {
+    if (text?.length > 0 || selectedImage) {
       showButtons(false);
       showSend(true);
     } else {
       showSend(false);
     }
-  }, [text]);
+  }, [text, selectedImage]);
 
   const _onPressSelectImage = () => {
     ImagePicker.openPickerSingle().then(file => {
@@ -164,7 +164,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           const errorMessage =
             typeof e === 'string'
               ? e
-              : e?.meta?.message || t('common:error_upload_photo_failed');
+              : e?.meta?.message || t('post:error_upload_photo_failed');
           setUploading(false);
           setUploadError(errorMessage);
           dispatch(
@@ -262,6 +262,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const getText = () => text;
 
+  const getSelectedImage = () => selectedImage;
+
   const clear = () => {
     setText('');
     setUploadError('');
@@ -276,6 +278,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   useImperativeHandle(commentInputRef, () => ({
     setText,
     getText,
+    getSelectedImage,
     clear,
     focus,
     isFocused,
@@ -425,7 +428,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
         </Animated.View>
-        <Button onPress={_onPressSend} disabled={!text.trim() || _loading}>
+        <Button
+          onPress={_onPressSend}
+          disabled={(!text.trim() && !selectedImage) || _loading}>
           {_loading ? (
             <ActivityIndicator
               style={styles.loadingContainer}
@@ -438,7 +443,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               size={16}
               icon={'iconSend'}
               tintColor={theme.colors.primary7}
-              disabled={!text.trim()}
+              disabled={!text.trim() && !selectedImage}
             />
           )}
         </Button>

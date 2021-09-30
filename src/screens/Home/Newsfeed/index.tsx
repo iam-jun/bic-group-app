@@ -1,34 +1,34 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-  View,
-  StyleSheet,
   ActivityIndicator,
   Platform,
+  StyleSheet,
   useWindowDimensions,
+  View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import {ITheme} from '~/theme/interfaces';
-import images from '~/resources/images';
-import {useKeySelector} from '~/hooks/selector';
-import homeActions from '~/screens/Home/redux/actions';
-import postActions from '~/screens/Post/redux/actions';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
-import {AppContext} from '~/contexts/AppContext';
-import {useUserIdAuth} from '~/hooks/auth';
-
-import ListView from '~/beinComponents/list/ListView';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Header from '~/beinComponents/Header';
 import PostItem from '~/beinComponents/list/items/PostItem';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
-import Text from '~/beinComponents/Text';
-import {useRootNavigation} from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+
+import ListView from '~/beinComponents/list/ListView';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import Text from '~/beinComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {AppContext} from '~/contexts/AppContext';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import images from '~/resources/images';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
+import homeActions from '~/screens/Home/redux/actions';
+import homeKeySelector from '~/screens/Home/redux/keySelector';
+import postActions from '~/screens/Post/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
+
+import {ITheme} from '~/theme/interfaces';
 
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
@@ -141,6 +141,7 @@ const Newsfeed = () => {
           data={homePosts}
           refreshing={refreshing}
           onRefresh={() => getData(true)}
+          onEndReachedThreshold={1}
           onLoadMore={() => getData()}
           renderItem={renderItem}
           ListHeaderComponent={() => (

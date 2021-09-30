@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useContext, useEffect, useRef} from 'react';
 import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -38,6 +38,8 @@ import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
 
 export interface CreatePostProps {
   route?: {
@@ -61,6 +63,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
+
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
 
   const createPostData = useCreatePost();
   const {loading, data, chosenAudiences = [], important} = createPostData || {};
@@ -150,10 +155,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (isEditPost) {
       if (isEditPostHasChange) {
         dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            ContentComponent: <CreatePostExitOptions />,
-            props: {webModalStyle: {minHeight: undefined}},
+          modalActions.showAlert({
+            title: i18n.t('common:label_discard_changes'),
+            content: i18n.t('post:alert_content_back_edit_post'),
+            showCloseButton: true,
+            cancelBtn: true,
+            cancelLabel: i18n.t('common:btn_continue_editing'),
+            confirmLabel: i18n.t('common:btn_discard'),
+            onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
@@ -163,7 +173,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         dispatch(
           modalActions.showModal({
             isOpen: true,
-            ContentComponent: <CreatePostExitOptions />,
+            ContentComponent: (
+              <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
+            ),
             props: {webModalStyle: {minHeight: undefined}},
           }),
         );
@@ -173,7 +185,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.goBack();
   };
 
-  const onPressPost = async () => {
+  const onPressSaveDraft = async () => {
+    await onPressPost(true);
+  };
+
+  const onPressPost = async (isDraft?: boolean) => {
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
@@ -215,7 +231,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.putEditPost(payload));
     } else {
       const postData = {content, images, videos: [], files: []};
-      const payload: IPostCreatePost = {data: postData, audience};
+      const payload: IPostCreatePost = {
+        data: postData,
+        audience,
+        is_draft: isDraft,
+        userId,
+        streamClient,
+      };
       if (important?.active) {
         payload.important = important;
       }
@@ -296,7 +318,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           highEmphasis: true,
         }}
         onPressBack={onPressBack}
-        onPressButton={onPressPost}
+        onPressButton={() => onPressPost(false)}
       />
       {!isEditPost && (
         <View>
