@@ -1,10 +1,9 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet, View} from 'react-native';
+import {FlatList, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -33,7 +32,6 @@ import {
   DownButton,
   UnreadBanner,
 } from '~/screens/Chat/components';
-import Text from '~/beinComponents/Text';
 import {IReactionCounts} from '~/interfaces/IPost';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {makeHttpRequest} from '~/services/httpApiRequest';
@@ -222,10 +220,6 @@ const Conversation = () => {
     selectedMessage && setEditingMessage(selectedMessage);
   };
 
-  const onEditMessage = (message: IMessage | undefined) => {
-    setEditingMessage(message);
-  };
-
   const viewReactions = () => {
     if (selectedMessage?.reaction_counts) {
       const payload: IPayloadReactionDetailBottomSheet = {
@@ -372,30 +366,9 @@ const Conversation = () => {
     }
   };
 
-  const onCancelEdit = () => setEditingMessage(undefined);
+  const onCancelEditingMessage = () => setEditingMessage(undefined);
 
-  const renderEditingMessage = () => {
-    if (!editingMessage) return null;
-
-    return (
-      <View style={styles.editMessageHeader}>
-        <View style={styles.headerContent}>
-          <Text.BodySM color={theme.colors.primary6}>
-            {i18next.t('chat:text_editing_message')}
-            <Text.BodySM color={theme.colors.textSecondary}>
-              {'  • '}
-              <Text.BodySM
-                useI18n
-                color={theme.colors.textSecondary}
-                onPress={onCancelEdit}>
-                common:btn_cancel
-              </Text.BodySM>
-            </Text.BodySM>
-          </Text.BodySM>
-        </View>
-      </View>
-    );
-  };
+  const onCancelReplyingMessage = () => setReplyingMessage(undefined);
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
     const props = {
@@ -511,13 +484,12 @@ const Conversation = () => {
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}
-      {renderEditingMessage()}
 
       <ChatInput
         editingMessage={editingMessage}
-        onChangeMessage={onEditMessage}
         replyingMessage={replyingMessage}
-        onCancelReplying={() => setReplyingMessage(undefined)}
+        onCancelEditing={onCancelEditingMessage}
+        onCancelReplying={onCancelReplyingMessage}
         onError={setError}
       />
 
@@ -536,24 +508,13 @@ const Conversation = () => {
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {spacing, colors} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
     },
     headerTitle: {
       marginEnd: spacing.margin.small,
-    },
-    editMessageHeader: {
-      flexDirection: 'row',
-      paddingHorizontal: spacing.padding.base,
-      paddingVertical: spacing.padding.base,
-      borderTopWidth: 1,
-      borderTopColor: colors.borderDivider,
-    },
-    headerContent: {
-      flex: 1,
-      flexDirection: 'row',
     },
   });
 };
