@@ -14,6 +14,8 @@ import {formatDate} from '~/utils/formatData';
 import {AppContext} from '~/contexts/AppContext';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useDispatch} from 'react-redux';
+import modalActions from '~/store/modal/actions';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
@@ -33,6 +35,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   onPressShowAudiences,
 }: PostViewHeaderProps) => {
   const {rootNavigation} = useRootNavigation();
+  const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -45,11 +48,16 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const avatar = actor?.data?.avatar;
   const actorName = actor?.data?.fullname;
 
-  const onPressActor = () => {
+  const onPressActor = (e: any) => {
     if (actor?.id) {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: actor?.id,
-      });
+      // rootNavigation.navigate(mainStack.userProfile, {
+      //   userId: actor?.id,
+      // });
+      const payload = {
+        userId: actor.id,
+        position: {x: e?.pageX, y: e?.pageY},
+      };
+      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
     }
   };
 

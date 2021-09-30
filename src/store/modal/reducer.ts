@@ -46,6 +46,12 @@ export const initState = {
     position: {x: -1, y: -1},
     callback: undefined,
   },
+
+  userProfilePreview: {
+    isOpen: false,
+    userId: undefined,
+    position: {x: -1, y: -1},
+  },
 };
 
 function commonReducer(state = initState, action: any = {}) {
@@ -136,6 +142,12 @@ function commonReducer(state = initState, action: any = {}) {
       return {
         ...state,
         reactionBottomSheet: payload || initState.reactionBottomSheet,
+      };
+    case actions.SET_USER_PROFILE_PREVIEW_BOTTOM_SHEET:
+      console.log('[REDUCER] payload', payload);
+      return {
+        ...state,
+        userProfilePreview: payload || initState.userProfilePreview,
       };
     default:
       return state;
