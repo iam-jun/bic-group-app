@@ -159,7 +159,7 @@ const createStyles = (
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     redDot: {
-      marginTop: spacing.margin.tiny,
+      marginTop: Platform.OS !== 'web' ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
     },
     divider: {
