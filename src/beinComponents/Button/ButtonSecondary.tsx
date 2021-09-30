@@ -39,7 +39,9 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
     _backgroundColor = colors.primary7;
     _textColor = colors.background;
     _colorHover = colors.primary6;
-  } else if (disabled) {
+  }
+
+  if (disabled) {
     _backgroundColor = colorDisabled || colors.bgDisable;
     // @ts-ignore
     _textColor = textColorDisabled || colors.textDisabled;
@@ -48,7 +50,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       backgroundColor: _backgroundColor,
-      padding: spacing?.padding.base,
+      padding: spacing?.padding.small,
       borderRadius: borderRadius || spacing?.borderRadius.small,
       alignItems: 'center',
     },
