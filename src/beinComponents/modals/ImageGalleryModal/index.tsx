@@ -42,6 +42,14 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const imageUrls = getImageUrls(source);
 
+  const onRequestClose = () => {
+    if (isFocus) {
+      setIsFocus(false);
+    } else {
+      onPressClose?.();
+    }
+  };
+
   const onPressShare = () => {
     try {
       Share.share({
@@ -217,7 +225,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} transparent={true}>
+    <Modal visible={visible} transparent={true} onRequestClose={onRequestClose}>
       <View style={styles.container}>
         {renderHeader()}
         <View style={{flex: 1, flexDirection: 'row'}}>
