@@ -43,12 +43,11 @@ const rootReducers = (state, action) => {
   ) {
     try {
       AsyncStorage.multiRemove(['persist:root', 'persist:auth']);
-      if (Platform.OS === 'web') {
-        return;
+      if (Platform.OS !== 'web') {
+        initPushTokenMessage().then(messaging => {
+          messaging().deleteToken();
+        });
       }
-      initPushTokenMessage().then(messaging => {
-        messaging().deleteToken();
-      });
     } catch (e) {
       console.log('error when logout');
     }
