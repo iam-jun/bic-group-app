@@ -48,7 +48,8 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       backgroundColor: _backgroundColor,
-      padding: spacing?.padding.base,
+      paddingHorizontal: spacing?.padding.base,
+      paddingVertical: spacing?.padding.small,
       borderRadius: borderRadius || spacing?.borderRadius.small,
       alignItems: 'center',
     },
