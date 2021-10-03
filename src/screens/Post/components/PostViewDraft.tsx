@@ -11,7 +11,11 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
 import {useRootNavigation} from '~/hooks/navigation';
 
-import {IPayloadGetDraftPosts, IPostActivity} from '~/interfaces/IPost';
+import {
+  IPayloadGetDraftPosts,
+  IPayloadPublishDraftPost,
+  IPostActivity,
+} from '~/interfaces/IPost';
 import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
@@ -93,6 +97,20 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const onPressPost = () => {
     if (id) {
       setPublishing(true);
+      const payload: IPayloadPublishDraftPost = {
+        draftPostId: id,
+        onSuccess: () => {
+          dispatch(
+            showHideToastMessage({
+              content: 'post:draft:text_draft_published',
+              props: {textProps: {useI18n: true}, type: 'success'},
+            }),
+          );
+          refreshDraftPosts();
+        },
+        onError: () => setPublishing(false),
+      };
+      dispatch(postActions.postPublishDraftPost(payload));
       postDataHelper
         .postPublishDraftPost(id)
         .then(response => {

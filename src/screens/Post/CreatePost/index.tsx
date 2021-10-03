@@ -18,6 +18,7 @@ import {
   IActivityDataImage,
   IAudience,
   ICreatePostParams,
+  IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
   IPostCreatePost,
@@ -101,7 +102,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     loading ||
     content?.length === 0 ||
     chosenAudiences.length === 0 ||
-    (isEditPost && !isEditPostHasChange);
+    (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
   useBackHandler(() => {
     onPressBack();
@@ -243,7 +244,26 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
     });
 
-    if (isEditPost && initPostData?.id) {
+    if (isEditDraftPost && initPostData?.id) {
+      const postData = {content, images, videos: [], files: []};
+      const draftData: IPostCreatePost = {
+        getstream_id: initPostData.id,
+        data: postData,
+        audience,
+      };
+      if (important?.active) {
+        draftData.important = important;
+      }
+      const payload: IPayloadPutEditDraftPost = {
+        id: initPostData?.id,
+        replaceWithDetail: replaceWithDetail,
+        data: draftData,
+        userId: userId,
+        streamClient: streamClient,
+        publishNow: true,
+      };
+      dispatch(postActions.putEditDraftPost(payload));
+    } else if (isEditPost && initPostData?.id) {
       const newEditData: IPostCreatePost = {
         getstream_id: initPostData.id,
         data,
@@ -339,7 +359,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       <Header
         titleTextProps={{useI18n: true}}
         title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
-        buttonText={isEditPost ? 'common:btn_save' : 'post:post_button'}
+        buttonText={
+          isEditPost
+            ? isEditDraftPost
+              ? 'common:btn_publish'
+              : 'common:btn_save'
+            : 'post:post_button'
+        }
         buttonProps={{
           loading: loading,
           disabled: disableButtonPost,

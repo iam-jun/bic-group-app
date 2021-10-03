@@ -7,7 +7,9 @@ import {
   IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
+  IPayloadPublishDraftPost,
   IPayloadPutEditComment,
+  IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPayloadReactToComment,
   IPayloadReactToPost,
@@ -41,7 +43,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
-  yield takeLatest(postTypes.DELETE_POST, deletePost);
+  yield takeEvery(postTypes.DELETE_POST, deletePost);
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
@@ -63,6 +65,8 @@ export default function* postSaga() {
   yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
   yield takeLatest(postTypes.GET_POST_DETAIL, getPostDetail);
   yield takeEvery(postTypes.GET_DRAFT_POSTS, getDraftPosts);
+  yield takeEvery(postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost);
+  yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
 }
 
 function* postCreateNewPost({
@@ -786,6 +790,94 @@ function* getDraftPosts({
     const newData = {...draftPostsData, loading: false, refreshing: false};
     yield put(postActions.setDraftPosts(newData));
     console.log(`\x1b[31m🐣️ saga getDraftPosts error: `, e, `\x1b[0m`);
+  }
+}
+
+function* postPublishDraftPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadPublishDraftPost;
+}) {
+  const {
+    draftPostId,
+    onSuccess,
+    onError,
+    replaceWithDetail,
+    userId,
+    streamClient,
+  } = payload || {};
+  try {
+    yield put(postActions.setLoadingCreatePost(true));
+    const res = yield call(postDataHelper.postPublishDraftPost, draftPostId);
+    yield put(postActions.setLoadingCreatePost(false));
+    if (res.data) {
+      onSuccess?.();
+      const postData: IPostActivity = res.data;
+      yield put(postActions.addToAllPosts(postData));
+      if (replaceWithDetail) {
+        navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+      }
+      if (userId && streamClient) {
+        const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+          userId,
+          streamClient,
+          isRefresh: true,
+        };
+        yield put(postActions.getDraftPosts(payloadGetDraftPosts));
+      }
+    } else {
+      onError?.();
+      showError(res);
+    }
+  } catch (e) {
+    yield put(postActions.setLoadingCreatePost(false));
+    onError?.();
+    showError(e);
+  }
+}
+
+function* putEditDraftPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadPutEditDraftPost;
+}) {
+  const {id, data, replaceWithDetail, userId, streamClient, publishNow} =
+    payload || {};
+  if (!id || !data) {
+    console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
+    return;
+  }
+  try {
+    yield put(postActions.setLoadingCreatePost(true));
+    const response = yield call(postDataHelper.putEditPost, id, data);
+    if (response?.data) {
+      if (publishNow) {
+        const p: IPayloadPublishDraftPost = {
+          draftPostId: id,
+          replaceWithDetail: replaceWithDetail,
+          userId,
+          streamClient,
+          refreshDraftPosts: true,
+        };
+        yield put(postActions.postPublishDraftPost(p));
+      } else {
+        yield put(postActions.setLoadingCreatePost(false));
+        navigation.goBack();
+        yield put(
+          modalActions.showHideToastMessage({
+            content: 'post:draft:text_draft_saved',
+            props: {textProps: {useI18n: true}, type: 'success'},
+          }),
+        );
+      }
+    } else {
+      yield put(postActions.setLoadingCreatePost(false));
+    }
+  } catch (e) {
+    yield put(postActions.setLoadingCreatePost(true));
+    yield showError(e);
   }
 }
 
