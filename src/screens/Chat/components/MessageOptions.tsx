@@ -1,11 +1,10 @@
 import i18next from 'i18next';
-import React, {useState} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {isEmpty} from 'lodash';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
-import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {
@@ -37,9 +36,7 @@ const MessageOptionsModal: React.FC<Props> = ({
   ...props
 }: Props) => {
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
   const styles = themeStyle(theme);
-  const [hoverItem, setHoverItem] = useState<string | null>(null);
 
   const renderReactions = () => {
     if (Platform.OS === 'web') return null;
@@ -49,6 +46,7 @@ const MessageOptionsModal: React.FC<Props> = ({
         {Object.keys(reactions).map(key => (
           <Icon
             key={`reaction-${key}`}
+            // @ts-ignore
             icon={reactions[key].icon}
             onPress={() => onReactionPress(key)}
           />
@@ -59,8 +57,6 @@ const MessageOptionsModal: React.FC<Props> = ({
 
   const renderItem = ({item}: {item: MessageOptionType; index: number}) => {
     const menu = messageOptionData[item] as IMessageMenu;
-    const backgroundColor =
-      item === hoverItem ? colors.placeholder : colors.background;
 
     return (
       <PrimaryItem

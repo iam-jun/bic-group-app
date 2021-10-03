@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {ImageStyle} from 'react-native';
 import {
   Animated,
+  ImageStyle,
   Platform,
   StyleProp,
   StyleSheet,
@@ -20,6 +20,7 @@ export interface ImageProps {
   ImageComponent?: any;
   onError?: (err: any) => void;
   useOnLayoutSize?: boolean;
+  cache?: boolean;
   [x: string]: any;
 }
 
@@ -33,6 +34,7 @@ const Image: React.FC<ImageProps> = ({
   ImageComponent = FastImage,
   onError,
   useOnLayoutSize,
+  cache = true,
   ...props
 }: ImageProps) => {
   const [layoutSizeStyle, setLayoutSizeStyle] = useState({width: 0, height: 0});
@@ -57,7 +59,7 @@ const Image: React.FC<ImageProps> = ({
       typeof source === 'string' &&
       source.toLowerCase?.().startsWith?.('http')
     ) {
-      setSource({uri: source});
+      setSource({uri: cache ? source : source + '?' + Date.now()});
     } else {
       setSource(source);
     }
@@ -79,17 +81,19 @@ const Image: React.FC<ImageProps> = ({
 
   const onLayout = (e: any) => {
     const {width, height} = e?.nativeEvent?.layout || {};
-    if (width) {
+    if (useOnLayoutSize && width && width !== layoutSizeStyle?.width) {
       setLayoutSizeStyle({width, height});
     }
   };
 
-  if (useOnLayoutSize && !layoutSizeStyle.width) {
-    return <View style={{width: '100%', height: '100%'}} onLayout={onLayout} />;
-  }
-
   return (
-    <View style={StyleSheet.flatten([styles.container, containerStyle])}>
+    <View
+      onLayout={onLayout}
+      style={StyleSheet.flatten([
+        styles.container,
+        useOnLayoutSize ? {width: '100%', height: '100%'} : {},
+        containerStyle,
+      ])}>
       {Platform.select({
         android: (
           <React.Fragment>

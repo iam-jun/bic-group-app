@@ -61,12 +61,13 @@ const UploadingImage: FC<UploadingImageProps> = ({
         uploadType,
         file,
         onSuccess: uploadedUrl => {
+          setError('');
           _setImageUrl(uploadedUrl);
           onUploadSuccess?.(uploadedUrl, fileName || '');
         },
         onError: e => {
           setError(
-            typeof e === 'string' ? e : t('common:error_upload_photo_failed'),
+            typeof e === 'string' ? e : t('post:error_upload_photo_failed'),
           );
         },
       };
@@ -85,7 +86,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
         undefined,
         e => {
           setError(
-            typeof e === 'string' ? e : t('common:error_upload_photo_failed'),
+            typeof e === 'string' ? e : t('post:error_upload_photo_failed'),
           );
         },
       );

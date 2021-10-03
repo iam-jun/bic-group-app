@@ -35,7 +35,6 @@ import {IUserResponse} from '~/interfaces/IAuth';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
 import Store from '~/store';
-import {setupPushToken} from '~/store/app/actions';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
@@ -196,9 +195,6 @@ export default (): React.ReactElement => {
     };
     try {
       const user: IUserResponse | boolean = Store.getCurrentUser();
-      if (user) {
-        dispatch(setupPushToken());
-      }
       /*Fetch setting*/
       dispatch(fetchSetting());
 

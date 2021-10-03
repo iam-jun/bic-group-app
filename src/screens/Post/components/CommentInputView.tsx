@@ -70,11 +70,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     };
   }, []);
 
-  useEffect(() => {
-    if (!content) {
-      _commentInputRef?.current?.clear?.();
-    }
-  }, [content]);
+  const _onCommentSuccess = (data?: any) => {
+    onCommentSuccess?.(data);
+    _commentInputRef?.current?.clear?.();
+  };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
     if (postId) {
@@ -87,7 +86,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         parentCommentId: replyTargetId,
         commentData: {content: content?.trim(), images},
         userId: userId,
-        onSuccess: onCommentSuccess,
+        onSuccess: _onCommentSuccess,
       };
       dispatch(postActions.postCreateNewComment(payload));
     }

@@ -127,14 +127,14 @@ const GroupMembers = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(
+  const searchHandler = useCallback(
     debounce(searchUsers, appConfig.searchTriggerTime),
     [],
   );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);
-    seachHandler(text);
+    searchHandler(text);
   };
 
   const showConfirmations = (user: IChatUser) => {
