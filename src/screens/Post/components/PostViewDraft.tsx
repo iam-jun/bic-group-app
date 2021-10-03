@@ -18,6 +18,7 @@ import PostViewImportant from '~/screens/Post/components/postView/PostViewImport
 import Button from '~/beinComponents/Button';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -117,7 +118,10 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   };
 
   const onPressEdit = () => {
-    alert('edit');
+    rootNavigation.navigate(homeStack.createPost, {
+      draftPostId: id,
+      replaceWithDetail: !isPostDetail,
+    });
   };
 
   const onDelete = () => {

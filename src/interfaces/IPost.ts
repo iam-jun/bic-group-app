@@ -291,6 +291,7 @@ export interface IPayloadUpdateCommentsById {
 }
 
 export interface ICreatePostParams {
+  draftPostId?: string;
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;

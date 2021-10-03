@@ -36,7 +36,7 @@ import FileUploader from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {uploadTypes} from '~/configs/resourceConfig';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
@@ -50,7 +50,8 @@ export interface CreatePostProps {
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
   const mentionInputRef = useRef<any>();
-  const {postId, replaceWithDetail, initAudience} = route?.params || {};
+  const {postId, draftPostId, replaceWithDetail, initAudience} =
+    route?.params || {};
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -62,6 +63,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   let initPostData: IPostActivity = {};
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
+  }
+  if (draftPostId) {
+    const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
+    initPostData = draftPosts?.find(
+      (item: IPostActivity) => item?.id === draftPostId,
+    );
   }
 
   const userId = useUserIdAuth();
@@ -76,6 +83,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+  const isEditDraftPost = !!initPostData?.id && draftPostId;
+  const isEditContentOnly = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -115,6 +124,26 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, []);
 
   useEffect(() => {
+    if (initPostData && isEditDraftPost) {
+      const initImages: any = [];
+      initPostData?.object?.data?.images?.map(item => {
+        initImages.push({
+          fileName: item?.origin_name || item?.name,
+          file: {
+            name: item?.origin_name || item?.name,
+            filename: item?.origin_name || item?.name,
+            width: item?.width || 0,
+            height: item?.height || 0,
+          },
+          url: getResourceUrl(uploadTypes.postImage, item?.name),
+        });
+      });
+      dispatch(postActions.setCreatePostImagesDraft(initImages));
+      dispatch(postActions.setCreatePostImages(initImages));
+    }
+  }, [initPostData]);
+
+  useEffect(() => {
     if (initPostData?.id) {
       const initData = initPostData?.object?.data || {};
       dispatch(postActions.setCreatePostData(initData));
@@ -152,7 +181,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const onPressBack = () => {
     Keyboard.dismiss();
 
-    if (isEditPost) {
+    if (isEditPost && !isEditDraftPost) {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
@@ -320,7 +349,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      {!isEditPost && (
+      {!isEditContentOnly && (
         <View>
           {!!important?.active && <ImportantStatus notExpired />}
           <CreatePostChosenAudiences disabled={loading} />
@@ -328,30 +357,44 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      {!isEditPost && (
+      {!isEditContentOnly && (
         <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
       )}
     </ScreenWrapper>
   );
 };
 
-const validateImages = (selectingImages: IFilePicked[], t: any) => {
+const validateImages = (
+  selectingImages: IFilePicked[] | IActivityDataImage[],
+  t: any,
+) => {
   let imageError = '';
   const images: IActivityDataImage[] = [];
-  selectingImages?.map?.(item => {
-    const {file, fileName} = item || {};
-    const {url, uploading} = FileUploader.getInstance().getFile(fileName) || {};
-    if (uploading) {
-      imageError = t('post:error_wait_uploading');
-    } else if (!url) {
-      imageError = t('error_upload_failed');
+  // @ts-ignore
+  selectingImages?.map?.((item: any) => {
+    if (item?.url) {
+      images.push({
+        name: item?.url || '',
+        origin_name: item?.fileName,
+        width: item?.file?.width,
+        height: item?.file?.height,
+      });
+    } else {
+      const {file, fileName} = item || {};
+      const {url, uploading} =
+        FileUploader.getInstance().getFile(fileName) || {};
+      if (uploading) {
+        imageError = t('post:error_wait_uploading');
+      } else if (!url) {
+        imageError = t('error_upload_failed');
+      }
+      images.push({
+        name: url || '',
+        origin_name: fileName,
+        width: file?.width,
+        height: file?.height,
+      });
     }
-    images.push({
-      name: url || '',
-      origin_name: fileName,
-      width: file?.width,
-      height: file?.height,
-    });
   });
   return {imageError, images};
 };
