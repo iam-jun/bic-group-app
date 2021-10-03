@@ -216,10 +216,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onPressSaveDraft = async () => {
-    await onPressPost(true);
+    if (isEditDraftPost && initPostData?.id) {
+      await onPressPost(true, true);
+    } else {
+      await onPressPost(true);
+    }
   };
 
-  const onPressPost = async (isDraft?: boolean) => {
+  const onPressPost = async (
+    isSaveAsDraft?: boolean,
+    isEditDraft?: boolean,
+  ) => {
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
@@ -260,7 +267,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         data: draftData,
         userId: userId,
         streamClient: streamClient,
-        publishNow: true,
+        publishNow: !isEditDraft,
       };
       dispatch(postActions.putEditDraftPost(payload));
     } else if (isEditPost && initPostData?.id) {
@@ -283,7 +290,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       const payload: IPostCreatePost = {
         data: postData,
         audience,
-        is_draft: isDraft,
+        is_draft: isSaveAsDraft,
         userId,
         streamClient,
       };

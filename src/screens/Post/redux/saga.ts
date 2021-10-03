@@ -864,6 +864,12 @@ function* putEditDraftPost({
         yield put(postActions.postPublishDraftPost(p));
       } else {
         yield put(postActions.setLoadingCreatePost(false));
+        const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+          userId,
+          streamClient,
+          isRefresh: true,
+        };
+        yield put(postActions.getDraftPosts(payloadGetDraftPosts));
         navigation.goBack();
         yield put(
           modalActions.showHideToastMessage({
