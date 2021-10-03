@@ -136,7 +136,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             width: item?.width || 0,
             height: item?.height || 0,
           },
-          url: getResourceUrl(uploadTypes.postImage, item?.name),
+          url: item?.name?.includes('http')
+            ? item.name
+            : getResourceUrl(uploadTypes.postImage, item?.name),
         });
       });
       dispatch(postActions.setCreatePostImagesDraft(initImages));
