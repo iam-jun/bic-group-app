@@ -111,27 +111,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         onError: () => setPublishing(false),
       };
       dispatch(postActions.postPublishDraftPost(payload));
-      postDataHelper
-        .postPublishDraftPost(id)
-        .then(response => {
-          setPublishing(false);
-          if (response?.data?.id) {
-            dispatch(postActions.addToAllPosts(response.data));
-            dispatch(
-              showHideToastMessage({
-                content: 'post:draft:text_draft_published',
-                props: {textProps: {useI18n: true}, type: 'success'},
-              }),
-            );
-            refreshDraftPosts();
-          } else {
-            showError(response?.data || response);
-          }
-        })
-        .catch(e => {
-          setPublishing(false);
-          showError(e);
-        });
     }
   };
 
