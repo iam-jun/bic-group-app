@@ -439,7 +439,7 @@ function* addMembersToGroup({payload}: {type: string; payload: number[]}) {
         user_ids: payload,
       }),
     );
-    yield handleAddMember(payload);
+    handleAddMember();
   } catch (err: any) {
     yield put(
       modalActions.showAlert({
@@ -523,13 +523,12 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   if (payload.msg !== 'result') return;
   switch (payload.id) {
     case chatSocketId.ADD_MEMBERS_TO_GROUP:
-      yield handleAddMember();
+      handleAddMember();
       break;
   }
 }
 
-function* handleAddMember(data?: number[]) {
-  if (data) yield put(actions.addMembersToGroupSuccess(data.length));
+function handleAddMember() {
   navigation.replace(chatStack.conversation);
 }
 
@@ -599,13 +598,16 @@ function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
-    case messageEventTypes.ADD_USER:
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.ADD_USER:
+      yield handleNewMessage(data);
+      yield put(actions.addMembersToGroupSuccess(1));
       break;
     case messageEventTypes.REMOVE_MESSAGE:
       yield handleRemoveMessage(data);
