@@ -12,7 +12,6 @@ import apiConfig, {
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/configs/apiConfig';
-import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes, createAction} from '~/utils';
@@ -402,20 +401,7 @@ const refreshAuthTokens = async () => {
     notiSubscribeToken,
   );
 
-  // after refresh token, update push token with the new tokens
-  if (Platform.OS === 'web') {
-    return true;
-  }
-  try {
-    const messaging = await initPushTokenMessage();
-    await messaging().deleteToken();
-    const deviceToken = await messaging().getToken();
-    await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
-    return true;
-  } catch (e) {
-    console.log('pushToken when refreshToken failed:', e);
-    return false;
-  }
+  return true;
 };
 
 const getAuthTokens = async () => {

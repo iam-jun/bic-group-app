@@ -61,17 +61,6 @@ const LeftPanel = () => {
       />
       <PrimaryItem
         height={48}
-        leftIcon={'iconMenuBookmarkRed'}
-        leftIconProps={{
-          icon: 'iconMenuBookmarkRed',
-          size: 24,
-          style: styles.leftIcon,
-        }}
-        title={t('home:saved_posts')}
-        onPress={onPressSavedPosts}
-      />
-      <PrimaryItem
-        height={48}
         leftIcon={'iconMenuDraft'}
         leftIconProps={{
           icon: 'iconMenuDraft',
@@ -81,6 +70,17 @@ const LeftPanel = () => {
         title={t('home:draft_post')}
         onPress={onPressDraftPost}
         RightComponent={renderBadgeNumber(draftPost?.length || 0)}
+      />
+      <PrimaryItem
+        height={48}
+        leftIcon={'iconMenuBookmarkRed'}
+        leftIconProps={{
+          icon: 'iconMenuBookmarkRed',
+          size: 24,
+          style: styles.leftIcon,
+        }}
+        title={t('home:saved_posts')}
+        onPress={onPressSavedPosts}
       />
     </ScreenWrapper>
   );
