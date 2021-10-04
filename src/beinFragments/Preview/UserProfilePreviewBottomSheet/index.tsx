@@ -25,6 +25,7 @@ import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import Avatar from '~/beinComponents/Avatar';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
@@ -134,7 +135,7 @@ const UserProfilePreviewBottomSheet = () => {
 
   const renderAvatar = () => {
     return (
-      <Image
+      <Avatar.UltraSuperLarge
         style={styles.avatar}
         source={avatar || images.img_user_avatar_default}
       />
