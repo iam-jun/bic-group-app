@@ -144,7 +144,6 @@ function commonReducer(state = initState, action: any = {}) {
         reactionBottomSheet: payload || initState.reactionBottomSheet,
       };
     case actions.SET_USER_PROFILE_PREVIEW_BOTTOM_SHEET:
-      console.log('[REDUCER] payload', payload);
       return {
         ...state,
         userProfilePreview: payload || initState.userProfilePreview,
