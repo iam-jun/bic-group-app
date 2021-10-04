@@ -30,6 +30,7 @@ import {useBaseHook} from '~/hooks';
 import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import EmojiBoardAnimated from '~/beinComponents/emoji/EmojiBoardAnimated';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -88,6 +89,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
+  const [selection, setSelection] = useState<{start: number; end: number}>();
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
@@ -96,6 +98,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const showSendAnim = useRef(new Animated.Value(0)).current;
   const showButtonsAnim = useRef(new Animated.Value(1)).current;
+  const emojiBoardRef = useRef<any>();
 
   const _loading = loading || uploading;
 
@@ -141,7 +144,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressEmoji = () => {
-    alert('onPressEmoji');
+    emojiBoardRef?.current?.show?.();
   };
 
   const handleUpload = () => {
@@ -189,8 +192,21 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onSelectionChange = (event: any) => {
+    setSelection(event.nativeEvent.selection);
     onSelectionChange?.(event);
     Platform.OS === 'web' && setInputSelection(event.nativeEvent.selection);
+  };
+
+  const onEmojiSelected = (emoji: string) => {
+    if (selection?.start) {
+      _onChangeText(
+        `${text.slice(0, selection.start)}${emoji}${text.slice(
+          selection.start,
+        )}`,
+      );
+    } else {
+      _onChangeText(`${text}${emoji}`);
+    }
   };
 
   const showButtons = (show: boolean) => {
@@ -404,70 +420,76 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   return (
-    <View style={[styles.root, style]}>
-      {HeaderComponent}
-      {renderSelectedImage()}
-      <View style={styles.container}>
-        {renderButtons()}
-        <Animated.View
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            zIndex: 1,
-            marginLeft: isWeb ? 0 : textInputMarginLeft,
-            marginRight: isWeb ? 0 : textInputMarginRight,
-          }}>
-          <Animated.View style={{flex: 1, height: heightAnimated}}>
-            <TextInput
-              selection={inputSelection}
-              {...props}
-              onContentSizeChange={_onContentSizeChange}
-              ref={textInputRef}
-              style={inputStyle}
-              selectionColor={colors.textInput}
-              multiline={true}
-              autoFocus={autoFocus}
-              placeholder={placeholder}
-              placeholderTextColor={colors.textSecondary}
-              editable={!_loading}
-              value={text}
-              onChangeText={_onChangeText}
-              onSelectionChange={_onSelectionChange}
-              onKeyPress={onKeyPress}
-            />
+    <View>
+      <View style={[styles.root, style]}>
+        {HeaderComponent}
+        {renderSelectedImage()}
+        <View style={styles.container}>
+          {renderButtons()}
+          <Animated.View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              zIndex: 1,
+              marginLeft: isWeb ? 0 : textInputMarginLeft,
+              marginRight: isWeb ? 0 : textInputMarginRight,
+            }}>
+            <Animated.View style={{flex: 1, height: heightAnimated}}>
+              <TextInput
+                selection={inputSelection}
+                {...props}
+                onContentSizeChange={_onContentSizeChange}
+                ref={textInputRef}
+                style={inputStyle}
+                selectionColor={colors.textInput}
+                multiline={true}
+                autoFocus={autoFocus}
+                placeholder={placeholder}
+                placeholderTextColor={colors.textSecondary}
+                editable={!_loading}
+                value={text}
+                onChangeText={_onChangeText}
+                onSelectionChange={_onSelectionChange}
+                onKeyPress={onKeyPress}
+              />
+            </Animated.View>
+            <Button
+              style={{position: 'absolute', right: 10, bottom: 10}}
+              onPress={onPressEmoji}
+              disabled={_loading}>
+              <Icon
+                size={24}
+                icon={'iconSmileSolid'}
+                tintColor={theme.colors.iconTintReversed}
+              />
+            </Button>
           </Animated.View>
           <Button
-            style={{position: 'absolute', right: 10, bottom: 10}}
-            onPress={onPressEmoji}
-            disabled={_loading}>
-            <Icon
-              size={24}
-              icon={'iconSmileSolid'}
-              tintColor={theme.colors.iconTintReversed}
-            />
+            onPress={_onPressSend}
+            disabled={(!text.trim() && !selectedImage) || _loading}>
+            {_loading ? (
+              <ActivityIndicator
+                style={styles.loadingContainer}
+                size={'small'}
+                color={colors.disabled}
+              />
+            ) : (
+              <Icon
+                style={styles.iconSend}
+                size={16}
+                icon={'iconSend'}
+                tintColor={theme.colors.primary7}
+                disabled={!text.trim() && !selectedImage}
+              />
+            )}
           </Button>
-        </Animated.View>
-        <Button
-          onPress={_onPressSend}
-          disabled={(!text.trim() && !selectedImage) || _loading}>
-          {_loading ? (
-            <ActivityIndicator
-              style={styles.loadingContainer}
-              size={'small'}
-              color={colors.disabled}
-            />
-          ) : (
-            <Icon
-              style={styles.iconSend}
-              size={16}
-              icon={'iconSend'}
-              tintColor={theme.colors.primary7}
-              disabled={!text.trim() && !selectedImage}
-            />
-          )}
-        </Button>
+        </View>
+        {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
       </View>
-      {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
+      <EmojiBoardAnimated
+        emojiBoardRef={emojiBoardRef}
+        onEmojiSelected={onEmojiSelected}
+      />
     </View>
   );
 };
