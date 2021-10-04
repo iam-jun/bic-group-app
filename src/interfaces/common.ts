@@ -62,3 +62,10 @@ export interface IPayloadShowModal {
   ContentComponent: any;
   props?: BaseBottomSheetProps | any;
 }
+
+export interface IUserPreview {
+  isOpen?: boolean;
+  userId?: number | string;
+  params?: IObject<any>;
+  position?: {x: number; y: number};
+}

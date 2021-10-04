@@ -10,6 +10,7 @@ import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 import iconTabChat from '../../assets/icons/icon_chat.svg';
 import iconTabChatBein from '../../assets/icons/icon_chat_bein.svg';
 import iconMessages from '../../assets/icons/icon_chat_bein.svg';
+import iconChatPurple from '../../assets/icons/icon_chat_purple.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
 import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
@@ -146,6 +147,7 @@ const icons = {
   images: 'Images',
   leavesGroup: 'SignOutAlt',
   iconMessages,
+  iconChatPurple,
   iconAddPost,
   iconAddSquareDone,
   iconAddSquareGroup,

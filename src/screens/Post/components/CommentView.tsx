@@ -75,8 +75,15 @@ const CommentView: React.FC<CommentViewProps> = ({
 
   const onPressUser = (audience?: any) => {
     const id = audience?.id || user?.id;
-    if (id) {
+    if (!id) return;
+
+    if (Platform.OS === 'web') {
       rootNavigation.navigate(mainStack.userProfile, {userId: id});
+    } else {
+      const payload = {
+        userId: id,
+      };
+      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
     }
   };
 
@@ -197,7 +204,9 @@ const CommentView: React.FC<CommentViewProps> = ({
   return (
     <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       <View style={styles.container}>
-        <Avatar source={avatar} />
+        <ButtonWrapper onPress={onPressUser}>
+          <Avatar source={avatar} />
+        </ButtonWrapper>
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
           <Button onLongPress={onLongPress}>
             <View style={{flex: 1}}>

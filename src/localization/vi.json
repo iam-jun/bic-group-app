@@ -358,7 +358,8 @@
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
-    "title_direct_message": "Gửi tin nhắn"
+    "title_direct_message": "Gửi tin nhắn",
+    "title_view_profile": "Xem trang cá nhân"
   },
   "right_col": {
     "about_bein": "About Bein",

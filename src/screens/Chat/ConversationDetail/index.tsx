@@ -135,7 +135,7 @@ const ConversationDetail = (): React.ReactElement => {
   const renderAvatar = () => {
     return (
       <Avatar.Group
-        variant="ultraLarge"
+        variant="largeAlt"
         source={_avatar}
         onError={onLoadAvatarError}
       />

@@ -470,10 +470,10 @@
     },
     "label_no_description": "No Description",
     "label_unread_messages_banner": "Unread messages since",
-    "label_unread_messages" : "Unread messages",
+    "label_unread_messages": "Unread messages",
     "text_editing_message": "Editing message",
     "text_edited": "edited",
-    "label_replied_messsage_attachment":"Tap to view attachment"
+    "label_replied_messsage_attachment": "Tap to view attachment"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -521,7 +521,8 @@
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
-    "title_direct_message": "Direct Message"
+    "title_direct_message": "Direct Message",
+    "title_view_profile": "View Profile"
   },
   "right_col": {
     "about_bein": "About Bein",

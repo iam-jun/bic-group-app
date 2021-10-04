@@ -8,9 +8,10 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import TextInput from '~/beinComponents/inputs/TextInput';
+import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 
 const Section4 = () => {
-  const {spacing, colors}: ITheme = useTheme();
+  const {spacing} = useTheme() as ITheme;
   const baseSheetRef: any = useRef();
   const postToolbarRef: any = useRef();
 
@@ -75,7 +76,7 @@ const Section4 = () => {
           ContentComponent={
             <View style={{marginHorizontal: spacing?.margin.base}}>
               <Text.H5 style={{marginVertical: spacing?.margin.base}}>
-                Privary Type
+                Primary Type
               </Text.H5>
               <PrimaryItem
                 title={'Public'}
@@ -108,8 +109,8 @@ const Section4 = () => {
           style={{
             marginHorizontal: spacing?.margin.base,
             marginTop: spacing?.margin.base,
-          }}>{`<BottomSheet.PostToolbar/>`}</Text.H5>
-        <BottomSheet.PostToolbar modalizeRef={postToolbarRef} />
+          }}>{`<PostToolbar/>`}</Text.H5>
+        <PostToolbar modalizeRef={postToolbarRef} />
       </View>,
     );
   };

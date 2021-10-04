@@ -25,6 +25,7 @@ import menuKeySelector from '../redux/keySelector';
 import {useUserIdAuth} from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Avatar from '~/beinComponents/Avatar';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -98,7 +99,7 @@ const UserProfile = (props: any) => {
   const renderAvatar = () => {
     return (
       <View style={styles.imageButton}>
-        <Image
+        <Avatar.UltraSuperLarge
           style={styles.avatar}
           source={avatar || images.img_user_avatar_default}
         />
