@@ -17,7 +17,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
-  time: any;
+  time?: any;
   actor: any;
   onPressHeader?: () => void;
   onPressMenu?: (e: any) => void;

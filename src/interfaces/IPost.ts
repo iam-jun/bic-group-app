@@ -291,6 +291,7 @@ export interface IPayloadUpdateCommentsById {
 }
 
 export interface ICreatePostParams {
+  draftPostId?: string;
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
@@ -313,4 +314,23 @@ export interface IPayloadGetDraftPosts {
   streamClient?: StreamClient;
   isRefresh?: boolean;
   offset?: number;
+}
+
+export interface IPayloadPublishDraftPost {
+  draftPostId: string;
+  replaceWithDetail?: boolean;
+  onSuccess?: () => void;
+  onError?: () => void;
+  userId?: string;
+  streamClient?: StreamClient;
+  refreshDraftPosts?: boolean;
+}
+
+export interface IPayloadPutEditDraftPost {
+  id: string;
+  data: IPostCreatePost;
+  replaceWithDetail?: boolean;
+  userId: string;
+  streamClient?: StreamClient;
+  publishNow: boolean;
 }

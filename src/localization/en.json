@@ -16,6 +16,7 @@
     "btn_discard": "Discard",
     "btn_edit": "Edit",
     "btn_save": "Save",
+    "btn_publish": "Publish",
     "btn_done": "Done",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
@@ -341,8 +342,15 @@
     "draft": {
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
+      "btn_menu_schedule": "Schedule to Post",
+      "btn_menu_delete": "Delete Draft Post",
       "title_no_draft_posts": "No Draft Post",
-      "text_no_draft_posts": "You have no draft post left"
+      "title_delete_draft_post": "Delete Draft Post",
+      "text_delete_draft_post": "Are you sure want to delete this draft post?",
+      "text_no_draft_posts": "You have no draft post left",
+      "text_draft_published": "Your post has been published",
+      "text_draft_saved": "Your draft has been saved",
+      "text_draft_deleted": "Your draft has been deleted"
     }
   },
   "chat": {

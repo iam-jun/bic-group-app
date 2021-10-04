@@ -21,6 +21,8 @@ import {
   ICreatePostImage,
   IPayloadGetDraftPosts,
   IPayloadSetDraftPosts,
+  IPayloadPublishDraftPost,
+  IPayloadPutEditDraftPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -180,6 +182,14 @@ const postActions = {
   }),
   getDraftPosts: (payload?: IPayloadGetDraftPosts) => ({
     type: postTypes.GET_DRAFT_POSTS,
+    payload,
+  }),
+  postPublishDraftPost: (payload: IPayloadPublishDraftPost) => ({
+    type: postTypes.POST_PUBLISH_DRAFT_POST,
+    payload,
+  }),
+  putEditDraftPost: (payload: IPayloadPutEditDraftPost) => ({
+    type: postTypes.PUT_EDIT_DRAFT_POST,
     payload,
   }),
 };
