@@ -319,7 +319,7 @@ export default class EmojiSelector extends Component {
         </View>
         <View style={{flex: 1}}>
           {showSearchBar && Searchbar}
-          {isReady ? (
+          {isReady && (
             <View style={{flex: 1}}>
               <View style={styles.container}>
                 {showSectionTitles && (
@@ -337,13 +337,6 @@ export default class EmojiSelector extends Component {
                   removeClippedSubviews
                 />
               </View>
-            </View>
-          ) : (
-            <View style={styles.loader} {...other}>
-              <ActivityIndicator
-                size={'large'}
-                color={Platform.OS === 'android' ? theme : '#000000'}
-              />
             </View>
           )}
         </View>

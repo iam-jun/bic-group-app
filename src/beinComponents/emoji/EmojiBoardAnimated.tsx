@@ -29,6 +29,7 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   emojiBoardRef,
   onEmojiSelected,
 }: EmojiBoardAnimatedProps) => {
+  const [showEmojiBoard, setShowEmojiBoard] = useState(true);
   const [keyboardHeight, setKeyboardHeight] = useState(336);
   const _emojiBoardRef = emojiBoardRef || useRef();
 
@@ -56,16 +57,18 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   }, [keyboard?.keyboardHeight]);
 
   const show = () => {
+    setShowEmojiBoard(true);
     Keyboard.dismiss();
     Animated.timing(visibleAnim, {
       toValue: keyboardHeight,
       duration: 200,
-      delay: 50,
+      delay: 100,
       useNativeDriver: false,
     }).start();
   };
 
   const hide = () => {
+    setShowEmojiBoard(false);
     Animated.timing(visibleAnim, {
       toValue: 0,
       duration: 100,
@@ -83,6 +86,10 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
     inputRange: [0, keyboardHeight],
     outputRange: [0, keyboardHeight],
   });
+
+  if (!showEmojiBoard) {
+    return null;
+  }
 
   return (
     <Animated.View style={[styles.container, {height}]}>

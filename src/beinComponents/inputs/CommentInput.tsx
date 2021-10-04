@@ -90,6 +90,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
   const [selection, setSelection] = useState<{start: number; end: number}>();
+  const [addToEnd, setAddToEnd] = useState(true);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
@@ -186,6 +187,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
+  const _onFocus = () => {
+    emojiBoardRef?.current?.hide?.();
+  };
+
   const _onChangeText = (value: string) => {
     setText(value);
     onChangeText?.(value);
@@ -194,15 +199,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onSelectionChange = (event: any) => {
     setSelection(event.nativeEvent.selection);
     onSelectionChange?.(event);
+    if (selection?.end === text?.length - 1) {
+      setAddToEnd(true);
+    } else {
+      setAddToEnd(false);
+    }
     Platform.OS === 'web' && setInputSelection(event.nativeEvent.selection);
   };
 
   const onEmojiSelected = (emoji: string) => {
-    if (selection?.start) {
+    if (selection?.end && !addToEnd) {
       _onChangeText(
-        `${text.slice(0, selection.start)}${emoji}${text.slice(
-          selection.start,
-        )}`,
+        `${text.slice(0, selection.end)}${emoji}${text.slice(selection.end)}`,
       );
     } else {
       _onChangeText(`${text}${emoji}`);
@@ -448,6 +456,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 placeholderTextColor={colors.textSecondary}
                 editable={!_loading}
                 value={text}
+                onFocus={_onFocus}
                 onChangeText={_onChangeText}
                 onSelectionChange={_onSelectionChange}
                 onKeyPress={onKeyPress}
