@@ -106,9 +106,8 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         buttonProps={{
           loading: loading,
           disabled: disableButton,
-          color: colors.primary7,
-          textColor: colors.textReversed,
           useI18n: true,
+          highEmphasis: true,
         }}
         onPressBack={onPressBack}
         onPressButton={onPressComment}

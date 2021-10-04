@@ -49,7 +49,8 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     return null;
   }
 
-  const _children = children?.replace?.(/(?:\r\n|\r|\n)/g, '<br>');
+  const _children = replaceLineBreak(children);
+
   const markdownIt = MarkdownIt({typographer: true})
     .use(emojiPlugin, {
       defs: emojiDefs,
@@ -116,6 +117,22 @@ const MarkdownView: FC<MarkdownViewProps> = ({
       </Markdown>
     </View>
   );
+};
+
+const replaceLineBreak = (content: string) => {
+  let result = '';
+  const replacerSplash = (splash: string) => (match: any) => {
+    let middle = match.substring(splash.length, match.lastIndexOf(splash));
+    if (middle) {
+      middle = middle?.replace(new RegExp(splash, 'g'), '<br>');
+      return splash + middle + splash;
+    }
+    return '';
+  };
+  result = content.replace(/(\r\n)(\r\n)+(\r\n)/g, replacerSplash('\r\n'));
+  result = result.replace(/(\n)(\n)+(\n)/g, replacerSplash('\n'));
+  result = result.replace(/(\r)(\r)+(\r)/g, replacerSplash('\r'));
+  return result;
 };
 
 const createStyle = (theme: ITheme) => {

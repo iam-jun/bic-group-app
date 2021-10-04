@@ -7,8 +7,8 @@ function timeOut(ms: number) {
 
 export default function* saga() {
   yield takeLatest(types.GET_CONFIGS, getConfigs);
-  yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
-  yield takeLatest(types.COPY_DEVICE_TOKEN, copyDeviceToken);
+  // yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
+  // yield takeLatest(types.COPY_DEVICE_TOKEN, copyDeviceToken);
 }
 
 function* getConfigs() {
@@ -22,10 +22,10 @@ function* getConfigs() {
   }
 }
 
-function* setupPushToken() {
-  yield console.log('web is not supported');
-}
-
-function* copyDeviceToken() {
-  yield console.log('web is not supported');
-}
+// function* setupPushToken() {
+//   yield console.log('web is not supported');
+// }
+//
+// function* copyDeviceToken() {
+//   yield console.log('web is not supported');
+// }

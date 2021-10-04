@@ -27,8 +27,9 @@ import Image from '~/beinComponents/Image';
 import FileUploader from '~/services/fileUploader';
 import {IActivityDataImage} from '~/interfaces/IPost';
 import {useBaseHook} from '~/hooks';
-import {showHideToastMessage} from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
+import Text from '~/beinComponents/Text';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -167,12 +168,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
               : e?.meta?.message || t('post:error_upload_photo_failed');
           setUploading(false);
           setUploadError(errorMessage);
-          dispatch(
-            showHideToastMessage({
-              content: errorMessage,
-              props: {textProps: {useI18n: true}, type: 'error'},
-            }),
-          );
         });
     } else {
       onPressSend?.({content: text});
@@ -364,22 +359,46 @@ const CommentInput: React.FC<CommentInputProps> = ({
       return null;
     }
     return (
-      <View style={styles.selectedImageWrapper}>
-        <View style={styles.selectedImageContainer}>
-          <Image
-            style={styles.selectedImage}
-            source={
-              selectedImage?.uri
-                ? {uri: selectedImage?.uri}
-                : selectedImage?.base64
-            }
-          />
+      <View>
+        {!!uploadError && (
+          <View style={styles.selectedImageErrorContainer}>
+            <Text color={colors.error}>
+              <Text color={colors.error}>{uploadError}</Text>
+              <Text color={colors.error}>
+                {' • '}
+                <Text.BodyM useI18n color={colors.error} onPress={handleUpload}>
+                  common:text_retry
+                </Text.BodyM>
+              </Text>
+            </Text>
+          </View>
+        )}
+        <View style={styles.selectedImageWrapper}>
+          <View style={styles.selectedImageContainer}>
+            <Image
+              style={styles.selectedImage}
+              source={
+                selectedImage?.uri
+                  ? {uri: selectedImage?.uri}
+                  : selectedImage?.base64
+              }
+            />
+            {(_loading || !!uploadError) && (
+              <View
+                style={[
+                  styles.selectedImageFilter,
+                  {borderWidth: uploadError ? 1 : 0},
+                ]}>
+                {_loading && <LoadingIndicator />}
+              </View>
+            )}
+          </View>
+          <Button
+            style={styles.iconCloseSelectedImage}
+            onPress={() => setSelectedImage(undefined)}>
+            <Icon size={12} icon={'iconCloseSmall'} />
+          </Button>
         </View>
-        <Button
-          style={styles.iconCloseSelectedImage}
-          onPress={() => setSelectedImage(undefined)}>
-          <Icon size={12} icon={'iconCloseSmall'} />
-        </Button>
       </View>
     );
   };
@@ -530,6 +549,22 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
       elevation: 8,
+    },
+    selectedImageFilter: {
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+      backgroundColor: 'rgba(255,255,255,0.7)',
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.error,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    selectedImageErrorContainer: {
+      flexDirection: 'row',
+      marginTop: spacing.margin.tiny,
+      marginHorizontal: spacing.margin.base,
     },
   });
 };

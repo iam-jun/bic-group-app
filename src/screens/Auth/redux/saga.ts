@@ -1,7 +1,8 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {delay, put, takeLatest} from 'redux-saga/effects';
+import {Platform} from 'react-native';
+import {delay, put, select, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
@@ -11,7 +12,11 @@ import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
-import {refreshAuthTokens} from '~/services/httpApiRequest';
+import {initPushTokenMessage} from '~/services/helper';
+import {
+  makePushTokenRequest,
+  refreshAuthTokens,
+} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
@@ -140,6 +145,23 @@ function* onSignInSuccess(user: IUserResponse) {
 
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
+  if (Platform.OS !== 'web') {
+    const messaging = yield initPushTokenMessage();
+    const deviceToken = yield messaging().getToken();
+    try {
+      const {auth} = yield select();
+      yield makePushTokenRequest(
+        deviceToken,
+        auth.chat?.accessToken,
+        auth.chat?.userId,
+      );
+    } catch (e) {
+      console.log('\x1b[36m error when setup push token: \x1b[0m', e);
+      yield put(actions.signOut(false));
+      yield onSignInFailed(i18n.t('error:http:unknown'));
+      return;
+    }
+  }
   if (!refreshSuccess) {
     yield put(actions.signOut(false));
     yield onSignInFailed(i18n.t('error:http:unknown'));

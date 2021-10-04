@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
@@ -135,9 +135,16 @@ const createStyles = (
     title: {
       flex: 1,
       height: 20,
+      lineHeight: 20,
+      ...Platform.select({
+        web: {
+          paddingTop: 0,
+        },
+      }),
     },
     textUpdate: {
-      height: 16,
+      height: 20,
+      lineHeight: 20,
     },
     body: {
       flex: 1,
@@ -152,6 +159,7 @@ const createStyles = (
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     redDot: {
+      marginTop: Platform.OS !== 'web' ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
     },
     divider: {

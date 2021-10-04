@@ -81,17 +81,19 @@ const Image: React.FC<ImageProps> = ({
 
   const onLayout = (e: any) => {
     const {width, height} = e?.nativeEvent?.layout || {};
-    if (width) {
+    if (useOnLayoutSize && width && width !== layoutSizeStyle?.width) {
       setLayoutSizeStyle({width, height});
     }
   };
 
-  if (useOnLayoutSize && !layoutSizeStyle.width) {
-    return <View style={{width: '100%', height: '100%'}} onLayout={onLayout} />;
-  }
-
   return (
-    <View style={StyleSheet.flatten([styles.container, containerStyle])}>
+    <View
+      onLayout={onLayout}
+      style={StyleSheet.flatten([
+        styles.container,
+        useOnLayoutSize ? {width: '100%', height: '100%'} : {},
+        containerStyle,
+      ])}>
       {Platform.select({
         android: (
           <React.Fragment>
