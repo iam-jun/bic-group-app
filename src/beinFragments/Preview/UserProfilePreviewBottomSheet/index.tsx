@@ -6,7 +6,7 @@ import {isEmpty} from 'lodash';
 import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
-import {scaleCoverHeight, scaleSize} from '~/theme/dimension';
+import {scaleCoverHeight} from '~/theme/dimension';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -26,6 +26,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
@@ -135,17 +136,20 @@ const UserProfilePreviewBottomSheet = () => {
 
   const renderAvatar = () => {
     return (
-      <Avatar.UltraSuperLarge
-        style={styles.avatar}
-        source={avatar || images.img_user_avatar_default}
-      />
+      <TouchableOpacity onPress={onPressViewProfile} style={styles.avatar}>
+        <Avatar.UltraSuperLarge
+          source={avatar || images.img_user_avatar_default}
+        />
+      </TouchableOpacity>
     );
   };
 
   const renderUserHeader = () => {
     return (
       <View style={styles.headerContainer}>
-        <Text.H5>{fullname}</Text.H5>
+        <TouchableOpacity onPress={onPressViewProfile}>
+          <Text.H5>{fullname}</Text.H5>
+        </TouchableOpacity>
         {!!description && <Text.Body>{description}</Text.Body>}
       </View>
     );
@@ -255,11 +259,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     avatar: {
       alignSelf: 'center',
       marginTop: -36,
-      width: scaleSize(96),
-      height: scaleSize(96),
-      maxHeight: 125,
-      maxWidth: 125,
-      borderRadius: 8,
     },
     headerContainer: {
       alignItems: 'center',
