@@ -9,9 +9,11 @@ import {ITheme} from '~/theme/interfaces';
 import {scaleCoverHeight, scaleSize} from '~/theme/dimension';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
+import {useRootNavigation} from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
+import chatActions from '~/screens/Chat/redux/actions';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import images from '~/resources/images';
 import {IconType} from '~/resources/icons';
@@ -21,12 +23,14 @@ import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const styles = themeStyles(theme, coverHeight);
   const userPreviewRef: any = useRef();
+  const {rootNavigation} = useRootNavigation();
 
   const dispatch = useDispatch();
 
@@ -42,8 +46,15 @@ const UserProfilePreviewBottomSheet = () => {
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, background_img_url, language, phone} =
-    userProfileData || {};
+  const {
+    fullname,
+    description,
+    avatar,
+    background_img_url,
+    language,
+    phone,
+    username,
+  } = userProfileData || {};
 
   const userLanguageList = language?.map(
     // @ts-ignore
@@ -74,8 +85,23 @@ const UserProfilePreviewBottomSheet = () => {
     );
   };
 
+  const navigateToChatScreen = (roomId: string) =>
+    rootNavigation.navigate('chat', {
+      screen: chatStack.conversation,
+      params: {roomId, initial: false},
+    });
+
   const onPressChat = () => {
-    console.log('[DEBUG] chat pressed');
+    if (!!username)
+      dispatch(
+        chatActions.createConversation(
+          // @ts-ignore
+          [{username, name: fullname}],
+          true,
+          navigateToChatScreen,
+        ),
+      );
+    userPreviewRef?.current?.close?.();
   };
 
   const onPressViewProfile = () => {
