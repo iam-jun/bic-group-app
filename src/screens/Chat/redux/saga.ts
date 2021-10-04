@@ -439,7 +439,7 @@ function* addMembersToGroup({payload}: {type: string; payload: number[]}) {
         user_ids: payload,
       }),
     );
-    handleAddMember();
+    yield handleAddMember(payload);
   } catch (err: any) {
     yield put(
       modalActions.showAlert({
@@ -523,12 +523,13 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   if (payload.msg !== 'result') return;
   switch (payload.id) {
     case chatSocketId.ADD_MEMBERS_TO_GROUP:
-      handleAddMember();
+      yield handleAddMember();
       break;
   }
 }
 
-function handleAddMember() {
+function* handleAddMember(data?: number[]) {
+  if (data) yield put(actions.addMembersToGroupSuccess(data.length));
   navigation.replace(chatStack.conversation);
 }
 

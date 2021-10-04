@@ -454,6 +454,18 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
             (member: IUser) => member.username !== payload.msg,
           ),
         },
+        conversation: {
+          ...conversation,
+          usersCount: conversation.usersCount - 1,
+        },
+      };
+    case types.ADD_MEMBERS_TO_GROUP_SUCCESS:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          usersCount: conversation.usersCount + payload,
+        },
       };
     case types.KICK_ME_OUT:
       return {

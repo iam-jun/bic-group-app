@@ -171,6 +171,11 @@ const addMembersToGroup = (payload: number[]) => ({
   payload,
 });
 
+const addMembersToGroupSuccess = (payload: number) => ({
+  type: Actions.ADD_MEMBERS_TO_GROUP_SUCCESS,
+  payload,
+});
+
 const removeMember = (payload: IChatUser) => ({
   type: Actions.REMOVE_MEMBER,
   payload,
@@ -250,6 +255,7 @@ export default {
   updateConversationName,
   uploadFile,
   addMembersToGroup,
+  addMembersToGroupSuccess,
   removeMember,
   removeMemberSuccess,
   kickMeOut,
