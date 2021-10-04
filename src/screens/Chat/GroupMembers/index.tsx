@@ -138,7 +138,7 @@ const GroupMembers = (): React.ReactElement => {
     searchHandler(text);
   };
 
-  const showConfirmations = (user: IChatUser) => {
+  const alertRemoveMember = (user: IChatUser) => {
     const alertPayload = {
       iconName: 'RemoveUser',
       title: i18next.t('chat:modal_confirm_remove_member:title'),
@@ -196,7 +196,7 @@ const GroupMembers = (): React.ReactElement => {
 
   const onRemovePress = () => {
     if (selectedMember) {
-      showConfirmations(selectedMember);
+      alertRemoveMember(selectedMember);
     }
   };
 
