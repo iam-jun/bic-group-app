@@ -2,21 +2,25 @@ import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {isEmpty} from 'lodash';
 import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
+import {scaleCoverHeight, scaleSize} from '~/theme/dimension';
+import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
 import modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
-import BottomSheet from '~/beinComponents/BottomSheet';
-import Text from '~/beinComponents/Text';
 import menuActions from '~/screens/Menu/redux/actions';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import {scaleCoverHeight, scaleSize} from '~/theme/dimension';
-import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import {useUserIdAuth} from '~/hooks/auth';
+import {IconType} from '~/resources/icons';
+import speakingLanguages from '~/constants/speakingLanguages';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Image from '~/beinComponents/Image';
+import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
+import Icon from '~/beinComponents/Icon';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
@@ -38,8 +42,16 @@ const UserProfilePreviewBottomSheet = () => {
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {address, fullname, description, avatar, background_img_url} =
+  const {fullname, description, avatar, background_img_url, language, phone} =
     userProfileData || {};
+
+  const userLanguageList = language?.map(
+    // @ts-ignore
+    (code: string) => speakingLanguages[code].name,
+  );
+  const userLanguages = userLanguageList?.join(', ');
+
+  const showUserBasicInfo = !!phone || !isEmpty(language);
 
   const onClose = () => {
     dispatch(modalActions.hideUserProfilePreviewBottomSheet());
@@ -128,14 +140,37 @@ const UserProfilePreviewBottomSheet = () => {
         <Button.Secondary
           onPress={onPressViewProfile}
           style={styles.button}
-          leftIcon={'iconUserProfile'}
-          leftIconProps={{
-            icon: 'iconUserProfile',
-            size: 16,
-            tintColor: 'none',
-          }}>
+          leftIcon={'UserSquare'}
+          leftIconProps={{icon: 'UserSquare', size: 17}}>
           {i18next.t('profile:title_view_profile')}
         </Button.Secondary>
+      </View>
+    );
+  };
+
+  const renderInfoItem = (icon: IconType, content?: string) => {
+    if (!content) return null;
+
+    return (
+      <View style={styles.infoItem}>
+        <Icon
+          icon={icon}
+          tintColor={theme.colors.primary5}
+          size={24}
+          style={styles.infoItemIcon}
+        />
+        <Text.Body style={styles.infoItemContent} useI18n>
+          {content}
+        </Text.Body>
+      </View>
+    );
+  };
+
+  const renderBasicInfo = () => {
+    return (
+      <View style={styles.basicInfoContainer}>
+        {renderInfoItem('CommentsAlt', userLanguages)}
+        {renderInfoItem('Phone', phone)}
       </View>
     );
   };
@@ -148,7 +183,7 @@ const UserProfilePreviewBottomSheet = () => {
         {renderAvatar()}
         {renderUserHeader()}
         {renderButtons()}
-        <Text.Body>Address, {address}</Text.Body>
+        {showUserBasicInfo && renderBasicInfo()}
       </View>
     );
   };
@@ -173,6 +208,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
   return StyleSheet.create({
     container: {
       minHeight: containerMinHeight,
+      paddingBottom: spacing.padding.tiny,
       ...Platform.select({
         web: {
           width: 800,
@@ -209,6 +245,23 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       flex: 1,
       marginHorizontal: spacing.margin.tiny,
     },
+    basicInfoContainer: {
+      paddingTop: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
+      borderTopColor: colors.borderDivider,
+      borderTopWidth: 1,
+    },
+    infoItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      minHeight: 32,
+      // Add margin right => wrap the text sooner
+      marginRight: spacing.margin.base,
+    },
+    infoItemIcon: {
+      marginRight: spacing.margin.large,
+    },
+    infoItemContent: {},
   });
 };
 
