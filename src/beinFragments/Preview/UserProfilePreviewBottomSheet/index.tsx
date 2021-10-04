@@ -281,7 +281,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       flexDirection: 'row',
       alignItems: 'center',
       minHeight: 32,
-      // Add margin right => wrap the text sooner
+      // Add margin right => avoid text going out of the container
       marginRight: spacing.margin.base,
     },
     infoItemIcon: {
