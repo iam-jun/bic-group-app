@@ -18,7 +18,6 @@ import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {ViewSpacing} from '~/components';
 import {chatPermissions, roomTypes} from '~/constants/chat';
-import {useUserIdAuth} from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
@@ -26,7 +25,6 @@ import {IconType} from '~/resources/icons';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
@@ -47,7 +45,6 @@ const ConversationDetail = (): React.ReactElement => {
     conversation.avatar,
   );
   const permissions = conversation.permissions || {};
-  const currentUserId = useUserIdAuth();
 
   useEffect(() => {
     if (route?.params?.roomId)
