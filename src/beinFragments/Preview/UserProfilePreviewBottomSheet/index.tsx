@@ -94,7 +94,7 @@ const UserProfilePreviewBottomSheet = () => {
       params: {roomId, initial: false},
     });
 
-  const onPressChat = () => {
+  const navigateToChat = () => {
     if (!!username)
       dispatch(
         chatActions.createConversation(
@@ -107,7 +107,7 @@ const UserProfilePreviewBottomSheet = () => {
     userPreviewRef?.current?.close?.();
   };
 
-  const onPressViewProfile = () => {
+  const navigateToUserProfile = () => {
     if (!!userId) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId,
@@ -136,7 +136,7 @@ const UserProfilePreviewBottomSheet = () => {
 
   const renderAvatar = () => {
     return (
-      <TouchableOpacity onPress={onPressViewProfile} style={styles.avatar}>
+      <TouchableOpacity onPress={navigateToUserProfile} style={styles.avatar}>
         <Avatar.UltraSuperLarge
           source={avatar || images.img_user_avatar_default}
         />
@@ -147,7 +147,7 @@ const UserProfilePreviewBottomSheet = () => {
   const renderUserHeader = () => {
     return (
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={onPressViewProfile}>
+        <TouchableOpacity onPress={navigateToUserProfile}>
           <Text.H5>{fullname}</Text.H5>
         </TouchableOpacity>
         {!!description && <Text.Body>{description}</Text.Body>}
@@ -163,7 +163,7 @@ const UserProfilePreviewBottomSheet = () => {
       <View style={styles.buttonsContainer}>
         {!hideButtonChat && (
           <Button.Secondary
-            onPress={onPressChat}
+            onPress={navigateToChat}
             style={styles.button}
             leftIcon={'iconChatPurple'}
             leftIconProps={{
@@ -175,7 +175,7 @@ const UserProfilePreviewBottomSheet = () => {
           </Button.Secondary>
         )}
         <Button.Secondary
-          onPress={onPressViewProfile}
+          onPress={navigateToUserProfile}
           style={styles.button}
           leftIcon={'UserSquare'}
           leftIconProps={{icon: 'UserSquare', size: 17}}>
@@ -239,18 +239,11 @@ const UserProfilePreviewBottomSheet = () => {
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {colors, spacing} = theme;
-  const containerMinHeight = 365;
+  const containerMinHeight = 330;
 
   return StyleSheet.create({
     container: {
       minHeight: containerMinHeight,
-      paddingBottom: spacing.padding.tiny,
-      ...Platform.select({
-        web: {
-          width: 800,
-          height: 600,
-        },
-      }),
     },
     cover: {
       width: '100%',
@@ -268,13 +261,17 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-evenly',
+      alignItems: 'center',
+      height: 68,
       padding: spacing.padding.large,
     },
     button: {
       flex: 1,
+      height: 36,
       marginHorizontal: spacing.margin.tiny,
     },
     basicInfoContainer: {
+      marginBottom: spacing.margin.tiny,
       paddingTop: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
       borderTopColor: colors.borderDivider,
