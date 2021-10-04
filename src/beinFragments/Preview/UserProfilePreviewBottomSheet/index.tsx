@@ -176,7 +176,6 @@ const UserProfilePreviewBottomSheet = () => {
   };
 
   const renderUserProfile = () => {
-    console.log('[DEBUG] userProfileData', userProfileData);
     return (
       <View style={styles.container}>
         {renderCoverImage()}
@@ -203,7 +202,7 @@ const UserProfilePreviewBottomSheet = () => {
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
   const {colors, spacing} = theme;
-  const containerMinHeight = 350;
+  const containerMinHeight = 365;
 
   return StyleSheet.create({
     container: {
@@ -228,8 +227,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       maxHeight: 125,
       maxWidth: 125,
       borderRadius: 8,
-      borderWidth: 1,
-      borderColor: colors.background,
     },
     headerContainer: {
       alignItems: 'center',
