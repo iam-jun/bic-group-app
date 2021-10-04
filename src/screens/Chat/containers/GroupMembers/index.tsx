@@ -213,31 +213,37 @@ const GroupMembers = (): React.ReactElement => {
               title={i18next.t('chat:member_menu:label_view_profile')}
               onPress={() => onPressMenuOption('view-profile')}
             />
-            <PrimaryItem
-              style={styles.menuOption}
-              leftIcon="Star"
-              leftIconProps={{icon: 'Star', size: 24}}
-              title={i18next.t('chat:member_menu:label_set_as_admin')}
-              onPress={() => onPressMenuOption('set-admin')}
-            />
-            <PrimaryItem
-              style={styles.menuOption}
-              leftIcon="iconSend"
-              leftIconProps={{icon: 'iconSend', size: 24}}
-              title={i18next.t('chat:member_menu:label_direct_message')}
-              onPress={() => onPressMenuOption('send-direct-message')}
-            />
+            {permissions[chatPermissions.MANAGE_MEMBER] &&
+              !selectedMember?.roles?.includes('owner') && (
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon="Star"
+                  leftIconProps={{icon: 'Star', size: 24}}
+                  title={i18next.t('chat:member_menu:label_set_as_admin')}
+                  onPress={() => onPressMenuOption('set-admin')}
+                />
+              )}
             {selectedMember?.username !== user?.username && (
               <PrimaryItem
                 style={styles.menuOption}
-                leftIcon="TrashAlt"
-                leftIconProps={{icon: 'TrashAlt', size: 24}}
-                title={i18next.t(
-                  'chat:member_menu:label_remove_from_group_chat',
-                )}
-                onPress={() => onPressMenuOption('remove-member')}
+                leftIcon="iconSend"
+                leftIconProps={{icon: 'iconSend', size: 24}}
+                title={i18next.t('chat:member_menu:label_direct_message')}
+                onPress={() => onPressMenuOption('send-direct-message')}
               />
             )}
+            {permissions[chatPermissions.CAN_REMOVE_CHAT_MEMBER] &&
+              selectedMember?.username !== user?.username && (
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon="TrashAlt"
+                  leftIconProps={{icon: 'TrashAlt', size: 24}}
+                  title={i18next.t(
+                    'chat:member_menu:label_remove_from_group_chat',
+                  )}
+                  onPress={() => onPressMenuOption('remove-member')}
+                />
+              )}
           </View>
         }
       />
