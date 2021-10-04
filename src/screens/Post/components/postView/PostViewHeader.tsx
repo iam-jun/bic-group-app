@@ -1,5 +1,5 @@
 import React, {FC, useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -49,10 +49,13 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const actorName = actor?.data?.fullname;
 
   const onPressActor = (e: any) => {
-    if (actor?.id) {
-      // rootNavigation.navigate(mainStack.userProfile, {
-      //   userId: actor?.id,
-      // });
+    if (!actor.id) return;
+
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: actor?.id,
+      });
+    } else {
       const payload = {
         userId: actor.id,
         position: {x: e?.pageX, y: e?.pageY},
