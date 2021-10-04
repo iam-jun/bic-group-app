@@ -50,6 +50,7 @@ export const initState = {
   userProfilePreview: {
     isOpen: false,
     userId: undefined,
+    params: {},
     position: {x: -1, y: -1},
   },
 };

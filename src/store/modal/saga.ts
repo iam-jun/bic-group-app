@@ -1,7 +1,11 @@
 import {put, select, takeLatest} from 'redux-saga/effects';
 import {get} from 'lodash';
 
-import {IPayloadShowModal, IToastMessage} from '~/interfaces/common';
+import {
+  IPayloadShowModal,
+  IToastMessage,
+  IUserPreview,
+} from '~/interfaces/common';
 import modalActions, {
   clearToastMessage,
   setToastMessage,
@@ -53,12 +57,13 @@ function* showUserProfilePreviewBottomSheet({
   payload,
 }: {
   type: string;
-  payload: {userId: number; position?: {x: number; y: number}};
+  payload: IUserPreview;
 }) {
   const _payload = {
     isOpen: true,
     ...payload,
   };
+  console.log('[SAGA] payload', _payload);
   yield put(setUserProfilePreviewBottomSheet(_payload));
 }
 

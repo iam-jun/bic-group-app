@@ -40,7 +40,7 @@ const UserProfilePreviewBottomSheet = () => {
   const bottomSheetData = useKeySelector(
     commonKeySelector.userProfilePreviewBottomSheet,
   );
-  const {isOpen, userId, position} = bottomSheetData || {};
+  const {isOpen, userId, params, position} = bottomSheetData || {};
 
   const currentUserId = useUserIdAuth();
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
@@ -73,7 +73,7 @@ const UserProfilePreviewBottomSheet = () => {
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) dispatch(menuActions.getUserProfile({userId}));
+    if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
   };
 
   useEffect(() => {
