@@ -15,6 +15,8 @@ import commonKeySelector from '~/store/modal/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
 import chatActions from '~/screens/Chat/redux/actions';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import mainStack from '~/router/navigator/MainStack/stack';
 import images from '~/resources/images';
 import {IconType} from '~/resources/icons';
 import speakingLanguages from '~/constants/speakingLanguages';
@@ -23,7 +25,6 @@ import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
@@ -105,7 +106,12 @@ const UserProfilePreviewBottomSheet = () => {
   };
 
   const onPressViewProfile = () => {
-    console.log('[DEBUG], view profile');
+    if (!!userId) {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId,
+      });
+    }
+    userPreviewRef?.current?.close?.();
   };
 
   const onCoverLayout = (e: any) => {
