@@ -126,7 +126,7 @@ export const avatarSizes = {
   small: 24,
   medium: 36,
   large: 48,
-  ultraLarge: 52,
+  largeAlt: 52,
 };
 
 export const headerHeight = 48;

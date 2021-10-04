@@ -16,8 +16,8 @@ const Medium: React.FC<AvatarProps> = (props: AvatarProps) => (
 const Large: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant={'large'} {...props} />
 );
-const UltraLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'ultraLarge'} {...props} />
+const LargeAlt: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'largeAlt'} {...props} />
 );
 
 const Avatar = Object.assign(AvatarComponent, {
@@ -25,7 +25,7 @@ const Avatar = Object.assign(AvatarComponent, {
   Small,
   Medium,
   Large,
-  UltraLarge,
+  LargeAlt,
   Group,
 });
 

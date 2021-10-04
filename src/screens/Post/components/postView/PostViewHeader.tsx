@@ -82,7 +82,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       disabled={!onPressHeader}
       onPress={() => onPressHeader?.()}
       style={styles.headerContainer}>
-      <Avatar.UltraLarge source={avatar} style={styles.avatar} />
+      <Avatar.LargeAlt source={avatar} style={styles.avatar} />
       <View style={{flex: 1}}>
         <TouchableOpacity
           onPress={onPressActor}
