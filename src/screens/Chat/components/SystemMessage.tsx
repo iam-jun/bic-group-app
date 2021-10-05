@@ -20,13 +20,11 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      alignItems: 'center',
-      paddingHorizontal: spacing.padding.big,
+      paddingHorizontal: spacing.padding.base,
       paddingBottom: spacing.padding.small,
     },
     text: {
       color: colors.textSecondary,
-      textAlign: 'center',
     },
   });
 };

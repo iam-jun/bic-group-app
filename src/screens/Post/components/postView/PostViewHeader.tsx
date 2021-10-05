@@ -1,5 +1,5 @@
 import React, {FC, useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -14,10 +14,12 @@ import {formatDate} from '~/utils/formatData';
 import {AppContext} from '~/contexts/AppContext';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useDispatch} from 'react-redux';
+import modalActions from '~/store/modal/actions';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
-  time: any;
+  time?: any;
   actor: any;
   onPressHeader?: () => void;
   onPressMenu?: (e: any) => void;
@@ -33,6 +35,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   onPressShowAudiences,
 }: PostViewHeaderProps) => {
   const {rootNavigation} = useRootNavigation();
+  const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -45,11 +48,19 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const avatar = actor?.data?.avatar;
   const actorName = actor?.data?.fullname;
 
-  const onPressActor = () => {
-    if (actor?.id) {
+  const onPressActor = (e: any) => {
+    if (!actor.id) return;
+
+    if (Platform.OS === 'web') {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: actor?.id,
       });
+    } else {
+      const payload = {
+        userId: actor.id,
+        position: {x: e?.pageX, y: e?.pageY},
+      };
+      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
     }
   };
 
@@ -71,7 +82,9 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       disabled={!onPressHeader}
       onPress={() => onPressHeader?.()}
       style={styles.headerContainer}>
-      <Avatar.UltraLarge source={avatar} style={styles.avatar} />
+      <TouchableOpacity onPress={onPressActor} style={styles.avatar}>
+        <Avatar.LargeAlt source={avatar} />
+      </TouchableOpacity>
       <View style={{flex: 1}}>
         <TouchableOpacity
           onPress={onPressActor}

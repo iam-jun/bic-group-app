@@ -27,6 +27,7 @@ import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
 import CommonModal from '~/beinFragments/CommonModal';
+import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
 
 const Stack = createStackNavigator();
 
@@ -121,6 +122,7 @@ const MainStack = (): React.ReactElement => {
       <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />
+      <UserProfilePreviewBottomSheet />
       <CommonModal />
     </View>
   );

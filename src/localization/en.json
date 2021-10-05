@@ -16,6 +16,7 @@
     "btn_discard": "Discard",
     "btn_edit": "Edit",
     "btn_save": "Save",
+    "btn_publish": "Publish",
     "btn_done": "Done",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
@@ -341,8 +342,15 @@
     "draft": {
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
+      "btn_menu_schedule": "Schedule to Post",
+      "btn_menu_delete": "Delete Draft Post",
       "title_no_draft_posts": "No Draft Post",
-      "text_no_draft_posts": "You have no draft post left"
+      "title_delete_draft_post": "Delete Draft Post",
+      "text_delete_draft_post": "Are you sure want to delete this draft post?",
+      "text_no_draft_posts": "You have no draft post left",
+      "text_draft_published": "Your post has been published",
+      "text_draft_saved": "Your draft has been saved",
+      "text_draft_deleted": "Your draft has been deleted"
     }
   },
   "chat": {
@@ -441,7 +449,8 @@
     "text_mention_all": "All",
     "modal_confirm_remove_member": {
       "title": "Remove Member",
-      "description": "This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+      "description": "This member will be removed from this chat conversation. Do you want to continue?",
+      "description_group_chat": "This member will be removed from groups: {0}. Do you want to continue?"
     },
     "message_option": {
       "pin": "Pin this message",
@@ -461,10 +470,10 @@
     },
     "label_no_description": "No Description",
     "label_unread_messages_banner": "Unread messages since",
-    "label_unread_messages" : "Unread messages",
+    "label_unread_messages": "Unread messages",
     "text_editing_message": "Editing message",
     "text_edited": "edited",
-    "label_replied_messsage_attachment":"Tap to view attachment"
+    "label_replied_messsage_attachment": "Tap to view attachment"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -512,7 +521,8 @@
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
-    "title_direct_message": "Direct Message"
+    "title_direct_message": "Direct Message",
+    "title_view_profile": "View Profile"
   },
   "right_col": {
     "about_bein": "About Bein",

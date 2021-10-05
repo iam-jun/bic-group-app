@@ -598,13 +598,16 @@ function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
-    case messageEventTypes.ADD_USER:
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.ADD_USER:
+      yield handleNewMessage(data);
+      yield put(actions.addMembersToGroupSuccess(1));
       break;
     case messageEventTypes.REMOVE_MESSAGE:
       yield handleRemoveMessage(data);
