@@ -283,7 +283,6 @@ function* createConversation({
     );
 
     yield put(actions.setConversationDetail(conversation));
-    yield put(actions.createConversationSuccess(conversation));
 
     if (callBack) return callBack(conversation._id);
 
@@ -583,7 +582,7 @@ function* handleRemoveMessage(data: any) {
 
 function* handleAddNewRoom(data: any) {
   try {
-    const {chat, auth} = yield select();
+    const {auth} = yield select();
 
     yield put(
       actions.createConversationSuccess(mapConversation(auth.user, data)),
