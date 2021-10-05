@@ -618,11 +618,15 @@ function* handleRoomsMessage(payload?: any) {
 }
 
 function* handleNotifyUser(payload?: any) {
+  const {chat} = yield select();
   const data = payload.fields.args || [];
   switch (data[0]) {
     case 'removed':
-      yield put(actions.kickMeOut(data[1]));
-      navigation.replace(chatStack.conversationList);
+      {
+        yield put(actions.kickMeOut(data[1]));
+        if (chat.conversation?._id)
+          navigation.replace(chatStack.conversationList);
+      }
       break;
     case 'inserted':
       yield handleAddNewRoom(data[1]);
