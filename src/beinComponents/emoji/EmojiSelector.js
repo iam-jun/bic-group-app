@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
-  ActivityIndicator,
-  AsyncStorage,
   FlatList,
 } from 'react-native';
 import emoji from 'emoji-datasource';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Categories = {
   all: {
@@ -91,7 +90,7 @@ const TabBar = ({theme, activeCategory, onPress, width}) => {
             style={{
               textAlign: 'center',
               paddingBottom: 8,
-              fontSize: tabSize - 24,
+              fontSize: (tabSize - 12) * 0.7,
             }}>
             {category.symbol}
           </Text>
@@ -320,24 +319,17 @@ export default class EmojiSelector extends Component {
         <View style={{flex: 1}}>
           {showSearchBar && Searchbar}
           {isReady && (
-            <View style={{flex: 1}}>
-              <View style={styles.container}>
-                {showSectionTitles && (
-                  <Text style={styles.sectionHeader}>{title}</Text>
-                )}
-                <FlatList
-                  style={styles.scrollview}
-                  contentContainerStyle={{paddingBottom: colSize}}
-                  data={this.returnSectionData()}
-                  renderItem={this.renderEmojiCell}
-                  horizontal={false}
-                  numColumns={columns}
-                  keyboardShouldPersistTaps={'always'}
-                  ref={scrollview => (this.scrollview = scrollview)}
-                  removeClippedSubviews
-                />
-              </View>
-            </View>
+            <FlatList
+              style={styles.scrollview}
+              data={this.returnSectionData()}
+              renderItem={this.renderEmojiCell}
+              horizontal={false}
+              numColumns={columns}
+              keyboardShouldPersistTaps={'always'}
+              ref={scrollview => (this.scrollview = scrollview)}
+              removeClippedSubviews
+              nestedScrollEnabled
+            />
           )}
         </View>
       </View>
@@ -370,7 +362,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   scrollview: {
-    flex: 1,
+    // flex: 1,
   },
   searchbar_container: {
     width: '100%',
@@ -389,10 +381,10 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   container: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    // flex: 1,
+    // flexWrap: 'wrap',
+    // flexDirection: 'row',
+    // alignItems: 'flex-start',
   },
   sectionHeader: {
     margin: 8,
