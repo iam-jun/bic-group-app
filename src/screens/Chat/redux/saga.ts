@@ -259,7 +259,6 @@ function* createConversation({
     );
 
     yield put(actions.setConversationDetail(conversation));
-    yield put(actions.createConversationSuccess(conversation));
 
     if (callBack) return callBack(conversation._id);
 
@@ -714,13 +713,16 @@ function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
-    case messageEventTypes.ADD_USER:
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.ADD_USER:
+      yield handleNewMessage(data);
+      yield put(actions.addMembersToGroupSuccess(1));
       break;
     case messageEventTypes.REMOVE_MESSAGE:
       yield handleRemoveMessage(data);
@@ -732,11 +734,15 @@ function* handleRoomsMessage(payload?: any) {
 }
 
 function* handleNotifyUser(payload?: any) {
+  const {chat} = yield select();
   const data = payload.fields.args || [];
   switch (data[0]) {
     case 'removed':
-      yield put(actions.kickMeOut(data[1]));
-      navigation.replace(chatStack.conversationList);
+      {
+        yield put(actions.kickMeOut(data[1]));
+        if (chat.conversation?._id)
+          navigation.replace(chatStack.conversationList);
+      }
       break;
     case 'inserted':
       yield handleAddNewRoom(data[1]);

@@ -23,16 +23,16 @@ import {ITheme} from '~/theme/interfaces';
 interface Props {
   replyingMessage?: IMessage;
   editingMessage?: IMessage;
+  onCancelEditing: () => void;
   onCancelReplying: () => void;
-  onChangeMessage?: (value: IMessage | undefined) => void;
   onError: (err: any) => void;
 }
 
 const ChatInput: React.FC<Props> = ({
   editingMessage,
   replyingMessage,
+  onCancelEditing,
   onCancelReplying,
-  onChangeMessage,
   onError,
 }: Props) => {
   const commentInputRef = useRef<any>();
@@ -40,7 +40,6 @@ const ChatInput: React.FC<Props> = ({
   const dispatch = useDispatch();
   const [text, setText] = useState(editingMessage?.text || '');
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
   const styles = createStyles(theme);
 
   const {user} = useAuth();
@@ -91,7 +90,7 @@ const ChatInput: React.FC<Props> = ({
       );
     }
     setText('');
-    onChangeMessage?.(undefined);
+    onCancelEditing();
   };
 
   const onPressSelectImage = (file: IFilePicked) => {
@@ -157,28 +156,34 @@ const ChatInput: React.FC<Props> = ({
     }
   };
 
-  const renderCommentInputHeader = () => {
-    if (!replyingMessage) {
-      return null;
-    }
+  const onCancel = () => {
+    !!editingMessage && onCancelEditing();
+    !!replyingMessage && onCancelReplying();
+  };
+
+  const renderInputHeader = () => {
+    if (!editingMessage && !replyingMessage) return null;
     return (
-      <View style={styles.commentInputHeader}>
+      <View style={styles.inputMessageHeader}>
         <View style={styles.headerContent}>
-          <Text color={colors.textSecondary}>
-            {i18next.t('post:label_replying_to')}
-            <Text.BodyM>
-              {replyingMessage.user.name || i18next.t('post:someone')}
-            </Text.BodyM>
-            <Text.BodyS color={colors.textSecondary}>
+          <Text.BodyM>
+            {!!editingMessage && i18next.t('chat:text_editing_message')}
+            {!!replyingMessage && i18next.t('post:label_replying_to')}
+            {!!replyingMessage && (
+              <Text.BodyM>
+                {replyingMessage.user.name || i18next.t('post:someone')}
+              </Text.BodyM>
+            )}
+            <Text.BodySM color={theme.colors.textSecondary}>
               {'  • '}
               <Text.BodyM
                 useI18n
-                color={colors.textSecondary}
-                onPress={onCancelReplying}>
+                color={theme.colors.textSecondary}
+                onPress={onCancel}>
                 common:btn_cancel
               </Text.BodyM>
-            </Text.BodyS>
-          </Text>
+            </Text.BodySM>
+          </Text.BodyM>
         </View>
       </View>
     );
@@ -191,7 +196,7 @@ const ChatInput: React.FC<Props> = ({
       ComponentInput={CommentInput}
       mentionField="beinUserId"
       componentInputProps={{
-        HeaderComponent: renderCommentInputHeader(),
+        HeaderComponent: renderInputHeader(),
         commentInputRef: commentInputRef,
         onPressSend: onSend,
         onPressFile,
@@ -211,7 +216,7 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    commentInputHeader: {
+    inputMessageHeader: {
       flexDirection: 'row',
       marginHorizontal: spacing?.margin.base,
       marginTop: spacing?.margin.tiny,

@@ -12,7 +12,6 @@ import apiConfig, {
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/configs/apiConfig';
-import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes, createAction} from '~/utils';
@@ -300,7 +299,7 @@ const interceptorsResponseError = async (error: AxiosError) => {
  */
 const makeGetStreamRequest = async (
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   funcName: string,
   ...params: any
@@ -325,7 +324,7 @@ let unauthorizedGetStreamReqQueue: UnauthorizedReq[] = [];
 const handleResponseFailFeedActivity = async (
   activitiesError: FeedResponseError,
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   funcName: any,
   ...params: any
@@ -402,19 +401,7 @@ const refreshAuthTokens = async () => {
     notiSubscribeToken,
   );
 
-  // after refresh token, update push token with the new tokens
-  if (Platform.OS === 'web') {
-    return true;
-  }
-  try {
-    const messaging = await initPushTokenMessage();
-    const deviceToken = await messaging().getToken();
-    await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
-    return true;
-  } catch (e) {
-    console.log('pushToken when refreshToken failed:', e);
-    return false;
-  }
+  return true;
 };
 
 const getAuthTokens = async () => {
@@ -515,7 +502,7 @@ const makePushTokenRequest = async (
 // helper function to make subscription to get stream and run callback when client receive new activity
 const subscribeGetstreamFeed = (
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   callback,
 ) => {

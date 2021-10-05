@@ -16,6 +16,7 @@
     "btn_discard": "Bỏ",
     "btn_edit": "Sửa",
     "btn_save": "Lưu",
+    "btn_publish": "Đăng",
     "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
@@ -288,7 +289,20 @@
     "post_exit_desc": "Bạn có thể lưu bản nháp để hoàn thiện sau",
     "post_exit_option_save": "Lưu bản nháp",
     "post_exit_option_discard": "Huỷ bài viết",
-    "post_exit_option_continue": "Tiếp tục viết bài"
+    "post_exit_option_continue": "Tiếp tục viết bài",
+    "draft": {
+      "btn_post_now": "Đăng ngay",
+      "btn_edit": "Sửa",
+      "btn_menu_schedule": "Đặt lịch đăng bài",
+      "btn_menu_delete": "Xoá bản nháp",
+      "title_delete_draft_post": "Xoá bản nháp",
+      "text_delete_draft_post": "Bạn có chắc muốn xoá bản nháp này?",
+      "title_no_draft_posts": "Không có bài nháp",
+      "text_no_draft_posts": "Bạn không còn bài nháp nào",
+      "text_draft_published": "Bài viết của bạn đã được đăng",
+      "text_draft_saved": "Bản nháp của bạn đã được lưu",
+      "text_draft_deleted": "Bản nháp của bạn đã được xoá"
+    }
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
@@ -344,7 +358,8 @@
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
-    "title_direct_message": "Gửi tin nhắn"
+    "title_direct_message": "Gửi tin nhắn",
+    "title_view_profile": "Xem trang cá nhân"
   },
   "right_col": {
     "about_bein": "About Bein",

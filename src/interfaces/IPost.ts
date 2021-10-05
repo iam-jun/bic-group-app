@@ -86,6 +86,7 @@ export interface IPostActivity {
   own_reactions?: any;
   reaction_counts?: IObject<number>;
   deleted?: boolean;
+  is_draft?: boolean;
 }
 
 export interface IOwnReaction {
@@ -111,6 +112,10 @@ export interface IPostCreatePost {
   };
   tags?: number[];
   important?: IActivityImportant;
+  is_draft?: boolean;
+
+  userId?: string;
+  streamClient?: StreamClient;
 }
 
 export interface IPayloadCreateComment {
@@ -286,6 +291,7 @@ export interface IPayloadUpdateCommentsById {
 }
 
 export interface ICreatePostParams {
+  draftPostId?: string;
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
@@ -294,4 +300,37 @@ export interface ICreatePostParams {
 export interface IPayloadReplying {
   comment: IReaction;
   parentComment?: IReaction;
+}
+
+export interface IPayloadSetDraftPosts {
+  posts?: IActivityData[];
+  canLoadMore?: boolean;
+  loading?: boolean;
+  refreshing?: boolean;
+}
+
+export interface IPayloadGetDraftPosts {
+  userId: string;
+  streamClient?: StreamClient;
+  isRefresh?: boolean;
+  offset?: number;
+}
+
+export interface IPayloadPublishDraftPost {
+  draftPostId: string;
+  replaceWithDetail?: boolean;
+  onSuccess?: () => void;
+  onError?: () => void;
+  userId?: string;
+  streamClient?: StreamClient;
+  refreshDraftPosts?: boolean;
+}
+
+export interface IPayloadPutEditDraftPost {
+  id: string;
+  data: IPostCreatePost;
+  replaceWithDetail?: boolean;
+  userId: string;
+  streamClient?: StreamClient;
+  publishNow: boolean;
 }

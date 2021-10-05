@@ -1,4 +1,3 @@
-import {IReactionCounts, IOwnReaction} from '~/interfaces/IPost';
 import i18next from 'i18next';
 import {messageEventTypes, roomTypes} from '~/constants/chat';
 import {
@@ -7,11 +6,12 @@ import {
   IConversation,
   IMessage,
 } from '~/interfaces/IChat';
+import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
+import reactionIcons from '~/resources/reactions';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 import {messageStatus} from './../../constants/chat';
-import reactionIcons from '~/resources/reactions';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -43,7 +43,7 @@ export const mapJoinableUsers = (data?: []): IChatUser[] =>
 
 export const mapConversation = (user: IChatUser, item: any): IConversation => {
   if (!item) return item;
-  const _id = item._id || item.rid;
+  const _id = item.rid || item._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
   const membersExcludeMe = (item.usernames || []).filter(
@@ -191,10 +191,10 @@ export const mapRole = (item: any) => ({
 });
 
 export const getAvatar = (username: string) =>
-  `${getEnv('ROCKET_CHAT_SERVER')}avatar/${username}?format=png`;
+  `${getEnv('ROCKET_CHAT_SERVER')}/avatar/${username}?format=png`;
 
 export const getRoomAvatar = (roomId: string) =>
-  `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}?format=png`;
+  `${getEnv('ROCKET_CHAT_SERVER')}/avatar/room/${roomId}?format=png`;
 
 export const getMessageAttachmentUrl = (attachmentUrl: string) => {
   const auth = getChatAuthInfo();
@@ -216,12 +216,11 @@ export const getMessageAttachmentUrl = (attachmentUrl: string) => {
 
 export const getDownloadUrl = (file?: string) => {
   const auth = getChatAuthInfo();
-
   return `${getEnv('ROCKET_CHAT_SERVER')}${file}?download&rc_uid=${
     auth.userId
   }&rc_token=${auth.accessToken}`;
 };
 
 export const getDefaultAvatar = (name: string) => {
-  return `${getEnv('ROCKET_CHAT_SERVER')}avatar/${name}?format=png`;
+  return `${getEnv('ROCKET_CHAT_SERVER')}/avatar/${name}?format=png`;
 };

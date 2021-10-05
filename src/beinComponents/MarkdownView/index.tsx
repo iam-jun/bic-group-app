@@ -1,26 +1,26 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
+import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Icon from '~/beinComponents/Icon';
+import {
+  blacklistDefault,
+  blacklistLimit,
+} from '~/beinComponents/MarkdownView/constant';
 
 import Markdown, {
   emojiDefs,
   emojiPlugin,
   emojiShortcuts,
-  regexPlugin,
   MarkdownIt,
+  regexPlugin,
 } from '~/beinComponents/MarkdownView/Markdown/index';
-
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
+import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {audienceRegex} from '~/constants/commonRegex';
 import {IAudience} from '~/interfaces/IPost';
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
-import {
-  blacklistDefault,
-  blacklistLimit,
-} from '~/beinComponents/MarkdownView/constant';
 import {fontFamilies} from '~/theme/fonts';
+
+import {ITheme} from '~/theme/interfaces';
 
 export interface MarkdownViewProps {
   style?: StyleProp<ViewStyle>;
@@ -49,8 +49,9 @@ const MarkdownView: FC<MarkdownViewProps> = ({
     return null;
   }
 
-  const _children = children?.replace?.(/(?:\r\n|\r|\n)/g, '<br>');
-  const markdownIt = MarkdownIt({typographer: true})
+  const _children = replaceLineBreak(children);
+
+  const markdownIt = MarkdownIt({typographer: true, linkify: true})
     .use(emojiPlugin, {
       defs: emojiDefs,
       shortcuts: emojiShortcuts,
@@ -116,6 +117,22 @@ const MarkdownView: FC<MarkdownViewProps> = ({
       </Markdown>
     </View>
   );
+};
+
+const replaceLineBreak = (content: string) => {
+  let result = '';
+  const replacerSplash = (splash: string) => (match: any) => {
+    let middle = match.substring(splash.length, match.lastIndexOf(splash));
+    if (middle) {
+      middle = middle?.replace(new RegExp(splash, 'g'), '<br>');
+      return splash + middle + splash;
+    }
+    return '';
+  };
+  result = content.replace(/(\r\n)(\r\n)+(\r\n)/g, replacerSplash('\r\n'));
+  result = result.replace(/(\n)(\n)+(\n)/g, replacerSplash('\n'));
+  result = result.replace(/(\r)(\r)+(\r)/g, replacerSplash('\r'));
+  return result;
 };
 
 const createStyle = (theme: ITheme) => {

@@ -19,6 +19,10 @@ import {
   IPayloadReplying,
   IPayloadGetPostDetail,
   ICreatePostImage,
+  IPayloadGetDraftPosts,
+  IPayloadSetDraftPosts,
+  IPayloadPublishDraftPost,
+  IPayloadPutEditDraftPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -74,6 +78,10 @@ const postActions = {
   }),
   setSearchResultAudienceUsers: (payload: IUser[]) => ({
     type: postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS,
+    payload,
+  }),
+  setDraftPosts: (payload?: IPayloadSetDraftPosts) => ({
+    type: postTypes.SET_DRAFT_POSTS,
     payload,
   }),
   //post detail
@@ -170,6 +178,18 @@ const postActions = {
   }),
   getPostDetail: (payload: IPayloadGetPostDetail) => ({
     type: postTypes.GET_POST_DETAIL,
+    payload,
+  }),
+  getDraftPosts: (payload?: IPayloadGetDraftPosts) => ({
+    type: postTypes.GET_DRAFT_POSTS,
+    payload,
+  }),
+  postPublishDraftPost: (payload: IPayloadPublishDraftPost) => ({
+    type: postTypes.POST_PUBLISH_DRAFT_POST,
+    payload,
+  }),
+  putEditDraftPost: (payload: IPayloadPutEditDraftPost) => ({
+    type: postTypes.PUT_EDIT_DRAFT_POST,
     payload,
   }),
 };

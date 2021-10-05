@@ -116,7 +116,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
 
-    increment_build_number(skip_info_plist: true, build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
+    increment_build_number(build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
     build_app(
       workspace: "#{ENV['SCHEME_NAME']}.xcworkspace",
       scheme: "#{ENV['SCHEME_NAME_IOS']}",
@@ -128,6 +128,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
       clean: true,
     )
     upload_to_testflight(
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Version #{ENV['APP_VERSION']}",
     )

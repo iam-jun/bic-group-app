@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -11,7 +11,13 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-const CreatePostExitOptions = () => {
+export interface CreatePostExitOptionsProps {
+  onPressSaveDraft?: () => void;
+}
+
+const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
+  onPressSaveDraft,
+}: CreatePostExitOptionsProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
@@ -21,7 +27,7 @@ const CreatePostExitOptions = () => {
 
   const onPressSaveAsDraft = () => {
     dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlertNewFeature());
+    onPressSaveDraft?.();
   };
 
   const onPressDiscard = () => {

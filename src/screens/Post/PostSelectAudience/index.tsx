@@ -213,7 +213,7 @@ const PostSelectAudience = () => {
         <PrimaryItem
           showAvatar
           avatar={icon || avatar}
-          avatarProps={{variant: isGroup ? 'ultraLarge' : 'large'}}
+          avatarProps={{variant: isGroup ? 'largeAlt' : 'large'}}
           style={styles.item}
           title={name}
           onPressCheckbox={() => onPressUser(item)}

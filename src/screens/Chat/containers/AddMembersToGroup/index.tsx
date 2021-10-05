@@ -122,8 +122,7 @@ const AddMembersToGroup = (): React.ReactElement => {
         buttonText={i18next.t('common:text_add')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
-          color: colors.primary7,
-          textColor: colors.textReversed,
+          highEmphasis: true,
         }}
         onPressButton={onAddPress}
       />

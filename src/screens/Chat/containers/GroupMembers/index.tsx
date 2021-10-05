@@ -23,6 +23,8 @@ import {showAlertNewFeature} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../../fragments/MembersSelection';
 import actions from '../../redux/actions';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -125,29 +127,66 @@ const GroupMembers = (): React.ReactElement => {
     );
   };
 
-  const seachHandler = useCallback(
+  const searchHandler = useCallback(
     debounce(searchUsers, appConfig.searchTriggerTime),
     [],
   );
 
   const onQueryChanged = (text: string) => {
     setSearchQuery(text);
-    seachHandler(text);
+    searchHandler(text);
   };
 
-  const showConfirmations = (user: IChatUser) => {
-    dispatch(
-      modalActions.showAlert({
-        iconName: 'RemoveUser',
-        title: i18next.t('chat:modal_confirm_remove_member:title'),
-        content: i18next
-          .t(`chat:modal_confirm_remove_member:description`)
-          .replace('{0}', conversation.name),
-        cancelBtn: true,
-        onConfirm: () => doRemoveUser(user),
-        confirmLabel: i18next.t('chat:button_remove_member'),
-      }),
+  const alertRemovingMember = (user: IChatUser) => {
+    const alertPayload = {
+      iconName: 'RemoveUser',
+      title: i18next.t('chat:modal_confirm_remove_member:title'),
+      content: i18next.t(`chat:modal_confirm_remove_member:description`),
+      cancelBtn: true,
+      onConfirm: () => doRemoveUser(user),
+      confirmLabel: i18next.t('chat:button_remove_member'),
+    };
+
+    if (conversation.type !== roomTypes.GROUP) {
+      dispatch(modalActions.showAlert(alertPayload));
+      return;
+    }
+
+    // Handling remove user from group chat and other inner groups
+    alertPayload.content = i18next.t(
+      `chat:modal_confirm_remove_member:description_group_chat`,
     );
+
+    groupsDataHelper
+      .getUserInnerGroups(conversation.beinGroupId, user.beinUserId)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        const groupsRemovedFrom = [conversation.name, ...innerGroups];
+        if (groupsRemovedFrom.length === 1) {
+          alertPayload.content = alertPayload.content.replace(
+            'groups',
+            'group',
+          );
+        }
+        const groupsRemovedFromToString = groupsRemovedFrom.join(', ');
+        alertPayload.content = alertPayload.content.replace(
+          '{0}',
+          groupsRemovedFromToString,
+        );
+
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.log('[ERROR] error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
   };
 
   const doRemoveUser = (user: IChatUser) => {
@@ -156,9 +195,7 @@ const GroupMembers = (): React.ReactElement => {
 
   const onRemovePress = () => {
     if (selectedMember) {
-      if (conversation.type === roomTypes.GROUP)
-        showConfirmations(selectedMember);
-      else doRemoveUser(selectedMember);
+      alertRemovingMember(selectedMember);
     }
   };
 

@@ -249,11 +249,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           data: action.payload,
         },
       };
-    case types.GET_SUBSCRIPTIONS:
-      return {
-        ...state,
-        conversation: initState.conversation,
-      };
+    // case types.GET_SUBSCRIPTIONS:
+    //   return {
+    //     ...state,
+    //     conversation: initState.conversation,
+    //   };
     case types.SET_SUBSCRIPTIONS:
       return {
         ...state,
@@ -507,6 +507,18 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           data: state.members.data.filter(
             (member: IUser) => member.username !== payload.msg,
           ),
+        },
+        conversation: {
+          ...conversation,
+          usersCount: conversation.usersCount - 1,
+        },
+      };
+    case types.ADD_MEMBERS_TO_GROUP_SUCCESS:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          usersCount: conversation.usersCount + payload,
         },
       };
     case types.KICK_ME_OUT:

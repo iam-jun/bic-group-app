@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
   Platform,
   StyleProp,
   StyleSheet,
@@ -18,7 +17,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import _, {debounce, get} from 'lodash';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity, FlatList} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
@@ -321,6 +320,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           <FlatList
             keyboardShouldPersistTaps={'always'}
             data={list || []}
+            nestedScrollEnabled
             ListEmptyComponent={renderEmpty}
             renderItem={_renderItem}
             keyExtractor={item => item.id || item._id}

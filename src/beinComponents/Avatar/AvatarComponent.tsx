@@ -1,12 +1,18 @@
 import React from 'react';
-import {StyleSheet, StyleProp, View, ViewStyle, ImageStyle} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
+import {ImageStyle, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Image, {ImageProps} from '~/beinComponents/Image';
 import {IconType} from '~/resources/icons';
+import {ITheme} from '~/theme/interfaces';
 
-export type AvatarType = 'tiny' | 'small' | 'medium' | 'large' | 'ultraLarge';
+export type AvatarType =
+  | 'tiny'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'largeAlt'
+  | 'ultraSuperLarge';
 
 export type AvatarStatus = 'online';
 
@@ -19,6 +25,7 @@ export interface AvatarProps extends ImageProps {
   badge?: any;
   badgeBottom?: boolean;
   isRounded?: boolean;
+  cache?: boolean;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -183,9 +190,14 @@ const creatStyle = (theme: ITheme) => {
       height: dimension?.avatarSizes?.large,
       borderRadius: spacing?.borderRadius.small,
     },
-    ultraLarge: {
-      width: dimension?.avatarSizes?.ultraLarge,
-      height: dimension?.avatarSizes?.ultraLarge,
+    largeAlt: {
+      width: dimension?.avatarSizes?.largeAlt,
+      height: dimension?.avatarSizes?.largeAlt,
+      borderRadius: (spacing?.borderRadius.small || 6) + 2,
+    },
+    ultraSuperLarge: {
+      width: dimension?.avatarSizes?.ultraSuperLarge,
+      height: dimension?.avatarSizes?.ultraSuperLarge,
       borderRadius: (spacing?.borderRadius.small || 6) + 2,
     },
   });

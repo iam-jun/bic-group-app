@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useContext, useEffect, useRef} from 'react';
 import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -18,6 +18,7 @@ import {
   IActivityDataImage,
   IAudience,
   ICreatePostParams,
+  IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
   IPostCreatePost,
@@ -36,8 +37,10 @@ import FileUploader from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {uploadTypes} from '~/configs/resourceConfig';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
 
 export interface CreatePostProps {
   route?: {
@@ -48,7 +51,8 @@ export interface CreatePostProps {
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
   const mentionInputRef = useRef<any>();
-  const {postId, replaceWithDetail, initAudience} = route?.params || {};
+  const {postId, draftPostId, replaceWithDetail, initAudience} =
+    route?.params || {};
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -61,6 +65,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
+  if (draftPostId) {
+    const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
+    initPostData = draftPosts?.find(
+      (item: IPostActivity) => item?.id === draftPostId,
+    );
+  }
+
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
 
   const createPostData = useCreatePost();
   const {loading, data, chosenAudiences = [], important} = createPostData || {};
@@ -71,6 +84,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+  const isEditDraftPost = !!initPostData?.id && draftPostId;
+  const isEditContentOnly = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -87,7 +102,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     loading ||
     content?.length === 0 ||
     chosenAudiences.length === 0 ||
-    (isEditPost && !isEditPostHasChange);
+    (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
   useBackHandler(() => {
     onPressBack();
@@ -108,6 +123,28 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);
+
+  useEffect(() => {
+    if (initPostData && isEditDraftPost) {
+      const initImages: any = [];
+      initPostData?.object?.data?.images?.map(item => {
+        initImages.push({
+          fileName: item?.origin_name || item?.name,
+          file: {
+            name: item?.origin_name || item?.name,
+            filename: item?.origin_name || item?.name,
+            width: item?.width || 0,
+            height: item?.height || 0,
+          },
+          url: item?.name?.includes('http')
+            ? item.name
+            : getResourceUrl(uploadTypes.postImage, item?.name),
+        });
+      });
+      dispatch(postActions.setCreatePostImagesDraft(initImages));
+      dispatch(postActions.setCreatePostImages(initImages));
+    }
+  }, [initPostData]);
 
   useEffect(() => {
     if (initPostData?.id) {
@@ -147,13 +184,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const onPressBack = () => {
     Keyboard.dismiss();
 
-    if (isEditPost) {
+    if (isEditPost && !isEditDraftPost) {
       if (isEditPostHasChange) {
         dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            ContentComponent: <CreatePostExitOptions />,
-            props: {webModalStyle: {minHeight: undefined}},
+          modalActions.showAlert({
+            title: i18n.t('common:label_discard_changes'),
+            content: i18n.t('post:alert_content_back_edit_post'),
+            showCloseButton: true,
+            cancelBtn: true,
+            cancelLabel: i18n.t('common:btn_continue_editing'),
+            confirmLabel: i18n.t('common:btn_discard'),
+            onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
@@ -163,7 +205,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         dispatch(
           modalActions.showModal({
             isOpen: true,
-            ContentComponent: <CreatePostExitOptions />,
+            ContentComponent: (
+              <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
+            ),
             props: {webModalStyle: {minHeight: undefined}},
           }),
         );
@@ -173,7 +217,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.goBack();
   };
 
-  const onPressPost = async () => {
+  const onPressSaveDraft = async () => {
+    if (isEditDraftPost && initPostData?.id) {
+      await onPressPost(true, true);
+    } else {
+      await onPressPost(true);
+    }
+  };
+
+  const onPressPost = async (
+    isSaveAsDraft?: boolean,
+    isEditDraft?: boolean,
+  ) => {
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
@@ -198,7 +253,26 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
     });
 
-    if (isEditPost && initPostData?.id) {
+    if (isEditDraftPost && initPostData?.id) {
+      const postData = {content, images, videos: [], files: []};
+      const draftData: IPostCreatePost = {
+        getstream_id: initPostData.id,
+        data: postData,
+        audience,
+      };
+      if (important?.active) {
+        draftData.important = important;
+      }
+      const payload: IPayloadPutEditDraftPost = {
+        id: initPostData?.id,
+        replaceWithDetail: replaceWithDetail,
+        data: draftData,
+        userId: userId,
+        streamClient: streamClient,
+        publishNow: !isEditDraft,
+      };
+      dispatch(postActions.putEditDraftPost(payload));
+    } else if (isEditPost && initPostData?.id) {
       const newEditData: IPostCreatePost = {
         getstream_id: initPostData.id,
         data,
@@ -215,7 +289,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.putEditPost(payload));
     } else {
       const postData = {content, images, videos: [], files: []};
-      const payload: IPostCreatePost = {data: postData, audience};
+      const payload: IPostCreatePost = {
+        data: postData,
+        audience,
+        is_draft: isSaveAsDraft,
+        userId,
+        streamClient,
+      };
       if (important?.active) {
         payload.important = important;
       }
@@ -288,7 +368,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       <Header
         titleTextProps={{useI18n: true}}
         title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
-        buttonText={isEditPost ? 'common:btn_save' : 'post:post_button'}
+        buttonText={
+          isEditPost
+            ? isEditDraftPost
+              ? 'common:btn_publish'
+              : 'common:btn_save'
+            : 'post:post_button'
+        }
         buttonProps={{
           loading: loading,
           disabled: disableButtonPost,
@@ -296,9 +382,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           highEmphasis: true,
         }}
         onPressBack={onPressBack}
-        onPressButton={onPressPost}
+        onPressButton={() => onPressPost(false)}
       />
-      {!isEditPost && (
+      {!isEditContentOnly && (
         <View>
           {!!important?.active && <ImportantStatus notExpired />}
           <CreatePostChosenAudiences disabled={loading} />
@@ -306,30 +392,44 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      {!isEditPost && (
+      {!isEditContentOnly && (
         <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
       )}
     </ScreenWrapper>
   );
 };
 
-const validateImages = (selectingImages: IFilePicked[], t: any) => {
+const validateImages = (
+  selectingImages: IFilePicked[] | IActivityDataImage[],
+  t: any,
+) => {
   let imageError = '';
   const images: IActivityDataImage[] = [];
-  selectingImages?.map?.(item => {
-    const {file, fileName} = item || {};
-    const {url, uploading} = FileUploader.getInstance().getFile(fileName) || {};
-    if (uploading) {
-      imageError = t('post:error_wait_uploading');
-    } else if (!url) {
-      imageError = t('error_upload_failed');
+  // @ts-ignore
+  selectingImages?.map?.((item: any) => {
+    if (item?.url) {
+      images.push({
+        name: item?.url || '',
+        origin_name: item?.fileName,
+        width: item?.file?.width,
+        height: item?.file?.height,
+      });
+    } else {
+      const {file, fileName} = item || {};
+      const {url, uploading} =
+        FileUploader.getInstance().getFile(fileName) || {};
+      if (uploading) {
+        imageError = t('post:error_wait_uploading');
+      } else if (!url) {
+        imageError = t('error_upload_failed');
+      }
+      images.push({
+        name: url || '',
+        origin_name: fileName,
+        width: file?.width,
+        height: file?.height,
+      });
     }
-    images.push({
-      name: url || '',
-      origin_name: fileName,
-      width: file?.width,
-      height: file?.height,
-    });
   });
   return {imageError, images};
 };

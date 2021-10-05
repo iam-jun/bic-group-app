@@ -1,13 +1,11 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
-import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet, View} from 'react-native';
+import {FlatList, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
@@ -184,10 +182,6 @@ const Conversation = () => {
     selectedMessage && setEditingMessage(selectedMessage);
   };
 
-  const onEditMessage = (message: IMessage | undefined) => {
-    setEditingMessage(message);
-  };
-
   const viewReactions = () => {
     if (selectedMessage?.reaction_counts) {
       const payload: IPayloadReactionDetailBottomSheet = {
@@ -301,30 +295,9 @@ const Conversation = () => {
     }
   };
 
-  const onCancelEdit = () => setEditingMessage(undefined);
+  const onCancelEditingMessage = () => setEditingMessage(undefined);
 
-  const renderEditingMessage = () => {
-    if (!editingMessage) return null;
-
-    return (
-      <View style={styles.editMessageHeader}>
-        <View style={styles.headerContent}>
-          <Text.BodySM color={theme.colors.primary6}>
-            {i18next.t('chat:text_editing_message')}
-            <Text.BodySM color={theme.colors.textSecondary}>
-              {'  • '}
-              <Text.BodySM
-                useI18n
-                color={theme.colors.textSecondary}
-                onPress={onCancelEdit}>
-                common:btn_cancel
-              </Text.BodySM>
-            </Text.BodySM>
-          </Text.BodySM>
-        </View>
-      </View>
-    );
-  };
+  const onCancelReplyingMessage = () => setReplyingMessage(undefined);
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
     const props = {
@@ -452,50 +425,40 @@ const Conversation = () => {
     if (isEmpty(messages.data)) return <ChatWelcome type={conversation.type} />;
 
     return (
-      <View style={styles.listContainer}>
-        <ListMessages
-          listRef={listRef}
-          nativeID={'list-messages'}
-          // inverted
-          data={messages.data}
-          keyboardShouldPersistTaps="handled"
-          onEndReached={onEndReached}
-          onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
-          removeClippedSubviews={true}
-          onScrollToIndexFailed={scrollToIndexFailed}
-          onContentSizeChange={scrollToBottom}
-          showsHorizontalScrollIndicator={false}
-          maxToRenderPerBatch={appConfig.messagesPerPage}
-          initialNumToRender={appConfig.messagesPerPage}
-          contentContainerStyle={{
-            paddingBottom: 8,
-            flexGrow: 1,
-            justifyContent: 'flex-end',
-            // alignContent: 'flex-end',
-            // alignContent: 'baseline',
-            // flexDirection: 'column-reverse',
-            // alignItems: 'flex-end',
-          }}
-          /* means that the component will render the visible screen
+      <ListMessages
+        listRef={listRef}
+        nativeID={'list-messages'}
+        // inverted
+        data={messages.data}
+        keyboardShouldPersistTaps="handled"
+        onEndReached={onEndReached}
+        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
+        removeClippedSubviews={true}
+        onScrollToIndexFailed={scrollToIndexFailed}
+        onContentSizeChange={scrollToBottom}
+        showsHorizontalScrollIndicator={false}
+        maxToRenderPerBatch={appConfig.messagesPerPage}
+        initialNumToRender={appConfig.messagesPerPage}
+        contentContainerStyle={styles.listContainer}
+        /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
-          windowSize={5000}
-          renderItem={renderItem}
-          keyExtractor={item => item._id}
-          onViewableItemsChanged={(changed: any) =>
-            onViewableItemsChanged(changed)
-          }
-          ListFooterComponent={() => (
-            <ViewSpacing height={theme.spacing.margin.large} />
-          )}
-          maintainVisibleContentPosition={{
-            minIndexForVisible: 0,
-          }}
-          onMomentumScrollEnd={onMomentumScrollEnd}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-          }}
-        />
-      </View>
+        windowSize={5000}
+        renderItem={renderItem}
+        keyExtractor={item => item._id}
+        onViewableItemsChanged={(changed: any) =>
+          onViewableItemsChanged(changed)
+        }
+        ListFooterComponent={() => (
+          <ViewSpacing height={theme.spacing.margin.large} />
+        )}
+        maintainVisibleContentPosition={{
+          minIndexForVisible: 0,
+        }}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 50,
+        }}
+      />
     );
   };
 
@@ -522,12 +485,11 @@ const Conversation = () => {
       />
       {renderChatMessages()}
       <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
-      {renderEditingMessage()}
       <ChatInput
         editingMessage={editingMessage}
-        onChangeMessage={onEditMessage}
         replyingMessage={replyingMessage}
-        onCancelReplying={() => setReplyingMessage(undefined)}
+        onCancelEditing={onCancelEditingMessage}
+        onCancelReplying={onCancelReplyingMessage}
         onError={setError}
       />
 
@@ -544,28 +506,18 @@ const Conversation = () => {
 };
 
 const createStyles = (theme: IObject<any>) => {
-  const {spacing, colors} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
     },
     listContainer: {
-      flex: 1,
+      paddingBottom: 8,
+      flexGrow: 1,
       justifyContent: 'flex-end',
     },
     headerTitle: {
       marginEnd: spacing.margin.small,
-    },
-    editMessageHeader: {
-      flexDirection: 'row',
-      paddingHorizontal: spacing.padding.base,
-      paddingVertical: spacing.padding.base,
-      borderTopWidth: 1,
-      borderTopColor: colors.borderDivider,
-    },
-    headerContent: {
-      flex: 1,
-      flexDirection: 'row',
     },
   });
 };
