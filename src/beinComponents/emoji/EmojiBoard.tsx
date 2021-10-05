@@ -3,7 +3,7 @@ import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import EmojiSelector from '~/beinComponents/emoji/EmojiSelector';
+import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
 
 export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
@@ -32,6 +32,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
         theme={colors.primary}
         showHistory={true}
         showSearchBar={false}
+        category={Categories.emotion}
         showSectionTitles={false}
         columns={7}
         onEmojiSelected={_onEmojiSelected}
@@ -48,6 +49,7 @@ const createStyle = (theme: ITheme) => {
       height: 100,
       paddingTop: spacing.padding.base,
       backgroundColor: colors.background,
+      overflow: 'hidden',
     },
   });
 };

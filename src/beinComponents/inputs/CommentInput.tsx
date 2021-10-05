@@ -31,6 +31,8 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import EmojiBoardAnimated from '~/beinComponents/emoji/EmojiBoardAnimated';
+import modalActions from '~/store/modal/actions';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -144,8 +146,28 @@ const CommentInput: React.FC<CommentInputProps> = ({
     alert('onPressSticker');
   };
 
-  const onPressEmoji = () => {
-    emojiBoardRef?.current?.show?.();
+  const onPressEmoji = (event: any) => {
+    if (!isWeb) {
+      emojiBoardRef?.current?.show?.();
+    } else {
+      dispatch(
+        modalActions.showModal({
+          isOpen: true,
+          ContentComponent: (
+            <EmojiBoard
+              width={400}
+              height={300}
+              onEmojiSelected={onEmojiSelected}
+            />
+          ),
+          props: {
+            webModalStyle: {minHeight: undefined},
+            isContextMenu: true,
+            position: {x: event?.pageX, y: event?.pageY},
+          },
+        }),
+      );
+    }
   };
 
   const handleUpload = () => {
@@ -208,6 +230,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onEmojiSelected = (emoji: string) => {
+    if (isWeb) {
+      dispatch(modalActions.hideModal());
+    }
     if (selection?.end && !addToEnd) {
       _onChangeText(
         `${text.slice(0, selection.end)}${emoji}${text.slice(selection.end)}`,
@@ -495,10 +520,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
         </View>
         {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
       </View>
-      <EmojiBoardAnimated
-        emojiBoardRef={emojiBoardRef}
-        onEmojiSelected={onEmojiSelected}
-      />
+      {!isWeb && (
+        <EmojiBoardAnimated
+          emojiBoardRef={emojiBoardRef}
+          onEmojiSelected={onEmojiSelected}
+        />
+      )}
     </View>
   );
 };
