@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+import {isEmpty} from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -8,12 +10,13 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 import Div from '~/beinComponents/Div';
 import Divider from '~/beinComponents/Divider';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import ReactionView from '~/beinComponents/ReactionView';
 import {Text} from '~/components';
 import appConfig from '~/configs/appConfig';
+import {ReactionType} from '~/constants/reactions';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
@@ -26,9 +29,6 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
-import ReactionView from '~/beinComponents/ReactionView';
-import {ReactionType} from '~/constants/reactions';
-import {isEmpty} from 'lodash';
 
 export interface MessageItemProps {
   previousMessage: IMessage;

@@ -31,10 +31,8 @@ import {fontConfig} from '~/configs/fonts';
 import notificationsActions from '~/constants/notificationActions';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
-import {IUserResponse} from '~/interfaces/IAuth';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
-import Store from '~/store';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
@@ -194,7 +192,6 @@ export default (): React.ReactElement => {
       loaded: false,
     };
     try {
-      const user: IUserResponse | boolean = Store.getCurrentUser();
       /*Fetch setting*/
       dispatch(fetchSetting());
 
