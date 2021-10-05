@@ -19,10 +19,11 @@ import {AppContext} from '~/contexts/AppContext';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import {useBaseHook} from '~/hooks';
 
 const DraftPost = () => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const {spacing} = theme;
@@ -84,13 +85,15 @@ const DraftPost = () => {
     );
   };
 
+  const title = `${t('home:draft_post')}${
+    draftPosts?.length > 0
+      ? ` (${draftPosts.length > 9 ? '9+' : draftPosts.length})`
+      : ''
+  }`;
+
   return (
     <View style={styles.container}>
-      <Header
-        titleTextProps={{useI18n: true}}
-        title={'home:draft_post'}
-        hideBackOnLaptop
-      />
+      <Header title={title} hideBackOnLaptop />
       <ListView
         isFullView
         containerStyle={styles.listContainer}
