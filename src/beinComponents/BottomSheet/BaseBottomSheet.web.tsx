@@ -71,7 +71,7 @@ const BaseBottomSheet: React.FC<Props> = ({
     height: -1,
   });
 
-  const hideModal = _position.x < 0 || _position.y < 0;
+  const hideModal = false; //_position.x < 0 || _position.y < 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -155,16 +155,22 @@ const BaseBottomSheet: React.FC<Props> = ({
             </TouchableWithoutFeedback>
           </Modal>
         ) : (
-          <PaperModal
-            visible={visible}
-            dismissable
-            onDismiss={_onClosed}
-            contentContainerStyle={StyleSheet.flatten([
-              styles.modalContainer,
-              webModalStyle,
-            ])}>
-            {flatListProps ? <FlatList {...flatListProps} /> : ContentComponent}
-          </PaperModal>
+          (!!ContentComponent || !!flatListProps) && (
+            <PaperModal
+              visible={visible}
+              dismissable
+              onDismiss={_onClosed}
+              contentContainerStyle={StyleSheet.flatten([
+                styles.modalContainer,
+                webModalStyle,
+              ])}>
+              {flatListProps ? (
+                <FlatList {...flatListProps} />
+              ) : (
+                ContentComponent
+              )}
+            </PaperModal>
+          )
         ))}
     </>
   );
