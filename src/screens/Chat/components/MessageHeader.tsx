@@ -24,8 +24,6 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
-  console.log('MessageHeader', user);
-
   const onPressUser = () => {
     const payload = {
       userId: user.username,

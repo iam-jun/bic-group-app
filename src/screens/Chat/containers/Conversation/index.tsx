@@ -210,6 +210,7 @@ const Conversation = () => {
       (item: IMessage) => item._id === message.msgId,
     );
     if (index >= 0) {
+      dispatch(actions.setJumpedMessage(messages.data[index]));
       listRef.current?.scrollToIndex({index, animated: true});
     } else {
       // dispatch(actions.resetData('messages'));
@@ -218,6 +219,7 @@ const Conversation = () => {
   };
 
   const onPressBack = async () => {
+    dispatch(actions.resetData('messages'));
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
     else rootNavigation.goBack();

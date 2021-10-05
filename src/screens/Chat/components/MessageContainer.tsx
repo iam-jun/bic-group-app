@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -95,6 +95,18 @@ const MessageItem = (props: MessageItemProps) => {
     within5Mins &&
     messages.unreadMessage?._id !== _id;
 
+  const [blinking, setBlinking] = useState(false);
+  useEffect(() => {
+    if (messages.jumpedMessage?._id === _id) {
+      setBlinking(true);
+
+      setTimeout(() => {
+        dispatch(actions.setJumpedMessage(null));
+        setBlinking(false);
+      }, 2000);
+    }
+  }, [messages.jumpedMessage]);
+
   const onMenuPress = (e: any) => {
     if (removed) return;
 
@@ -117,6 +129,7 @@ const MessageItem = (props: MessageItemProps) => {
             style={[
               styles.container,
               !hideHeader && styles.containerWithHeader,
+              blinking && {backgroundColor: 'red'},
             ]}>
             {quotedMessage && (
               <QuotedMessage

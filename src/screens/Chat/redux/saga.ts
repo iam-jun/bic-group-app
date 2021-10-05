@@ -518,13 +518,13 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
     if (result.length === 0) return;
 
     const index = result.findIndex((item: IMessage) => item._id === payload);
-
     yield put(actions.setMessages(result.slice(0, index + 1).reverse()));
     yield put(
       actions.setMessagesHistory(
         result.slice(index + 1, result.length).reverse(),
       ),
     );
+    yield put(actions.setJumpedMessage(result[index]));
   } catch (err) {
     console.log('getSurroundingMessages', err);
   }

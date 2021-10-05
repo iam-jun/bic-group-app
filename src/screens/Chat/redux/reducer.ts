@@ -204,8 +204,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
     case types.SET_JUMPED_MESSAGE:
       return {
         ...state,
-        ...messages,
-        jumpedMessage: payload,
+        messages: {
+          ...messages,
+          jumpedMessage: payload,
+        },
       };
     case types.READ_CONVERSATION:
       return {

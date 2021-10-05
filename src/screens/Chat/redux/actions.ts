@@ -175,7 +175,7 @@ export default {
     type: Actions.SET_UNREAD_MESSAGE,
     payload,
   }),
-  setJumpedMessage: (payload: IMessage) => ({
+  setJumpedMessage: (payload: IMessage | null) => ({
     type: Actions.SET_JUMPED_MESSAGE,
     payload,
   }),

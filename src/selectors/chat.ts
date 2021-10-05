@@ -16,8 +16,7 @@ export const getConversations = createSelector(chatState, data => {
 
         return {
           ...item,
-          // unreadCount: sub?.unread,
-          unreadCount: 3,
+          unreadCount: sub?.unread,
         };
       })
       .sort(function (a: IConversation, b: IConversation) {
