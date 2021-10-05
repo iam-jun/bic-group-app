@@ -194,11 +194,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           data: action.payload,
         },
       };
-    case types.GET_SUBSCRIPTIONS:
-      return {
-        ...state,
-        conversation: initState.conversation,
-      };
+    // case types.GET_SUBSCRIPTIONS:
+    //   return {
+    //     ...state,
+    //     conversation: initState.conversation,
+    //   };
     case types.SET_SUBSCRIPTIONS:
       return {
         ...state,
