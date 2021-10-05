@@ -1,14 +1,15 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
-
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {MessageOptionType} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
@@ -17,31 +18,30 @@ import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
 import {IMessage, IQuotedMessage} from '~/interfaces/IChat';
+import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import {IReactionCounts} from '~/interfaces/IPost';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import actions from '~/screens/Chat/redux/actions';
-import * as modalActions from '~/store/modal/actions';
-import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
-import dimension from '~/theme/dimension';
-import {getDefaultAvatar} from '../helper';
 import {
   ChatInput,
+  ChatWelcome,
+  DownButton,
   ListMessages,
   MessageContainer,
   MessageOptionsModal,
-  ChatWelcome,
-  DownButton,
   UnreadBanner,
 } from '~/screens/Chat/components';
-import Text from '~/beinComponents/Text';
-import {IReactionCounts} from '~/interfaces/IPost';
-import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import actions from '~/screens/Chat/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import apiConfig from '~/configs/apiConfig';
+import * as modalActions from '~/store/modal/actions';
+import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
+import dimension from '~/theme/dimension';
+import LoadingMessages from '../../components/LoadingMessages';
+import {getDefaultAvatar} from '../../helper';
 
 const Conversation = () => {
   const {user} = useAuth();
-  const {conversation, messages} = useChat();
+  const {conversation, messages, unreadMessagePosition} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
@@ -54,13 +54,12 @@ const Conversation = () => {
     conversation.avatar,
   );
   const isFocused = useIsFocused();
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
   const [unreadBannerVisible, setUnreadBannerVisible] =
     useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
-  let initiated = false;
-  let countRetryScrollToBottom = useRef(0).current;
   const [editingMessage, setEditingMessage] = useState<IMessage>();
 
   const onLoadAvatarError = () => {
@@ -68,7 +67,10 @@ const Conversation = () => {
   };
 
   useEffect(() => {
-    !isFocused && dispatch(actions.readSubscriptions(conversation._id));
+    if (!isFocused) {
+      dispatch(actions.readSubscriptions(conversation._id));
+      dispatch(actions.resetData('messages'));
+    }
   }, [isFocused]);
 
   useEffect(() => {
@@ -79,9 +81,10 @@ const Conversation = () => {
 
   useEffect(() => {
     if (conversation?._id) {
-      _getMessages();
-      setUnreadBannerVisible(
-        conversation.unreadCount > appConfig.unreadMessageOffset,
+      getMessages(conversation.unreadCount);
+      setUnreadBannerVisible(conversation.unreadCount > 0);
+      setDownButtonVisible(
+        conversation.unreadCount > appConfig.messagesPerPage,
       );
       setAvatar(conversation?.avatar);
     }
@@ -101,58 +104,17 @@ const Conversation = () => {
     }
   }, [error]);
 
-  const scrollToUnreadMessage = (initRenderItems: number) => {
-    if (
-      initRenderItems < 4 &&
-      countRetryScrollToBottom < 20 &&
-      !initiated &&
-      conversation.unreadCount > appConfig.unreadMessageOffset
-    ) {
-      initiated = true;
-      countRetryScrollToBottom = countRetryScrollToBottom + 1;
-      try {
-        listRef.current?.scrollToIndex({
-          index: 1,
-          animated: false,
-        });
-        setDownButtonVisible(true);
-        const _offset =
-          conversation.unreadCount -
-          (appConfig.messagesPerPage + appConfig.unreadMessageOffset);
-        dispatch(
-          actions.getMoreDownMessages({
-            offset: _offset > 0 ? _offset : 0,
-            count:
-              conversation.unreadCount - appConfig.unreadMessageOffset >=
-              appConfig.messagesPerPage
-                ? appConfig.messagesPerPage
-                : conversation.unreadCount - appConfig.unreadMessageOffset,
-          }),
-        );
-      } catch (e: any) {
-        console.log('scroll error', e);
-        //sometime it's not trigger scrollToIndexFailed
-      }
+  const getMessages = (unreadCount: number) => {
+    dispatch(actions.resetData('messages'));
+    if (unreadCount > appConfig.messagesPerPage) {
+      dispatch(actions.getUnreadMessage());
+    } else {
+      dispatch(actions.getMessagesHistory());
     }
   };
 
-  const _getMessages = () => {
-    dispatch(actions.resetData('messages'));
-    dispatch(
-      actions.getData('messages', {
-        roomId: conversation._id,
-        type: conversation.type,
-        count: appConfig.messagesPerPage,
-        offset:
-          conversation.unreadCount > appConfig.unreadMessageOffset
-            ? conversation.unreadCount - appConfig.unreadMessageOffset
-            : 0,
-      }),
-    );
-  };
-
   const loadMoreMessages = () => {
-    dispatch(actions.mergeExtraData('messages'));
+    if (!messages.loading) dispatch(actions.mergeMessagesHistory());
   };
 
   const onOptionsClosed = () => {
@@ -297,54 +259,6 @@ const Conversation = () => {
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
-  const onMomentumScrollEnd = (event: any) => {
-    if (Platform.OS === 'web') return;
-
-    const offsetY = event.nativeEvent?.contentOffset.y;
-
-    // 2 screens
-    setDownButtonVisible(
-      offsetY >= dimension.deviceHeight * 2 ||
-        messages.unreadPoint > appConfig.unreadMessageOffset,
-    );
-    if (
-      conversation.unreadCount > appConfig.unreadMessageOffset &&
-      !messages.loadingDown &&
-      offsetY < 10
-    ) {
-      // reach bottom
-      if (
-        messages.unreadPoint !==
-        conversation.unreadCount - appConfig.unreadMessageOffset
-      ) {
-        dispatch(
-          actions.getMoreDownMessages({
-            offset: messages.downOffset < 0 ? 0 : messages.downOffset,
-            count:
-              messages.downOffset < 0
-                ? messages.downOffset + appConfig.messagesPerPage
-                : appConfig.messagesPerPage,
-          }),
-        );
-      } else {
-        setUnreadBannerVisible(false);
-        setDownButtonVisible(false);
-        dispatch(actions.readConversation());
-      }
-    }
-  };
-
-  const onDownPress = () => {
-    if (conversation.unreadCount - messages.unreadPoint > 50) {
-      _getMessages();
-    } else {
-      listRef.current?.scrollToOffset({offset: 0, animated: true});
-    }
-    dispatch(actions.readConversation());
-    setUnreadBannerVisible(false);
-    setDownButtonVisible(false);
-  };
-
   const getReactionStatistics = async (param: {
     reactionType: ReactionType;
     messageId: string;
@@ -414,8 +328,7 @@ const Conversation = () => {
 
   const renderItem = ({item, index}: {item: IMessage; index: number}) => {
     const props = {
-      previousMessage:
-        index < messages.data.length - 1 && messages.data[index + 1],
+      previousMessage: index > 0 && messages.data[index - 1],
       currentMessage: item,
       index: index,
       onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
@@ -433,25 +346,33 @@ const Conversation = () => {
     return <MessageContainer {...props} />;
   };
 
-  const onViewableItemsChanged = useRef(({changed}: {changed: any[]}) => {
+  const onViewableItemsChanged = (changed: any[]) => {
     if (
       Platform.OS !== 'web' &&
-      conversation.unreadCount > appConfig.unreadMessageOffset &&
+      conversation.unreadCount < appConfig.messagesPerPage &&
+      messages.unreadMessage &&
       changed &&
       changed.length > 0
     ) {
-      scrollToUnreadMessage(changed[0].index + 1);
+      const item = changed[0].item;
+
+      if (item._id !== messages.unreadMessage?._id) {
+        listRef.current?.scrollToIndex({
+          index: unreadMessagePosition,
+          animated: false,
+        });
+      }
     }
-  });
+  };
 
   const onUnreadBannerPress = () => {
     try {
       listRef.current?.scrollToIndex({
-        index: messages.unreadPoint,
+        index: unreadMessagePosition,
         animated: true,
       });
     } catch (e: any) {
-      scrollToIndexFailed();
+      scrollToIndexFailed({index: unreadMessagePosition});
     }
   };
 
@@ -459,50 +380,122 @@ const Conversation = () => {
     setUnreadBannerVisible(false);
   };
 
-  const scrollToIndexFailed = () => {
-    setTimeout(scrollToUnreadMessage, 200);
+  const scrollToIndexFailed = (e: any) => {
+    setTimeout(
+      () => listRef.current?.scrollToIndex({index: e.index, animated: true}),
+      200,
+    );
+  };
+
+  const scrollToBottom = () => {
+    if (messages.canLoadNext) setDownButtonVisible(true);
+    if (
+      !isScrolled &&
+      !isEmpty(messages.data) &&
+      conversation.unreadCount === 0
+    ) {
+      setIsScrolled(true);
+      listRef.current?.scrollToIndex({
+        index: messages.data.length - 1,
+        animated: false,
+      });
+    }
+  };
+
+  const onMomentumScrollEnd = (event: any) => {
+    if (Platform.OS === 'web') return;
+
+    const offsetY = event.nativeEvent?.contentOffset.y;
+    const contentHeight = event.nativeEvent?.contentSize.height;
+
+    // 2 screens
+    setDownButtonVisible(
+      contentHeight - dimension.deviceHeight * 2 > offsetY ||
+        messages.unreadPoint > appConfig.unreadMessageOffset,
+    );
+
+    if (!messages.loadingNext && offsetY < 10) {
+      // reach top
+      loadMoreMessages();
+    }
+  };
+
+  const onEndReached = () => {
+    if (messages.canLoadNext) {
+      dispatch(actions.getNextMessages());
+    } else {
+      if (conversation.unreadCount > 0) {
+        setUnreadBannerVisible(false);
+        dispatch(actions.readConversation());
+      }
+    }
+  };
+
+  const onDownPress = () => {
+    setDownButtonVisible(false);
+    if (messages.canLoadNext) {
+      setUnreadBannerVisible(false);
+      setIsScrolled(false);
+      dispatch(actions.readConversation());
+      getMessages(0);
+    } else {
+      listRef.current?.scrollToIndex({
+        index: messages.data.length - 1,
+        animated: true,
+      });
+    }
   };
 
   const renderChatMessages = () => {
-    if (!messages.loading && isEmpty(messages.data))
-      return <ChatWelcome type={conversation.type} />;
+    if (messages.loading) return <LoadingMessages />;
+
+    if (isEmpty(messages.data)) return <ChatWelcome type={conversation.type} />;
 
     return (
-      <ListMessages
-        listRef={listRef}
-        nativeID={'list-messages'}
-        inverted
-        data={messages.data}
-        keyboardShouldPersistTaps="handled"
-        onEndReached={loadMoreMessages}
-        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
-        removeClippedSubviews={true}
-        onScrollToIndexFailed={scrollToIndexFailed}
-        showsHorizontalScrollIndicator={false}
-        maxToRenderPerBatch={appConfig.messagesPerPage}
-        initialNumToRender={appConfig.messagesPerPage}
-        contentContainerStyle={{paddingBottom: 16}}
-        /* means that the component will render the visible screen
+      <View style={styles.listContainer}>
+        <ListMessages
+          listRef={listRef}
+          nativeID={'list-messages'}
+          // inverted
+          data={messages.data}
+          keyboardShouldPersistTaps="handled"
+          onEndReached={onEndReached}
+          onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
+          removeClippedSubviews={true}
+          onScrollToIndexFailed={scrollToIndexFailed}
+          onContentSizeChange={scrollToBottom}
+          showsHorizontalScrollIndicator={false}
+          maxToRenderPerBatch={appConfig.messagesPerPage}
+          initialNumToRender={appConfig.messagesPerPage}
+          contentContainerStyle={{
+            paddingBottom: 8,
+            flexGrow: 1,
+            justifyContent: 'flex-end',
+            // alignContent: 'flex-end',
+            // alignContent: 'baseline',
+            // flexDirection: 'column-reverse',
+            // alignItems: 'flex-end',
+          }}
+          /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
-        windowSize={5000}
-        renderItem={renderItem}
-        keyExtractor={item => item._id}
-        onViewableItemsChanged={onViewableItemsChanged.current}
-        ListFooterComponent={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
-        )}
-        maintainVisibleContentPosition={
-          conversation.unreadCount > appConfig.unreadMessageOffset
-            ? {
-                minIndexForVisible: 0,
-              }
-            : null
-        }
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-      />
+          windowSize={5000}
+          renderItem={renderItem}
+          keyExtractor={item => item._id}
+          onViewableItemsChanged={(changed: any) =>
+            onViewableItemsChanged(changed)
+          }
+          ListFooterComponent={() => (
+            <ViewSpacing height={theme.spacing.margin.large} />
+          )}
+          maintainVisibleContentPosition={{
+            minIndexForVisible: 0,
+          }}
+          onMomentumScrollEnd={onMomentumScrollEnd}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+        />
+      </View>
     );
   };
 
@@ -555,6 +548,10 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
+    },
+    listContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
     },
     headerTitle: {
       marginEnd: spacing.margin.small,

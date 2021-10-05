@@ -16,6 +16,7 @@ import {
   IGetReactionStatisticsReq,
   IGetMessageReq,
   IGetSurroundingMessages,
+  IRealtimeAPIReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -324,6 +325,24 @@ const Chat = {
         'X-User-Id': auth.userId,
       },
       params,
+    };
+  },
+  getMessagesHistory: (data: IRealtimeAPIReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}method.call/loadHistory`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data: {message: JSON.stringify(data)},
+    };
+  },
+  getNextMessages: (data: IRealtimeAPIReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}method.call/loadNextMessages`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data: {message: JSON.stringify(data)},
     };
   },
 };

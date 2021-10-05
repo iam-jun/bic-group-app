@@ -16,7 +16,8 @@ export const getConversations = createSelector(chatState, data => {
 
         return {
           ...item,
-          unreadCount: sub?.unread,
+          // unreadCount: sub?.unread,
+          unreadCount: 17,
         };
       })
       .sort(function (a: IConversation, b: IConversation) {
@@ -44,4 +45,10 @@ export const getUnreadConversationCount = createSelector(chatState, data => {
     if (typeof sub !== 'undefined' && sub.unread > 0) count++;
   });
   return count;
+});
+
+export const getUnreadMessagePosition = createSelector(chatState, data => {
+  return data.messages.data.findIndex(
+    (item: IMessage) => item._id === data.messages?.unreadMessage?._id,
+  );
 });

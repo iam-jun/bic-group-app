@@ -97,3 +97,10 @@ export interface IGetSurroundingMessages {
   room_id: string;
   count: number;
 }
+
+export interface IRealtimeAPIReq {
+  msg: string;
+  method: string;
+  id: string;
+  params: any;
+}

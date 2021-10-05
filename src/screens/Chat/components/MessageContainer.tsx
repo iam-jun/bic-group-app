@@ -1,14 +1,15 @@
+import i18next from 'i18next';
 import moment from 'moment';
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 import Div from '~/beinComponents/Div';
 import Divider from '~/beinComponents/Divider';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import ReactionView from '~/beinComponents/ReactionView';
 import {Text} from '~/components';
-import appConfig from '~/configs/appConfig';
+import {ReactionType} from '~/constants/reactions';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
@@ -21,8 +22,6 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
-import ReactionView from '~/beinComponents/ReactionView';
-import {ReactionType} from '~/constants/reactions';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -47,7 +46,6 @@ const MessageItem = (props: MessageItemProps) => {
   const {
     previousMessage,
     currentMessage,
-    index,
     onReactPress,
     onReplyPress,
     onLongPress,
@@ -57,6 +55,7 @@ const MessageItem = (props: MessageItemProps) => {
     onQuotedMessagePress,
   } = props;
   const {
+    _id,
     text,
     system,
     removed,
@@ -88,7 +87,7 @@ const MessageItem = (props: MessageItemProps) => {
     sameUser &&
     sameType &&
     sameDay &&
-    index !== messages.unreadPoint + 2;
+    messages.unreadMessage?._id !== _id;
 
   const onMenuPress = (e: any) => {
     if (removed) return;
@@ -188,9 +187,7 @@ const MessageItem = (props: MessageItemProps) => {
 
   return (
     <View>
-      {messages.unreadPoint > appConfig.unreadMessageOffset &&
-        index === messages.unreadPoint + appConfig.unreadMessageOffset &&
-        renderDivider()}
+      {messages.unreadMessage?._id === _id && renderDivider()}
       {system ? <SystemMessage {...currentMessage} /> : renderMessage()}
     </View>
   );

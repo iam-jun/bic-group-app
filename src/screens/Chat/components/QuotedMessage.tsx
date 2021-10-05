@@ -4,6 +4,7 @@ import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
+import LoadingQuotedMessage from './LoadingQuotedMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
@@ -29,7 +30,7 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
     !_message && dispatch(actions.getMessageDetail(msgId));
   }, [_message]);
 
-  if (!_message) return null;
+  if (!_message) return <LoadingQuotedMessage />;
 
   return (
     <ButtonWrapper contentStyle={styles.container} onPress={onPress}>
@@ -56,6 +57,7 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
     </ButtonWrapper>
   );
 };
+
 const createStyles = (theme: ITheme) => {
   const {colors} = theme;
   return StyleSheet.create({

@@ -14,8 +14,8 @@ import useChat from '~/hooks/chat';
 import {IChatUser} from '~/interfaces/IChat';
 import {sendMessage} from '~/services/chatSocket';
 import {ITheme} from '~/theme/interfaces';
-import MembersSelection from '../fragments/MembersSelection';
-import actions from '../redux/actions';
+import MembersSelection from '../../fragments/MembersSelection';
+import actions from '../../redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import appConfig from '~/configs/appConfig';
 
