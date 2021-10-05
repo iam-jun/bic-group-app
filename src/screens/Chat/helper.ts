@@ -42,7 +42,7 @@ export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
 export const mapConversation = (user: IChatUser, item: any): IConversation => {
-  const _id = item?._id || item?.rid;
+  const _id = item?.rid || item?._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
   const membersExcludeMe = (item.usernames || []).filter(
