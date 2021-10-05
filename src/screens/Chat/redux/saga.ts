@@ -601,14 +601,6 @@ function* getNextMessages() {
 
     const messagesData = mapMessages(auth.user, result.result?.messages);
     yield put(actions.setNextMessages(messagesData));
-    // yield put(actions.setMessages(data));
-    // if (data.length === 0) {
-    //   yield put(actions.setMessages(messagesData));
-    //   if (messagesData.length === appConfig.recordsPerPage)
-    //     yield put(actions.getMessagesHistory());
-    // } else {
-    //   yield put(actions.setMessagesHistory(messagesData));
-    // }
   } catch (err: any) {
     console.log('getMessagesHistory', err);
   }
@@ -740,7 +732,10 @@ function* handleNotifyUser(payload?: any) {
     case 'removed':
       {
         yield put(actions.kickMeOut(data[1]));
-        if (chat.conversation?._id)
+        if (
+          chat.conversation?._id === data[1].rid ||
+          chat.conversation?._id === data[1]._id
+        )
           navigation.replace(chatStack.conversationList);
       }
       break;

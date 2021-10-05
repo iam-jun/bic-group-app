@@ -24,6 +24,8 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
+  console.log('MessageHeader', user);
+
   const onPressUser = () => {
     const payload = {
       userId: user.username,
@@ -45,7 +47,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
         <Avatar.Medium
           source={user?.avatar}
           cache={false}
-          placeholderSource={getDefaultAvatar(user.name)}
+          placeholderSource={getDefaultAvatar(user?.name)}
           ImageComponent={Image}
         />
       </ButtonWrapper>

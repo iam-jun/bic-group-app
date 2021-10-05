@@ -149,6 +149,10 @@ export default {
     type: Actions.REMOVE_MEMBER_SUCCESS,
     payload,
   }),
+  addMembersToGroupSuccess: (payload: number) => ({
+    type: Actions.ADD_MEMBERS_TO_GROUP_SUCCESS,
+    payload,
+  }),
   kickMeOut: (payload: IMessage) => ({
     type: Actions.KICK_ME_OUT,
     payload,

@@ -8,7 +8,7 @@ interface Props extends FlatListProps<any> {
 
 const ListMessages = ({listRef, onViewableItemsChanged, ...props}: Props) => {
   let initiated = false;
-
+  // useRef doesn't work with state
   const _onViewableItemsChanged = useRef((event: any) => {
     if (!initiated) onViewableItemsChanged(event.changed);
     initiated = true;

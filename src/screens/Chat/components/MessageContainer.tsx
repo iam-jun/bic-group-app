@@ -219,7 +219,7 @@ const createStyles = (theme: ITheme) => {
     },
     divider: {
       flexDirection: 'row',
-      marginVertical: spacing.margin.base,
+      // marginVertical: spacing.margin.base,
     },
     dividerLine: {
       flex: 1,

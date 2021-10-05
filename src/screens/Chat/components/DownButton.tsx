@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const DownButton = ({visible, onDownPress}: Props) => {
-  if (Platform.OS === 'web' || !visible) return null;
+  if (!visible) return null;
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 

@@ -1,7 +1,13 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -67,7 +73,6 @@ const Conversation = () => {
   useEffect(() => {
     if (!isFocused) {
       dispatch(actions.readSubscriptions(conversation._id));
-      dispatch(actions.resetData('messages'));
     }
   }, [isFocused]);
 
@@ -79,6 +84,7 @@ const Conversation = () => {
 
   useEffect(() => {
     if (conversation?._id) {
+      setIsScrolled(false);
       getMessages(conversation.unreadCount);
       setUnreadBannerVisible(conversation.unreadCount > 0);
       setDownButtonVisible(
@@ -321,7 +327,6 @@ const Conversation = () => {
 
   const onViewableItemsChanged = (changed: any[]) => {
     if (
-      Platform.OS !== 'web' &&
       conversation.unreadCount < appConfig.messagesPerPage &&
       messages.unreadMessage &&
       changed &&
@@ -376,18 +381,17 @@ const Conversation = () => {
   };
 
   const onMomentumScrollEnd = (event: any) => {
-    if (Platform.OS === 'web') return;
-
     const offsetY = event.nativeEvent?.contentOffset.y;
     const contentHeight = event.nativeEvent?.contentSize.height;
 
-    // 2 screens
+    const delta = Platform.OS === 'web' ? 100 : 10;
+
     setDownButtonVisible(
       contentHeight - dimension.deviceHeight * 2 > offsetY ||
         messages.unreadPoint > appConfig.unreadMessageOffset,
     );
 
-    if (!messages.loadingNext && offsetY < 10) {
+    if (!messages.loadingNext && offsetY < delta) {
       // reach top
       loadMoreMessages();
     }
@@ -425,40 +429,44 @@ const Conversation = () => {
     if (isEmpty(messages.data)) return <ChatWelcome type={conversation.type} />;
 
     return (
-      <ListMessages
-        listRef={listRef}
-        nativeID={'list-messages'}
-        // inverted
-        data={messages.data}
-        keyboardShouldPersistTaps="handled"
-        onEndReached={onEndReached}
-        onEndReachedThreshold={Platform.OS === 'web' ? 0 : 0.5}
-        removeClippedSubviews={true}
-        onScrollToIndexFailed={scrollToIndexFailed}
-        onContentSizeChange={scrollToBottom}
-        showsHorizontalScrollIndicator={false}
-        maxToRenderPerBatch={appConfig.messagesPerPage}
-        initialNumToRender={appConfig.messagesPerPage}
-        contentContainerStyle={styles.listContainer}
-        /* means that the component will render the visible screen
+      <View style={styles.messagesContainer}>
+        {messages.loadingMore && <ActivityIndicator />}
+        <ListMessages
+          listRef={listRef}
+          nativeID={'list-messages'}
+          data={messages.data}
+          keyboardShouldPersistTaps="handled"
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
+          removeClippedSubviews={true}
+          onScrollToIndexFailed={scrollToIndexFailed}
+          onContentSizeChange={scrollToBottom}
+          onMomentumScrollEnd={
+            Platform.OS !== 'web' ? onMomentumScrollEnd : undefined
+          }
+          onScroll={Platform.OS === 'web' ? onMomentumScrollEnd : undefined}
+          showsHorizontalScrollIndicator={false}
+          maxToRenderPerBatch={appConfig.messagesPerPage}
+          initialNumToRender={appConfig.messagesPerPage}
+          contentContainerStyle={styles.listContainer}
+          /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
-        windowSize={5000}
-        renderItem={renderItem}
-        keyExtractor={item => item._id}
-        onViewableItemsChanged={(changed: any) =>
-          onViewableItemsChanged(changed)
-        }
-        ListFooterComponent={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
-        )}
-        maintainVisibleContentPosition={{
-          minIndexForVisible: 0,
-        }}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-      />
+          windowSize={5000}
+          renderItem={renderItem}
+          keyExtractor={item => item._id}
+          onViewableItemsChanged={onViewableItemsChanged}
+          ListFooterComponent={() => (
+            <ViewSpacing height={theme.spacing.margin.large} />
+          )}
+          maintainVisibleContentPosition={{
+            minIndexForVisible: 0,
+          }}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+        />
+        {messages.loadingNext && <ActivityIndicator />}
+      </View>
     );
   };
 
@@ -510,6 +518,9 @@ const createStyles = (theme: IObject<any>) => {
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.large,
+    },
+    messagesContainer: {
+      flex: 1,
     },
     listContainer: {
       paddingBottom: 8,
