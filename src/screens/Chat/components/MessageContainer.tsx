@@ -129,7 +129,7 @@ const MessageItem = (props: MessageItemProps) => {
             style={[
               styles.container,
               !hideHeader && styles.containerWithHeader,
-              blinking && {backgroundColor: 'red'},
+              blinking && styles.blinking,
             ]}>
             {quotedMessage && (
               <QuotedMessage
@@ -226,6 +226,9 @@ const createStyles = (theme: ITheme) => {
     },
     container: {
       paddingHorizontal: spacing.padding.base,
+    },
+    blinking: {
+      backgroundColor: colors.placeholder,
     },
     marginTop: {
       marginTop: spacing.margin.base,
