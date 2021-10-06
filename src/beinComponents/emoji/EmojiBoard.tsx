@@ -12,6 +12,7 @@ import {ITheme} from '~/theme/interfaces';
 import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import {useBaseHook} from '~/hooks';
 
 export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
@@ -33,6 +34,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
   onPressKeyboard,
 }: EmojiBoardProps) => {
   const theme = useTheme() as ITheme;
+  const {t} = useBaseHook();
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
@@ -49,6 +51,8 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
         showHistory={true}
         showSearchBar={true}
         category={Categories.emotion}
+        placeholder={t('common:text_search_emoji')}
+        inactiveTab={colors.borderDivider}
         showSectionTitles={false}
         columns={7}
         onEmojiSelected={_onEmojiSelected}
@@ -83,6 +87,8 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing.padding.base,
       backgroundColor: colors.background,
       overflow: 'hidden',
+      borderTopWidth: 1,
+      borderColor: colors.borderDivider,
     },
     buttonContainer: {
       height: 52,
