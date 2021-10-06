@@ -104,6 +104,8 @@ const icons = {
   AngleRightB: 'AngleRightB',
   AngleDown: 'AngleDown',
   AngleUp: 'AngleUp',
+  KeyboardShow: 'KeyboardShow',
+  Backspace: 'Backspace',
   CornerDownRight: 'CornerDownRight',
   Trash: 'Trash',
   FileEditAlt: 'FileEditAlt',

@@ -27,6 +27,7 @@ const emojiShortNameBlacklist = {
   black_cat: 'black_cat',
   mammoth: 'mammoth',
   beaver: 'beaver',
+  polar_bear: 'polar_bear',
   dodo: 'dodo',
   feather: 'feather',
   seal: 'seal',

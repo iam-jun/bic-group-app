@@ -222,7 +222,12 @@ export default class EmojiSelector extends Component {
           const filtered = emoji.filter(e => {
             let display = false;
             e.short_names.forEach(name => {
-              if (name.includes(searchQuery.toLowerCase())) display = true;
+              if (
+                name.includes(searchQuery.toLowerCase()) &&
+                !emojiShortNameBlacklist?.[name]
+              ) {
+                display = true;
+              }
             });
             return display;
           });
