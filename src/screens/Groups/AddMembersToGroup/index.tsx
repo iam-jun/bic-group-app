@@ -10,7 +10,6 @@ import {ITheme} from '~/theme/interfaces';
 import groupsActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
 import appConfig from '~/configs/appConfig';
 
 import MembersSelection from '~/beinFragments/MembersSelection';
@@ -20,14 +19,14 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const AddMembersToGroup = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
   const users = useKeySelector(groupsKeySelector.users);
   const group = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {id: groupId, name: groupName} = group;
+  const {id: groupId} = group;
 
   const [searchText, setSearchText] = useState<string>('');
 

@@ -52,6 +52,7 @@ export interface IAction {
   dataType: keyof typeof initDataState;
   payload?: any;
   reset?: boolean;
+  field?: string;
 }
 
 const initState = {
@@ -297,9 +298,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         selectedUsers: !action.payload.selected
           ? [...selectedUsers, {...action.payload, selected: true}]
           : selectedUsers.filter(user => user._id !== action.payload._id),
-        users: {
-          ...users,
-          data: users.data.map((item: IChatUser) =>
+        [action.field || 'users']: {
+          // @ts-ignore
+          ...state[action.field || 'users'],
+          // @ts-ignore
+          data: state[action.field || 'users'].data.map((item: IChatUser) =>
             item._id === action.payload._id
               ? {
                   ...item,

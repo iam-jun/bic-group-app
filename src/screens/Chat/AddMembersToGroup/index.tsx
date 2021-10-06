@@ -23,7 +23,7 @@ const AddMembersToGroup = (): React.ReactElement => {
   const route = useRoute<RouteProp<RootStackParamList, 'AddMembersToGroup'>>();
 
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
 
   const dispatch = useDispatch();
   const {selectedUsers, joinableUsers, conversation} = useChat();
@@ -136,6 +136,7 @@ const AddMembersToGroup = (): React.ReactElement => {
           onChangeText: onQueryChanged,
         }}
         onLoadMore={loadMoreData}
+        field="joinableUsers"
       />
     </ScreenWrapper>
   );
