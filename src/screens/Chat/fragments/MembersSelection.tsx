@@ -28,6 +28,7 @@ export interface MembersSelectionProps {
     data: IChatUser[];
   };
   loading?: boolean;
+  field?: string;
   onPressMenu?: (e: any, payload: IChatUser) => void;
   onLoadMore: () => void;
 }
@@ -39,6 +40,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   data,
   roles,
   loading,
+  field,
   onPressMenu,
   onLoadMore,
 }: MembersSelectionProps): React.ReactElement => {
@@ -50,7 +52,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   const {selectedUsers} = useChat();
 
   const onSelectUser = (user: IChatUser) => {
-    dispatch(actions.selectUser(user));
+    dispatch(actions.selectUser(user, field));
   };
 
   const renderItemUser = ({item}: {item: IChatUser; index: number}) => {

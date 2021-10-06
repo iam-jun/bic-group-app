@@ -126,9 +126,10 @@ const deleteMessageSuccess = (payload: IMessage) => ({
   payload,
 });
 
-const selectUser = (payload: IChatUser) => ({
+const selectUser = (payload: IChatUser, field?: string) => ({
   type: Actions.SELECT_USER,
   payload,
+  field,
 });
 
 const clearSelectedUsers = () => ({
