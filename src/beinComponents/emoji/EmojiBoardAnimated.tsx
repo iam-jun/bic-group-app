@@ -23,11 +23,17 @@ export interface EmojiBoardAnimatedProps {
   emojiBoardRef?: any;
   style?: StyleProp<ViewStyle>;
   onEmojiSelected: (emoji: string) => void;
+  onPressSpace: () => void;
+  onPressBackSpace: () => void;
+  onPressKeyboard: () => void;
 }
 
 const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   emojiBoardRef,
   onEmojiSelected,
+  onPressSpace,
+  onPressBackSpace,
+  onPressKeyboard,
 }: EmojiBoardAnimatedProps) => {
   const [showEmojiBoard, setShowEmojiBoard] = useState(true);
   const [keyboardHeight, setKeyboardHeight] = useState(336);
@@ -40,12 +46,6 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   const styles = createStyle(theme);
 
   const keyboard = useKeyboard();
-
-  useEffect(() => {
-    if (keyboard?.keyboardShown) {
-      hide();
-    }
-  }, [keyboard?.keyboardShown]);
 
   useEffect(() => {
     if (
@@ -97,6 +97,9 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
         width={dimension.deviceWidth}
         height={keyboardHeight}
         onEmojiSelected={onEmojiSelected}
+        onPressSpace={onPressSpace}
+        onPressBackSpace={onPressBackSpace}
+        onPressKeyboard={onPressKeyboard}
       />
     </Animated.View>
   );

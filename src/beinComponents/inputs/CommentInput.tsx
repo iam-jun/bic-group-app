@@ -229,17 +229,33 @@ const CommentInput: React.FC<CommentInputProps> = ({
     Platform.OS === 'web' && setInputSelection(event.nativeEvent.selection);
   };
 
+  const addTextToCursor = (newText: string) => {
+    if (selection?.end && !addToEnd) {
+      _onChangeText(
+        `${text.slice(0, selection.end)}${newText}${text.slice(selection.end)}`,
+      );
+    } else {
+      _onChangeText(`${text}${newText}`);
+    }
+  };
+
+  const backSpaceFromCursor = () => {
+    if (selection?.end && !addToEnd) {
+      _onChangeText(
+        `${text.slice(0, selection.end - 1)}${text.slice(selection.end)}`,
+      );
+    } else {
+      if (text?.length > 0) {
+        _onChangeText(`${text.slice(0, text.length - 1)}`);
+      }
+    }
+  };
+
   const onEmojiSelected = (emoji: string) => {
     if (isWeb) {
       dispatch(modalActions.hideModal());
     }
-    if (selection?.end && !addToEnd) {
-      _onChangeText(
-        `${text.slice(0, selection.end)}${emoji}${text.slice(selection.end)}`,
-      );
-    } else {
-      _onChangeText(`${text}${emoji}`);
-    }
+    addTextToCursor(emoji);
   };
 
   const showButtons = (show: boolean) => {
@@ -315,9 +331,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
     setSelectedImage(undefined);
   };
 
-  const focus = () => textInputRef.current?.focus();
+  const focus = () => textInputRef.current?.focus?.();
 
-  const isFocused = () => textInputRef.current?.isFocused();
+  const isFocused = () => textInputRef.current?.isFocused?.();
 
   useImperativeHandle(commentInputRef, () => ({
     setText,
@@ -524,6 +540,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <EmojiBoardAnimated
           emojiBoardRef={emojiBoardRef}
           onEmojiSelected={onEmojiSelected}
+          onPressKeyboard={focus}
+          onPressSpace={() => addTextToCursor(' ')}
+          onPressBackSpace={backSpaceFromCursor}
         />
       )}
     </View>

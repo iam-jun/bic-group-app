@@ -5,12 +5,13 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
   Platform,
   FlatList,
 } from 'react-native';
 import emoji from 'emoji-datasource';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import emojiShortNameBlacklist from '~/beinComponents/emoji/emojiShortNameBlacklist';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
 
 export const Categories = {
   all: {
@@ -62,13 +63,21 @@ export const Categories = {
 const charFromUtf16 = utf16 =>
   String.fromCodePoint(...utf16.split('-').map(u => '0x' + u));
 export const charFromEmojiObject = obj => charFromUtf16(obj.unified);
-const filteredEmojis = emoji.filter(e => !e['obsoleted_by']);
+const filteredEmojis = emoji.filter(
+  e => !e['obsoleted_by'] && !emojiShortNameBlacklist?.[e?.short_name],
+);
 const emojiByCategory = category =>
   filteredEmojis.filter(e => e.category === category);
 const sortEmoji = list => list.sort((a, b) => a.sort_order - b.sort_order);
 const categoryKeys = Object.keys(Categories);
 
-const TabBar = ({theme, activeCategory, onPress, width}) => {
+const TabBar = ({
+  theme,
+  inactiveTab = '#EEEEEE',
+  activeCategory,
+  onPress,
+  width,
+}) => {
   const tabSize = width / categoryKeys.length;
 
   return categoryKeys.map(c => {
@@ -81,8 +90,8 @@ const TabBar = ({theme, activeCategory, onPress, width}) => {
           style={{
             flex: 1,
             height: tabSize,
-            borderColor: category === activeCategory ? theme : '#EEEEEE',
-            borderBottomWidth: 2,
+            borderColor: category === activeCategory ? theme : inactiveTab,
+            borderBottomWidth: category === activeCategory ? 2 : 1,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -219,7 +228,12 @@ export default class EmojiSelector extends Component {
           const filtered = emoji.filter(e => {
             let display = false;
             e.short_names.forEach(name => {
-              if (name.includes(searchQuery.toLowerCase())) display = true;
+              if (
+                name.includes(searchQuery.toLowerCase()) &&
+                !emojiShortNameBlacklist?.[name]
+              ) {
+                display = true;
+              }
             });
             return display;
           });
@@ -276,6 +290,7 @@ export default class EmojiSelector extends Component {
   render() {
     const {
       theme,
+      inactiveTab,
       columns,
       placeholder,
       showHistory,
@@ -289,13 +304,8 @@ export default class EmojiSelector extends Component {
 
     const Searchbar = (
       <View style={styles.searchbar_container}>
-        <TextInput
-          style={styles.search}
+        <SearchInput
           placeholder={placeholder}
-          clearButtonMode="always"
-          returnKeyType="done"
-          autoCorrect={false}
-          underlineColorAndroid={theme}
           value={searchQuery}
           onChangeText={this.handleSearch}
         />
@@ -312,6 +322,7 @@ export default class EmojiSelector extends Component {
               activeCategory={category}
               onPress={this.handleTabSelect}
               theme={theme}
+              inactiveTab={inactiveTab}
               width={this.state.width}
             />
           )}
@@ -368,6 +379,9 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 1,
     backgroundColor: 'rgba(255,255,255,0.75)',
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 4,
   },
   search: {
     ...Platform.select({
