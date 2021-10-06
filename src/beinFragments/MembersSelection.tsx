@@ -10,7 +10,6 @@ import SearchInput, {
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
-import Image from '~/beinComponents/Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import {IUser} from '~/interfaces/IAuth';
@@ -46,7 +45,6 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   onLoadMore,
   selectedUsers,
   onSelectUser,
-  emptyTitle,
 }: MembersSelectionProps): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);

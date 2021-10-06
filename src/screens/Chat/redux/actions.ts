@@ -104,9 +104,10 @@ export default {
     type: Actions.DELETE_MESSAGE_SUCCESS,
     payload,
   }),
-  selectUser: (payload: IChatUser) => ({
+  selectUser: (payload: IChatUser, field?: string) => ({
     type: Actions.SELECT_USER,
     payload,
+    field,
   }),
   clearSelectedUsers: () => ({
     type: Actions.CLEAR_SELECTED_USERS,
