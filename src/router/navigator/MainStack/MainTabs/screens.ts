@@ -3,9 +3,10 @@ import {
   Conversation,
   ConversationDetail,
   CreateConversation,
-  GroupMembers,
+  GroupMembers as GroupChatMembers,
 } from '~/screens/Chat';
 import GroupAbout from '~/screens/Groups/GroupAbout';
+import GroupMembers from '~/screens/Groups/GroupMembers';
 import GroupDetail from '~/screens/Groups/GroupDetail';
 import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
 import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/GeneralInformation';
@@ -58,7 +59,7 @@ export const screensWebLaptop = {
 
   //GROUP STACK
   // 'group-list': Groups,
-  'chat-group-members': GroupMembers,
+  'chat-group-members': GroupChatMembers,
   'add-members': AddMembersToGroup,
   'group-detail': GroupDetail,
   'group-about': GroupAbout,
