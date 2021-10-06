@@ -63,7 +63,9 @@ export const Categories = {
 const charFromUtf16 = utf16 =>
   String.fromCodePoint(...utf16.split('-').map(u => '0x' + u));
 export const charFromEmojiObject = obj => charFromUtf16(obj.unified);
-const filteredEmojis = emoji.filter(e => !e['obsoleted_by'] && !emojiShortNameBlacklist?.[e?.short_name]);
+const filteredEmojis = emoji.filter(
+  e => !e['obsoleted_by'] && !emojiShortNameBlacklist?.[e?.short_name],
+);
 const emojiByCategory = category =>
   filteredEmojis.filter(e => e.category === category);
 const sortEmoji = list => list.sort((a, b) => a.sort_order - b.sort_order);
@@ -146,10 +148,6 @@ export default class EmojiSelector extends Component {
     if (this.props.showHistory) {
       this.addToHistoryAsync(emoji);
     }
-    console.log(
-      `\x1b[34m🐣️ EmojiSelector handleEmojiSelect`,
-      `${JSON.stringify(emoji?.short_name, undefined, 2)}\x1b[0m`,
-    );
     this.props.onEmojiSelected(charFromEmojiObject(emoji));
   };
 
