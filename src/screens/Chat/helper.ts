@@ -42,7 +42,8 @@ export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
 export const mapConversation = (user: IChatUser, item: any): IConversation => {
-  const _id = item?.rid || item?._id;
+  if (!item) return item;
+  const _id = item.rid || item._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
   const membersExcludeMe = (item.usernames || []).filter(
@@ -156,7 +157,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     type,
     system: !!item.t && item.t !== messageEventTypes.REMOVE_MESSAGE,
     removed: !!item.t && item.t === messageEventTypes.REMOVE_MESSAGE,
-    createdAt: timestampToISODate(item.ts),
+    createdAt: timestampToISODate(item.ts?.$date),
     _updatedAt: timestampToISODate(item._updatedAt),
     status: messageStatus.SENT,
     text,

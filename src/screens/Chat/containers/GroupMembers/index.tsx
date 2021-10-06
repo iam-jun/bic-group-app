@@ -1,29 +1,28 @@
+import {RouteProp, useRoute} from '@react-navigation/core';
 import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {RouteProp, useRoute} from '@react-navigation/core';
-import {RootStackParamList} from '~/interfaces/IRouter';
-
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {chatPermissions, roomTypes} from '~/constants/chat';
 import appConfig from '~/configs/appConfig';
+import {chatPermissions, roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IChatUser} from '~/interfaces/IChat';
+import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {ITheme} from '~/theme/interfaces';
-import MembersSelection from '../fragments/MembersSelection';
-import actions from '../redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {showAlertNewFeature} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
+import MembersSelection from '../../fragments/MembersSelection';
+import actions from '../../redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
 

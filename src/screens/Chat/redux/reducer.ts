@@ -3,7 +3,7 @@ import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
-import * as types from './constants';
+import types from './constants';
 
 export const initDataState = {
   rooms: {
@@ -37,13 +37,15 @@ export const initDataState = {
   },
   messages: {
     loading: false,
-    loadingDown: false,
+    loadingNext: false,
     data: [],
     extra: [],
     offset: -1,
     downOffset: 0,
-    unreadPoint: 0,
     canLoadMore: true,
+    canLoadNext: false,
+    unreadMessage: null,
+    jumpedMessage: null,
   },
 };
 
@@ -92,10 +94,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ...state[dataType],
           loading: state[dataType].data.length === 0,
           params: payload,
-          offset:
-            payload?.offset && state[dataType].offset <= 0
-              ? payload?.offset
-              : state[dataType].offset,
         },
       };
     case types.SET_DATA:
@@ -133,24 +131,83 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         [dataType]: initDataState[dataType],
       };
-    case types.GET_MORE_DOWN_MESSAGES:
+    case types.GET_MESSAGES_HISTORY:
       return {
         ...state,
         messages: {
           ...messages,
-          downOffset: payload?.offset,
-          loadingDown: true,
+          loading: messages.data.length === 0,
         },
       };
-    case types.SET_MORE_DOWN_MESSAGES:
+    case types.SET_MESSAGES:
       return {
         ...state,
         messages: {
           ...messages,
-          downOffset: messages.downOffset - payload.length,
-          unreadPoint: messages.unreadPoint + payload.length,
-          loadingDown: false,
-          data: [...payload, ...messages.data],
+          data: payload,
+          loading: false,
+          canLoadMore: payload.length >= appConfig.messagesPerPage,
+        },
+      };
+    case types.SET_MESSAGES_HISTORY:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          extra: payload,
+          canLoadMore: payload.length >= appConfig.messagesPerPage,
+        },
+      };
+    case types.MERGE_MESSAGES_HISTORY:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: [...messages.extra, ...messages.data],
+          extra: [],
+        },
+      };
+    case types.GET_NEXT_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          loadingNext: true,
+        },
+      };
+    case types.SET_NEXT_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          loadingNext: false,
+          data: [...messages.data, ...payload],
+          canLoadNext: payload.length === appConfig.messagesPerPage,
+        },
+      };
+    case types.GET_SURROUNDING_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          canLoadNext: true,
+          loading: true,
+        },
+      };
+    case types.SET_UNREAD_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          unreadMessage: payload,
+        },
+      };
+    case types.SET_JUMPED_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          jumpedMessage: payload,
         },
       };
     case types.READ_CONVERSATION:
@@ -162,7 +219,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         },
         messages: {
           ...messages,
-          unreadPoint: 0,
+          unreadMessage: null,
         },
       };
     case types.SEARCH_CONVERSATIONS:
@@ -228,9 +285,8 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       );
 
       const haveUnreadMessages =
-        messages.unreadPoint > 0 &&
-        messages.unreadPoint !==
-          conversation.unreadCount - appConfig.unreadMessageOffset;
+        messages.unreadMessage &&
+        conversation.unreadCount > appConfig.messagesPerPage;
 
       const newMessages =
         !haveUnreadMessages && !include
@@ -476,7 +532,8 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         rooms: {
           ...state.rooms,
           data: state.rooms.data.filter(
-            (group: IConversation) => group._id !== payload.rid,
+            (group: IConversation) =>
+              group._id !== payload.rid || group._id !== payload._id,
           ),
         },
       };

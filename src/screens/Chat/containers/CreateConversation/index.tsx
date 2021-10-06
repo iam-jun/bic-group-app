@@ -7,14 +7,11 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import {roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
-import {IUser} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
-import {generateRoomName} from '~/utils/generator';
-import MembersSelection from '../fragments/MembersSelection';
-import actions from '../redux/actions';
+import MembersSelection from '../../fragments/MembersSelection';
+import actions from '../../redux/actions';
 
 const CreateConversation = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;

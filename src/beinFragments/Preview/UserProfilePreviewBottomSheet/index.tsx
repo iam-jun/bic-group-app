@@ -1,32 +1,32 @@
+import i18next from 'i18next';
+import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, View, StyleSheet, Platform} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {isEmpty} from 'lodash';
-import i18next from 'i18next';
 
-import {ITheme} from '~/theme/interfaces';
-import {scaleCoverHeight} from '~/theme/dimension';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useKeySelector} from '~/hooks/selector';
-import {useRootNavigation} from '~/hooks/navigation';
-import modalActions from '~/store/modal/actions';
-import commonKeySelector from '~/store/modal/keySelector';
-import menuActions from '~/screens/Menu/redux/actions';
-import chatActions from '~/screens/Chat/redux/actions';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import mainStack from '~/router/navigator/MainStack/stack';
-import images from '~/resources/images';
-import {IconType} from '~/resources/icons';
-import speakingLanguages from '~/constants/speakingLanguages';
+import Avatar from '~/beinComponents/Avatar';
 import BottomSheet from '~/beinComponents/BottomSheet';
-import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/beinComponents/Avatar';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Image from '~/beinComponents/Image';
+import Text from '~/beinComponents/Text';
+import speakingLanguages from '~/constants/speakingLanguages';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import {IconType} from '~/resources/icons';
+import images from '~/resources/images';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import mainStack from '~/router/navigator/MainStack/stack';
+import chatActions from '~/screens/Chat/redux/actions';
+import menuActions from '~/screens/Menu/redux/actions';
+import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import modalActions from '~/store/modal/actions';
+import commonKeySelector from '~/store/modal/keySelector';
+import {scaleCoverHeight} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
@@ -109,9 +109,13 @@ const UserProfilePreviewBottomSheet = () => {
 
   const navigateToUserProfile = () => {
     if (!!userId) {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId,
-      });
+      const payload = {
+        userId: userId,
+        params: typeof userId === 'string' && {
+          type: 'username',
+        },
+      };
+      rootNavigation.navigate(mainStack.userProfile, payload);
     }
     userPreviewRef?.current?.close?.();
   };

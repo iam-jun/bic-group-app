@@ -77,7 +77,7 @@ const ChatInput: React.FC<Props> = ({
           _updatedAt: new Date().toISOString(),
           text: text.trim(),
           user,
-          quotedMessage: replyingMessage,
+          replyingMessage,
         }),
       );
       onCancelReplying();

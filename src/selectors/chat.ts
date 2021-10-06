@@ -45,3 +45,9 @@ export const getUnreadConversationCount = createSelector(chatState, data => {
   });
   return count;
 });
+
+export const getUnreadMessagePosition = createSelector(chatState, data => {
+  return data.messages.data.findIndex(
+    (item: IMessage) => item._id === data.messages?.unreadMessage?._id,
+  );
+});

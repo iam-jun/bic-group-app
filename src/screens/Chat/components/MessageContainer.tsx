@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -15,7 +15,6 @@ import Divider from '~/beinComponents/Divider';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import ReactionView from '~/beinComponents/ReactionView';
 import {Text} from '~/components';
-import appConfig from '~/configs/appConfig';
 import {ReactionType} from '~/constants/reactions';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -40,6 +39,7 @@ export interface MessageItemProps {
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
   onLongPressReaction: (reactionType: ReactionType) => void;
+  onQuotedMessagePress: () => void;
 }
 
 const MessageItem = (props: MessageItemProps) => {
@@ -52,15 +52,16 @@ const MessageItem = (props: MessageItemProps) => {
   const {
     previousMessage,
     currentMessage,
-    index,
     onReactPress,
     onReplyPress,
     onLongPress,
     onAddReaction,
     onRemoveReaction,
     onLongPressReaction,
+    onQuotedMessagePress,
   } = props;
   const {
+    _id,
     text,
     system,
     removed,
@@ -92,7 +93,19 @@ const MessageItem = (props: MessageItemProps) => {
     sameUser &&
     sameType &&
     within5Mins &&
-    index !== messages.unreadPoint + 2;
+    messages.unreadMessage?._id !== _id;
+
+  const [blinking, setBlinking] = useState(false);
+  useEffect(() => {
+    if (messages.jumpedMessage?._id === _id) {
+      setBlinking(true);
+
+      setTimeout(() => {
+        dispatch(actions.setJumpedMessage(null));
+        setBlinking(false);
+      }, 2000);
+    }
+  }, [messages.jumpedMessage]);
 
   const onMenuPress = (e: any) => {
     if (removed) return;
@@ -116,8 +129,14 @@ const MessageItem = (props: MessageItemProps) => {
             style={[
               styles.container,
               !hideHeader && styles.containerWithHeader,
+              blinking && styles.blinking,
             ]}>
-            {quotedMessage && <QuotedMessage {...quotedMessage} />}
+            {quotedMessage && (
+              <QuotedMessage
+                message={quotedMessage}
+                onPress={onQuotedMessagePress}
+              />
+            )}
             {!hideHeader && (
               <MessageHeader user={user} _updatedAt={_updatedAt} />
             )}
@@ -157,7 +176,7 @@ const MessageItem = (props: MessageItemProps) => {
               )}
             </View>
             <MessageStatus status={status} onRetryPress={_onRetryPress} />
-            {!isEmpty(reaction_counts) && (
+            {!removed && !isEmpty(reaction_counts) && (
               <View style={styles.reactionView}>
                 <ReactionView
                   ownReactions={own_reactions || {}}
@@ -192,9 +211,7 @@ const MessageItem = (props: MessageItemProps) => {
 
   return (
     <View>
-      {messages.unreadPoint > appConfig.unreadMessageOffset &&
-        index === messages.unreadPoint + appConfig.unreadMessageOffset &&
-        renderDivider()}
+      {messages.unreadMessage?._id === _id && renderDivider()}
       {system ? <SystemMessage {...currentMessage} /> : renderMessage()}
     </View>
   );
@@ -210,9 +227,15 @@ const createStyles = (theme: ITheme) => {
     container: {
       paddingHorizontal: spacing.padding.base,
     },
+    blinking: {
+      backgroundColor: colors.placeholder,
+    },
+    marginTop: {
+      marginTop: spacing.margin.base,
+    },
     divider: {
       flexDirection: 'row',
-      marginVertical: spacing.margin.base,
+      // marginVertical: spacing.margin.base,
     },
     dividerLine: {
       flex: 1,

@@ -1,13 +1,26 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {FlatList, FlatListProps} from 'react-native';
 
 interface Props extends FlatListProps<any> {
-  listRef?: React.MutableRefObject<FlatList> | null;
-  onScroll: (event: any) => void;
+  listRef?: React.RefObject<FlatList> | null;
+  onViewableItemsChanged: (changed: any) => void;
 }
 
-const ListMessages = ({listRef, ...props}: Props) => {
-  return <FlatList ref={listRef} {...props} />;
+const ListMessages = ({listRef, onViewableItemsChanged, ...props}: Props) => {
+  let initiated = false;
+  // useRef doesn't work with state
+  const _onViewableItemsChanged = useRef((event: any) => {
+    if (!initiated) onViewableItemsChanged(event.changed);
+    initiated = true;
+  });
+
+  return (
+    <FlatList
+      ref={listRef}
+      {...props}
+      onViewableItemsChanged={_onViewableItemsChanged.current}
+    />
+  );
 };
 
 export default ListMessages;

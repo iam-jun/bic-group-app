@@ -30,7 +30,7 @@ import {
   mapRole,
 } from './../helper';
 import actions from './actions';
-import * as types from './constants';
+import types from './constants';
 
 /**
  * Chat
@@ -44,7 +44,10 @@ export default function* saga() {
   yield takeLatest(types.INIT_CHAT, initChat);
   yield takeEvery(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
-  yield takeLatest(types.GET_MORE_DOWN_MESSAGES, getMoreDownMessages);
+  yield takeLatest(types.GET_MESSAGES_HISTORY, getMessagesHistory);
+  yield takeLatest(types.MERGE_MESSAGES_HISTORY, mergeMessagesHistory);
+  yield takeLatest(types.GET_NEXT_MESSAGES, getNextMessages);
+  yield takeLatest(types.GET_UNREAD_MESSAGE, getUnreadMessage);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
@@ -61,6 +64,7 @@ export default function* saga() {
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
+  yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
 }
 
 function* initChat() {
@@ -98,8 +102,6 @@ function* getData({
       response.data[field || dataType],
     );
 
-    delete payload?.offset;
-
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
       const page = payload?.count || appConfig.recordsPerPage;
@@ -117,32 +119,6 @@ function* mergeExtraData({dataType}: {type: string; dataType: string}) {
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
     yield put(actions.getData(dataType, params));
-  }
-}
-
-function* getMoreDownMessages({
-  payload,
-}: {
-  type: string;
-  payload: {offset: number; count: number};
-}) {
-  try {
-    const {auth, chat} = yield select();
-    const {_id} = chat.conversation;
-
-    const response: AxiosResponse = yield makeHttpRequest(
-      //@ts-ignore
-      apiConfig.Chat.messages({
-        roomId: _id,
-        ...payload,
-      }),
-    );
-
-    const result = mapMessages(auth.user, response.data?.messages);
-
-    yield put(actions.setMoreDownMessages(result));
-  } catch (err) {
-    console.error('getMoreDownMessages', err);
   }
 }
 
@@ -354,12 +330,12 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
           _id: payload._id,
           rid: payload.room_id,
           msg: payload.text,
-          attachments: payload.quotedMessage && [
+          attachments: payload.replyingMessage && [
             {
               description: JSON.stringify({
                 type: 'reply',
-                msgId: payload.quotedMessage._id,
-                author: payload.quotedMessage.user.username,
+                msgId: payload.replyingMessage._id,
+                author: payload.replyingMessage.user.username,
               }),
             },
           ],
@@ -368,7 +344,7 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
     );
 
     const message = mapMessage(auth.user, response.data.message);
-    yield put(actions.sendMessageSuccess({...payload, ...message}));
+    yield put(actions.sendMessageSuccess({...payload, ...message} as IMessage));
   } catch (err) {
     yield put(actions.sendMessageFailed(payload));
   }
@@ -506,6 +482,138 @@ function* getMessageDetail({payload}: {payload: string; type: string}) {
   }
 }
 
+function* getUnreadMessage() {
+  try {
+    const {auth, chat} = yield select();
+    const {conversation} = chat;
+    const response: AxiosResponse = yield makeHttpRequest(
+      //@ts-ignore
+      apiConfig.Chat.messages({
+        roomId: conversation._id,
+        type: conversation.type,
+        count: 1,
+        offset: conversation.unreadCount,
+      }),
+    );
+    const message = mapMessage(auth.user, response.data.messages[0]);
+    yield put(actions.setUnreadMessage(message));
+    yield put(actions.getSurroundingMessages(message._id));
+  } catch (err) {
+    console.error('getMessageDetail', err);
+  }
+}
+
+function* getSurroundingMessages({payload}: {type: string; payload: string}) {
+  try {
+    const {auth, chat} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getSurroundingMessages({
+        room_id: chat.conversation?._id,
+        message_id: payload,
+        count: appConfig.messagesPerPage,
+      }),
+    );
+
+    const result = mapMessages(auth.user, response.data.data).reverse();
+    if (result.length === 0) return;
+
+    const index = result.findIndex((item: IMessage) => item._id === payload);
+    yield put(actions.setMessages(result.slice(0, index + 1).reverse()));
+    yield put(
+      actions.setMessagesHistory(
+        result.slice(index + 1, result.length).reverse(),
+      ),
+    );
+    yield put(actions.setJumpedMessage(result[index]));
+  } catch (err) {
+    console.log('getSurroundingMessages', err);
+  }
+}
+
+function* getMessagesHistory() {
+  try {
+    const {auth, chat} = yield select();
+    const {conversation, messages} = chat;
+    const {data} = messages;
+    const lastDate = data.length > 0 ? data[0].createdAt : '';
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getMessagesHistory({
+        msg: 'method',
+        method: 'loadHistory',
+        id: conversation._id,
+        params: [
+          conversation._id,
+          {$date: new Date(lastDate).getTime() || new Date().getTime()},
+          appConfig.messagesPerPage,
+          {$date: new Date().getTime()},
+        ],
+      }),
+    );
+    const result = JSON.parse(response.data.message);
+
+    const messagesData = mapMessages(
+      auth.user,
+      result.result?.messages,
+    ).reverse();
+
+    if (data.length === 0) {
+      if (conversation.unreadCount < messagesData.length) {
+        yield put(
+          actions.setUnreadMessage(
+            messagesData[messagesData.length - conversation.unreadCount],
+          ),
+        );
+      }
+      yield put(actions.setMessages(messagesData));
+
+      if (messagesData.length === appConfig.recordsPerPage) {
+        yield put(actions.getMessagesHistory());
+      }
+    } else {
+      yield put(actions.setMessagesHistory(messagesData));
+    }
+  } catch (err: any) {
+    console.log('getMessagesHistory', err);
+  }
+}
+
+function* getNextMessages() {
+  try {
+    const {auth, chat} = yield select();
+    const {conversation, messages} = chat;
+    const {data} = messages;
+    const lastDate = data.length > 1 ? data[data.length - 1].createdAt : '';
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getNextMessages({
+        msg: 'method',
+        method: 'loadNextMessages',
+        id: conversation._id,
+        params: [
+          conversation._id,
+          {$date: new Date(lastDate).getTime()},
+          appConfig.messagesPerPage,
+        ],
+      }),
+    );
+    const result = JSON.parse(response.data.message);
+
+    const messagesData = mapMessages(auth.user, result.result?.messages);
+    yield put(actions.setNextMessages(messagesData));
+  } catch (err: any) {
+    console.log('getMessagesHistory', err);
+  }
+}
+
+function* mergeMessagesHistory() {
+  const {chat} = yield select();
+  const {canLoadMore} = chat.messages;
+  if (canLoadMore) {
+    yield put(actions.getMessagesHistory());
+  }
+}
+
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
@@ -624,7 +732,10 @@ function* handleNotifyUser(payload?: any) {
     case 'removed':
       {
         yield put(actions.kickMeOut(data[1]));
-        if (chat.conversation?._id)
+        if (
+          chat.conversation?._id === data[1].rid ||
+          chat.conversation?._id === data[1]._id
+        )
           navigation.replace(chatStack.conversationList);
       }
       break;
