@@ -46,6 +46,7 @@
     "axios": "~0.21.1",
     "css-to-react-native": "~3.0.0",
     "detox": "~18.13.0",
+    "emoji-datasource": "^7.0.2",
     "getstream": "~7.2.10",
     "i18next": "~20.2.2",
     "lodash": "~4.17.21",
