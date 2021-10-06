@@ -65,6 +65,7 @@ const Conversation = () => {
     useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
   const [editingMessage, setEditingMessage] = useState<IMessage>();
+  const [scrollY, setScrollY] = useState(true);
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
@@ -368,13 +369,15 @@ const Conversation = () => {
   };
 
   const scrollToBottom = () => {
+    console.log('scrollToBottom', scrollY);
     if (messages.canLoadNext) setDownButtonVisible(true);
     if (
-      !isScrolled &&
+      // !isScrolled &&
+      scrollY &&
       !isEmpty(messages.data) &&
       conversation.unreadCount === 0
     ) {
-      setIsScrolled(true);
+      // setIsScrolled(true);
       listRef.current?.scrollToIndex({
         index: messages.data.length - 1,
         animated: false,
@@ -385,13 +388,13 @@ const Conversation = () => {
   const onMomentumScrollEnd = (event: any) => {
     const offsetY = event.nativeEvent?.contentOffset.y;
     const contentHeight = event.nativeEvent?.contentSize.height;
-
     const delta = Platform.OS === 'web' ? 100 : 10;
-
+    console.log('scrollend', offsetY);
     setDownButtonVisible(
       contentHeight - dimension.deviceHeight * 2 > offsetY ||
         messages.unreadPoint > appConfig.unreadMessageOffset,
     );
+    setScrollY(offsetY > 200);
 
     if (!messages.loadingNext && offsetY < delta) {
       // reach top
@@ -400,6 +403,7 @@ const Conversation = () => {
   };
 
   const onEndReached = () => {
+    setScrollY(true);
     if (messages.canLoadNext) {
       dispatch(actions.getNextMessages());
     } else {

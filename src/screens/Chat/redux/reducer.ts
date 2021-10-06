@@ -290,7 +290,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
 
       const newMessages =
         !haveUnreadMessages && !include
-          ? [{...action.payload, status: messageStatus.SENT}, ...messages.data]
+          ? [...messages.data, {...payload, status: messageStatus.SENT}]
           : messages.data.map((item: IMessage) =>
               item._id === action.payload._id ||
               (item.localId && item.localId === action.payload.localId)
@@ -403,11 +403,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         messages: {
           ...messages,
           data: [
+            ...messages.data,
             {
               ...payload,
               status: messageStatus.SENDING,
             },
-            ...messages.data,
           ],
         },
         quotedMessages: payload.quotedMessage
