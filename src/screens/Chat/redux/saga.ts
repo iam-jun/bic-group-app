@@ -42,7 +42,7 @@ const navigation = withNavigation(rootNavigationRef);
 
 export default function* saga() {
   yield takeLatest(types.INIT_CHAT, initChat);
-  yield takeLatest(types.GET_DATA, getData);
+  yield takeEvery(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
   yield takeLatest(types.GET_MORE_DOWN_MESSAGES, getMoreDownMessages);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
