@@ -647,8 +647,9 @@ function* handleNewMessage(data: any) {
       (item: IConversation) => item._id === message?.room_id,
     );
 
-    if (existed) yield put(actions.addNewMessage(message));
-    else {
+    if (existed) {
+      yield put(actions.addNewMessage(message));
+    } else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({
           roomId: message?.room_id,

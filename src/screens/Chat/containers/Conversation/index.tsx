@@ -1,5 +1,5 @@
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
-import {isEmpty} from 'lodash';
+import {debounce, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -59,13 +59,13 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [offsetY, setOffsetY] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
   const [unreadBannerVisible, setUnreadBannerVisible] =
     useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
   const [editingMessage, setEditingMessage] = useState<IMessage>();
-  const [scrollY, setScrollY] = useState(true);
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
@@ -369,42 +369,55 @@ const Conversation = () => {
   };
 
   const scrollToBottom = () => {
-    console.log('scrollToBottom', scrollY);
+    listRef.current?.scrollToIndex({
+      index: messages.data.length - 1,
+      animated: false,
+    });
+  };
+
+  const onContentLayoutChange = () => {
     if (messages.canLoadNext) setDownButtonVisible(true);
     if (
-      // !isScrolled &&
-      scrollY &&
+      (!isScrolled || offsetY > 500) &&
+      !messages.canLoadNext &&
       !isEmpty(messages.data) &&
       conversation.unreadCount === 0
     ) {
-      // setIsScrolled(true);
-      listRef.current?.scrollToIndex({
-        index: messages.data.length - 1,
-        animated: false,
-      });
+      scrollToBottom();
+      // only first time
+      setIsScrolled(true);
     }
   };
 
-  const onMomentumScrollEnd = (event: any) => {
-    const offsetY = event.nativeEvent?.contentOffset.y;
-    const contentHeight = event.nativeEvent?.contentSize.height;
+  const handleScroll = (event: any) => {
+    const _offsetY = event?.contentOffset.y;
+    const contentHeight = event?.contentSize.height;
     const delta = Platform.OS === 'web' ? 100 : 10;
-    console.log('scrollend', offsetY);
+    setOffsetY(_offsetY);
     setDownButtonVisible(
-      contentHeight - dimension.deviceHeight * 2 > offsetY ||
+      contentHeight - dimension.deviceHeight * 2 > _offsetY ||
         messages.unreadPoint > appConfig.unreadMessageOffset,
     );
-    setScrollY(offsetY > 200);
 
-    if (!messages.loadingNext && offsetY < delta) {
+    if (
+      isScrolled &&
+      !messages.loadingMore &&
+      messages.canLoadMore &&
+      _offsetY < delta
+    ) {
       // reach top
       loadMoreMessages();
     }
   };
 
+  const scrollHandler = debounce(handleScroll, 10);
+
+  const onScroll = (event: any) => {
+    scrollHandler(event.nativeEvent);
+  };
+
   const onEndReached = () => {
-    setScrollY(true);
-    if (messages.canLoadNext) {
+    if (!messages.loadingNext && messages.canLoadNext) {
       dispatch(actions.getNextMessages());
     } else {
       if (conversation.unreadCount > 0) {
@@ -444,13 +457,11 @@ const Conversation = () => {
           keyboardShouldPersistTaps="handled"
           onEndReached={onEndReached}
           onEndReachedThreshold={0.5}
+          scrollEventThrottle={0.5}
           removeClippedSubviews={true}
           onScrollToIndexFailed={scrollToIndexFailed}
-          onContentSizeChange={scrollToBottom}
-          onMomentumScrollEnd={
-            Platform.OS !== 'web' ? onMomentumScrollEnd : undefined
-          }
-          onScroll={Platform.OS === 'web' ? onMomentumScrollEnd : undefined}
+          onContentSizeChange={onContentLayoutChange}
+          onScroll={onScroll}
           showsHorizontalScrollIndicator={false}
           maxToRenderPerBatch={appConfig.messagesPerPage}
           initialNumToRender={appConfig.messagesPerPage}
