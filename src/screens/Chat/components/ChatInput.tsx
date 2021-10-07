@@ -92,6 +92,7 @@ const ChatInput: React.FC<Props> = ({
         }),
       );
     }
+    commentInputRef?.current?.clear();
     setText('');
     onCancelEditing();
   };
