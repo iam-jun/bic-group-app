@@ -383,13 +383,13 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message": {
-      "au": "{1}  joined to this group",
+      "au": "{1} joined to this group",
       "ru": "{1} was removed from the group.",
       "room_changed_description": "{0} has changed the chat description.",
       "room_changed_announcement": "{0} has changed the chat announcement.",
-      "room_changed_topic": "{0} has changed the group chat topic to “{1}”",
+      "room_changed_topic": "{0} has changed the group chat topic to {1}",
       "room_changed_avatar": "{0} has changed the group avatar",
-      "r": "{0} has changed the group chat name to “{1}”",
+      "r": "{0} has changed the group chat name to {1}",
       "rm": {
         "me": "You deleted this message.",
         "other": "This message has been deleted",

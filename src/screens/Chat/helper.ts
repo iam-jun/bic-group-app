@@ -124,10 +124,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
         `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`,
       );
     } else {
-      text = i18next
-        .t(`chat:system_message:${item.t}`)
-        .replace('{0}', user.name || '')
-        .replace('{1}', item.msg);
+      text = i18next.t(`chat:system_message:${item.t}`);
     }
   }
 
