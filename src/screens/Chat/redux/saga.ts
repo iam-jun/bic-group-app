@@ -321,26 +321,30 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
 }
 
 function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
+  const {_id, room_id, text, replyingMessage, image} = payload || {};
   try {
     const {auth} = yield select();
 
+    const attachments = [];
+    if (replyingMessage) {
+      attachments.push({
+        description: JSON.stringify({
+          type: 'reply',
+          msgId: replyingMessage._id,
+          author: replyingMessage.user.username,
+        }),
+      });
+    }
+    if (image) {
+      attachments.push({
+        image_url: image.name,
+        image_dimensions: {width: image.width, height: image.height},
+      });
+    }
+
+    const params = {message: {_id, rid: room_id, msg: text, attachments}};
     const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.sendMessage({
-        message: {
-          _id: payload._id,
-          rid: payload.room_id,
-          msg: payload.text,
-          attachments: payload.replyingMessage && [
-            {
-              description: JSON.stringify({
-                type: 'reply',
-                msgId: payload.replyingMessage._id,
-                author: payload.replyingMessage.user.username,
-              }),
-            },
-          ],
-        },
-      }),
+      apiConfig.Chat.sendMessage(params),
     );
 
     const message = mapMessage(auth.user, response.data.message);

@@ -31,3 +31,15 @@ export function titleCase(str: string | undefined) {
   // Directly return the joined string
   return splitStr.join(' ');
 }
+
+export function parseSafe(str?: string) {
+  let result;
+  if (str) {
+    try {
+      result = JSON.parse(str);
+    } catch (e) {
+      console.log(`\x1b[35m🐣️ common parseSafe: `, e, `\x1b[0m`);
+    }
+  }
+  return result;
+}
