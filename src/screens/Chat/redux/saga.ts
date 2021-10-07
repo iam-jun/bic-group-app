@@ -157,6 +157,7 @@ function* readSubscriptions({payload}: {type: string; payload: string}) {
         rid: payload,
       }),
     );
+    yield getSubscriptions();
   } catch (err) {
     console.log('readSubscriptions', err);
   }
