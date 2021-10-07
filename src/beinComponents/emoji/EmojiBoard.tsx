@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import NodeEmoji from 'node-emoji';
 
 import {ITheme} from '~/theme/interfaces';
 import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
@@ -18,7 +19,7 @@ export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
   width: number;
   height: number;
-  onEmojiSelected: (emoji: string) => void;
+  onEmojiSelected: (emoji: string, key: string) => void;
   onPressSpace?: () => void;
   onPressBackSpace?: () => void;
   onPressKeyboard?: () => void;
@@ -39,7 +40,8 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
   const styles = createStyle(theme);
 
   const _onEmojiSelected = (emoji: string) => {
-    onEmojiSelected?.(emoji);
+    const emojiResult = NodeEmoji.find(emoji);
+    onEmojiSelected?.(emoji, emojiResult?.key);
   };
 
   return (
