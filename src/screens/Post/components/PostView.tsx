@@ -14,7 +14,7 @@ import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {formatLargeNumber} from '~/utils/formatData';
-import ReactionView from '~/screens/Post/components/ReactionView';
+import ReactionView from '~/beinComponents/ReactionView';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';

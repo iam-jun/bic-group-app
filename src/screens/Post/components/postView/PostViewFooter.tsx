@@ -10,6 +10,7 @@ import Div from '~/beinComponents/Div';
 import Button from '~/beinComponents/Button';
 import * as modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -24,18 +25,36 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 }: PostViewFooterProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
   const styles = createStyle(theme);
+
+  const onEmojiSelected = (emoji: string, key?: string) => {
+    dispatch(modalActions.hideModal());
+    if (key) {
+      onAddReaction?.(key);
+    }
+  };
 
   const onPressReact = (event: any) => {
     const payload = {
-      show: true,
-      position: {x: event?.pageX, y: event?.pageY},
-      callback: onAddReaction,
+      isOpen: true,
+      ContentComponent: (
+        <EmojiBoard
+          width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+          height={280}
+          onEmojiSelected={onEmojiSelected}
+        />
+      ),
+      props: {
+        webModalStyle: {minHeight: undefined},
+        isContextMenu: true,
+        position: {x: event?.pageX, y: event?.pageY},
+        side: 'center',
+      },
     };
 
     if (Platform.OS !== 'web') {
-      dispatch(modalActions.setShowReactionBottomSheet(payload));
+      dispatch(modalActions.showModal(payload));
       return;
     }
 
@@ -57,9 +76,9 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         // Move menu further down when pressing on label
         y = y + buttonReactPaddingBottom * 1.5;
       }
-      payload.position = {x, y};
+      payload.props.position = {x, y};
 
-      dispatch(modalActions.setShowReactionBottomSheet(payload));
+      dispatch(modalActions.showModal(payload));
     });
   };
 

@@ -151,7 +151,15 @@ const MessageItem = (props: MessageItemProps) => {
                 </Text>
               ) : (
                 <>
-                  <AttachmentView {...currentMessage} />
+                  {currentMessage?.attachments?.map?.(
+                    (attach: any, i: number) => (
+                      <AttachmentView
+                        key={`${_id}_attachment_${attach?.ts || i}`}
+                        {...currentMessage}
+                        attachment={attach}
+                      />
+                    ),
+                  )}
                   <View style={styles.textContainer}>
                     <MarkdownView
                       limitMarkdownTypes

@@ -210,6 +210,8 @@ const icons = {
   ArrowDown: 'ArrowDown',
   CreateThread: 'CommentAltPlus',
   Smile: 'Smile',
+  ArrowRight: 'ArrowRight',
+  ArrowLeft: 'ArrowLeft',
 };
 
 export default icons;

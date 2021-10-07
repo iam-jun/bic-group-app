@@ -34,6 +34,7 @@ export const chatPermissions = {
   CAN_MUTE: 'can_mute',
   CAN_REMOVE_CHAT_MEMBER: 'can_remove_chat_member',
   CAN_LEAVE: 'can_leave',
+  MANAGE_MEMBER: 'manage_member',
 };
 
 export const messageOptionData = {

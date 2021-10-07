@@ -19,6 +19,7 @@ import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
+import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;
@@ -75,6 +76,15 @@ const Icon: React.FC<IconProps> = ({
   } else if (typeof _icon === 'function') {
     IconComponent = SvgIcon;
     source = _icon;
+  } else if (
+    typeof icon === 'string' &&
+    !icons[icon] &&
+    !icon.includes('http')
+  ) {
+    IconComponent = TextEmojiIcon;
+    name = icon;
+    _style.width = size;
+    _style.height = size;
   } else {
     IconComponent = Image;
     source = _icon;

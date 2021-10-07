@@ -1,5 +1,8 @@
-import {IReactionProps} from '~/interfaces/IReaction';
-import reactionIcons from '~/resources/reactions';
+export const blacklistReactions: any = {
+  comment: 'comment',
+  comment_count: 'comment_count',
+  mark_as_read: 'mark_as_read',
+};
 
 export const reactions = {
   angry_furious: {
@@ -100,5 +103,5 @@ export const reactions = {
   },
 };
 
-export type ReactionType = keyof typeof reactions;
+export type ReactionType = string;
 export default reactions;
