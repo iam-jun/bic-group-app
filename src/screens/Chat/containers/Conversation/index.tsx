@@ -80,6 +80,7 @@ const Conversation = () => {
   useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
+      dispatch(actions.readSubscriptions(route.params.roomId));
     }
   }, [route.params?.roomId]);
 
