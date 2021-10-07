@@ -1,4 +1,4 @@
-import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -57,7 +57,6 @@ const Conversation = () => {
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(
     conversation.avatar,
   );
-  const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
@@ -72,14 +71,9 @@ const Conversation = () => {
   };
 
   useEffect(() => {
-    if (!isFocused) {
-      dispatch(actions.readSubscriptions(conversation._id));
-    }
-  }, [isFocused]);
-
-  useEffect(() => {
     if (route.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
+      dispatch(actions.readSubscriptions(conversation._id));
     }
   }, [route.params?.roomId]);
 
