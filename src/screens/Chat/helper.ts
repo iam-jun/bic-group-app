@@ -50,7 +50,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     (_username: any) => _username !== user?.username,
   );
 
-  const name = item.fname || item.name;
+  const name = item.customFields?.beinChatName?.name || item.fname || item.name;
 
   const avatar =
     type === roomTypes.DIRECT
@@ -81,7 +81,6 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     ...item.customFields,
     _id,
     name,
-    ...item.customFields,
     type,
     avatar,
     user: item.u && mapUser(item?.u),
