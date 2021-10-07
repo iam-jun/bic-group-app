@@ -9,7 +9,7 @@ import {messageStatus} from '~/constants/chat';
 import {IMessage} from '~/interfaces/IChat';
 import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {openLink} from '~/utils/common';
+import {openLink, parseSafe} from '~/utils/common';
 import {formatBytes} from '~/utils/formatData';
 import {getDownloadUrl, getMessageAttachmentUrl} from '../helper';
 
@@ -19,7 +19,10 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
   const {attachment, status} = props;
   const {name, size} = attachment || {};
 
-  if (!attachment) return null;
+  const desc = attachment?.description || '';
+  const descObj = parseSafe(desc);
+
+  if (!attachment || descObj?.type === 'reply') return null;
 
   const color =
     status === messageStatus.FAILED ? theme.colors.error : theme.colors.text;

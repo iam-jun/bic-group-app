@@ -2,7 +2,7 @@ import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IconType} from '~/resources/icons';
 import {IFilePicked} from './common';
-import {IOwnReaction, IReactionCounts} from './IPost';
+import {IActivityDataImage, IOwnReaction, IReactionCounts} from './IPost';
 export interface IReaction {
   type: ReactionType;
   count: number;
@@ -195,6 +195,7 @@ export interface ISendMessageAction {
   room_id: string;
   _updatedAt: string;
   replyingMessage?: IMessage;
+  image?: IActivityDataImage;
 }
 
 export interface IUploadFileAction {

@@ -6,7 +6,9 @@ import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 
 import Text from '~/beinComponents/Text';
-import CommentInput from '~/beinComponents/inputs/CommentInput';
+import CommentInput, {
+  ICommentInputSendParam,
+} from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import apiConfig from '~/configs/apiConfig';
 import useAuth from '~/hooks/auth';
@@ -68,7 +70,7 @@ const ChatInput: React.FC<Props> = ({
     setText(value);
   };
 
-  const onSend = () => {
+  const onSend = (sendData?: ICommentInputSendParam) => {
     if (!editingMessage) {
       dispatch(
         actions.sendMessage({
@@ -78,6 +80,7 @@ const ChatInput: React.FC<Props> = ({
           text: text.trim(),
           user,
           replyingMessage,
+          image: sendData?.image,
         }),
       );
       onCancelReplying();
@@ -89,6 +92,7 @@ const ChatInput: React.FC<Props> = ({
         }),
       );
     }
+    commentInputRef?.current?.clear();
     setText('');
     onCancelEditing();
   };
@@ -198,9 +202,9 @@ const ChatInput: React.FC<Props> = ({
       componentInputProps={{
         HeaderComponent: renderInputHeader(),
         commentInputRef: commentInputRef,
+        isHandleUpload: true,
         onPressSend: onSend,
         onPressFile,
-        onPressSelectImage,
       }}
       showItemAll
       emptyContent={i18next.t('post:mention_empty_content')}
