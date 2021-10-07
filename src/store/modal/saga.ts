@@ -63,7 +63,6 @@ function* showUserProfilePreviewBottomSheet({
     isOpen: true,
     ...payload,
   };
-  console.log('[SAGA] payload', _payload);
   yield put(setUserProfilePreviewBottomSheet(_payload));
 }
 
