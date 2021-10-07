@@ -159,6 +159,10 @@ export type IMessage = {
   createdAt?: string;
 };
 
+export type ISystemMessage = IMessage & {
+  msg: string;
+};
+
 export interface IAttachmentMessage {
   _id: string | number;
   user: IChatUser;
