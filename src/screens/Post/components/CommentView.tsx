@@ -28,6 +28,7 @@ import * as modalActions from '~/store/modal/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 import ReactionView from '~/beinComponents/ReactionView';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 
 export interface CommentViewProps {
   postId: string;
@@ -53,7 +54,7 @@ const CommentView: React.FC<CommentViewProps> = ({
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
   const styles = createStyle(theme);
 
   const currentUserId = useUserIdAuth();
@@ -116,15 +117,31 @@ const CommentView: React.FC<CommentViewProps> = ({
     }
   };
 
+  const onEmojiSelected = (emoji: string, key?: string) => {
+    dispatch(modalActions.hideModal());
+    if (key) {
+      onAddReaction?.(key);
+    }
+  };
+
   const onPressReact = (event: any) => {
-    dispatch(
-      modalActions.setShowReactionBottomSheet({
-        show: true,
-        title: t('post:label_all_reacts'),
+    const payload = {
+      isOpen: true,
+      ContentComponent: (
+        <EmojiBoard
+          width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+          height={280}
+          onEmojiSelected={onEmojiSelected}
+        />
+      ),
+      props: {
+        webModalStyle: {minHeight: undefined},
+        isContextMenu: true,
         position: {x: event?.pageX, y: event?.pageY},
-        callback: onAddReaction,
-      }),
-    );
+        side: 'center',
+      },
+    };
+    dispatch(modalActions.showModal(payload));
   };
 
   const _onPressReply = () => {
