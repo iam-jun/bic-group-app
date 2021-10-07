@@ -204,6 +204,13 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       } else {
         _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
       }
+      const isRefreshSuccess = await refreshAuthTokens();
+      if (!isRefreshSuccess) {
+        await Auth.currentAuthenticatedUser();
+        refreshFailKickOut();
+        isSuccess = false;
+        return;
+      }
     } catch (e) {
       refreshFailKickOut();
       return;
@@ -444,7 +451,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...requestConfig.headers,
         ...{
           Authorization: getBeinIdToken(),
-          'X-Requested-With': 'google',
         },
       };
       break;
