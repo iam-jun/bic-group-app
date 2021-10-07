@@ -12,7 +12,6 @@ import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
 import {ReactionType} from '~/constants/reactions';
-import ReactionView from '~/screens/Post/components/ReactionView';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -27,10 +26,8 @@ import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import Image from '~/beinComponents/Image';
-import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
-import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
+import ReactionView from '~/beinComponents/ReactionView';
 
 export interface CommentViewProps {
   postId: string;

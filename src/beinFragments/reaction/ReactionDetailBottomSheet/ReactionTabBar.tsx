@@ -3,12 +3,11 @@ import {FlatList, View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import {ReactionType} from '~/constants/reactions';
-import reactions from '~/resources/reactions';
+import {blacklistReactions, ReactionType} from '~/constants/reactions';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import NodeEmoji from 'node-emoji';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
@@ -64,7 +63,10 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       const newData: any = [];
       Object.keys(reactionCounts)?.map?.(key => {
         const reactionType = key as ReactionType;
-        if (reactions[reactionType] && reactionCounts?.[reactionType] > 0) {
+        if (
+          !blacklistReactions?.[reactionType] &&
+          reactionCounts?.[reactionType] > 0
+        ) {
           newData.push({
             reactionType,
             count: reactionCounts[reactionType],
@@ -86,12 +88,15 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const renderItem = ({item, index}: any) => {
     const {reactionType, count} = item || {};
     const isActive = activeIndex === index;
+    const emoji = NodeEmoji.find(reactionType || '')?.emoji || '';
     return (
       <View>
         <Button style={styles.tabItem} onPress={() => _onPressTab(index)}>
-          <Icon size={20} icon={reactionType} style={styles.reactionIcon} />
+          <Text.H5 color={isActive ? colors.primary7 : colors.textPrimary}>
+            {emoji}
+          </Text.H5>
           <Text.H6 color={isActive ? colors.primary7 : colors.textPrimary}>
-            {count}
+            {` ${count}`}
           </Text.H6>
         </Button>
         {isActive && <View style={styles.tabItemActive} />}
@@ -127,10 +132,6 @@ const createStyle = (theme: ITheme) => {
       borderBottomWidth: 1,
       borderColor: colors.borderDisable,
       maxWidth: 500,
-    },
-    reactionIcon: {
-      marginBottom: Platform.select({web: 0, default: spacing.margin.tiny}),
-      marginRight: Platform.select({web: 6, default: spacing.margin.tiny}),
     },
     tabItem: {
       width: itemWidth,

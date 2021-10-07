@@ -118,6 +118,9 @@ const emojiShortNameBlacklist = {
   black_small_square: 'black_small_square',
   white_small_square: 'white_small_square',
   transgender_flag: 'transgender_flag',
+  reversed_hand_with_middle_finger_extended:
+    'reversed_hand_with_middle_finger_extended',
+  'eye-in-speech-bubble': 'eye-in-speech-bubble',
 };
 
 export default emojiShortNameBlacklist;
