@@ -4,15 +4,14 @@ import {
   StyleProp,
   StyleSheet,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import Icon from '../Icon';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
+import NodeEmoji from 'node-emoji';
 
 interface ReactionProps {
   value: number;
@@ -44,6 +43,8 @@ const Reaction: React.FC<ReactionProps> = ({
     setIsSelected(selected);
   }, [selected]);
 
+  const emoji = NodeEmoji.find(icon || '')?.emoji || '';
+
   const _onChangeValue = () => {
     const newValue = !isSelected;
 
@@ -74,16 +75,11 @@ const Reaction: React.FC<ReactionProps> = ({
           style={styles.indicator}
         />
       ) : (
-        <>
-          <View style={{width: 16, height: 16}}>
-            <Icon icon={icon} size={16} />
-          </View>
-          <Text.BodySM
-            color={isSelected ? colors.primary7 : colors.textPrimary}
-            style={styles.textInput}>
-            {value}
-          </Text.BodySM>
-        </>
+        <Text.BodySM
+          color={isSelected ? colors.primary7 : colors.textPrimary}
+          style={styles.textInput}>
+          {`${emoji} ${value}`}
+        </Text.BodySM>
       )}
     </TouchableOpacity>
   );
@@ -105,7 +101,6 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
       height: 28,
     },
     textInput: {
-      marginStart: spacing?.margin.tiny,
       marginBottom: 2,
     },
     indicator: {

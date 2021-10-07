@@ -7,7 +7,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
 import {ITheme} from '~/theme/interfaces';
-import reactions, {ReactionType} from '~/constants/reactions';
+import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 
@@ -49,7 +49,7 @@ const ReactionView: FC<ReactionViewProps> = ({
     const rendered: React.ReactNode[] = [];
     Object.keys(reactionCounts || {})?.map?.((key, index) => {
       const react = key as ReactionType;
-      if (reactions?.[react] && reactionCounts?.[key]) {
+      if (!blacklistReactions?.[react] && reactionCounts?.[key]) {
         rendered.push(
           <Reaction
             key={`${index}_${key}`}
@@ -102,14 +102,13 @@ const createStyle = (theme: ITheme) => {
     containerButtonOnly: {
       flex: 1,
       alignItems: 'flex-start',
-      marginTop: spacing.margin.tiny,
       marginLeft: spacing.margin.small,
     },
     container: {
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
-      paddingTop: spacing.padding.tiny,
+      paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.small,
     },
