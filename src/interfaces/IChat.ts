@@ -157,10 +157,7 @@ export type IMessage = {
   editedAt?: any;
   editedBy?: any;
   createdAt?: string;
-};
-
-export type ISystemMessage = IMessage & {
-  msg: string;
+  msg?: string;
 };
 
 export interface IAttachmentMessage {
