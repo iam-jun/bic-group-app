@@ -2,17 +2,23 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
-import {IMessage} from '~/interfaces/IChat';
+import {ISystemMessage} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 
-const SystemMessage: React.FC<IMessage> = ({text}: IMessage) => {
+const SystemMessage: React.FC<ISystemMessage> = ({
+  text,
+  msg,
+}: ISystemMessage) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
+  const content = text?.replace(msg, '');
+
   return (
-    <View style={styles.container}>
-      <Text.BodyS style={styles.text}>{text}</Text.BodyS>
-    </View>
+    <Text.BodyS style={styles.container}>
+      <Text.BodyS style={styles.name}>{msg}</Text.BodyS>
+      {content}
+    </Text.BodyS>
   );
 };
 
@@ -22,9 +28,10 @@ const createStyles = (theme: ITheme) => {
     container: {
       paddingHorizontal: spacing.padding.base,
       paddingBottom: spacing.padding.small,
-    },
-    text: {
       color: colors.textSecondary,
+    },
+    name: {
+      fontWeight: '700',
     },
   });
 };
