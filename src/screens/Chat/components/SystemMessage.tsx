@@ -154,10 +154,11 @@ const createStyles = (theme: ITheme) => {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: defaultPaddingVertical,
+      paddingVertical: Platform.OS !== 'web' ? defaultPaddingVertical : 0,
       paddingHorizontal: spacing.padding.base,
     },
     icon: {
+      marginTop: Platform.OS === 'web' ? spacing.margin.tiny : 0,
       marginHorizontal: spacing.margin.base,
     },
     text: {
