@@ -40,6 +40,7 @@ export interface MentionInputProps extends TextInputProps {
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
+  showShadow?: boolean;
   onPress?: (item: any) => void;
   onPressAll?: () => void;
   showItemAll?: boolean;
@@ -66,6 +67,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
+  showShadow = true,
   onPress,
   onPressAll,
   showItemAll,
@@ -311,12 +313,17 @@ const MentionInput: React.FC<MentionInputProps> = ({
         editable={!disabled}
       />
       {mentioning && (
-        <View style={[styles.containerModal, modalStyle]}>
+        <View
+          style={[
+            styles.containerModal,
+            showShadow && styles.shadow,
+            modalStyle,
+          ]}>
           {!!title && (!key || list?.length === 0) && (
             <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
           )}
           {renderMentionAll()}
-          <Divider margin={spacing.margin.small} />
+          <Divider />
           <FlatList
             keyboardShouldPersistTaps={'always'}
             data={list || []}
@@ -373,7 +380,9 @@ const createStyles = (
       backgroundColor: colors.background,
       justifyContent: 'center',
       alignSelf: 'center',
-
+      zIndex: 2,
+    },
+    shadow: {
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -382,7 +391,6 @@ const createStyles = (
       shadowOpacity: 0.12,
       shadowRadius: 10.32,
       elevation: 16,
-      zIndex: 2,
     },
     textInputWrapper: {
       height: 40,
