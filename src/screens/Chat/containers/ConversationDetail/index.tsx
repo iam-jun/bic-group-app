@@ -214,7 +214,7 @@ const ConversationDetail = (): React.ReactElement => {
           label={i18next.t('chat:label_mute')}
         />
       )}
-      {!isDirect && permissions[chatPermissions.CAN_INVITE] && (
+      {!isDirect && permissions[chatPermissions.CAN_MANAGE_MEMBER] && (
         <Button.Icon
           icon="addUser"
           tintColor={colors.primary7}
