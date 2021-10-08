@@ -4,15 +4,18 @@ import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
-import LoadingQuotedMessage from './LoadingQuotedMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
+import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IQuotedMessage} from '~/interfaces/IChat';
+import mainStack from '~/router/navigator/MainStack/stack';
+import modalActions from '~/store/modal/actions';
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
 import {getAvatar, getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
+import LoadingQuotedMessage from './LoadingQuotedMessage';
 
 interface Props {
   message: IQuotedMessage;
@@ -32,6 +35,23 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
 
   if (!_message) return <LoadingQuotedMessage />;
 
+  const {rootNavigation} = useRootNavigation();
+
+  const onPressUser = () => {
+    const payload = {
+      userId: author,
+      params: {
+        type: 'username',
+      },
+    };
+
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(mainStack.userProfile, payload);
+    } else {
+      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
+    }
+  };
+
   return (
     <ButtonWrapper contentStyle={styles.container} onPress={onPress}>
       <View style={styles.connector} />
@@ -39,14 +59,16 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
         style={styles.right}
         numberOfLines={Platform.OS === 'web' ? 1 : 2}
         ellipsizeMode="tail">
-        <Avatar.Tiny
-          style={styles.avatar}
-          source={getAvatar(author)}
-          placeholderSource={getDefaultAvatar(_message?.user?.name)}
-        />
-        <Text.BodySM style={styles.textWrapper}>
-          {`${_message?.user?.name}  `}
-        </Text.BodySM>
+        <Text onPress={onPressUser}>
+          <Avatar.Tiny
+            style={styles.avatar}
+            source={getAvatar(author)}
+            placeholderSource={getDefaultAvatar(_message?.user?.name)}
+          />
+          <Text.BodySM style={styles.textWrapper}>
+            {`${_message?.user?.name}  `}
+          </Text.BodySM>
+        </Text>
         <Text.BodyS style={styles.quote}>
           {_message?.text ||
             ((_message?.attachments || []).length > 0
