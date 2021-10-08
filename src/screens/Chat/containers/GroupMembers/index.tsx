@@ -67,7 +67,7 @@ const GroupMembers = (): React.ReactElement => {
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('members'));
 
-  const onAddPress = !permissions[chatPermissions.CAN_INVITE]
+  const onAddPress = !permissions[chatPermissions.CAN_MANAGE_MEMBER]
     ? undefined
     : () => {
         dispatch(actions.clearSelectedUsers());
@@ -213,7 +213,7 @@ const GroupMembers = (): React.ReactElement => {
               title={i18next.t('chat:member_menu:label_view_profile')}
               onPress={() => onPressMenuOption('view-profile')}
             />
-            {permissions[chatPermissions.MANAGE_MEMBER] &&
+            {permissions[chatPermissions.CAN_MANAGE_MEMBER] &&
               !selectedMember?.roles?.includes('owner') && (
                 <PrimaryItem
                   style={styles.menuOption}
@@ -232,7 +232,7 @@ const GroupMembers = (): React.ReactElement => {
                 onPress={() => onPressMenuOption('send-direct-message')}
               />
             )}
-            {permissions[chatPermissions.CAN_REMOVE_CHAT_MEMBER] &&
+            {permissions[chatPermissions.CAN_MANAGE_MEMBER] &&
               selectedMember?.username !== user?.username && (
                 <PrimaryItem
                   style={styles.menuOption}
