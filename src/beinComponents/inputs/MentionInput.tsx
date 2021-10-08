@@ -92,7 +92,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [inputSelection, setInputSelection] = useState<any>();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
-  const [hoverItem, setHoverItem] = useState<any>('');
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -228,17 +227,14 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 
   const _renderItem = ({item}: {item: any}) => {
-    const backgroundColor =
-      hoverItem?.[mentionField] &&
-      item?.[mentionField] === hoverItem?.[mentionField]
-        ? colors.placeholder
-        : colors.background;
+    // const backgroundColor =
+    //   hoverItem?.[mentionField] &&
+    //   item?.[mentionField] === hoverItem?.[mentionField]
+    //     ? colors.placeholder
+    //     : colors.background;
 
     return (
-      <Div
-        style={{backgroundColor}}
-        onMouseOver={() => setHoverItem(item)}
-        onMouseLeave={() => setHoverItem(null)}>
+      <Div className="mention-item">
         <TouchableOpacity
           style={[styles.item]}
           onPress={() => _onPressItem(item)}>
@@ -255,15 +251,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const renderMentionAll = () => {
     if (!onPressAll && !showItemAll) return null;
-    const backgroundColor =
-      hoverItem?.id === 'all' ? colors.placeholder : colors.background;
 
     return (
-      <Div
-        onMouseOver={() => setHoverItem({id: 'all'})}
-        onMouseLeave={() => setHoverItem(null)}>
+      <Div className="mention-item">
         <TouchableOpacity onPress={_onPressAll}>
-          <View style={[styles.mentionAll, {backgroundColor}]}>
+          <View style={styles.mentionAll}>
             <Text.ButtonBase style={styles.textMentionAll}>
               @all
             </Text.ButtonBase>
