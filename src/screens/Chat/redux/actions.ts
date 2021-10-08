@@ -116,11 +116,13 @@ export default {
     payload: IChatUser[],
     hideConfirmation?: boolean,
     callBack?: (roomId: string) => void,
+    conversationName?: string,
   ) => ({
     type: Actions.CREATE_CONVERSATION,
     payload,
     hideConfirmation,
     callBack,
+    conversationName,
   }),
   createConversationSuccess: (payload: IConversation) => ({
     type: Actions.CREATE_CONVERSATION_SUCCESS,
