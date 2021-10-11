@@ -19,6 +19,7 @@ import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsActions from '~/screens/Groups/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {generateRoomName} from '~/utils/generator';
@@ -656,6 +657,8 @@ function* handleNewMessage(data: any) {
       (item: IConversation) => item._id === message?.room_id,
     );
 
+    yield put(groupsActions.getJoinedGroups());
+
     if (existed) {
       yield put(actions.addNewMessage(message));
     } else {
@@ -747,6 +750,7 @@ function* handleNotifyUser(payload?: any) {
           chat.conversation?._id === data[1]._id
         )
           navigation.replace(chatStack.conversationList);
+        yield put(groupsActions.getJoinedGroups());
       }
       break;
     case 'inserted':
