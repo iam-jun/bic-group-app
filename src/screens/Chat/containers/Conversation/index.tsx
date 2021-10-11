@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -147,20 +148,37 @@ const Conversation = () => {
     );
   };
 
+  const onEmojiSelected = (emoji: string, key: string, msgId: string) => {
+    dispatch(modalActions.hideModal());
+    if (key) {
+      onAddReaction(key, msgId);
+    }
+  };
+
   const onPressReact = (
     event: any,
     item: IMessage,
     side: 'left' | 'right' | 'center',
   ) => {
-    dispatch(
-      modalActions.setShowReactionBottomSheet({
-        show: true,
+    const payload = {
+      isOpen: true,
+      ContentComponent: (
+        <EmojiBoard
+          width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+          height={280}
+          onEmojiSelected={(emoji: string, key: string) =>
+            onEmojiSelected(emoji, key, item._id)
+          }
+        />
+      ),
+      props: {
+        webModalStyle: {minHeight: undefined},
+        isContextMenu: true,
         position: {x: event?.pageX, y: event?.pageY},
         side: side,
-        callback: (reactionId: ReactionType) =>
-          onAddReaction(reactionId, item._id),
-      }),
-    );
+      },
+    };
+    dispatch(modalActions.showModal(payload));
   };
 
   const onReactionPress = async (type: string) => {
