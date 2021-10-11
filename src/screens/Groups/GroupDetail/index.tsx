@@ -153,8 +153,7 @@ const GroupDetail = (props: any) => {
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      {/* {loadingPage ? renderPlaceholder() : renderGroupDetail()} */}
-      {renderGroupDetail()}
+      {loadingPage ? renderPlaceholder() : renderGroupDetail()}
     </ScreenWrapper>
   );
 };
