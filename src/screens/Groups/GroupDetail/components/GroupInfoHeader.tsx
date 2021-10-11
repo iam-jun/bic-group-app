@@ -13,6 +13,8 @@ import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import Button from '~/beinComponents/Button';
 
 const GroupInfoHeader = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -20,6 +22,9 @@ const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
+  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
+
   const {name, user_count, icon, background_img_url, privacy} = groupDetail;
 
   const onCoverLayout = (e: any) => {
@@ -66,6 +71,28 @@ const GroupInfoHeader = () => {
     );
   };
 
+  const onPressJoin = () => {
+    console.log('[GroupInfoHeader] onPressJoin called');
+  };
+
+  const renderJoinButton = () => {
+    if (isMember) return null;
+
+    return (
+      <Button.Secondary
+        rightIcon={'Plus'}
+        rightIconProps={{icon: 'Plus', size: 20}}
+        style={styles.btnJoin}
+        onPress={onPressJoin}
+        color={theme.colors.primary7}
+        textColor={theme.colors.background}
+        colorHover={theme.colors.primary6}
+        useI18n>
+        common:btn_join
+      </Button.Secondary>
+    );
+  };
+
   return (
     <View style={styles.coverAndInfoHeader}>
       {renderCoverImage()}
@@ -75,6 +102,7 @@ const GroupInfoHeader = () => {
         <View style={styles.header}>
           <Avatar.LargeAlt source={icon} style={styles.avatar} />
           {renderGroupInfoHeader()}
+          {renderJoinButton()}
         </View>
       </View>
     </View>
@@ -129,5 +157,9 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       }),
     },
     nameHeader: {},
+    btnJoin: {
+      position: 'absolute',
+      right: 0,
+    },
   });
 };
