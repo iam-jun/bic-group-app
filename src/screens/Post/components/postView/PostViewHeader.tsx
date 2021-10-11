@@ -51,17 +51,11 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const onPressActor = (e: any) => {
     if (!actor.id) return;
 
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: actor?.id,
-      });
-    } else {
-      const payload = {
-        userId: actor.id,
-        position: {x: e?.pageX, y: e?.pageY},
-      };
-      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
-    }
+    const payload = {
+      userId: actor.id,
+      position: {x: e?.pageX, y: e?.pageY},
+    };
+    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
   const renderPostTime = () => {
