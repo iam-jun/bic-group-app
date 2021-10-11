@@ -17,7 +17,10 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-const AddMembersToGroup = (): React.ReactElement => {
+const AddMembersToGroup = (props: any): React.ReactElement => {
+  const params = props.route.params;
+  const {groupId} = params || {};
+
   const theme: ITheme = useTheme() as ITheme;
   const {spacing} = theme;
   const navigation = useNavigation();
@@ -25,8 +28,6 @@ const AddMembersToGroup = (): React.ReactElement => {
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
   const users = useKeySelector(groupsKeySelector.users);
-  const group = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {id: groupId} = group;
 
   const [searchText, setSearchText] = useState<string>('');
 
