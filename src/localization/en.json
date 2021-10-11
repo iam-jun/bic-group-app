@@ -526,7 +526,8 @@
   "profile": {
     "title_edit_profile": "Edit Profile",
     "title_direct_message": "Direct Message",
-    "title_view_profile": "View Profile"
+    "title_view_profile": "View Profile",
+    "text_name_must_not_be_empty": "Name must not be empty"
   },
   "right_col": {
     "about_bein": "About Bein",
