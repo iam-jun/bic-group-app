@@ -72,7 +72,7 @@ const GroupInfoHeader = () => {
   };
 
   const onPressJoin = () => {
-    console.log('[GroupInfoHeader] onPressJoin called');
+    alert('Press join');
   };
 
   const renderJoinButton = () => {
