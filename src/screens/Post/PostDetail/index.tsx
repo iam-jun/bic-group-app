@@ -1,3 +1,4 @@
+import {useBackHandler} from '@react-native-community/hooks';
 import React, {
   useCallback,
   useContext,
@@ -5,17 +6,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {useWindowDimensions} from 'react-native';
 import {
   Platform,
   RefreshControl,
   SectionList,
   StyleSheet,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {useBackHandler} from '@react-native-community/hooks';
 
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
@@ -27,7 +27,6 @@ import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
-import * as modalActions from '~/store/modal/actions';
 
 import {
   IAudienceGroup,
@@ -35,11 +34,13 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
@@ -136,6 +137,10 @@ const PostDetail = (props: any) => {
           stretchOnWeb: true,
         }),
       );
+      return;
+    }
+    if (!rootNavigation.canGoBack) {
+      rootNavigation.navigate(homeStack.newsfeed);
       return;
     }
     rootNavigation.goBack();
