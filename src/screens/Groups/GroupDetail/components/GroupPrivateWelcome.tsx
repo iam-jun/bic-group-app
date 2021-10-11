@@ -9,10 +9,11 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import GroupAboutContent from '../../components/GroupAboutContent';
 import GroupInfoHeader from './GroupInfoHeader';
 import LockImg from '~/../assets/images/group_private.svg';
+import {deviceDimensions} from '~/theme/dimension';
 
-const GroupPrivateWelcome = () => {
+const GroupPrivateWelcome = ({parentWidth}: {parentWidth?: number}) => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, parentWidth);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -40,13 +41,17 @@ const GroupPrivateWelcome = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {dimension} = theme;
+const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
+  const {dimension, spacing} = theme;
+  const bigParentOnWeb =
+    Platform.OS === 'web' && parentWidth > dimension.maxNewsfeedWidth;
+
   return StyleSheet.create({
     content: {
       width: '100%',
       maxWidth: Platform.OS === 'web' ? dimension.maxNewsfeedWidth : undefined,
       alignSelf: 'center',
+      paddingTop: bigParentOnWeb ? spacing.margin.small : 0,
     },
     svgSection: {
       minHeight: 252,
