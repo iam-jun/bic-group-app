@@ -6,10 +6,8 @@ import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
-import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IQuotedMessage} from '~/interfaces/IChat';
-import mainStack from '~/router/navigator/MainStack/stack';
 import modalActions from '~/store/modal/actions';
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
@@ -35,21 +33,15 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
 
   if (!_message) return <LoadingQuotedMessage />;
 
-  const {rootNavigation} = useRootNavigation();
-
-  const onPressUser = () => {
+  const onPressUser = (e: any) => {
     const payload = {
       userId: author,
+      position: {x: e?.pageX, y: e?.pageY},
       params: {
         type: 'username',
       },
     };
-
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(mainStack.userProfile, payload);
-    } else {
-      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
-    }
+    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
   return (
