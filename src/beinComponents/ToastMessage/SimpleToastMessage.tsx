@@ -12,6 +12,8 @@ import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
+import {useDispatch} from 'react-redux';
+import {clearToastMessage} from '~/store/modal/actions';
 
 interface SimpleToastMessageProps {
   children?: React.ReactNode;
@@ -28,11 +30,17 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   style,
   onActionPress,
 }: SimpleToastMessageProps) => {
+  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
+  const _onPress = () => {
+    onActionPress?.();
+    dispatch(clearToastMessage());
+  };
+
   return (
-    <TouchableOpacity onPress={onActionPress}>
+    <TouchableOpacity onPress={_onPress}>
       <View style={[styles.container, style]}>
         <Text.BodyS {...textProps} color={theme.colors.primary7}>
           {children}

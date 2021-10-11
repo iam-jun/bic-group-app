@@ -5,6 +5,7 @@ import {
   CreateConversation,
   GroupMembers,
   AddMembersToGroup,
+  ReviewConversation,
 } from '~/screens/Chat';
 
 export default {
@@ -12,6 +13,7 @@ export default {
   conversation: Conversation,
   'conversation-detail': ConversationDetail,
   'create-conversation': CreateConversation,
+  'review-conversation': ReviewConversation,
   'chat-group-members': GroupMembers,
   'add-members': AddMembersToGroup,
 };

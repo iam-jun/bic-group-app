@@ -104,7 +104,11 @@ const DraftPost = () => {
         )}
         ListHeaderComponent={() => (
           <ViewSpacing
-            height={Platform.OS === 'web' ? spacing.margin.extraLarge : 0}
+            height={
+              Platform.OS === 'web'
+                ? spacing.margin.extraLarge
+                : spacing.margin.base
+            }
           />
         )}
         ListFooterComponent={renderFooter}

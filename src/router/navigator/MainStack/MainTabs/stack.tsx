@@ -13,6 +13,7 @@ const mainTabStack = {
   conversation: 'conversation',
   'conversation-detail': 'conversation-detail',
   'create-conversation': 'create-conversation',
+  'review-conversation': 'review-conversation',
 
   //GROUP
   // 'group-list': Groups,

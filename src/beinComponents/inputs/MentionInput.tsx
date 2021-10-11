@@ -40,6 +40,7 @@ export interface MentionInputProps extends TextInputProps {
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
+  showShadow?: boolean;
   onPress?: (item: any) => void;
   onPressAll?: () => void;
   showItemAll?: boolean;
@@ -66,6 +67,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
+  showShadow = true,
   onPress,
   onPressAll,
   showItemAll,
@@ -90,7 +92,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [inputSelection, setInputSelection] = useState<any>();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
-  const [hoverItem, setHoverItem] = useState<any>('');
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -226,17 +227,14 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 
   const _renderItem = ({item}: {item: any}) => {
-    const backgroundColor =
-      hoverItem?.[mentionField] &&
-      item?.[mentionField] === hoverItem?.[mentionField]
-        ? colors.placeholder
-        : colors.background;
+    // const backgroundColor =
+    //   hoverItem?.[mentionField] &&
+    //   item?.[mentionField] === hoverItem?.[mentionField]
+    //     ? colors.placeholder
+    //     : colors.background;
 
     return (
-      <Div
-        style={{backgroundColor}}
-        onMouseOver={() => setHoverItem(item)}
-        onMouseLeave={() => setHoverItem(null)}>
+      <Div className="mention-item">
         <TouchableOpacity
           style={[styles.item]}
           onPress={() => _onPressItem(item)}>
@@ -253,15 +251,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const renderMentionAll = () => {
     if (!onPressAll && !showItemAll) return null;
-    const backgroundColor =
-      hoverItem?.id === 'all' ? colors.placeholder : colors.background;
 
     return (
-      <Div
-        onMouseOver={() => setHoverItem({id: 'all'})}
-        onMouseLeave={() => setHoverItem(null)}>
+      <Div className="mention-item">
         <TouchableOpacity onPress={_onPressAll}>
-          <View style={[styles.mentionAll, {backgroundColor}]}>
+          <View style={styles.mentionAll}>
             <Text.ButtonBase style={styles.textMentionAll}>
               @all
             </Text.ButtonBase>
@@ -311,12 +305,17 @@ const MentionInput: React.FC<MentionInputProps> = ({
         editable={!disabled}
       />
       {mentioning && (
-        <View style={[styles.containerModal, modalStyle]}>
+        <View
+          style={[
+            styles.containerModal,
+            showShadow && styles.shadow,
+            modalStyle,
+          ]}>
           {!!title && (!key || list?.length === 0) && (
             <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
           )}
           {renderMentionAll()}
-          <Divider margin={spacing.margin.small} />
+          <Divider />
           <FlatList
             keyboardShouldPersistTaps={'always'}
             data={list || []}
@@ -373,7 +372,9 @@ const createStyles = (
       backgroundColor: colors.background,
       justifyContent: 'center',
       alignSelf: 'center',
-
+      zIndex: 2,
+    },
+    shadow: {
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -382,7 +383,6 @@ const createStyles = (
       shadowOpacity: 0.12,
       shadowRadius: 10.32,
       elevation: 16,
-      zIndex: 2,
     },
     textInputWrapper: {
       height: 40,
