@@ -84,25 +84,25 @@ export const myMessageOptions = [
 export const messageOptions = ['copy', 'reply', 'get_link'];
 
 export const reactions = {
-  crazy_love_heart: {
-    id: 'crazy_love_heart',
-    icon: 'crazy_love_heart',
+  heart_eyes: {
+    id: 'heart_eyes',
+    icon: 'heart_eyes',
   },
-  stunned_wow: {
-    id: 'stunned_wow',
-    icon: 'stunned_wow',
+  open_mouth: {
+    id: 'open_mouth',
+    icon: 'open_mouth',
   },
-  laugh_rofl: {
-    id: 'laugh_rofl',
-    icon: 'laugh_rofl',
+  rolling_on_the_floor_laughing: {
+    id: 'rolling_on_the_floor_laughing',
+    icon: 'rolling_on_the_floor_laughing',
   },
-  crying_sad: {
-    id: 'crying_sad',
-    icon: 'crying_sad',
+  sob: {
+    id: 'sob',
+    icon: 'sob',
   },
-  angry_furious: {
-    id: 'angry_furious',
-    icon: 'angry_furious',
+  rage: {
+    id: 'rage',
+    icon: 'rage',
   },
   add_react: {
     id: 'add_react',
