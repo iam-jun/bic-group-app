@@ -40,6 +40,7 @@ const GroupContent = ({
   const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
   const {rocket_chat_id, id: groupId} = groupData;
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
@@ -95,7 +96,7 @@ const GroupContent = ({
         <View style={styles.groupInfo}>
           <GroupInfoHeader />
           <View style={styles.buttonContainer}>
-            {join_status === groupJoinStatus.member && (
+            {isMember && (
               <>
                 <Button.Secondary useI18n onPress={onPressChat}>
                   chat:title
@@ -116,11 +117,13 @@ const GroupContent = ({
             </Button.Secondary>
           </View>
         </View>
-        <HeaderCreatePost
-          audience={groupData}
-          parentWidth={parentWidth}
-          style={styles.createPost}
-        />
+        {isMember && (
+          <HeaderCreatePost
+            audience={groupData}
+            parentWidth={parentWidth}
+            style={styles.createPost}
+          />
+        )}
       </>
     );
   };
