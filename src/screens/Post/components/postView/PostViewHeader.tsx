@@ -1,5 +1,5 @@
 import React, {FC, useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -12,8 +12,6 @@ import {useBaseHook} from '~/hooks';
 import moment from 'moment';
 import {formatDate} from '~/utils/formatData';
 import {AppContext} from '~/contexts/AppContext';
-import mainStack from '~/router/navigator/MainStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
 import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 
@@ -34,7 +32,6 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   onPressMenu,
   onPressShowAudiences,
 }: PostViewHeaderProps) => {
-  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
