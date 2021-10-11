@@ -16,7 +16,6 @@ import speakingLanguages from '~/constants/speakingLanguages';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
-import {IObject} from '~/interfaces/common';
 import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -110,17 +109,7 @@ const UserProfilePreviewBottomSheet = () => {
 
   const navigateToUserProfile = () => {
     if (!!userId) {
-      // avoid adding empty params
-      const payload: IObject<any> = {
-        userId: userId,
-      };
-
-      if (isNaN(userId)) {
-        payload['params'] = {
-          type: 'username',
-        };
-      }
-
+      const payload = {userId, params};
       rootNavigation.navigate(mainStack.userProfile, payload);
     }
     userPreviewRef?.current?.close?.();
