@@ -204,7 +204,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
         item.fullname || item.name
       }] `;
       inputRef.current?.focus();
-      setContent(replaceContent(content, `@${key}`, mention));
+      const newContent = replaceContent(content, `@${key}`, mention);
+      setContent(newContent);
+      componentInputProps?.commentInputRef?.current?.setText?.(
+        newContent || '',
+      );
       onPress?.(item);
       setMentioning(false);
     },
@@ -215,7 +219,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
     inputRef.current?.focus();
     onPressAll?.();
     if (allReplacer) {
-      setContent(replaceContent(content, `@${key}`, allReplacer));
+      const newContent = replaceContent(content, `@${key}`, allReplacer);
+      setContent(newContent);
+      componentInputProps?.commentInputRef?.current?.setText?.(
+        newContent || '',
+      );
     }
     setMentioning(false);
   };
