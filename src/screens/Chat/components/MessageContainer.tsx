@@ -23,7 +23,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 import AttachmentView from './AttachmentView';
-import LinkPreviewer from './LinkPreviewer';
+import LinkPreviewer from '~/beinComponents/LinkPreviewer';
 import MessageHeader from './MessageHeader';
 import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';

@@ -8,7 +8,8 @@ import {useKeySelector} from '~/hooks/selector';
 import appActions from '~/store/app/actions';
 import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {getUrlFromText} from '~/utils/common';
+import {getUrlFromText, openLink} from '~/utils/common';
+import ButtonWrapper from './Button/ButtonWrapper';
 
 interface Props {
   text?: string;
@@ -36,16 +37,24 @@ const LinkPreviewer = ({text}: Props) => {
 
   if (!link || !linkPreviews?.[link]) return null;
 
+  const onPress = () => {
+    openLink(link);
+  };
+
   return (
-    <View style={styles.container}>
-      <Image style={styles.thumbnail} source={linkPreviews?.[link].thumbnail} />
+    <ButtonWrapper contentStyle={styles.container} onPress={onPress}>
+      <Image
+        style={styles.thumbnail}
+        containerStyle={styles.thumbnailContainer}
+        source={linkPreviews?.[link].thumbnail}
+      />
       <View style={styles.metadata}>
         <Text.ButtonBase style={styles.title}>
           {linkPreviews?.[link].title}
         </Text.ButtonBase>
         <Text.Subtitle>{linkPreviews?.[link].description}</Text.Subtitle>
       </View>
-    </View>
+    </ButtonWrapper>
   );
 };
 
@@ -53,6 +62,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
+      flexDirection: 'column',
       marginTop: spacing.margin.small,
       borderRadius: spacing.borderRadius.small,
       backgroundColor: colors.surface,
@@ -60,8 +70,11 @@ const createStyle = (theme: ITheme) => {
       borderColor: colors.borderDivider,
       overflow: 'hidden',
     },
+    thumbnailContainer: {
+      width: '100%',
+    },
     thumbnail: {
-      width: Platform.OS === 'web' ? 300 : scaleSize(307),
+      width: Platform.OS === 'web' ? '100%' : scaleSize(307),
       height: Platform.OS === 'web' ? 200 : scaleSize(225.5),
     },
     metadata: {
