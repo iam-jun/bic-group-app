@@ -364,6 +364,9 @@
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
+    "title_create_quick_chat": "Create Quick Chat",
+    "text_create_quick_chat_name_note": "Note: If you leave the Quick Chat name empty, the system will use names of members by default",
+    "text_me": "me",
     "title_group_add_member": {
       "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
       "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"

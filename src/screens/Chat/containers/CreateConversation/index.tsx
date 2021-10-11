@@ -9,18 +9,21 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
+import {useRootNavigation} from '~/hooks/navigation';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../../fragments/MembersSelection';
 import actions from '../../redux/actions';
 
 const CreateConversation = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
 
   const dispatch = useDispatch();
   const {user} = useAuth();
   const {selectedUsers, users} = useChat();
   const [searchQuery, setSearchQuery] = useState('');
+  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     dispatch(actions.resetData('users'));
@@ -33,8 +36,8 @@ const CreateConversation = (): React.ReactElement => {
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
-  const onCreatePress = () => {
-    dispatch(actions.createConversation(selectedUsers));
+  const onNextPress = () => {
+    rootNavigation.navigate(chatStack.reviewConversation);
   };
 
   const searchUsers = (searchQuery: string) => {
@@ -67,12 +70,11 @@ const CreateConversation = (): React.ReactElement => {
     <ScreenWrapper testID="CreateConversationScreen" isFullView>
       <Header
         title={i18next.t('chat:title_add_participants')}
-        buttonText={i18next.t('common:btn_create')}
+        buttonText={i18next.t('common:btn_next')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
-          highEmphasis: true,
         }}
-        onPressButton={onCreatePress}
+        onPressButton={onNextPress}
       />
       <ViewSpacing height={spacing?.margin.base} />
       <MembersSelection

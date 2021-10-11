@@ -185,11 +185,13 @@ function* createConversation({
   payload,
   hideConfirmation,
   callBack,
+  conversationName,
 }: {
   payload: IChatUser[];
   type: string;
   hideConfirmation?: boolean;
   callBack?: (roomId: string) => void;
+  conversationName?: string;
 }) {
   try {
     const {auth, chat} = yield select();
@@ -230,10 +232,12 @@ function* createConversation({
         apiConfig.Chat.createDirectChat({username: payload[0].username}),
       );
     } else {
-      const name = generateRoomName(
-        user,
-        payload.map((_user: IChatUser) => _user?.name),
-      );
+      const name =
+        conversationName ||
+        generateRoomName(
+          user,
+          payload.map((_user: IChatUser) => _user?.name),
+        );
 
       const members = [...payload, user];
 
@@ -652,8 +656,9 @@ function* handleNewMessage(data: any) {
       (item: IConversation) => item._id === message?.room_id,
     );
 
-    if (existed) yield put(actions.addNewMessage(message));
-    else {
+    if (existed) {
+      yield put(actions.addNewMessage(message));
+    } else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({
           roomId: message?.room_id,

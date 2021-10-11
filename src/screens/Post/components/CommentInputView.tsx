@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import CommentInput, {
@@ -46,6 +46,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
+
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
@@ -153,12 +154,15 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       getDataPromise={postDataHelper.getSearchMentionAudiences}
       getDataParam={{group_ids: groupIds}}
       getDataResponseKey={'data'}
+      modalStyle={Platform.OS !== 'web' && styles.mentionModalStyle}
+      showShadow={Platform.OS !== 'web' && false}
     />
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors, spacing} = theme;
+
   return StyleSheet.create({
     container: {},
     flex1: {flex: 1},
@@ -171,6 +175,15 @@ const createStyle = (theme: ITheme) => {
     headerContent: {
       flex: 1,
       flexDirection: 'row',
+    },
+    mentionModalStyle: {
+      width: '100%',
+      maxWidth: undefined,
+      maxHeight: 300,
+      borderWidth: 1,
+      borderColor: colors.borderDivider,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
     },
   });
 };

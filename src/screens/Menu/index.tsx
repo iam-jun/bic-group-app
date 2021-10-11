@@ -1,5 +1,10 @@
 import React, {useEffect} from 'react';
-import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -92,65 +97,67 @@ const Menu = (): React.ReactElement => {
         titleTextProps={{useI18n: true}}
         removeBorderAndShadow={isLaptop}
       />
-      <HeaderAvatarView
-        firstLabel={fullname}
-        secondLabel={email}
-        avatar={avatar || images.img_user_avatar_default}
-        containerStyle={styles.header}
-        onPress={goToMyProfile}
-      />
-      <ViewSpacing height={theme.spacing.margin.large} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HeaderAvatarView
+          firstLabel={fullname}
+          secondLabel={email}
+          avatar={avatar || images.img_user_avatar_default}
+          containerStyle={styles.header}
+          onPress={goToMyProfile}
+        />
+        <ViewSpacing height={theme.spacing.margin.large} />
 
-      {Platform.OS !== 'web' && (
-        <>
-          <Divider style={styles.divider} />
-          <ListView
-            itemStyle={styles.itemStyle}
-            type="menu"
-            data={postFeatureMenu}
-            scrollEnabled={false}
-            onItemPress={onSettingPress}
-          />
-        </>
-      )}
-      <Divider style={styles.divider} />
-      <ListView
-        itemStyle={styles.itemStyle}
-        type="menu"
-        data={appSettingsMenu}
-        scrollEnabled={false}
-        onItemPress={onSettingPress}
-      />
-      <Divider style={styles.divider} />
-      <ListView
-        itemStyle={styles.itemStyle}
-        type="menu"
-        data={documentsMenu}
-        scrollEnabled={false}
-        onItemPress={onSettingPress}
-      />
+        {Platform.OS !== 'web' && (
+          <>
+            <Divider style={styles.divider} />
+            <ListView
+              itemStyle={styles.itemStyle}
+              type="menu"
+              data={postFeatureMenu}
+              scrollEnabled={false}
+              onItemPress={onSettingPress}
+            />
+          </>
+        )}
+        <Divider style={styles.divider} />
+        <ListView
+          itemStyle={styles.itemStyle}
+          type="menu"
+          data={appSettingsMenu}
+          scrollEnabled={false}
+          onItemPress={onSettingPress}
+        />
+        <Divider style={styles.divider} />
+        <ListView
+          itemStyle={styles.itemStyle}
+          type="menu"
+          data={documentsMenu}
+          scrollEnabled={false}
+          onItemPress={onSettingPress}
+        />
 
-      <Divider style={styles.divider} />
-      <ListView
-        itemStyle={styles.itemStyle}
-        type="menu"
-        data={logoutMenu}
-        scrollEnabled={false}
-        onItemPress={onSettingPress}
-      />
+        <Divider style={styles.divider} />
+        <ListView
+          itemStyle={styles.itemStyle}
+          type="menu"
+          data={logoutMenu}
+          scrollEnabled={false}
+          onItemPress={onSettingPress}
+        />
 
-      {__DEV__ && (
-        <>
-          <Divider style={styles.divider} />
-          <ListView
-            itemStyle={styles.itemStyle}
-            scrollEnabled={false}
-            type="menu"
-            data={settings}
-            onItemPress={onSettingPress}
-          />
-        </>
-      )}
+        {__DEV__ && (
+          <>
+            <Divider style={styles.divider} />
+            <ListView
+              itemStyle={styles.itemStyle}
+              scrollEnabled={false}
+              type="menu"
+              data={settings}
+              onItemPress={onSettingPress}
+            />
+          </>
+        )}
+      </ScrollView>
     </ScreenWrapper>
   );
 };
