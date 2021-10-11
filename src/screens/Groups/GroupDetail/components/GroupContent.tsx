@@ -150,6 +150,8 @@ const GroupContent = ({
 
 const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
   const {spacing, dimension, colors} = theme;
+  const bigParentOnWeb =
+    Platform.OS === 'web' && parentWidth > dimension.maxNewsfeedWidth;
 
   return StyleSheet.create({
     groupInfo: {
@@ -159,7 +161,7 @@ const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
           alignSelf: 'center',
-          borderRadius: parentWidth > dimension.maxNewsfeedWidth ? 6 : 0,
+          borderRadius: bigParentOnWeb ? 6 : 0,
           overflow: 'hidden',
         },
       }),
@@ -168,7 +170,7 @@ const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
       flex: 1,
     },
     listHeaderComponentStyle: {
-      marginTop: spacing.margin.small,
+      marginTop: bigParentOnWeb ? spacing.margin.small : 0,
       marginBottom: spacing.margin.base,
     },
     buttonContainer: {
