@@ -45,7 +45,7 @@
     "amazon-cognito-identity-js": "~5.0.2",
     "aws-amplify": "~4.0.2",
     "axios": "~0.21.1",
-    "bein-js": "git+ssh://git@bitbucket.org:bein-platform/bein-group-js.git",
+    "bein-js": "^1.0.0",
     "css-to-react-native": "~3.0.0",
     "detox": "~18.13.0",
     "emoji-datasource": "~7.0.2",

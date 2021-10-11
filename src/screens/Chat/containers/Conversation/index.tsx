@@ -1,3 +1,4 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {debounce, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
@@ -40,6 +41,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
+import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
 
@@ -205,6 +207,23 @@ const Conversation = () => {
     }
   };
 
+  const getMessageLink = () => {
+    Clipboard.setString(
+      getLink(LINK_CHAT_MESSAGE, route.params?.roomId, {
+        message_id: selectedMessage?._id,
+      }),
+    );
+    dispatch(
+      showHideToastMessage({
+        content: 'common:text_link_copied_to_clipboard',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
+  };
+
   const jumpToRepliedMessage = (message?: IQuotedMessage) => {
     if (!message) return;
 
@@ -240,6 +259,9 @@ const Conversation = () => {
         break;
       case 'reactions':
         viewReactions();
+        break;
+      case 'get_link':
+        getMessageLink();
         break;
       default:
         dispatch(showAlertNewFeature());

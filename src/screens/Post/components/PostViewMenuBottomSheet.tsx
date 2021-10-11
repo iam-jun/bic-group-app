@@ -1,17 +1,18 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {ITheme} from '~/theme/interfaces';
+import React, {FC} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
-import {useDispatch} from 'react-redux';
-import postActions from '~/screens/Post/redux/actions';
-import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
+import {getLink, LINK_POST} from '~/utils/link';
 
 export interface PostViewMenuBottomSheetProps {
   modalizeRef: any;
@@ -61,20 +62,21 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
     });
   };
 
-  const onPressCopy = () => {
+  const onPressCopyLink = () => {
     modalizeRef?.current?.close?.();
-    if (content) {
-      Clipboard.setString(content);
-      dispatch(
-        showHideToastMessage({
-          content: 'common:text_copied_to_clipboard',
-          props: {
-            textProps: {useI18n: true},
-            type: 'success',
-          },
-        }),
-      );
-    }
+    // if (content) {
+
+    Clipboard.setString(getLink(LINK_POST, postId));
+    dispatch(
+      showHideToastMessage({
+        content: 'common:text_link_copied_to_clipboard',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
+    // }
   };
 
   const renderContent = () => {
@@ -94,7 +96,7 @@ const PostViewMenuBottomSheet: FC<PostViewMenuBottomSheetProps> = ({
           leftIcon={'Copy'}
           leftIconProps={{icon: 'Copy', size: 24}}
           title={t('post:post_menu_copy')}
-          onPress={onPressCopy}
+          onPress={onPressCopyLink}
         />
         <PrimaryItem
           style={styles.item}
