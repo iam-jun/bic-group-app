@@ -3,7 +3,6 @@ import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import GroupAboutContent from '../../components/GroupAboutContent';
@@ -18,16 +17,12 @@ const GroupPrivateWelcome = ({parentWidth}: {parentWidth?: number}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
-        <GroupInfoHeader />
-        <Divider
-          size={16}
-          color={
-            Platform.OS === 'web'
-              ? theme.colors.surface
-              : theme.colors.bgSecondary
-          }
-        />
-        <GroupAboutContent />
+        <View style={styles.contentSection}>
+          <GroupInfoHeader />
+        </View>
+        <View style={[styles.contentSection, styles.marginTop]}>
+          <GroupAboutContent />
+        </View>
         <View style={styles.svgSection}>
           {/* @ts-ignore */}
           <SVGIcon source={LockImg} size={160} tintColor="none" />
@@ -52,6 +47,17 @@ const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
       maxWidth: Platform.OS === 'web' ? dimension.maxNewsfeedWidth : undefined,
       alignSelf: 'center',
       paddingTop: bigParentOnWeb ? spacing.margin.small : 0,
+    },
+    contentSection: {
+      ...Platform.select({
+        web: {
+          borderRadius: bigParentOnWeb ? 6 : 0,
+          overflow: 'hidden',
+        },
+      }),
+    },
+    marginTop: {
+      marginTop: spacing.margin.large,
     },
     svgSection: {
       minHeight: 252,
