@@ -13,7 +13,7 @@ export default {
     payload,
   }),
   setLinkPreview: (payload: ILinkPreview) => ({
-    type: Actions.GET_LINK_PREVIEW,
+    type: Actions.SET_LINK_PREVIEW,
     payload,
   }),
 };

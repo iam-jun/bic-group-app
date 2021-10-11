@@ -1,6 +1,7 @@
 import {AxiosResponse} from 'axios';
-import {takeLatest, call, put} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
+import {makeHttpRequest} from '~/services/httpApiRequest';
 import actions from './actions';
 import types from './constants';
 
@@ -28,9 +29,10 @@ function* getConfigs() {
 
 function* getLinkPreview({payload}: {type: string; payload: string}) {
   try {
-    const response: AxiosResponse = yield call(
-      apiConfig.App.getLinkPreview,
-      payload,
+    const link = encodeURIComponent(payload);
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.App.getLinkPreview(link),
     );
     yield put(actions.setLinkPreview(response.data?.data));
   } catch (err: any) {

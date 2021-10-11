@@ -50,5 +50,5 @@ export const getUrlFromText = (text?: string) => {
   const urls = text.match(linkRegex);
 
   if (urls && urls.length > 0) return urls[0];
-  else return text;
+  else return null;
 };
