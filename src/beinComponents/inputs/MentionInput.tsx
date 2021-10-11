@@ -245,8 +245,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
     if (mentioning && list?.length > 0) {
       event.preventDefault();
       const {key} = event || {};
-      if (key === 'Enter') {
-        //todo check enter to select
+      if (key === 'Enter' && highlightItem) {
+        _onPressItem(highlightItem);
         return;
       }
       const step = key === 'ArrowUp' ? -1 : 1;
