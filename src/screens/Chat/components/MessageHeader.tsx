@@ -5,9 +5,7 @@ import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
-import {useRootNavigation} from '~/hooks/navigation';
 import {IChatUser} from '~/interfaces/IChat';
-import mainStack from '~/router/navigator/MainStack/stack';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
@@ -21,22 +19,17 @@ interface Props {
 const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
-  const onPressUser = () => {
+  const onPressUser = (e: any) => {
     const payload = {
       userId: user.username,
+      position: {x: e?.pageX, y: e?.pageY},
       params: {
         type: 'username',
       },
     };
-
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(mainStack.userProfile, payload);
-    } else {
-      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
-    }
+    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
   return (
