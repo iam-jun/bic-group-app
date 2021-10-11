@@ -1,5 +1,8 @@
-import {takeLatest} from 'redux-saga/effects';
-import * as types from './constants';
+import {AxiosResponse} from 'axios';
+import {takeLatest, call, put} from 'redux-saga/effects';
+import apiConfig from '~/configs/apiConfig';
+import actions from './actions';
+import types from './constants';
 
 function timeOut(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -7,6 +10,7 @@ function timeOut(ms: number) {
 
 export default function* saga() {
   yield takeLatest(types.GET_CONFIGS, getConfigs);
+  yield takeLatest(types.GET_LINK_PREVIEW, getLinkPreview);
   // yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
   // yield takeLatest(types.COPY_DEVICE_TOKEN, copyDeviceToken);
 }
@@ -19,6 +23,18 @@ function* getConfigs() {
     // yield put(actions.setConfigs(response));
   } catch (err) {
     console.log('getConfigs', {err});
+  }
+}
+
+function* getLinkPreview({payload}: {type: string; payload: string}) {
+  try {
+    const response: AxiosResponse = yield call(
+      apiConfig.App.getLinkPreview,
+      payload,
+    );
+    yield put(actions.setLinkPreview(response.data?.data));
+  } catch (err: any) {
+    console.log('getLinkPreview', err);
   }
 }
 

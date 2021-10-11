@@ -83,8 +83,7 @@ const initState = {
  */
 function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
   const {type, dataType, payload} = action;
-  const {rooms, conversation, messages, selectedUsers, users, quotedMessages} =
-    state;
+  const {rooms, conversation, messages, selectedUsers, quotedMessages} = state;
 
   switch (type) {
     case types.GET_DATA:

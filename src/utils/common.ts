@@ -1,3 +1,4 @@
+import {linkRegex} from './../constants/commonRegex';
 import {Linking} from 'react-native';
 
 export const generateAvatar = (name?: string, color?: string) => {
@@ -43,3 +44,11 @@ export function parseSafe(str?: string) {
   }
   return result;
 }
+
+export const getUrlFromText = (text?: string) => {
+  if (!text) return text;
+  const urls = text.match(linkRegex);
+
+  if (urls && urls.length > 0) return urls[0];
+  else return text;
+};

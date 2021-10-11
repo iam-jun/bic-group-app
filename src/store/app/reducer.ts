@@ -1,7 +1,8 @@
-import * as types from './constants';
+import types from './constants';
 
 export const initState = {
   configs: {},
+  linkPreviews: {},
 };
 
 /**
@@ -11,7 +12,7 @@ export const initState = {
  * @returns {*}
  */
 function reducer(state = initState, action: any = {}) {
-  const {type} = action;
+  const {type, payload} = action;
   const {configs} = state;
 
   switch (type) {
@@ -22,7 +23,14 @@ function reducer(state = initState, action: any = {}) {
           ...configs,
         },
       };
-
+    case types.SET_LINK_PREVIEW:
+      return {
+        ...state,
+        linkPreviews: {
+          ...state.linkPreviews,
+          [payload?.url]: payload,
+        },
+      };
     default:
       return state;
   }

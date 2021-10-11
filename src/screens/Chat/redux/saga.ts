@@ -541,6 +541,7 @@ function* getMessagesHistory() {
     const {conversation, messages} = chat;
     const {data} = messages;
     const lastDate = data.length > 0 ? data[0].createdAt : '';
+    console.log('getMessagesHistory', conversation);
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getMessagesHistory({
