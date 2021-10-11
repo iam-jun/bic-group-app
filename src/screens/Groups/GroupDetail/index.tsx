@@ -45,6 +45,7 @@ const GroupDetail = (props: any) => {
   const {privacy} = groupInfo;
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
@@ -67,7 +68,10 @@ const GroupDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group, 
     which will lead to endless fetching group posts in 
     httpApiRequest > makeGetStreamRequest */
-    if (loadingGroupDetail || isEmpty(groupInfo)) {
+    console.log('[getGroupPosts] isMember', isMember);
+    const privilegeToFetchPost = isMember || privacy === groupPrivacy.public;
+    if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
+      console.log('[getGroupPosts] stop fetching');
       return;
     }
 
@@ -94,11 +98,7 @@ const GroupDetail = (props: any) => {
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
-    if (
-      join_status !== groupJoinStatus.member &&
-      privacy === groupPrivacy.private &&
-      !loadingPage
-    ) {
+    if (!isMember && privacy === groupPrivacy.private && !loadingPage) {
       return <GroupAboutContent />;
     }
 
@@ -154,7 +154,8 @@ const GroupDetail = (props: any) => {
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      {loadingPage ? renderPlaceholder() : renderGroupDetail()}
+      {/* {loadingPage ? renderPlaceholder() : renderGroupDetail()} */}
+      {renderGroupDetail()}
     </ScreenWrapper>
   );
 };
