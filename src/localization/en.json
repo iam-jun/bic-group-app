@@ -242,7 +242,11 @@
     "text_engaged": "Engaged",
     "text_married": "Married",
     "title_choose_languages": "Choose Speaking Languages",
-    "title_choose_relationship": "Choose Relationship Status"
+    "title_choose_relationship": "Choose Relationship Status",
+    "title_contact": "Contact",
+    "title_email": "Email",
+    "title_phone_number": "Phone number",
+    "title_address": "Address"
   },
   "languages": {
     "title_en": "English",

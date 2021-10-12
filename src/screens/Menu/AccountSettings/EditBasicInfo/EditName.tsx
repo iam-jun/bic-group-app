@@ -63,7 +63,7 @@ const EditName = ({onChangeName}: EditNameProps) => {
       ) : (
         <SettingItem
           title={'settings:title_name'}
-          subtitle={name || i18next.t('settings:text_not_set')}
+          subtitle={name || i18next.t('common:text_not_set')}
           leftIcon={'TextFields'}
           rightIcon={'EditAlt'}
           onPress={onNameEditOpen}

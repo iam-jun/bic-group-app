@@ -36,6 +36,11 @@ const SettingItem = ({
       <PrimaryItem
         title={i18next.t(title)}
         subTitle={subtitle}
+        subTitleProps={
+          subtitle === i18next.t('common:text_not_set')
+            ? {variant: 'bodyI'}
+            : undefined
+        }
         LeftComponent={
           leftIcon ? (
             <Icon

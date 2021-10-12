@@ -99,7 +99,7 @@ const LanguageOptionMenu = ({
           selectedLanguages
             // @ts-ignore
             ?.map(language => speakingLanguages[language]?.name)
-            .join(', ') || i18next.t('settings:text_not_set')
+            .join(', ') || i18next.t('common:text_not_set')
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}
