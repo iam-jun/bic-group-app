@@ -296,13 +296,15 @@ function* forgotPasswordConfirm({
 function* signOut({payload}: any) {
   try {
     yield Auth.signOut();
-    // yield messaging().deleteToken();
     if (!payload) {
       return;
     }
     navigation.replace(rootSwitch.authStack);
   } catch (err) {
     yield showError(err);
+    if (!payload) {
+      return;
+    }
     navigation.replace(rootSwitch.authStack);
   }
 }
