@@ -1,5 +1,5 @@
 import React, {FC, useContext, useEffect, useRef} from 'react';
-import {Keyboard, ScrollView, StyleSheet, View} from 'react-native';
+import {Keyboard, Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
@@ -475,7 +475,7 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
     },
     mentionInputModal: {
-      maxHeight: 180,
+      maxHeight: Platform.OS === 'web' ? 350 : 180,
     },
   });
 };
