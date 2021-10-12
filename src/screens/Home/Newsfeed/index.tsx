@@ -18,7 +18,7 @@ import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -29,11 +29,14 @@ import postActions from '~/screens/Post/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
+import {ITabTypes} from '~/router/navigator/MainStack/MainTabs/screens';
 
 let newsfeedPostCount = 0;
 const itemLeftToGetMore = 10;
 
 const Newsfeed = () => {
+  const listRef = useRef<any>();
+
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
@@ -66,6 +69,15 @@ const Newsfeed = () => {
       );
     }
   };
+
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'home') {
+        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+      }
+    },
+    [listRef],
+  );
 
   useEffect(() => {
     getData(true);
@@ -150,6 +162,7 @@ const Newsfeed = () => {
         renderPlaceholder()
       ) : (
         <ListView
+          listRef={listRef}
           isFullView
           containerStyle={styles.listContainer}
           data={homePosts}
