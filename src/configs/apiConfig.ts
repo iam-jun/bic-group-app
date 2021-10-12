@@ -391,6 +391,14 @@ const App = {
       },
     };
   },
+  getLinkPreview: (link: string): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}link-preview/${link}`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+    };
+  },
 };
 
 export interface HttpApiRequestConfig extends AxiosRequestConfig {
