@@ -18,7 +18,7 @@ import appConfig from '~/configs/appConfig';
 import {deviceDimensions} from '~/theme/dimension';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useTabPressListener} from '~/hooks/navigation';
-import {ITabTypes} from '~/router/navigator/MainStack/MainTabs/screens';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();

@@ -4,9 +4,9 @@ import {
   rightNavigationRef,
   rootNavigationRef,
 } from '~/router/navigator/refs';
-import {ITabTypes} from '~/router/navigator/MainStack/MainTabs/screens';
 import {useEffect} from 'react';
 import {DeviceEventEmitter} from 'react-native';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 export const useRootNavigation = () => {
   const rootNavigation = withNavigation(rootNavigationRef);

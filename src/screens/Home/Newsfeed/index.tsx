@@ -29,7 +29,7 @@ import postActions from '~/screens/Post/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
-import {ITabTypes} from '~/router/navigator/MainStack/MainTabs/screens';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 let newsfeedPostCount = 0;
 const itemLeftToGetMore = 10;
