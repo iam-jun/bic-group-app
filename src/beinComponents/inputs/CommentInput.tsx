@@ -50,6 +50,7 @@ export interface CommentInputProps {
   onSelectionChange?:
     | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
     | undefined;
+  onKeyPress?: (e: any) => void;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;
   value?: string; //work only on init, not handle change
@@ -76,6 +77,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   onPressSelectImage,
   onPressFile,
   onSelectionChange,
+  onKeyPress,
   autoFocus,
   blurOnSubmit,
   value,
@@ -344,7 +346,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
     isFocused,
   }));
 
-  const onKeyPress = Platform.OS !== 'web' ? undefined : handleKeyEvent;
+  const _onKeyPress = (e: any) => {
+    onKeyPress?.(e);
+    Platform.OS !== 'web' ? undefined : handleKeyEvent;
+  };
 
   const inputStyle: any = StyleSheet.flatten([
     styles.textInput,
@@ -500,7 +505,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 onFocus={_onFocus}
                 onChangeText={_onChangeText}
                 onSelectionChange={_onSelectionChange}
-                onKeyPress={onKeyPress}
+                onKeyPress={_onKeyPress}
               />
             </Animated.View>
             <Button

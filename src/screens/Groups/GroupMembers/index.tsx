@@ -24,7 +24,10 @@ import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
 
-const GroupMembers = () => {
+const GroupMembers = (props: any) => {
+  const params = props.route.params;
+  const {groupId} = params || {};
+
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
   const [selectedMember, setSelectedMember] = useState<string>('');
@@ -38,8 +41,6 @@ const GroupMembers = () => {
 
   //todo handle get data if group data not loaded
 
-  const {id: groupId} =
-    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
@@ -209,7 +210,7 @@ const GroupMembers = () => {
 
   const goInviteMembers = () => {
     dispatch(groupsActions.clearSelectedUsers());
-    rootNavigation.navigate(groupStack.inviteMembers);
+    rootNavigation.navigate(groupStack.inviteMembers, {groupId});
   };
 
   const searchUsers = (searchQuery: string) => {

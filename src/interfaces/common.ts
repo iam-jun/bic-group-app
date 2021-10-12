@@ -69,3 +69,11 @@ export interface IUserPreview {
   params?: IObject<any>;
   position?: {x: number; y: number};
 }
+
+export interface ILinkPreview {
+  url: string;
+  thumbnail?: string;
+  title?: string;
+  description?: string;
+  domain?: string;
+}

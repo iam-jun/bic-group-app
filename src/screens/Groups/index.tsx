@@ -10,13 +10,10 @@ import ListView from '~/beinComponents/list/ListView';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
-import Image from '~/beinComponents/Image';
 
-import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
-import {scaleSize} from '~/theme/dimension';
 import appConfig from '~/configs/appConfig';
 import {deviceDimensions} from '~/theme/dimension';
 import NoSearchResult from '~/beinFragments/NoSearchResult';

@@ -212,6 +212,7 @@ const icons = {
   Smile: 'Smile',
   ArrowRight: 'ArrowRight',
   ArrowLeft: 'ArrowLeft',
+  Plus: 'Plus',
 };
 
 export default icons;

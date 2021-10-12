@@ -83,8 +83,7 @@ const initState = {
  */
 function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
   const {type, dataType, payload} = action;
-  const {rooms, conversation, messages, selectedUsers, users, quotedMessages} =
-    state;
+  const {rooms, conversation, messages, selectedUsers, quotedMessages} = state;
 
   switch (type) {
     case types.GET_DATA:
@@ -532,8 +531,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         rooms: {
           ...state.rooms,
           data: state.rooms.data.filter(
-            (group: IConversation) =>
-              group._id !== payload.rid || group._id !== payload._id,
+            (group: IConversation) => group._id !== payload.rid,
           ),
         },
       };

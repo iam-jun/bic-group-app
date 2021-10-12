@@ -441,6 +441,25 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     interceptorResponseSuccess,
     interceptorResponseError;
 
+  let tokenHeaders: any = {
+    Authorization: getBeinIdToken(),
+  };
+
+  // For cases request to Bein with Chat tokens
+  if (
+    requestConfig.headers &&
+    (requestConfig.headers['X-Auth-Token'] ||
+      requestConfig.headers['X-User-Id'])
+  ) {
+    const auth = getChatAuthInfo();
+    tokenHeaders = {
+      ...tokenHeaders,
+      'X-Auth-Token': auth.accessToken,
+      'X-User-Id': auth.userId,
+    };
+  }
+  //
+
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
@@ -449,9 +468,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       requestConfig.headers = {
         ...commonHeaders,
         ...requestConfig.headers,
-        ...{
-          Authorization: getBeinIdToken(),
-        },
+        ...tokenHeaders,
       };
       break;
     case apiConfig.providers.chat.name:

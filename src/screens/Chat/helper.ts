@@ -131,19 +131,14 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   let reaction_counts: IReactionCounts = {};
   let own_reactions: IOwnReaction = {};
   if (item?.reactions) {
-    Object.keys(item?.reactions)
-      .filter(emoji => {
-        const emojiName = emoji.replace(/:/g, '');
-        return Object.keys(reactionIcons).includes(emojiName);
-      })
-      .map(emoji => {
-        const emojiName = emoji.replace(/:/g, '');
-        const count = item.reactions[emoji].usernames.length;
-        if (item.reactions[emoji].usernames.includes(_user.username)) {
-          own_reactions = {...own_reactions, [emojiName]: [{id: emojiName}]};
-        }
-        reaction_counts = {...reaction_counts, [emojiName]: count};
-      });
+    Object.keys(item?.reactions).map(emoji => {
+      const emojiName = emoji.replace(/:/g, '');
+      const count = item.reactions[emoji].usernames.length;
+      if (item.reactions[emoji].usernames.includes(_user.username)) {
+        own_reactions = {...own_reactions, [emojiName]: [{id: emojiName}]};
+      }
+      reaction_counts = {...reaction_counts, [emojiName]: count};
+    });
   }
 
   return {

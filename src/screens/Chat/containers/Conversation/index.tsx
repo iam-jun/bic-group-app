@@ -1,3 +1,4 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import {debounce, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -40,6 +42,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
+import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
 
@@ -147,20 +150,37 @@ const Conversation = () => {
     );
   };
 
+  const onEmojiSelected = (emoji: string, key: string, msgId: string) => {
+    dispatch(modalActions.hideModal());
+    if (key) {
+      onAddReaction(key, msgId);
+    }
+  };
+
   const onPressReact = (
     event: any,
     item: IMessage,
     side: 'left' | 'right' | 'center',
   ) => {
-    dispatch(
-      modalActions.setShowReactionBottomSheet({
-        show: true,
+    const payload = {
+      isOpen: true,
+      ContentComponent: (
+        <EmojiBoard
+          width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+          height={280}
+          onEmojiSelected={(emoji: string, key: string) =>
+            onEmojiSelected(emoji, key, item._id)
+          }
+        />
+      ),
+      props: {
+        webModalStyle: {minHeight: undefined},
+        isContextMenu: true,
         position: {x: event?.pageX, y: event?.pageY},
         side: side,
-        callback: (reactionId: ReactionType) =>
-          onAddReaction(reactionId, item._id),
-      }),
-    );
+      },
+    };
+    dispatch(modalActions.showModal(payload));
   };
 
   const onReactionPress = async (type: string) => {
@@ -205,6 +225,23 @@ const Conversation = () => {
     }
   };
 
+  const getMessageLink = () => {
+    Clipboard.setString(
+      getLink(LINK_CHAT_MESSAGE, route.params?.roomId, {
+        message_id: selectedMessage?._id,
+      }),
+    );
+    dispatch(
+      showHideToastMessage({
+        content: 'common:text_link_copied_to_clipboard',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
+  };
+
   const jumpToRepliedMessage = (message?: IQuotedMessage) => {
     if (!message) return;
 
@@ -240,6 +277,9 @@ const Conversation = () => {
         break;
       case 'reactions':
         viewReactions();
+        break;
+      case 'get_link':
+        getMessageLink();
         break;
       default:
         dispatch(showAlertNewFeature());

@@ -40,6 +40,7 @@ const GroupContent = ({
   const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
   const {rocket_chat_id, id: groupId} = groupData;
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
@@ -95,7 +96,7 @@ const GroupContent = ({
         <View style={styles.groupInfo}>
           <GroupInfoHeader />
           <View style={styles.buttonContainer}>
-            {join_status === groupJoinStatus.member && (
+            {isMember && (
               <>
                 <Button.Secondary useI18n onPress={onPressChat}>
                   chat:title
@@ -116,11 +117,13 @@ const GroupContent = ({
             </Button.Secondary>
           </View>
         </View>
-        <HeaderCreatePost
-          audience={groupData}
-          parentWidth={parentWidth}
-          style={styles.createPost}
-        />
+        {isMember && (
+          <HeaderCreatePost
+            audience={groupData}
+            parentWidth={parentWidth}
+            style={styles.createPost}
+          />
+        )}
       </>
     );
   };
@@ -147,6 +150,8 @@ const GroupContent = ({
 
 const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
   const {spacing, dimension, colors} = theme;
+  const bigParentOnWeb =
+    Platform.OS === 'web' && parentWidth > dimension.maxNewsfeedWidth;
 
   return StyleSheet.create({
     groupInfo: {
@@ -156,7 +161,7 @@ const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
           alignSelf: 'center',
-          borderRadius: parentWidth > dimension.maxNewsfeedWidth ? 6 : 0,
+          borderRadius: bigParentOnWeb ? 6 : 0,
           overflow: 'hidden',
         },
       }),
@@ -165,7 +170,7 @@ const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
       flex: 1,
     },
     listHeaderComponentStyle: {
-      marginTop: spacing.margin.small,
+      marginTop: bigParentOnWeb ? spacing.margin.small : 0,
       marginBottom: spacing.margin.base,
     },
     buttonContainer: {

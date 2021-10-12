@@ -10,6 +10,8 @@
     "text_see_all": "Xem tất cả",
     "text_member": "Thành viên",
     "text_copied_to_clipboard": "Đã sao chép",
+    "text_link_copied_to_clipboard": "Đã sao chép liên kết",
+    "text_message_link_copied_to_clipboard": "Đã sao chép liên kết tin nhắn",
     "text_description": "Giới thiệu",
     "btn_cancel": "Huỷ",
     "btn_delete": "Xoá",
@@ -20,6 +22,7 @@
     "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
+    "btn_join": "Tham gia",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -132,7 +135,7 @@
     "title_help": "Trợ giúp",
     "title_app_policies": "App Policies",
     "title_feedback": "Feedback",
-    "title_user_profile": "Thông tin cá nhận",
+    "title_user_profile": "Thông tin cá nhân",
     "title_security_login": "Bảo mật & Đăng nhập",
     "title_change_password": "Đổi mật khẩu",
     "subtitle_change_password": "It's always better to use a strong password that you not using it elsewhere",
@@ -274,7 +277,7 @@
     "comment_menu_history": "Lịch sử chỉnh sửa",
     "comment_menu_delete": "Xoá bình luận",
     "post_menu_edit": "Sửa bài viết",
-    "post_menu_copy": "Sao chép nội dung",
+    "post_menu_copy": "Sao chép liên kết",
     "post_menu_save": "Lưu bài viết",
     "post_menu_view_insights": "Xem thông tin",
     "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
@@ -355,6 +358,10 @@
       "label_direct_message": "Direct message",
       "label_set_as_admin": "Set as admin",
       "label_remove_from_group": "Remove from this group"
+    },
+    "private_group_welcome_message": {
+      "title": "Đây là nhóm kín.",
+      "subtitle": "Hãy tham gia nhóm để xem và thảo luận."
     }
   },
   "profile": {
