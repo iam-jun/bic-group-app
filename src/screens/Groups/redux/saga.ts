@@ -303,6 +303,11 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
 
     yield groupsDataHelper.addUsers(groupId, userIds);
 
+    // refresh group detail after adding new members
+    yield put(groupsActions.clearGroupMembers());
+    yield put(groupsActions.getGroupMembers({groupId}));
+    yield put(groupsActions.getGroupDetail(groupId));
+
     const userAddedCount = userIds.length;
 
     const toastMessage: IToastMessage = {
