@@ -59,8 +59,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
   const replyTargetUser =
     replying?.comment?.user || replying?.parentComment?.user;
-  const replyTargetName = replyTargetUser?.data?.fullname;
   const replyTargetUserId = replyTargetUser?.id;
+  let replyTargetName = replyTargetUser?.data?.fullname;
+  if (replyTargetUserId === userId) {
+    replyTargetName = t('post:label_yourself');
+  }
 
   const content = useKeySelector(postKeySelector.createComment.content) || '';
   const loading = useKeySelector(postKeySelector.createComment.loading);
@@ -74,9 +77,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   useEffect(() => {
     if (replyTargetUserId && replyTargetUserId) {
-      _commentInputRef?.current?.setText?.(
-        `@[u:${replyTargetUserId}:${replyTargetName}] `,
-      );
+      let content = `@[u:${replyTargetUserId}:${replyTargetName}] `;
+      if (replyTargetUserId === userId) {
+        content = '';
+      }
+      _commentInputRef?.current?.setText?.(content);
     }
   }, [replyTargetName, replyTargetUserId]);
 
