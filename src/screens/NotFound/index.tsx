@@ -1,7 +1,7 @@
+import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import i18next from 'i18next';
 
 import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';

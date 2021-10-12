@@ -29,6 +29,7 @@ import {
   linkingConfig,
   linkingConfigFull,
   linkingConfigFullLaptop,
+  linkingConfigLaptop,
   navigationSetting,
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
@@ -168,12 +169,14 @@ const StackNavigator = (): React.ReactElement => {
     Platform.OS === 'web' && isLaptop
       ? linkingConfigFullLaptop
       : linkingConfigFull;
+  const configLink =
+    Platform.OS === 'web' && isLaptop ? linkingConfigLaptop : linkingConfig;
 
   return (
     <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
       <View style={styles.container}>
         <NavigationContainer
-          linking={user ? configLinkFull : linkingConfig}
+          linking={user ? configLinkFull : configLink}
           ref={rootNavigationRef}
           onReady={onReady}
           theme={navigationTheme}

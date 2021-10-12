@@ -130,26 +130,50 @@ export const linkingConfig = {
           },
         },
       },
-      // MainStack: {
-      //   screens: {
-      //     main: {
-      //       screens: {
-      //         home: {
-      //           screens: {
-      //             'post-detail': {
-      //               path: 'post/t/:post_id?',
-      //             },
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      // },
+    },
+  },
+};
+
+export const linkingConfigLaptop = {
+  prefixes: [
+    __DEV__ ? 'http://localhost:8088' : getEnv('SELF_DOMAIN'),
+    'bein://',
+  ],
+  config: {
+    screens: {
+      AuthStack: {
+        screens: {
+          Landing: {
+            path: 'welcome',
+          },
+          SignIn: {
+            path: 'login',
+          },
+          SignUp: {
+            path: 'register',
+          },
+          ForgotPassword: {
+            path: 'reset-password',
+          },
+        },
+      },
+      MainStack: {
+        screens: {
+          main: {
+            screens: {
+              'post-detail': {
+                path: 'post/t/:post_id?',
+              },
+            },
+          },
+        },
+      },
       NotFound: '*',
     },
   },
 };
 
+// User logged in
 export const linkingConfigFull = {
   prefixes: [
     __DEV__ ? 'http://localhost:8088' : getEnv('SELF_DOMAIN'),
