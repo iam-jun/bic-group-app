@@ -34,8 +34,12 @@ const Groups: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
-    dispatch(groupsActions.getJoinedGroups());
+    getData();
   }, []);
+
+  const getData = () => {
+    dispatch(groupsActions.getJoinedGroups());
+  };
 
   const searchGroups = (searchQuery: string) => {
     setSearchText(searchQuery);
@@ -73,8 +77,9 @@ const Groups: React.FC = () => {
       <ListView
         style={styles.dataList}
         type={'flatGroups'}
-        loading={loadingJoinedGroups}
         data={joinedGroups}
+        onRefresh={getData}
+        refreshing={loadingJoinedGroups}
         isFullView
         ListHeaderComponent={
           loadingJoinedGroups ? null : (
