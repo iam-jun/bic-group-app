@@ -5,12 +5,10 @@ import notificationsTypes from '~/screens/Notification/redux/types';
 import {IGetStreamDispatch, IToastMessage} from '~/interfaces/common';
 import notificationSelector from './selector';
 import {get} from 'lodash';
-import {timeOut} from '~/utils/common';
 import {
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
 } from '~/interfaces/INotification';
-import notificationActions from '~/constants/notificationActions';
 import * as modalActions from '~/store/modal/actions';
 
 export default function* notificationsSaga() {
@@ -25,15 +23,21 @@ export default function* notificationsSaga() {
   );
 }
 
-function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
+function* getNotifications({
+  payload,
+}: {
+  payload: IGetStreamDispatch;
+  type: string;
+}) {
   try {
     const {userId, streamClient} = payload;
-
+    yield put(notificationsActions.setLoadingNotifications(true));
     const response = yield notificationsDataHelper.getNotificationList(
       userId,
       streamClient,
     );
 
+    yield put(notificationsActions.setLoadingNotifications(false));
     yield put(
       notificationsActions.setNotifications({
         notifications: response.results,
@@ -41,6 +45,7 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
       }),
     );
   } catch (err) {
+    yield put(notificationsActions.setLoadingNotifications(true));
     console.log(
       '\x1b[33m',
       'khanh --- getNotifications | getNotifications : error',
@@ -51,7 +56,12 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
 }
 
 // load new notifications when have realtime event
-function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
+function* loadNewNotifications({
+  payload,
+}: {
+  payload: ILoadNewNotifications;
+  type: string;
+}) {
   try {
     const {userId, notiGroupId, streamClient, limit} = payload;
     const response = yield notificationsDataHelper.loadNewNotification(
@@ -72,7 +82,12 @@ function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
   }
 }
 
-function* markAsReadAll({payload}: {payload: IGetStreamDispatch}) {
+function* markAsReadAll({
+  payload,
+}: {
+  payload: IGetStreamDispatch;
+  type: string;
+}) {
   try {
     // send request to Getstream to mark notification as read without waiting response
     const {userId, streamClient} = payload;
@@ -111,7 +126,12 @@ function* markAsReadAll({payload}: {payload: IGetStreamDispatch}) {
   }
 }
 
-function* markAsSeenAll({payload}: {payload: IGetStreamDispatch}) {
+function* markAsSeenAll({
+  payload,
+}: {
+  payload: IGetStreamDispatch;
+  type: string;
+}) {
   try {
     // send request to Getstream to mark notification as seen without waiting response
     const {userId, streamClient} = payload;
@@ -140,7 +160,12 @@ function* markAsSeenAll({payload}: {payload: IGetStreamDispatch}) {
   }
 }
 
-function* markAsRead({payload}: {payload: IMarkAsReadAnActivity}) {
+function* markAsRead({
+  payload,
+}: {
+  payload: IMarkAsReadAnActivity;
+  type: string;
+}) {
   try {
     // send request to Getstream to mark notification as read without waiting response
     const {userId, streamClient, activityId} = payload;
@@ -171,7 +196,7 @@ function* markAsRead({payload}: {payload: IMarkAsReadAnActivity}) {
 }
 
 // load more old notifications
-function* loadmore({payload}: {payload: IGetStreamDispatch}) {
+function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
   try {
     // show loading more spinner, set isLoadingMore = true
     yield put(notificationsActions.setIsLoadingMore(true));

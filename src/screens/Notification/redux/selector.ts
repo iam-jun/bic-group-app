@@ -1,4 +1,5 @@
 const notificationSelector = {
+  isLoading: 'notifications.loadingNotifications',
   notifications: 'notifications.notificationList',
   noMoreNotification: 'notifications.noMoreNotification',
   isLoadingMore: 'notifications.isLoadingMore',
