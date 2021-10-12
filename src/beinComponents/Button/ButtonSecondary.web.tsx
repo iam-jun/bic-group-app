@@ -20,6 +20,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
+  const {onPress, onLongPress} = props;
   const {colors}: ITheme = useTheme() as ITheme;
   let className = 'button--secondary';
 
@@ -37,20 +38,30 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
     className = 'button--disable';
   }
 
+  /*
+  Wrap the inside div in buttonWrapper again
+  to make sure onPress, and onLongPress work
+  even when clicking on the edge
+  */
   return (
     <Div style={style}>
-      <Div
-        className={className}
-        style={{backgroundColor: disabled ? colorDisabled : color}}>
-        <ButtonWrapper
-          disabled={disabled}
-          textProps={{color: _textColor, useI18n}}
-          underlayColor={_colorHover}
-          TouchableComponent={TouchableWithoutFeedback}
-          {...props}>
-          {children}
-        </ButtonWrapper>
-      </Div>
+      <ButtonWrapper
+        onPress={onPress}
+        onLongPress={onLongPress}
+        TouchableComponent={TouchableWithoutFeedback}>
+        <Div
+          className={className}
+          style={{backgroundColor: disabled ? colorDisabled : color}}>
+          <ButtonWrapper
+            disabled={disabled}
+            textProps={{color: _textColor, useI18n}}
+            underlayColor={_colorHover}
+            TouchableComponent={TouchableWithoutFeedback}
+            {...props}>
+            {children}
+          </ButtonWrapper>
+        </Div>
+      </ButtonWrapper>
     </Div>
   );
 };
