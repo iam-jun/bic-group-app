@@ -103,7 +103,8 @@ const createStyles = (
 ) => {
   const {colors, spacing} = theme;
   const headerHeight = 20;
-  const bodyHeight = 40;
+  const lastMessagePaddingTop = 4;
+  const bodyHeight = 40 + lastMessagePaddingTop;
   const dividerMarginTop = spacing.margin.small || 8;
   const dividerHeight = 1;
   const contentHeight =
@@ -155,7 +156,9 @@ const createStyles = (
     },
     lastMessage: {
       flex: 1,
+      paddingTop: lastMessagePaddingTop,
       height: bodyHeight,
+      lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     redDot: {
