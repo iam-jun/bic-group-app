@@ -340,7 +340,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             mentionInputRef={mentionInputRef}
             style={shouldScroll ? {} : styles.flex1}
             textInputStyle={shouldScroll ? {} : styles.flex1}
-            modalStyle={styles.mentionInputModal}
             modalPosition={'bottom'}
             onPress={onPressMentionAudience}
             onChangeText={onChangeText}
@@ -351,6 +350,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             getDataParam={{group_ids: strGroupIds}}
             getDataResponseKey={'data'}
             disabled={loading}
+            modalStyle={Platform.OS !== 'web' && styles.mentionModalStyle}
+            showShadow={Platform.OS !== 'web' && false}
           />
           <PostPhotoPreview
             data={images || []}
@@ -435,7 +436,7 @@ const validateImages = (
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -474,8 +475,14 @@ const themeStyles = (theme: ITheme) => {
       marginBottom: spacing.margin.large,
       marginHorizontal: spacing.margin.large,
     },
-    mentionInputModal: {
-      maxHeight: Platform.OS === 'web' ? 350 : 180,
+    mentionModalStyle: {
+      width: '100%',
+      maxWidth: undefined,
+      maxHeight: Platform.OS === 'web' ? 350 : 240,
+      borderWidth: 1,
+      borderColor: colors.borderDivider,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
     },
   });
 };
