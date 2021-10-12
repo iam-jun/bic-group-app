@@ -522,6 +522,26 @@ const makePushTokenRequest = async (
   );
 };
 
+const makeRemovePushTokenRequest = async (
+  authToken: string,
+  chatToken: string,
+  chatUserId: string,
+) => {
+  const deviceName = await DeviceInfo.getDeviceName();
+  const requestConfig = apiConfig.App.removePushToken(
+    authToken,
+    Platform.OS,
+    chatToken,
+    chatUserId,
+    DeviceInfo.getBundleId(),
+    DeviceInfo.getDeviceType(),
+    deviceName,
+  );
+  const axiosInstance = axios.create();
+  axiosInstance.defaults.timeout = requestConfig.timeout;
+  return axiosInstance(requestConfig);
+};
+
 // helper function to make subscription to get stream and run callback when client receive new activity
 const subscribeGetstreamFeed = (
   streamClient: StreamClient,
@@ -550,6 +570,7 @@ export {
   makeGetStreamRequest,
   makeHttpRequest,
   makePushTokenRequest,
+  makeRemovePushTokenRequest,
   getChatAuthInfo,
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,
