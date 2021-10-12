@@ -43,6 +43,8 @@ export const screens = {
   menus: MenuStack,
 };
 
+export type ITabTypes = 'home' | 'groups' | 'chat' | 'notification' | 'menus';
+
 export const screensWebLaptop = {
   //HOME STACK
   newsfeed: Newsfeed,
