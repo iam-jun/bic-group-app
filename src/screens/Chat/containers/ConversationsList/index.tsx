@@ -108,6 +108,7 @@ const ConversationsList = (): React.ReactElement => {
         loading={loading}
         data={searchQuery ? searchResult : data}
         onItemPress={onChatPress}
+        onRefresh={() => dispatch(actions.getSubscriptions())}
         ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
