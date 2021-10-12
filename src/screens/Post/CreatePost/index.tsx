@@ -352,7 +352,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             disabled={loading}
             fullWidth={Platform.OS !== 'web'}
             modalStyle={styles.mentionModalStyle}
-            showShadow={Platform.OS !== 'web'}
+            showShadow={Platform.OS === 'web'}
           />
           <PostPhotoPreview
             data={images || []}
