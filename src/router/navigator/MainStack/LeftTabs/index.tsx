@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {DeviceEventEmitter, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -83,6 +83,9 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
             key={'tabs' + name}
             name={name}
             component={component}
+            listeners={{
+              tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
+            }}
             options={{
               tabBarIcon: ({focused}: {focused: boolean}) => {
                 // @ts-ignore

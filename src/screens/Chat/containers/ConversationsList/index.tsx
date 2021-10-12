@@ -1,6 +1,12 @@
 import {useIsFocused} from '@react-navigation/native';
 import {debounce} from 'lodash';
-import React, {createRef, useCallback, useEffect, useState} from 'react';
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -18,14 +24,17 @@ import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import useModal from '~/hooks/modal';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {IConversation} from '~/interfaces/IChat';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 const ConversationsList = (): React.ReactElement => {
+  const listRef = useRef<any>();
+
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
@@ -50,6 +59,15 @@ const ConversationsList = (): React.ReactElement => {
   useEffect(() => {
     Platform.OS === 'web' && inputRef.current?.focus();
   }, [searchInputFocus]);
+
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'chat') {
+        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+      }
+    },
+    [listRef],
+  );
 
   const loadMore = () => {
     dispatch(actions.mergeExtraData('rooms'));
@@ -103,6 +121,7 @@ const ConversationsList = (): React.ReactElement => {
         onChangeText={onQueryChanged}
       />
       <ListView
+        listRef={listRef}
         type="conversation"
         isFullView
         loading={loading}

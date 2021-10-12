@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -17,8 +17,12 @@ import groupsKeySelector from './redux/keySelector';
 import appConfig from '~/configs/appConfig';
 import {deviceDimensions} from '~/theme/dimension';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
+import {useTabPressListener} from '~/hooks/navigation';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 const Groups: React.FC = () => {
+  const listRef = useRef<any>();
+
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -36,6 +40,15 @@ const Groups: React.FC = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'groups') {
+        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+      }
+    },
+    [listRef],
+  );
 
   const getData = () => {
     dispatch(groupsActions.getJoinedGroups());
@@ -75,6 +88,7 @@ const Groups: React.FC = () => {
   const renderDataList = () => {
     return (
       <ListView
+        listRef={listRef}
         style={styles.dataList}
         type={'flatGroups'}
         data={joinedGroups}
