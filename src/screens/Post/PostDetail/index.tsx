@@ -1,4 +1,5 @@
 import {useBackHandler} from '@react-native-community/hooks';
+import {useFocusEffect} from '@react-navigation/native';
 import React, {
   useCallback,
   useContext,
@@ -27,6 +28,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {IUserResponse} from '~/interfaces/IAuth';
 
 import {
   IAudienceGroup,
@@ -35,11 +37,13 @@ import {
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {rootSwitch} from '~/router/stack';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -85,6 +89,13 @@ const PostDetail = (props: any) => {
   const sectionData = getSectionData(listComment) || [];
 
   const commentLeft = commentCount - listComment.length;
+
+  const user: IUserResponse | boolean = Store.getCurrentUser();
+  useFocusEffect(() => {
+    if (!user && Platform.OS === 'web') {
+      rootNavigation.replace(rootSwitch.authStack);
+    }
+  });
 
   useEffect(() => {
     if (id && userId && streamClient) {
