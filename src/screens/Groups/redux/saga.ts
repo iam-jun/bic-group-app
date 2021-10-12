@@ -18,6 +18,8 @@ import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData} from '../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import {groupPrivacy} from '~/constants/privacyTypes';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -53,6 +55,15 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
   try {
     const result = yield requestGroupDetail(payload);
     yield put(groupsActions.setGroupDetail(result));
+
+    const {groups} = yield select();
+    const join_status = groups?.groupDetail?.join_status;
+    const isMember = join_status === groupJoinStatus.member;
+
+    const privacy = groups?.groupDetail?.group?.privacy;
+    const isPublic = privacy === groupPrivacy.public;
+
+    if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
     console.log('[getGroupDetail]', e);
     yield put(groupsActions.setLoadingPage(false));

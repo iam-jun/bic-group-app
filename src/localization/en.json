@@ -23,6 +23,7 @@
     "btn_next": "Next",
     "btn_confirm": "Confirm",
     "btn_create": "Create",
+    "btn_join": "Join",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
     "text_clear": "Clear",
@@ -523,6 +524,10 @@
       "label_direct_message": "Direct message",
       "label_set_as_admin": "Set as admin",
       "label_remove_from_group": "Remove from this group"
+    },
+    "private_group_welcome_message": {
+      "title": "This group is private.",
+      "subtitle": "Join this group to view or participate on discussions"
     }
   },
   "profile": {

@@ -20,7 +20,6 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
-import GroupAboutContent from '../components/GroupAboutContent';
 import GroupTopBar from './components/GroupTopBar';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -28,6 +27,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import {deviceDimensions} from '~/theme/dimension';
+import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -45,6 +45,7 @@ const GroupDetail = (props: any) => {
   const {privacy} = groupInfo;
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
@@ -67,7 +68,9 @@ const GroupDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group, 
     which will lead to endless fetching group posts in 
     httpApiRequest > makeGetStreamRequest */
-    if (loadingGroupDetail || isEmpty(groupInfo)) {
+    const privilegeToFetchPost = isMember || privacy === groupPrivacy.public;
+    if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
+      console.log('[getGroupPosts] stop fetching');
       return;
     }
 
@@ -94,12 +97,12 @@ const GroupDetail = (props: any) => {
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
-    if (
-      join_status !== groupJoinStatus.member &&
-      privacy === groupPrivacy.private &&
-      !loadingPage
-    ) {
-      return <GroupAboutContent />;
+    console.log('[DEBUG] groupInfo', groupInfo);
+    console.log('[getGroupPosts] isMember', isMember);
+
+    if (!isMember && privacy === groupPrivacy.private) {
+      console.log('[DEBUG] render group about only');
+      return <GroupPrivateWelcome parentWidth={viewWidth} />;
     }
 
     return (
@@ -126,16 +129,6 @@ const GroupDetail = (props: any) => {
     );
   };
 
-  // visitors cannot see anything of Secret groups
-  // => render No Group Found
-  if (
-    join_status !== groupJoinStatus.member &&
-    privacy === groupPrivacy.secret &&
-    !loadingPage
-  ) {
-    return <NoGroupFound />;
-  }
-
   const renderGroupDetail = () => {
     if (isEmpty(groupInfo)) return <NoGroupFound />;
     return (
@@ -151,6 +144,12 @@ const GroupDetail = (props: any) => {
       </Fragment>
     );
   };
+
+  // visitors cannot see anything of Secret groups
+  // => render No Group Found
+  if (!isMember && privacy === groupPrivacy.secret && !loadingPage) {
+    return <NoGroupFound />;
+  }
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>

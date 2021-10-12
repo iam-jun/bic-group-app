@@ -22,6 +22,7 @@
     "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
+    "btn_join": "Tham gia",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -357,6 +358,10 @@
       "label_direct_message": "Direct message",
       "label_set_as_admin": "Set as admin",
       "label_remove_from_group": "Remove from this group"
+    },
+    "private_group_welcome_message": {
+      "title": "Đây là nhóm kín.",
+      "subtitle": "Hãy tham gia nhóm để xem và thảo luận."
     }
   },
   "profile": {
