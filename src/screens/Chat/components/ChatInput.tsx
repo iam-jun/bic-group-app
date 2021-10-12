@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
@@ -212,12 +212,14 @@ const ChatInput: React.FC<Props> = ({
       getDataPromise={getMentionUsers}
       getDataParam={{}}
       getDataResponseKey={'data'}
+      modalStyle={Platform.OS !== 'web' && styles.mentionModalStyle}
+      showShadow={Platform.OS !== 'web' && false}
     />
   );
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     inputMessageHeader: {
@@ -228,6 +230,15 @@ const createStyles = (theme: ITheme) => {
     headerContent: {
       flex: 1,
       flexDirection: 'row',
+    },
+    mentionModalStyle: {
+      width: '100%',
+      maxWidth: undefined,
+      maxHeight: 300,
+      borderWidth: 1,
+      borderColor: colors.borderDivider,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
     },
   });
 };
