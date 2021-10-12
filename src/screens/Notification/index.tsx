@@ -18,7 +18,6 @@ import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
-import useNotifications from '~/hooks/notifications';
 import {useKeySelector} from '~/hooks/selector';
 import i18n from '~/localization';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -32,23 +31,22 @@ import notificationSelector from './redux/selector';
 const Notification = () => {
   const menuSheetRef = useRef<any>();
 
-  const notificationData = useNotifications();
-  const {loadingNotifications, notificationList} = notificationData;
-  const showNoNotification = notificationList.length === 0;
-
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
-
-  const {rootNavigation} = useRootNavigation();
-
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const isFocused = useIsFocused();
+  const dimensions = useWindowDimensions();
   const {streamClient} = useContext(AppContext);
   const userId = useUserIdAuth();
+
+  const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
+  const loadingNotifications = useKeySelector(notificationSelector.isLoading);
+  const notificationList = useKeySelector(notificationSelector.notifications);
   const noMoreNotification = useKeySelector(
     notificationSelector.noMoreNotification,
   );
-  const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
+
+  const showNoNotification = notificationList.length === 0;
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   useEffect(() => {
     if (isFocused && streamClient) {
@@ -60,6 +58,17 @@ const Notification = () => {
       );
     }
   }, [isFocused]);
+
+  const refreshListNotification = () => {
+    if (streamClient?.currentUser?.token) {
+      dispatch(
+        notificationsActions.getNotifications({
+          streamClient,
+          userId: userId.toString(),
+        }),
+      );
+    }
+  };
 
   const onPressMenu = (e: any) => {
     menuSheetRef.current?.open?.(e?.pageX, e?.pageY);
@@ -221,11 +230,12 @@ const Notification = () => {
         <ListView
           style={styles.list}
           type="notification"
-          loading={loadingNotifications}
           isFullView
           renderItemSeparator={() => <ViewSpacing height={2} />}
           data={notificationList}
           onItemPress={_onItemPress}
+          onRefresh={refreshListNotification}
+          refreshing={loadingNotifications}
           onLoadMore={() => loadMoreNotifications()}
           ListFooterComponent={renderListFooter}
         />
