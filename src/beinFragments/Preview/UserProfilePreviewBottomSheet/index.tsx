@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -16,6 +16,7 @@ import speakingLanguages from '~/constants/speakingLanguages';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {IObject} from '~/interfaces/common';
 import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -109,12 +110,14 @@ const UserProfilePreviewBottomSheet = () => {
 
   const navigateToUserProfile = () => {
     if (!!userId) {
-      const payload = {
-        userId: userId,
-        params: typeof userId === 'string' && {
-          type: 'username',
-        },
+      // Double check if userId is username, and lack of type in params
+      const _params: IObject<unknown> = {
+        ...params,
       };
+      if (isNaN(userId) && _params?.type !== 'username')
+        _params['type'] = 'username';
+
+      const payload = {userId, params: _params};
       rootNavigation.navigate(mainStack.userProfile, payload);
     }
     userPreviewRef?.current?.close?.();
@@ -248,6 +251,11 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
   return StyleSheet.create({
     container: {
       minHeight: containerMinHeight,
+      ...Platform.select({
+        web: {
+          width: 375,
+        },
+      }),
     },
     cover: {
       width: '100%',

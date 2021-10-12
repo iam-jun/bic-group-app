@@ -71,18 +71,20 @@ const CommentView: React.FC<CommentViewProps> = ({
     postTime = countTime(created_at);
   }
 
-  const onPressUser = (audience?: any) => {
-    const id = audience?.id || user?.id;
+  const onPressUser = (e?: any) => {
+    const id = user?.id;
     if (!id) return;
 
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(mainStack.userProfile, {userId: id});
-    } else {
-      const payload = {
-        userId: id,
-      };
-      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
-    }
+    const payload = {
+      userId: id,
+      position: {x: e?.pageX, y: e?.pageY},
+    };
+    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
+  };
+
+  const onPressAudience = (audience: any) => {
+    if (!audience || !audience?.id) return;
+    rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
@@ -245,7 +247,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                   useMarkdown
                   limitMarkdownTypes
                   content={content || ''}
-                  onPressAudience={(audience: any) => onPressUser(audience)}
+                  onPressAudience={(audience: any) => onPressAudience(audience)}
                 />
               </View>
               <CommentMediaView data={data} onLongPress={onLongPress} />

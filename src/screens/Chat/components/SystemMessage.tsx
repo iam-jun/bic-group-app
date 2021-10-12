@@ -5,44 +5,40 @@ import {useDispatch} from 'react-redux';
 import Icon from '~/beinComponents/Icon';
 
 import Text from '~/beinComponents/Text';
-import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
-import mainStack from '~/router/navigator/MainStack/stack';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 
 const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
   const {text, type: messageType, user, msg} = currentMessage;
 
-  const onPressUser = (username: string) => {
+  const onPressUser = (e: any, username?: string) => {
+    if (!username) return;
+
     const payload = {
       userId: username,
+      position: {x: e?.pageX, y: e?.pageY},
       params: {
         type: 'username',
       },
     };
-
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(mainStack.userProfile, payload);
-    } else {
-      dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
-    }
+    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
   const renderAddRemoveUser = () => {
     const content = text?.replace('{1}', '');
+    const username = msg;
 
     return (
       <>
         <Text.BodyM
-          onPress={() => msg && onPressUser(msg)}
+          onPress={(e: any) => msg && onPressUser(e, username)}
           style={styles.textBold}>
-          {msg}
+          {username}
         </Text.BodyM>
         {content}
       </>
@@ -56,7 +52,7 @@ const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
       <>
         <Text.BodyM
           style={styles.textBold}
-          onPress={() => onPressUser(user.username)}>
+          onPress={(e: any) => onPressUser(e, user.username)}>
           {user.name}
         </Text.BodyM>
         {content}
@@ -70,7 +66,7 @@ const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
     return (
       <>
         <Text.BodyM
-          onPress={() => onPressUser(user.username)}
+          onPress={(e: any) => onPressUser(e, user.username)}
           style={styles.textBold}>
           {user.name}
         </Text.BodyM>
