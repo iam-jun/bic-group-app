@@ -57,9 +57,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     postKeySelector.replyingComment,
   );
   const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
-  const replyTargetName =
-    replying?.comment?.user?.data?.fullname ||
-    replying?.parentComment?.user?.data?.fullname;
+  const replyTargetUser =
+    replying?.comment?.user || replying?.parentComment?.user;
+  const replyTargetName = replyTargetUser?.data?.fullname;
+  const replyTargetUserId = replyTargetUser?.id;
 
   const content = useKeySelector(postKeySelector.createComment.content) || '';
   const loading = useKeySelector(postKeySelector.createComment.loading);
@@ -70,6 +71,14 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       dispatch(postActions.setCreateComment({content: '', loading: false}));
     };
   }, []);
+
+  useEffect(() => {
+    if (replyTargetUserId && replyTargetUserId) {
+      _commentInputRef?.current?.setText?.(
+        `@[u:${replyTargetUserId}:${replyTargetName}] `,
+      );
+    }
+  }, [replyTargetName, replyTargetUserId]);
 
   const _onCommentSuccess = (data?: any) => {
     onCommentSuccess?.(data);

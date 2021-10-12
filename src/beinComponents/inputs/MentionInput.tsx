@@ -29,6 +29,9 @@ import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import Div from '../Div';
 
+const DEFAULT_INDEX = -2;
+const MENTION_ALL_INDEX = -1;
+
 export interface MentionInputProps extends TextInputProps {
   mentionInputRef?: any;
   textInputRef?: any;
@@ -84,6 +87,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
 }: MentionInputProps) => {
   const _mentionInputRef = mentionInputRef || useRef<any>();
   const inputRef = textInputRef || useRef<TextInput>();
+  const listRef = useRef<any>();
   const [mentioning, setMentioning] = useState(false);
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +96,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [inputSelection, setInputSelection] = useState<any>();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
+  const [highlightItem, sethHighlightItem] = useState<any>();
+  const [highlightIndex, setHighlightIndex] = useState<number>(DEFAULT_INDEX);
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
@@ -105,6 +111,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
   useEffect(() => {
     onChangeText?.(content);
   }, [content]);
+
+  useEffect(() => {
+    if (!mentioning && highlightIndex !== DEFAULT_INDEX) {
+      setHighlightIndex(DEFAULT_INDEX);
+      sethHighlightItem(undefined);
+    }
+  }, [mentioning]);
 
   const getContent = () => content;
 
@@ -131,6 +144,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
           );
           setIsLoading(false);
           setList([]);
+          setHighlightIndex(DEFAULT_INDEX);
+          sethHighlightItem(undefined);
         });
     }
   };
@@ -189,7 +204,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
         item.fullname || item.name
       }] `;
       inputRef.current?.focus();
-      setContent(replaceContent(content, `@${key}`, mention));
+      const newContent = replaceContent(content, `@${key}`, mention);
+      setContent(newContent);
+      componentInputProps?.commentInputRef?.current?.setText?.(
+        newContent || '',
+      );
       onPress?.(item);
       setMentioning(false);
     },
@@ -200,7 +219,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
     inputRef.current?.focus();
     onPressAll?.();
     if (allReplacer) {
-      setContent(replaceContent(content, `@${key}`, allReplacer));
+      const newContent = replaceContent(content, `@${key}`, allReplacer);
+      setContent(newContent);
+      componentInputProps?.commentInputRef?.current?.setText?.(
+        newContent || '',
+      );
     }
     setMentioning(false);
   };
@@ -226,15 +249,74 @@ const MentionInput: React.FC<MentionInputProps> = ({
     [isKeyboardOpen],
   );
 
-  const _renderItem = ({item}: {item: any}) => {
-    // const backgroundColor =
-    //   hoverItem?.[mentionField] &&
-    //   item?.[mentionField] === hoverItem?.[mentionField]
-    //     ? colors.placeholder
-    //     : colors.background;
+  const handleMentionKey = (event: any) => {
+    if (mentioning && list?.length > 0) {
+      event.preventDefault();
+      const {key} = event || {};
+      if (key === 'Enter' && highlightItem) {
+        _onPressItem(highlightItem);
+        return;
+      }
+      const step = key === 'ArrowUp' ? -1 : 1;
+      const min = showItemAll ? MENTION_ALL_INDEX : 0;
+      let newIndex =
+        highlightIndex === DEFAULT_INDEX ? min : highlightIndex + step;
+      if (newIndex >= list.length) {
+        newIndex = min;
+      }
+      if (newIndex < min) {
+        newIndex = list.length - 1;
+      }
+
+      let newHighlightItem: any = list?.[newIndex];
+      if (newIndex === MENTION_ALL_INDEX) {
+        newHighlightItem = {id: 'all'};
+      }
+      if (newIndex >= 0 && newIndex < list?.length) {
+        listRef.current?.scrollToIndex({
+          index: newIndex,
+          viewPosition: 0.5,
+        });
+      }
+      setHighlightIndex(newIndex);
+      sethHighlightItem(newHighlightItem);
+    }
+  };
+
+  const onKeyPress = (event: any) => {
+    if (Platform.OS === 'web') {
+      switch (event?.key) {
+        case 'Enter':
+        case 'ArrowDown':
+        case 'ArrowUp':
+          handleMentionKey(event);
+          break;
+      }
+    }
+  };
+
+  const onHoverItem = (item: any, index: number) => {
+    setHighlightIndex(index);
+    sethHighlightItem(item);
+  };
+
+  const onLeaveItem = (item: any, index: number) => {
+    setHighlightIndex(DEFAULT_INDEX);
+    sethHighlightItem(undefined);
+  };
+
+  const _renderItem = ({item, index}: {item: any; index: number}) => {
+    const backgroundColor =
+      highlightItem?.[mentionField] &&
+      item?.[mentionField] === highlightItem?.[mentionField]
+        ? colors.placeholder
+        : colors.background;
 
     return (
-      <Div className="mention-item">
+      <Div
+        style={{backgroundColor}}
+        onMouseOver={() => onHoverItem(item, index)}
+        onMouseLeave={() => onLeaveItem(item, index)}>
         <TouchableOpacity
           style={[styles.item]}
           onPress={() => _onPressItem(item)}>
@@ -251,11 +333,15 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const renderMentionAll = () => {
     if (!onPressAll && !showItemAll) return null;
+    const backgroundColor =
+      highlightItem?.id === 'all' ? colors.placeholder : colors.background;
 
     return (
-      <Div className="mention-item">
+      <Div
+        onMouseOver={() => onHoverItem({id: 'all'}, MENTION_ALL_INDEX)}
+        onMouseLeave={() => onLeaveItem({id: 'all'}, MENTION_ALL_INDEX)}>
         <TouchableOpacity onPress={_onPressAll}>
-          <View style={styles.mentionAll}>
+          <View style={[styles.mentionAll, {backgroundColor}]}>
             <Text.ButtonBase style={styles.textMentionAll}>
               @all
             </Text.ButtonBase>
@@ -289,6 +375,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           style={styles.hidden}
           onContentSizeChange={_onContentSizeChange}
           editable={!disabled}
+          onKeyPress={onKeyPress}
         />
       )}
       <ComponentInput
@@ -303,6 +390,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
         onSelectionChange={onSelectionChange}
         editable={!disabled}
+        onKeyPress={onKeyPress}
       />
       {mentioning && (
         <View
@@ -317,12 +405,14 @@ const MentionInput: React.FC<MentionInputProps> = ({
           {renderMentionAll()}
           <Divider />
           <FlatList
+            ref={listRef}
             keyboardShouldPersistTaps={'always'}
             data={list || []}
             nestedScrollEnabled
             ListEmptyComponent={renderEmpty}
             renderItem={_renderItem}
             keyExtractor={item => item.id || item._id}
+            onScrollToIndexFailed={() => {}}
           />
         </View>
       )}
