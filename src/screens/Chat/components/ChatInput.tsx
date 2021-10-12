@@ -212,14 +212,14 @@ const ChatInput: React.FC<Props> = ({
       getDataPromise={getMentionUsers}
       getDataParam={{}}
       getDataResponseKey={'data'}
-      modalStyle={Platform.OS !== 'web' && styles.mentionModalStyle}
-      showShadow={Platform.OS !== 'web' && false}
+      fullWidth={Platform.OS !== 'web'}
+      showShadow={Platform.OS === 'web'}
     />
   );
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
 
   return StyleSheet.create({
     inputMessageHeader: {
@@ -230,15 +230,6 @@ const createStyles = (theme: ITheme) => {
     headerContent: {
       flex: 1,
       flexDirection: 'row',
-    },
-    mentionModalStyle: {
-      width: '100%',
-      maxWidth: undefined,
-      maxHeight: 300,
-      borderWidth: 1,
-      borderColor: colors.borderDivider,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
     },
   });
 };

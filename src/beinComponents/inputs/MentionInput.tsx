@@ -43,6 +43,7 @@ export interface MentionInputProps extends TextInputProps {
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
   modalStyle?: StyleProp<ViewStyle>;
+  fullWidth?: boolean;
   showShadow?: boolean;
   onPress?: (item: any) => void;
   onPressAll?: () => void;
@@ -70,6 +71,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   placeholderText,
   textInputStyle,
   modalStyle,
+  fullWidth,
   showShadow = true,
   onPress,
   onPressAll,
@@ -396,6 +398,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         <View
           style={[
             styles.containerModal,
+            fullWidth && styles.containerModalFullWidth,
             showShadow && styles.shadow,
             modalStyle,
           ]}>
@@ -457,12 +460,20 @@ const createStyles = (
       ...stylePosition,
       width: '85%',
       maxWidth: 355,
-      maxHeight: 236,
+      maxHeight: 300,
       borderRadius: 6,
       backgroundColor: colors.background,
       justifyContent: 'center',
       alignSelf: 'center',
       zIndex: 2,
+    },
+    containerModalFullWidth: {
+      width: '100%',
+      maxWidth: undefined,
+      borderWidth: 1,
+      borderColor: colors.borderDivider,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
     },
     shadow: {
       shadowColor: '#000',
