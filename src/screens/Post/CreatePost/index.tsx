@@ -350,8 +350,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             getDataParam={{group_ids: strGroupIds}}
             getDataResponseKey={'data'}
             disabled={loading}
-            modalStyle={Platform.OS !== 'web' && styles.mentionModalStyle}
-            showShadow={Platform.OS !== 'web' && false}
+            fullWidth={Platform.OS !== 'web'}
+            modalStyle={styles.mentionModalStyle}
+            showShadow={Platform.OS !== 'web'}
           />
           <PostPhotoPreview
             data={images || []}
@@ -436,7 +437,7 @@ const validateImages = (
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -476,13 +477,7 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
     },
     mentionModalStyle: {
-      width: '100%',
-      maxWidth: undefined,
       maxHeight: Platform.OS === 'web' ? 350 : 240,
-      borderWidth: 1,
-      borderColor: colors.borderDivider,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
     },
   });
 };
