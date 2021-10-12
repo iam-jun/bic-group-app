@@ -186,6 +186,8 @@ const emojiShortNameBlacklist = {
   mechanical_arm: 'mechanical_arm',
   mechanical_leg: 'mechanical_leg',
   ear_with_hearing_aid: 'ear_with_hearing_aid',
+  guide_dog: 'guide_dog',
+  orangutan: 'orangutan',
 };
 
 export default emojiShortNameBlacklist;

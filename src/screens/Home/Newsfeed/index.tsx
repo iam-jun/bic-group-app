@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useRef} from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -29,6 +29,9 @@ import postActions from '~/screens/Post/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
+
+let newsfeedPostCount = 0;
+const itemLeftToGetMore = 10;
 
 const Newsfeed = () => {
   const {rootNavigation} = useRootNavigation();
@@ -127,6 +130,17 @@ const Newsfeed = () => {
     rootNavigation.navigate(homeStack.createPost);
   };
 
+  useEffect(() => {
+    newsfeedPostCount = homePosts?.length;
+  }, [homePosts?.length]);
+
+  const onViewableItemsChanged = useRef(({viewableItems}: any) => {
+    const lastVisibleIndex = viewableItems?.[viewableItems?.length - 1]?.index;
+    if (newsfeedPostCount - lastVisibleIndex < itemLeftToGetMore) {
+      getData();
+    }
+  }).current;
+
   return (
     <View
       style={styles.container}
@@ -144,6 +158,7 @@ const Newsfeed = () => {
           onEndReachedThreshold={1}
           onLoadMore={() => getData()}
           renderItem={renderItem}
+          onViewableItemsChanged={onViewableItemsChanged}
           ListHeaderComponent={() => (
             <HeaderCreatePost
               style={styles.headerCreatePost}
