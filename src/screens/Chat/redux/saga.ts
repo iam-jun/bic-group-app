@@ -354,7 +354,7 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
 }
 
 function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
-  const {_id, room_id, text, replyingMessage, image} = payload || {};
+  const {_id, room_id, text, replyingMessage} = payload || {};
   try {
     const {auth} = yield select();
 
@@ -368,12 +368,12 @@ function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
         }),
       });
     }
-    if (image) {
-      attachments.push({
-        image_url: image.name,
-        image_dimensions: {width: image.width, height: image.height},
-      });
-    }
+    // if (image) {
+    //   attachments.push({
+    //     image_url: image.name,
+    //     image_dimensions: {width: image.width, height: image.height},
+    //   });
+    // }
 
     const params = {message: {_id, rid: room_id, msg: text, attachments}};
     const response: AxiosResponse = yield makeHttpRequest(

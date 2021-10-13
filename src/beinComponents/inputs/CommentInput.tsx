@@ -63,6 +63,8 @@ export interface CommentInputProps {
   uploadImageType?: IUploadType;
   uploadVideoType?: IUploadType;
   uploadFileType?: IUploadType;
+  uploadFilePromise?: any;
+  uploadFileParam?: any;
 }
 
 const DEFAULT_HEIGHT = 44;
@@ -90,6 +92,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   uploadImageType = uploadTypes.commentImage,
   uploadVideoType = uploadTypes.commentVideo,
   uploadFileType = uploadTypes.commentFile,
+  uploadFilePromise,
+  uploadFileParam = {},
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -176,9 +180,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
     if (selectedImage) {
       console.log(`\x1b[36m🐣️ CommentInput handleUpload upload now\x1b[0m`);
       setUploading(true);
-      FileUploader.getInstance()
-        .upload({file: selectedImage, uploadType: uploadImageType})
-        .then(result => {
+      const param = {
+        file: selectedImage,
+        uploadType: uploadImageType,
+        ...uploadFileParam,
+      };
+      const promise = uploadFilePromise
+        ? uploadFilePromise(param)
+        : FileUploader.getInstance().upload(param);
+      promise
+        .then((result: any) => {
           setUploading(false);
           const imageData: IActivityDataImage = {
             name: result,
@@ -188,7 +199,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           };
           onPressSend?.({content: text, image: imageData});
         })
-        .catch(e => {
+        .catch((e: any) => {
           console.log(`\x1b[31m🐣️ CommentInput upload Error:`, e, `\x1b[0m`);
           const errorMessage =
             typeof e === 'string'

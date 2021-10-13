@@ -15,7 +15,7 @@ import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {IFilePicked} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
-import {mapUsers} from '~/screens/Chat/helper';
+import {getDownloadUrl, mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
@@ -138,6 +138,33 @@ const ChatInput: React.FC<Props> = ({
     );
   };
 
+  const uploadFilePromise = async (param: any) => {
+    try {
+      const {file} = param || {};
+      if (!file) {
+        return Promise.reject();
+      }
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+      formData.append(
+        'description',
+        JSON.stringify({size: file.size, type: file.type}),
+      );
+      const response: any = await makeHttpRequest(
+        apiConfig.Chat.uploadFile(conversation._id, formData),
+      );
+      if (response?.data?.success) {
+        const attachment: any = response?.data?.message?.attachments?.[0];
+        const link = getDownloadUrl(attachment?.title_link);
+        return Promise.resolve(link);
+      } else {
+        return Promise.reject(response?.data);
+      }
+    } catch (e) {
+      return Promise.reject();
+    }
+  };
+
   const getMentionUsers = async (param: any) => {
     try {
       const {key} = param || {};
@@ -205,6 +232,7 @@ const ChatInput: React.FC<Props> = ({
         isHandleUpload: true,
         onPressSend: onSend,
         onPressFile,
+        uploadFilePromise,
       }}
       showItemAll
       emptyContent={i18next.t('post:mention_empty_content')}
