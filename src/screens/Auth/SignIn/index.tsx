@@ -61,11 +61,6 @@ const SignIn = () => {
     dispatch(actions.setSigningInError(''));
     checkDisableSignIn();
     setDisableSignIn(true);
-
-    return function cleanup() {
-      dispatch(actions.setLoading(false));
-      setDisableSignIn(true);
-    };
   }, []);
 
   useEffect(() => {
