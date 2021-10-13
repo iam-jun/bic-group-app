@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
@@ -212,6 +212,8 @@ const ChatInput: React.FC<Props> = ({
       getDataPromise={getMentionUsers}
       getDataParam={{}}
       getDataResponseKey={'data'}
+      fullWidth={Platform.OS !== 'web'}
+      showShadow={Platform.OS === 'web'}
     />
   );
 };
