@@ -246,7 +246,8 @@
     "title_contact": "Contact",
     "title_email": "Email",
     "title_phone_number": "Phone number",
-    "title_address": "Address"
+    "title_address": "Address",
+    "title_edit_contact": "Edit Contact",
   },
   "languages": {
     "title_en": "English",

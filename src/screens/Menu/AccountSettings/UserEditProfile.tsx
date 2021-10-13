@@ -62,6 +62,8 @@ const UserEditProfile = () => {
 
   const goToEditInfo = () => navigation.navigate(mainStack.editBasicInfo);
 
+  const goToEditContact = () => navigation.navigate(mainStack.editContact);
+
   const uploadFile = (
     file: IFilePicked,
     fieldName: 'avatar' | 'background_img_url',
@@ -235,7 +237,7 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_contact
           </Text.H5>
-          <ButtonWrapper onPress={() => alert('Go to edit contact')}>
+          <ButtonWrapper onPress={goToEditContact}>
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
