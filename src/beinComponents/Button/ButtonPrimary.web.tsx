@@ -31,11 +31,6 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
     className = 'button--disable';
   }
 
-  /*
-  Wrap the inside div in buttonWrapper again
-  to make sure onPress, and onLongPress work
-  even when clicking on the edge
-  */
   return (
     <Div style={style}>
       <Div
