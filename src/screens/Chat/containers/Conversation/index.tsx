@@ -62,7 +62,7 @@ const Conversation = () => {
   );
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [offsetY, setOffsetY] = useState(0);
+  const offsetY = useRef(0);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
   const [unreadBannerVisible, setUnreadBannerVisible] =
@@ -419,7 +419,7 @@ const Conversation = () => {
   const onContentLayoutChange = () => {
     if (messages.canLoadNext) setDownButtonVisible(true);
     if (
-      (!isScrolled || offsetY > 500) &&
+      (!isScrolled || offsetY.current > 500) &&
       !messages.canLoadNext &&
       !isEmpty(messages.data) &&
       conversation.unreadCount === 0
@@ -434,11 +434,11 @@ const Conversation = () => {
     const _offsetY = event?.contentOffset.y;
     const contentHeight = event?.contentSize.height;
     const delta = Platform.OS === 'web' ? 100 : 10;
-    setOffsetY(_offsetY);
-    setDownButtonVisible(
-      contentHeight - dimension.deviceHeight * 2 > _offsetY ||
-        messages.unreadPoint > appConfig.unreadMessageOffset,
-    );
+    const condition1 = contentHeight - dimension.deviceHeight * 2 > _offsetY;
+    const condition2 = messages.canLoadNext;
+
+    setDownButtonVisible(condition1 || condition2);
+    offsetY.current = _offsetY;
 
     if (
       isScrolled &&
@@ -484,12 +484,13 @@ const Conversation = () => {
   };
 
   const renderChatMessages = () => {
-    if (messages.loading) return <LoadingMessages />;
+    if (!messages.loading && isEmpty(messages.data))
+      return <ChatWelcome type={conversation.type} />;
 
-    if (isEmpty(messages.data)) return <ChatWelcome type={conversation.type} />;
-
+    // show loading until calculation has done and flatlist has scrolled
     return (
       <View style={styles.messagesContainer}>
+        {!isScrolled && <LoadingMessages />}
         {messages.loadingMore && <ActivityIndicator />}
         <ListMessages
           listRef={listRef}
@@ -521,9 +522,12 @@ const Conversation = () => {
           }}
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50,
+            // waitForInteraction: true,
+            // viewAreaCoveragePercentThreshold: 95,
           }}
         />
         {messages.loadingNext && <ActivityIndicator />}
+        <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       </View>
     );
   };
@@ -550,7 +554,6 @@ const Conversation = () => {
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}
-      <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       <ChatInput
         editingMessage={editingMessage}
         replyingMessage={replyingMessage}

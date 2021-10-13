@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -15,12 +15,13 @@ const DownButton = ({visible, onDownPress}: Props) => {
   const styles = createStyle(theme);
 
   return (
-    <Icon
-      iconStyle={styles.container}
-      tintColor={theme.colors.accent}
-      icon="ArrowDown"
-      onPress={onDownPress}
-    />
+    <View style={styles.container}>
+      <Icon
+        tintColor={theme.colors.accent}
+        icon="ArrowDown"
+        onPress={onDownPress}
+      />
+    </View>
   );
 };
 

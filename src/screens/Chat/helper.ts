@@ -7,7 +7,6 @@ import {
   IMessage,
 } from '~/interfaces/IChat';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
-import reactionIcons from '~/resources/reactions';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
