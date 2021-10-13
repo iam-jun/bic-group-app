@@ -117,7 +117,7 @@ const LanguageOptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView>
               <ListView data={languages} renderItem={renderItem} />
             </ScrollView>
           </View>
@@ -131,16 +131,13 @@ export default LanguageOptionMenu;
 
 const themeStyles = (theme: ITheme, screenHeight: number) => {
   const {spacing} = theme;
-  const baseBottomSheetHeight = 606; // full height when showing all options
 
   return StyleSheet.create({
     contentComponent: {
+      maxHeight: 0.9 * screenHeight,
       ...Platform.select({
         web: {
-          height:
-            screenHeight < 1.5 * baseBottomSheetHeight
-              ? screenHeight * 0.5
-              : baseBottomSheetHeight,
+          maxHeight: 0.55 * screenHeight,
         },
       }),
     },
