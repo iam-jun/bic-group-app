@@ -38,7 +38,7 @@ export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   title?: string;
   emptyContent?: string;
-  modalPosition: 'top' | 'bottom';
+  modalPosition: 'top' | 'bottom' | 'above-keyboard';
   disabled?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
@@ -101,6 +101,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [highlightItem, sethHighlightItem] = useState<any>();
   const [highlightIndex, setHighlightIndex] = useState<number>(DEFAULT_INDEX);
 
+  const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
+
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyles(
@@ -108,6 +110,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
     modalPosition,
     topPosition,
     measuredHeight,
+    keyboardHeight,
   );
 
   useEffect(() => {
@@ -239,7 +242,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
     setTopPosition(e.nativeEvent.contentSize.height);
   };
 
-  const isKeyboardOpen = useKeyboardStatus();
   const debounceSetMeasuredHeight = _.debounce(height => {
     setMeasuredHeight(height);
   }, 80);
@@ -428,27 +430,36 @@ const createStyles = (
   position: string,
   topPosition: number,
   measuredHeight: number,
+  keyboardHeight: number,
 ) => {
   const {colors, spacing} = theme;
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
 
   let stylePosition;
-  if (position === 'top') {
-    stylePosition = {
-      bottom: '100%',
-    };
-  } else {
-    if (topPosition > maxTopPosition) {
-      const distance = measuredHeight - topPosition;
+  switch (position) {
+    case 'top':
       stylePosition = {
-        bottom: distance <= 20 ? 35 : distance + 10,
+        bottom: '100%',
       };
-    } else {
+      break;
+    case 'above-keyboard':
       stylePosition = {
-        top: topPosition + 20,
+        bottom: keyboardHeight,
       };
-    }
+      break;
+    default:
+      if (topPosition > maxTopPosition) {
+        const distance = measuredHeight - topPosition;
+        stylePosition = {
+          bottom: distance <= 20 ? 35 : distance + 10,
+        };
+      } else {
+        stylePosition = {
+          top: topPosition + 20,
+        };
+      }
+      break;
   }
 
   return StyleSheet.create({
