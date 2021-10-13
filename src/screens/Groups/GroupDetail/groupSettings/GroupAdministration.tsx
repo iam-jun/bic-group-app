@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -10,6 +10,7 @@ import {IconType} from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsActions from '../../redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -17,18 +18,27 @@ import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 
-const GroupAdministration = () => {
+const GroupAdministration = (props: any) => {
+  const params = props.route.params;
+  const {groupId} = params || {};
+
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
 
+  useEffect(() => {
+    // in case for refreshing page on web
+    Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(groupId));
+  }, [groupId]);
+
   const onGroupAdminPress = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const goToGeneralInfo = () => rootNavigation.navigate(groupStack.generalInfo);
+  const goToGeneralInfo = () =>
+    rootNavigation.navigate(groupStack.generalInfo, {groupId});
 
   const renderItem = (
     icon: IconType,

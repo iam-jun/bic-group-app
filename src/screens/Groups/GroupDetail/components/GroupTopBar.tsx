@@ -21,6 +21,8 @@ const GroupTopBar = () => {
 
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {id: groupId} = groupInfo || {};
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -38,7 +40,9 @@ const GroupTopBar = () => {
     return (
       can_setting && (
         <ButtonWrapper
-          onPress={() => rootNavigation.navigate(groupStack.groupAdmin)}>
+          onPress={() =>
+            rootNavigation.navigate(groupStack.groupAdmin, {groupId})
+          }>
           <Icon
             icon={'iconShieldStar'}
             fill={theme.colors.iconTint}
