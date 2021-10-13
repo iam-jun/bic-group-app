@@ -63,6 +63,13 @@ const SignIn = () => {
 
   useEffect(() => {
     setDisableSignIn(loading);
+
+    /*
+    Set false to avoid memory leak when logging in and escape app at the same time
+    */
+    return () => {
+      setDisableSignIn(false);
+    };
   }, [loading]);
 
   useEffect(() => {
