@@ -371,6 +371,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
       style={[styles.containerWrapper, style]}
       onLayout={_onLayoutContainer}>
       {Platform.OS === 'web' && (
+        /*
+        Duplicate ComponentInput because _onContentSizeChange
+        in the below component could not work some times on web.
+        Make sure this and the below ComponentInput share the same styling
+        */
         <ComponentInput
           value={content}
           multiline
