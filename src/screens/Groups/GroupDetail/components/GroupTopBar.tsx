@@ -35,14 +35,14 @@ const GroupTopBar = () => {
     else rootNavigation.goBack();
   };
 
+  const navigateToGroupAdmin = () =>
+    rootNavigation.navigate(groupStack.groupAdmin, {groupId});
+
   const renderAdminButton = () => {
     // only admin can see this button
     return (
       can_setting && (
-        <ButtonWrapper
-          onPress={() =>
-            rootNavigation.navigate(groupStack.groupAdmin, {groupId})
-          }>
+        <ButtonWrapper onPress={navigateToGroupAdmin}>
           <Icon
             icon={'iconShieldStar'}
             fill={theme.colors.iconTint}
