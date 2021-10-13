@@ -376,14 +376,16 @@ const MentionInput: React.FC<MentionInputProps> = ({
         in the below component could not work some times on web.
         Make sure this and the below ComponentInput share the same styling
         */
-        <ComponentInput
-          value={content}
-          multiline
-          style={styles.hidden}
-          onContentSizeChange={_onContentSizeChange}
-          editable={!disabled}
-          onKeyPress={onKeyPress}
-        />
+        <Div nativeID="display--none">
+          <ComponentInput
+            value={content}
+            multiline
+            style={styles.hidden}
+            onContentSizeChange={_onContentSizeChange}
+            editable={!disabled}
+            onKeyPress={onKeyPress}
+          />
+        </Div>
       )}
       <ComponentInput
         {...componentInputProps}
