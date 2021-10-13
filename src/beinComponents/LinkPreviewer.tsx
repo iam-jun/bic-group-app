@@ -29,12 +29,13 @@ const LinkPreviewer = ({text}: Props) => {
 
   useEffect(() => {
     if (link && !linkPreviews?.[link]) {
+      console.log('link', link);
+
       dispatch(appActions.getLinkPreview(link));
     }
   }, [link]);
 
-  // link preview must have title at least
-  if (!link || !linkPreviews?.[link]?.title) return null;
+  if (!link || !linkPreviews?.[link]) return null;
 
   const onPress = () => {
     openLink(link);
@@ -42,22 +43,16 @@ const LinkPreviewer = ({text}: Props) => {
 
   return (
     <ButtonWrapper contentStyle={styles.container} onPress={onPress}>
-      {!!linkPreviews?.[link].thumbnail && (
-        <Image
-          style={styles.thumbnail}
-          containerStyle={styles.thumbnailContainer}
-          source={linkPreviews?.[link].thumbnail}
-        />
-      )}
+      <Image
+        style={styles.thumbnail}
+        containerStyle={styles.thumbnailContainer}
+        source={linkPreviews?.[link].thumbnail}
+      />
       <View style={styles.metadata}>
         <Text.ButtonBase style={styles.title}>
           {linkPreviews?.[link].title}
         </Text.ButtonBase>
-        {!!linkPreviews?.[link].description && (
-          <Text.Subtitle style={styles.description}>
-            {linkPreviews?.[link].description}
-          </Text.Subtitle>
-        )}
+        <Text.Subtitle>{linkPreviews?.[link].description}</Text.Subtitle>
       </View>
     </ButtonWrapper>
   );
@@ -74,11 +69,9 @@ const createStyle = (theme: ITheme) => {
       borderWidth: 1,
       borderColor: colors.borderDivider,
       overflow: 'hidden',
-      alignItems: 'flex-start',
     },
     thumbnailContainer: {
       width: '100%',
-      marginBottom: spacing.margin.base,
     },
     thumbnail: {
       width: Platform.OS === 'web' ? '100%' : scaleSize(307),
@@ -89,10 +82,8 @@ const createStyle = (theme: ITheme) => {
       paddingBottom: spacing.padding.large,
     },
     title: {
-      marginTop: spacing.margin.small,
-    },
-    description: {
-      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.small,
+      marginTop: spacing.margin.extraLarge,
     },
   });
 };
