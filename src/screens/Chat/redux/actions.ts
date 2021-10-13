@@ -41,6 +41,17 @@ export default {
     type: Actions.GET_CONVERSATION_DETAIL,
     payload,
   }),
+  getAttachmentMedia: (payload: {
+    roomId: string;
+    isDirectMessage: boolean;
+  }) => ({
+    type: Actions.GET_ATTACHMENT_MEDIA,
+    payload,
+  }),
+  setAttachmentMedia: (payload?: any) => ({
+    type: Actions.SET_ATTACHMENT_MEDIA,
+    payload,
+  }),
   setConversationDetail: (payload: IConversation) => ({
     type: Actions.SET_CONVERSATION_DETAIL,
     payload,

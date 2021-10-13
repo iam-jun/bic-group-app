@@ -11,6 +11,7 @@ import {
   IChatUser,
   IConversation,
   IMessage,
+  IPayloadGetAttachmentFiles,
   IPayloadReactMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
@@ -51,6 +52,7 @@ export default function* saga() {
   yield takeLatest(types.GET_UNREAD_MESSAGE, getUnreadMessage);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
+  yield takeLatest(types.GET_ATTACHMENT_MEDIA, getAttachmentMedia);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
@@ -180,6 +182,20 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
   } catch (err) {
     console.log('getConversationDetail', err);
   }
+}
+
+function* getAttachmentMedia({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetAttachmentFiles;
+}) {
+  payload.query = {typeGroup: 'image'};
+  const response: any = yield makeHttpRequest(
+    apiConfig.Chat.getAttachmentFiles(payload),
+  );
+  const {files} = response?.data || {};
+  yield put(actions.setAttachmentMedia(files || []));
 }
 
 function* createConversation({

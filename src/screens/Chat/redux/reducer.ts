@@ -60,6 +60,7 @@ export interface IAction {
 const initState = {
   ...initDataState,
   conversation: {} as IConversation,
+  attachmentMedia: [],
   selectedUsers: new Array<IChatUser>(),
   roles: {
     loading: false,
@@ -275,6 +276,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ...conversation,
           ...payload,
         },
+      };
+    case types.SET_ATTACHMENT_MEDIA:
+      return {
+        ...state,
+        attachmentMedia: payload || [],
       };
     case types.ADD_NEW_MESSAGE: {
       const include = messages.data.find(
