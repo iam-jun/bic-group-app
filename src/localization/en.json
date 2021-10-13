@@ -248,6 +248,10 @@
     "title_phone_number": "Phone number",
     "title_address": "Address",
     "title_edit_contact": "Edit Contact",
+    "title_edit_email_address": "Edit Email Address",
+    "text_wrong_email_format": "Wrong Email format",
+    "text_updated_successfully": "updated successfully",
+    "text_email_is_used": "This Email is used"
   },
   "languages": {
     "title_en": "English",
