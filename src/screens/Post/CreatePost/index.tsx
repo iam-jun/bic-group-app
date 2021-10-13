@@ -340,7 +340,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             mentionInputRef={mentionInputRef}
             style={shouldScroll ? {} : styles.flex1}
             textInputStyle={shouldScroll ? {} : styles.flex1}
-            modalStyle={styles.mentionInputModal}
             modalPosition={'bottom'}
             onPress={onPressMentionAudience}
             onChangeText={onChangeText}
@@ -351,6 +350,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             getDataParam={{group_ids: strGroupIds}}
             getDataResponseKey={'data'}
             disabled={loading}
+            fullWidth={Platform.OS !== 'web'}
+            modalStyle={styles.mentionModalStyle}
+            showShadow={Platform.OS === 'web'}
           />
           <PostPhotoPreview
             data={images || []}
@@ -474,8 +476,8 @@ const themeStyles = (theme: ITheme) => {
       marginBottom: spacing.margin.large,
       marginHorizontal: spacing.margin.large,
     },
-    mentionInputModal: {
-      maxHeight: Platform.OS === 'web' ? 350 : 180,
+    mentionModalStyle: {
+      maxHeight: Platform.OS === 'web' ? 350 : 240,
     },
   });
 };
