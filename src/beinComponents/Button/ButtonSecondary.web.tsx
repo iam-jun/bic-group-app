@@ -20,7 +20,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
-  const {colors}: ITheme = useTheme() as ITheme;
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
   let className = 'button--secondary';
 
   const _colorHover = colorHover || colors.primary2;
@@ -47,6 +47,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
           textProps={{color: _textColor, useI18n}}
           underlayColor={_colorHover}
           TouchableComponent={TouchableWithoutFeedback}
+          contentStyle={{padding: spacing.padding.small}}
           {...props}>
           {children}
         </ButtonWrapper>

@@ -21,6 +21,8 @@ const GroupTopBar = () => {
 
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {id: groupId} = groupInfo || {};
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -33,12 +35,14 @@ const GroupTopBar = () => {
     else rootNavigation.goBack();
   };
 
+  const navigateToGroupAdmin = () =>
+    rootNavigation.navigate(groupStack.groupAdmin, {groupId});
+
   const renderAdminButton = () => {
     // only admin can see this button
     return (
       can_setting && (
-        <ButtonWrapper
-          onPress={() => rootNavigation.navigate(groupStack.groupAdmin)}>
+        <ButtonWrapper onPress={navigateToGroupAdmin}>
           <Icon
             icon={'iconShieldStar'}
             fill={theme.colors.iconTint}
