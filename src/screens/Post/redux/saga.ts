@@ -31,6 +31,7 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
+import homeActions from '~/screens/Home/redux/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -96,8 +97,17 @@ function* postCreateNewPost({
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
 
-      if (payload?.is_draft && userId && streamClient) {
-        yield put(postActions.getDraftPosts({userId, streamClient}));
+      if (userId && streamClient) {
+        if (payload?.is_draft) {
+          yield put(postActions.getDraftPosts({userId, streamClient}));
+        }
+        yield put(
+          homeActions.getHomePosts({
+            streamClient,
+            userId: `${userId}`,
+            isRefresh: true,
+          }),
+        );
       }
     } else {
       //todo handle post error
