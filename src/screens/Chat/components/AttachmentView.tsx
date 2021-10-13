@@ -13,10 +13,16 @@ import {openLink, parseSafe} from '~/utils/common';
 import {formatBytes} from '~/utils/formatData';
 import {getDownloadUrl, getMessageAttachmentUrl} from '../helper';
 
-const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
+interface AttachmentViewProps extends IMessage {
+  attachmentMedia?: any;
+}
+
+const AttachmentView: React.FC<AttachmentViewProps> = (
+  props: AttachmentViewProps,
+) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {attachment, status} = props;
+  const {attachment, status, attachmentMedia} = props;
   const {name, size} = attachment || {};
 
   const desc = attachment?.description || '';
@@ -36,12 +42,19 @@ const AttachmentView: React.FC<IMessage> = (props: IMessage) => {
     if (status === messageStatus.SENT) {
       if (attachment?.image_url) {
         const url = getMessageAttachmentUrl(attachment?.image_url);
+        let initIndex;
+        attachmentMedia?.map?.((item: any, index: number) => {
+          if (item?.title === attachment?.title) {
+            initIndex = index;
+          }
+        });
 
         return (
           <ImageViewer
             style={styles.image}
             resizeMode="cover"
-            source={{uri: url}}
+            source={initIndex !== undefined ? attachmentMedia : url}
+            initIndex={initIndex}
           />
         );
       } else if (attachment?.video_url) {

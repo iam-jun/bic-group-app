@@ -29,6 +29,7 @@ import MessageMenu from './MessageMenu';
 import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
+import {getMessageAttachmentUrl} from '~/screens/Chat/helper';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -49,7 +50,7 @@ const MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {messages} = useChat();
+  const {messages, attachmentMedia} = useChat();
   const {
     previousMessage,
     currentMessage,
@@ -77,6 +78,14 @@ const MessageItem = (props: MessageItemProps) => {
 
   const sameUser = user?.username === previousMessage?.user?.username;
   const sameType = type === previousMessage?.type;
+
+  const mediaSource: any = [];
+  attachmentMedia?.map?.((item: any) => {
+    mediaSource.push({
+      uri: getMessageAttachmentUrl(item?.path),
+      title: item?.name,
+    });
+  });
 
   const minutes = moment(_updatedAt).diff(
     previousMessage._updatedAt,
@@ -156,9 +165,10 @@ const MessageItem = (props: MessageItemProps) => {
                   {currentMessage?.attachments?.map?.(
                     (attach: any, i: number) => (
                       <AttachmentView
-                        key={`${_id}_attachment_${attach?.ts || i}`}
+                        key={`${_id}_attachment_${attach?.msgId}_${attach?.ts}_${i}`}
                         {...currentMessage}
                         attachment={attach}
+                        attachmentMedia={mediaSource}
                       />
                     ),
                   )}

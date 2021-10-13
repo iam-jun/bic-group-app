@@ -87,19 +87,19 @@ const Conversation = () => {
   }, [isFocused]);
 
   useEffect(() => {
-    if (route.params?.roomId) {
+    if (route?.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
       dispatch(actions.readSubscriptions(route.params.roomId));
     }
-  }, [route.params?.roomId]);
+  }, [route?.params?.roomId]);
 
   useEffect(() => {
-    const roomId = route.params.roomId;
+    const roomId = route?.params.roomId;
     const isDirectMessage = conversation?.type === roomTypes.DIRECT;
     if (roomId && conversation?._id && roomId === conversation?._id) {
       dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
     }
-  }, [route.params?.roomId, conversation?._id]);
+  }, [route?.params?.roomId, conversation?._id]);
 
   useEffect(() => {
     if (conversation?._id) {

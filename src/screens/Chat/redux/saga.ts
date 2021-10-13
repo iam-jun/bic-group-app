@@ -190,12 +190,23 @@ function* getAttachmentMedia({
   type: string;
   payload: IPayloadGetAttachmentFiles;
 }) {
-  payload.query = {typeGroup: 'image'};
-  const response: any = yield makeHttpRequest(
-    apiConfig.Chat.getAttachmentFiles(payload),
-  );
-  const {files} = response?.data || {};
-  yield put(actions.setAttachmentMedia(files || []));
+  try {
+    payload.query = {typeGroup: 'image'};
+    payload.sort = {uploadedAt: -1};
+    const response: any = yield makeHttpRequest(
+      apiConfig.Chat.getAttachmentFiles(payload),
+    );
+    const {files} = response?.data || {};
+    yield put(actions.setAttachmentMedia(files || []));
+  } catch (err) {
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
+  }
 }
 
 function* createConversation({

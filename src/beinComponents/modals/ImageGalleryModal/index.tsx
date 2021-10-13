@@ -98,6 +98,12 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     }
   };
 
+  const getItemFooterLayout = (data: any, index: number) => ({
+    length: 48,
+    offset: 48 * index,
+    index,
+  });
+
   const renderHeader = () => (
     <View style={styles.headerContainer}>
       <Icon
@@ -158,6 +164,8 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
           ref={footerListRef}
           horizontal
           data={imageUrls}
+          initialScrollIndex={initIndex}
+          getItemLayout={getItemFooterLayout}
           renderItem={renderFooterItem}
           showsHorizontalScrollIndicator={false}
           onScrollToIndexFailed={onScrollToIndexFailed}
@@ -226,21 +234,23 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   return (
     <Modal visible={visible} transparent={true} onRequestClose={onRequestClose}>
-      <View style={styles.container}>
-        {renderHeader()}
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <PagerView
-            ref={pagerRef}
-            style={{flex: 1}}
-            initialPage={initIndex}
-            onPageSelected={onPageSelected}>
-            {imageUrls.map(renderScreen)}
-          </PagerView>
-          {renderControlButton()}
+      {visible && (
+        <View style={styles.container}>
+          {renderHeader()}
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <PagerView
+              ref={pagerRef}
+              style={{flex: 1}}
+              initialPage={initIndex}
+              onPageSelected={onPageSelected}>
+              {imageUrls.map(renderScreen)}
+            </PagerView>
+            {renderControlButton()}
+          </View>
+          {renderFooter()}
+          {isFocus && renderFocusScreen()}
         </View>
-        {renderFooter()}
-        {isFocus && renderFocusScreen()}
-      </View>
+      )}
     </Modal>
   );
 };
