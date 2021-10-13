@@ -32,7 +32,6 @@ import {deviceDimensions} from '~/theme/dimension';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import * as actions from '../redux/actions';
-import {setSigningInError} from '../redux/actions';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -57,8 +56,11 @@ const SignIn = () => {
   } = useForm();
 
   useEffect(() => {
-    dispatch(setSigningInError(''));
+    // avoid taking old loading state from store
+    dispatch(actions.setLoading(false));
+    dispatch(actions.setSigningInError(''));
     checkDisableSignIn();
+    setDisableSignIn(true);
   }, []);
 
   useEffect(() => {
