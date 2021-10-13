@@ -1,11 +1,12 @@
 import i18next from 'i18next';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -39,7 +40,10 @@ import {titleCase} from '~/utils/common';
 import GroupSectionItem from '../components/GroupSectionItem';
 import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 
-const GeneralInformation = () => {
+const GeneralInformation = (props: any) => {
+  const params = props.route.params;
+  const {groupId: id} = params || {};
+
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme = useTheme() as ITheme;
@@ -48,11 +52,16 @@ const GeneralInformation = () => {
   const dispatch = useDispatch();
   const {groupDetail, isPrivacyModalOpen, loadingAvatar, loadingCover} =
     useGroups();
-  const {id, name, icon, background_img_url, description, privacy} =
+  const {name, icon, background_img_url, description, privacy} =
     groupDetail.group;
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
+
+  useEffect(() => {
+    // in case for refreshing page on web
+    Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(id));
+  }, [id]);
 
   const helpMessage = () => {
     baseSheetRef.current?.close();

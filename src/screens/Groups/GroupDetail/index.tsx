@@ -97,11 +97,11 @@ const GroupDetail = (props: any) => {
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
-    console.log('[DEBUG] groupInfo', groupInfo);
-    console.log('[getGroupPosts] isMember', isMember);
+    // console.log('[DEBUG] groupInfo', groupInfo);
+    // console.log('[getGroupPosts] isMember', isMember);
 
     if (!isMember && privacy === groupPrivacy.private) {
-      console.log('[DEBUG] render group about only');
+      // console.log('[DEBUG] render group about only');
       return <GroupPrivateWelcome parentWidth={viewWidth} />;
     }
 
