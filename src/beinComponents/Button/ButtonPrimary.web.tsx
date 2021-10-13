@@ -19,8 +19,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   disabled,
   ...props
 }: ButtonPrimaryProps) => {
-  const {onPress, onLongPress} = props;
-  const {colors}: ITheme = useTheme() as ITheme;
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
   let className = 'button--primary';
 
   const _colorHover = colorHover || colors.iconTint;
@@ -39,23 +38,22 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   */
   return (
     <Div style={style}>
-      <ButtonWrapper
-        onPress={onPress}
-        onLongPress={onLongPress}
-        TouchableComponent={TouchableWithoutFeedback}>
-        <Div
-          className={className}
-          style={{backgroundColor: disabled ? colorDisabled : color}}>
-          <ButtonWrapper
-            disabled={disabled}
-            textProps={{color: _textColor, useI18n}}
-            underlayColor={_colorHover}
-            TouchableComponent={TouchableWithoutFeedback}
-            {...props}>
-            {children}
-          </ButtonWrapper>
-        </Div>
-      </ButtonWrapper>
+      <Div
+        className={className}
+        style={{backgroundColor: disabled ? colorDisabled : color}}>
+        <ButtonWrapper
+          disabled={disabled}
+          textProps={{color: _textColor, useI18n}}
+          underlayColor={_colorHover}
+          TouchableComponent={TouchableWithoutFeedback}
+          contentStyle={{
+            paddingVertical: spacing.padding.small,
+            paddingHorizontal: spacing.padding.base,
+          }}
+          {...props}>
+          {children}
+        </ButtonWrapper>
+      </Div>
     </Div>
   );
 };

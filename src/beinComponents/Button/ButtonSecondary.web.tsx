@@ -20,8 +20,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
-  const {onPress, onLongPress} = props;
-  const {colors}: ITheme = useTheme() as ITheme;
+  const {colors, spacing}: ITheme = useTheme() as ITheme;
   let className = 'button--secondary';
 
   const _colorHover = colorHover || colors.primary2;
@@ -45,23 +44,19 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   */
   return (
     <Div style={style}>
-      <ButtonWrapper
-        onPress={onPress}
-        onLongPress={onLongPress}
-        TouchableComponent={TouchableWithoutFeedback}>
-        <Div
-          className={className}
-          style={{backgroundColor: disabled ? colorDisabled : color}}>
-          <ButtonWrapper
-            disabled={disabled}
-            textProps={{color: _textColor, useI18n}}
-            underlayColor={_colorHover}
-            TouchableComponent={TouchableWithoutFeedback}
-            {...props}>
-            {children}
-          </ButtonWrapper>
-        </Div>
-      </ButtonWrapper>
+      <Div
+        className={className}
+        style={{backgroundColor: disabled ? colorDisabled : color}}>
+        <ButtonWrapper
+          disabled={disabled}
+          textProps={{color: _textColor, useI18n}}
+          underlayColor={_colorHover}
+          TouchableComponent={TouchableWithoutFeedback}
+          contentStyle={{padding: spacing.padding.small}}
+          {...props}>
+          {children}
+        </ButtonWrapper>
+      </Div>
     </Div>
   );
 };
