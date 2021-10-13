@@ -17,7 +17,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import i18n from '~/localization';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -27,8 +27,10 @@ import {ITheme} from '~/theme/interfaces';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 const Notification = () => {
+  const listRef = useRef<any>();
   const menuSheetRef = useRef<any>();
 
   const dispatch = useDispatch();
@@ -58,6 +60,15 @@ const Notification = () => {
       );
     }
   }, [isFocused]);
+
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'notification') {
+        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+      }
+    },
+    [listRef],
+  );
 
   const refreshListNotification = () => {
     if (streamClient?.currentUser?.token) {
@@ -228,6 +239,7 @@ const Notification = () => {
       {showNoNotification && <NoNotificationFound />}
       {!showNoNotification && (
         <ListView
+          listRef={listRef}
           style={styles.list}
           type="notification"
           isFullView

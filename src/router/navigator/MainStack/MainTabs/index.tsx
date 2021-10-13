@@ -1,7 +1,12 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import i18next from 'i18next';
 import React, {useContext, useEffect} from 'react';
-import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  DeviceEventEmitter,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -132,6 +137,9 @@ const MainTabs = () => {
             key={'tabs' + name}
             name={name}
             component={component}
+            listeners={{
+              tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
+            }}
             options={{
               tabBarIcon: ({
                 focused,

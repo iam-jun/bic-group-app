@@ -9,6 +9,7 @@ import menuReducer from '~/screens/Menu/redux/reducer';
 import notificationsReducer from '~/screens/Notification/redux/reducer';
 import postReducer from '~/screens/Post/redux/reducer';
 import {initPushTokenMessage} from '~/services/helper';
+import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 import {ActionTypes} from '~/utils';
 import auth from '../screens/Auth/redux/reducer';
@@ -41,16 +42,21 @@ const rootReducers = (state, action) => {
     action.type === types.SIGN_OUT ||
     action.type === ActionTypes.UnauthorizedLogout
   ) {
-    try {
-      AsyncStorage.multiRemove(['persist:root', 'persist:auth']);
-      if (Platform.OS !== 'web') {
-        initPushTokenMessage().then(messaging => {
+    makeRemovePushTokenRequest(
+      state?.auth?.user?.signInUserSession.idToken.jwtToken,
+      state?.auth?.chat?.accessToken,
+      state?.auth?.chat?.userId,
+    ).catch(e => console.log('error when call api logout', e));
+    if (Platform.OS !== 'web') {
+      initPushTokenMessage()
+        .then(messaging => {
           messaging().deleteToken();
-        });
-      }
-    } catch (e) {
-      console.log('error when logout');
+        })
+        .catch(e => console.log('error when delete token', e));
     }
+    AsyncStorage.multiRemove(['persist:root', 'persist:auth']).catch(e =>
+      console.log('error when logout', e),
+    );
     return appReducer(undefined, action);
   }
 

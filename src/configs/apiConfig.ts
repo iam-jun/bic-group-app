@@ -1,26 +1,26 @@
 import {AxiosRequestConfig} from 'axios';
+import {IPayloadReactMessage} from '~/interfaces/IChat';
 import {
-  ICreateRoomReq,
-  IGetGroupReq,
-  IGetGroupRolesReq,
-  ICreateDiretChatReq,
-  IGetMentionUsersReq,
-  IPaginationParams,
-  IReadSubscription,
-  ISendMessageReq,
-  IUpdateGroupName,
-  IRemoveMemberReq,
   IAddUsersToGroupReq,
+  ICreateDiretChatReq,
+  ICreateRoomReq,
   IDeleteMessage,
   IEditMessageReq,
-  IGetReactionStatisticsReq,
+  IGetGroupReq,
+  IGetGroupRolesReq,
+  IGetMentionUsersReq,
   IGetMessageReq,
+  IGetReactionStatisticsReq,
   IGetSurroundingMessages,
+  IPaginationParams,
+  IReadSubscription,
   IRealtimeAPIReq,
+  IRemoveMemberReq,
+  ISendMessageReq,
+  IUpdateGroupName,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
-import {IPayloadReactMessage} from '~/interfaces/IChat';
 
 const providers = {
   bein: {
@@ -384,6 +384,34 @@ const App = {
       },
       data: {
         token: deviceToken,
+        device_os: deviceOS,
+        app_name: appBundleId,
+        device_type: deviceType,
+        device_name: deviceName,
+      },
+    };
+  },
+  removePushToken: (
+    authToken: string,
+    deviceOS: string,
+    chatToken: string,
+    chatUserId: string,
+    appBundleId: string,
+    deviceType: string,
+    deviceName: string,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}notification/token`,
+      method: 'delete',
+      provider: providers.bein,
+      useRetry: false,
+      timeout: 5000,
+      headers: {
+        Authorization: authToken,
+        'X-Auth-Token': chatToken,
+        'X-User-Id': chatUserId,
+      },
+      data: {
         device_os: deviceOS,
         app_name: appBundleId,
         device_type: deviceType,

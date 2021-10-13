@@ -56,7 +56,10 @@ const removeOnMessageCallback = (id: string) => {
 };
 
 const sendMessage = (data: any) => {
-  if (socket?.readyState !== 1) {
+  if (
+    socket?.readyState !== 1 &&
+    manualSocketCloseCode !== ManualSocketCloseCodeDefault
+  ) {
     waitForSocketConnection(function () {
       sendMessage(data);
     });

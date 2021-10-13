@@ -21,3 +21,5 @@ export type RootStackParamList = {
     roomId?: string;
   };
 };
+
+export type ITabTypes = 'home' | 'groups' | 'chat' | 'notification' | 'menus';
