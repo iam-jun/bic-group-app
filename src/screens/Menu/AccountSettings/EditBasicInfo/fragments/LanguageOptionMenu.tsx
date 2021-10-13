@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -24,8 +25,10 @@ const LanguageOptionMenu = ({
   title,
   onChangeLanguages,
 }: LanguageOptionMenuProps) => {
+  const windowDimension = useWindowDimensions();
+  const screenHeight = windowDimension.height;
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, screenHeight);
   const {myProfile} = useMenu();
   const {language: userLanguages} = myProfile;
 
@@ -114,7 +117,9 @@ const LanguageOptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            <ListView data={languages} renderItem={renderItem} />
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <ListView data={languages} renderItem={renderItem} />
+            </ScrollView>
           </View>
         }
       />
@@ -124,11 +129,21 @@ const LanguageOptionMenu = ({
 
 export default LanguageOptionMenu;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, screenHeight: number) => {
   const {spacing} = theme;
+  const baseBottomSheetHeight = 606; // full height when showing all options
 
   return StyleSheet.create({
-    contentComponent: {},
+    contentComponent: {
+      ...Platform.select({
+        web: {
+          height:
+            screenHeight < 1.5 * baseBottomSheetHeight
+              ? screenHeight * 0.5
+              : baseBottomSheetHeight,
+        },
+      }),
+    },
     chooseText: {
       margin: spacing.margin.base,
     },
