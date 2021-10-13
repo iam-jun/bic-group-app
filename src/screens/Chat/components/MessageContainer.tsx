@@ -30,6 +30,7 @@ import MessageStatus from './MessageStatus';
 import QuotedMessage from './QuotedMessage';
 import SystemMessage from './SystemMessage';
 import {getMessageAttachmentUrl} from '~/screens/Chat/helper';
+import MessageSeparator from '~/screens/Chat/components/MessageSeparator';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
@@ -135,6 +136,10 @@ const MessageItem = (props: MessageItemProps) => {
   const renderMessage = () => {
     return (
       <Div className="chat-message">
+        <MessageSeparator
+          previousUpdateAt={previousMessage._updatedAt}
+          updateAt={currentMessage._updatedAt}
+        />
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
           <View
             style={[
