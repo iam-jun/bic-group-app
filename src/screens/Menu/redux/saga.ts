@@ -1,5 +1,5 @@
 import {select, put, takeLatest} from 'redux-saga/effects';
-import {Platform} from 'react-native';
+import i18next from 'i18next';
 
 import menuActions from './actions';
 import menuTypes from './types';
@@ -50,7 +50,16 @@ function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
   }
 }
 
-function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
+function* editMyProfile({
+  payload,
+  editFieldName,
+  callback,
+}: {
+  type: string;
+  payload: IUserEdit;
+  editFieldName?: string;
+  callback?: () => void;
+}) {
   try {
     const result: unknown = yield requestEditMyProfile(payload);
 
@@ -64,7 +73,15 @@ function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
     } else if (!!background_img_url) {
       toastContent = 'common:cover_changed';
     } else {
-      toastContent = 'common:text_edit_success';
+      // this field is used to indicate which parts of
+      // user profile have been updated
+      if (editFieldName) {
+        toastContent = `${editFieldName} ${i18next.t(
+          'settings:text_updated_successfully',
+        )}`;
+      } else {
+        toastContent = 'common:text_edit_success';
+      }
     }
 
     const toastMessage: IToastMessage = {
@@ -77,8 +94,21 @@ function* editMyProfile({payload}: {type: string; payload: IUserEdit}) {
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     yield put(menuActions.setMyProfile(mapProfile(result)));
+
+    if (callback) return callback();
   } catch (err) {
     console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
+
+    // @ts-ignore
+    const errorMessage: string = err?.meta?.message;
+
+    if (errorMessage === 'This Email is used') {
+      yield put(
+        menuActions.setEmailEditError(i18next.t('settings:text_email_is_used')),
+      );
+      return;
+    }
+
     const toastMessage: IToastMessage = {
       content: 'common:text_edit_fail',
       props: {

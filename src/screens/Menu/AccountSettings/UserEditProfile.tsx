@@ -49,6 +49,9 @@ const UserEditProfile = () => {
     birthday,
     language,
     relationship_status,
+    email,
+    phone,
+    address,
   } = myProfile;
 
   const userLanguageList = language?.map(
@@ -58,6 +61,8 @@ const UserEditProfile = () => {
   const userLanguages = userLanguageList?.join(', ');
 
   const goToEditInfo = () => navigation.navigate(mainStack.editBasicInfo);
+
+  const goToEditContact = () => navigation.navigate(mainStack.editContact);
 
   const uploadFile = (
     file: IFilePicked,
@@ -178,40 +183,87 @@ const UserEditProfile = () => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <View style={styles.basicInfoList}>
+        <View style={styles.infoItem}>
           <SettingItem
             title={'settings:title_name'}
-            subtitle={fullname}
+            subtitle={fullname || i18next.t('common:text_not_set')}
             leftIcon={'TextFields'}
             isTouchDisabled
           />
           <SettingItem
             title={'settings:title_gender'}
-            // @ts-ignore
-            subtitle={i18next.t(genders[gender])}
+            subtitle={
+              // @ts-ignore
+              i18next.t(genders[gender]) || i18next.t('common:text_not_set')
+            }
             leftIcon={'UserSquare'}
             isTouchDisabled
           />
           <SettingItem
             title={'settings:title_birthday'}
-            subtitle={formatDate(birthday, 'MMM Do, YYYY')}
+            subtitle={
+              formatDate(birthday, 'MMM Do, YYYY') ||
+              i18next.t('common:text_not_set')
+            }
             leftIcon={'Calender'}
             isTouchDisabled
           />
           <SettingItem
             title={'settings:title_speaking_languages'}
-            subtitle={userLanguages}
+            subtitle={userLanguages || i18next.t('common:text_not_set')}
             leftIcon={'CommentsAlt'}
             isTouchDisabled
           />
           <SettingItem
             title={'settings:title_relationship_status'}
-            // @ts-ignore
-            subtitle={i18next.t(relationshipStatus[relationship_status])}
+            subtitle={
+              // @ts-ignore
+              i18next.t(relationshipStatus[relationship_status]) ||
+              i18next.t('common:text_not_set')
+            }
             leftIcon={'Heart'}
             isTouchDisabled
           />
+          <Divider style={styles.divider} />
         </View>
+      </View>
+    );
+  };
+
+  const renderContact = () => {
+    return (
+      <View>
+        <View style={styles.infoHeader}>
+          <Text.H5 color={theme.colors.iconTint} useI18n>
+            settings:title_contact
+          </Text.H5>
+          <ButtonWrapper onPress={goToEditContact}>
+            <Text.H6 color={theme.colors.primary7} useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
+        </View>
+        <View style={styles.infoItem}>
+          <SettingItem
+            title={'settings:title_email'}
+            subtitle={email || i18next.t('common:text_not_set')}
+            leftIcon={'EnvelopeAlt'}
+            isTouchDisabled
+          />
+          <SettingItem
+            title={'settings:title_phone_number'}
+            subtitle={phone || i18next.t('common:text_not_set')}
+            leftIcon={'Phone'}
+            isTouchDisabled
+          />
+          <SettingItem
+            title={'settings:title_address'}
+            subtitle={address || i18next.t('common:text_not_set')}
+            leftIcon={'LocationPoint'}
+            isTouchDisabled
+          />
+        </View>
+        <Divider style={styles.divider} />
       </View>
     );
   };
@@ -223,6 +275,7 @@ const UserEditProfile = () => {
         {renderAvatar()}
         {renderCover()}
         {renderBasicInfo()}
+        {renderContact()}
       </ScrollView>
     </ScreenWrapper>
   );
@@ -273,7 +326,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       width: '100%',
       height: coverHeight,
     },
-    basicInfoList: {
+    infoItem: {
       marginHorizontal: spacing.margin.tiny,
     },
     imageButton: {
