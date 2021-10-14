@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import React, {useEffect} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -6,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
+import ParseText from '~/beinComponents/Text/ParseText';
 import {useKeySelector} from '~/hooks/selector';
 import {IQuotedMessage} from '~/interfaces/IChat';
 import modalActions from '~/store/modal/actions';
@@ -61,12 +61,13 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
             {`${_message?.user?.name}  `}
           </Text.BodySM>
         </Text>
-        <Text.BodyS style={styles.quote}>
-          {_message?.text ||
-            ((_message?.attachments || []).length > 0
-              ? i18next.t('chat:label_replied_messsage_attachment')
-              : '')}
-        </Text.BodyS>
+        {(_message?.attachments || []).length > 0 ? (
+          <Text.BodyS useI18n style={styles.quote}>
+            chat:label_replied_messsage_attachment
+          </Text.BodyS>
+        ) : (
+          <ParseText style={styles.quote}>{_message?.text}</ParseText>
+        )}
       </Text>
     </ButtonWrapper>
   );
