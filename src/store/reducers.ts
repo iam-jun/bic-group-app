@@ -42,12 +42,14 @@ const rootReducers = (state, action) => {
     action.type === types.SIGN_OUT ||
     action.type === ActionTypes.UnauthorizedLogout
   ) {
-    makeRemovePushTokenRequest(
-      state?.auth?.user?.signInUserSession.idToken.jwtToken,
-      state?.auth?.chat?.accessToken,
-      state?.auth?.chat?.userId,
-    ).catch(e => console.log('error when call api logout', e));
     if (Platform.OS !== 'web') {
+      if (state?.auth?.user) {
+        makeRemovePushTokenRequest(
+          state?.auth?.user?.signInUserSession.idToken.jwtToken,
+          state?.auth?.chat?.accessToken,
+          state?.auth?.chat?.userId,
+        ).catch(e => console.log('error when call api logout', e));
+      }
       initPushTokenMessage()
         .then(messaging => {
           messaging().deleteToken();
