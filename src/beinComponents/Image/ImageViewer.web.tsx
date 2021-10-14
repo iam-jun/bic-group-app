@@ -4,10 +4,17 @@ import {ImageProps} from '.';
 import Div from '../Div';
 import Image from './FastImage';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
+import {isArray} from 'lodash';
 
-const ImageViewer = ({source, style}: ImageProps) => {
+export interface ImagePreviewerProps extends ImageProps {
+  initIndex?: number;
+}
+
+const ImageViewer = ({source, style, initIndex}: ImageProps) => {
   const [viewerVisible, setViewerVisible] = useState(false);
-  const [zoomIn, setZoomIn] = useState(false);
+
+  const thumbnailSource = isArray(source) ? source?.[initIndex || 0] : source;
+  const gallerySource = isArray(source) ? source : [source];
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.keyCode === 27) {
@@ -18,11 +25,12 @@ const ImageViewer = ({source, style}: ImageProps) => {
   return (
     <Div tabIndex="0" onKeyDown={onKeyDown}>
       <TouchableOpacity onPress={() => setViewerVisible(true)}>
-        <Image source={source} style={style} />
+        <Image source={thumbnailSource} style={style as any} />
       </TouchableOpacity>
       <ImageGalleryModal
         visible={viewerVisible}
-        source={source}
+        source={gallerySource}
+        initIndex={initIndex}
         onPressClose={() => setViewerVisible(false)}
       />
     </Div>

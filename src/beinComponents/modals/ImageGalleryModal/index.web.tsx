@@ -149,19 +149,21 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   return (
     <Modal visible={visible} transparent={true}>
-      <View style={styles.container}>
-        {renderHeader()}
-        <View style={styles.imageContainer}>
-          <Pressable onPress={() => setZoomIn(!zoomIn)}>
-            <Image
-              source={imageUrls?.[activeIndex]?.url}
-              className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
-            />
-          </Pressable>
-          {renderControlButton()}
+      {visible && (
+        <View style={styles.container}>
+          {renderHeader()}
+          <View style={styles.imageContainer}>
+            <Pressable onPress={() => setZoomIn(!zoomIn)}>
+              <Image
+                source={imageUrls?.[activeIndex]?.url}
+                className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
+              />
+            </Pressable>
+            {renderControlButton()}
+          </View>
+          {renderFooter()}
         </View>
-        {renderFooter()}
-      </View>
+      )}
     </Modal>
   );
 };

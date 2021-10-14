@@ -212,3 +212,13 @@ export interface IPayloadReactMessage {
   messageId: string;
   shouldReact: boolean;
 }
+
+export interface IPayloadGetAttachmentFiles {
+  roomId: string;
+  isDirectMessage: boolean;
+  offset?: number;
+  count?: number;
+  sort?: any;
+  query?: any;
+  fields?: any;
+}

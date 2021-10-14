@@ -17,7 +17,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
-import {MessageOptionType} from '~/constants/chat';
+import {MessageOptionType, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
@@ -75,17 +75,31 @@ const Conversation = () => {
   };
 
   useEffect(() => {
+    return () => {
+      dispatch(actions.setAttachmentMedia());
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isFocused) {
       dispatch(actions.readSubscriptions(conversation._id));
     }
   }, [isFocused]);
 
   useEffect(() => {
-    if (route.params?.roomId) {
+    if (route?.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
       dispatch(actions.readSubscriptions(route.params.roomId));
     }
-  }, [route.params?.roomId]);
+  }, [route?.params?.roomId]);
+
+  useEffect(() => {
+    const roomId = route?.params.roomId;
+    const isDirectMessage = conversation?.type === roomTypes.DIRECT;
+    if (roomId && conversation?._id && roomId === conversation?._id) {
+      dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
+    }
+  }, [route?.params?.roomId, conversation?._id]);
 
   useEffect(() => {
     if (conversation?._id) {

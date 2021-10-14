@@ -1,5 +1,8 @@
 import {AxiosRequestConfig} from 'axios';
-import {IPayloadReactMessage} from '~/interfaces/IChat';
+import {
+  IPayloadGetAttachmentFiles,
+  IPayloadReactMessage,
+} from '~/interfaces/IChat';
 import {
   IAddUsersToGroupReq,
   ICreateDiretChatReq,
@@ -264,6 +267,19 @@ const Chat = {
         'X-Auth-Token': auth.accessToken,
         'X-User-Id': auth.userId,
       },
+    };
+  },
+  getAttachmentFiles: (
+    data: IPayloadGetAttachmentFiles,
+  ): HttpApiRequestConfig => {
+    const {isDirectMessage, ...params} = data || {};
+    const endpoint = isDirectMessage ? 'im.files' : 'groups.files';
+    return {
+      url: `${providers.chat.url}${endpoint}`,
+      method: 'get',
+      useRetry: false,
+      provider: providers.chat,
+      params,
     };
   },
   reactMessage: (data: IPayloadReactMessage): HttpApiRequestConfig => {
