@@ -30,6 +30,7 @@ const ImageViewer = ({source, style, initIndex}: ImageProps) => {
       <ImageGalleryModal
         visible={viewerVisible}
         source={gallerySource}
+        initIndex={initIndex}
         onPressClose={() => setViewerVisible(false)}
       />
     </Div>
