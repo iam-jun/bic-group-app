@@ -86,7 +86,11 @@ const ConversationItem: React.FC<Props> = ({
               {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
             </Text>
             {!!unreadCount && (
-              <RedDot style={styles.redDot} number={unreadCount} />
+              <RedDot
+                style={styles.redDot}
+                number={unreadCount}
+                maxNumber={99}
+              />
             )}
           </View>
           {showDivider && <Div style={styles.divider} />}
