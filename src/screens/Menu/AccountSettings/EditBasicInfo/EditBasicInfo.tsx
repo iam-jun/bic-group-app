@@ -150,9 +150,7 @@ const EditBasicInfo = () => {
 
         <SettingItem
           title={'settings:title_gender'}
-          subtitle={
-            titleCase(genderState) || i18next.t('settings:text_not_set')
-          }
+          subtitle={titleCase(genderState) || i18next.t('common:text_not_set')}
           leftIcon={'UserSquare'}
           rightIcon={'EditAlt'}
           onPress={e => onGenderEditOpen(e)}
@@ -161,7 +159,7 @@ const EditBasicInfo = () => {
           title={'settings:title_birthday'}
           subtitle={
             formatDate(birthdayState, 'MMM Do, YYYY') ||
-            i18next.t('settings:text_not_set')
+            i18next.t('common:text_not_set')
           }
           leftIcon={'Calender'}
           rightIcon={'EditAlt'}
@@ -175,7 +173,7 @@ const EditBasicInfo = () => {
           title={'settings:title_relationship_status'}
           subtitle={
             i18next.t(relationshipStatus[relationshipState]) ||
-            i18next.t('settings:text_not_set')
+            i18next.t('common:text_not_set')
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}

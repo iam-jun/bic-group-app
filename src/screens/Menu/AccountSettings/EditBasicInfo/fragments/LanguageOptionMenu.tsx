@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -24,8 +25,10 @@ const LanguageOptionMenu = ({
   title,
   onChangeLanguages,
 }: LanguageOptionMenuProps) => {
+  const windowDimension = useWindowDimensions();
+  const screenHeight = windowDimension.height;
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, screenHeight);
   const {myProfile} = useMenu();
   const {language: userLanguages} = myProfile;
 
@@ -96,7 +99,7 @@ const LanguageOptionMenu = ({
           selectedLanguages
             // @ts-ignore
             ?.map(language => speakingLanguages[language]?.name)
-            .join(', ') || i18next.t('settings:text_not_set')
+            .join(', ') || i18next.t('common:text_not_set')
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}
@@ -114,7 +117,9 @@ const LanguageOptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            <ListView data={languages} renderItem={renderItem} />
+            <ScrollView>
+              <ListView data={languages} renderItem={renderItem} />
+            </ScrollView>
           </View>
         }
       />
@@ -124,11 +129,18 @@ const LanguageOptionMenu = ({
 
 export default LanguageOptionMenu;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, screenHeight: number) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    contentComponent: {},
+    contentComponent: {
+      maxHeight: 0.9 * screenHeight,
+      ...Platform.select({
+        web: {
+          maxHeight: 0.55 * screenHeight,
+        },
+      }),
+    },
     chooseText: {
       margin: spacing.margin.base,
     },

@@ -7,7 +7,6 @@ import {
   IMessage,
 } from '~/interfaces/IChat';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
-import reactionIcons from '~/resources/reactions';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
@@ -50,7 +49,12 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     (_username: any) => _username !== user?.username,
   );
 
-  const name = item.customFields?.beinChatName?.name || item.fname || item.name;
+  const name =
+    (typeof item.customFields?.beinChatName === 'string'
+      ? item.customFields?.beinChatName
+      : item.customFields?.beinChatName?.name) ||
+    item.fname ||
+    item.name;
 
   const avatar =
     type === roomTypes.DIRECT

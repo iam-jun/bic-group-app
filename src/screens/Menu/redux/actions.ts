@@ -46,12 +46,22 @@ const menuActions = {
     };
   },
 
-  editMyProfile: function (payload: IUserEdit) {
+  editMyProfile: function (
+    payload: IUserEdit,
+    editFieldName?: string,
+    callback?: () => void,
+  ) {
     return {
       type: menuTypes.EDIT_MY_PROFILE,
       payload,
+      editFieldName,
+      callback,
     };
   },
+  setEmailEditError: (payload: string) => ({
+    type: menuTypes.SET_EMAIL_EDIT_ERROR,
+    payload,
+  }),
   uploadImage: function (payload: IUserImageUpload) {
     return {
       type: menuTypes.UPLOAD_IMAGE,

@@ -10,6 +10,7 @@ const initMenuState = {
   showUserNotFound: false,
 
   myProfile: {} as IUserProfile,
+  emailEditError: '',
 
   loadingAvatar: false,
   loadingCover: false,
@@ -51,6 +52,11 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         loadingMyProfile: true,
+      };
+    case menuTypes.SET_EMAIL_EDIT_ERROR:
+      return {
+        ...state,
+        emailEditError: payload,
       };
     case menuTypes.SET_MY_PROFILE:
       return {

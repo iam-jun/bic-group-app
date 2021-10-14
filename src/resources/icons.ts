@@ -177,6 +177,7 @@ const icons = {
   CommentSlash: 'CommentSlash',
   Phone: 'Phone',
   Envelope: 'Envelope',
+  EnvelopeAlt: 'EnvelopeAlt',
   EditAlt: 'EditAlt',
   TextFields: 'TextFields',
   UserSquare: 'UserSquare',

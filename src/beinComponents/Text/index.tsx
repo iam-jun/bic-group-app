@@ -21,6 +21,7 @@ export type TextVariant =
   | 'buttonBase'
   | 'buttonSmall'
   | 'bodyM'
+  | 'bodyI'
   | 'body'
   | 'bodySM'
   | 'bodyS'

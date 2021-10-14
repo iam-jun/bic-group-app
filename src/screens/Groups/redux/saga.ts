@@ -104,6 +104,8 @@ function* editGroupDetail({
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     yield put(groupsActions.setGroupDetail(result));
+
+    yield put(groupsActions.getJoinedGroups());
   } catch (err) {
     console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
     yield showError(err);
@@ -307,6 +309,7 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
     yield put(groupsActions.clearGroupMembers());
     yield put(groupsActions.getGroupMembers({groupId}));
     yield put(groupsActions.getGroupDetail(groupId));
+    yield put(groupsActions.getJoinedGroups());
 
     const userAddedCount = userIds.length;
 

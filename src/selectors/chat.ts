@@ -14,9 +14,17 @@ export const getConversations = createSelector(chatState, data => {
           (sub: any) => sub.rid === item._id,
         );
 
+        const name =
+          (typeof sub?.customFields?.beinChatName === 'string'
+            ? sub?.customFields?.beinChatName
+            : sub?.customFields?.beinChatName?.name) ||
+          sub?.fname ||
+          sub?.name;
+
         return {
           ...item,
           unreadCount: sub?.unread,
+          name,
         };
       })
       .sort(function (a: IConversation, b: IConversation) {
