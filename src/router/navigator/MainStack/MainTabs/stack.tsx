@@ -37,6 +37,8 @@ const mainTabStack = {
   'security-and-login': 'security-and-login',
   'change-password': 'change-password',
   'edit-basic-info': 'edit-basic-info',
+  'edit-contact': 'edit-contact',
+  'edit-email': 'edit-email',
 
   //NOTIFICATION
   // notification: Notification,

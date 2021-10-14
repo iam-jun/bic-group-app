@@ -98,6 +98,8 @@ export const appScreens = {
   settingSecurityLogin: 'security-and-login',
   settingChangePassword: 'change-password',
   settingEditBasicInfo: 'edit-basic-info',
+  settingEditContact: 'edit-contact',
+  settingEditEmail: 'edit-email',
   userProfile: 'user-profile',
 
   // Notification
@@ -405,7 +407,13 @@ export const linkingConfigFullLaptop = {
                 path: 'settings/account',
               },
               'edit-basic-info': {
-                path: 'settings/account/edit',
+                path: 'settings/account/edit-basic-info',
+              },
+              'edit-contact': {
+                path: 'settings/account/edit-contact',
+              },
+              'edit-email': {
+                path: 'settings/account/edit-email',
               },
               'change-password': {
                 path: 'settings/security/change-password',
