@@ -13,6 +13,7 @@ import Icon, {IconProps} from '~/beinComponents/Icon';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 
 export interface ButtonWrapperProps {
+  nativeID?: string;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
@@ -35,6 +36,7 @@ export interface ButtonWrapperProps {
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
+  nativeID,
   testID,
   children,
   style,
@@ -95,6 +97,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
   return (
     <TouchableComponent
+      nativeID={nativeID}
       testID={testID}
       disabled={disabled}
       onPress={onPress}
