@@ -61,6 +61,8 @@ export interface IPayloadShowModal {
   isOpen: boolean;
   ContentComponent: any;
   props?: BaseBottomSheetProps | any;
+  useAppBottomSheet?: boolean;
+  appModalStyle?: any;
 }
 
 export interface IUserPreview {
