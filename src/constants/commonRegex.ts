@@ -9,3 +9,4 @@ export const mentionRegex = /@(?!(?:[^]*\s){3})[^@[\]]{1,24}/g;
 export const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)]/;
 export const linkRegex =
   /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+export const phoneNumberRegex = /^[0-9]+$/;

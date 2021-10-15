@@ -62,6 +62,10 @@ const menuActions = {
     type: menuTypes.SET_EMAIL_EDIT_ERROR,
     payload,
   }),
+  setPhoneNumberEditError: (payload: string) => ({
+    type: menuTypes.SET_PHONE_NUMBER_EDIT_ERROR,
+    payload,
+  }),
   uploadImage: function (payload: IUserImageUpload) {
     return {
       type: menuTypes.UPLOAD_IMAGE,

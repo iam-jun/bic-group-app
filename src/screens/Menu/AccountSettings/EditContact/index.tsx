@@ -14,12 +14,7 @@ import menuKeySelector from '../../redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 
-import modalActions from '~/store/modal/actions';
-import Text from '~/beinComponents/Text';
-import {useDispatch} from 'react-redux';
-
 const EditContact = () => {
-  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -32,24 +27,7 @@ const EditContact = () => {
   };
 
   const goToEditPhoneNumber = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        useAppBottomSheet: false,
-        ContentComponent: (
-          <View
-            style={{
-              backgroundColor: '#FFFFFF',
-              marginHorizontal: 16,
-              borderRadius: 6,
-              padding: 12,
-            }}>
-            <Text>Input your phone number</Text>
-          </View>
-        ),
-        props: {webModalStyle: {minHeight: undefined}},
-      }),
-    );
+    rootNavigation.navigate(mainStack.editPhoneNumber);
   };
 
   return (

@@ -102,21 +102,27 @@ function* editMyProfile({
     // @ts-ignore
     const errorMessage: string = err?.meta?.message;
 
-    if (errorMessage === 'This Email is used') {
-      yield put(
-        menuActions.setEmailEditError(i18next.t('settings:text_email_is_used')),
-      );
-      return;
+    switch (errorMessage) {
+      case 'This Email is used':
+        yield put(
+          menuActions.setEmailEditError(
+            i18next.t('settings:text_email_is_used'),
+          ),
+        );
+        break;
+
+      case 'This phone number is used':
+        yield put(
+          menuActions.setPhoneNumberEditError(
+            i18next.t('settings:text_phone_number_is_used'),
+          ),
+        );
+        break;
+
+      default:
+        yield showError(err);
     }
 
-    const toastMessage: IToastMessage = {
-      content: 'common:text_edit_fail',
-      props: {
-        textProps: {useI18n: true},
-        type: 'error',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
     // just in case there is some error regarding editing images url
     yield put(menuActions.setLoadingAvatar(false));
     yield put(menuActions.setLoadingCover(false));

@@ -11,6 +11,7 @@ const initMenuState = {
 
   myProfile: {} as IUserProfile,
   emailEditError: '',
+  phoneNumberEditError: '',
 
   loadingAvatar: false,
   loadingCover: false,

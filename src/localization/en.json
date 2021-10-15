@@ -248,10 +248,14 @@
     "title_phone_number": "Phone number",
     "title_address": "Address",
     "title_edit_contact": "Edit Contact",
+    "title_edit_phone_number": "Edit Phone number",
     "title_edit_email_address": "Edit Email Address",
     "text_wrong_email_format": "Wrong Email format",
     "text_updated_successfully": "updated successfully",
-    "text_email_is_used": "This Email is used"
+    "text_email_is_used": "This Email is used",
+    "text_wrong_phone_number_format": "Wrong number format",
+    "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
+    "text_phone_number_is_used": "This number is already used"
   },
   "languages": {
     "title_en": "English",
