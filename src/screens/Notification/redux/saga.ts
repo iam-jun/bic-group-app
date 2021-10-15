@@ -94,9 +94,10 @@ function* markAsReadAll({
     notificationsDataHelper.markAsReadAll(userId, streamClient);
 
     // get all notifications from store
-    const notifications = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
+    const notifications =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || [];
 
     // then set theirs is_read field by true to un-highlight them directly on device store
     notifications.forEach(notificationGroup => {
