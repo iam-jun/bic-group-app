@@ -1,15 +1,15 @@
-import {put, takeLatest, takeEvery, select} from 'redux-saga/effects';
-import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
-import notificationsActions from '~/screens/Notification/redux/actions';
-import notificationsTypes from '~/screens/Notification/redux/types';
+import {cloneDeep, get} from 'lodash';
+import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import {IGetStreamDispatch, IToastMessage} from '~/interfaces/common';
-import notificationSelector from './selector';
-import {get} from 'lodash';
 import {
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
 } from '~/interfaces/INotification';
+import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
+import notificationsActions from '~/screens/Notification/redux/actions';
+import notificationsTypes from '~/screens/Notification/redux/types';
 import * as modalActions from '~/store/modal/actions';
+import notificationSelector from './selector';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -94,9 +94,10 @@ function* markAsReadAll({
     notificationsDataHelper.markAsReadAll(userId, streamClient);
 
     // get all notifications from store
-    const notifications = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
+    const notifications =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || [];
 
     // then set theirs is_read field by true to un-highlight them directly on device store
     notifications.forEach(notificationGroup => {
@@ -172,9 +173,10 @@ function* markAsRead({
     notificationsDataHelper.markAsRead(userId, activityId, streamClient);
 
     // get all notifications from store
-    const notifications = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
+    const notifications =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || [];
 
     // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
     notifications.forEach(notificationGroup => {
