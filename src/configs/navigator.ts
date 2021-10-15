@@ -164,6 +164,12 @@ export const linkingConfigLaptop = {
               'post-detail': {
                 path: 'post/t/:post_id?',
               },
+              'group-detail': {
+                path: 'groups/:groupId?',
+              },
+              conversation: {
+                path: 'chat/:roomId?',
+              },
             },
           },
         },
