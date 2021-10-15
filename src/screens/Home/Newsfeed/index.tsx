@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState, useRef} from 'react';
 import {
   ActivityIndicator,
+  InteractionManager,
   Platform,
   StyleSheet,
   useWindowDimensions,
@@ -80,11 +81,15 @@ const Newsfeed = () => {
   );
 
   useEffect(() => {
-    getData(true);
+    InteractionManager.runAfterInteractions(() => {
+      getData(true);
+    });
   }, [streamClient]);
 
   useEffect(() => {
-    dispatch(postActions.addToAllPosts(homePosts));
+    InteractionManager.runAfterInteractions(() => {
+      dispatch(postActions.addToAllPosts(homePosts));
+    });
   }, [homePosts]);
 
   const renderHeader = () => {
