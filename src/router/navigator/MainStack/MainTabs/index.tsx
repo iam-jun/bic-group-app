@@ -1,5 +1,4 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import i18next from 'i18next';
 import React, {useContext, useEffect} from 'react';
 import {
   Platform,
@@ -10,14 +9,8 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import RedDot from '~/beinComponents/Badge/RedDot';
-import Div from '~/beinComponents/Div';
-import Icon from '~/beinComponents/Icon';
-import {Text} from '~/components';
-import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
-import useTabBadge from '~/hooks/tabBadge';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import {default as chatActions} from '~/screens/Chat/redux/actions';
@@ -28,6 +21,7 @@ import {ITheme} from '~/theme/interfaces';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
 import postActions from '~/screens/Post/redux/actions';
+import BottomTabBar from '~/router/components/BottomTabBar';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -48,7 +42,6 @@ const MainTabs = () => {
   const Tab = isPhone ? BottomTab : SideTab;
 
   const styles = createStyles(theme, isPhone, isLaptop);
-  const tabBadge = useTabBadge();
 
   const dispatch = useDispatch();
 
@@ -117,18 +110,7 @@ const MainTabs = () => {
     // @ts-ignore
     <Tab.Navigator
       backBehavior={backBehavior}
-      tabBarOptions={{
-        // activeTintColor: activeColor,
-        // inactiveTintColor: inactiveColor,
-        keyboardHidesTabBar: true,
-        activeTintColor: colors.primary7,
-        inactiveTintColor: colors.textSecondary,
-        activeBackgroundColor: colors.bgButtonSecondary,
-        style: {
-          backgroundColor: colors.background,
-          height: 64 + (!isPhone ? 0 : insets.bottom),
-        },
-      }}
+      tabBar={props => <BottomTabBar {...props} />}
       tabBarStyle={styles.tabBar}>
       {Object.entries(screens).map(([name, component]) => {
         return (
@@ -140,83 +122,11 @@ const MainTabs = () => {
             listeners={{
               tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
             }}
-            options={{
-              tabBarIcon: ({
-                focused,
-                color,
-              }: {
-                focused: boolean;
-                color: string;
-              }) => {
-                if (isLaptop) return null;
-
-                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
-                const styles = tabBarIconStyles(theme, focused, isPhone, color);
-                // @ts-ignore
-                const unreadCount = tabBadge[name] || undefined;
-
-                let className = 'tab-bar__menu';
-
-                if (isPhone) className = className + ' tab-bar--bottom__menu';
-                if (focused) className = className + ' tab-bar__menu--active';
-
-                return (
-                  <Div
-                    className={className}
-                    style={Platform.OS !== 'web' ? styles.container : {}}>
-                    <Icon
-                      //@ts-ignore
-                      icon={icon[name]}
-                      size={20}
-                      tintColor="none"
-                    />
-                    {isPhone && (
-                      <Text.Subtitle style={styles.label}>
-                        {i18next.t(`tabs:${name}`)}
-                      </Text.Subtitle>
-                    )}
-                    {!!unreadCount && (
-                      <RedDot style={styles.badge} number={unreadCount} />
-                    )}
-                  </Div>
-                );
-              },
-              tabBarLabel: () => null,
-            }}
           />
         );
       })}
     </Tab.Navigator>
   );
-};
-
-const tabBarIconStyles = (
-  theme: ITheme,
-  focused: boolean,
-  isPhone: boolean,
-  color: string,
-) => {
-  const {colors} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      width: 75,
-      height: isPhone ? '100%' : 64,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: focused ? colors.bgButtonSecondary : colors.background,
-    },
-    label: {
-      color: color,
-      textAlign: 'center',
-    },
-    badge: {
-      position: 'absolute',
-      top: isPhone ? '6%' : '18%',
-      left: '54%',
-    },
-  });
 };
 
 const createStyles = (theme: ITheme, isPhone: boolean, isLaptop: boolean) => {
