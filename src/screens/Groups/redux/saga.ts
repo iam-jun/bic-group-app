@@ -352,7 +352,10 @@ function* joinNewGroup({payload}: {type: string; payload: {groupId: number}}) {
         type: 'success',
       },
     };
+
     yield put(modalActions.showHideToastMessage(toastMessage));
+    yield put(groupsActions.setLoadingPage(true));
+    yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
     console.error('joinNewGroup catch', err);
     yield showError(err);
