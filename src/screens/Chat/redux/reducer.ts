@@ -84,7 +84,14 @@ const initState = {
  */
 function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
   const {type, dataType, payload} = action;
-  const {rooms, conversation, messages, selectedUsers, quotedMessages} = state;
+  const {
+    rooms,
+    conversation,
+    messages,
+    subscriptions,
+    selectedUsers,
+    quotedMessages,
+  } = state;
 
   switch (type) {
     case types.GET_DATA:
@@ -213,10 +220,9 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
     case types.READ_CONVERSATION:
       return {
         ...state,
-        conversation: {
-          ...conversation,
-          unreadCount: 0,
-        },
+        subscriptions: subscriptions.map((item: any) =>
+          item.rid === conversation._id ? {...item, unread: 0} : item,
+        ),
         messages: {
           ...messages,
           unreadMessage: null,
@@ -252,11 +258,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           data: action.payload,
         },
       };
-    // case types.GET_SUBSCRIPTIONS:
-    //   return {
-    //     ...state,
-    //     conversation: initState.conversation,
-    //   };
     case types.SET_SUBSCRIPTIONS:
       return {
         ...state,
@@ -289,9 +290,12 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           (item.localId && item.localId === action.payload.localId),
       );
 
+      const subs: any = subscriptions.find(
+        (item: any) => item.rid === conversation._id,
+      );
+
       const haveUnreadMessages =
-        messages.unreadMessage &&
-        conversation.unreadCount > appConfig.messagesPerPage;
+        messages.unreadMessage && subs?.unread > appConfig.messagesPerPage;
 
       const newMessages =
         !haveUnreadMessages && !include
@@ -309,8 +313,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           action.payload.room_id === conversation._id
             ? {
                 ...messages,
-                // Update offset when add new item
-                offset: messages.offset + 1,
                 data: newMessages,
               }
             : messages,
@@ -328,10 +330,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   : item,
               ),
             },
-        conversation: {
-          ...conversation,
-          unreadCount: conversation.unreadCount + 1,
-        },
         subscriptions:
           action.payload.room_id !== conversation._id
             ? state.subscriptions.map((sub: any) =>
