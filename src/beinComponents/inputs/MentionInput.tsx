@@ -51,6 +51,7 @@ export interface MentionInputProps extends TextInputProps {
   allReplacer?: string;
   onChangeText?: (value: string) => void;
   onMentionText?: (textMention: string) => void;
+  onKeyPress?: (e: any) => void;
   ComponentInput?: any;
   componentInputProps?: any;
   mentionField?: string;
@@ -79,6 +80,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   allReplacer,
   onChangeText,
   onMentionText,
+  onKeyPress,
   ComponentInput = TextInput,
   componentInputProps = {},
   mentionField = 'id',
@@ -254,7 +256,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 
   const handleMentionKey = (event: any) => {
-    if (mentioning && list?.length > 0) {
+    if (list?.length > 0) {
       event.preventDefault();
       const {key} = event || {};
       if (key === 'Enter' && highlightItem) {
@@ -287,15 +289,19 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }
   };
 
-  const onKeyPress = (event: any) => {
-    if (Platform.OS === 'web') {
-      switch (event?.key) {
-        case 'Enter':
-        case 'ArrowDown':
-        case 'ArrowUp':
-          handleMentionKey(event);
-          break;
+  const _onKeyPress = (event: any) => {
+    if (mentioning) {
+      if (Platform.OS === 'web') {
+        switch (event?.key) {
+          case 'Enter':
+          case 'ArrowDown':
+          case 'ArrowUp':
+            handleMentionKey(event);
+            break;
+        }
       }
+    } else {
+      onKeyPress?.(event);
     }
   };
 
@@ -385,7 +391,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           style={styles.hidden}
           onContentSizeChange={_onContentSizeChange}
           editable={!disabled}
-          onKeyPress={onKeyPress}
+          onKeyPress={_onKeyPress}
         />
       )}
       <ComponentInput
@@ -400,7 +406,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
         onSelectionChange={onSelectionChange}
         editable={!disabled}
-        onKeyPress={onKeyPress}
+        onKeyPress={_onKeyPress}
       />
       {mentioning && (
         <View

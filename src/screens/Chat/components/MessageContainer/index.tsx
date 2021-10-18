@@ -139,8 +139,8 @@ const MessageItem = (props: MessageItemProps) => {
     return (
       <Div className="chat-message">
         <MessageSeparator
-          previousUpdateAt={previousMessage._updatedAt}
-          updateAt={currentMessage._updatedAt}
+          previousTime={previousMessage.createdAt}
+          time={currentMessage.createdAt}
         />
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
           <View
