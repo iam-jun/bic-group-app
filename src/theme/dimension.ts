@@ -134,6 +134,7 @@ export const headerHeight = 48;
 export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
 export const maxNewsfeedWidth = 584;
+export const bottomBarHeight = 66;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
@@ -149,6 +150,7 @@ export default {
   avatarSizes,
   commentBarHeight,
   maxNewsfeedWidth,
+  bottomBarHeight,
   deviceWidth: DeviceWidth,
   deviceHeight: DeviceHeight,
 };

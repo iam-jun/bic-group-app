@@ -7,6 +7,21 @@ export const authStack = {
   forgotPassword: 'ForgotPassword',
 };
 
+export const hideBottomTabRoutes = [
+  //Post: Post Detail, Comment View
+  'post-detail',
+  'comment-view',
+  //Chat: Create new chat, Conversation, Conversation info, Conversation member
+  'conversation',
+  'conversation-detail',
+  'create-conversation',
+  'chat-group-members',
+  'add-members',
+  //Setting: Account setting, Edit account, Security, Privacy
+  'account-settings',
+  'user-edit',
+];
+
 export const navigationSetting = {
   defaultNavigationOption: {
     headerStyle: {
