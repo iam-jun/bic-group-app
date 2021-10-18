@@ -101,14 +101,19 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const [selection, setSelection] = useState<{start: number; end: number}>();
   const [addToEnd, setAddToEnd] = useState(true);
 
-  const [contentHeight, setContentHeight] = useState(DEFAULT_HEIGHT);
+  const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
 
-  useEffect(() => {
-    console.group('contentHeight changes');
-    console.log(`contentHeight`, contentHeight);
-    console.groupEnd();
-  }, [contentHeight]);
+  const handleSetTextInputHeight = (newHeight: number) => {
+    if (newHeight === textTextInputHeight) return;
+
+    setTextInputHeight(newHeight);
+    Animated.timing(heightAnimated, {
+      toValue: newHeight,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
   const [uploading, setUploading] = useState(false);
@@ -339,7 +344,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
-  const calculateContentHeight = (height: number) => {
+  const calculateTextInputHeight = (height: number) => {
     let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
     if (value?.length === 0) {
       newHeight = DEFAULT_HEIGHT;
@@ -351,25 +356,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
     onContentSizeChange?.(e);
 
     if (isWeb) return;
-    const newHeight = calculateContentHeight(e.nativeEvent.contentSize.height);
+    const newHeight = calculateTextInputHeight(
+      e.nativeEvent.contentSize.height,
+    );
 
-    setContentHeight(newHeight);
-    Animated.timing(heightAnimated, {
-      toValue: newHeight,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
+    handleSetTextInputHeight(newHeight);
   };
 
   const _onLayout = (e: any) => {
     console.log(`onLayout called`, e.nativeEvent?.layout.height);
-    const newHeight = calculateContentHeight(e.nativeEvent.layout.height);
-    setContentHeight(newHeight);
-    Animated.timing(heightAnimated, {
-      toValue: newHeight,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
+    const newHeight = calculateTextInputHeight(e.nativeEvent.layout.height);
+
+    handleSetTextInputHeight(newHeight);
   };
 
   const getText = () => text;
@@ -403,7 +401,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const inputStyle: any = StyleSheet.flatten([
     styles.textInput,
-    Platform.OS === 'web' ? {outlineWidth: 0, height: contentHeight} : {},
+    Platform.OS === 'web' ? {outlineWidth: 0, height: textTextInputHeight} : {},
   ]);
 
   const buttonsMarginLeft = showButtonsAnim.interpolate({
