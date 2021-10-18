@@ -97,9 +97,23 @@ const CommentInput: React.FC<CommentInputProps> = ({
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
+  const [cloneTextForWeb, setCloneTextForWeb] = useState<string>(value || '');
   const [selection, setSelection] = useState<{start: number; end: number}>();
   const [addToEnd, setAddToEnd] = useState(true);
+
+  const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
+
+  const handleSetTextInputHeight = (newHeight: number) => {
+    if (newHeight === textTextInputHeight) return;
+
+    setTextInputHeight(newHeight);
+    Animated.timing(heightAnimated, {
+      toValue: newHeight,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
   const [uploading, setUploading] = useState(false);
@@ -129,6 +143,19 @@ const CommentInput: React.FC<CommentInputProps> = ({
       showSend(true);
     } else {
       showSend(false);
+    }
+
+    /**
+     * Clone text in order to handling empty newline
+     * as the <Text> does not adding the height of
+     * the empty newline by its own
+     */
+    if (isWeb) {
+      const lastChar = text.substr(text.length - 1);
+      const isEmptyNewline = lastChar === '\n';
+
+      if (isEmptyNewline) setCloneTextForWeb(text + '.');
+      else setCloneTextForWeb(text);
     }
   }, [text, selectedImage]);
 
@@ -317,20 +344,29 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
-  const _onContentSizeChange = (e: any) => {
-    onContentSizeChange?.(e);
-    let newHeight = Math.min(
-      Math.max(DEFAULT_HEIGHT, e.nativeEvent.contentSize.height),
-      LIMIT_HEIGHT,
-    );
+  const calculateTextInputHeight = (height: number) => {
+    let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
     if (value?.length === 0) {
       newHeight = DEFAULT_HEIGHT;
     }
-    Animated.timing(heightAnimated, {
-      toValue: newHeight,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
+    return newHeight;
+  };
+
+  const _onContentSizeChange = (e: any) => {
+    onContentSizeChange?.(e);
+
+    if (isWeb) return;
+    const newHeight = calculateTextInputHeight(
+      e.nativeEvent.contentSize.height,
+    );
+
+    handleSetTextInputHeight(newHeight);
+  };
+
+  const _onLayout = (e: any) => {
+    const newHeight = calculateTextInputHeight(e.nativeEvent.layout.height);
+
+    handleSetTextInputHeight(newHeight);
   };
 
   const getText = () => text;
@@ -364,7 +400,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const inputStyle: any = StyleSheet.flatten([
     styles.textInput,
-    Platform.OS === 'web' ? {outlineWidth: 0} : {},
+    Platform.OS === 'web' ? {outlineWidth: 0, height: textTextInputHeight} : {},
   ]);
 
   const buttonsMarginLeft = showButtonsAnim.interpolate({
@@ -518,6 +554,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 onSelectionChange={_onSelectionChange}
                 onKeyPress={_onKeyPress}
               />
+              {isWeb && (
+                /**
+                 * Add duplicated Text on web to handle changing
+                 * content size more precisely
+                 */
+                <Text
+                  nativeID="lol-text"
+                  onLayout={_onLayout}
+                  style={[styles.textInput, styles.textDuplicatedOnWeb]}>
+                  {cloneTextForWeb || placeholder}
+                </Text>
+              )}
             </Animated.View>
             <Button
               style={{position: 'absolute', right: 10, bottom: 10}}
@@ -594,7 +642,7 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       alignItems: 'center',
     },
     textInput: {
-      flex: 1,
+      width: '100%',
       lineHeight: 22,
       paddingRight: 36,
       paddingTop: spacing?.padding.small,
@@ -605,6 +653,15 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       borderRadius: spacing?.borderRadius.large,
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
+    },
+    textDuplicatedOnWeb: {
+      ...Platform.select({
+        web: {
+          position: 'absolute',
+          width: '100%',
+          visibility: 'hidden',
+        },
+      }),
     },
     iconSend: {
       marginBottom: spacing?.margin.base,
