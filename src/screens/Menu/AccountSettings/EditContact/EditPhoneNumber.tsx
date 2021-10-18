@@ -1,14 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Modal,
+  Platform,
+} from 'react-native';
 import i18next from 'i18next';
 import {useTheme} from 'react-native-paper';
 import {Controller, useForm} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
+import {debounce} from 'lodash';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TextInput from '~/beinComponents/inputs/TextInput';
-import Text from '~/beinComponents/Text';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ListView from '~/beinComponents/list/ListView';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
@@ -16,8 +26,10 @@ import menuKeySelector from '../../redux/keySelector';
 import * as validation from '~/constants/commonRegex';
 import menuActions from '../../redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import modalActions from '~/store/modal/actions';
 import {formatTextRemoveSpace} from '~/utils/formatData';
+import {ICountryCodeList} from '~/interfaces/common';
+import appConfig from '~/configs/appConfig';
+import {dimension} from '~/theme';
 
 const EditPhoneNumber = () => {
   const theme = useTheme() as ITheme;
@@ -26,11 +38,17 @@ const EditPhoneNumber = () => {
   const dispatch = useDispatch();
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {id, phone} = myProfile || {};
+  const {id, phone, country_code} = myProfile || {};
+  const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
+  const {data, searchResult} = countryCodeList || {};
   const phoneNumberEditError = useKeySelector(
     menuKeySelector.phoneNumberEditError,
   );
   const [showSaveButton, setShowSaveButton] = useState<boolean>(false);
+  const [codeValue, setCodeValue] = useState<string>(country_code);
+  const [flagValue, setFlagValue] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     clearAllErrors();
@@ -39,6 +57,13 @@ const EditPhoneNumber = () => {
   useEffect(() => {
     phoneNumberEditError && showErrors();
   }, [phoneNumberEditError]);
+
+  useEffect(() => {
+    const currentCode = data.find(
+      (item: ICountryCodeList) => item.code === country_code,
+    );
+    currentCode?.flag && setFlagValue(currentCode.flag);
+  }, []);
 
   const {
     control,
@@ -65,7 +90,7 @@ const EditPhoneNumber = () => {
     const phoneNumber = getValues('phoneNumber');
     dispatch(
       menuActions.editMyProfile(
-        {id, phone: phoneNumber},
+        {id, phone: phoneNumber, country_code: codeValue},
         i18next.t('settings:title_phone_number'),
         navigateBack,
       ),
@@ -89,39 +114,82 @@ const EditPhoneNumber = () => {
     dispatch(menuActions.setPhoneNumberEditError(''));
   };
 
-  const onOpenCountryExtension = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        useAppBottomSheet: false,
-        ContentComponent: (
-          <View
-            style={{
-              backgroundColor: '#FFFFFF',
-              marginHorizontal: 16,
-              borderRadius: 6,
-              padding: 12,
-            }}>
-            <Text>Input your phone number</Text>
-          </View>
-        ),
-        props: {webModalStyle: {minHeight: undefined}},
-      }),
+  const doSearch = (searchQuery: string) => {
+    dispatch(menuActions.searchCountryCode(searchQuery));
+  };
+
+  const searchHandler = useCallback(
+    debounce(doSearch, appConfig.searchTriggerTime),
+    [],
+  );
+
+  const onQueryChanged = (text: string) => {
+    setSearchQuery(text);
+    searchHandler(text);
+  };
+
+  const onCloseModal = () => {
+    setIsOpen(false);
+    setSearchQuery('');
+  };
+
+  const onSelectCountryCode = (item: ICountryCodeList) => {
+    setCodeValue(item.code);
+    setFlagValue(item.flag);
+    !showSaveButton && setShowSaveButton(true);
+    setIsOpen(false);
+    setSearchQuery('');
+  };
+
+  const renderItem = ({item}: {item: ICountryCodeList}) => {
+    return (
+      <PrimaryItem
+        height={34}
+        title={`${item.flag}  ${item.name} (+${item.code})`}
+        onPress={() => onSelectCountryCode(item)}
+      />
     );
   };
 
-  const renderCountryPhoneExtensionInput = () => {
+  const renderCountryCodeList = () => {
     return (
-      <TextInput
-        // label={i18next.t('settings:title_email')}
-        value={'+84'}
-        style={styles.countryExtension}
-        // onChangeText={}
-        error={errors.email}
-        helperContent={errors?.email?.message}
-        // keyboardType="email-address"
-        autoCapitalize="none"
-      />
+      <Modal visible={isOpen} transparent={true}>
+        <View style={styles.modalView}>
+          <TouchableOpacity
+            style={styles.appModalContainer}
+            onPress={onCloseModal}>
+            <View />
+          </TouchableOpacity>
+          <View style={styles.countryCodeModalList}>
+            <SearchInput
+              onChangeText={onQueryChanged}
+              placeholder={i18next.t('input:search_country')}
+            />
+            <ListView
+              listStyle={styles.listView}
+              data={searchQuery ? searchResult : data}
+              renderItem={renderItem}
+            />
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  const onOpenCountryCode = () => {
+    setIsOpen(true);
+  };
+
+  const renderCountryCodeInput = () => {
+    return (
+      <ButtonWrapper onPress={onOpenCountryCode}>
+        <View pointerEvents="none">
+          <TextInput
+            value={`${flagValue} +${codeValue}`}
+            style={styles.countryExtension}
+          />
+        </View>
+      </ButtonWrapper>
     );
   };
 
@@ -179,11 +247,11 @@ const EditPhoneNumber = () => {
         }}
         onPressButton={showSaveButton ? onSave : undefined}
       />
-
       <View style={styles.inputsView}>
-        {renderCountryPhoneExtensionInput()}
+        {renderCountryCodeInput()}
         {renderPhoneNumberInput()}
       </View>
+      {renderCountryCodeList()}
     </ScreenWrapper>
   );
 };
@@ -191,7 +259,7 @@ const EditPhoneNumber = () => {
 export default EditPhoneNumber;
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     inputsView: {
@@ -201,9 +269,34 @@ const createStyles = (theme: ITheme) => {
     },
     countryExtension: {
       marginRight: spacing.margin.small,
+      justifyContent: 'center',
     },
     phoneNumberView: {
       flex: 1,
+    },
+    countryCodeModalList: {
+      position: 'absolute',
+      zIndex: 3,
+      backgroundColor: colors.background,
+      borderRadius: 6,
+      paddingVertical: spacing.padding.large,
+      paddingHorizontal: spacing.padding.extraLarge,
+      maxWidth: dimension.deviceWidth / (Platform.OS === 'web' ? 2 : 1),
+      minWidth: dimension.deviceWidth / (Platform.OS === 'web' ? 2 : 1),
+    },
+    appModalContainer: {
+      flex: 1,
+      backgroundColor: 'rgba(12, 13, 14, 0.5)',
+      width: '100%',
+    },
+    modalView: {
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    listView: {
+      marginVertical: spacing.margin.large,
     },
   });
 };

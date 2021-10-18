@@ -79,3 +79,9 @@ export interface ILinkPreview {
   description?: string;
   domain?: string;
 }
+
+export interface ICountryCodeList {
+  code: string;
+  name: string;
+  flag: string;
+}

@@ -46,6 +46,11 @@ const menuActions = {
     };
   },
 
+  searchCountryCode: (payload: string) => ({
+    type: menuTypes.SEARCH_COUNTRY_CODE,
+    payload,
+  }),
+
   editMyProfile: function (
     payload: IUserEdit,
     editFieldName?: string,

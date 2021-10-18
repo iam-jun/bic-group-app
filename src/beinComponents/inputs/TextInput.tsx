@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -61,6 +61,10 @@ const TextInput: React.FC<TextInputProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const [text, setText] = useState<string>(value || '');
+
+  useEffect(() => {
+    setText(value || '');
+  }, [value]);
 
   const customTheme = {
     colors: {

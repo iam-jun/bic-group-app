@@ -5,6 +5,7 @@ const menuKeySelector = {
   showUserNotFound: 'menu.showUserNotFound',
   emailEditError: 'menu.emailEditError',
   phoneNumberEditError: 'menu.phoneNumberEditError',
+  countryCodeList: 'menu.countryCodeList',
 };
 
 export default menuKeySelector;
