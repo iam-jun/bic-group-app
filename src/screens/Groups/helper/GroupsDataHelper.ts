@@ -255,14 +255,6 @@ const groupsDataHelper = {
   },
   joinGroup: async (groupId: number) => {
     try {
-      return Promise.resolve({
-        code: 200,
-        data: true,
-        meta: {
-          message: 'Joined',
-        },
-      });
-
       const response: any = await makeHttpRequest(
         groupsApiConfig.joinGroup(groupId),
       );
