@@ -9,22 +9,22 @@ import moment from 'moment';
 
 export interface MessageSeparatorProps {
   style?: StyleProp<ViewStyle>;
-  updateAt?: string;
-  previousUpdateAt?: string;
+  time?: string;
+  previousTime?: string;
 }
 
 const MessageSeparator: FC<MessageSeparatorProps> = ({
   style,
-  updateAt,
-  previousUpdateAt,
+  time,
+  previousTime,
 }: MessageSeparatorProps) => {
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-  const date = moment(updateAt, formats, true);
-  const previousDate = moment(previousUpdateAt, formats, true);
+  const date = moment(time, formats, true);
+  const previousDate = moment(previousTime, formats, true);
 
   if (date.day() === previousDate.day()) {
     return null;
