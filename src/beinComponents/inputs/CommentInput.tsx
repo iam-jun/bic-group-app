@@ -99,7 +99,15 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const [text, setText] = useState<string>(value || '');
   const [selection, setSelection] = useState<{start: number; end: number}>();
   const [addToEnd, setAddToEnd] = useState(true);
+
+  const [contentHeight, setContentHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
+
+  useEffect(() => {
+    console.group('contentHeight changes');
+    console.log(`contentHeight`, contentHeight);
+    console.groupEnd();
+  }, [contentHeight]);
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
   const [uploading, setUploading] = useState(false);
@@ -317,15 +325,32 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
-  const _onContentSizeChange = (e: any) => {
-    onContentSizeChange?.(e);
-    let newHeight = Math.min(
-      Math.max(DEFAULT_HEIGHT, e.nativeEvent.contentSize.height),
-      LIMIT_HEIGHT,
-    );
+  const calculateContentHeight = (height: number) => {
+    let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
     if (value?.length === 0) {
       newHeight = DEFAULT_HEIGHT;
     }
+    return newHeight;
+  };
+
+  const _onContentSizeChange = (e: any) => {
+    onContentSizeChange?.(e);
+
+    if (isWeb) return;
+    const newHeight = calculateContentHeight(e.nativeEvent.contentSize.height);
+
+    setContentHeight(newHeight);
+    Animated.timing(heightAnimated, {
+      toValue: newHeight,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const _onLayout = (e: any) => {
+    console.log(`onLayout called`, e.nativeEvent?.layout.height);
+    const newHeight = calculateContentHeight(e.nativeEvent.layout.height);
+    setContentHeight(newHeight);
     Animated.timing(heightAnimated, {
       toValue: newHeight,
       duration: 100,
@@ -364,7 +389,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const inputStyle: any = StyleSheet.flatten([
     styles.textInput,
-    Platform.OS === 'web' ? {outlineWidth: 0} : {},
+    Platform.OS === 'web' ? {outlineWidth: 0, height: contentHeight} : {},
   ]);
 
   const buttonsMarginLeft = showButtonsAnim.interpolate({
@@ -518,6 +543,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 onSelectionChange={_onSelectionChange}
                 onKeyPress={_onKeyPress}
               />
+              {isWeb && (
+                /**
+                 * Add duplicated Text on web to handle changing
+                 * content size more precisely
+                 */
+                <Text
+                  nativeID="lol-text"
+                  onLayout={_onLayout}
+                  style={[styles.textInput, styles.textDuplicatedOnWeb]}>
+                  {text || placeholder}
+                </Text>
+              )}
             </Animated.View>
             <Button
               style={{position: 'absolute', right: 10, bottom: 10}}
@@ -594,7 +631,7 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       alignItems: 'center',
     },
     textInput: {
-      flex: 1,
+      width: '100%',
       lineHeight: 22,
       paddingRight: 36,
       paddingTop: spacing?.padding.small,
@@ -605,6 +642,15 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       borderRadius: spacing?.borderRadius.large,
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
+    },
+    textDuplicatedOnWeb: {
+      ...Platform.select({
+        web: {
+          position: 'absolute',
+          width: '100%',
+          visibility: 'hidden',
+        },
+      }),
     },
     iconSend: {
       marginBottom: spacing?.margin.base,
