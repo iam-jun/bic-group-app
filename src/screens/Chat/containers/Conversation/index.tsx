@@ -94,7 +94,7 @@ const Conversation = () => {
   }, [route?.params?.roomId]);
 
   useEffect(() => {
-    const roomId = route?.params.roomId;
+    const roomId = route?.params?.roomId;
     const isDirectMessage = conversation?.type === roomTypes.DIRECT;
     if (roomId && conversation?._id && roomId === conversation?._id) {
       dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
