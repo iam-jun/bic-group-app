@@ -97,6 +97,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
+  const [cloneTextForWeb, setCloneTextForWeb] = useState<string>(value || '');
   const [selection, setSelection] = useState<{start: number; end: number}>();
   const [addToEnd, setAddToEnd] = useState(true);
 
@@ -137,6 +138,19 @@ const CommentInput: React.FC<CommentInputProps> = ({
       showSend(true);
     } else {
       showSend(false);
+    }
+
+    /**
+     * Clone text in order to handling empty newline
+     * as the <Text> does not adding the height of
+     * the empty newline by its own
+     */
+    if (isWeb) {
+      const lastChar = text.substr(text.length - 1);
+      const isEmptyNewline = lastChar === '\n';
+
+      if (isEmptyNewline) setCloneTextForWeb(text + '.');
+      else setCloneTextForWeb(text);
     }
   }, [text, selectedImage]);
 
@@ -552,7 +566,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
                   nativeID="lol-text"
                   onLayout={_onLayout}
                   style={[styles.textInput, styles.textDuplicatedOnWeb]}>
-                  {text || placeholder}
+                  {cloneTextForWeb || placeholder}
                 </Text>
               )}
             </Animated.View>
