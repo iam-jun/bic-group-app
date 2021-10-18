@@ -21,16 +21,18 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {ITheme} from '~/theme/interfaces';
-import actions from '../redux/actions';
-import AttachmentView from './AttachmentView';
+import actions from '../../redux/actions';
+import AttachmentView from './components/AttachmentView';
 import LinkPreviewer from '~/beinComponents/LinkPreviewer';
-import MessageHeader from './MessageHeader';
-import MessageMenu from './MessageMenu';
-import MessageStatus from './MessageStatus';
-import QuotedMessage from './QuotedMessage';
-import SystemMessage from './SystemMessage';
+import {
+  MessageHeader,
+  MessageMenu,
+  MessageStatus,
+  QuotedMessage,
+  SystemMessage,
+  MessageSeparator,
+} from './components';
 import {getMessageAttachmentUrl} from '~/screens/Chat/helper';
-import MessageSeparator from '~/screens/Chat/components/MessageSeparator';
 
 export interface MessageItemProps {
   previousMessage: IMessage;

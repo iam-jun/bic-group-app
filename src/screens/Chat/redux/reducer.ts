@@ -230,7 +230,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           searchResult: !payload
             ? rooms.data
             : rooms.data.filter((item: IConversation) =>
-                item.name.toLowerCase().includes(payload.toLowerCase()),
+                item?.name?.toLowerCase().includes(payload.toLowerCase()),
               ),
         },
       };

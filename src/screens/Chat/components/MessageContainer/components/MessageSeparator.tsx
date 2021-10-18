@@ -14,12 +14,11 @@ export interface MessageSeparatorProps {
 }
 
 const MessageSeparator: FC<MessageSeparatorProps> = ({
-  style,
   time,
   previousTime,
 }: MessageSeparatorProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];

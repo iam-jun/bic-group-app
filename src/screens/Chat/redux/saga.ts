@@ -536,7 +536,7 @@ function* getUnreadMessage() {
     yield put(actions.setUnreadMessage(message));
     yield put(actions.getSurroundingMessages(message._id));
   } catch (err) {
-    console.error('getMessageDetail', err);
+    console.error('getUnreadMessage', err);
   }
 }
 
@@ -604,7 +604,7 @@ function* getMessagesHistory() {
       }
       yield put(actions.setMessages(messagesData));
 
-      if (messagesData.length === appConfig.recordsPerPage) {
+      if (messagesData.length === appConfig.messagesPerPage) {
         yield put(actions.getMessagesHistory());
       }
     } else {
