@@ -13,8 +13,12 @@ import groupsKeySelector from '../../redux/keySelector';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {RootStackParamList} from '~/interfaces/IRouter';
+import modalActions from '~/store/modal/actions';
+import {useDispatch} from 'react-redux';
+import GroupHeaderMenu from '~/screens/Groups/GroupDetail/components/GroupHeaderMenu';
 
 const GroupTopBar = () => {
+  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -37,6 +41,21 @@ const GroupTopBar = () => {
 
   const navigateToGroupAdmin = () =>
     rootNavigation.navigate(groupStack.groupAdmin, {groupId});
+
+  const onPressMenu = (event?: any) => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <GroupHeaderMenu groupId={groupId} />,
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+          menuMinWidth: 280,
+          position: {x: event?.pageX, y: event?.pageY},
+        },
+      }),
+    );
+  };
 
   const renderAdminButton = () => {
     // only admin can see this button
@@ -72,7 +91,7 @@ const GroupTopBar = () => {
 
   const renderGroupOption = () => {
     return (
-      <ButtonWrapper onPress={() => alert('Press Group option...')}>
+      <ButtonWrapper onPress={onPressMenu}>
         <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
       </ButtonWrapper>
     );

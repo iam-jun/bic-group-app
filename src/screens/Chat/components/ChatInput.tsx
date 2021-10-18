@@ -71,6 +71,9 @@ const ChatInput: React.FC<Props> = ({
   };
 
   const onSend = (sendData?: ICommentInputSendParam) => {
+    if (!text.trim() && !sendData?.image) {
+      return;
+    }
     if (!editingMessage) {
       dispatch(
         actions.sendMessage({
@@ -92,7 +95,10 @@ const ChatInput: React.FC<Props> = ({
         }),
       );
     }
-    commentInputRef?.current?.clear();
+    setTimeout(() => {
+      //slowdown for web
+      commentInputRef?.current?.clear();
+    }, 100);
     setText('');
     onCancelEditing();
   };
@@ -192,6 +198,12 @@ const ChatInput: React.FC<Props> = ({
     !!replyingMessage && onCancelReplying();
   };
 
+  const _onKeyPress = (event: any) => {
+    if (Platform.OS === 'web' && !event?.shiftKey && event?.key === 'Enter') {
+      onSend();
+    }
+  };
+
   const renderInputHeader = () => {
     if (!editingMessage && !replyingMessage) return null;
     return (
@@ -226,6 +238,7 @@ const ChatInput: React.FC<Props> = ({
       onChangeText={_onChangeText}
       ComponentInput={CommentInput}
       mentionField="beinUserId"
+      onKeyPress={_onKeyPress}
       componentInputProps={{
         HeaderComponent: renderInputHeader(),
         commentInputRef: commentInputRef,

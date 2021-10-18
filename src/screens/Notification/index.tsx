@@ -19,6 +19,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {ITabTypes} from '~/interfaces/IRouter';
 import i18n from '~/localization';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
@@ -27,7 +28,6 @@ import {ITheme} from '~/theme/interfaces';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
-import {ITabTypes} from '~/interfaces/IRouter';
 
 const Notification = () => {
   const listRef = useRef<any>();

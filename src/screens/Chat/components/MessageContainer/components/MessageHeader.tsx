@@ -9,7 +9,7 @@ import {IChatUser} from '~/interfaces/IChat';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
-import {getDefaultAvatar} from '../helper';
+import {getDefaultAvatar} from '../../../helper';
 
 interface Props {
   user: IChatUser;

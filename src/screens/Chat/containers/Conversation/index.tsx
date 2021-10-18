@@ -61,7 +61,7 @@ const Conversation = () => {
     conversation.avatar,
   );
   const isFocused = useIsFocused();
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
@@ -94,7 +94,7 @@ const Conversation = () => {
   }, [route?.params?.roomId]);
 
   useEffect(() => {
-    const roomId = route?.params.roomId;
+    const roomId = route?.params?.roomId;
     const isDirectMessage = conversation?.type === roomTypes.DIRECT;
     if (roomId && conversation?._id && roomId === conversation?._id) {
       dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
@@ -398,6 +398,7 @@ const Conversation = () => {
           animated: false,
         });
       }
+      setIsScrolled(true);
     }
   };
 
@@ -432,6 +433,7 @@ const Conversation = () => {
 
   const onContentLayoutChange = () => {
     if (messages.canLoadNext) setDownButtonVisible(true);
+
     if (
       (!isScrolled || offsetY.current > 500) &&
       !messages.canLoadNext &&
@@ -440,6 +442,8 @@ const Conversation = () => {
     ) {
       scrollToBottom();
       // only first time
+      setIsScrolled(true);
+    } else if (isEmpty(messages.data)) {
       setIsScrolled(true);
     }
   };
@@ -450,16 +454,10 @@ const Conversation = () => {
     const delta = Platform.OS === 'web' ? 100 : 10;
     const condition1 = contentHeight - dimension.deviceHeight * 2 > _offsetY;
     const condition2 = messages.canLoadNext;
-
     setDownButtonVisible(condition1 || condition2);
     offsetY.current = _offsetY;
 
-    if (
-      isScrolled &&
-      !messages.loadingMore &&
-      messages.canLoadMore &&
-      _offsetY < delta
-    ) {
+    if (!messages.loadingMore && !isEmpty(messages.extra) && _offsetY < delta) {
       // reach top
       loadMoreMessages();
     }
@@ -498,48 +496,52 @@ const Conversation = () => {
   };
 
   const renderChatMessages = () => {
-    if (!messages.loading && isEmpty(messages.data))
+    if (!messages.loading && isEmpty(messages.data) && isScrolled)
       return <ChatWelcome type={conversation.type} />;
 
     // show loading until calculation has done and flatlist has scrolled
     return (
       <View style={styles.messagesContainer}>
-        {!isScrolled && <LoadingMessages />}
+        {(messages.loading || (!isScrolled && !messages.canLoadNext)) && (
+          <LoadingMessages />
+        )}
         {messages.loadingMore && <ActivityIndicator />}
-        <ListMessages
-          listRef={listRef}
-          nativeID={'list-messages'}
-          data={messages.data}
-          keyboardShouldPersistTaps="handled"
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0.5}
-          scrollEventThrottle={0.5}
-          removeClippedSubviews={true}
-          onScrollToIndexFailed={scrollToIndexFailed}
-          onContentSizeChange={onContentLayoutChange}
-          onScroll={onScroll}
-          showsHorizontalScrollIndicator={false}
-          maxToRenderPerBatch={appConfig.messagesPerPage}
-          initialNumToRender={appConfig.messagesPerPage}
-          contentContainerStyle={styles.listContainer}
-          /* means that the component will render the visible screen
+        {!messages.loading && (
+          <ListMessages
+            listRef={listRef}
+            nativeID={'list-messages'}
+            data={messages.data}
+            keyboardShouldPersistTaps="handled"
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.5}
+            scrollEventThrottle={0.5}
+            removeClippedSubviews={true}
+            onScrollToIndexFailed={scrollToIndexFailed}
+            onContentSizeChange={onContentLayoutChange}
+            onScroll={onScroll}
+            showsHorizontalScrollIndicator={false}
+            maxToRenderPerBatch={appConfig.messagesPerPage}
+            initialNumToRender={appConfig.messagesPerPage}
+            contentContainerStyle={styles.listContainer}
+            /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
-          windowSize={5000}
-          renderItem={renderItem}
-          keyExtractor={item => item._id}
-          onViewableItemsChanged={onViewableItemsChanged}
-          ListFooterComponent={() => (
-            <ViewSpacing height={theme.spacing.margin.large} />
-          )}
-          maintainVisibleContentPosition={{
-            minIndexForVisible: 0,
-          }}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-            // waitForInteraction: true,
-            // viewAreaCoveragePercentThreshold: 95,
-          }}
-        />
+            windowSize={5000}
+            renderItem={renderItem}
+            keyExtractor={item => item._id}
+            onViewableItemsChanged={onViewableItemsChanged}
+            ListFooterComponent={() => (
+              <ViewSpacing height={theme.spacing.margin.large} />
+            )}
+            maintainVisibleContentPosition={{
+              minIndexForVisible: 0,
+            }}
+            viewabilityConfig={{
+              itemVisiblePercentThreshold: 50,
+              // waitForInteraction: true,
+              // viewAreaCoveragePercentThreshold: 95,
+            }}
+          />
+        )}
         {messages.loadingNext && <ActivityIndicator />}
         <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       </View>
