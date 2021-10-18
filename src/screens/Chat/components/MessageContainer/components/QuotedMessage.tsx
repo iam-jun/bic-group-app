@@ -11,8 +11,8 @@ import {IQuotedMessage} from '~/interfaces/IChat';
 import modalActions from '~/store/modal/actions';
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
-import {getAvatar, getDefaultAvatar} from '../helper';
-import actions from '../redux/actions';
+import {getAvatar, getDefaultAvatar} from '../../../helper';
+import actions from '../../../redux/actions';
 import LoadingQuotedMessage from './LoadingQuotedMessage';
 
 interface Props {

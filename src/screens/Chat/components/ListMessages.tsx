@@ -1,5 +1,6 @@
-import React, {useRef} from 'react';
-import {FlatList, FlatListProps} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {FlatList, FlatListProps, Platform} from 'react-native';
+import _ from 'lodash';
 
 interface Props extends FlatListProps<any> {
   listRef?: React.RefObject<FlatList> | null;
@@ -14,8 +15,23 @@ const ListMessages = ({listRef, onViewableItemsChanged, ...props}: Props) => {
     initiated = true;
   });
 
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const lM = document.getElementById('list-messages');
+
+      const lClass = _.filter(lM?.classList, item => {
+        return item.includes('scrollbarWidth');
+      });
+
+      if (lClass.length > 0) {
+        lM?.classList.remove(lClass[0]);
+      }
+    }
+  });
+
   return (
     <FlatList
+      nativeID={'list-messages'}
       ref={listRef}
       {...props}
       onViewableItemsChanged={_onViewableItemsChanged.current}

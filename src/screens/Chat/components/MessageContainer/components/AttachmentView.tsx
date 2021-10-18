@@ -11,7 +11,7 @@ import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {openLink, parseSafe} from '~/utils/common';
 import {formatBytes} from '~/utils/formatData';
-import {getDownloadUrl, getMessageAttachmentUrl} from '../helper';
+import {getDownloadUrl, getMessageAttachmentUrl} from '../../../helper';
 
 interface AttachmentViewProps extends IMessage {
   attachmentMedia?: any;

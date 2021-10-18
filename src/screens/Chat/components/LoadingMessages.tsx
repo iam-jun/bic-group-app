@@ -39,7 +39,7 @@ const LoadingMessages = () => {
 
   return (
     <View style={styles.container}>
-      {Array.from(Array(15).keys()).map((item, index) => renderItem(index))}
+      {Array.from(Array(30).keys()).map((item, index) => renderItem(index))}
     </View>
   );
 };
