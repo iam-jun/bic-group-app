@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useEffect, useRef} from 'react';
-import {FlatList, FlatListProps} from 'react-native';
+import {FlatList, FlatListProps, Platform} from 'react-native';
 
 interface Props extends FlatListProps<any> {
   listRef?: React.RefObject<FlatList> | null;
@@ -16,25 +16,19 @@ const ListMessages = ({listRef, onViewableItemsChanged, ...props}: Props) => {
   });
 
   useEffect(() => {
-    const lM = document.getElementById('list-messages');
+    if (Platform.OS === 'web') {
+      const lM = document.getElementById('list-messages');
 
-    const lClass = _.filter(lM?.classList, item => {
-      return item.includes('scrollbarWidth');
-    });
+      const lClass = _.filter(lM?.classList, item => {
+        return item.includes('scrollbarWidth');
+      });
 
-    if (lClass.length > 0) {
-      lM?.classList.remove(lClass[0]);
-
-      // const lClass = _.filter(lM?.classList, item => {
-
-      //   return item.includes('scrollbarWidth');
-
-      // });
-
-      const classList = lM?.classList;
-
-      if (classList && classList.length > 0) {
-        lM?.classList.remove(classList[classList.length - 2]);
+      if (lClass.length > 0) {
+        lM?.classList.remove(lClass[0]);
+        const classList = lM?.classList;
+        if (classList && classList.length > 0) {
+          lM?.classList.remove(classList[classList.length - 2]);
+        }
       }
     }
   }, []);
