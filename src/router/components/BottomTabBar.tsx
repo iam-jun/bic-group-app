@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useRef} from 'react';
 import {
-  View,
+  Animated,
+  DeviceEventEmitter,
+  Keyboard,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
-  DeviceEventEmitter,
-  Keyboard,
-  Animated,
+  View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -16,7 +16,11 @@ import Text from '~/beinComponents/Text';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {useBaseHook} from '~/hooks';
 import Icon from '~/beinComponents/Icon';
-import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
+import {
+  bottomTabIcons,
+  bottomTabIconsFocused,
+  hideBottomTabRoutes,
+} from '~/configs/navigator';
 import {deviceDimensions, sizes} from '~/theme/dimension';
 import useTabBadge from '~/hooks/tabBadge';
 import RedDot from '~/beinComponents/Badge/RedDot';
@@ -27,6 +31,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   descriptors,
   navigation,
 }: BottomTabBarProps) => {
+  let tabBarVisible = useRef(true).current;
   const visibleAnim = useRef(new Animated.Value(1)).current;
 
   const theme = useTheme() as ITheme;
@@ -46,32 +51,64 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     outputRange: [0, bottomBarHeight],
   });
 
-  const show = () => {
+  const show = (duration = 150) => {
+    if (!tabBarVisible) {
+      return;
+    }
     Animated.timing(visibleAnim, {
       toValue: 1,
-      duration: 0,
+      duration,
       useNativeDriver: false,
     }).start();
   };
 
-  const hide = () => {
+  const hide = (duration = 150) => {
     Animated.timing(visibleAnim, {
       toValue: 0,
-      duration: 0,
+      duration,
       useNativeDriver: false,
     }).start();
+  };
+
+  const getActiveRouteName = (state: any): any => {
+    const route: any = state?.routes?.[state?.index];
+    if (route?.state) {
+      return getActiveRouteName(route?.state);
+    }
+    return route?.name;
   };
 
   useEffect(() => {
-    const willShowSubscription = Keyboard.addListener('keyboardWillShow', hide);
-    const showSubscription = Keyboard.addListener('keyboardDidShow', hide);
-    const willHideSubscription = Keyboard.addListener('keyboardWillHide', show);
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', show);
+    // @ts-ignore
+    return navigation.addListener('state', (event: any) => {
+      const routeName = getActiveRouteName(event?.data?.state);
+      const shouldHideTab = hideBottomTabRoutes.includes(routeName);
+      if (shouldHideTab) {
+        if (tabBarVisible) {
+          tabBarVisible = false;
+          hide();
+        }
+      } else {
+        if (!tabBarVisible) {
+          tabBarVisible = true;
+          show();
+        }
+      }
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    const onShow = () => hide(0);
+    const onHide = () => show(0);
+    const willShowListener = Keyboard.addListener('keyboardWillShow', onShow);
+    const showListener = Keyboard.addListener('keyboardDidShow', onShow);
+    const willHideListener = Keyboard.addListener('keyboardWillHide', onHide);
+    const hideListener = Keyboard.addListener('keyboardDidHide', onHide);
     return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-      willShowSubscription.remove();
-      willHideSubscription.remove();
+      showListener.remove();
+      hideListener.remove();
+      willShowListener.remove();
+      willHideListener.remove();
     };
   }, []);
 
