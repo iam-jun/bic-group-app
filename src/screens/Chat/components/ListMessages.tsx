@@ -18,17 +18,9 @@ const ListMessages = ({listRef, onViewableItemsChanged, ...props}: Props) => {
   useEffect(() => {
     if (Platform.OS === 'web') {
       const lM = document.getElementById('list-messages');
-
-      const lClass = _.filter(lM?.classList, item => {
-        return item.includes('scrollbarWidth');
-      });
-
-      if (lClass.length > 0) {
-        lM?.classList.remove(lClass[0]);
-        const classList = lM?.classList;
-        if (classList && classList.length > 0) {
-          lM?.classList.remove(classList[classList.length - 2]);
-        }
+      const classList = lM?.classList;
+      if (classList && classList.length > 0) {
+        lM?.classList.remove(classList[classList.length - 2]);
       }
     }
   }, []);
