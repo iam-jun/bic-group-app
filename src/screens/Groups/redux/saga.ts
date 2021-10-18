@@ -35,6 +35,7 @@ export default function* groupsSaga() {
     mergeExtraJoinableUsers,
   );
   yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
+  yield takeLatest(groupsTypes.JOIN_NEW_GROUP, joinNewGroup);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -334,6 +335,26 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
+    yield showError(err);
+  }
+}
+
+function* joinNewGroup({payload}: {type: string; payload: {groupId: number}}) {
+  try {
+    console.log(`payload`, payload);
+    const {groupId} = payload;
+
+    yield groupsDataHelper.joinGroup(groupId);
+
+    const toastMessage: IToastMessage = {
+      content: 'You are now a member of this group ' + groupId,
+      props: {
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.error('joinNewGroup catch', err);
     yield showError(err);
   }
 }
