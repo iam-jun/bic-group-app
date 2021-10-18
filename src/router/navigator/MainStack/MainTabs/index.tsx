@@ -1,10 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useContext, useEffect} from 'react';
 import {
+  DeviceEventEmitter,
   Platform,
   StyleSheet,
   useWindowDimensions,
-  DeviceEventEmitter,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -12,23 +12,22 @@ import {useDispatch} from 'react-redux';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
+import BottomTabBar from '~/router/components/BottomTabBar';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import {default as chatActions} from '~/screens/Chat/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
+import postActions from '~/screens/Post/redux/actions';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
-import postActions from '~/screens/Post/redux/actions';
-import BottomTabBar from '~/router/components/BottomTabBar';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
 
 const MainTabs = () => {
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
 
   const backBehavior = 'history';
 
@@ -94,6 +93,16 @@ const MainTabs = () => {
             userId: userId.toString(),
             notiGroupId,
             limit: limit,
+          }),
+        );
+    }
+    if (data?.deleted?.length > 0) {
+      streamClient &&
+        dispatch(
+          notificationsActions.deleteNotifications({
+            streamClient,
+            notiGroupIds: data.deleted,
+            userId: userId.toString(),
           }),
         );
     }

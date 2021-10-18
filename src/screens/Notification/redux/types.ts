@@ -12,6 +12,7 @@ const notificationsTypes = {
   MARK_AS_READ: 'notifications/MARK_AS_READ',
   LOADMORE: 'notifications/LOADMORE',
   LOAD_NEW_NOTIFICATIONS: 'notifications/LOAD_NEW_NOTIFICATIONS',
+  DELETE_NOTIFICATIONS: 'notifications/DELETE_NOTIFICATIONS',
 };
 
 export default notificationsTypes;

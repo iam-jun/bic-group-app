@@ -1,10 +1,10 @@
 import {IGetStreamDispatch} from './common';
 
 import {
-  IGetStreamUser,
-  IGetStreamPost,
-  IReaction,
   IGetStreamAudience,
+  IGetStreamPost,
+  IGetStreamUser,
+  IReaction,
 } from './IPost';
 
 export interface IGetStreamNotificationActivity {
@@ -29,4 +29,8 @@ export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
 export interface ILoadNewNotifications extends IGetStreamDispatch {
   notiGroupId: string;
   limit: string;
+}
+
+export interface IDeleteNotifications extends IGetStreamDispatch {
+  notiGroupIds: string[];
 }

@@ -37,6 +37,15 @@ function notificationsReducer(
         unseenNumber: state.unseenNumber + payload.unseen,
       };
     }
+    case notificationsTypes.DELETE_NOTIFICATIONS: {
+      const newListAfterDelete = state.notificationList.filter(item => {
+        return !payload.notiGroupIds.includes(item.group);
+      });
+      return {
+        ...state,
+        notificationList: newListAfterDelete,
+      };
+    }
     case notificationsTypes.CONCAT_NOTICATIONS:
       return {
         ...state,
