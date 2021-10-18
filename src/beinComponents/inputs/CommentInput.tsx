@@ -364,7 +364,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onLayout = (e: any) => {
-    console.log(`onLayout called`, e.nativeEvent?.layout.height);
     const newHeight = calculateTextInputHeight(e.nativeEvent.layout.height);
 
     handleSetTextInputHeight(newHeight);
