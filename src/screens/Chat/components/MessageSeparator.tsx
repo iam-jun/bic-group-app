@@ -26,7 +26,7 @@ const MessageSeparator: FC<MessageSeparatorProps> = ({
   const date = moment(time, formats, true);
   const previousDate = moment(previousTime, formats, true);
 
-  if (date.day() === previousDate.day()) {
+  if (!time || !previousTime || date.day() === previousDate.day()) {
     return null;
   }
 
