@@ -1,29 +1,29 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {useForm} from 'react-hook-form';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import {useForm} from 'react-hook-form';
+import Button from '~/beinComponents/Button';
+import Icon from '~/beinComponents/Icon';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
-import Icon from '~/beinComponents/Icon';
+import {forgotPasswordStages} from '~/constants/authConstants';
 
 import {useBaseHook} from '~/hooks';
-import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
-import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
-import {forgotPasswordStages} from '~/constants/authConstants';
 import useAuth from '~/hooks/auth';
-import * as actions from '~/screens/Auth/redux/actions';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import LockImg from '../../../../assets/images/auth_forgot_password_complete.svg';
-import {ITheme} from '~/theme/interfaces';
 import icons from '~/resources/icons';
-import {deviceDimensions} from '~/theme/dimension';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
+import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
+import * as actions from '~/screens/Auth/redux/actions';
+import {deviceDimensions} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import LockImg from '../../../../assets/images/auth_forgot_password_complete.svg';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -63,10 +63,10 @@ const ForgotPassword = () => {
     return (
       <View style={styles.completeContainer}>
         <SVGIcon
-          style={styles.svg}
           // @ts-ignore
           source={LockImg}
-          size={imgSize}
+          width={imgSize}
+          height={imgSize}
         />
         <View style={styles.textContainer}>
           <Text.H6>{t('auth:text_forgot_password_complete_title')}</Text.H6>
