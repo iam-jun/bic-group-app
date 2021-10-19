@@ -23,12 +23,14 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({
       <TouchableOpacity onPress={() => setVisible(true)}>
         <Image {...props} source={thumbnailSource} />
       </TouchableOpacity>
-      <ImageGalleryModal
-        visible={visible}
-        source={gallerySource}
-        initIndex={initIndex}
-        onPressClose={() => setVisible(false)}
-      />
+      {visible && (
+        <ImageGalleryModal
+          visible={visible}
+          source={gallerySource}
+          initIndex={initIndex}
+          onPressClose={() => setVisible(false)}
+        />
+      )}
     </View>
   );
 };
