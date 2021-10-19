@@ -28,6 +28,7 @@ import {useKeyboardStatus} from '~/hooks/keyboard';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import Div from '../Div';
+import BottomSheet from '../BottomSheet';
 
 const DEFAULT_INDEX = -2;
 const MENTION_ALL_INDEX = -1;
@@ -90,6 +91,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   getDataResponseKey = '',
 }: MentionInputProps) => {
   const _mentionInputRef = mentionInputRef || useRef<any>();
+  const mentionBottomSheetRef = useRef<any>();
   const inputRef = textInputRef || useRef<TextInput>();
   const listRef = useRef<any>();
   const [mentioning, setMentioning] = useState(false);
@@ -124,6 +126,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
       setHighlightIndex(DEFAULT_INDEX);
       sethHighlightItem(undefined);
     }
+
+    mentioning
+      ? mentionBottomSheetRef?.current?.open()
+      : mentionBottomSheetRef?.current?.close();
   }, [mentioning]);
 
   const getContent = () => content;
@@ -414,6 +420,26 @@ const MentionInput: React.FC<MentionInputProps> = ({
     );
   };
 
+  const renderMentionBottomSheet = () => {
+    if (modalPosition !== 'bottom-sheet') return null;
+    console.log('Hello');
+
+    return (
+      <BottomSheet
+        modalizeRef={mentionBottomSheetRef}
+        onClose={() => {
+          setMentioning(false);
+          inputRef?.current?.focus();
+        }}
+        ContentComponent={
+          <View style={[styles.containerBottomSheet, modalStyle]}>
+            {renderMentionContent()}
+          </View>
+        }
+      />
+    );
+  };
+
   return (
     <View
       style={[styles.containerWrapper, style]}
@@ -448,7 +474,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
         editable={!disabled}
         onKeyPress={_onKeyPress}
       />
-      {renderMentionModal()}
+      {modalPosition === 'bottom-sheet'
+        ? renderMentionBottomSheet()
+        : renderMentionModal()}
     </View>
   );
 };
@@ -516,6 +544,11 @@ const createStyles = (
       borderColor: colors.borderDivider,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
+    },
+    containerBottomSheet: {
+      maxHeight: 360,
+      backgroundColor: colors.background,
+      justifyContent: 'center',
     },
     shadow: {
       shadowColor: '#000',
