@@ -27,6 +27,7 @@ interface Props {
   editingMessage?: IMessage;
   onCancelEditing: () => void;
   onCancelReplying: () => void;
+  onSendCallback: () => void;
   onError: (err: any) => void;
 }
 
@@ -35,6 +36,7 @@ const ChatInput: React.FC<Props> = ({
   replyingMessage,
   onCancelEditing,
   onCancelReplying,
+  onSendCallback,
   onError,
 }: Props) => {
   const commentInputRef = useRef<any>();
@@ -98,17 +100,10 @@ const ChatInput: React.FC<Props> = ({
     setTimeout(() => {
       //slowdown for web
       commentInputRef?.current?.clear();
+      onSendCallback();
     }, 100);
     setText('');
     onCancelEditing();
-  };
-
-  const onPressSelectImage = (file: IFilePicked) => {
-    const _error = validateFile(file);
-    onError(_error);
-    if (_error) return;
-    const type = file.type.includes('/') ? file.type.split('/')[0] : 'image';
-    showUploadConfirmation(file, type);
   };
 
   const onPressFile = (file: IFilePicked) => {
