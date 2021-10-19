@@ -289,7 +289,7 @@
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
     "error_upload_photo_failed": "Tải ảnh lên thất bại!",
     "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh",
-    "error_post_detail_deleted": "Bài viết bị đã xoá",
+    "error_post_detail_deleted": "Bài viết không tìm thấy hoặc đã bị xoá",
     "placeholder_create_post": "Bạn đang nghĩ gì...",
     "post_exit_title": "Bạn muốn hoàn thiện bài viết sau?",
     "post_exit_desc": "Bạn có thể lưu bản nháp để hoàn thiện sau",
