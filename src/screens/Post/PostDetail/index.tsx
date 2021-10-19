@@ -48,6 +48,8 @@ import * as modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
+import {showHideToastMessage} from '~/store/modal/actions';
+import {useBaseHook} from '~/hooks';
 
 const PostDetail = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -63,6 +65,7 @@ const PostDetail = (props: any) => {
   let layoutSetted = useRef(false).current;
 
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -99,7 +102,24 @@ const PostDetail = (props: any) => {
 
   useEffect(() => {
     if (id && userId && streamClient) {
-      getPostDetail();
+      getPostDetail((loading, success) => {
+        if (!loading && !success) {
+          if (Platform.OS === 'web') {
+            rootNavigation.replace(rootSwitch.notFound);
+          } else {
+            rootNavigation.canGoBack && rootNavigation.goBack();
+            dispatch(
+              showHideToastMessage({
+                content: t('post:error_post_detail_deleted'),
+                props: {
+                  textProps: {useI18n: true},
+                  type: 'error',
+                },
+              }),
+            );
+          }
+        }
+      });
     }
   }, [id, userId, streamClient]);
 
@@ -117,7 +137,9 @@ const PostDetail = (props: any) => {
     }
   }, [deleted]);
 
-  const getPostDetail = (callbackLoading?: (loading: boolean) => void) => {
+  const getPostDetail = (
+    callbackLoading?: (loading: boolean, success: boolean) => void,
+  ) => {
     if (userId && id && streamClient) {
       const payload: IPayloadGetPostDetail = {
         userId,
