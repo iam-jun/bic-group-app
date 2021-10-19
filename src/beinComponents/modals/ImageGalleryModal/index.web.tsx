@@ -1,5 +1,12 @@
 import React, {FC, useState, useRef} from 'react';
-import {StyleSheet, Modal, View, FlatList, Pressable} from 'react-native';
+import {
+  StyleSheet,
+  Modal,
+  View,
+  FlatList,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -26,6 +33,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const footerListRef = useRef<any>();
 
   const dispatch = useDispatch();
+  const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const {colors, spacing, dimension} = theme;
@@ -111,16 +119,18 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
             </Text.H6>
           )}
         </View>
-        <FlatList
-          contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-          ref={footerListRef}
-          horizontal
-          data={imageUrls}
-          renderItem={renderFooterItem}
-          showsHorizontalScrollIndicator={false}
-          onScrollToIndexFailed={onScrollToIndexFailed}
-          keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
-        />
+        <View style={{width: dimensions.width * 0.8}}>
+          <FlatList
+            contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+            ref={footerListRef}
+            horizontal
+            data={imageUrls}
+            renderItem={renderFooterItem}
+            showsHorizontalScrollIndicator={false}
+            onScrollToIndexFailed={onScrollToIndexFailed}
+            keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
+          />
+        </View>
       </View>
     );
   };
