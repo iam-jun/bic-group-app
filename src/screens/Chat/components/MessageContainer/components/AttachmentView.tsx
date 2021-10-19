@@ -44,11 +44,14 @@ const AttachmentView: React.FC<AttachmentViewProps> = (
       if (attachment?.image_url) {
         const url = getMessageAttachmentUrl(attachment?.image_url);
         let initIndex;
-        attachmentMedia?.map?.((item: any, index: number) => {
-          if (item?.title === attachment?.title) {
-            initIndex = index;
+        if (attachmentMedia?.length > 0) {
+          for (let i = 0; i < attachmentMedia.length; i++) {
+            if (attachmentMedia?.[i]?.title === attachment?.title) {
+              initIndex = i;
+              break;
+            }
           }
-        });
+        }
         const target = attachmentMedia?.[initIndex || 0] || attachment;
         const {width, height} = calculateImgSize(target?.width, target?.height);
         return (
