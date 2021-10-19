@@ -477,7 +477,7 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
     },
     mentionModalStyle: {
-      maxHeight: Platform.OS === 'web' ? 350 : 240,
+      maxHeight: Platform.OS === 'web' ? 350 : 300,
     },
   });
 };
