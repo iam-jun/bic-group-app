@@ -5,6 +5,7 @@ import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import PostSelectImage from '~/screens/Post/PostSelectImage';
 import DraftPost from '~/screens/Post/DraftPost';
+import UserProfile from '~/screens/Menu/UserProfile';
 
 export default {
   newsfeed: Newsfeed,
@@ -14,4 +15,5 @@ export default {
   'post-select-audience': PostSelectAudience,
   'post-select-image': PostSelectImage,
   'draft-post': DraftPost,
+  'user-profile': UserProfile,
 };

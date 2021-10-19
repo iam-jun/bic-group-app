@@ -7,6 +7,7 @@ import {
   AddMembersToGroup,
   ReviewConversation,
 } from '~/screens/Chat';
+import UserProfile from '~/screens/Menu/UserProfile';
 
 export default {
   'conversation-list': ConversationsList,
@@ -16,4 +17,5 @@ export default {
   'review-conversation': ReviewConversation,
   'chat-group-members': GroupMembers,
   'add-members': AddMembersToGroup,
+  'user-profile': UserProfile,
 };
