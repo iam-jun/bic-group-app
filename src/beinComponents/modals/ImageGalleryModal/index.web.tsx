@@ -12,7 +12,6 @@ import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import {useDispatch} from 'react-redux';
 import * as modalActions from '~/store/modal/actions';
-import {showHideToastMessage} from '~/store/modal/actions';
 
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
@@ -128,29 +127,29 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const renderControlButton = () => {
     return (
-      <View style={styles.buttonControlContainer}>
-        <View>
+      <>
+        <View style={{position: 'absolute', left: 0}}>
           {activeIndex > 0 && (
             <Button style={styles.buttonControl} onPress={onPressBack}>
               <Icon icon={'iconBack'} tintColor={colors.iconTintReversed} />
             </Button>
           )}
         </View>
-        <View>
+        <View style={{position: 'absolute', right: 0}}>
           {activeIndex < imageUrls.length - 1 && (
             <Button style={styles.buttonControl} onPress={onPressNext}>
               <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
             </Button>
           )}
         </View>
-      </View>
+      </>
     );
   };
 
   return (
     <Modal visible={visible} transparent={true}>
       {visible && (
-        <View style={styles.container}>
+        <Pressable onPress={onPressClose} style={styles.container}>
           {renderHeader()}
           <View style={styles.imageContainer}>
             <Pressable onPress={() => setZoomIn(!zoomIn)}>
@@ -162,7 +161,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
             {renderControlButton()}
           </View>
           {renderFooter()}
-        </View>
+        </Pressable>
       )}
     </Modal>
   );
