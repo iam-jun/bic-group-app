@@ -117,6 +117,7 @@ const EditEmail = () => {
               helperContent={errors?.email?.message}
               keyboardType="email-address"
               autoCapitalize="none"
+              disabled
             />
           )}
           rules={{
