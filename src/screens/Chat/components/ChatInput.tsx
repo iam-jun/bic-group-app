@@ -146,7 +146,7 @@ const ChatInput: React.FC<Props> = ({
 
   const uploadFilePromise = async (param: any) => {
     try {
-      const {file} = param || {};
+      const {file, text} = param || {};
       if (!file) {
         return Promise.reject();
       }
@@ -156,6 +156,9 @@ const ChatInput: React.FC<Props> = ({
         'description',
         JSON.stringify({size: file.size, type: file.type}),
       );
+      if (text) {
+        formData.append('msg', text);
+      }
       const response: any = await makeHttpRequest(
         apiConfig.Chat.uploadFile(conversation._id, formData),
       );
@@ -243,6 +246,7 @@ const ChatInput: React.FC<Props> = ({
         HeaderComponent: renderInputHeader(),
         commentInputRef: commentInputRef,
         isHandleUpload: true,
+        clearWhenUploadDone: true,
         onPressSend: onSend,
         onPressFile,
         uploadFilePromise,
