@@ -51,6 +51,7 @@ const UserEditProfile = () => {
     relationship_status,
     email,
     phone,
+    country_code,
     address,
   } = myProfile;
 
@@ -252,7 +253,11 @@ const UserEditProfile = () => {
           />
           <SettingItem
             title={'settings:title_phone_number'}
-            subtitle={phone || i18next.t('common:text_not_set')}
+            subtitle={
+              country_code && phone
+                ? `(+${country_code}) ${phone}`
+                : i18next.t('common:text_not_set')
+            }
             leftIcon={'Phone'}
             isTouchDisabled
           />

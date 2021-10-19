@@ -20,10 +20,14 @@ const EditContact = () => {
   const {rootNavigation} = useRootNavigation();
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {email, phone, address} = myProfile || {};
+  const {email, phone, address, country_code} = myProfile || {};
 
   const goToEditEmail = () => {
     rootNavigation.navigate(mainStack.editEmail);
+  };
+
+  const goToEditPhoneNumber = () => {
+    rootNavigation.navigate(mainStack.editPhoneNumber);
   };
 
   return (
@@ -43,9 +47,14 @@ const EditContact = () => {
         />
         <SettingItem
           title={'settings:title_phone_number'}
-          subtitle={phone || i18next.t('common:text_not_set')}
+          subtitle={
+            country_code && phone
+              ? `(+${country_code}) ${phone}`
+              : i18next.t('common:text_not_set')
+          }
           leftIcon={'Phone'}
           rightIcon={'EditAlt'}
+          onPress={goToEditPhoneNumber}
         />
         <SettingItem
           title={'settings:title_address'}
