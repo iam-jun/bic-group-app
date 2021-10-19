@@ -6,7 +6,7 @@ import {useTheme} from 'react-native-paper';
 export interface LoadingIndicatorProps {
   style?: StyleProp<ViewStyle>;
   size?: number | 'small' | 'large';
-  color?: 'string';
+  color?: string;
 }
 
 const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({

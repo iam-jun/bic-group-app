@@ -347,6 +347,7 @@
     "error_upload_failed": "Please remove file upload failed or retry",
     "error_upload_photo_failed": "Upload photo failed!",
     "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
+    "error_post_detail_deleted": "Post not found or deleted",
     "placeholder_create_post": "Write your post here...",
     "post_exit_title": "Want to finish your post later?",
     "post_exit_desc": "You can save it as a draft for later editing",

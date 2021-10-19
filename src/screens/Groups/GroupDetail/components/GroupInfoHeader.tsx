@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import {titleCase} from '~/utils/common';
 import {ITheme} from '~/theme/interfaces';
@@ -8,6 +9,7 @@ import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
+import groupsActions from '../../redux/actions';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
@@ -24,6 +26,7 @@ const GroupInfoHeader = () => {
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
+  const dispatch = useDispatch();
 
   const {name, user_count, icon, background_img_url, privacy} = groupDetail;
 
@@ -72,7 +75,9 @@ const GroupInfoHeader = () => {
   };
 
   const onPressJoin = () => {
-    alert('Press join');
+    const groupId = groupDetail.id;
+    console.log(`Joining`, groupId);
+    dispatch(groupsActions.joinNewGroup({groupId}));
   };
 
   const renderJoinButton = () => {

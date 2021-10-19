@@ -144,6 +144,13 @@ const groupsActions = {
     };
   },
 
+  joinNewGroup: function (payload: {groupId: number}) {
+    return {
+      type: groupsTypes.JOIN_NEW_GROUP,
+      payload,
+    };
+  },
+
   setLoadingAvatar: (payload: boolean) => ({
     type: groupsTypes.SET_LOADING_AVATAR,
     payload,

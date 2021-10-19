@@ -8,6 +8,7 @@ import {
   ReviewConversation,
 } from '~/screens/Chat';
 import UserProfile from '~/screens/Menu/UserProfile';
+import PostDetail from '~/screens/Post/PostDetail';
 
 export default {
   'conversation-list': ConversationsList,
@@ -18,4 +19,5 @@ export default {
   'chat-group-members': GroupMembers,
   'add-members': AddMembersToGroup,
   'user-profile': UserProfile,
+  'post-detail': PostDetail,
 };
