@@ -21,6 +21,7 @@ const AttachmentView: React.FC<AttachmentViewProps> = (
   props: AttachmentViewProps,
 ) => {
   const theme = useTheme() as ITheme;
+  const {colors, spacing} = theme;
   const styles = createStyles(theme);
   const {attachment, status, attachmentMedia} = props;
   const {name, size} = attachment || {};
@@ -48,11 +49,17 @@ const AttachmentView: React.FC<AttachmentViewProps> = (
             initIndex = index;
           }
         });
-
+        const target = attachmentMedia?.[initIndex || 0] || attachment;
+        const {width, height} = calculateImgSize(target?.width, target?.height);
         return (
           <ImageViewer
-            style={styles.image}
-            resizeMode="cover"
+            style={{
+              width,
+              height,
+              backgroundColor: colors.placeholder,
+              borderRadius: spacing.borderRadius.small,
+            }}
+            resizeMode={'contain'}
             source={initIndex !== undefined ? attachmentMedia : url}
             initIndex={initIndex}
           />
@@ -107,6 +114,21 @@ const AttachmentView: React.FC<AttachmentViewProps> = (
   return <View style={styles.container}>{renderAttachment()}</View>;
 };
 
+const calculateImgSize = (oW: number, oH: number) => {
+  const dW = Platform.OS === 'web' ? 300 : scaleSize(307);
+  const dH = Platform.OS === 'web' ? 200 : scaleSize(307);
+  if (!oW || !oH) {
+    return {width: dW, height: dH};
+  }
+  let width = dW;
+  let height = (width * oH) / oW;
+  if (height > dH) {
+    height = dH;
+    width = (height * oW) / oH;
+  }
+  return {width, height};
+};
+
 const createStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
@@ -114,11 +136,6 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingVertical: spacing.padding.base,
-    },
-    image: {
-      width: Platform.OS === 'web' ? 300 : scaleSize(307),
-      height: Platform.OS === 'web' ? 200 : scaleSize(225.5),
-      backgroundColor: colors.placeholder,
     },
     defaultFileContainer: {
       flexDirection: 'row',
