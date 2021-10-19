@@ -18,8 +18,8 @@ export const hideBottomTabRoutes = [
   'chat-group-members',
   'add-members',
   //Setting: Account setting, Edit account, Security, Privacy
-  'account-settings',
   'user-edit',
+  'security-and-login',
 ];
 
 export const navigationSetting = {
