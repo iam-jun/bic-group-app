@@ -147,6 +147,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
         ?.then?.((response: any) => {
           setIsLoading(false);
           const newList = get(response, getDataResponseKey) || [];
+
+          if (newList?.length === 0) {
+            setList([]);
+            setMentioning(false);
+            return;
+          }
+
           setList(newList);
           setKey(mentionKey);
         })
@@ -156,6 +163,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
             `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
           );
           setIsLoading(false);
+          setMentioning(false);
           setList([]);
           setHighlightIndex(DEFAULT_INDEX);
           sethHighlightItem(undefined);
@@ -422,7 +430,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const renderMentionBottomSheet = () => {
     if (modalPosition !== 'bottom-sheet') return null;
-    console.log('Hello');
 
     return (
       <BottomSheet
@@ -431,6 +438,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           setMentioning(false);
           inputRef?.current?.focus();
         }}
+        overlayStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}}
         ContentComponent={
           <View style={[styles.containerBottomSheet, modalStyle]}>
             {renderMentionContent()}
@@ -546,7 +554,7 @@ const createStyles = (
       borderBottomRightRadius: 0,
     },
     containerBottomSheet: {
-      maxHeight: 360,
+      maxHeight: 300,
       backgroundColor: colors.background,
       justifyContent: 'center',
     },
