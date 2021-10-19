@@ -27,6 +27,7 @@ interface Props {
   editingMessage?: IMessage;
   onCancelEditing: () => void;
   onCancelReplying: () => void;
+  onSentAttachment: () => void;
   onError: (err: any) => void;
 }
 
@@ -35,6 +36,7 @@ const ChatInput: React.FC<Props> = ({
   replyingMessage,
   onCancelEditing,
   onCancelReplying,
+  onSentAttachment,
   onError,
 }: Props) => {
   const commentInputRef = useRef<any>();
@@ -165,6 +167,7 @@ const ChatInput: React.FC<Props> = ({
       if (response?.data?.success) {
         const attachment: any = response?.data?.message?.attachments?.[0];
         const link = getDownloadUrl(attachment?.title_link);
+        onSentAttachment?.();
         return Promise.resolve(link);
       } else {
         return Promise.reject(response?.data);
