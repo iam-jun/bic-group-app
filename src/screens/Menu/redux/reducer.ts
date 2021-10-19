@@ -1,5 +1,7 @@
 import {IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
+import countryCode from '~/constants/countryCode';
+import {ICountryCodeList} from '~/interfaces/common';
 
 const initMenuState = {
   loadingMyProfile: false,
@@ -11,6 +13,11 @@ const initMenuState = {
 
   myProfile: {} as IUserProfile,
   emailEditError: '',
+  phoneNumberEditError: '',
+  countryCodeList: {
+    data: countryCode,
+    searchResult: [],
+  },
 
   loadingAvatar: false,
   loadingCover: false,
@@ -18,6 +25,7 @@ const initMenuState = {
 
 const menuReducer = (state = initMenuState, action: any = {}) => {
   const {type, payload} = action;
+  const {countryCodeList} = state;
 
   switch (type) {
     case menuTypes.GET_USER_PROFILE:
@@ -58,6 +66,11 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
         ...state,
         emailEditError: payload,
       };
+    case menuTypes.SET_PHONE_NUMBER_EDIT_ERROR:
+      return {
+        ...state,
+        phoneNumberEditError: payload,
+      };
     case menuTypes.SET_MY_PROFILE:
       return {
         ...state,
@@ -67,6 +80,20 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
         myProfile: {
           ...state.myProfile,
           ...payload,
+        },
+      };
+    case menuTypes.SEARCH_COUNTRY_CODE:
+      return {
+        ...state,
+        countryCodeList: {
+          ...state.countryCodeList,
+          searchResult: !payload
+            ? countryCodeList.data
+            : countryCodeList.data.filter(
+                (item: ICountryCodeList) =>
+                  item.code.includes(payload) ||
+                  item.name.toLowerCase().includes(payload.toLowerCase()),
+              ),
         },
       };
 

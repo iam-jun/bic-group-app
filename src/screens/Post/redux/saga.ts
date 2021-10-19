@@ -950,7 +950,7 @@ function* getPostDetail({
     return;
   }
   try {
-    callbackLoading?.(true);
+    callbackLoading?.(true, false);
     const response = yield call(
       postDataHelper.getPostDetail,
       userId,
@@ -958,9 +958,16 @@ function* getPostDetail({
       postId,
     );
     yield put(postActions.addToAllPosts(response));
-    callbackLoading?.(false);
+    callbackLoading?.(false, true);
   } catch (e) {
-    callbackLoading?.(false);
+    const post = yield select(state =>
+      get(state, postKeySelector.postById(postId)),
+    );
+    if (post) {
+      post.deleted = true;
+      yield put(postActions.addToAllPosts(post));
+    }
+    callbackLoading?.(false, false);
     showError(e);
   }
 }

@@ -6,6 +6,8 @@ const chatStack = {
   reviewConversation: 'review-conversation',
   chatGroupMembers: 'chat-group-members',
   addMembers: 'add-members',
+  userProfile: 'user-profile',
+  postDetail: 'post-detail',
 };
 
 export default chatStack;

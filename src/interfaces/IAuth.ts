@@ -74,6 +74,7 @@ export interface IUserProfile {
   avatar?: string;
   background_img_url?: string;
   phone?: string;
+  country_code?: string;
   address?: string;
   language?: string[];
   description?: string;
@@ -95,6 +96,7 @@ export interface IUserEdit {
   avatar?: string;
   background_img_url?: string;
   phone?: string;
+  country_code?: string;
   address?: string;
   language?: string[];
   description?: string;

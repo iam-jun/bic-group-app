@@ -153,3 +153,8 @@ export const escapeMarkDown = (text: string) => {
   }
   return text;
 };
+
+export const formatTextRemoveSpace = (text: string) => {
+  if (!text) return text;
+  return text.replace(/\s/g, '');
+};

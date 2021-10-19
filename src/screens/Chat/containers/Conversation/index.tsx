@@ -437,7 +437,6 @@ const Conversation = () => {
 
   const onContentLayoutChange = () => {
     if (messages.canLoadNext) setDownButtonVisible(true);
-
     if (
       (!isScrolled || offsetY.current > 500) &&
       !messages.canLoadNext &&
@@ -579,6 +578,7 @@ const Conversation = () => {
         replyingMessage={replyingMessage}
         onCancelEditing={onCancelEditingMessage}
         onCancelReplying={onCancelReplyingMessage}
+        onSendCallback={scrollToBottom}
         onError={setError}
         onSentAttachment={getAttachments}
       />

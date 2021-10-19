@@ -19,6 +19,7 @@ const AboutProfile = (props: IUserProfile) => {
     address,
     language,
     phone,
+    country_code,
     relationship_status,
     gender,
     birthday,
@@ -55,7 +56,10 @@ const AboutProfile = (props: IUserProfile) => {
       {renderItem('CommentsAlt', userLanguages)}
       {/* @ts-ignore */}
       {renderItem('Calender', formatDate(birthday, 'MMM Do, YYYY'))}
-      {renderItem('Phone', phone)}
+      {renderItem(
+        'Phone',
+        country_code && phone ? `(+${country_code}) ${phone}` : undefined,
+      )}
       {renderItem('Envelope', email)}
       {/* @ts-ignore */}
       {renderItem('UserSquare', genders[gender])}

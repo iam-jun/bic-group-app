@@ -9,6 +9,7 @@ import PostDetail from '~/screens/Post/PostDetail';
 import DraftPost from '~/screens/Post/DraftPost';
 import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
+import UserProfile from '~/screens/Menu/UserProfile';
 
 export default {
   menu: Menu,
@@ -16,6 +17,7 @@ export default {
   'account-settings': AccoutSettings,
   'security-and-login': SecurityLogin,
   'change-password': ChangePassword,
+  'user-profile': UserProfile,
 
   //use for draft post
   'create-post': CreatePost,

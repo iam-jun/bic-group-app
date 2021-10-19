@@ -248,10 +248,14 @@
     "title_phone_number": "Phone number",
     "title_address": "Address",
     "title_edit_contact": "Edit Contact",
+    "title_edit_phone_number": "Edit Phone number",
     "title_edit_email_address": "Edit Email Address",
     "text_wrong_email_format": "Wrong Email format",
     "text_updated_successfully": "updated successfully",
-    "text_email_is_used": "This Email is used"
+    "text_email_is_used": "This Email is used",
+    "text_wrong_phone_number_format": "Wrong number format",
+    "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
+    "text_phone_number_is_used": "This number is already used"
   },
   "languages": {
     "title_en": "English",
@@ -347,6 +351,7 @@
     "error_upload_failed": "Please remove file upload failed or retry",
     "error_upload_photo_failed": "Upload photo failed!",
     "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
+    "error_post_detail_deleted": "Post not found or deleted",
     "placeholder_create_post": "Write your post here...",
     "post_exit_title": "Want to finish your post later?",
     "post_exit_desc": "You can save it as a draft for later editing",
@@ -521,7 +526,8 @@
   },
   "input": {
     "search": "Search for someone to chat...",
-    "search_group": "Search for groups or people..."
+    "search_group": "Search for groups or people...",
+    "search_country": "Search Country"
   },
   "groups": {
     "search_results": "Search results",

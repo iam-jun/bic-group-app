@@ -46,6 +46,11 @@ const menuActions = {
     };
   },
 
+  searchCountryCode: (payload: string) => ({
+    type: menuTypes.SEARCH_COUNTRY_CODE,
+    payload,
+  }),
+
   editMyProfile: function (
     payload: IUserEdit,
     editFieldName?: string,
@@ -60,6 +65,10 @@ const menuActions = {
   },
   setEmailEditError: (payload: string) => ({
     type: menuTypes.SET_EMAIL_EDIT_ERROR,
+    payload,
+  }),
+  setPhoneNumberEditError: (payload: string) => ({
+    type: menuTypes.SET_PHONE_NUMBER_EDIT_ERROR,
     payload,
   }),
   uploadImage: function (payload: IUserImageUpload) {

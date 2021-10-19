@@ -13,6 +13,7 @@ import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/Edi
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 import NewFeature from '~/screens/NewFeature';
 import DraftPost from '~/screens/Post/DraftPost';
+import UserProfile from '~/screens/Menu/UserProfile';
 
 export default {
   'group-list': Groups,
@@ -30,4 +31,5 @@ export default {
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
   'invite-members': AddMembersToGroup,
+  'user-profile': UserProfile,
 };

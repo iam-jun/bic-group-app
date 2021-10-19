@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'lodash';
 import debounce from 'lodash/debounce';
 import {Controller, useForm} from 'react-hook-form';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -178,8 +178,7 @@ const ChangePassword = () => {
               testID="inputNewPassword"
               label={t('auth:input_label_new_password')}
               placeholder={t('auth:input_label_new_password')}
-              // @ts-ignore
-              autoCompleteType="new-password"
+              autoCompleteType="off"
               error={errors.newPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}
