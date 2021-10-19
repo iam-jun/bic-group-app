@@ -42,8 +42,9 @@ const EditContact = () => {
           title={'settings:title_email'}
           subtitle={email || i18next.t('common:text_not_set')}
           leftIcon={'EnvelopeAlt'}
-          rightIcon={'EditAlt'}
+          // rightIcon={'EditAlt'}
           onPress={goToEditEmail}
+          isTouchDisabled
         />
         <SettingItem
           title={'settings:title_phone_number'}
