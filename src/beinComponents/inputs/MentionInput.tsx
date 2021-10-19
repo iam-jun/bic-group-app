@@ -38,7 +38,7 @@ export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   title?: string;
   emptyContent?: string;
-  modalPosition: 'top' | 'bottom' | 'above-keyboard';
+  modalPosition: 'top' | 'bottom' | 'above-keyboard' | 'bottom-sheet';
   disabled?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
@@ -374,6 +374,46 @@ const MentionInput: React.FC<MentionInputProps> = ({
     );
   };
 
+  const renderMentionContent = () => {
+    return (
+      <>
+        {!!title && (!key || list?.length === 0) && (
+          <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
+        )}
+        {renderMentionAll()}
+        <Divider />
+        <FlatList
+          ref={listRef}
+          keyboardShouldPersistTaps={'always'}
+          data={list || []}
+          nestedScrollEnabled
+          ListEmptyComponent={renderEmpty}
+          renderItem={_renderItem}
+          keyExtractor={item => item.id || item._id}
+          onScrollToIndexFailed={() => {
+            // do nothing
+          }}
+        />
+      </>
+    );
+  };
+
+  const renderMentionModal = () => {
+    if (!mentioning) return null;
+
+    return (
+      <View
+        style={[
+          styles.containerModal,
+          fullWidth && styles.containerModalFullWidth,
+          showShadow && styles.shadow,
+          modalStyle,
+        ]}>
+        {renderMentionContent()}
+      </View>
+    );
+  };
+
   return (
     <View
       style={[styles.containerWrapper, style]}
@@ -408,31 +448,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
         editable={!disabled}
         onKeyPress={_onKeyPress}
       />
-      {mentioning && (
-        <View
-          style={[
-            styles.containerModal,
-            fullWidth && styles.containerModalFullWidth,
-            showShadow && styles.shadow,
-            modalStyle,
-          ]}>
-          {!!title && (!key || list?.length === 0) && (
-            <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
-          )}
-          {renderMentionAll()}
-          <Divider />
-          <FlatList
-            ref={listRef}
-            keyboardShouldPersistTaps={'always'}
-            data={list || []}
-            nestedScrollEnabled
-            ListEmptyComponent={renderEmpty}
-            renderItem={_renderItem}
-            keyExtractor={item => item.id || item._id}
-            onScrollToIndexFailed={() => {}}
-          />
-        </View>
-      )}
+      {renderMentionModal()}
     </View>
   );
 };
@@ -448,7 +464,7 @@ const createStyles = (
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
 
-  let stylePosition;
+  let stylePosition = {};
   switch (position) {
     case 'top':
       stylePosition = {
@@ -459,6 +475,9 @@ const createStyles = (
       stylePosition = {
         bottom: keyboardHeight,
       };
+      break;
+    case 'bottom-sheet':
+      stylePosition = {};
       break;
     default:
       if (topPosition > maxTopPosition) {
