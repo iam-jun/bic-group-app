@@ -23,7 +23,7 @@ import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
-import {IMessage, IQuotedMessage} from '~/interfaces/IChat';
+import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {IReactionCounts} from '~/interfaces/IPost';
 import {RootStackParamList} from '~/interfaces/IRouter';
@@ -94,6 +94,10 @@ const Conversation = () => {
   }, [route?.params?.roomId]);
 
   useEffect(() => {
+    if (!messages.loading) jumpToMessage(route?.params?.message_id);
+  }, [route?.params?.message_id]);
+
+  useEffect(() => {
     const roomId = route?.params?.roomId;
     const isDirectMessage = conversation?.type === roomTypes.DIRECT;
     if (roomId && conversation?._id && roomId === conversation?._id) {
@@ -128,8 +132,11 @@ const Conversation = () => {
   }, [error]);
 
   const getMessages = (unreadCount: number) => {
+    console.log('getMessages', route.params);
     dispatch(actions.resetData('messages'));
-    if (unreadCount > appConfig.messagesPerPage) {
+    if (route.params?.message_id) {
+      dispatch(actions.getSurroundingMessages(route.params.message_id));
+    } else if (unreadCount > appConfig.messagesPerPage) {
       dispatch(actions.getUnreadMessage());
     } else {
       dispatch(actions.getMessagesHistory());
@@ -256,23 +263,22 @@ const Conversation = () => {
     );
   };
 
-  const jumpToRepliedMessage = (message?: IQuotedMessage) => {
-    if (!message) return;
+  const jumpToMessage = (messageId?: string) => {
+    if (!messageId) return;
 
     const index = messages.data.findIndex(
-      (item: IMessage) => item._id === message.msgId,
+      (item: IMessage) => item._id === messageId,
     );
     if (index >= 0) {
       dispatch(actions.setJumpedMessage(messages.data[index]));
       listRef.current?.scrollToIndex({index, animated: true});
     } else {
       // dispatch(actions.resetData('messages'));
-      dispatch(actions.getSurroundingMessages(message.msgId));
+      dispatch(actions.getSurroundingMessages(messageId));
     }
   };
 
   const onPressBack = async () => {
-    dispatch(actions.resetData('messages'));
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
     else rootNavigation.goBack();
@@ -378,7 +384,7 @@ const Conversation = () => {
         onRemoveReaction(reactionId, item._id),
       onLongPressReaction: (reactionType: ReactionType) =>
         onLongPressReaction(item._id, reactionType, item?.reaction_counts),
-      onQuotedMessagePress: () => jumpToRepliedMessage(item.quotedMessage),
+      onQuotedMessagePress: () => jumpToMessage(item.quotedMessage?.msgId),
     };
     return <MessageContainer {...props} />;
   };
@@ -392,14 +398,17 @@ const Conversation = () => {
     ) {
       const item = changed[0].item;
 
-      if (item._id !== messages.unreadMessage?._id) {
+      if (
+        item._id !== messages.unreadMessage?._id &&
+        messages.data.length > unreadMessagePosition
+      ) {
         listRef.current?.scrollToIndex({
           index: unreadMessagePosition,
           animated: false,
         });
       }
-      setIsScrolled(true);
     }
+    setIsScrolled(true);
   };
 
   const onUnreadBannerPress = () => {
@@ -437,7 +446,8 @@ const Conversation = () => {
       (!isScrolled || offsetY.current > 500) &&
       !messages.canLoadNext &&
       !isEmpty(messages.data) &&
-      conversation.unreadCount === 0
+      conversation.unreadCount === 0 &&
+      !route.params?.message_id
     ) {
       scrollToBottom();
       // only first time
@@ -471,11 +481,9 @@ const Conversation = () => {
   const onEndReached = () => {
     if (!messages.loadingNext && messages.canLoadNext) {
       dispatch(actions.getNextMessages());
-    } else {
-      if (conversation.unreadCount > 0) {
-        setUnreadBannerVisible(false);
-        dispatch(actions.readConversation());
-      }
+    } else if (conversation.unreadCount > 0) {
+      setUnreadBannerVisible(false);
+      dispatch(actions.readConversation());
     }
   };
 
