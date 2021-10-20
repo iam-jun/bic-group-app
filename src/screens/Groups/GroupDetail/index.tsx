@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import {isEmpty} from 'lodash';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useFocusEffect, useRoute} from '@react-navigation/native';
 
 import {ITheme} from '~/theme/interfaces';
 import {AppContext} from '~/contexts/AppContext';
@@ -28,6 +28,7 @@ import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCrea
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import {deviceDimensions} from '~/theme/dimension';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
+import {rootSwitch} from '~/router/stack';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
@@ -53,6 +54,12 @@ const GroupDetail = (props: any) => {
 
   const {rootNavigation} = useRootNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
+
+  useFocusEffect(() => {
+    if (!userId && Platform.OS === 'web') {
+      rootNavigation.replace(rootSwitch.authStack);
+    }
+  });
 
   const onPressBack = () => {
     if (route.params?.initial === false)
