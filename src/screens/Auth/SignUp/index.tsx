@@ -1,24 +1,24 @@
+import debounce from 'lodash/debounce';
+import isEmpty from 'lodash/isEmpty';
 import React from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Controller, useForm} from 'react-hook-form';
-import isEmpty from 'lodash/isEmpty';
-import debounce from 'lodash/debounce';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
+import Button from '~/beinComponents/Button';
+import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 
 import TextInput from '~/beinComponents/inputs/TextInput';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Button from '~/beinComponents/Button';
-import {spacing} from '~/theme';
-import * as actions from '~/screens/Auth/redux/actions';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
+import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import * as actions from '~/screens/Auth/redux/actions';
+import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const SignUp = () => {
   const dispatch = useDispatch();
