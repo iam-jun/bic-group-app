@@ -60,11 +60,11 @@ export interface CommentInputProps {
   disableKeyboardSpacer?: boolean;
   onContentSizeChange?: (event: any) => void;
   isHandleUpload?: boolean;
+  clearWhenUploadDone?: boolean;
   uploadImageType?: IUploadType;
   uploadVideoType?: IUploadType;
   uploadFileType?: IUploadType;
   uploadFilePromise?: any;
-  uploadFileParam?: any;
 }
 
 const DEFAULT_HEIGHT = 44;
@@ -89,11 +89,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   disableKeyboardSpacer,
   onContentSizeChange,
   isHandleUpload,
+  clearWhenUploadDone,
   uploadImageType = uploadTypes.commentImage,
   uploadVideoType = uploadTypes.commentVideo,
   uploadFileType = uploadTypes.commentFile,
   uploadFilePromise,
-  uploadFileParam = {},
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -210,10 +210,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
       const param = {
         file: selectedImage,
         uploadType: uploadImageType,
-        ...uploadFileParam,
       };
       const promise = uploadFilePromise
-        ? uploadFilePromise(param)
+        ? uploadFilePromise({...param, text})
         : FileUploader.getInstance().upload(param);
       promise
         .then((result: any) => {
@@ -224,7 +223,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
             width: selectedImage.width,
             height: selectedImage.height,
           };
-          onPressSend?.({content: text, image: imageData});
+          !clearWhenUploadDone &&
+            onPressSend?.({content: text, image: imageData});
+          clearWhenUploadDone && clear();
         })
         .catch((e: any) => {
           console.log(`\x1b[31m🐣️ CommentInput upload Error:`, e, `\x1b[0m`);

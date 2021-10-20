@@ -469,9 +469,11 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
     const {chat} = yield select();
     const {conversation} = chat;
     if (conversation.type === roomTypes.GROUP) {
-      yield groupsDataHelper.removeUsers(conversation.beinGroupId, [
-        payload.beinUserId,
-      ]);
+      yield groupsDataHelper.removeUsers(
+        conversation.beinGroupId,
+        [payload.username],
+        'usernames',
+      );
     } else {
       const data = {
         roomId: conversation._id,
@@ -573,8 +575,12 @@ function* getMessagesHistory() {
     const {auth, chat} = yield select();
     const {conversation, messages} = chat;
     const {data} = messages;
-    const lastDate = data.length > 0 ? data[0].createdAt : '';
-
+    const lastDate =
+      data.length > 0
+        ? {
+            $date: new Date(data[0].createdAt).getTime(),
+          }
+        : null;
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getMessagesHistory({
         msg: 'method',
@@ -582,7 +588,7 @@ function* getMessagesHistory() {
         id: conversation._id,
         params: [
           conversation._id,
-          {$date: new Date(lastDate).getTime() || new Date().getTime()},
+          lastDate,
           appConfig.messagesPerPage,
           {$date: new Date().getTime()},
         ],

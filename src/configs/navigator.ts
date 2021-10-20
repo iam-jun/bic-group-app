@@ -10,6 +10,8 @@ export const authStack = {
 export const hideBottomTabRoutes = [
   //Post: Post Detail, Comment View
   'post-detail',
+  'create-post',
+  'create-comment',
   'comment-view',
   //Chat: Create new chat, Conversation, Conversation info, Conversation member
   'conversation',

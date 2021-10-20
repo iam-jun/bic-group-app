@@ -304,7 +304,9 @@ const PostDetail = (props: any) => {
     if (!layoutSetted) {
       layoutSetted = true;
       if (focus_comment && listComment?.length > 0) {
-        scrollTo(-1, -1);
+        //limit section index to default comment length = 10 to avoid scroll crash. it happen when init with large amount of comment, then scroll, then reload, result only 10 latest comment, scroll to out of index
+        const sectionIndex = Math.min(9, sectionData.length - 1);
+        scrollTo(sectionIndex, -1);
       }
       if (focus_comment && Platform.OS === 'web') {
         textInputRef.current?.focus?.();
@@ -326,7 +328,7 @@ const PostDetail = (props: any) => {
           <View style={styles.postDetailContainer}>
             <SectionList
               ref={listRef}
-              sections={sectionData}
+              sections={deleted ? [] : sectionData}
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
               ListHeaderComponent={renderPostContent}

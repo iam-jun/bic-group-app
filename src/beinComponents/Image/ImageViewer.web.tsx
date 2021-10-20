@@ -27,12 +27,14 @@ const ImageViewer = ({source, style, initIndex}: ImageProps) => {
       <TouchableOpacity onPress={() => setViewerVisible(true)}>
         <Image source={thumbnailSource} style={style as any} />
       </TouchableOpacity>
-      <ImageGalleryModal
-        visible={viewerVisible}
-        source={gallerySource}
-        initIndex={initIndex}
-        onPressClose={() => setViewerVisible(false)}
-      />
+      {viewerVisible && (
+        <ImageGalleryModal
+          visible={viewerVisible}
+          source={gallerySource}
+          initIndex={initIndex}
+          onPressClose={() => setViewerVisible(false)}
+        />
+      )}
     </Div>
   );
 };

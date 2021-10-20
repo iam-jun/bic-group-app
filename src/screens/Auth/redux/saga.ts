@@ -176,6 +176,7 @@ function* onSignInSuccess(user: IUserResponse) {
 }
 
 function* onSignInFailed(errorMessage: string) {
+  yield put(modalActions.hideLoading());
   yield put(actions.setLoading(false));
   yield put(actions.setSigningInError(errorMessage));
 }
