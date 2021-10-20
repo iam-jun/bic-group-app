@@ -328,7 +328,7 @@ const PostDetail = (props: any) => {
           <View style={styles.postDetailContainer}>
             <SectionList
               ref={listRef}
-              sections={sectionData}
+              sections={deleted ? [] : sectionData}
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
               ListHeaderComponent={renderPostContent}
