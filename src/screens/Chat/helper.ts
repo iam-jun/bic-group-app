@@ -51,7 +51,9 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
 
   const avatar =
     type === roomTypes.DIRECT
-      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0])
+      ? membersExcludeMe?.length > 0
+        ? getAvatar(membersExcludeMe[0])
+        : null
       : getRoomAvatar(_id);
 
   const attachment =
@@ -70,15 +72,33 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     item?.fname ||
     item?.name;
 
-  const lastMessage = item.lastMessage
-    ? attachment && extraData?.type !== 'reply'
-      ? item.lastMessage.u?.username === user?.username
-        ? i18next.t('chat:label_last_message:my_attachment')
-        : i18next
-            .t('chat:label_last_message:other_attachment')
-            .replace('{0}', item.lastMessage.u?.name)
-      : `${item.lastMessage.u?.name}: ${item?.lastMessage?.msg}`
-    : null;
+  let lastMessage = null;
+
+  if (item.lastMessage) {
+    const isMyMessage = user.username === item.lastMessage.u?.username;
+    // hide removed message
+    if (item.lastMessage.t) {
+      if (item.lastMessage.t === messageEventTypes.REMOVE_MESSAGE) {
+        lastMessage = i18next.t(
+          `chat:system_message:${item.lastMessage.t}:${
+            isMyMessage ? 'me' : 'other'
+          }`,
+        );
+      } else {
+        lastMessage = i18next.t(`chat:system_message:${item.lastMessage.t}`);
+      }
+    } else {
+      lastMessage = item.lastMessage
+        ? attachment && extraData?.type !== 'reply'
+          ? item.lastMessage.u?.username === user?.username
+            ? i18next.t('chat:label_last_message:my_attachment')
+            : i18next
+                .t('chat:label_last_message:other_attachment')
+                .replace('{0}', item.lastMessage.u?.name)
+          : `${item.lastMessage.u?.name}: ${item?.lastMessage?.msg}`
+        : null;
+    }
+  }
 
   return {
     ...item,

@@ -105,6 +105,7 @@ const Conversation = () => {
     if (roomId && conversation?._id && roomId === conversation?._id) {
       dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
     }
+    getAttachments();
   }, [route?.params?.roomId, conversation?._id]);
 
   useEffect(() => {
@@ -142,6 +143,14 @@ const Conversation = () => {
       dispatch(actions.getUnreadMessage());
     } else {
       dispatch(actions.getMessagesHistory());
+    }
+  };
+
+  const getAttachments = () => {
+    const roomId = route?.params?.roomId;
+    const isDirectMessage = conversation?.type === roomTypes.DIRECT;
+    if (roomId && conversation?._id && roomId === conversation?._id) {
+      dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
     }
   };
 
@@ -591,6 +600,7 @@ const Conversation = () => {
         onCancelReplying={onCancelReplyingMessage}
         onSendCallback={scrollToBottom}
         onError={setError}
+        onSentAttachment={getAttachments}
       />
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}

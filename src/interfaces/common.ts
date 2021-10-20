@@ -83,5 +83,5 @@ export interface ILinkPreview {
 export interface ICountryCodeList {
   code: string;
   name: string;
-  flag: string;
+  flag: IconType;
 }

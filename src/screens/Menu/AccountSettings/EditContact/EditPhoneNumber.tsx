@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import i18next from 'i18next';
-import {useTheme} from 'react-native-paper';
+import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {Controller, useForm} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
@@ -30,6 +30,9 @@ import {formatTextRemoveSpace} from '~/utils/formatData';
 import {ICountryCodeList} from '~/interfaces/common';
 import appConfig from '~/configs/appConfig';
 import {dimension} from '~/theme';
+import Icon from '~/beinComponents/Icon';
+import {IconType} from '~/resources/icons';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const EditPhoneNumber = () => {
   const theme = useTheme() as ITheme;
@@ -46,7 +49,7 @@ const EditPhoneNumber = () => {
   );
   const [showSaveButton, setShowSaveButton] = useState<boolean>(false);
   const [codeValue, setCodeValue] = useState<string>(country_code);
-  const [flagValue, setFlagValue] = useState<string>('');
+  const [flagValue, setFlagValue] = useState<IconType>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -75,7 +78,11 @@ const EditPhoneNumber = () => {
   } = useForm();
 
   const navigateBack = () => {
-    rootNavigation.goBack();
+    if (rootNavigation.canGoBack) {
+      rootNavigation.goBack();
+    } else {
+      rootNavigation.replace(mainStack.editContact);
+    }
     clearAllErrors();
   };
 
@@ -145,7 +152,8 @@ const EditPhoneNumber = () => {
     return (
       <PrimaryItem
         height={34}
-        title={`${item.flag}  ${item.name} (+${item.code})`}
+        title={`${item.name} (+${item.code})`}
+        leftIcon={item.flag}
         onPress={() => onSelectCountryCode(item)}
       />
     );
@@ -185,8 +193,17 @@ const EditPhoneNumber = () => {
       <ButtonWrapper onPress={onOpenCountryCode}>
         <View pointerEvents="none">
           <TextInput
-            value={`${flagValue} +${codeValue}`}
+            value={`+${codeValue}`}
             style={styles.countryExtension}
+            left={
+              <TextInputPaper.Icon
+                name={() => (
+                  <View style={styles.iconStyle}>
+                    <Icon icon={flagValue} size={16} />
+                  </View>
+                )}
+              />
+            }
           />
         </View>
       </ButtonWrapper>
@@ -246,6 +263,7 @@ const EditPhoneNumber = () => {
           highEmphasis: true,
         }}
         onPressButton={showSaveButton ? onSave : undefined}
+        onPressBack={navigateBack}
       />
       <View style={styles.inputsView}>
         {renderCountryCodeInput()}
@@ -297,6 +315,9 @@ const createStyles = (theme: ITheme) => {
     },
     listView: {
       marginVertical: spacing.margin.large,
+    },
+    iconStyle: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

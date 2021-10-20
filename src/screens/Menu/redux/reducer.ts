@@ -80,6 +80,7 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
         myProfile: {
           ...state.myProfile,
           ...payload,
+          country_code: payload.country_code || '84',
         },
       };
     case menuTypes.SEARCH_COUNTRY_CODE:
@@ -90,6 +91,7 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
           searchResult: !payload
             ? countryCodeList.data
             : countryCodeList.data.filter(
+                // @ts-ignore
                 (item: ICountryCodeList) =>
                   item.code.includes(payload) ||
                   item.name.toLowerCase().includes(payload.toLowerCase()),

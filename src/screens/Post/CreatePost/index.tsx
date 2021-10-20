@@ -61,6 +61,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {colors} = theme;
   const styles = themeStyles(theme);
 
+  const isWeb = Platform.OS === 'web';
+
   let initPostData: IPostActivity = {};
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
@@ -340,7 +342,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             mentionInputRef={mentionInputRef}
             style={shouldScroll ? {} : styles.flex1}
             textInputStyle={shouldScroll ? {} : styles.flex1}
-            modalPosition={Platform.OS === 'web' ? 'bottom' : 'above-keyboard'}
+            modalPosition={isWeb ? 'bottom' : 'above-keyboard'}
             onPress={onPressMentionAudience}
             onChangeText={onChangeText}
             ComponentInput={PostInput}
@@ -350,9 +352,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             getDataParam={{group_ids: strGroupIds}}
             getDataResponseKey={'data'}
             disabled={loading}
-            fullWidth={Platform.OS !== 'web'}
-            modalStyle={styles.mentionModalStyle}
-            showShadow={Platform.OS === 'web'}
+            fullWidth={!isWeb}
+            modalStyle={isWeb ? {maxHeight: 350} : {}}
+            showShadow={isWeb}
           />
           <PostPhotoPreview
             data={images || []}
@@ -475,9 +477,6 @@ const themeStyles = (theme: ITheme) => {
     audienceList: {
       marginBottom: spacing.margin.large,
       marginHorizontal: spacing.margin.large,
-    },
-    mentionModalStyle: {
-      maxHeight: Platform.OS === 'web' ? 350 : 240,
     },
   });
 };

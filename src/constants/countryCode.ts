@@ -2,16 +2,16 @@ export default [
   {
     code: '84',
     name: 'Vietnam',
-    flag: '🇻🇳',
+    flag: 'iconFlagVn',
   },
   {
     code: '1',
     name: 'United States',
-    flag: '🇺🇸',
+    flag: 'iconFlagUs',
   },
   {
     code: '65',
     name: 'Singapore',
-    flag: '🇸🇬',
+    flag: 'iconFlagSg',
   },
 ];

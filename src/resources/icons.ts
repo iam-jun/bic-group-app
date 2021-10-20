@@ -62,6 +62,9 @@ import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
 import iconSmileSolid from '../../assets/icons/icon_smile_solid.svg';
 import iconStar from '../../assets/icons/icon_star_alt.svg';
 import iconSticker from '../../assets/icons/icon_sticker.svg';
+import iconFlagVn from '../../assets/icons/icon_flag_vn.svg';
+import iconFlagSg from '../../assets/icons/icon_flag_sg.svg';
+import iconFlagUs from '../../assets/icons/icon_flag_us.svg';
 
 const icons = {
   iconTabHome,
@@ -214,6 +217,9 @@ const icons = {
   ArrowRight: 'ArrowRight',
   ArrowLeft: 'ArrowLeft',
   Plus: 'Plus',
+  iconFlagVn,
+  iconFlagSg,
+  iconFlagUs,
 };
 
 export default icons;

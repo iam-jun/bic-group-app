@@ -27,6 +27,7 @@ interface Props {
   editingMessage?: IMessage;
   onCancelEditing: () => void;
   onCancelReplying: () => void;
+  onSentAttachment: () => void;
   onSendCallback: () => void;
   onError: (err: any) => void;
 }
@@ -37,6 +38,7 @@ const ChatInput: React.FC<Props> = ({
   onCancelEditing,
   onCancelReplying,
   onSendCallback,
+  onSentAttachment,
   onError,
 }: Props) => {
   const commentInputRef = useRef<any>();
@@ -141,7 +143,7 @@ const ChatInput: React.FC<Props> = ({
 
   const uploadFilePromise = async (param: any) => {
     try {
-      const {file} = param || {};
+      const {file, text} = param || {};
       if (!file) {
         return Promise.reject();
       }
@@ -151,12 +153,16 @@ const ChatInput: React.FC<Props> = ({
         'description',
         JSON.stringify({size: file.size, type: file.type}),
       );
+      if (text) {
+        formData.append('msg', text);
+      }
       const response: any = await makeHttpRequest(
         apiConfig.Chat.uploadFile(conversation._id, formData),
       );
       if (response?.data?.success) {
         const attachment: any = response?.data?.message?.attachments?.[0];
         const link = getDownloadUrl(attachment?.title_link);
+        onSentAttachment?.();
         return Promise.resolve(link);
       } else {
         return Promise.reject(response?.data);
@@ -238,6 +244,7 @@ const ChatInput: React.FC<Props> = ({
         HeaderComponent: renderInputHeader(),
         commentInputRef: commentInputRef,
         isHandleUpload: true,
+        clearWhenUploadDone: true,
         onPressSend: onSend,
         onPressFile,
         uploadFilePromise,

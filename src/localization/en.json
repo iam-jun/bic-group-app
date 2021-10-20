@@ -542,8 +542,8 @@
     "group_menu": {
       "label_copy_group_link": "Copy Group Link",
       "label_leave_group": "Leave Group",
-      "label_share_group": "Share To...",
-      "label_share_to_chat": "Share To Chat"
+      "label_share_group": "Share to...",
+      "label_share_to_chat": "Share to Bein Chat"
     },
     "member_menu": {
       "label_view_profile": "View profile",
