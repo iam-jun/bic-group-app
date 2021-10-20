@@ -96,6 +96,17 @@ const EditBasicInfo = () => {
     setLanguageState(languages);
   };
 
+  const maxBirthday = () => {
+    const currentMoment = new Date();
+    const currentDay = currentMoment.getDate();
+    const currentMonth = currentMoment.getMonth();
+    const currentYear = currentMoment.getFullYear();
+
+    // user must be at least 8 years old up to today
+    const maxDateToSelect = new Date(currentYear - 8, currentMonth, currentDay);
+    return maxDateToSelect;
+  };
+
   const _onPressBack = () => {
     const isChanged =
       fullname !== nameState ||
@@ -199,10 +210,11 @@ const EditBasicInfo = () => {
       {selectingDate && (
         <DateTimePicker
           isVisible={selectingDate}
-          date={new Date()}
+          date={maxBirthday()}
           mode={Platform.OS === 'web' ? 'time' : 'date'}
           onConfirm={onSetBirthday}
           onCancel={onDateEditClose}
+          maxDate={maxBirthday()}
         />
       )}
     </ScreenWrapper>
