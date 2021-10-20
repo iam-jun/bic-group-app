@@ -75,13 +75,17 @@ export const groupsApiConfig = {
       user_ids: userIds,
     },
   }),
-  removeUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
+  removeUsers: (
+    groupId: number,
+    userIds: (number | string)[],
+    type?: string,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/remove`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: false,
     data: {
-      user_ids: userIds,
+      [type || 'user_ids']: userIds,
     },
   }),
   joinGroup: (groupId: number): HttpApiRequestConfig => ({
@@ -239,10 +243,14 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  removeUsers: async (groupId: number, userIds: number[]) => {
+  removeUsers: async (
+    groupId: number,
+    userIds: (number | string)[],
+    type?: string,
+  ) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.removeUsers(groupId, userIds),
+        groupsApiConfig.removeUsers(groupId, userIds, type),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

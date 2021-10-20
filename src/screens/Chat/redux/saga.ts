@@ -468,9 +468,11 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
     const {chat} = yield select();
     const {conversation} = chat;
     if (conversation.type === roomTypes.GROUP) {
-      yield groupsDataHelper.removeUsers(conversation.beinGroupId, [
-        payload.beinUserId,
-      ]);
+      yield groupsDataHelper.removeUsers(
+        conversation.beinGroupId,
+        [payload.username],
+        'usernames',
+      );
     } else {
       const data = {
         roomId: conversation._id,
