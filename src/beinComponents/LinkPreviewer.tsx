@@ -42,11 +42,11 @@ const LinkPreviewer = ({text}: Props) => {
 
   return (
     <ButtonWrapper contentStyle={styles.container} onPress={onPress}>
-      {!!linkPreviews?.[link].thumbnail && (
+      {!!linkPreviews?.[link].image && (
         <Image
           style={styles.thumbnail}
           containerStyle={styles.thumbnailContainer}
-          source={linkPreviews?.[link].thumbnail}
+          source={linkPreviews?.[link].image}
         />
       )}
       <View style={styles.metadata}>
