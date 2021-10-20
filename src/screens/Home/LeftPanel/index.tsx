@@ -13,6 +13,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IconType} from '~/resources/icons';
 import {linkingConfigFullLaptop} from '~/configs/navigator';
+import Div from '~/beinComponents/Div';
 
 const homeScreens =
   linkingConfigFullLaptop.config.screens.MainStack.screens.main.screens;
@@ -92,28 +93,28 @@ const LeftPanel = () => {
     onPress?: () => void;
     [key: string]: any;
   }) => {
-    let style = {};
-    if (path === currentPath) {
-      style = {
-        backgroundColor: theme.colors.placeholder,
-      };
-    }
+    const isActive = path === currentPath;
+
+    let className = 'left-col__item';
+    if (isActive) className = className + ` ${className}--active`;
 
     return (
-      <PrimaryItem
-        height={48}
-        leftIconProps={{
-          icon,
-          size: 24,
-          style: styles.leftIcon,
-        }}
-        leftIcon={icon}
-        titleProps={{useI18n: true}}
-        title={title}
-        onPress={onPress}
-        style={style}
-        {...props}
-      />
+      <Div style={[styles.itemContainer]}>
+        <PrimaryItem
+          height={48}
+          leftIconProps={{
+            icon,
+            size: 24,
+            style: styles.leftIcon,
+          }}
+          leftIcon={icon}
+          titleProps={{useI18n: true}}
+          title={title}
+          onPress={onPress}
+          className={className}
+          {...props}
+        />
+      </Div>
     );
   };
 
@@ -150,6 +151,9 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     root: {
       paddingTop: spacing.padding.base,
+    },
+    itemContainer: {
+      marginHorizontal: spacing.margin.base,
     },
     leftIcon: {
       marginLeft: spacing.margin.base,
