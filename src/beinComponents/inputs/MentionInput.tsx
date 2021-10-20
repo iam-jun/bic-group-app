@@ -28,7 +28,6 @@ import {useKeyboardStatus} from '~/hooks/keyboard';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import Div from '../Div';
-import BottomSheet from '../BottomSheet';
 
 const DEFAULT_INDEX = -2;
 const MENTION_ALL_INDEX = -1;
@@ -39,7 +38,7 @@ export interface MentionInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
   title?: string;
   emptyContent?: string;
-  modalPosition: 'top' | 'bottom' | 'above-keyboard' | 'bottom-sheet';
+  modalPosition: 'top' | 'bottom' | 'above-keyboard';
   disabled?: boolean;
   placeholderText?: string;
   textInputStyle?: StyleProp<TextStyle>;
@@ -91,7 +90,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
   getDataResponseKey = '',
 }: MentionInputProps) => {
   const _mentionInputRef = mentionInputRef || useRef<any>();
-  const mentionBottomSheetRef = useRef<any>();
   const inputRef = textInputRef || useRef<TextInput>();
   const listRef = useRef<any>();
   const [mentioning, setMentioning] = useState(false);
@@ -108,7 +106,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
 
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const styles = createStyles(
     theme,
     modalPosition,
@@ -126,10 +124,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
       setHighlightIndex(DEFAULT_INDEX);
       sethHighlightItem(undefined);
     }
-
-    mentioning
-      ? mentionBottomSheetRef?.current?.open()
-      : mentionBottomSheetRef?.current?.close();
   }, [mentioning]);
 
   const getContent = () => content;
@@ -394,66 +388,6 @@ const MentionInput: React.FC<MentionInputProps> = ({
     );
   };
 
-  const renderMentionContent = () => {
-    return (
-      <>
-        {!!title && (!key || list?.length === 0) && (
-          <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
-        )}
-        {renderMentionAll()}
-        <Divider />
-        <FlatList
-          ref={listRef}
-          keyboardShouldPersistTaps={'always'}
-          data={list || []}
-          nestedScrollEnabled
-          ListEmptyComponent={renderEmpty}
-          renderItem={_renderItem}
-          keyExtractor={item => item.id || item._id}
-          onScrollToIndexFailed={() => {
-            // do nothing
-          }}
-        />
-      </>
-    );
-  };
-
-  const renderMentionModal = () => {
-    if (!mentioning) return null;
-
-    return (
-      <View
-        style={[
-          styles.containerModal,
-          fullWidth && styles.containerModalFullWidth,
-          showShadow && styles.shadow,
-          modalStyle,
-        ]}>
-        {renderMentionContent()}
-      </View>
-    );
-  };
-
-  const renderMentionBottomSheet = () => {
-    if (modalPosition !== 'bottom-sheet') return null;
-
-    return (
-      <BottomSheet
-        modalizeRef={mentionBottomSheetRef}
-        onClose={() => {
-          setMentioning(false);
-          inputRef?.current?.focus();
-        }}
-        overlayStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}}
-        ContentComponent={
-          <View style={[styles.containerBottomSheet, modalStyle]}>
-            {renderMentionContent()}
-          </View>
-        }
-      />
-    );
-  };
-
   return (
     <View
       style={[styles.containerWrapper, style]}
@@ -488,9 +422,33 @@ const MentionInput: React.FC<MentionInputProps> = ({
         editable={!disabled}
         onKeyPress={_onKeyPress}
       />
-      {modalPosition === 'bottom-sheet'
-        ? renderMentionBottomSheet()
-        : renderMentionModal()}
+      {mentioning && (
+        <View
+          style={[
+            styles.containerModal,
+            fullWidth && styles.containerModalFullWidth,
+            showShadow && styles.shadow,
+            modalStyle,
+          ]}>
+          {!!title && (!key || list?.length === 0) && (
+            <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
+          )}
+          {renderMentionAll()}
+          <Divider />
+          <FlatList
+            ref={listRef}
+            keyboardShouldPersistTaps={'always'}
+            data={list || []}
+            nestedScrollEnabled
+            ListEmptyComponent={renderEmpty}
+            renderItem={_renderItem}
+            keyExtractor={item => item.id || item._id}
+            onScrollToIndexFailed={() => {
+              // do nothing
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -517,9 +475,6 @@ const createStyles = (
       stylePosition = {
         bottom: keyboardHeight,
       };
-      break;
-    case 'bottom-sheet':
-      stylePosition = {};
       break;
     default:
       if (topPosition > maxTopPosition) {
@@ -558,11 +513,6 @@ const createStyles = (
       borderColor: colors.borderDivider,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
-    },
-    containerBottomSheet: {
-      maxHeight: 300,
-      backgroundColor: colors.background,
-      justifyContent: 'center',
     },
     shadow: {
       shadowColor: '#000',
