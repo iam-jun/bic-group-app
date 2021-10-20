@@ -276,6 +276,17 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ...conversation,
           ...payload,
         },
+        rooms: {
+          ...rooms,
+          data: rooms.data.map((room: IConversation) =>
+            room._id === payload._id
+              ? {
+                  ...room,
+                  ...payload,
+                }
+              : room,
+          ),
+        },
       };
     case types.SET_ATTACHMENT_MEDIA:
       return {

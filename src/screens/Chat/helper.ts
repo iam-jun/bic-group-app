@@ -57,7 +57,9 @@ export const mapConversation = (
 
   const avatar =
     type === roomTypes.DIRECT
-      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0])
+      ? membersExcludeMe?.length > 0
+        ? getAvatar(membersExcludeMe[0])
+        : null
       : getRoomAvatar(_id);
 
   const attachment =
