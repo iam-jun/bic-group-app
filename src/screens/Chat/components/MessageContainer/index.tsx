@@ -87,6 +87,8 @@ const MessageItem = (props: MessageItemProps) => {
     mediaSource.push({
       uri: getMessageAttachmentUrl(item?.path),
       title: item?.name,
+      width: item?.identify?.size?.width,
+      height: item?.identify?.size?.height,
     });
   });
 

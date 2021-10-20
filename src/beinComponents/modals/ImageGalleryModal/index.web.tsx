@@ -1,5 +1,12 @@
 import React, {FC, useState, useRef} from 'react';
-import {StyleSheet, Modal, View, FlatList, Pressable} from 'react-native';
+import {
+  StyleSheet,
+  Modal,
+  View,
+  FlatList,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -12,7 +19,6 @@ import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import {useDispatch} from 'react-redux';
 import * as modalActions from '~/store/modal/actions';
-import {showHideToastMessage} from '~/store/modal/actions';
 
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
@@ -27,6 +33,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const footerListRef = useRef<any>();
 
   const dispatch = useDispatch();
+  const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const {colors, spacing, dimension} = theme;
@@ -112,45 +119,47 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
             </Text.H6>
           )}
         </View>
-        <FlatList
-          contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-          ref={footerListRef}
-          horizontal
-          data={imageUrls}
-          renderItem={renderFooterItem}
-          showsHorizontalScrollIndicator={false}
-          onScrollToIndexFailed={onScrollToIndexFailed}
-          keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
-        />
+        <View style={{width: dimensions.width * 0.8}}>
+          <FlatList
+            contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+            ref={footerListRef}
+            horizontal
+            data={imageUrls}
+            renderItem={renderFooterItem}
+            showsHorizontalScrollIndicator={false}
+            onScrollToIndexFailed={onScrollToIndexFailed}
+            keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
+          />
+        </View>
       </View>
     );
   };
 
   const renderControlButton = () => {
     return (
-      <View style={styles.buttonControlContainer}>
-        <View>
+      <>
+        <View style={{position: 'absolute', left: 0}}>
           {activeIndex > 0 && (
             <Button style={styles.buttonControl} onPress={onPressBack}>
               <Icon icon={'iconBack'} tintColor={colors.iconTintReversed} />
             </Button>
           )}
         </View>
-        <View>
+        <View style={{position: 'absolute', right: 0}}>
           {activeIndex < imageUrls.length - 1 && (
             <Button style={styles.buttonControl} onPress={onPressNext}>
               <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
             </Button>
           )}
         </View>
-      </View>
+      </>
     );
   };
 
   return (
     <Modal visible={visible} transparent={true}>
       {visible && (
-        <View style={styles.container}>
+        <Pressable onPress={onPressClose} style={styles.container}>
           {renderHeader()}
           <View style={styles.imageContainer}>
             <Pressable onPress={() => setZoomIn(!zoomIn)}>
@@ -162,7 +171,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
             {renderControlButton()}
           </View>
           {renderFooter()}
-        </View>
+        </Pressable>
       )}
     </Modal>
   );
