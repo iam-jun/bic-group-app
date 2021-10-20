@@ -40,7 +40,11 @@ export const mapUsers = (data?: []): IChatUser[] =>
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
-export const mapConversation = (user: IChatUser, item: any): IConversation => {
+export const mapConversation = (
+  user: IChatUser,
+  item: any,
+  subscriptions?: any[],
+): IConversation => {
   if (!item) return item;
   const _id = item.rid || item._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
@@ -48,6 +52,8 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
   const membersExcludeMe = (item.usernames || []).filter(
     (_username: any) => _username !== user?.username,
   );
+
+  const sub = (subscriptions || []).find((item: any) => item.rid === item?._id);
 
   const avatar =
     type === roomTypes.DIRECT
@@ -63,6 +69,13 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
   } catch (e: any) {
     console.log(e);
   }
+  const name =
+    (typeof item?.customFields?.beinChatName === 'string'
+      ? item?.customFields?.beinChatName
+      : item?.customFields?.beinChatName?.name) ||
+    item?.fname ||
+    item?.name;
+
   const lastMessage = item.lastMessage
     ? attachment && extraData?.type !== 'reply'
       ? item.lastMessage.u?.username === user?.username
@@ -86,7 +99,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     },
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
-    unreadCount: 0,
+    unreadCount: sub?.unnread || 0,
   };
 };
 
