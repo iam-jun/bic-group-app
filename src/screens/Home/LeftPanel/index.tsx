@@ -40,6 +40,7 @@ const LeftPanel = () => {
   const loadCurrentPath = () => {
     /**
      * Currently only load on web, as this component only show on web
+     * and we could not get the screen id
      * Need more work if need to get current active screen on tablet
      */
     if (Platform.OS === 'web') {
