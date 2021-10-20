@@ -49,7 +49,10 @@ const LeftPanel = () => {
       const parse = require('url-parse');
       const urlObj = parse(url, true);
       const path = urlObj.pathname.substr(1);
-      setCurrentPath(path);
+
+      // if accessing from the root, and auto navigate to newsfeed
+      if (path === '') setCurrentPath(PATH.newsfeed);
+      else setCurrentPath(path);
       return;
     }
   };
@@ -100,6 +103,7 @@ const LeftPanel = () => {
 
     return (
       <Div style={[styles.itemContainer]}>
+        {isActive && <View style={styles.itemActiveIndicator} />}
         <PrimaryItem
           height={48}
           leftIconProps={{
@@ -154,6 +158,15 @@ const createStyle = (theme: ITheme) => {
     },
     itemContainer: {
       marginHorizontal: spacing.margin.base,
+    },
+    itemActiveIndicator: {
+      width: 4,
+      height: 32,
+      position: 'absolute',
+      marginTop: 10,
+      backgroundColor: colors.primary5,
+      borderTopRightRadius: 6,
+      borderBottomRightRadius: 6,
     },
     leftIcon: {
       marginLeft: spacing.margin.base,
