@@ -168,15 +168,16 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }, 200),
   ).current;
 
-  const _onChangeText = (text: string) => {
+  const checkMention = (text: string, sIndex: number) => {
+    const cutText = text?.substr?.(0, sIndex) || '';
     let isMention = false;
-    const matches = text?.match?.(mentionRegex);
+    const matches = cutText?.match?.(mentionRegex);
     let mentionKey = '';
-    if (text && matches && matches.length > 0) {
+    if (cutText && matches && matches.length > 0) {
       mentionKey = matches[matches.length - 1]?.replace('@', '');
       isMention = true;
     }
-    if (text?.[text?.length - 1] === '@') {
+    if (cutText?.[cutText?.length - 1] === '@') {
       _onStartMention();
       isMention = true;
     }
@@ -184,6 +185,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
       _onMentionText(mentionKey, getDataParam);
     }
     setMentioning(isMention);
+  };
+
+  const _onChangeText = (text: string) => {
+    checkMention(text, inputSelection?.end);
     setContent(text);
   };
 
@@ -236,6 +241,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   const onSelectionChange = (event: any) => {
+    checkMention(content, event?.nativeEvent?.selection?.end);
     setInputSelection(event.nativeEvent.selection);
   };
 
