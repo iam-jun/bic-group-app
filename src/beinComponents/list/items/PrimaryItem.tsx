@@ -44,6 +44,7 @@ export interface PrimaryItemProps {
   LeftComponent?: React.ReactNode | React.ReactElement;
   RightComponent?: React.ReactNode | React.ReactElement;
   ContentComponent?: React.ReactNode | React.ReactElement;
+  className?: string;
 }
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
@@ -69,6 +70,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   onPressMenu,
   RightComponent,
   ContentComponent,
+  className = 'button',
 }: PrimaryItemProps) => {
   const theme = useTheme() as ITheme;
   const {dimension, spacing} = theme;
@@ -85,7 +87,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   ]);
 
   return (
-    <Div className="button">
+    <Div className={className}>
       <TouchableOpacity
         style={containerStyle}
         disabled={!onPress}
