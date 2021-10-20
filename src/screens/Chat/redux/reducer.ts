@@ -46,6 +46,7 @@ export const initDataState = {
     canLoadNext: false,
     unreadMessage: null,
     jumpedMessage: null,
+    error: null,
   },
 };
 
@@ -192,6 +193,14 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ...messages,
           canLoadNext: true,
           loading: true,
+        },
+      };
+    case types.SET_MESSAGES_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          error: payload,
         },
       };
     case types.SET_UNREAD_MESSAGE:

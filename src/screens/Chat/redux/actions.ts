@@ -197,6 +197,10 @@ export default {
     type: Actions.GET_SURROUNDING_MESSAGES,
     payload,
   }),
+  setMessagesError: (payload: any) => ({
+    type: Actions.SET_MESSAGES_ERROR,
+    payload,
+  }),
   getMessagesHistory: () => ({
     type: Actions.GET_MESSAGES_HISTORY,
   }),

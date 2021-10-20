@@ -566,6 +566,7 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
     yield put(actions.setJumpedMessage(result[index]));
   } catch (err) {
     console.log('getSurroundingMessages', err);
+    yield put(actions.setMessagesError(err));
   }
 }
 

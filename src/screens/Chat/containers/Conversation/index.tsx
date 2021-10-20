@@ -1,5 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import i18next from 'i18next';
 import {debounce, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -31,6 +32,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
   ChatInput,
   ChatWelcome,
+  MessageNotFound,
   DownButton,
   ListMessages,
   MessageContainer,
@@ -503,6 +505,7 @@ const Conversation = () => {
   };
 
   const renderChatMessages = () => {
+    if (messages.error) return <MessageNotFound />;
     if (!messages.loading && isEmpty(messages.data) && isScrolled)
       return <ChatWelcome type={conversation.type} />;
 
@@ -560,12 +563,16 @@ const Conversation = () => {
       <Header
         avatar={_avatar}
         avatarProps={{variant: 'default', onError: onLoadAvatarError}}
-        title={conversation.name}
+        title={
+          messages.error
+            ? i18next.t('chat:title_invalid_msg_link')
+            : conversation.name
+        }
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"
-        onPressIcon={onSearchPress}
+        onPressIcon={!messages.error ? onSearchPress : undefined}
         menuIcon="ConversationInfo"
-        onPressMenu={goConversationDetail}
+        onPressMenu={!messages.error ? goConversationDetail : undefined}
         onPressBack={onPressBack}
         hideBackOnLaptop
       />
@@ -585,7 +592,6 @@ const Conversation = () => {
         onSendCallback={scrollToBottom}
         onError={setError}
       />
-
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}
