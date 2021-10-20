@@ -106,7 +106,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
 
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const styles = createStyles(
     theme,
     modalPosition,
@@ -141,6 +141,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
         ?.then?.((response: any) => {
           setIsLoading(false);
           const newList = get(response, getDataResponseKey) || [];
+
+          if (newList?.length === 0) {
+            setList([]);
+            setMentioning(false);
+            return;
+          }
+
           setList(newList);
           setKey(mentionKey);
         })
@@ -150,6 +157,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
             `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
           );
           setIsLoading(false);
+          setMentioning(false);
           setList([]);
           setHighlightIndex(DEFAULT_INDEX);
           sethHighlightItem(undefined);
@@ -168,15 +176,16 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }, 200),
   ).current;
 
-  const _onChangeText = (text: string) => {
+  const checkMention = (text: string, sIndex: number) => {
+    const cutText = text?.substr?.(0, sIndex) || '';
     let isMention = false;
-    const matches = text?.match?.(mentionRegex);
+    const matches = cutText?.match?.(mentionRegex);
     let mentionKey = '';
-    if (text && matches && matches.length > 0) {
+    if (cutText && matches && matches.length > 0) {
       mentionKey = matches[matches.length - 1]?.replace('@', '');
       isMention = true;
     }
-    if (text?.[text?.length - 1] === '@') {
+    if (cutText?.[cutText?.length - 1] === '@') {
       _onStartMention();
       isMention = true;
     }
@@ -184,6 +193,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
       _onMentionText(mentionKey, getDataParam);
     }
     setMentioning(isMention);
+  };
+
+  const _onChangeText = (text: string) => {
+    checkMention(text, inputSelection?.end);
     setContent(text);
   };
 
@@ -236,6 +249,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   const onSelectionChange = (event: any) => {
+    checkMention(content, event?.nativeEvent?.selection?.end);
     setInputSelection(event.nativeEvent.selection);
   };
 
@@ -429,7 +443,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
             ListEmptyComponent={renderEmpty}
             renderItem={_renderItem}
             keyExtractor={item => item.id || item._id}
-            onScrollToIndexFailed={() => {}}
+            onScrollToIndexFailed={() => {
+              // do nothing
+            }}
           />
         </View>
       )}
@@ -448,7 +464,7 @@ const createStyles = (
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
 
-  let stylePosition;
+  let stylePosition = {};
   switch (position) {
     case 'top':
       stylePosition = {
