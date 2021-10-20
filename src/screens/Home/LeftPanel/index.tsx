@@ -1,10 +1,9 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
@@ -12,11 +11,11 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {IconType} from '~/resources/icons';
 
 const LeftPanel = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -46,42 +45,52 @@ const LeftPanel = () => {
     );
   };
 
+  const renderItem = ({
+    icon,
+    title,
+    onPress,
+    ...props
+  }: {
+    icon: IconType;
+    title: string;
+    onPress?: () => void;
+    [key: string]: any;
+  }) => {
+    return (
+      <PrimaryItem
+        height={48}
+        leftIconProps={{
+          icon,
+          size: 24,
+          style: styles.leftIcon,
+        }}
+        leftIcon={icon}
+        titleProps={{useI18n: true}}
+        title={title}
+        onPress={onPress}
+        {...props}
+      />
+    );
+  };
+
   return (
     <ScreenWrapper testID="VipScreen" disabledDarkMode isFullView>
-      <PrimaryItem
-        height={48}
-        leftIconProps={{
-          icon: 'iconTabHomeBein',
-          size: 24,
-          style: styles.leftIcon,
-        }}
-        leftIcon={'iconTabHomeBein'}
-        title={t('home:newsfeed')}
-        onPress={onPressNewsfeed}
-      />
-      <PrimaryItem
-        height={48}
-        leftIcon={'iconMenuDraft'}
-        leftIconProps={{
-          icon: 'iconMenuDraft',
-          size: 24,
-          style: styles.leftIcon,
-        }}
-        title={t('home:draft_post')}
-        onPress={onPressDraftPost}
-        RightComponent={renderBadgeNumber(draftPost?.length || 0)}
-      />
-      <PrimaryItem
-        height={48}
-        leftIcon={'iconMenuBookmarkRed'}
-        leftIconProps={{
-          icon: 'iconMenuBookmarkRed',
-          size: 24,
-          style: styles.leftIcon,
-        }}
-        title={t('home:saved_posts')}
-        onPress={onPressSavedPosts}
-      />
+      {renderItem({
+        icon: 'iconTabHomeBein',
+        title: 'home:newsfeed',
+        onPress: onPressNewsfeed,
+      })}
+      {renderItem({
+        icon: 'iconMenuDraft',
+        title: 'home:draft_post',
+        onPress: onPressDraftPost,
+        RightComponent: renderBadgeNumber(draftPost?.length || 0),
+      })}
+      {renderItem({
+        icon: 'iconMenuBookmarkRed',
+        title: 'home:saved_posts',
+        onPress: onPressSavedPosts,
+      })}
     </ScreenWrapper>
   );
 };
