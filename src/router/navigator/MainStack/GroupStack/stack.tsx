@@ -14,6 +14,7 @@ const groupStack = {
   generalInfo: 'general-info',
   editGroupDescription: 'edit-group-description',
   inviteMembers: 'invite-members',
+  userProfile: 'user-profile',
 };
 
 export default groupStack;

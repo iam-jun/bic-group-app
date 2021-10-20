@@ -6,6 +6,7 @@ const homeStack = {
   postSelectAudience: 'post-select-audience',
   postSelectImage: 'post-select-image',
   draftPost: 'draft-post',
+  userProfile: 'user-profile',
 };
 
 export default homeStack;

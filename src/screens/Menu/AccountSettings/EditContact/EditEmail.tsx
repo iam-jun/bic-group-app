@@ -29,7 +29,7 @@ const EditEmail = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(menuActions.setEmailEditError(''));
+    clearAllErrors();
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,10 @@ const EditEmail = () => {
     clearErrors,
   } = useForm();
 
-  const navigateBack = () => rootNavigation.goBack();
+  const navigateBack = () => {
+    rootNavigation.goBack();
+    clearAllErrors();
+  };
 
   const onSave = async () => {
     const validEmail = await validateEmail();
@@ -92,6 +95,7 @@ const EditEmail = () => {
           highEmphasis: true,
         }}
         onPressButton={showSaveButton ? onSave : undefined}
+        onPressBack={navigateBack}
       />
 
       <View style={styles.editEmail}>
@@ -113,6 +117,7 @@ const EditEmail = () => {
               helperContent={errors?.email?.message}
               keyboardType="email-address"
               autoCapitalize="none"
+              disabled
             />
           )}
           rules={{

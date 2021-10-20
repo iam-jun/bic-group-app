@@ -61,6 +61,8 @@ export interface IPayloadShowModal {
   isOpen: boolean;
   ContentComponent: any;
   props?: BaseBottomSheetProps | any;
+  useAppBottomSheet?: boolean;
+  appModalStyle?: any;
 }
 
 export interface IUserPreview {
@@ -76,4 +78,10 @@ export interface ILinkPreview {
   title?: string;
   description?: string;
   domain?: string;
+}
+
+export interface ICountryCodeList {
+  code: string;
+  name: string;
+  flag: string;
 }
