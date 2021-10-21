@@ -1,7 +1,8 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
@@ -22,6 +23,7 @@ import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
+import appActions from '~/store/app/actions';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -31,6 +33,12 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) dispatch(appActions.setRootScreenName('settings'));
+  }, [isFocused]);
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
