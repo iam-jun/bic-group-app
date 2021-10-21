@@ -29,9 +29,10 @@ export default {
     payload,
     dataType,
   }),
-  mergeExtraData: (dataType: string) => ({
+  mergeExtraData: (dataType: string, field?: string) => ({
     type: Actions.MERGE_EXTRA_DATA,
     dataType,
+    field,
   }),
   resetData: (dataType: string) => ({
     type: Actions.RESET_DATA,
@@ -195,6 +196,10 @@ export default {
   }),
   getSurroundingMessages: (payload: string) => ({
     type: Actions.GET_SURROUNDING_MESSAGES,
+    payload,
+  }),
+  setMessagesError: (payload: any) => ({
+    type: Actions.SET_MESSAGES_ERROR,
     payload,
   }),
   getMessagesHistory: () => ({

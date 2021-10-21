@@ -40,11 +40,7 @@ export const mapUsers = (data?: []): IChatUser[] =>
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
-export const mapConversation = (
-  user: IChatUser,
-  item: any,
-  subscriptions?: any[],
-): IConversation => {
+export const mapConversation = (user: IChatUser, item: any): IConversation => {
   if (!item) return item;
   const _id = item.rid || item._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
@@ -52,8 +48,6 @@ export const mapConversation = (
   const membersExcludeMe = (item.usernames || []).filter(
     (_username: any) => _username !== user?.username,
   );
-
-  const sub = (subscriptions || []).find((item: any) => item.rid === item?._id);
 
   const avatar =
     type === roomTypes.DIRECT
@@ -119,7 +113,6 @@ export const mapConversation = (
     },
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
-    unreadCount: sub?.unnread || 0,
   };
 };
 
@@ -194,6 +187,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
 export const mapUser = (item: any): IChatUser => ({
   ...item,
   ...item.customFields,
+  _id: item?._id || item?.rocket_chat_id,
   avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
 });

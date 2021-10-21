@@ -119,6 +119,10 @@ const MessageItem = (props: MessageItemProps) => {
       setTimeout(() => {
         dispatch(actions.setJumpedMessage(null));
         setBlinking(false);
+        // clear params after jump to message
+        rootNavigation.setParams({
+          message_id: undefined,
+        });
       }, 2000);
     }
   }, [messages.jumpedMessage]);

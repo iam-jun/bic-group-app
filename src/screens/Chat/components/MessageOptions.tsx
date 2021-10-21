@@ -46,6 +46,7 @@ const MessageOptionsModal: React.FC<Props> = ({
         {Object.keys(reactions).map(key => (
           <Icon
             key={`reaction-${key}`}
+            size={22}
             // @ts-ignore
             icon={reactions[key].icon}
             onPress={() => onReactionPress(key)}

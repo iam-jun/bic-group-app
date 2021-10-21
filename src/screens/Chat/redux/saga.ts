@@ -83,7 +83,7 @@ function* getData({
 }: {
   type: string;
   payload: any;
-  field: string;
+  field?: string;
   dataType: string;
 }) {
   try {
@@ -108,7 +108,8 @@ function* getData({
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
       const page = payload?.count || appConfig.recordsPerPage;
-      if (result.length === page) yield put(actions.getData(dataType, payload));
+      if (result.length === page)
+        yield put(actions.getData(dataType, payload, field));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -117,11 +118,18 @@ function* getData({
   }
 }
 
-function* mergeExtraData({dataType}: {type: string; dataType: string}) {
+function* mergeExtraData({
+  dataType,
+  field,
+}: {
+  type: string;
+  dataType: string;
+  field?: string;
+}) {
   const {chat} = yield select();
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
-    yield put(actions.getData(dataType, params));
+    yield put(actions.getData(dataType, params, field));
   }
 }
 
@@ -168,7 +176,7 @@ function* readSubscriptions({payload}: {type: string; payload: string}) {
 
 function* getConversationDetail({payload}: {type: string; payload: string}) {
   try {
-    const {auth, chat} = yield select();
+    const {auth} = yield select();
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getChatInfo(payload),
@@ -176,7 +184,7 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
 
     yield put(
       actions.setConversationDetail(
-        mapConversation(auth.user, response.data?.data, chat.subcriptions),
+        mapConversation(auth.user, response.data?.data),
       ),
     );
   } catch (err) {
@@ -289,7 +297,6 @@ function* createConversation({
             name: payload[0].name,
           }
         : response?.data?.group,
-      chat.subscriptions,
     );
 
     yield put(actions.setConversationDetail(conversation));
@@ -581,6 +588,7 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
     yield put(actions.setJumpedMessage(result[index]));
   } catch (err) {
     console.log('getSurroundingMessages', err);
+    yield put(actions.setMessagesError(err));
   }
 }
 
@@ -717,7 +725,7 @@ function* handleNewMessage(data: any) {
       );
       yield put(
         actions.createConversationSuccess(
-          mapConversation(auth.user, response.data?.group, chat.subscriptions),
+          mapConversation(auth.user, response.data?.group),
         ),
       );
       yield getSubscriptions();
@@ -751,12 +759,10 @@ function* handleRemoveMessage(data: any) {
 
 function* handleAddNewRoom(data: any) {
   try {
-    const {auth, chat} = yield select();
+    const {auth} = yield select();
 
     yield put(
-      actions.createConversationSuccess(
-        mapConversation(auth.user, data, chat.subscriptions),
-      ),
+      actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
     yield getSubscriptions();
   } catch (err) {
