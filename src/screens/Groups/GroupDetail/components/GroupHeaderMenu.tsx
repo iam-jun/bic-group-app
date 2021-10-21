@@ -17,6 +17,9 @@ import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import {getLink, LINK_GROUP} from '~/utils/link';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 export interface GroupHeaderMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -31,6 +34,11 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+
+  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
+
+  const isWeb = Platform.OS === 'web';
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
@@ -80,7 +88,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
         title={t('groups:group_menu:label_copy_group_link')}
         onPress={onPressCopyLink}
       />
-      {Platform.OS !== 'web' && (
+      {!isWeb && (
         <PrimaryItem
           height={48}
           leftIconProps={{icon: 'ShareAlt', size: 24}}
@@ -89,7 +97,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           onPress={onPressShare}
         />
       )}
-      {Platform.OS === 'web' && (
+      {isWeb && (
         <PrimaryItem
           height={48}
           leftIconProps={{icon: 'iconSend', size: 24}}
@@ -98,13 +106,15 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           onPress={onPressShareChat}
         />
       )}
-      <PrimaryItem
-        height={48}
-        leftIconProps={{icon: 'leavesGroup', size: 24}}
-        leftIcon={'leavesGroup'}
-        title={t('groups:group_menu:label_leave_group')}
-        onPress={onPressLeave}
-      />
+      {isMember && (
+        <PrimaryItem
+          height={48}
+          leftIconProps={{icon: 'leavesGroup', size: 24}}
+          leftIcon={'leavesGroup'}
+          title={t('groups:group_menu:label_leave_group')}
+          onPress={onPressLeave}
+        />
+      )}
     </View>
   );
 };
