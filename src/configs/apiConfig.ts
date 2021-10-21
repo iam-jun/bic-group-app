@@ -124,10 +124,10 @@ const Chat = {
   },
   users: (params: IPaginationParams & {params: any}) => {
     return {
-      url: `${providers.chat.url}users.list`,
+      url: `${providers.bein.url}users`,
       method: 'get',
       useRetry: true,
-      provider: providers.chat,
+      provider: providers.bein,
       params,
     };
   },

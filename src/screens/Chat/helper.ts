@@ -194,6 +194,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
 export const mapUser = (item: any): IChatUser => ({
   ...item,
   ...item.customFields,
+  _id: item?._id || item?.rocket_chat_id,
   avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
 });

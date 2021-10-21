@@ -83,7 +83,7 @@ function* getData({
 }: {
   type: string;
   payload: any;
-  field: string;
+  field?: string;
   dataType: string;
 }) {
   try {
@@ -108,7 +108,8 @@ function* getData({
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
       const page = payload?.count || appConfig.recordsPerPage;
-      if (result.length === page) yield put(actions.getData(dataType, payload));
+      if (result.length === page)
+        yield put(actions.getData(dataType, payload, field));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -117,11 +118,18 @@ function* getData({
   }
 }
 
-function* mergeExtraData({dataType}: {type: string; dataType: string}) {
+function* mergeExtraData({
+  dataType,
+  field,
+}: {
+  type: string;
+  dataType: string;
+  field?: string;
+}) {
   const {chat} = yield select();
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
-    yield put(actions.getData(dataType, params));
+    yield put(actions.getData(dataType, params, field));
   }
 }
 

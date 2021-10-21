@@ -7,7 +7,6 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -20,7 +19,6 @@ const CreateConversation = (): React.ReactElement => {
   const {spacing} = theme;
 
   const dispatch = useDispatch();
-  const {user} = useAuth();
   const {selectedUsers, users} = useChat();
   const [searchQuery, setSearchQuery] = useState('');
   const {rootNavigation} = useRootNavigation();
@@ -28,13 +26,17 @@ const CreateConversation = (): React.ReactElement => {
   useEffect(() => {
     dispatch(actions.resetData('users'));
     dispatch(
-      actions.getData('users', {
-        query: {username: {$ne: user.username}},
-      }),
+      actions.getData(
+        'users',
+        {
+          limit: appConfig.recordsPerPage,
+        },
+        'data',
+      ),
     );
   }, []);
 
-  const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
+  const loadMoreData = () => dispatch(actions.mergeExtraData('users', 'data'));
 
   const onNextPress = () => {
     rootNavigation.navigate(chatStack.reviewConversation);
@@ -43,16 +45,14 @@ const CreateConversation = (): React.ReactElement => {
   const searchUsers = (searchQuery: string) => {
     dispatch(actions.resetData('users'));
     dispatch(
-      actions.getData('users', {
-        query: {
-          $and: [
-            {
-              username: {$ne: user.username},
-            },
-            {name: {$regex: searchQuery, $options: 'ig'}},
-          ],
+      actions.getData(
+        'users',
+        {
+          key: searchQuery,
+          limit: appConfig.recordsPerPage,
         },
-      }),
+        'data',
+      ),
     );
   };
 

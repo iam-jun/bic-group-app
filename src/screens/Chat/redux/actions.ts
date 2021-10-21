@@ -29,9 +29,10 @@ export default {
     payload,
     dataType,
   }),
-  mergeExtraData: (dataType: string) => ({
+  mergeExtraData: (dataType: string, field?: string) => ({
     type: Actions.MERGE_EXTRA_DATA,
     dataType,
+    field,
   }),
   resetData: (dataType: string) => ({
     type: Actions.RESET_DATA,
