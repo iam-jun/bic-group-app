@@ -37,7 +37,9 @@ const CreateConversation = (): React.ReactElement => {
   const loadMoreData = () => dispatch(actions.mergeExtraData('users'));
 
   const onNextPress = () => {
-    rootNavigation.navigate(chatStack.reviewConversation);
+    if (selectedUsers.length === 1)
+      dispatch(actions.createConversation(selectedUsers));
+    else rootNavigation.navigate(chatStack.reviewConversation);
   };
 
   const searchUsers = (searchQuery: string) => {

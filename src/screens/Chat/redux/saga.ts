@@ -1,4 +1,4 @@
-import {StackActions} from '@react-navigation/native';
+import {StackActions, CommonActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import i18next from 'i18next';
 import {Platform} from 'react-native';
@@ -296,9 +296,23 @@ function* createConversation({
 
     if (callBack) return callBack(conversation._id);
 
+    rootNavigationRef?.current?.dispatch(state => {
+      // Remove the createConversation route from the stack
+      const routes = state.routes.filter(
+        r => r.name !== chatStack.createConversation,
+      );
+
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      });
+    });
+
     rootNavigationRef?.current?.dispatch(
       StackActions.replace(chatStack.conversation),
     );
+    yield put(actions.clearSelectedUsers());
   } catch (err: any) {
     yield put(
       modalActions.showAlert({
