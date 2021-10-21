@@ -91,9 +91,12 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
                 // @ts-ignore
                 const unreadCount = tabBadge[name] || undefined;
 
+                let className = 'tab-bar__menu';
+                if (focused) className = className + ` ${className}__active`;
+
                 return (
                   <Div
-                    className="tab-bar__menu"
+                    className={className}
                     style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
                     {renderIcon(name, focused)}
                     {!!unreadCount && (
@@ -118,7 +121,7 @@ const CreateStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       ...Platform.select({
         web: {
-          width: 80,
+          width: 84,
           borderRightColor: colors.borderDivider,
           borderRightWidth: 1,
         },

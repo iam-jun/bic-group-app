@@ -20,6 +20,7 @@ import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
+import Div from '../Div';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;
@@ -100,21 +101,23 @@ const Icon: React.FC<IconProps> = ({
       onPress={onPress}
       hitSlop={hitSlop}>
       <Wrapper style={[styles.container, style, {backgroundColor}]}>
-        <View
+        <Div
           style={[
             isButton && styles.button,
             disabled && isButton && styles.disabled,
             iconStyle,
           ]}>
-          <IconComponent
-            style={_style}
-            tintColor={_tintColor}
-            size={size}
-            type={type}
-            name={name}
-            source={source}
-          />
-        </View>
+          <Div className="icon-wrapper">
+            <IconComponent
+              style={_style}
+              tintColor={_tintColor}
+              size={size}
+              type={type}
+              name={name}
+              source={source}
+            />
+          </Div>
+        </Div>
         {label && (
           <Text.ButtonBase
             useI18n
