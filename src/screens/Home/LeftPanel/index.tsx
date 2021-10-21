@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -12,55 +12,20 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IconType} from '~/resources/icons';
-import {linkingConfigFullLaptop} from '~/configs/navigator';
 import Div from '~/beinComponents/Div';
-
-const homeScreens =
-  linkingConfigFullLaptop.config.screens.MainStack.screens.main.screens;
-
-const PATH = {
-  newsfeed: homeScreens.newsfeed.path,
-  draftPost: homeScreens['draft-post'].path,
-};
+import {appScreens} from '~/configs/navigator';
 
 const LeftPanel = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
-
-  const [currentPath, setCurrentPath] = useState<string>('');
-
   const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
 
-  useEffect(() => {
-    loadCurrentPath();
-  }, []);
-
-  const loadCurrentPath = () => {
-    /**
-     * Currently only load on web, as this component only show on web
-     * and we could not get the screen id
-     * Need more work if need to get current active screen on tablet
-     */
-    if (Platform.OS === 'web') {
-      const url = window.location.href;
-
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const parse = require('url-parse');
-      const urlObj = parse(url, true);
-      const path = urlObj.pathname.substr(1);
-
-      // if accessing from the root, and auto navigate to newsfeed
-      if (path === '') setCurrentPath(PATH.newsfeed);
-      else setCurrentPath(path);
-      return;
-    }
-  };
+  const currentPath = useKeySelector('app.rootScreenName') || 'newsfeed';
 
   const onPressNewsfeed = () => {
     rootNavigation.navigate(homeStack.newsfeed);
-    setCurrentPath(PATH.newsfeed);
   };
 
   const onPressSavedPosts = () => {
@@ -69,7 +34,6 @@ const LeftPanel = () => {
 
   const onPressDraftPost = () => {
     rootNavigation.navigate(homeStack.draftPost);
-    setCurrentPath(PATH.draftPost);
   };
 
   const renderBadgeNumber = (badgeNumber: number) => {
@@ -132,13 +96,13 @@ const LeftPanel = () => {
       {renderItem({
         icon: 'iconTabHomeBein',
         title: 'home:newsfeed',
-        path: PATH.newsfeed,
+        path: appScreens.newsfeed,
         onPress: onPressNewsfeed,
       })}
       {renderItem({
         icon: 'iconMenuDraft',
         title: 'home:draft_post',
-        path: PATH.draftPost,
+        path: appScreens.draftPost,
         onPress: onPressDraftPost,
         RightComponent: renderBadgeNumber(draftPost?.length || 0),
       })}
