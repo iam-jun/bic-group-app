@@ -40,6 +40,7 @@ const mainTabStack = {
   'edit-contact': 'edit-contact',
   'edit-email': 'edit-email',
   'edit-phone-number': 'edit-phone-number',
+  'edit-location': 'edit-location',
 
   //NOTIFICATION
   // notification: Notification,

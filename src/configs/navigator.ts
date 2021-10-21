@@ -118,6 +118,7 @@ export const appScreens = {
   settingEditContact: 'edit-contact',
   settingEditEmail: 'edit-email',
   settingEditPhoneNumber: 'edit-phone-number',
+  settingEditLocation: 'edit-location',
   userProfile: 'user-profile',
 
   // Notification
@@ -441,6 +442,9 @@ export const linkingConfigFullLaptop = {
               },
               'edit-phone-number': {
                 path: 'settings/account/edit-phone-number',
+              },
+              'edit-location': {
+                path: 'settings/account/edit-location',
               },
               'change-password': {
                 path: 'settings/security/change-password',

@@ -19,6 +19,7 @@ import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasi
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
 import EditPhoneNumber from '~/screens/Menu/AccountSettings/EditContact/EditPhoneNumber';
+import EditLocation from '~/screens/Menu/AccountSettings/EditContact/EditLocation';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
 import UserEdit from '~/screens/Menu/AccountSettings/UserEditProfile';
@@ -88,6 +89,7 @@ export const screensWebLaptop = {
   'edit-contact': EditContact,
   'edit-email': EditEmail,
   'edit-phone-number': EditPhoneNumber,
+  'edit-location': EditLocation,
 
   //NOTIFICATION STACK
   // notification: Notification,

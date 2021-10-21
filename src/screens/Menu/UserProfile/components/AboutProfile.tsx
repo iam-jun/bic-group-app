@@ -16,7 +16,8 @@ import relationshipStatus from '~/constants/relationshipStatus';
 const AboutProfile = (props: IUserProfile) => {
   const {
     email,
-    address,
+    city,
+    country,
     language,
     phone,
     country_code,
@@ -52,7 +53,10 @@ const AboutProfile = (props: IUserProfile) => {
       <Text.ButtonBase style={styles.about}>
         {i18next.t('settings:title_about')}
       </Text.ButtonBase>
-      {renderItem('LocationPoint', address)}
+      {renderItem(
+        'LocationPoint',
+        city && country ? `${city}, ${country}` : undefined,
+      )}
       {renderItem('CommentsAlt', userLanguages)}
       {/* @ts-ignore */}
       {renderItem('Calender', formatDate(birthday, 'MMM Do, YYYY'))}

@@ -1,7 +1,9 @@
 import {IUserProfile} from '~/interfaces/IAuth';
 import menuTypes from './types';
 import countryCode from '~/constants/countryCode';
-import {ICountryCodeList} from '~/interfaces/common';
+import {ICountryCodeList, ILocation} from '~/interfaces/common';
+import locations from '~/constants/locations';
+import {searchText} from '~/utils/common';
 
 const initMenuState = {
   loadingMyProfile: false,
@@ -19,13 +21,18 @@ const initMenuState = {
     searchResult: [],
   },
 
+  locationList: {
+    data: locations,
+    searchResult: [],
+  },
+
   loadingAvatar: false,
   loadingCover: false,
 };
 
 const menuReducer = (state = initMenuState, action: any = {}) => {
   const {type, payload} = action;
-  const {countryCodeList} = state;
+  const {countryCodeList, locationList} = state;
 
   switch (type) {
     case menuTypes.GET_USER_PROFILE:
@@ -87,15 +94,26 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         countryCodeList: {
-          ...state.countryCodeList,
-          searchResult: !payload
-            ? countryCodeList.data
-            : countryCodeList.data.filter(
-                // @ts-ignore
-                (item: ICountryCodeList) =>
-                  item.code.includes(payload) ||
-                  item.name.toLowerCase().includes(payload.toLowerCase()),
-              ),
+          ...countryCodeList,
+          searchResult: countryCodeList.data.filter(
+            // @ts-ignore
+            (item: ICountryCodeList) =>
+              searchText(payload, item.code) || searchText(payload, item.name),
+          ),
+        },
+      };
+    case menuTypes.SEARCH_LOCATION:
+      return {
+        ...state,
+        locationList: {
+          ...locationList,
+          searchResult: locationList.data
+            .filter(
+              (item: ILocation) =>
+                searchText(payload, item.name) ||
+                searchText(payload, item.country),
+            )
+            .slice(0, 8),
         },
       };
 

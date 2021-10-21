@@ -79,6 +79,8 @@ export interface IUserProfile {
   language?: string[];
   description?: string;
   relationship_status?: string;
+  city?: string;
+  country?: string;
   isPublic?: boolean;
 }
 
@@ -101,6 +103,8 @@ export interface IUserEdit {
   language?: string[];
   description?: string;
   relationship_status?: RELATIONSHIP_TYPE;
+  city?: string;
+  country?: string;
 }
 export interface IChangePasswordPayload {
   oldPassword: string;

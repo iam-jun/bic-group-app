@@ -62,7 +62,7 @@ const EditPhoneNumber = () => {
   }, [phoneNumberEditError]);
 
   useEffect(() => {
-    const currentCode = data.find(
+    const currentCode = data?.find(
       (item: ICountryCodeList) => item.code === country_code,
     );
     currentCode?.flag && setFlagValue(currentCode.flag);
@@ -122,7 +122,7 @@ const EditPhoneNumber = () => {
   };
 
   const doSearch = (searchQuery: string) => {
-    dispatch(menuActions.searchCountryCode(searchQuery));
+    searchQuery && dispatch(menuActions.searchCountryCode(searchQuery));
   };
 
   const searchHandler = useCallback(
