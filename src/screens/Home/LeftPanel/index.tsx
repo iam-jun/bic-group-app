@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -14,6 +13,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IconType} from '~/resources/icons';
 import Div from '~/beinComponents/Div';
 import {appScreens} from '~/configs/navigator';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const LeftPanel = () => {
   const dispatch = useDispatch();
@@ -63,24 +63,13 @@ const LeftPanel = () => {
   }) => {
     const isActive = path === currentPath;
 
-    let className = 'left-col__item';
-    if (isActive) className = className + ` ${className}--active`;
-
     return (
       <Div style={[styles.itemContainer]}>
-        {isActive && <View style={styles.itemActiveIndicator} />}
-        <PrimaryItem
-          height={48}
-          leftIconProps={{
-            icon,
-            size: 24,
-            style: styles.leftIcon,
-          }}
-          leftIcon={icon}
-          titleProps={{useI18n: true}}
+        <MenuItem
           title={title}
+          icon={icon}
+          isActive={isActive}
           onPress={onPress}
-          className={className}
           {...props}
         />
       </Div>
