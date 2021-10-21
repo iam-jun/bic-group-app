@@ -15,6 +15,7 @@ export const appSettingsMenu = [
     type: 'accountSettings',
     title: 'settings:title_account_settings',
     icon: 'iconMenuSetting',
+    path: 'settings',
   },
 ];
 
