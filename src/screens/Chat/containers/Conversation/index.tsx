@@ -1,5 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import i18next from 'i18next';
 import {debounce, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -23,7 +24,7 @@ import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IObject} from '~/interfaces/common';
-import {IMessage, IQuotedMessage} from '~/interfaces/IChat';
+import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {IReactionCounts} from '~/interfaces/IPost';
 import {RootStackParamList} from '~/interfaces/IRouter';
@@ -31,6 +32,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
   ChatInput,
   ChatWelcome,
+  MessageNotFound,
   DownButton,
   ListMessages,
   MessageContainer,
@@ -94,6 +96,15 @@ const Conversation = () => {
   }, [route?.params?.roomId]);
 
   useEffect(() => {
+    if (!messages.loading) jumpToMessage(route?.params?.message_id);
+  }, [route?.params?.message_id]);
+
+  useEffect(() => {
+    const roomId = route?.params?.roomId;
+    const isDirectMessage = conversation?.type === roomTypes.DIRECT;
+    if (roomId && conversation?._id && roomId === conversation?._id) {
+      dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
+    }
     getAttachments();
   }, [route?.params?.roomId, conversation?._id]);
 
@@ -124,8 +135,11 @@ const Conversation = () => {
   }, [error]);
 
   const getMessages = (unreadCount: number) => {
+    console.log('getMessages', route.params);
     dispatch(actions.resetData('messages'));
-    if (unreadCount > appConfig.messagesPerPage) {
+    if (route.params?.message_id) {
+      dispatch(actions.getSurroundingMessages(route.params.message_id));
+    } else if (unreadCount > appConfig.messagesPerPage) {
       dispatch(actions.getUnreadMessage());
     } else {
       dispatch(actions.getMessagesHistory());
@@ -260,23 +274,22 @@ const Conversation = () => {
     );
   };
 
-  const jumpToRepliedMessage = (message?: IQuotedMessage) => {
-    if (!message) return;
+  const jumpToMessage = (messageId?: string) => {
+    if (!messageId) return;
 
     const index = messages.data.findIndex(
-      (item: IMessage) => item._id === message.msgId,
+      (item: IMessage) => item._id === messageId,
     );
     if (index >= 0) {
       dispatch(actions.setJumpedMessage(messages.data[index]));
       listRef.current?.scrollToIndex({index, animated: true});
     } else {
       // dispatch(actions.resetData('messages'));
-      dispatch(actions.getSurroundingMessages(message.msgId));
+      dispatch(actions.getSurroundingMessages(messageId));
     }
   };
 
   const onPressBack = async () => {
-    dispatch(actions.resetData('messages'));
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
     else rootNavigation.goBack();
@@ -382,7 +395,7 @@ const Conversation = () => {
         onRemoveReaction(reactionId, item._id),
       onLongPressReaction: (reactionType: ReactionType) =>
         onLongPressReaction(item._id, reactionType, item?.reaction_counts),
-      onQuotedMessagePress: () => jumpToRepliedMessage(item.quotedMessage),
+      onQuotedMessagePress: () => jumpToMessage(item.quotedMessage?.msgId),
     };
     return <MessageContainer {...props} />;
   };
@@ -396,14 +409,17 @@ const Conversation = () => {
     ) {
       const item = changed[0].item;
 
-      if (item._id !== messages.unreadMessage?._id) {
+      if (
+        item._id !== messages.unreadMessage?._id &&
+        messages.data.length > unreadMessagePosition
+      ) {
         listRef.current?.scrollToIndex({
           index: unreadMessagePosition,
           animated: false,
         });
       }
-      setIsScrolled(true);
     }
+    setIsScrolled(true);
   };
 
   const onUnreadBannerPress = () => {
@@ -441,7 +457,8 @@ const Conversation = () => {
       (!isScrolled || offsetY.current > 500) &&
       !messages.canLoadNext &&
       !isEmpty(messages.data) &&
-      conversation.unreadCount === 0
+      conversation.unreadCount === 0 &&
+      !route.params?.message_id
     ) {
       scrollToBottom();
       // only first time
@@ -475,11 +492,9 @@ const Conversation = () => {
   const onEndReached = () => {
     if (!messages.loadingNext && messages.canLoadNext) {
       dispatch(actions.getNextMessages());
-    } else {
-      if (conversation.unreadCount > 0) {
-        setUnreadBannerVisible(false);
-        dispatch(actions.readConversation());
-      }
+    } else if (conversation.unreadCount > 0) {
+      setUnreadBannerVisible(false);
+      dispatch(actions.readConversation());
     }
   };
 
@@ -499,6 +514,7 @@ const Conversation = () => {
   };
 
   const renderChatMessages = () => {
+    if (messages.error) return <MessageNotFound />;
     if (!messages.loading && isEmpty(messages.data) && isScrolled)
       return <ChatWelcome type={conversation.type} />;
 
@@ -556,12 +572,16 @@ const Conversation = () => {
       <Header
         avatar={_avatar}
         avatarProps={{variant: 'default', onError: onLoadAvatarError}}
-        title={conversation.name}
+        title={
+          messages.error
+            ? i18next.t('chat:title_invalid_msg_link')
+            : conversation.name
+        }
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"
-        onPressIcon={onSearchPress}
+        onPressIcon={!messages.error ? onSearchPress : undefined}
         menuIcon="ConversationInfo"
-        onPressMenu={goConversationDetail}
+        onPressMenu={!messages.error ? goConversationDetail : undefined}
         onPressBack={onPressBack}
         hideBackOnLaptop
       />
@@ -582,7 +602,6 @@ const Conversation = () => {
         onError={setError}
         onSentAttachment={getAttachments}
       />
-
       <MessageOptionsModal
         isMyMessage={selectedMessage?.user?.username === user?.username}
         ref={messageOptionsModalRef}

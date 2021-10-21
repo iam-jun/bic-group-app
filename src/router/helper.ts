@@ -16,6 +16,7 @@ export interface Props {
     name: string,
     params?: IObject<unknown>,
   ) => void;
+  setParams: (params: any) => void;
 }
 
 export const withNavigation = (
@@ -62,6 +63,10 @@ export const withNavigation = (
     });
   };
 
+  const setParams = (params: any) => {
+    navigationRef?.current?.setParams(params);
+  };
+
   return {
     canGoBack,
     navigate,
@@ -69,5 +74,6 @@ export const withNavigation = (
     goBack,
     popToTop,
     nestedNavigate,
+    setParams,
   };
 };

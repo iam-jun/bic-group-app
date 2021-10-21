@@ -176,7 +176,7 @@ function* readSubscriptions({payload}: {type: string; payload: string}) {
 
 function* getConversationDetail({payload}: {type: string; payload: string}) {
   try {
-    const {auth, chat} = yield select();
+    const {auth} = yield select();
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getChatInfo(payload),
@@ -184,7 +184,7 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
 
     yield put(
       actions.setConversationDetail(
-        mapConversation(auth.user, response.data?.data, chat.subcriptions),
+        mapConversation(auth.user, response.data?.data),
       ),
     );
   } catch (err) {
@@ -297,7 +297,6 @@ function* createConversation({
             name: payload[0].name,
           }
         : response?.data?.group,
-      chat.subscriptions,
     );
 
     yield put(actions.setConversationDetail(conversation));
@@ -575,6 +574,7 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
     yield put(actions.setJumpedMessage(result[index]));
   } catch (err) {
     console.log('getSurroundingMessages', err);
+    yield put(actions.setMessagesError(err));
   }
 }
 
@@ -711,7 +711,7 @@ function* handleNewMessage(data: any) {
       );
       yield put(
         actions.createConversationSuccess(
-          mapConversation(auth.user, response.data?.group, chat.subscriptions),
+          mapConversation(auth.user, response.data?.group),
         ),
       );
       yield getSubscriptions();
@@ -745,12 +745,10 @@ function* handleRemoveMessage(data: any) {
 
 function* handleAddNewRoom(data: any) {
   try {
-    const {auth, chat} = yield select();
+    const {auth} = yield select();
 
     yield put(
-      actions.createConversationSuccess(
-        mapConversation(auth.user, data, chat.subscriptions),
-      ),
+      actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
     yield getSubscriptions();
   } catch (err) {

@@ -4,6 +4,7 @@ export type RootStackParamList = {
   };
   Conversation: {
     roomId?: string;
+    message_id?: string;
     initial?: boolean;
   };
   ConversationDetail: {

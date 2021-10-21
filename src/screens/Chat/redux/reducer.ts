@@ -46,6 +46,7 @@ export const initDataState = {
     canLoadNext: false,
     unreadMessage: null,
     jumpedMessage: null,
+    error: null,
   },
 };
 
@@ -194,6 +195,14 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           loading: true,
         },
       };
+    case types.SET_MESSAGES_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          error: payload,
+        },
+      };
     case types.SET_UNREAD_MESSAGE:
       return {
         ...state,
@@ -269,12 +278,17 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           sub.rid === action.payload ? {...sub, unread: 0} : sub,
         ),
       };
-    case types.SET_CONVERSATION_DETAIL:
+    case types.SET_CONVERSATION_DETAIL: {
+      const sub: any = (state.subscriptions || []).find(
+        (item: any) => item.rid === item?._id,
+      );
+
       return {
         ...state,
         conversation: {
           ...conversation,
           ...payload,
+          unreadCount: conversation.unreadCount || sub?.unread || 0,
         },
         rooms: {
           ...rooms,
@@ -288,6 +302,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           ),
         },
       };
+    }
     case types.SET_ATTACHMENT_MEDIA:
       return {
         ...state,
@@ -320,27 +335,29 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           action.payload.room_id === conversation._id
             ? {
                 ...messages,
-                // Update offset when add new item
-                offset: messages.offset + 1,
+
                 data: newMessages,
               }
             : messages,
-        rooms: payload.system
-          ? state.rooms
-          : {
-              ...rooms,
-              data: rooms.data.map((item: any) =>
-                item._id === action.payload.room_id
-                  ? {
-                      ...item,
-                      lastMessage: action.payload.msg,
-                      _updatedAt: action.payload._updatedAt,
-                    }
-                  : item,
-              ),
-            },
+        rooms:
+          payload.system || include
+            ? state.rooms
+            : {
+                ...rooms,
+                data: rooms.data.map((item: any) =>
+                  item._id === action.payload.room_id
+                    ? {
+                        ...item,
+                        lastMessage: action.payload.msg,
+                        _updatedAt: action.payload._updatedAt,
+                      }
+                    : item,
+                ),
+              },
         conversation: {
           ...conversation,
+          /* logic count unread on conversation screen 
+             independent with subscriptions */
           unreadCount: conversation.unreadCount + 1,
         },
         subscriptions:
