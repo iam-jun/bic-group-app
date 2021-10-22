@@ -111,7 +111,7 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing.padding.base,
     },
     itemContainer: {
-      marginHorizontal: spacing.margin.base,
+      marginHorizontal: spacing.margin.small,
     },
     itemActiveIndicator: {
       width: 4,
