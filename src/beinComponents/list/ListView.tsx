@@ -112,7 +112,9 @@ const ListView: React.FC<ListViewProps> = ({
     }
 
     const itemPath = item['path'];
-    const isActive = currentPath && itemPath === currentPath;
+    let isActive = false;
+
+    if (currentPath && itemPath === currentPath) isActive = true;
 
     return (
       <TouchableOpacity
