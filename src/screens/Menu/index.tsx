@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Platform,
   ScrollView,
@@ -40,6 +40,17 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+
+  /**
+   * TODO: Update path in ~/src/constants/settings
+   * like appSettingsMenu if want to set active state to the items
+   */
+  const [currentPath, setCurrentPath] = useState<string>('');
+  const rootScreenName = useKeySelector('app.rootScreenName');
+
+  useEffect(() => {
+    setCurrentPath(rootScreenName);
+  }, [rootScreenName]);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -116,6 +127,7 @@ const Menu = (): React.ReactElement => {
               data={postFeatureMenu}
               scrollEnabled={false}
               onItemPress={onSettingPress}
+              currentPath={currentPath}
             />
           </>
         )}
@@ -126,6 +138,7 @@ const Menu = (): React.ReactElement => {
           data={appSettingsMenu}
           scrollEnabled={false}
           onItemPress={onSettingPress}
+          currentPath={currentPath}
         />
         <Divider style={styles.divider} />
         <ListView
@@ -134,6 +147,7 @@ const Menu = (): React.ReactElement => {
           data={documentsMenu}
           scrollEnabled={false}
           onItemPress={onSettingPress}
+          currentPath={currentPath}
         />
 
         <Divider style={styles.divider} />
@@ -143,6 +157,7 @@ const Menu = (): React.ReactElement => {
           data={logoutMenu}
           scrollEnabled={false}
           onItemPress={onSettingPress}
+          currentPath={currentPath}
         />
 
         {__DEV__ && (
@@ -154,6 +169,7 @@ const Menu = (): React.ReactElement => {
               type="menu"
               data={settings}
               onItemPress={onSettingPress}
+              currentPath={currentPath}
             />
           </>
         )}
