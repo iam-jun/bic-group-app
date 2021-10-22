@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {
   Platform,
   ScrollView,
+  StyleProp,
   StyleSheet,
   useWindowDimensions,
+  ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -120,6 +122,31 @@ const Menu = (): React.ReactElement => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
+  const renderListView = ({
+    data,
+    itemStyle,
+    onItemPress,
+    ...props
+  }: {
+    data?: Array<any>;
+    itemStyle?: StyleProp<ViewStyle>;
+    onItemPress?: (...params: any) => void;
+
+    [x: string]: any;
+  }) => {
+    return (
+      <ListView
+        itemStyle={[styles.itemStyle, itemStyle]}
+        type="menu"
+        data={data}
+        scrollEnabled={false}
+        onItemPress={onItemPress ? onItemPress : onSettingPress}
+        currentPath={currentPath}
+        {...props}
+      />
+    );
+  };
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header
@@ -141,56 +168,31 @@ const Menu = (): React.ReactElement => {
         {Platform.OS !== 'web' && (
           <>
             <Divider style={styles.divider} />
-            <ListView
-              itemStyle={styles.itemStyle}
-              type="menu"
-              data={postFeatureMenu}
-              scrollEnabled={false}
-              onItemPress={onSettingPress}
-              currentPath={currentPath}
-            />
+            {renderListView({
+              data: postFeatureMenu,
+            })}
           </>
         )}
         <Divider style={styles.divider} />
-        <ListView
-          itemStyle={styles.itemStyle}
-          type="menu"
-          data={appSettingsMenu}
-          scrollEnabled={false}
-          onItemPress={onSettingPress}
-          currentPath={currentPath}
-        />
+        {renderListView({
+          data: appSettingsMenu,
+        })}
         <Divider style={styles.divider} />
-        <ListView
-          itemStyle={styles.itemStyle}
-          type="menu"
-          data={documentsMenu}
-          scrollEnabled={false}
-          onItemPress={onSettingPress}
-          currentPath={currentPath}
-        />
+        {renderListView({
+          data: documentsMenu,
+        })}
 
         <Divider style={styles.divider} />
-        <ListView
-          itemStyle={styles.itemStyle}
-          type="menu"
-          data={logoutMenu}
-          scrollEnabled={false}
-          onItemPress={onSettingPress}
-          currentPath={currentPath}
-        />
+        {renderListView({
+          data: logoutMenu,
+        })}
 
         {__DEV__ && (
           <>
             <Divider style={styles.divider} />
-            <ListView
-              itemStyle={styles.itemStyle}
-              scrollEnabled={false}
-              type="menu"
-              data={settings}
-              onItemPress={onSettingPress}
-              currentPath={currentPath}
-            />
+            {renderListView({
+              data: settings,
+            })}
           </>
         )}
       </ScrollView>
