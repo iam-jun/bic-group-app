@@ -59,6 +59,7 @@ export default [
     type: 'component',
     title: 'Component Collection',
     icon: 'Bug',
+    path: 'component-collection',
   },
 ];
 
