@@ -5,6 +5,7 @@ const groupsKeySelector = {
     can_manage_member: 'groups.groupDetail.can_manage_member',
     join_status: 'groups.groupDetail.join_status',
   },
+  groupSearch: 'groups.groupSearch',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
   groupMember: 'groups.groupMember',
