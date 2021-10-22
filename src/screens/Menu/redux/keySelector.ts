@@ -6,6 +6,7 @@ const menuKeySelector = {
   emailEditError: 'menu.emailEditError',
   phoneNumberEditError: 'menu.phoneNumberEditError',
   countryCodeList: 'menu.countryCodeList',
+  locationList: 'menu.locationList',
 };
 
 export default menuKeySelector;

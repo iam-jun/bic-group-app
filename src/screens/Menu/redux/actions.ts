@@ -50,6 +50,10 @@ const menuActions = {
     type: menuTypes.SEARCH_COUNTRY_CODE,
     payload,
   }),
+  searchLocation: (payload: string) => ({
+    type: menuTypes.SEARCH_LOCATION,
+    payload,
+  }),
 
   editMyProfile: function (
     payload: IUserEdit,

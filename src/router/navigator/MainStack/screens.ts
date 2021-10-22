@@ -5,6 +5,7 @@ import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasi
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
 import EditPhoneNumber from '~/screens/Menu/AccountSettings/EditContact/EditPhoneNumber';
+import EditLocation from '~/screens/Menu/AccountSettings/EditContact/EditLocation';
 
 export default {
   main: MainTabs,
@@ -14,4 +15,5 @@ export default {
   'edit-contact': EditContact,
   'edit-email': EditEmail,
   'edit-phone-number': EditPhoneNumber,
+  'edit-location': EditLocation,
 };

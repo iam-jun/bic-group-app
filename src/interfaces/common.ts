@@ -85,3 +85,10 @@ export interface ICountryCodeList {
   name: string;
   flag: IconType;
 }
+
+export interface ILocation {
+  name: string;
+  type: string;
+  name_with_type: string;
+  country: string;
+}
