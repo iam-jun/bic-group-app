@@ -38,6 +38,7 @@ const groupsTypes = {
   SET_LOADING_PAGE: 'groups/SET_LOADING_PAGE',
 
   SET_GROUP_SEARCH: 'groups/SET_GROUP_SEARCH',
+  GET_GROUP_SEARCH: 'groups/GET_GROUP_SEARCH',
 };
 
 export default groupsTypes;

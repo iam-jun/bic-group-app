@@ -14,6 +14,7 @@ const initGroupsState = {
   },
   groupSearch: {
     isShow: false,
+    loading: false,
     searchKey: '',
     result: [],
   },

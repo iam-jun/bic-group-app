@@ -89,6 +89,7 @@ export interface IGroupAddMembers {
 
 export interface IGroupSearchPayload {
   isShow?: boolean;
+  loading?: boolean;
   searchKey?: string;
   result?: [];
 }

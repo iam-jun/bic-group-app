@@ -168,6 +168,10 @@ const groupsActions = {
     type: groupsTypes.SET_GROUP_SEARCH,
     payload,
   }),
+  getGroupSearch: (payload: string) => ({
+    type: groupsTypes.GET_GROUP_SEARCH,
+    payload,
+  }),
 };
 
 export default groupsActions;
