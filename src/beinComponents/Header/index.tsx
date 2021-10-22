@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -20,6 +20,7 @@ import {ImageProps} from '../Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {deviceDimensions} from '~/theme/dimension';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
+import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 
 export interface HeaderProps {
   children?: React.ReactNode;
@@ -45,6 +46,8 @@ export interface HeaderProps {
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
   removeBorderAndShadow?: boolean;
+  onShowSearch?: (isShow: boolean) => void;
+  onSearchText?: (searchText: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -70,7 +73,11 @@ const Header: React.FC<HeaderProps> = ({
   disableInsetTop,
   style,
   removeBorderAndShadow = false,
+  onShowSearch,
+  onSearchText,
 }: HeaderProps) => {
+  const [isShowSearch, setIsShowSearch] = useState(false);
+
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
   const styles = createStyle(theme);
@@ -85,6 +92,24 @@ const Header: React.FC<HeaderProps> = ({
       onPressBack();
     } else {
       navigation.goBack();
+    }
+  };
+
+  const showSearch = () => {
+    setIsShowSearch(true);
+    onShowSearch?.(true);
+  };
+
+  const hideSearch = () => {
+    setIsShowSearch(false);
+    onShowSearch?.(false);
+  };
+
+  const _onPressSearch = () => {
+    if (isShowSearch) {
+      hideSearch();
+    } else {
+      showSearch();
     }
   };
 
@@ -163,6 +188,19 @@ const Header: React.FC<HeaderProps> = ({
             {buttonText}
           </Button.Secondary>
         )}
+        {onSearchText && (
+          <Icon
+            icon={'iconSearch'}
+            size={20}
+            style={{marginRight: spacing?.margin.large}}
+            onPress={_onPressSearch}
+          />
+        )}
+        <HeaderSearch
+          isShowSearch={isShowSearch}
+          onSearchText={onSearchText}
+          onPressBack={hideSearch}
+        />
       </View>
     );
   };
