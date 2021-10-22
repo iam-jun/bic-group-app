@@ -122,21 +122,23 @@ const Menu = (): React.ReactElement => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
+  const renderDivider = () => <Divider style={styles.divider} />;
+
   const renderListView = ({
     data,
-    itemStyle,
+    containerStyle,
     onItemPress,
     ...props
   }: {
     data?: Array<any>;
-    itemStyle?: StyleProp<ViewStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
     onItemPress?: (...params: any) => void;
 
     [x: string]: any;
   }) => {
     return (
       <ListView
-        itemStyle={[styles.itemStyle, itemStyle]}
+        containerStyle={[styles.listContainerStyle, containerStyle]}
         type="menu"
         data={data}
         scrollEnabled={false}
@@ -167,29 +169,29 @@ const Menu = (): React.ReactElement => {
 
         {Platform.OS !== 'web' && (
           <>
-            <Divider style={styles.divider} />
+            {renderDivider()}
             {renderListView({
               data: postFeatureMenu,
             })}
           </>
         )}
-        <Divider style={styles.divider} />
+        {renderDivider()}
         {renderListView({
           data: appSettingsMenu,
         })}
-        <Divider style={styles.divider} />
+        {renderDivider()}
         {renderListView({
           data: documentsMenu,
         })}
 
-        <Divider style={styles.divider} />
+        {renderDivider()}
         {renderListView({
           data: logoutMenu,
         })}
 
         {__DEV__ && (
           <>
-            <Divider style={styles.divider} />
+            {/* {renderDivider()} */}
             {renderListView({
               data: settings,
             })}
@@ -212,8 +214,8 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
-    itemStyle: {
-      paddingHorizontal: spacing.padding.extraLarge,
+    listContainerStyle: {
+      marginHorizontal: spacing.margin.small,
     },
   });
 };
