@@ -36,6 +36,7 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import appActions from '~/store/app/actions';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -50,7 +51,26 @@ const Menu = (): React.ReactElement => {
 
   useEffect(() => {
     setCurrentPath(rootScreenName);
-  }, [rootScreenName]);
+  }, [rootScreenName, currentPath]);
+
+  useEffect(() => {
+    /**
+     * Get 'settings' in first path
+     * to handle user access the deeper level
+     * in account setting by url
+     */
+    if (Platform.OS === 'web') {
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      const paths = url.pathname.split('/');
+      const route = paths.length > 0 ? paths[1] : '';
+      if (route === '') return;
+
+      dispatch(appActions.setRootScreenName(route));
+    }
+  }, []);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
