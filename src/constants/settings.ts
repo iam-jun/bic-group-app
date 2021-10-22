@@ -15,6 +15,7 @@ export const appSettingsMenu = [
     type: 'accountSettings',
     title: 'settings:title_account_settings',
     icon: 'iconMenuSetting',
+    path: 'settings',
   },
 ];
 
@@ -58,6 +59,7 @@ export default [
     type: 'component',
     title: 'Component Collection',
     icon: 'Bug',
+    path: 'component-collection',
   },
 ];
 

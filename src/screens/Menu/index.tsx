@@ -1,9 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Platform,
   ScrollView,
+  StyleProp,
   StyleSheet,
   useWindowDimensions,
+  ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -36,10 +38,41 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import appActions from '~/store/app/actions';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+
+  /**
+   * TODO: Update path in ~/src/constants/settings
+   * like appSettingsMenu if want to set active state to the items
+   */
+  const [currentPath, setCurrentPath] = useState<string>('');
+  const rootScreenName = useKeySelector('app.rootScreenName');
+
+  useEffect(() => {
+    setCurrentPath(rootScreenName);
+  }, [rootScreenName, currentPath]);
+
+  useEffect(() => {
+    /**
+     * Get 'settings' in first path
+     * to handle user access the deeper level
+     * in account setting by url
+     */
+    if (Platform.OS === 'web') {
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      const paths = url.pathname.split('/');
+      const route = paths.length > 0 ? paths[1] : '';
+      if (route === '') return;
+
+      dispatch(appActions.setRootScreenName(route));
+    }
+  }, []);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -89,6 +122,33 @@ const Menu = (): React.ReactElement => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
+  const renderDivider = () => <Divider style={styles.divider} />;
+
+  const renderListView = ({
+    data,
+    containerStyle,
+    onItemPress,
+    ...props
+  }: {
+    data?: Array<any>;
+    containerStyle?: StyleProp<ViewStyle>;
+    onItemPress?: (...params: any) => void;
+
+    [x: string]: any;
+  }) => {
+    return (
+      <ListView
+        containerStyle={[styles.listContainerStyle, containerStyle]}
+        type="menu"
+        data={data}
+        scrollEnabled={false}
+        onItemPress={onItemPress ? onItemPress : onSettingPress}
+        currentPath={currentPath}
+        {...props}
+      />
+    );
+  };
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header
@@ -109,52 +169,32 @@ const Menu = (): React.ReactElement => {
 
         {Platform.OS !== 'web' && (
           <>
-            <Divider style={styles.divider} />
-            <ListView
-              itemStyle={styles.itemStyle}
-              type="menu"
-              data={postFeatureMenu}
-              scrollEnabled={false}
-              onItemPress={onSettingPress}
-            />
+            {renderDivider()}
+            {renderListView({
+              data: postFeatureMenu,
+            })}
           </>
         )}
-        <Divider style={styles.divider} />
-        <ListView
-          itemStyle={styles.itemStyle}
-          type="menu"
-          data={appSettingsMenu}
-          scrollEnabled={false}
-          onItemPress={onSettingPress}
-        />
-        <Divider style={styles.divider} />
-        <ListView
-          itemStyle={styles.itemStyle}
-          type="menu"
-          data={documentsMenu}
-          scrollEnabled={false}
-          onItemPress={onSettingPress}
-        />
+        {renderDivider()}
+        {renderListView({
+          data: appSettingsMenu,
+        })}
+        {renderDivider()}
+        {renderListView({
+          data: documentsMenu,
+        })}
 
-        <Divider style={styles.divider} />
-        <ListView
-          itemStyle={styles.itemStyle}
-          type="menu"
-          data={logoutMenu}
-          scrollEnabled={false}
-          onItemPress={onSettingPress}
-        />
+        {renderDivider()}
+        {renderListView({
+          data: logoutMenu,
+        })}
 
         {__DEV__ && (
           <>
-            <Divider style={styles.divider} />
-            <ListView
-              itemStyle={styles.itemStyle}
-              scrollEnabled={false}
-              type="menu"
-              data={settings}
-              onItemPress={onSettingPress}
-            />
+            {/* {renderDivider()} */}
+            {renderListView({
+              data: settings,
+            })}
           </>
         )}
       </ScrollView>
@@ -174,8 +214,8 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
-    itemStyle: {
-      paddingHorizontal: spacing.padding.extraLarge,
+    listContainerStyle: {
+      marginHorizontal: spacing.margin.small,
     },
   });
 };

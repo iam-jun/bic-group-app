@@ -1,6 +1,12 @@
 import i18next from 'i18next';
-import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Linking,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Button from '~/beinComponents/Button';
@@ -14,17 +20,32 @@ const NotFound = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const dimensions = useWindowDimensions();
+  const [baseUrl, setBaseUrl] = useState<string>('');
+
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      setBaseUrl(url.origin);
+    }
+  }, []);
 
   const imgMaxWidth = 328;
   const imgPadding = theme.spacing.margin.base || 12;
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
-  /*
-  TODO: Handle pressing go back.
-    - If signed in, go to home page.
-    - Otherwise, go to landing page
-  */
+  const onPressGoBack = () => {
+    if (Platform.OS === 'web' && baseUrl) {
+      window.open(baseUrl, '_self');
+      return;
+    }
+
+    alert('Pressed "Go back"');
+  };
+
   return (
     <ScreenWrapper isFullView style={styles.container}>
       <View style={styles.contentContainer}>
@@ -36,7 +57,7 @@ const NotFound = () => {
         <Button.Secondary
           style={styles.button}
           highEmphasis
-          onPress={() => alert('Pressed "Go back"')}
+          onPress={onPressGoBack}
           textVariant="h6">
           {i18next.t('error:button_not_found')}
         </Button.Secondary>
