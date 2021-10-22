@@ -41,6 +41,12 @@ const GroupSearch: FC<GroupSearchProps> = ({style}: GroupSearchProps) => {
     }
   }, [searchKey]);
 
+  useEffect(() => {
+    if (isShow) {
+      dispatch(groupsActions.getGroupSearch(''));
+    }
+  }, [isShow]);
+
   if (!isShow) {
     return null;
   }
