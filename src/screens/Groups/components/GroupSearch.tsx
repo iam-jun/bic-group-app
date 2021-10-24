@@ -33,7 +33,7 @@ const GroupSearch = () => {
     useKeySelector(groupsKeySelector.groupSearch) || {};
 
   const containerStyle = useAnimatedStyle(() => ({
-    opacity: showValue.value,
+    opacity: Platform.OS === 'web' ? 1 : showValue.value,
   }));
 
   const show = () => {

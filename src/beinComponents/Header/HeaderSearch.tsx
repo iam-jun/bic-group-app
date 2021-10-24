@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -16,9 +16,6 @@ import Animated, {
   runOnJS,
   withTiming,
 } from 'react-native-reanimated';
-import {scaleSize} from '~/theme/dimension';
-
-const searchBarWidth = scaleSize(310);
 
 export interface HeaderSearchProps {
   isShowSearch: boolean;
@@ -40,10 +37,14 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
 
   const iconStyle = useAnimatedStyle(() => ({
     marginLeft: spacing.margin.large,
-    opacity: showValue.value,
+    opacity: Platform.OS === 'web' ? 1 : showValue.value,
   }));
   const searchContainerStyle = useAnimatedStyle(() => ({
-    width: interpolate(showValue.value, [0, 1], [0, searchBarWidth]),
+    width: `${interpolate(
+      showValue.value,
+      [0, 1],
+      [Platform.OS === 'web' ? 96 : 0, 96],
+    )}%`,
   }));
 
   const show = () => {
