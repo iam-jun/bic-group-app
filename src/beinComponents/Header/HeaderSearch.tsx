@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -8,6 +8,17 @@ import SearchInput from '~/beinComponents/inputs/SearchInput';
 import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  interpolate,
+  runOnJS,
+  withTiming,
+} from 'react-native-reanimated';
+import {scaleSize} from '~/theme/dimension';
+
+const searchBarWidth = scaleSize(310);
 
 export interface HeaderSearchProps {
   isShowSearch: boolean;
@@ -20,11 +31,44 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   onSearchText,
   onPressBack,
 }: HeaderSearchProps) => {
+  const [isShow, setIsShow] = useState(false);
+  const showValue = useSharedValue(0);
+
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
-  if (!isShowSearch) {
+  const iconStyle = useAnimatedStyle(() => ({
+    marginLeft: spacing.margin.large,
+    opacity: showValue.value,
+  }));
+  const searchContainerStyle = useAnimatedStyle(() => ({
+    width: interpolate(showValue.value, [0, 1], [0, searchBarWidth]),
+  }));
+
+  const show = () => {
+    setIsShow(true);
+    showValue.value = withSpring(1, {mass: 0.8});
+  };
+
+  const hide = () => {
+    const onHideDone = () => {
+      setIsShow(false);
+    };
+    showValue.value = withTiming(0, undefined, () => {
+      runOnJS(onHideDone)();
+    });
+  };
+
+  useEffect(() => {
+    if (isShowSearch) {
+      show();
+    } else {
+      hide();
+    }
+  }, [isShowSearch]);
+
+  if (!isShow) {
     return null;
   }
 
@@ -37,30 +81,31 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => {}}
-      style={styles.container}>
+    <Animated.View style={styles.container}>
+      <Animated.View style={iconStyle}>
+        <Icon
+          icon="iconBack"
+          onPress={_onPressBack}
+          size={28}
+          hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+        />
+      </Animated.View>
+      <View style={styles.searchWrapper}>
+        <Animated.View style={[searchContainerStyle, styles.searchContainer]}>
+          <SearchInput
+            style={styles.searchInput}
+            onChangeText={_onChangeText}
+            placeholder={i18next.t('input:search_group')}
+          />
+        </Animated.View>
+      </View>
       <ViewSpacing width={spacing.margin.large} />
-      <Icon
-        icon="iconBack"
-        onPress={_onPressBack}
-        size={28}
-        hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-      />
-      <ViewSpacing width={spacing.margin.base} />
-      <SearchInput
-        style={{flex: 1}}
-        onChangeText={_onChangeText}
-        placeholder={i18next.t('input:search_group')}
-      />
-      <ViewSpacing width={spacing.margin.large} />
-    </TouchableOpacity>
+    </Animated.View>
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, dimension} = theme;
+  const {colors, dimension, spacing} = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.headerHeight || 44,
@@ -71,6 +116,17 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: colors.background,
+    },
+    searchWrapper: {
+      flex: 1,
+      alignItems: 'flex-end',
+    },
+    searchInput: {flex: 1, backgroundColor: undefined},
+    searchContainer: {
+      height: 36,
+      overflow: 'hidden',
+      backgroundColor: colors.placeholder,
+      borderRadius: spacing.borderRadius.large,
     },
   });
 };

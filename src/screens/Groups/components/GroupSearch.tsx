@@ -47,7 +47,7 @@ const GroupSearch = () => {
     };
     showValue.value = withSpring(0, undefined, isFinished => {
       if (isFinished) {
-        runOnJS(onHideDone);
+        runOnJS(onHideDone)();
       }
     });
   };
