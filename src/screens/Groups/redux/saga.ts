@@ -93,8 +93,8 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
     }
   } catch (err) {
     console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
-    yield put(groupsActions.setGroupSearch({loading: false}));
-    yield showError(err);
+    yield put(groupsActions.setGroupSearch({loading: false, result: []}));
+    // yield showError(err);
   }
 }
 

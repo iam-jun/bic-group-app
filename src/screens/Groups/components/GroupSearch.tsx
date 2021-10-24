@@ -1,13 +1,12 @@
-import React, {FC, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  FlatList,
-  Platform,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, FlatList, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -21,11 +20,10 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupItemPlaceholder from '~/screens/Groups/components/GroupItemPlaceholder';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 
-export interface GroupSearchProps {
-  style?: StyleProp<ViewStyle>;
-}
+const GroupSearch = () => {
+  const [_isShow, _setIsShow] = useState(false);
+  const showValue = useSharedValue(0);
 
-const GroupSearch: FC<GroupSearchProps> = ({style}: GroupSearchProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {spacing} = theme;
@@ -33,6 +31,26 @@ const GroupSearch: FC<GroupSearchProps> = ({style}: GroupSearchProps) => {
 
   const {isShow, loading, searchKey, result} =
     useKeySelector(groupsKeySelector.groupSearch) || {};
+
+  const containerStyle = useAnimatedStyle(() => ({
+    opacity: showValue.value,
+  }));
+
+  const show = () => {
+    _setIsShow(true);
+    showValue.value = withSpring(1);
+  };
+
+  const hide = () => {
+    const onHideDone = () => {
+      _setIsShow(false);
+    };
+    showValue.value = withSpring(0, undefined, isFinished => {
+      if (isFinished) {
+        runOnJS(onHideDone);
+      }
+    });
+  };
 
   useEffect(() => {
     console.log(`\x1b[36m🐣️ GroupSearch \x1b[0m`);
@@ -44,10 +62,13 @@ const GroupSearch: FC<GroupSearchProps> = ({style}: GroupSearchProps) => {
   useEffect(() => {
     if (isShow) {
       dispatch(groupsActions.getGroupSearch(''));
+      show();
+    } else {
+      hide();
     }
   }, [isShow]);
 
-  if (!isShow) {
+  if (!_isShow) {
     return null;
   }
 
@@ -87,7 +108,7 @@ const GroupSearch: FC<GroupSearchProps> = ({style}: GroupSearchProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, containerStyle]}>
       {renderHeader()}
       <FlatList
         scrollEnabled={!loading}
@@ -102,7 +123,7 @@ const GroupSearch: FC<GroupSearchProps> = ({style}: GroupSearchProps) => {
           <ViewSpacing height={spacing.margin.small} />
         )}
       />
-    </View>
+    </Animated.View>
   );
 };
 
