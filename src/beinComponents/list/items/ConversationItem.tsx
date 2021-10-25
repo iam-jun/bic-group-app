@@ -89,7 +89,8 @@ const ConversationItem: React.FC<Props> = ({
               {countTime(_updatedAt)}
             </Text.Subtitle>
           </View>
-          <View style={styles.body}>
+          <View
+            style={[styles.body, showDivider ? styles.bodyBottomDivider : {}]}>
             <Text
               variant={unreadCount ? 'bodyM' : 'body'}
               numberOfLines={2}
@@ -104,7 +105,6 @@ const ConversationItem: React.FC<Props> = ({
               />
             )}
           </View>
-          {showDivider && <Div style={styles.divider} />}
         </Div>
       </View>
     </Div>
@@ -183,6 +183,10 @@ const createStyles = (
       height: '100%',
       maxHeight: bodyHeight,
     },
+    bodyBottomDivider: {
+      borderBottomColor: colors.borderDivider,
+      borderBottomWidth: 1,
+    },
     lastMessage: {
       flex: 1,
       paddingTop: lastMessagePaddingTop,
@@ -193,12 +197,6 @@ const createStyles = (
     redDot: {
       marginTop: Platform.OS !== 'web' ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
-    },
-    divider: {
-      width: '100%',
-      height: 1,
-      marginTop: dividerMarginTop,
-      backgroundColor: colors.borderDivider,
     },
   });
 };
