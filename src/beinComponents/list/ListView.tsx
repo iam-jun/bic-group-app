@@ -16,6 +16,7 @@ import items, {IListViewItem} from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {appScreens} from '~/configs/navigator';
 import {IAction} from '~/constants/commonActions';
 
 import {spacing} from '~/theme';
@@ -111,10 +112,30 @@ const ListView: React.FC<ListViewProps> = ({
       return renderItem({item, index});
     }
 
-    const itemPath = item['path'];
+    let itemPath = '';
     let isActive = false;
+    // eslint-disable-next-line react/prop-types
+    const paths = currentPath?.split('/');
 
-    if (currentPath && itemPath === currentPath) isActive = true;
+    switch (type) {
+      case 'conversation':
+        itemPath = item['_id'];
+        if (
+          paths &&
+          paths?.length > 0 &&
+          paths[0] === appScreens.chat &&
+          paths[1] === itemPath
+        )
+          isActive = true;
+        break;
+
+      case 'menu':
+        itemPath = item['path'];
+        if (currentPath && itemPath === currentPath) isActive = true;
+        break;
+      default:
+        break;
+    }
 
     return (
       <TouchableOpacity
