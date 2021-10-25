@@ -1,25 +1,23 @@
+import i18next from 'i18next';
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
-
-import useChat from '~/hooks/chat';
-import {ITheme} from '~/theme/interfaces';
-import {IChatUser} from '~/interfaces/IChat';
-import actions from '../../redux/actions';
-import {useKeySelector} from '~/hooks/selector';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import {IUserProfile} from '~/interfaces/IAuth';
-import useAuth from '~/hooks/auth';
-
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import TextInput from '~/beinComponents/inputs/TextInput';
-import ListView from '~/beinComponents/list/ListView';
-import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
+import TextInput from '~/beinComponents/inputs/TextInput';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ListView from '~/beinComponents/list/ListView';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
+import useAuth from '~/hooks/auth';
+import useChat from '~/hooks/chat';
+import {useKeySelector} from '~/hooks/selector';
+import {IUserProfile} from '~/interfaces/IAuth';
+import {IChatUser} from '~/interfaces/IChat';
+import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import {ITheme} from '~/theme/interfaces';
+import actions from '../../redux/actions';
 
 const ReviewConversation = () => {
   const theme: ITheme = useTheme() as ITheme;
@@ -44,7 +42,6 @@ const ReviewConversation = () => {
         text.trim(),
       ),
     );
-    dispatch(actions.clearSelectedUsers());
   };
 
   const renderListHeader = () => {

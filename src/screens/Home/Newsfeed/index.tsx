@@ -28,9 +28,12 @@ import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
+import appActions from '~/store/app/actions';
 
 import {ITheme} from '~/theme/interfaces';
 import {ITabTypes} from '~/interfaces/IRouter';
+import {useIsFocused} from '@react-navigation/core';
+import {appScreens} from '~/configs/navigator';
 
 let newsfeedPostCount = 0;
 const itemLeftToGetMore = 10;
@@ -54,6 +57,12 @@ const Newsfeed = () => {
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) dispatch(appActions.setRootScreenName(appScreens.newsfeed));
+  }, [isFocused]);
 
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;

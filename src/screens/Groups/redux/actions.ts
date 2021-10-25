@@ -8,6 +8,7 @@ import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
+  IGroupSearchPayload,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -161,6 +162,14 @@ const groupsActions = {
   }),
   setLoadingPage: (payload: boolean) => ({
     type: groupsTypes.SET_LOADING_PAGE,
+    payload,
+  }),
+  setGroupSearch: (payload: IGroupSearchPayload) => ({
+    type: groupsTypes.SET_GROUP_SEARCH,
+    payload,
+  }),
+  getGroupSearch: (payload: string) => ({
+    type: groupsTypes.GET_GROUP_SEARCH,
     payload,
   }),
 };

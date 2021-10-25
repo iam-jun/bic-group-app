@@ -20,7 +20,7 @@ const EditContact = () => {
   const {rootNavigation} = useRootNavigation();
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {email, phone, address, country_code} = myProfile || {};
+  const {email, phone, country_code, country, city} = myProfile || {};
 
   const goToEditEmail = () => {
     rootNavigation.navigate(mainStack.editEmail);
@@ -30,11 +30,24 @@ const EditContact = () => {
     rootNavigation.navigate(mainStack.editPhoneNumber);
   };
 
+  const goToEditLocation = () => {
+    rootNavigation.navigate(mainStack.editLocation);
+  };
+
+  const navigateBack = () => {
+    if (rootNavigation.canGoBack) {
+      rootNavigation.goBack();
+    } else {
+      rootNavigation.replace(mainStack.userEdit);
+    }
+  };
+
   return (
     <ScreenWrapper testID="EditContact" isFullView>
       <Header
         titleTextProps={{useI18n: true}}
         title={'settings:title_edit_contact'}
+        onPressBack={navigateBack}
       />
 
       <View style={styles.infoItem}>
@@ -58,10 +71,15 @@ const EditContact = () => {
           onPress={goToEditPhoneNumber}
         />
         <SettingItem
-          title={'settings:title_address'}
-          subtitle={address || i18next.t('common:text_not_set')}
+          title={'settings:title_location'}
+          subtitle={
+            city && country
+              ? `${city}, ${country}`
+              : i18next.t('common:text_not_set')
+          }
           leftIcon={'LocationPoint'}
           rightIcon={'EditAlt'}
+          onPress={goToEditLocation}
         />
       </View>
       <Divider style={styles.divider} />

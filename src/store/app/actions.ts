@@ -16,6 +16,10 @@ export default {
     type: Actions.SET_LINK_PREVIEW,
     payload,
   }),
+  setRootScreenName: (payload: string) => ({
+    type: Actions.SET_ROOT_SCREEN_NAME,
+    payload,
+  }),
 };
 
 // export const setupPushToken = () => ({

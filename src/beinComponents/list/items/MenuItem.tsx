@@ -9,8 +9,16 @@ import Text from '~/beinComponents/Text';
 import Div from '~/beinComponents/Div';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const MenuItem: React.FC<IOption> = ({
+interface MenuItemProps extends IOption {
+  isActive?: boolean;
+  RightComponent?: React.ReactNode | React.ReactElement;
+  onPress?: () => void;
+  disable?: boolean;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({
   title,
   icon,
   rightSubTitle,
@@ -18,7 +26,11 @@ const MenuItem: React.FC<IOption> = ({
   subTitle,
   style,
   type,
-}: IOption) => {
+  isActive = false,
+  RightComponent,
+  onPress,
+  disable,
+}: MenuItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -31,37 +43,46 @@ const MenuItem: React.FC<IOption> = ({
     }
   }
 
+  let className = 'menu-item';
+  if (isActive) className = className + ` ${className}--active`;
+
+  if (disable) className = '';
+
   return (
-    <Div className="button">
-      <View style={[styles.container, style]}>
-        <Icon icon={icon} size={24} />
-        <View style={styles.titleContainer}>
-          <Text.ButtonBase useI18n>{title}</Text.ButtonBase>
-          {!!subTitle && (
-            <Text.Subtitle numberOfLines={2} useI18n>
-              {subTitle}
-            </Text.Subtitle>
-          )}
-        </View>
-        <View style={styles.rightComponent}>
-          {!!rightSubTitle && (
-            <Text.BodyS color={theme.colors.iconTint} useI18n>
-              {rightSubTitle}
-            </Text.BodyS>
-          )}
-          {!!rightSubIcon && (
-            <Icon icon={rightSubIcon} style={styles.rightSubIcon} />
-          )}
-        </View>
-        {!!badgeNumber && (
-          <View style={styles.badgeNumberContainer}>
-            <Text.Subtitle style={styles.badgeNumber}>
-              {badgeNumber}
-            </Text.Subtitle>
+    <TouchableOpacity disabled={disable} onPress={onPress}>
+      <Div className={className}>
+        {isActive && <View style={styles.itemActiveIndicator} />}
+        <View style={[styles.container, style]}>
+          {icon && <Icon icon={icon} size={24} />}
+          <View style={styles.titleContainer}>
+            <Text.ButtonBase useI18n>{title}</Text.ButtonBase>
+            {!!subTitle && (
+              <Text.Subtitle numberOfLines={2} useI18n>
+                {subTitle}
+              </Text.Subtitle>
+            )}
           </View>
-        )}
-      </View>
-    </Div>
+          <View style={styles.rightComponent}>
+            {!!rightSubTitle && (
+              <Text.BodyS color={theme.colors.iconTint} useI18n>
+                {rightSubTitle}
+              </Text.BodyS>
+            )}
+            {!!rightSubIcon && (
+              <Icon icon={rightSubIcon} style={styles.rightSubIcon} />
+            )}
+          </View>
+          {!!badgeNumber && (
+            <View style={styles.badgeNumberContainer}>
+              <Text.Subtitle style={styles.badgeNumber}>
+                {badgeNumber}
+              </Text.Subtitle>
+            </View>
+          )}
+          {RightComponent}
+        </View>
+      </Div>
+    </TouchableOpacity>
   );
 };
 
@@ -71,10 +92,19 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      padding: spacing.padding.base,
-      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.base,
+      paddingHorizontal: spacing.padding.extraLarge,
       borderRadius: spacing.borderRadius.small,
       alignItems: 'center',
+    },
+    itemActiveIndicator: {
+      width: 4,
+      height: 32,
+      position: 'absolute',
+      marginTop: 8,
+      backgroundColor: colors.primary5,
+      borderTopRightRadius: 6,
+      borderBottomRightRadius: 6,
     },
     titleContainer: {
       flex: 1,

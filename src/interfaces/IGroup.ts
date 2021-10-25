@@ -86,3 +86,10 @@ export interface IGroupAddMembers {
   groupId: number;
   userIds: number[];
 }
+
+export interface IGroupSearchPayload {
+  isShow?: boolean;
+  loading?: boolean;
+  searchKey?: string;
+  result?: [];
+}

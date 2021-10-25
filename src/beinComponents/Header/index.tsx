@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,19 +7,23 @@ import {
   Platform,
   useWindowDimensions,
 } from 'react-native';
-import Text, {TextProps} from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBackHandler} from '@react-native-community/hooks';
+
+import {useBaseHook} from '~/hooks';
+import {ITheme} from '~/theme/interfaces';
+import {deviceDimensions} from '~/theme/dimension';
+import {IconType} from '~/resources/icons';
+
+import Text, {TextProps} from '~/beinComponents/Text';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useBaseHook} from '~/hooks';
-import {IconType} from '~/resources/icons';
 import {ImageProps} from '../Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {deviceDimensions} from '~/theme/dimension';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
+import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 
 export interface HeaderProps {
   children?: React.ReactNode;
@@ -45,6 +49,8 @@ export interface HeaderProps {
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
   removeBorderAndShadow?: boolean;
+  onShowSearch?: (isShow: boolean) => void;
+  onSearchText?: (searchText: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -70,7 +76,11 @@ const Header: React.FC<HeaderProps> = ({
   disableInsetTop,
   style,
   removeBorderAndShadow = false,
+  onShowSearch,
+  onSearchText,
 }: HeaderProps) => {
+  const [isShowSearch, setIsShowSearch] = useState(false);
+
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
   const styles = createStyle(theme);
@@ -85,6 +95,33 @@ const Header: React.FC<HeaderProps> = ({
       onPressBack();
     } else {
       navigation.goBack();
+    }
+  };
+
+  const showSearch = () => {
+    setIsShowSearch(true);
+    onShowSearch?.(true);
+  };
+
+  const hideSearch = () => {
+    setIsShowSearch(false);
+    onShowSearch?.(false);
+  };
+
+  useBackHandler(() => {
+    if (isShowSearch) {
+      hideSearch();
+    } else {
+      _onPressBack();
+    }
+    return true;
+  });
+
+  const _onPressSearch = () => {
+    if (isShowSearch) {
+      hideSearch();
+    } else {
+      showSearch();
     }
   };
 
@@ -163,6 +200,19 @@ const Header: React.FC<HeaderProps> = ({
             {buttonText}
           </Button.Secondary>
         )}
+        {onSearchText && (
+          <Icon
+            icon={'iconSearch'}
+            size={20}
+            style={{marginRight: spacing?.margin.large}}
+            onPress={_onPressSearch}
+          />
+        )}
+        <HeaderSearch
+          isShowSearch={isShowSearch}
+          onSearchText={onSearchText}
+          onPressBack={hideSearch}
+        />
       </View>
     );
   };

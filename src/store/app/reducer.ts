@@ -3,6 +3,7 @@ import types from './constants';
 export const initState = {
   configs: {},
   linkPreviews: {},
+  rootScreenName: '',
 };
 
 /**
@@ -30,6 +31,11 @@ function reducer(state = initState, action: any = {}) {
           ...state.linkPreviews,
           [payload?.url]: payload,
         },
+      };
+    case types.SET_ROOT_SCREEN_NAME:
+      return {
+        ...state,
+        rootScreenName: payload,
       };
     default:
       return state;

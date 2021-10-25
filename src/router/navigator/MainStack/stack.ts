@@ -6,6 +6,7 @@ const mainStack = {
   editContact: 'edit-contact',
   editEmail: 'edit-email',
   editPhoneNumber: 'edit-phone-number',
+  editLocation: 'edit-location',
 };
 
 export default mainStack;

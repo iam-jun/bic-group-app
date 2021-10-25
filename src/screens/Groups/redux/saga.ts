@@ -20,6 +20,7 @@ import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {groupPrivacy} from '~/constants/privacyTypes';
+import {isArray} from 'lodash';
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -36,6 +37,7 @@ export default function* groupsSaga() {
   );
   yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
   yield takeLatest(groupsTypes.JOIN_NEW_GROUP, joinNewGroup);
+  yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -69,6 +71,30 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
     console.log('[getGroupDetail]', e);
     yield put(groupsActions.setLoadingPage(false));
     yield put(groupsActions.setGroupDetail(null));
+  }
+}
+
+function* getGroupSearch({payload}: {type: string; payload: string}) {
+  try {
+    yield put(groupsActions.setGroupSearch({loading: true}));
+    const params = {key: payload || ''};
+    //todo waiting for backend add param for search, such as 'discovery'
+    const response = yield groupsDataHelper.getMyGroups(params);
+    if (isArray(response?.data)) {
+      yield put(
+        groupsActions.setGroupSearch({
+          result: response.data || [],
+          loading: false,
+        }),
+      );
+    } else {
+      yield put(groupsActions.setGroupSearch({loading: false}));
+      yield showError(response);
+    }
+  } catch (err) {
+    console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
+    yield put(groupsActions.setGroupSearch({loading: false, result: []}));
+    // yield showError(err);
   }
 }
 

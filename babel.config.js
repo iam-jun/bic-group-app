@@ -32,6 +32,9 @@ module.exports = function (api) {
     plugins.push(['react-native-paper/babel']);
   }
 
+  //Reanimated plugin has to be listed last
+  plugins.push(['react-native-reanimated/plugin']);
+
   return {
     presets,
     plugins,

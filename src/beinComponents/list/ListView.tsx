@@ -61,6 +61,7 @@ export interface ListViewProps {
   title?: string;
   isFullView?: boolean;
   keyboardShouldPersistTaps?: 'always' | 'never' | 'handled';
+  currentPath?: string;
 
   [x: string]: any;
 }
@@ -97,6 +98,7 @@ const ListView: React.FC<ListViewProps> = ({
   title,
   isFullView,
   keyboardShouldPersistTaps,
+  currentPath,
   ...props
 }: ListViewProps) => {
   const {colors} = useTheme() as ITheme;
@@ -108,6 +110,11 @@ const ListView: React.FC<ListViewProps> = ({
     if (renderItem) {
       return renderItem({item, index});
     }
+
+    const itemPath = item['path'];
+    let isActive = false;
+
+    if (currentPath && itemPath === currentPath) isActive = true;
 
     return (
       <TouchableOpacity
@@ -126,6 +133,7 @@ const ListView: React.FC<ListViewProps> = ({
           // eslint-disable-next-line react/prop-types
           total={data && data?.length}
           index={index}
+          isActive={isActive}
         />
       </TouchableOpacity>
     );

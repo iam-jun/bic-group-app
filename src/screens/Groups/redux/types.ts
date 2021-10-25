@@ -36,6 +36,9 @@ const groupsTypes = {
   SET_LOADING_AVATAR: 'groups/SET_LOADING_AVATAR',
   SET_LOADING_COVER: 'groups/SET_LOADING_COVER',
   SET_LOADING_PAGE: 'groups/SET_LOADING_PAGE',
+
+  SET_GROUP_SEARCH: 'groups/SET_GROUP_SEARCH',
+  GET_GROUP_SEARCH: 'groups/GET_GROUP_SEARCH',
 };
 
 export default groupsTypes;

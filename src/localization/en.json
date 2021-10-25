@@ -250,12 +250,15 @@
     "title_edit_contact": "Edit Contact",
     "title_edit_phone_number": "Edit Phone number",
     "title_edit_email_address": "Edit Email Address",
+    "title_edit_address": "Edit Address",
     "text_wrong_email_format": "Wrong Email format",
     "text_updated_successfully": "updated successfully",
     "text_email_is_used": "This Email is used",
     "text_wrong_phone_number_format": "Wrong number format",
     "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
-    "text_phone_number_is_used": "This number is already used"
+    "text_phone_number_is_used": "This number is already used",
+    "title_choose_location": "Choose Location",
+    "title_location": "Location"
   },
   "languages": {
     "title_en": "English",
@@ -496,10 +499,10 @@
     "text_editing_message": "Editing message",
     "text_edited": "edited",
     "label_replied_messsage_attachment": "Tap to view attachment",
-    "title_msg_not_found":"No message found",
-    "description_msg_not_found":"We couldn’t find the message you are looking for or you do not have the permission to access",
-    "title_invalid_msg_link":"Invalid message link",
-    "button_go_back_to_chat":"Go back to Chat"
+    "title_msg_not_found": "No message found",
+    "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
+    "title_invalid_msg_link": "Invalid message link",
+    "button_go_back_to_chat": "Go back to Chat"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -531,7 +534,8 @@
   "input": {
     "search": "Search for someone to chat...",
     "search_group": "Search for groups or people...",
-    "search_country": "Search Country"
+    "search_country": "Search Country",
+    "search_location": "Search for City/Province/Country"
   },
   "groups": {
     "search_results": "Search results",

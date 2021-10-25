@@ -52,7 +52,8 @@ const UserEditProfile = () => {
     email,
     phone,
     country_code,
-    address,
+    country,
+    city,
   } = myProfile;
 
   const userLanguageList = language?.map(
@@ -262,8 +263,12 @@ const UserEditProfile = () => {
             isTouchDisabled
           />
           <SettingItem
-            title={'settings:title_address'}
-            subtitle={address || i18next.t('common:text_not_set')}
+            title={'settings:title_location'}
+            subtitle={
+              city && country
+                ? `${city}, ${country}`
+                : i18next.t('common:text_not_set')
+            }
             leftIcon={'LocationPoint'}
             isTouchDisabled
           />

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -20,6 +20,9 @@ import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {useBaseHook} from '~/hooks';
+import {useIsFocused} from '@react-navigation/core';
+import appActions from '~/store/app/actions';
+import {appScreens} from '~/configs/navigator';
 
 const DraftPost = () => {
   const dispatch = useDispatch();
@@ -31,6 +34,12 @@ const DraftPost = () => {
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) dispatch(appActions.setRootScreenName(appScreens.draftPost));
+  }, [isFocused]);
 
   //get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
