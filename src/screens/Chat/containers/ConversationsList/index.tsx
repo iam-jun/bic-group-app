@@ -135,6 +135,7 @@ const ConversationsList = (): React.ReactElement => {
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
         showItemSeparator={false}
+        containerStyle={styles.listContainer}
       />
     </ScreenWrapper>
   );
@@ -146,6 +147,10 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     inputSearch: {
       margin: spacing.margin.base,
+    },
+    listContainer: {
+      marginHorizontal:
+        Platform.OS === 'web' ? spacing.margin.small : spacing.margin.base,
     },
   });
 };
