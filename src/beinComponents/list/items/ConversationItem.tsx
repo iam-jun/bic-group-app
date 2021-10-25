@@ -78,7 +78,11 @@ const ConversationItem: React.FC<Props> = ({
       <View style={styles.container}>
         {isActive && <View style={styles.itemActiveIndicator} />}
         {ItemAvatar}
-        <Div style={styles.contentContainer}>
+        <Div
+          style={[
+            styles.contentContainer,
+            showDivider ? styles.bottomDivider : {},
+          ]}>
           <View style={styles.header}>
             <Text.H6 style={styles.title} numberOfLines={1}>
               {name}
@@ -89,8 +93,7 @@ const ConversationItem: React.FC<Props> = ({
               {countTime(_updatedAt)}
             </Text.Subtitle>
           </View>
-          <View
-            style={[styles.body, showDivider ? styles.bodyBottomDivider : {}]}>
+          <View style={styles.body}>
             <Text
               variant={unreadCount ? 'bodyM' : 'body'}
               numberOfLines={2}
@@ -118,24 +121,21 @@ const createStyles = (
   isActive: boolean,
 ) => {
   const {colors, spacing} = theme;
+  const isWeb = Platform.OS === 'web';
+
+  const contentHeight = 72;
   const headerHeight = 20;
-  const lastMessagePaddingTop = 4;
-  const bodyHeight = 40 + lastMessagePaddingTop;
-  const dividerMarginTop = spacing.margin.small || 8;
-  const dividerHeight = 1;
-  const contentHeight =
-    headerHeight + bodyHeight + dividerMarginTop + dividerHeight * 1.1;
+  const messageHeight = 40;
 
   return StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'row',
-      height: isActive ? 88 : 84,
+      height: 88,
       paddingVertical: spacing.padding.small,
-      paddingRight:
-        Platform.OS === 'web' ? spacing.padding.small : spacing.padding.tiny,
+      paddingRight: isWeb ? spacing.padding.small : spacing.padding.tiny,
       borderRadius: spacing.borderRadius.small,
-      marginHorizontal: Platform.OS !== 'web' ? spacing.margin.base : 0,
+      marginHorizontal: !isWeb ? spacing.margin.base : 0,
     },
     itemActiveIndicator: {
       alignSelf: 'center',
@@ -180,21 +180,19 @@ const createStyles = (
     body: {
       flexDirection: 'row',
       alignItems: twoLineLastMessage ? 'center' : 'flex-start',
-      height: bodyHeight,
     },
-    bodyBottomDivider: {
+    bottomDivider: {
       borderBottomColor: colors.borderDivider,
       borderBottomWidth: 1,
     },
     lastMessage: {
       flex: 1,
-      paddingTop: lastMessagePaddingTop,
-      height: bodyHeight,
+      height: messageHeight,
       lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     redDot: {
-      marginTop: Platform.OS !== 'web' ? spacing.margin.tiny : 0,
+      marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
     },
   });
