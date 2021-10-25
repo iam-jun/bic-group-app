@@ -295,7 +295,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         conversation: {
           ...conversation,
           ...payload,
-          unreadCount: conversation.unreadCount || sub?.unread || 0,
+          unreadCount:
+            conversation.unreadCount ||
+            payload?.unreadCount ||
+            sub?.unread ||
+            0,
         },
         rooms: {
           ...rooms,

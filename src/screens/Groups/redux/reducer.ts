@@ -12,7 +12,12 @@ const initGroupsState = {
   groupDetail: {
     group: {},
   },
-
+  groupSearch: {
+    isShow: false,
+    loading: false,
+    searchKey: '',
+    result: [],
+  },
   loadingGroupMember: false,
   groupMember: {
     skip: 0,
@@ -243,7 +248,14 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         loadingPage: payload,
       };
-
+    case groupsTypes.SET_GROUP_SEARCH:
+      return {
+        ...state,
+        groupSearch: {
+          ...state.groupSearch,
+          ...payload,
+        },
+      };
     default:
       return state;
   }
