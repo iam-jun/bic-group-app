@@ -87,7 +87,8 @@
     "cover_changed": "Cover changed",
     "text_present": "Present",
     "text_start_date": "Start Date",
-    "text_end_date": "End Date"
+    "text_end_date": "End Date",
+    "text_group": "Group"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -445,6 +446,7 @@
     },
     "title_privacy": "Privacy",
     "title_more_actions": "More actions",
+    "title_files_images_links": "Files & Images & Links",
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
     "text_feedback": "Feedback this chat",

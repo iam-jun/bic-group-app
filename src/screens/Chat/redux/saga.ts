@@ -246,6 +246,7 @@ function* createConversation({
         if (hideConfirmation) {
           navigation.replace(chatStack.conversation, {
             roomId: existedRoom._id,
+            initial: false,
           });
         } else {
           yield put(
@@ -256,6 +257,7 @@ function* createConversation({
               onConfirm: () => {
                 navigation.replace(chatStack.conversation, {
                   roomId: existedRoom._id,
+                  initial: false,
                 });
               },
             }),
@@ -317,7 +319,7 @@ function* createConversation({
     });
 
     rootNavigationRef?.current?.dispatch(
-      StackActions.replace(chatStack.conversation),
+      StackActions.replace(chatStack.conversation, {initial: false}),
     );
     yield put(actions.clearSelectedUsers());
   } catch (err: any) {
