@@ -178,11 +178,9 @@ const createStyles = (
       lineHeight: 20,
     },
     body: {
-      flex: 1,
       flexDirection: 'row',
       alignItems: twoLineLastMessage ? 'center' : 'flex-start',
-      height: '100%',
-      maxHeight: bodyHeight,
+      height: bodyHeight,
     },
     bodyBottomDivider: {
       borderBottomColor: colors.borderDivider,
