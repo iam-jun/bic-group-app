@@ -47,6 +47,8 @@ import dimension from '~/theme/dimension';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
+import appActions from '~/store/app/actions';
+import {appScreens} from '~/configs/navigator';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -83,9 +85,16 @@ const Conversation = () => {
   }, []);
 
   useEffect(() => {
-    if (!isFocused) {
+    if (isFocused) {
+      const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
+      dispatch(appActions.setRootScreenName(newRootScreenName));
+    } else {
       dispatch(actions.readSubscriptions(conversation._id));
     }
+
+    return () => {
+      dispatch(appActions.setRootScreenName(''));
+    };
   }, [isFocused]);
 
   useEffect(() => {
