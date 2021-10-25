@@ -149,8 +149,7 @@ const createStyles = (theme: ITheme) => {
       margin: spacing.margin.base,
     },
     listContainer: {
-      marginHorizontal:
-        Platform.OS === 'web' ? spacing.margin.small : spacing.margin.base,
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
   });
 };

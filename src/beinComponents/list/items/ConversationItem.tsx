@@ -135,6 +135,7 @@ const createStyles = (
       paddingRight:
         Platform.OS === 'web' ? spacing.padding.small : spacing.padding.tiny,
       borderRadius: spacing.borderRadius.small,
+      marginHorizontal: Platform.OS !== 'web' ? spacing.margin.base : 0,
     },
     itemActiveIndicator: {
       alignSelf: 'center',
