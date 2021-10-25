@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import Text from '~/beinComponents/Text';
@@ -7,7 +7,13 @@ import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 
-const NoSearchResult = () => {
+export interface NoSearchResultProps {
+  title?: string;
+}
+
+const NoSearchResult: FC<NoSearchResultProps> = ({
+  title,
+}: NoSearchResultProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -16,7 +22,7 @@ const NoSearchResult = () => {
       {/* @ts-ignore */}
       <SvgIcon source={NoSearchResultImg} width={250} height={200} />
       <Text.Body style={styles.text} useI18n>
-        common:text_search_no_results
+        {title || 'common:text_search_no_results'}
       </Text.Body>
     </View>
   );
