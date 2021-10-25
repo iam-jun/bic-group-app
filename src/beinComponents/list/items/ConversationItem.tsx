@@ -15,6 +15,7 @@ import {countTime, escapeMarkDown} from '~/utils/formatData';
 interface Props extends IConversation {
   total?: number;
   index?: number;
+  isActive?: boolean;
 }
 
 const ConversationItem: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const ConversationItem: React.FC<Props> = ({
   type,
   total,
   index,
+  isActive = false,
 }: Props): React.ReactElement => {
   const AVG_CHAR_ON_ONE_LINE = 32;
   let twoLineLastMessage = false;
@@ -33,7 +35,12 @@ const ConversationItem: React.FC<Props> = ({
     twoLineLastMessage = true;
 
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme, unreadCount > 0, twoLineLastMessage);
+  const styles = createStyles(
+    theme,
+    unreadCount > 0,
+    twoLineLastMessage,
+    isActive,
+  );
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
   const isDirect = type === roomTypes.DIRECT;
   const welcomeText =
@@ -43,6 +50,9 @@ const ConversationItem: React.FC<Props> = ({
 
   let showDivider = true;
   if (index && total && index + 1 === total) showDivider = false;
+
+  let className = 'chat__conversation-item';
+  if (isActive) className = className + ` ${className}--active`;
 
   const onLoadAvatarError = () => {
     setAvatar(getDefaultAvatar(name));
@@ -64,9 +74,10 @@ const ConversationItem: React.FC<Props> = ({
   );
 
   return (
-    <Div className="chat__conversation-item">
+    <Div className={className}>
       <View style={styles.container}>
-        <View>{ItemAvatar}</View>
+        {isActive && <View style={styles.itemActiveIndicator} />}
+        {ItemAvatar}
         <Div style={styles.contentContainer}>
           <View style={styles.header}>
             <Text.H6 style={styles.title} numberOfLines={1}>
@@ -104,6 +115,7 @@ const createStyles = (
   theme: ITheme,
   unreadMessage: boolean,
   twoLineLastMessage: boolean,
+  isActive: boolean,
 ) => {
   const {colors, spacing} = theme;
   const headerHeight = 20;
@@ -118,12 +130,25 @@ const createStyles = (
     container: {
       flex: 1,
       flexDirection: 'row',
-      height: 84,
+      height: isActive ? 88 : 84,
       paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
-      borderRadius: 6,
+      paddingRight:
+        Platform.OS === 'web' ? spacing.padding.small : spacing.padding.tiny,
+      borderRadius: spacing.borderRadius.small,
+    },
+    itemActiveIndicator: {
+      alignSelf: 'center',
+      width: 4,
+      height: 48,
+      marginRight: spacing.margin.large,
+      backgroundColor: colors.primary5,
+      borderTopRightRadius: spacing.borderRadius.small,
+      borderBottomRightRadius: spacing.borderRadius.small,
     },
     avatar: {
+      alignSelf: isActive ? 'center' : 'flex-start',
+      marginTop: 0,
+      marginLeft: isActive ? 0 : spacing.margin.tiny,
       marginRight: spacing.margin.base,
     },
     contentContainer: {
