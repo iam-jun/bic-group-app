@@ -1,3 +1,4 @@
+import {ISearchChatReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   IPayloadGetAttachmentFiles,
@@ -359,6 +360,20 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       data: {message: JSON.stringify(data)},
+    };
+  },
+  search: (params?: ISearchChatReq): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+    return {
+      url: `${providers.bein.url}chat/search`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.bein,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      params,
     };
   },
 };

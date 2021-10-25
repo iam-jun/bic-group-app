@@ -17,6 +17,8 @@ export const mapData = (user: IChatUser, dataType: string, data: any) => {
     case 'users':
     case 'members':
       return mapUsers(data);
+    case 'search':
+      return mapSearchResults(user, data);
     case 'rooms':
       return mapConversations(user, data);
     case 'messages':
@@ -39,6 +41,16 @@ export const mapUsers = (data?: []): IChatUser[] =>
 
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
+
+export const mapSearchResults = (
+  user: IChatUser,
+  data?: any[],
+): IConversation[] => {
+  return (data || []).map((item: any) => {
+    if (item.type !== 'user') return mapConversation(user, item);
+    else return item;
+  });
+};
 
 export const mapConversation = (user: IChatUser, item: any): IConversation => {
   if (!item) return item;

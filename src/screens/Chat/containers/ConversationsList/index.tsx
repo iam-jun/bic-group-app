@@ -1,17 +1,12 @@
 import {useIsFocused} from '@react-navigation/native';
-import {debounce} from 'lodash';
-import React, {
-  createRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {createRef, useEffect, useRef} from 'react';
 import {
   Platform,
+  Pressable,
   StyleSheet,
   TextInput,
   useWindowDimensions,
+  View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -20,17 +15,16 @@ import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
-import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import useModal from '~/hooks/modal';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {IConversation} from '~/interfaces/IChat';
+import {ITabTypes} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {ITabTypes} from '~/interfaces/IRouter';
 
 const ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
@@ -49,8 +43,7 @@ const ConversationsList = (): React.ReactElement => {
 
   const {conversations} = useChat();
   const {searchInputFocus} = useModal();
-  const {data, searchResult, loading} = conversations;
-  const [searchQuery, setSearchQuery] = useState('');
+  const {data, loading} = conversations;
 
   useEffect(() => {
     isFocused && dispatch(actions.getSubscriptions());
@@ -87,23 +80,11 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   const renderEmpty = () => {
-    if (!searchQuery) return null;
     return <NoSearchResult />;
   };
 
-  const doSearch = (searchQuery: string) => {
-    dispatch(actions.resetData('members'));
-    dispatch(actions.searchConversation(searchQuery));
-  };
-
-  const searchHandler = useCallback(
-    debounce(doSearch, appConfig.searchTriggerTime),
-    [],
-  );
-
-  const onQueryChanged = (text: string) => {
-    setSearchQuery(text);
-    searchHandler(text);
+  const doSearch = () => {
+    rootNavigation.navigate(chatStack.searchConversations);
   };
 
   return (
@@ -116,19 +97,23 @@ const ConversationsList = (): React.ReactElement => {
         onPressMenu={onMenuPress}
         removeBorderAndShadow={isLaptop}
       />
-      <SearchInput
-        inputRef={inputRef}
-        style={styles.inputSearch}
-        autoFocus={false}
-        placeholder={t('chat:placeholder_search')}
-        onChangeText={onQueryChanged}
-      />
+      <Pressable onPress={doSearch}>
+        <View pointerEvents="none">
+          <SearchInput
+            inputRef={inputRef}
+            style={styles.inputSearch}
+            autoFocus={false}
+            placeholder={t('chat:placeholder_search')}
+          />
+        </View>
+      </Pressable>
+
       <ListView
         listRef={listRef}
         type="conversation"
         isFullView
         loading={loading}
-        data={searchQuery ? searchResult : data}
+        data={data}
         onItemPress={onChatPress}
         onRefresh={() => dispatch(actions.getSubscriptions())}
         ListEmptyComponent={renderEmpty}
