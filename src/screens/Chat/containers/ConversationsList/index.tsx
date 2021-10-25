@@ -31,6 +31,7 @@ import actions from '~/screens/Chat/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {ITabTypes} from '~/interfaces/IRouter';
+import {useKeySelector} from '~/hooks/selector';
 
 const ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
@@ -51,6 +52,8 @@ const ConversationsList = (): React.ReactElement => {
   const {searchInputFocus} = useModal();
   const {data, searchResult, loading} = conversations;
   const [searchQuery, setSearchQuery] = useState('');
+
+  const currentPath = useKeySelector('app.rootScreenName');
 
   useEffect(() => {
     isFocused && dispatch(actions.getSubscriptions());
@@ -136,6 +139,7 @@ const ConversationsList = (): React.ReactElement => {
         onEndReachedThreshold={0.5}
         showItemSeparator={false}
         containerStyle={styles.listContainer}
+        currentPath={currentPath}
       />
     </ScreenWrapper>
   );
