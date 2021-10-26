@@ -38,7 +38,8 @@ export const getMessages = createSelector(chatState, data => {
   return {
     ...data?.messages,
     data: (data?.messages?.data || []).filter(
-      (item: IMessage) => !item.type?.includes('role'),
+      (item: IMessage) =>
+        !item.type?.includes('role') || item.type === 'room_changed_avatar',
     ),
   };
 });
