@@ -47,7 +47,7 @@ export const mapSearchResults = (
   data?: any[],
 ): IConversation[] => {
   return (data || []).map((item: any) => {
-    if (item.type !== 'user') return mapConversation(user, item);
+    if (item.customFields) return mapConversation(user, item);
     else return item;
   });
 };

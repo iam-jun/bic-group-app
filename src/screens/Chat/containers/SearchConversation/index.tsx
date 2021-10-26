@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -12,10 +12,11 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IConversation} from '~/interfaces/IChat';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Avatar from '~/beinComponents/Avatar';
 import images from '~/resources/images';
+import {debounce} from 'lodash';
+import appConfig from '~/configs/appConfig';
 
 const SearchConversation = () => {
   const {rootNavigation} = useRootNavigation();
@@ -26,33 +27,53 @@ const SearchConversation = () => {
   const search = useKeySelector('chat.search');
 
   useEffect(() => {
-    doSearch();
+    doSearch('');
   }, []);
 
-  const doSearch = () => {
+  const doSearch = (text: string) => {
     dispatch(actions.resetData('search'));
     dispatch(
       actions.getData(
         'search',
         {
-          name: '',
+          name: text,
         },
         'data',
       ),
     );
   };
 
+  const searchHandler = useCallback(
+    debounce(doSearch, appConfig.searchTriggerTime),
+    [],
+  );
+
+  const onQueryChanged = (text: string) => {
+    searchHandler(text);
+  };
+
   const onBackPress = () => {
     rootNavigation.goBack();
   };
 
-  const renderItem = (item: IConversation) => {
+  const renderItem = ({item}: {item: any; index: number}) => {
+    const subTitle =
+      item.type === 'user'
+        ? `${item.title_position}${i18next.t(
+            'chat:search_result:title_position',
+          )}${item.company}`
+        : item.description ||
+          `${item.members?.join(' ,')}${i18next
+            .t('chat:search_result:member_count')
+            .replace('{0}', `${item.usersCount - item.members?.length}`)}`;
     return (
       <PrimaryItem
         title={item.name}
+        subTitle={subTitle}
+        subTitleProps={{color: theme.colors.textSecondary}}
         LeftComponent={
           <Avatar.Large
-            // style={styles.marginRight}
+            style={styles.marginRight}
             source={item.avatar}
             placeholderSource={images.img_user_avatar_default}
           />
@@ -77,15 +98,22 @@ const SearchConversation = () => {
           style={styles.inputSearch}
           autoFocus={false}
           placeholder={i18next.t('chat:placeholder_search')}
-          //   onChangeText={onQueryChanged}
+          onChangeText={onQueryChanged}
         />
       </View>
-      <ListView data={search.data} renderItem={renderItem} />
+      <ListView
+        isFullView
+        style={styles.list}
+        data={search.data}
+        loading={search.loading}
+        renderItem={renderItem}
+      />
     </ScreenWrapper>
   );
 };
 
 const createStyles = (theme: ITheme, insets: EdgeInsets) => {
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: insets.top,
@@ -93,9 +121,19 @@ const createStyles = (theme: ITheme, insets: EdgeInsets) => {
     header: {
       flexDirection: 'row',
       alignItems: 'center',
+      borderBottomColor: colors.borderDivider,
+      borderBottomWidth: 1,
+      padding: spacing.padding.base,
     },
     inputSearch: {
       flex: 1,
+      marginStart: spacing.padding.small,
+    },
+    marginRight: {
+      marginRight: spacing?.margin.base,
+    },
+    list: {
+      marginTop: spacing.padding.base,
     },
   });
 };
