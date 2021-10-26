@@ -24,6 +24,7 @@ export interface GroupItemProps extends IParsedGroup {
   onToggleItem?: (item: GroupItemProps) => void;
   onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
+  isActive?: boolean;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -43,12 +44,16 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onToggleItem,
     onCheckedItem,
     disableOnPressItem,
+    isActive = false,
   } = props;
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
+
+  let className = 'group-item';
+  if (isActive) className = className + ` ${className}--active`;
 
   if (hide) {
     return null;
@@ -117,9 +122,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   return (
-    <Div className="group-item">
+    <Div className={className}>
       <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.container}>
+          {isActive && <View style={styles.itemActiveIndicator} />}
           {renderUiLevelLines()}
           {renderToggle()}
           <View style={styles.itemContainer}>
@@ -163,6 +169,19 @@ const themeStyles = (theme: IObject<any>) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    container: {
+      flexDirection: 'row',
+      height: 46,
+    },
+    itemActiveIndicator: {
+      width: 4,
+      height: 32,
+      position: 'absolute',
+      marginTop: 7,
+      backgroundColor: colors.primary5,
+      borderTopRightRadius: 6,
+      borderBottomRightRadius: 6,
     },
     textName: {
       maxWidth: 200,
