@@ -437,7 +437,7 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     stateIndicatorActive: {
       ...stateIndicator,
       width: 6,
-      height: 56,
+      height: 48,
       borderTopRightRadius: 6,
       borderBottomRightRadius: 6,
     },
