@@ -114,28 +114,19 @@ const ListView: React.FC<ListViewProps> = ({
 
     let itemPath = '';
     let isActive = false;
-    // eslint-disable-next-line react/prop-types
-    const paths = currentPath?.split('/');
 
     switch (type) {
       case 'conversation':
         itemPath = item['_id'];
-        if (
-          paths &&
-          paths?.length > 0 &&
-          paths[0] === appScreens.chat &&
-          paths[1] === itemPath
-        )
-          isActive = true;
         break;
 
       case 'menu':
         itemPath = item['path'];
-        if (currentPath && itemPath === currentPath) isActive = true;
         break;
       default:
         break;
     }
+    if (currentPath && itemPath === currentPath) isActive = true;
 
     return (
       <TouchableOpacity
