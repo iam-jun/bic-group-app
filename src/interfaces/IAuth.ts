@@ -122,3 +122,13 @@ export interface IUserWorkExperience {
   startDate?: string;
   endDate?: string;
 }
+
+export interface IUserAddWorkExperience {
+  company: string;
+  titlePosition: string;
+  location?: string;
+  description?: string;
+  currentlyWorkHere?: boolean;
+  startDate?: string;
+  endDate?: string;
+}

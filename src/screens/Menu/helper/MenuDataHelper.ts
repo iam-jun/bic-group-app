@@ -1,5 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {IUserEdit} from '~/interfaces/IAuth';
+import {IAddWorkExperienceReq} from '~/interfaces/IWorkExperienceRequest';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
@@ -24,6 +25,13 @@ export const menuApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  addWorkExperience: (data: IAddWorkExperienceReq): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+    data,
   }),
 };
 
@@ -60,6 +68,20 @@ const menuDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.getWorkExperience(),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  addWorkExperience: async (data: IAddWorkExperienceReq) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.addWorkExperience(data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

@@ -1,5 +1,6 @@
 import {
   IGetUserProfile,
+  IUserAddWorkExperience,
   IUserEdit,
   IUserProfile,
   IUserWorkExperience,
@@ -60,6 +61,16 @@ const menuActions = {
     return {
       type: menuTypes.SET_MY_WORK_EXPERIENCE,
       payload,
+    };
+  },
+  addWorkExperience: (
+    payload: IUserAddWorkExperience,
+    callback?: () => void,
+  ) => {
+    return {
+      type: menuTypes.ADD_WORK_EXPERIENCE,
+      payload,
+      callback,
     };
   },
 
