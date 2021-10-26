@@ -78,6 +78,11 @@ const Conversation = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
   };
 
+  const setNewRootScreenName = () => {
+    const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
+    dispatch(appActions.setRootScreenName(newRootScreenName));
+  };
+
   useEffect(() => {
     return () => {
       dispatch(actions.setAttachmentMedia());
@@ -86,21 +91,17 @@ const Conversation = () => {
 
   useEffect(() => {
     if (isFocused) {
-      const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
-      dispatch(appActions.setRootScreenName(newRootScreenName));
+      setNewRootScreenName();
     } else {
       dispatch(actions.readSubscriptions(conversation._id));
     }
-
-    return () => {
-      dispatch(appActions.setRootScreenName(''));
-    };
   }, [isFocused]);
 
   useEffect(() => {
     if (route?.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
       dispatch(actions.readSubscriptions(route.params.roomId));
+      setNewRootScreenName();
     }
   }, [route?.params?.roomId]);
 
