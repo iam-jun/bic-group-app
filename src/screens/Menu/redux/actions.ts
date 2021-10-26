@@ -1,4 +1,9 @@
-import {IGetUserProfile, IUserEdit, IUserProfile} from '~/interfaces/IAuth';
+import {
+  IGetUserProfile,
+  IUserEdit,
+  IUserProfile,
+  IUserWorkExperience,
+} from '~/interfaces/IAuth';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import menuTypes from './types';
 
@@ -42,6 +47,18 @@ const menuActions = {
   setMyProfile: (payload: IUserProfile | null) => {
     return {
       type: menuTypes.SET_MY_PROFILE,
+      payload,
+    };
+  },
+
+  getMyWorkExperience: () => {
+    return {
+      type: menuTypes.GET_MY_WORK_EXPERIENCE,
+    };
+  },
+  setMyWorkExperience: (payload: IUserWorkExperience[]) => {
+    return {
+      type: menuTypes.SET_MY_WORK_EXPERIENCE,
       payload,
     };
   },

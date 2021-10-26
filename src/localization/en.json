@@ -83,7 +83,8 @@
     "text_no_recent_searches": "No recent searches!",
     "text_files": "Files",
     "avatar_changed": "Avatar changed",
-    "cover_changed": "Cover changed"
+    "cover_changed": "Cover changed",
+    "text_present": "Present"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -258,7 +259,9 @@
     "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
     "text_phone_number_is_used": "This number is already used",
     "title_choose_location": "Choose Location",
-    "title_location": "Location"
+    "title_location": "Location",
+    "text_work": "Work",
+    "text_add_work": "Add Work"
   },
   "languages": {
     "title_en": "English",

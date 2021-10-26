@@ -14,6 +14,7 @@ const initMenuState = {
   showUserNotFound: false,
 
   myProfile: {} as IUserProfile,
+  myWorkExperience: [],
   emailEditError: '',
   phoneNumberEditError: '',
   countryCodeList: {
@@ -132,6 +133,12 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         loadingCover: payload,
+      };
+
+    case menuTypes.SET_MY_WORK_EXPERIENCE:
+      return {
+        ...state,
+        myWorkExperience: payload || [],
       };
 
     default:
