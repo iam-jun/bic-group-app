@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState, useRef} from 'react';
+import React, {FC, useEffect, useState, useRef, memo} from 'react';
 import {View, StyleSheet, Keyboard, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -26,6 +26,8 @@ import PostViewContent from '~/screens/Post/components/postView/PostViewContent'
 import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
 import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
 import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface PostViewProps {
   postId: string;
@@ -47,6 +49,7 @@ const PostView: FC<PostViewProps> = ({
   const menuSheetRef = useRef<any>();
 
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {spacing} = theme;
@@ -172,6 +175,25 @@ const PostView: FC<PostViewProps> = ({
     dispatch(showReactionDetailBottomSheet(payload));
   };
 
+  const _onPressHeader = () => {
+    if (onPressHeader) {
+      onPressHeader?.(postId);
+    } else {
+      rootNavigation.navigate(homeStack.postDetail, {post_id: postId});
+    }
+  };
+
+  const _onPressComment = () => {
+    if (onPressComment) {
+      onPressComment?.(postId);
+    } else {
+      rootNavigation.navigate(homeStack.postDetail, {
+        post_id: postId,
+        focus_comment: true,
+      });
+    }
+  };
+
   if (deleted) {
     return (
       <View style={styles.deletedContainer}>
@@ -193,7 +215,7 @@ const PostView: FC<PostViewProps> = ({
           audience={audience}
           actor={actor}
           time={time}
-          onPressHeader={() => onPressHeader?.(postId)}
+          onPressHeader={_onPressHeader}
           onPressMenu={onPressMenu}
           onPressShowAudiences={onPressShowAudiences}
         />
@@ -224,7 +246,7 @@ const PostView: FC<PostViewProps> = ({
         <PostViewFooter
           labelButtonComment={labelButtonComment}
           onAddReaction={onAddReaction}
-          onPressComment={() => onPressComment?.(postId)}
+          onPressComment={_onPressComment}
         />
         <PostViewMenuBottomSheet
           modalizeRef={menuSheetRef}
@@ -266,5 +288,6 @@ const createStyle = (theme: ITheme) => {
     imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
   });
 };
-
-export default PostView;
+const PostViewMemo = memo(PostView);
+PostViewMemo.whyDidYouRender = true;
+export default PostViewMemo;
