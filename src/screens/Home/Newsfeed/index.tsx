@@ -184,6 +184,7 @@ const Newsfeed = () => {
           onRefresh={() => getData(true)}
           onEndReachedThreshold={1}
           onLoadMore={() => getData()}
+          disableVirtualization={Platform.OS === 'web'}
           renderItem={renderItem}
           onViewableItemsChanged={onViewableItemsChanged}
           ListHeaderComponent={() => (
