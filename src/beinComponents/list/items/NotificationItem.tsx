@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ViewProps, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Avatar from '~/beinComponents/Avatar';
@@ -20,6 +20,7 @@ export interface NotificationItemProps {
   actor_count: number;
   created_at: string;
   updated_at: string;
+  isActive?: boolean;
 }
 
 const VERB = {
@@ -43,9 +44,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   actor_count,
   created_at,
   updated_at,
+  isActive = false,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme, is_read);
+  const styles = createStyles(theme, is_read, isActive);
 
   const activity = activities[0];
   const avatar = activity.actor.data?.avatar || activity.actor.data?.avatarUrl;
@@ -112,6 +114,18 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         '\x1b[0m',
       );
       console.log('\x1b[33m', '--- notification detail ---', act, '\x1b[0m');
+    }
+  };
+
+  const renderIndicator = () => {
+    if (Platform.OS !== 'web') return null;
+
+    if (isActive) {
+      console.log(`Rendering active`);
+      return <View style={styles.stateIndicatorActive} />;
+    } else if (!is_read) {
+      console.log(`Rendering unread`);
+      return <View style={styles.stateIndicatorUnread} />;
     }
   };
 
@@ -383,6 +397,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   // render notification item
   return (
     <View style={styles.container}>
+      {renderIndicator()}
       {renderAvatar(activities)}
       <View style={styles.flex1}>{renderNotiContent(activities)}</View>
       <Text.Subtitle style={styles.timeCreated}>
@@ -393,8 +408,20 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, isRead: boolean) => {
+const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
   const {colors, spacing} = theme;
+
+  const notiBackgroundColor = isActive
+    ? colors.primary2
+    : isRead
+    ? colors.background
+    : colors.primary1;
+
+  const stateIndicator = {
+    position: 'absolute',
+    left: 0,
+    backgroundColor: colors.primary5,
+  } as ViewProps;
 
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -402,9 +429,22 @@ const createStyles = (theme: ITheme, isRead: boolean) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: isRead ? colors.background : colors.primary1,
+      backgroundColor: notiBackgroundColor,
       paddingVertical: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.base,
+      borderRadius: 6,
+    },
+    stateIndicatorActive: {
+      ...stateIndicator,
+      width: 6,
+      height: 56,
+      borderTopRightRadius: 6,
+      borderBottomRightRadius: 6,
+    },
+    stateIndicatorUnread: {
+      ...stateIndicator,
+      width: 6,
+      height: 6,
       borderRadius: 6,
     },
     content: {
