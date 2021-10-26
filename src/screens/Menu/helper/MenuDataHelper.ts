@@ -19,6 +19,12 @@ export const menuApiConfig = {
       ...data,
     },
   }),
+  getWorkExperience: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const menuDataHelper = {
@@ -40,6 +46,20 @@ const menuDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.editMyProfile(userId, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getWorkExperience: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.getWorkExperience(),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

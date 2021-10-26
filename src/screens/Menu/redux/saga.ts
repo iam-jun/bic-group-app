@@ -6,7 +6,7 @@ import menuTypes from './types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import {IUserEdit, IGetUserProfile} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
-import {mapProfile} from './helper';
+import {mapProfile, mapWorkExperience} from './helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import FileUploader from '~/services/fileUploader';
@@ -16,6 +16,7 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_PROFILE, getMyProfile);
   yield takeLatest(menuTypes.EDIT_MY_PROFILE, editMyProfile);
   yield takeLatest(menuTypes.UPLOAD_IMAGE, uploadImage);
+  yield takeLatest(menuTypes.GET_MY_WORK_EXPERIENCE, getMyWorkExperience);
 }
 
 function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
@@ -179,5 +180,17 @@ function* updateLoadingImageState(
     yield put(menuActions.setLoadingAvatar(value));
   } else {
     yield put(menuActions.setLoadingCover(value));
+  }
+}
+
+function* getMyWorkExperience() {
+  try {
+    const response: IResponseData = yield menuDataHelper.getWorkExperience();
+
+    yield put(
+      menuActions.setMyWorkExperience(mapWorkExperience(response?.data)),
+    );
+  } catch (err) {
+    console.log('getMyWorkExperience error:', err);
   }
 }
