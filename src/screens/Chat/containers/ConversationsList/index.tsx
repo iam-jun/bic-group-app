@@ -82,7 +82,7 @@ const ConversationsList = (): React.ReactElement => {
       // const newRootScreenName = `${paths[1]}/${paths[2]}}`;
       // dispatch(appActions.setRootScreenName(newRootScreenName));
     }
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     const paths = rootScreenName.split('/');
@@ -122,6 +122,7 @@ const ConversationsList = (): React.ReactElement => {
       roomId: item._id,
       message_id: undefined,
     });
+    setCurrentPath(item._id);
   };
 
   const onMenuPress = async () => {
