@@ -32,6 +32,7 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {ITabTypes} from '~/interfaces/IRouter';
 import {useKeySelector} from '~/hooks/selector';
+import {appScreens} from '~/configs/navigator';
 
 const ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
@@ -53,7 +54,46 @@ const ConversationsList = (): React.ReactElement => {
   const {data, searchResult, loading} = conversations;
   const [searchQuery, setSearchQuery] = useState('');
 
-  const currentPath = useKeySelector('app.rootScreenName');
+  const rootScreenName = useKeySelector('app.rootScreenName');
+  const [currentPath, setCurrentPath] = useState('');
+
+  useEffect(() => {
+    /**
+     * Get 'chat' in init url
+     * to handle user access the deeper level
+     * in account setting by url
+     */
+    if (Platform.OS === 'web') {
+      console.log('DEBUG');
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      const paths = url.pathname.split('/');
+      console.log(`paths`, paths);
+
+      if (!paths || paths.length === 0) return;
+
+      /**
+       * set new currentPath directly, not through dispatch as
+       * there is errors, when access through url
+       */
+      setCurrentPath(paths[2]);
+      // const newRootScreenName = `${paths[1]}/${paths[2]}}`;
+      // dispatch(appActions.setRootScreenName(newRootScreenName));
+    }
+  }, []);
+
+  useEffect(() => {
+    const paths = rootScreenName.split('/');
+    if (!paths || paths.length === 0 || paths[0] !== appScreens.chat) return;
+
+    const roomId = paths[1];
+
+    if (!roomId) return;
+
+    setCurrentPath(paths[1]);
+  }, [rootScreenName]);
 
   useEffect(() => {
     isFocused && dispatch(actions.getSubscriptions());
