@@ -8,6 +8,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Icon from '~/beinComponents/Icon';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
@@ -17,6 +18,7 @@ import Avatar from '~/beinComponents/Avatar';
 import images from '~/resources/images';
 import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const SearchConversation = () => {
   const {rootNavigation} = useRootNavigation();
@@ -56,6 +58,16 @@ const SearchConversation = () => {
     rootNavigation.goBack();
   };
 
+  const goConversation = (item: any) => {
+    if (item.type === 'user') {
+      //@ts-ignore
+      dispatch(actions.createConversation([{username: item.username}], true));
+    } else {
+      dispatch(actions.setConversationDetail(item));
+      rootNavigation.navigate(chatStack.conversation, {roomId: item._id});
+    }
+  };
+
   const renderItem = ({item}: {item: any; index: number}) => {
     const subTitle =
       item.type === 'user'
@@ -78,8 +90,14 @@ const SearchConversation = () => {
             placeholderSource={images.img_user_avatar_default}
           />
         }
+        onPress={() => goConversation(item)}
       />
     );
+  };
+
+  const EmptyComponent = () => {
+    if (search.loading) return null;
+    return <NoSearchResult />;
   };
 
   return (
@@ -106,6 +124,7 @@ const SearchConversation = () => {
         style={styles.list}
         data={search.data}
         loading={search.loading}
+        ListEmptyComponent={EmptyComponent}
         renderItem={renderItem}
       />
     </ScreenWrapper>

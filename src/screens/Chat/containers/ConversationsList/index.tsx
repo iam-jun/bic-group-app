@@ -32,7 +32,7 @@ const ConversationsList = (): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
-  const {rootNavigation} = useRootNavigation();
+  const {rootNavigation, leftNavigation} = useRootNavigation();
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -84,7 +84,9 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   const doSearch = () => {
-    rootNavigation.navigate(chatStack.searchConversations);
+    if (Platform.OS === 'web')
+      leftNavigation.navigate(chatStack.searchConversations);
+    else rootNavigation.navigate(chatStack.searchConversations);
   };
 
   return (
