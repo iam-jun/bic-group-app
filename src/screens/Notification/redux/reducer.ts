@@ -29,11 +29,19 @@ function notificationsReducer(
       };
     case notificationsTypes.ADD_NEW_NOTIFICATIONS: {
       const newNotifications = payload.notifications || [];
-      const newList = cloneDeep(state.notificationList);
-      newList.unshift(...newNotifications);
+      let notificationList: any[] = cloneDeep(state.notificationList);
+
+      // if the notification group id is existing, remove old items
+      const newGroupIds = newNotifications.map((noti: any) => noti.group);
+      notificationList = notificationList.filter((noti: any) => {
+        return !newGroupIds.includes(noti.group);
+      });
+      // then add the grouped notification that is updated at top of list
+      notificationList.unshift(...newNotifications);
+
       return {
         ...state,
-        notificationList: newList,
+        notificationList: notificationList,
         unseenNumber: state.unseenNumber + payload.unseen,
       };
     }
