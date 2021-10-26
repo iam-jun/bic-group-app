@@ -120,8 +120,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   const user = mapUser(item?.u);
   let attachment = null;
   let quotedMessage = null;
-  let lastMessage = item.msg;
-
   if (item.attachments?.length > 0) {
     const _attachment: IAttachment = item.attachments[0];
     let extraData = null;
@@ -138,12 +136,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
         name: _attachment.title,
         ...extraData,
       };
-      lastMessage =
-        user?.username === _user?.username
-          ? i18next.t('chat:label_last_message:my_attachment')
-          : i18next
-              .t('chat:label_last_message:other_attachment')
-              .replace('{0}', user?.name);
     }
   }
   const type = item.t || attachment?.type;
@@ -184,7 +176,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     _updatedAt: timestampToISODate(item._updatedAt),
     status: messageStatus.SENT,
     text,
-    msg: lastMessage,
     attachment,
     quotedMessage,
     localId: item.localId || attachment?.localId,
