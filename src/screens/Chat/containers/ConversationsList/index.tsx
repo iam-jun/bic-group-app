@@ -64,13 +64,11 @@ const ConversationsList = (): React.ReactElement => {
      * in account setting by url
      */
     if (Platform.OS === 'web') {
-      console.log('DEBUG');
       const initUrl = window.location.href;
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const parse = require('url-parse');
       const url = parse(initUrl, true);
       const paths = url.pathname.split('/');
-      console.log(`paths`, paths);
 
       if (!paths || paths.length === 0) return;
 
