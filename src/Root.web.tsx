@@ -56,8 +56,10 @@ export default (): React.ReactElement => {
     (state: any) => state.auth?.feed?.notiSubscribeToken,
   );
 
-  const streamClient = useGetStream(token);
-  const streamNotiSubClient = useGetStream(notiSubscribeToken);
+  const [streamClient, streamNotiSubClient] = useGetStream(
+    token,
+    notiSubscribeToken,
+  );
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
@@ -163,7 +165,7 @@ export default (): React.ReactElement => {
       streamClient,
       streamNotiSubClient,
     };
-  }, [i18n.language, streamClient, streamNotiSubClient]);
+  }, [i18n.language, streamClient]);
 
   return (
     <SafeAreaProvider>

@@ -1,22 +1,24 @@
 import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
-
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import ListView from '~/beinComponents/list/ListView';
+import Button from '~/beinComponents/Button';
+
 import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import genders from '~/constants/genders';
 import relationshipStatus from '~/constants/relationshipStatus';
 import speakingLanguages from '~/constants/speakingLanguages';
-import useMenu from '~/hooks/menu';
 import {IFilePicked} from '~/interfaces/common';
 import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
@@ -30,6 +32,11 @@ import {
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
 import menuActions from '../redux/actions';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../redux/keySelector';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import {IUserWorkExperience} from '~/interfaces/IAuth';
+import Icon from '~/beinComponents/Icon';
 
 const UserEditProfile = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -39,7 +46,8 @@ const UserEditProfile = () => {
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {myProfile, loadingAvatar, loadingCover} = useMenu();
+
+  const myProfile = useKeySelector(menuKeySelector.myProfile);
   const {
     id,
     fullname,
@@ -54,7 +62,15 @@ const UserEditProfile = () => {
     country_code,
     country,
     city,
-  } = myProfile;
+  } = myProfile || {};
+
+  const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
+  const loadingCover = useKeySelector(menuKeySelector.loadingCover);
+  const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
+
+  useEffect(() => {
+    dispatch(menuActions.getMyWorkExperience());
+  }, []);
 
   const userLanguageList = language?.map(
     // @ts-ignore
@@ -278,6 +294,61 @@ const UserEditProfile = () => {
     );
   };
 
+  const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
+    return (
+      <PrimaryItem
+        height={100}
+        leftIcon={'iconSuitcase'}
+        leftIconProps={{
+          icon: 'iconSuitcase',
+          size: 20,
+        }}
+        RightComponent={<Icon icon={'EditAlt'} />}
+        ContentComponent={
+          <View>
+            <Text.ButtonBase>{`${item.titlePosition} at ${item.company}`}</Text.ButtonBase>
+            {item?.startDate && (
+              <Text>
+                {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
+                  item?.currentlyWorkHere
+                    ? `to ${i18next.t('common:text_present')}`
+                    : item?.endDate
+                    ? `to ${formatDate(item.endDate, 'MMM Do, YYYY')}`
+                    : ''
+                }`}
+              </Text>
+            )}
+            <Text.Subtitle color={colors.textSecondary}>
+              {item.location}
+            </Text.Subtitle>
+            <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
+              {item.description}
+            </Text.Subtitle>
+          </View>
+        }
+      />
+    );
+  };
+
+  const renderWorkExperience = () => {
+    return (
+      <View>
+        <View style={styles.infoHeader}>
+          <Text.H5 color={theme.colors.iconTint} useI18n>
+            settings:text_work
+          </Text.H5>
+        </View>
+        <View style={styles.infoItem}>
+          <ListView data={myWorkExperience} renderItem={renderWorkItem} />
+        </View>
+        <Button.Secondary style={styles.buttonAddWork}>
+          {i18next.t('settings:text_add_work')}
+        </Button.Secondary>
+        <Divider style={styles.divider} />
+      </View>
+    );
+  };
+
   return (
     <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header title={i18next.t('settings:title_user_profile')} />
@@ -286,6 +357,7 @@ const UserEditProfile = () => {
         {renderCover()}
         {renderBasicInfo()}
         {renderContact()}
+        {renderWorkExperience()}
       </ScrollView>
     </ScreenWrapper>
   );
@@ -344,6 +416,10 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     divider: {
       marginVertical: spacing.margin.small,
+    },
+    buttonAddWork: {
+      marginHorizontal: spacing.margin.large,
+      marginTop: spacing.margin.base,
     },
   });
 };

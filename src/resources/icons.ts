@@ -220,6 +220,7 @@ const icons = {
   iconFlagVn,
   iconFlagSg,
   iconFlagUs,
+  iconSuitcase: 'Suitcase',
 };
 
 export default icons;
