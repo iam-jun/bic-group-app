@@ -12,7 +12,7 @@ export const useUserIdAuth = () => {
       (state: IObject<any>) =>
         state.auth?.user?.signInUserSession?.idToken?.payload?.[
           'custom:bein_user_id'
-          ],
+        ],
     ) || '';
   return userId;
 };

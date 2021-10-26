@@ -431,7 +431,7 @@ const getAuthTokens = async () => {
       notiSubscribeToken,
     };
   } catch (e) {
-    console.log('getAuthTokens failed.');
+    console.log('getAuthTokens failed', e);
     return false;
   }
 };
