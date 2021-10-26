@@ -19,8 +19,9 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {ReactionType} from '~/constants/reactions';
-import PostViewMenuBottomSheet from '~/screens/Post/components/PostViewMenuBottomSheet';
-import {showReactionDetailBottomSheet} from '~/store/modal/actions';
+import modalActions, {
+  showReactionDetailBottomSheet,
+} from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
@@ -28,13 +29,13 @@ import PostViewImportant from '~/screens/Post/components/postView/PostViewImport
 import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import PostViewMenu from '~/screens/Post/components/PostViewMenu';
 
 export interface PostViewProps {
   postId: string;
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
   onPressHeader?: (postId: string) => void;
-  hideMarkAsRead?: boolean;
 }
 
 const PostView: FC<PostViewProps> = ({
@@ -42,11 +43,8 @@ const PostView: FC<PostViewProps> = ({
   isPostDetail = false,
   onPressComment,
   onPressHeader,
-  hideMarkAsRead = true,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
-  const [calledMarkAsRead, setCalledMarkAsRead] = useState(false);
-  const menuSheetRef = useRef<any>();
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -106,24 +104,25 @@ const PostView: FC<PostViewProps> = ({
     dispatch(postActions.showPostAudiencesBottomSheet(payload));
   };
 
-  const onPressMenu = (e: any) => {
+  const onPressMenu = (event: any) => {
     Keyboard.dismiss();
-    menuSheetRef.current?.open?.(e?.pageX, e?.pageY);
-  };
-
-  const onPressMarkAsRead = () => {
-    if (postId) {
-      postDataHelper
-        .postMarkAsRead(postId, userId)
-        .then(response => {
-          if (response && response?.data) {
-            setCalledMarkAsRead(true);
-          }
-        })
-        .catch(e => {
-          console.log('\x1b[31m', '🐣️ onPressMarkAsRead |  : ', e, '\x1b[0m');
-        });
-    }
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <PostViewMenu
+            postId={postId}
+            isPostDetail={isPostDetail}
+            isActor={actor?.id == userId}
+          />
+        ),
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+          position: {x: event?.pageX, y: event?.pageY},
+        },
+      }),
+    );
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
@@ -224,18 +223,6 @@ const PostView: FC<PostViewProps> = ({
           images={images}
           isPostDetail={isPostDetail}
         />
-        {!hideMarkAsRead && isImportant && (
-          <View>
-            <Button.Secondary
-              useI18n
-              style={{margin: spacing.margin.base}}
-              disabled={calledMarkAsRead}
-              onPress={onPressMarkAsRead}>
-              {calledMarkAsRead ? 'post:marked_as_read' : 'post:mark_as_read'}
-            </Button.Secondary>
-            <Divider />
-          </View>
-        )}
         <ReactionView
           ownReactions={own_reactions}
           reactionCounts={reaction_counts}
@@ -247,13 +234,6 @@ const PostView: FC<PostViewProps> = ({
           labelButtonComment={labelButtonComment}
           onAddReaction={onAddReaction}
           onPressComment={_onPressComment}
-        />
-        <PostViewMenuBottomSheet
-          modalizeRef={menuSheetRef}
-          postId={postId}
-          content={content}
-          isPostDetail={isPostDetail}
-          isActor={actor?.id == userId}
         />
       </View>
     </View>
