@@ -111,3 +111,14 @@ export interface IChangePasswordPayload {
   newPassword: string;
   global: boolean;
 }
+
+export interface IUserWorkExperience {
+  id: number;
+  company: string;
+  titlePosition: string;
+  location?: string;
+  description?: string;
+  currentlyWorkHere?: boolean;
+  startDate?: string;
+  endDate?: string;
+}

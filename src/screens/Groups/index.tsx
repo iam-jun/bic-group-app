@@ -1,24 +1,20 @@
-import React, {useEffect, useState, useCallback, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {debounce} from 'lodash';
-import i18next from 'i18next';
 
 import groupsActions from '~/screens/Groups/redux/actions';
 import ListView from '~/beinComponents/list/ListView';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Header from '~/beinComponents/Header';
-import Text from '~/beinComponents/Text';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
-import appConfig from '~/configs/appConfig';
 import {deviceDimensions} from '~/theme/dimension';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
+import GroupSearch from '~/screens/Groups/components/GroupSearch';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();
@@ -34,8 +30,6 @@ const Groups: React.FC = () => {
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
-
-  const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
     getData();
@@ -54,35 +48,22 @@ const Groups: React.FC = () => {
     dispatch(groupsActions.getJoinedGroups());
   };
 
-  const searchGroups = (searchQuery: string) => {
-    setSearchText(searchQuery);
-    dispatch(groupsActions.getJoinedGroups({params: {key: searchQuery}}));
+  const onShowSearch = (isShow: boolean) => {
+    dispatch(
+      groupsActions.setGroupSearch({
+        isShow: isShow,
+        loading: false,
+        searchKey: '',
+        result: [],
+      }),
+    );
   };
 
-  const searchHandler = useCallback(
-    debounce(searchGroups, appConfig.searchTriggerTime),
-    [],
-  );
-
-  const onQueryChanged = (searchQuery: string) => {
-    searchHandler(searchQuery);
-  };
+  const onSearchText = (searchText: string) =>
+    dispatch(groupsActions.setGroupSearch({searchKey: searchText}));
 
   const renderEmpty = () => {
-    if (!searchText) return null;
     return !loadingJoinedGroups && <NoSearchResult />;
-  };
-
-  const renderSearchBar = () => {
-    return (
-      <View style={styles.searchBar}>
-        <SearchInput
-          style={styles.searchInput}
-          onChangeText={onQueryChanged}
-          placeholder={i18next.t('input:search_group')}
-        />
-      </View>
-    );
   };
 
   const renderDataList = () => {
@@ -95,13 +76,6 @@ const Groups: React.FC = () => {
         onRefresh={getData}
         refreshing={loadingJoinedGroups}
         isFullView
-        ListHeaderComponent={
-          loadingJoinedGroups ? null : (
-            <Text.H5 useI18n>
-              {searchText ? 'groups:search_results' : null}
-            </Text.H5>
-          )
-        }
         ListEmptyComponent={renderEmpty}
       />
     );
@@ -114,9 +88,13 @@ const Groups: React.FC = () => {
         title="tabs:groups"
         titleTextProps={{useI18n: true}}
         removeBorderAndShadow={isLaptop}
+        onShowSearch={onShowSearch}
+        onSearchText={onSearchText}
       />
-      {renderSearchBar()}
-      {renderDataList()}
+      <View style={{flex: 1}}>
+        {renderDataList()}
+        <GroupSearch />
+      </View>
     </View>
   );
 };
