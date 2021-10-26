@@ -36,6 +36,7 @@ export interface PostViewProps {
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
   onPressHeader?: (postId: string) => void;
+  onContentLayout?: () => void;
 }
 
 const PostView: FC<PostViewProps> = ({
@@ -43,6 +44,7 @@ const PostView: FC<PostViewProps> = ({
   isPostDetail = false,
   onPressComment,
   onPressHeader,
+  onContentLayout,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
 
@@ -222,6 +224,7 @@ const PostView: FC<PostViewProps> = ({
           content={content}
           images={images}
           isPostDetail={isPostDetail}
+          onContentLayout={onContentLayout}
         />
         <ReactionView
           ownReactions={own_reactions}
