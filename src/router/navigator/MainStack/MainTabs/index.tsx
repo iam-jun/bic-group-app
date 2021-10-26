@@ -7,7 +7,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
@@ -33,7 +32,7 @@ const MainTabs = () => {
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
 
-  const insets = useSafeAreaInsets();
+  // const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -72,7 +71,7 @@ const MainTabs = () => {
         subscription && subscription.cancel();
       };
     }
-  }, [streamClient, streamNotiSubClient]);
+  }, [streamClient]);
 
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
