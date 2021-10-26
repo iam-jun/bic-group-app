@@ -402,7 +402,7 @@ const createStyles = (theme: ITheme, isRead: boolean) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: isRead ? colors.background : colors.primary2,
+      backgroundColor: isRead ? colors.background : colors.primary1,
       paddingVertical: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.base,
       borderRadius: 6,
