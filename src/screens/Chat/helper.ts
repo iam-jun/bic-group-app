@@ -118,35 +118,39 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
 
 export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   const user = mapUser(item?.u);
-  let attachment = null;
+  const attachments: IAttachment[] = [];
   let quotedMessage = null;
   let lastMessage = item.msg;
+  let type = item.t;
 
   if (item.attachments?.length > 0) {
-    const _attachment: IAttachment = item.attachments[0];
-    let extraData = null;
-    try {
-      extraData = JSON.parse(_attachment.description || '{}');
-    } catch (e: any) {
-      console.log(e);
-    }
-    if (extraData?.type === 'reply') {
-      quotedMessage = extraData;
-    } else {
-      attachment = {
-        ..._attachment,
-        name: _attachment.title,
-        ...extraData,
-      };
-      lastMessage =
-        user?.username === _user?.username
-          ? i18next.t('chat:label_last_message:my_attachment')
-          : i18next
-              .t('chat:label_last_message:other_attachment')
-              .replace('{0}', user?.name);
-    }
+    type = 'attachment';
+
+    item.attachments.forEach((_attachment: any) => {
+      // const _attachment: IAttachment = item.attachments[0];
+      let extraData = null;
+      try {
+        extraData = JSON.parse(_attachment.description || '{}');
+      } catch (e: any) {
+        console.log(e);
+      }
+      if (extraData?.type === 'reply') {
+        quotedMessage = extraData;
+      } else {
+        attachments.push({
+          ..._attachment,
+          name: _attachment.title,
+          ...extraData,
+        });
+        lastMessage =
+          user?.username === _user?.username
+            ? i18next.t('chat:label_last_message:my_attachment')
+            : i18next
+                .t('chat:label_last_message:other_attachment')
+                .replace('{0}', user?.name);
+      }
+    });
   }
-  const type = item.t || attachment?.type;
   let text = item.msg;
   const isMyMessage = user.username === _user.username;
 
@@ -185,9 +189,9 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     status: messageStatus.SENT,
     text,
     msg: lastMessage,
-    attachment,
+    attachments,
     quotedMessage,
-    localId: item.localId || attachment?.localId,
+    localId: item.localId || attachments[0]?.localId,
     reaction_counts,
     own_reactions,
   };
