@@ -151,10 +151,10 @@ const GroupMembers = (props: any) => {
             '',
           );
         } else {
-          const groupsRemovedFromToString = groupsRemovedFrom.join(', ');
+          const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
           alertPayload.content = alertPayload.content.replace(
             '{other groups}',
-            ` and ${groupsRemovedFromToString}`,
+            ` and ${otherGroups}`,
           );
         }
 
@@ -410,3 +410,11 @@ const createStyle = (theme: ITheme) => {
 };
 
 export default GroupMembers;
+
+const groupsRemovedFromToString = (groupList: string[]) => {
+  if (groupList.length === 1) {
+    return groupList[0];
+  }
+
+  return `${groupList.length} other groups: ${groupList.join(', ')}`;
+};
