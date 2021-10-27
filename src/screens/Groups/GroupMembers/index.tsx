@@ -24,6 +24,8 @@ import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {IObject} from '~/interfaces/common';
+import groupsDataHelper from '../helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
 
 const GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -118,24 +120,55 @@ const GroupMembers = (props: any) => {
       return;
     }
 
-    let content = i18next
-      .t(`groups:modal_confirm_remove_member:description`)
-      .replace('{name}', `"${selectedMember.fullname}"`);
+    const {id: userId, fullname} = selectedMember;
 
-    content = content.replace('{other groups}', '');
+    const content = i18next
+      .t(`groups:modal_confirm_remove_member:description`)
+      .replace('{name}', `"${fullname}"`);
 
     const alertPayload = {
       iconName: 'RemoveUser',
       title: i18next.t('groups:modal_confirm_remove_member:title'),
       content: content,
       cancelBtn: true,
-      onConfirm: () => removeMember(selectedMember.id),
+      onConfirm: () => removeMember(userId),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_member:button_remove',
       ),
     };
 
-    dispatch(modalActions.showAlert(alertPayload));
+    groupsDataHelper
+      .getUserInnerGroups(groupId, userId)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        const groupsRemovedFrom = [...innerGroups];
+
+        if (groupsRemovedFrom.length === 0) {
+          alertPayload.content = alertPayload.content.replace(
+            '{other groups}',
+            '',
+          );
+        } else {
+          const groupsRemovedFromToString = groupsRemovedFrom.join(', ');
+          alertPayload.content = alertPayload.content.replace(
+            '{other groups}',
+            ` and ${groupsRemovedFromToString}`,
+          );
+        }
+
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.error('Error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
   };
 
   const onPressMenuOption = (
