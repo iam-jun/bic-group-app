@@ -121,6 +121,7 @@ function* postCreateNewPost({
       } else {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
+      yield timeOut(1000);
       yield put(postActions.setLoadingCreatePost(false));
     } else {
       //todo handle post error
