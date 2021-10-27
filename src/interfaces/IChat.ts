@@ -117,6 +117,7 @@ interface IUserSettings {
 }
 
 export type IAttachment = {
+  localId?: string;
   text?: string;
   timestamp?: string;
   message_link?: string;
