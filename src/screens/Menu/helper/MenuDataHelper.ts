@@ -43,6 +43,12 @@ export const menuApiConfig = {
     useRetry: false,
     data,
   }),
+  deleteWorkExperience: (id: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience/${id}`,
+    method: 'delete',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+  }),
 };
 
 const menuDataHelper = {
@@ -106,6 +112,20 @@ const menuDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.editWorkExperience(id, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteWorkExperience: async (id: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.deleteWorkExperience(id),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

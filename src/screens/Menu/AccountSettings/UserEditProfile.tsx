@@ -37,7 +37,6 @@ import menuKeySelector from '../redux/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
-import {useRootNavigation} from '~/hooks/navigation';
 
 const UserEditProfile = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -68,7 +67,6 @@ const UserEditProfile = () => {
   const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
   const loadingCover = useKeySelector(menuKeySelector.loadingCover);
   const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
-  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     dispatch(menuActions.getMyWorkExperience());

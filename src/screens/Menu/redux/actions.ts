@@ -85,6 +85,13 @@ const menuActions = {
       callback,
     };
   },
+  deleteWorkExperience: (id: number, callback?: () => void) => {
+    return {
+      type: menuTypes.DELETE_WORK_EXPERIENCE,
+      id,
+      callback,
+    };
+  },
   setSelectedWorkItem: (payload: IUserWorkExperience | null) => {
     return {
       type: menuTypes.SET_SELECTED_WORK_ITEM,

@@ -90,6 +90,10 @@ const AddWork = () => {
       : dispatch(menuActions.addWorkExperience(data, navigateBack));
   };
 
+  const onDelete = () => {
+    dispatch(menuActions.deleteWorkExperience(id, navigateBack));
+  };
+
   const onChangeCompany = (text: string) => {
     setCompanyValue(text);
   };
@@ -242,7 +246,7 @@ const AddWork = () => {
         <View>
           <Divider />
           <View style={styles.deleteWork}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onDelete}>
               <Text.H6 color={theme.colors.error} useI18n>
                 settings:text_delete_work
               </Text.H6>

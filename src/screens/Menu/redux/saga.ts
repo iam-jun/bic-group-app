@@ -23,6 +23,7 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_MY_WORK_EXPERIENCE, getMyWorkExperience);
   yield takeLatest(menuTypes.ADD_WORK_EXPERIENCE, addWorkExperience);
   yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
+  yield takeLatest(menuTypes.DELETE_WORK_EXPERIENCE, deleteWorkExperience);
 }
 
 function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
@@ -261,6 +262,26 @@ function* editWorkExperience({
     if (callback) return callback();
   } catch (err) {
     console.log('editWorkExperience:', err);
+    yield showError(err);
+  }
+}
+
+function* deleteWorkExperience({
+  id,
+  callback,
+}: {
+  type: string;
+  id: number;
+  callback?: () => void;
+}) {
+  try {
+    yield menuDataHelper.deleteWorkExperience(id);
+
+    yield put(menuActions.getMyWorkExperience());
+
+    if (callback) return callback();
+  } catch (err) {
+    console.log('deleteWorkExperience:', err);
     yield showError(err);
   }
 }
