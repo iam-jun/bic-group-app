@@ -12,7 +12,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
-import {showAlertNewFeature} from '~/store/modal/actions';
+import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -99,11 +99,31 @@ const GroupMembers = (props: any) => {
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
+  const removeMember = (userId: string) => {
+    console.log('Remove member', userId);
+  };
+
+  const alertRemovingMember = (userId: string) => {
+    const alertPayload = {
+      iconName: 'RemoveUser',
+      title: i18next.t('chat:modal_confirm_remove_member:title'),
+      content: i18next.t(`chat:modal_confirm_remove_member:description`),
+      cancelBtn: true,
+      onConfirm: () => removeMember(userId),
+      confirmLabel: i18next.t('chat:button_remove_member'),
+    };
+
+    dispatch(modalActions.showAlert(alertPayload));
+  };
+
   const onPressMenuOption = (
     type: 'view-profile' | 'send-message' | 'set-admin' | 'remove-member',
   ) => {
     baseSheetRef.current?.close();
     switch (type) {
+      case 'remove-member':
+        alertRemovingMember(selectedMember);
+        break;
       default:
         dispatch(showAlertNewFeature());
         break;
