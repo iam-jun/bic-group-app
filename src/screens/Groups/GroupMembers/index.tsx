@@ -106,8 +106,8 @@ const GroupMembers = (props: any) => {
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
-  const removeMember = (userId: string) => {
-    dispatch(groupsActions.removeMember({groupId, userId}));
+  const removeMember = (userId: string, userFullname: string) => {
+    dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
   };
 
   const alertRemovingMember = () => {
@@ -136,7 +136,7 @@ const GroupMembers = (props: any) => {
       cancelBtnProps: {
         textColor: colors.primary7,
       },
-      onConfirm: () => removeMember(userId),
+      onConfirm: () => removeMember(userId, fullname),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_member:button_remove',
       ),

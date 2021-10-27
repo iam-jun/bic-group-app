@@ -367,14 +367,25 @@ function* removeMember({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; userId: string};
+  payload: {groupId: number; userId: string; userFullname: string};
 }) {
   try {
-    const {groupId, userId} = payload;
+    const {groupId, userId, userFullname} = payload;
 
     yield groupsDataHelper.removeUsers(groupId, [userId]);
 
     yield refreshGroupMembers(groupId);
+
+    const toastMessage: IToastMessage = {
+      content: i18next
+        .t('common:message_remove_member_success')
+        .replace('{n}', userFullname),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log(
       '\x1b[33m',
