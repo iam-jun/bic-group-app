@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React, {useCallback, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -21,7 +21,7 @@ import appConfig from '~/configs/appConfig';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const SearchConversation = () => {
-  const {rootNavigation} = useRootNavigation();
+  const {rootNavigation, leftNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const insets = useSafeAreaInsets();
   const styles = createStyles(theme, insets);
@@ -55,7 +55,8 @@ const SearchConversation = () => {
   };
 
   const onBackPress = () => {
-    rootNavigation.goBack();
+    if (Platform.OS === 'web') leftNavigation.goBack();
+    else rootNavigation.goBack();
   };
 
   const goConversation = (item: any) => {
@@ -114,7 +115,7 @@ const SearchConversation = () => {
         />
         <SearchInput
           style={styles.inputSearch}
-          autoFocus={false}
+          autoFocus={Platform.OS === 'web'}
           placeholder={i18next.t('chat:placeholder_search')}
           onChangeText={onQueryChanged}
         />

@@ -1,10 +1,9 @@
 import {useIsFocused} from '@react-navigation/native';
-import React, {createRef, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Platform,
   Pressable,
   StyleSheet,
-  TextInput,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -15,18 +14,18 @@ import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
+import {appScreens} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import useChat from '~/hooks/chat';
 import useModal from '~/hooks/modal';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {IConversation} from '~/interfaces/IChat';
 import {ITabTypes} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
-import {appScreens} from '~/configs/navigator';
 
 const ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
@@ -41,7 +40,6 @@ const ConversationsList = (): React.ReactElement => {
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const inputRef = createRef<TextInput>();
 
   const {conversations} = useChat();
   const {searchInputFocus} = useModal();
@@ -91,7 +89,7 @@ const ConversationsList = (): React.ReactElement => {
   }, [isFocused]);
 
   useEffect(() => {
-    Platform.OS === 'web' && inputRef.current?.focus();
+    Platform.OS === 'web' && goSearch();
   }, [searchInputFocus]);
 
   useTabPressListener(
@@ -125,7 +123,7 @@ const ConversationsList = (): React.ReactElement => {
     return <NoSearchResult />;
   };
 
-  const doSearch = () => {
+  const goSearch = () => {
     if (Platform.OS === 'web')
       leftNavigation.navigate(chatStack.searchConversations);
     else rootNavigation.navigate(chatStack.searchConversations);
@@ -141,10 +139,9 @@ const ConversationsList = (): React.ReactElement => {
         onPressMenu={onMenuPress}
         removeBorderAndShadow={isLaptop}
       />
-      <Pressable onPress={doSearch}>
+      <Pressable onPress={goSearch}>
         <View pointerEvents="none">
           <SearchInput
-            inputRef={inputRef}
             style={styles.inputSearch}
             autoFocus={false}
             placeholder={t('chat:placeholder_search')}
