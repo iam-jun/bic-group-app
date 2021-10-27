@@ -582,7 +582,11 @@ const Conversation = () => {
     <ScreenWrapper isFullView testID="MessageScreen">
       <Header
         avatar={_avatar}
-        avatarProps={{variant: 'default', onError: onLoadAvatarError}}
+        avatarProps={{
+          variant: 'default',
+          cache: false,
+          onError: onLoadAvatarError,
+        }}
         title={
           messages.error
             ? i18next.t('chat:title_invalid_msg_link')
