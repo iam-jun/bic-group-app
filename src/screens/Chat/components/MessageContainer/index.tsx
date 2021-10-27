@@ -127,10 +127,13 @@ const MessageItem = (props: MessageItemProps) => {
     }
   }, [messages.jumpedMessage]);
 
+  const _onLongPress = (e: any) => {
+    onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
+  };
+
   const onMenuPress = (e: any) => {
     if (removed) return;
-
-    onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
+    _onLongPress(e);
   };
 
   const onMentionPress = (user: any) => {
@@ -182,6 +185,7 @@ const MessageItem = (props: MessageItemProps) => {
                         {...currentMessage}
                         attachment={attach}
                         attachmentMedia={mediaSource}
+                        onLongPress={_onLongPress}
                       />
                     ),
                   )}
