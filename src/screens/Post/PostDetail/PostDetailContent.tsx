@@ -51,7 +51,7 @@ import {sortComments} from '../helper/PostUtils';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {useBaseHook} from '~/hooks';
 
-const PostDetailContent = (props: any) => {
+const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
@@ -410,6 +410,6 @@ const createStyle = (theme: ITheme, isLaptop: boolean) => {
   });
 };
 
-const PostDetailContentMemo = memo(PostDetailContent);
-PostDetailContentMemo.whyDidYouRender = true;
-export default PostDetailContentMemo;
+const PostDetailContent = memo(_PostDetailContent);
+PostDetailContent.whyDidYouRender = true;
+export default PostDetailContent;

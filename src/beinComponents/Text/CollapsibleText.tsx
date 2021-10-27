@@ -20,7 +20,7 @@ export interface CollapsibleTextProps extends TextProps {
   [x: string]: any;
 }
 
-const CollapsibleText: FC<CollapsibleTextProps> = ({
+const _CollapsibleText: FC<CollapsibleTextProps> = ({
   style,
   content,
   limitLength = 120,
@@ -102,6 +102,6 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   );
 };
 
-const CollapsibleTextMemo = memo(CollapsibleText);
-CollapsibleTextMemo.whyDidYouRender = true;
+const CollapsibleText = memo(_CollapsibleText);
+CollapsibleText.whyDidYouRender = true;
 export default CollapsibleText;

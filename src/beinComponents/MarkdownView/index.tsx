@@ -32,7 +32,7 @@ export interface MarkdownViewProps {
   onPressAudience?: (audience: IAudience) => void;
 }
 
-const MarkdownView: FC<MarkdownViewProps> = ({
+const _MarkdownView: FC<MarkdownViewProps> = ({
   style,
   children,
   debugPrintTree,
@@ -272,6 +272,6 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-const MarkdownViewMemo = memo(MarkdownView);
-MarkdownViewMemo.whyDidYouRender = true;
-export default MarkdownViewMemo;
+const MarkdownView = memo(_MarkdownView);
+MarkdownView.whyDidYouRender = true;
+export default MarkdownView;
