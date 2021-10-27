@@ -609,7 +609,7 @@ const Conversation = () => {
         replyingMessage={replyingMessage}
         onCancelEditing={onCancelEditingMessage}
         onCancelReplying={onCancelReplyingMessage}
-        onSendCallback={scrollToBottom}
+        onSendCallback={onDownPress}
         onError={setError}
         onSentAttachment={getAttachments}
       />

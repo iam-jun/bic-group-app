@@ -78,6 +78,9 @@ const ChatInput: React.FC<Props> = ({
     if (!text.trim() && !sendData?.image) {
       return;
     }
+
+    onSendCallback();
+
     if (!editingMessage) {
       dispatch(
         actions.sendMessage({
@@ -102,7 +105,6 @@ const ChatInput: React.FC<Props> = ({
     setTimeout(() => {
       //slowdown for web
       commentInputRef?.current?.clear();
-      onSendCallback();
     }, 100);
     setText('');
     onCancelEditing();
