@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import i18next from 'i18next';
-import {View, StyleSheet, TextInput, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -20,6 +26,8 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {fontFamilies} from '~/theme/fonts';
 import menuActions from '../../redux/actions';
 import {formatDate} from '~/utils/formatData';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../../redux/keySelector';
 
 const AddWork = () => {
   const theme = useTheme() as ITheme;
@@ -27,16 +35,36 @@ const AddWork = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const [companyValue, setCompanyValue] = useState<string>('');
-  const [positionValue, setPositionValue] = useState<string>('');
-  const [locationValue, setLocationValue] = useState<string>('');
-  const [descriptionValue, setDescriptionValue] = useState<string>('');
-  const [isWorkHere, setIsWorkHere] = useState<boolean>(false);
+  const selectedWorkItem = useKeySelector(menuKeySelector.selectedWorkItem);
+  const {
+    id,
+    company,
+    titlePosition,
+    location,
+    description,
+    currentlyWorkHere,
+    startDate,
+    endDate,
+  } = selectedWorkItem || {};
 
-  const [startDateValue, setStartDateValue] = useState<string>('');
+  const [companyValue, setCompanyValue] = useState<string>(company || '');
+  const [positionValue, setPositionValue] = useState<string>(
+    titlePosition || '',
+  );
+  const [locationValue, setLocationValue] = useState<string>(location || '');
+  const [descriptionValue, setDescriptionValue] = useState<string>(
+    description || '',
+  );
+  const [isWorkHere, setIsWorkHere] = useState<boolean>(
+    currentlyWorkHere || false,
+  );
+
+  const [startDateValue, setStartDateValue] = useState<string>(
+    startDate || new Date().toISOString(),
+  );
   const [selectingStartDate, setSelectingStartDate] = useState<boolean>(false);
 
-  const [endDateValue, setEndDateValue] = useState<string>('');
+  const [endDateValue, setEndDateValue] = useState<string>(endDate || '');
   const [selectingEndDate, setSelectingEndDate] = useState<boolean>(false);
 
   const navigateBack = () => {
@@ -48,20 +76,18 @@ const AddWork = () => {
   };
 
   const onSave = () => {
-    dispatch(
-      menuActions.addWorkExperience(
-        {
-          company: companyValue,
-          titlePosition: positionValue,
-          location: locationValue,
-          description: descriptionValue,
-          currentlyWorkHere: isWorkHere,
-          startDate: startDateValue ? startDateValue : undefined,
-          endDate: endDateValue ? endDateValue : undefined,
-        },
-        navigateBack,
-      ),
-    );
+    const data = {
+      company: companyValue,
+      titlePosition: positionValue,
+      location: locationValue,
+      description: descriptionValue,
+      currentlyWorkHere: isWorkHere,
+      startDate: startDateValue ? startDateValue : undefined,
+      endDate: endDateValue ? endDateValue : undefined,
+    };
+    selectedWorkItem
+      ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
+      : dispatch(menuActions.addWorkExperience(data, navigateBack));
   };
 
   const onChangeCompany = (text: string) => {
@@ -210,18 +236,31 @@ const AddWork = () => {
     );
   };
 
-  // const renderDeleteButton = () => {
-  //   return (
-  //     <View style={styles.deleteWork}>
-  //       <Text.H6 color={theme.colors.error}>Delete Work</Text.H6>
-  //     </View>
-  //   );
-  // };
+  const renderDeleteButton = () => {
+    return (
+      selectedWorkItem && (
+        <View>
+          <Divider />
+          <View style={styles.deleteWork}>
+            <TouchableOpacity>
+              <Text.H6 color={theme.colors.error} useI18n>
+                settings:text_delete_work
+              </Text.H6>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    );
+  };
 
   return (
     <ScreenWrapper testID="AddWork" isFullView>
       <Header
-        title={'settings:text_add_work'}
+        title={
+          selectedWorkItem
+            ? 'settings:text_edit_work'
+            : 'settings:text_add_work'
+        }
         titleTextProps={{useI18n: true}}
         buttonText={'common:text_save'}
         buttonProps={{
@@ -245,6 +284,7 @@ const AddWork = () => {
           {renderStartDate()}
           {renderEndDate()}
         </View>
+        {renderDeleteButton()}
       </View>
 
       {selectingStartDate && (
@@ -294,6 +334,9 @@ const createStyles = (theme: ITheme) => {
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: spacing.margin.extraLarge,
+    },
+    deleteWork: {
+      margin: spacing.margin.large,
     },
   });
 };

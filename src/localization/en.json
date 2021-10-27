@@ -264,6 +264,8 @@
     "title_location": "Location",
     "text_work": "Work",
     "text_add_work": "Add Work",
+    "text_edit_work": "Edit Work",
+    "text_delete_work": "Delete Work",
     "text_compamny": "Company",
     "text_title_position": "Title/Position",
     "text_currently_work_here": "Currently work here",

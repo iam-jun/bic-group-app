@@ -22,6 +22,7 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.UPLOAD_IMAGE, uploadImage);
   yield takeLatest(menuTypes.GET_MY_WORK_EXPERIENCE, getMyWorkExperience);
   yield takeLatest(menuTypes.ADD_WORK_EXPERIENCE, addWorkExperience);
+  yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
 }
 
 function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
@@ -220,6 +221,46 @@ function* addWorkExperience({
     if (callback) return callback();
   } catch (err) {
     console.log('addWorkExperience:', err);
+    yield showError(err);
+  }
+}
+
+function* editWorkExperience({
+  payload,
+  callback,
+  id,
+}: {
+  type: string;
+  id: number;
+  payload: IUserAddWorkExperience;
+  callback?: () => void;
+}) {
+  try {
+    const {
+      company,
+      titlePosition,
+      location,
+      description,
+      currentlyWorkHere,
+      startDate,
+      endDate,
+    } = payload;
+
+    yield menuDataHelper.editWorkExperience(id, {
+      company,
+      title_position: titlePosition,
+      location,
+      description,
+      currently_work_here: currentlyWorkHere,
+      start_date: startDate,
+      end_date: endDate,
+    });
+
+    yield put(menuActions.getMyWorkExperience());
+
+    if (callback) return callback();
+  } catch (err) {
+    console.log('editWorkExperience:', err);
     yield showError(err);
   }
 }

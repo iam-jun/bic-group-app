@@ -1,4 +1,4 @@
-import {IUserProfile} from '~/interfaces/IAuth';
+import {IUserProfile, IUserWorkExperience} from '~/interfaces/IAuth';
 import menuTypes from './types';
 import countryCode from '~/constants/countryCode';
 import {ICountryCodeList, ILocation} from '~/interfaces/common';
@@ -21,6 +21,7 @@ const initMenuState = {
     data: countryCode,
     searchResult: [],
   },
+  selectedWorkItem: {} as IUserWorkExperience,
 
   locationList: {
     data: locations,
@@ -139,6 +140,11 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         myWorkExperience: payload || [],
+      };
+    case menuTypes.SET_SELECTED_WORK_ITEM:
+      return {
+        ...state,
+        selectedWorkItem: payload,
       };
 
     default:

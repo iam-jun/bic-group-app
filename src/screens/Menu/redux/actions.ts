@@ -73,6 +73,24 @@ const menuActions = {
       callback,
     };
   },
+  editWorkExperience: (
+    id: number,
+    payload: IUserAddWorkExperience,
+    callback?: () => void,
+  ) => {
+    return {
+      type: menuTypes.EDIT_WORK_EXPERIENCE,
+      id,
+      payload,
+      callback,
+    };
+  },
+  setSelectedWorkItem: (payload: IUserWorkExperience | null) => {
+    return {
+      type: menuTypes.SET_SELECTED_WORK_ITEM,
+      payload,
+    };
+  },
 
   searchCountryCode: (payload: string) => ({
     type: menuTypes.SEARCH_COUNTRY_CODE,

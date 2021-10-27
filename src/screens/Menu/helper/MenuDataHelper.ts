@@ -33,6 +33,16 @@ export const menuApiConfig = {
     useRetry: false,
     data,
   }),
+  editWorkExperience: (
+    id: number,
+    data: IAddWorkExperienceReq,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience/${id}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+    data,
+  }),
 };
 
 const menuDataHelper = {
@@ -82,6 +92,20 @@ const menuDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.addWorkExperience(data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  editWorkExperience: async (id: number, data: IAddWorkExperienceReq) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.editWorkExperience(id, data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
