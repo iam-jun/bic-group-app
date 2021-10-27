@@ -38,6 +38,7 @@ import HomeStack from '../HomeStack';
 import MenuStack from '../MenuStack';
 import NotiStack from '../NotiStack';
 import DraftPost from '~/screens/Post/DraftPost';
+import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 
 export const screens = {
   home: HomeStack,
@@ -90,6 +91,7 @@ export const screensWebLaptop = {
   'edit-email': EditEmail,
   'edit-phone-number': EditPhoneNumber,
   'edit-location': EditLocation,
+  'add-work': AddWork,
 
   //NOTIFICATION STACK
   // notification: Notification,

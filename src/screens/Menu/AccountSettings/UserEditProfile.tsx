@@ -82,6 +82,16 @@ const UserEditProfile = () => {
 
   const goToEditContact = () => navigation.navigate(mainStack.editContact);
 
+  const goToAddWork = () => {
+    dispatch(menuActions.setSelectedWorkItem(null));
+    navigation.navigate(mainStack.addWork);
+  };
+
+  const selectWorkItem = (item: IUserWorkExperience) => {
+    dispatch(menuActions.setSelectedWorkItem(item));
+    navigation.navigate(mainStack.addWork);
+  };
+
   const uploadFile = (
     file: IFilePicked,
     fieldName: 'avatar' | 'background_img_url',
@@ -326,6 +336,7 @@ const UserEditProfile = () => {
             </Text.Subtitle>
           </View>
         }
+        onPress={() => selectWorkItem(item)}
       />
     );
   };
@@ -341,7 +352,7 @@ const UserEditProfile = () => {
         <View style={styles.infoItem}>
           <ListView data={myWorkExperience} renderItem={renderWorkItem} />
         </View>
-        <Button.Secondary style={styles.buttonAddWork}>
+        <Button.Secondary onPress={goToAddWork} style={styles.buttonAddWork}>
           {i18next.t('settings:text_add_work')}
         </Button.Secondary>
         <Divider style={styles.divider} />
