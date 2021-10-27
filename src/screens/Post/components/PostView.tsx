@@ -39,7 +39,7 @@ export interface PostViewProps {
   onContentLayout?: () => void;
 }
 
-const PostView: FC<PostViewProps> = ({
+const _PostView: FC<PostViewProps> = ({
   postId,
   isPostDetail = false,
   onPressComment,
@@ -271,6 +271,6 @@ const createStyle = (theme: ITheme) => {
     imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
   });
 };
-const PostViewMemo = memo(PostView);
-PostViewMemo.whyDidYouRender = true;
-export default PostViewMemo;
+const PostView = memo(_PostView);
+PostView.whyDidYouRender = true;
+export default PostView;
