@@ -42,7 +42,8 @@
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
-    }
+    },
+    "message_remove_member_success": "Đã xóa {n} khỏi nhóm"
   },
   "auth": {
     "text_kickout_title": "Notice",
