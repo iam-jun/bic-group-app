@@ -26,12 +26,14 @@ export interface HeaderCreatePostProps {
   audience?: any;
   style?: StyleProp<ViewStyle>;
   parentWidth?: number;
+  createFromGroupId?: number;
 }
 
 const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   audience,
   style,
   parentWidth,
+  createFromGroupId,
 }: HeaderCreatePostProps) => {
   const dispatch = useDispatch();
   const {navigation} = useBaseHook();
@@ -49,7 +51,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   }, [avatar]);
 
   const onPressCreate = () => {
-    const params: ICreatePostParams = {};
+    const params: ICreatePostParams = {createFromGroupId};
     if (audience) {
       params.initAudience = audience;
     }
