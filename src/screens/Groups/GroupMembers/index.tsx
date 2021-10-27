@@ -131,6 +131,7 @@ const GroupMembers = (props: any) => {
       iconName: 'RemoveUser',
       title: i18next.t('groups:modal_confirm_remove_member:title'),
       content: content,
+      ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
         textColor: colors.primary7,

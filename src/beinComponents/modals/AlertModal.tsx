@@ -36,6 +36,8 @@ const AlertModal: React.FC<AlertModalProps> = ({
     visible,
     title,
     content,
+    ContentComponent,
+    contentProps,
     input,
     inputProps,
     iconName,
@@ -55,6 +57,8 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const _cancelLabel = cancelLabel
     ? cancelLabel
     : i18next.t('common:btn_cancel');
+
+  const _ContentComponent = ContentComponent || Text.Subtitle;
 
   const _ConfirmBtnComponent = ConfirmBtnComponent || Button.Secondary;
   const _CancelBtnComponent = CancelBtnComponent || Button.Secondary;
@@ -107,7 +111,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
             )}
           </View>
           {!!content && (
-            <Text.Subtitle style={styles.content}>{content}</Text.Subtitle>
+            <_ContentComponent style={styles.content} {...contentProps}>
+              {content}
+            </_ContentComponent>
           )}
           {input && (
             <TextInput
