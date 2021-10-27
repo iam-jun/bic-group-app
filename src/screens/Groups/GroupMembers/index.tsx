@@ -107,7 +107,7 @@ const GroupMembers = (props: any) => {
   };
 
   const removeMember = (userId: string) => {
-    console.log('Remove member', userId);
+    dispatch(groupsActions.removeMember({groupId, userId}));
   };
 
   const alertRemovingMember = () => {
@@ -421,5 +421,5 @@ const groupsRemovedFromToString = (groupList: string[]) => {
     return groupList[0];
   }
 
-  return `${groupList.length} other groups: ${groupList.join(', ')}`;
+  return `${groupList.length} other inner groups: ${groupList.join(', ')}`;
 };
