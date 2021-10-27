@@ -6,6 +6,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   Platform,
   StyleSheet,
   View,
@@ -145,7 +146,6 @@ const Conversation = () => {
   }, [error]);
 
   const getMessages = (unreadCount: number) => {
-    console.log('getMessages', route.params);
     dispatch(actions.resetData('messages'));
     if (route.params?.message_id) {
       dispatch(actions.getSurroundingMessages(route.params.message_id));
@@ -341,6 +341,7 @@ const Conversation = () => {
 
   const onLongPress = (item: IMessage, position: {x: number; y: number}) => {
     setSelectedMessage(item);
+    Keyboard.dismiss();
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 
