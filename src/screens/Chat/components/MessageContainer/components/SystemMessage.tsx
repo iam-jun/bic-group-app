@@ -10,6 +10,12 @@ import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 
 const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
+  if (
+    !currentMessage.type?.includes('role') ||
+    currentMessage.type === 'room_changed_avatar'
+  )
+    return null;
+
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();

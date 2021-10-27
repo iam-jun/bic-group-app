@@ -1,7 +1,8 @@
 import React from 'react';
-import {Image, Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import FastImage from '~/beinComponents/Image/FastImage';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
@@ -36,10 +37,12 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
     <View style={styles.container}>
       <ButtonWrapper style={styles.avatarContainer} onPress={onPressUser}>
         <Avatar.Medium
-          source={user?.avatar}
+          source={{
+            uri: user?.avatar,
+            cache: FastImage.cacheControl.web,
+          }}
           cache={false}
           placeholderSource={getDefaultAvatar(user?.name)}
-          ImageComponent={Image}
         />
       </ButtonWrapper>
       <View style={styles.viewHeaderInfo}>
