@@ -165,7 +165,7 @@ const GroupMembers = (): React.ReactElement => {
     );
 
     groupsDataHelper
-      .getUserInnerGroups(conversation.beinGroupId, user.beinUserId)
+      .getUserInnerGroups(conversation.beinGroupId, user.username)
       .then(res => {
         const innerGroups = res.data.inner_groups.map(
           (group: IGroup) => group.name,
