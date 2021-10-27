@@ -62,11 +62,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
 
-  console.group('AlertModal');
-  console.log(`ConfirmBtnComponent`, ConfirmBtnComponent);
-  console.log(`_ConfirmBtnComponent`, _ConfirmBtnComponent);
-  console.groupEnd();
-
   useEffect(() => {
     setText(inputProps?.value || '');
   }, [inputProps]);
