@@ -71,6 +71,7 @@
       "1": "{n} member has been added",
       "many": "{n} members have been added"
     },
+    "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
     "title_page_not_found": "Page Not Found",
@@ -561,6 +562,11 @@
     "private_group_welcome_message": {
       "title": "This group is private.",
       "subtitle": "Join this group to view or participate on discussions"
+    },
+    "modal_confirm_remove_member": {
+      "title": "Remove this member",
+      "description": "Do you want to remove {name}, this member will no longer be in this group{other groups}.",
+      "button_remove": "Remove"
     }
   },
   "profile": {

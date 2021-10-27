@@ -39,6 +39,8 @@ const groupsTypes = {
 
   SET_GROUP_SEARCH: 'groups/SET_GROUP_SEARCH',
   GET_GROUP_SEARCH: 'groups/GET_GROUP_SEARCH',
+
+  REMOVE_MEMBER: 'groups/REMOVE_MEMBER',
 };
 
 export default groupsTypes;

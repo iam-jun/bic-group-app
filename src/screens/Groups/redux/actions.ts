@@ -172,6 +172,15 @@ const groupsActions = {
     type: groupsTypes.GET_GROUP_SEARCH,
     payload,
   }),
+
+  removeMember: (payload: {
+    groupId: number;
+    userId: string;
+    userFullname: string;
+  }) => ({
+    type: groupsTypes.REMOVE_MEMBER,
+    payload,
+  }),
 };
 
 export default groupsActions;

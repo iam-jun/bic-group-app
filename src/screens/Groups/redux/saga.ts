@@ -38,6 +38,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
   yield takeLatest(groupsTypes.JOIN_NEW_GROUP, joinNewGroup);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
+  yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -332,10 +333,7 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
     yield groupsDataHelper.addUsers(groupId, userIds);
 
     // refresh group detail after adding new members
-    yield put(groupsActions.clearGroupMembers());
-    yield put(groupsActions.getGroupMembers({groupId}));
-    yield put(groupsActions.getGroupDetail(groupId));
-    yield put(groupsActions.getJoinedGroups());
+    yield refreshGroupMembers(groupId);
 
     const userAddedCount = userIds.length;
 
@@ -347,6 +345,40 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
           }`,
         )
         .replace('{n}', userAddedCount.toString()),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.log(
+      '\x1b[33m',
+      'addMembers catch: ',
+      JSON.stringify(err, undefined, 2),
+      '\x1b[0m',
+    );
+    yield showError(err);
+  }
+}
+
+function* removeMember({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; userId: string; userFullname: string};
+}) {
+  try {
+    const {groupId, userId, userFullname} = payload;
+
+    yield groupsDataHelper.removeUsers(groupId, [userId]);
+
+    yield refreshGroupMembers(groupId);
+
+    const toastMessage: IToastMessage = {
+      content: i18next
+        .t('common:message_remove_member_success')
+        .replace('{n}', userFullname),
       props: {
         textProps: {useI18n: true},
         type: 'success',
@@ -410,4 +442,11 @@ function* updateLoadingImageState(
   } else {
     yield put(groupsActions.setLoadingCover(value));
   }
+}
+
+function* refreshGroupMembers(groupId: number) {
+  yield put(groupsActions.clearGroupMembers());
+  yield put(groupsActions.getGroupMembers({groupId}));
+  yield put(groupsActions.getGroupDetail(groupId));
+  yield put(groupsActions.getJoinedGroups());
 }
