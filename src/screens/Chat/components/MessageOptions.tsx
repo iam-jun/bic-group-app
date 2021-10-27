@@ -105,6 +105,7 @@ const themeStyle = (theme: ITheme) => {
       justifyContent: 'space-around',
       borderBottomWidth: 1,
       borderBottomColor: colors.placeholder,
+      alignItems: 'center',
     },
     itemMenu: {
       height: 44,
