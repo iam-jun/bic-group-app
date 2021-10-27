@@ -83,7 +83,7 @@ const ChatInput: React.FC<Props> = ({
         actions.sendMessage({
           _id: uuid.v4().toString(),
           room_id: conversation._id,
-          _updatedAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
           text: text.trim(),
           user,
           replyingMessage,

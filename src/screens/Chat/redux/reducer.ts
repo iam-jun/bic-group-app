@@ -443,6 +443,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
             ...messages.data,
             {
               ...payload,
+              user: {
+                ...payload.user,
+                name: payload.user.name || payload.user.fullname,
+              },
               status: messageStatus.SENDING,
             },
           ],
