@@ -89,11 +89,18 @@ const UserProfilePreviewBottomSheet = () => {
     );
   };
 
-  const navigateToChatScreen = (roomId: string) =>
+  const navigateToChatScreen = (roomId: string) => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: roomId,
+      });
+      return;
+    }
     rootNavigation.navigate('chat', {
       screen: chatStack.conversation,
-      params: {roomId, initial: false},
+      params: {roomId: roomId, initial: false},
     });
+  };
 
   const navigateToChat = () => {
     if (!!username)

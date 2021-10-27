@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -49,11 +55,18 @@ const UserProfile = (props: any) => {
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
 
-  const navigateToChatScreen = (roomId: string) =>
+  const navigateToChatScreen = (roomId: string) => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: roomId,
+      });
+      return;
+    }
     rootNavigation.navigate('chat', {
       screen: chatStack.conversation,
-      params: {roomId, initial: false},
+      params: {roomId: roomId, initial: false},
     });
+  };
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
