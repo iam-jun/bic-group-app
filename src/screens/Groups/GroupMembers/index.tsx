@@ -118,13 +118,21 @@ const GroupMembers = (props: any) => {
       return;
     }
 
+    let content = i18next
+      .t(`groups:modal_confirm_remove_member:description`)
+      .replace('{name}', `"${selectedMember.fullname}"`);
+
+    content = content.replace('{other groups}', '');
+
     const alertPayload = {
       iconName: 'RemoveUser',
-      title: i18next.t('chat:modal_confirm_remove_member:title'),
-      content: i18next.t(`chat:modal_confirm_remove_member:description`),
+      title: i18next.t('groups:modal_confirm_remove_member:title'),
+      content: content,
       cancelBtn: true,
       onConfirm: () => removeMember(selectedMember.id),
-      confirmLabel: i18next.t('chat:button_remove_member'),
+      confirmLabel: i18next.t(
+        'groups:modal_confirm_remove_member:button_remove',
+      ),
     };
 
     dispatch(modalActions.showAlert(alertPayload));
