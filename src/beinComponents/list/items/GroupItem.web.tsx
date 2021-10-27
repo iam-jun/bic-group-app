@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -16,6 +16,9 @@ import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {generateUniqueId} from '~/utils/generator';
 import Div from '~/beinComponents/Div';
+import {useKeySelector} from '~/hooks/selector';
+import appActions from '~/store/app/actions';
+import {appScreens} from '~/configs/navigator';
 
 export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
@@ -24,7 +27,6 @@ export interface GroupItemProps extends IParsedGroup {
   onToggleItem?: (item: GroupItemProps) => void;
   onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
-  isActive?: boolean;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -44,13 +46,37 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onToggleItem,
     onCheckedItem,
     disableOnPressItem,
-    isActive = false,
   } = props;
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const dispatch = useDispatch();
+
+  const rootScreenName = useKeySelector('app.rootScreenName');
+  const [currentAccessingGroup, setCurrentShowingGroup] = useState<any>();
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    // If accessing group, path will be 'groups/{id}'
+    const paths = rootScreenName.split('/');
+
+    if (paths[0] !== appScreens.groups) setCurrentShowingGroup(undefined);
+
+    console.log(`paths[1]`, paths[1]);
+    setCurrentShowingGroup(paths[1]);
+  }, [rootScreenName]);
+
+  useEffect(() => {
+    if (!currentAccessingGroup) {
+      setIsActive(false);
+      return;
+    }
+
+    // Don't have to use strict equality, as currentAccessingGroup might not number
+    currentAccessingGroup == id ? setIsActive(true) : setIsActive(false);
+  }, [currentAccessingGroup]);
 
   let className = 'group-item';
   if (isActive) className = className + ` ${className}--active`;
@@ -60,6 +86,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   }
 
   const _onPressItem = () => {
+    const newRootScreenName = `${appScreens.groups}/${id}`;
+    console.log(`newRootScreenName`, newRootScreenName);
+    dispatch(appActions.setRootScreenName(newRootScreenName));
+
     if (onPressItem) {
       onPressItem(props);
     } else {
