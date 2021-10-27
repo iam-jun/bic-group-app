@@ -91,7 +91,9 @@ const Newsfeed = () => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      getData(true);
+      if (streamClient && (!homePosts || homePosts?.length === 0)) {
+        getData(true);
+      }
     });
   }, [streamClient]);
 
