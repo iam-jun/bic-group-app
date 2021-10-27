@@ -16,6 +16,7 @@ import items, {IListViewItem} from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {appScreens} from '~/configs/navigator';
 import {IAction} from '~/constants/commonActions';
 
 import {spacing} from '~/theme';
@@ -111,9 +112,20 @@ const ListView: React.FC<ListViewProps> = ({
       return renderItem({item, index});
     }
 
-    const itemPath = item['path'];
+    let itemPath = '';
     let isActive = false;
 
+    switch (type) {
+      case 'conversation':
+        itemPath = item['_id'];
+        break;
+
+      case 'menu':
+        itemPath = item['path'];
+        break;
+      default:
+        break;
+    }
     if (currentPath && itemPath === currentPath) isActive = true;
 
     return (
