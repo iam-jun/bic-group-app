@@ -121,10 +121,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     if (Platform.OS !== 'web') return null;
 
     if (isActive) {
-      console.log(`Rendering active`);
       return <View style={styles.stateIndicatorActive} />;
     } else if (!is_read) {
-      console.log(`Rendering unread`);
       return <View style={styles.stateIndicatorUnread} />;
     }
   };
