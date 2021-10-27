@@ -11,7 +11,7 @@ import {ITheme} from '~/theme/interfaces';
 
 const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
   if (
-    !currentMessage.type?.includes('role') ||
+    currentMessage.type?.includes('role') ||
     currentMessage.type === 'room_changed_avatar'
   )
     return null;
