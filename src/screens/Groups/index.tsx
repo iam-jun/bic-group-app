@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, View, useWindowDimensions, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -15,6 +16,7 @@ import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import GroupSearch from '~/screens/Groups/components/GroupSearch';
+import appActions from '~/store/app/actions';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();
@@ -30,6 +32,20 @@ const Groups: React.FC = () => {
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      const path = url.pathname.substring(1);
+
+      dispatch(appActions.setRootScreenName(path));
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     getData();
