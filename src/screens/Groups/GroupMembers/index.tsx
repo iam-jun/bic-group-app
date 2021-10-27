@@ -26,6 +26,7 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import {IObject} from '~/interfaces/common';
 import groupsDataHelper from '../helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
+import Button from '~/beinComponents/Button';
 
 const GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -131,10 +132,14 @@ const GroupMembers = (props: any) => {
       title: i18next.t('groups:modal_confirm_remove_member:title'),
       content: content,
       cancelBtn: true,
+      cancelBtnProps: {
+        textColor: colors.primary7,
+      },
       onConfirm: () => removeMember(userId),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_member:button_remove',
       ),
+      ConfirmBtnComponent: Button.Danger,
     };
 
     groupsDataHelper

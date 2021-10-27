@@ -25,6 +25,7 @@ import MembersSelection from '../../fragments/MembersSelection';
 import actions from '../../redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
+import Button from '~/beinComponents/Button';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -143,8 +144,12 @@ const GroupMembers = (): React.ReactElement => {
       title: i18next.t('chat:modal_confirm_remove_member:title'),
       content: i18next.t(`chat:modal_confirm_remove_member:description`),
       cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
       onConfirm: () => doRemoveUser(user),
       confirmLabel: i18next.t('chat:button_remove_member'),
+      ConfirmBtnComponent: Button.Danger,
     };
 
     if (conversation.type !== roomTypes.GROUP) {
