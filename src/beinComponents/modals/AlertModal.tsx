@@ -42,8 +42,12 @@ const AlertModal: React.FC<AlertModalProps> = ({
     onConfirm,
     onDismiss,
     confirmLabel,
+    confirmBtnProps,
+    ConfirmBtnComponent,
     cancelBtn,
     cancelLabel,
+    cancelBtnProps,
+    CancelBtnComponent,
     showCloseButton,
     style: alertModalStyle,
     stretchOnWeb,
@@ -52,8 +56,16 @@ const AlertModal: React.FC<AlertModalProps> = ({
     ? cancelLabel
     : i18next.t('common:btn_cancel');
 
+  const _ConfirmBtnComponent = ConfirmBtnComponent || Button.Secondary;
+  const _CancelBtnComponent = CancelBtnComponent || Button.Secondary;
+
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
+
+  console.group('AlertModal');
+  console.log(`ConfirmBtnComponent`, ConfirmBtnComponent);
+  console.log(`_ConfirmBtnComponent`, _ConfirmBtnComponent);
+  console.groupEnd();
 
   useEffect(() => {
     setText(inputProps?.value || '');
@@ -111,23 +123,25 @@ const AlertModal: React.FC<AlertModalProps> = ({
           )}
           <View style={styles.displayBtn}>
             {!!cancelBtn && (
-              <Button.Secondary
+              <_CancelBtnComponent
                 style={{marginEnd: theme.spacing?.margin.base}}
-                onPress={_onDismiss}>
+                onPress={_onDismiss}
+                {...cancelBtnProps}>
                 {_cancelLabel}
-              </Button.Secondary>
+              </_CancelBtnComponent>
             )}
 
             {!!confirmLabel && (
-              <Button.Secondary
+              <_ConfirmBtnComponent
                 highEmphasis
                 disabled={input && !text}
                 onPress={() => {
                   dispatch(actions.hideAlert());
                   onConfirm && onConfirm(text);
-                }}>
+                }}
+                {...confirmBtnProps}>
                 {confirmLabel}
-              </Button.Secondary>
+              </_ConfirmBtnComponent>
             )}
           </View>
         </View>
