@@ -317,6 +317,32 @@ const Section1 = () => {
             paddingHorizontal: spacing?.padding.base,
           }}
         />
+        <Text.H5>{`<Button.Danger></Button.Danger>`}</Text.H5>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: spacing?.margin.small,
+            marginBottom: spacing?.margin.base,
+            justifyContent: 'space-around',
+          }}>
+          <Button.Danger
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Default
+          </Button.Danger>
+          <Button.Danger
+            disabled
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Disabled
+          </Button.Danger>
+        </View>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
         <Text.H5>{`<Button.BottomFixed></Button.BottomFixed>`}</Text.H5>
         <View
           style={{
