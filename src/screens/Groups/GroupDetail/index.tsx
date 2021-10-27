@@ -17,7 +17,6 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
 import {RootStackParamList} from '~/interfaces/IRouter';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
 import GroupTopBar from './components/GroupTopBar';
@@ -53,19 +52,12 @@ const GroupDetail = (props: any) => {
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
 
   const {rootNavigation} = useRootNavigation();
-  const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
 
   useFocusEffect(() => {
     if (!userId && Platform.OS === 'web') {
       rootNavigation.replace(rootSwitch.authStack);
     }
   });
-
-  const onPressBack = () => {
-    if (route.params?.initial === false)
-      rootNavigation.replace(groupStack.groups);
-    else rootNavigation.goBack();
-  };
 
   const getGroupDetail = () => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -140,7 +132,7 @@ const GroupDetail = (props: any) => {
     if (isEmpty(groupInfo)) return <NoGroupFound />;
     return (
       <Fragment>
-        <Header onPressBack={onPressBack}>
+        <Header>
           <GroupTopBar />
         </Header>
         <View

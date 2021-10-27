@@ -34,8 +34,7 @@ const GroupTopBar = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
 
   const onPressBack = () => {
-    if (route.params?.initial === false)
-      rootNavigation.replace(groupStack.groups);
+    if (!route.params?.initial) rootNavigation.replace(groupStack.groups);
     else rootNavigation.goBack();
   };
 
