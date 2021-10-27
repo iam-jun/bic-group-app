@@ -23,6 +23,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
+import {IObject} from '~/interfaces/common';
 
 const GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -30,7 +31,8 @@ const GroupMembers = (props: any) => {
 
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedMember, setSelectedMember] = useState<string>('');
+  const [selectedMember, setSelectedMember] = useState<IObject<any>>({});
+  const clearSelectedMember = () => setSelectedMember({});
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -92,10 +94,12 @@ const GroupMembers = (props: any) => {
   //   alert('onPress userId: ' + userId);
   // };
 
-  const onPressMenu = (e: any, userId: string) => {
-    if (!userId) return;
+  const onPressMenu = (e: any, item: any) => {
+    if (!item || !item.id) return;
 
-    setSelectedMember(userId);
+    setSelectedMember({
+      ...item,
+    });
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
@@ -103,13 +107,23 @@ const GroupMembers = (props: any) => {
     console.log('Remove member', userId);
   };
 
-  const alertRemovingMember = (userId: string) => {
+  const alertRemovingMember = () => {
+    if (!selectedMember) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'No member selected',
+          props: {type: 'error'},
+        }),
+      );
+      return;
+    }
+
     const alertPayload = {
       iconName: 'RemoveUser',
       title: i18next.t('chat:modal_confirm_remove_member:title'),
       content: i18next.t(`chat:modal_confirm_remove_member:description`),
       cancelBtn: true,
-      onConfirm: () => removeMember(userId),
+      onConfirm: () => removeMember(selectedMember.id),
       confirmLabel: i18next.t('chat:button_remove_member'),
     };
 
@@ -122,7 +136,7 @@ const GroupMembers = (props: any) => {
     baseSheetRef.current?.close();
     switch (type) {
       case 'remove-member':
-        alertRemovingMember(selectedMember);
+        alertRemovingMember();
         break;
       default:
         dispatch(showAlertNewFeature());
@@ -135,7 +149,7 @@ const GroupMembers = (props: any) => {
   };
 
   const renderItem = ({item}: any) => {
-    const {id, fullname, avatar, title} = item || {};
+    const {fullname, avatar, title} = item || {};
 
     return (
       <PrimaryItem
@@ -143,7 +157,7 @@ const GroupMembers = (props: any) => {
         style={styles.itemContainer}
         avatar={avatar}
         title={fullname}
-        onPressMenu={(e: any) => onPressMenu(e, id)}
+        onPressMenu={(e: any) => onPressMenu(e, item)}
         subTitle={title}
         subTitleProps={{variant: 'subtitle', color: colors.textSecondary}}
       />
@@ -185,7 +199,7 @@ const GroupMembers = (props: any) => {
     return (
       <BottomSheet
         modalizeRef={baseSheetRef}
-        onClosed={() => setSelectedMember('')}
+        onClosed={clearSelectedMember}
         ContentComponent={
           <View style={styles.bottomSheet}>
             <PrimaryItem
