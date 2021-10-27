@@ -6,6 +6,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   Platform,
   StyleSheet,
   View,
@@ -47,6 +48,8 @@ import dimension from '~/theme/dimension';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
+import appActions from '~/store/app/actions';
+import {appScreens} from '~/configs/navigator';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -76,6 +79,11 @@ const Conversation = () => {
     setAvatar(getDefaultAvatar(conversation?.name));
   };
 
+  const setNewRootScreenName = () => {
+    const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
+    dispatch(appActions.setRootScreenName(newRootScreenName));
+  };
+
   useEffect(() => {
     return () => {
       dispatch(actions.setAttachmentMedia());
@@ -83,7 +91,9 @@ const Conversation = () => {
   }, []);
 
   useEffect(() => {
-    if (!isFocused) {
+    if (isFocused) {
+      setNewRootScreenName();
+    } else {
       dispatch(actions.readSubscriptions(conversation._id));
     }
   }, [isFocused]);
@@ -92,6 +102,7 @@ const Conversation = () => {
     if (route?.params?.roomId) {
       dispatch(actions.getConversationDetail(route.params.roomId));
       dispatch(actions.readSubscriptions(route.params.roomId));
+      setNewRootScreenName();
     }
   }, [route?.params?.roomId]);
 
@@ -135,7 +146,6 @@ const Conversation = () => {
   }, [error]);
 
   const getMessages = (unreadCount: number) => {
-    console.log('getMessages', route.params);
     dispatch(actions.resetData('messages'));
     if (route.params?.message_id) {
       dispatch(actions.getSurroundingMessages(route.params.message_id));
@@ -331,6 +341,7 @@ const Conversation = () => {
 
   const onLongPress = (item: IMessage, position: {x: number; y: number}) => {
     setSelectedMessage(item);
+    Keyboard.dismiss();
     messageOptionsModalRef.current?.open(position.x, position.y);
   };
 

@@ -183,7 +183,9 @@
       border-radius: var(--border-radius--default);
     }
 
-    .chat__conversation-item:hover {
+    .chat__conversation-item:hover,
+    .chat__conversation-item:focus,
+    .chat__conversation-item--active {
       background-color: var(--border-divider);
     }
 
@@ -321,7 +323,8 @@
     }
 
     .group-item:hover,
-    .group-item:focus {
+    .group-item:focus,
+    .group-item--active {
       background-color: var(--placeholder);
     }
 
