@@ -116,6 +116,7 @@ export interface IPostCreatePost {
 
   userId?: string;
   streamClient?: StreamClient;
+  createFromGroupId?: string | number;
 }
 
 export interface IPayloadCreateComment {
@@ -295,6 +296,7 @@ export interface ICreatePostParams {
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadReplying {
