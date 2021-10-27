@@ -2,7 +2,6 @@ import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import FastImage from '~/beinComponents/Image/FastImage';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
@@ -39,7 +38,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
         <Avatar.Medium
           source={{
             uri: user?.avatar,
-            cache: FastImage.cacheControl.web,
+            cache: 'web',
           }}
           cache={false}
           placeholderSource={getDefaultAvatar(user?.name)}
