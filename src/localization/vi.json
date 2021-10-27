@@ -370,6 +370,11 @@
     "private_group_welcome_message": {
       "title": "Đây là nhóm kín.",
       "subtitle": "Hãy tham gia nhóm để xem và thảo luận."
+    },
+    "modal_confirm_remove_member": {
+      "title": "Xóa khỏi nhóm",
+      "description": "Xóa {name} khỏi nhóm, thành viên này sẽ không còn trong nhóm của bạn{other groups}.",
+      "button_remove": "Xác nhận"
     }
   },
   "profile": {
