@@ -125,7 +125,6 @@ const ListView: React.FC<ListViewProps> = ({
         break;
       case 'notification':
         itemPath = item.id;
-        console.log(`item`, item);
         break;
       default:
         break;
