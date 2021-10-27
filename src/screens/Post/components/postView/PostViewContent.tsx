@@ -15,12 +15,14 @@ export interface PostViewContentProps {
   content?: string;
   images?: IActivityDataImage[];
   isPostDetail: boolean;
+  onContentLayout?: () => void;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
   content = '',
   images = [],
   isPostDetail,
+  onContentLayout,
 }: PostViewContentProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
@@ -32,8 +34,16 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
   };
 
+  const onLayout = () => {
+    onContentLayout?.();
+  };
+
+  if (!content && (!images || images?.length === 0)) {
+    return null;
+  }
+
   return (
-    <View>
+    <View onLayout={onLayout}>
       <View style={styles.contentContainer}>
         {isPostDetail ? (
           <MarkdownView onPressAudience={onPressMentionAudience}>

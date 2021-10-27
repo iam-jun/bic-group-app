@@ -77,8 +77,7 @@ function* getGroupDetail({payload}: {type: string; payload: number}) {
 function* getGroupSearch({payload}: {type: string; payload: string}) {
   try {
     yield put(groupsActions.setGroupSearch({loading: true}));
-    const params = {key: payload || ''};
-    //todo waiting for backend add param for search, such as 'discovery'
+    const params = {key: payload || '', discovery: true};
     const response = yield groupsDataHelper.getMyGroups(params);
     if (isArray(response?.data)) {
       yield put(
