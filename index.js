@@ -1,3 +1,5 @@
+import './wdyr';
+
 // eslint-disable-next-line no-undef
 if (__DEV__) {
   import('~/ReactotronConfig').then(() => console.log('Reactotron Configured'));
