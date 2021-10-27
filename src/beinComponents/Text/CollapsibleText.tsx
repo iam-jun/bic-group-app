@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {View, StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
@@ -102,4 +102,6 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   );
 };
 
+const CollapsibleTextMemo = memo(CollapsibleText);
+CollapsibleTextMemo.whyDidYouRender = true;
 export default CollapsibleText;

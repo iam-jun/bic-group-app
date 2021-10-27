@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -28,11 +28,11 @@ const PostViewContent: FC<PostViewContentProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const onPressMentionAudience = (audience: any) => {
+  const onPressMentionAudience = useCallback((audience: any) => {
     if (audience?.id) {
       rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
     }
-  };
+  }, []);
 
   const onLayout = () => {
     onContentLayout?.();
@@ -56,9 +56,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             shortLength={400}
             useMarkdown
             toggleOnPress
-            onPressAudience={(audience: any) =>
-              onPressMentionAudience(audience)
-            }
+            onPressAudience={onPressMentionAudience}
           />
         )}
       </View>
