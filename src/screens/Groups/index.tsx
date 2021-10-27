@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, View, useWindowDimensions, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -36,13 +36,15 @@ const Groups: React.FC = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    const initUrl = window.location.href;
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const parse = require('url-parse');
-    const url = parse(initUrl, true);
-    const path = url.pathname.substring(1);
+    if (Platform.OS === 'web') {
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      const path = url.pathname.substring(1);
 
-    dispatch(appActions.setRootScreenName(path));
+      dispatch(appActions.setRootScreenName(path));
+    }
   }, [isFocused]);
 
   useEffect(() => {
