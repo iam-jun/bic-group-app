@@ -136,6 +136,7 @@ const ConversationDetail = (): React.ReactElement => {
       <Avatar.Group
         variant="largeAlt"
         source={_avatar}
+        cache={false}
         onError={onLoadAvatarError}
       />
     );
