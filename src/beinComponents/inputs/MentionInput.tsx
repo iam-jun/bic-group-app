@@ -133,9 +133,19 @@ const MentionInput: React.FC<MentionInputProps> = ({
     getContent,
   }));
 
-  const getData = (mentionKey: string, getDataParam: any) => {
-    if (!getDataPromise || !getDataParam || getDataParam.group_ids === '')
+  /**
+   * Need to put debounce as checkMention is called in 2 places
+   * and useRef as the debounce-only solution doesn't work
+   */
+  const getData = debounce((mentionKey: string, getDataParam: any) => {
+    console.group('getData');
+    console.log(`mentionKey`, mentionKey);
+    console.log(`getDataParam`, getDataParam);
+
+    if (!getDataPromise || !getDataParam || getDataParam.group_ids === '') {
+      console.groupEnd();
       return;
+    }
 
     const param = {...getDataParam, key: mentionKey};
     setIsLoading(true);
@@ -159,12 +169,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
           `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
         );
         setIsLoading(false);
-        setMentioning(false);
+        // setMentioning(false);
         setList([]);
         setHighlightIndex(DEFAULT_INDEX);
         sethHighlightItem(undefined);
       });
-  };
+    console.groupEnd();
+  }, 50);
 
   const _onStartMention = () => {
     getData('', getDataParam);
