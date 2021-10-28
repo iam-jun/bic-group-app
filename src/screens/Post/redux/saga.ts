@@ -32,6 +32,7 @@ import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -76,15 +77,39 @@ function* postCreateNewPost({
   type: string;
   payload: IPostCreatePost;
 }) {
-  const {userId, streamClient, ...postPayload} = payload || {};
+  const {userId, streamClient, createFromGroupId, ...postPayload} =
+    payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(postDataHelper.postCreateNewPost, postPayload);
-    yield put(postActions.setLoadingCreatePost(false));
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts(postData));
 
+      if (userId && streamClient) {
+        if (payload?.is_draft) {
+          yield put(postActions.getDraftPosts({userId, streamClient}));
+        }
+        if (createFromGroupId) {
+          yield put(groupsActions.clearGroupPosts());
+          const getGroupPostsPayload = {
+            streamClient,
+            userId: Number(userId),
+            groupId: Number(createFromGroupId),
+          };
+          yield put(groupsActions.getGroupPosts(getGroupPostsPayload));
+        } else {
+          yield put(
+            homeActions.getHomePosts({
+              streamClient,
+              userId: `${userId}`,
+              isRefresh: true,
+            }),
+          );
+        }
+      }
+
+      yield timeOut(500);
       if (payload?.is_draft) {
         yield put(
           modalActions.showHideToastMessage({
@@ -96,21 +121,11 @@ function* postCreateNewPost({
       } else {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
-
-      if (userId && streamClient) {
-        if (payload?.is_draft) {
-          yield put(postActions.getDraftPosts({userId, streamClient}));
-        }
-        yield put(
-          homeActions.getHomePosts({
-            streamClient,
-            userId: `${userId}`,
-            isRefresh: true,
-          }),
-        );
-      }
+      yield timeOut(1000);
+      yield put(postActions.setLoadingCreatePost(false));
     } else {
       //todo handle post error
+      yield put(postActions.setLoadingCreatePost(false));
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
@@ -956,6 +971,7 @@ function* getPostDetail({
       streamClient,
       postId,
     );
+    yield timeOut(500);
     yield put(postActions.addToAllPosts(response));
     callbackLoading?.(false, true);
   } catch (e) {
@@ -966,7 +982,6 @@ function* getPostDetail({
       post.deleted = true;
       yield put(postActions.addToAllPosts(post));
     }
-    callbackLoading?.(false, false);
     showError(e);
   }
 }

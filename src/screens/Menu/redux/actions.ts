@@ -1,5 +1,6 @@
 import {
   IGetUserProfile,
+  IUserAddWorkExperience,
   IUserEdit,
   IUserProfile,
   IUserWorkExperience,
@@ -59,6 +60,41 @@ const menuActions = {
   setMyWorkExperience: (payload: IUserWorkExperience[]) => {
     return {
       type: menuTypes.SET_MY_WORK_EXPERIENCE,
+      payload,
+    };
+  },
+  addWorkExperience: (
+    payload: IUserAddWorkExperience,
+    callback?: () => void,
+  ) => {
+    return {
+      type: menuTypes.ADD_WORK_EXPERIENCE,
+      payload,
+      callback,
+    };
+  },
+  editWorkExperience: (
+    id: number,
+    payload: IUserAddWorkExperience,
+    callback?: () => void,
+  ) => {
+    return {
+      type: menuTypes.EDIT_WORK_EXPERIENCE,
+      id,
+      payload,
+      callback,
+    };
+  },
+  deleteWorkExperience: (id: number, callback?: () => void) => {
+    return {
+      type: menuTypes.DELETE_WORK_EXPERIENCE,
+      id,
+      callback,
+    };
+  },
+  setSelectedWorkItem: (payload: IUserWorkExperience | null) => {
+    return {
+      type: menuTypes.SET_SELECTED_WORK_ITEM,
       payload,
     };
   },

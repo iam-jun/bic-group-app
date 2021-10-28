@@ -120,6 +120,7 @@ export const appScreens = {
   settingEditPhoneNumber: 'edit-phone-number',
   settingEditLocation: 'edit-location',
   userProfile: 'user-profile',
+  settingCreateWork: 'add-work',
 
   // Notification
   notificationEmpty: 'not-select-notification',
@@ -451,6 +452,9 @@ export const linkingConfigFullLaptop = {
               },
               'security-and-login': {
                 path: 'settings/security',
+              },
+              'add-work': {
+                path: 'settings/add-work',
               },
             },
           },
