@@ -307,7 +307,7 @@ const UserEditProfile = () => {
   const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
     return (
       <PrimaryItem
-        height={100}
+        height={null}
         leftIcon={'iconSuitcase'}
         leftIconProps={{
           icon: 'iconSuitcase',
@@ -316,7 +316,9 @@ const UserEditProfile = () => {
         RightComponent={<Icon icon={'EditAlt'} />}
         ContentComponent={
           <View>
-            <Text.ButtonBase>{`${item.titlePosition} at ${item.company}`}</Text.ButtonBase>
+            <Text.ButtonBase>{`${item?.titlePosition} ${i18next.t(
+              'common:text_at',
+            )} ${item?.company}`}</Text.ButtonBase>
             {item?.startDate && (
               <Text>
                 {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
@@ -328,12 +330,16 @@ const UserEditProfile = () => {
                 }`}
               </Text>
             )}
-            <Text.Subtitle color={colors.textSecondary}>
-              {item.location}
-            </Text.Subtitle>
-            <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
-              {item.description}
-            </Text.Subtitle>
+            {!!item?.location && (
+              <Text.Subtitle color={colors.textSecondary}>
+                {item.location}
+              </Text.Subtitle>
+            )}
+            {!!item?.description && (
+              <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
+                {item.description}
+              </Text.Subtitle>
+            )}
           </View>
         }
         onPress={() => selectWorkItem(item)}
