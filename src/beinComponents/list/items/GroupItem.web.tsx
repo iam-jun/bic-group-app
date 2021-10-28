@@ -64,7 +64,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
     if (paths[0] !== appScreens.groups) setCurrentShowingGroup(undefined);
 
-    console.log(`paths[1]`, paths[1]);
     setCurrentShowingGroup(paths[1]);
   }, [rootScreenName]);
 
@@ -87,7 +86,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const _onPressItem = () => {
     const newRootScreenName = `${appScreens.groups}/${id}`;
-    console.log(`newRootScreenName`, newRootScreenName);
     dispatch(appActions.setRootScreenName(newRootScreenName));
 
     if (onPressItem) {
