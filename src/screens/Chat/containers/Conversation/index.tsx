@@ -597,8 +597,7 @@ const Conversation = () => {
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"
         onPressIcon={!messages.error ? onSearchPress : undefined}
-        menuIcon="ConversationInfo"
-        onPressMenu={!messages.error ? goConversationDetail : undefined}
+        onPressHeader={!messages.error ? goConversationDetail : undefined}
         onPressBack={onPressBack}
         hideBackOnLaptop
       />
