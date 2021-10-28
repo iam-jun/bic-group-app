@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -155,7 +155,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     <Div className={className}>
       <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
         <View style={styles.container}>
-          {isActive && <View style={styles.itemActiveIndicator} />}
+          {Platform.OS === 'web' && isActive && (
+            <View style={styles.itemActiveIndicator} />
+          )}
           {renderUiLevelLines()}
           {renderToggle()}
           <View style={styles.itemContainer}>
