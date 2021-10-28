@@ -124,7 +124,23 @@ const EmojiCell = ({emoji, colSize, ...other}) => (
   </TouchableOpacity>
 );
 
-const storage_key = '@react-native-emoji-selector:HISTORY';
+export const emojiStorageKey = '@react-native-emoji-selector:HISTORY';
+
+export const getEmojiHistory = async (limit = 6) => {
+  let result = ['❤️', '👍', '🤣', '😮', '😭', '😡'];
+  try {
+    let historyStr = await AsyncStorage.getItem(emojiStorageKey);
+    if (historyStr) {
+      let history = JSON.parse(historyStr) || [];
+      history = history?.slice?.(0, limit)?.reverse?.();
+      history?.map?.(item => result.unshift(charFromEmojiObject(item)));
+    }
+    return Promise.resolve(result.splice(0, limit));
+  } catch (e) {
+    return Promise.resolve(result);
+  }
+};
+
 export default class EmojiSelector extends Component {
   state = {
     searchQuery: '',
@@ -162,7 +178,7 @@ export default class EmojiSelector extends Component {
   };
 
   addToHistoryAsync = async emoji => {
-    let history = await AsyncStorage.getItem(storage_key);
+    let history = await AsyncStorage.getItem(emojiStorageKey);
 
     let value = [];
     if (!history) {
@@ -179,14 +195,14 @@ export default class EmojiSelector extends Component {
       }
     }
 
-    AsyncStorage.setItem(storage_key, JSON.stringify(value));
+    AsyncStorage.setItem(emojiStorageKey, JSON.stringify(value));
     this.setState({
       history: value,
     });
   };
 
   loadHistoryAsync = async () => {
-    let result = await AsyncStorage.getItem(storage_key);
+    let result = await AsyncStorage.getItem(emojiStorageKey);
     if (result) {
       let history = JSON.parse(result);
       this.setState({history});
