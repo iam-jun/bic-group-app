@@ -134,35 +134,36 @@ const MentionInput: React.FC<MentionInputProps> = ({
   }));
 
   const getData = (mentionKey: string, getDataParam: any) => {
-    if (getDataPromise && getDataParam) {
-      const param = {...getDataParam, key: mentionKey};
-      setIsLoading(true);
-      getDataPromise?.(param)
-        ?.then?.((response: any) => {
-          setIsLoading(false);
-          const newList = get(response, getDataResponseKey) || [];
+    if (!getDataPromise || !getDataParam || getDataParam.group_ids === '')
+      return;
 
-          if (newList?.length === 0) {
-            setList([]);
-            setMentioning(false);
-            return;
-          }
+    const param = {...getDataParam, key: mentionKey};
+    setIsLoading(true);
+    getDataPromise?.(param)
+      ?.then?.((response: any) => {
+        setIsLoading(false);
+        const newList = get(response, getDataResponseKey) || [];
 
-          setList(newList);
-          setKey(mentionKey);
-        })
-        ?.catch((e: any) => {
-          console.log(
-            `\x1b[34m🐣️ MentionInput get data error: `,
-            `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-          );
-          setIsLoading(false);
-          setMentioning(false);
+        if (newList?.length === 0) {
           setList([]);
-          setHighlightIndex(DEFAULT_INDEX);
-          sethHighlightItem(undefined);
-        });
-    }
+          setMentioning(false);
+          return;
+        }
+
+        setList(newList);
+        setKey(mentionKey);
+      })
+      ?.catch((e: any) => {
+        console.log(
+          `\x1b[34m🐣️ MentionInput get data error: `,
+          `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+        );
+        setIsLoading(false);
+        setMentioning(false);
+        setList([]);
+        setHighlightIndex(DEFAULT_INDEX);
+        sethHighlightItem(undefined);
+      });
   };
 
   const _onStartMention = () => {
