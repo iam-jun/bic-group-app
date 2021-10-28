@@ -13,16 +13,23 @@ export const groupsApiConfig = {
     useRetry: true,
     params,
   }),
+  getSearchGroups: (params?: any): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
   getUserInnerGroups: (
     groupId: number,
-    userId: number,
+    username: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      user: userId,
+      username,
     },
   }),
   getGroupMembers: (groupId: number, params: any): HttpApiRequestConfig => ({
@@ -111,10 +118,24 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getUserInnerGroups: async (groupId: number, userId: number) => {
+  getSearchGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getUserInnerGroups(groupId, userId),
+        groupsApiConfig.getSearchGroups(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getUserInnerGroups: async (groupId: number, username: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getUserInnerGroups(groupId, username),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

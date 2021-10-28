@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
@@ -13,10 +13,10 @@ import {getDefaultAvatar} from '../../../helper';
 
 interface Props {
   user: IChatUser;
-  _updatedAt: string;
+  createdAt: string;
 }
 
-const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
+const MessageHeader: React.FC<Props> = ({user, createdAt}: Props) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
@@ -36,19 +36,19 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
     <View style={styles.container}>
       <ButtonWrapper style={styles.avatarContainer} onPress={onPressUser}>
         <Avatar.Medium
-          source={user?.avatar}
+          source={{
+            uri: user?.avatar,
+            cache: 'web',
+          }}
           cache={false}
           placeholderSource={getDefaultAvatar(user?.name)}
-          ImageComponent={Image}
         />
       </ButtonWrapper>
       <View style={styles.viewHeaderInfo}>
         <ButtonWrapper onPress={onPressUser}>
           <Text.BodyM style={styles.textName}>{user?.name}</Text.BodyM>
         </ButtonWrapper>
-        <Text.BodyS style={styles.textTime}>
-          {formatDate(_updatedAt)}
-        </Text.BodyS>
+        <Text.BodyS style={styles.textTime}>{formatDate(createdAt)}</Text.BodyS>
       </View>
     </View>
   );

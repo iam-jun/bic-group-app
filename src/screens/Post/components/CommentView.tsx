@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {Animated, View, StyleSheet, Keyboard, Platform} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -82,10 +82,10 @@ const CommentView: React.FC<CommentViewProps> = ({
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
-  const onPressAudience = (audience: any) => {
+  const onPressAudience = useCallback((audience: any) => {
     if (!audience || !audience?.id) return;
     rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
-  };
+  }, []);
 
   const onAddReaction = (reactionId: ReactionType) => {
     if (id) {
@@ -247,7 +247,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                   useMarkdown
                   limitMarkdownTypes
                   content={content || ''}
-                  onPressAudience={(audience: any) => onPressAudience(audience)}
+                  onPressAudience={onPressAudience}
                 />
               </View>
               <CommentMediaView data={data} onLongPress={onLongPress} />

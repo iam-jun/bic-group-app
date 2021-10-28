@@ -20,7 +20,7 @@ const TextEmojiIcon: FC<TextEmojiIconProps> = ({
   const emoji = NodeEmoji.find(name || '')?.emoji;
 
   // @ts-ignore
-  const fontSize = (style?.width || 12) * 0.85;
+  const fontSize = (style?.width || 12) * 0.75;
 
   return (
     <View style={[styles.container, style]}>

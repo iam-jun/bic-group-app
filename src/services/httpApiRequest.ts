@@ -3,6 +3,7 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {connect, StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
+import moment from 'moment';
 import {Alert, Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
@@ -71,12 +72,14 @@ const dispatchStoreAuthTokens = (
 const refreshFailKickOut = () => {
   _dispatchLogout();
   _dispatchSessionExpire();
+  isRefreshingToken = false;
+  // count retry limit
+  countLimitRetry = 0;
+  timeEndCountLimit = 0;
   // bein
   unauthorizedReqQueue = [];
-  isRefreshingToken = false;
   // get stream
   unauthorizedGetStreamReqQueue = [];
-  isRefreshingAuthTokens = false;
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
@@ -186,9 +189,25 @@ const handleRetry = async (error: AxiosError) => {
 
 // get refresh token
 let isRefreshingToken = false;
+let countLimitRetry = 0;
+let timeEndCountLimit = 0;
 const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   if (!isRefreshingToken) {
     isRefreshingToken = true;
+    countLimitRetry++;
+    if (countLimitRetry > 10) {
+      const timeNow = moment.now();
+      if (timeNow >= timeEndCountLimit) {
+        refreshFailKickOut();
+        return;
+      } else {
+        countLimitRetry = 0;
+        timeEndCountLimit = 0;
+      }
+    }
+    if (countLimitRetry == 1) {
+      timeEndCountLimit = moment.now() + 60; // 1 minute from now
+    }
     let isSuccess = true;
 
     try {
@@ -216,16 +235,18 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       return;
     }
 
+    unauthorizedGetStreamReqQueue.forEach(callback => callback(isSuccess));
+    unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
     isRefreshingToken = false;
   }
 };
 
+let alertShow = false;
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
-  let alertShow = false;
   if (error.response) {
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
@@ -368,29 +389,12 @@ const handleResponseFailFeedActivity = async (
     });
 
     // create request to refresh token
-    await refreshAuthTokensAndRetry();
+    await getTokenAndCallBackBein('');
 
     // next
     return newReqPromise;
   }
   return activitiesError;
-};
-
-let isRefreshingAuthTokens = false;
-const refreshAuthTokensAndRetry = async () => {
-  if (!isRefreshingAuthTokens) {
-    isRefreshingAuthTokens = true;
-    const isRefreshSuccess = await refreshAuthTokens();
-    if (!isRefreshSuccess) {
-      refreshFailKickOut();
-      return;
-    }
-    unauthorizedGetStreamReqQueue.forEach(callback =>
-      callback(isRefreshSuccess),
-    );
-    unauthorizedGetStreamReqQueue = [];
-    isRefreshingAuthTokens = false;
-  }
 };
 
 const refreshAuthTokens = async () => {
@@ -547,6 +551,7 @@ const subscribeGetstreamFeed = (
   streamClient: StreamClient,
   feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
+  // @ts-ignore
   callback,
 ) => {
   // just a log when client subscribe the notification feed successfully
@@ -555,9 +560,9 @@ const subscribeGetstreamFeed = (
   };
 
   // just a log when client subscribe the notification feed failed
+  // @ts-ignore
   const subscribeFailCallback = data => {
-    console.log('something went wrong, check the console logs');
-    console.log(data);
+    console.log('something went wrong:', data);
   };
 
   // subscribe notification feed to get realtime activity

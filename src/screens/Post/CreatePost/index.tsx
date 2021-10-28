@@ -51,8 +51,13 @@ export interface CreatePostProps {
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
   const mentionInputRef = useRef<any>();
-  const {postId, draftPostId, replaceWithDetail, initAudience} =
-    route?.params || {};
+  const {
+    postId,
+    draftPostId,
+    replaceWithDetail,
+    initAudience,
+    createFromGroupId,
+  } = route?.params || {};
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -297,6 +302,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         is_draft: isSaveAsDraft,
         userId,
         streamClient,
+        createFromGroupId,
       };
       if (important?.active) {
         payload.important = important;

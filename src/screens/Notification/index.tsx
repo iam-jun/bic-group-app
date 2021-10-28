@@ -1,7 +1,8 @@
 import {useIsFocused} from '@react-navigation/native';
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  Platform,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -50,7 +51,11 @@ const Notification = () => {
   const showNoNotification = notificationList.length === 0;
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
+  const [currentPath, setCurrentPath] = useState('');
+
   useEffect(() => {
+    if (!isFocused) setCurrentPath('');
+
     if (isFocused && streamClient) {
       dispatch(
         notificationsActions.markAsSeenAll({
@@ -91,6 +96,10 @@ const Notification = () => {
     // for now make the navigation to be simple by redirect to post detail screen
     // for feature, check notification type to implement more complex requirements
     const act = item.activities[0];
+    if (Platform.OS === 'web') {
+      setCurrentPath(item.id);
+    }
+
     try {
       if (act.notificationType !== undefined) {
         switch (act.notificationType) {
@@ -250,6 +259,7 @@ const Notification = () => {
           refreshing={loadingNotifications}
           onLoadMore={() => loadMoreNotifications()}
           ListFooterComponent={renderListFooter}
+          currentPath={currentPath}
         />
       )}
       <NotificationBottomSheet modalizeRef={menuSheetRef} />

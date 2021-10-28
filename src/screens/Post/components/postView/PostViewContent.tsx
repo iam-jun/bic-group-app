@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -15,25 +15,35 @@ export interface PostViewContentProps {
   content?: string;
   images?: IActivityDataImage[];
   isPostDetail: boolean;
+  onContentLayout?: () => void;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
   content = '',
   images = [],
   isPostDetail,
+  onContentLayout,
 }: PostViewContentProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const onPressMentionAudience = (audience: any) => {
+  const onPressMentionAudience = useCallback((audience: any) => {
     if (audience?.id) {
       rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
     }
+  }, []);
+
+  const onLayout = () => {
+    onContentLayout?.();
   };
 
+  if (!content && (!images || images?.length === 0)) {
+    return null;
+  }
+
   return (
-    <View>
+    <View onLayout={onLayout}>
       <View style={styles.contentContainer}>
         {isPostDetail ? (
           <MarkdownView onPressAudience={onPressMentionAudience}>
@@ -46,9 +56,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             shortLength={400}
             useMarkdown
             toggleOnPress
-            onPressAudience={(audience: any) =>
-              onPressMentionAudience(audience)
-            }
+            onPressAudience={onPressMentionAudience}
           />
         )}
       </View>

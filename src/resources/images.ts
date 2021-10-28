@@ -13,6 +13,9 @@ const images = {
   img_menu_chat: require('../../assets/images/menu_chat.png'),
   ic_star_white: require('../../assets/images/ic_star_white.png'),
   img_empty_draft: require('../../assets/images/img_empty_draft.png'),
+  img_chat_group_cover_default: require('../../assets/images/chat_group_cover_default.png'),
+  img_quick_chat_cover_default: require('../../assets/images/quick_chat_cover_default.png'),
+  img_direct_chat_cover_default: require('../../assets/images/direct_chat_cover_default.png'),
 };
 
 export default images;

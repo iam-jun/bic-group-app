@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -11,6 +17,7 @@ import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import Avatar from '~/beinComponents/Avatar';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
@@ -25,7 +32,6 @@ import menuKeySelector from '../redux/keySelector';
 import {useUserIdAuth} from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
-import Avatar from '~/beinComponents/Avatar';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -49,11 +55,18 @@ const UserProfile = (props: any) => {
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
 
-  const navigateToChatScreen = (roomId: string) =>
+  const navigateToChatScreen = (roomId: string) => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: roomId,
+      });
+      return;
+    }
     rootNavigation.navigate('chat', {
       screen: chatStack.conversation,
-      params: {roomId, initial: false},
+      params: {roomId: roomId, initial: false},
     });
+  };
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());

@@ -1,12 +1,11 @@
 import i18next from 'i18next';
-import React, {useState} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
-import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import {getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
@@ -15,6 +14,7 @@ import {countTime, escapeMarkDown} from '~/utils/formatData';
 interface Props extends IConversation {
   total?: number;
   index?: number;
+  isActive?: boolean;
 }
 
 const ConversationItem: React.FC<Props> = ({
@@ -26,6 +26,7 @@ const ConversationItem: React.FC<Props> = ({
   type,
   total,
   index,
+  isActive = false,
 }: Props): React.ReactElement => {
   const AVG_CHAR_ON_ONE_LINE = 32;
   let twoLineLastMessage = false;
@@ -33,9 +34,12 @@ const ConversationItem: React.FC<Props> = ({
     twoLineLastMessage = true;
 
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme, unreadCount > 0, twoLineLastMessage);
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
-  const isDirect = type === roomTypes.DIRECT;
+  const styles = createStyles(
+    theme,
+    unreadCount > 0,
+    twoLineLastMessage,
+    isActive,
+  );
   const welcomeText =
     type === 'direct'
       ? 'chat:label_init_direct_message:short'
@@ -44,30 +48,28 @@ const ConversationItem: React.FC<Props> = ({
   let showDivider = true;
   if (index && total && index + 1 === total) showDivider = false;
 
-  const onLoadAvatarError = () => {
-    setAvatar(getDefaultAvatar(name));
-  };
+  let className = 'chat__conversation-item';
+  if (isActive) className = className + ` ${className}--active`;
 
-  const ItemAvatar = isDirect ? (
+  const ItemAvatar = (
     <Avatar.Large
       style={styles.avatar}
       source={avatar}
+      cache={false}
       placeholderSource={getDefaultAvatar(name)}
-    />
-  ) : (
-    <Avatar.Group
-      variant="large"
-      style={styles.avatar}
-      source={_avatar}
-      onError={onLoadAvatarError}
     />
   );
 
   return (
-    <Div className="chat__conversation-item">
+    <Div className={className}>
       <View style={styles.container}>
-        <View>{ItemAvatar}</View>
-        <Div style={styles.contentContainer}>
+        {isActive && <View style={styles.itemActiveIndicator} />}
+        {ItemAvatar}
+        <Div
+          style={[
+            styles.contentContainer,
+            showDivider ? styles.bottomDivider : {},
+          ]}>
           <View style={styles.header}>
             <Text.H6 style={styles.title} numberOfLines={1}>
               {name}
@@ -93,7 +95,6 @@ const ConversationItem: React.FC<Props> = ({
               />
             )}
           </View>
-          {showDivider && <Div style={styles.divider} />}
         </Div>
       </View>
     </Div>
@@ -104,26 +105,38 @@ const createStyles = (
   theme: ITheme,
   unreadMessage: boolean,
   twoLineLastMessage: boolean,
+  isActive: boolean,
 ) => {
   const {colors, spacing} = theme;
+  const isWeb = Platform.OS === 'web';
+
+  const contentHeight = 72;
   const headerHeight = 20;
-  const lastMessagePaddingTop = 4;
-  const bodyHeight = 40 + lastMessagePaddingTop;
-  const dividerMarginTop = spacing.margin.small || 8;
-  const dividerHeight = 1;
-  const contentHeight =
-    headerHeight + bodyHeight + dividerMarginTop + dividerHeight * 1.1;
+  const messageHeight = 40;
 
   return StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'row',
-      height: 84,
+      height: 88,
       paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
-      borderRadius: 6,
+      paddingRight: isWeb ? spacing.padding.small : spacing.padding.tiny,
+      borderRadius: spacing.borderRadius.small,
+      marginHorizontal: !isWeb ? spacing.margin.base : 0,
+    },
+    itemActiveIndicator: {
+      alignSelf: 'center',
+      width: 4,
+      height: 48,
+      marginRight: spacing.margin.large,
+      backgroundColor: colors.primary5,
+      borderTopRightRadius: spacing.borderRadius.small,
+      borderBottomRightRadius: spacing.borderRadius.small,
     },
     avatar: {
+      alignSelf: isActive ? 'center' : 'flex-start',
+      marginTop: 0,
+      marginLeft: isActive ? 0 : spacing.margin.tiny,
       marginRight: spacing.margin.base,
     },
     contentContainer: {
@@ -152,28 +165,22 @@ const createStyles = (
       lineHeight: 20,
     },
     body: {
-      flex: 1,
       flexDirection: 'row',
       alignItems: twoLineLastMessage ? 'center' : 'flex-start',
-      height: '100%',
-      maxHeight: bodyHeight,
+    },
+    bottomDivider: {
+      borderBottomColor: colors.borderDivider,
+      borderBottomWidth: 1,
     },
     lastMessage: {
       flex: 1,
-      paddingTop: lastMessagePaddingTop,
-      height: bodyHeight,
+      height: messageHeight,
       lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     redDot: {
-      marginTop: Platform.OS !== 'web' ? spacing.margin.tiny : 0,
+      marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
-    },
-    divider: {
-      width: '100%',
-      height: 1,
-      marginTop: dividerMarginTop,
-      backgroundColor: colors.borderDivider,
     },
   });
 };

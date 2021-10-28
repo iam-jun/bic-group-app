@@ -246,6 +246,7 @@ function* createConversation({
         if (hideConfirmation) {
           navigation.replace(chatStack.conversation, {
             roomId: existedRoom._id,
+            initial: false,
           });
         } else {
           yield put(
@@ -256,6 +257,7 @@ function* createConversation({
               onConfirm: () => {
                 navigation.replace(chatStack.conversation, {
                   roomId: existedRoom._id,
+                  initial: false,
                 });
               },
             }),
@@ -317,7 +319,7 @@ function* createConversation({
     });
 
     rootNavigationRef?.current?.dispatch(
-      StackActions.replace(chatStack.conversation),
+      StackActions.replace(chatStack.conversation, {initial: false}),
     );
     yield put(actions.clearSelectedUsers());
   } catch (err: any) {
@@ -679,6 +681,24 @@ function* mergeMessagesHistory() {
     yield put(actions.getMessagesHistory());
   }
 }
+
+// function* searchConversations({payload}: {type: string; payload?: string}) {
+//   try {
+//     const {auth} = yield select();
+
+//     const response: AxiosResponse = yield makeHttpRequest(
+//       apiConfig.Chat.search(payload ? {name: payload} : undefined),
+//     );
+
+//     yield put(
+//       actions.setConversationDetail(
+//         mapConversation(auth.user, response.data?.data),
+//       ),
+//     );
+//   } catch (err) {
+//     console.log('searchConversations', err);
+//   }
+// }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event

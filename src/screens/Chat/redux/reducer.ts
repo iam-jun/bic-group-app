@@ -48,6 +48,13 @@ export const initDataState = {
     jumpedMessage: null,
     error: null,
   },
+  search: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
 };
 
 export interface IAction {
@@ -443,6 +450,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
             ...messages.data,
             {
               ...payload,
+              user: {
+                ...payload.user,
+                name: payload.user.name || payload.user.fullname,
+              },
               status: messageStatus.SENDING,
             },
           ],

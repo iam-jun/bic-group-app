@@ -2,6 +2,7 @@ const menuKeySelector = {
   userProfile: 'menu.userProfile',
   myProfile: 'menu.myProfile',
   myWorkExperience: 'menu.myWorkExperience',
+  selectedWorkItem: 'menu.selectedWorkItem',
   loadingUserProfile: 'menu.loadingUserProfile',
   loadingAvatar: 'menu.loadingAvatar',
   loadingCover: 'menu.loadingCover',

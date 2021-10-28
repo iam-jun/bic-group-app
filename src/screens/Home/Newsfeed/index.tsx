@@ -91,7 +91,9 @@ const Newsfeed = () => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      getData(true);
+      if (streamClient && (!homePosts || homePosts?.length === 0)) {
+        getData(true);
+      }
     });
   }, [streamClient]);
 
@@ -184,6 +186,7 @@ const Newsfeed = () => {
           onRefresh={() => getData(true)}
           onEndReachedThreshold={1}
           onLoadMore={() => getData()}
+          disableVirtualization={Platform.OS === 'web'}
           renderItem={renderItem}
           onViewableItemsChanged={onViewableItemsChanged}
           ListHeaderComponent={() => (

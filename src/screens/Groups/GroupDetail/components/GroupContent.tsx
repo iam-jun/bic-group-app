@@ -122,6 +122,7 @@ const GroupContent = ({
             audience={groupData}
             parentWidth={parentWidth}
             style={styles.createPost}
+            createFromGroupId={groupId}
           />
         )}
       </>

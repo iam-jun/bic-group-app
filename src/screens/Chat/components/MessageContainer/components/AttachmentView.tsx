@@ -15,6 +15,7 @@ import {getDownloadUrl, getMessageAttachmentUrl} from '../../../helper';
 
 interface AttachmentViewProps extends IMessage {
   attachmentMedia?: any;
+  onLongPress?: (e: any) => void;
 }
 
 const AttachmentView: React.FC<AttachmentViewProps> = (
@@ -23,7 +24,7 @@ const AttachmentView: React.FC<AttachmentViewProps> = (
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyles(theme);
-  const {attachment, status, attachmentMedia} = props;
+  const {attachment, status, attachmentMedia, onLongPress} = props;
   const {name, size} = attachment || {};
 
   const desc = attachment?.description || '';
@@ -65,6 +66,7 @@ const AttachmentView: React.FC<AttachmentViewProps> = (
             resizeMode={'contain'}
             source={initIndex !== undefined ? attachmentMedia : url}
             initIndex={initIndex}
+            onLongPress={onLongPress}
           />
         );
       } else if (attachment?.video_url) {

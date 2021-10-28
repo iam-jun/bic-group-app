@@ -71,6 +71,7 @@
       "1": "{n} member has been added",
       "many": "{n} members have been added"
     },
+    "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
     "title_page_not_found": "Page Not Found",
@@ -84,7 +85,11 @@
     "text_files": "Files",
     "avatar_changed": "Avatar changed",
     "cover_changed": "Cover changed",
-    "text_present": "Present"
+    "text_present": "Present",
+    "text_start_date": "Start Date",
+    "text_end_date": "End Date",
+    "text_group": "Group",
+    "text_at": "at"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -261,7 +266,15 @@
     "title_choose_location": "Choose Location",
     "title_location": "Location",
     "text_work": "Work",
-    "text_add_work": "Add Work"
+    "text_add_work": "Add Work",
+    "text_edit_work": "Edit Work",
+    "text_delete_work": "Delete Work",
+    "text_compamny": "Company",
+    "text_title_position": "Title/Position",
+    "text_currently_work_here": "Currently work here",
+    "text_location_optional": "Location (optional)",
+    "text_description_optional": "Description (optional)",
+    "text_since": "Since"
   },
   "languages": {
     "title_en": "English",
@@ -434,6 +447,7 @@
     },
     "title_privacy": "Privacy",
     "title_more_actions": "More actions",
+    "title_files_images_links": "Files & Images & Links",
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
     "text_feedback": "Feedback this chat",
@@ -505,7 +519,11 @@
     "title_msg_not_found": "No message found",
     "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
     "title_invalid_msg_link": "Invalid message link",
-    "button_go_back_to_chat": "Go back to Chat"
+    "button_go_back_to_chat": "Go back to Chat",
+    "search_result":{
+      "job_title": " at ",
+      "member_count": " & {0} others"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -561,6 +579,11 @@
     "private_group_welcome_message": {
       "title": "This group is private.",
       "subtitle": "Join this group to view or participate on discussions"
+    },
+    "modal_confirm_remove_member": {
+      "title": "Remove this member",
+      "description": "Do you want to remove {name}, this member will no longer be in this group{other groups}.",
+      "button_remove": "Remove"
     }
   },
   "profile": {

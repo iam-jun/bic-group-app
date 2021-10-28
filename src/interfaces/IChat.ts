@@ -117,6 +117,7 @@ interface IUserSettings {
 }
 
 export type IAttachment = {
+  localId?: string;
   text?: string;
   timestamp?: string;
   message_link?: string;
@@ -144,7 +145,7 @@ export type IMessage = {
   quotedMessage?: IQuotedMessage;
   reactions?: IReaction[];
   attachments?: IAttachment[];
-  _updatedAt: string;
+  _updatedAt?: string;
   type?: string;
   localId?: string;
   status?: IMesssageStatus;
@@ -156,7 +157,7 @@ export type IMessage = {
   own_reactions?: IOwnReaction;
   editedAt?: any;
   editedBy?: any;
-  createdAt?: string;
+  createdAt: string;
   msg?: string;
 };
 
@@ -193,7 +194,7 @@ export interface ISendMessageAction {
   text: string;
   user: IChatUser;
   room_id: string;
-  _updatedAt: string;
+  createdAt: string;
   replyingMessage?: IMessage;
   image?: IActivityDataImage;
 }

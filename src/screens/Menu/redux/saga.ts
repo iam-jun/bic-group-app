@@ -4,7 +4,11 @@ import i18next from 'i18next';
 import menuActions from './actions';
 import menuTypes from './types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {IUserEdit, IGetUserProfile} from '~/interfaces/IAuth';
+import {
+  IUserEdit,
+  IGetUserProfile,
+  IUserAddWorkExperience,
+} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
 import {mapProfile, mapWorkExperience} from './helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
@@ -17,6 +21,9 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.EDIT_MY_PROFILE, editMyProfile);
   yield takeLatest(menuTypes.UPLOAD_IMAGE, uploadImage);
   yield takeLatest(menuTypes.GET_MY_WORK_EXPERIENCE, getMyWorkExperience);
+  yield takeLatest(menuTypes.ADD_WORK_EXPERIENCE, addWorkExperience);
+  yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
+  yield takeLatest(menuTypes.DELETE_WORK_EXPERIENCE, deleteWorkExperience);
 }
 
 function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
@@ -158,20 +165,6 @@ function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
   }
 }
 
-function* showError(err: any) {
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.message ||
-      err?.meta?.errors?.[0]?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(modalActions.showHideToastMessage(toastMessage));
-}
-
 function* updateLoadingImageState(
   fieldName: 'avatar' | 'background_img_url',
   value: boolean,
@@ -193,4 +186,116 @@ function* getMyWorkExperience() {
   } catch (err) {
     console.log('getMyWorkExperience error:', err);
   }
+}
+
+function* addWorkExperience({
+  payload,
+  callback,
+}: {
+  type: string;
+  payload: IUserAddWorkExperience;
+  callback?: () => void;
+}) {
+  try {
+    const {
+      company,
+      titlePosition,
+      location,
+      description,
+      currentlyWorkHere,
+      startDate,
+      endDate,
+    } = payload;
+
+    yield menuDataHelper.addWorkExperience({
+      company,
+      title_position: titlePosition,
+      location,
+      description,
+      currently_work_here: currentlyWorkHere,
+      start_date: startDate,
+      end_date: endDate,
+    });
+
+    yield put(menuActions.getMyWorkExperience());
+
+    if (callback) return callback();
+  } catch (err) {
+    console.log('addWorkExperience:', err);
+    yield showError(err);
+  }
+}
+
+function* editWorkExperience({
+  payload,
+  callback,
+  id,
+}: {
+  type: string;
+  id: number;
+  payload: IUserAddWorkExperience;
+  callback?: () => void;
+}) {
+  try {
+    const {
+      company,
+      titlePosition,
+      location,
+      description,
+      currentlyWorkHere,
+      startDate,
+      endDate,
+    } = payload;
+
+    yield menuDataHelper.editWorkExperience(id, {
+      company,
+      title_position: titlePosition,
+      location,
+      description,
+      currently_work_here: currentlyWorkHere,
+      start_date: startDate,
+      end_date: endDate,
+    });
+
+    yield put(menuActions.getMyWorkExperience());
+
+    if (callback) return callback();
+  } catch (err) {
+    console.log('editWorkExperience:', err);
+    yield showError(err);
+  }
+}
+
+function* deleteWorkExperience({
+  id,
+  callback,
+}: {
+  type: string;
+  id: number;
+  callback?: () => void;
+}) {
+  try {
+    yield menuDataHelper.deleteWorkExperience(id);
+
+    yield put(menuActions.getMyWorkExperience());
+
+    if (callback) return callback();
+  } catch (err) {
+    console.log('deleteWorkExperience:', err);
+    yield showError(err);
+  }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }

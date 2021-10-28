@@ -32,6 +32,7 @@ import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -76,15 +77,39 @@ function* postCreateNewPost({
   type: string;
   payload: IPostCreatePost;
 }) {
-  const {userId, streamClient, ...postPayload} = payload || {};
+  const {userId, streamClient, createFromGroupId, ...postPayload} =
+    payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(postDataHelper.postCreateNewPost, postPayload);
-    yield put(postActions.setLoadingCreatePost(false));
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts(postData));
 
+      if (userId && streamClient) {
+        if (payload?.is_draft) {
+          yield put(postActions.getDraftPosts({userId, streamClient}));
+        }
+        if (createFromGroupId) {
+          yield put(groupsActions.clearGroupPosts());
+          const getGroupPostsPayload = {
+            streamClient,
+            userId: Number(userId),
+            groupId: Number(createFromGroupId),
+          };
+          yield put(groupsActions.getGroupPosts(getGroupPostsPayload));
+        } else {
+          yield put(
+            homeActions.getHomePosts({
+              streamClient,
+              userId: `${userId}`,
+              isRefresh: true,
+            }),
+          );
+        }
+      }
+
+      yield timeOut(500);
       if (payload?.is_draft) {
         yield put(
           modalActions.showHideToastMessage({
@@ -96,21 +121,11 @@ function* postCreateNewPost({
       } else {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
-
-      if (userId && streamClient) {
-        if (payload?.is_draft) {
-          yield put(postActions.getDraftPosts({userId, streamClient}));
-        }
-        yield put(
-          homeActions.getHomePosts({
-            streamClient,
-            userId: `${userId}`,
-            isRefresh: true,
-          }),
-        );
-      }
+      yield timeOut(1000);
+      yield put(postActions.setLoadingCreatePost(false));
     } else {
       //todo handle post error
+      yield put(postActions.setLoadingCreatePost(false));
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
@@ -283,8 +298,8 @@ function* addToAllPosts({
 }) {
   const allPosts = yield select(state => state?.post?.allPosts) || {};
   const newAllPosts = {...allPosts};
-  const newComments: IReaction[] = [];
-  const newAllCommentByParentId: any = {};
+  // const newComments: IReaction[] = [];
+  // const newAllCommentByParentId: any = {};
 
   let posts: IPostActivity[] = [];
   if (isArray(payload) && payload.length > 0) {
@@ -295,31 +310,31 @@ function* addToAllPosts({
 
   posts.map((item: IPostActivity) => {
     if (item?.id) {
-      const postComments = sortComments(item?.latest_reactions?.comment || []);
-
-      //todo update getstream query to get only 1 child comment
-      //todo @Toan is researching for solution
-      if (postComments.length > 0) {
-        for (let i = 0; i < postComments.length; i++) {
-          const cc = postComments[i]?.latest_children?.comment || [];
-          if (cc.length > 1) {
-            postComments[i].latest_children.comment = cc.slice(
-              cc.length - 1,
-              cc.length,
-            );
-          }
-        }
-      }
-      //todo remove code above later
+      // const postComments = sortComments(item?.latest_reactions?.comment || []);
+      //
+      // //todo update getstream query to get only 1 child comment
+      // //todo @Toan is researching for solution
+      // if (postComments.length > 0) {
+      //   for (let i = 0; i < postComments.length; i++) {
+      //     const cc = postComments[i]?.latest_children?.comment || [];
+      //     if (cc.length > 1) {
+      //       postComments[i].latest_children.comment = cc.slice(
+      //         cc.length - 1,
+      //         cc.length,
+      //       );
+      //     }
+      //   }
+      // }
+      // //todo remove code above later
 
       newAllPosts[item.id] = item;
-      newAllCommentByParentId[item.id] = postComments;
-      postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
+      // newAllCommentByParentId[item.id] = postComments;
+      // postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
     }
   });
 
-  yield put(postActions.addToAllComments(newComments));
-  yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
+  // yield put(postActions.addToAllComments(newComments));
+  // yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
@@ -507,9 +522,8 @@ function* postReactToComment({
     return;
   }
   try {
-    const cComment1 = yield select(s =>
-      get(s, postKeySelector.commentById(id)),
-    ) || {};
+    const cComment1 =
+      (yield select(s => get(s, postKeySelector.commentById(id)))) || comment;
     const cReactionCount1 = cComment1.children_counts || {};
     const cOwnReactions1 = cComment1.own_children || {};
 
@@ -539,9 +553,9 @@ function* postReactToComment({
         userId,
       );
       if (response?.data?.[0]) {
-        const cComment2 = yield select(s =>
-          get(s, postKeySelector.commentById(id)),
-        ) || {};
+        const cComment2 =
+          (yield select(s => get(s, postKeySelector.commentById(id)))) ||
+          comment;
         const cReactionCount2 = cComment2.children_counts || {};
         const cOwnReactions2 = cComment2.own_children || {};
         const newOwnChildren2 = {...cOwnReactions2};
@@ -957,6 +971,7 @@ function* getPostDetail({
       streamClient,
       postId,
     );
+    yield timeOut(500);
     yield put(postActions.addToAllPosts(response));
     callbackLoading?.(false, true);
   } catch (e) {
@@ -967,7 +982,6 @@ function* getPostDetail({
       post.deleted = true;
       yield put(postActions.addToAllPosts(post));
     }
-    callbackLoading?.(false, false);
     showError(e);
   }
 }

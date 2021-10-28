@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
@@ -32,7 +32,7 @@ export interface MarkdownViewProps {
   onPressAudience?: (audience: IAudience) => void;
 }
 
-const MarkdownView: FC<MarkdownViewProps> = ({
+const _MarkdownView: FC<MarkdownViewProps> = ({
   style,
   children,
   debugPrintTree,
@@ -120,19 +120,24 @@ const MarkdownView: FC<MarkdownViewProps> = ({
 };
 
 const replaceLineBreak = (content: string) => {
-  let result = '';
+  if (!content) {
+    return '';
+  }
   const replacerSplash = (splash: string) => (match: any) => {
     let middle = match.substring(splash.length, match.lastIndexOf(splash));
     if (middle) {
       middle = middle?.replace(new RegExp(splash, 'g'), '<br>');
-      return splash + middle + splash;
+      return splash + middle + '<br>';
     }
     return '';
   };
-  result = content.replace(/(\r\n)(\r\n)+(\r\n)/g, replacerSplash('\r\n'));
-  result = result.replace(/(\n)(\n)+(\n)/g, replacerSplash('\n'));
-  result = result.replace(/(\r)(\r)+(\r)/g, replacerSplash('\r'));
-  return result;
+  return content
+    .replace(/(\r\n)(\r\n)+(\r\n)/g, replacerSplash('\r\n'))
+    .replace(/(\n)(\n)+(\n)/g, replacerSplash('\n'))
+    .replace(/(\r)(\r)+(\r)/g, replacerSplash('\r'))
+    .replace(/\n\n/g, '\n<br>')
+    .replace(/\r\r/g, '\r<br>')
+    .replace(/\r\n\r\n/g, '\r\n<br>');
 };
 
 const createStyle = (theme: ITheme) => {
@@ -267,4 +272,6 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
+const MarkdownView = memo(_MarkdownView);
+MarkdownView.whyDidYouRender = true;
 export default MarkdownView;

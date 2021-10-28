@@ -72,7 +72,7 @@ const MessageItem = (props: MessageItemProps) => {
     removed,
     quotedMessage,
     user,
-    _updatedAt,
+    createdAt,
     status,
     type,
     reaction_counts,
@@ -92,10 +92,7 @@ const MessageItem = (props: MessageItemProps) => {
     });
   });
 
-  const minutes = moment(_updatedAt).diff(
-    previousMessage._updatedAt,
-    'minutes',
-  );
+  const minutes = moment(createdAt).diff(previousMessage.createdAt, 'minutes');
   const within5Mins = minutes <= 5;
 
   const _onRetryPress = () => {
@@ -127,10 +124,13 @@ const MessageItem = (props: MessageItemProps) => {
     }
   }, [messages.jumpedMessage]);
 
+  const _onLongPress = (e: any) => {
+    onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
+  };
+
   const onMenuPress = (e: any) => {
     if (removed) return;
-
-    onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
+    _onLongPress(e);
   };
 
   const onMentionPress = (user: any) => {
@@ -161,9 +161,7 @@ const MessageItem = (props: MessageItemProps) => {
                 onPress={onQuotedMessagePress}
               />
             )}
-            {!hideHeader && (
-              <MessageHeader user={user} _updatedAt={_updatedAt} />
-            )}
+            {!hideHeader && <MessageHeader user={user} createdAt={createdAt} />}
             <View
               style={[
                 styles.messageContainer,
@@ -182,6 +180,7 @@ const MessageItem = (props: MessageItemProps) => {
                         {...currentMessage}
                         attachment={attach}
                         attachmentMedia={mediaSource}
+                        onLongPress={_onLongPress}
                       />
                     ),
                   )}

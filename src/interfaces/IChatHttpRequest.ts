@@ -104,3 +104,7 @@ export interface IRealtimeAPIReq {
   id: string;
   params: any;
 }
+
+export interface ISearchChatReq {
+  name: string;
+}

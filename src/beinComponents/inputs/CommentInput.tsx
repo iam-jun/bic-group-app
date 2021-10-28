@@ -599,7 +599,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
             )}
           </Button>
         </View>
-        {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
       </View>
       {!isWeb && (
         <EmojiBoardAnimated
@@ -610,6 +609,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           onPressBackSpace={backSpaceFromCursor}
         />
       )}
+      {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>
   );
 };

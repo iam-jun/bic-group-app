@@ -82,6 +82,16 @@ const UserEditProfile = () => {
 
   const goToEditContact = () => navigation.navigate(mainStack.editContact);
 
+  const goToAddWork = () => {
+    dispatch(menuActions.setSelectedWorkItem(null));
+    navigation.navigate(mainStack.addWork);
+  };
+
+  const selectWorkItem = (item: IUserWorkExperience) => {
+    dispatch(menuActions.setSelectedWorkItem(item));
+    navigation.navigate(mainStack.addWork);
+  };
+
   const uploadFile = (
     file: IFilePicked,
     fieldName: 'avatar' | 'background_img_url',
@@ -297,7 +307,7 @@ const UserEditProfile = () => {
   const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
     return (
       <PrimaryItem
-        height={100}
+        height={null}
         leftIcon={'iconSuitcase'}
         leftIconProps={{
           icon: 'iconSuitcase',
@@ -306,7 +316,9 @@ const UserEditProfile = () => {
         RightComponent={<Icon icon={'EditAlt'} />}
         ContentComponent={
           <View>
-            <Text.ButtonBase>{`${item.titlePosition} at ${item.company}`}</Text.ButtonBase>
+            <Text.ButtonBase>{`${item?.titlePosition} ${i18next.t(
+              'common:text_at',
+            )} ${item?.company}`}</Text.ButtonBase>
             {item?.startDate && (
               <Text>
                 {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
@@ -318,14 +330,19 @@ const UserEditProfile = () => {
                 }`}
               </Text>
             )}
-            <Text.Subtitle color={colors.textSecondary}>
-              {item.location}
-            </Text.Subtitle>
-            <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
-              {item.description}
-            </Text.Subtitle>
+            {!!item?.location && (
+              <Text.Subtitle color={colors.textSecondary}>
+                {item.location}
+              </Text.Subtitle>
+            )}
+            {!!item?.description && (
+              <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
+                {item.description}
+              </Text.Subtitle>
+            )}
           </View>
         }
+        onPress={() => selectWorkItem(item)}
       />
     );
   };
@@ -341,7 +358,7 @@ const UserEditProfile = () => {
         <View style={styles.infoItem}>
           <ListView data={myWorkExperience} renderItem={renderWorkItem} />
         </View>
-        <Button.Secondary style={styles.buttonAddWork}>
+        <Button.Secondary onPress={goToAddWork} style={styles.buttonAddWork}>
           {i18next.t('settings:text_add_work')}
         </Button.Secondary>
         <Divider style={styles.divider} />

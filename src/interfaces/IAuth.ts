@@ -81,7 +81,10 @@ export interface IUserProfile {
   relationship_status?: string;
   city?: string;
   country?: string;
-  isPublic?: boolean;
+  latest_work?: {
+    company?: string;
+    title_position?: string;
+  };
 }
 
 export interface IGetUserProfile {
@@ -114,6 +117,16 @@ export interface IChangePasswordPayload {
 
 export interface IUserWorkExperience {
   id: number;
+  company: string;
+  titlePosition: string;
+  location?: string;
+  description?: string;
+  currentlyWorkHere?: boolean;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface IUserAddWorkExperience {
   company: string;
   titlePosition: string;
   location?: string;

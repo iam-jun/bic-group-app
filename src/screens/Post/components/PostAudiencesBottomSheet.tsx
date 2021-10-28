@@ -41,18 +41,29 @@ const PostAudiencesBottomSheet = () => {
     postAudienceSheetRef?.current?.close?.();
   };
 
+  const navigateToGroup = (groupId: any) => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId,
+        initial: false,
+      });
+    } else {
+      rootNavigation.navigate('groups', {
+        screen: groupStack.groupDetail,
+        params: {
+          groupId,
+          initial: false,
+        },
+      });
+    }
+  };
+
   const onPressItem = (item: any) => {
     const {id, type} = item || {};
     if (type === 'user') {
       rootNavigation.navigate(mainStack.userProfile, {userId: id});
     } else {
-      rootNavigation.navigate('groups', {
-        screen: groupStack.groupDetail,
-        params: {
-          groupId: id,
-          initial: false,
-        },
-      });
+      navigateToGroup(id);
     }
     onPressClose();
   };

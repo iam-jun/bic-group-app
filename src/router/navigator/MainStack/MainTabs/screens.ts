@@ -5,6 +5,7 @@ import {
   CreateConversation,
   GroupMembers as GroupChatMembers,
   ReviewConversation,
+  SearchConversation,
 } from '~/screens/Chat';
 import GroupAbout from '~/screens/Groups/GroupAbout';
 import GroupMembers from '~/screens/Groups/GroupMembers';
@@ -38,6 +39,7 @@ import HomeStack from '../HomeStack';
 import MenuStack from '../MenuStack';
 import NotiStack from '../NotiStack';
 import DraftPost from '~/screens/Post/DraftPost';
+import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 
 export const screens = {
   home: HomeStack,
@@ -65,6 +67,7 @@ export const screensWebLaptop = {
   'review-conversation': ReviewConversation,
   'chat-group-members': GroupChatMembers,
   'add-members': AddMembersToGroupChat,
+  'search-conversation': SearchConversation,
 
   //GROUP STACK
   // 'group-list': Groups,
@@ -90,6 +93,7 @@ export const screensWebLaptop = {
   'edit-email': EditEmail,
   'edit-phone-number': EditPhoneNumber,
   'edit-location': EditLocation,
+  'add-work': AddWork,
 
   //NOTIFICATION STACK
   // notification: Notification,
