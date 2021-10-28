@@ -20,10 +20,11 @@ import {IconType} from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 import Div from '~/beinComponents/Div';
+import {primaryItemHeight} from '~/theme/dimension';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
-  height?: number;
+  height?: number | null;
   title?: string | React.ReactNode;
   titleProps?: TextProps;
   subTitle?: string | React.ReactNode;
@@ -49,7 +50,7 @@ export interface PrimaryItemProps {
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
-  height,
+  height = primaryItemHeight,
   title,
   titleProps,
   showAvatar,
@@ -73,13 +74,14 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   className = 'button',
 }: PrimaryItemProps) => {
   const theme = useTheme() as ITheme;
-  const {dimension, spacing} = theme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
+  // @ts-ignore
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      height: height || dimension?.primaryItemHeight,
+      height: height,
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
     },

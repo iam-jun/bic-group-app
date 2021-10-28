@@ -88,7 +88,8 @@
     "text_present": "Present",
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
-    "text_group": "Group"
+    "text_group": "Group",
+    "text_at": "at"
   },
   "auth": {
     "text_kickout_title": "Notice",
