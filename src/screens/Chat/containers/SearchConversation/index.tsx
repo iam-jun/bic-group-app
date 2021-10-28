@@ -73,9 +73,13 @@ const SearchConversation = () => {
     const subTitle =
       item.type && item.type !== 'user'
         ? item.description ||
-          `${item.members?.join(', ')}${i18next
-            .t('chat:search_result:member_count')
-            .replace('{0}', `${item.usersCount - item.members?.length}`)}`
+          `${item.members?.join(', ')}${
+            item.usersCount - item.members?.length > 0
+              ? i18next
+                  .t('chat:search_result:member_count')
+                  .replace('{0}', `${item.usersCount - item.members?.length}`)
+              : ''
+          }`
         : item.title_position
         ? `${item.title_position}${i18next.t('chat:search_result:job_title')}${
             item.company

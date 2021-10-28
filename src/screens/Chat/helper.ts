@@ -125,6 +125,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     },
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
+    members: item.members || item.customFields?.members,
   };
 };
 
