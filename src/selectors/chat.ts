@@ -34,16 +34,6 @@ export const getConversations = createSelector(chatState, data => {
   };
 });
 
-export const getMessages = createSelector(chatState, data => {
-  return {
-    ...data?.messages,
-    data: (data?.messages?.data || []).filter(
-      (item: IMessage) =>
-        !item.type?.includes('role') || item.type === 'room_changed_avatar',
-    ),
-  };
-});
-
 export const getUnreadConversationCount = createSelector(chatState, data => {
   let count = 0;
   (data?.rooms?.data || []).forEach((item: IConversation) => {
