@@ -8,6 +8,7 @@ const chatStack = {
   addMembers: 'add-members',
   userProfile: 'user-profile',
   postDetail: 'post-detail',
+  searchConversations: 'search-conversation',
 };
 
 export default chatStack;

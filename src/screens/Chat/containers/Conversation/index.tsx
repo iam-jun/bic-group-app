@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
@@ -24,7 +25,6 @@ import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {IReactionCounts} from '~/interfaces/IPost';
@@ -33,10 +33,10 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
   ChatInput,
   ChatWelcome,
-  MessageNotFound,
   DownButton,
   ListMessages,
   MessageContainer,
+  MessageNotFound,
   MessageOptionsModal,
   UnreadBanner,
 } from '~/screens/Chat/components';
@@ -45,6 +45,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
@@ -58,8 +59,9 @@ const Conversation = () => {
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
   const dispatch = useDispatch();
-  const theme: IObject<any> = useTheme();
-  const styles = createStyles(theme);
+  const insets = useSafeAreaInsets();
+  const theme = useTheme() as ITheme;
+  const styles = createStyles(theme, insets);
   const {rootNavigation} = useRootNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(
@@ -579,7 +581,7 @@ const Conversation = () => {
   };
 
   return (
-    <ScreenWrapper isFullView testID="MessageScreen">
+    <ScreenWrapper isFullView testID="MessageScreen" style={styles.container}>
       <Header
         avatar={_avatar}
         avatarProps={{
@@ -629,11 +631,11 @@ const Conversation = () => {
   );
 };
 
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (theme: ITheme, insets: EdgeInsets) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingBottom: spacing.padding.large,
+      paddingBottom: insets.bottom,
     },
     messagesContainer: {
       flex: 1,

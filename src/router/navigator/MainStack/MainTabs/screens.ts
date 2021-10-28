@@ -5,6 +5,7 @@ import {
   CreateConversation,
   GroupMembers as GroupChatMembers,
   ReviewConversation,
+  SearchConversation,
 } from '~/screens/Chat';
 import GroupAbout from '~/screens/Groups/GroupAbout';
 import GroupMembers from '~/screens/Groups/GroupMembers';
@@ -66,6 +67,7 @@ export const screensWebLaptop = {
   'review-conversation': ReviewConversation,
   'chat-group-members': GroupChatMembers,
   'add-members': AddMembersToGroupChat,
+  'search-conversation': SearchConversation,
 
   //GROUP STACK
   // 'group-list': Groups,

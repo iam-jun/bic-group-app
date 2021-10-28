@@ -5,3 +5,4 @@ export {default as CreateConversation} from './containers/CreateConversation';
 export {default as ReviewConversation} from './containers/CreateConversation/ReviewConversation';
 export {default as GroupMembers} from './containers/GroupMembers';
 export {default as AddMembersToGroup} from './containers/AddMembersToGroup';
+export {default as SearchConversation} from './containers/SearchConversation';

@@ -680,6 +680,24 @@ function* mergeMessagesHistory() {
   }
 }
 
+// function* searchConversations({payload}: {type: string; payload?: string}) {
+//   try {
+//     const {auth} = yield select();
+
+//     const response: AxiosResponse = yield makeHttpRequest(
+//       apiConfig.Chat.search(payload ? {name: payload} : undefined),
+//     );
+
+//     yield put(
+//       actions.setConversationDetail(
+//         mapConversation(auth.user, response.data?.data),
+//       ),
+//     );
+//   } catch (err) {
+//     console.log('searchConversations', err);
+//   }
+// }
+
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.

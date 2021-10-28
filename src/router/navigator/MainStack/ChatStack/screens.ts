@@ -6,6 +6,7 @@ import {
   GroupMembers,
   AddMembersToGroup,
   ReviewConversation,
+  SearchConversation,
 } from '~/screens/Chat';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostDetail from '~/screens/Post/PostDetail';
@@ -20,4 +21,5 @@ export default {
   'add-members': AddMembersToGroup,
   'user-profile': UserProfile,
   'post-detail': PostDetail,
+  'search-conversation': SearchConversation,
 };

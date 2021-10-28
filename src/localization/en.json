@@ -517,7 +517,11 @@
     "title_msg_not_found": "No message found",
     "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
     "title_invalid_msg_link": "Invalid message link",
-    "button_go_back_to_chat": "Go back to Chat"
+    "button_go_back_to_chat": "Go back to Chat",
+    "search_result":{
+      "job_title": " at ",
+      "member_count": " & {0} others"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
