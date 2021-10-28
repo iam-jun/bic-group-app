@@ -251,6 +251,7 @@ const Conversation = () => {
   };
 
   const editMessage = () => {
+    replyingMessage && onCancelReplyingMessage();
     selectedMessage && setEditingMessage(selectedMessage);
   };
 
@@ -307,13 +308,18 @@ const Conversation = () => {
     else rootNavigation.goBack();
   };
 
+  const onReplyPress = (item?: IMessage) => {
+    editingMessage && onCancelEditingMessage();
+    setReplyingMessage(item);
+  };
+
   const onMenuPress = async (menu: MessageOptionType) => {
     switch (menu) {
       case 'delete':
         deleteMessage();
         break;
       case 'reply':
-        setReplyingMessage(selectedMessage);
+        onReplyPress(selectedMessage);
         break;
       case 'edit':
         editMessage();
@@ -400,7 +406,7 @@ const Conversation = () => {
       index: index,
       onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
         onPressReact(event, item, side),
-      onReplyPress: () => setReplyingMessage(item),
+      onReplyPress: () => onReplyPress(item),
       onLongPress,
       onAddReaction: (reactionId: ReactionType) =>
         onAddReaction(reactionId, item._id),
