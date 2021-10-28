@@ -71,14 +71,16 @@ const SearchConversation = () => {
 
   const renderItem = ({item}: {item: any; index: number}) => {
     const subTitle =
-      item.type === 'user'
-        ? `${item.title_position}${i18next.t(
-            'chat:search_result:title_position',
-          )}${item.company}`
-        : item.description ||
-          `${item.members?.join(' ,')}${i18next
+      item.type && item.type !== 'user'
+        ? item.description ||
+          `${item.members?.join(', ')}${i18next
             .t('chat:search_result:member_count')
-            .replace('{0}', `${item.usersCount - item.members?.length}`)}`;
+            .replace('{0}', `${item.usersCount - item.members?.length}`)}`
+        : item.title_position
+        ? `${item.title_position}${i18next.t('chat:search_result:job_title')}${
+            item.company
+          }`
+        : null;
     return (
       <PrimaryItem
         title={item.name}

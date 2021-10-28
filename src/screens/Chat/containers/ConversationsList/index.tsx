@@ -89,7 +89,7 @@ const ConversationsList = (): React.ReactElement => {
   }, [isFocused]);
 
   useEffect(() => {
-    Platform.OS === 'web' && goSearch();
+    Platform.OS === 'web' && searchInputFocus && goSearch();
   }, [searchInputFocus]);
 
   useTabPressListener(
