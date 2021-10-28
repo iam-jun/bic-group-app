@@ -84,8 +84,8 @@ const Icon: React.FC<IconProps> = ({
   ) {
     IconComponent = TextEmojiIcon;
     name = icon;
-    _style.width = size;
-    _style.height = size;
+    _style.width = size * 1.3;
+    _style.height = size * 1.3;
   } else {
     IconComponent = Image;
     source = _icon;

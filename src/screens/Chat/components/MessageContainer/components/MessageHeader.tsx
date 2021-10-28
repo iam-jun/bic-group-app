@@ -13,10 +13,10 @@ import {getDefaultAvatar} from '../../../helper';
 
 interface Props {
   user: IChatUser;
-  _updatedAt: string;
+  createdAt: string;
 }
 
-const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
+const MessageHeader: React.FC<Props> = ({user, createdAt}: Props) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
@@ -46,9 +46,7 @@ const MessageHeader: React.FC<Props> = ({user, _updatedAt}: Props) => {
         <ButtonWrapper onPress={onPressUser}>
           <Text.BodyM style={styles.textName}>{user?.name}</Text.BodyM>
         </ButtonWrapper>
-        <Text.BodyS style={styles.textTime}>
-          {formatDate(_updatedAt)}
-        </Text.BodyS>
+        <Text.BodyS style={styles.textTime}>{formatDate(createdAt)}</Text.BodyS>
       </View>
     </View>
   );

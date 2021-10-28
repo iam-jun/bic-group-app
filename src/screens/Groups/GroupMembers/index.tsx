@@ -12,7 +12,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
-import {showAlertNewFeature} from '~/store/modal/actions';
+import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -23,6 +23,10 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
+import {IObject} from '~/interfaces/common';
+import groupsDataHelper from '../helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
+import Button from '~/beinComponents/Button';
 
 const GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -30,7 +34,8 @@ const GroupMembers = (props: any) => {
 
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedMember, setSelectedMember] = useState<string>('');
+  const [selectedMember, setSelectedMember] = useState<IObject<any>>({});
+  const clearSelectedMember = () => setSelectedMember({});
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -92,11 +97,84 @@ const GroupMembers = (props: any) => {
   //   alert('onPress userId: ' + userId);
   // };
 
-  const onPressMenu = (e: any, userId: string) => {
-    if (!userId) return;
+  const onPressMenu = (e: any, item: any) => {
+    if (!item || !item.id) return;
 
-    setSelectedMember(userId);
+    setSelectedMember({
+      ...item,
+    });
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
+  };
+
+  const removeMember = (userId: string, userFullname: string) => {
+    dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
+  };
+
+  const alertRemovingMember = () => {
+    if (!selectedMember) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'No member selected',
+          props: {type: 'error'},
+        }),
+      );
+      return;
+    }
+
+    const {id: userId, fullname} = selectedMember;
+
+    const content = i18next
+      .t(`groups:modal_confirm_remove_member:description`)
+      .replace('{name}', `"${fullname}"`);
+
+    const alertPayload = {
+      iconName: 'RemoveUser',
+      title: i18next.t('groups:modal_confirm_remove_member:title'),
+      content: content,
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: colors.primary7,
+      },
+      onConfirm: () => removeMember(userId, fullname),
+      confirmLabel: i18next.t(
+        'groups:modal_confirm_remove_member:button_remove',
+      ),
+      ConfirmBtnComponent: Button.Danger,
+    };
+
+    groupsDataHelper
+      .getUserInnerGroups(groupId, userId)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        const groupsRemovedFrom = [...innerGroups];
+
+        if (groupsRemovedFrom.length === 0) {
+          alertPayload.content = alertPayload.content.replace(
+            '{other groups}',
+            '',
+          );
+        } else {
+          const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
+          alertPayload.content = alertPayload.content.replace(
+            '{other groups}',
+            ` and ${otherGroups}`,
+          );
+        }
+
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.error('Error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
   };
 
   const onPressMenuOption = (
@@ -104,6 +182,9 @@ const GroupMembers = (props: any) => {
   ) => {
     baseSheetRef.current?.close();
     switch (type) {
+      case 'remove-member':
+        alertRemovingMember();
+        break;
       default:
         dispatch(showAlertNewFeature());
         break;
@@ -115,7 +196,7 @@ const GroupMembers = (props: any) => {
   };
 
   const renderItem = ({item}: any) => {
-    const {id, fullname, avatar, title} = item || {};
+    const {fullname, avatar, title} = item || {};
 
     return (
       <PrimaryItem
@@ -123,7 +204,7 @@ const GroupMembers = (props: any) => {
         style={styles.itemContainer}
         avatar={avatar}
         title={fullname}
-        onPressMenu={(e: any) => onPressMenu(e, id)}
+        onPressMenu={(e: any) => onPressMenu(e, item)}
         subTitle={title}
         subTitleProps={{variant: 'subtitle', color: colors.textSecondary}}
       />
@@ -165,7 +246,7 @@ const GroupMembers = (props: any) => {
     return (
       <BottomSheet
         modalizeRef={baseSheetRef}
-        onClosed={() => setSelectedMember('')}
+        onClosed={clearSelectedMember}
         ContentComponent={
           <View style={styles.bottomSheet}>
             <PrimaryItem
@@ -335,3 +416,11 @@ const createStyle = (theme: ITheme) => {
 };
 
 export default GroupMembers;
+
+const groupsRemovedFromToString = (groupList: string[]) => {
+  if (groupList.length === 1) {
+    return groupList[0];
+  }
+
+  return `${groupList.length} other inner groups: ${groupList.join(', ')}`;
+};
