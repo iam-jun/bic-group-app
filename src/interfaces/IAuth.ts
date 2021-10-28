@@ -81,7 +81,10 @@ export interface IUserProfile {
   relationship_status?: string;
   city?: string;
   country?: string;
-  isPublic?: boolean;
+  latest_work?: {
+    company?: string;
+    title_position?: string;
+  };
 }
 
 export interface IGetUserProfile {

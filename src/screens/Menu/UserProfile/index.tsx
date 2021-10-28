@@ -17,6 +17,7 @@ import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import Avatar from '~/beinComponents/Avatar';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
@@ -31,7 +32,6 @@ import menuKeySelector from '../redux/keySelector';
 import {useUserIdAuth} from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
-import Avatar from '~/beinComponents/Avatar';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
