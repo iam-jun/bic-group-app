@@ -13,6 +13,13 @@ export const groupsApiConfig = {
     useRetry: true,
     params,
   }),
+  getSearchGroups: (params?: any): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
   getUserInnerGroups: (
     groupId: number,
     username: string,
@@ -101,6 +108,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getMyGroups(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSearchGroups: async (params?: any) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSearchGroups(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

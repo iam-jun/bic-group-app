@@ -79,7 +79,7 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
   try {
     yield put(groupsActions.setGroupSearch({loading: true}));
     const params = {key: payload || '', discovery: true};
-    const response = yield groupsDataHelper.getMyGroups(params);
+    const response = yield groupsDataHelper.getSearchGroups(params);
     if (isArray(response?.data)) {
       yield put(
         groupsActions.setGroupSearch({
