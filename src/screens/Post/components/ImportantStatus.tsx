@@ -1,12 +1,11 @@
 import React, {FC} from 'react';
-import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import Divider from '~/beinComponents/Divider';
 
 export interface ImportantStatusProps {
   notExpired: boolean;
@@ -22,8 +21,6 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
-
-  const borderRadius = Platform.OS === 'web' ? spacing.borderRadius.small : 0;
 
   const ImportantStatusStyle = {
     active: {
@@ -51,8 +48,6 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
       backgroundColor: backgroundColor,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
-      borderTopLeftRadius: borderRadius,
-      borderTopRightRadius: borderRadius,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.placeholder,
     },
