@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -64,7 +64,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
     if (paths[0] !== appScreens.groups) setCurrentShowingGroup(undefined);
 
-    console.log(`paths[1]`, paths[1]);
     setCurrentShowingGroup(paths[1]);
   }, [rootScreenName]);
 
@@ -87,7 +86,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const _onPressItem = () => {
     const newRootScreenName = `${appScreens.groups}/${id}`;
-    console.log(`newRootScreenName`, newRootScreenName);
     dispatch(appActions.setRootScreenName(newRootScreenName));
 
     if (onPressItem) {
@@ -155,7 +153,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     <Div className={className}>
       <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
         <View style={styles.container}>
-          {isActive && <View style={styles.itemActiveIndicator} />}
+          {Platform.OS === 'web' && isActive && (
+            <View style={styles.itemActiveIndicator} />
+          )}
           {renderUiLevelLines()}
           {renderToggle()}
           <View style={styles.itemContainer}>

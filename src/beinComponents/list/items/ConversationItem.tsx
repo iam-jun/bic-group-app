@@ -63,7 +63,9 @@ const ConversationItem: React.FC<Props> = ({
   return (
     <Div className={className}>
       <View style={styles.container}>
-        {isActive && <View style={styles.itemActiveIndicator} />}
+        {Platform.OS === 'web' && isActive && (
+          <View style={styles.itemActiveIndicator} />
+        )}
         {ItemAvatar}
         <Div
           style={[
