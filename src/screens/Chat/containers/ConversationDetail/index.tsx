@@ -38,6 +38,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {scaleCoverHeight} from '~/theme/dimension';
 import {titleCase} from '~/utils/common';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const ConversationDetail = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -227,11 +228,11 @@ const ConversationDetail = (): React.ReactElement => {
 
     return (
       <TouchableOpacity onPress={() => onItemPress(type)}>
-        <PrimaryItem
+        <MenuItem
           style={styles.actionItem}
           title={label}
-          leftIcon={icon}
-          leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
+          icon={icon}
+          // leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
           RightComponent={RightComponent}
         />
       </TouchableOpacity>
@@ -467,6 +468,8 @@ const ConversationDetail = (): React.ReactElement => {
           {renderPrivacy()}
         </View>
         {renderBottomSheet()}
+        {/* Add for better scrolling experience */}
+        <View style={{height: 24}} />
       </ScrollView>
     </ScreenWrapper>
   );
@@ -531,9 +534,6 @@ const createStyles = (
     actionItem: {
       paddingHorizontal: spacing.padding.large,
       height: 44,
-    },
-    actionItemIcon: {
-      marginRight: spacing.margin.large,
     },
     bottomSheet: {
       paddingHorizontal: spacing.padding.big,
