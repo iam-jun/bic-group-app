@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
@@ -22,6 +22,8 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const borderRadius = Platform.OS === 'web' ? spacing.borderRadius.small : 0;
 
   const ImportantStatusStyle = {
     active: {
@@ -49,8 +51,8 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
       backgroundColor: backgroundColor,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
-      borderTopLeftRadius: 6,
-      borderTopRightRadius: 6,
+      borderTopLeftRadius: borderRadius,
+      borderTopRightRadius: borderRadius,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.placeholder,
     },
