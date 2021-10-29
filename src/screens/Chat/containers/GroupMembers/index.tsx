@@ -104,6 +104,9 @@ const GroupMembers = (): React.ReactElement => {
       case 'view-profile':
         goToUserProfile();
         break;
+      case 'send-direct-message':
+        goToDirectChat();
+        break;
       case 'remove-member':
         onRemovePress();
         break;
@@ -219,6 +222,27 @@ const GroupMembers = (): React.ReactElement => {
         },
       });
     }
+  };
+
+  const goToDirectChat = () => {
+    if (selectedMember) {
+      const {username, name} = selectedMember;
+      if (!!username)
+        dispatch(
+          actions.createConversation(
+            // @ts-ignore
+            [{username, name: name}],
+            true,
+            navigateToChatScreen,
+          ),
+        );
+    }
+  };
+
+  const navigateToChatScreen = (roomId: string) => {
+    rootNavigation.navigate(chatStack.conversation, {
+      roomId: roomId,
+    });
   };
 
   const renderBottomSheet = () => {
