@@ -13,6 +13,10 @@ import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
 import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
+import {IObject} from '~/interfaces/common';
+import groupsDataHelper from '../helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -23,9 +27,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
-import {IObject} from '~/interfaces/common';
-import groupsDataHelper from '../helper/GroupsDataHelper';
-import {IGroup} from '~/interfaces/IGroup';
 import Button from '~/beinComponents/Button';
 
 const GroupMembers = (props: any) => {
@@ -106,6 +107,11 @@ const GroupMembers = (props: any) => {
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
+  const goToUserProfile = () => {
+    const {id: userId} = selectedMember;
+    rootNavigation.navigate(mainStack.userProfile, {userId});
+  };
+
   const removeMember = (userId: string, userFullname: string) => {
     dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
   };
@@ -182,6 +188,9 @@ const GroupMembers = (props: any) => {
   ) => {
     baseSheetRef.current?.close();
     switch (type) {
+      case 'view-profile':
+        goToUserProfile();
+        break;
       case 'remove-member':
         alertRemovingMember();
         break;
