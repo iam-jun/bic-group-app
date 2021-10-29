@@ -13,6 +13,7 @@ import {
   TextInput,
   TextInputProps,
   TextStyle,
+  useWindowDimensions,
   View,
   ViewStyle,
 } from 'react-native';
@@ -104,6 +105,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [highlightIndex, setHighlightIndex] = useState<number>(DEFAULT_INDEX);
 
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
+  const windowDimension = useWindowDimensions();
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -113,6 +115,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
     topPosition,
     measuredHeight,
     keyboardHeight,
+    windowDimension.height,
+    list.length === 0,
   );
 
   useEffect(() => {
@@ -138,12 +142,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
    * and useRef as the debounce-only solution doesn't work
    */
   const getData = debounce((mentionKey: string, getDataParam: any) => {
-    console.group('getData');
-    console.log(`mentionKey`, mentionKey);
-    console.log(`getDataParam`, getDataParam);
-
     if (!getDataPromise || !getDataParam || getDataParam.group_ids === '') {
-      console.groupEnd();
+      setList([]);
       return;
     }
 
@@ -169,12 +169,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
           `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
         );
         setIsLoading(false);
-        // setMentioning(false);
+        setMentioning(false);
         setList([]);
         setHighlightIndex(DEFAULT_INDEX);
         sethHighlightItem(undefined);
       });
-    console.groupEnd();
   }, 50);
 
   const _onStartMention = () => {
@@ -471,10 +470,16 @@ const createStyles = (
   topPosition: number,
   measuredHeight: number,
   keyboardHeight: number,
+  screenHeight: number,
+  isListEmpty: boolean,
 ) => {
   const {colors, spacing} = theme;
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
+
+  const modalHeight = isListEmpty
+    ? undefined
+    : screenHeight - keyboardHeight - 200;
 
   let stylePosition = {};
   switch (position) {
@@ -485,7 +490,7 @@ const createStyles = (
       break;
     case 'above-keyboard':
       stylePosition = {
-        bottom: keyboardHeight,
+        bottom: 0,
       };
       break;
     default:
@@ -511,6 +516,7 @@ const createStyles = (
       ...stylePosition,
       width: '85%',
       maxWidth: 355,
+      height: modalHeight,
       maxHeight: 300,
       borderRadius: 6,
       backgroundColor: colors.background,
