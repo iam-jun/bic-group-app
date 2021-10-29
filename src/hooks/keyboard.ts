@@ -12,7 +12,7 @@ export function useKeyboardStatus() {
     keyboardShowListener.current = Keyboard.addListener(
       'keyboardDidShow',
       (e: any) => {
-        setHeight(height);
+        setHeight(e.endCoordinates?.height);
         setIsOpen(true);
       },
     );
