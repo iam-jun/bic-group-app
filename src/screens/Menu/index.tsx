@@ -207,7 +207,6 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {},
     header: {
-      marginHorizontal: spacing.margin.small,
       marginTop: spacing.margin.large,
     },
     divider: {
@@ -215,7 +214,7 @@ const themeStyles = (theme: ITheme) => {
       marginVertical: spacing.margin.small,
     },
     listContainerStyle: {
-      marginHorizontal: spacing.margin.small,
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
   });
 };
