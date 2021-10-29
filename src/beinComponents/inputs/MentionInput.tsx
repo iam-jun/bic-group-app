@@ -483,7 +483,7 @@ const createStyles = (
 
   const modalHeight = isListEmpty
     ? undefined
-    : screenHeight - keyboardHeight - 200;
+    : screenHeight - keyboardHeight - 220;
 
   let stylePosition = {};
   switch (position) {
