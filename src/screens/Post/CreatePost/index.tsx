@@ -348,7 +348,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             mentionInputRef={mentionInputRef}
             style={shouldScroll ? {} : styles.flex1}
             textInputStyle={shouldScroll ? {} : styles.flex1}
-            modalPosition={isWeb ? 'bottom' : 'above-keyboard'}
+            modalPosition={'bottom'}
             onPress={onPressMentionAudience}
             onChangeText={onChangeText}
             ComponentInput={PostInput}

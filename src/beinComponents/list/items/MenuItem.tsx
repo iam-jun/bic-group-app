@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -51,7 +51,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
   return (
     <TouchableOpacity disabled={disable} onPress={onPress}>
       <Div className={className}>
-        {isActive && <View style={styles.itemActiveIndicator} />}
+        {Platform.OS === 'web' && isActive && (
+          <View style={styles.itemActiveIndicator} />
+        )}
         <View style={[styles.container, style]}>
           {icon && <Icon icon={icon} size={24} />}
           <View style={styles.titleContainer}>
