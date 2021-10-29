@@ -144,6 +144,7 @@ const Menu = (): React.ReactElement => {
         scrollEnabled={false}
         onItemPress={onItemPress ? onItemPress : onSettingPress}
         currentPath={currentPath}
+        showItemSeparator={false}
         {...props}
       />
     );

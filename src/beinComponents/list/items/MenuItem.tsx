@@ -96,7 +96,7 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
       paddingVertical: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: Platform.OS === 'web' ? spacing.borderRadius.small : 0,
       alignItems: 'center',
     },
     itemActiveIndicator: {
