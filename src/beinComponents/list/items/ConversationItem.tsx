@@ -62,10 +62,10 @@ const ConversationItem: React.FC<Props> = ({
 
   return (
     <Div className={className}>
+      {Platform.OS === 'web' && isActive && (
+        <View style={styles.itemActiveIndicator} />
+      )}
       <View style={styles.container}>
-        {Platform.OS === 'web' && isActive && (
-          <View style={styles.itemActiveIndicator} />
-        )}
         {ItemAvatar}
         <Div
           style={[
@@ -122,15 +122,14 @@ const createStyles = (
       flexDirection: 'row',
       height: 88,
       paddingVertical: spacing.padding.small,
-      paddingRight: isWeb ? spacing.padding.small : spacing.padding.tiny,
+      paddingHorizontal: spacing.padding.large,
       borderRadius: spacing.borderRadius.small,
-      marginHorizontal: !isWeb ? spacing.margin.base : 0,
     },
     itemActiveIndicator: {
-      alignSelf: 'center',
+      position: 'absolute',
+      top: '24%',
       width: 4,
       height: 48,
-      marginRight: spacing.margin.large,
       backgroundColor: colors.primary5,
       borderTopRightRadius: spacing.borderRadius.small,
       borderBottomRightRadius: spacing.borderRadius.small,
@@ -138,7 +137,6 @@ const createStyles = (
     avatar: {
       alignSelf: isActive ? 'center' : 'flex-start',
       marginTop: 0,
-      marginLeft: isActive ? 0 : spacing.margin.tiny,
       marginRight: spacing.margin.base,
     },
     contentContainer: {
