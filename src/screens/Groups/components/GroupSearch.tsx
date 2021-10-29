@@ -146,7 +146,7 @@ const createStyle = (theme: ITheme) => {
     labelHeader: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.base,
-      marginHorizontal: spacing.margin.small,
+      marginHorizontal: spacing.margin.large,
     },
   });
 };
