@@ -1,5 +1,11 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {View, StyleSheet, SectionList, ActivityIndicator} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SectionList,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -17,6 +23,9 @@ import {IObject} from '~/interfaces/common';
 import groupsDataHelper from '../helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
 import mainStack from '~/router/navigator/MainStack/stack';
+import chatActions from '~/screens/Chat/redux/actions';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import useAuth from '~/hooks/auth';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -44,6 +53,7 @@ const GroupMembers = (props: any) => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
+  const {user} = useAuth();
 
   //todo handle get data if group data not loaded
 
@@ -110,6 +120,32 @@ const GroupMembers = (props: any) => {
   const goToUserProfile = () => {
     const {id: userId} = selectedMember;
     rootNavigation.navigate(mainStack.userProfile, {userId});
+  };
+
+  const goToDirectChat = () => {
+    const {username, fullname} = selectedMember;
+    if (!!username)
+      dispatch(
+        chatActions.createConversation(
+          // @ts-ignore
+          [{username, name: fullname}],
+          true,
+          navigateToChatScreen,
+        ),
+      );
+  };
+
+  const navigateToChatScreen = (roomId: string) => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: roomId,
+      });
+      return;
+    }
+    rootNavigation.navigate('chat', {
+      screen: chatStack.conversation,
+      params: {roomId: roomId, initial: false},
+    });
   };
 
   const removeMember = (userId: string, userFullname: string) => {
@@ -191,6 +227,9 @@ const GroupMembers = (props: any) => {
       case 'view-profile':
         goToUserProfile();
         break;
+      case 'send-message':
+        goToDirectChat();
+        break;
       case 'remove-member':
         alertRemovingMember();
         break;
@@ -265,13 +304,15 @@ const GroupMembers = (props: any) => {
               title={i18next.t('groups:member_menu:label_view_profile')}
               onPress={() => onPressMenuOption('view-profile')}
             />
-            <PrimaryItem
-              style={styles.menuOption}
-              leftIcon={'iconSend'}
-              leftIconProps={{icon: 'iconSend', size: 24}}
-              title={i18next.t('groups:member_menu:label_direct_message')}
-              onPress={() => onPressMenuOption('send-message')}
-            />
+            {selectedMember?.username !== user?.username && (
+              <PrimaryItem
+                style={styles.menuOption}
+                leftIcon={'iconSend'}
+                leftIconProps={{icon: 'iconSend', size: 24}}
+                title={i18next.t('groups:member_menu:label_direct_message')}
+                onPress={() => onPressMenuOption('send-message')}
+              />
+            )}
             {can_manage_member && (
               <>
                 <PrimaryItem
