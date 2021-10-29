@@ -47,7 +47,8 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
     {
       flexDirection: 'row',
       backgroundColor: backgroundColor,
-      padding: spacing.padding.small,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
       borderTopLeftRadius: 6,
       borderTopRightRadius: 6,
       borderBottomWidth: 1,
@@ -85,7 +86,6 @@ const createStyle = (theme: ITheme) => {
     },
     leftIcon: {
       marginRight: spacing.margin.small,
-      marginLeft: spacing.margin.tiny,
     },
     iconStyle: {padding: 3, borderRadius: 100},
   });
