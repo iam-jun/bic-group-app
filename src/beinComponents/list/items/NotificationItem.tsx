@@ -429,7 +429,6 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
       backgroundColor: notiBackgroundColor,
       paddingVertical: spacing?.padding.base,
       paddingHorizontal: spacing?.padding.large,
-      borderRadius: 6,
     },
     stateIndicatorActive: {
       ...stateIndicator,
