@@ -118,9 +118,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   };
 
   const renderIndicator = () => {
-    if (Platform.OS !== 'web') return null;
-
-    if (isActive) {
+    if (Platform.OS === 'web' && isActive) {
       return <View style={styles.stateIndicatorActive} />;
     } else if (!is_read) {
       return <View style={styles.stateIndicatorUnread} />;
@@ -172,7 +170,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   // render notification body, it can be post content, comment content
   const renderNotiBody = (body: any) => {
-    return <Text.Subtitle style={styles.subContent}>{body}</Text.Subtitle>;
+    return <Text.BodyS style={styles.subContent}>{body}</Text.BodyS>;
   };
 
   // render content of default notification type
@@ -396,11 +394,13 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   return (
     <View style={styles.container}>
       {renderIndicator()}
-      {renderAvatar(activities)}
+      <View style={styles.avatarContainer}>{renderAvatar(activities)}</View>
       <View style={styles.flex1}>{renderNotiContent(activities)}</View>
-      <Text.Subtitle style={styles.timeCreated}>
-        {countTime(`${updated_at}`)}
-      </Text.Subtitle>
+      <View>
+        <Text.BodyS style={styles.timeCreated}>
+          {countTime(`${updated_at}`)}
+        </Text.BodyS>
+      </View>
       {/*<Icon style={styles.iconOptions} icon="EllipsisH" size={16} />*/}
     </View>
   );
@@ -425,11 +425,10 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     flex1: {flex: 1},
     container: {
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: 'flex-start',
       backgroundColor: notiBackgroundColor,
-      paddingVertical: spacing?.padding.small,
-      paddingHorizontal: spacing?.padding.base,
+      paddingVertical: spacing?.padding.base,
+      paddingHorizontal: spacing?.padding.large,
       borderRadius: 6,
     },
     stateIndicatorActive: {
@@ -441,35 +440,29 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     },
     stateIndicatorUnread: {
       ...stateIndicator,
+      top: 40,
+      left: 4,
       width: 6,
       height: 6,
       borderRadius: 6,
+    },
+    avatarContainer: {
+      marginTop: spacing.margin.small,
     },
     content: {
       marginStart: spacing?.margin.base,
       flex: 1,
     },
     title: {
-      marginEnd: 30,
       alignItems: 'baseline',
     },
     subContent: {
-      marginTop: spacing?.margin.tiny,
       color: colors.textSecondary,
-      marginEnd: 30,
     },
-    iconOptions: {
-      position: 'absolute',
-      top: spacing?.margin.extraLarge,
-      right: spacing?.margin.base,
-      zIndex: 99,
-    },
+    iconOptions: {},
     timeCreated: {
-      position: 'absolute',
-      top: spacing?.margin.small,
-      right: spacing?.margin.base,
+      marginTop: 1,
       color: colors.textSecondary,
-      zIndex: 99,
     },
     reactIcon: {
       transform: [{translateY: 4}],
