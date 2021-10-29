@@ -130,6 +130,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }
   }, [mentioning]);
 
+  useEffect(() => {
+    _onChangeText(content);
+  }, [getDataParam?.group_ids]);
+
   const getContent = () => content;
 
   useImperativeHandle(_mentionInputRef, () => ({
