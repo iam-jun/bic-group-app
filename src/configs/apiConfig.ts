@@ -1,4 +1,3 @@
-import {ISearchChatReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   IPayloadGetAttachmentFiles,
@@ -22,6 +21,8 @@ import {
   IRemoveMemberReq,
   ISendMessageReq,
   IUpdateGroupName,
+  ISearchChatReq,
+  IUpdateConversationDescription,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -220,6 +221,17 @@ const Chat = {
   updateGroupName: (data: IUpdateGroupName): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}groups.rename`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data,
+    };
+  },
+  updateConversationDescription: (
+    data: IUpdateConversationDescription,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}groups.setDescription`,
       method: 'post',
       useRetry: true,
       provider: providers.chat,

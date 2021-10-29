@@ -117,6 +117,12 @@ const ConversationDetail = (): React.ReactElement => {
     );
   };
 
+  const goToEditConversationDescription = () => {
+    rootNavigation.navigate(chatStack.editChatDescription, {
+      roomId: conversation._id,
+    });
+  };
+
   const onItemPress = (type: string) => {
     switch (type) {
       case 'members':
@@ -124,6 +130,10 @@ const ConversationDetail = (): React.ReactElement => {
         break;
       case 'editName':
         showChangeNameModal();
+        break;
+      case 'editDescription':
+        baseSheetRef.current?.close();
+        goToEditConversationDescription();
         break;
       default:
         baseSheetRef.current?.close();

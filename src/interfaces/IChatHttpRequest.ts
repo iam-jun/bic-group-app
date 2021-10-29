@@ -71,6 +71,11 @@ export interface IUpdateGroupName {
   name: string;
 }
 
+export interface IUpdateConversationDescription {
+  roomId: string;
+  description: string;
+}
+
 export interface IRemoveMemberReq {
   roomId: string;
   userId: string;

@@ -63,6 +63,10 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(
+    types.UPDATE_CONVERSATION_DESCRIPTION,
+    updateConversationDescription,
+  );
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
@@ -462,6 +466,33 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
     );
   } catch (err) {
     console.log('updateConversationName', err);
+    yield showError(err);
+  }
+}
+
+function* updateConversationDescription({
+  payload,
+  callback,
+}: {
+  type: string;
+  payload: string;
+  callback?: (roomId?: string) => void;
+}) {
+  try {
+    const {chat} = yield select();
+    const {conversation} = chat;
+
+    yield makeHttpRequest(
+      apiConfig.Chat.updateConversationDescription({
+        roomId: conversation._id,
+        description: payload,
+      }),
+    );
+
+    if (callback) return callback(conversation._id);
+  } catch (err) {
+    console.log('updateConversationDescription', err);
+    yield showError(err);
   }
 }
 
@@ -794,8 +825,10 @@ function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
-    case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
+      yield put(actions.getConversationDetail(data.rid));
+      break;
+    case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:

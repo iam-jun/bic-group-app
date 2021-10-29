@@ -96,6 +96,7 @@ export const appScreens = {
   chatCreateConversation: 'create-conversation',
   chatGroupMembers: 'chat-group-members',
   chatAddMembers: 'add-members',
+  chatEditDescription: 'edit-chat-description',
 
   // Group
   groupList: 'group-list',
@@ -299,6 +300,9 @@ export const linkingConfigFull = {
                   'add-members': {
                     path: 'chat/:roomId/invite',
                   },
+                  'edit-chat-description': {
+                    path: 'chat/:roomId/edit/description',
+                  },
                 },
               },
               notification: {
@@ -422,6 +426,9 @@ export const linkingConfigFullLaptop = {
               },
               'add-members': {
                 path: 'chat/:roomId/invite',
+              },
+              'edit-chat-description': {
+                path: 'chat/:roomId/edit/description',
               },
               'not-select-notification': {
                 path: 'notifications',

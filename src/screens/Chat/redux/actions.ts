@@ -144,6 +144,14 @@ export default {
     type: Actions.UPDATE_CONVERSATION_NAME,
     payload,
   }),
+  updateConversationDescription: (
+    payload: string,
+    callback?: (roomId?: string) => void,
+  ) => ({
+    type: Actions.UPDATE_CONVERSATION_DESCRIPTION,
+    payload,
+    callback,
+  }),
   uploadFile: (payload: IUploadFileAction) => ({
     type: Actions.UPLOAD_FILE,
     payload,
