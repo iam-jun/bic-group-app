@@ -19,6 +19,7 @@ import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 import ListView from '~/beinComponents/list/ListView';
 import {groupSettings} from '~/constants/groupAdminSettings';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
@@ -55,76 +56,89 @@ const GroupAdministration = (props: any) => {
   const renderItem = (
     icon: IconType,
     title: string,
-    onActionPress?: () => void,
-    rightSubTitle?: string,
+    onPress?: () => void,
+    redDotNumber?: number,
   ) => {
     return (
-      <TouchableOpacity style={styles.itemContainer} onPress={onActionPress}>
-        <Icon icon={icon} tintColor={theme.colors.primary7} size={24} />
-        <View style={styles.titleContainer}>
-          <Text.ButtonBase useI18n style={styles.label}>
-            {title}
-          </Text.ButtonBase>
-        </View>
-
-        <View style={styles.rightComponent}>
-          {!!rightSubTitle && (
-            <View style={styles.rightSubtitle}>
-              <Text.BodyS color={theme.colors.background} useI18n>
-                {rightSubTitle}
-              </Text.BodyS>
-            </View>
-          )}
-          <Icon icon={'AngleRightB'} style={styles.rightSubIcon} />
-        </View>
+      <TouchableOpacity onPress={onPress}>
+        <MenuItem
+          title={title}
+          icon={icon}
+          redDotNumber={redDotNumber}
+          redDotProps={{maxNumber: 99}}
+          rightSubIcon="AngleRightB"
+        />
       </TouchableOpacity>
     );
   };
 
+  const renderGroupModerating = () => (
+    <>
+      <Text.H5
+        style={styles.headerTitle}
+        color={theme.colors.textSecondary}
+        useI18n>
+        settings:title_group_moderating
+      </Text.H5>
+      {renderItem(
+        'UserExclamation',
+        'settings:title_pending_members',
+        displayNewFeature,
+        1,
+      )}
+      {renderItem(
+        'FileExclamationAlt',
+        'settings:title_pending_posts',
+        displayNewFeature,
+        23,
+      )}
+      {renderItem(
+        'ExclamationTriangle',
+        'settings:title_reported_posts',
+        displayNewFeature,
+        1,
+      )}
+      {renderItem(
+        'ChatInfo',
+        'settings:title_reported_chats',
+        displayNewFeature,
+        1,
+      )}
+    </>
+  );
+
+  const renderGroupSettings = () => (
+    <>
+      <Text.H5
+        style={styles.headerTitle}
+        color={theme.colors.textSecondary}
+        useI18n>
+        settings:title_group_settings
+      </Text.H5>
+      <ListView
+        type="menu"
+        data={groupSettings}
+        scrollEnabled={false}
+        onItemPress={onGroupAdminPress}
+        style={styles.settingsContainer}
+        showItemSeparator={false}
+      />
+    </>
+  );
+
   return (
-    <ScreenWrapper
-      testID="GroupAdministration"
-      style={styles.container}
-      isFullView>
+    <ScreenWrapper testID="GroupAdministration" isFullView>
       <Header
         title={name}
         titleTextProps={{color: theme.colors.textPrimary}}
         avatar={icon}
       />
-
-      <View style={styles.groupModerating}>
-        <Text.H5
-          style={styles.headerTitle}
-          color={theme.colors.textSecondary}
-          useI18n>
-          settings:title_group_moderating
-        </Text.H5>
-        {renderItem(
-          'UserExclamation',
-          'settings:title_pending_members',
-          displayNewFeature,
-          '1',
-        )}
+      <View style={styles.container}>
+        {renderGroupModerating()}
+        <Divider style={styles.divider} />
+        {renderGroupSettings()}
+        <Divider />
       </View>
-
-      <View style={styles.groupSetting}>
-        <Text.H5
-          style={styles.headerTitle}
-          color={theme.colors.textSecondary}
-          useI18n>
-          settings:title_group_settings
-        </Text.H5>
-        <ListView
-          type="menu"
-          data={groupSettings}
-          scrollEnabled={false}
-          onItemPress={onGroupAdminPress}
-          style={styles.settingsContainer}
-          showItemSeparator={false}
-        />
-      </View>
-
-      <Divider />
     </ScreenWrapper>
   );
 };
@@ -135,42 +149,23 @@ const themeStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    container: {},
+    container: {
+      paddingTop: spacing.padding.large,
+    },
     itemContainer: {
       flexDirection: 'row',
-      // padding: spacing.padding.,
       backgroundColor: colors.background,
       borderRadius: spacing.borderRadius.base,
     },
-    rightComponent: {
-      flexDirection: 'row',
-    },
-    titleContainer: {
-      flex: 1,
-      marginLeft: spacing.margin.large,
-    },
-    label: {},
-    rightSubIcon: {
-      marginLeft: spacing.margin.base,
-    },
-    groupModerating: {
-      marginVertical: spacing.margin.large,
-    },
-    groupSetting: {},
     settingsContainer: {
       marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,
-      marginBottom: spacing.margin.small,
     },
-    rightSubtitle: {
-      backgroundColor: colors.error,
-      paddingVertical: 2,
-      paddingHorizontal: 6.5,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 100,
+    divider: {
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.small,
     },
   });
 };

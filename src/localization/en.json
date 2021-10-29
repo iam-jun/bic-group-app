@@ -207,6 +207,9 @@
     "app_language": "English",
     "title_group_moderating": "Group Moderating",
     "title_pending_members": "Pending Members",
+    "title_pending_posts": "Pending Posts",
+    "title_reported_posts": "Reported Post",
+    "title_reported_chats": "Reported Chats",
     "title_group_settings": "Group Settings",
     "title_general_information": "General Information",
     "title_role_management": "Role Management",
@@ -520,7 +523,7 @@
     "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
     "title_invalid_msg_link": "Invalid message link",
     "button_go_back_to_chat": "Go back to Chat",
-    "search_result":{
+    "search_result": {
       "job_title": " at ",
       "member_count": " & {0} others"
     }
