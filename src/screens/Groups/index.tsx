@@ -137,7 +137,8 @@ const themeStyles = (theme: ITheme) => {
       margin: spacing.margin.large,
     },
     dataList: {
-      marginHorizontal: spacing.margin.large,
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.large,
     },
   });
 };
