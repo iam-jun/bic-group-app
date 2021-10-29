@@ -6,9 +6,9 @@ import {ITheme} from '~/theme/interfaces';
 
 const MAX_NUMBER = 9;
 
-interface RedDotProps {
+export interface RedDotProps {
   style?: StyleProp<ViewStyle>;
-  number: number;
+  number?: number;
   maxNumber?: number;
 }
 
@@ -19,6 +19,8 @@ const RedDot: React.FC<RedDotProps> = ({
   number,
   maxNumber = MAX_NUMBER,
 }: RedDotProps) => {
+  if (!number) return null;
+
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;

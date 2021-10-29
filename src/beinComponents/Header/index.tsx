@@ -248,7 +248,8 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     avatar: {
-      marginHorizontal: spacing.margin.base,
+      marginLeft: 6,
+      // marginRight: spacing.margin.base,
     },
     titleContainer: {
       flex: 1,

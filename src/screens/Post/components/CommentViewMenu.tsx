@@ -3,23 +3,22 @@ import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import {IReactionProps} from '~/interfaces/IReaction';
-import {reactionDefault} from '~/beinFragments/reaction/reactionConfig';
 import {ReactionType} from '~/constants/reactions';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {showHideToastMessage} from '~/store/modal/actions';
+import Text from '~/beinComponents/Text';
+import NodeEmoji from 'node-emoji';
+import {quickReactions} from '~/configs/reactionConfig';
 
-export interface CommentViewMenuBottomSheetProps {
-  modalizeRef: any;
+export interface CommentViewMenuProps {
   commentId: string;
   content: string;
   groupIds: string;
@@ -29,8 +28,7 @@ export interface CommentViewMenuBottomSheetProps {
   onPressReply: () => void;
 }
 
-const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
-  modalizeRef,
+const CommentViewMenu: FC<CommentViewMenuProps> = ({
   commentId,
   content,
   groupIds,
@@ -38,7 +36,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   onPressMoreReaction,
   onAddReaction,
   onPressReply,
-}: CommentViewMenuBottomSheetProps) => {
+}: CommentViewMenuProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
@@ -46,18 +44,18 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
 
-  const _onPressReaction = (item: IReactionProps) => {
-    modalizeRef?.current?.close?.();
-    onAddReaction?.(item.id);
+  const _onPressReaction = (emoji: any) => {
+    dispatch(modalActions.hideModal());
+    onAddReaction?.(NodeEmoji.find(emoji || '')?.key || '');
   };
 
   const _onPressMoreReaction = (e?: any) => {
-    modalizeRef?.current?.close?.();
+    dispatch(modalActions.hideModal());
     onPressMoreReaction?.(e);
   };
 
   const _onPressEdit = () => {
-    modalizeRef?.current?.close?.();
+    dispatch(modalActions.hideModal());
     rootNavigation.navigate(homeStack.createComment, {
       commentId: commentId,
       groupIds: groupIds,
@@ -65,17 +63,17 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   };
 
   const _onPress = () => {
-    modalizeRef?.current?.close?.();
+    dispatch(modalActions.hideModal());
     dispatch(modalActions.showAlertNewFeature());
   };
 
   const _onPressReply = () => {
-    modalizeRef?.current?.close?.();
+    dispatch(modalActions.hideModal());
     onPressReply?.();
   };
 
   const _onPressCopy = () => {
-    modalizeRef?.current?.close?.();
+    dispatch(modalActions.hideModal());
     if (content) {
       Clipboard.setString(content);
       dispatch(
@@ -95,7 +93,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
       <Button
         key={`reaction_${index}_${item.id}`}
         onPress={() => _onPressReaction(item)}>
-        <Icon icon={item.icon} size={32} />
+        <Text style={{fontSize: 24, lineHeight: 30}}>{item}</Text>
       </Button>
     );
   };
@@ -103,7 +101,7 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
   const renderReact = () => {
     return (
       <View style={styles.reactContainer}>
-        {reactionDefault.map(renderReactItem)}
+        {quickReactions.map(renderReactItem)}
         <Button style={styles.btnReact} onPress={_onPressMoreReaction}>
           <Icon icon={'iconReact'} size={22} />
         </Button>
@@ -111,59 +109,49 @@ const CommentViewMenuBottomSheet: FC<CommentViewMenuBottomSheetProps> = ({
     );
   };
 
-  const renderContent = () => {
-    return (
-      <View style={styles.container}>
-        {renderReact()}
+  return (
+    <View style={styles.container}>
+      {renderReact()}
+      <PrimaryItem
+        style={styles.item}
+        leftIcon={'CornerDownRight'}
+        leftIconProps={{icon: 'CornerDownRight', size: 24}}
+        title={t('post:comment_menu_reply')}
+        onPress={_onPressReply}
+      />
+      <PrimaryItem
+        style={styles.item}
+        leftIcon={'Copy'}
+        leftIconProps={{icon: 'Copy', size: 24}}
+        title={t('post:comment_menu_copy_text')}
+        onPress={_onPressCopy}
+      />
+      {isActor && (
         <PrimaryItem
           style={styles.item}
-          leftIcon={'CornerDownRight'}
-          leftIconProps={{icon: 'CornerDownRight', size: 24}}
-          title={t('post:comment_menu_reply')}
-          onPress={_onPressReply}
+          leftIcon={'Edit'}
+          leftIconProps={{icon: 'Edit', size: 24}}
+          title={t('post:comment_menu_edit')}
+          onPress={_onPressEdit}
         />
+      )}
+      <PrimaryItem
+        style={styles.item}
+        leftIcon={'Redo'}
+        leftIconProps={{icon: 'Redo', size: 24}}
+        title={t('post:comment_menu_history')}
+        onPress={_onPress}
+      />
+      {isActor && (
         <PrimaryItem
           style={styles.item}
-          leftIcon={'Copy'}
-          leftIconProps={{icon: 'Copy', size: 24}}
-          title={t('post:comment_menu_copy_text')}
-          onPress={_onPressCopy}
-        />
-        {isActor && (
-          <PrimaryItem
-            style={styles.item}
-            leftIcon={'Edit'}
-            leftIconProps={{icon: 'Edit', size: 24}}
-            title={t('post:comment_menu_edit')}
-            onPress={_onPressEdit}
-          />
-        )}
-        <PrimaryItem
-          style={styles.item}
-          leftIcon={'Redo'}
-          leftIconProps={{icon: 'Redo', size: 24}}
-          title={t('post:comment_menu_history')}
+          leftIcon={'Trash'}
+          leftIconProps={{icon: 'Trash', size: 24}}
+          title={t('post:comment_menu_delete')}
           onPress={_onPress}
         />
-        {isActor && (
-          <PrimaryItem
-            style={styles.item}
-            leftIcon={'Trash'}
-            leftIconProps={{icon: 'Trash', size: 24}}
-            title={t('post:comment_menu_delete')}
-            onPress={_onPress}
-          />
-        )}
-      </View>
-    );
-  };
-
-  return (
-    <BottomSheet
-      modalizeRef={modalizeRef}
-      ContentComponent={renderContent()}
-      menuMinWidth={375}
-    />
+      )}
+    </View>
   );
 };
 
@@ -192,4 +180,4 @@ const createStyle = (theme: ITheme, insets: any) => {
   });
 };
 
-export default CommentViewMenuBottomSheet;
+export default CommentViewMenu;

@@ -6,7 +6,6 @@ import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import Divider from '~/beinComponents/Divider';
 
 export interface ImportantStatusProps {
   notExpired: boolean;
@@ -47,9 +46,8 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
     {
       flexDirection: 'row',
       backgroundColor: backgroundColor,
-      padding: spacing.padding.small,
-      borderTopLeftRadius: 6,
-      borderTopRightRadius: 6,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.placeholder,
     },
@@ -85,7 +83,6 @@ const createStyle = (theme: ITheme) => {
     },
     leftIcon: {
       marginRight: spacing.margin.small,
-      marginLeft: spacing.margin.tiny,
     },
     iconStyle: {padding: 3, borderRadius: 100},
   });

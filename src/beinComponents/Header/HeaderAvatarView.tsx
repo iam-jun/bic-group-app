@@ -53,9 +53,9 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       marginTop: spacing.margin.small,
       alignItems: 'center',
+      paddingHorizontal: spacing.padding.large,
     },
     avatar: {
-      marginLeft: spacing.margin.large,
       marginRight: spacing.margin.base,
     },
   });

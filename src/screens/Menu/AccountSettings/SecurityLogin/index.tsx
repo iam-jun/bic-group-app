@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
@@ -65,9 +65,10 @@ const themeStyles = (theme: ITheme) => {
       marginTop: spacing.margin.base,
     },
     menuGroup: {
-      marginHorizontal: spacing.margin.base,
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
     divider: {
+      marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
   });

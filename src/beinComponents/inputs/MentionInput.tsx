@@ -13,6 +13,7 @@ import {
   TextInput,
   TextInputProps,
   TextStyle,
+  useWindowDimensions,
   View,
   ViewStyle,
 } from 'react-native';
@@ -104,6 +105,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const [highlightIndex, setHighlightIndex] = useState<number>(DEFAULT_INDEX);
 
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
+  const windowDimension = useWindowDimensions();
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -113,6 +115,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
     topPosition,
     measuredHeight,
     keyboardHeight,
+    windowDimension.height,
+    list.length === 0,
   );
 
   useEffect(() => {
@@ -126,6 +130,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }
   }, [mentioning]);
 
+  useEffect(() => {
+    _onChangeText(content);
+  }, [getDataParam?.group_ids]);
+
   const getContent = () => content;
 
   useImperativeHandle(_mentionInputRef, () => ({
@@ -133,37 +141,44 @@ const MentionInput: React.FC<MentionInputProps> = ({
     getContent,
   }));
 
-  const getData = (mentionKey: string, getDataParam: any) => {
-    if (getDataPromise && getDataParam) {
-      const param = {...getDataParam, key: mentionKey};
-      setIsLoading(true);
-      getDataPromise?.(param)
-        ?.then?.((response: any) => {
-          setIsLoading(false);
-          const newList = get(response, getDataResponseKey) || [];
-
-          if (newList?.length === 0) {
-            setList([]);
-            setMentioning(false);
-            return;
-          }
-
-          setList(newList);
-          setKey(mentionKey);
-        })
-        ?.catch((e: any) => {
-          console.log(
-            `\x1b[34m🐣️ MentionInput get data error: `,
-            `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-          );
-          setIsLoading(false);
-          setMentioning(false);
-          setList([]);
-          setHighlightIndex(DEFAULT_INDEX);
-          sethHighlightItem(undefined);
-        });
+  /**
+   * Need to put debounce as checkMention is called in 2 places
+   * and useRef as the debounce-only solution doesn't work
+   */
+  const getData = debounce((mentionKey: string, getDataParam: any) => {
+    if (!getDataPromise || !getDataParam || getDataParam.group_ids === '') {
+      setList([]);
+      return;
     }
-  };
+
+    const param = {...getDataParam, key: mentionKey};
+    setIsLoading(true);
+    getDataPromise?.(param)
+      ?.then?.((response: any) => {
+        setIsLoading(false);
+        const newList = get(response, getDataResponseKey) || [];
+
+        if (newList?.length === 0) {
+          setList([]);
+          setMentioning(false);
+          return;
+        }
+
+        setList(newList);
+        setKey(mentionKey);
+      })
+      ?.catch((e: any) => {
+        console.log(
+          `\x1b[34m🐣️ MentionInput get data error: `,
+          `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+        );
+        setIsLoading(false);
+        setMentioning(false);
+        setList([]);
+        setHighlightIndex(DEFAULT_INDEX);
+        sethHighlightItem(undefined);
+      });
+  }, 50);
 
   const _onStartMention = () => {
     getData('', getDataParam);
@@ -459,10 +474,19 @@ const createStyles = (
   topPosition: number,
   measuredHeight: number,
   keyboardHeight: number,
+  screenHeight: number,
+  isListEmpty: boolean,
 ) => {
   const {colors, spacing} = theme;
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
+
+  const minViewableContent = 220;
+  const modalHeight = isListEmpty
+    ? 80
+    : screenHeight - keyboardHeight - minViewableContent;
+
+  const maxModalHeight = Math.min(modalHeight, 300);
 
   let stylePosition = {};
   switch (position) {
@@ -473,7 +497,7 @@ const createStyles = (
       break;
     case 'above-keyboard':
       stylePosition = {
-        bottom: keyboardHeight,
+        bottom: 0,
       };
       break;
     default:
@@ -499,7 +523,7 @@ const createStyles = (
       ...stylePosition,
       width: '85%',
       maxWidth: 355,
-      maxHeight: 300,
+      maxHeight: maxModalHeight,
       borderRadius: 6,
       backgroundColor: colors.background,
       justifyContent: 'center',

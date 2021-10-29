@@ -92,6 +92,7 @@ const GeneralSettings = () => {
         scrollEnabled={false}
         listStyle={styles.menuList}
         onItemPress={onAccountSettingsPress}
+        showItemSeparator={false}
       />
       <BottomSheet
         modalizeRef={baseSheetRef}
@@ -126,7 +127,7 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     menuList: {
       marginTop: spacing.margin.base,
-      marginHorizontal: spacing.margin.base,
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
     contentComponent: {
       ...Platform.select({
