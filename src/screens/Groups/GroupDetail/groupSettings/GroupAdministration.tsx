@@ -17,6 +17,8 @@ import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
+import ListView from '~/beinComponents/list/ListView';
+import {groupSettings} from '~/constants/groupAdminSettings';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
@@ -33,8 +35,18 @@ const GroupAdministration = (props: any) => {
     Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(groupId));
   }, [groupId]);
 
-  const onGroupAdminPress = () => {
-    dispatch(modalActions.showAlertNewFeature());
+  const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
+
+  const onGroupAdminPress = (item: any) => {
+    const {type} = item;
+    switch (type) {
+      case 'generalInfo':
+        goToGeneralInfo();
+        break;
+      default:
+        displayNewFeature();
+        break;
+    }
   };
 
   const goToGeneralInfo = () =>
@@ -75,8 +87,8 @@ const GroupAdministration = (props: any) => {
       style={styles.container}
       isFullView>
       <Header
-        subTitle={name}
-        subTitleTextProps={{color: theme.colors.textPrimary}}
+        title={name}
+        titleTextProps={{color: theme.colors.textPrimary}}
         avatar={icon}
       />
 
@@ -90,7 +102,7 @@ const GroupAdministration = (props: any) => {
         {renderItem(
           'UserExclamation',
           'settings:title_pending_members',
-          onGroupAdminPress,
+          displayNewFeature,
           '1',
         )}
       </View>
@@ -102,31 +114,14 @@ const GroupAdministration = (props: any) => {
           useI18n>
           settings:title_group_settings
         </Text.H5>
-        {renderItem(
-          'Cog',
-          'settings:title_general_information',
-          goToGeneralInfo,
-        )}
-        {renderItem(
-          'ChatBubbleUser',
-          'settings:title_role_management',
-          onGroupAdminPress,
-        )}
-        {renderItem(
-          'UserCircle',
-          'settings:title_membership_settings',
-          onGroupAdminPress,
-        )}
-        {renderItem(
-          'FileCopyAlt',
-          'settings:title_post_settings',
-          onGroupAdminPress,
-        )}
-        {renderItem(
-          'WebGrid',
-          'settings:title_module_settings',
-          onGroupAdminPress,
-        )}
+        <ListView
+          type="menu"
+          data={groupSettings}
+          scrollEnabled={false}
+          onItemPress={onGroupAdminPress}
+          style={styles.settingsContainer}
+          showItemSeparator={false}
+        />
       </View>
 
       <Divider />
@@ -143,7 +138,7 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     itemContainer: {
       flexDirection: 'row',
-      padding: spacing.padding.base,
+      // padding: spacing.padding.,
       backgroundColor: colors.background,
       borderRadius: spacing.borderRadius.base,
     },
@@ -159,12 +154,14 @@ const themeStyles = (theme: ITheme) => {
       marginLeft: spacing.margin.base,
     },
     groupModerating: {
-      margin: spacing.margin.large,
+      marginVertical: spacing.margin.large,
     },
-    groupSetting: {
-      marginHorizontal: spacing.margin.large,
+    groupSetting: {},
+    settingsContainer: {
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
     headerTitle: {
+      marginHorizontal: spacing.margin.large,
       marginBottom: spacing.margin.small,
     },
     rightSubtitle: {
