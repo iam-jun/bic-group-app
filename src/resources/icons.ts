@@ -221,6 +221,9 @@ const icons = {
   iconFlagSg,
   iconFlagUs,
   iconSuitcase: 'Suitcase',
+  FileExclamationAlt: 'FileExclamationAlt',
+  ExclamationTriangle: 'ExclamationTriangle',
+  ChatInfo: 'ChatInfo',
 };
 
 export default icons;

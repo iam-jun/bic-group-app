@@ -10,12 +10,15 @@ import Div from '~/beinComponents/Div';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import RedDot, {RedDotProps} from '~/beinComponents/Badge/RedDot';
 
 interface MenuItemProps extends IOption {
   isActive?: boolean;
   RightComponent?: React.ReactNode | React.ReactElement;
   onPress?: () => void;
   disable?: boolean;
+  redDotNumber?: number;
+  redDotProps?: RedDotProps;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -30,6 +33,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   RightComponent,
   onPress,
   disable,
+  redDotNumber,
+  redDotProps,
 }: MenuItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -64,6 +69,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
               </Text.Subtitle>
             )}
           </View>
+          {(redDotNumber || redDotProps) && (
+            <RedDot number={redDotNumber} {...redDotProps} />
+          )}
           <View style={styles.rightComponent}>
             {!!rightSubTitle && (
               <Text.BodyS color={theme.colors.iconTint} useI18n>
@@ -95,8 +103,8 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       paddingVertical: spacing.padding.base,
-      paddingHorizontal: spacing.padding.extraLarge,
-      borderRadius: spacing.borderRadius.small,
+      paddingHorizontal: spacing.padding.large,
+      borderRadius: Platform.OS === 'web' ? spacing.borderRadius.small : 0,
       alignItems: 'center',
     },
     itemActiveIndicator: {
