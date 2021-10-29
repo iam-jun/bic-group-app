@@ -27,6 +27,7 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -100,6 +101,9 @@ const GroupMembers = (): React.ReactElement => {
   ) => {
     baseSheetRef.current?.close();
     switch (type) {
+      case 'view-profile':
+        goToUserProfile();
+        break;
       case 'remove-member':
         onRemovePress();
         break;
@@ -203,6 +207,17 @@ const GroupMembers = (): React.ReactElement => {
   const onRemovePress = () => {
     if (selectedMember) {
       alertRemovingMember(selectedMember);
+    }
+  };
+
+  const goToUserProfile = () => {
+    if (selectedMember) {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: selectedMember?.username,
+        params: {
+          type: 'username',
+        },
+      });
     }
   };
 
