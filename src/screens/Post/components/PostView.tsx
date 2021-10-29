@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState, useRef, memo} from 'react';
+import React, {FC, useEffect, useState, memo} from 'react';
 import {View, StyleSheet, Keyboard, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -6,8 +6,6 @@ import {useDispatch} from 'react-redux';
 import {ITheme} from '~/theme/interfaces';
 import {IPayloadReactToPost} from '~/interfaces/IPost';
 import Image from '~/beinComponents/Image';
-import Button from '~/beinComponents/Button/';
-import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import resourceImages from '~/resources/images';
 import {useBaseHook} from '~/hooks';
@@ -52,7 +50,6 @@ const _PostView: FC<PostViewProps> = ({
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const actor = useKeySelector(postKeySelector.postActorById(postId));
