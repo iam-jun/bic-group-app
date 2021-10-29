@@ -481,9 +481,12 @@ const createStyles = (
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
 
+  const minViewableContent = 220;
   const modalHeight = isListEmpty
-    ? undefined
-    : screenHeight - keyboardHeight - 220;
+    ? 80
+    : screenHeight - keyboardHeight - minViewableContent;
+
+  const maxModalHeight = Math.min(modalHeight, 300);
 
   let stylePosition = {};
   switch (position) {
@@ -520,8 +523,7 @@ const createStyles = (
       ...stylePosition,
       width: '85%',
       maxWidth: 355,
-      height: modalHeight,
-      maxHeight: 300,
+      maxHeight: maxModalHeight,
       borderRadius: 6,
       backgroundColor: colors.background,
       justifyContent: 'center',
