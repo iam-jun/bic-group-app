@@ -975,6 +975,7 @@ function* getPostDetail({
     yield put(postActions.addToAllPosts(response));
     callbackLoading?.(false, true);
   } catch (e) {
+    callbackLoading?.(false, false);
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),
     );

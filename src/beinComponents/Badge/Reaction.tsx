@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {
   ActivityIndicator,
+  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -77,8 +78,9 @@ const Reaction: React.FC<ReactionProps> = ({
       ) : (
         <Text.BodySM
           color={isSelected ? colors.primary7 : colors.textPrimary}
-          style={styles.textInput}>
-          {`${emoji} ${value}`}
+          style={styles.text}>
+          <Text.BodySM style={styles.emoji}>{emoji}</Text.BodySM>
+          {` ${value}`}
         </Text.BodySM>
       )}
     </TouchableOpacity>
@@ -98,9 +100,12 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-      height: 28,
+      height: Platform.OS === 'web' ? 30 : 28,
     },
-    textInput: {
+    emoji: {
+      fontSize: Platform.OS === 'web' ? 15 : 13,
+    },
+    text: {
       marginBottom: 2,
     },
     indicator: {

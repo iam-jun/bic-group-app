@@ -12,10 +12,14 @@ import {
   messageOptions,
   MessageOptionType,
   myMessageOptions,
-  reactions,
 } from '~/constants/chat';
 import {IMessage, IMessageMenu} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
+import {quickReactions} from '~/configs/reactionConfig';
+import Button from '~/beinComponents/Button';
+import Text from '~/beinComponents/Text';
+import NodeEmoji from 'node-emoji';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface Props {
   isMyMessage: boolean;
@@ -35,32 +39,41 @@ const MessageOptionsModal: React.FC<Props> = ({
   onClosed,
   ...props
 }: Props) => {
+  const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
-  const styles = themeStyle(theme);
+  const styles = themeStyle(theme, insets);
 
-  const renderReactions = () => {
+  const renderReactItem = (emoji: any, index: number) => {
+    return (
+      <Button
+        key={`reaction_item_${index}`}
+        onPress={() => onReactionPress(NodeEmoji.find(emoji || '')?.key || '')}>
+        <Text style={{fontSize: 24, lineHeight: 30}}>{emoji}</Text>
+      </Button>
+    );
+  };
+
+  const renderReact = () => {
     if (Platform.OS === 'web') return null;
 
     return (
-      <View style={styles.reactions}>
-        {Object.keys(reactions).map(key => (
-          <Icon
-            key={`reaction-${key}`}
-            size={22}
-            // @ts-ignore
-            icon={reactions[key].icon}
-            onPress={() => onReactionPress(key)}
-          />
-        ))}
+      <View style={styles.reactContainer}>
+        {quickReactions.map(renderReactItem)}
+        <Button
+          style={styles.btnReact}
+          onPress={() => onReactionPress?.('add_react')}>
+          <Icon icon={'iconReact'} size={22} />
+        </Button>
       </View>
     );
   };
 
-  const renderItem = ({item}: {item: MessageOptionType; index: number}) => {
+  const renderItem = (item: MessageOptionType, index: number) => {
     const menu = messageOptionData[item] as IMessageMenu;
 
     return (
       <PrimaryItem
+        key={`message_options_${index}`}
         style={styles.itemMenu}
         leftIcon={menu.icon}
         leftIconProps={{icon: menu.icon, size: 24}}
@@ -70,7 +83,9 @@ const MessageOptionsModal: React.FC<Props> = ({
     );
   };
 
-  let data = isMyMessage ? myMessageOptions : messageOptions;
+  let data = isMyMessage
+    ? (myMessageOptions as MessageOptionType[])
+    : (messageOptions as MessageOptionType[]);
   data = isEmpty(selectedMessage?.reaction_counts)
     ? data
     : [...data, 'reactions'];
@@ -81,31 +96,32 @@ const MessageOptionsModal: React.FC<Props> = ({
       modalizeRef={modalRef}
       side="left"
       onClosed={onClosed}
-      flatListProps={{
-        style: styles.list,
-        data: data,
-        keyExtractor: (item: MessageOptionType) => `message-menu-${item}`,
-        renderItem: renderItem,
-        ListHeaderComponent: renderReactions,
-      }}
+      ContentComponent={
+        <View style={styles.container}>
+          {renderReact()}
+          {data?.map?.(renderItem)}
+        </View>
+      }
     />
   );
 };
 
-const themeStyle = (theme: ITheme) => {
+const themeStyle = (theme: ITheme, insets: any) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
+    container: {
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.base + insets.bottom,
+    },
     list: {
       minWidth: 250,
     },
-    reactions: {
-      paddingBottom: spacing.padding.large,
+    reactContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      borderBottomWidth: 1,
-      borderBottomColor: colors.placeholder,
-      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: spacing.padding.small,
+      paddingVertical: spacing.padding.base,
     },
     itemMenu: {
       height: 44,
@@ -113,6 +129,14 @@ const themeStyle = (theme: ITheme) => {
     },
     label: {
       marginStart: spacing.margin.large,
+    },
+    btnReact: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: colors.primary1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 };
