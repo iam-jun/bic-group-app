@@ -24,6 +24,7 @@ const AboutProfile = (props: IUserProfile) => {
     relationship_status,
     gender,
     birthday,
+    latest_work,
   } = props;
 
   const theme = useTheme() as ITheme;
@@ -35,14 +36,23 @@ const AboutProfile = (props: IUserProfile) => {
   );
   const userLanguages = userLanguageList?.join(', ');
 
-  const renderItem = (icon: IconType, label?: string) => {
+  const renderItem = ({
+    icon,
+    title,
+    TitleComponent,
+  }: {
+    icon: IconType;
+    title?: string;
+    TitleComponent?: React.ReactNode;
+  }) => {
     return (
-      !!label && (
+      (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
           <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
           <Text.Body style={styles.text} useI18n>
-            {label}
+            {title}
           </Text.Body>
+          {TitleComponent}
         </View>
       )
     );
@@ -53,22 +63,40 @@ const AboutProfile = (props: IUserProfile) => {
       <Text.ButtonBase style={styles.about}>
         {i18next.t('settings:title_about')}
       </Text.ButtonBase>
-      {renderItem(
-        'LocationPoint',
-        city && country ? `${city}, ${country}` : undefined,
-      )}
-      {renderItem('CommentsAlt', userLanguages)}
+      {renderItem({
+        icon: 'iconSuitcase',
+        TitleComponent: latest_work && (
+          <Text.BodyM>
+            {`${latest_work?.title_position} `}
+            <Text useI18n>common:text_at</Text>
+            <Text.BodyM>{` ${latest_work?.company}`}</Text.BodyM>
+          </Text.BodyM>
+        ),
+      })}
+      {renderItem({
+        icon: 'LocationPoint',
+        title: city && country ? `${city}, ${country}` : undefined,
+      })}
+      {renderItem({icon: 'CommentsAlt', title: userLanguages})}
+      {birthday &&
+        renderItem({
+          icon: 'Calender',
+          title: formatDate(birthday, 'MMM Do, YYYY'),
+        })}
+      {renderItem({
+        icon: 'Phone',
+        title:
+          country_code && phone ? `(+${country_code}) ${phone}` : undefined,
+      })}
+      {renderItem({icon: 'Envelope', title: email})}
       {/* @ts-ignore */}
-      {renderItem('Calender', formatDate(birthday, 'MMM Do, YYYY'))}
-      {renderItem(
-        'Phone',
-        country_code && phone ? `(+${country_code}) ${phone}` : undefined,
-      )}
-      {renderItem('Envelope', email)}
-      {/* @ts-ignore */}
-      {renderItem('UserSquare', genders[gender])}
-      {/* @ts-ignore */}
-      {renderItem('Heart', relationshipStatus[relationship_status])}
+      {gender && renderItem({icon: 'UserSquare', title: genders[gender]})}
+      {relationship_status &&
+        renderItem({
+          icon: 'Heart',
+          // @ts-ignore
+          title: relationshipStatus[relationship_status],
+        })}
     </View>
   );
 };

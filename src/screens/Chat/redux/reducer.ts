@@ -48,6 +48,13 @@ export const initDataState = {
     jumpedMessage: null,
     error: null,
   },
+  search: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
 };
 
 export interface IAction {

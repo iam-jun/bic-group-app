@@ -1,12 +1,11 @@
 import i18next from 'i18next';
-import React, {useState} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
-import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import {getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
@@ -41,8 +40,6 @@ const ConversationItem: React.FC<Props> = ({
     twoLineLastMessage,
     isActive,
   );
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
-  const isDirect = type === roomTypes.DIRECT;
   const welcomeText =
     type === 'direct'
       ? 'chat:label_init_direct_message:short'
@@ -54,22 +51,12 @@ const ConversationItem: React.FC<Props> = ({
   let className = 'chat__conversation-item';
   if (isActive) className = className + ` ${className}--active`;
 
-  const onLoadAvatarError = () => {
-    setAvatar(getDefaultAvatar(name));
-  };
-
-  const ItemAvatar = isDirect ? (
+  const ItemAvatar = (
     <Avatar.Large
       style={styles.avatar}
       source={avatar}
+      cache={false}
       placeholderSource={getDefaultAvatar(name)}
-    />
-  ) : (
-    <Avatar.Group
-      variant="large"
-      style={styles.avatar}
-      source={_avatar}
-      onError={onLoadAvatarError}
     />
   );
 

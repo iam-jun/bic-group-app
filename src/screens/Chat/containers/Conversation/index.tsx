@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
@@ -24,7 +25,6 @@ import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IObject} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {IReactionCounts} from '~/interfaces/IPost';
@@ -33,10 +33,10 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
   ChatInput,
   ChatWelcome,
-  MessageNotFound,
   DownButton,
   ListMessages,
   MessageContainer,
+  MessageNotFound,
   MessageOptionsModal,
   UnreadBanner,
 } from '~/screens/Chat/components';
@@ -45,6 +45,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
@@ -58,8 +59,9 @@ const Conversation = () => {
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
   const dispatch = useDispatch();
-  const theme: IObject<any> = useTheme();
-  const styles = createStyles(theme);
+  const insets = useSafeAreaInsets();
+  const theme = useTheme() as ITheme;
+  const styles = createStyles(theme, insets);
   const {rootNavigation} = useRootNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
   const [_avatar, setAvatar] = useState<string | string[] | undefined>(
@@ -249,6 +251,7 @@ const Conversation = () => {
   };
 
   const editMessage = () => {
+    replyingMessage && onCancelReplyingMessage();
     selectedMessage && setEditingMessage(selectedMessage);
   };
 
@@ -305,13 +308,18 @@ const Conversation = () => {
     else rootNavigation.goBack();
   };
 
+  const onReplyPress = (item?: IMessage) => {
+    editingMessage && onCancelEditingMessage();
+    setReplyingMessage(item);
+  };
+
   const onMenuPress = async (menu: MessageOptionType) => {
     switch (menu) {
       case 'delete':
         deleteMessage();
         break;
       case 'reply':
-        setReplyingMessage(selectedMessage);
+        onReplyPress(selectedMessage);
         break;
       case 'edit':
         editMessage();
@@ -398,7 +406,7 @@ const Conversation = () => {
       index: index,
       onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
         onPressReact(event, item, side),
-      onReplyPress: () => setReplyingMessage(item),
+      onReplyPress: () => onReplyPress(item),
       onLongPress,
       onAddReaction: (reactionId: ReactionType) =>
         onAddReaction(reactionId, item._id),
@@ -579,10 +587,14 @@ const Conversation = () => {
   };
 
   return (
-    <ScreenWrapper isFullView testID="MessageScreen">
+    <ScreenWrapper isFullView testID="MessageScreen" style={styles.container}>
       <Header
         avatar={_avatar}
-        avatarProps={{variant: 'default', onError: onLoadAvatarError}}
+        avatarProps={{
+          variant: 'default',
+          cache: false,
+          onError: onLoadAvatarError,
+        }}
         title={
           messages.error
             ? i18next.t('chat:title_invalid_msg_link')
@@ -591,8 +603,7 @@ const Conversation = () => {
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"
         onPressIcon={!messages.error ? onSearchPress : undefined}
-        menuIcon="ConversationInfo"
-        onPressMenu={!messages.error ? goConversationDetail : undefined}
+        onPressHeader={!messages.error ? goConversationDetail : undefined}
         onPressBack={onPressBack}
         hideBackOnLaptop
       />
@@ -625,11 +636,11 @@ const Conversation = () => {
   );
 };
 
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (theme: ITheme, insets: EdgeInsets) => {
   const {spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingBottom: spacing.padding.large,
+      paddingBottom: insets.bottom,
     },
     messagesContainer: {
       flex: 1,
