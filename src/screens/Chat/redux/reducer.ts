@@ -359,7 +359,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                     ? {
                         ...item,
                         lastMessage: action.payload.lastMessage,
-                        _updatedAt: action.payload._updatedAt,
+                        _updatedAt: action.payload.createAt,
                       }
                     : item,
                 ),
@@ -464,7 +464,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
               ? {
                   ...item,
                   lastMessage: getLastMessage(action.payload, true),
-                  _updatedAt: action.payload._updatedAt,
+                  _updatedAt: action.payload.createdAt,
                 }
               : item,
           ),

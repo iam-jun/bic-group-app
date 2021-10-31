@@ -46,7 +46,7 @@ export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
   if (!item) return null;
   let lastMessage = `${item.user?.name || item.user?.fullname}: ${item?.text}`;
 
-  if (item.attachments && item.attachments.length > 0) {
+  if ((item.attachments && item.attachments.length > 0) || item.quotedMessage) {
     lastMessage = !item.quotedMessage
       ? item.user?.username === item.user?.username
         ? i18next.t('chat:label_last_message:my_attachment')
@@ -136,7 +136,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     type = 'attachment';
 
     item.attachments.forEach((_attachment: any) => {
-      // const _attachment: IAttachment = item.attachments[0];
       let extraData = null;
       try {
         extraData = JSON.parse(_attachment.description || '{}');
