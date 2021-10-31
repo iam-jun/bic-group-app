@@ -44,7 +44,7 @@ export const mapJoinableUsers = (data?: []): IChatUser[] =>
 
 export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
   if (!item) return null;
-  let lastMessage = `${item.user?.name}: ${item?.text}`;
+  let lastMessage = `${item.user?.name || item.user?.fullname}: ${item?.text}`;
 
   if (item.attachments && item.attachments.length > 0) {
     lastMessage = !item.quotedMessage
