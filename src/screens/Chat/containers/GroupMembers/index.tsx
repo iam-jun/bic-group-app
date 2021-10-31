@@ -27,6 +27,7 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -100,6 +101,12 @@ const GroupMembers = (): React.ReactElement => {
   ) => {
     baseSheetRef.current?.close();
     switch (type) {
+      case 'view-profile':
+        goToUserProfile();
+        break;
+      case 'send-direct-message':
+        goToDirectChat();
+        break;
       case 'remove-member':
         onRemovePress();
         break;
@@ -204,6 +211,38 @@ const GroupMembers = (): React.ReactElement => {
     if (selectedMember) {
       alertRemovingMember(selectedMember);
     }
+  };
+
+  const goToUserProfile = () => {
+    if (selectedMember) {
+      rootNavigation.navigate(mainStack.userProfile, {
+        userId: selectedMember?.username,
+        params: {
+          type: 'username',
+        },
+      });
+    }
+  };
+
+  const goToDirectChat = () => {
+    if (selectedMember) {
+      const {username, name} = selectedMember;
+      if (!!username)
+        dispatch(
+          actions.createConversation(
+            // @ts-ignore
+            [{username, name: name}],
+            true,
+            navigateToChatScreen,
+          ),
+        );
+    }
+  };
+
+  const navigateToChatScreen = (roomId: string) => {
+    rootNavigation.navigate(chatStack.conversation, {
+      roomId: roomId,
+    });
   };
 
   const renderBottomSheet = () => {

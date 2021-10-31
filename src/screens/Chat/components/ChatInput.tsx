@@ -1,26 +1,26 @@
 import i18next from 'i18next';
+import React, {useEffect, useRef, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import {useTheme} from 'react-native-paper';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
-
-import Text from '~/beinComponents/Text';
 import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
+import Text from '~/beinComponents/Text';
 import apiConfig from '~/configs/apiConfig';
-import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
+import {useKeySelector} from '~/hooks/selector';
 import {IFilePicked} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
 import {getDownloadUrl, mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
+import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
-import {validateFile} from '~/utils/validation';
 import {ITheme} from '~/theme/interfaces';
+import {validateFile} from '~/utils/validation';
 
 interface Props {
   replyingMessage?: IMessage;
@@ -48,7 +48,7 @@ const ChatInput: React.FC<Props> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
-  const {user} = useAuth();
+  const user = useKeySelector(menuKeySelector.myProfile);
   const {conversation} = useChat();
 
   useEffect(() => {

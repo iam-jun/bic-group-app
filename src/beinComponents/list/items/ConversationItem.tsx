@@ -1,12 +1,11 @@
 import i18next from 'i18next';
-import React, {useState} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
-import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import {getDefaultAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
@@ -41,8 +40,6 @@ const ConversationItem: React.FC<Props> = ({
     twoLineLastMessage,
     isActive,
   );
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
-  const isDirect = type === roomTypes.DIRECT;
   const welcomeText =
     type === 'direct'
       ? 'chat:label_init_direct_message:short'
@@ -54,29 +51,21 @@ const ConversationItem: React.FC<Props> = ({
   let className = 'chat__conversation-item';
   if (isActive) className = className + ` ${className}--active`;
 
-  const onLoadAvatarError = () => {
-    setAvatar(getDefaultAvatar(name));
-  };
-
-  const ItemAvatar = isDirect ? (
+  const ItemAvatar = (
     <Avatar.Large
       style={styles.avatar}
       source={avatar}
+      cache={false}
       placeholderSource={getDefaultAvatar(name)}
-    />
-  ) : (
-    <Avatar.Group
-      variant="large"
-      style={styles.avatar}
-      source={_avatar}
-      onError={onLoadAvatarError}
     />
   );
 
   return (
     <Div className={className}>
+      {Platform.OS === 'web' && isActive && (
+        <View style={styles.itemActiveIndicator} />
+      )}
       <View style={styles.container}>
-        {isActive && <View style={styles.itemActiveIndicator} />}
         {ItemAvatar}
         <Div
           style={[
@@ -133,15 +122,14 @@ const createStyles = (
       flexDirection: 'row',
       height: 88,
       paddingVertical: spacing.padding.small,
-      paddingRight: isWeb ? spacing.padding.small : spacing.padding.tiny,
+      paddingHorizontal: spacing.padding.large,
       borderRadius: spacing.borderRadius.small,
-      marginHorizontal: !isWeb ? spacing.margin.base : 0,
     },
     itemActiveIndicator: {
-      alignSelf: 'center',
+      position: 'absolute',
+      top: '24%',
       width: 4,
       height: 48,
-      marginRight: spacing.margin.large,
       backgroundColor: colors.primary5,
       borderTopRightRadius: spacing.borderRadius.small,
       borderBottomRightRadius: spacing.borderRadius.small,
@@ -149,7 +137,6 @@ const createStyles = (
     avatar: {
       alignSelf: isActive ? 'center' : 'flex-start',
       marginTop: 0,
-      marginLeft: isActive ? 0 : spacing.margin.tiny,
       marginRight: spacing.margin.base,
     },
     contentContainer: {

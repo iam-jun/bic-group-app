@@ -17,6 +17,8 @@ export const mapData = (user: IChatUser, dataType: string, data: any) => {
     case 'users':
     case 'members':
       return mapUsers(data);
+    case 'search':
+      return mapSearchResults(user, data);
     case 'rooms':
       return mapConversations(user, data);
     case 'messages':
@@ -67,6 +69,16 @@ export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
   return lastMessage;
 };
 
+export const mapSearchResults = (
+  user: IChatUser,
+  data?: any[],
+): IConversation[] => {
+  return (data || []).map((item: any) => {
+    if (item.customFields) return mapConversation(user, item);
+    else return item;
+  });
+};
+
 export const mapConversation = (user: IChatUser, item: any): IConversation => {
   if (!item) return item;
   const _id = item.rid || item._id;
@@ -110,6 +122,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     },
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
+    members: item.members || item.customFields?.members,
   };
 };
 

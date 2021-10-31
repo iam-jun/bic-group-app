@@ -6,6 +6,7 @@ import {
   ViewStyle,
   Platform,
   useWindowDimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -51,6 +52,7 @@ export interface HeaderProps {
   removeBorderAndShadow?: boolean;
   onShowSearch?: (isShow: boolean) => void;
   onSearchText?: (searchText: string) => void;
+  onPressHeader?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -78,6 +80,7 @@ const Header: React.FC<HeaderProps> = ({
   removeBorderAndShadow = false,
   onShowSearch,
   onSearchText,
+  onPressHeader,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
 
@@ -149,31 +152,38 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         {!!avatar && (
-          <Avatar.Group
-            source={avatar}
-            style={styles.avatar}
-            variant="small"
-            {...avatarProps}
-          />
+          <TouchableOpacity onPress={onPressHeader}>
+            <Avatar.Group
+              source={avatar}
+              style={styles.avatar}
+              variant="small"
+              {...avatarProps}
+            />
+          </TouchableOpacity>
         )}
         {!!leftIcon && (
           <Icon
             size={14}
             style={{marginLeft: spacing?.margin.base}}
             icon={leftIcon}
+            onPress={onPressHeader}
             {...leftIconProps}
           />
         )}
         <View style={styles.titleContainer}>
           {!!title && (
-            <Text.H5 style={styles.title} {...titleTextProps}>
-              {title}
-            </Text.H5>
+            <TouchableOpacity onPress={onPressHeader}>
+              <Text.H5 style={styles.title} {...titleTextProps}>
+                {title}
+              </Text.H5>
+            </TouchableOpacity>
           )}
           {!!subTitle && (
-            <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
-              {subTitle}
-            </Text.Subtitle>
+            <TouchableOpacity onPress={onPressHeader}>
+              <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
+                {subTitle}
+              </Text.Subtitle>
+            </TouchableOpacity>
           )}
         </View>
         {!!icon && onPressIcon && (
@@ -238,7 +248,8 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     avatar: {
-      marginHorizontal: spacing.margin.base,
+      marginLeft: 6,
+      // marginRight: spacing.margin.base,
     },
     titleContainer: {
       flex: 1,

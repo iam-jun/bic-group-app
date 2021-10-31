@@ -87,7 +87,9 @@
     "cover_changed": "Cover changed",
     "text_present": "Present",
     "text_start_date": "Start Date",
-    "text_end_date": "End Date"
+    "text_end_date": "End Date",
+    "text_group": "Group",
+    "text_at": "at"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -205,6 +207,9 @@
     "app_language": "English",
     "title_group_moderating": "Group Moderating",
     "title_pending_members": "Pending Members",
+    "title_pending_posts": "Pending Posts",
+    "title_reported_posts": "Reported Post",
+    "title_reported_chats": "Reported Chats",
     "title_group_settings": "Group Settings",
     "title_general_information": "General Information",
     "title_role_management": "Role Management",
@@ -445,6 +450,7 @@
     },
     "title_privacy": "Privacy",
     "title_more_actions": "More actions",
+    "title_files_images_links": "Files & Images & Links",
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
     "text_feedback": "Feedback this chat",
@@ -516,7 +522,11 @@
     "title_msg_not_found": "No message found",
     "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
     "title_invalid_msg_link": "Invalid message link",
-    "button_go_back_to_chat": "Go back to Chat"
+    "button_go_back_to_chat": "Go back to Chat",
+    "search_result": {
+      "job_title": " at ",
+      "member_count": " & {0} others"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

@@ -57,10 +57,6 @@ export default {
     type: Actions.SET_CONVERSATION_DETAIL,
     payload,
   }),
-  searchConversation: (payload: string) => ({
-    type: Actions.SEARCH_CONVERSATIONS,
-    payload,
-  }),
   getGroupRoles: (payload: string) => ({
     type: Actions.GET_GROUP_ROLES,
     payload,
@@ -223,4 +219,8 @@ export default {
     type: Actions.SET_NEXT_MESSAGES,
     payload,
   }),
+  // searchConversations: (payload?: string) => ({
+  //   type: Actions.SEARCH_CONVERSATIONS,
+  //   payload,
+  // }),
 };

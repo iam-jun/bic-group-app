@@ -110,7 +110,7 @@ const createStyle = (theme: ITheme) => {
       flexWrap: 'wrap',
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.small,
+      paddingHorizontal: spacing.padding.base,
     },
     buttonReact: {
       marginVertical: 2,

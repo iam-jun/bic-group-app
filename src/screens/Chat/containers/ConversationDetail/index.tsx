@@ -1,14 +1,22 @@
 import {RouteProp, useRoute} from '@react-navigation/core';
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+
 import Avatar from '~/beinComponents/Avatar';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
-import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -18,7 +26,6 @@ import {ViewSpacing} from '~/components';
 import {chatPermissions, roomTypes} from '~/constants/chat';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IObject} from '~/interfaces/common';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -26,23 +33,26 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
-import {getDefaultAvatar} from '../../helper';
 import actions from '../../redux/actions';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
+import {scaleCoverHeight} from '~/theme/dimension';
+import {titleCase} from '~/utils/common';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const ConversationDetail = (): React.ReactElement => {
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<RootStackParamList, 'ConversationDetail'>>();
 
+  const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const insets = useSafeAreaInsets();
+  const styles = createStyles(theme, coverHeight, insets);
   const {colors, spacing} = theme;
   const {conversation} = useChat();
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(
-    conversation.avatar,
-  );
   const permissions = conversation.permissions || {};
 
   useEffect(() => {
@@ -50,12 +60,6 @@ const ConversationDetail = (): React.ReactElement => {
       dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.clearSelectedUsers());
   }, [route?.params?.roomId]);
-
-  useEffect(() => {
-    if (conversation?._id) {
-      setAvatar(conversation?.avatar);
-    }
-  }, [conversation?._id]);
 
   const onPressBack = () => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
@@ -127,39 +131,26 @@ const ConversationDetail = (): React.ReactElement => {
     }
   };
 
-  const onLoadAvatarError = () => {
-    setAvatar(getDefaultAvatar(conversation.name));
-  };
-
   const renderAvatar = () => {
     return (
-      <Avatar.Group
-        variant="largeAlt"
-        source={_avatar}
-        onError={onLoadAvatarError}
+      <Avatar.LargeAlt
+        source={conversation?.avatar}
+        placeholderSource={
+          conversation?.type === roomTypes.DIRECT
+            ? images.img_user_avatar_default
+            : images.img_group_avatar_default
+        }
       />
     );
   };
 
   const renderHeader = () => {
     return (
-      <TouchableOpacity onPress={goProfile}>
-        <View style={styles.header}>
-          {renderAvatar()}
-          <Text.H5 style={styles.name} numberOfLines={2}>
-            {conversation.name}
-            {conversation.type !== roomTypes.QUICK && (
-              <Text>
-                <Icon
-                  iconStyle={styles.iconTitleRight}
-                  size={12}
-                  icon="RightArrow"
-                />
-              </Text>
-            )}
-          </Text.H5>
-        </View>
-      </TouchableOpacity>
+      <View>
+        {renderCover()}
+        {renderOptionMenu()}
+        {renderGroupInfoHeader()}
+      </View>
     );
   };
 
@@ -237,11 +228,11 @@ const ConversationDetail = (): React.ReactElement => {
 
     return (
       <TouchableOpacity onPress={() => onItemPress(type)}>
-        <PrimaryItem
+        <MenuItem
           style={styles.actionItem}
           title={label}
-          leftIcon={icon}
-          leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
+          icon={icon}
+          // leftIconProps={{icon, size: 20, style: styles.actionItemIcon}}
           RightComponent={RightComponent}
         />
       </TouchableOpacity>
@@ -251,7 +242,7 @@ const ConversationDetail = (): React.ReactElement => {
   const renderActions = () => (
     <View style={styles.bottomMenu}>
       <Text style={styles.bottomMenuTitle}>
-        {i18next.t('chat:title_more_actions')}
+        {i18next.t('chat:title_files_images_links')}
       </Text>
       {renderActionItem(
         'files',
@@ -353,19 +344,117 @@ const ConversationDetail = (): React.ReactElement => {
     );
   };
 
-  const onPressMenu =
-    conversation.type === roomTypes.QUICK
-      ? (e: any) => {
-          baseSheetRef.current?.open(e?.pageX, e?.pageY);
-        }
-      : undefined;
+  const onCoverLayout = (e: any) => {
+    if (!e?.nativeEvent?.layout?.width) return;
+    const coverWidth = e.nativeEvent.layout.width;
+    const coverHeight = scaleCoverHeight(coverWidth);
+    setCoverHeight(coverHeight);
+  };
+
+  const getDefaultCoverImage = (type: keyof typeof roomTypes) => {
+    if (type === roomTypes.GROUP) {
+      return images.img_chat_group_cover_default;
+    } else if (type === roomTypes.QUICK) {
+      return images.img_quick_chat_cover_default;
+    } else {
+      return images.img_direct_chat_cover_default;
+    }
+  };
+
+  const renderCover = () => {
+    return (
+      <View onLayout={onCoverLayout}>
+        <Image
+          style={styles.cover}
+          source={conversation?.background_img_url}
+          placeholderSource={getDefaultCoverImage(conversation?.type)}
+        />
+      </View>
+    );
+  };
+
+  const renderOptionMenu = () => {
+    return (
+      <LinearGradient
+        colors={['rgba(41, 39, 42, 0.4219)', 'rgba(255, 255, 255, 0.1)']}
+        style={styles.groupOptionMenu}>
+        <Icon
+          icon="iconBack"
+          onPress={onPressBack}
+          size={28}
+          tintColor={colors.background}
+        />
+        {conversation.type === roomTypes.QUICK && (
+          <Icon
+            icon="iconSettings"
+            size={28}
+            tintColor={colors.background}
+            onPress={onPressMenu}
+          />
+        )}
+      </LinearGradient>
+    );
+  };
+
+  const renderGroupIcon = () => {
+    return (
+      conversation?.type === roomTypes.GROUP && (
+        <Button.Secondary leftIcon={'UsersAlt'} useI18n>
+          common:text_group
+        </Button.Secondary>
+      )
+    );
+  };
+
+  const renderGroupInfoHeader = () => {
+    return (
+      <LinearGradient
+        colors={['rgba(41, 39, 42, 0)', 'rgba(41, 39, 42, 1)']}
+        style={styles.groupHeader}>
+        {renderAvatar()}
+        <View style={styles.groupTitle}>
+          <Text.H5 numberOfLines={2} color={colors.background}>
+            {conversation?.name}
+          </Text.H5>
+
+          {conversation?.type === roomTypes.GROUP && (
+            <View style={styles.groupInfo}>
+              <Icon
+                style={styles.iconSmall}
+                icon={'iconPrivate'}
+                size={16}
+                tintColor={colors.background}
+              />
+              <Text.BodySM color={colors.background} useI18n>
+                {titleCase(conversation?.privacy)}
+              </Text.BodySM>
+              <Text.BodySM color={colors.background}>{`  ⬩  `}</Text.BodySM>
+              <Icon
+                style={styles.iconSmall}
+                icon={'UsersAlt'}
+                size={17}
+                tintColor={colors.background}
+              />
+              <Text.BodySM color={colors.background}>
+                {conversation?.usersCount}
+              </Text.BodySM>
+            </View>
+          )}
+        </View>
+        {renderGroupIcon()}
+      </LinearGradient>
+    );
+  };
+
+  const onPressMenu = (e: any) => {
+    baseSheetRef.current?.open(e?.pageX, e?.pageY);
+  };
 
   return (
     <ScreenWrapper
       style={styles.wrapper}
       testID="ConversationDetailScreen"
       isFullView>
-      <Header onPressMenu={onPressMenu} onPressBack={onPressBack} />
       <ScrollView style={styles.root}>
         <View style={styles.container}>
           <View style={styles.top}>
@@ -379,12 +468,18 @@ const ConversationDetail = (): React.ReactElement => {
           {renderPrivacy()}
         </View>
         {renderBottomSheet()}
+        {/* Add for better scrolling experience */}
+        <View style={{height: 24}} />
       </ScrollView>
     </ScreenWrapper>
   );
 };
 
-const createStyles = (theme: IObject<any>) => {
+const createStyles = (
+  theme: ITheme,
+  coverHeight: number,
+  insets: EdgeInsets,
+) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     root: {
@@ -393,9 +488,9 @@ const createStyles = (theme: IObject<any>) => {
     wrapper: {},
     container: {
       backgroundColor: colors.bgSecondary,
+      paddingTop: insets.top,
     },
     top: {
-      padding: spacing.padding.large,
       backgroundColor: colors.background,
     },
     header: {
@@ -413,6 +508,7 @@ const createStyles = (theme: IObject<any>) => {
     },
     description: {
       paddingVertical: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
     members: {
       flexDirection: 'row',
@@ -429,18 +525,15 @@ const createStyles = (theme: IObject<any>) => {
       marginTop: spacing.margin.small,
       paddingTop: spacing.padding.base,
       paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.background,
     },
     bottomMenuTitle: {
       marginBottom: spacing.margin.tiny,
+      marginLeft: spacing.margin.large,
     },
     actionItem: {
-      paddingHorizontal: 0,
+      paddingHorizontal: spacing.padding.large,
       height: 44,
-    },
-    actionItemIcon: {
-      marginRight: spacing.margin.large,
     },
     bottomSheet: {
       paddingHorizontal: spacing.padding.big,
@@ -454,6 +547,45 @@ const createStyles = (theme: IObject<any>) => {
     },
     marginRight: {
       marginRight: spacing.margin.big,
+    },
+    cover: {
+      width: '100%',
+      height: coverHeight,
+    },
+    groupInfo: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      ...Platform.select({
+        web: {
+          marginTop: spacing.margin.small,
+        },
+      }),
+    },
+    iconSmall: {
+      marginRight: spacing.margin.tiny,
+      height: 16,
+    },
+    groupHeader: {
+      position: 'absolute',
+      flexDirection: 'row',
+      alignItems: 'center',
+      zIndex: 3,
+      bottom: 0,
+      width: '100%',
+      padding: spacing.padding.base,
+    },
+    groupTitle: {
+      marginLeft: spacing.margin.small,
+      flex: 1,
+    },
+    groupOptionMenu: {
+      position: 'absolute',
+      flexDirection: 'row',
+      zIndex: 3,
+      top: 0,
+      width: '100%',
+      padding: spacing.padding.base,
+      justifyContent: 'space-between',
     },
   });
 };

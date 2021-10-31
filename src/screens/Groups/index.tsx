@@ -17,6 +17,7 @@ import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import GroupSearch from '~/screens/Groups/components/GroupSearch';
 import appActions from '~/store/app/actions';
+import {debounce} from 'lodash';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();
@@ -75,8 +76,9 @@ const Groups: React.FC = () => {
     );
   };
 
-  const onSearchText = (searchText: string) =>
+  const onSearchText = debounce((searchText: string) => {
     dispatch(groupsActions.setGroupSearch({searchKey: searchText}));
+  }, 300);
 
   const renderEmpty = () => {
     return !loadingJoinedGroups && <NoSearchResult />;
@@ -135,7 +137,8 @@ const themeStyles = (theme: ITheme) => {
       margin: spacing.margin.large,
     },
     dataList: {
-      marginHorizontal: spacing.margin.large,
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.large,
     },
   });
 };

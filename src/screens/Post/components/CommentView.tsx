@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {Animated, View, StyleSheet, Keyboard, Platform} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -15,7 +15,6 @@ import {ReactionType} from '~/constants/reactions';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import CommentViewMenuBottomSheet from '~/screens/Post/components/CommentViewMenuBottomSheet';
 import Button from '~/beinComponents/Button';
 
 import {useRootNavigation} from '~/hooks/navigation';
@@ -29,6 +28,7 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 import ReactionView from '~/beinComponents/ReactionView';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
+import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
 
 export interface CommentViewProps {
   postId: string;
@@ -47,7 +47,6 @@ const CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const menuSheetRef = useRef<any>();
   const animated = useRef(new Animated.Value(0)).current;
 
   const {t} = useBaseHook();
@@ -82,10 +81,10 @@ const CommentView: React.FC<CommentViewProps> = ({
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
-  const onPressAudience = (audience: any) => {
+  const onPressAudience = useCallback((audience: any) => {
     if (!audience || !audience?.id) return;
     rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
-  };
+  }, []);
 
   const onAddReaction = (reactionId: ReactionType) => {
     if (id) {
@@ -150,9 +149,28 @@ const CommentView: React.FC<CommentViewProps> = ({
     onPressReply?.(commentData);
   };
 
-  const onLongPress = (e?: any) => {
-    Keyboard.dismiss();
-    menuSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  const onLongPress = (event?: any) => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <CommentViewMenu
+            commentId={id}
+            content={content}
+            groupIds={groupIds}
+            isActor={currentUserId === user_id}
+            onPressMoreReaction={onPressReact}
+            onAddReaction={onAddReaction}
+            onPressReply={_onPressReply}
+          />
+        ),
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+          position: {x: event?.pageX, y: event?.pageY},
+        },
+      }),
+    );
   };
 
   const onMouseOver = () => {
@@ -247,7 +265,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                   useMarkdown
                   limitMarkdownTypes
                   content={content || ''}
-                  onPressAudience={(audience: any) => onPressAudience(audience)}
+                  onPressAudience={onPressAudience}
                 />
               </View>
               <CommentMediaView data={data} onLongPress={onLongPress} />
@@ -273,16 +291,6 @@ const CommentView: React.FC<CommentViewProps> = ({
         </View>
         {renderWebMenuButton()}
       </View>
-      <CommentViewMenuBottomSheet
-        modalizeRef={menuSheetRef}
-        commentId={id}
-        content={content}
-        groupIds={groupIds}
-        isActor={currentUserId === user_id}
-        onPressMoreReaction={onPressReact}
-        onAddReaction={onAddReaction}
-        onPressReply={_onPressReply}
-      />
     </Div>
   );
 };

@@ -43,10 +43,10 @@ const Image: React.FC<ImageProps> = ({
     new Animated.Value(1),
   ).current;
 
-  const [_source, setSource] = useState(source);
+  const [_source, setSource] = useState(source || placeholderSource);
 
   useEffect(() => {
-    updateSource(source);
+    updateSource(source || placeholderSource);
   }, [source]);
 
   const _onError = (error: any) => {
