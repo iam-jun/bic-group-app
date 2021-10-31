@@ -53,10 +53,9 @@ export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
         : i18next
             .t('chat:label_last_message:other_attachment')
             .replace('{0}', item.user?.name)
-      : `${item.user?.name}: ${item?.text}`;
+      : `${item.user?.name || item.user?.fullname}: ${item?.text}`;
   } else if (item.type) {
     // hide removed message
-
     if (item.type === messageEventTypes.REMOVE_MESSAGE) {
       lastMessage = i18next.t(
         `chat:system_message:${item.type}:${isMyMessage ? 'me' : 'other'}`,
@@ -179,7 +178,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     });
   }
 
-  return {
+  const _message = {
     ...item,
     room_id: item?.rid,
     user,
@@ -195,7 +194,11 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     localId: item.localId || attachments[0]?.localId,
     reaction_counts,
     own_reactions,
-    lastMessage: getLastMessage(item, item.u?.username === _user.username),
+  };
+
+  return {
+    ..._message,
+    lastMessage: getLastMessage(_message, item.u?.username === _user.username),
   };
 };
 
