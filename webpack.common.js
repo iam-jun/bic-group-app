@@ -32,6 +32,7 @@ const compileNodeModules = [
   'react-native-vector-icons',
   'react-modal',
   'react-native-video',
+  '@stream-io/flat-list-mvcp',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = env => {

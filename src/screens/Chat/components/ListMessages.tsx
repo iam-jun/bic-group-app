@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import {FlatList} from '@stream-io/flat-list-mvcp';
 import React, {useEffect, useRef} from 'react';
-import {FlatList, FlatListProps, Platform} from 'react-native';
+import {FlatListProps, Platform} from 'react-native';
 
 interface Props extends FlatListProps<any> {
   listRef?: React.RefObject<FlatList> | null;
