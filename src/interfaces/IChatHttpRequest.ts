@@ -116,7 +116,7 @@ export interface ISearchChatReq {
 
 export interface IUpdateConversationDetailReq {
   name?: string;
-  description?: string;
+  description?: string | null;
   icon?: string;
   background_img_url?: string;
 }

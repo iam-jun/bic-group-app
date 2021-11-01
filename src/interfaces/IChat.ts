@@ -226,7 +226,7 @@ export interface IPayloadGetAttachmentFiles {
 
 export interface IUpdateConversationDetail {
   name?: string;
-  description?: string;
+  description?: string | null;
   avatar?: string;
   cover?: string;
 }

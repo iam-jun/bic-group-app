@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TextInput} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import TextInput from '~/beinComponents/inputs/TextInput';
 
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import useChat from '~/hooks/chat';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import {fontFamilies} from '~/theme/fonts';
 
 const EditConversationDescription = ({route}: {route: any}) => {
   const theme = useTheme() as ITheme;
@@ -21,7 +21,7 @@ const EditConversationDescription = ({route}: {route: any}) => {
   const {conversation} = useChat();
   const {rootNavigation} = useRootNavigation();
 
-  const [text, setText] = useState<string>(conversation?.description);
+  const [text, setText] = useState<string>(conversation?.description || '');
   const _onChangeText = (value: string) => {
     setText(value);
   };
@@ -29,7 +29,7 @@ const EditConversationDescription = ({route}: {route: any}) => {
   const onSave = () => {
     dispatch(
       actions.updateConversationDetail(
-        {description: text.trim()},
+        {description: text.trim() ? text.trim() : null},
         i18next.t('chat:text_chat_description'),
         onPressBack,
       ),
@@ -45,10 +45,7 @@ const EditConversationDescription = ({route}: {route: any}) => {
   };
 
   return (
-    <ScreenWrapper
-      testID="EditConversationDescription"
-      style={styles.container}
-      isFullView>
+    <ScreenWrapper testID="EditConversationDescription" isFullView>
       <Header
         title={i18next.t('chat:detail_menu.edit_description')}
         buttonText={'common:btn_save'}
@@ -62,11 +59,10 @@ const EditConversationDescription = ({route}: {route: any}) => {
 
       <View style={styles.content}>
         <TextInput
+          style={styles.textEdit}
           value={text}
           onChangeText={_onChangeText}
           multiline
-          // @ts-ignore
-          minHeight={224}
         />
       </View>
     </ScreenWrapper>
@@ -76,18 +72,22 @@ const EditConversationDescription = ({route}: {route: any}) => {
 export default EditConversationDescription;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors, dimension} = theme;
 
   return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
     content: {
-      marginTop: spacing.margin.large,
-      marginHorizontal: spacing.margin.large,
+      margin: spacing.margin.large,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderBottomColor: colors.textPrimary,
+      padding: spacing.margin.base,
+      minHeight: 224,
     },
     textEdit: {
-      marginBottom: spacing.margin.small,
+      minHeight: 224,
+      fontFamily: fontFamilies.Segoe,
+      fontSize: dimension.sizes.body,
+      color: colors.textPrimary,
     },
   });
 };

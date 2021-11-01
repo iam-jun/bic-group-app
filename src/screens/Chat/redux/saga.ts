@@ -16,6 +16,7 @@ import {
   ISendMessageAction,
   IUpdateConversationDetail,
 } from '~/interfaces/IChat';
+import {IUpdateConversationDetailReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -490,7 +491,7 @@ function* updateConversationDetail({
       id = conversation?._id;
     }
 
-    yield makeHttpRequest(
+    const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.updateConversationDetail(id, {
         name,
         description,
@@ -498,8 +499,11 @@ function* updateConversationDetail({
         background_img_url: cover,
       }),
     );
+    if (!response?.data) {
+      throw new Error(response?.data);
+    }
 
-    if (callback) return callback(conversation?._id);
+    if (callback) callback(conversation?._id);
 
     // show success toast message
     let toastContent: string;
