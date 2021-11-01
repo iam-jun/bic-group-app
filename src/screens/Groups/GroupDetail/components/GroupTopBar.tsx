@@ -101,9 +101,9 @@ const GroupTopBar = () => {
       <View style={styles.leftComponent}>
         {!isLaptop && (
           <Icon
-            icon={'iconBack'}
-            size={26}
-            tintColor={theme.colors.iconTint}
+            icon="iconBack"
+            size={28}
+            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
             onPress={onPressBack}
           />
         )}
@@ -126,6 +126,7 @@ const themeStyles = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
