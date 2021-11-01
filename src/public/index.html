@@ -183,10 +183,26 @@
       border-radius: var(--border-radius--default);
     }
 
+
     .chat__conversation-item:hover,
     .chat__conversation-item:focus,
     .chat__conversation-item--active {
       background-color: var(--border-divider);
+    }
+
+    .chat__conversation-item__menu {
+      display: none;
+    }
+
+    .chat__conversation-item:hover .chat__conversation-item__menu,
+    .chat__conversation-item:focus .chat__conversation-item__menu {
+      display: block;
+    }
+
+    .chat__conversation-item__menu:hover div,
+    .chat__conversation-item__menu:focus div {
+      background-color: var(--bg-disable);
+      border-radius: var(--border-radius--default);
     }
 
     /*.chat-message {*/
