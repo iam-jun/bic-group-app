@@ -314,6 +314,8 @@
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
     "title_members": "Thành viên",
+    "label_mute": "Mute",
+    "label_unmute": "Unmute",
     "label_init_group_message": {
       "short": "Say hello to your group",
       "full": "🤗 Say hello to your group!"
