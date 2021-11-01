@@ -22,14 +22,20 @@ const EditName = ({onChangeName}: EditNameProps) => {
 
   const [editName, setEditName] = useState<boolean>(false);
   const [name, setName] = useState<string>(fullname);
+  const [error, setError] = useState<boolean>(false);
 
   const onDoneEditName = () => {
-    onChangeName(name);
-    setEditName(false);
+    if (name) {
+      onChangeName(name);
+      setEditName(false);
+      error && setError(false);
+    } else {
+      setError(true);
+    }
   };
 
   const _onChangeName = (text: string) => {
-    setName(text);
+    setName(text.trim());
   };
 
   const onNameEditOpen = () => setEditName(true);
@@ -43,6 +49,12 @@ const EditName = ({onChangeName}: EditNameProps) => {
             value={name}
             style={styles.textinput}
             onChangeText={_onChangeName}
+            error={error}
+            helperContent={
+              error
+                ? i18next.t('profile:text_name_must_not_be_empty')
+                : undefined
+            }
           />
           <Button.Secondary onPress={onDoneEditName} useI18n>
             common:text_done
@@ -51,7 +63,7 @@ const EditName = ({onChangeName}: EditNameProps) => {
       ) : (
         <SettingItem
           title={'settings:title_name'}
-          subtitle={name || i18next.t('settings:text_not_set')}
+          subtitle={name || i18next.t('common:text_not_set')}
           leftIcon={'TextFields'}
           rightIcon={'EditAlt'}
           onPress={onNameEditOpen}

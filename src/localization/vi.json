@@ -9,15 +9,21 @@
     "text_show_all": "Tất cả",
     "text_see_all": "Xem tất cả",
     "text_member": "Thành viên",
+    "text_copied_to_clipboard": "Đã sao chép",
+    "text_link_copied_to_clipboard": "Đã sao chép liên kết",
+    "text_message_link_copied_to_clipboard": "Đã sao chép liên kết tin nhắn",
     "text_description": "Giới thiệu",
     "btn_cancel": "Huỷ",
     "btn_delete": "Xoá",
     "btn_discard": "Bỏ",
     "btn_edit": "Sửa",
     "btn_save": "Lưu",
+    "btn_publish": "Đăng",
     "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
+    "btn_join": "Tham gia",
+    "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
     "text_set_time": "Đặt Giờ",
@@ -29,7 +35,15 @@
     "text_retry": "Thử lại",
     "text_done": "Xong",
     "text_error_message": "Có gì đó sai sai",
-    "text_important_posts": "Bài viết quan trọng"
+    "text_important_posts": "Bài viết quan trọng",
+    "text_files": "Files",
+    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "error": {
+      "file": {
+        "over_file_size": "Dung lượng file tối đa 10MB"
+      }
+    },
+    "message_remove_member_success": "Đã xóa {n} khỏi nhóm"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -117,11 +131,12 @@
   "settings": {
     "title_app_language": "Ngôn ngữ",
     "title_app_theme": "Giao diện",
+    "title_post_feature_draft": "Bài nháp",
     "title_account_settings": "Thiết lập tài khoản",
     "title_help": "Trợ giúp",
     "title_app_policies": "App Policies",
     "title_feedback": "Feedback",
-    "title_user_profile": "Thông tin cá nhận",
+    "title_user_profile": "Thông tin cá nhân",
     "title_security_login": "Bảo mật & Đăng nhập",
     "title_change_password": "Đổi mật khẩu",
     "subtitle_change_password": "It's always better to use a strong password that you not using it elsewhere",
@@ -186,12 +201,15 @@
   },
   "home": {
     "newsfeed": "Bản tin",
-    "saved_posts": "Bài viết đã lưu"
+    "saved_posts": "Bài viết đã lưu",
+    "draft_post": "Bài nháp"
   },
   "post": {
     "news_feed": "News Feed",
+    "title_post_detail": "Chi tiết bài viết",
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
+    "title_edit_images": "Sửa ảnh",
     "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
     "mention_empty_content": "Không tìm thấy",
     "button_like": "Thích",
@@ -202,65 +220,108 @@
     "label_view_more_replies": "Xem thêm {0} trả lời",
     "label_likes_with_me": "Bạn và {0} người khác",
     "label_post_audiences": "Đối tượng bài viết",
+    "label_desc_post_audiences": "Thành viên trong những nhóm dưới đây có thể xem, bình luận và tương tác với bài viết.",
     "label_like": "Thích",
     "label_comment": "Bình luận",
     "label_share": "Chia sẻ",
     "label_comments": "Bình luận",
     "label_shares": "Chia sẻ",
     "label_donate": "Đóng góp",
-    "label_groups": "Groups",
-    "label_users": "Users",
+    "label_groups": "Nhóm",
+    "label_users": "Người dùng",
     "label_post_deleted": "Bài viết đã xoá",
     "label_all_reacts": "Tất cả tương tác",
     "text_search_result_empty": "Không có kết quả. Vui lòng thử lại...",
-    "title_delete_post": "Delete Post",
-    "content_delete_post": "Do you really want to delete this post?",
+    "title_delete_post": "Xoá bài viết",
+    "content_delete_post": "Bạn thực sự muốn xoá bài viết này?",
     "alert_title_back_edit_post": "Huỷ sửa bài viết",
     "alert_content_back_edit_post": "Nếu huỷ, bạn sẽ mất những nội dung đã chỉnh sửa trên bài viết.",
     "alert_title_back_create_post": "Huỷ đăng bài",
     "alert_content_back_create_post": "Nếu huỷ, bạn sẽ mất những nội dung đã nhập.",
     "btn_menu_delete": "Xoá bài viết",
-    "add_photo": "Add Photo",
-    "add_file": "Add Files",
-    "placeholder_write_post": "Writing your post...",
-    "create_post": "Create Post",
+    "add_photo": "Thêm Ảnh",
+    "add_file": "Thêm File",
+    "placeholder_write_post": "Bạn đang nghĩ gì...",
+    "create_post": "Tạo bài viết",
     "create_new_post": "Tạo bài viết",
     "post_button": "Tạo",
-    "send_to": "Send to",
-    "save": "Save",
+    "send_to": "Tới",
+    "save": "Lưu",
     "to": "đến",
     "and": "và",
     "edit_comment_success": "Sửa bình luận thành công",
     "label_replying_to": "Đang trả lời ",
+    "label_yourself": "chính mình",
     "someone": "ai đó",
     "other_places": "khác",
     "mark_as_read": "Đánh dấu đã đọc",
     "marked_as_read": "Đã đọc",
     "mark_as_important": "Bài viết Quan trọng",
     "expire_on": "Ngày hết hạn:",
-    "choose_group_people": "Choose group or people",
-    "placeholder_audience_search": "Search for groups or people",
-    "audience_selected": "Selected audiences",
-    "select_audience": "Select Audiences",
-    "expiring_time": "Expiring Time",
-    "expire_time_desc": "This post stay on top of feed until expire time.",
+    "choose_group_people": "Chọn nhóm",
+    "placeholder_audience_search": "Tìm kiếm nhóm",
+    "audience_selected": "Đã chọn",
+    "select_audience": "Chọn đối tượng",
+    "expiring_time": "Thời gian kết thúc",
+    "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết hạn",
     "delete_post_complete": "Bài viết đã được xoá",
-    "search_results": "Search results",
+    "search_results": "Kết quả tìm kiếm",
     "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
-    "group_manage": "Your Groups",
-    "people_search": "People",
-    "show_all": "Show all",
+    "group_manage": "Nhóm của bạn",
+    "people_search": "Người dùng",
+    "show_all": "Xem tất cả",
     "text_load_more_comments": "Xem bình luận trước đó",
     "text_load_more_x_replies": "Xem %VALUE% trả lời",
+    "text_add_to_post": "Thêm vào bài viết",
     "comment_menu_reply": "Trả lời bình luận này",
     "comment_menu_copy_text": "Sao chép nội dung",
     "comment_menu_edit": "Sửa bình luận",
     "comment_menu_history": "Lịch sử chỉnh sửa",
-    "comment_menu_delete": "Xoá bình luận"
+    "comment_menu_delete": "Xoá bình luận",
+    "post_menu_edit": "Sửa bài viết",
+    "post_menu_copy": "Sao chép liên kết",
+    "post_menu_save": "Lưu bài viết",
+    "post_menu_view_insights": "Xem thông tin",
+    "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
+    "post_menu_history": "Xem lịch sử chỉnh sửa",
+    "post_menu_delete": "Xoá bài viết",
+    "post_menu_report": "Báo cáo",
+    "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
+    "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
+    "error_upload_photo_failed": "Tải ảnh lên thất bại!",
+    "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh",
+    "error_post_detail_deleted": "Bài viết không tìm thấy hoặc đã bị xoá",
+    "placeholder_create_post": "Bạn đang nghĩ gì...",
+    "post_exit_title": "Bạn muốn hoàn thiện bài viết sau?",
+    "post_exit_desc": "Bạn có thể lưu bản nháp để hoàn thiện sau",
+    "post_exit_option_save": "Lưu bản nháp",
+    "post_exit_option_discard": "Huỷ bài viết",
+    "post_exit_option_continue": "Tiếp tục viết bài",
+    "draft": {
+      "btn_post_now": "Đăng ngay",
+      "btn_edit": "Sửa",
+      "btn_menu_schedule": "Đặt lịch đăng bài",
+      "btn_menu_delete": "Xoá bản nháp",
+      "title_delete_draft_post": "Xoá bản nháp",
+      "text_delete_draft_post": "Bạn có chắc muốn xoá bản nháp này?",
+      "title_no_draft_posts": "Không có bài nháp",
+      "text_no_draft_posts": "Bạn không còn bài nháp nào",
+      "text_draft_published": "Bài viết của bạn đã được đăng",
+      "text_draft_saved": "Bản nháp của bạn đã được lưu",
+      "text_draft_deleted": "Bản nháp của bạn đã được xoá"
+    }
   },
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
-    "title_members": "Thành viên"
+    "title_members": "Thành viên",
+    "label_init_group_message": {
+      "short": "Say hello to your group",
+      "full": "🤗 Say hello to your group!"
+    },
+    "label_init_direct_message": {
+      "short": "Say hello to your friend",
+      "full": "🤗 Say hello to your friend!"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -272,7 +333,7 @@
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
-      "unknown": "Unknown http error",
+      "unknown": "Đã có lỗi xảy ra. Vui lòng thử lại sau ít phút.",
       "401": "Unauthorized",
       "token_expired": "Token expired"
     },
@@ -294,11 +355,33 @@
   },
   "groups": {
     "search_results": "Kết quả tìm kiếm",
-    "all_groups": "Tất cả"
+    "all_groups": "Tất cả",
+    "group_menu": {
+      "label_copy_group_link": "Sao chép đường dẫn nhóm",
+      "label_leave_group": "Rời nhóm",
+      "label_share_group": "Chia sẻ tới...",
+      "label_share_to_chat": "Chia sẻ trong Bein Chat"
+    },
+    "member_menu": {
+      "label_view_profile": "View profile",
+      "label_direct_message": "Direct message",
+      "label_set_as_admin": "Set as admin",
+      "label_remove_from_group": "Remove from this group"
+    },
+    "private_group_welcome_message": {
+      "title": "Đây là nhóm kín.",
+      "subtitle": "Hãy tham gia nhóm để xem và thảo luận."
+    },
+    "modal_confirm_remove_member": {
+      "title": "Xóa khỏi nhóm",
+      "description": "Xóa {name} khỏi nhóm, thành viên này sẽ không còn trong nhóm của bạn{other groups}.",
+      "button_remove": "Xác nhận"
+    }
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
-    "title_direct_message": "Gửi tin nhắn"
+    "title_direct_message": "Gửi tin nhắn",
+    "title_view_profile": "Xem trang cá nhân"
   },
   "right_col": {
     "about_bein": "About Bein",
@@ -331,7 +414,10 @@
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "No more notification",
     "no_notification_found": "Your notification box is empty",
-    "no_notification_found_desc": "We’ll notify you when something arrives"
+    "no_notification_found_desc": "We’ll notify you when something arrives",
+    "you_joined_group": "You joined {group_name}",
+    "number_people": "{number} people",
+    "number_times": "{number} times"
   },
   "new_feature": {
     "title": "New feature",

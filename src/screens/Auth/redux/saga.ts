@@ -1,7 +1,8 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {put, takeLatest} from 'redux-saga/effects';
+import {Platform} from 'react-native';
+import {delay, put, select, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
@@ -11,8 +12,13 @@ import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
-import {refreshAuthTokens} from '~/services/httpApiRequest';
+import {initPushTokenMessage} from '~/services/helper';
+import {
+  makePushTokenRequest,
+  refreshAuthTokens,
+} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
+import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import * as actions from './actions';
 import * as types from './types';
@@ -116,7 +122,7 @@ function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
 }
 
 function* onSignInSuccess(user: IUserResponse) {
-  yield put(actions.setLoading(false));
+  yield put(modalActions.showLoading());
 
   const name =
     user?.attributes?.name?.length < 50
@@ -139,16 +145,38 @@ function* onSignInSuccess(user: IUserResponse) {
 
   // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
+  if (Platform.OS !== 'web') {
+    const messaging = yield initPushTokenMessage();
+    const deviceToken = yield messaging().getToken();
+    try {
+      const {auth} = yield select();
+      yield makePushTokenRequest(
+        deviceToken,
+        auth.chat?.accessToken,
+        auth.chat?.userId,
+      );
+    } catch (e) {
+      console.log('\x1b[36m error when setup push token: \x1b[0m', e);
+      yield put(actions.signOut(false));
+      yield onSignInFailed(i18n.t('error:http:unknown'));
+      return;
+    }
+  }
   if (!refreshSuccess) {
-    console.log('TODO: get auth tokens failed');
-    yield onSignInFailed(i18n.t('error:http:token_expired'));
+    yield put(actions.signOut(false));
+    yield onSignInFailed(i18n.t('error:http:unknown'));
     return;
   }
 
   navigation.replace(rootSwitch.mainStack);
+  yield put(actions.setLoading(false));
+
+  yield delay(500); // Delay to avoid showing authStack
+  yield put(modalActions.hideLoading());
 }
 
 function* onSignInFailed(errorMessage: string) {
+  yield put(modalActions.hideLoading());
   yield put(actions.setLoading(false));
   yield put(actions.setSigningInError(errorMessage));
 }
@@ -266,13 +294,19 @@ function* forgotPasswordConfirm({
   }
 }
 
-function* signOut() {
+function* signOut({payload}: any) {
   try {
     yield Auth.signOut();
-
+    if (!payload) {
+      return;
+    }
     navigation.replace(rootSwitch.authStack);
   } catch (err) {
     yield showError(err);
+    if (!payload) {
+      return;
+    }
+    navigation.replace(rootSwitch.authStack);
   }
 }
 

@@ -34,7 +34,7 @@ const HeaderAvatarView = ({
     <TouchableOpacity
       style={StyleSheet.flatten([styles.container, containerStyle])}
       onPress={onPress}>
-      <Avatar.UltraLarge source={avatar} style={styles.avatar} />
+      <Avatar.LargeAlt source={avatar} style={styles.avatar} />
       <View style={{flex: 1}}>
         <Text.H6>{firstLabel}</Text.H6>
         <Text.Subtitle>{secondLabel}</Text.Subtitle>
@@ -53,9 +53,9 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       marginTop: spacing.margin.small,
       alignItems: 'center',
+      paddingHorizontal: spacing.padding.large,
     },
     avatar: {
-      marginLeft: spacing.margin.large,
       marginRight: spacing.margin.base,
     },
   });

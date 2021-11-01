@@ -1,7 +1,9 @@
-import * as types from './constants';
+import types from './constants';
 
 export const initState = {
   configs: {},
+  linkPreviews: {},
+  rootScreenName: '',
 };
 
 /**
@@ -11,7 +13,7 @@ export const initState = {
  * @returns {*}
  */
 function reducer(state = initState, action: any = {}) {
-  const {type} = action;
+  const {type, payload} = action;
   const {configs} = state;
 
   switch (type) {
@@ -22,7 +24,19 @@ function reducer(state = initState, action: any = {}) {
           ...configs,
         },
       };
-
+    case types.SET_LINK_PREVIEW:
+      return {
+        ...state,
+        linkPreviews: {
+          ...state.linkPreviews,
+          [payload?.url]: payload,
+        },
+      };
+    case types.SET_ROOT_SCREEN_NAME:
+      return {
+        ...state,
+        rootScreenName: payload,
+      };
     default:
       return state;
   }

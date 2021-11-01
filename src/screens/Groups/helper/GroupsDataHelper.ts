@@ -3,13 +3,34 @@ import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {StreamClient} from 'getstream';
 import {makeGetStreamRequest} from '~/services/httpApiRequest';
+import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
-  getMyGroups: (): HttpApiRequestConfig => ({
+  getMyGroups: (params?: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/my-groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params,
+  }),
+  getSearchGroups: (params?: any): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
+  getUserInnerGroups: (
+    groupId: number,
+    username: string,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      username,
+    },
   }),
   getGroupMembers: (groupId: number, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
@@ -45,16 +66,6 @@ export const groupsApiConfig = {
       ...data,
     },
   }),
-  uploadImage: (data: FormData): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}files/upload-photos`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    useRetry: false,
-    data,
-  }),
   getJoinableUsers: (groupId: number, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joinable-users`,
     method: 'get',
@@ -71,22 +82,60 @@ export const groupsApiConfig = {
       user_ids: userIds,
     },
   }),
-  removeUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
+  removeUsers: (
+    groupId: number,
+    userIds: (number | string)[],
+    type?: string,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/remove`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: false,
     data: {
-      user_ids: userIds,
+      [type || 'user_ids']: userIds,
     },
+  }),
+  joinGroup: (groupId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/join`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
   }),
 };
 
 const groupsDataHelper = {
-  getMyGroups: async () => {
+  getMyGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyGroups(),
+        groupsApiConfig.getMyGroups(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSearchGroups: async (params?: any) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSearchGroups(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getUserInnerGroups: async (groupId: number, username: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getUserInnerGroups(groupId, username),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -106,7 +155,7 @@ const groupsDataHelper = {
     if (streamClient) {
       const streamOptions = {
         offset: offset || 0,
-        limit: 10,
+        limit: appConfig.recordsPerPage,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
         withOwnReactions: true,
@@ -187,20 +236,6 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  uploadImage: async (data: FormData) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.uploadImage(data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   getJoinableUsers: async (groupId: number, params: any) => {
     try {
       const response: any = await makeHttpRequest(
@@ -229,10 +264,28 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  removeUsers: async (groupId: number, userIds: number[]) => {
+  removeUsers: async (
+    groupId: number,
+    userIds: (number | string)[],
+    type?: string,
+  ) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.removeUsers(groupId, userIds),
+        groupsApiConfig.removeUsers(groupId, userIds, type),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  joinGroup: async (groupId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.joinGroup(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

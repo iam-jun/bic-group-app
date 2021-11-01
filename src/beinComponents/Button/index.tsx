@@ -2,6 +2,7 @@ import React from 'react';
 import ButtonWrapper, {ButtonWrapperProps} from './ButtonWrapper';
 import Primary from './ButtonPrimary';
 import Secondary from './ButtonSecondary';
+import Danger from './ButtonDanger';
 import BottomFixed from './ButtonBottomFixed';
 import BottomSecondary from './ButtonBottomSecondary';
 import Icon from './ButtonIcon';
@@ -12,8 +13,8 @@ export interface ButtonProps extends ButtonWrapperProps {
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
-  onPress?: () => void;
-  onLongPress?: () => void;
+  onPress?: (e: any) => void;
+  onLongPress?: (e: any) => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
 }
@@ -25,6 +26,7 @@ const ButtonComponent: React.FC<ButtonProps> = (props: ButtonProps) => {
 const Button = Object.assign(ButtonComponent, {
   Primary,
   Secondary,
+  Danger,
   BottomFixed,
   BottomSecondary,
   Icon,

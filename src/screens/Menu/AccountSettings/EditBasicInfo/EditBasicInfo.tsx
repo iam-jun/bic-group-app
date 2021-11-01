@@ -96,6 +96,17 @@ const EditBasicInfo = () => {
     setLanguageState(languages);
   };
 
+  const maxBirthday = () => {
+    const currentMoment = new Date();
+    const currentDay = currentMoment.getDate();
+    const currentMonth = currentMoment.getMonth();
+    const currentYear = currentMoment.getFullYear();
+
+    // user must be at least 8 years old up to today
+    const maxDateToSelect = new Date(currentYear - 8, currentMonth, currentDay);
+    return maxDateToSelect;
+  };
+
   const _onPressBack = () => {
     const isChanged =
       fullname !== nameState ||
@@ -107,13 +118,14 @@ const EditBasicInfo = () => {
     if (isChanged) {
       dispatch(
         modalActions.showAlert({
-          title: i18next.t('common:text_discard_changes'),
-          iconName: 'Save',
+          title: i18next.t('common:label_discard_changes'),
+          showCloseButton: true,
           cancelBtn: true,
-          isDismissable: false,
+          isDismissible: false,
           onConfirm: () => navigation.goBack(),
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
+          stretchOnWeb: true,
         }),
       );
     } else {
@@ -121,12 +133,14 @@ const EditBasicInfo = () => {
     }
   };
 
-  const onGenderEditOpen = () => genderSheetRef?.current?.open?.();
+  const onGenderEditOpen = (e: any) =>
+    genderSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   const onDateEditOpen = () => setSelectingDate(true);
   const onDateEditClose = () => setSelectingDate(false);
 
-  const onRelationshipEditOpen = () => relationshipSheetRef?.current?.open?.();
+  const onRelationshipEditOpen = (e: any) =>
+    relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
@@ -135,9 +149,8 @@ const EditBasicInfo = () => {
         title={'settings:title_edit_basic_info'}
         buttonText={'common:text_save'}
         buttonProps={{
-          color: theme.colors.primary7,
-          textColor: theme.colors.background,
           useI18n: true,
+          highEmphasis: true,
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
@@ -148,18 +161,16 @@ const EditBasicInfo = () => {
 
         <SettingItem
           title={'settings:title_gender'}
-          subtitle={
-            titleCase(genderState) || i18next.t('settings:text_not_set')
-          }
+          subtitle={titleCase(genderState) || i18next.t('common:text_not_set')}
           leftIcon={'UserSquare'}
           rightIcon={'EditAlt'}
-          onPress={onGenderEditOpen}
+          onPress={e => onGenderEditOpen(e)}
         />
         <SettingItem
           title={'settings:title_birthday'}
           subtitle={
             formatDate(birthdayState, 'MMM Do, YYYY') ||
-            i18next.t('settings:text_not_set')
+            i18next.t('common:text_not_set')
           }
           leftIcon={'Calender'}
           rightIcon={'EditAlt'}
@@ -173,11 +184,11 @@ const EditBasicInfo = () => {
           title={'settings:title_relationship_status'}
           subtitle={
             i18next.t(relationshipStatus[relationshipState]) ||
-            i18next.t('settings:text_not_set')
+            i18next.t('common:text_not_set')
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}
-          onPress={onRelationshipEditOpen}
+          onPress={e => onRelationshipEditOpen(e)}
         />
       </View>
 
@@ -199,10 +210,11 @@ const EditBasicInfo = () => {
       {selectingDate && (
         <DateTimePicker
           isVisible={selectingDate}
-          date={new Date()}
+          date={maxBirthday()}
           mode={Platform.OS === 'web' ? 'time' : 'date'}
           onConfirm={onSetBirthday}
           onCancel={onDateEditClose}
+          maxDate={maxBirthday()}
         />
       )}
     </ScreenWrapper>

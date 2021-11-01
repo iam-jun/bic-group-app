@@ -10,7 +10,7 @@ const homeDataHelper = {
     if (streamClient && userId) {
       const streamOptions = {
         offset: offset || 0,
-        limit: 10,
+        limit: 15,
         user_id: `${userId}`, //required for CORRECT own_reactions data
         ownReactions: true,
         recentReactionsLimit: 10,

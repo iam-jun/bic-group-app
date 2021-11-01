@@ -1,5 +1,6 @@
 export const chatSocketId = {
   SUBSCRIBE_ROOMS_MESSAGES: 'chat-socket-subscribe-rooms-messages',
+  SUBSCRIBE_NOTIFY_USER: 'chat-socket-subscribe-stream-notify-user',
   ADD_MEMBERS_TO_GROUP: 'chat-socket-add-members-to-groups',
 };
 
@@ -29,53 +30,79 @@ export const messageStatus = {
 
 export const chatPermissions = {
   CAN_PIN_MESSAGE: 'can_pin_message',
-  CAN_INVITE: 'can_invite',
   CAN_MUTE: 'can_mute',
-  CAN_REMOVE_CHAT_MEMBER: 'can_remove_chat_member',
   CAN_LEAVE: 'can_leave',
+  CAN_MANAGE_MEMBER: 'can_manage_member',
 };
 
 export const messageOptionData = {
+  pin: {
+    icon: 'iconPinGroup',
+    label: 'pin_message',
+  },
+  edit: {
+    icon: 'EditAlt',
+    label: 'edit_message',
+  },
+  create_thread: {
+    icon: 'CreateThread',
+    label: 'create_thread',
+  },
   delete: {
     icon: 'Trash',
     label: 'delete',
   },
   reply: {
-    icon: 'CornerDownRight',
+    icon: 'iconReply',
     label: 'reply',
   },
   copy: {
     icon: 'Copy',
     label: 'copy',
   },
+  get_link: {
+    icon: 'Link',
+    label: 'get_link',
+  },
+  reactions: {
+    icon: 'Smile',
+    label: 'reactions',
+  },
 };
 
 export type MessageOptionType = keyof typeof messageOptionData;
 
-export const myMessageOptions = ['delete', 'reply', 'copy'];
+export const myMessageOptions = [
+  'reply',
+  'create_thread',
+  'copy',
+  'get_link',
+  'edit',
+  'delete',
+];
 
-export const messageOptions = ['reply', 'copy'];
+export const messageOptions = ['copy', 'reply', 'get_link'];
 
 export const reactions = {
-  love_hearts: {
-    id: 'love_hearts',
-    icon: 'love_hearts',
+  heart_eyes: {
+    id: 'heart_eyes',
+    icon: 'heart_eyes',
   },
-  stunned_wow: {
-    id: 'stunned_wow',
-    icon: 'stunned_wow',
+  open_mouth: {
+    id: 'open_mouth',
+    icon: 'open_mouth',
   },
-  laugh_rofl: {
-    id: 'laugh_rofl',
-    icon: 'laugh_rofl',
+  rolling_on_the_floor_laughing: {
+    id: 'rolling_on_the_floor_laughing',
+    icon: 'rolling_on_the_floor_laughing',
   },
-  crying_sad: {
-    id: 'crying_sad',
-    icon: 'crying_sad',
+  sob: {
+    id: 'sob',
+    icon: 'sob',
   },
-  angry_furious: {
-    id: 'angry_furious',
-    icon: 'angry_furious',
+  rage: {
+    id: 'rage',
+    icon: 'rage',
   },
   add_react: {
     id: 'add_react',

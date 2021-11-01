@@ -1,35 +1,61 @@
+import {StreamClient} from 'getstream';
 import React from 'react';
-import {View, Platform, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import Button from '~/beinComponents/Button';
+import PostItem from '~/beinComponents/list/items/PostItem';
 
 import ListView from '~/beinComponents/list/ListView';
-import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
+import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
+import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
-import Button from '~/beinComponents/Button';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
-const GroupContent = () => {
+const GroupContent = ({
+  getGroupPosts,
+  streamClient,
+  parentWidth,
+}: {
+  getGroupPosts: () => void;
+  streamClient: StreamClient;
+  parentWidth?: number;
+}) => {
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
   const {spacing} = theme || {};
-  const styles = themeStyles(theme);
+  const styles = themeStyles(theme, parentWidth);
+  const dispatch = useDispatch();
 
-  const groupPosts = useKeySelector(groupsKeySelector.groupPosts) || [];
+  const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-  const {rocket_chat_id} = groupData;
-  const groupId = groupData.id;
-
+  const isMember = join_status === groupJoinStatus.member;
+  const {rocket_chat_id, id: groupId} = groupData;
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
+  const userId = useUserIdAuth();
+  const dimensions = useWindowDimensions();
   const onPressChat = () => {
+    const isLaptop = dimensions.width >= deviceDimensions.laptop;
+    const isLaptopWeb = Platform.OS === 'web' && isLaptop;
+    if (isLaptopWeb) {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: rocket_chat_id,
+      });
+      return;
+    }
     rootNavigation.navigate('chat', {
       screen: chatStack.conversation,
       params: {roomId: rocket_chat_id, initial: false},
@@ -44,37 +70,62 @@ const GroupContent = () => {
     rootNavigation.navigate(groupStack.groupMembers, {groupId});
   };
 
+  const onPressFiles = () => {
+    rootNavigation.navigate(groupStack.groupFiles);
+  };
+
+  const loadMoreData = () => {
+    if (posts.extra.length !== 0) {
+      dispatch(
+        groupsActions.mergeExtraGroupPosts({streamClient, userId, groupId}),
+      );
+    }
+  };
+
   const renderItem = ({item}: any) => {
     return <PostItem postData={item} />;
   };
 
+  const _onRefresh = () => {
+    getGroupPosts();
+  };
+
   const renderHeader = () => {
     return (
-      <View>
-        <GroupInfoHeader />
-        <View style={styles.buttonContainer}>
-          {join_status === groupJoinStatus.member && (
-            <>
-              <Button.Secondary
-                leftIcon={'iconMessages'}
-                useI18n
-                onPress={onPressChat}>
-                chat:title
-              </Button.Secondary>
-              <ViewSpacing width={spacing.margin.base} />
-            </>
-          )}
-          <Button.Secondary useI18n onPress={onPressAbout}>
-            settings:title_about
-          </Button.Secondary>
-          <ViewSpacing width={spacing.margin.base} />
-          <Button.Secondary useI18n onPress={onPressMembers}>
-            chat:title_members
-          </Button.Secondary>
+      <>
+        <View style={styles.groupInfo}>
+          <GroupInfoHeader />
+          <View style={styles.buttonContainer}>
+            {isMember && (
+              <>
+                <Button.Secondary useI18n onPress={onPressChat}>
+                  chat:title
+                </Button.Secondary>
+                <ViewSpacing width={spacing.margin.base} />
+              </>
+            )}
+            <Button.Secondary useI18n onPress={onPressAbout}>
+              settings:title_about
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.base} />
+            <Button.Secondary useI18n onPress={onPressMembers}>
+              chat:title_members
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.base} />
+            <Button.Secondary useI18n onPress={onPressFiles}>
+              common:text_files
+            </Button.Secondary>
+          </View>
         </View>
-        <ViewSpacing height={spacing.margin.small} />
-        <HeaderCreatePost audience={groupData} />
-      </View>
+        {isMember && (
+          <HeaderCreatePost
+            audience={groupData}
+            parentWidth={parentWidth}
+            style={styles.createPost}
+            createFromGroupId={groupId}
+          />
+        )}
+      </>
     );
   };
 
@@ -82,7 +133,11 @@ const GroupContent = () => {
     <ListView
       isFullView
       style={styles.listContainer}
-      data={groupPosts}
+      data={posts.data}
+      refreshing={refreshingGroupPosts}
+      onRefresh={_onRefresh}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.5}
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
@@ -94,22 +149,29 @@ const GroupContent = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
   const {spacing, dimension, colors} = theme;
+  const bigParentOnWeb =
+    Platform.OS === 'web' && parentWidth > dimension.maxNewsfeedWidth;
 
   return StyleSheet.create({
-    listContainer: {
+    groupInfo: {
       flex: 1,
       ...Platform.select({
         web: {
-          alignSelf: 'center',
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
+          borderRadius: bigParentOnWeb ? 6 : 0,
+          overflow: 'hidden',
         },
       }),
     },
+    listContainer: {
+      flex: 1,
+    },
     listHeaderComponentStyle: {
-      marginTop: spacing.margin.small,
+      marginTop: bigParentOnWeb ? spacing.margin.small : 0,
       marginBottom: spacing.margin.base,
     },
     buttonContainer: {
@@ -118,6 +180,9 @@ const themeStyles = (theme: ITheme) => {
       paddingBottom: spacing.padding.base,
       paddingHorizontal: spacing.padding.base,
       backgroundColor: colors.background,
+    },
+    createPost: {
+      marginTop: spacing.margin.small,
     },
   });
 };

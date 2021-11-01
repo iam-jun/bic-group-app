@@ -3,13 +3,18 @@ import {Keyboard} from 'react-native';
 
 export function useKeyboardStatus() {
   const [isOpen, setIsOpen] = useState(false);
+  const [height, setHeight] = useState(0);
   const keyboardShowListener = useRef(null);
   const keyboardHideListener = useRef(null);
 
   useEffect(() => {
     // @ts-ignore
-    keyboardShowListener.current = Keyboard.addListener('keyboardDidShow', () =>
-      setIsOpen(true),
+    keyboardShowListener.current = Keyboard.addListener(
+      'keyboardDidShow',
+      (e: any) => {
+        setHeight(e.endCoordinates?.height);
+        setIsOpen(true);
+      },
     );
     // @ts-ignore
     keyboardHideListener.current = Keyboard.addListener('keyboardDidHide', () =>
@@ -24,5 +29,5 @@ export function useKeyboardStatus() {
     };
   });
 
-  return isOpen;
+  return {isOpen, height};
 }

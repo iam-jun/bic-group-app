@@ -74,7 +74,7 @@ const HeaderView: React.FC<Props> = ({
               <Text
                 style={[styles.label, secondLabelStyle, {marginBottom: space}]}
                 h6>
-                {formatDate(secondLabel, 'll', 3) || secondLabel}
+                {formatDate(secondLabel, 'll', undefined, 3) || secondLabel}
               </Text>
             </>
           )}

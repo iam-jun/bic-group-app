@@ -1,13 +1,9 @@
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import 'moment/locale/vi';
+
+import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  LogBox,
-  NativeModules,
-  Platform,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import {LogBox, StatusBar, useColorScheme} from 'react-native';
 
 /* Theme */
 import {
@@ -22,6 +18,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
 import {useDispatch, useSelector} from 'react-redux';
+import {AppConfig, languages} from '~/configs';
 import {fontConfig} from '~/configs/fonts';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
@@ -30,7 +27,6 @@ import localStorage from '~/services/localStorage';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
-import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
 
@@ -60,12 +56,20 @@ export default (): React.ReactElement => {
     (state: any) => state.auth?.feed?.notiSubscribeToken,
   );
 
-  const streamClient = useGetStream(token);
-  const streamNotiSubClient = useGetStream(notiSubscribeToken);
+  const [streamClient, streamNotiSubClient] = useGetStream(
+    token,
+    notiSubscribeToken,
+  );
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
   }, [colorScheme]);
+
+  useEffect(() => {
+    if (i18n?.language) {
+      moment.locale(i18n?.language);
+    }
+  }, [i18n?.language]);
 
   const preferences = React.useMemo(
     () => ({
@@ -86,11 +90,9 @@ export default (): React.ReactElement => {
     if (language) {
       // @ts-ignore
       i18n.language !== language && i18n.changeLanguage(language);
+      moment.locale(language);
     } else {
-      let systemLocale =
-        Platform.OS === 'ios'
-          ? NativeModules.SettingsManager.settings.AppleLocale
-          : NativeModules.I18nManager.localeIdentifier;
+      let systemLocale = window?.navigator?.language;
 
       if (systemLocale && systemLocale.includes('_'))
         systemLocale = systemLocale.split('_')[0];
@@ -101,8 +103,11 @@ export default (): React.ReactElement => {
         (item: string) => item === systemLocale,
       );
 
-      if (isSupportLanguage) changeLanguage(systemLocale);
-      else changeLanguage(AppConfig.defaultLanguage);
+      const newLanguage = isSupportLanguage
+        ? systemLocale
+        : AppConfig.defaultLanguage;
+      changeLanguage(newLanguage);
+      moment.locale(newLanguage);
     }
   };
 
@@ -133,22 +138,34 @@ export default (): React.ReactElement => {
   };
 
   //Set config theme
-  const themeConfig: any =
-    theme === 'light'
-      ? {
-          ...DefaultTheme,
-          colors: {...DefaultTheme.colors, ...colors.light.colors},
-        }
-      : {
-          ...DarkTheme,
-          colors: {...DarkTheme.colors, ...colors.dark.colors},
-        };
-  themeConfig.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
-  themeConfig.spacing = {...spacing};
-  themeConfig.dimension = {...dimension};
-  themeConfig.shadow = {...shadow};
-  /*Config font*/
-  themeConfig.fonts = configureFonts(fontConfig);
+  const themeConfig: any = useMemo(() => {
+    const result: any =
+      theme === 'light'
+        ? {
+            ...DefaultTheme,
+            colors: {...DefaultTheme.colors, ...colors.light.colors},
+          }
+        : {
+            ...DarkTheme,
+            colors: {...DarkTheme.colors, ...colors.dark.colors},
+          };
+    result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
+    result.spacing = {...spacing};
+    result.dimension = {...dimension};
+    result.shadow = {...shadow};
+    /*Config font*/
+    result.fonts = configureFonts(fontConfig);
+    return result;
+  }, [theme, stateCurrent.loaded]);
+
+  const providerValue = useMemo(() => {
+    return {
+      language: i18n.language,
+      changeLanguage,
+      streamClient,
+      streamNotiSubClient,
+    };
+  }, [i18n.language, streamClient]);
 
   return (
     <SafeAreaProvider>
@@ -160,13 +177,7 @@ export default (): React.ReactElement => {
         />
         <PreferencesContext.Provider value={preferences}>
           <PaperProvider theme={themeConfig}>
-            <AppContext.Provider
-              value={{
-                language: i18n.language,
-                changeLanguage,
-                streamClient,
-                streamNotiSubClient,
-              }}>
+            <AppContext.Provider value={providerValue}>
               <Portal.Host>
                 <RootNavigator />
               </Portal.Host>

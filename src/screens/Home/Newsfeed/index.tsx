@@ -1,41 +1,67 @@
-import React, {useEffect, useContext} from 'react';
-import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
+import {
+  InteractionManager,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import {ITheme} from '~/theme/interfaces';
-import images from '~/resources/images';
-import {useKeySelector} from '~/hooks/selector';
-import homeActions from '~/screens/Home/redux/actions';
-import postActions from '~/screens/Post/redux/actions';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
+import Header from '~/beinComponents/Header';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
-
-import ListView from '~/beinComponents/list/ListView';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Header from '~/beinComponents/Header';
-import PostItem from '~/beinComponents/list/items/PostItem';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
-import Text from '~/beinComponents/Text';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeActions from '~/screens/Home/redux/actions';
+import homeKeySelector from '~/screens/Home/redux/keySelector';
+import postActions from '~/screens/Post/redux/actions';
+import {deviceDimensions} from '~/theme/dimension';
+import appActions from '~/store/app/actions';
+
+import {ITheme} from '~/theme/interfaces';
+import {ITabTypes} from '~/interfaces/IRouter';
+import {useIsFocused} from '@react-navigation/core';
+import {appScreens} from '~/configs/navigator';
+import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
+import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 
 const Newsfeed = () => {
+  const listRef = useRef<any>();
+
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
+  const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
+    deviceDimensions.phone,
+  );
   const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
 
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
-  const homePosts = useKeySelector(homeKeySelector.homePosts);
+  const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
 
-  const renderItem = ({item}: any) => {
-    return <PostItem postData={item} />;
-  };
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    InteractionManager.runAfterInteractions(() => {
+      if (isFocused)
+        dispatch(appActions.setRootScreenName(appScreens.newsfeed));
+    });
+  }, [isFocused]);
 
   const getData = (isRefresh?: boolean) => {
     if (streamClient) {
@@ -49,55 +75,76 @@ const Newsfeed = () => {
     }
   };
 
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'home') {
+        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+      }
+    },
+    [listRef],
+  );
+
   useEffect(() => {
-    getData(true);
+    InteractionManager.runAfterInteractions(() => {
+      if (streamClient && (!homePosts || homePosts?.length === 0)) {
+        getData(true);
+      }
+    });
   }, [streamClient]);
 
   useEffect(() => {
-    dispatch(postActions.addToAllPosts(homePosts));
+    InteractionManager.runAfterInteractions(() => {
+      dispatch(postActions.addToAllPosts({data: homePosts}));
+    });
   }, [homePosts]);
 
-  const renderFooter = () => {
-    return (
-      <View style={styles.listFooter}>
-        {!noMoreHomePosts && !refreshing && (
-          <ActivityIndicator color={theme.colors.bgFocus} />
-        )}
-        {!refreshing && noMoreHomePosts && (
-          <Text.Subtitle color={theme.colors.textSecondary}>
-            No more homeposts
-          </Text.Subtitle>
-        )}
-      </View>
-    );
-  };
+  const renderHeader = () => {
+    if (isLaptop)
+      return (
+        <Header
+          hideBack
+          title={'post:news_feed'}
+          titleTextProps={{useI18n: true}}
+          style={styles.headerOnLaptop}
+          removeBorderAndShadow
+        />
+      );
 
-  return (
-    <View style={styles.container}>
+    return (
       <Header
         avatar={images.logo_bein}
         hideBack
-        title={'post:news_feed'}
-        titleTextProps={{useI18n: true}}
-        icon={images.logo_bein}
         menuIcon={'Edit'}
-        onPressMenu={() => rootNavigation.navigate(homeStack.createPost)}
+        onPressMenu={navigateToCreatePost}
       />
-      <ListView
-        isFullView
-        containerStyle={styles.listContainer}
+    );
+  };
+
+  const navigateToCreatePost = () => {
+    rootNavigation.navigate(homeStack.createPost);
+  };
+
+  const onEndReach = useCallback(() => getData(), []);
+
+  const onRefresh = useCallback(() => getData(true), []);
+
+  return (
+    <View
+      style={styles.container}
+      onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
+      {renderHeader()}
+      <NewsfeedList
         data={homePosts}
         refreshing={refreshing}
-        onRefresh={() => getData(true)}
-        onLoadMore={() => getData()}
-        renderItem={renderItem}
-        ListHeaderComponent={() => (
-          <HeaderCreatePost style={styles.headerCreatePost} />
-        )}
-        ListFooterComponent={renderFooter}
-        renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
-        )}
+        canLoadMore={!noMoreHomePosts}
+        onEndReach={onEndReach}
+        onRefresh={onRefresh}
+        HeaderComponent={
+          <HeaderCreatePost
+            style={styles.headerCreatePost}
+            parentWidth={newsfeedWidth}
+          />
+        }
       />
     </View>
   );
@@ -112,15 +159,21 @@ const createStyle = (theme: ITheme) => {
       backgroundColor:
         Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
     },
-    listContainer: {
+    headerOnLaptop: {
+      backgroundColor: colors.surface,
+    },
+    placeholder: {
       flex: 1,
       ...Platform.select({
         web: {
-          alignSelf: 'center',
           width: '100%',
           maxWidth: dimension.maxNewsfeedWidth,
+          alignSelf: 'center',
         },
       }),
+    },
+    listContainer: {
+      flex: 1,
     },
     listFooter: {
       height: 150,
@@ -128,6 +181,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     headerCreatePost: {
+      width: '100%',
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
     },

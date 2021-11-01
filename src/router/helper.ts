@@ -6,19 +6,24 @@ import {IObject} from '~/interfaces/common';
 export const isNavigationRefReady = React.createRef();
 
 export interface Props {
+  canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
   goBack: () => void;
+  popToTop: () => void;
   nestedNavigate: (
     parentName: string,
     name: string,
     params?: IObject<unknown>,
   ) => void;
+  setParams: (params: any) => void;
 }
 
 export const withNavigation = (
   navigationRef: RefObject<NavigationContainerRef> | null | undefined,
 ): Props => {
+  const canGoBack = navigationRef?.current?.canGoBack();
+
   const navigate = (name: string, params?: IObject<unknown>): void => {
     if (isNavigationRefReady?.current && navigationRef?.current) {
       navigationRef?.current?.navigate(name, params);
@@ -40,7 +45,11 @@ export const withNavigation = (
   };
 
   const goBack = () => {
-    navigationRef?.current?.canGoBack && navigationRef?.current?.goBack();
+    navigationRef?.current?.canGoBack() && navigationRef?.current?.goBack();
+  };
+
+  const popToTop = () => {
+    navigationRef?.current?.dispatch(StackActions.popToTop());
   };
 
   const nestedNavigate = (
@@ -54,10 +63,17 @@ export const withNavigation = (
     });
   };
 
+  const setParams = (params: any) => {
+    navigationRef?.current?.setParams(params);
+  };
+
   return {
+    canGoBack,
     navigate,
     replace,
     goBack,
+    popToTop,
     nestedNavigate,
+    setParams,
   };
 };

@@ -2,11 +2,20 @@ import i18n from 'i18next';
 
 import {getEnv} from '~/utils/env';
 
+export const postFeatureMenu = [
+  {
+    type: 'draftPost',
+    title: 'settings:title_post_feature_draft',
+    icon: 'iconMenuDraft',
+  },
+];
+
 export const appSettingsMenu = [
   {
     type: 'accountSettings',
     title: 'settings:title_account_settings',
     icon: 'iconMenuSetting',
+    path: 'settings',
   },
 ];
 
@@ -50,6 +59,7 @@ export default [
     type: 'component',
     title: 'Component Collection',
     icon: 'Bug',
+    path: 'component-collection',
   },
 ];
 

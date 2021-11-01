@@ -1,3 +1,4 @@
+import {cloneDeep} from 'lodash';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 const initNotificationsState = {
@@ -28,12 +29,29 @@ function notificationsReducer(
       };
     case notificationsTypes.ADD_NEW_NOTIFICATIONS: {
       const newNotifications = payload.notifications || [];
-      const newList = state.notificationList;
-      newList.unshift(...newNotifications);
+      let notificationList: any[] = cloneDeep(state.notificationList);
+
+      // if the notification group id is existing, remove old items
+      const newGroupIds = newNotifications.map((noti: any) => noti.group);
+      notificationList = notificationList.filter((noti: any) => {
+        return !newGroupIds.includes(noti.group);
+      });
+      // then add the grouped notification that is updated at top of list
+      notificationList.unshift(...newNotifications);
+
       return {
         ...state,
-        notificationList: newList,
+        notificationList: notificationList,
         unseenNumber: state.unseenNumber + payload.unseen,
+      };
+    }
+    case notificationsTypes.DELETE_NOTIFICATIONS: {
+      const newListAfterDelete = state.notificationList.filter(item => {
+        return !payload.notiGroupIds.includes(item.group);
+      });
+      return {
+        ...state,
+        notificationList: newListAfterDelete,
       };
     }
     case notificationsTypes.CONCAT_NOTICATIONS:
@@ -52,12 +70,6 @@ function notificationsReducer(
       return {
         ...state,
         isLoadingMore: payload,
-      };
-    }
-    case notificationsTypes.SHOW_MARKED_AS_READ_TOAST: {
-      return {
-        ...state,
-        showMarkedAsReadToast: payload,
       };
     }
 

@@ -1,43 +1,353 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bein</title>
-    
-    <style>
-      #app-root {
-        display: flex;
-        flex: 1 1 100%;
-        height: 100vh;
-      }
-      textarea, input {
-        outline: none !important;
-      }
-      img {
-        object-fit: cover !important;
-      }
-      .image-zoom-in {
-        cursor: -moz-zoom-in; 
-        cursor: -webkit-zoom-in; 
-        cursor: zoom-in;
-        max-width: 80vw;
-        max-height: 90vh;
-      }
-       .image-zoom-out {
-        cursor: -moz-zoom-out; 
-        cursor: -webkit-zoom-out; 
-        cursor: zoom-out;
-        width: 100%;
-        height: 100%;
-      }
-      span {
-        overflow-wrap: anywhere !important;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app-root"></div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+  <title>Bein</title>
+
+  <style>
+    :root {
+      --primary: #3F2885;
+      --primary-1: #F9F7FD;
+      --primary-2: #ECE7F8;
+      --primary-3: #CBC0EC;
+      --primary-4: #AB99E0;
+      --primary-5: #917AD7;
+      --primary-6: #7052CB;
+      --primary-7: #5234AD;
+
+      --background: #FFFFFF;
+      --bg-secondary: #F5F5F5;
+      --bg-focus: #BDBDBD;
+      --bg-hover: #BDBDBD;
+      --bg-disable: #E0E0E0;
+      --bg-button-primary: #0C0D0E;
+      --bg-button-secondary: #F9F7FD;
+      --border-focus: #29272A;
+      --border-disable: #BDBDBD;
+      --border-card: #E0E0E0;
+      --border-divider: #F0F0F0;
+      --text-input: #524F55;
+      --placeholder: #F0F0F0;
+      --surface: #FAFAFA;
+      --icon-tint: #0C0D0E;
+      --icon-tint-reversed: #FFFFFF;
+
+      --text-primary: #29272A;
+      --text-secondary: #828085;
+      --text-success: #29272A;
+      --text-danger: #FFFFFF;
+      --text-warning: #29272A;
+      --text-info: #174BE2;
+      --text-disabled: #BDBDBD;
+      --text-reversed: #FFFFFF;
+
+      --link: #174BE2;
+      --active-link: #3F2885;
+      --success: #3BB774;
+      --error: #E25050;
+      --warning: #FFE351;
+
+      --border-radius--default: 0.375rem;
+
+      --shadow--default: 0px 4px 24px rgba(0, 0, 0, 0.0875), 0px 4px 12px rgba(0, 0, 0, 0.0625);
+    }
+
+    #app-root {
+      display: flex;
+      flex: 1 1 100%;
+      height: 100vh;
+    }
+
+    #component-input--hidden {
+      height: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      border: none;
+    }
+
+    #down-button,
+    #down-button:active {
+      border-color: var(--primary-3);
+      box-shadow: none;
+    }
+
+    #down-button:hover,
+    #down-button:focus {
+      border-color: var(--primary-6);
+      box-shadow: var(--shadow--default);
+    }
+
+    .icon-wrapper {
+      display: flex;
+    }
+
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab-bar__menu {
+      display: flex;
+      flex: 1;
+      height: 4rem;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .tab-bar__menu:hover,
+    .tab-bar__menu:focus {
+      background-color: var(--placeholder);
+    }
+
+    .tab-bar__menu--active {
+      background-color: var(--bg-button-secondary);
+    }
+
+    .tab-bar--bottom__menu {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      width: calc(100vw / 5);
+      height: 4rem;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .left-col__item {
+      display: block;
+      height: 3.25rem;
+      border-radius: var(--border-radius--default);
+    }
+
+    .left-col__item:hover,
+    .left-col__item:focus,
+    .left-col__item--active {
+      background-color: var(--placeholder);
+    }
+
+    textarea,
+    input {
+      outline: none !important;
+    }
+
+    img {
+      object-fit: cover !important;
+    }
+
+    .image-zoom-in {
+      cursor: -moz-zoom-in;
+      cursor: -webkit-zoom-in;
+      cursor: zoom-in;
+      max-width: 80vw;
+      max-height: 90vh;
+    }
+
+    .image-zoom-out {
+      cursor: -moz-zoom-out;
+      cursor: -webkit-zoom-out;
+      cursor: zoom-out;
+      width: 100%;
+      height: 100%;
+    }
+
+    span {
+      overflow-wrap: anywhere !important;
+    }
+
+    #chat-wrapper {
+      transform: rotate(180deg);
+      flex: 1 1 0%;
+      overflow-y: scroll;
+      direction: rtl;
+
+    }
+
+    #chat-container {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column-reverse;
+      flex-direction: column-reverse;
+      -webkit-box-pack: end;
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+    }
+
+    .chat__conversation-item {
+      border-radius: var(--border-radius--default);
+    }
+
+    .chat__conversation-item:hover,
+    .chat__conversation-item:focus,
+    .chat__conversation-item--active {
+      background-color: var(--border-divider);
+    }
+
+    /*.chat-message {*/
+    /*  transform: rotate(180deg);*/
+    /*  direction: ltr;*/
+    /*}*/
+
+    .chat-message:hover {
+      background: var(--surface);
+    }
+
+    .chat-message-menu {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .chat-message-menu--with-header {
+      top: -1.5rem;
+    }
+
+    .chat-message:hover .chat-message-menu {
+      display: block;
+    }
+
+    .chat-message-menu__option:hover {
+      background-color: var(--primary-3);
+      border-radius: var(--border-radius--default);
+    }
+
+
+    .button,
+    .mention-item,
+    .menu-item {
+      display: block;
+      border-radius: var(--border-radius--default);
+    }
+
+    .button:hover,
+    .button:focus,
+    .button-react:hover,
+    .button-react:focus,
+    .mention-item:hover,
+    .mention-item:focus,
+    .menu-item:hover,
+    .menu-item:focus,
+    .menu-item--active {
+      background-color: var(--placeholder);
+    }
+
+
+    .button-react {
+      display: flex;
+      flex: 1;
+      height: 80%;
+      margin: 0 0.25rem;
+      border-radius: var(--border-radius--default);
+    }
+
+    .button--primary,
+    .button--primary:active {
+      width: 100%;
+      background-color: var(--bg-button-primary);
+      color: var(--text-reversed);
+      border-radius: var(--border-radius--default);
+      cursor: pointer;
+    }
+
+    .button--primary:hover,
+    .button--primary:focus {
+      background: var(--border-focus);
+      box-shadow: var(--shadow--default);
+    }
+
+    .button--secondary {
+      width: 100%;
+      /* padding: 0.5rem; */
+      background-color: var(--bg-button-secondary);
+      color: var(--primary);
+      border-radius: var(--border-radius--default);
+      cursor: pointer;
+    }
+
+    .button--secondary:hover,
+    .button--secondary:focus {
+      background-color: var(--primary-2);
+      box-shadow: var(--shadow--default);
+    }
+
+    .button--secondary:active {
+      background-color: var(--primary-3);
+      box-shadow: none;
+    }
+
+    .button--secondary--high-emphasis,
+    .button--secondary--high-emphasis:hover,
+    .button--secondary--high-emphasis:focus {
+      background-color: var(--primary);
+    }
+
+    .button--secondary--high-emphasis:active {
+      background-color: var(--primary-6);
+    }
+
+    .button--disable {
+      width: 100%;
+      background-color: var(--bg-disable);
+      color: var(--text-disabled);
+      border-radius: var(--border-radius--default);
+    }
+
+    .button--danger {
+      width: 100%;
+      background-color: var(--primary-1);
+      color: var(--error);
+      border-radius: var(--border-radius--default);
+      cursor: pointer;
+    }
+
+    .button--danger:hover,
+    .button--danger:focus {
+      background-color: var(--error);
+      color: var(--icon-tint-reversed);
+    }
+
+    .button--danger:active {
+      background-color: var(--placeholder);
+      color: var(--error);
+    }
+
+    .group-item {
+      border-radius: var(--border-radius--default);
+    }
+
+    .group-item:hover,
+    .group-item:focus,
+    .group-item--active {
+      background-color: var(--placeholder);
+    }
+
+    .group-item__toggle {
+      display: flex;
+      flex-direction: row;
+      width: 0.125rem;
+      height: 100%;
+      margin: 0.75rem 0;
+      background-color: var(--placeholder);
+    }
+
+    .group-item__line {
+      width: 0.125rem;
+      height: auto;
+      background-color: var(--placeholder);
+      margin: 0 0.75rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app-root"></div>
+</body>
+
 </html>

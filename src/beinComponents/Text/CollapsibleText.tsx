@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {View, StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
@@ -15,11 +15,12 @@ export interface CollapsibleTextProps extends TextProps {
   onPress?: () => void;
   toggleOnPress?: boolean;
   useMarkdown?: boolean;
+  onPressAudience?: (audience: any) => any;
   limitMarkdownTypes?: boolean;
   [x: string]: any;
 }
 
-const CollapsibleText: FC<CollapsibleTextProps> = ({
+const _CollapsibleText: FC<CollapsibleTextProps> = ({
   style,
   content,
   limitLength = 120,
@@ -27,6 +28,7 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   onPress,
   toggleOnPress,
   useMarkdown,
+  onPressAudience,
   limitMarkdownTypes,
   ...textProps
 }: CollapsibleTextProps) => {
@@ -55,7 +57,9 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   const renderContentWithMarkdown = () => {
     return (
       <View style={style}>
-        <MarkdownView limitMarkdownTypes={limitMarkdownTypes}>
+        <MarkdownView
+          limitMarkdownTypes={limitMarkdownTypes}
+          onPressAudience={onPressAudience}>
           {!shortContent ? content : contentShowAll ? content : shortContent}
         </MarkdownView>
         {!!shortContent && (
@@ -98,4 +102,6 @@ const CollapsibleText: FC<CollapsibleTextProps> = ({
   );
 };
 
+const CollapsibleText = memo(_CollapsibleText);
+CollapsibleText.whyDidYouRender = true;
 export default CollapsibleText;

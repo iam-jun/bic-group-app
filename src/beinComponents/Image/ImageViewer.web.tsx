@@ -1,83 +1,42 @@
 import React, {useState} from 'react';
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {TouchableOpacity} from 'react-native';
 import {ImageProps} from '.';
-import Icon from '../Icon';
+import Div from '../Div';
 import Image from './FastImage';
+import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
+import {isArray} from 'lodash';
 
-const ImageViewer = ({source, style}: ImageProps) => {
+export interface ImagePreviewerProps extends ImageProps {
+  initIndex?: number;
+}
+
+const ImageViewer = ({source, style, initIndex}: ImageProps) => {
   const [viewerVisible, setViewerVisible] = useState(false);
-  const [zoomIn, setZoomIn] = useState(false);
-  const theme = useTheme() as ITheme;
-  const {colors} = theme;
-  const styles = createStyles(theme);
 
-  const onClose = () => {
-    setZoomIn(false);
-    setViewerVisible(false);
+  const thumbnailSource = isArray(source) ? source?.[initIndex || 0] : source;
+  const gallerySource = isArray(source) ? source : [source];
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.keyCode === 27) {
+      setViewerVisible(false);
+    }
   };
 
   return (
-    <View>
+    <Div tabIndex="0" onKeyDown={onKeyDown}>
       <TouchableOpacity onPress={() => setViewerVisible(true)}>
-        <Image source={source} style={style} />
+        <Image source={thumbnailSource} style={style as any} />
       </TouchableOpacity>
-      <Modal
-        style={styles.modal}
-        transparent
-        animationType="fade"
-        visible={viewerVisible}>
-        <TouchableWithoutFeedback onPress={() => setViewerVisible(false)}>
-          <View style={styles.viewer}>
-            <Pressable onPress={() => setZoomIn(!zoomIn)}>
-              <Image
-                source={source}
-                className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
-              />
-            </Pressable>
-            <Icon
-              style={styles.icon}
-              icon="iconClose"
-              tintColor={colors.textReversed}
-              onPress={onClose}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-    </View>
+      {viewerVisible && (
+        <ImageGalleryModal
+          visible={viewerVisible}
+          source={gallerySource}
+          initIndex={initIndex}
+          onPressClose={() => setViewerVisible(false)}
+        />
+      )}
+    </Div>
   );
-};
-
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-
-  return StyleSheet.create({
-    modal: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    viewer: {
-      backgroundColor: colors.backdrop,
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    icon: {
-      position: 'absolute',
-      zIndex: 2,
-      top: spacing.margin.large,
-      right: spacing.margin.large,
-    },
-  });
 };
 
 export default ImageViewer;

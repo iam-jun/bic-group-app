@@ -1,13 +1,15 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {IUserEdit} from '~/interfaces/IAuth';
+import {IAddWorkExperienceReq} from '~/interfaces/IWorkExperienceRequest';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
-  getMyProfile: (userId: number): HttpApiRequestConfig => ({
+  getUserProfile: (userId: number, params?: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params,
   }),
   editMyProfile: (userId: number, data: IUserEdit): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
@@ -18,23 +20,42 @@ export const menuApiConfig = {
       ...data,
     },
   }),
-  uploadImage: (data: FormData): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}files/upload-photos`,
+  getWorkExperience: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  addWorkExperience: (data: IAddWorkExperienceReq): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience`,
     method: 'post',
     provider: ApiConfig.providers.bein,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
     useRetry: false,
     data,
+  }),
+  editWorkExperience: (
+    id: number,
+    data: IAddWorkExperienceReq,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience/${id}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+    data,
+  }),
+  deleteWorkExperience: (id: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/work-experience/${id}`,
+    method: 'delete',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
   }),
 };
 
 const menuDataHelper = {
-  getMyProfile: async (userId: number) => {
+  getUserProfile: async (userId: number, params?: any) => {
     try {
       const response: any = await makeHttpRequest(
-        menuApiConfig.getMyProfile(userId),
+        menuApiConfig.getUserProfile(userId, params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -59,10 +80,52 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  uploadImage: async (data: FormData) => {
+  getWorkExperience: async () => {
     try {
       const response: any = await makeHttpRequest(
-        menuApiConfig.uploadImage(data),
+        menuApiConfig.getWorkExperience(),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  addWorkExperience: async (data: IAddWorkExperienceReq) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.addWorkExperience(data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  editWorkExperience: async (id: number, data: IAddWorkExperienceReq) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.editWorkExperience(id, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteWorkExperience: async (id: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.deleteWorkExperience(id),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

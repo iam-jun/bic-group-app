@@ -2,11 +2,17 @@ const menuStack = {
   settings: 'menu',
   componentCollection: 'component-collection',
   accountSettings: 'account-settings',
-  userProfile: 'user-profile',
-  myProfile: 'my-profile',
   securityLogin: 'security-and-login',
   changePassword: 'change-password',
-  editBasicInfo: 'edit-basic-info',
+  userProfile: 'user-profile',
+
+  //use for draft posts
+  createPost: 'create-post',
+  createComment: 'create-comment',
+  postSelectAudience: 'post-select-audience',
+  postSelectImage: 'post-select-image',
+  postDetail: 'post-detail',
+  draftPost: 'draft-post',
 };
 
 export default menuStack;

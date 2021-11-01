@@ -10,14 +10,16 @@ import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {ActivityIndicator, useTheme} from 'react-native-paper';
 import Icon, {IconProps} from '~/beinComponents/Icon';
+import {createTextStyle} from '~/beinComponents/Text/textStyle';
 
 export interface ButtonWrapperProps {
+  nativeID?: string;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
   disabled?: boolean;
-  onPress?: () => void;
-  onLongPress?: () => void;
+  onPress?: (e: any) => void;
+  onLongPress?: (e: any) => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
   useI18n?: boolean;
@@ -34,6 +36,7 @@ export interface ButtonWrapperProps {
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
+  nativeID,
   testID,
   children,
   style,
@@ -57,15 +60,21 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
+  const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonBase';
 
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {
+      // In order to fix the title on web is pushed beneath the avg line
+      // @ts-ignore
+      const size = textStyles[textVariant].lineHeight;
+
       return (
         <Icon
           icon={iconSource}
           tintColor={textProps?.color}
           style={styles.icon}
+          size={size}
           {...iconProps}
         />
       );
@@ -88,6 +97,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
   return (
     <TouchableComponent
+      nativeID={nativeID}
       testID={testID}
       disabled={disabled}
       onPress={onPress}
@@ -98,7 +108,11 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       style={StyleSheet.flatten([style])}>
       <View
         style={StyleSheet.flatten([
-          {flexDirection: 'row', alignItems: 'center'},
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
           contentStyle,
         ])}>
         {renderLoading()}

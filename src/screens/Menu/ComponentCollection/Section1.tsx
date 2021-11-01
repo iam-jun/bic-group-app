@@ -279,10 +279,8 @@ const Section1 = () => {
             onLongPress={() => alert('onLongPress')}>
             Default
           </Button.Secondary>
-          <Button.Secondary
-            color={colors.primary2}
-            onPress={() => alert('onPress')}>
-            Hover
+          <Button.Secondary highEmphasis onPress={() => alert('onPress')}>
+            High emphasis
           </Button.Secondary>
           <Button.Secondary
             disabled
@@ -313,6 +311,32 @@ const Section1 = () => {
         <Text.Subtitle>
           text not centered because of font, designer confirmed...
         </Text.Subtitle>
+        <Divider
+          style={{
+            margin: spacing?.margin.base,
+            paddingHorizontal: spacing?.padding.base,
+          }}
+        />
+        <Text.H5>{`<Button.Danger></Button.Danger>`}</Text.H5>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: spacing?.margin.small,
+            marginBottom: spacing?.margin.base,
+            justifyContent: 'space-around',
+          }}>
+          <Button.Danger
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Default
+          </Button.Danger>
+          <Button.Danger
+            disabled
+            onPress={() => alert('onPress')}
+            onLongPress={() => alert('onLongPress')}>
+            Disabled
+          </Button.Danger>
+        </View>
         <Divider
           style={{
             margin: spacing?.margin.base,

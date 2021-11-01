@@ -1,14 +1,17 @@
 import React, {useContext, useEffect} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {DeviceEventEmitter, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import RedDot from '~/beinComponents/Badge/RedDot';
+import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
+import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import notificationsActions from '../../../../screens/Notification/redux/actions';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
@@ -20,7 +23,7 @@ interface Props {
   initialRouteName?: string;
 }
 
-const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
+const LeftTabs: React.FC<Props> = (): React.ReactElement => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = CreateStyle(theme);
@@ -41,20 +44,35 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
     );
   }, []);
 
-  const renderBadge = (name: string) => {
-    const number = tabBadge[name];
-
-    if (number > 0) {
-      return <RedDot style={{top: 15, left: 45}} number={number} />;
-    } else {
-      return null;
+  const renderIcon = (name: string, focused: boolean) => {
+    if (name === 'home') {
+      return (
+        <Image
+          source={
+            focused ? images.logo_bein_simple : images.logo_bein_black_white
+          }
+          resizeMode="contain"
+          style={styles.logoBein}
+        />
+      );
     }
+
+    const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
+
+    return (
+      <Icon
+        //@ts-ignore
+        icon={icon[name]}
+        size={24}
+        tintColor="none"
+        bold={focused}
+      />
+    );
   };
 
   return (
     // @ts-ignore
     <Tab.Navigator
-      initialRouteName={initialRouteName}
       activeBackgroundColor={colors.bgButtonSecondary}
       backBehavior={'history'}
       tabBarStyle={styles.navigatorContainer}>
@@ -65,20 +83,26 @@ const LeftTabs: React.FC<Props> = ({initialRouteName}): React.ReactElement => {
             key={'tabs' + name}
             name={name}
             component={component}
+            listeners={{
+              tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
+            }}
             options={{
               tabBarIcon: ({focused}: {focused: boolean}) => {
-                const icon = focused ? bottomTabIconsFocused : bottomTabIcons;
+                // @ts-ignore
+                const unreadCount = tabBadge[name] || undefined;
+
+                let className = 'tab-bar__menu';
+                if (focused) className = className + ` ${className}__active`;
+
                 return (
-                  <View style={styles.iconContainer}>
-                    <Icon
-                      //@ts-ignore
-                      icon={icon[name]}
-                      size={24}
-                      tintColor="none"
-                      bold={focused}
-                    />
-                    {renderBadge(name)}
-                  </View>
+                  <Div
+                    className={className}
+                    style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
+                    {renderIcon(name, focused)}
+                    {!!unreadCount && (
+                      <RedDot style={styles.badge} number={unreadCount} />
+                    )}
+                  </Div>
                 );
               },
             }}
@@ -97,7 +121,7 @@ const CreateStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       ...Platform.select({
         web: {
-          width: 80,
+          width: 84,
           borderRightColor: colors.borderDivider,
           borderRightWidth: 1,
         },
@@ -106,12 +130,21 @@ const CreateStyle = (theme: ITheme) => {
         },
       }),
     },
+    logoBein: {
+      width: 26.67,
+      height: 26.67,
+    },
     iconContainer: {
       flex: 1,
       height: 64,
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
+    },
+    badge: {
+      position: 'absolute',
+      top: '16%',
+      left: '54%',
     },
   });
 };

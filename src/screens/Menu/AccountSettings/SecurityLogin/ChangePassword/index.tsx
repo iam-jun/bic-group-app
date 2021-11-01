@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'lodash';
 import debounce from 'lodash/debounce';
 import {Controller, useForm} from 'react-hook-form';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -123,15 +123,7 @@ const ChangePassword = () => {
   };
 
   const handleForgotPassword = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function has not been developed. Stay tuned for further releases 😀',
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
-      }),
-    );
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   const handleOnSaveChangePassword = async () => {
@@ -156,6 +148,7 @@ const ChangePassword = () => {
               testID="inputPassword"
               label={t('auth:input_label_current_password')}
               placeholder={t('auth:input_label_current_password')}
+              autoCompleteType="off"
               error={errors.password}
               autoCapitalize="none"
               editable={!changePasswordLoading}
@@ -185,6 +178,7 @@ const ChangePassword = () => {
               testID="inputNewPassword"
               label={t('auth:input_label_new_password')}
               placeholder={t('auth:input_label_new_password')}
+              autoCompleteType="off"
               error={errors.newPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}
@@ -215,6 +209,7 @@ const ChangePassword = () => {
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
               placeholder={t('auth:input_label_confirm_new_password')}
+              autoCompleteType="off"
               error={errors.confirmNewPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}

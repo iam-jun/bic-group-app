@@ -1,4 +1,4 @@
-import {put, takeLatest, select} from 'redux-saga/effects';
+import {put, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {get} from 'lodash';
 import homeTypes from '~/screens/Home/redux/types';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
@@ -7,7 +7,7 @@ import {IPayloadGetHomePost} from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 
 export default function* homeSaga() {
-  yield takeLatest(homeTypes.GET_HOME_POSTS, getHomePosts);
+  yield takeEvery(homeTypes.GET_HOME_POSTS, getHomePosts);
 }
 
 function* getHomePosts({
@@ -19,11 +19,10 @@ function* getHomePosts({
   try {
     const {userId, streamClient, isRefresh} = payload;
     let homePosts, offset;
-    const noMoreHomePosts = yield select(state =>
-      get(state, homeKeySelector.noMoreHomePosts),
-    );
+    const {noMoreHomePosts, loadingHomePosts, refreshingHomePosts} =
+      yield select(state => get(state, 'home'));
 
-    if (noMoreHomePosts && !isRefresh) {
+    if ((noMoreHomePosts || loadingHomePosts) && !isRefresh) {
       return;
     }
 
@@ -49,7 +48,7 @@ function* getHomePosts({
     yield put(homeActions.setHomePosts(newHomePosts));
 
     if (newHomePosts?.length === homePosts?.length) {
-      yield put(homeActions.setNoMoreHomePosts(newHomePosts));
+      yield put(homeActions.setNoMoreHomePosts(true));
     }
 
     if (isRefresh) {

@@ -1,5 +1,6 @@
-import {IObject} from '~/interfaces/common';
+import {IFilePicked, IObject} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
+import {StreamClient} from 'getstream';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -32,9 +33,16 @@ export interface IAudience {
   isGroup?: boolean;
 }
 
+export interface IActivityDataImage {
+  name: string;
+  origin_name?: string;
+  width?: number;
+  height?: number;
+}
+
 export interface IActivityData {
   content?: string;
-  images?: string[];
+  images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
 }
@@ -42,6 +50,12 @@ export interface IActivityData {
 export interface IActivityImportant {
   active?: 0 | 1;
   expiresTime?: string;
+}
+
+export interface ICreatePostImage {
+  fileName?: string;
+  file?: IFilePicked;
+  url?: string;
 }
 
 /**
@@ -72,6 +86,7 @@ export interface IPostActivity {
   own_reactions?: any;
   reaction_counts?: IObject<number>;
   deleted?: boolean;
+  is_draft?: boolean;
 }
 
 export interface IOwnReaction {
@@ -97,6 +112,11 @@ export interface IPostCreatePost {
   };
   tags?: number[];
   important?: IActivityImportant;
+  is_draft?: boolean;
+
+  userId?: string;
+  streamClient?: StreamClient;
+  createFromGroupId?: string | number;
 }
 
 export interface IPayloadCreateComment {
@@ -117,6 +137,13 @@ export interface IPayloadPutEditComment {
   id: string;
   comment: IReaction;
   data: IActivityData;
+}
+
+export interface IPayloadGetPostDetail {
+  userId: string;
+  streamClient: StreamClient;
+  postId: string;
+  callbackLoading?: (loading: boolean, success: boolean) => void;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
@@ -149,7 +176,7 @@ export interface IRequestGetPostComment {
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
   isMerge: boolean;
-  callbackLoading?: (loading: boolean) => void;
+  callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 
 export interface IReaction {
@@ -165,6 +192,7 @@ export interface IReaction {
   latest_children?: any;
   children_counts?: any;
   own_children?: any;
+  loading?: boolean;
 }
 
 export interface IGetStreamAudienceUser {
@@ -218,10 +246,23 @@ export interface IParamSearchMentionAudiences {
   take?: number;
 }
 
+export interface IParamGetReactionDetail {
+  reactionType: ReactionType;
+  postId?: string;
+  commentId?: string;
+  limit?: number;
+  idLessThan?: string;
+}
+
 export interface IPostAudienceSheet {
   isShow: boolean;
   data: any[];
   fromStack?: 'newsfeed' | 'groups';
+}
+
+export interface IPayloadAddToAllPost {
+  data: IPostActivity[] | IPostActivity;
+  handleComment?: boolean;
 }
 
 export interface IPayloadReactToPost {
@@ -256,12 +297,47 @@ export interface IPayloadUpdateCommentsById {
 }
 
 export interface ICreatePostParams {
+  draftPostId?: string;
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadReplying {
   comment: IReaction;
   parentComment?: IReaction;
+}
+
+export interface IPayloadSetDraftPosts {
+  posts?: IActivityData[];
+  canLoadMore?: boolean;
+  loading?: boolean;
+  refreshing?: boolean;
+}
+
+export interface IPayloadGetDraftPosts {
+  userId: string;
+  streamClient?: StreamClient;
+  isRefresh?: boolean;
+  offset?: number;
+}
+
+export interface IPayloadPublishDraftPost {
+  draftPostId: string;
+  replaceWithDetail?: boolean;
+  onSuccess?: () => void;
+  onError?: () => void;
+  userId?: string;
+  streamClient?: StreamClient;
+  refreshDraftPosts?: boolean;
+}
+
+export interface IPayloadPutEditDraftPost {
+  id: string;
+  data: IPostCreatePost;
+  replaceWithDetail?: boolean;
+  userId: string;
+  streamClient?: StreamClient;
+  publishNow: boolean;
 }

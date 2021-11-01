@@ -1,9 +1,10 @@
 import {IGetStreamDispatch} from '~/interfaces/common';
-import notificationsTypes from '~/screens/Notification/redux/types';
 import {
+  IDeleteNotifications,
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
 } from '~/interfaces/INotification';
+import notificationsTypes from '~/screens/Notification/redux/types';
 
 const notificationsActions = {
   setLoadingNotifications: function (payload: boolean) {
@@ -30,12 +31,6 @@ const notificationsActions = {
       payload,
     };
   },
-  setShowMarkedAsReadToast: function (payload: boolean) {
-    return {
-      type: notificationsTypes.SHOW_MARKED_AS_READ_TOAST,
-      payload,
-    };
-  },
 
   //for saga
   getNotifications: function (payload: IGetStreamDispatch) {
@@ -47,6 +42,12 @@ const notificationsActions = {
   loadNewNotifications: function (payload: ILoadNewNotifications) {
     return {
       type: notificationsTypes.LOAD_NEW_NOTIFICATIONS,
+      payload,
+    };
+  },
+  deleteNotifications: function (payload: IDeleteNotifications) {
+    return {
+      type: notificationsTypes.DELETE_NOTIFICATIONS,
       payload,
     };
   },

@@ -6,19 +6,33 @@ const initGroupsState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
+
+  loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
   },
+  groupSearch: {
+    isShow: false,
+    loading: false,
+    searchKey: '',
+    result: [],
+  },
+  loadingGroupMember: false,
   groupMember: {
     skip: 0,
     take: 20,
     canLoadMore: true,
     //type admin, member...
   },
-  loadingGroupPosts: false,
-  groupPosts: [],
   refreshingGroupPosts: false,
+  posts: {
+    loading: false,
+    data: [],
+    extra: [],
+    offset: 0,
+    canLoadMore: true,
+  },
 
   users: {
     loading: false,
@@ -28,6 +42,9 @@ const initGroupsState = {
     canLoadMore: true,
   },
   selectedUsers: new Array<IUser>(),
+
+  loadingAvatar: false,
+  loadingCover: false,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -40,28 +57,41 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         isPrivacyModalOpen: action.payload,
       };
-    case groupsTypes.SET_LOADING_JOINED_GROUPS:
+
+    case groupsTypes.GET_JOINED_GROUPS:
       return {
         ...state,
-        loadingJoinedGroups: action.payload,
+        loadingJoinedGroups: true,
+        joinedGroups: initGroupsState.joinedGroups,
       };
     case groupsTypes.SET_JOINED_GROUPS:
       return {
         ...state,
+        loadingJoinedGroups: false,
         joinedGroups: action.payload || [],
       };
-    case groupsTypes.SET_LOADING_GROUP_DETAIL:
+
+    case groupsTypes.GET_GROUP_DETAIL:
       return {
         ...state,
-        loadingGroupDetail: action.payload,
+        loadingGroupDetail: true,
       };
     case groupsTypes.SET_GROUP_DETAIL:
       return {
         ...state,
+        loadingCover: false,
+        loadingAvatar: false,
+        loadingGroupDetail: false,
         groupDetail: {
-          ...state.groupDetail,
+          group: {}, // init state
           ...action.payload,
         },
+      };
+
+    case groupsTypes.SET_LOADING_GROUP_MEMBER:
+      return {
+        ...state,
+        loadingGroupMember: payload,
       };
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {
@@ -73,27 +103,55 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         ...state,
         groupMember: action.payload,
       };
-    case groupsTypes.SET_LOADING_GROUP_POSTS:
-      return {
-        ...state,
-        loadingGroupPosts: action.payload,
-      };
-    case groupsTypes.SET_GROUP_POSTS:
-      return {
-        ...state,
-        groupPosts: action.payload || [],
-        refreshingGroupPosts: false,
-      };
-    case groupsTypes.CLEAR_GROUP_POSTS:
-      return {
-        ...state,
-        groupPosts: initGroupsState.groupPosts,
-      };
+
     case groupsTypes.GET_GROUP_POSTS:
       return {
         ...state,
         refreshingGroupPosts: true,
+        posts: {
+          ...state.posts,
+          loading: state.posts.data.length === 0,
+          params: payload.params,
+        },
       };
+    case groupsTypes.SET_GROUP_POSTS:
+      return {
+        ...state,
+        refreshingGroupPosts: false,
+        posts: {
+          ...state.posts,
+          loading: false,
+          data: payload,
+          offset: state.posts.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.SET_EXTRA_GROUP_POSTS:
+      return {
+        ...state,
+        refreshingGroupPosts: false,
+        posts: {
+          ...state.posts,
+          extra: payload,
+          offset: state.posts.offset + payload.length,
+          canLoadMore: payload.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.MERGE_EXTRA_GROUP_POSTS:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          data: [...state.posts.data, ...state.posts.extra],
+          extra: [],
+        },
+      };
+    case groupsTypes.CLEAR_GROUP_POSTS:
+      return {
+        ...state,
+        posts: initGroupsState.posts,
+      };
+
     case groupsTypes.EDIT_GROUP_DETAIL:
       return {
         ...state,
@@ -175,6 +233,29 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         users: initGroupsState.users,
       };
 
+    case groupsTypes.SET_LOADING_AVATAR:
+      return {
+        ...state,
+        loadingAvatar: payload,
+      };
+    case groupsTypes.SET_LOADING_COVER:
+      return {
+        ...state,
+        loadingCover: payload,
+      };
+    case groupsTypes.SET_LOADING_PAGE:
+      return {
+        ...state,
+        loadingPage: payload,
+      };
+    case groupsTypes.SET_GROUP_SEARCH:
+      return {
+        ...state,
+        groupSearch: {
+          ...state.groupSearch,
+          ...payload,
+        },
+      };
     default:
       return state;
   }

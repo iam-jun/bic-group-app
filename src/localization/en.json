@@ -9,15 +9,22 @@
     "text_show_all": "Show all",
     "text_see_all": "See all",
     "text_member": "Members",
+    "text_copied_to_clipboard": "Copied to clipboard",
+    "text_link_copied_to_clipboard": "Link copied to clipboard",
+    "text_message_link_copied_to_clipboard": "Message link copied to clipboard",
     "btn_cancel": "Cancel",
     "btn_delete": "Delete",
+    "btn_continue_editing": "Continue Editing",
     "btn_discard": "Discard",
     "btn_edit": "Edit",
     "btn_save": "Save",
+    "btn_publish": "Publish",
     "btn_done": "Done",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
     "btn_create": "Create",
+    "btn_join": "Join",
+    "text_search_emoji": "Search Emoji",
     "text_important": "Important",
     "text_clear": "Clear",
     "text_set_time": "Set Time",
@@ -49,8 +56,9 @@
         "over_file_size": "Your file must be less than 10MB"
       }
     },
-    "text_discard_changes": "Discard Changes?",
+    "label_discard_changes": "Discard Changes",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
+    "text_discard_warning": "If you discard now, you'll lose any changes that you've made",
     "text_invite": "Invite",
     "text_search_not_found": "Not found",
     "title_group_add_member": {
@@ -63,22 +71,32 @@
       "1": "{n} member has been added",
       "many": "{n} members have been added"
     },
+    "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
     "title_page_not_found": "Page Not Found",
-    "text_edit_success": "Updated profile successfully!",
+    "text_edit_success": "Profile updated successfully",
     "text_edit_fail": "Failed to update profile!",
     "text_info": "Info",
     "text_help_center": "Help center is coming soon 🤗",
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
-    "text_got_it": "Got it"
+    "text_got_it": "Got it",
+    "text_no_recent_searches": "No recent searches!",
+    "text_files": "Files",
+    "avatar_changed": "Avatar changed",
+    "cover_changed": "Cover changed",
+    "text_present": "Present",
+    "text_start_date": "Start Date",
+    "text_end_date": "End Date",
+    "text_group": "Group",
+    "text_at": "at"
   },
   "auth": {
     "text_kickout_title": "Notice",
     "text_kickout_desc": "Your session has expired.",
     "text_kickout_confirm_button": "Got it",
     "text_change_password_success_title": "Notice",
-    "text_change_password_success_desc": "You have changed password successfully.",
+    "text_change_password_success_desc": "You have changed password successfully",
     "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Sign In",
     "text_sign_in_desc": "Login with your Bein account",
@@ -107,8 +125,8 @@
     "text_err_forgot_password": "Email is invalid!",
     "text_err_exist_email": "Email is exist!",
     "text_err_otp": "OTP is invalid!",
-    "text_change_password_success": "Change password successfully!",
-    "text_resend_otp_success": "Resend OTP successfully. Please check your email!",
+    "text_change_password_success": "Changed password successfully!",
+    "text_resend_otp_success": "Resent OTP successfully. Please check your email!",
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
     "text_err_id_password_not_matched": "Email and password doesn't match.",
     "text_err_password_blank": "Password is required!",
@@ -160,6 +178,7 @@
   "settings": {
     "title_app_language": "App language",
     "title_app_theme": "App theme",
+    "title_post_feature_draft": "Draft Posts",
     "title_account_settings": "Account Settings",
     "title_help": "Help",
     "title_app_policies": "App Policies",
@@ -188,6 +207,9 @@
     "app_language": "English",
     "title_group_moderating": "Group Moderating",
     "title_pending_members": "Pending Members",
+    "title_pending_posts": "Pending Posts",
+    "title_reported_posts": "Reported Post",
+    "title_reported_chats": "Reported Chats",
     "title_group_settings": "Group Settings",
     "title_general_information": "General Information",
     "title_role_management": "Role Management",
@@ -229,7 +251,33 @@
     "text_engaged": "Engaged",
     "text_married": "Married",
     "title_choose_languages": "Choose Speaking Languages",
-    "title_choose_relationship": "Choose Relationship Status"
+    "title_choose_relationship": "Choose Relationship Status",
+    "title_contact": "Contact",
+    "title_email": "Email",
+    "title_phone_number": "Phone number",
+    "title_address": "Address",
+    "title_edit_contact": "Edit Contact",
+    "title_edit_phone_number": "Edit Phone number",
+    "title_edit_email_address": "Edit Email Address",
+    "title_edit_address": "Edit Address",
+    "text_wrong_email_format": "Wrong Email format",
+    "text_updated_successfully": "updated successfully",
+    "text_email_is_used": "This Email is used",
+    "text_wrong_phone_number_format": "Wrong number format",
+    "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
+    "text_phone_number_is_used": "This number is already used",
+    "title_choose_location": "Choose Location",
+    "title_location": "Location",
+    "text_work": "Work",
+    "text_add_work": "Add Work",
+    "text_edit_work": "Edit Work",
+    "text_delete_work": "Delete Work",
+    "text_compamny": "Company",
+    "text_title_position": "Title/Position",
+    "text_currently_work_here": "Currently work here",
+    "text_location_optional": "Location (optional)",
+    "text_description_optional": "Description (optional)",
+    "text_since": "Since"
   },
   "languages": {
     "title_en": "English",
@@ -237,12 +285,15 @@
   },
   "home": {
     "newsfeed": "News feed",
-    "saved_posts": "Saved Posts"
+    "saved_posts": "Saved Posts",
+    "draft_post": "Draft Posts"
   },
   "post": {
     "news_feed": "News Feed",
+    "title_post_detail": "Post detail",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
+    "title_edit_images": "Edit images",
     "mention_title": "Can only mention people in your selected audiences",
     "mention_empty_content": "No people found",
     "button_like": "Like",
@@ -253,6 +304,7 @@
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",
     "label_post_audiences": "Post Audiences",
+    "label_desc_post_audiences": "Members of group(s) below will be able to see the post, create comments and send reactions.",
     "label_like": "Like",
     "label_comment": "Comment",
     "label_share": "Share",
@@ -263,14 +315,13 @@
     "label_users": "Users",
     "label_post_deleted": "Post deleted",
     "label_all_reacts": "All Reacts",
-    "text_search_result_empty": "No matching results! Please try another name...",
+    "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",
     "alert_title_back_create_post": "Discard new post",
     "alert_content_back_create_post": "If you discard now, you’ll lose any changes you’ve made to this new post.",
-    "label_menu_delete": "Delete post",
     "add_photo": "Add Photo",
     "add_file": "Add Files",
     "placeholder_write_post": "Writing your post...",
@@ -281,16 +332,17 @@
     "save": "Save",
     "and": "and",
     "to": "to",
-    "edit_comment_success": "Edit comment success",
+    "edit_comment_success": "Edited comment successfully",
     "label_replying_to": "Replying to ",
+    "label_yourself": "yourself",
     "someone": "someone",
     "other_places": "more",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
     "mark_as_important": "Mark as Important",
     "expire_on": "Expire on:",
-    "choose_group_people": "Choose group or people",
-    "placeholder_audience_search": "Search for groups or people",
+    "choose_group_people": "Choose group",
+    "placeholder_audience_search": "Search for groups",
     "audience_selected": "Selected audiences",
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
@@ -303,11 +355,44 @@
     "show_all": "Show all",
     "text_load_more_comments": "View previous comments...",
     "text_load_more_x_replies": "View %VALUE% replies",
+    "text_add_to_post": "Add to your post",
     "comment_menu_reply": "Reply this comment",
     "comment_menu_copy_text": "Copy text",
     "comment_menu_edit": "Edit Comment",
     "comment_menu_history": "View Edit History",
-    "comment_menu_delete": "Delete Comment"
+    "comment_menu_delete": "Delete Comment",
+    "post_menu_edit": "Edit Post",
+    "post_menu_copy": "Copy Post Link",
+    "post_menu_save": "Save Post",
+    "post_menu_view_insights": "View Post Insights",
+    "post_menu_turn_off_noti": "Turn off notification for this post",
+    "post_menu_history": "View Edit History",
+    "post_menu_delete": "Delete post",
+    "post_menu_report": "Report to group Admin",
+    "error_wait_uploading": "Please wait until upload finish",
+    "error_upload_failed": "Please remove file upload failed or retry",
+    "error_upload_photo_failed": "Upload photo failed!",
+    "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
+    "error_post_detail_deleted": "Post not found or deleted",
+    "placeholder_create_post": "Write your post here...",
+    "post_exit_title": "Want to finish your post later?",
+    "post_exit_desc": "You can save it as a draft for later editing",
+    "post_exit_option_save": "Save as Draft",
+    "post_exit_option_discard": "Discard Post",
+    "post_exit_option_continue": "Continue Editing",
+    "draft": {
+      "btn_post_now": "Post Now",
+      "btn_edit": "Edit",
+      "btn_menu_schedule": "Schedule to Post",
+      "btn_menu_delete": "Delete Draft Post",
+      "title_no_draft_posts": "No Draft Post",
+      "title_delete_draft_post": "Delete Draft Post",
+      "text_delete_draft_post": "Are you sure want to delete this draft post?",
+      "text_no_draft_posts": "You have no draft post left",
+      "text_draft_published": "Your post has been published",
+      "text_draft_saved": "Your draft has been saved",
+      "text_draft_deleted": "Your draft has been deleted"
+    }
   },
   "chat": {
     "title": "Chat",
@@ -319,6 +404,9 @@
     "title_members": "Members",
     "title_add_participants": "Add participants",
     "title_create_group_chat": "Create group chat",
+    "title_create_quick_chat": "Create Quick Chat",
+    "text_create_quick_chat_name_note": "Note: If you leave the Quick Chat name empty, the system will use names of members by default",
+    "text_me": "me",
     "title_group_add_member": {
       "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
       "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
@@ -338,13 +426,13 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message": {
-      "au": "{0} has added {1} to this group",
-      "ru": "{0} has removed {1} from the group chat.",
+      "au": "{1} joined to this group",
+      "ru": "{1} was removed from the group.",
       "room_changed_description": "{0} has changed the chat description.",
       "room_changed_announcement": "{0} has changed the chat announcement.",
-      "room_changed_topic": "{0} has changed the group chat topic to “{1}”",
+      "room_changed_topic": "{0} has changed the group chat topic to {1}",
       "room_changed_avatar": "{0} has changed the group avatar",
-      "r": "{0} has changed the group chat name to “{1}”",
+      "r": "{0} has changed the group chat name to {1}",
       "rm": {
         "me": "You deleted this message.",
         "other": "This message has been deleted",
@@ -362,6 +450,7 @@
     },
     "title_privacy": "Privacy",
     "title_more_actions": "More actions",
+    "title_files_images_links": "Files & Images & Links",
     "title_admin_tool": "Admin Tool",
     "text_block": "Block",
     "text_feedback": "Feedback this chat",
@@ -371,6 +460,14 @@
       "change_avatar": "Change Group Avatar",
       "edit_description": "Edit Description",
       "edit_name": "Edit Group Chat Name"
+    },
+    "label_init_group_message": {
+      "short": "Say hello to your group",
+      "full": "🤗 Say hello to your group!"
+    },
+    "label_init_direct_message": {
+      "short": "Say hello to your friend",
+      "full": "🤗 Say hello to your friend!"
     },
     "label_last_message": {
       "my_attachment": "You sent an attachment",
@@ -395,14 +492,20 @@
       "label_remove_from_group_chat": "Remove from group chat"
     },
     "text_mention_all": "All",
-    "modal_confirm_remove_member":{
-      "title":"Remove Member",
-      "description":"This member will be removed from this chat conversation and group {0} also. Do you want to continue?"
+    "modal_confirm_remove_member": {
+      "title": "Remove Member",
+      "description": "This member will be removed from this chat conversation. Do you want to continue?",
+      "description_group_chat": "This member will be removed from groups: {0}. Do you want to continue?"
     },
     "message_option": {
-      "delete": "Delete Message",
+      "pin": "Pin this message",
+      "edit_message": "Edit message",
+      "create_thread": "Create Thread",
+      "copy": "Copy Text",
       "reply": "Reply",
-      "copy": "Copy Text"
+      "get_link": "Copy Message Link",
+      "delete": "Delete Message",
+      "reactions": "View Reactions"
     },
     "label_my_message": "You",
     "label_deleted_message": {
@@ -410,7 +513,20 @@
       "other": "This message has been deleted",
       "list": "deleted a message"
     },
-    "label_no_description": "No Description"
+    "label_no_description": "No Description",
+    "label_unread_messages_banner": "Unread messages since",
+    "label_unread_messages": "Unread messages",
+    "text_editing_message": "Editing message",
+    "text_edited": "edited",
+    "label_replied_messsage_attachment": "Tap to view attachment",
+    "title_msg_not_found": "No message found",
+    "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
+    "title_invalid_msg_link": "Invalid message link",
+    "button_go_back_to_chat": "Go back to Chat",
+    "search_result": {
+      "job_title": " at ",
+      "member_count": " & {0} others"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -422,7 +538,7 @@
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
-      "unknown": "Unknown http error",
+      "unknown": "Something went wrong. Please try again later.",
       "401": "Unauthorized",
       "token_expired": "Token expired"
     },
@@ -441,18 +557,43 @@
   },
   "input": {
     "search": "Search for someone to chat...",
-    "search_group": "Search for groups or people..."
+    "search_group": "Search for groups or people...",
+    "search_country": "Search Country",
+    "search_location": "Search for City/Province/Country"
   },
   "groups": {
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
     "text_search_member": "Search group member",
-    "text_search": "Search people"
+    "text_search": "Search people",
+    "group_menu": {
+      "label_copy_group_link": "Copy Group Link",
+      "label_leave_group": "Leave Group",
+      "label_share_group": "Share to...",
+      "label_share_to_chat": "Share to Bein Chat"
+    },
+    "member_menu": {
+      "label_view_profile": "View profile",
+      "label_direct_message": "Direct message",
+      "label_set_as_admin": "Set as admin",
+      "label_remove_from_group": "Remove from this group"
+    },
+    "private_group_welcome_message": {
+      "title": "This group is private.",
+      "subtitle": "Join this group to view or participate on discussions"
+    },
+    "modal_confirm_remove_member": {
+      "title": "Remove this member",
+      "description": "Do you want to remove {name}, this member will no longer be in this group{other groups}.",
+      "button_remove": "Remove"
+    }
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
-    "title_direct_message": "Direct Message"
+    "title_direct_message": "Direct Message",
+    "title_view_profile": "View Profile",
+    "text_name_must_not_be_empty": "Name must not be empty"
   },
   "right_col": {
     "about_bein": "About Bein",
@@ -485,7 +626,9 @@
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "No more notification",
     "no_notification_found": "Your notification box is empty",
-    "no_notification_found_desc": "We’ll notify you when something arrives"
+    "no_notification_found_desc": "We’ll notify you when something arrives",
+    "number_people": "{number} people",
+    "number_times": "{number} times"
   },
   "new_feature": {
     "title": "New feature",

@@ -1,34 +1,46 @@
-import React, {FC, useEffect, useRef} from 'react';
-import {Keyboard, StyleSheet, View} from 'react-native';
+import React, {FC, useContext, useEffect, useRef} from 'react';
+import {Keyboard, Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useBackHandler} from '@react-native-community/hooks';
+
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
-
 import Header from '~/beinComponents/Header';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
-import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
 import {
+  IActivityDataImage,
   IAudience,
   ICreatePostParams,
+  IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
   IPostCreatePost,
 } from '~/interfaces/IPost';
+import i18n from '~/localization';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
-import {margin, padding} from '~/theme/spacing';
+import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import {IFilePicked} from '~/interfaces/common';
+import modalActions from '~/store/modal/actions';
+import FileUploader from '~/services/fileUploader';
+import {useBaseHook} from '~/hooks';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
+import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
+import {useUserIdAuth} from '~/hooks/auth';
+import {AppContext} from '~/contexts/AppContext';
 
 export interface CreatePostProps {
   route?: {
@@ -38,31 +50,49 @@ export interface CreatePostProps {
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
-  const {postId, replaceWithDetail, initAudience} = route?.params || {};
+  const mentionInputRef = useRef<any>();
+  const {
+    postId,
+    draftPostId,
+    replaceWithDetail,
+    initAudience,
+    createFromGroupId,
+  } = route?.params || {};
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+  const styles = themeStyles(theme);
+
+  const isWeb = Platform.OS === 'web';
 
   let initPostData: IPostActivity = {};
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
+  if (draftPostId) {
+    const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
+    initPostData = draftPosts?.find(
+      (item: IPostActivity) => item?.id === draftPostId,
+    );
+  }
+
+  const userId = useUserIdAuth();
+  const {streamClient} = useContext(AppContext);
 
   const createPostData = useCreatePost();
-  const {
-    loading,
-    isOpenModal,
-    data,
-    chosenAudiences = [],
-    important,
-  } = createPostData || {};
-  const {content, images, videos, files} = data || {};
+  const {loading, data, chosenAudiences = [], important} = createPostData || {};
+  const {content} = data || {};
+
+  const selectingImages = useKeySelector(postKeySelector.createPost.images);
+  const {images} = validateImages(selectingImages, t);
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+  const isEditDraftPost = !!initPostData?.id && draftPostId;
+  const isEditContentOnly = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -79,7 +109,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     loading ||
     content?.length === 0 ||
     chosenAudiences.length === 0 ||
-    (isEditPost && !isEditPostHasChange);
+    (isEditPost && !isEditPostHasChange && !isEditDraftPost);
+
+  useBackHandler(() => {
+    onPressBack();
+    return true;
+  });
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -92,8 +127,31 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
     return () => {
       dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);
+
+  useEffect(() => {
+    if (initPostData && isEditDraftPost) {
+      const initImages: any = [];
+      initPostData?.object?.data?.images?.map(item => {
+        initImages.push({
+          fileName: item?.origin_name || item?.name,
+          file: {
+            name: item?.origin_name || item?.name,
+            filename: item?.origin_name || item?.name,
+            width: item?.width || 0,
+            height: item?.height || 0,
+          },
+          url: item?.name?.includes('http')
+            ? item.name
+            : getResourceUrl(uploadTypes.postImage, item?.name),
+        });
+      });
+      dispatch(postActions.setCreatePostImagesDraft(initImages));
+      dispatch(postActions.setCreatePostImages(initImages));
+    }
+  }, [initPostData]);
 
   useEffect(() => {
     if (initPostData?.id) {
@@ -124,30 +182,40 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
   }, [initPostData?.id]);
 
+  useEffect(() => {
+    if (content && !mentionInputRef?.current?.getContent?.()) {
+      mentionInputRef?.current?.setContent?.(content);
+    }
+  }, [content, images]);
+
   const onPressBack = () => {
     Keyboard.dismiss();
-    if (isEditPost) {
+
+    if (isEditPost && !isEditDraftPost) {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            title: t('post:alert_title_back_edit_post'),
-            content: t('post:alert_content_back_edit_post'),
+            title: i18n.t('common:label_discard_changes'),
+            content: i18n.t('post:alert_content_back_edit_post'),
+            showCloseButton: true,
             cancelBtn: true,
-            confirmLabel: t('common:btn_discard'),
+            cancelLabel: i18n.t('common:btn_continue_editing'),
+            confirmLabel: i18n.t('common:btn_discard'),
             onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
           }),
         );
         return;
       }
     } else {
-      if (content) {
+      if (content || chosenAudiences?.length > 0) {
         dispatch(
-          modalActions.showAlert({
-            title: t('post:alert_title_back_create_post'),
-            content: t('post:alert_content_back_create_post'),
-            cancelBtn: true,
-            confirmLabel: t('common:btn_discard'),
-            onConfirm: () => rootNavigation.goBack(),
+          modalActions.showModal({
+            isOpen: true,
+            ContentComponent: (
+              <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
+            ),
+            props: {webModalStyle: {minHeight: undefined}},
           }),
         );
         return;
@@ -156,12 +224,33 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.goBack();
   };
 
-  const onPressPost = async () => {
-    const tags: any = []; //todo remove default
+  const onPressSaveDraft = async () => {
+    if (isEditDraftPost && initPostData?.id) {
+      await onPressPost(true, true);
+    } else {
+      await onPressPost(true);
+    }
+  };
 
+  const onPressPost = async (
+    isSaveAsDraft?: boolean,
+    isEditDraft?: boolean,
+  ) => {
     const users: number[] = [];
     const groups: number[] = [];
     const audience = {groups, users};
+
+    const {imageError, images} = validateImages(selectingImages, t);
+
+    if (imageError) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: imageError,
+          props: {textProps: {useI18n: true}, type: 'error'},
+        }),
+      );
+      return;
+    }
 
     chosenAudiences.map((selected: IAudience) => {
       if (selected.type === 'user') {
@@ -171,12 +260,30 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
     });
 
-    if (isEditPost && initPostData?.id) {
+    if (isEditDraftPost && initPostData?.id) {
+      const postData = {content, images, videos: [], files: []};
+      const draftData: IPostCreatePost = {
+        getstream_id: initPostData.id,
+        data: postData,
+        audience,
+      };
+      if (important?.active) {
+        draftData.important = important;
+      }
+      const payload: IPayloadPutEditDraftPost = {
+        id: initPostData?.id,
+        replaceWithDetail: replaceWithDetail,
+        data: draftData,
+        userId: userId,
+        streamClient: streamClient,
+        publishNow: !isEditDraft,
+      };
+      dispatch(postActions.putEditDraftPost(payload));
+    } else if (isEditPost && initPostData?.id) {
       const newEditData: IPostCreatePost = {
         getstream_id: initPostData.id,
         data,
         audience,
-        tags,
       };
       if (important?.active) {
         newEditData.important = important;
@@ -188,7 +295,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       dispatch(postActions.putEditPost(payload));
     } else {
-      const payload: IPostCreatePost = {data, audience, tags};
+      const postData = {content, images, videos: [], files: []};
+      const payload: IPostCreatePost = {
+        data: postData,
+        audience,
+        is_draft: isSaveAsDraft,
+        userId,
+        streamClient,
+        createFromGroupId,
+      };
       if (important?.active) {
         payload.important = important;
       }
@@ -222,105 +337,154 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     // }
   };
 
-  const onOpenPostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(true));
-  };
-  const onClosePostToolbarModal = () => {
-    dispatch(postActions.setOpenPostToolBarModal(false));
+  const renderContent = () => {
+    const shouldScroll = selectingImages?.length > 0;
+    const Container = shouldScroll ? ScrollView : View;
+
+    return (
+      <Container style={shouldScroll ? {} : styles.flex1}>
+        <View style={shouldScroll ? {} : styles.flex1}>
+          <MentionInput
+            mentionInputRef={mentionInputRef}
+            style={shouldScroll ? {} : styles.flex1}
+            textInputStyle={shouldScroll ? {} : styles.flex1}
+            modalPosition={'bottom'}
+            onPress={onPressMentionAudience}
+            onChangeText={onChangeText}
+            ComponentInput={PostInput}
+            title={i18n.t('post:mention_title')}
+            emptyContent={i18n.t('post:mention_empty_content')}
+            getDataPromise={postDataHelper.getSearchMentionAudiences}
+            getDataParam={{group_ids: strGroupIds}}
+            getDataResponseKey={'data'}
+            disabled={loading}
+            fullWidth={!isWeb}
+            modalStyle={isWeb ? {maxHeight: 350} : {}}
+            showShadow={isWeb}
+          />
+          <PostPhotoPreview
+            data={images || []}
+            style={{alignSelf: 'center'}}
+            uploadType={uploadTypes.postImage}
+            onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
+          />
+        </View>
+      </Container>
+    );
   };
 
   return (
-    <View style={styles.container}>
-      <ScreenWrapper isFullView testID={'CreatePostScreen'}>
-        <Header
-          titleTextProps={{useI18n: true}}
-          title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
-          buttonText={isEditPost ? 'common:btn_save' : 'post:post_button'}
-          buttonProps={{
-            loading: loading,
-            disabled: disableButtonPost,
-            color: colors.primary7,
-            textColor: colors.textReversed,
-            useI18n: true,
-          }}
-          onPressBack={onPressBack}
-          onPressButton={onPressPost}
-        />
-        {!isEditPost && (
-          <View>
-            {!!important?.active && <ImportantStatus notExpired />}
-            <CreatePostChosenAudiences />
-            <Divider />
-          </View>
-        )}
-        <MentionInput
-          style={styles.flex1}
-          textInputStyle={styles.flex1}
-          modalStyle={styles.mentionInputModal}
-          modalPosition={'bottom'}
-          onPress={onPressMentionAudience}
-          onChangeText={onChangeText}
-          value={content}
-          ComponentInput={PostInput}
-          title={t('post:mention_title')}
-          emptyContent={t('post:mention_empty_content')}
-          getDataPromise={postDataHelper.getSearchMentionAudiences}
-          getDataParam={{group_ids: strGroupIds}}
-          getDataResponseKey={'data'}
-        />
-        {!isEditPost && (
-          <PostToolbar
-            isOpenModal={isOpenModal}
-            onOpenModal={onOpenPostToolbarModal}
-            onCloseModal={onClosePostToolbarModal}
-            modalizeRef={toolbarModalizeRef}
-          />
-        )}
-      </ScreenWrapper>
-    </View>
+    <ScreenWrapper isFullView testID={'CreatePostScreen'}>
+      <Header
+        titleTextProps={{useI18n: true}}
+        title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
+        buttonText={
+          isEditPost
+            ? isEditDraftPost
+              ? 'common:btn_publish'
+              : 'common:btn_save'
+            : 'post:post_button'
+        }
+        buttonProps={{
+          loading: loading,
+          disabled: disableButtonPost,
+          useI18n: true,
+          highEmphasis: true,
+        }}
+        onPressBack={onPressBack}
+        onPressButton={() => onPressPost(false)}
+      />
+      {!isEditContentOnly && (
+        <View>
+          {!!important?.active && <ImportantStatus notExpired />}
+          <CreatePostChosenAudiences disabled={loading} />
+          <Divider />
+        </View>
+      )}
+      {renderContent()}
+      {!isEditContentOnly && (
+        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+      )}
+    </ScreenWrapper>
   );
 };
 
-const styles = StyleSheet.create({
-  flex1: {flex: 1},
-  container: {
-    flex: 1,
-  },
-  header: {
-    justifyContent: 'space-between',
-  },
-  sendTo: {
-    marginHorizontal: margin.big,
-    marginVertical: margin.base,
-  },
-  chooseAudience: {
-    marginHorizontal: margin.small,
-    marginVertical: margin.base,
-    borderRadius: 50,
-    paddingHorizontal: padding.base,
-    paddingVertical: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textContent: {
-    minHeight: 500,
-    marginVertical: margin.base,
-    marginHorizontal: margin.big,
-  },
-  button: {
-    height: 35,
-  },
-  actionList: {
-    justifyContent: 'flex-end',
-    marginVertical: margin.big,
-  },
-  audienceList: {
-    marginBottom: margin.large,
-    marginHorizontal: margin.large,
-  },
-  mentionInputModal: {
-    maxHeight: 180,
-  },
-});
+const validateImages = (
+  selectingImages: IFilePicked[] | IActivityDataImage[],
+  t: any,
+) => {
+  let imageError = '';
+  const images: IActivityDataImage[] = [];
+  // @ts-ignore
+  selectingImages?.map?.((item: any) => {
+    if (item?.url) {
+      images.push({
+        name: item?.url || '',
+        origin_name: item?.fileName,
+        width: item?.file?.width,
+        height: item?.file?.height,
+      });
+    } else {
+      const {file, fileName} = item || {};
+      const {url, uploading} =
+        FileUploader.getInstance().getFile(fileName) || {};
+      if (uploading) {
+        imageError = t('post:error_wait_uploading');
+      } else if (!url) {
+        imageError = t('error_upload_failed');
+      }
+      images.push({
+        name: url || '',
+        origin_name: fileName,
+        width: file?.width,
+        height: file?.height,
+      });
+    }
+  });
+  return {imageError, images};
+};
+
+const themeStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+
+  return StyleSheet.create({
+    flex1: {flex: 1},
+    container: {
+      flex: 1,
+    },
+    header: {
+      justifyContent: 'space-between',
+    },
+    sendTo: {
+      marginHorizontal: spacing.margin.big,
+      marginVertical: spacing.margin.base,
+    },
+    chooseAudience: {
+      marginHorizontal: spacing.margin.small,
+      marginVertical: spacing.margin.base,
+      borderRadius: 50,
+      paddingHorizontal: padding.base,
+      paddingVertical: 3,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    textContent: {
+      minHeight: 500,
+      marginVertical: spacing.margin.base,
+      marginHorizontal: spacing.margin.big,
+    },
+    button: {
+      height: 35,
+    },
+    actionList: {
+      justifyContent: 'flex-end',
+      marginVertical: spacing.margin.big,
+    },
+    audienceList: {
+      marginBottom: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
+    },
+  });
+};
 
 export default CreatePost;

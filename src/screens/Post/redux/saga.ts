@@ -1,12 +1,16 @@
-import {put, call, takeLatest, select} from 'redux-saga/effects';
+import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get} from 'lodash';
-import i18n from 'i18next';
 
 import {
   IOwnReaction,
+  IPayloadAddToAllPost,
   IPayloadCreateComment,
   IPayloadGetCommentsById,
+  IPayloadGetDraftPosts,
+  IPayloadGetPostDetail,
+  IPayloadPublishDraftPost,
   IPayloadPutEditComment,
+  IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPayloadReactToComment,
   IPayloadReactToPost,
@@ -28,6 +32,8 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
+import homeActions from '~/screens/Home/redux/actions';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -40,13 +46,13 @@ export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
-  yield takeLatest(postTypes.DELETE_POST, deletePost);
+  yield takeEvery(postTypes.DELETE_POST, deletePost);
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
-  yield takeLatest(postTypes.POST_REACT_TO_POST, postReactToPost);
-  yield takeLatest(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
-  yield takeLatest(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
-  yield takeLatest(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
+  yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
+  yield takeEvery(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
+  yield takeEvery(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
+  yield takeEvery(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
     showPostAudienceBottomSheet,
@@ -60,6 +66,10 @@ export default function* postSaga() {
     updateAllCommentsByParentIdsWithComments,
   );
   yield takeLatest(postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId);
+  yield takeLatest(postTypes.GET_POST_DETAIL, getPostDetail);
+  yield takeEvery(postTypes.GET_DRAFT_POSTS, getDraftPosts);
+  yield takeEvery(postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost);
+  yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
 }
 
 function* postCreateNewPost({
@@ -68,23 +78,55 @@ function* postCreateNewPost({
   type: string;
   payload: IPostCreatePost;
 }) {
-  console.log(
-    '\x1b[36m',
-    'namanh --- postCreateNewPost | postCreateNewPost : ',
-    '\x1b[0m',
-    payload,
-  );
+  const {userId, streamClient, createFromGroupId, ...postPayload} =
+    payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.postCreateNewPost, payload);
-    yield put(postActions.setLoadingCreatePost(false));
+    const response = yield call(postDataHelper.postCreateNewPost, postPayload);
     if (response.data) {
       const postData: IPostActivity = response.data;
-      yield put(postActions.addToAllPosts(postData));
-      yield put(postActions.setPostDetail(postData));
-      navigation.replace(homeStack.postDetail);
+      yield put(postActions.addToAllPosts({data: postData}));
+
+      if (userId && streamClient) {
+        if (payload?.is_draft) {
+          yield put(postActions.getDraftPosts({userId, streamClient}));
+        }
+        if (createFromGroupId) {
+          yield put(groupsActions.clearGroupPosts());
+          const getGroupPostsPayload = {
+            streamClient,
+            userId: Number(userId),
+            groupId: Number(createFromGroupId),
+          };
+          yield put(groupsActions.getGroupPosts(getGroupPostsPayload));
+        } else {
+          yield put(
+            homeActions.getHomePosts({
+              streamClient,
+              userId: `${userId}`,
+              isRefresh: true,
+            }),
+          );
+        }
+      }
+
+      yield timeOut(500);
+      if (payload?.is_draft) {
+        yield put(
+          modalActions.showHideToastMessage({
+            content: 'post:draft:text_draft_saved',
+            props: {textProps: {useI18n: true}, type: 'success'},
+          }),
+        );
+        navigation?.goBack?.();
+      } else {
+        navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+      }
+      yield timeOut(1000);
+      yield put(postActions.setLoadingCreatePost(false));
     } else {
       //todo handle post error
+      yield put(postActions.setLoadingCreatePost(false));
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
@@ -172,10 +214,9 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
         post.object.data = data?.data || {};
       }
       //todo waiting for backend update response, replace whole object from response instead of local change
-      yield put(postActions.addToAllPosts(post));
+      yield put(postActions.addToAllPosts({data: post}));
       if (replaceWithDetail) {
-        yield put(postActions.setPostDetail(post));
-        navigation.replace(homeStack.postDetail);
+        navigation.replace(homeStack.postDetail, {post_id: post?.id});
       } else {
         navigation.goBack();
       }
@@ -231,7 +272,7 @@ function* deletePost({payload}: {type: string; payload: string}) {
         get(state, postKeySelector.postById(payload)),
       );
       post.deleted = true;
-      yield put(postActions.addToAllPosts(post));
+      yield put(postActions.addToAllPosts({data: post}));
       yield timeOut(500);
 
       yield put(
@@ -239,7 +280,7 @@ function* deletePost({payload}: {type: string; payload: string}) {
           content: 'post:delete_post_complete',
           props: {
             textProps: {variant: 'h6', useI18n: true},
-            type: 'error',
+            type: 'success',
           },
         }),
       );
@@ -254,16 +295,24 @@ function* addToAllPosts({
   payload,
 }: {
   type: string;
-  payload: IPostActivity[] | IPostActivity;
+  payload: IPayloadAddToAllPost;
 }) {
+  const {data, handleComment} = payload || {};
   const allPosts = yield select(state => state?.post?.allPosts) || {};
   const newAllPosts = {...allPosts};
   const newComments: IReaction[] = [];
   const newAllCommentByParentId: any = {};
 
-  if (isArray(payload) && payload.length > 0) {
-    payload.map((item: IPostActivity) => {
-      if (item?.id) {
+  let posts: IPostActivity[] = [];
+  if (isArray(data) && data.length > 0) {
+    posts = posts.concat(data);
+  } else {
+    posts = new Array(data) as IPostActivity[];
+  }
+
+  posts.map((item: IPostActivity) => {
+    if (item?.id) {
+      if (handleComment) {
         const postComments = sortComments(
           item?.latest_reactions?.comment || [],
         );
@@ -283,20 +332,19 @@ function* addToAllPosts({
         }
         //todo remove code above later
 
-        newAllPosts[item.id] = item;
         newAllCommentByParentId[item.id] = postComments;
         postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
       }
-    });
-  } else if (payload && 'id' in payload && payload.id) {
-    const postComments = sortComments(payload?.latest_reactions?.comment || []);
-    newAllPosts[payload.id] = payload;
-    newAllCommentByParentId[payload.id] = postComments;
-    postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
-  }
+      newAllPosts[item.id] = item;
+    }
+  });
 
-  yield put(postActions.addToAllComments(newComments));
-  yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
+  if (handleComment) {
+    yield put(postActions.addToAllComments(newComments));
+    yield put(
+      postActions.updateAllCommentsByParentIds(newAllCommentByParentId),
+    );
+  }
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
@@ -338,7 +386,7 @@ function* onUpdateReactionOfPostById(
     );
     post.reaction_counts = reactionCounts;
     post.own_reactions = ownReaction;
-    yield put(postActions.addToAllPosts(post));
+    yield put(postActions.addToAllPosts({data: post}));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
   }
@@ -352,18 +400,22 @@ function* postReactToPost({
 }) {
   const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
+    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+    const cReactionCounts1 = post1.reaction_counts || {};
+    const cOwnReaction1 = post1.own_reactions || {};
+
     const data: ReactionType[] = [];
     data.push(reactionId);
-    const added = ownReaction?.[reactionId]?.length > 0;
+    const added = cOwnReaction1?.[reactionId]?.length > 0;
     if (!added) {
-      const newOwnReaction: IOwnReaction = {...ownReaction};
+      const newOwnReaction1: IOwnReaction = {...cOwnReaction1};
       const reactionArr: IReaction[] = [];
-      reactionArr.push({kind: reactionId});
-      newOwnReaction[reactionId] = reactionArr;
-      const newReactionCounts = {...reactionCounts};
+      reactionArr.push({loading: true});
+      newOwnReaction1[reactionId] = reactionArr;
+      const newReactionCounts = {...cReactionCounts1};
       newReactionCounts[reactionId] =
         (newReactionCounts?.[reactionId] || 0) + 1;
-      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+      yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
       const response = yield call(
         postDataHelper.postReaction,
@@ -373,11 +425,20 @@ function* postReactToPost({
         userId,
       );
       if (response?.data?.[0]) {
+        const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+        const cReactionCounts2 = post2.reaction_counts || {};
+        const cOwnReaction2 = post2.own_reactions || {};
+        const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
+
         const reactionArr2: IReaction[] = [];
         reactionArr2.push({id: response?.data?.[0]});
-        newOwnReaction[reactionId] = reactionArr2;
+        newOwnReaction2[reactionId] = reactionArr2;
 
-        yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+        yield onUpdateReactionOfPostById(
+          id,
+          {...newOwnReaction2},
+          {...cReactionCounts2},
+        );
       }
     }
   } catch (e) {
@@ -394,17 +455,33 @@ function* deleteReactToPost({
 }) {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
-    const rId = ownReaction?.[reactionId]?.[0]?.id;
+    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+    const cReactionCounts1 = post1.reaction_counts || {};
+    const cOwnReaction1 = post1.own_reactions || {};
+
+    const rId = cOwnReaction1?.[reactionId]?.[0]?.id;
     if (rId) {
-      const newOwnReaction = {...ownReaction};
-      newOwnReaction[reactionId] = [];
-      const newReactionCounts = {...reactionCounts};
-      newReactionCounts[reactionId] = Math.max(
-        0,
-        (newReactionCounts[reactionId] || 0) - 1,
-      );
-      yield onUpdateReactionOfPostById(id, newOwnReaction, newReactionCounts);
+      const newOwnReaction1: IOwnReaction = {...cOwnReaction1};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({loading: true});
+      newOwnReaction1[reactionId] = reactionArr;
+      yield onUpdateReactionOfPostById(id, newOwnReaction1, {
+        ...cReactionCounts1,
+      });
+
       yield call(postDataHelper.deleteReaction, rId);
+
+      const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+      const cReactionCounts2 = post2.reaction_counts || {};
+      const cOwnReaction2 = post2.own_reactions || {};
+      const newOwnReaction2 = {...cOwnReaction2};
+      newOwnReaction2[reactionId] = [];
+      const newReactionCounts2 = {...cReactionCounts2};
+      newReactionCounts2[reactionId] = Math.max(
+        0,
+        (newReactionCounts2[reactionId] || 0) - 1,
+      );
+      yield onUpdateReactionOfPostById(id, newOwnReaction2, newReactionCounts2);
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
@@ -455,20 +532,26 @@ function* postReactToComment({
     return;
   }
   try {
+    const cComment1 =
+      (yield select(s => get(s, postKeySelector.commentById(id)))) || comment;
+    const cReactionCount1 = cComment1.children_counts || {};
+    const cOwnReactions1 = cComment1.own_children || {};
+
     const data: ReactionType[] = [];
     data.push(reactionId);
-    const added = ownReaction?.[reactionId]?.length > 0;
+    const added = cOwnReactions1?.[reactionId]?.length > 0;
     if (!added) {
-      const newChildrenCounts = {...reactionCounts};
-      newChildrenCounts[reactionId] = (newChildrenCounts[reactionId] || 0) + 1;
-      const newOwnChildren = {...ownReaction};
+      const newOwnChildren1 = {...cOwnReactions1};
       const reactionArr: IReaction[] = [];
-      reactionArr.push({kind: reactionId});
-      newOwnChildren[reactionId] = reactionArr;
+      reactionArr.push({loading: true});
+      newOwnChildren1[reactionId] = reactionArr;
+      const newChildrenCounts1 = {...cReactionCount1};
+      newChildrenCounts1[reactionId] =
+        (newChildrenCounts1[reactionId] || 0) + 1;
       yield onUpdateReactionOfCommentById(
         id,
-        newOwnChildren,
-        newChildrenCounts,
+        newOwnChildren1,
+        newChildrenCounts1,
         comment,
       );
 
@@ -480,13 +563,19 @@ function* postReactToComment({
         userId,
       );
       if (response?.data?.[0]) {
+        const cComment2 =
+          (yield select(s => get(s, postKeySelector.commentById(id)))) ||
+          comment;
+        const cReactionCount2 = cComment2.children_counts || {};
+        const cOwnReactions2 = cComment2.own_children || {};
+        const newOwnChildren2 = {...cOwnReactions2};
         const reactionArr2: IReaction[] = [];
         reactionArr2.push({id: response?.data?.[0]});
-        newOwnChildren[reactionId] = reactionArr2;
+        newOwnChildren2[reactionId] = reactionArr2;
         yield onUpdateReactionOfCommentById(
           id,
-          newOwnChildren,
-          newChildrenCounts,
+          newOwnChildren2,
+          {...cReactionCount2},
           comment,
         );
       }
@@ -512,21 +601,44 @@ function* deleteReactToComment({
   try {
     const rId = ownReaction?.[reactionId]?.[0]?.id;
     if (rId) {
-      const newChildrenCounts = {...reactionCounts};
-      newChildrenCounts[reactionId] = Math.max(
-        0,
-        (newChildrenCounts[reactionId] || 0) - 1,
-      );
-      const newOwnChildren = {...ownReaction};
-      newOwnChildren[reactionId] = [];
+      const cComment1 = yield select(s =>
+        get(s, postKeySelector.commentById(id)),
+      ) || {};
+      const cReactionCount1 = cComment1.children_counts || {};
+      const cOwnReactions1 = cComment1.own_children || {};
+
+      const newOwnChildren1 = {...cOwnReactions1};
+      const reactionArr: IReaction[] = [];
+      reactionArr.push({loading: true});
+      newOwnChildren1[reactionId] = reactionArr;
       yield onUpdateReactionOfCommentById(
         id,
-        newOwnChildren,
-        newChildrenCounts,
+        newOwnChildren1,
+        {...cReactionCount1},
         comment,
       );
 
       yield call(postDataHelper.deleteReaction, rId);
+
+      const cComment2 = yield select(s =>
+        get(s, postKeySelector.commentById(id)),
+      ) || {};
+      const cReactionCount2 = cComment2.children_counts || {};
+      const cOwnReactions2 = cComment2.own_children || {};
+
+      const newChildrenCounts2 = {...cReactionCount2};
+      newChildrenCounts2[reactionId] = Math.max(
+        0,
+        (newChildrenCounts2[reactionId] || 0) - 1,
+      );
+      const newOwnChildren2 = {...cOwnReactions2};
+      newOwnChildren2[reactionId] = [];
+      yield onUpdateReactionOfCommentById(
+        id,
+        newOwnChildren2,
+        newChildrenCounts2,
+        comment,
+      );
     }
   } catch (e) {
     yield onUpdateReactionOfCommentById(
@@ -665,6 +777,150 @@ function* addChildCommentToCommentsOfPost({
   }
 }
 
+function* getDraftPosts({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetDraftPosts;
+}) {
+  const {userId, streamClient, isRefresh = true} = payload;
+  const draftPostsData = yield select(s =>
+    get(s, postKeySelector.draftPostsData),
+  );
+  const {
+    posts: draftPosts,
+    canLoadMore,
+    refreshing,
+    loading,
+  } = draftPostsData || {};
+  try {
+    if (!refreshing && !loading && (isRefresh || canLoadMore)) {
+      if (isRefresh) {
+        const newData = {...draftPostsData, refreshing: true};
+        yield put(postActions.setDraftPosts(newData));
+      } else {
+        const newData = {...draftPostsData, loading: true};
+        yield put(postActions.setDraftPosts(newData));
+      }
+
+      const offset = isRefresh ? 0 : draftPosts?.length || 0;
+      const p = {userId, streamClient, offset: offset};
+      const response = yield call(postDataHelper.getDraftPosts, p);
+      const newPosts = isRefresh
+        ? response?.data || []
+        : draftPosts.concat(response?.data || []);
+      yield put(
+        postActions.setDraftPosts({
+          posts: newPosts,
+          canLoadMore: response?.canLoadMore,
+          loading: false,
+          refreshing: false,
+        }),
+      );
+    } else {
+      console.log(`\x1b[31m🐣️ saga getDraftPosts cant load more\x1b[0m`);
+    }
+  } catch (e) {
+    const newData = {...draftPostsData, loading: false, refreshing: false};
+    yield put(postActions.setDraftPosts(newData));
+    console.log(`\x1b[31m🐣️ saga getDraftPosts error: `, e, `\x1b[0m`);
+  }
+}
+
+function* postPublishDraftPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadPublishDraftPost;
+}) {
+  const {
+    draftPostId,
+    onSuccess,
+    onError,
+    replaceWithDetail,
+    userId,
+    streamClient,
+  } = payload || {};
+  try {
+    yield put(postActions.setLoadingCreatePost(true));
+    const res = yield call(postDataHelper.postPublishDraftPost, draftPostId);
+    yield put(postActions.setLoadingCreatePost(false));
+    if (res.data) {
+      onSuccess?.();
+      const postData: IPostActivity = res.data;
+      yield put(postActions.addToAllPosts({data: postData}));
+      if (replaceWithDetail) {
+        navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+      }
+      if (userId && streamClient) {
+        const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+          userId,
+          streamClient,
+          isRefresh: true,
+        };
+        yield put(postActions.getDraftPosts(payloadGetDraftPosts));
+      }
+    } else {
+      onError?.();
+      showError(res);
+    }
+  } catch (e) {
+    yield put(postActions.setLoadingCreatePost(false));
+    onError?.();
+    showError(e);
+  }
+}
+
+function* putEditDraftPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadPutEditDraftPost;
+}) {
+  const {id, data, replaceWithDetail, userId, streamClient, publishNow} =
+    payload || {};
+  if (!id || !data) {
+    console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
+    return;
+  }
+  try {
+    yield put(postActions.setLoadingCreatePost(true));
+    const response = yield call(postDataHelper.putEditPost, id, data);
+    if (response?.data) {
+      if (publishNow) {
+        const p: IPayloadPublishDraftPost = {
+          draftPostId: id,
+          replaceWithDetail: replaceWithDetail,
+          userId,
+          streamClient,
+          refreshDraftPosts: true,
+        };
+        yield put(postActions.postPublishDraftPost(p));
+      } else {
+        yield put(postActions.setLoadingCreatePost(false));
+        const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+          userId,
+          streamClient,
+          isRefresh: true,
+        };
+        yield put(postActions.getDraftPosts(payloadGetDraftPosts));
+        navigation.goBack();
+        yield put(
+          modalActions.showHideToastMessage({
+            content: 'post:draft:text_draft_saved',
+            props: {textProps: {useI18n: true}, type: 'success'},
+          }),
+        );
+      }
+    } else {
+      yield put(postActions.setLoadingCreatePost(false));
+    }
+  } catch (e) {
+    yield put(postActions.setLoadingCreatePost(true));
+    yield showError(e);
+  }
+}
+
 function* getCommentsByPostId({
   payload,
 }: {
@@ -675,21 +931,23 @@ function* getCommentsByPostId({
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
-    callbackLoading?.(false);
-    if (response?.length > 0) {
+    const newList = response?.results;
+    const canLoadMore = !!response?.next;
+    callbackLoading?.(false, canLoadMore);
+    if (newList?.length > 0) {
       if (commentId) {
         //get child comment of comment
         yield addChildCommentToCommentsOfPost({
           postId: postId,
           commentId: commentId,
-          childComments: response,
+          childComments: newList,
         });
-        yield put(postActions.addToAllComments(response));
+        yield put(postActions.addToAllComments(newList));
       } else {
         //get comment of post
-        const payload = {id: postId, comments: response, isMerge};
+        const payload = {id: postId, comments: newList, isMerge};
         const newAllComments: IReaction[] = [];
-        response.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
+        newList.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
 
         yield put(postActions.addToAllComments(newAllComments));
         yield put(
@@ -698,12 +956,44 @@ function* getCommentsByPostId({
       }
     }
   } catch (e) {
-    console.log(
-      `\x1b[34m🐣️ saga getCommentsById error:`,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
+    console.log(`\x1b[31m🐣️ saga getCommentsByPostId error: `, e, `\x1b[0m`);
     callbackLoading?.(false);
     yield showError(e);
+  }
+}
+
+function* getPostDetail({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetPostDetail;
+}) {
+  const {userId, postId, streamClient, callbackLoading} = payload || {};
+  if (!userId || !postId || !streamClient) {
+    console.log(`\x1b[31m🐣️ saga getPostDetail invalid params\x1b[0m`);
+    return;
+  }
+  try {
+    callbackLoading?.(true, false);
+    const response = yield call(
+      postDataHelper.getPostDetail,
+      userId,
+      streamClient,
+      postId,
+    );
+    yield timeOut(500);
+    yield put(postActions.addToAllPosts({data: response, handleComment: true}));
+    callbackLoading?.(false, true);
+  } catch (e) {
+    callbackLoading?.(false, false);
+    const post = yield select(state =>
+      get(state, postKeySelector.postById(postId)),
+    );
+    if (post) {
+      post.deleted = true;
+      yield put(postActions.addToAllPosts({data: post}));
+    }
+    showError(e);
   }
 }
 

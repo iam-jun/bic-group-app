@@ -1,16 +1,15 @@
-import {put, takeLatest, takeEvery, select} from 'redux-saga/effects';
-import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
-import notificationsActions from '~/screens/Notification/redux/actions';
-import notificationsTypes from '~/screens/Notification/redux/types';
-import {IGetStreamDispatch} from '~/interfaces/common';
-import notificationSelector from './selector';
-import {get} from 'lodash';
-import {timeOut} from '~/utils/common';
+import {cloneDeep, get} from 'lodash';
+import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
+import {IGetStreamDispatch, IToastMessage} from '~/interfaces/common';
 import {
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
 } from '~/interfaces/INotification';
-import notificationActions from '~/constants/notificationActions';
+import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
+import notificationsActions from '~/screens/Notification/redux/actions';
+import notificationsTypes from '~/screens/Notification/redux/types';
+import * as modalActions from '~/store/modal/actions';
+import notificationSelector from './selector';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -24,15 +23,21 @@ export default function* notificationsSaga() {
   );
 }
 
-function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
+function* getNotifications({
+  payload,
+}: {
+  payload: IGetStreamDispatch;
+  type: string;
+}) {
   try {
     const {userId, streamClient} = payload;
-
+    yield put(notificationsActions.setLoadingNotifications(true));
     const response = yield notificationsDataHelper.getNotificationList(
       userId,
       streamClient,
     );
 
+    yield put(notificationsActions.setLoadingNotifications(false));
     yield put(
       notificationsActions.setNotifications({
         notifications: response.results,
@@ -40,6 +45,7 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
       }),
     );
   } catch (err) {
+    yield put(notificationsActions.setLoadingNotifications(true));
     console.log(
       '\x1b[33m',
       'khanh --- getNotifications | getNotifications : error',
@@ -50,7 +56,12 @@ function* getNotifications({payload}: {payload: IGetStreamDispatch}) {
 }
 
 // load new notifications when have realtime event
-function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
+function* loadNewNotifications({
+  payload,
+}: {
+  payload: ILoadNewNotifications;
+  type: string;
+}) {
   try {
     const {userId, notiGroupId, streamClient, limit} = payload;
     const response = yield notificationsDataHelper.loadNewNotification(
@@ -71,16 +82,22 @@ function* loadNewNotifications({payload}: {payload: ILoadNewNotifications}) {
   }
 }
 
-function* markAsReadAll({payload}: {payload: IGetStreamDispatch}) {
+function* markAsReadAll({
+  payload,
+}: {
+  payload: IGetStreamDispatch;
+  type: string;
+}) {
   try {
     // send request to Getstream to mark notification as read without waiting response
     const {userId, streamClient} = payload;
     notificationsDataHelper.markAsReadAll(userId, streamClient);
 
     // get all notifications from store
-    const notifications = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
+    const notifications =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || [];
 
     // then set theirs is_read field by true to un-highlight them directly on device store
     notifications.forEach(notificationGroup => {
@@ -95,16 +112,27 @@ function* markAsReadAll({payload}: {payload: IGetStreamDispatch}) {
       }),
     );
 
-    yield timeOut(500);
-    yield put(notificationsActions.setShowMarkedAsReadToast(true));
-    yield timeOut(2500); // keep the toast messtion 2s then hide it
-    yield put(notificationsActions.setShowMarkedAsReadToast(false));
+    yield put(
+      modalActions.showHideToastMessage({
+        content: 'notification:mark_all_as_read_success',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m');
+    yield showError(err);
   }
 }
 
-function* markAsSeenAll({payload}: {payload: IGetStreamDispatch}) {
+function* markAsSeenAll({
+  payload,
+}: {
+  payload: IGetStreamDispatch;
+  type: string;
+}) {
   try {
     // send request to Getstream to mark notification as seen without waiting response
     const {userId, streamClient} = payload;
@@ -129,19 +157,26 @@ function* markAsSeenAll({payload}: {payload: IGetStreamDispatch}) {
     );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsSeenAll error', err, '\x1b[0m');
+    yield showError(err);
   }
 }
 
-function* markAsRead({payload}: {payload: IMarkAsReadAnActivity}) {
+function* markAsRead({
+  payload,
+}: {
+  payload: IMarkAsReadAnActivity;
+  type: string;
+}) {
   try {
     // send request to Getstream to mark notification as read without waiting response
     const {userId, streamClient, activityId} = payload;
     notificationsDataHelper.markAsRead(userId, activityId, streamClient);
 
     // get all notifications from store
-    const notifications = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
+    const notifications =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || [];
 
     // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
     notifications.forEach(notificationGroup => {
@@ -163,7 +198,7 @@ function* markAsRead({payload}: {payload: IMarkAsReadAnActivity}) {
 }
 
 // load more old notifications
-function* loadmore({payload}: {payload: IGetStreamDispatch}) {
+function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
   try {
     // show loading more spinner, set isLoadingMore = true
     yield put(notificationsActions.setIsLoadingMore(true));
@@ -201,4 +236,18 @@ function* loadmore({payload}: {payload: IGetStreamDispatch}) {
   } catch (err) {
     console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
   }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }

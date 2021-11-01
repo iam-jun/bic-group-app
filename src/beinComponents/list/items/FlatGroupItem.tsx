@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {IGroup} from '~/interfaces/IGroup';
@@ -13,6 +13,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import Button from '~/beinComponents/Button';
 
 export interface FlatGroupItemProps extends GroupItemProps {
+  style?: StyleProp<ViewStyle>;
   showSmallestChild?: boolean;
   selectingData?: OnChangeCheckedGroupsData;
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
@@ -33,6 +34,7 @@ const limitLength = 45;
 const limitLengthShort = 35;
 
 const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
+  style,
   showSmallestChild,
   onChangeCheckedGroups,
   selectingData,
@@ -112,7 +114,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     } else if (onPressItem) {
       onPressItem(group);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, group as any);
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: group.id,
+        initial: true,
+      });
     }
   };
 
@@ -151,7 +156,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={StyleSheet.flatten([styles.container, style])}>
       {!hidePath && renderPath()}
       {showTree ? (
         <GroupTree

@@ -65,6 +65,7 @@ const GroupAboutContent = () => {
         }}
         title={i18next.t(title)}
         subTitle={i18next.t(subtitle)}
+        subTitleProps={{variant: 'subtitle'}}
       />
     </View>
   );
@@ -77,7 +78,7 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.large,
+      paddingVertical: spacing.padding.small,
     },
     labelDescription: {
       paddingVertical: spacing.padding.small,
@@ -85,8 +86,14 @@ const createStyle = (theme: ITheme) => {
     descriptionContainer: {
       paddingBottom: spacing.padding.small,
     },
-    memberItem: {height: 44, paddingHorizontal: 0},
-    privacyItem: {height: 56, paddingHorizontal: 0},
+    memberItem: {
+      height: 44,
+      paddingHorizontal: 0,
+    },
+    privacyItem: {
+      height: 56,
+      paddingHorizontal: 0,
+    },
   });
 };
 

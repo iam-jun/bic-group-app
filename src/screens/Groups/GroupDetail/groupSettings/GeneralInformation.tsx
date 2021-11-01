@@ -1,11 +1,12 @@
 import i18next from 'i18next';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
+  ActivityIndicator,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -24,7 +25,7 @@ import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
 import useGroups from '~/hooks/groups';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IFileResponse} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import images from '~/resources/images';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -36,23 +37,31 @@ import {
 } from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
-import {validateFile} from '~/utils/validation';
 import GroupSectionItem from '../components/GroupSectionItem';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 
-const GeneralInformation = () => {
+const GeneralInformation = (props: any) => {
+  const params = props.route.params;
+  const {groupId: id} = params || {};
+
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const {groupDetail, isPrivacyModalOpen} = useGroups();
-  const {id, name, icon, background_img_url, description, privacy} =
+  const {groupDetail, isPrivacyModalOpen, loadingAvatar, loadingCover} =
+    useGroups();
+  const {name, icon, background_img_url, description, privacy} =
     groupDetail.group;
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
 
-  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    // in case for refreshing page on web
+    Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(id));
+  }, [id]);
 
   const helpMessage = () => {
     baseSheetRef.current?.close();
@@ -81,46 +90,39 @@ const GeneralInformation = () => {
     rootNavigation.navigate(groupStack.editGroupDescription);
 
   const uploadFile = (
-    file: IFileResponse,
+    file: IFilePicked,
     fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
   ) => {
     dispatch(
       groupsActions.uploadImage({
         id,
-        image: file,
+        file,
         fieldName,
+        uploadType,
       }),
     );
   };
 
   // fieldName: field name in group profile to be edited
   // 'icon' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (fieldName: 'icon' | 'background_img_url') => {
-    ImagePicker.openPicker({
+  const _openImagePicker = (
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
       ...groupProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
-      multiple: false,
-    }).then(result => {
-      if (!result) return;
-
-      const file = {
-        name: result.filename,
-        size: result.size,
-        type: result.mime,
-        uri: result.path,
-      };
-      const _error = validateFile(file);
-      setError(_error);
-      if (_error) return;
-      // @ts-ignore
-      uploadFile(Platform.OS === 'web' ? result : file, fieldName);
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
     });
   };
 
-  const onEditAvatar = () => _openImagePicker('icon');
+  const onEditAvatar = () => _openImagePicker('icon', uploadTypes.groupAvatar);
 
-  const onEditCover = () => _openImagePicker('background_img_url');
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.groupCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -137,7 +139,7 @@ const GeneralInformation = () => {
           subTitle={
             <Text>
               {`${i18next.t(item.subtitle)} `}
-              <Text onPress={helpMessage} color={theme.colors.link} useI18n>
+              <Text onPress={helpMessage} color={colors.link} useI18n>
                 settings:text_learn_more
               </Text>
             </Text>
@@ -147,11 +149,7 @@ const GeneralInformation = () => {
           }
           RightComponent={
             privacy === item.type ? (
-              <Icon
-                icon={'Check'}
-                size={24}
-                tintColor={theme.colors.primary7}
-              />
+              <Icon icon={'Check'} size={24} tintColor={colors.primary7} />
             ) : undefined
           }
         />
@@ -163,20 +161,28 @@ const GeneralInformation = () => {
     return (
       <View>
         <View style={styles.avatarHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={onEditAvatar}>
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+            <Text.H6
+              color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View style={styles.imageButton}>
-          <Image
-            style={styles.avatar}
-            source={icon || images.img_user_avatar_default}
-          />
+          {!loadingAvatar ? (
+            <Image
+              style={styles.avatar}
+              source={icon || images.img_user_avatar_default}
+            />
+          ) : (
+            <View style={[styles.avatar, styles.imageLoading]}>
+              <ActivityIndicator />
+            </View>
+          )}
         </View>
       </View>
     );
@@ -186,20 +192,28 @@ const GeneralInformation = () => {
     return (
       <View>
         <View style={styles.coverHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={onEditCover}>
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+            <Text.H6
+              color={!loadingCover ? colors.primary7 : colors.textDisabled}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View onLayout={onCoverLayout}>
-          <Image
-            style={styles.cover}
-            source={background_img_url || images.img_cover_default}
-          />
+          {!loadingCover ? (
+            <Image
+              style={styles.cover}
+              source={background_img_url || images.img_cover_default}
+            />
+          ) : (
+            <View style={[styles.cover, styles.imageLoading]}>
+              <ActivityIndicator />
+            </View>
+          )}
         </View>
       </View>
     );
@@ -223,7 +237,7 @@ const GeneralInformation = () => {
 
         <GroupSectionItem
           title={'settings:title_privacy'}
-          subtitle={titleCase(privacy)}
+          subtitle={titleCase(privacy) || ''}
           rightIcon={'EditAlt'}
           onPress={editGroupPrivacy}
         />
@@ -249,7 +263,7 @@ const GeneralInformation = () => {
           ContentComponent={
             <View style={styles.contentBottomSheet}>
               <Text.H5
-                color={theme.colors.iconTint}
+                color={colors.iconTint}
                 style={styles.privacyTypeText}
                 useI18n>
                 settings:title_privacy_type
@@ -271,7 +285,7 @@ const GeneralInformation = () => {
 export default GeneralInformation;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     container: {
@@ -295,6 +309,10 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       maxHeight: 125,
       maxWidth: 125,
       borderRadius: 8,
+    },
+    imageLoading: {
+      backgroundColor: colors.bgDisable,
+      justifyContent: 'center',
     },
     cover: {
       width: '100%',

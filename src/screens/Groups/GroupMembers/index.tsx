@@ -1,5 +1,11 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, StyleSheet, SectionList} from 'react-native';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
+import {
+  View,
+  StyleSheet,
+  SectionList,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -11,6 +17,15 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import appConfig from '~/configs/appConfig';
+import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
+import {IObject} from '~/interfaces/common';
+import groupsDataHelper from '../helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
+import mainStack from '~/router/navigator/MainStack/stack';
+import chatActions from '~/screens/Chat/redux/actions';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import useAuth from '~/hooks/auth';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -19,27 +34,35 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Button from '~/beinComponents/Button';
 
-const GroupMembers = () => {
+const GroupMembers = (props: any) => {
+  const params = props.route.params;
+  const {groupId} = params || {};
+
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
+  const [selectedMember, setSelectedMember] = useState<IObject<any>>({});
+  const clearSelectedMember = () => setSelectedMember({});
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
+  const baseSheetRef: any = useRef();
+  const {user} = useAuth();
 
   //todo handle get data if group data not loaded
 
-  const {id: groupId} =
-    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
+  const loadingGroupMember = useKeySelector(
+    groupsKeySelector.loadingGroupMember,
   );
 
   const getMembers = () => {
@@ -54,10 +77,6 @@ const GroupMembers = () => {
   };
 
   useEffect(() => {
-    if (refreshingGroupPosts) setSearchText('');
-  }, [refreshingGroupPosts]);
-
-  useEffect(() => {
     if (groupMember) {
       const newSectionList: any = [];
 
@@ -65,7 +84,7 @@ const GroupMembers = () => {
         const section: any = {};
         const {name, data} = roleData || {};
         if (name && data) {
-          section.title = `${roleData.name} (${roleData.user_count})`;
+          section.title = `${roleData.name}s (${roleData.user_count})`;
           section.data = roleData.data;
           newSectionList.push(section);
         }
@@ -85,8 +104,139 @@ const GroupMembers = () => {
     };
   }, []);
 
-  const onPressUser = (userId: string) => {
-    alert('onPress userId: ' + userId);
+  // const onPressUser = (userId: string) => {
+  //   alert('onPress userId: ' + userId);
+  // };
+
+  const onPressMenu = (e: any, item: any) => {
+    if (!item || !item.id) return;
+
+    setSelectedMember({
+      ...item,
+    });
+    baseSheetRef.current?.open(e?.pageX, e?.pageY);
+  };
+
+  const goToUserProfile = () => {
+    const {id: userId} = selectedMember;
+    rootNavigation.navigate(mainStack.userProfile, {userId});
+  };
+
+  const goToDirectChat = () => {
+    const {username, fullname} = selectedMember;
+    if (!!username)
+      dispatch(
+        chatActions.createConversation(
+          // @ts-ignore
+          [{username, name: fullname}],
+          true,
+          navigateToChatScreen,
+        ),
+      );
+  };
+
+  const navigateToChatScreen = (roomId: string) => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(chatStack.conversation, {
+        roomId: roomId,
+      });
+      return;
+    }
+    rootNavigation.navigate('chat', {
+      screen: chatStack.conversation,
+      params: {roomId: roomId, initial: false},
+    });
+  };
+
+  const removeMember = (userId: string, userFullname: string) => {
+    dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
+  };
+
+  const alertRemovingMember = () => {
+    if (!selectedMember) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'No member selected',
+          props: {type: 'error'},
+        }),
+      );
+      return;
+    }
+
+    const {id: userId, fullname} = selectedMember;
+
+    const content = i18next
+      .t(`groups:modal_confirm_remove_member:description`)
+      .replace('{name}', `"${fullname}"`);
+
+    const alertPayload = {
+      iconName: 'RemoveUser',
+      title: i18next.t('groups:modal_confirm_remove_member:title'),
+      content: content,
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: colors.primary7,
+      },
+      onConfirm: () => removeMember(userId, fullname),
+      confirmLabel: i18next.t(
+        'groups:modal_confirm_remove_member:button_remove',
+      ),
+      ConfirmBtnComponent: Button.Danger,
+    };
+
+    groupsDataHelper
+      .getUserInnerGroups(groupId, userId)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        const groupsRemovedFrom = [...innerGroups];
+
+        if (groupsRemovedFrom.length === 0) {
+          alertPayload.content = alertPayload.content.replace(
+            '{other groups}',
+            '',
+          );
+        } else {
+          const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
+          alertPayload.content = alertPayload.content.replace(
+            '{other groups}',
+            ` and ${otherGroups}`,
+          );
+        }
+
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.error('Error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
+  };
+
+  const onPressMenuOption = (
+    type: 'view-profile' | 'send-message' | 'set-admin' | 'remove-member',
+  ) => {
+    baseSheetRef.current?.close();
+    switch (type) {
+      case 'view-profile':
+        goToUserProfile();
+        break;
+      case 'send-message':
+        goToDirectChat();
+        break;
+      case 'remove-member':
+        alertRemovingMember();
+        break;
+      default:
+        dispatch(showAlertNewFeature());
+        break;
+    }
   };
 
   const onLoadMore = () => {
@@ -94,7 +244,7 @@ const GroupMembers = () => {
   };
 
   const renderItem = ({item}: any) => {
-    const {id, fullname, avatar, title} = item || {};
+    const {fullname, avatar, title} = item || {};
 
     return (
       <PrimaryItem
@@ -102,7 +252,7 @@ const GroupMembers = () => {
         style={styles.itemContainer}
         avatar={avatar}
         title={fullname}
-        onPressMenu={() => onPressUser(id)}
+        onPressMenu={(e: any) => onPressMenu(e, item)}
         subTitle={title}
         subTitleProps={{variant: 'subtitle', color: colors.textSecondary}}
       />
@@ -116,7 +266,7 @@ const GroupMembers = () => {
   const renderSectionHeader = ({section: {title}}: any) => {
     return (
       <View style={styles.sectionHeader}>
-        <Text.H6S color={colors.textSecondary}>{title}</Text.H6S>
+        <Text.H5 color={colors.textSecondary}>{title}</Text.H5>
       </View>
     );
   };
@@ -140,9 +290,58 @@ const GroupMembers = () => {
     );
   };
 
+  const renderBottomSheet = () => {
+    return (
+      <BottomSheet
+        modalizeRef={baseSheetRef}
+        onClosed={clearSelectedMember}
+        ContentComponent={
+          <View style={styles.bottomSheet}>
+            <PrimaryItem
+              style={styles.menuOption}
+              leftIcon={'UsersAlt'}
+              leftIconProps={{icon: 'UsersAlt', size: 24}}
+              title={i18next.t('groups:member_menu:label_view_profile')}
+              onPress={() => onPressMenuOption('view-profile')}
+            />
+            {selectedMember?.username !== user?.username && (
+              <PrimaryItem
+                style={styles.menuOption}
+                leftIcon={'iconSend'}
+                leftIconProps={{icon: 'iconSend', size: 24}}
+                title={i18next.t('groups:member_menu:label_direct_message')}
+                onPress={() => onPressMenuOption('send-message')}
+              />
+            )}
+            {can_manage_member && (
+              <>
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon={'Star'}
+                  leftIconProps={{icon: 'Star', size: 24}}
+                  title={i18next.t('groups:member_menu:label_set_as_admin')}
+                  onPress={() => onPressMenuOption('set-admin')}
+                />
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon={'TrashAlt'}
+                  leftIconProps={{icon: 'TrashAlt', size: 24}}
+                  title={i18next.t(
+                    'groups:member_menu:label_remove_from_group',
+                  )}
+                  onPress={() => onPressMenuOption('remove-member')}
+                />
+              </>
+            )}
+          </View>
+        }
+      />
+    );
+  };
+
   const goInviteMembers = () => {
     dispatch(groupsActions.clearSelectedUsers());
-    rootNavigation.navigate(groupStack.inviteMembers);
+    rootNavigation.navigate(groupStack.inviteMembers, {groupId});
   };
 
   const searchUsers = (searchQuery: string) => {
@@ -153,10 +352,33 @@ const GroupMembers = () => {
     );
   };
 
-  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+  const searchHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onSearchUser = (text: string) => {
     searchHandler(text);
+  };
+
+  const _renderLoading = () => {
+    if (loadingGroupMember) {
+      return (
+        <View style={styles.loadingMember}>
+          <ActivityIndicator color={colors.borderDisable} />
+        </View>
+      );
+    }
+  };
+
+  const checkingEmptyData = (): any[] => {
+    return sectionList.filter((item: any) => item?.data.length > 0).length === 0
+      ? []
+      : sectionList;
+  };
+
+  const renderEmpty = () => {
+    return !loadingGroupMember ? <NoSearchResult /> : null;
   };
 
   return (
@@ -172,17 +394,23 @@ const GroupMembers = () => {
         {renderInviteMemberButton()}
       </View>
 
+      {_renderLoading()}
+
       <SectionList
         style={styles.content}
-        sections={sectionList}
+        sections={checkingEmptyData()}
         keyExtractor={(item, index) => `section_list_${item}_${index}`}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
         ListHeaderComponent={renderListHeader}
+        ListEmptyComponent={renderEmpty}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{}} />}
+        stickySectionHeadersEnabled={false}
+        showsVerticalScrollIndicator={false}
       />
+      {renderBottomSheet()}
     </ScreenWrapper>
   );
 };
@@ -196,6 +424,7 @@ const createStyle = (theme: ITheme) => {
       paddingVertical: spacing.padding.tiny,
     },
     sectionHeader: {
+      marginTop: spacing.margin.small,
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.base,
@@ -208,22 +437,40 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginHorizontal: spacing.margin.base,
+      marginTop: spacing.margin.base,
     },
     inputSearch: {
       flex: 1,
-      margin: spacing.margin.base,
     },
     inviteButton: {
       backgroundColor: colors.bgButtonSecondary,
       padding: spacing.padding.small,
       borderRadius: 6,
-      marginTop: spacing.margin.base,
-      marginRight: spacing.margin.base,
+      marginLeft: spacing.margin.small,
     },
     iconSmall: {
       marginRight: spacing.margin.small,
+    },
+    loadingMember: {
+      marginTop: spacing.margin.large,
+    },
+    bottomSheet: {
+      paddingVertical: spacing.padding.tiny,
+    },
+    menuOption: {
+      height: 44,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };
 
 export default GroupMembers;
+
+const groupsRemovedFromToString = (groupList: string[]) => {
+  if (groupList.length === 1) {
+    return groupList[0];
+  }
+
+  return `${groupList.length} other inner groups: ${groupList.join(', ')}`;
+};

@@ -1,7 +1,8 @@
-import React, {useContext, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useContext, useEffect, useRef} from 'react';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
@@ -17,12 +18,12 @@ import {accountSettingsMenu} from '~/constants/settings';
 import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import useMenu from '~/hooks/menu';
-import menuActions from '~/screens/Menu/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
+import mainStack from '~/router/navigator/MainStack/stack';
+import appActions from '~/store/app/actions';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -32,46 +33,42 @@ const GeneralSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {changeLanguage, language} = useContext(AppContext);
-  const {isLanguageModalOpen} = useMenu();
 
-  const onLanguageModalClose = () => {
-    dispatch(menuActions.setLanguageModalOpen(false));
-  };
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) dispatch(appActions.setRootScreenName('settings'));
+  }, [isFocused]);
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
   };
 
-  const onAccountSettingsPress = (item: ISetting) => {
+  const onAccountSettingsPress = (item: ISetting, e: any) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(menuStack.userProfile);
+        return rootNavigation.navigate(mainStack.userEdit);
 
       case 'securityLogin':
         return rootNavigation.navigate(menuStack.securityLogin);
 
       case 'language':
-        dispatch(menuActions.setLanguageModalOpen(true));
+        baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
         return;
 
       default:
-        dispatch(
-          modalActions.showAlert({
-            title: 'Info',
-            content:
-              'Function has not been developed. Stay tuned for further releases 😀',
-            onConfirm: () => dispatch(modalActions.hideAlert()),
-            confirmLabel: 'Got it',
-          }),
-        );
+        dispatch(modalActions.showAlertNewFeature());
     }
   };
 
-  const renderItem = ({item}: {item: ILanguage}) => {
+  const renderLanguageOption = ({item}: {item: ILanguage}) => {
     return (
       <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
         <PrimaryItem
+          style={styles.languageOption}
           title={t(item.title)}
+          leftIcon={item.icon}
+          leftIconProps={{icon: item.icon, size: 24}}
           RightComponent={
             language === item.code ? (
               <Icon
@@ -88,17 +85,16 @@ const GeneralSettings = () => {
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
-      <Header title={t('settings:title_account_settings')} />
+      <Header title={t('settings:title_account_settings')} hideBackOnLaptop />
       <ListView
         type="menu"
         data={accountSettingsMenu}
         scrollEnabled={false}
         listStyle={styles.menuList}
         onItemPress={onAccountSettingsPress}
+        showItemSeparator={false}
       />
       <BottomSheet
-        isOpen={isLanguageModalOpen}
-        onClose={onLanguageModalClose}
         modalizeRef={baseSheetRef}
         ContentComponent={
           <View style={styles.contentComponent}>
@@ -112,7 +108,7 @@ const GeneralSettings = () => {
             <ListView
               type="primary"
               data={languages}
-              renderItem={renderItem}
+              renderItem={renderLanguageOption}
               onItemPress={onLanguageMenuPress}
             />
           </View>
@@ -131,12 +127,22 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     menuList: {
       marginTop: spacing.margin.base,
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
     contentComponent: {
-      marginHorizontal: spacing.margin.base,
+      ...Platform.select({
+        web: {
+          width: 200,
+        },
+      }),
     },
     chooseLanguageText: {
       margin: spacing.margin.base,
+      marginHorizontal: spacing.margin.extraLarge,
+    },
+    languageOption: {
+      height: 48,
+      paddingHorizontal: spacing.padding.extraLarge,
     },
   });
 };

@@ -26,7 +26,7 @@ const NoGroupFound = () => {
     <ScreenWrapper style={styles.root} isFullView>
       <Header
         title={i18next.t('error:no_group_found_title')}
-        hideBack={isLaptop}
+        hideBackOnLaptop
       />
       <View style={styles.mainContainer}>
         <SVGIcon

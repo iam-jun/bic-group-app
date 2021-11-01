@@ -1,11 +1,19 @@
 import React, {FC} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
+import {useDispatch} from 'react-redux';
+import {clearToastMessage} from '~/store/modal/actions';
 
 export interface ToastMessageProps {
   type?: 'error' | 'success' | 'informative';
@@ -20,10 +28,17 @@ const ToastMessage: FC<ToastMessageProps> = ({
   children,
   textProps,
   style,
+  onActionPress,
 }: ToastMessageProps) => {
+  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const _onPress = () => {
+    onActionPress?.();
+    dispatch(clearToastMessage());
+  };
 
   const ToastMessageStyle = {
     success: {
@@ -61,7 +76,10 @@ const ToastMessage: FC<ToastMessageProps> = ({
   ]);
 
   return (
-    <View style={containerStyle}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={containerStyle}
+      onPress={_onPress}>
       <Icon
         isButton
         iconStyle={[
@@ -78,7 +96,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
           {children}
         </Text.Body>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

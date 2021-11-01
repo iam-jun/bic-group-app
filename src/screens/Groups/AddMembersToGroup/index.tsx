@@ -10,23 +10,24 @@ import {ITheme} from '~/theme/interfaces';
 import groupsActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
+import appConfig from '~/configs/appConfig';
 
 import MembersSelection from '~/beinFragments/MembersSelection';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-const AddMembersToGroup = (): React.ReactElement => {
+const AddMembersToGroup = (props: any): React.ReactElement => {
+  const params = props.route.params;
+  const {groupId} = params || {};
+
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
   const users = useKeySelector(groupsKeySelector.users);
-  const group = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {id: groupId, name: groupName} = group;
 
   const [searchText, setSearchText] = useState<string>('');
 
@@ -51,7 +52,10 @@ const AddMembersToGroup = (): React.ReactElement => {
     );
   };
 
-  const searchHandler = useCallback(debounce(searchUsers, 1000), []);
+  const searchHandler = useCallback(
+    debounce(searchUsers, appConfig.searchTriggerTime),
+    [],
+  );
 
   const onQueryChanged = (text: string) => {
     searchHandler(text);
@@ -74,8 +78,7 @@ const AddMembersToGroup = (): React.ReactElement => {
         buttonText={i18next.t('common:text_invite')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
-          color: colors.primary7,
-          textColor: colors.textReversed,
+          highEmphasis: true,
         }}
         onPressButton={onInvitePress}
       />

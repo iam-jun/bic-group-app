@@ -3,6 +3,7 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {connect, StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
+import moment from 'moment';
 import {Alert, Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
@@ -12,7 +13,6 @@ import apiConfig, {
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/configs/apiConfig';
-import {initPushTokenMessage} from '~/services/helper';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes, createAction} from '~/utils';
@@ -69,6 +69,19 @@ const dispatchStoreAuthTokens = (
   );
 };
 
+const refreshFailKickOut = () => {
+  _dispatchLogout();
+  _dispatchSessionExpire();
+  isRefreshingToken = false;
+  // count retry limit
+  countLimitRetry = 0;
+  timeEndCountLimit = 0;
+  // bein
+  unauthorizedReqQueue = [];
+  // get stream
+  unauthorizedGetStreamReqQueue = [];
+};
+
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
   console.log(
     '%c ================ REQUEST ================',
@@ -108,7 +121,7 @@ const getBeinIdToken = (): string => {
   );
 };
 
-export const getChatAuthInfo = () => {
+const getChatAuthInfo = () => {
   return _.get(Store.getCurrentAuth(), 'chat', {});
 };
 
@@ -168,7 +181,7 @@ const handleRetry = async (error: AxiosError) => {
   });
 
   // create request to refresh token
-  await getTokenAndCallBackBein();
+  await getTokenAndCallBackBein(error.config.headers.Authorization);
 
   // next
   return newReqPromise;
@@ -176,39 +189,64 @@ const handleRetry = async (error: AxiosError) => {
 
 // get refresh token
 let isRefreshingToken = false;
-const getTokenAndCallBackBein = async (): Promise<void> => {
+let countLimitRetry = 0;
+let timeEndCountLimit = 0;
+const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   if (!isRefreshingToken) {
     isRefreshingToken = true;
+    countLimitRetry++;
+    if (countLimitRetry > 10) {
+      const timeNow = moment.now();
+      if (timeNow >= timeEndCountLimit) {
+        refreshFailKickOut();
+        return;
+      } else {
+        countLimitRetry = 0;
+        timeEndCountLimit = 0;
+      }
+    }
+    if (countLimitRetry == 1) {
+      timeEndCountLimit = moment.now() + 60; // 1 minute from now
+    }
     let isSuccess = true;
 
     try {
-      const oldToken = getBeinIdToken();
       const sessionData = await Auth.currentSession();
       const newToken = sessionData?.getAccessToken().getJwtToken();
       const refreshToken = sessionData?.getRefreshToken().getToken();
       const idToken = sessionData?.getIdToken().getJwtToken();
-      if (idToken === oldToken) {
-        await Auth.currentAuthenticatedUser(); // TODO: verify
-        _dispatchLogout();
-        _dispatchSessionExpire();
+      if (idToken === oldBeinToken) {
+        await Auth.currentAuthenticatedUser(); // TODO: verify when change password kickout
+        refreshFailKickOut();
         isSuccess = false;
+        return;
+      } else {
+        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
       }
-      _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+      const isRefreshSuccess = await refreshAuthTokens();
+      if (!isRefreshSuccess) {
+        await Auth.currentAuthenticatedUser();
+        refreshFailKickOut();
+        isSuccess = false;
+        return;
+      }
     } catch (e) {
-      _dispatchLogout();
-      _dispatchSessionExpire();
+      refreshFailKickOut();
+      return;
     }
 
+    unauthorizedGetStreamReqQueue.forEach(callback => callback(isSuccess));
+    unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
     isRefreshingToken = false;
   }
 };
 
+let alertShow = false;
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
-  let alertShow = false;
   if (error.response) {
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
@@ -289,14 +327,14 @@ const interceptorsResponseError = async (error: AxiosError) => {
  */
 const makeGetStreamRequest = async (
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   funcName: string,
-  params: any,
+  ...params: any
 ) => {
   const user = streamClient.feed(feedSlug, feedId);
   // @ts-ignore
-  return user[funcName](params)
+  return user[funcName](...params)
     .then((getStreamResponse: any) => getStreamResponse)
     .catch(async (activitiesError: FeedResponseError) => {
       return handleResponseFailFeedActivity(
@@ -305,7 +343,7 @@ const makeGetStreamRequest = async (
         feedSlug,
         feedId,
         funcName,
-        params,
+        ...params,
       );
     });
 };
@@ -314,10 +352,10 @@ let unauthorizedGetStreamReqQueue: UnauthorizedReq[] = [];
 const handleResponseFailFeedActivity = async (
   activitiesError: FeedResponseError,
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
   funcName: any,
-  params: any,
+  ...params: any
 ) => {
   if (activitiesError.error.status_code === 403) {
     const newReqPromise = new Promise((resolve, reject) => {
@@ -331,13 +369,14 @@ const handleResponseFailFeedActivity = async (
             getEnv('GET_STREAM_API_KEY'),
             getFeedAccessToken(),
             getEnv('GET_STREAM_APP_ID'),
+            {location: 'singapore'},
           );
           const resp = await makeGetStreamRequest(
             newStreamClient,
             feedSlug,
             feedId,
             funcName,
-            params,
+            ...params,
           );
           return resolve(resp);
         } catch (e) {
@@ -350,26 +389,12 @@ const handleResponseFailFeedActivity = async (
     });
 
     // create request to refresh token
-    await refreshAuthTokensAndRetry();
+    await getTokenAndCallBackBein('');
 
     // next
     return newReqPromise;
   }
   return activitiesError;
-};
-
-let isRefreshingAuthTokens = false;
-const refreshAuthTokensAndRetry = async () => {
-  if (!isRefreshingAuthTokens) {
-    isRefreshingAuthTokens = true;
-    const isRefreshSuccess = await refreshAuthTokens();
-    // TODO: handle when cannot refresh token
-    unauthorizedGetStreamReqQueue.forEach(callback =>
-      callback(isRefreshSuccess),
-    );
-    unauthorizedGetStreamReqQueue = [];
-    isRefreshingAuthTokens = false;
-  }
 };
 
 const refreshAuthTokens = async () => {
@@ -387,19 +412,7 @@ const refreshAuthTokens = async () => {
     notiSubscribeToken,
   );
 
-  // after refresh token, update push token with the new tokens
-  if (Platform.OS === 'web') {
-    return true;
-  }
-  try {
-    const messaging = await initPushTokenMessage();
-    const deviceToken = await messaging().getToken();
-    await makePushTokenRequest(deviceToken, chatAccessToken, chatUserId);
-    return true;
-  } catch (e) {
-    console.log('pushToken when refreshToken failed:', e);
-    return false;
-  }
+  return true;
 };
 
 const getAuthTokens = async () => {
@@ -422,7 +435,7 @@ const getAuthTokens = async () => {
       notiSubscribeToken,
     };
   } catch (e) {
-    console.log('getAuthTokens failed.');
+    console.log('getAuthTokens failed', e);
     return false;
   }
 };
@@ -432,6 +445,25 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     interceptorResponseSuccess,
     interceptorResponseError;
 
+  let tokenHeaders: any = {
+    Authorization: getBeinIdToken(),
+  };
+
+  // For cases request to Bein with Chat tokens
+  if (
+    requestConfig.headers &&
+    (requestConfig.headers['X-Auth-Token'] ||
+      requestConfig.headers['X-User-Id'])
+  ) {
+    const auth = getChatAuthInfo();
+    tokenHeaders = {
+      ...tokenHeaders,
+      'X-Auth-Token': auth.accessToken,
+      'X-User-Id': auth.userId,
+    };
+  }
+  //
+
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
@@ -440,10 +472,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       requestConfig.headers = {
         ...commonHeaders,
         ...requestConfig.headers,
-        ...{
-          Authorization: getBeinIdToken(),
-          'X-Requested-With': 'google',
-        },
+        ...tokenHeaders,
       };
       break;
     case apiConfig.providers.chat.name:
@@ -497,11 +526,32 @@ const makePushTokenRequest = async (
   );
 };
 
+const makeRemovePushTokenRequest = async (
+  authToken: string,
+  chatToken: string,
+  chatUserId: string,
+) => {
+  const deviceName = await DeviceInfo.getDeviceName();
+  const requestConfig = apiConfig.App.removePushToken(
+    authToken,
+    Platform.OS,
+    chatToken,
+    chatUserId,
+    DeviceInfo.getBundleId(),
+    DeviceInfo.getDeviceType(),
+    deviceName,
+  );
+  const axiosInstance = axios.create();
+  axiosInstance.defaults.timeout = requestConfig.timeout;
+  return axiosInstance(requestConfig);
+};
+
 // helper function to make subscription to get stream and run callback when client receive new activity
 const subscribeGetstreamFeed = (
   streamClient: StreamClient,
-  feedSlug: 'notification' | 'newsfeed' | 'timeline',
+  feedSlug: 'notification' | 'newsfeed' | 'timeline' | 'draft',
   feedId: string,
+  // @ts-ignore
   callback,
 ) => {
   // just a log when client subscribe the notification feed successfully
@@ -510,22 +560,22 @@ const subscribeGetstreamFeed = (
   };
 
   // just a log when client subscribe the notification feed failed
+  // @ts-ignore
   const subscribeFailCallback = data => {
-    console.log('something went wrong, check the console logs');
-    console.log(data);
+    console.log('something went wrong:', data);
   };
 
   // subscribe notification feed to get realtime activity
-  streamClient
-    .feed(feedSlug, feedId)
-    .subscribe(callback)
-    .then(subscribeSuccessCallback, subscribeFailCallback);
+  const subscription = streamClient.feed(feedSlug, feedId).subscribe(callback);
+  subscription.then(subscribeSuccessCallback, subscribeFailCallback);
+  return subscription;
 };
 
 export {
   makeGetStreamRequest,
   makeHttpRequest,
   makePushTokenRequest,
+  makeRemovePushTokenRequest,
   getChatAuthInfo,
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,

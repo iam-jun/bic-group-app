@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {ImageStyle} from 'react-native';
 import {
   Animated,
+  ImageStyle,
   Platform,
   StyleProp,
   StyleSheet,
@@ -19,6 +19,8 @@ export interface ImageProps {
   style?: StyleProp<ImageStyle>;
   ImageComponent?: any;
   onError?: (err: any) => void;
+  useOnLayoutSize?: boolean;
+  cache?: boolean;
   [x: string]: any;
 }
 
@@ -31,16 +33,20 @@ const Image: React.FC<ImageProps> = ({
   style,
   ImageComponent = FastImage,
   onError,
+  useOnLayoutSize,
+  cache = true,
   ...props
 }: ImageProps) => {
+  const [layoutSizeStyle, setLayoutSizeStyle] = useState({width: 0, height: 0});
+
   const placeholderContainerOpacity = React.useRef(
     new Animated.Value(1),
   ).current;
 
-  const [_source, setSource] = useState(source);
+  const [_source, setSource] = useState(source || placeholderSource);
 
   useEffect(() => {
-    updateSource(source);
+    updateSource(source || placeholderSource);
   }, [source]);
 
   const _onError = (error: any) => {
@@ -53,7 +59,7 @@ const Image: React.FC<ImageProps> = ({
       typeof source === 'string' &&
       source.toLowerCase?.().startsWith?.('http')
     ) {
-      setSource({uri: source});
+      setSource({uri: cache ? source : source + '?' + Date.now()});
     } else {
       setSource(source);
     }
@@ -73,8 +79,21 @@ const Image: React.FC<ImageProps> = ({
     );
   };
 
+  const onLayout = (e: any) => {
+    const {width, height} = e?.nativeEvent?.layout || {};
+    if (useOnLayoutSize && width && width !== layoutSizeStyle?.width) {
+      setLayoutSizeStyle({width, height});
+    }
+  };
+
   return (
-    <View style={StyleSheet.flatten([styles.container, containerStyle])}>
+    <View
+      onLayout={onLayout}
+      style={StyleSheet.flatten([
+        styles.container,
+        useOnLayoutSize ? {width: '100%', height: '100%'} : {},
+        containerStyle,
+      ])}>
       {Platform.select({
         android: (
           <React.Fragment>
@@ -102,12 +121,15 @@ const Image: React.FC<ImageProps> = ({
             <ImageComponent
               source={_source}
               {...props}
-              style={style}
+              style={StyleSheet.flatten([
+                useOnLayoutSize ? layoutSizeStyle : {},
+                style,
+              ])}
               onError={_onError}
             />
           </React.Fragment>
         ),
-        default: (
+        ios: (
           <React.Fragment>
             <Animated.View
               style={StyleSheet.flatten([
@@ -129,9 +151,22 @@ const Image: React.FC<ImageProps> = ({
               {...props}
               onLoadEnd={onLoadEnd}
               onError={_onError}
-              style={style}
+              style={StyleSheet.flatten([
+                useOnLayoutSize ? layoutSizeStyle : {},
+                style,
+              ])}
             />
           </React.Fragment>
+        ),
+        web: (
+          <ImageComponent
+            source={_source}
+            {...props}
+            style={StyleSheet.flatten([
+              useOnLayoutSize ? layoutSizeStyle : {},
+              style,
+            ])}
+          />
         ),
       })}
     </View>

@@ -1,18 +1,27 @@
-import {} from './../interfaces/IChatHttpRequest';
+import {ISearchChatReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
+  IPayloadGetAttachmentFiles,
+  IPayloadReactMessage,
+} from '~/interfaces/IChat';
+import {
+  IAddUsersToGroupReq,
+  ICreateDiretChatReq,
   ICreateRoomReq,
+  IDeleteMessage,
+  IEditMessageReq,
   IGetGroupReq,
   IGetGroupRolesReq,
-  ICreateDiretChatReq,
   IGetMentionUsersReq,
+  IGetMessageReq,
+  IGetReactionStatisticsReq,
+  IGetSurroundingMessages,
   IPaginationParams,
   IReadSubscription,
+  IRealtimeAPIReq,
+  IRemoveMemberReq,
   ISendMessageReq,
   IUpdateGroupName,
-  IRemoveMemberReq,
-  IAddUsersToGroupReq,
-  IDeleteMessage,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -29,6 +38,43 @@ const providers = {
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
+  },
+};
+
+const Upload = {
+  uploadFile: (
+    type: any,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+  ): HttpApiRequestConfig => {
+    const uploadEndPoint: any = {
+      userAvatar: 'upload/user-avatar',
+      userCover: 'upload/user-cover',
+      groupAvatar: 'upload/group-avatar',
+      groupCover: 'upload/group-cover',
+      postImage: 'upload/post-image',
+      postVideo: 'upload/post-video',
+      postFile: 'upload/post-file',
+      commentImage: 'upload/comment-image',
+      commentVideo: 'upload/comment-video',
+      commentFile: 'upload/comment-file',
+      chatImage: 'upload/chat-image',
+      chatVideo: 'upload/chat-video',
+      chatFile: 'upload/chat-file',
+    };
+
+    const url = `${providers.bein.url}${uploadEndPoint[type]}`;
+    return {
+      url,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: false,
+      provider: providers.bein,
+      onUploadProgress: onUploadProgress,
+      data,
+    };
   },
 };
 
@@ -79,10 +125,10 @@ const Chat = {
   },
   users: (params: IPaginationParams & {params: any}) => {
     return {
-      url: `${providers.chat.url}users.list`,
+      url: `${providers.bein.url}users`,
       method: 'get',
       useRetry: true,
-      provider: providers.chat,
+      provider: providers.bein,
       params,
     };
   },
@@ -93,6 +139,7 @@ const Chat = {
     method: 'get',
     provider: providers.bein,
     useRetry: true,
+    params,
   }),
   messages: (params: IPaginationParams & {roomId: string; type?: string}) => {
     const endPoint = params?.type === 'direct' ? 'im' : 'groups';
@@ -134,7 +181,7 @@ const Chat = {
       provider: providers.chat,
     };
   },
-  readSubcriptions: (data: IReadSubscription): HttpApiRequestConfig => {
+  readSubscriptions: (data: IReadSubscription): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}subscriptions.read`,
       method: 'post',
@@ -223,6 +270,112 @@ const Chat = {
       },
     };
   },
+  getAttachmentFiles: (
+    data: IPayloadGetAttachmentFiles,
+  ): HttpApiRequestConfig => {
+    const {isDirectMessage, ...params} = data || {};
+    const endpoint = isDirectMessage ? 'im.files' : 'groups.files';
+    return {
+      url: `${providers.chat.url}${endpoint}`,
+      method: 'get',
+      useRetry: false,
+      provider: providers.chat,
+      params,
+    };
+  },
+  reactMessage: (data: IPayloadReactMessage): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.react`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  editMessage: (data: IEditMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.update`,
+      method: 'post',
+      useRetry: false,
+      provider: providers.chat,
+      data,
+    };
+  },
+  getReactionStatistics: (
+    params: IGetReactionStatisticsReq,
+  ): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/reactions`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      params,
+    };
+  },
+  getMessageDetail: (params: IGetMessageReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}chat.getMessage`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.chat,
+      params,
+    };
+  },
+  getSurroundingMessages: (
+    params: IGetSurroundingMessages,
+  ): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chat/surrounding-messages`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.bein,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      params,
+    };
+  },
+  getMessagesHistory: (data: IRealtimeAPIReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}method.call/loadHistory`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data: {message: JSON.stringify(data)},
+    };
+  },
+  getNextMessages: (data: IRealtimeAPIReq): HttpApiRequestConfig => {
+    return {
+      url: `${providers.chat.url}method.call/loadNextMessages`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data: {message: JSON.stringify(data)},
+    };
+  },
+  search: (params?: ISearchChatReq): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+    return {
+      url: `${providers.bein.url}chat/search`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.bein,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      params,
+    };
+  },
 };
 
 const App = {
@@ -269,6 +422,42 @@ const App = {
       },
     };
   },
+  removePushToken: (
+    authToken: string,
+    deviceOS: string,
+    chatToken: string,
+    chatUserId: string,
+    appBundleId: string,
+    deviceType: string,
+    deviceName: string,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}notification/token`,
+      method: 'delete',
+      provider: providers.bein,
+      useRetry: false,
+      timeout: 5000,
+      headers: {
+        Authorization: authToken,
+        'X-Auth-Token': chatToken,
+        'X-User-Id': chatUserId,
+      },
+      data: {
+        device_os: deviceOS,
+        app_name: appBundleId,
+        device_type: deviceType,
+        device_name: deviceName,
+      },
+    };
+  },
+  getLinkPreview: (link: string): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}link-preview/${link}`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+    };
+  },
 };
 
 export interface HttpApiRequestConfig extends AxiosRequestConfig {
@@ -305,4 +494,5 @@ export default {
 
   App,
   Chat,
+  Upload,
 };

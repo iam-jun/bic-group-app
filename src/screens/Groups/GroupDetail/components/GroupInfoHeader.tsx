@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import {titleCase} from '~/utils/common';
 import {ITheme} from '~/theme/interfaces';
@@ -8,12 +9,14 @@ import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
+import groupsActions from '../../redux/actions';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import Button from '~/beinComponents/Button';
 
 const GroupInfoHeader = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -21,6 +24,10 @@ const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
+  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
+  const dispatch = useDispatch();
+
   const {name, user_count, icon, background_img_url, privacy} = groupDetail;
 
   const onCoverLayout = (e: any) => {
@@ -44,13 +51,13 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <ButtonWrapper textProps={{variant: 'h5'}}>{name}</ButtonWrapper>
+        <Text.H5 style={styles.nameHeader}>{name}</Text.H5>
 
-        <View style={styles.groupInfoText}>
+        <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
             icon={'iconPrivate'}
-            size={14}
+            size={16}
             tintColor={theme.colors.iconTint}
           />
           <Text.BodySM useI18n>{titleCase(privacy)}</Text.BodySM>
@@ -58,12 +65,36 @@ const GroupInfoHeader = () => {
           <Icon
             style={styles.iconSmall}
             icon={'UsersAlt'}
-            size={16}
+            size={17}
             tintColor={theme.colors.iconTint}
           />
           <Text.BodySM>{user_count}</Text.BodySM>
         </View>
       </View>
+    );
+  };
+
+  const onPressJoin = () => {
+    const groupId = groupDetail.id;
+    console.log(`Joining`, groupId);
+    dispatch(groupsActions.joinNewGroup({groupId}));
+  };
+
+  const renderJoinButton = () => {
+    if (isMember) return null;
+
+    return (
+      <Button.Secondary
+        rightIcon={'Plus'}
+        rightIconProps={{icon: 'Plus', size: 20}}
+        style={styles.btnJoin}
+        onPress={onPressJoin}
+        color={theme.colors.primary7}
+        textColor={theme.colors.background}
+        colorHover={theme.colors.primary6}
+        useI18n>
+        common:btn_join
+      </Button.Secondary>
     );
   };
 
@@ -74,8 +105,9 @@ const GroupInfoHeader = () => {
       {/* Group info header */}
       <View style={styles.infoContainer}>
         <View style={styles.header}>
-          <Avatar.UltraLarge source={icon} style={styles.avatar} />
+          <Avatar.LargeAlt source={icon} style={styles.avatar} />
           {renderGroupInfoHeader()}
+          {renderJoinButton()}
         </View>
       </View>
     </View>
@@ -104,6 +136,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     iconSmall: {
       marginRight: spacing.margin.tiny,
+      height: 16,
     },
     coverAndInfoHeader: {
       backgroundColor: colors.background,
@@ -119,11 +152,19 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       padding: spacing.padding.small,
       borderRadius: 6,
     },
-    groupInfoText: {
+    groupInfo: {
       flexDirection: 'row',
-      marginTop: spacing.margin.tiny,
       alignItems: 'center',
+      ...Platform.select({
+        web: {
+          marginTop: spacing.margin.small,
+        },
+      }),
     },
-    nameHeader: {flex: 1},
+    nameHeader: {},
+    btnJoin: {
+      position: 'absolute',
+      right: 0,
+    },
   });
 };

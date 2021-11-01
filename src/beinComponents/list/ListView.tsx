@@ -16,6 +16,7 @@ import items, {IListViewItem} from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {appScreens} from '~/configs/navigator';
 import {IAction} from '~/constants/commonActions';
 
 import {spacing} from '~/theme';
@@ -47,10 +48,12 @@ export interface ListViewProps {
     index: number;
   }) => React.ReactElement;
   renderItemSeparator?: any;
+  showItemSeparator?: boolean;
   renderLoading?: any;
   ListHeaderComponent: any;
   ListFooterComponent: any;
   ListEmptyComponent: any;
+  itemStyle?: StyleProp<ViewStyle>;
 
   horizontal?: boolean;
   loading?: boolean;
@@ -59,6 +62,7 @@ export interface ListViewProps {
   title?: string;
   isFullView?: boolean;
   keyboardShouldPersistTaps?: 'always' | 'never' | 'handled';
+  currentPath?: string;
 
   [x: string]: any;
 }
@@ -81,10 +85,12 @@ const ListView: React.FC<ListViewProps> = ({
 
   renderItem,
   renderItemSeparator,
+  showItemSeparator = true,
   renderLoading,
   ListHeaderComponent,
   ListFooterComponent,
   ListEmptyComponent,
+  itemStyle,
 
   horizontal,
   loading,
@@ -93,6 +99,7 @@ const ListView: React.FC<ListViewProps> = ({
   title,
   isFullView,
   keyboardShouldPersistTaps,
+  currentPath,
   ...props
 }: ListViewProps) => {
   const {colors} = useTheme() as ITheme;
@@ -105,26 +112,52 @@ const ListView: React.FC<ListViewProps> = ({
       return renderItem({item, index});
     }
 
+    let itemPath = '';
+    let isActive = false;
+
+    switch (type) {
+      case 'conversation':
+        itemPath = item['_id'];
+        break;
+
+      case 'menu':
+        itemPath = item['path'];
+        break;
+      case 'notification':
+        itemPath = item.id;
+        break;
+      default:
+        break;
+    }
+    if (currentPath && itemPath === currentPath) isActive = true;
+
     return (
       <TouchableOpacity
         disabled={!onItemPress || item.disableClick}
-        onPress={() => onItemPress && onItemPress(item)}>
+        onPress={e => onItemPress && onItemPress(item, e)}>
         <ItemComponent
           {...item}
           title={item[titleField || 'title']}
           subTitle={item[subTitleField || 'subTitle']}
+          style={itemStyle}
           onActionPress={
             onActionPress
               ? (action: IAction) => onActionPress(action, item)
               : undefined
           }
+          // eslint-disable-next-line react/prop-types
+          total={data && data?.length}
+          index={index}
+          isActive={isActive}
         />
       </TouchableOpacity>
     );
   };
 
   const _renderItemSeparator = () => {
-    if (renderItemSeparator) {
+    if (!showItemSeparator) {
+      return null;
+    } else if (renderItemSeparator) {
       return renderItemSeparator();
     }
     return (

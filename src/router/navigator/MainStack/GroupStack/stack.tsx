@@ -3,16 +3,18 @@ const groupStack = {
   groupDetail: 'group-detail',
   groupAbout: 'group-about',
   groupMembers: 'group-members',
+  groupFiles: 'group-files',
   createPost: 'create-post',
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',
+  postSelectImage: 'post-select-image',
   postDetail: 'post-detail',
+  draftPost: 'draft-post',
   groupAdmin: 'group-admin',
   generalInfo: 'general-info',
   editGroupDescription: 'edit-group-description',
-  myProfile: 'my-profile',
-  publicProfile: 'user-profile',
   inviteMembers: 'invite-members',
+  userProfile: 'user-profile',
 };
 
 export default groupStack;

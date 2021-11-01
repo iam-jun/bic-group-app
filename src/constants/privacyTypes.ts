@@ -2,7 +2,7 @@ export type PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET';
 export type GROUP_TYPE = 'GENERIC' | 'COMMUNITY' | 'COMPANY';
 
 export const groupPrivacy = {
-  // public: 'PUBLIC',
+  public: 'PUBLIC',
   private: 'PRIVATE',
   secret: 'SECRET',
 };

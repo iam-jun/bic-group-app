@@ -17,6 +17,13 @@ import {
   IPayloadPutEditComment,
   IPayloadCreateComment,
   IPayloadReplying,
+  IPayloadGetPostDetail,
+  ICreatePostImage,
+  IPayloadGetDraftPosts,
+  IPayloadSetDraftPosts,
+  IPayloadPublishDraftPost,
+  IPayloadPutEditDraftPost,
+  IPayloadAddToAllPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -31,10 +38,6 @@ const postActions = {
     type: postTypes.SET_ALL_COMMENTS,
     payload,
   }),
-  setOpenPostToolBarModal: (payload: boolean) => ({
-    type: postTypes.SET_OPEN_POST_TOOLBAR_MODAL,
-    payload,
-  }),
   setLoadingCreatePost: (payload: boolean) => ({
     type: postTypes.SET_LOADING_CREATE_POST,
     payload,
@@ -44,6 +47,10 @@ const postActions = {
   }),
   setCreatePostData: (payload: IActivityData) => ({
     type: postTypes.SET_CREATE_POST_DATA,
+    payload,
+  }),
+  setCreatePostDataImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_DATA_IMAGES,
     payload,
   }),
   setCreateComment: (payload: {loading?: boolean; content?: string}) => ({
@@ -58,6 +65,14 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMPORTANT,
     payload,
   }),
+  setCreatePostImages: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES,
+    payload,
+  }),
+  setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({
+    type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
+    payload,
+  }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({
     type: postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS,
     payload,
@@ -66,11 +81,11 @@ const postActions = {
     type: postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS,
     payload,
   }),
-  //post detail
-  setPostDetail: (payload: IPostActivity) => ({
-    type: postTypes.SET_POST_DETAIL,
+  setDraftPosts: (payload?: IPayloadSetDraftPosts) => ({
+    type: postTypes.SET_DRAFT_POSTS,
     payload,
   }),
+  //post detail
   setPostDetailReplyingComment: (payload?: IPayloadReplying) => ({
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
@@ -82,6 +97,7 @@ const postActions = {
   setShowReactionBottomSheet: (payload?: {
     show?: boolean;
     title?: string;
+    position?: {x: number; y: number};
     callback?: (reactionId: ReactionType) => void;
   }) => ({
     type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,
@@ -109,7 +125,7 @@ const postActions = {
     type: postTypes.DELETE_POST,
     payload,
   }),
-  addToAllPosts: (payload: IPostActivity[] | IPostActivity) => ({
+  addToAllPosts: (payload: IPayloadAddToAllPost) => ({
     type: postTypes.ADD_TO_ALL_POSTS,
     payload,
   }),
@@ -159,6 +175,22 @@ const postActions = {
   }),
   getCommentsByPostId: (payload: IPayloadGetCommentsById) => ({
     type: postTypes.GET_COMMENTS_BY_POST_ID,
+    payload,
+  }),
+  getPostDetail: (payload: IPayloadGetPostDetail) => ({
+    type: postTypes.GET_POST_DETAIL,
+    payload,
+  }),
+  getDraftPosts: (payload?: IPayloadGetDraftPosts) => ({
+    type: postTypes.GET_DRAFT_POSTS,
+    payload,
+  }),
+  postPublishDraftPost: (payload: IPayloadPublishDraftPost) => ({
+    type: postTypes.POST_PUBLISH_DRAFT_POST,
+    payload,
+  }),
+  putEditDraftPost: (payload: IPayloadPutEditDraftPost) => ({
+    type: postTypes.PUT_EDIT_DRAFT_POST,
     payload,
   }),
 };

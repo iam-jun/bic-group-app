@@ -9,11 +9,13 @@ import SearchInput, {
 } from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {Image, Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
 import {IChatUser} from '~/interfaces/IChat';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
+import {getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
 
 export interface MembersSelectionProps {
@@ -26,6 +28,7 @@ export interface MembersSelectionProps {
     data: IChatUser[];
   };
   loading?: boolean;
+  field?: string;
   onPressMenu?: (e: any, payload: IChatUser) => void;
   onLoadMore: () => void;
 }
@@ -37,6 +40,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   data,
   roles,
   loading,
+  field,
   onPressMenu,
   onLoadMore,
 }: MembersSelectionProps): React.ReactElement => {
@@ -48,7 +52,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   const {selectedUsers} = useChat();
 
   const onSelectUser = (user: IChatUser) => {
-    dispatch(actions.selectUser(user));
+    dispatch(actions.selectUser(user, field));
   };
 
   const renderItemUser = ({item}: {item: IChatUser; index: number}) => {
@@ -62,7 +66,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
             style={styles.marginRight}
             source={item.avatar}
             ImageComponent={RNImage}
-            placeholderSource={images.img_user_avatar_default}
+            placeholderSource={getDefaultAvatar(item.name)}
           />
         }
         onPressCheckbox={selectable ? () => onSelectUser(item) : undefined}
@@ -76,7 +80,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         <Avatar.Large
           source={item.avatar}
           actionIcon="iconClose"
-          placeholderSource={images.img_user_avatar_default}
+          placeholderSource={getDefaultAvatar(item.name)}
           ImageComponent={RNImage}
           onPressAction={() => onSelectUser(item)}
         />
@@ -107,12 +111,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
 
   const EmptyComponent = () => {
     if (loading) return null;
-    return (
-      <View style={styles.empty}>
-        <Text.Body useI18n>chat:text_search_empty</Text.Body>
-        <Image style={styles.imageEmtpy} source={images.img_search_empty} />
-      </View>
-    );
+    return <NoSearchResult />;
   };
 
   return (
@@ -168,13 +167,6 @@ const createStyles = (theme: ITheme) => {
     },
     itemSelectedUser: {
       width: dimension?.avatarSizes.large,
-    },
-    empty: {
-      alignItems: 'center',
-    },
-    imageEmtpy: {
-      width: '100%',
-      aspectRatio: 1,
     },
   });
 };

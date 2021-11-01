@@ -1,33 +1,72 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableHighlight,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import ButtonPrimary, {
-  ButtonPrimaryProps,
-} from '~/beinComponents/Button/ButtonPrimary';
+import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {ITheme} from '~/theme/interfaces';
+import ButtonWrapper from './ButtonWrapper';
 
-const ButtonSecondary: React.FC<ButtonPrimaryProps> = ({
+export interface ButtonSecondaryProps extends ButtonPrimaryProps {
+  highEmphasis?: boolean;
+}
+
+const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   color,
   colorHover,
   colorDisabled,
   textColor,
   textColorDisabled,
+  useI18n,
+  borderRadius,
+  children,
   style,
+  disabled,
+  highEmphasis = false,
   ...props
-}: ButtonPrimaryProps) => {
+}: ButtonSecondaryProps) => {
   const {colors, spacing}: ITheme = useTheme() as ITheme;
 
+  let _colorHover = colorHover || colors.primary2;
+  let _backgroundColor = color || colors.bgButtonSecondary;
+  let _textColor = textColor || colors.primary;
+
+  if (highEmphasis) {
+    _backgroundColor = colors.primary7;
+    _textColor = colors.background;
+    _colorHover = colors.primary6;
+  }
+
+  if (disabled) {
+    _backgroundColor = colorDisabled || colors.bgDisable;
+    // @ts-ignore
+    _textColor = textColorDisabled || colors.textDisabled;
+  }
+
+  const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
+    {
+      backgroundColor: _backgroundColor,
+      padding: spacing?.padding.small,
+      borderRadius: borderRadius || spacing?.borderRadius.small,
+      alignItems: 'center',
+    },
+    style,
+  ]);
+
   return (
-    <ButtonPrimary
-      color={color || colors.bgButtonSecondary}
-      colorHover={colorHover || colors.primary2}
-      colorDisabled={colorDisabled}
-      textColor={textColor || colors.primary}
-      textColorDisabled={textColorDisabled}
-      style={StyleSheet.flatten([{padding: spacing?.padding.small}, style])}
-      {...props}
-    />
+    <ButtonWrapper
+      disabled={disabled}
+      style={containerStyle}
+      textProps={{color: _textColor, useI18n}}
+      underlayColor={_colorHover}
+      TouchableComponent={TouchableHighlight}
+      {...props}>
+      {children}
+    </ButtonWrapper>
   );
 };
 

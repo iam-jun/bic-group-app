@@ -1,72 +1,48 @@
-import React, {useState} from 'react';
-import {
-  Modal,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
-import {useTheme} from 'react-native-paper';
-import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ITheme} from '~/theme/interfaces';
+import React, {memo, useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import Image, {ImageProps} from '.';
-import Icon from '../Icon';
-import FastImage from './FastImage';
+import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
+import {isArray} from 'lodash';
 
-const ImagePreviewer: React.FC<ImageProps> = ({
+export interface ImagePreviewerProps extends ImageProps {
+  initIndex?: number;
+  onLongPress?: (event: any) => void;
+}
+
+const ImagePreviewer: React.FC<ImagePreviewerProps> = ({
   source,
+  initIndex,
+  onLongPress,
   ...props
-}: ImageProps) => {
-  const theme = useTheme() as ITheme;
-  const insets = useSafeAreaInsets();
-
-  const styles = createStyles(theme, insets);
-
+}: ImagePreviewerProps) => {
   const [visible, setVisible] = useState(false);
+
+  const thumbnailSource = isArray(source) ? source?.[initIndex || 0] : source;
+  const gallerySource = isArray(source) ? source : [source];
+
+  const _onLongPress = (e: any) => {
+    onLongPress?.(e);
+  };
 
   return (
     <View>
-      <TouchableOpacity onPress={() => setVisible(true)}>
-        <Image {...props} source={source} />
+      <TouchableOpacity
+        onPress={() => setVisible(true)}
+        onLongPress={_onLongPress}>
+        <Image {...props} source={thumbnailSource} />
       </TouchableOpacity>
-      <Modal visible={visible} transparent={true}>
-        <ImageViewer
-          renderImage={image => <FastImage {...image} />}
-          imageUrls={[
-            {
-              url: source?.uri || source,
-            },
-          ]}
-          renderHeader={() => (
-            <TouchableOpacity
-              style={styles.icon}
-              onPress={() => setVisible(false)}>
-              <Icon
-                icon="iconClose"
-                tintColor="#fff"
-                onPress={() => setVisible(false)}
-              />
-            </TouchableOpacity>
-          )}
+      {visible && (
+        <ImageGalleryModal
+          visible={visible}
+          source={gallerySource}
+          initIndex={initIndex}
+          onPressClose={() => setVisible(false)}
         />
-      </Modal>
+      )}
     </View>
   );
 };
 
-const createStyles = (theme: ITheme, insets: EdgeInsets) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    icon: {
-      position: 'absolute',
-      zIndex: 2,
-      top: insets?.top,
-      right: spacing.margin.large,
-      padding: spacing.padding.base,
-    },
-  });
-};
-
+const ImagePreviewerMemo = memo(ImagePreviewer);
+ImagePreviewerMemo.whyDidYouRender = true;
 export default ImagePreviewer;

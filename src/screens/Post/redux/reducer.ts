@@ -17,6 +17,8 @@ const initState = {
       active: 0,
       expiresTime: '',
     },
+    images: [],
+    imagesDraft: [],
   },
   createComment: {
     loading: false,
@@ -25,6 +27,7 @@ const initState = {
   reactionBottomSheet: {
     show: false,
     title: '',
+    position: {x: -1, y: -1},
     callback: undefined,
   },
   mention: {
@@ -32,11 +35,16 @@ const initState = {
     searchKey: '',
     searchResult: [],
   },
-  postDetail: {},
   replyingComment: {},
   allPosts: {},
   allComments: {},
   allCommentsByParentIds: {},
+  draftPosts: {
+    posts: [],
+    canLoadMore: true,
+    loading: false,
+    refreshing: false,
+  },
   postAudienceSheet: {
     isShow: false,
     data: undefined,
@@ -58,13 +66,10 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         allComments: payload,
       };
-    case postTypes.SET_OPEN_POST_TOOLBAR_MODAL:
+    case postTypes.SET_DRAFT_POSTS:
       return {
         ...state,
-        createPost: {
-          ...state.createPost,
-          isOpenModal: payload,
-        },
+        draftPosts: payload || initState.draftPosts,
       };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
@@ -85,6 +90,17 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           data: payload,
+        },
+      };
+    case postTypes.SET_CREATE_POST_DATA_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          data: {
+            ...state.createPost.data,
+            images: payload,
+          },
         },
       };
     case postTypes.SET_CREATE_COMMENT:
@@ -111,6 +127,22 @@ function postReducer(state = initState, action: any = {}) {
           important: payload || initState.createPost.important,
         },
       };
+    case postTypes.SET_CREATE_POST_IMAGES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          images: payload || [],
+        },
+      };
+    case postTypes.SET_CREATE_POST_IMAGES_DRAFT:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          imagesDraft: payload || [],
+        },
+      };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:
       return {
         ...state,
@@ -126,11 +158,6 @@ function postReducer(state = initState, action: any = {}) {
           ...state.createPost,
           searchResultAudienceUsers: payload,
         },
-      };
-    case postTypes.SET_POST_DETAIL:
-      return {
-        ...state,
-        postDetail: payload,
       };
     case postTypes.SET_POST_DETAIL_REPLYING_COMMENT:
       return {

@@ -1,117 +1,190 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import i18next from 'i18next';
+import React from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import RedDot from '~/beinComponents/Badge/RedDot';
+import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
 import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import images from '~/resources/images';
-import {getAvatar} from '~/screens/Chat/helper';
 import {ITheme} from '~/theme/interfaces';
-import {countTime} from '~/utils/formatData';
-import PrimaryItem from './PrimaryItem';
+import {countTime, escapeMarkDown} from '~/utils/formatData';
 
-const ConversationItem: React.FC<IConversation> = ({
+interface Props extends IConversation {
+  total?: number;
+  index?: number;
+  isActive?: boolean;
+}
+
+const ConversationItem: React.FC<Props> = ({
   name,
   lastMessage,
-  usernames,
   avatar,
   _updatedAt,
   unreadCount,
   type,
-}: IConversation): React.ReactElement => {
+  total,
+  index,
+  isActive = false,
+}: Props): React.ReactElement => {
+  const AVG_CHAR_ON_ONE_LINE = 32;
+  let twoLineLastMessage = false;
+  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
+    twoLineLastMessage = true;
+
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
-  const {text, textReversed, textSecondary} = theme.colors;
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(avatar);
-  const textcolor = unreadCount ? text : textSecondary;
-  const isDirect = type === roomTypes.DIRECT;
+  const styles = createStyles(
+    theme,
+    unreadCount > 0,
+    twoLineLastMessage,
+    isActive,
+  );
+  const welcomeText =
+    type === 'direct'
+      ? 'chat:label_init_direct_message:short'
+      : 'chat:label_init_group_message:short';
 
-  const onLoadAvatarError = () => {
-    if (usernames) {
-      const avatarGroup = usernames.map((username: string) =>
-        getAvatar(username),
-      );
-      setAvatar(avatarGroup);
-    } else setAvatar(images.img_group_avatar_default);
-  };
+  let showDivider = true;
+  if (index && total && index + 1 === total) showDivider = false;
 
-  const ItemAvatar = isDirect ? (
+  let className = 'chat__conversation-item';
+  if (isActive) className = className + ` ${className}--active`;
+
+  const ItemAvatar = (
     <Avatar.Large
-      style={styles.marginRight}
+      style={styles.avatar}
       source={avatar}
-      placeholderSource={images.img_user_avatar_default}
-    />
-  ) : (
-    <Avatar.Group
-      variant="large"
-      style={styles.marginRight}
-      source={_avatar}
-      onError={onLoadAvatarError}
+      cache={false}
+      placeholderSource={
+        type === roomTypes.DIRECT
+          ? images.img_user_avatar_default
+          : images.img_group_avatar_default
+      }
     />
   );
 
   return (
-    <PrimaryItem
-      title={name}
-      titleProps={{
-        numberOfLines: 1,
-        color: textcolor,
-      }}
-      subTitleProps={{
-        numberOfLines: 2,
-        variant: unreadCount ? 'bodyM' : 'body',
-        color: textcolor,
-      }}
-      subTitle={lastMessage}
-      style={styles.container}
-      LeftComponent={ItemAvatar}
-      RightComponent={
-        <View style={styles.rightComponent}>
-          <Text.Subtitle
-            style={styles.textUpdate}
-            color={theme.colors.textSecondary}>
-            {countTime(_updatedAt)}
-          </Text.Subtitle>
-          {unreadCount && (
-            <View style={styles.unread}>
-              <Text.ButtonSmall color={textReversed}>
-                {unreadCount}
-              </Text.ButtonSmall>
-            </View>
-          )}
-        </View>
-      }
-    />
+    <Div className={className}>
+      {Platform.OS === 'web' && isActive && (
+        <View style={styles.itemActiveIndicator} />
+      )}
+      <View style={styles.container}>
+        {ItemAvatar}
+        <Div
+          style={[
+            styles.contentContainer,
+            showDivider ? styles.bottomDivider : {},
+          ]}>
+          <View style={styles.header}>
+            <Text.H6 style={styles.title} numberOfLines={1}>
+              {name}
+            </Text.H6>
+            <Text.Subtitle
+              style={styles.textUpdate}
+              color={theme.colors.textSecondary}>
+              {countTime(_updatedAt)}
+            </Text.Subtitle>
+          </View>
+          <View style={styles.body}>
+            <Text
+              variant={unreadCount ? 'bodyM' : 'body'}
+              numberOfLines={2}
+              style={styles.lastMessage}>
+              {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
+            </Text>
+            {!!unreadCount && (
+              <RedDot
+                style={styles.redDot}
+                number={unreadCount}
+                maxNumber={99}
+              />
+            )}
+          </View>
+        </Div>
+      </View>
+    </Div>
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyles = (
+  theme: ITheme,
+  unreadMessage: boolean,
+  twoLineLastMessage: boolean,
+  isActive: boolean,
+) => {
+  const {colors, spacing} = theme;
+  const isWeb = Platform.OS === 'web';
+
+  const contentHeight = 72;
+  const headerHeight = 22;
+  const messageHeight = 42;
 
   return StyleSheet.create({
     container: {
-      // marginVertical: spacing.padding.base,
+      flex: 1,
+      flexDirection: 'row',
+      height: 88,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
+      borderRadius: spacing.borderRadius.small,
     },
-    rightComponent: {
-      marginLeft: spacing.margin.base,
-      alignSelf: 'baseline',
-      alignItems: 'flex-end',
+    itemActiveIndicator: {
+      position: 'absolute',
+      top: '24%',
+      width: 4,
+      height: 48,
+      backgroundColor: colors.primary5,
+      borderTopRightRadius: spacing.borderRadius.small,
+      borderBottomRightRadius: spacing.borderRadius.small,
     },
-    marginRight: {
+    avatar: {
+      alignSelf: isActive ? 'center' : 'flex-start',
+      marginTop: 0,
       marginRight: spacing.margin.base,
     },
-    textUpdate: {
-      paddingTop: spacing.padding.tiny,
+    contentContainer: {
+      flex: 1,
+      height: contentHeight,
+      overflow: 'hidden',
     },
-    unread: {
-      borderRadius: spacing?.borderRadius.large,
-      width: spacing?.lineHeight.base,
-      height: spacing?.lineHeight.base,
-      marginTop: spacing?.margin.base,
-      backgroundColor: colors.error,
-      alignItems: 'center',
-      justifyContent: 'center',
+    header: {
+      flex: 1,
+      flexDirection: 'row',
+      height: '100%',
+      maxHeight: headerHeight,
+    },
+    title: {
+      flex: 1,
+      lineHeight: 20,
+      ...Platform.select({
+        web: {
+          paddingTop: 0,
+        },
+      }),
+    },
+    textUpdate: {
+      height: 20,
+      lineHeight: 20,
+    },
+    body: {
+      flexDirection: 'row',
+      alignItems: twoLineLastMessage ? 'center' : 'flex-start',
+    },
+    bottomDivider: {
+      borderBottomColor: colors.borderDivider,
+      borderBottomWidth: 1,
+    },
+    lastMessage: {
+      flex: 1,
+      height: messageHeight,
+      lineHeight: 20,
+      color: unreadMessage ? colors.textPrimary : colors.textSecondary,
+    },
+    redDot: {
+      marginTop: !isWeb ? spacing.margin.tiny : 0,
+      marginLeft: spacing.margin.base,
     },
   });
 };

@@ -1,19 +1,28 @@
 import React, {useState, useEffect} from 'react';
-import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import Icon from '../Icon';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
+import NodeEmoji from 'node-emoji';
 
 interface ReactionProps {
   value: number;
   icon: any;
   selected: boolean;
   onActionPress: (action: IAction) => void;
+  onLongPress?: () => void;
   style?: StyleProp<ViewStyle>;
   disableUpdateState?: boolean;
+  loading?: boolean;
 }
 
 const Reaction: React.FC<ReactionProps> = ({
@@ -21,8 +30,10 @@ const Reaction: React.FC<ReactionProps> = ({
   icon,
   selected,
   onActionPress,
+  onLongPress,
   style,
   disableUpdateState,
+  loading,
 }: ReactionProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ITheme = useTheme() as ITheme;
@@ -32,6 +43,8 @@ const Reaction: React.FC<ReactionProps> = ({
   useEffect(() => {
     setIsSelected(selected);
   }, [selected]);
+
+  const emoji = NodeEmoji.find(icon || '')?.emoji || '';
 
   const _onChangeValue = () => {
     const newValue = !isSelected;
@@ -47,16 +60,29 @@ const Reaction: React.FC<ReactionProps> = ({
     }
   };
 
+  const _onLongPress = () => {
+    onLongPress?.();
+  };
+
   return (
     <TouchableOpacity
+      disabled={loading}
       style={[styles.container, style]}
-      onPress={_onChangeValue}>
-      <Icon icon={icon} size={16} />
-      <Text.BodySM
-        color={isSelected ? colors.primary7 : colors.textPrimary}
-        style={styles.textInput}>
-        {value}
-      </Text.BodySM>
+      onPress={_onChangeValue}
+      onLongPress={_onLongPress}>
+      {loading ? (
+        <ActivityIndicator
+          color={colors.borderDisable}
+          style={styles.indicator}
+        />
+      ) : (
+        <Text.BodySM
+          color={isSelected ? colors.primary7 : colors.textPrimary}
+          style={styles.text}>
+          <Text.BodySM style={styles.emoji}>{emoji}</Text.BodySM>
+          {` ${value}`}
+        </Text.BodySM>
+      )}
     </TouchableOpacity>
   );
 };
@@ -70,14 +96,20 @@ const createStyles = (theme: ITheme, isSelected: boolean) => {
       borderWidth: 1,
       borderColor: isSelected ? colors.primary6 : colors.placeholder,
       borderRadius: 6,
-      paddingVertical: spacing?.padding.tiny,
       paddingHorizontal: 6,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
+      height: Platform.OS === 'web' ? 30 : 28,
     },
-    textInput: {
-      marginStart: spacing?.margin.tiny,
+    emoji: {
+      fontSize: Platform.OS === 'web' ? 15 : 13,
+    },
+    text: {
+      marginBottom: 2,
+    },
+    indicator: {
+      marginHorizontal: spacing.margin.tiny,
     },
   });
 };

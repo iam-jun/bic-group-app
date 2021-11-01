@@ -23,7 +23,7 @@ platform :android do
       timeout: 600,
     )
     rocket_chat(
-      message: "[DEV] New build version of Android #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+      message: "🟣 [DEV] 🤖 -Android- New build version #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
     )
   end
 
@@ -38,8 +38,14 @@ platform :android do
       build_type: "Release",
       flavor: "Staging",
     )
+    diawi(
+      token: ENV['DIAWI_TOKEN'],
+      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+      timeout: 600,
+    )
     rocket_chat(
-      message: "[STAGING] New build version of Android #{appVersionText} can be download on Internal Testing",
+      message: "🟡 [STG] 🤖 -Android- New build version #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+    #  message: "🟡 [STG] 🤖 -Android- New build version #{appVersionText} can be download on Internal Testing",
     )
 #     upload_to_play_store_internal_app_sharing
   end

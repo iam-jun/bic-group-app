@@ -1,16 +1,18 @@
-import React, {useImperativeHandle, useState} from 'react';
+import React, {useEffect, useImperativeHandle, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   FlatListProps,
+  Keyboard,
   LayoutChangeEvent,
   Modal,
+  StyleProp,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
+  ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {MessageOptionType} from '~/constants/chat';
+import {useTheme, Modal as PaperModal} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 export interface Props {
@@ -18,48 +20,98 @@ export interface Props {
   children?: React.ReactNode;
   flatListProps?: FlatListProps<any>;
   modalizeRef?: any;
-  side?: 'left' | 'right';
+  side?: 'left' | 'right' | 'center';
   ContentComponent?: React.ReactNode;
-  onMenuPress: (item: MessageOptionType) => void;
+  position?: {
+    x: number;
+    y: number;
+  };
+
+  deltaX?: number;
+  deltaY?: number;
+  menuMinWidth?: number;
+  menuMinHeight?: number;
+  isContextMenu?: boolean;
+  modalStyle?: StyleProp<ViewStyle>;
+  webModalStyle?: StyleProp<ViewStyle>;
+
   onClose: () => void;
 }
 
 const BaseBottomSheet: React.FC<Props> = ({
+  children,
   modalizeRef,
   flatListProps,
   ContentComponent,
   side,
-
+  isOpen,
+  position,
+  deltaX = 0,
+  deltaY = 0,
+  menuMinWidth,
+  menuMinHeight,
+  isContextMenu = true,
+  webModalStyle,
   onClose,
 }: Props) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyle(theme);
   const [visible, setVisible] = useState(false);
-  const [position, setPosition] = useState<{
+  const [initPosition, setInitPosition] = useState<{
     x: number;
     y: number;
   }>({x: -1, y: -1});
+  const [_position, setPosition] = useState<{
+    x: number;
+    y: number;
+  }>({x: -1, y: -1});
+
   const [boxSize, setBoxSize] = useState<{width: number; height: number}>({
-    width: 250, //For first time, onLayout have not triggered yet
-    height: 200,
+    width: -1, //For first time, onLayout have not triggered yet
+    height: -1,
   });
 
-  const open = (x: number, y: number) => {
-    let _x = Dimensions.get('window').width / 2 - boxSize.width / 2;
-    let _y = Dimensions.get('window').height / 2 - boxSize.height / 2;
-    if (x) _x = side === 'left' ? x - boxSize.width : x;
+  const hideModal = false; //_position.x < 0 || _position.y < 0;
+
+  useEffect(() => {
+    if (isOpen) {
+      Keyboard.dismiss();
+      setInitPosition({x: position?.x || -1, y: position?.y || -1});
+
+      open(position?.x, position?.y);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    // recalculate and update position
+    calculatePosition(initPosition?.x, initPosition?.y);
+  }, [boxSize]);
+
+  const calculatePosition = (x?: number, y?: number) => {
+    let _x = (Dimensions.get('window').width - boxSize.width) / 2;
+    let _y = (Dimensions.get('window').height - boxSize.height) / 2;
+    if (x) {
+      if (side === 'left') _x = x - boxSize.width;
+      else if (side === 'center') _x = x - boxSize.width / 2;
+      else _x = x;
+    }
     if (y)
       _y =
         y + boxSize.height > Dimensions.get('window').height
           ? y - boxSize.height
           : y;
 
-    setPosition({x: _x, y: _y});
-    setVisible(true);
+    setPosition({x: _x + deltaX, y: _y + deltaY});
+  };
+
+  const open = (x?: number, y?: number) => {
+    setInitPosition({x: x || -1, y: y || -1});
+    calculatePosition(x, y);
+    !visible && setVisible(true);
   };
 
   const close = () => {
-    setVisible(false);
+    _onClosed();
   };
 
   useImperativeHandle(modalizeRef, () => ({
@@ -70,48 +122,91 @@ const BaseBottomSheet: React.FC<Props> = ({
   const _onClosed = () => {
     if (!visible) return;
     setVisible(false);
-    onClose();
+    onClose?.();
   };
 
   const onLayout = (e: LayoutChangeEvent) => {
     setBoxSize({...e.nativeEvent.layout});
   };
 
-  if (position.x < 0 || position.y < 0) return null;
-
   return (
-    <Modal transparent animationType="fade" visible={visible}>
-      <TouchableWithoutFeedback onPress={_onClosed}>
-        <View style={styles.container}>
-          <View
-            onLayout={onLayout}
-            style={[styles.menu, {left: position.x, top: position.y}]}>
-            {flatListProps ? <FlatList {...flatListProps} /> : ContentComponent}
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </Modal>
+    <>
+      {children}
+      {!hideModal &&
+        (isContextMenu ? (
+          <Modal transparent animationType="fade" visible={visible}>
+            <TouchableWithoutFeedback onPress={_onClosed}>
+              <View style={styles.menuContainer}>
+                <View
+                  onLayout={onLayout}
+                  style={[
+                    styles.menu,
+                    {opacity: boxSize.width > 0 ? 1 : 0},
+                    {left: _position.x, top: _position.y},
+                    {minWidth: menuMinWidth, minHeight: menuMinHeight},
+                  ]}>
+                  {flatListProps ? (
+                    <FlatList {...flatListProps} />
+                  ) : (
+                    ContentComponent
+                  )}
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+        ) : (
+          (!!ContentComponent || !!flatListProps) && (
+            <PaperModal
+              visible={visible}
+              dismissable
+              onDismiss={_onClosed}
+              contentContainerStyle={StyleSheet.flatten([
+                styles.modalContainer,
+                webModalStyle,
+              ])}>
+              {flatListProps ? (
+                <FlatList {...flatListProps} />
+              ) : (
+                ContentComponent
+              )}
+            </PaperModal>
+          )
+        ))}
+    </>
   );
 };
 
 const themeStyle = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    container: {
+    menuContainer: {
       width: '100%',
       height: '100%',
     },
+    modalContainer: {
+      minWidth: 320,
+      minHeight: 400,
+      backgroundColor: colors.background,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      borderRadius: spacing.borderRadius.small,
+      alignSelf: 'center',
+    },
     menu: {
       position: 'absolute',
+      overflow: 'hidden',
+      borderWidth: 1,
+      borderColor: colors.bgSecondary,
+      borderRadius: spacing.borderRadius.small,
       backgroundColor: colors.background,
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
-        height: 12,
+        height: 4,
       },
       shadowOpacity: 0.12,
-      shadowRadius: 10.32,
+      shadowRadius: 12,
       elevation: 16,
     },
   });

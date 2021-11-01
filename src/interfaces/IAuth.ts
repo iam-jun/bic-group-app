@@ -58,7 +58,7 @@ export interface IChangePasswordError {
 export type ISignUpResponse = ISignUpResult;
 
 export interface IUserProfile {
-  id: string;
+  id: string | number;
   email?: string;
   fullname?: string;
   username?: string;
@@ -74,11 +74,22 @@ export interface IUserProfile {
   avatar?: string;
   background_img_url?: string;
   phone?: string;
+  country_code?: string;
   address?: string;
   language?: string[];
   description?: string;
   relationship_status?: string;
-  isPublic?: boolean;
+  city?: string;
+  country?: string;
+  latest_work?: {
+    company?: string;
+    title_position?: string;
+  };
+}
+
+export interface IGetUserProfile {
+  userId: number;
+  params?: any;
 }
 
 export interface IUserEdit {
@@ -90,13 +101,37 @@ export interface IUserEdit {
   avatar?: string;
   background_img_url?: string;
   phone?: string;
+  country_code?: string;
   address?: string;
   language?: string[];
   description?: string;
   relationship_status?: RELATIONSHIP_TYPE;
+  city?: string;
+  country?: string;
 }
 export interface IChangePasswordPayload {
   oldPassword: string;
   newPassword: string;
   global: boolean;
+}
+
+export interface IUserWorkExperience {
+  id: number;
+  company: string;
+  titlePosition: string;
+  location?: string;
+  description?: string;
+  currentlyWorkHere?: boolean;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface IUserAddWorkExperience {
+  company: string;
+  titlePosition: string;
+  location?: string;
+  description?: string;
+  currentlyWorkHere?: boolean;
+  startDate?: string;
+  endDate?: string;
 }

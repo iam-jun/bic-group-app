@@ -1,14 +1,17 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamGetReactionDetail,
   IParamSearchMentionAudiences,
+  IPayloadGetDraftPosts,
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
 } from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
+import {StreamClient} from 'getstream';
 
 export const postApiConfig = {
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -132,6 +135,31 @@ export const postApiConfig = {
   deleteReaction: (id: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/${id}`,
     method: 'delete',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  getReactionDetail: (
+    reactionType: ReactionType,
+    postId?: string,
+    commentId?: string,
+    idLessThan?: string,
+    limit?: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}reactions`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      kind: reactionType,
+      reaction_id: commentId,
+      post_id: commentId ? undefined : postId,
+      id_lt: idLessThan,
+      limit: limit || 20,
+    },
+  }),
+  postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/public/${draftPostId}`,
+    method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
@@ -323,6 +351,117 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.deleteReaction(id),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getReactionDetail: async (param: IParamGetReactionDetail) => {
+    const {reactionType, postId, commentId, idLessThan, limit} = param;
+    if (reactionType && (postId || commentId)) {
+      try {
+        const response: any = await makeHttpRequest(
+          postApiConfig.getReactionDetail(
+            reactionType,
+            postId,
+            commentId,
+            idLessThan,
+            limit,
+          ),
+        );
+        if (response && response?.data) {
+          return Promise.resolve(response?.data?.data);
+        } else {
+          return Promise.reject(response);
+        }
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    } else {
+      return Promise.reject('Invalid param');
+    }
+  },
+
+  getPostDetail: async (
+    userId: string,
+    streamClient?: StreamClient,
+    postId?: string,
+  ) => {
+    if (streamClient && userId && postId) {
+      const streamOptions = {
+        limit: 1,
+        // id_lte: postId,
+        user_id: `${userId}`, //required for CORRECT own_reactions data
+        ownReactions: true,
+        recentReactionsLimit: 10,
+        withOwnReactions: true,
+        withOwnChildren: true, //return own_children of reaction to comment
+        withRecentReactions: true,
+        withReactionCounts: true,
+        enrich: true, //extra data for user & group
+      };
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'newsfeed',
+          `u-${userId}`,
+          'getActivityDetail',
+          postId,
+          streamOptions,
+        );
+        if (data?.results?.[0]) {
+          return Promise.resolve(data?.results?.[0]);
+        } else {
+          return Promise.reject(data);
+        }
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    }
+    return Promise.reject('StreamClient or UserId not found');
+  },
+  getDraftPosts: async (payload: IPayloadGetDraftPosts) => {
+    const {userId, streamClient, offset = 0} = payload || {};
+    if (streamClient && userId) {
+      const streamOptions = {
+        offset: offset || 0,
+        limit: 10,
+        user_id: `${userId}`, //required for CORRECT own_reactions data
+        ownReactions: true,
+        recentReactionsLimit: 10,
+        withOwnReactions: true,
+        withOwnChildren: true, //return own_children of reaction to comment
+        withRecentReactions: true,
+        withReactionCounts: true,
+        enrich: true, //extra data for user & group
+      };
+      try {
+        const data = await makeGetStreamRequest(
+          streamClient,
+          'draft',
+          `u-${userId}`,
+          'get',
+          streamOptions,
+        );
+        return Promise.resolve({
+          data: data?.results || [],
+          canLoadMore: !!data?.next,
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    }
+    return Promise.reject('StreamClient or UserId not found');
+  },
+  postPublishDraftPost: async (draftPostId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postPublishDraftPost(draftPostId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

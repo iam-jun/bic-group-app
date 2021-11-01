@@ -1,21 +1,24 @@
-import {messageStatus} from './../../constants/chat';
 import i18next from 'i18next';
-import {roomTypes, messageEventTypes} from '~/constants/chat';
+import {messageEventTypes, roomTypes} from '~/constants/chat';
 import {
   IAttachment,
   IChatUser,
   IConversation,
   IMessage,
 } from '~/interfaces/IChat';
+import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
+import {messageStatus} from './../../constants/chat';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
     case 'users':
     case 'members':
       return mapUsers(data);
+    case 'search':
+      return mapSearchResults(user, data);
     case 'rooms':
       return mapConversations(user, data);
     case 'messages':
@@ -39,33 +42,70 @@ export const mapUsers = (data?: []): IChatUser[] =>
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
+export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
+  if (!item) return null;
+  let lastMessage = `${item.user?.name || item.user?.fullname}: ${item?.text}`;
+
+  if ((item.attachments && item.attachments.length > 0) || item.quotedMessage) {
+    lastMessage = !item.quotedMessage
+      ? item.user?.username === item.user?.username
+        ? i18next.t('chat:label_last_message:my_attachment')
+        : i18next
+            .t('chat:label_last_message:other_attachment')
+            .replace('{0}', item.user?.name)
+      : `${item.user?.name || item.user?.fullname}: ${item?.text}`;
+  } else if (item.type) {
+    // hide removed message
+    if (item.type === messageEventTypes.REMOVE_MESSAGE) {
+      lastMessage = i18next.t(
+        `chat:system_message:${item.type}:${isMyMessage ? 'me' : 'other'}`,
+      );
+    } else {
+      lastMessage = i18next.t(`chat:system_message:${item.type}`);
+    }
+  }
+
+  return lastMessage;
+};
+
+export const mapSearchResults = (
+  user: IChatUser,
+  data?: any[],
+): IConversation[] => {
+  return (data || []).map((item: any) => {
+    if (item.customFields) return mapConversation(user, item);
+    else return item;
+  });
+};
+
 export const mapConversation = (user: IChatUser, item: any): IConversation => {
-  const _id = item?._id || item?.rid;
+  if (!item) return item;
+  const _id = item.rid || item._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
 
   const membersExcludeMe = (item.usernames || []).filter(
     (_username: any) => _username !== user?.username,
   );
 
-  const name = item.fname || item.name;
-
   const avatar =
     type === roomTypes.DIRECT
-      ? getAvatar(membersExcludeMe?.length > 0 && membersExcludeMe[0])
+      ? membersExcludeMe?.length > 0
+        ? getAvatar(membersExcludeMe[0])
+        : null
       : getRoomAvatar(_id);
 
-  const attachment =
-    item.lastMessage?.attachments?.length > 0 &&
-    item.lastMessage.attachments[0];
+  const name =
+    (typeof item?.customFields?.beinChatName === 'string'
+      ? item?.customFields?.beinChatName
+      : item?.customFields?.beinChatName?.name) ||
+    item?.fname ||
+    item?.name;
 
   const lastMessage = item.lastMessage
-    ? attachment
-      ? item.lastMessage.u?.username === user?.username
-        ? i18next.t('chat:label_last_message:my_attachment')
-        : i18next
-            .t('chat:label_last_message:other_attachment')
-            .replace('{0}', item.lastMessage.u?.name)
-      : `${item.lastMessage.u?.name}: ${item?.lastMessage?.msg}`
+    ? getLastMessage(
+        mapMessage(user, item.lastMessage),
+        item.lastMessage?.u.username === user.username,
+      )
     : null;
 
   return {
@@ -73,62 +113,99 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     ...item.customFields,
     _id,
     name,
-    ...item.customFields,
     type,
     avatar,
     user: item.u && mapUser(item?.u),
-    directUser: membersExcludeMe?.length > 0 && membersExcludeMe[0],
+    directUser: item.t === 'd' && {
+      beinUserId: item.bein_user_id,
+    },
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
+    members: item.members || item.customFields?.members,
   };
 };
 
 export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   const user = mapUser(item?.u);
-  let attachment = null;
+  const attachments: IAttachment[] = [];
+  let quotedMessage = null;
+  let type = item.t;
+
   if (item.attachments?.length > 0) {
-    const _attachment: IAttachment = item.attachments[0];
-    const extraData = JSON.parse(_attachment.description || '{}');
-    attachment = {
-      ..._attachment,
-      name: _attachment.title,
-      ...extraData,
-    };
+    type = 'attachment';
+
+    item.attachments.forEach((_attachment: any) => {
+      let extraData = null;
+      try {
+        extraData = JSON.parse(_attachment.description || '{}');
+      } catch (e: any) {
+        console.log(e);
+      }
+      if (extraData?.type === 'reply') {
+        quotedMessage = extraData;
+      } else {
+        attachments.push({
+          ..._attachment,
+          name: _attachment.title,
+          ...extraData,
+        });
+      }
+    });
   }
-  const type = item.t || attachment?.type;
   let text = item.msg;
   const isMyMessage = user.username === _user.username;
 
   if (item.t) {
     if (item.t === messageEventTypes.REMOVE_MESSAGE) {
-      text = `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`;
+      text = i18next.t(
+        `chat:system_message:${item.t}:${isMyMessage ? 'me' : 'other'}`,
+      );
     } else {
-      text = i18next
-        .t(`chat:system_message:${item.t}`)
-        .replace('{0}', user.name || '')
-        .replace('{1}', item.msg);
+      text = i18next.t(`chat:system_message:${item.t}`);
     }
   }
 
-  return {
+  let reaction_counts: IReactionCounts = {};
+  let own_reactions: IOwnReaction = {};
+  if (item?.reactions) {
+    Object.keys(item?.reactions).map(emoji => {
+      const emojiName = emoji.replace(/:/g, '');
+      const count = item.reactions[emoji].usernames.length;
+      if (item.reactions[emoji].usernames.includes(_user.username)) {
+        own_reactions = {...own_reactions, [emojiName]: [{id: emojiName}]};
+      }
+      reaction_counts = {...reaction_counts, [emojiName]: count};
+    });
+  }
+
+  const _message = {
     ...item,
     room_id: item?.rid,
     user,
     type,
     system: !!item.t && item.t !== messageEventTypes.REMOVE_MESSAGE,
     removed: !!item.t && item.t === messageEventTypes.REMOVE_MESSAGE,
-    createdAt: timestampToISODate(item.ts),
+    createdAt: timestampToISODate(item.ts?.$date),
     _updatedAt: timestampToISODate(item._updatedAt),
     status: messageStatus.SENT,
     text,
-    attachment,
-    localId: item.localId || attachment?.localId,
+    attachments,
+    quotedMessage,
+    localId: item.localId || attachments[0]?.localId,
+    reaction_counts,
+    own_reactions,
+  };
+
+  return {
+    ..._message,
+    lastMessage: getLastMessage(_message, item.u?.username === _user.username),
   };
 };
 
 export const mapUser = (item: any): IChatUser => ({
   ...item,
   ...item.customFields,
+  _id: item?._id || item?.rocket_chat_id,
   avatar: getAvatar(item?.username),
   name: item?.name || item?.fullname || item?.username,
 });
@@ -148,10 +225,10 @@ export const mapRole = (item: any) => ({
 });
 
 export const getAvatar = (username: string) =>
-  `${getEnv('ROCKET_CHAT_SERVER')}avatar/${username}`;
+  `${getEnv('ROCKET_CHAT_SERVER')}/avatar/${username}?format=png`;
 
 export const getRoomAvatar = (roomId: string) =>
-  `${getEnv('ROCKET_CHAT_SERVER')}avatar/room/${roomId}`;
+  `${getEnv('ROCKET_CHAT_SERVER')}/avatar/room/${roomId}?format=png`;
 
 export const getMessageAttachmentUrl = (attachmentUrl: string) => {
   const auth = getChatAuthInfo();
@@ -173,8 +250,11 @@ export const getMessageAttachmentUrl = (attachmentUrl: string) => {
 
 export const getDownloadUrl = (file?: string) => {
   const auth = getChatAuthInfo();
-
   return `${getEnv('ROCKET_CHAT_SERVER')}${file}?download&rc_uid=${
     auth.userId
   }&rc_token=${auth.accessToken}`;
+};
+
+export const getDefaultAvatar = (name: string) => {
+  return `${getEnv('ROCKET_CHAT_SERVER')}/avatar/${name}?format=png`;
 };

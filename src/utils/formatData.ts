@@ -9,6 +9,7 @@ export const formatNumber = (n: number) => {
 export const formatDate = (
   value: string | number | Date | moment.Moment,
   format?: string,
+  locale?: string,
   maxFromDays?: number,
   fromNow = true,
 ) => {
@@ -16,16 +17,27 @@ export const formatDate = (
   const date = moment(value, formats, true);
   if (!date.isValid()) return '';
 
+  let momentValue = moment(value);
+  if (locale) {
+    momentValue = momentValue.locale(locale);
+  }
+
   if (format) {
-    value = moment(value).format(format);
+    value = momentValue.format(format);
   } else {
     const days = moment(new Date()).diff(date, 'days'); // today - future < 0
     if (fromNow) {
-      if (days < (maxFromDays || 1)) value = moment(value).fromNow(true);
-      else value = moment(value).format('lll');
+      if (days < (maxFromDays || 1)) {
+        value = momentValue.fromNow(true);
+      } else {
+        value = momentValue.format('lll');
+      }
     } else {
-      if (days < (maxFromDays || 1)) value = moment(value).calendar();
-      else value = moment(value).format('L');
+      if (days < (maxFromDays || 1)) {
+        value = momentValue.calendar();
+      } else {
+        value = momentValue.format('L');
+      }
     }
   }
 
@@ -131,3 +143,18 @@ export function formatBytes(bytes: number, decimals = 1) {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
+export const escapeMarkDown = (text: string) => {
+  const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
+
+  let match;
+  while ((match = MENTION_USER_REG.exec(text))) {
+    text = text.replace(match[0], match[2]);
+    MENTION_USER_REG.lastIndex = 0;
+  }
+  return text;
+};
+
+export const formatTextRemoveSpace = (text: string) => {
+  if (!text) return text;
+  return text.replace(/\s/g, '');
+};

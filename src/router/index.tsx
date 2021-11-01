@@ -7,27 +7,40 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking, Platform, StyleSheet, View} from 'react-native';
+import {
+  Linking,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
+import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
+import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
+import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import {AppConfig} from '~/configs';
 import {
   linkingConfig,
   linkingConfigFull,
+  linkingConfigFullLaptop,
+  linkingConfigLaptop,
   navigationSetting,
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {signOut} from '~/screens/Auth/redux/actions';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
+import {deviceDimensions} from '~/theme/dimension';
 import {isNavigationRefReady} from './helper';
 /*import config navigation*/
 import * as screens from './navigator';
@@ -40,10 +53,6 @@ const StackNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-
-  const [initialRouteName, setInitialRouteName] = React.useState<
-    string | undefined
-  >();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
@@ -76,24 +85,43 @@ const StackNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = false;
     checkAuthKickout();
     handleDeepLink();
-    /*Deep link*/
-    Linking.addEventListener('url', handleOpenURL);
+    // Linking.addEventListener('url', handleOpenURL);
   }, []);
 
-  /*Deep link*/
   /*Handle when app killed*/
   const handleDeepLink = async () => {
+    if (Platform.OS !== 'web') {
+      return;
+    }
+    const {leftNavigation} = useRootNavigation();
     const initialUrl = await Linking.getInitialURL();
-    console.log('handleDeepLink', {initialUrl});
-    // TODO:
-    // const navigation = withNavigation(rootNavigationRef);
-    // navigation.replace(rootSwitch.mainStack);
-
-    //[TO-DO] replace url with config url
-    const path = initialUrl?.replace('http://0.0.0.0:8080/', '') || '';
-    const route =
-      path.indexOf('/') >= 0 ? path.substr(0, path.indexOf('/')) : path;
-    setInitialRouteName(route || '');
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const parse = require('url-parse');
+    const url = parse(initialUrl, true);
+    const paths = url.pathname.split('/');
+    const route = paths.length > 0 ? paths[1] : '';
+    let navigateRoute = '';
+    switch (route) {
+      case 'chat':
+      case 'groups':
+      case 'menus':
+        navigateRoute = route;
+        break;
+      case 'settings':
+        navigateRoute = 'menus';
+        break;
+      case 'notifications':
+        navigateRoute = 'notification';
+        break;
+      case 'post':
+        navigateRoute = 'home';
+        if (url.query?.noti_id) navigateRoute = 'notification';
+        break;
+      default:
+        navigateRoute = '';
+        break;
+    }
+    if (navigateRoute) leftNavigation.navigate(navigateRoute);
   };
 
   /*Handle when app in background*/
@@ -112,6 +140,13 @@ const StackNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = true;
   };
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      event.preventDefault();
+      dispatch(modalActions.focusSearchInput(new Date().getTime().toString()));
+    }
+  };
+
   const renderToastMessage = () => {
     if (!toastMessage?.content) return null;
 
@@ -128,44 +163,60 @@ const StackNavigator = (): React.ReactElement => {
     );
   };
 
-  return (
-    <View style={styles.container}>
-      <NavigationContainer
-        linking={user ? linkingConfigFull : linkingConfig}
-        ref={rootNavigationRef}
-        onReady={onReady}
-        theme={navigationTheme}
-        documentTitle={{
-          enabled: false,
-        }}>
-        <Stack.Navigator
-          initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
-          screenOptions={{cardStyle: cardStyleConfig}}>
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
-            //@ts-ignore
-            name={rootSwitch.authStack}
-            component={screens.AuthStack}
-          />
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
-            //@ts-ignore
-            name={rootSwitch.mainStack}
-            component={screens.MainStack}
-            initialParams={{initialRouteName}}
-          />
-          <Stack.Screen
-            options={getOptions(t)}
-            // @ts-ignore
-            name={rootSwitch.notFound}
-            component={screens.NotFound}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <AlertModal />
+  const dimensions = useWindowDimensions();
+  const isLaptop = dimensions.width >= deviceDimensions.laptop;
+  const configLinkFull =
+    Platform.OS === 'web' && isLaptop
+      ? linkingConfigFullLaptop
+      : linkingConfigFull;
+  const configLink =
+    Platform.OS === 'web' && isLaptop ? linkingConfigLaptop : linkingConfig;
 
-      {renderToastMessage()}
-    </View>
+  return (
+    <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
+      <View style={styles.container}>
+        <NavigationContainer
+          linking={user ? configLinkFull : configLink}
+          ref={rootNavigationRef}
+          onReady={onReady}
+          theme={navigationTheme}
+          documentTitle={{
+            enabled: false,
+          }}>
+          <Stack.Navigator
+            //@ts-ignore
+            initialRouteName={
+              user ? rootSwitch.mainStack : rootSwitch.authStack
+            }
+            screenOptions={{cardStyle: cardStyleConfig}}>
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              //@ts-ignore
+              name={rootSwitch.authStack}
+              component={screens.AuthStack}
+            />
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              //@ts-ignore
+              name={rootSwitch.mainStack}
+              component={screens.MainStack}
+            />
+            <Stack.Screen
+              options={getOptions(t)}
+              // @ts-ignore
+              name={rootSwitch.notFound}
+              component={screens.NotFound}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+
+        <AlertModal />
+        <AlertNewFeatureModal />
+        <LoadingModal />
+
+        {renderToastMessage()}
+      </View>
+    </Div>
   );
 };
 
@@ -178,8 +229,12 @@ const getOptions = (t: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
+  },
+  container: {
+    width: '100%',
+    height: '100%',
   },
   toastStyle: {
     position: 'absolute',

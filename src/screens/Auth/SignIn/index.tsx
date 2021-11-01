@@ -10,14 +10,16 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+
 import Button from '~/beinComponents/Button';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import Input from '~/beinComponents/inputs/TextInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-
 import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
@@ -30,11 +32,11 @@ import {deviceDimensions} from '~/theme/dimension';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import * as actions from '../redux/actions';
-import {setSigningInError} from '../redux/actions';
 
 const SignIn = () => {
   useAuthAmplifyHub();
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {loading, signingInError} = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
@@ -54,8 +56,11 @@ const SignIn = () => {
   } = useForm();
 
   useEffect(() => {
-    dispatch(setSigningInError(''));
+    // avoid taking old loading state from store
+    dispatch(actions.setLoading(false));
+    dispatch(actions.setSigningInError(''));
     checkDisableSignIn();
+    setDisableSignIn(true);
   }, []);
 
   useEffect(() => {
@@ -119,15 +124,7 @@ const SignIn = () => {
 
   // TODO: remove when function signup come back
   const handleSignUpNotFunctioning = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: 'Info',
-        content:
-          'Function sign up has not been developed. Stay tuned for further releases 😀',
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: 'Got it',
-      }),
-    );
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   return (
@@ -139,17 +136,19 @@ const SignIn = () => {
             style={styles.logo}
             source={images.logo_bein}
           />
-          <Text.H6 style={styles.title}>{t('auth:text_sign_in_desc')}</Text.H6>
+          <Text.H6 style={styles.title} useI18n>
+            auth:text_sign_in_desc
+          </Text.H6>
           <Controller
             control={control}
             render={({field: {onChange, value}}) => (
               <Input
                 testID="inputEmail"
-                label={t('auth:input_label_email')}
+                label={!loading ? t('auth:input_label_email') : undefined}
                 placeholder={'sample@email.com'}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                editable={!loading}
+                disabled={loading}
                 value={value}
                 error={errors.email}
                 onChangeText={text => {
@@ -181,11 +180,11 @@ const SignIn = () => {
             render={({field: {onChange, value}}) => (
               <PasswordInput
                 testID="inputPassword"
-                label={t('auth:input_label_password')}
+                label={!loading ? t('auth:input_label_password') : undefined}
                 placeholder={t('auth:input_label_password')}
                 error={errors.password}
                 autoCapitalize="none"
-                editable={!loading}
+                disabled={loading}
                 value={value}
                 onChangeText={text => {
                   onChange(text);
@@ -213,8 +212,8 @@ const SignIn = () => {
             <TouchableOpacity
               testID="btnSignInForgotPassword"
               onPress={() => navigation.navigate(authStack.forgotPassword)}>
-              <Text.H6 style={styles.transparentButton}>
-                {t('auth:btn_forgot_password')}
+              <Text.H6 style={styles.transparentButton} useI18n>
+                auth:btn_forgot_password
               </Text.H6>
             </TouchableOpacity>
           </View>
@@ -222,20 +221,21 @@ const SignIn = () => {
             testID="btnLogin"
             style={styles.btnSignIn}
             disabled={disableSignIn}
-            onPress={onSignIn}>
-            {t('auth:btn_sign_in')}
+            onPress={onSignIn}
+            useI18n>
+            {loading ? <LoadingIndicator /> : 'auth:btn_sign_in'}
           </Button.Primary>
         </View>
-        {/*<Text.H5 style={styles.orText}>{t('auth:text_or')}</Text.H5>*/}
+        {/*<Text.H5 style={styles.orText} useI18n>auth:text_or</Text.H5>*/}
         {/*<SignInOAuth />*/}
         <View style={styles.signUpContainer}>
-          <Text.H6>{t('auth:text_sign_up_desc')} </Text.H6>
+          <Text.H6 useI18n>auth:text_sign_up_desc</Text.H6>
           <TouchableOpacity
             testID="btnSignInForgotPassword"
             // onPress={() => navigation.navigate(authStack.signup)}
             onPress={handleSignUpNotFunctioning}>
-            <Text.H6 style={styles.transparentButton}>
-              {t('auth:btn_sign_up_now')}
+            <Text.H6 style={styles.transparentButton} useI18n>
+              auth:btn_sign_up_now
             </Text.H6>
           </TouchableOpacity>
         </View>
@@ -287,6 +287,7 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       color: colors.primary7,
     },
     transparentButton: {
+      marginLeft: spacing.margin.tiny,
       color: colors.primary7,
     },
     orText: {

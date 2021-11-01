@@ -1,4 +1,4 @@
-import {StackActions} from '@react-navigation/native';
+import {StackActions, CommonActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import i18next from 'i18next';
 import {Platform} from 'react-native';
@@ -6,10 +6,13 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
+import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
   IConversation,
   IMessage,
+  IPayloadGetAttachmentFiles,
+  IPayloadReactMessage,
   ISendMessageAction,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
@@ -17,6 +20,7 @@ import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsActions from '~/screens/Groups/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import {generateRoomName} from '~/utils/generator';
@@ -24,11 +28,11 @@ import {
   mapConversation,
   mapData,
   mapMessage,
+  mapMessages,
   mapRole,
-  mapUsers,
 } from './../helper';
 import actions from './actions';
-import * as types from './constants';
+import types from './constants';
 
 /**
  * Chat
@@ -40,22 +44,30 @@ const navigation = withNavigation(rootNavigationRef);
 
 export default function* saga() {
   yield takeLatest(types.INIT_CHAT, initChat);
-  yield takeLatest(types.GET_DATA, getData);
+  yield takeEvery(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
+  yield takeLatest(types.GET_MESSAGES_HISTORY, getMessagesHistory);
+  yield takeLatest(types.MERGE_MESSAGES_HISTORY, mergeMessagesHistory);
+  yield takeLatest(types.GET_NEXT_MESSAGES, getNextMessages);
+  yield takeLatest(types.GET_UNREAD_MESSAGE, getUnreadMessage);
   yield takeLatest(types.GET_GROUP_ROLES, getGroupRoles);
   yield takeLatest(types.GET_CONVERSATION_DETAIL, getConversationDetail);
+  yield takeLatest(types.GET_ATTACHMENT_MEDIA, getAttachmentMedia);
   yield takeLatest(types.HANDLE_EVENT, handleEvent);
   yield takeLatest(types.CREATE_CONVERSATION, createConversation);
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
+  yield takeEvery(types.EDIT_MESSAGE, editMessage);
   yield takeLatest(types.DELETE_MESSAGE, deleteMessage);
   yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
-  yield takeLatest(types.READ_SUBCRIPTIONS, readSubcriptions);
+  yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
-  yield takeLatest(types.GET_MENTION_USERS, getMentionUsers);
+  yield takeLatest(types.REACT_MESSAGE, reactMessage);
+  yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
+  yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
 }
 
 function* initChat() {
@@ -71,7 +83,7 @@ function* getData({
 }: {
   type: string;
   payload: any;
-  field: string;
+  field?: string;
   dataType: string;
 }) {
   try {
@@ -95,8 +107,9 @@ function* getData({
 
     if (data.length === 0) {
       yield put(actions.setData(dataType, result));
-      if (result.length === appConfig.recordsPerPage)
-        yield put(actions.getData(dataType, payload));
+      const page = payload?.count || appConfig.recordsPerPage;
+      if (result.length === page)
+        yield put(actions.getData(dataType, payload, field));
     } else {
       yield put(actions.setExtraData(dataType, result));
     }
@@ -105,22 +118,26 @@ function* getData({
   }
 }
 
-function* mergeExtraData({dataType}: {type: string; dataType: string}) {
+function* mergeExtraData({
+  dataType,
+  field,
+}: {
+  type: string;
+  dataType: string;
+  field?: string;
+}) {
   const {chat} = yield select();
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
-    yield put(actions.getData(dataType, params));
+    yield put(actions.getData(dataType, params, field));
   }
 }
 
-function* getGroupRoles() {
+function* getGroupRoles({payload}: {type: string; payload: string}) {
   try {
-    const {chat} = yield select();
-    const {conversation} = chat;
-
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.roles({
-        roomId: conversation._id,
+        roomId: payload,
       }),
     );
 
@@ -144,15 +161,16 @@ function* getSubscriptions() {
   }
 }
 
-function* readSubcriptions({payload}: {type: string; payload: string}) {
+function* readSubscriptions({payload}: {type: string; payload: string}) {
   try {
     yield makeHttpRequest(
-      apiConfig.Chat.readSubcriptions({
+      apiConfig.Chat.readSubscriptions({
         rid: payload,
       }),
     );
+    yield getSubscriptions();
   } catch (err) {
-    console.log('readSubcriptions', err);
+    console.log('readSubscriptions', err);
   }
 }
 
@@ -174,7 +192,43 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
   }
 }
 
-function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
+function* getAttachmentMedia({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadGetAttachmentFiles;
+}) {
+  try {
+    payload.query = {typeGroup: 'image'};
+    payload.sort = {uploadedAt: -1};
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getAttachmentFiles(payload),
+    );
+    const {files} = response?.data || {};
+    yield put(actions.setAttachmentMedia(files || []));
+  } catch (err: any) {
+    yield put(
+      modalActions.showAlert({
+        title: i18next.t('common:text_error'),
+        content: err?.message || err,
+        confirmLabel: i18next.t('common:text_ok'),
+      }),
+    );
+  }
+}
+
+function* createConversation({
+  payload,
+  hideConfirmation,
+  callBack,
+  conversationName,
+}: {
+  payload: IChatUser[];
+  type: string;
+  hideConfirmation?: boolean;
+  callBack?: (roomId: string) => void;
+  conversationName?: string;
+}) {
   try {
     const {auth, chat} = yield select();
     const {user} = auth;
@@ -188,28 +242,40 @@ function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
           (room.usernames || []).includes(payload[0].username),
       );
       if (existedRoom) {
-        yield put(
-          modalActions.showAlert({
-            title: i18next.t('common:text_error'),
-            content: i18next.t('chat:error:existing_direct_chat'),
-            confirmLabel: i18next.t('common:text_ok'),
-            onConfirm: () => {
-              navigation.replace(chatStack.conversation, {
-                roomId: existedRoom._id,
-              });
-            },
-          }),
-        );
+        if (callBack) return callBack(existedRoom._id);
+        if (hideConfirmation) {
+          navigation.replace(chatStack.conversation, {
+            roomId: existedRoom._id,
+            initial: false,
+          });
+        } else {
+          yield put(
+            modalActions.showAlert({
+              title: i18next.t('common:text_error'),
+              content: i18next.t('chat:error:existing_direct_chat'),
+              confirmLabel: i18next.t('common:text_ok'),
+              onConfirm: () => {
+                navigation.replace(chatStack.conversation, {
+                  roomId: existedRoom._id,
+                  initial: false,
+                });
+              },
+            }),
+          );
+        }
+
         return;
       }
       response = yield makeHttpRequest(
         apiConfig.Chat.createDirectChat({username: payload[0].username}),
       );
     } else {
-      const name = generateRoomName(
-        user,
-        payload.map((_user: IChatUser) => _user?.name),
-      );
+      const name =
+        conversationName ||
+        generateRoomName(
+          user,
+          payload.map((_user: IChatUser) => _user?.name),
+        );
 
       const members = [...payload, user];
 
@@ -236,12 +302,27 @@ function* createConversation({payload}: {payload: IChatUser[]; type: string}) {
     );
 
     yield put(actions.setConversationDetail(conversation));
-    yield put(actions.createConversationSuccess(conversation));
+
+    if (callBack) return callBack(conversation._id);
+
+    rootNavigationRef?.current?.dispatch(state => {
+      // Remove the createConversation route from the stack
+      const routes = state.routes.filter(
+        r => r.name !== chatStack.createConversation,
+      );
+
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      });
+    });
 
     rootNavigationRef?.current?.dispatch(
-      StackActions.replace(chatStack.conversation),
+      StackActions.replace(chatStack.conversation, {initial: false}),
     );
-  } catch (err) {
+    yield put(actions.clearSelectedUsers());
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -287,7 +368,6 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.uploadFile(conversation._id, formData),
     );
-    console.log('uploadFile', response);
 
     const message = mapMessage(auth.user, response.data.message);
     yield put(actions.sendMessageSuccess({...payload, ...message}));
@@ -298,16 +378,48 @@ function* uploadFile({payload}: {payload: IMessage; type: string}) {
 }
 
 function* sendMessage({payload}: {payload: ISendMessageAction; type: string}) {
+  const {_id, room_id, text, replyingMessage} = payload || {};
+  try {
+    const {auth} = yield select();
+
+    const attachments = [];
+    if (replyingMessage) {
+      attachments.push({
+        description: JSON.stringify({
+          type: 'reply',
+          msgId: replyingMessage._id,
+          author: replyingMessage.user.username,
+        }),
+      });
+    }
+    // if (image) {
+    //   attachments.push({
+    //     image_url: image.name,
+    //     image_dimensions: {width: image.width, height: image.height},
+    //   });
+    // }
+
+    const params = {message: {_id, rid: room_id, msg: text, attachments}};
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.sendMessage(params),
+    );
+
+    const message = mapMessage(auth.user, response.data.message);
+    yield put(actions.sendMessageSuccess({...payload, ...message} as IMessage));
+  } catch (err) {
+    yield put(actions.sendMessageFailed(payload));
+  }
+}
+
+function* editMessage({payload}: {payload: IMessage; type: string}) {
   try {
     const {auth} = yield select();
 
     const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.sendMessage({
-        message: {
-          _id: payload._id,
-          rid: payload.room_id,
-          msg: payload.text,
-        },
+      apiConfig.Chat.editMessage({
+        roomId: payload.room_id,
+        msgId: payload._id,
+        text: payload.text || '',
       }),
     );
 
@@ -326,7 +438,7 @@ function* deleteMessage({payload}: {payload: IMessage; type: string}) {
         msgId: payload._id,
       }),
     );
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -364,7 +476,7 @@ function* addMembersToGroup({payload}: {type: string; payload: number[]}) {
       }),
     );
     handleAddMember();
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -380,9 +492,11 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
     const {chat} = yield select();
     const {conversation} = chat;
     if (conversation.type === roomTypes.GROUP) {
-      yield groupsDataHelper.removeUsers(conversation.beinGroupId, [
-        payload.beinUserId,
-      ]);
+      yield groupsDataHelper.removeUsers(
+        conversation.beinGroupId,
+        [payload.username],
+        'usernames',
+      );
     } else {
       const data = {
         roomId: conversation._id,
@@ -395,33 +509,196 @@ function* removeMember({payload}: {type: string; payload: IChatUser}) {
   }
 }
 
+function* reactMessage({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadReactMessage;
+}) {
+  try {
+    yield makeHttpRequest(apiConfig.Chat.reactMessage(payload));
+  } catch (err) {
+    console.log('reactMessage:', err);
+    yield showError(err);
+  }
+}
+
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
+  else if (payload.createdAt) yield editMessage({payload, type});
   else yield sendMessage({payload, type});
 }
 
-function* getMentionUsers({payload}: {payload: string; type: string}) {
+function* getMessageDetail({payload}: {payload: string; type: string}) {
   try {
-    const {chat} = yield select();
-    const {conversation} = chat;
-
+    const {auth} = yield select();
     const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.mentionUsers({
-        query: {
-          $and: [
-            {__rooms: {$eq: conversation._id}},
-            {name: {$regex: payload, $options: 'ig'}},
-          ],
-        },
+      apiConfig.Chat.getMessageDetail({
+        msgId: payload,
+      }),
+    );
+    yield put(
+      actions.setMessageDetail(mapMessage(auth.user, response.data.message)),
+    );
+  } catch (err) {
+    console.error('getMessageDetail', err);
+  }
+}
+
+function* getUnreadMessage() {
+  try {
+    const {auth, chat} = yield select();
+    const {conversation} = chat;
+    const response: AxiosResponse = yield makeHttpRequest(
+      //@ts-ignore
+      apiConfig.Chat.messages({
+        roomId: conversation._id,
+        type: conversation.type,
+        count: 1,
+        offset: conversation.unreadCount,
+      }),
+    );
+    const message = mapMessage(auth.user, response.data.messages[0]);
+    yield put(actions.setUnreadMessage(message));
+    yield put(actions.getSurroundingMessages(message._id));
+  } catch (err) {
+    console.error('getUnreadMessage', err);
+  }
+}
+
+function* getSurroundingMessages({payload}: {type: string; payload: string}) {
+  try {
+    const {auth, chat} = yield select();
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getSurroundingMessages({
+        room_id: chat.conversation?._id,
+        message_id: payload,
+        count: appConfig.messagesPerPage,
       }),
     );
 
-    const users = mapUsers(response.data.users);
-    yield put(actions.setMentionUsers(users));
+    const result = mapMessages(auth.user, response.data.data).reverse();
+    if (result.length === 0) return;
+
+    const index = result.findIndex((item: IMessage) => item._id === payload);
+    yield put(actions.setMessages(result.slice(0, index + 1).reverse()));
+    yield put(
+      actions.setMessagesHistory(
+        result.slice(index + 1, result.length).reverse(),
+      ),
+    );
+    yield put(actions.setJumpedMessage(result[index]));
   } catch (err) {
-    console.log('getMentionUsers', err);
+    console.log('getSurroundingMessages', err);
+    yield put(actions.setMessagesError(err));
   }
 }
+
+function* getMessagesHistory() {
+  try {
+    const {auth, chat} = yield select();
+    const {conversation, messages} = chat;
+    const {data} = messages;
+    const lastDate =
+      data.length > 0
+        ? {
+            $date: new Date(data[0].createdAt).getTime(),
+          }
+        : null;
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getMessagesHistory({
+        msg: 'method',
+        method: 'loadHistory',
+        id: conversation._id,
+        params: [
+          conversation._id,
+          lastDate,
+          appConfig.messagesPerPage,
+          {$date: new Date().getTime()},
+        ],
+      }),
+    );
+    const result = JSON.parse(response.data.message);
+
+    const messagesData = mapMessages(
+      auth.user,
+      result.result?.messages,
+    ).reverse();
+
+    if (data.length === 0) {
+      if (conversation.unreadCount < messagesData.length) {
+        yield put(
+          actions.setUnreadMessage(
+            messagesData[messagesData.length - conversation.unreadCount],
+          ),
+        );
+      }
+      yield put(actions.setMessages(messagesData));
+
+      if (messagesData.length === appConfig.messagesPerPage) {
+        yield put(actions.getMessagesHistory());
+      }
+    } else {
+      yield put(actions.setMessagesHistory(messagesData));
+    }
+  } catch (err: any) {
+    console.log('getMessagesHistory', err);
+  }
+}
+
+function* getNextMessages() {
+  try {
+    const {auth, chat} = yield select();
+    const {conversation, messages} = chat;
+    const {data} = messages;
+    const lastDate = data.length > 1 ? data[data.length - 1].createdAt : '';
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.getNextMessages({
+        msg: 'method',
+        method: 'loadNextMessages',
+        id: conversation._id,
+        params: [
+          conversation._id,
+          {$date: new Date(lastDate).getTime()},
+          appConfig.messagesPerPage,
+        ],
+      }),
+    );
+    const result = JSON.parse(response.data.message);
+
+    const messagesData = mapMessages(auth.user, result.result?.messages);
+    yield put(actions.setNextMessages(messagesData));
+  } catch (err: any) {
+    console.log('getMessagesHistory', err);
+  }
+}
+
+function* mergeMessagesHistory() {
+  const {chat} = yield select();
+  const {canLoadMore} = chat.messages;
+  if (canLoadMore) {
+    yield put(actions.getMessagesHistory());
+  }
+}
+
+// function* searchConversations({payload}: {type: string; payload?: string}) {
+//   try {
+//     const {auth} = yield select();
+
+//     const response: AxiosResponse = yield makeHttpRequest(
+//       apiConfig.Chat.search(payload ? {name: payload} : undefined),
+//     );
+
+//     yield put(
+//       actions.setConversationDetail(
+//         mapConversation(auth.user, response.data?.data),
+//       ),
+//     );
+//   } catch (err) {
+//     console.log('searchConversations', err);
+//   }
+// }
 
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event
@@ -429,11 +706,11 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
       [TO-DO] Need to check with BE
   */
 
-  if (
-    payload.msg === 'changed' &&
-    payload.collection === 'stream-room-messages'
-  ) {
-    yield handleRoomsMessage(payload);
+  if (payload.msg === 'changed') {
+    if (payload.collection === 'stream-room-messages')
+      yield handleRoomsMessage(payload);
+    else if (payload.collection === 'stream-notify-user')
+      yield handleNotifyUser(payload);
   }
 
   if (payload.msg !== 'result') return;
@@ -456,8 +733,11 @@ function* handleNewMessage(data: any) {
       (item: IConversation) => item._id === message?.room_id,
     );
 
-    if (existed) yield put(actions.addNewMessage(message));
-    else {
+    yield put(groupsActions.getJoinedGroups());
+
+    if (existed) {
+      yield put(actions.addNewMessage(message));
+    } else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({
           roomId: message?.room_id,
@@ -479,15 +759,9 @@ function* handleRemoveUser(data: any) {
   try {
     const {auth} = yield select();
     const message = mapMessage(auth.user, data);
-    console.log('handleRemoveUser', message, auth.user);
 
-    if (message.msg === auth.user.username) {
-      yield put(actions.kickMeOut(message));
-      navigation.replace(chatStack.conversationList);
-    } else {
-      yield handleNewMessage(data);
-      yield put(actions.removeMemberSuccess(message));
-    }
+    yield handleNewMessage(data);
+    yield put(actions.removeMemberSuccess(message));
   } catch (err) {
     console.log('handleRemoveUser', err);
   }
@@ -503,17 +777,33 @@ function* handleRemoveMessage(data: any) {
   }
 }
 
+function* handleAddNewRoom(data: any) {
+  try {
+    const {auth} = yield select();
+
+    yield put(
+      actions.createConversationSuccess(mapConversation(auth.user, data)),
+    );
+    yield getSubscriptions();
+  } catch (err) {
+    console.log('handleAddNewRoom', err);
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
-    case messageEventTypes.ADD_USER:
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case undefined:
       yield handleNewMessage(data);
+      break;
+    case messageEventTypes.ADD_USER:
+      yield handleNewMessage(data);
+      yield put(actions.addMembersToGroupSuccess(1));
       break;
     case messageEventTypes.REMOVE_MESSAGE:
       yield handleRemoveMessage(data);
@@ -522,4 +812,39 @@ function* handleRoomsMessage(payload?: any) {
       yield handleRemoveUser(data);
       break;
   }
+}
+
+function* handleNotifyUser(payload?: any) {
+  const {chat} = yield select();
+  const data = payload.fields.args || [];
+  switch (data[0]) {
+    case 'removed':
+      {
+        yield put(actions.kickMeOut(data[1]));
+        if (
+          chat.conversation?._id === data[1].rid ||
+          chat.conversation?._id === data[1]._id
+        )
+          navigation.replace(chatStack.conversationList);
+        yield put(groupsActions.getJoinedGroups());
+      }
+      break;
+    case 'inserted':
+      yield handleAddNewRoom(data[1]);
+      break;
+  }
+}
+
+function* showError(err: any) {
+  const toastMessage: IToastMessage = {
+    content:
+      err?.meta?.message ||
+      err?.meta?.errors?.[0]?.message ||
+      'common:text_error_message',
+    props: {
+      textProps: {useI18n: true},
+      type: 'error',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
 }

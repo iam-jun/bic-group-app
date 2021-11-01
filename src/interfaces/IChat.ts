@@ -1,7 +1,8 @@
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IconType} from '~/resources/icons';
-import {IFileResponse} from './common';
+import {IFilePicked} from './common';
+import {IActivityDataImage, IOwnReaction, IReactionCounts} from './IPost';
 export interface IReaction {
   type: ReactionType;
   count: number;
@@ -21,6 +22,7 @@ export interface IChatUser {
   active: boolean;
   username: string;
   name: string;
+  fullname?: string;
   services?: IUserServices;
   emails?: IUserEmail[];
   status?: string;
@@ -116,6 +118,7 @@ interface IUserSettings {
 }
 
 export type IAttachment = {
+  localId?: string;
   text?: string;
   timestamp?: string;
   message_link?: string;
@@ -130,22 +133,33 @@ export type IAttachment = {
 
 export type IMesssageStatus = typeof messageStatus[keyof typeof messageStatus];
 
+export interface IQuotedMessage {
+  msgId: string;
+  author: string;
+}
+
 export type IMessage = {
   _id: string;
   room_id: string;
   user: IChatUser;
   text?: string;
-  quoted_message?: IMessage;
+  quotedMessage?: IQuotedMessage;
   reactions?: IReaction[];
   attachments?: IAttachment[];
-  _updatedAt: string;
+  _updatedAt?: string;
   type?: string;
   localId?: string;
   status?: IMesssageStatus;
   system?: boolean;
   removed?: boolean;
-  attachment?: IFileResponse & IAttachment;
+  attachment?: IFilePicked & IAttachment;
   permissions?: [x: string];
+  reaction_counts?: IReactionCounts;
+  own_reactions?: IOwnReaction;
+  editedAt?: any;
+  editedBy?: any;
+  createdAt: string;
+  msg?: string;
 };
 
 export interface IAttachmentMessage {
@@ -154,7 +168,7 @@ export interface IAttachmentMessage {
   _updatedAt: string;
   type?: string;
   status?: string;
-  attachment: IFileResponse;
+  attachment: IFilePicked;
 }
 
 export type IRoomType = typeof roomTypes[keyof typeof roomTypes];
@@ -169,6 +183,7 @@ export type IConversation = {
   usernames: string[];
   usersCount: number;
   unreadCount: number;
+  unreadCountText?: string;
   lastMessage: string;
   _updatedAt: string;
   type: IRoomType;
@@ -180,7 +195,9 @@ export interface ISendMessageAction {
   text: string;
   user: IChatUser;
   room_id: string;
-  _updatedAt: string;
+  createdAt: string;
+  replyingMessage?: IMessage;
+  image?: IActivityDataImage;
 }
 
 export interface IUploadFileAction {
@@ -189,5 +206,21 @@ export interface IUploadFileAction {
   user: IChatUser;
   room_id: string;
   _updatedAt: string;
-  attachment: IFileResponse;
+  attachment: IFilePicked;
+}
+
+export interface IPayloadReactMessage {
+  emoji: string;
+  messageId: string;
+  shouldReact: boolean;
+}
+
+export interface IPayloadGetAttachmentFiles {
+  roomId: string;
+  isDirectMessage: boolean;
+  offset?: number;
+  count?: number;
+  sort?: any;
+  query?: any;
+  fields?: any;
 }

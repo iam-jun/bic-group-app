@@ -109,7 +109,7 @@ const Section3 = () => {
         <Text.H5>{`<Avatar.Small/>`}</Text.H5>
         <Text.H5>{`<Avatar.Medium/>`}</Text.H5>
         <Text.H5>{`<Avatar.Large/>`}</Text.H5>
-        <Text.H5>{`<Avatar.UltraLarge/>`}</Text.H5>
+        <Text.H5>{`<Avatar.LargeAlt/>`}</Text.H5>
         <View style={{flexDirection: 'row'}}>
           <Avatar.Tiny
             style={{margin: spacing?.margin.small}}
@@ -140,7 +140,7 @@ const Section3 = () => {
             badge={'iconReactionLove'}
             badgeBottom
           />
-          <Avatar.UltraLarge
+          <Avatar.LargeAlt
             style={{margin: spacing?.margin.small}}
             source={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
             // onPressAction={() => alert('onPress action')}
@@ -248,7 +248,7 @@ const Section3 = () => {
             totalMember={123}
           />
           <Avatar.Group
-            variant={'ultraLarge'}
+            variant={'largeAlt'}
             style={{margin: spacing?.margin.small}}
             source={[
               'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',

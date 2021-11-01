@@ -2,6 +2,7 @@ import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
 import {StreamClient} from 'getstream';
 import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
+import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 
 export interface IObject<T> {
   [key: string]: T;
@@ -29,11 +30,19 @@ export interface IRightMenu {
   title: string;
 }
 
-export interface IFileResponse {
-  name?: string;
-  uri: string;
-  size: number;
+export interface IFilePicked {
+  name: string;
+  filename: string;
   type: string;
+  mime: string;
+  size: number;
+  width: number;
+  height: number;
+  //app
+  uri: string;
+  //web
+  base64?: string;
+  [x: string]: any;
 }
 
 export interface IResponseData {
@@ -46,4 +55,40 @@ export interface IToastMessage {
   content: string;
   props: ToastMessageProps;
   duration?: number;
+}
+
+export interface IPayloadShowModal {
+  isOpen: boolean;
+  ContentComponent: any;
+  props?: BaseBottomSheetProps | any;
+  useAppBottomSheet?: boolean;
+  appModalStyle?: any;
+}
+
+export interface IUserPreview {
+  isOpen?: boolean;
+  userId?: number | string;
+  params?: IObject<any>;
+  position?: {x: number; y: number};
+}
+
+export interface ILinkPreview {
+  url: string;
+  thumbnail?: string;
+  title?: string;
+  description?: string;
+  domain?: string;
+}
+
+export interface ICountryCodeList {
+  code: string;
+  name: string;
+  flag: IconType;
+}
+
+export interface ILocation {
+  name: string;
+  type: string;
+  name_with_type: string;
+  country: string;
 }

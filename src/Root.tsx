@@ -4,7 +4,7 @@ import messaging, {
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   LogBox,
@@ -33,7 +33,6 @@ import {PreferencesContext} from '~/contexts/PreferencesContext';
 import {useGetStream} from '~/hooks/getStream';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
-import {setupPushToken} from '~/store/app/actions';
 import {fetchSetting} from '~/store/modal/actions';
 
 import {colors, dimension, fonts, shadow, spacing} from '~/theme';
@@ -69,14 +68,22 @@ export default (): React.ReactElement => {
     (state: any) => state.auth?.feed?.notiSubscribeToken,
   );
 
-  const streamClient = useGetStream(token);
-  const streamNotiSubClient = useGetStream(notiSubscribeToken);
+  const [streamClient, streamNotiSubClient] = useGetStream(
+    token,
+    notiSubscribeToken,
+  );
 
   const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     if (colorScheme !== theme) toggleTheme();
   }, [colorScheme]);
+
+  useEffect(() => {
+    if (i18n?.language) {
+      moment.locale(i18n?.language);
+    }
+  }, [i18n?.language]);
 
   const preferences = React.useMemo(
     () => ({
@@ -116,7 +123,11 @@ export default (): React.ReactElement => {
     remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
   ) => {
     const data = handleMessageData(remoteMessage);
-    if (data) rootNavigation.navigate(rootSwitch.mainStack, data);
+    if (data)
+      rootNavigation.navigate(rootSwitch.mainStack, {
+        screen: 'main',
+        params: {...data, initial: false},
+      });
   };
 
   const handleMessageData = (
@@ -148,6 +159,7 @@ export default (): React.ReactElement => {
     if (language) {
       // @ts-ignore
       i18n.language !== language && i18n.changeLanguage(language);
+      moment.locale(language);
     } else {
       let systemLocale =
         Platform.OS === 'ios'
@@ -163,10 +175,12 @@ export default (): React.ReactElement => {
         (item: string) => item === systemLocale,
       );
 
-      if (isSupportLanguage) changeLanguage(systemLocale);
-      else changeLanguage(AppConfig.defaultLanguage);
+      const newLanguage = isSupportLanguage
+        ? systemLocale
+        : AppConfig.defaultLanguage;
+      changeLanguage(newLanguage);
+      moment.locale(newLanguage);
     }
-    moment.locale(language);
   };
 
   const changeLanguage = async (language: string) => {
@@ -180,7 +194,6 @@ export default (): React.ReactElement => {
       loaded: false,
     };
     try {
-      dispatch(setupPushToken());
       /*Fetch setting*/
       dispatch(fetchSetting());
 
@@ -197,22 +210,34 @@ export default (): React.ReactElement => {
   };
 
   //Set config theme
-  const themeConfig: any =
-    theme === 'light'
-      ? {
-          ...DefaultTheme,
-          colors: {...DefaultTheme.colors, ...colors.light.colors},
-        }
-      : {
-          ...DarkTheme,
-          colors: {...DarkTheme.colors, ...colors.dark.colors},
-        };
-  themeConfig.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
-  themeConfig.spacing = {...spacing};
-  themeConfig.dimension = {...dimension};
-  themeConfig.shadow = {...shadow};
-  /*Config font*/
-  themeConfig.fonts = configureFonts(fontConfig);
+  const themeConfig: any = useMemo(() => {
+    const result: any =
+      theme === 'light'
+        ? {
+            ...DefaultTheme,
+            colors: {...DefaultTheme.colors, ...colors.light.colors},
+          }
+        : {
+            ...DarkTheme,
+            colors: {...DarkTheme.colors, ...colors.dark.colors},
+          };
+    result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
+    result.spacing = {...spacing};
+    result.dimension = {...dimension};
+    result.shadow = {...shadow};
+    /*Config font*/
+    result.fonts = configureFonts(fontConfig);
+    return result;
+  }, [theme, stateCurrent.loaded]);
+
+  const providerValue = useMemo(() => {
+    return {
+      language: i18n.language,
+      changeLanguage,
+      streamClient,
+      streamNotiSubClient,
+    };
+  }, [i18n.language, streamClient]);
 
   return (
     <SafeAreaProvider>
@@ -226,13 +251,7 @@ export default (): React.ReactElement => {
         />
         <PreferencesContext.Provider value={preferences}>
           <PaperProvider theme={themeConfig}>
-            <AppContext.Provider
-              value={{
-                language: i18n.language,
-                changeLanguage,
-                streamClient,
-                streamNotiSubClient,
-              }}>
+            <AppContext.Provider value={providerValue}>
               <Portal.Host>
                 <RootNavigator />
               </Portal.Host>

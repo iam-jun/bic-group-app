@@ -8,6 +8,7 @@ import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
+  IGroupSearchPayload,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -18,9 +19,10 @@ const groupsActions = {
       payload,
     };
   },
-  setLoadingJoinedGroups: function (payload: boolean) {
+
+  getJoinedGroups: function (payload?: any) {
     return {
-      type: groupsTypes.SET_LOADING_JOINED_GROUPS,
+      type: groupsTypes.GET_JOINED_GROUPS,
       payload,
     };
   },
@@ -30,12 +32,11 @@ const groupsActions = {
       payload,
     };
   },
-  setLoadingGroupDetail: function (payload: boolean) {
-    return {
-      type: groupsTypes.SET_LOADING_GROUP_DETAIL,
-      payload,
-    };
-  },
+
+  setLoadingGroupMembers: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_GROUP_MEMBER,
+    payload,
+  }),
   clearGroupMembers: function () {
     return {
       type: groupsTypes.CLEAR_GROUP_MEMBER,
@@ -53,15 +54,16 @@ const groupsActions = {
       payload,
     };
   },
-  setGroupDetail: function (payload: IGroupDetail) {
+  setGroupDetail: function (payload: IGroupDetail | null) {
     return {
       type: groupsTypes.SET_GROUP_DETAIL,
       payload,
     };
   },
-  setLoadingGroupPosts: function (payload: boolean) {
+
+  getGroupPosts: (payload: IPayloadGetGroupPost) => {
     return {
-      type: groupsTypes.SET_LOADING_GROUP_POSTS,
+      type: groupsTypes.GET_GROUP_POSTS,
       payload,
     };
   },
@@ -71,6 +73,15 @@ const groupsActions = {
       payload,
     };
   },
+  setExtraGroupPosts: (payload: IGroup[]) => ({
+    type: groupsTypes.SET_EXTRA_GROUP_POSTS,
+    payload,
+  }),
+  mergeExtraGroupPosts: (payload: IPayloadGetGroupPost) => ({
+    type: groupsTypes.MERGE_EXTRA_GROUP_POSTS,
+    payload,
+  }),
+
   clearGroupPosts: () => ({
     type: groupsTypes.CLEAR_GROUP_POSTS,
   }),
@@ -108,24 +119,13 @@ const groupsActions = {
     type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
   }),
 
-  getJoinedGroups: function (payload?: any) {
-    return {
-      type: groupsTypes.GET_JOINED_GROUPS,
-      payload,
-    };
-  },
   getGroupDetail: function (payload: number) {
     return {
       type: groupsTypes.GET_GROUP_DETAIL,
       payload,
     };
   },
-  getGroupPosts: function (payload: IPayloadGetGroupPost) {
-    return {
-      type: groupsTypes.GET_GROUP_POSTS,
-      payload,
-    };
-  },
+
   editGroupDetail: function (payload: IGroupDetailEdit) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
@@ -144,6 +144,43 @@ const groupsActions = {
       payload,
     };
   },
+
+  joinNewGroup: function (payload: {groupId: number}) {
+    return {
+      type: groupsTypes.JOIN_NEW_GROUP,
+      payload,
+    };
+  },
+
+  setLoadingAvatar: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_AVATAR,
+    payload,
+  }),
+  setLoadingCover: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_COVER,
+    payload,
+  }),
+  setLoadingPage: (payload: boolean) => ({
+    type: groupsTypes.SET_LOADING_PAGE,
+    payload,
+  }),
+  setGroupSearch: (payload: IGroupSearchPayload) => ({
+    type: groupsTypes.SET_GROUP_SEARCH,
+    payload,
+  }),
+  getGroupSearch: (payload: string) => ({
+    type: groupsTypes.GET_GROUP_SEARCH,
+    payload,
+  }),
+
+  removeMember: (payload: {
+    groupId: number;
+    userId: string;
+    userFullname: string;
+  }) => ({
+    type: groupsTypes.REMOVE_MEMBER,
+    payload,
+  }),
 };
 
 export default groupsActions;

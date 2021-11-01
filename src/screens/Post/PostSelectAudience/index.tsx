@@ -24,6 +24,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IUser} from '~/interfaces/IAuth';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import NoSearchResult from '~/beinFragments/NoSearchResult';
 
 const PostSelectAudience = () => {
   const [loading, setLoading] = useState(true);
@@ -212,7 +213,7 @@ const PostSelectAudience = () => {
         <PrimaryItem
           showAvatar
           avatar={icon || avatar}
-          avatarProps={{variant: isGroup ? 'ultraLarge' : 'large'}}
+          avatarProps={{variant: isGroup ? 'largeAlt' : 'large'}}
           style={styles.item}
           title={name}
           onPressCheckbox={() => onPressUser(item)}
@@ -262,14 +263,7 @@ const PostSelectAudience = () => {
     if (loading) {
       return null;
     }
-    return (
-      <View style={styles.emptyContainer}>
-        <Text style={styles.textEmpty} useI18n>
-          post:text_search_result_empty
-        </Text>
-        <Image style={styles.imgSearchEmpty} source={images.img_search_empty} />
-      </View>
-    );
+    return <NoSearchResult />;
   };
 
   return (
@@ -280,6 +274,7 @@ const PostSelectAudience = () => {
         buttonText={'common:btn_done'}
         buttonProps={{useI18n: true}}
         onPressButton={onPressSave}
+        hideBackOnLaptop
       />
       <SearchInput
         autoFocus
@@ -294,7 +289,9 @@ const PostSelectAudience = () => {
       <SectionList
         style={{paddingHorizontal: spacing?.padding.large}}
         sections={sectionListData}
-        keyExtractor={(item, index) => `section_list_${item}_${index}`}
+        keyExtractor={(item, index) =>
+          item?.unique || `section_list_${item}_${index}`
+        }
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         ListEmptyComponent={renderEmpty}
@@ -324,19 +321,6 @@ const createStyle = (theme: ITheme) => {
     },
     sectionHeaderText: {
       marginVertical: spacing?.margin.small,
-    },
-    emptyContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    textEmpty: {
-      marginVertical: spacing.margin.large,
-      marginHorizontal: spacing.margin.large,
-      textAlign: 'center',
-    },
-    imgSearchEmpty: {
-      width: 200,
-      height: 200,
     },
   });
 };

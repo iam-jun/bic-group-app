@@ -1,4 +1,10 @@
-import {IUserEdit, IUserProfile} from '~/interfaces/IAuth';
+import {
+  IGetUserProfile,
+  IUserAddWorkExperience,
+  IUserEdit,
+  IUserProfile,
+  IUserWorkExperience,
+} from '~/interfaces/IAuth';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import menuTypes from './types';
 
@@ -9,36 +15,119 @@ const menuActions = {
       payload,
     };
   },
-  setMyProfile: (payload: IUserProfile) => {
+
+  getUserProfile: (payload: IGetUserProfile) => {
+    return {
+      type: menuTypes.GET_USER_PROFILE,
+      payload,
+    };
+  },
+  setUserProfile: (payload: IUserProfile | null) => {
+    return {
+      type: menuTypes.SET_USER_PROFILE,
+      payload,
+    };
+  },
+  setShowUserNotFound: () => {
+    return {
+      type: menuTypes.SET_SHOW_USER_NOT_FOUND,
+    };
+  },
+  clearUserProfile: () => {
+    return {
+      type: menuTypes.CLEAR_USER_PROFILE,
+    };
+  },
+
+  getMyProfile: (payload: IGetUserProfile) => {
+    return {
+      type: menuTypes.GET_MY_PROFILE,
+      payload,
+    };
+  },
+  setMyProfile: (payload: IUserProfile | null) => {
     return {
       type: menuTypes.SET_MY_PROFILE,
       payload,
     };
   },
-  selectMyProfile: (payload: IUserProfile) => {
+
+  getMyWorkExperience: () => {
     return {
-      type: menuTypes.SELECT_MY_PROFILE,
+      type: menuTypes.GET_MY_WORK_EXPERIENCE,
+    };
+  },
+  setMyWorkExperience: (payload: IUserWorkExperience[]) => {
+    return {
+      type: menuTypes.SET_MY_WORK_EXPERIENCE,
       payload,
     };
   },
-  setSelectedProfile: (payload: IUserProfile) => {
+  addWorkExperience: (
+    payload: IUserAddWorkExperience,
+    callback?: () => void,
+  ) => {
     return {
-      type: menuTypes.SET_SELECTED_PROFILE,
+      type: menuTypes.ADD_WORK_EXPERIENCE,
+      payload,
+      callback,
+    };
+  },
+  editWorkExperience: (
+    id: number,
+    payload: IUserAddWorkExperience,
+    callback?: () => void,
+  ) => {
+    return {
+      type: menuTypes.EDIT_WORK_EXPERIENCE,
+      id,
+      payload,
+      callback,
+    };
+  },
+  deleteWorkExperience: (id: number, callback?: () => void) => {
+    return {
+      type: menuTypes.DELETE_WORK_EXPERIENCE,
+      id,
+      callback,
+    };
+  },
+  setSelectedWorkItem: (payload: IUserWorkExperience | null) => {
+    return {
+      type: menuTypes.SET_SELECTED_WORK_ITEM,
       payload,
     };
   },
-  selectedProfile: (payload: IUserProfile) => {
-    return {
-      type: menuTypes.SELECTED_PROFILE,
-      payload,
-    };
-  },
-  editMyProfile: function (payload: IUserEdit) {
+
+  searchCountryCode: (payload: string) => ({
+    type: menuTypes.SEARCH_COUNTRY_CODE,
+    payload,
+  }),
+  searchLocation: (payload: string) => ({
+    type: menuTypes.SEARCH_LOCATION,
+    payload,
+  }),
+
+  editMyProfile: function (
+    payload: IUserEdit,
+    editFieldName?: string,
+    callback?: () => void,
+  ) {
     return {
       type: menuTypes.EDIT_MY_PROFILE,
       payload,
+      editFieldName,
+      callback,
     };
   },
+  setEmailEditError: (payload: string) => ({
+    type: menuTypes.SET_EMAIL_EDIT_ERROR,
+    payload,
+  }),
+  setPhoneNumberEditError: (payload: string) => ({
+    type: menuTypes.SET_PHONE_NUMBER_EDIT_ERROR,
+    payload,
+  }),
   uploadImage: function (payload: IUserImageUpload) {
     return {
       type: menuTypes.UPLOAD_IMAGE,
@@ -46,18 +135,14 @@ const menuActions = {
     };
   },
 
-  getMyProfile: (payload: string) => {
-    return {
-      type: menuTypes.GET_MY_PROFILE,
-      payload,
-    };
-  },
-  getSelectedProfile: (payload: string) => {
-    return {
-      type: menuTypes.GET_SELECTED_PROFILE,
-      payload,
-    };
-  },
+  setLoadingAvatar: (payload: boolean) => ({
+    type: menuTypes.SET_LOADING_AVATAR,
+    payload,
+  }),
+  setLoadingCover: (payload: boolean) => ({
+    type: menuTypes.SET_LOADING_COVER,
+    payload,
+  }),
 };
 
 export default menuActions;

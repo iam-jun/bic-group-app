@@ -19,6 +19,8 @@ import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
+import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
+import Div from '../Div';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;
@@ -75,6 +77,15 @@ const Icon: React.FC<IconProps> = ({
   } else if (typeof _icon === 'function') {
     IconComponent = SvgIcon;
     source = _icon;
+  } else if (
+    typeof icon === 'string' &&
+    !icons[icon] &&
+    !icon.includes('http')
+  ) {
+    IconComponent = TextEmojiIcon;
+    name = icon;
+    _style.width = size * 1.3;
+    _style.height = size * 1.3;
   } else {
     IconComponent = Image;
     source = _icon;
@@ -85,23 +96,28 @@ const Icon: React.FC<IconProps> = ({
   const Wrapper = Platform.OS === 'web' ? Text : View;
 
   return (
-    <TouchableOpacity disabled={!onPress} onPress={onPress} hitSlop={hitSlop}>
+    <TouchableOpacity
+      disabled={disabled || !onPress}
+      onPress={onPress}
+      hitSlop={hitSlop}>
       <Wrapper style={[styles.container, style, {backgroundColor}]}>
-        <View
+        <Div
           style={[
             isButton && styles.button,
             disabled && isButton && styles.disabled,
             iconStyle,
           ]}>
-          <IconComponent
-            style={_style}
-            tintColor={_tintColor}
-            size={size}
-            type={type}
-            name={name}
-            source={source}
-          />
-        </View>
+          <Div className="icon-wrapper">
+            <IconComponent
+              style={_style}
+              tintColor={_tintColor}
+              size={size}
+              type={type}
+              name={name}
+              source={source}
+            />
+          </Div>
+        </Div>
         {label && (
           <Text.ButtonBase
             useI18n

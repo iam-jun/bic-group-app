@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -18,10 +19,12 @@ import {IAction} from '~/constants/commonActions';
 import {IconType} from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
+import Div from '~/beinComponents/Div';
+import {primaryItemHeight} from '~/theme/dimension';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
-  height?: number;
+  height?: number | null;
   title?: string | React.ReactNode;
   titleProps?: TextProps;
   subTitle?: string | React.ReactNode;
@@ -42,11 +45,12 @@ export interface PrimaryItemProps {
   LeftComponent?: React.ReactNode | React.ReactElement;
   RightComponent?: React.ReactNode | React.ReactElement;
   ContentComponent?: React.ReactNode | React.ReactElement;
+  className?: string;
 }
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
-  height,
+  height = primaryItemHeight,
   title,
   titleProps,
   showAvatar,
@@ -67,15 +71,17 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   onPressMenu,
   RightComponent,
   ContentComponent,
+  className = 'button',
 }: PrimaryItemProps) => {
   const theme = useTheme() as ITheme;
-  const {dimension, spacing} = theme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
+  // @ts-ignore
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      height: height || dimension?.primaryItemHeight,
+      height: height,
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
     },
@@ -83,66 +89,80 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   ]);
 
   return (
-    <TouchableOpacity
-      disabled={!onPress}
-      onPress={onPress}
-      style={containerStyle}>
-      {LeftComponent}
-      {(showAvatar || !!avatar) && (
-        <Avatar.Medium source={avatar} style={styles.avatar} {...avatarProps} />
-      )}
-      {!!leftIcon && (
-        <Icon
-          size={14}
-          style={styles.iconMarginRight}
-          icon={leftIcon}
-          {...leftIconProps}
-        />
-      )}
-      <View style={styles.contentContainer}>
-        {!!title && (
-          <Text variant="h6" numberOfLines={2} {...titleProps}>
-            {title}
-          </Text>
+    <Div className={className}>
+      <TouchableOpacity
+        style={containerStyle}
+        disabled={!onPress}
+        onPress={onPress}>
+        {LeftComponent}
+        {(showAvatar || !!avatar) && (
+          <Avatar.Medium
+            source={avatar}
+            style={styles.avatar}
+            {...avatarProps}
+          />
         )}
-        {!!subTitle && (
-          <Text variant="body" numberOfLines={2} {...subTitleProps}>
-            {subTitle}
-          </Text>
+        {!!leftIcon && (
+          <Icon
+            size={14}
+            style={styles.iconMarginRight}
+            icon={leftIcon}
+            {...leftIconProps}
+          />
         )}
-        {ContentComponent}
-      </View>
-      {onPressCheckbox && (
-        <Checkbox
-          style={styles.iconMarginLeft}
-          isChecked={isChecked}
-          onActionPress={onPressCheckbox}
-          {...checkboxProps}
-        />
-      )}
-      {onPressToggle && (
-        <Toggle
-          style={styles.iconMarginLeft}
-          isChecked={toggleChecked}
-          onActionPress={onPressToggle}
-        />
-      )}
-      {onPressEdit && (
-        <Icon
-          style={styles.iconMarginLeft}
-          icon={'Edit'}
-          onPress={onPressEdit}
-        />
-      )}
-      {onPressMenu && (
-        <Icon
-          style={styles.iconMarginLeft}
-          onPress={onPressMenu}
-          icon={'EllipsisV'}
-        />
-      )}
-      {RightComponent}
-    </TouchableOpacity>
+        <View style={styles.contentContainer}>
+          {!!title && (
+            <Text
+              variant="h6"
+              numberOfLines={2}
+              style={styles.text}
+              {...titleProps}>
+              {title}
+            </Text>
+          )}
+          {!!subTitle && (
+            <Text
+              variant="body"
+              numberOfLines={2}
+              style={styles.text}
+              {...subTitleProps}>
+              {subTitle}
+            </Text>
+          )}
+          {ContentComponent}
+        </View>
+        {onPressCheckbox && (
+          <Checkbox
+            style={styles.iconMarginLeft}
+            isChecked={isChecked}
+            onActionPress={onPressCheckbox}
+            {...checkboxProps}
+          />
+        )}
+        {onPressToggle && (
+          <Toggle
+            style={styles.iconMarginLeft}
+            isChecked={toggleChecked}
+            onActionPress={onPressToggle}
+          />
+        )}
+        {onPressEdit && (
+          <Icon
+            style={styles.iconMarginLeft}
+            icon={'Edit'}
+            onPress={onPressEdit}
+          />
+        )}
+        {onPressMenu && (
+          <Icon
+            style={styles.iconMarginLeft}
+            onPress={onPressMenu}
+            icon={'EllipsisV'}
+          />
+        )}
+        {RightComponent}
+      </TouchableOpacity>
+    </Div>
   );
 };
 
@@ -158,6 +178,13 @@ const createStyle = (theme: ITheme) => {
     },
     avatar: {
       marginRight: spacing?.margin.base,
+    },
+    text: {
+      ...Platform.select({
+        web: {
+          paddingTop: 0,
+        },
+      }),
     },
   });
 };
