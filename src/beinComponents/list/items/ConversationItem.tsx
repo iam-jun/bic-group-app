@@ -118,8 +118,8 @@ const createStyles = (
   const isWeb = Platform.OS === 'web';
 
   const contentHeight = 72;
-  const headerHeight = 20;
-  const messageHeight = 40;
+  const headerHeight = 22;
+  const messageHeight = 42;
 
   return StyleSheet.create({
     container: {
@@ -157,7 +157,6 @@ const createStyles = (
     },
     title: {
       flex: 1,
-      height: 20,
       lineHeight: 20,
       ...Platform.select({
         web: {
