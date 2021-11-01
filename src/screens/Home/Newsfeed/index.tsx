@@ -94,7 +94,7 @@ const Newsfeed = () => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      dispatch(postActions.addToAllPosts(homePosts));
+      dispatch(postActions.addToAllPosts({data: homePosts}));
     });
   }, [homePosts]);
 
