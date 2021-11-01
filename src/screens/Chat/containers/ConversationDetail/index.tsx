@@ -55,6 +55,8 @@ const ConversationDetail = (): React.ReactElement => {
   const baseSheetRef: any = useRef();
   const permissions = conversation.permissions || {};
 
+  const [dummyIsMute, setDummyIsMute] = useState(false);
+
   useEffect(() => {
     if (route?.params?.roomId)
       dispatch(actions.getConversationDetail(route?.params?.roomId));
@@ -180,6 +182,36 @@ const ConversationDetail = (): React.ReactElement => {
     );
   };
 
+  const onPressMute = () => {
+    const _dummyIsMute = !dummyIsMute;
+    setDummyIsMute(_dummyIsMute);
+    alert('Set mute: ' + _dummyIsMute);
+  };
+
+  const renderButtonMute = () => {
+    if (dummyIsMute)
+      return (
+        <Button.Icon
+          icon="BellSlash"
+          style={styles.marginRight}
+          iconWrapperStyle={styles.buttonMuteEnable}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_unmute')}
+          onPress={onPressMute}
+        />
+      );
+
+    return (
+      <Button.Icon
+        icon="Bell"
+        style={styles.marginRight}
+        tintColor={colors.primary7}
+        label={i18next.t('chat:label_mute')}
+        onPress={onPressMute}
+      />
+    );
+  };
+
   // TODO: Fix marginRight, they are pushed to the left, when there is no button invite
   const renderMenu = () => (
     <View style={styles.menuContainer}>
@@ -197,14 +229,7 @@ const ConversationDetail = (): React.ReactElement => {
           label={i18next.t('chat:label_pin_chat')}
         />
       )}
-      {permissions[chatPermissions.CAN_MUTE] && (
-        <Button.Icon
-          icon="bell"
-          style={styles.marginRight}
-          tintColor={colors.primary7}
-          label={i18next.t('chat:label_mute')}
-        />
-      )}
+      {permissions[chatPermissions.CAN_MUTE] && renderButtonMute()}
       {!isDirect && permissions[chatPermissions.CAN_MANAGE_MEMBER] && (
         <Button.Icon
           icon="addUser"
@@ -547,6 +572,9 @@ const createStyles = (
     },
     marginRight: {
       marginRight: spacing.margin.big,
+    },
+    buttonMuteEnable: {
+      backgroundColor: colors.primary3,
     },
     cover: {
       width: '100%',
