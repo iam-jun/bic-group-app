@@ -1,6 +1,7 @@
 import {
   IChatUser,
   IConversation,
+  IConversationInfo,
   IMessage,
   IPayloadReactMessage,
   ISendMessageAction,
@@ -154,6 +155,10 @@ export default {
     payload,
     editFieldName,
     callback,
+  }),
+  setUpdatedConversationDetail: (payload: IConversationInfo) => ({
+    type: Actions.SET_UPDATED_CONVERSATION_DETAIL,
+    payload,
   }),
   uploadFile: (payload: IUploadFileAction) => ({
     type: Actions.UPLOAD_FILE,

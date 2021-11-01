@@ -189,6 +189,13 @@ export type IConversation = {
   beinGroupId?: number;
 };
 
+export type IConversationInfo = {
+  name?: string;
+  description?: string;
+  avatar?: string;
+  cover?: string;
+};
+
 export interface ISendMessageAction {
   _id: string;
   text: string;

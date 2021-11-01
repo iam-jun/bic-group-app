@@ -858,7 +858,8 @@ function* handleRoomsMessage(payload?: any) {
 
   switch (data.t) {
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
-      yield put(actions.getConversationDetail(data.rid));
+      yield put(actions.setUpdatedConversationDetail({description: data.msg}));
+      yield handleNewMessage(data);
       break;
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_NAME:
