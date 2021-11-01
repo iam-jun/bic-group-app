@@ -14,6 +14,7 @@ import {
   IPayloadGetAttachmentFiles,
   IPayloadReactMessage,
   ISendMessageAction,
+  IUpdateConversationDetail,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
@@ -63,10 +64,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
-  yield takeLatest(
-    types.UPDATE_CONVERSATION_DESCRIPTION,
-    updateConversationDescription,
-  );
+  yield takeLatest(types.UPDATE_CONVERSATION_DETAIL, updateConversationDetail);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
@@ -470,28 +468,38 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
   }
 }
 
-function* updateConversationDescription({
+function* updateConversationDetail({
   payload,
   callback,
 }: {
   type: string;
-  payload: string;
+  payload: IUpdateConversationDetail;
   callback?: (roomId?: string) => void;
 }) {
   try {
     const {chat} = yield select();
     const {conversation} = chat;
+    const {name, description, avatar, cover} = payload;
+
+    let id: number | string;
+    if (conversation?.type === roomTypes.GROUP) {
+      id = conversation.beinGroupId;
+    } else {
+      id = conversation._id;
+    }
 
     yield makeHttpRequest(
-      apiConfig.Chat.updateConversationDescription({
-        roomId: conversation._id,
-        description: payload,
+      apiConfig.Chat.updateConversationDetail(id, {
+        name,
+        description,
+        icon: avatar,
+        background_img_url: cover,
       }),
     );
 
     if (callback) return callback(conversation._id);
   } catch (err) {
-    console.log('updateConversationDescription', err);
+    console.log('updateConversationDetail', err);
     yield showError(err);
   }
 }

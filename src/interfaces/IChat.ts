@@ -223,3 +223,10 @@ export interface IPayloadGetAttachmentFiles {
   query?: any;
   fields?: any;
 }
+
+export interface IUpdateConversationDetail {
+  name?: string;
+  description?: string;
+  avatar?: string;
+  cover?: string;
+}

@@ -13,7 +13,6 @@ import actions from '../../redux/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import useChat from '~/hooks/chat';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import {roomTypes} from '~/constants/chat';
 
 const EditConversationDescription = ({route}: {route: any}) => {
   const theme = useTheme() as ITheme;
@@ -28,8 +27,9 @@ const EditConversationDescription = ({route}: {route: any}) => {
   };
 
   const onSave = () => {
-    conversation?.type === roomTypes.QUICK &&
-      dispatch(actions.updateConversationDescription(text, onPressBack));
+    dispatch(
+      actions.updateConversationDetail({description: text}, onPressBack),
+    );
   };
 
   const onPressBack = (roomId?: string) => {

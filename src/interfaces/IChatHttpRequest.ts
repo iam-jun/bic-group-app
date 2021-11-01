@@ -113,3 +113,10 @@ export interface IRealtimeAPIReq {
 export interface ISearchChatReq {
   name: string;
 }
+
+export interface IUpdateConversationDetailReq {
+  name?: string;
+  description?: string;
+  icon?: string;
+  background_img_url?: string;
+}

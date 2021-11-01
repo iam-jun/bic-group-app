@@ -23,6 +23,7 @@ import {
   IUpdateGroupName,
   ISearchChatReq,
   IUpdateConversationDescription,
+  IUpdateConversationDetailReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -227,17 +228,16 @@ const Chat = {
       data,
     };
   },
-  updateConversationDescription: (
-    data: IUpdateConversationDescription,
-  ): HttpApiRequestConfig => {
-    return {
-      url: `${providers.chat.url}groups.setDescription`,
-      method: 'post',
-      useRetry: true,
-      provider: providers.chat,
-      data,
-    };
-  },
+  updateConversationDetail: (
+    id: number | string,
+    data: IUpdateConversationDetailReq,
+  ): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}groups/${id}`,
+    method: 'put',
+    provider: providers.bein,
+    useRetry: true,
+    data,
+  }),
   uploadFile: (roomId: string, data: FormData): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}rooms.upload/${roomId}`,
