@@ -201,12 +201,12 @@ function* getAttachmentMedia({
   try {
     payload.query = {typeGroup: 'image'};
     payload.sort = {uploadedAt: -1};
-    const response: any = yield makeHttpRequest(
+    const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getAttachmentFiles(payload),
     );
     const {files} = response?.data || {};
     yield put(actions.setAttachmentMedia(files || []));
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
