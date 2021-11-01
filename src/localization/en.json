@@ -526,6 +526,12 @@
     "search_result": {
       "job_title": " at ",
       "member_count": " & {0} others"
+    },
+    "conversation_options": {
+      "notifications": "Notifications",
+      "pin": "Pin",
+      "mark_as_read": "Mark as Read",
+      "delete_chat": "Delete Chat"
     }
   },
   "comment": {

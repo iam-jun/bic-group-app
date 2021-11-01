@@ -321,6 +321,12 @@
     "label_init_direct_message": {
       "short": "Say hello to your friend",
       "full": "🤗 Say hello to your friend!"
+    },
+    "conversation_options": {
+      "notifications": "Thông báo",
+      "pin": "Ghim",
+      "mark_as_read": "Đánh dấu đã xem",
+      "delete_chat": "Xóa tin nhắn"
     }
   },
   "comment": {
