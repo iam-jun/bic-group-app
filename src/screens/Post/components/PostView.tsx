@@ -30,6 +30,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import PostViewMenu from '~/screens/Post/components/PostViewMenu';
 
 export interface PostViewProps {
+  style?: any;
   postId: string;
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
@@ -38,6 +39,7 @@ export interface PostViewProps {
 }
 
 const _PostView: FC<PostViewProps> = ({
+  style,
   postId,
   isPostDetail = false,
   onPressComment,
@@ -203,7 +205,10 @@ const _PostView: FC<PostViewProps> = ({
 
   return (
     <View
-      style={Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {}}>
+      style={StyleSheet.flatten([
+        Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {},
+        style,
+      ])}>
       <PostViewImportant
         isImportant={isImportant}
         expireTime={important?.expiresTime}
