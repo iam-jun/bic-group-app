@@ -193,7 +193,7 @@ const ConversationDetail = (): React.ReactElement => {
       return (
         <Button.Icon
           icon="BellSlash"
-          style={styles.marginRight}
+          style={styles.menuOption}
           iconWrapperStyle={styles.buttonMuteEnable}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_unmute')}
@@ -204,7 +204,7 @@ const ConversationDetail = (): React.ReactElement => {
     return (
       <Button.Icon
         icon="Bell"
-        style={styles.marginRight}
+        style={styles.menuOption}
         tintColor={colors.primary7}
         label={i18next.t('chat:label_mute')}
         onPress={onPressMute}
@@ -212,19 +212,18 @@ const ConversationDetail = (): React.ReactElement => {
     );
   };
 
-  // TODO: Fix marginRight, they are pushed to the left, when there is no button invite
   const renderMenu = () => (
     <View style={styles.menuContainer}>
       <Button.Icon
         icon="search"
-        style={styles.marginRight}
+        style={styles.menuOption}
         tintColor={colors.primary7}
         label={i18next.t('common:text_search')}
       />
       {permissions[chatPermissions.CAN_PIN_MESSAGE] && (
         <Button.Icon
           icon="iconPin"
-          style={styles.marginRight}
+          style={styles.menuOption}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_pin_chat')}
         />
@@ -233,6 +232,7 @@ const ConversationDetail = (): React.ReactElement => {
       {!isDirect && permissions[chatPermissions.CAN_MANAGE_MEMBER] && (
         <Button.Icon
           icon="addUser"
+          style={styles.menuOption}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_invite')}
           onPress={goAddMembers}
@@ -546,6 +546,9 @@ const createStyles = (
       alignItems: 'center',
       paddingVertical: spacing.padding.large,
     },
+    menuOption: {
+      marginHorizontal: spacing.margin.large,
+    },
     bottomMenu: {
       marginTop: spacing.margin.small,
       paddingTop: spacing.padding.base,
@@ -563,15 +566,6 @@ const createStyles = (
     bottomSheet: {
       paddingHorizontal: spacing.padding.big,
       paddingTop: spacing.padding.tiny,
-    },
-    marginBottom: {
-      marginBottom: spacing.margin.large,
-    },
-    marginStart: {
-      marginStart: spacing.margin.large,
-    },
-    marginRight: {
-      marginRight: spacing.margin.big,
     },
     buttonMuteEnable: {
       backgroundColor: colors.primary3,
