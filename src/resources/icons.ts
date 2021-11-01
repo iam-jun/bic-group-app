@@ -126,6 +126,7 @@ const icons = {
   Bookmark: 'Bookmark',
   Copy: 'Copy',
   Bell: 'Bell',
+  BellSlash: 'BellSlash',
   TrashAlt: 'TrashAlt',
   ShareAlt: 'ShareAlt',
   InfoCircle: 'InfoCircle',
