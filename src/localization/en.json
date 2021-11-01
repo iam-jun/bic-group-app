@@ -526,7 +526,8 @@
     "search_result": {
       "job_title": " at ",
       "member_count": " & {0} others"
-    }
+    },
+    "text_chat_description": "Chat Description"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

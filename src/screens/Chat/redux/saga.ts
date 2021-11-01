@@ -470,10 +470,12 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
 
 function* updateConversationDetail({
   payload,
+  editFieldName,
   callback,
 }: {
   type: string;
   payload: IUpdateConversationDetail;
+  editFieldName?: string;
   callback?: (roomId?: string) => void;
 }) {
   try {
@@ -483,9 +485,9 @@ function* updateConversationDetail({
 
     let id: number | string;
     if (conversation?.type === roomTypes.GROUP) {
-      id = conversation.beinGroupId;
+      id = conversation?.beinGroupId;
     } else {
-      id = conversation._id;
+      id = conversation?._id;
     }
 
     yield makeHttpRequest(
@@ -497,7 +499,25 @@ function* updateConversationDetail({
       }),
     );
 
-    if (callback) return callback(conversation._id);
+    if (callback) return callback(conversation?._id);
+
+    // show success toast message
+    let toastContent: string;
+    if (editFieldName) {
+      toastContent = `${editFieldName} ${i18next.t(
+        'settings:text_updated_successfully',
+      )}`;
+    } else {
+      toastContent = 'common:text_edit_success';
+    }
+    const toastMessage: IToastMessage = {
+      content: toastContent,
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('updateConversationDetail', err);
     yield showError(err);

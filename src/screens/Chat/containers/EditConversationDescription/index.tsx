@@ -28,7 +28,11 @@ const EditConversationDescription = ({route}: {route: any}) => {
 
   const onSave = () => {
     dispatch(
-      actions.updateConversationDetail({description: text}, onPressBack),
+      actions.updateConversationDetail(
+        {description: text.trim()},
+        i18next.t('chat:text_chat_description'),
+        onPressBack,
+      ),
     );
   };
 

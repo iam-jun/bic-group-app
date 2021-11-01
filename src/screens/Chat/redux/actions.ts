@@ -147,10 +147,12 @@ export default {
   }),
   updateConversationDetail: (
     payload: IUpdateConversationDetail,
+    editFieldName?: string,
     callback?: (roomId?: string) => void,
   ) => ({
     type: Actions.UPDATE_CONVERSATION_DETAIL,
     payload,
+    editFieldName,
     callback,
   }),
   uploadFile: (payload: IUploadFileAction) => ({
