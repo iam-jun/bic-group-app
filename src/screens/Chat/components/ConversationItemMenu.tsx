@@ -28,6 +28,7 @@ const ConversationItemMenu: FC<ConversationItemMenuProps> = ({
 
   const onPressNotificationToggle = (action: IAction) => {
     console.log(`action`, action);
+    alert('Notification toggle pressed, ' + action);
   };
 
   return (
