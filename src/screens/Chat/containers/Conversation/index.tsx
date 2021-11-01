@@ -51,6 +51,7 @@ import LoadingMessages from '../../components/LoadingMessages';
 import {getDefaultAvatar} from '../../helper';
 import appActions from '~/store/app/actions';
 import {appScreens} from '~/configs/navigator';
+import images from '~/resources/images';
 
 const Conversation = () => {
   const {user} = useAuth();
@@ -64,9 +65,7 @@ const Conversation = () => {
   const styles = createStyles(theme, insets);
   const {rootNavigation} = useRootNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(
-    conversation.avatar,
-  );
+
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
@@ -76,10 +75,6 @@ const Conversation = () => {
     useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
   const [editingMessage, setEditingMessage] = useState<IMessage>();
-
-  const onLoadAvatarError = () => {
-    setAvatar(getDefaultAvatar(conversation?.name));
-  };
 
   const setNewRootScreenName = () => {
     const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
@@ -129,7 +124,6 @@ const Conversation = () => {
       setDownButtonVisible(
         conversation.unreadCount > appConfig.messagesPerPage,
       );
-      setAvatar(conversation?.avatar);
     }
   }, [conversation?._id]);
 
@@ -589,11 +583,14 @@ const Conversation = () => {
   return (
     <ScreenWrapper isFullView testID="MessageScreen" style={styles.container}>
       <Header
-        avatar={_avatar}
+        avatar={conversation?.avatar}
         avatarProps={{
           variant: 'default',
           cache: false,
-          onError: onLoadAvatarError,
+          placeholderSource:
+            conversation?.type === roomTypes.DIRECT
+              ? images.img_user_avatar_default
+              : images.img_group_avatar_default,
         }}
         title={
           messages.error

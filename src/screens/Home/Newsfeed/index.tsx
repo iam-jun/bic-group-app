@@ -1,6 +1,11 @@
-import React, {useContext, useEffect, useState, useRef} from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
 import {
-  ActivityIndicator,
   InteractionManager,
   Platform,
   StyleSheet,
@@ -10,20 +15,12 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
-import PostItem from '~/beinComponents/list/items/PostItem';
-
-import ListView from '~/beinComponents/list/ListView';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import Text from '~/beinComponents/Text';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
@@ -34,9 +31,8 @@ import {ITheme} from '~/theme/interfaces';
 import {ITabTypes} from '~/interfaces/IRouter';
 import {useIsFocused} from '@react-navigation/core';
 import {appScreens} from '~/configs/navigator';
-
-let newsfeedPostCount = 0;
-const itemLeftToGetMore = 10;
+import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
+import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 
 const Newsfeed = () => {
   const listRef = useRef<any>();
@@ -46,7 +42,7 @@ const Newsfeed = () => {
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
   );
-  const styles = createStyle(theme, newsfeedWidth);
+  const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
 
@@ -61,12 +57,11 @@ const Newsfeed = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) dispatch(appActions.setRootScreenName(appScreens.newsfeed));
+    InteractionManager.runAfterInteractions(() => {
+      if (isFocused)
+        dispatch(appActions.setRootScreenName(appScreens.newsfeed));
+    });
   }, [isFocused]);
-
-  const renderItem = ({item}: any) => {
-    return <PostItem postData={item} />;
-  };
 
   const getData = (isRefresh?: boolean) => {
     if (streamClient) {
@@ -99,7 +94,7 @@ const Newsfeed = () => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      dispatch(postActions.addToAllPosts(homePosts));
+      dispatch(postActions.addToAllPosts({data: homePosts}));
     });
   }, [homePosts]);
 
@@ -125,87 +120,37 @@ const Newsfeed = () => {
     );
   };
 
-  const renderFooter = () => {
-    return (
-      <View style={styles.listFooter}>
-        {!noMoreHomePosts && !refreshing && (
-          <ActivityIndicator color={theme.colors.bgFocus} />
-        )}
-        {!refreshing && noMoreHomePosts && (
-          <Text.Subtitle color={theme.colors.textSecondary}>
-            No more homeposts
-          </Text.Subtitle>
-        )}
-      </View>
-    );
-  };
-
-  const renderPlaceholder = () => {
-    return (
-      <View style={styles.placeholder}>
-        <HeaderCreatePostPlaceholder
-          style={styles.headerCreatePost}
-          parentWidth={newsfeedWidth}
-        />
-        <PostViewPlaceholder />
-        <PostViewPlaceholder />
-        <PostViewPlaceholder />
-      </View>
-    );
-  };
-
   const navigateToCreatePost = () => {
     rootNavigation.navigate(homeStack.createPost);
   };
 
-  useEffect(() => {
-    newsfeedPostCount = homePosts?.length;
-  }, [homePosts?.length]);
+  const onEndReach = useCallback(() => getData(), []);
 
-  const onViewableItemsChanged = useRef(({viewableItems}: any) => {
-    const lastVisibleIndex = viewableItems?.[viewableItems?.length - 1]?.index;
-    if (newsfeedPostCount - lastVisibleIndex < itemLeftToGetMore) {
-      getData();
-    }
-  }).current;
+  const onRefresh = useCallback(() => getData(true), []);
 
   return (
     <View
       style={styles.container}
       onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {renderHeader()}
-      {homePosts.length === 0 && refreshing ? (
-        renderPlaceholder()
-      ) : (
-        <ListView
-          listRef={listRef}
-          isFullView
-          containerStyle={styles.listContainer}
-          data={homePosts}
-          refreshing={refreshing}
-          onRefresh={() => getData(true)}
-          onEndReachedThreshold={1}
-          onLoadMore={() => getData()}
-          disableVirtualization={Platform.OS === 'web'}
-          renderItem={renderItem}
-          onViewableItemsChanged={onViewableItemsChanged}
-          ListHeaderComponent={() => (
-            <HeaderCreatePost
-              style={styles.headerCreatePost}
-              parentWidth={newsfeedWidth}
-            />
-          )}
-          ListFooterComponent={renderFooter}
-          renderItemSeparator={() => (
-            <ViewSpacing height={theme.spacing.margin.large} />
-          )}
-        />
-      )}
+      <NewsfeedList
+        data={homePosts}
+        refreshing={refreshing}
+        canLoadMore={!noMoreHomePosts}
+        onEndReach={onEndReach}
+        onRefresh={onRefresh}
+        HeaderComponent={
+          <HeaderCreatePost
+            style={styles.headerCreatePost}
+            parentWidth={newsfeedWidth}
+          />
+        }
+      />
     </View>
   );
 };
 
-const createStyle = (theme: ITheme, newsfeedWidth: number) => {
+const createStyle = (theme: ITheme) => {
   const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
@@ -236,6 +181,7 @@ const createStyle = (theme: ITheme, newsfeedWidth: number) => {
       alignItems: 'center',
     },
     headerCreatePost: {
+      width: '100%',
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
     },

@@ -45,20 +45,23 @@ const PostViewContent: FC<PostViewContentProps> = ({
   return (
     <View onLayout={onLayout}>
       <View style={styles.contentContainer}>
-        {isPostDetail ? (
-          <MarkdownView onPressAudience={onPressMentionAudience}>
-            {content}
-          </MarkdownView>
-        ) : (
-          <CollapsibleText
-            content={content}
-            limitLength={400}
-            shortLength={400}
-            useMarkdown
-            toggleOnPress
-            onPressAudience={onPressMentionAudience}
-          />
-        )}
+        {/*{isPostDetail ? (*/}
+        {/*  <MarkdownView onPressAudience={onPressMentionAudience}>*/}
+        {/*    {content}*/}
+        {/*  </MarkdownView>*/}
+        {/*) : (*/}
+        {/*  <CollapsibleText*/}
+        {/*    content={content}*/}
+        {/*    limitLength={400}*/}
+        {/*    shortLength={400}*/}
+        {/*    useMarkdown*/}
+        {/*    toggleOnPress*/}
+        {/*    onPressAudience={onPressMentionAudience}*/}
+        {/*  />*/}
+        {/*)}*/}
+        <MarkdownView onPressAudience={onPressMentionAudience}>
+          {content}
+        </MarkdownView>
       </View>
       <PostPhotoPreview
         data={images || []}

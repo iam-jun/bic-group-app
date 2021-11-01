@@ -9,10 +9,11 @@ import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
 import ConversationItemMenu from '~/screens/Chat/components/ConversationItemMenu';
-import {getDefaultAvatar} from '~/screens/Chat/helper';
 import modalActions from '~/store/modal/actions';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
 
@@ -77,7 +78,11 @@ const ConversationItem: React.FC<Props> = ({
       style={styles.avatar}
       source={avatar}
       cache={false}
-      placeholderSource={getDefaultAvatar(name)}
+      placeholderSource={
+        type === roomTypes.DIRECT
+          ? images.img_user_avatar_default
+          : images.img_group_avatar_default
+      }
     />
   );
 

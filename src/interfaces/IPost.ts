@@ -260,6 +260,11 @@ export interface IPostAudienceSheet {
   fromStack?: 'newsfeed' | 'groups';
 }
 
+export interface IPayloadAddToAllPost {
+  data: IPostActivity[] | IPostActivity;
+  handleComment?: boolean;
+}
+
 export interface IPayloadReactToPost {
   id: string;
   reactionId: ReactionType;
