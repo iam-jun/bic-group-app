@@ -48,7 +48,7 @@ function* getHomePosts({
     yield put(homeActions.setHomePosts(newHomePosts));
 
     if (newHomePosts?.length === homePosts?.length) {
-      yield put(homeActions.setNoMoreHomePosts(newHomePosts));
+      yield put(homeActions.setNoMoreHomePosts(true));
     }
 
     if (isRefresh) {

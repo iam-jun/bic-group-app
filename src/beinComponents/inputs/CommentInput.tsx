@@ -165,6 +165,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       if (!isHandleUpload) {
         onPressSelectImage?.(file);
       } else {
+        setUploadError('');
         setSelectedImage(file);
       }
     });

@@ -3,6 +3,7 @@ import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
+import {getLastMessage} from '../helper';
 import types from './constants';
 
 export const initDataState = {
@@ -320,7 +321,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         attachmentMedia: payload || [],
       };
     case types.ADD_NEW_MESSAGE: {
-      const include = messages.data.find(
+      const include: any = messages.data.find(
         (item: IMessage) =>
           item._id === action.payload._id ||
           (item.localId && item.localId === action.payload.localId),
@@ -339,14 +340,12 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                 ? {...item, ...payload}
                 : item,
             );
-
       return {
         ...state,
         messages:
           action.payload.room_id === conversation._id
             ? {
                 ...messages,
-
                 data: newMessages,
               }
             : messages,
@@ -359,8 +358,8 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   item._id === action.payload.room_id
                     ? {
                         ...item,
-                        lastMessage: action.payload.msg,
-                        _updatedAt: action.payload._updatedAt,
+                        lastMessage: action.payload.lastMessage,
+                        _updatedAt: action.payload.createAt,
                       }
                     : item,
                 ),
@@ -457,6 +456,18 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
               status: messageStatus.SENDING,
             },
           ],
+        },
+        rooms: {
+          ...rooms,
+          data: rooms.data.map((item: any) =>
+            item._id === action.payload.room_id
+              ? {
+                  ...item,
+                  lastMessage: getLastMessage(action.payload, true),
+                  _updatedAt: action.payload.createdAt,
+                }
+              : item,
+          ),
         },
         quotedMessages: payload.quotedMessage
           ? {

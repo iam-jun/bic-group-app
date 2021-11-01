@@ -6,8 +6,9 @@ import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
+import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
-import {getDefaultAvatar} from '~/screens/Chat/helper';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
 
@@ -56,7 +57,11 @@ const ConversationItem: React.FC<Props> = ({
       style={styles.avatar}
       source={avatar}
       cache={false}
-      placeholderSource={getDefaultAvatar(name)}
+      placeholderSource={
+        type === roomTypes.DIRECT
+          ? images.img_user_avatar_default
+          : images.img_group_avatar_default
+      }
     />
   );
 
@@ -113,8 +118,8 @@ const createStyles = (
   const isWeb = Platform.OS === 'web';
 
   const contentHeight = 72;
-  const headerHeight = 20;
-  const messageHeight = 40;
+  const headerHeight = 22;
+  const messageHeight = 42;
 
   return StyleSheet.create({
     container: {
@@ -152,7 +157,6 @@ const createStyles = (
     },
     title: {
       flex: 1,
-      height: 20,
       lineHeight: 20,
       ...Platform.select({
         web: {

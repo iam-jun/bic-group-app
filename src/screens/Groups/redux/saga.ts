@@ -209,13 +209,13 @@ function* getGroupPosts({
     );
 
     if (data.length === 0) {
-      yield put(postActions.addToAllPosts(result));
+      yield put(postActions.addToAllPosts({data: result}));
       yield put(groupsActions.setGroupPosts(result));
       if (result.length === appConfig.recordsPerPage) {
         yield put(groupsActions.getGroupPosts(payload));
       }
     } else {
-      yield put(postActions.addToAllPosts(result));
+      yield put(postActions.addToAllPosts({data: result}));
       yield put(groupsActions.setExtraGroupPosts(result));
     }
 

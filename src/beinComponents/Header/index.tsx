@@ -149,6 +149,7 @@ const Header: React.FC<HeaderProps> = ({
             onPress={_onPressBack}
             size={28}
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+            style={styles.backButton}
           />
         )}
         {!!avatar && (
@@ -164,7 +165,7 @@ const Header: React.FC<HeaderProps> = ({
         {!!leftIcon && (
           <Icon
             size={14}
-            style={{marginLeft: spacing?.margin.base}}
+            style={styles.leftIcon}
             icon={leftIcon}
             onPress={onPressHeader}
             {...leftIconProps}
@@ -247,14 +248,19 @@ const createStyle = (theme: ITheme) => {
       shadowRadius: 1,
       elevation: 2,
     },
+    backButton: {
+      marginRight: spacing.margin.tiny,
+    },
     avatar: {
       marginLeft: 6,
-      // marginRight: spacing.margin.base,
+      marginRight: spacing.margin.large,
+    },
+    leftIcon: {
+      marginRight: spacing.margin.large,
     },
     titleContainer: {
       flex: 1,
       height: '100%',
-      marginLeft: spacing.margin.base,
       justifyContent: 'center',
       paddingTop: 1.5,
     },
