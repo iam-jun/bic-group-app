@@ -152,7 +152,6 @@ const createStyles = (
     },
     title: {
       flex: 1,
-      height: 20,
       lineHeight: 20,
       ...Platform.select({
         web: {
