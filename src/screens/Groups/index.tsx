@@ -88,7 +88,7 @@ const Groups: React.FC = () => {
     return (
       <ListView
         listRef={listRef}
-        style={styles.dataList}
+        containerStyle={styles.dataList}
         type={'flatGroups'}
         data={joinedGroups}
         onRefresh={getData}
