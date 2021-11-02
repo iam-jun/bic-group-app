@@ -585,6 +585,17 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           usersCount: conversation.usersCount + payload,
         },
       };
+    case types.LEAVE_CHAT:
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          data: state.rooms.data.filter(
+            (group: IConversation) =>
+              group._id !== payload && group.beinGroupId !== payload,
+          ),
+        },
+      };
     case types.KICK_ME_OUT:
       return {
         ...state,

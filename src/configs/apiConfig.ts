@@ -247,6 +247,23 @@ const Chat = {
       data,
     };
   },
+  leaveQuickChat: (roomId: string): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.chat.url}groups.leave`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      data: {
+        roomId,
+      },
+    };
+  },
   mentionUsers: (params: IGetMentionUsersReq): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}users.list`,

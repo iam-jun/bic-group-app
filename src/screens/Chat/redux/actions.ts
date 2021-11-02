@@ -168,6 +168,11 @@ export default {
     type: Actions.KICK_ME_OUT,
     payload,
   }),
+  leaveChat: (payload: string, roomType: string) => ({
+    type: Actions.LEAVE_CHAT,
+    payload,
+    roomType,
+  }),
   readConversation: () => ({
     type: Actions.READ_CONVERSATION,
   }),
