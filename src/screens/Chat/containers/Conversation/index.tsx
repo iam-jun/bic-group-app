@@ -2,10 +2,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
 import i18next from 'i18next';
 import {debounce, isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  InteractionManager,
   Keyboard,
   Platform,
   StyleSheet,
@@ -18,8 +19,8 @@ import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
+import {appScreens} from '~/configs/navigator';
 import {MessageOptionType, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
@@ -27,7 +28,6 @@ import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {IReactionCounts} from '~/interfaces/IPost';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
@@ -41,18 +41,16 @@ import {
   UnreadBanner,
 } from '~/screens/Chat/components';
 import actions from '~/screens/Chat/redux/actions';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
-import {getDefaultAvatar} from '../../helper';
-import appActions from '~/store/app/actions';
-import {appScreens} from '~/configs/navigator';
+import {getDefaultAvatar, getReactionStatistics} from '../../helper';
 
-const Conversation = () => {
+const _Conversation = () => {
   const {user} = useAuth();
   const {conversation, messages, unreadMessagePosition} = useChat();
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
@@ -93,19 +91,23 @@ const Conversation = () => {
   }, []);
 
   useEffect(() => {
-    if (isFocused) {
-      setNewRootScreenName();
-    } else {
-      dispatch(actions.readSubscriptions(conversation._id));
-    }
+    InteractionManager.runAfterInteractions(() => {
+      if (isFocused) {
+        if (Platform.OS === 'web') setNewRootScreenName();
+      } else {
+        dispatch(actions.readSubscriptions(conversation._id));
+      }
+    });
   }, [isFocused]);
 
   useEffect(() => {
-    if (route?.params?.roomId) {
-      dispatch(actions.getConversationDetail(route.params.roomId));
-      dispatch(actions.readSubscriptions(route.params.roomId));
-      setNewRootScreenName();
-    }
+    InteractionManager.runAfterInteractions(() => {
+      if (route?.params?.roomId) {
+        dispatch(actions.getConversationDetail(route.params.roomId));
+        dispatch(actions.readSubscriptions(route.params.roomId));
+        if (Platform.OS === 'web') setNewRootScreenName();
+      }
+    });
   }, [route?.params?.roomId]);
 
   useEffect(() => {
@@ -174,63 +176,51 @@ const Conversation = () => {
     setSelectedMessage(undefined);
   };
 
-  const onAddReaction = (reactionId: ReactionType, messageId: string) => {
-    dispatch(
-      actions.reactMessage({
-        emoji: reactionId,
-        messageId,
-        shouldReact: true,
-      }),
-    );
-  };
+  const onEmojiSelected = useCallback(
+    (emoji: string, key: string, msgId: string) => {
+      dispatch(modalActions.hideModal());
+      if (key) {
+        dispatch(
+          actions.reactMessage({
+            emoji: key,
+            messageId: msgId,
+            shouldReact: true,
+          }),
+        );
+      }
+    },
+    [],
+  );
 
-  const onRemoveReaction = (reactionId: ReactionType, messageId: string) => {
-    dispatch(
-      actions.reactMessage({
-        emoji: reactionId,
-        messageId,
-        shouldReact: false,
-      }),
-    );
-  };
+  const onReactPress = useCallback(
+    (event: any, item: IMessage, side: 'left' | 'right' | 'center') => {
+      const payload = {
+        isOpen: true,
+        ContentComponent: (
+          <EmojiBoard
+            width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+            height={280}
+            onEmojiSelected={(emoji: string, key: string) =>
+              onEmojiSelected(emoji, key, item._id)
+            }
+          />
+        ),
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+          position: {x: event?.pageX, y: event?.pageY},
+          side: side,
+        },
+      };
+      dispatch(modalActions.showModal(payload));
+    },
+    [],
+  );
 
-  const onEmojiSelected = (emoji: string, key: string, msgId: string) => {
-    dispatch(modalActions.hideModal());
-    if (key) {
-      onAddReaction(key, msgId);
-    }
-  };
-
-  const onPressReact = (
-    event: any,
-    item: IMessage,
-    side: 'left' | 'right' | 'center',
-  ) => {
-    const payload = {
-      isOpen: true,
-      ContentComponent: (
-        <EmojiBoard
-          width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
-          height={280}
-          onEmojiSelected={(emoji: string, key: string) =>
-            onEmojiSelected(emoji, key, item._id)
-          }
-        />
-      ),
-      props: {
-        webModalStyle: {minHeight: undefined},
-        isContextMenu: true,
-        position: {x: event?.pageX, y: event?.pageY},
-        side: side,
-      },
-    };
-    dispatch(modalActions.showModal(payload));
-  };
-
-  const onReactionPress = async (type: string) => {
+  const onReactionPress = useCallback(async (type: string) => {
     if (!!selectedMessage) {
       if (type === 'add_react') {
-        onPressReact(null, selectedMessage, 'left');
+        onReactPress(null, selectedMessage, 'left');
       } else {
         dispatch(
           actions.reactMessage({
@@ -243,7 +233,7 @@ const Conversation = () => {
     }
 
     messageOptionsModalRef.current?.close();
-  };
+  }, []);
 
   const deleteMessage = () => {
     selectedMessage && dispatch(actions.deleteMessage(selectedMessage));
@@ -287,7 +277,7 @@ const Conversation = () => {
     );
   };
 
-  const jumpToMessage = (messageId?: string) => {
+  const jumpToMessage = useCallback((messageId?: string) => {
     if (!messageId) return;
 
     const index = messages.data.findIndex(
@@ -300,42 +290,48 @@ const Conversation = () => {
       // dispatch(actions.resetData('messages'));
       dispatch(actions.getSurroundingMessages(messageId));
     }
-  };
+  }, []);
 
-  const onPressBack = async () => {
+  const onPressBack = useCallback(async () => {
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
     else rootNavigation.goBack();
-  };
+  }, []);
 
-  const onReplyPress = (item?: IMessage) => {
-    editingMessage && onCancelEditingMessage();
-    setReplyingMessage(item);
-  };
+  const onReplyPress = useCallback(
+    (item?: IMessage) => {
+      editingMessage && onCancelEditingMessage();
+      setReplyingMessage(item);
+    },
+    [editingMessage],
+  );
 
-  const onMenuPress = async (menu: MessageOptionType) => {
-    switch (menu) {
-      case 'delete':
-        deleteMessage();
-        break;
-      case 'reply':
-        onReplyPress(selectedMessage);
-        break;
-      case 'edit':
-        editMessage();
-        break;
-      case 'reactions':
-        viewReactions();
-        break;
-      case 'get_link':
-        getMessageLink();
-        break;
-      default:
-        dispatch(showAlertNewFeature());
-        break;
-    }
-    messageOptionsModalRef.current?.close();
-  };
+  const onMenuPress = useCallback(
+    async (menu: MessageOptionType) => {
+      switch (menu) {
+        case 'delete':
+          deleteMessage();
+          break;
+        case 'reply':
+          onReplyPress(selectedMessage);
+          break;
+        case 'edit':
+          editMessage();
+          break;
+        case 'reactions':
+          viewReactions();
+          break;
+        case 'get_link':
+          getMessageLink();
+          break;
+        default:
+          dispatch(showAlertNewFeature());
+          break;
+      }
+      messageOptionsModalRef.current?.close();
+    },
+    [selectedMessage],
+  );
 
   const onSearchPress = async () => {
     alert('Searching is in development');
@@ -347,53 +343,14 @@ const Conversation = () => {
     });
   };
 
-  const onLongPress = (item: IMessage, position: {x: number; y: number}) => {
-    setSelectedMessage(item);
-    Keyboard.dismiss();
-    messageOptionsModalRef.current?.open(position.x, position.y);
-  };
-
-  const getReactionStatistics = async (param: {
-    reactionType: ReactionType;
-    messageId: string;
-  }) => {
-    try {
-      const {reactionType, messageId} = param || {};
-      const response: any = await makeHttpRequest(
-        apiConfig.Chat.getReactionStatistics({
-          message_id: messageId,
-          reaction_name: reactionType,
-        }),
-      );
-      const data = response?.data?.data;
-      const users = data.map((item: {username: string; fullname: string}) => ({
-        avatar: getDefaultAvatar(item.username),
-        username: item.username,
-        fullname: item.fullname,
-      }));
-
-      return Promise.resolve(users || []);
-    } catch (err) {
-      return Promise.reject();
-    }
-  };
-
-  const onLongPressReaction = (
-    messageId: string,
-    reactionType: ReactionType,
-    reactionCounts?: IReactionCounts,
-  ) => {
-    if (reactionCounts) {
-      const payload: IPayloadReactionDetailBottomSheet = {
-        isOpen: true,
-        reactionCounts: reactionCounts,
-        initReaction: reactionType,
-        getDataParam: {messageId},
-        getDataPromise: getReactionStatistics,
-      };
-      dispatch(modalActions.showReactionDetailBottomSheet(payload));
-    }
-  };
+  const onLongPress = useCallback(
+    (item: IMessage, position: {x: number; y: number}) => {
+      setSelectedMessage(item);
+      Keyboard.dismiss();
+      messageOptionsModalRef.current?.open(position.x, position.y);
+    },
+    [],
+  );
 
   const onCancelEditingMessage = () => setEditingMessage(undefined);
 
@@ -403,18 +360,11 @@ const Conversation = () => {
     const props = {
       previousMessage: index > 0 && messages.data[index - 1],
       currentMessage: item,
-      index: index,
-      onReactPress: (event: any, side: 'left' | 'right' | 'center') =>
-        onPressReact(event, item, side),
-      onReplyPress: () => onReplyPress(item),
+      index,
+      onReactPress,
+      onReplyPress,
       onLongPress,
-      onAddReaction: (reactionId: ReactionType) =>
-        onAddReaction(reactionId, item._id),
-      onRemoveReaction: (reactionId: ReactionType) =>
-        onRemoveReaction(reactionId, item._id),
-      onLongPressReaction: (reactionType: ReactionType) =>
-        onLongPressReaction(item._id, reactionType, item?.reaction_counts),
-      onQuotedMessagePress: () => jumpToMessage(item.quotedMessage?.msgId),
+      onQuotedMessagePress: jumpToMessage,
     };
     return <MessageContainer {...props} />;
   };
@@ -656,4 +606,7 @@ const createStyles = (theme: ITheme, insets: EdgeInsets) => {
   });
 };
 
-export default React.memo(Conversation);
+const Conversation = React.memo(_Conversation);
+Conversation.whyDidYouRender = true;
+
+export default Conversation;

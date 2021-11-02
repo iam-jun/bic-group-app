@@ -27,7 +27,7 @@ import actions from '~/screens/Chat/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 
-const ConversationsList = (): React.ReactElement => {
+const _ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
 
   const theme: ITheme = useTheme() as ITheme;
@@ -106,12 +106,11 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   const onChatPress = (item: IConversation) => {
-    dispatch(actions.setConversationDetail(item));
     rootNavigation.navigate(chatStack.conversation, {
       roomId: item._id,
       message_id: undefined,
     });
-    setCurrentPath(item._id);
+    if (Platform.OS === 'web') setCurrentPath(item._id);
   };
 
   const onMenuPress = async () => {
@@ -181,4 +180,6 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
+const ConversationsList = React.memo(_ConversationsList);
+ConversationsList.whyDidYouRender = true;
 export default ConversationsList;

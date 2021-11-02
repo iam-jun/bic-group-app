@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -12,6 +12,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Div from '~/beinComponents/Div';
 import Divider from '~/beinComponents/Divider';
+import LinkPreviewer from '~/beinComponents/LinkPreviewer';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import ReactionView from '~/beinComponents/ReactionView';
 import {Text} from '~/components';
@@ -19,35 +20,41 @@ import {ReactionType} from '~/constants/reactions';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
+import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import {IReactionCounts} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
+import {
+  getMessageAttachmentUrl,
+  getReactionStatistics,
+} from '~/screens/Chat/helper';
+import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
-import AttachmentView from './components/AttachmentView';
-import LinkPreviewer from '~/beinComponents/LinkPreviewer';
 import {
   MessageHeader,
   MessageMenu,
+  MessageSeparator,
   MessageStatus,
   QuotedMessage,
   SystemMessage,
-  MessageSeparator,
 } from './components';
-import {getMessageAttachmentUrl} from '~/screens/Chat/helper';
+import AttachmentView from './components/AttachmentView';
 
 export interface MessageItemProps {
   previousMessage: IMessage;
   currentMessage: IMessage;
   index: number;
-  onReactPress: (event: any, side: 'left' | 'right' | 'center') => void;
-  onReplyPress: () => void;
+  onReactPress: (
+    event: any,
+    item: IMessage,
+    side: 'left' | 'right' | 'center',
+  ) => void;
+  onReplyPress: (item: IMessage) => void;
   onLongPress: (item: IMessage, position: {x: number; y: number}) => void;
-  onAddReaction: (reaction: ReactionType) => void;
-  onRemoveReaction: (reaction: ReactionType) => void;
-  onLongPressReaction: (reactionType: ReactionType) => void;
-  onQuotedMessagePress: () => void;
+  onQuotedMessagePress: (msgId: string) => void;
 }
 
-const MessageItem = (props: MessageItemProps) => {
+const _MessageItem = (props: MessageItemProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
@@ -60,9 +67,6 @@ const MessageItem = (props: MessageItemProps) => {
     onReactPress,
     onReplyPress,
     onLongPress,
-    onAddReaction,
-    onRemoveReaction,
-    onLongPressReaction,
     onQuotedMessagePress,
   } = props;
   const {
@@ -124,22 +128,75 @@ const MessageItem = (props: MessageItemProps) => {
     }
   }, [messages.jumpedMessage]);
 
-  const _onLongPress = (e: any) => {
-    onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
-  };
+  const _onLongPress = useCallback(
+    (e: any) => {
+      onLongPress?.(currentMessage, {x: e?.pageX, y: e?.pageY});
+    },
+    [currentMessage],
+  );
 
   const onMenuPress = (e: any) => {
     if (removed) return;
     _onLongPress(e);
   };
 
-  const onMentionPress = (user: any) => {
+  const onMentionPress = useCallback((user: any) => {
     if (!!user?.id) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: user.id,
       });
     }
+  }, []);
+
+  const onAddReaction = (reactionId: ReactionType) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId: _id,
+        shouldReact: true,
+      }),
+    );
   };
+
+  const onRemoveReaction = (reactionId: ReactionType) => {
+    dispatch(
+      actions.reactMessage({
+        emoji: reactionId,
+        messageId: _id,
+        shouldReact: false,
+      }),
+    );
+  };
+
+  const onLongPressReaction = (
+    reactionType: ReactionType,
+    reactionCounts?: IReactionCounts,
+  ) => {
+    if (reactionCounts) {
+      const payload: IPayloadReactionDetailBottomSheet = {
+        isOpen: true,
+        reactionCounts: reactionCounts,
+        initReaction: reactionType,
+        getDataParam: {messageId: _id},
+        getDataPromise: getReactionStatistics,
+      };
+      dispatch(modalActions.showReactionDetailBottomSheet(payload));
+    }
+  };
+
+  const _onReactPress = (event: any) => {
+    onReactPress(event, currentMessage, 'left');
+  };
+
+  const onPressSelectReaction = (event: any) => {
+    onReactPress(event, currentMessage, 'center');
+  };
+
+  const _onReplyPress = () => onReplyPress(currentMessage);
+
+  const _onQuotedMessagePress = useCallback(() => {
+    if (quotedMessage?.msgId) onQuotedMessagePress(quotedMessage?.msgId);
+  }, []);
 
   const renderMessage = () => {
     return (
@@ -158,7 +215,7 @@ const MessageItem = (props: MessageItemProps) => {
             {quotedMessage && (
               <QuotedMessage
                 message={quotedMessage}
-                onPress={onQuotedMessagePress}
+                onPress={_onQuotedMessagePress}
               />
             )}
             {!hideHeader && <MessageHeader user={user} createdAt={createdAt} />}
@@ -200,8 +257,8 @@ const MessageItem = (props: MessageItemProps) => {
                   </View>
                   <LinkPreviewer text={text} />
                   <MessageMenu
-                    onReactPress={(event: any) => onReactPress(event, 'left')}
-                    onReplyPress={() => onReplyPress()}
+                    onReactPress={_onReactPress}
+                    onReplyPress={_onReplyPress}
                     onMenuPress={onMenuPress}
                     hideHeader={hideHeader}
                   />
@@ -217,9 +274,7 @@ const MessageItem = (props: MessageItemProps) => {
                   onAddReaction={onAddReaction}
                   onRemoveReaction={onRemoveReaction}
                   onLongPressReaction={onLongPressReaction}
-                  onPressSelectReaction={(event: any) =>
-                    onReactPress(event, 'center')
-                  }
+                  onPressSelectReaction={onPressSelectReaction}
                   showSelectReactionWhenEmpty={false}
                 />
               </View>
@@ -300,5 +355,8 @@ const createStyles = (theme: ITheme) => {
     },
   });
 };
+
+const MessageItem = React.memo(_MessageItem);
+MessageItem.whyDidYouRender = true;
 
 export default MessageItem;
