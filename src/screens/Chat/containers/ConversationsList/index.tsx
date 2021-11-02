@@ -24,8 +24,10 @@ import {IConversation} from '~/interfaces/IChat';
 import {ITabTypes} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import ConversationItemMenu from '../../components/ConversationItemMenu';
 
 const ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
@@ -114,6 +116,21 @@ const ConversationsList = (): React.ReactElement => {
     setCurrentPath(item._id);
   };
 
+  const onChatLongPress = (item: IConversation) => {
+    if (Platform.OS === 'web') return;
+
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <ConversationItemMenu conversationId={item._id} />,
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+        },
+      }),
+    );
+  };
+
   const onMenuPress = async () => {
     dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.createConversation);
@@ -156,6 +173,7 @@ const ConversationsList = (): React.ReactElement => {
         loading={loading}
         data={data}
         onItemPress={onChatPress}
+        onItemLongPress={onChatLongPress}
         onRefresh={() => dispatch(actions.getSubscriptions())}
         ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}

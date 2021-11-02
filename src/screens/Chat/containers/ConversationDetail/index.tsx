@@ -55,6 +55,8 @@ const ConversationDetail = (): React.ReactElement => {
   const baseSheetRef: any = useRef();
   const permissions = conversation.permissions || {};
 
+  const [dummyIsMute, setDummyIsMute] = useState(false);
+
   useEffect(() => {
     if (route?.params?.roomId)
       dispatch(actions.getConversationDetail(route?.params?.roomId));
@@ -180,34 +182,57 @@ const ConversationDetail = (): React.ReactElement => {
     );
   };
 
-  // TODO: Fix marginRight, they are pushed to the left, when there is no button invite
+  const onPressMute = () => {
+    const _dummyIsMute = !dummyIsMute;
+    setDummyIsMute(_dummyIsMute);
+    alert('Set mute: ' + _dummyIsMute);
+  };
+
+  const renderButtonMute = () => {
+    if (dummyIsMute)
+      return (
+        <Button.Icon
+          icon="BellSlash"
+          style={styles.menuOption}
+          iconWrapperStyle={styles.buttonMuteEnable}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_unmute')}
+          onPress={onPressMute}
+        />
+      );
+
+    return (
+      <Button.Icon
+        icon="Bell"
+        style={styles.menuOption}
+        tintColor={colors.primary7}
+        label={i18next.t('chat:label_mute')}
+        onPress={onPressMute}
+      />
+    );
+  };
+
   const renderMenu = () => (
     <View style={styles.menuContainer}>
       <Button.Icon
         icon="search"
-        style={styles.marginRight}
+        style={styles.menuOption}
         tintColor={colors.primary7}
         label={i18next.t('common:text_search')}
       />
       {permissions[chatPermissions.CAN_PIN_MESSAGE] && (
         <Button.Icon
           icon="iconPin"
-          style={styles.marginRight}
+          style={styles.menuOption}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_pin_chat')}
         />
       )}
-      {permissions[chatPermissions.CAN_MUTE] && (
-        <Button.Icon
-          icon="bell"
-          style={styles.marginRight}
-          tintColor={colors.primary7}
-          label={i18next.t('chat:label_mute')}
-        />
-      )}
+      {permissions[chatPermissions.CAN_MUTE] && renderButtonMute()}
       {!isDirect && permissions[chatPermissions.CAN_MANAGE_MEMBER] && (
         <Button.Icon
           icon="addUser"
+          style={styles.menuOption}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_invite')}
           onPress={goAddMembers}
@@ -521,6 +546,9 @@ const createStyles = (
       alignItems: 'center',
       paddingVertical: spacing.padding.large,
     },
+    menuOption: {
+      marginHorizontal: spacing.margin.large,
+    },
     bottomMenu: {
       marginTop: spacing.margin.small,
       paddingTop: spacing.padding.base,
@@ -539,14 +567,8 @@ const createStyles = (
       paddingHorizontal: spacing.padding.big,
       paddingTop: spacing.padding.tiny,
     },
-    marginBottom: {
-      marginBottom: spacing.margin.large,
-    },
-    marginStart: {
-      marginStart: spacing.margin.large,
-    },
-    marginRight: {
-      marginRight: spacing.margin.big,
+    buttonMuteEnable: {
+      backgroundColor: colors.primary3,
     },
     cover: {
       width: '100%',
