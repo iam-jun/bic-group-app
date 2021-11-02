@@ -140,7 +140,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <Avatar.Group
           variant={'large'}
           source={actorAvatars}
-          totalMember={actorIds.length}
+          totalMember={actorIds.length - 3} // used when numers of avatars >= 5
         />
       );
     } else {
