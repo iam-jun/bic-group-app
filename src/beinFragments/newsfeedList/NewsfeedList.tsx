@@ -95,6 +95,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     console.log(`\x1b[36m🐣️ NewsfeedList ${data?.length}\x1b[0m`);
   }, [data]);
 
+  useEffect(() => {
+    if (!canLoadMore && !refreshing) {
+      setInitializing(false);
+    }
+  }, [canLoadMore, refreshing]);
+
   const _onItemLayout = debounce(() => {
     if (initializing) {
       setInitializing(false);
@@ -115,7 +121,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const renderPlaceholder = () => {
-    if ((refreshing || data?.length > 0) && !initializing) {
+    if (!initializing) {
       return null;
     }
     return (
@@ -131,6 +137,23 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     );
   };
 
+  const renderEmpty = () => {
+    if (data?.length === 0 && !canLoadMore) {
+      //todo waiting for design
+      return (
+        <View>
+          {!!HeaderComponent && HeaderComponent}
+          <View style={styles.listFooter}>
+            <Text.Subtitle color={theme.colors.textSecondary}>
+              Join a community to get updated
+            </Text.Subtitle>
+          </View>
+        </View>
+      );
+    }
+    return null;
+  };
+
   const renderFooter = () => {
     return (
       <View style={styles.listFooter}>
@@ -139,7 +162,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         )}
         {!refreshing && !canLoadMore && (
           <Text.Subtitle color={theme.colors.textSecondary}>
-            No more homeposts
+            No more posts
           </Text.Subtitle>
         )}
       </View>
@@ -173,6 +196,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           }}
         />
       )}
+      {renderEmpty()}
       {renderPlaceholder()}
     </View>
   );
