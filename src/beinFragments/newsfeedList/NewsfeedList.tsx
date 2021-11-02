@@ -20,6 +20,8 @@ import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import {useTabPressListener} from '~/hooks/navigation';
+import {ITabTypes} from '~/interfaces/IRouter';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -78,6 +80,15 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         HeaderComponent ? [{header: true}, ...data] : data,
       ),
     [data, HeaderComponent],
+  );
+
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'home') {
+        listView?.current?.scrollToOffset?.(0, 0, true);
+      }
+    },
+    [listView?.current],
   );
 
   useEffect(() => {
