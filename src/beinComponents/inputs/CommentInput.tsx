@@ -243,11 +243,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onPressSend = () => {
-    blurOnSubmit && Keyboard.dismiss();
-    if (!isHandleUpload) {
-      onPressSend?.({content: text});
-    } else {
-      handleUpload();
+    if (!_loading) {
+      blurOnSubmit && Keyboard.dismiss();
+      if (!isHandleUpload) {
+        onPressSend?.({content: text});
+      } else {
+        handleUpload();
+      }
     }
   };
 
@@ -386,6 +388,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const isFocused = () => textInputRef.current?.isFocused?.();
 
+  const send = () => _onPressSend();
+
   useImperativeHandle(commentInputRef, () => ({
     setText,
     getText,
@@ -393,6 +397,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     clear,
     focus,
     isFocused,
+    send,
   }));
 
   const _onKeyPress = (e: any) => {

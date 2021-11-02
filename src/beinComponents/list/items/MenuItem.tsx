@@ -39,10 +39,12 @@ const MenuItem: React.FC<MenuItemProps> = ({
   badgeColor,
 }: MenuItemProps) => {
   const theme = useTheme() as ITheme;
+  const {colors} = theme || {};
   const styles = themeStyles(theme);
 
   let badgeNumber;
   if (type === 'draftPost') {
+    badgeColor = colors.textSecondary;
     const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
     badgeNumber = draftPost?.length || 0;
     if (badgeNumber > 9) {
@@ -136,7 +138,7 @@ const themeStyles = (theme: ITheme) => {
     badgeNumberContainer: {
       minWidth: 20,
       minHeight: 20,
-      backgroundColor: colors.success,
+      backgroundColor: colors.error,
       borderRadius: 20,
       justifyContent: 'center',
       alignItems: 'center',
