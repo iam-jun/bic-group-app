@@ -23,6 +23,7 @@ import {
   IPayloadSetDraftPosts,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
+  IPayloadAddToAllPost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -124,7 +125,7 @@ const postActions = {
     type: postTypes.DELETE_POST,
     payload,
   }),
-  addToAllPosts: (payload: IPostActivity[] | IPostActivity) => ({
+  addToAllPosts: (payload: IPayloadAddToAllPost) => ({
     type: postTypes.ADD_TO_ALL_POSTS,
     payload,
   }),

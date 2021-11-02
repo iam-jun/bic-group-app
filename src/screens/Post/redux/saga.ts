@@ -3,6 +3,7 @@ import {isArray, get} from 'lodash';
 
 import {
   IOwnReaction,
+  IPayloadAddToAllPost,
   IPayloadCreateComment,
   IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
@@ -84,7 +85,7 @@ function* postCreateNewPost({
     const response = yield call(postDataHelper.postCreateNewPost, postPayload);
     if (response.data) {
       const postData: IPostActivity = response.data;
-      yield put(postActions.addToAllPosts(postData));
+      yield put(postActions.addToAllPosts({data: postData}));
 
       if (userId && streamClient) {
         if (payload?.is_draft) {
@@ -213,7 +214,7 @@ function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
         post.object.data = data?.data || {};
       }
       //todo waiting for backend update response, replace whole object from response instead of local change
-      yield put(postActions.addToAllPosts(post));
+      yield put(postActions.addToAllPosts({data: post}));
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: post?.id});
       } else {
@@ -271,7 +272,7 @@ function* deletePost({payload}: {type: string; payload: string}) {
         get(state, postKeySelector.postById(payload)),
       );
       post.deleted = true;
-      yield put(postActions.addToAllPosts(post));
+      yield put(postActions.addToAllPosts({data: post}));
       yield timeOut(500);
 
       yield put(
@@ -294,47 +295,56 @@ function* addToAllPosts({
   payload,
 }: {
   type: string;
-  payload: IPostActivity[] | IPostActivity;
+  payload: IPayloadAddToAllPost;
 }) {
+  const {data, handleComment} = payload || {};
   const allPosts = yield select(state => state?.post?.allPosts) || {};
   const newAllPosts = {...allPosts};
-  // const newComments: IReaction[] = [];
-  // const newAllCommentByParentId: any = {};
+  const newComments: IReaction[] = [];
+  const newAllCommentByParentId: any = {};
 
   let posts: IPostActivity[] = [];
-  if (isArray(payload) && payload.length > 0) {
-    posts = posts.concat(payload);
+  if (isArray(data) && data.length > 0) {
+    posts = posts.concat(data);
   } else {
-    posts = new Array(payload) as IPostActivity[];
+    posts = new Array(data) as IPostActivity[];
   }
 
   posts.map((item: IPostActivity) => {
     if (item?.id) {
-      // const postComments = sortComments(item?.latest_reactions?.comment || []);
-      //
-      // //todo update getstream query to get only 1 child comment
-      // //todo @Toan is researching for solution
-      // if (postComments.length > 0) {
-      //   for (let i = 0; i < postComments.length; i++) {
-      //     const cc = postComments[i]?.latest_children?.comment || [];
-      //     if (cc.length > 1) {
-      //       postComments[i].latest_children.comment = cc.slice(
-      //         cc.length - 1,
-      //         cc.length,
-      //       );
-      //     }
-      //   }
-      // }
-      // //todo remove code above later
+      if (handleComment) {
+        const postComments = sortComments(
+          item?.latest_reactions?.comment || [],
+        );
 
+        //todo update getstream query to get only 1 child comment
+        //todo @Toan is researching for solution
+        if (postComments.length > 0) {
+          for (let i = 0; i < postComments.length; i++) {
+            const cc = postComments[i]?.latest_children?.comment || [];
+            if (cc.length > 1) {
+              postComments[i].latest_children.comment = cc.slice(
+                cc.length - 1,
+                cc.length,
+              );
+            }
+          }
+        }
+        //todo remove code above later
+
+        newAllCommentByParentId[item.id] = postComments;
+        postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
+      }
       newAllPosts[item.id] = item;
-      // newAllCommentByParentId[item.id] = postComments;
-      // postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
     }
   });
 
-  // yield put(postActions.addToAllComments(newComments));
-  // yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
+  if (handleComment) {
+    yield put(postActions.addToAllComments(newComments));
+    yield put(
+      postActions.updateAllCommentsByParentIds(newAllCommentByParentId),
+    );
+  }
   yield put(postActions.setAllPosts(newAllPosts));
 }
 
@@ -376,7 +386,7 @@ function* onUpdateReactionOfPostById(
     );
     post.reaction_counts = reactionCounts;
     post.own_reactions = ownReaction;
-    yield put(postActions.addToAllPosts(post));
+    yield put(postActions.addToAllPosts({data: post}));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
   }
@@ -838,7 +848,7 @@ function* postPublishDraftPost({
     if (res.data) {
       onSuccess?.();
       const postData: IPostActivity = res.data;
-      yield put(postActions.addToAllPosts(postData));
+      yield put(postActions.addToAllPosts({data: postData}));
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
@@ -972,7 +982,7 @@ function* getPostDetail({
       postId,
     );
     yield timeOut(500);
-    yield put(postActions.addToAllPosts(response));
+    yield put(postActions.addToAllPosts({data: response, handleComment: true}));
     callbackLoading?.(false, true);
   } catch (e) {
     callbackLoading?.(false, false);
@@ -981,7 +991,7 @@ function* getPostDetail({
     );
     if (post) {
       post.deleted = true;
-      yield put(postActions.addToAllPosts(post));
+      yield put(postActions.addToAllPosts({data: post}));
     }
     showError(e);
   }

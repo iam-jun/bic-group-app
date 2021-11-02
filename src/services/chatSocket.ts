@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {chatSocketId} from '~/constants/chat';
 
 import {getChatAuthInfo, refreshAuthTokens} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -20,10 +21,12 @@ interface OnMessageCallback {
 let socket: WebSocket | undefined;
 let manualSocketCloseCode: number;
 let rocketChatAuthToken: string;
+let rocketChatUserId: string;
 let messageQueue: any[] = [];
 let isAuthRefreshing = false;
 let onMessageCallbacks: Array<OnMessageCallback> = [];
 let countRetryConnect = 0;
+let dataQueueToSendMessage: any[] = [];
 
 const connectChat = () => {
   if (socket && socket.readyState == 1) {
@@ -34,7 +37,8 @@ const connectChat = () => {
 };
 
 const closeConnectChat = () => {
-  onMessageCallbacks = [];
+  // onMessageCallbacks = [];
+  unsubscribeRoomsMessages();
   manualSocketCloseCode = ManualSocketCloseCodeDefault;
   socket && socket.close();
 };
@@ -50,6 +54,7 @@ const addOnMessageCallback = (
 };
 
 const removeOnMessageCallback = (id: string) => {
+  // TODO:
   _.remove(onMessageCallbacks, item => {
     return item.id === id;
   });
@@ -60,9 +65,8 @@ const sendMessage = (data: any) => {
     socket?.readyState !== 1 &&
     manualSocketCloseCode !== ManualSocketCloseCodeDefault
   ) {
-    waitForSocketConnection(function () {
-      sendMessage(data);
-    });
+    dataQueueToSendMessage.push(data);
+    waitForSocketConnection();
     return;
   }
   const dataSubmit = JSON.stringify(data);
@@ -74,19 +78,17 @@ const sendMessage = (data: any) => {
   messageQueue.push(data);
 };
 
-const waitForSocketConnection = (callback?: any) => {
+const waitForSocketConnection = () => {
   if (countRetryConnect > 10) {
     return;
   }
   setTimeout(function () {
     if (socket?.readyState === 1) {
       countRetryConnect = 0;
-      console.log('connection is made.');
-      callback && callback();
     } else {
       countRetryConnect++;
       console.log(countRetryConnect, 'wait for connection...');
-      waitForSocketConnection(callback);
+      waitForSocketConnection();
     }
   }, 100);
 };
@@ -105,17 +107,25 @@ const _login = () => {
 };
 
 const _onOpenDefault = () => {
-  console.log('onOpenDefault'); // TODO: comment
+  console.log('onOpenDefault');
   sendMessage({
     msg: 'connect',
     version: '1',
     support: ['1'],
   });
   _login();
+  if (dataQueueToSendMessage.length > 0) {
+    console.log(
+      'wait for connection success, now resend messages',
+      dataQueueToSendMessage,
+    );
+    dataQueueToSendMessage.forEach(i => sendMessage(i));
+    dataQueueToSendMessage = [];
+  }
 };
 
 const _onCloseDefault = (event: WebSocketCloseEvent) => {
-  console.log('onCloseDefault:', event); // TODO: comment
+  console.log('onCloseDefault:', event);
   if (manualSocketCloseCode === ManualSocketCloseCodeDefault && socket) {
     socket.onopen = null;
     socket.onclose = null;
@@ -130,12 +140,13 @@ const _onCloseDefault = (event: WebSocketCloseEvent) => {
 };
 
 const _onErrorDefault = (event: WebSocketErrorEvent) => {
-  console.log('onErrorDefault:', event); // TODO: comment
+  console.log('onErrorDefault:', event);
 };
 
 const _setupAuthInfo = () => {
-  const {accessToken} = getChatAuthInfo();
+  const {accessToken, userId} = getChatAuthInfo();
   rocketChatAuthToken = accessToken;
+  rocketChatUserId = userId;
 };
 
 const _onMessageMustHave = (event: WebSocketMessageEvent) => {
@@ -200,6 +211,29 @@ const _setupSocket = () => {
   };
   // @ts-ignore
   socket.onerror = _onErrorDefault;
+  subscribeRoomsMessages();
+};
+
+const subscribeRoomsMessages = () => {
+  sendMessage({
+    msg: 'sub',
+    id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
+    name: 'stream-room-messages',
+    params: ['__my_messages__', false],
+  });
+  sendMessage({
+    msg: 'sub',
+    id: chatSocketId.SUBSCRIBE_NOTIFY_USER,
+    name: 'stream-notify-user',
+    params: [`${rocketChatUserId}/subscriptions-changed`, false],
+  });
+};
+
+const unsubscribeRoomsMessages = () => {
+  sendMessage({
+    msg: 'unsub',
+    id: chatSocketId.SUBSCRIBE_ROOMS_MESSAGES,
+  });
 };
 
 export {
