@@ -1,3 +1,4 @@
+import {ReactionType} from './../../constants/reactions';
 import i18next from 'i18next';
 import {messageEventTypes, roomTypes} from '~/constants/chat';
 import {
@@ -7,10 +8,11 @@ import {
   IMessage,
 } from '~/interfaces/IChat';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
-import {getChatAuthInfo} from '~/services/httpApiRequest';
+import {getChatAuthInfo, makeHttpRequest} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 import {messageStatus} from './../../constants/chat';
+import apiConfig from '~/configs/apiConfig';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -257,4 +259,29 @@ export const getDownloadUrl = (file?: string) => {
 
 export const getDefaultAvatar = (name: string) => {
   return `${getEnv('ROCKET_CHAT_SERVER')}/avatar/${name}?format=png`;
+};
+
+export const getReactionStatistics = async (param: {
+  reactionType: ReactionType;
+  messageId: string;
+}) => {
+  try {
+    const {reactionType, messageId} = param || {};
+    const response: any = await makeHttpRequest(
+      apiConfig.Chat.getReactionStatistics({
+        message_id: messageId,
+        reaction_name: reactionType,
+      }),
+    );
+    const data = response?.data?.data;
+    const users = data.map((item: {username: string; fullname: string}) => ({
+      avatar: getDefaultAvatar(item.username),
+      username: item.username,
+      fullname: item.fullname,
+    }));
+
+    return Promise.resolve(users || []);
+  } catch (err) {
+    return Promise.reject();
+  }
 };
