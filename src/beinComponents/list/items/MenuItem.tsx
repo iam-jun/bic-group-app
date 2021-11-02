@@ -19,6 +19,7 @@ interface MenuItemProps extends IOption {
   disable?: boolean;
   redDotNumber?: number;
   redDotProps?: RedDotProps;
+  badgeColor?: string;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -35,6 +36,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   disable,
   redDotNumber,
   redDotProps,
+  badgeColor,
 }: MenuItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -83,7 +85,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
             )}
           </View>
           {!!badgeNumber && (
-            <View style={styles.badgeNumberContainer}>
+            <View
+              style={[
+                styles.badgeNumberContainer,
+                badgeColor ? {backgroundColor: badgeColor} : {},
+              ]}>
               <Text.Subtitle style={styles.badgeNumber}>
                 {badgeNumber}
               </Text.Subtitle>
@@ -130,7 +136,7 @@ const themeStyles = (theme: ITheme) => {
     badgeNumberContainer: {
       minWidth: 20,
       minHeight: 20,
-      backgroundColor: colors.error,
+      backgroundColor: colors.success,
       borderRadius: 20,
       justifyContent: 'center',
       alignItems: 'center',

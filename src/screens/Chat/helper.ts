@@ -44,6 +44,32 @@ export const mapUsers = (data?: []): IChatUser[] =>
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
+export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
+  if (!item) return null;
+  let lastMessage = `${item.user?.name || item.user?.fullname}: ${item?.text}`;
+
+  if ((item.attachments && item.attachments.length > 0) || item.quotedMessage) {
+    lastMessage = !item.quotedMessage
+      ? item.user?.username === item.user?.username
+        ? i18next.t('chat:label_last_message:my_attachment')
+        : i18next
+            .t('chat:label_last_message:other_attachment')
+            .replace('{0}', item.user?.name)
+      : `${item.user?.name || item.user?.fullname}: ${item?.text}`;
+  } else if (item.type) {
+    // hide removed message
+    if (item.type === messageEventTypes.REMOVE_MESSAGE) {
+      lastMessage = i18next.t(
+        `chat:system_message:${item.type}:${isMyMessage ? 'me' : 'other'}`,
+      );
+    } else {
+      lastMessage = i18next.t(`chat:system_message:${item.type}`);
+    }
+  }
+
+  return lastMessage;
+};
+
 export const mapSearchResults = (
   user: IChatUser,
   data?: any[],
@@ -70,15 +96,6 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
         : null
       : getRoomAvatar(_id);
 
-  const attachment =
-    item.lastMessage?.attachments?.length > 0 &&
-    item.lastMessage.attachments[0];
-  let extraData = null;
-  try {
-    extraData = JSON.parse(attachment.description || '{}');
-  } catch (e: any) {
-    console.log(e);
-  }
   const name =
     (typeof item?.customFields?.beinChatName === 'string'
       ? item?.customFields?.beinChatName
@@ -86,33 +103,12 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     item?.fname ||
     item?.name;
 
-  let lastMessage = null;
-
-  if (item.lastMessage) {
-    const isMyMessage = user.username === item.lastMessage.u?.username;
-    // hide removed message
-    if (item.lastMessage.t) {
-      if (item.lastMessage.t === messageEventTypes.REMOVE_MESSAGE) {
-        lastMessage = i18next.t(
-          `chat:system_message:${item.lastMessage.t}:${
-            isMyMessage ? 'me' : 'other'
-          }`,
-        );
-      } else {
-        lastMessage = i18next.t(`chat:system_message:${item.lastMessage.t}`);
-      }
-    } else {
-      lastMessage = item.lastMessage
-        ? attachment && extraData?.type !== 'reply'
-          ? item.lastMessage.u?.username === user?.username
-            ? i18next.t('chat:label_last_message:my_attachment')
-            : i18next
-                .t('chat:label_last_message:other_attachment')
-                .replace('{0}', item.lastMessage.u?.name)
-          : `${item.lastMessage.u?.name}: ${item?.lastMessage?.msg}`
-        : null;
-    }
-  }
+  const lastMessage = item.lastMessage
+    ? getLastMessage(
+        mapMessage(user, item.lastMessage),
+        item.lastMessage?.u.username === user.username,
+      )
+    : null;
 
   return {
     ...item,
@@ -135,14 +131,12 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
   const user = mapUser(item?.u);
   const attachments: IAttachment[] = [];
   let quotedMessage = null;
-  let lastMessage = item.msg;
   let type = item.t;
 
   if (item.attachments?.length > 0) {
     type = 'attachment';
 
     item.attachments.forEach((_attachment: any) => {
-      // const _attachment: IAttachment = item.attachments[0];
       let extraData = null;
       try {
         extraData = JSON.parse(_attachment.description || '{}');
@@ -157,12 +151,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
           name: _attachment.title,
           ...extraData,
         });
-        lastMessage =
-          user?.username === _user?.username
-            ? i18next.t('chat:label_last_message:my_attachment')
-            : i18next
-                .t('chat:label_last_message:other_attachment')
-                .replace('{0}', user?.name);
       }
     });
   }
@@ -192,7 +180,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     });
   }
 
-  return {
+  const _message = {
     ...item,
     room_id: item?.rid,
     user,
@@ -203,12 +191,16 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     _updatedAt: timestampToISODate(item._updatedAt),
     status: messageStatus.SENT,
     text,
-    msg: lastMessage,
     attachments,
     quotedMessage,
     localId: item.localId || attachments[0]?.localId,
     reaction_counts,
     own_reactions,
+  };
+
+  return {
+    ..._message,
+    lastMessage: getLastMessage(_message, item.u?.username === _user.username),
   };
 };
 

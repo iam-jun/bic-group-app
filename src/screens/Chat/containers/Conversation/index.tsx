@@ -29,6 +29,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {RootStackParamList} from '~/interfaces/IRouter';
+import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
   ChatInput,
@@ -48,7 +49,7 @@ import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
-import {getDefaultAvatar, getReactionStatistics} from '../../helper';
+import {getReactionStatistics} from '../../helper';
 
 const _Conversation = () => {
   const {user} = useAuth();
@@ -62,9 +63,7 @@ const _Conversation = () => {
   const styles = createStyles(theme, insets);
   const {rootNavigation} = useRootNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
-  const [_avatar, setAvatar] = useState<string | string[] | undefined>(
-    conversation.avatar,
-  );
+
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
@@ -74,10 +73,6 @@ const _Conversation = () => {
     useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
   const [editingMessage, setEditingMessage] = useState<IMessage>();
-
-  const onLoadAvatarError = () => {
-    setAvatar(getDefaultAvatar(conversation?.name));
-  };
 
   const setNewRootScreenName = () => {
     const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
@@ -131,7 +126,6 @@ const _Conversation = () => {
       setDownButtonVisible(
         conversation.unreadCount > appConfig.messagesPerPage,
       );
-      setAvatar(conversation?.avatar);
     }
   }, [conversation?._id]);
 
@@ -539,11 +533,14 @@ const _Conversation = () => {
   return (
     <ScreenWrapper isFullView testID="MessageScreen" style={styles.container}>
       <Header
-        avatar={_avatar}
+        avatar={conversation?.avatar}
         avatarProps={{
           variant: 'default',
           cache: false,
-          onError: onLoadAvatarError,
+          placeholderSource:
+            conversation?.type === roomTypes.DIRECT
+              ? images.img_user_avatar_default
+              : images.img_group_avatar_default,
         }}
         title={
           messages.error
