@@ -31,6 +31,7 @@ export interface ListViewProps {
   containerStyle?: StyleProp<ViewStyle>;
 
   onItemPress?: (...params: any) => void;
+  onItemLongPress?: (...params: any) => void;
   onActionPress?: (...params: any) => void;
   onRefresh?: () => void;
   onLoadMore?: () => void;
@@ -75,6 +76,7 @@ const ListView: React.FC<ListViewProps> = ({
   containerStyle,
 
   onItemPress,
+  onItemLongPress,
   onActionPress,
   onRefresh,
   onLoadMore,
@@ -134,7 +136,8 @@ const ListView: React.FC<ListViewProps> = ({
     return (
       <TouchableOpacity
         disabled={!onItemPress || item.disableClick}
-        onPress={e => onItemPress && onItemPress(item, e)}>
+        onPress={(e: any) => onItemPress && onItemPress(item, e)}
+        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
         <ItemComponent
           {...item}
           title={item[titleField || 'title']}

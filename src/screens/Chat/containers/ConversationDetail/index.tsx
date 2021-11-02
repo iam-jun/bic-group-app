@@ -2,23 +2,23 @@ import {RouteProp, useRoute} from '@react-navigation/core';
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
-  Platform,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
+import {useTheme} from 'react-native-paper';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
-
+import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Image from '~/beinComponents/Image';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
@@ -28,19 +28,15 @@ import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import mainStack from '~/router/navigator/MainStack/stack';
-import * as modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
-import actions from '../../redux/actions';
-import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import * as modalActions from '~/store/modal/actions';
 import {scaleCoverHeight} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
-import MenuItem from '~/beinComponents/list/items/MenuItem';
+import actions from '../../redux/actions';
 
-const ConversationDetail = (): React.ReactElement => {
+const _ConversationDetail = (): React.ReactElement => {
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<RootStackParamList, 'ConversationDetail'>>();
 
@@ -54,6 +50,8 @@ const ConversationDetail = (): React.ReactElement => {
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
   const permissions = conversation.permissions || {};
+
+  const [dummyIsMute, setDummyIsMute] = useState(false);
 
   useEffect(() => {
     if (route?.params?.roomId)
@@ -78,21 +76,6 @@ const ConversationDetail = (): React.ReactElement => {
   const goAddMembers = () => {
     dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.addMembers, {roomId: conversation._id});
-  };
-
-  const goProfile = () => {
-    if (conversation.type === roomTypes.DIRECT) {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: conversation.directUser.beinUserId,
-      });
-    } else if (conversation.type === roomTypes.GROUP) {
-      rootNavigation.navigate('groups', {
-        screen: groupStack.groupDetail,
-        params: {
-          groupId: conversation.beinGroupId,
-        },
-      });
-    }
   };
 
   const saveChatName = (text: string) => {
@@ -180,34 +163,57 @@ const ConversationDetail = (): React.ReactElement => {
     );
   };
 
-  // TODO: Fix marginRight, they are pushed to the left, when there is no button invite
+  const onPressMute = () => {
+    const _dummyIsMute = !dummyIsMute;
+    setDummyIsMute(_dummyIsMute);
+    alert('Set mute: ' + _dummyIsMute);
+  };
+
+  const renderButtonMute = () => {
+    if (dummyIsMute)
+      return (
+        <Button.Icon
+          icon="BellSlash"
+          style={styles.menuOption}
+          iconWrapperStyle={styles.buttonMuteEnable}
+          tintColor={colors.primary7}
+          label={i18next.t('chat:label_unmute')}
+          onPress={onPressMute}
+        />
+      );
+
+    return (
+      <Button.Icon
+        icon="Bell"
+        style={styles.menuOption}
+        tintColor={colors.primary7}
+        label={i18next.t('chat:label_mute')}
+        onPress={onPressMute}
+      />
+    );
+  };
+
   const renderMenu = () => (
     <View style={styles.menuContainer}>
       <Button.Icon
         icon="search"
-        style={styles.marginRight}
+        style={styles.menuOption}
         tintColor={colors.primary7}
         label={i18next.t('common:text_search')}
       />
       {permissions[chatPermissions.CAN_PIN_MESSAGE] && (
         <Button.Icon
           icon="iconPin"
-          style={styles.marginRight}
+          style={styles.menuOption}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_pin_chat')}
         />
       )}
-      {permissions[chatPermissions.CAN_MUTE] && (
-        <Button.Icon
-          icon="bell"
-          style={styles.marginRight}
-          tintColor={colors.primary7}
-          label={i18next.t('chat:label_mute')}
-        />
-      )}
+      {permissions[chatPermissions.CAN_MUTE] && renderButtonMute()}
       {!isDirect && permissions[chatPermissions.CAN_MANAGE_MEMBER] && (
         <Button.Icon
           icon="addUser"
+          style={styles.menuOption}
           tintColor={colors.primary7}
           label={i18next.t('chat:label_invite')}
           onPress={goAddMembers}
@@ -521,6 +527,9 @@ const createStyles = (
       alignItems: 'center',
       paddingVertical: spacing.padding.large,
     },
+    menuOption: {
+      marginHorizontal: spacing.margin.large,
+    },
     bottomMenu: {
       marginTop: spacing.margin.small,
       paddingTop: spacing.padding.base,
@@ -539,14 +548,8 @@ const createStyles = (
       paddingHorizontal: spacing.padding.big,
       paddingTop: spacing.padding.tiny,
     },
-    marginBottom: {
-      marginBottom: spacing.margin.large,
-    },
-    marginStart: {
-      marginStart: spacing.margin.large,
-    },
-    marginRight: {
-      marginRight: spacing.margin.big,
+    buttonMuteEnable: {
+      backgroundColor: colors.primary3,
     },
     cover: {
       width: '100%',
@@ -590,4 +593,6 @@ const createStyles = (
   });
 };
 
-export default React.memo(ConversationDetail);
+const ConversationDetail = React.memo(_ConversationDetail);
+ConversationDetail.whyDidYouRender = true;
+export default ConversationDetail;

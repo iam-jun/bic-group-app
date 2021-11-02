@@ -192,6 +192,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 const themeStyles = (theme: IObject<any>) => {
   const {spacing, colors, dimension} = theme;
   return StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      minHeight: 46,
+      width: 286,
+    },
     textContainer: {
       paddingHorizontal: spacing.padding.base,
       flex: 1,
@@ -199,10 +204,6 @@ const themeStyles = (theme: IObject<any>) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-    },
-    container: {
-      flexDirection: 'row',
-      height: 46,
     },
     itemActiveIndicator: {
       width: 4,

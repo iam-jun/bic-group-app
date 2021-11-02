@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {InteractionManager, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
@@ -20,7 +20,7 @@ interface Props {
   onPress: () => void;
 }
 
-const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
+const _QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -28,7 +28,9 @@ const QuotedMessage: React.FC<Props> = ({message, onPress}: Props) => {
   const _message = useKeySelector(`chat.quotedMessages.${msgId}`);
 
   useEffect(() => {
-    !_message && dispatch(actions.getMessageDetail(msgId));
+    InteractionManager.runAfterInteractions(() => {
+      !_message && dispatch(actions.getMessageDetail(msgId));
+    });
   }, [_message]);
 
   if (!_message) return <LoadingQuotedMessage />;
@@ -114,4 +116,6 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
+const QuotedMessage = React.memo(_QuotedMessage);
+QuotedMessage.whyDidYouRender = true;
 export default QuotedMessage;

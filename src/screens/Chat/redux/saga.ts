@@ -798,6 +798,7 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
+    case messageEventTypes.USER_LEFT:
     case undefined:
       yield handleNewMessage(data);
       break;

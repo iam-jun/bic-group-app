@@ -9,6 +9,7 @@ import ButtonWrapper, {ButtonWrapperProps} from './ButtonWrapper';
 
 export interface ButtonIconProps extends ButtonWrapperProps {
   style?: StyleProp<ViewStyle>;
+  iconWrapperStyle?: StyleProp<ViewStyle>;
   icon: IconType;
   tintColor?: string;
   label?: string;
@@ -19,6 +20,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   icon,
   label,
   tintColor,
+  iconWrapperStyle,
   ...props
 }: ButtonIconProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -27,7 +29,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   return (
     <View style={[styles.container, style]}>
       <ButtonWrapper
-        style={styles.icon}
+        style={[styles.icon, iconWrapperStyle]}
         leftIcon={icon}
         leftIconProps={{icon, tintColor}}
         {...props}

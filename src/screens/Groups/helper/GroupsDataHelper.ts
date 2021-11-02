@@ -101,6 +101,12 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: false,
   }),
+  leaveGroup: (groupId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/leave`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+  }),
 };
 
 const groupsDataHelper = {
@@ -286,6 +292,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.joinGroup(groupId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  leaveGroup: async (groupId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.leaveGroup(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

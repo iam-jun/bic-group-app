@@ -140,7 +140,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <Avatar.Group
           variant={'large'}
           source={actorAvatars}
-          totalMember={actorIds.length}
+          totalMember={actorIds.length - 3} // used when numers of avatars >= 5
         />
       );
     } else {
@@ -432,6 +432,7 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     },
     stateIndicatorActive: {
       ...stateIndicator,
+      top: 20,
       width: 6,
       height: 48,
       borderTopRightRadius: 6,
