@@ -293,17 +293,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         subscriptions: state.subscriptions.map((sub: any) =>
           sub.rid === payload.rid ? {...sub, ...payload} : sub,
         ),
-        rooms: {
-          ...rooms,
-          data: rooms.data.map((item: any) =>
-            item._id === action.payload.rid
-              ? {
-                  ...item,
-                  _updatedAt: timestampToISODate(payload._updatedAt),
-                }
-              : item,
-          ),
-        },
       };
     case types.SET_CONVERSATION_DETAIL: {
       const sub: any = (state.subscriptions || []).find(
@@ -377,6 +366,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   item._id === payload.room_id
                     ? {
                         ...item,
+                        _updatedAt: payload.createAt,
                         lastMessage: payload.lastMessage,
                       }
                     : item,
