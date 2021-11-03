@@ -350,10 +350,10 @@ PODS:
     - React-Core
   - react-native-unicons (1.0.3):
     - React
-  - react-native-video (5.1.1):
+  - react-native-video (5.2.0):
     - React-Core
-    - react-native-video/Video (= 5.1.1)
-  - react-native-video/Video (5.1.1):
+    - react-native-video/Video (= 5.2.0)
+  - react-native-video/Video (5.2.0):
     - React-Core
   - React-perflogger (0.66.1)
   - React-RCTActionSheet (0.66.1):
@@ -764,7 +764,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-unicons: 3f98688cbfc9f47e3ae45dd1560b7a2ab65075f4
-  react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
+  react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
   React-perflogger: fcac6090a80e3d967791b4c7f1b1a017f9d4a398
   React-RCTActionSheet: caf5913d9f9e605f5467206cf9d1caa6d47d7ad6
   React-RCTAnimation: 6539e3bf594f6a529cd861985ba6548286ae1ead
@@ -798,6 +798,6 @@ SPEC CHECKSUMS:
   Yoga: 2b4a01651f42a32f82e6cef3830a3ba48088237f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d6a7af76a951f20f1433f6fdd730f56da139a18b
+PODFILE CHECKSUM: 0d971171496d60787acd1f6a7aa4f10ad48606ec
 
 COCOAPODS: 1.10.1
