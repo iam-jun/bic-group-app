@@ -34,6 +34,7 @@ const ConversationItem: React.FC<Props> = ({
   total,
   index,
   isActive = false,
+  disableNotifications,
 }: Props): React.ReactElement => {
   const AVG_CHAR_ON_ONE_LINE = 32;
   let twoLineLastMessage = false;
@@ -63,7 +64,12 @@ const ConversationItem: React.FC<Props> = ({
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: <ConversationItemMenu conversationId={_id} />,
+        ContentComponent: (
+          <ConversationItemMenu
+            conversationId={_id}
+            disableNotifications={disableNotifications}
+          />
+        ),
         props: {
           webModalStyle: {minHeight: undefined},
           isContextMenu: true,
@@ -220,6 +226,7 @@ const createStyles = (
       lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
+
     redDot: {
       marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,

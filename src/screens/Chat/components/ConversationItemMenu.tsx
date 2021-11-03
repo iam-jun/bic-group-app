@@ -6,18 +6,22 @@ import {useDispatch} from 'react-redux';
 import {ITheme} from '~/theme/interfaces';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import * as modalActions from '~/store/modal/actions';
-import {IAction} from '~/constants/commonActions';
+import commonActions, {IAction} from '~/constants/commonActions';
+import chatActions from '~/screens/Chat/redux/actions';
 
 export interface ConversationItemMenuProps {
   conversationId: string;
+  disableNotifications?: boolean;
 }
 
 const ConversationItemMenu: FC<ConversationItemMenuProps> = ({
   conversationId,
+  disableNotifications = false,
 }: ConversationItemMenuProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
-  console.log(`conversationId`, conversationId);
+  const [isMute, setIsMute] = useState(disableNotifications);
+  const notificationsIcon = isMute ? 'BellSlash' : 'Bell';
 
   const dispatch = useDispatch();
 
@@ -27,19 +31,29 @@ const ConversationItemMenu: FC<ConversationItemMenuProps> = ({
   };
 
   const onPressNotificationToggle = (action: IAction) => {
-    console.log(`action`, action);
-    alert('Notification toggle pressed, ' + action);
+    if (action === commonActions.checkBox) {
+      dispatch(
+        chatActions.turnOnConversationNotifications({roomId: conversationId}),
+      );
+      setIsMute(false);
+    } else if (action === commonActions.uncheckBox) {
+      dispatch(
+        chatActions.turnOffConversationNotifications({roomId: conversationId}),
+      );
+      setIsMute(true);
+    }
   };
 
   return (
     <View style={styles.container}>
       <PrimaryItem
         style={styles.item}
-        leftIcon={'Bell'}
-        leftIconProps={{icon: 'Bell', size: 24}}
+        leftIcon={notificationsIcon}
+        leftIconProps={{icon: notificationsIcon, size: 24}}
         title={'chat:conversation_options:notifications'}
         titleProps={{useI18n: true}}
         onPressToggle={onPressNotificationToggle}
+        toggleChecked={!isMute}
       />
       <PrimaryItem
         style={styles.item}
