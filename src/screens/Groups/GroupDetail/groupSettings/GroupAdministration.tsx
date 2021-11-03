@@ -57,15 +57,15 @@ const GroupAdministration = (props: any) => {
     icon: IconType,
     title: string,
     onPress?: () => void,
-    redDotNumber?: number,
+    notificationsBadgeNumber?: number,
   ) => {
     return (
       <TouchableOpacity onPress={onPress}>
         <MenuItem
           title={title}
           icon={icon}
-          redDotNumber={redDotNumber}
-          redDotProps={{maxNumber: 99}}
+          notificationsBadgeNumber={notificationsBadgeNumber}
+          notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
           rightSubIcon="AngleRightB"
         />
       </TouchableOpacity>
