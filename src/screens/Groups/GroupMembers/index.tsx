@@ -163,7 +163,8 @@ const GroupMembers = (props: any) => {
       return;
     }
 
-    const {id: userId, fullname} = selectedMember;
+    const {id: userId, fullname, username} = selectedMember;
+    console.log(`selectedMember`, selectedMember);
 
     const content = i18next
       .t(`groups:modal_confirm_remove_member:description`)
@@ -186,7 +187,7 @@ const GroupMembers = (props: any) => {
     };
 
     groupsDataHelper
-      .getUserInnerGroups(groupId, userId)
+      .getUserInnerGroups(groupId, username)
       .then(res => {
         const innerGroups = res.data.inner_groups.map(
           (group: IGroup) => group.name,

@@ -22,6 +22,7 @@ export interface IChatUser {
   active: boolean;
   username: string;
   name: string;
+  fullname?: string;
   services?: IUserServices;
   emails?: IUserEmail[];
   status?: string;

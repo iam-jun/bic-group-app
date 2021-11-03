@@ -71,6 +71,7 @@ export default function* saga() {
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
   yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
+  yield takeLatest(types.LEAVE_CHAT, leaveChat);
 }
 
 function* initChat() {
@@ -204,12 +205,12 @@ function* getAttachmentMedia({
   try {
     payload.query = {typeGroup: 'image'};
     payload.sort = {uploadedAt: -1};
-    const response: any = yield makeHttpRequest(
+    const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getAttachmentFiles(payload),
     );
     const {files} = response?.data || {};
     yield put(actions.setAttachmentMedia(files || []));
-  } catch (err) {
+  } catch (err: any) {
     yield put(
       modalActions.showAlert({
         title: i18next.t('common:text_error'),
@@ -745,6 +746,44 @@ function* mergeMessagesHistory() {
   }
 }
 
+function* leaveChat({
+  payload,
+  roomType,
+}: {
+  type: string;
+  payload: string;
+  roomType: string;
+}) {
+  if (roomType !== roomTypes.GROUP) {
+    yield makeHttpRequest(apiConfig.Chat.leaveQuickChat(payload));
+  } else {
+    yield groupsDataHelper.leaveGroup(Number(payload));
+    yield put(groupsActions.getJoinedGroups());
+    yield put(groupsActions.getGroupDetail(Number(payload)));
+  }
+
+  if (Platform.OS === 'web') {
+    // navigate to the top conversation in the list
+    const {chat} = yield select();
+    const roomData = chat?.rooms?.data.sort(function (
+      a: IConversation,
+      b: IConversation,
+    ) {
+      //@ts-ignore
+      return new Date(b._updatedAt) - new Date(a._updatedAt);
+    });
+    navigation.navigate(chatStack.conversation, {roomId: roomData[0]?._id});
+  }
+
+  const toastMessage: IToastMessage = {
+    content: i18next.t('chat:modal_confirm_leave_chat:success_message'),
+    props: {
+      type: 'success',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
+}
+
 // function* searchConversations({payload}: {type: string; payload?: string}) {
 //   try {
 //     const {auth} = yield select();
@@ -864,6 +903,7 @@ function* handleRoomsMessage(payload?: any) {
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
+    case messageEventTypes.USER_LEFT:
     case undefined:
       yield handleNewMessage(data);
       break;

@@ -418,6 +418,7 @@
     "label_invite": "Invite",
     "label_notification": "Notifications",
     "label_mute": "Mute",
+    "label_unmute": "Unmute",
     "label_pin_chat": "Pin Chat",
     "label_attachments": "Files",
     "label_gallery": "Gallery",
@@ -426,10 +427,11 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message": {
-      "au": "{1} joined to this group",
-      "ru": "{1} was removed from the group.",
-      "room_changed_description": "{0} has changed the chat description.",
-      "room_changed_announcement": "{0} has changed the chat announcement.",
+      "au": "{1} joined the group",
+      "ru": "{1} was removed from the group",
+      "ul": "{1} left the group",
+      "room_changed_description": "{0} has changed the chat description",
+      "room_changed_announcement": "{0} has changed the chat announcement",
       "room_changed_topic": "{0} has changed the group chat topic to {1}",
       "room_changed_avatar": "{0} has changed the group avatar",
       "r": "{0} has changed the group chat name to {1}",
@@ -527,7 +529,20 @@
       "job_title": " at ",
       "member_count": " & {0} others"
     },
-    "text_chat_description": "Chat Description"
+    "text_chat_description": "Chat Description",
+    "conversation_options": {
+      "notifications": "Notifications",
+      "pin": "Pin",
+      "mark_as_read": "Mark as Read",
+      "delete_chat": "Delete Chat"
+    },
+    "modal_confirm_leave_chat": {
+      "title": "Leave Group",
+      "description": "Are you sure you want to leave this group chat?",
+      "leave_inner_groups": "You will also leave: {0}.",
+      "button_leave": "Leave Chat",
+      "success_message": "You have left the group chat"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -588,6 +603,13 @@
       "title": "Remove this member",
       "description": "Do you want to remove {name}, this member will no longer be in this group{other groups}.",
       "button_remove": "Remove"
+    },
+    "modal_confirm_leave_group": {
+      "title": "Leave Group",
+      "description": "Are you sure you want to leave this group?",
+      "leave_inner_groups": "You will also leave: {0}.",
+      "button_leave": "Leave Group",
+      "success_message": "You have left the group"
     }
   },
   "profile": {

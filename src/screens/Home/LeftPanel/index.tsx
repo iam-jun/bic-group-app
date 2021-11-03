@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -7,9 +7,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
-import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
 import {IconType} from '~/resources/icons';
 import Div from '~/beinComponents/Div';
 import {appScreens} from '~/configs/navigator';
@@ -19,8 +17,8 @@ const LeftPanel = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyle(theme);
-  const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
 
   const currentPath = useKeySelector('app.rootScreenName') || 'newsfeed';
 
@@ -34,18 +32,6 @@ const LeftPanel = () => {
 
   const onPressDraftPost = () => {
     rootNavigation.navigate(homeStack.draftPost);
-  };
-
-  const renderBadgeNumber = (badgeNumber: number) => {
-    if (!badgeNumber) {
-      return null;
-    }
-    const number = badgeNumber > 9 ? '9+' : badgeNumber;
-    return (
-      <View style={styles.badgeNumberContainer}>
-        <Text.Subtitle style={styles.badgeNumber}>{number}</Text.Subtitle>
-      </View>
-    );
   };
 
   const renderItem = ({
@@ -93,7 +79,8 @@ const LeftPanel = () => {
         title: 'home:draft_post',
         path: appScreens.draftPost,
         onPress: onPressDraftPost,
-        RightComponent: renderBadgeNumber(draftPost?.length || 0),
+        type: 'draftPost',
+        badgeColor: colors.textSecondary,
       })}
       {renderItem({
         icon: 'iconMenuBookmarkRed',

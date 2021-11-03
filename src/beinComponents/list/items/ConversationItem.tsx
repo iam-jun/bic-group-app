@@ -2,12 +2,18 @@ import i18next from 'i18next';
 import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+
 import Avatar from '~/beinComponents/Avatar';
 import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
+import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import {roomTypes} from '~/constants/chat';
 import {IConversation} from '~/interfaces/IChat';
-import {getDefaultAvatar} from '~/screens/Chat/helper';
+import ConversationItemMenu from '~/screens/Chat/components/ConversationItemMenu';
+import modalActions from '~/store/modal/actions';
+import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
 
@@ -18,6 +24,7 @@ interface Props extends IConversation {
 }
 
 const ConversationItem: React.FC<Props> = ({
+  _id,
   name,
   lastMessage,
   avatar,
@@ -32,6 +39,7 @@ const ConversationItem: React.FC<Props> = ({
   let twoLineLastMessage = false;
   if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
     twoLineLastMessage = true;
+  const dispatch = useDispatch();
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(
@@ -51,14 +59,48 @@ const ConversationItem: React.FC<Props> = ({
   let className = 'chat__conversation-item';
   if (isActive) className = className + ` ${className}--active`;
 
+  const onPressMenu = (event: any) => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <ConversationItemMenu conversationId={_id} />,
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+          position: {x: event?.pageX, y: event?.pageY},
+        },
+      }),
+    );
+  };
+
   const ItemAvatar = (
     <Avatar.Large
       style={styles.avatar}
       source={avatar}
       cache={false}
-      placeholderSource={getDefaultAvatar(name)}
+      placeholderSource={
+        type === roomTypes.DIRECT
+          ? images.img_user_avatar_default
+          : images.img_group_avatar_default
+      }
     />
   );
+
+  const renderMenuButton = () => {
+    if (Platform.OS !== 'web') return null;
+
+    return (
+      <Div className="chat__conversation-item__menu">
+        <View style={styles.menuButton}>
+          <Icon
+            style={{alignSelf: 'auto'}}
+            icon={'EllipsisH'}
+            onPress={onPressMenu}
+          />
+        </View>
+      </Div>
+    );
+  };
 
   return (
     <Div className={className}>
@@ -96,6 +138,7 @@ const ConversationItem: React.FC<Props> = ({
                 maxNumber={99}
               />
             )}
+            {renderMenuButton()}
           </View>
         </Div>
       </View>
@@ -113,8 +156,8 @@ const createStyles = (
   const isWeb = Platform.OS === 'web';
 
   const contentHeight = 72;
-  const headerHeight = 20;
-  const messageHeight = 40;
+  const headerHeight = 22;
+  const messageHeight = 42;
 
   return StyleSheet.create({
     container: {
@@ -152,7 +195,6 @@ const createStyles = (
     },
     title: {
       flex: 1,
-      height: 20,
       lineHeight: 20,
       ...Platform.select({
         web: {
@@ -180,6 +222,11 @@ const createStyles = (
     },
     redDot: {
       marginTop: !isWeb ? spacing.margin.tiny : 0,
+      marginLeft: spacing.margin.base,
+    },
+    menuButton: {
+      width: 20,
+      height: 20,
       marginLeft: spacing.margin.base,
     },
   });
