@@ -24,10 +24,12 @@ import {IConversation} from '~/interfaces/IChat';
 import {ITabTypes} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import ConversationItemMenu from '../../components/ConversationItemMenu';
 
-const ConversationsList = (): React.ReactElement => {
+const _ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
 
   const theme: ITheme = useTheme() as ITheme;
@@ -106,12 +108,26 @@ const ConversationsList = (): React.ReactElement => {
   };
 
   const onChatPress = (item: IConversation) => {
-    dispatch(actions.setConversationDetail(item));
     rootNavigation.navigate(chatStack.conversation, {
       roomId: item._id,
       message_id: undefined,
     });
-    setCurrentPath(item._id);
+    if (Platform.OS === 'web') setCurrentPath(item._id);
+  };
+
+  const onChatLongPress = (item: IConversation) => {
+    if (Platform.OS === 'web') return;
+
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <ConversationItemMenu conversationId={item._id} />,
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+        },
+      }),
+    );
   };
 
   const onMenuPress = async () => {
@@ -156,6 +172,7 @@ const ConversationsList = (): React.ReactElement => {
         loading={loading}
         data={data}
         onItemPress={onChatPress}
+        onItemLongPress={onChatLongPress}
         onRefresh={() => dispatch(actions.getSubscriptions())}
         ListEmptyComponent={renderEmpty}
         onEndReached={loadMore}
@@ -181,4 +198,6 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
+const ConversationsList = React.memo(_ConversationsList);
+ConversationsList.whyDidYouRender = true;
 export default ConversationsList;

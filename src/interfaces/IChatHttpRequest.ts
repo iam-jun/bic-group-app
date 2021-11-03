@@ -71,6 +71,11 @@ export interface IUpdateGroupName {
   name: string;
 }
 
+export interface IUpdateConversationDescription {
+  roomId: string;
+  description: string;
+}
+
 export interface IRemoveMemberReq {
   roomId: string;
   userId: string;
@@ -107,4 +112,11 @@ export interface IRealtimeAPIReq {
 
 export interface ISearchChatReq {
   name: string;
+}
+
+export interface IUpdateConversationDetailReq {
+  name?: string;
+  description?: string | null;
+  icon?: string;
+  background_img_url?: string;
 }

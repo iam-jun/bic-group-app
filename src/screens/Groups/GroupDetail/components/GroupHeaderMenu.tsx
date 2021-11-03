@@ -10,6 +10,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
+import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
@@ -20,6 +21,12 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import groupsActions from '../../redux/actions';
+import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
+import groupsDataHelper from '../../helper/GroupsDataHelper';
+import {IGroup} from '~/interfaces/IGroup';
+import useAuth from '~/hooks/auth';
 
 export interface GroupHeaderMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -34,6 +41,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+  const {user} = useAuth();
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
@@ -71,7 +79,60 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
 
   const onPressLeave = () => {
     dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlertNewFeature());
+    alertLeaveGroup();
+  };
+
+  const alertLeaveGroup = () => {
+    const alertPayload = {
+      iconName: 'SignOutAlt',
+      title: i18next.t('groups:modal_confirm_leave_group:title'),
+      content: i18next.t('groups:modal_confirm_leave_group:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => doLeaveGroup(),
+      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
+      ConfirmBtnComponent: Button.Danger,
+    };
+
+    // Handling leaving other inner groups
+    groupsDataHelper
+      .getUserInnerGroups(Number(groupId), user.username)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        if (innerGroups.length > 0) {
+          alertPayload.content =
+            alertPayload.content +
+            ` ${i18next.t(
+              'groups:modal_confirm_leave_group:leave_inner_groups',
+            )}`;
+
+          const groupsLeaveToString = innerGroups.join(', ');
+          alertPayload.content = alertPayload.content.replace(
+            '{0}',
+            groupsLeaveToString,
+          );
+        }
+
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.log('[ERROR] error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
+  };
+
+  const doLeaveGroup = () => {
+    dispatch(groupsActions.leaveGroup(Number(groupId)));
   };
 
   const onPressShareChat = () => {

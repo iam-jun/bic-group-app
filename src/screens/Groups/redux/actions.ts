@@ -151,6 +151,10 @@ const groupsActions = {
       payload,
     };
   },
+  leaveGroup: (payload: number) => ({
+    type: groupsTypes.LEAVE_GROUP,
+    payload,
+  }),
 
   setLoadingAvatar: (payload: boolean) => ({
     type: groupsTypes.SET_LOADING_AVATAR,

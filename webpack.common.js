@@ -100,6 +100,7 @@ module.exports = env => {
         '.json',
       ],
       alias: {
+        '^react-native$': 'react-native-web',
         'react-native$': 'react-native-web',
         'react-native-linear-gradient': 'react-native-web-linear-gradient',
         process: 'process/browser',

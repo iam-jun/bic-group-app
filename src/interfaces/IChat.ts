@@ -190,6 +190,13 @@ export type IConversation = {
   beinGroupId?: number;
 };
 
+export type IConversationInfo = {
+  name?: string;
+  description?: string;
+  avatar?: string;
+  cover?: string;
+};
+
 export interface ISendMessageAction {
   _id: string;
   text: string;
@@ -223,4 +230,11 @@ export interface IPayloadGetAttachmentFiles {
   sort?: any;
   query?: any;
   fields?: any;
+}
+
+export interface IUpdateConversationDetail {
+  name?: string;
+  description?: string | null;
+  avatar?: string;
+  cover?: string;
 }

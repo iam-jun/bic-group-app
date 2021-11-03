@@ -3,6 +3,7 @@ import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
+import {timestampToISODate} from '~/utils/formatData';
 import {getLastMessage} from '../helper';
 import types from './constants';
 
@@ -286,9 +287,16 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           sub.rid === action.payload ? {...sub, unread: 0} : sub,
         ),
       };
+    case types.UPDATE_SUBSCRIPTION:
+      return {
+        ...state,
+        subscriptions: state.subscriptions.map((sub: any) =>
+          sub.rid === payload.rid ? {...sub, ...payload} : sub,
+        ),
+      };
     case types.SET_CONVERSATION_DETAIL: {
       const sub: any = (state.subscriptions || []).find(
-        (item: any) => item.rid === item?._id,
+        (item: any) => item.rid === payload?._id,
       );
 
       return {
@@ -315,6 +323,14 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         },
       };
     }
+    case types.SET_UPDATED_CONVERSATION_DETAIL:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          ...payload,
+        },
+      };
     case types.SET_ATTACHMENT_MEDIA:
       return {
         ...state,
@@ -343,7 +359,7 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       return {
         ...state,
         messages:
-          action.payload.room_id === conversation._id
+          payload.room_id === conversation._id
             ? {
                 ...messages,
                 data: newMessages,
@@ -355,11 +371,11 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
             : {
                 ...rooms,
                 data: rooms.data.map((item: any) =>
-                  item._id === action.payload.room_id
+                  item._id === payload.room_id
                     ? {
                         ...item,
-                        lastMessage: action.payload.lastMessage,
-                        _updatedAt: action.payload.createAt,
+                        _updatedAt: payload.createAt,
+                        lastMessage: payload.lastMessage,
                       }
                     : item,
                 ),
@@ -583,6 +599,17 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         conversation: {
           ...conversation,
           usersCount: conversation.usersCount + payload,
+        },
+      };
+    case types.LEAVE_CHAT:
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          data: state.rooms.data.filter(
+            (group: IConversation) =>
+              group._id !== payload && group.beinGroupId !== payload,
+          ),
         },
       };
     case types.KICK_ME_OUT:

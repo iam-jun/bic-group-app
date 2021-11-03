@@ -15,6 +15,7 @@ export const getConversations = createSelector(chatState, data => {
         );
 
         const name =
+          item.name ||
           (typeof sub?.customFields?.beinChatName === 'string'
             ? sub?.customFields?.beinChatName
             : sub?.customFields?.beinChatName?.name) ||

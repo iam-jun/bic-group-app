@@ -54,8 +54,7 @@ const addOnMessageCallback = (
 };
 
 const removeOnMessageCallback = (id: string) => {
-  // TODO:
-  _.remove(onMessageCallbacks, item => {
+  onMessageCallbacks = _.remove(onMessageCallbacks, item => {
     return item.id === id;
   });
 };

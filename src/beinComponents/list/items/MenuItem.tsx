@@ -10,15 +10,16 @@ import Div from '~/beinComponents/Div';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import RedDot, {RedDotProps} from '~/beinComponents/Badge/RedDot';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import {NotificationsBadgeComponentProps} from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
 
 interface MenuItemProps extends IOption {
   isActive?: boolean;
   RightComponent?: React.ReactNode | React.ReactElement;
   onPress?: () => void;
   disable?: boolean;
-  redDotNumber?: number;
-  redDotProps?: RedDotProps;
+  notificationsBadgeNumber?: number;
+  notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
 }
 
@@ -34,8 +35,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   RightComponent,
   onPress,
   disable,
-  redDotNumber,
-  redDotProps,
+  notificationsBadgeNumber,
+  notificationsBadgeProps,
   badgeColor,
 }: MenuItemProps) => {
   const theme = useTheme() as ITheme;
@@ -71,8 +72,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
               </Text.Subtitle>
             )}
           </View>
-          {(redDotNumber || redDotProps) && (
-            <RedDot number={redDotNumber} {...redDotProps} />
+          {(notificationsBadgeNumber || notificationsBadgeProps) && (
+            <NotificationsBadge
+              number={notificationsBadgeNumber}
+              {...notificationsBadgeProps}
+            />
           )}
           <View style={styles.rightComponent}>
             {!!rightSubTitle && (
