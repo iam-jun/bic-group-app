@@ -315,6 +315,21 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         },
       };
     }
+    case types.SET_CONVERSATION_NOTIFICATIONS:
+      return {
+        ...state,
+        rooms: {
+          ...rooms,
+          data: rooms.data.map((room: IConversation) =>
+            room._id === payload.roomId
+              ? {
+                  ...room,
+                  disableNotifications: payload.disableNotifications,
+                }
+              : room,
+          ),
+        },
+      };
     case types.SET_ATTACHMENT_MEDIA:
       return {
         ...state,

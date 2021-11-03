@@ -223,4 +223,19 @@ export default {
   //   type: Actions.SEARCH_CONVERSATIONS,
   //   payload,
   // }),
+  setConversationNotifications: (payload?: {
+    roomId: string;
+    disableNotifications: boolean;
+  }) => ({
+    type: Actions.SET_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
+  turnOnConversationNotifications: (payload?: {roomId: string}) => ({
+    type: Actions.TURN_ON_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
+  turnOffConversationNotifications: (payload?: {roomId: string}) => ({
+    type: Actions.TURN_OFF_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
 };

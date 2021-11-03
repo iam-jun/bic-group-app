@@ -33,7 +33,8 @@ import {
 } from './../helper';
 import actions from './actions';
 import types from './constants';
-
+import appActions from '~/store/app/actions';
+import {appScreens} from '~/configs/navigator';
 /**
  * Chat
  * @param payload
@@ -68,6 +69,14 @@ export default function* saga() {
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
   yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
+  yield takeEvery(
+    types.TURN_OFF_CONVERSATION_NOTIFICATIONS,
+    turnOffConversationNotifications,
+  );
+  yield takeEvery(
+    types.TURN_ON_CONVERSATION_NOTIFICATIONS,
+    turnOnConversationNotifications,
+  );
 }
 
 function* initChat() {
@@ -187,6 +196,7 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
         mapConversation(auth.user, response.data?.data),
       ),
     );
+    yield put(appActions.setRootScreenName(`${appScreens.chat}/${payload}`));
   } catch (err) {
     console.log('getConversationDetail', err);
   }
@@ -591,6 +601,52 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
   } catch (err) {
     console.log('getSurroundingMessages', err);
     yield put(actions.setMessagesError(err));
+  }
+}
+
+function* turnOffConversationNotifications({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string};
+}) {
+  try {
+    const {roomId} = payload;
+    yield makeHttpRequest(
+      apiConfig.Chat.setConversationNotifications(roomId, true),
+    );
+
+    yield put(
+      actions.setConversationNotifications({
+        roomId,
+        disableNotifications: true,
+      }),
+    );
+  } catch (error) {
+    yield showError(error);
+  }
+}
+
+function* turnOnConversationNotifications({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string};
+}) {
+  try {
+    const {roomId} = payload;
+    yield makeHttpRequest(
+      apiConfig.Chat.setConversationNotifications(roomId, false),
+    );
+
+    yield put(
+      actions.setConversationNotifications({
+        roomId,
+        disableNotifications: false,
+      }),
+    );
+  } catch (error) {
+    yield showError(error);
   }
 }
 
