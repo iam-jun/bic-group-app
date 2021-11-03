@@ -166,7 +166,8 @@ const _ConversationDetail = (): React.ReactElement => {
   const onPressMute = () => {
     const _dummyIsMute = !dummyIsMute;
     setDummyIsMute(_dummyIsMute);
-    alert('Set mute: ' + _dummyIsMute);
+    // TODO: update this function when API chat/{id}/info can return disableNotifications
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   const renderButtonMute = () => {
