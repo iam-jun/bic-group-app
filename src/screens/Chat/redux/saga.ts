@@ -14,6 +14,7 @@ import {
   IPayloadGetAttachmentFiles,
   IPayloadReactMessage,
   ISendMessageAction,
+  IUpdateConversationDetail,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
@@ -64,6 +65,7 @@ export default function* saga() {
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
+  yield takeLatest(types.UPDATE_CONVERSATION_DETAIL, updateConversationDetail);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
@@ -77,6 +79,7 @@ export default function* saga() {
     types.TURN_ON_CONVERSATION_NOTIFICATIONS,
     turnOnConversationNotifications,
   );
+  yield takeLatest(types.LEAVE_CHAT, leaveChat);
 }
 
 function* initChat() {
@@ -472,6 +475,66 @@ function* updateConversationName({payload}: {type: string; payload: string}) {
     );
   } catch (err) {
     console.log('updateConversationName', err);
+    yield showError(err);
+  }
+}
+
+function* updateConversationDetail({
+  payload,
+  editFieldName,
+  callback,
+}: {
+  type: string;
+  payload: IUpdateConversationDetail;
+  editFieldName?: string;
+  callback?: (roomId?: string) => void;
+}) {
+  try {
+    const {chat} = yield select();
+    const {conversation} = chat;
+    const {name, description, avatar, cover} = payload;
+
+    let id: number | string;
+    if (conversation?.type === roomTypes.GROUP) {
+      id = conversation?.beinGroupId;
+    } else {
+      id = conversation?._id;
+    }
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.updateConversationDetail(id, {
+        name,
+        description,
+        icon: avatar,
+        background_img_url: cover,
+      }),
+    );
+    if (!response?.data) {
+      throw new Error(response?.data);
+    }
+
+    if (callback) callback(conversation?._id);
+
+    // show success toast message
+    let toastContent: string;
+    if (editFieldName) {
+      toastContent = `${editFieldName} ${i18next.t(
+        'settings:text_updated_successfully',
+      )}`;
+    } else {
+      toastContent = 'common:text_edit_success';
+    }
+    const toastMessage: IToastMessage = {
+      content: toastContent,
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.log('updateConversationDetail', err);
+    yield showError(err);
   }
 }
 
@@ -738,6 +801,44 @@ function* mergeMessagesHistory() {
   }
 }
 
+function* leaveChat({
+  payload,
+  roomType,
+}: {
+  type: string;
+  payload: string;
+  roomType: string;
+}) {
+  if (roomType !== roomTypes.GROUP) {
+    yield makeHttpRequest(apiConfig.Chat.leaveQuickChat(payload));
+  } else {
+    yield groupsDataHelper.leaveGroup(Number(payload));
+    yield put(groupsActions.getJoinedGroups());
+    yield put(groupsActions.getGroupDetail(Number(payload)));
+  }
+
+  if (Platform.OS === 'web') {
+    // navigate to the top conversation in the list
+    const {chat} = yield select();
+    const roomData = chat?.rooms?.data.sort(function (
+      a: IConversation,
+      b: IConversation,
+    ) {
+      //@ts-ignore
+      return new Date(b._updatedAt) - new Date(a._updatedAt);
+    });
+    navigation.navigate(chatStack.conversation, {roomId: roomData[0]?._id});
+  }
+
+  const toastMessage: IToastMessage = {
+    content: i18next.t('chat:modal_confirm_leave_chat:success_message'),
+    props: {
+      type: 'success',
+    },
+  };
+  yield put(modalActions.showHideToastMessage(toastMessage));
+}
+
 // function* searchConversations({payload}: {type: string; payload?: string}) {
 //   try {
 //     const {auth} = yield select();
@@ -846,12 +947,28 @@ function* handleAddNewRoom(data: any) {
   }
 }
 
+function* handleChangeDescription(data: any) {
+  const {chat} = yield select();
+  const {conversation} = chat;
+
+  if (data.rid === conversation?._id) {
+    yield put(
+      actions.setUpdatedConversationDetail({
+        description: data.msg,
+      }),
+    );
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
-    case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
+      yield handleChangeDescription(data);
+      yield handleNewMessage(data);
+      break;
+    case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
     case messageEventTypes.ROOM_CHANGED_NAME:
     case messageEventTypes.ROOM_CHANGED_TOPIC:
     case messageEventTypes.USER_LEFT:

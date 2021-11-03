@@ -24,12 +24,15 @@ import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {ViewSpacing} from '~/components';
 import {chatPermissions, roomTypes} from '~/constants/chat';
+import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {IGroup} from '~/interfaces/IGroup';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import {scaleCoverHeight} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -50,6 +53,7 @@ const _ConversationDetail = (): React.ReactElement => {
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
   const permissions = conversation.permissions || {};
+  const {user} = useAuth();
 
   const [dummyIsMute, setDummyIsMute] = useState(false);
 
@@ -100,6 +104,77 @@ const _ConversationDetail = (): React.ReactElement => {
     );
   };
 
+  const goToEditConversationDescription = () => {
+    rootNavigation.navigate(chatStack.editChatDescription, {
+      roomId: conversation._id,
+    });
+  };
+
+  const onPressLeave = () => {
+    baseSheetRef.current?.close();
+    alertLeaveChat();
+  };
+
+  const alertLeaveChat = () => {
+    const alertPayload = {
+      iconName: 'SignOutAlt',
+      title: i18next.t('chat:modal_confirm_leave_chat:title'),
+      content: i18next.t('chat:modal_confirm_leave_chat:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => doLeaveChat(),
+      confirmLabel: i18next.t('chat:modal_confirm_leave_chat:button_leave'),
+      ConfirmBtnComponent: Button.Danger,
+    };
+
+    if (conversation.type !== roomTypes.GROUP) {
+      dispatch(modalActions.showAlert(alertPayload));
+      return;
+    }
+
+    // Handling leaving other inner groups
+    groupsDataHelper
+      .getUserInnerGroups(conversation.beinGroupId, user.username)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        if (innerGroups.length > 0) {
+          alertPayload.content =
+            alertPayload.content +
+            ` ${i18next.t('chat:modal_confirm_leave_chat:leave_inner_groups')}`;
+
+          const groupsLeaveToString = innerGroups.join(', ');
+          alertPayload.content = alertPayload.content.replace(
+            '{0}',
+            groupsLeaveToString,
+          );
+        }
+
+        dispatch(modalActions.showAlert(alertPayload));
+      })
+      .catch(err => {
+        console.log('[ERROR] error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
+  };
+
+  const doLeaveChat = () => {
+    if (conversation.type !== roomTypes.GROUP) {
+      dispatch(actions.leaveChat(conversation?._id, roomTypes.QUICK));
+    } else {
+      dispatch(actions.leaveChat(conversation?.beinGroupId, roomTypes.GROUP));
+    }
+  };
+
   const onItemPress = (type: string) => {
     switch (type) {
       case 'members':
@@ -107,6 +182,13 @@ const _ConversationDetail = (): React.ReactElement => {
         break;
       case 'editName':
         showChangeNameModal();
+        break;
+      case 'editDescription':
+        baseSheetRef.current?.close();
+        goToEditConversationDescription();
+        break;
+      case 'leavesGroup':
+        onPressLeave();
         break;
       default:
         baseSheetRef.current?.close();

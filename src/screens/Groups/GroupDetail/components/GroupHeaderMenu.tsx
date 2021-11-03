@@ -93,7 +93,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
         textColor: theme.colors.primary7,
       },
       onConfirm: () => doLeaveGroup(),
-      confirmLabel: i18next.t('chat:button_remove_member'),
+      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
       ConfirmBtnComponent: Button.Danger,
     };
 

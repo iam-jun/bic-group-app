@@ -32,7 +32,6 @@ const compileNodeModules = [
   'react-native-vector-icons',
   'react-modal',
   'react-native-video',
-  '@stream-io/flat-list-mvcp',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = env => {
@@ -101,6 +100,7 @@ module.exports = env => {
         '.json',
       ],
       alias: {
+        '^react-native$': 'react-native-web',
         'react-native$': 'react-native-web',
         'react-native-linear-gradient': 'react-native-web-linear-gradient',
         process: 'process/browser',

@@ -116,6 +116,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     ...item.customFields,
     _id,
     name,
+    description: item.description || null,
     type,
     avatar,
     user: item.u && mapUser(item?.u),

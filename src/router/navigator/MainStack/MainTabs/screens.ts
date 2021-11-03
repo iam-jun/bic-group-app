@@ -3,6 +3,7 @@ import {
   Conversation,
   ConversationDetail,
   CreateConversation,
+  EditConversationDescription,
   GroupMembers as GroupChatMembers,
   ReviewConversation,
   SearchConversation,
@@ -68,6 +69,7 @@ export const screensWebLaptop = {
   'chat-group-members': GroupChatMembers,
   'add-members': AddMembersToGroupChat,
   'search-conversation': SearchConversation,
+  'edit-chat-description': EditConversationDescription,
 
   //GROUP STACK
   // 'group-list': Groups,
