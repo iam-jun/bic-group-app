@@ -160,7 +160,7 @@ const ConversationItem: React.FC<Props> = ({
           </View>
           <View style={styles.body}>
             <Text
-              variant={unreadCount ? 'bodyM' : 'body'}
+              variant={unreadCount && !disableNotifications ? 'bodyM' : 'body'}
               numberOfLines={2}
               style={styles.lastMessage}>
               {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
