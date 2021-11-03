@@ -16,7 +16,6 @@ import {
   ISendMessageAction,
   IUpdateConversationDetail,
 } from '~/interfaces/IChat';
-import {IUpdateConversationDetailReq} from '~/interfaces/IChatHttpRequest';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -892,12 +891,25 @@ function* handleAddNewRoom(data: any) {
   }
 }
 
+function* handleChangeDescription(data: any) {
+  const {chat} = yield select();
+  const {conversation} = chat;
+
+  if (data.rid === conversation?._id) {
+    yield put(
+      actions.setUpdatedConversationDetail({
+        description: data.msg,
+      }),
+    );
+  }
+}
+
 function* handleRoomsMessage(payload?: any) {
   const data = payload.fields.args[0];
 
   switch (data.t) {
     case messageEventTypes.ROOM_CHANGED_DESCRIPTION:
-      yield put(actions.setUpdatedConversationDetail({description: data.msg}));
+      yield handleChangeDescription(data);
       yield handleNewMessage(data);
       break;
     case messageEventTypes.ROOM_CHANGED_ANNOUNCEMENT:
