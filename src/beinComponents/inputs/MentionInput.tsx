@@ -318,6 +318,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }
   };
 
+  const checkSendWhenEnter = debounce((event: any) => {
+    if (event?.key === 'Enter') {
+      componentInputProps?.commentInputRef?.current?.send();
+    }
+  }, 200);
+
   const _onKeyPress = (event: any) => {
     if (mentioning) {
       if (Platform.OS === 'web') {
@@ -329,8 +335,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
             break;
         }
       }
-    } else {
+    } else if (onKeyPress) {
       onKeyPress?.(event);
+    } else {
+      checkSendWhenEnter(event);
     }
   };
 

@@ -201,12 +201,6 @@ const ChatInput: React.FC<Props> = ({
     !!replyingMessage && onCancelReplying();
   };
 
-  const _onKeyPress = (event: any) => {
-    if (Platform.OS === 'web' && !event?.shiftKey && event?.key === 'Enter') {
-      onSend();
-    }
-  };
-
   const renderInputHeader = () => {
     if (!editingMessage && !replyingMessage) return null;
     return (
@@ -241,7 +235,6 @@ const ChatInput: React.FC<Props> = ({
       onChangeText={_onChangeText}
       ComponentInput={CommentInput}
       mentionField="beinUserId"
-      onKeyPress={_onKeyPress}
       componentInputProps={{
         HeaderComponent: renderInputHeader(),
         commentInputRef: commentInputRef,
