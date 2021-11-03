@@ -223,10 +223,6 @@ export default {
     type: Actions.SET_NEXT_MESSAGES,
     payload,
   }),
-  // searchConversations: (payload?: string) => ({
-  //   type: Actions.SEARCH_CONVERSATIONS,
-  //   payload,
-  // }),
   setConversationNotifications: (payload?: {
     roomId: string;
     disableNotifications: boolean;
