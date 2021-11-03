@@ -499,7 +499,7 @@ const _Conversation = () => {
             scrollEventThrottle={0.5}
             removeClippedSubviews={true}
             onScrollToIndexFailed={scrollToIndexFailed}
-            onContentSizeChange={onContentLayoutChange}
+            // onContentSizeChange={onContentLayoutChange}
             onScroll={onScroll}
             showsHorizontalScrollIndicator={false}
             maxToRenderPerBatch={appConfig.messagesPerPage}

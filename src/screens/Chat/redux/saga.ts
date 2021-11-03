@@ -5,7 +5,12 @@ import {Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
-import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
+import {
+  chatSocketId,
+  messageEventTypes,
+  messageStatus,
+  roomTypes,
+} from '~/constants/chat';
 import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
@@ -728,12 +733,31 @@ function handleAddMember() {
 function* handleNewMessage(data: any) {
   try {
     const {chat, auth} = yield select();
+    const {messages, conversation} = chat;
     const message = mapMessage(auth.user, data);
     const existed = chat.rooms.data.find(
       (item: IConversation) => item._id === message?.room_id,
     );
 
-    yield put(groupsActions.getJoinedGroups());
+    const include: any = messages.data.find(
+      (item: IMessage) =>
+        item._id === message._id ||
+        (item.localId && item.localId === message.localId),
+    );
+
+    const haveUnreadMessages =
+      messages.unreadMessage &&
+      conversation.unreadCount > appConfig.messagesPerPage;
+
+    // const newMessages =
+    //   !haveUnreadMessages && !include
+    //     ? [...messages.data, {...message, status: messageStatus.SENT}]
+    //     : messages.data.map((item: IMessage) =>
+    //         item._id === message._id ||
+    //         (item.localId && item.localId === message.localId)
+    //           ? {...item, ...message}
+    //           : item,
+    //       );
 
     if (existed) {
       yield put(actions.addNewMessage(message));
@@ -784,6 +808,7 @@ function* handleAddNewRoom(data: any) {
     yield put(
       actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
+    yield put(groupsActions.getJoinedGroups());
     yield getSubscriptions();
   } catch (err) {
     console.log('handleAddNewRoom', err);

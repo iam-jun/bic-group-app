@@ -140,6 +140,10 @@ export default {
     type: Actions.ADD_NEW_MESSAGE,
     payload,
   }),
+  updateMessage: (payload: IMessage) => ({
+    type: Actions.UPDATE_MESSAGE,
+    payload,
+  }),
   updateConversationName: (payload: string) => ({
     type: Actions.UPDATE_CONVERSATION_NAME,
     payload,
