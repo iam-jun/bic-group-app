@@ -529,6 +529,7 @@
       "job_title": " at ",
       "member_count": " & {0} others"
     },
+    "text_chat_description": "Chat Description",
     "conversation_options": {
       "notifications": "Notifications",
       "pin": "Pin",

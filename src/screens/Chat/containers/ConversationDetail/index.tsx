@@ -104,6 +104,12 @@ const _ConversationDetail = (): React.ReactElement => {
     );
   };
 
+  const goToEditConversationDescription = () => {
+    rootNavigation.navigate(chatStack.editChatDescription, {
+      roomId: conversation._id,
+    });
+  };
+
   const onPressLeave = () => {
     baseSheetRef.current?.close();
     alertLeaveChat();
@@ -176,6 +182,10 @@ const _ConversationDetail = (): React.ReactElement => {
         break;
       case 'editName':
         showChangeNameModal();
+        break;
+      case 'editDescription':
+        baseSheetRef.current?.close();
+        goToEditConversationDescription();
         break;
       case 'leavesGroup':
         onPressLeave();

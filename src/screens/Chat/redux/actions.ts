@@ -1,9 +1,11 @@
 import {
   IChatUser,
   IConversation,
+  IConversationInfo,
   IMessage,
   IPayloadReactMessage,
   ISendMessageAction,
+  IUpdateConversationDetail,
   IUploadFileAction,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
@@ -146,6 +148,20 @@ export default {
   }),
   updateConversationName: (payload: string) => ({
     type: Actions.UPDATE_CONVERSATION_NAME,
+    payload,
+  }),
+  updateConversationDetail: (
+    payload: IUpdateConversationDetail,
+    editFieldName?: string,
+    callback?: (roomId?: string) => void,
+  ) => ({
+    type: Actions.UPDATE_CONVERSATION_DETAIL,
+    payload,
+    editFieldName,
+    callback,
+  }),
+  setUpdatedConversationDetail: (payload: IConversationInfo) => ({
+    type: Actions.SET_UPDATED_CONVERSATION_DETAIL,
     payload,
   }),
   uploadFile: (payload: IUploadFileAction) => ({

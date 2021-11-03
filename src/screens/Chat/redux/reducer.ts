@@ -323,6 +323,14 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         },
       };
     }
+    case types.SET_UPDATED_CONVERSATION_DETAIL:
+      return {
+        ...state,
+        conversation: {
+          ...conversation,
+          ...payload,
+        },
+      };
     case types.SET_ATTACHMENT_MEDIA:
       return {
         ...state,
