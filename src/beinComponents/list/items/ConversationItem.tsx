@@ -105,6 +105,20 @@ const ConversationItem: React.FC<Props> = ({
     );
   };
 
+  const renderNotificationsBadge = () => {
+    if (!unreadCount) return null;
+
+    const variant = disableNotifications ? 'default' : 'alert';
+    return (
+      <NotificationsBadge
+        style={styles.badge}
+        number={unreadCount}
+        maxNumber={99}
+        variant={variant}
+      />
+    );
+  };
+
   const renderMenuButton = () => {
     if (Platform.OS !== 'web') return null;
 
@@ -152,13 +166,7 @@ const ConversationItem: React.FC<Props> = ({
               {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
             </Text>
             <View style={styles.optionsContainer}>
-              {!!unreadCount && (
-                <NotificationsBadge.Alert
-                  style={styles.badge}
-                  number={unreadCount}
-                  maxNumber={99}
-                />
-              )}
+              {renderNotificationsBadge()}
               {renderMenuButton()}
             </View>
           </View>
