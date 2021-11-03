@@ -3,6 +3,7 @@ import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
+import {timestampToISODate} from '~/utils/formatData';
 import {getLastMessage} from '../helper';
 import types from './constants';
 
@@ -286,9 +287,16 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
           sub.rid === action.payload ? {...sub, unread: 0} : sub,
         ),
       };
+    case types.UPDATE_SUBSCRIPTION:
+      return {
+        ...state,
+        subscriptions: state.subscriptions.map((sub: any) =>
+          sub.rid === payload.rid ? {...sub, ...payload} : sub,
+        ),
+      };
     case types.SET_CONVERSATION_DETAIL: {
       const sub: any = (state.subscriptions || []).find(
-        (item: any) => item.rid === item?._id,
+        (item: any) => item.rid === payload?._id,
       );
 
       return {
@@ -341,14 +349,6 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
                   : item,
               ),
             },
-        subscriptions:
-          payload.room_id !== conversation._id
-            ? state.subscriptions.map((sub: any) =>
-                sub.rid === payload.room_id && payload.unread
-                  ? {...sub, unread: sub.unread + 1}
-                  : sub,
-              )
-            : state.subscriptions,
         //@ts-ignore
         quotedMessages: quotedMessages[payload._id]
           ? {

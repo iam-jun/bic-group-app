@@ -858,6 +858,9 @@ function* handleNotifyUser(payload?: any) {
     case 'inserted':
       yield handleAddNewRoom(data[1]);
       break;
+    case 'updated':
+      yield put(actions.updateSubscription(data[1]));
+      break;
   }
 }
 

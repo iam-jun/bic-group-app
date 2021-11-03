@@ -60,7 +60,9 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
     useEffect(() => {
       if (isOpen) {
         Keyboard.dismiss();
-        modalizeRef?.current?.open?.();
+        setTimeout(() => {
+          modalizeRef?.current?.open?.();
+        }, 50);
       }
     }, [isOpen]);
 
