@@ -92,6 +92,19 @@ const ConversationItem: React.FC<Props> = ({
     />
   );
 
+  const renderMuteIndicator = () => {
+    if (!disableNotifications) return null;
+
+    return (
+      <Icon
+        icon={'BellSlash'}
+        size={14}
+        tintColor={theme.colors.textSecondary}
+        style={styles.muteIndicator}
+      />
+    );
+  };
+
   const renderMenuButton = () => {
     if (Platform.OS !== 'web') return null;
 
@@ -124,6 +137,7 @@ const ConversationItem: React.FC<Props> = ({
             <Text.H6 style={styles.title} numberOfLines={1}>
               {name}
             </Text.H6>
+            {renderMuteIndicator()}
             <Text.Subtitle
               style={styles.textUpdate}
               color={theme.colors.textSecondary}>
@@ -209,6 +223,10 @@ const createStyles = (
           paddingTop: 0,
         },
       }),
+    },
+    muteIndicator: {
+      marginTop: 2,
+      marginRight: spacing.margin.tiny,
     },
     textUpdate: {
       height: 20,
