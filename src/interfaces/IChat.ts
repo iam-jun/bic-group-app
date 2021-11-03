@@ -188,6 +188,7 @@ export type IConversation = {
   _updatedAt: string;
   type: IRoomType;
   beinGroupId?: number;
+  disableNotifications?: boolean;
 };
 
 export interface ISendMessageAction {

@@ -84,6 +84,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
   if (!item) return item;
   const _id = item.rid || item._id;
   const type = item.t === 'd' ? roomTypes.DIRECT : item.customFields?.type;
+  const disableNotifications = item.disableNotifications || false;
 
   const membersExcludeMe = (item.usernames || []).filter(
     (_username: any) => _username !== user?.username,
@@ -124,6 +125,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     lastMessage,
     _updatedAt: timestampToISODate(item._updatedAt),
     members: item.members || item.customFields?.members,
+    disableNotifications,
   };
 };
 
