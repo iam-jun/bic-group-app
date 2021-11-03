@@ -97,6 +97,7 @@ export default {
           success: '#4cd964',
           error: '#ff3b30',
           warning: '#ffcc00',
+          statusOrange: '#E98A32',
         },
         android: {
           primary: '#2196f3',
@@ -104,6 +105,7 @@ export default {
           success: '#4caf50',
           error: '#f44336',
           warning: '#ffeb3b',
+          statusOrange: '#E98A32',
         },
       },
       headerStyle: {
@@ -188,6 +190,7 @@ export default {
           success: '#4cd964',
           error: '#ff3b30',
           warning: '#ffcc00',
+          statusOrange: '#E98A32',
         },
         android: {
           primary: '#2196f3',
@@ -195,6 +198,7 @@ export default {
           success: '#4caf50',
           error: '#f44336',
           warning: '#ffeb3b',
+          statusOrange: '#E98A32',
         },
       },
       headerStyle: {

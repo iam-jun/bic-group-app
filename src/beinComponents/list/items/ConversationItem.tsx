@@ -5,7 +5,6 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import Avatar from '~/beinComponents/Avatar';
-import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
@@ -16,6 +15,7 @@ import modalActions from '~/store/modal/actions';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import {countTime, escapeMarkDown} from '~/utils/formatData';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
 interface Props extends IConversation {
   total?: number;
@@ -139,8 +139,8 @@ const ConversationItem: React.FC<Props> = ({
             </Text>
             <View style={styles.optionsContainer}>
               {!!unreadCount && (
-                <RedDot
-                  style={styles.redDot}
+                <NotificationsBadge.Alert
+                  style={styles.badge}
                   number={unreadCount}
                   maxNumber={99}
                 />
@@ -232,7 +232,7 @@ const createStyles = (
       flexDirection: 'column',
       justifyContent: 'center',
     },
-    redDot: {
+    badge: {
       marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
     },

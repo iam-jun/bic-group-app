@@ -76,6 +76,10 @@ export default {
     type: Actions.READ_SUBCRIPTIONS,
     payload,
   }),
+  updateSubscription: (payload: any) => ({
+    type: Actions.UPDATE_SUBSCRIPTION,
+    payload,
+  }),
   handleEvent: (payload: ISocketEvent) => ({
     type: Actions.HANDLE_EVENT,
     payload,
