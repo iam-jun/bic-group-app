@@ -137,14 +137,16 @@ const ConversationItem: React.FC<Props> = ({
               style={styles.lastMessage}>
               {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
             </Text>
-            {!!unreadCount && (
-              <RedDot
-                style={styles.redDot}
-                number={unreadCount}
-                maxNumber={99}
-              />
-            )}
-            {renderMenuButton()}
+            <View style={styles.optionsContainer}>
+              {!!unreadCount && (
+                <RedDot
+                  style={styles.redDot}
+                  number={unreadCount}
+                  maxNumber={99}
+                />
+              )}
+              {renderMenuButton()}
+            </View>
           </View>
         </Div>
       </View>
@@ -226,7 +228,10 @@ const createStyles = (
       lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
-
+    optionsContainer: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
     redDot: {
       marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
@@ -234,6 +239,7 @@ const createStyles = (
     menuButton: {
       width: 20,
       height: 20,
+      marginTop: spacing.margin.tiny,
       marginLeft: spacing.margin.base,
     },
   });
