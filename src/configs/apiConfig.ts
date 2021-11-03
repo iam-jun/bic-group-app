@@ -376,6 +376,25 @@ const Chat = {
       params,
     };
   },
+  setConversationNotifications: (
+    roomId: string,
+    disableNotifications: boolean,
+  ): HttpApiRequestConfig => {
+    const data = {
+      roomId,
+      notifications: {
+        disableNotifications: disableNotifications ? '1' : '0',
+      },
+    };
+
+    return {
+      url: `${providers.chat.url}rooms.saveNotification`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data: data,
+    };
+  },
 };
 
 const App = {
