@@ -20,6 +20,7 @@ import {IMenuItemProps} from '~/interfaces/IMenu';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {IUser} from '~/interfaces/IAuth';
 import {useBaseHook} from '~/hooks';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
 const Section2 = () => {
   const {spacing, colors}: ITheme = useTheme();
@@ -60,6 +61,35 @@ const Section2 = () => {
             onActionPress={_onActionPress}
             style={{marginStart: spacing?.margin.small}}
           />
+        </View>
+        <View style={{margin: spacing?.margin.base}}>
+          <Text.H5>{`<NotificationsBadge />`}</Text.H5>
+          <Text.H5>{`<NotificationsBadge.Default />`}</Text.H5>
+          <Text.H5>{`<NotificationsBadge.Info/>`}</Text.H5>
+          <Text.H5>{`<NotificationsBadge.Warning/>`}</Text.H5>
+          <Text.H5>{`<NotificationsBadge.Alert />`}</Text.H5>
+          <View style={{flexDirection: 'row'}}>
+            <NotificationsBadge
+              style={{margin: spacing?.margin.small}}
+              number={10}
+            />
+            <NotificationsBadge.Default
+              style={{margin: spacing?.margin.small}}
+              number={10}
+            />
+            <NotificationsBadge.Info
+              style={{margin: spacing?.margin.small}}
+              number={10}
+            />
+            <NotificationsBadge.Warning
+              style={{margin: spacing?.margin.small}}
+              number={10}
+            />
+            <NotificationsBadge.Alert
+              style={{margin: spacing?.margin.small}}
+              number={10}
+            />
+          </View>
         </View>
 
         <Divider

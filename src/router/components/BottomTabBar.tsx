@@ -23,8 +23,8 @@ import {
 } from '~/configs/navigator';
 import {deviceDimensions, sizes} from '~/theme/dimension';
 import useTabBadge from '~/hooks/tabBadge';
-import RedDot from '~/beinComponents/Badge/RedDot';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -166,7 +166,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
             {t(`tabs:${name}`)}
           </Text>
         )}
-        {!!unreadCount && <RedDot style={styles.badge} number={unreadCount} />}
+        {!!unreadCount && (
+          <NotificationsBadge.Alert style={styles.badge} number={unreadCount} />
+        )}
       </TouchableOpacity>
     );
   };
