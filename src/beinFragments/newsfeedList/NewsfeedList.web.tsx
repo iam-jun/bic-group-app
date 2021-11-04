@@ -16,10 +16,12 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useTabPressListener} from '~/hooks/navigation';
-import {deviceDimensions} from '~/theme/dimension';
+import {deviceDimensions, scaleSize} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
 import {ITabTypes} from '~/interfaces/IRouter';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 
 let newsfeedPostCount = 0;
 const itemLeftToGetMore = 10;
@@ -64,15 +66,38 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 
   const renderFooter = () => {
+    console.log(
+      `\x1b[36m🐣️ NewsfeedList.web renderFooter ${canLoadMore} \x1b[0m`,
+    );
     return (
       <View style={styles.listFooter}>
         {canLoadMore && !refreshing && (
           <ActivityIndicator color={theme.colors.bgFocus} />
         )}
         {!refreshing && !canLoadMore && (
-          <Text.Subtitle color={theme.colors.textSecondary}>
-            No more homeposts
-          </Text.Subtitle>
+          <>
+            <Image
+              resizeMode={'contain'}
+              style={styles.imgEmpty}
+              source={
+                data?.length === 0
+                  ? images.img_empty_no_post
+                  : images.img_empty_cant_load_more
+              }
+            />
+            <Text.H6 useI18n>{`post:newsfeed:${
+              data?.length === 0
+                ? 'title_empty_no_post'
+                : 'title_empty_cant_load_more'
+            }`}</Text.H6>
+            <Text.Subtitle useI18n color={theme.colors.textSecondary}>
+              {`post:newsfeed:${
+                data?.length === 0
+                  ? 'text_empty_no_post'
+                  : 'text_empty_cant_load_more'
+              }`}
+            </Text.Subtitle>
+          </>
         )}
       </View>
     );
@@ -157,9 +182,10 @@ const createStyle = (theme: ITheme, newsfeedWidth: number) => {
       flex: 1,
     },
     listFooter: {
-      height: 150,
+      minHeight: 150,
       justifyContent: 'center',
       alignItems: 'center',
+      marginVertical: spacing.padding.large,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
@@ -169,6 +195,12 @@ const createStyle = (theme: ITheme, newsfeedWidth: number) => {
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.small,
+    },
+    imgEmpty: {
+      width: scaleSize(240),
+      height: scaleSize(160),
+      maxWidth: 300,
+      maxHeight: 200,
     },
   });
 };

@@ -297,6 +297,12 @@
     "post_exit_option_save": "Lưu bản nháp",
     "post_exit_option_discard": "Huỷ bài viết",
     "post_exit_option_continue": "Tiếp tục viết bài",
+    "newsfeed": {
+      "title_empty_no_post": "Nơi đây cô đơn quá...",
+      "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
+      "title_empty_cant_load_more": "Bạn đã xem hết rồi",
+      "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi"
+    },
     "draft": {
       "btn_post_now": "Đăng ngay",
       "btn_edit": "Sửa",
