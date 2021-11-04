@@ -1,5 +1,17 @@
 {
   "common": {
+    "time": {
+      "today": "Hôm nay",
+      "yesterday": "Hôm qua",
+      "at": "lúc",
+      "now": "vài giây",
+      "short_sec": "giây",
+      "short_min": "phút",
+      "short_hour": "giờ",
+      "short_day": "ngày",
+      "short_week": "tuần",
+      "short_year": "năm"
+    },
     "text_update_title": "Đã có bản cập nhật mới",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Cập nhật",

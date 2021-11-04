@@ -1,5 +1,17 @@
 {
   "common": {
+    "time": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "at": "at",
+      "now": "now",
+      "short_sec": "s",
+      "short_min": "m",
+      "short_hour": "h",
+      "short_day": "d",
+      "short_week": "w",
+      "short_year": "y"
+    },
     "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Update",
