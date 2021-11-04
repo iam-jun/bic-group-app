@@ -72,14 +72,6 @@ export default function* saga() {
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
   yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
   yield takeLatest(
-    types.TURN_OFF_CONVERSATION_NOTIFICATIONS,
-    turnOffConversationNotifications,
-  );
-  yield takeLatest(
-    types.TURN_ON_CONVERSATION_NOTIFICATIONS,
-    turnOnConversationNotifications,
-  );
-  yield takeLatest(
     types.TOGGLE_CONVERSATION_NOTIFICATIONS,
     toggleConversationNotifications,
   );
@@ -668,52 +660,6 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
   } catch (err) {
     console.log('getSurroundingMessages', err);
     yield put(actions.setMessagesError(err));
-  }
-}
-
-function* turnOffConversationNotifications({
-  payload,
-}: {
-  type: string;
-  payload: {roomId: string};
-}) {
-  try {
-    const {roomId} = payload;
-    yield makeHttpRequest(
-      apiConfig.Chat.setConversationNotifications(roomId, true),
-    );
-
-    yield put(
-      actions.setConversationNotifications({
-        roomId,
-        disableNotifications: true,
-      }),
-    );
-  } catch (error) {
-    yield showError(error);
-  }
-}
-
-function* turnOnConversationNotifications({
-  payload,
-}: {
-  type: string;
-  payload: {roomId: string};
-}) {
-  try {
-    const {roomId} = payload;
-    yield makeHttpRequest(
-      apiConfig.Chat.setConversationNotifications(roomId, false),
-    );
-
-    yield put(
-      actions.setConversationNotifications({
-        roomId,
-        disableNotifications: false,
-      }),
-    );
-  } catch (error) {
-    yield showError(error);
   }
 }
 

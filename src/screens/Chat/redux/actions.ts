@@ -258,12 +258,4 @@ export default {
     type: Actions.TOGGLE_CONVERSATION_NOTIFICATIONS,
     payload,
   }),
-  turnOnConversationNotifications: (payload?: {roomId: string}) => ({
-    type: Actions.TURN_ON_CONVERSATION_NOTIFICATIONS,
-    payload,
-  }),
-  turnOffConversationNotifications: (payload?: {roomId: string}) => ({
-    type: Actions.TURN_OFF_CONVERSATION_NOTIFICATIONS,
-    payload,
-  }),
 };
