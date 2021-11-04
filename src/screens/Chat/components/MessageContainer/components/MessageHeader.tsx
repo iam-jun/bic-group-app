@@ -10,6 +10,7 @@ import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
 import {getDefaultAvatar} from '../../../helper';
+import TimeView from '~/beinComponents/TimeView';
 
 interface Props {
   user: IChatUser;
@@ -48,7 +49,7 @@ const MessageHeader: React.FC<Props> = ({user, createdAt}: Props) => {
         <ButtonWrapper onPress={onPressUser}>
           <Text.BodyM style={styles.textName}>{user?.name}</Text.BodyM>
         </ButtonWrapper>
-        <Text.BodyS style={styles.textTime}>{formatDate(createdAt)}</Text.BodyS>
+        <TimeView style={styles.textTime} time={createdAt} />
       </View>
     </View>
   );

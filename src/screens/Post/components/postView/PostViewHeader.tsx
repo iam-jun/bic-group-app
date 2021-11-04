@@ -14,6 +14,7 @@ import {formatDate} from '~/utils/formatData';
 import {AppContext} from '~/contexts/AppContext';
 import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
+import TimeView from '~/beinComponents/TimeView';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
@@ -88,7 +89,9 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           </Text.H6S>
           <Text.H6 onPress={onPressShowAudiences}>{textAudiences}</Text.H6>
         </View>
-        <View style={styles.rowCenter}>{renderPostTime()}</View>
+        <View style={styles.rowCenter}>
+          <TimeView time={time} />
+        </View>
       </View>
       <View style={{marginRight: spacing?.margin.small}}>
         <Icon

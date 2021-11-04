@@ -14,8 +14,9 @@ import ConversationItemMenu from '~/screens/Chat/components/ConversationItemMenu
 import modalActions from '~/store/modal/actions';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
-import {countTime, escapeMarkDown} from '~/utils/formatData';
+import {escapeMarkDown} from '~/utils/formatData';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import TimeView from '~/beinComponents/TimeView';
 
 interface Props extends IConversation {
   total?: number;
@@ -143,11 +144,11 @@ const ConversationItem: React.FC<Props> = ({
               {name}
             </Text.H6>
             {renderMuteIndicator()}
-            <Text.Subtitle
+            <TimeView
               style={styles.textUpdate}
-              color={theme.colors.textSecondary}>
-              {countTime(_updatedAt)}
-            </Text.Subtitle>
+              time={_updatedAt}
+              type={'short'}
+            />
           </View>
           <View style={styles.body}>
             <Text
