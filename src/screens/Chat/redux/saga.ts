@@ -34,7 +34,8 @@ import {
 } from './../helper';
 import actions from './actions';
 import types from './constants';
-
+import appActions from '~/store/app/actions';
+import {appScreens} from '~/configs/navigator';
 /**
  * Chat
  * @param payload
@@ -70,6 +71,10 @@ export default function* saga() {
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
   yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
+  yield takeLatest(
+    types.TOGGLE_CONVERSATION_NOTIFICATIONS,
+    toggleConversationNotifications,
+  );
   yield takeLatest(types.LEAVE_CHAT, leaveChat);
 }
 
@@ -190,6 +195,7 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
         mapConversation(auth.user, response.data?.data),
       ),
     );
+    yield put(appActions.setRootScreenName(`${appScreens.chat}/${payload}`));
   } catch (err) {
     console.log('getConversationDetail', err);
   }
@@ -654,6 +660,34 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
   } catch (err) {
     console.log('getSurroundingMessages', err);
     yield put(actions.setMessagesError(err));
+  }
+}
+
+function* toggleConversationNotifications({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string; currentDisableNotifications: boolean};
+}) {
+  try {
+    const {roomId, currentDisableNotifications} = payload;
+    const newDisableNotifications = !currentDisableNotifications;
+
+    yield makeHttpRequest(
+      apiConfig.Chat.setConversationNotifications(
+        roomId,
+        newDisableNotifications,
+      ),
+    );
+
+    yield put(
+      actions.setConversationNotifications({
+        roomId,
+        disableNotifications: newDisableNotifications,
+      }),
+    );
+  } catch (error) {
+    yield showError(error);
   }
 }
 
