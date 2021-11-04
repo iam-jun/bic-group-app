@@ -168,6 +168,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         setUploadError('');
         setSelectedImage(file);
       }
+      focus();
     });
   };
 
