@@ -9,7 +9,8 @@ import {useBaseHook} from '~/hooks';
 import moment from 'moment';
 import {AppContext} from '~/contexts/AppContext';
 
-const intervalTime = 1000 * 60 * 5;
+const intervalTime = 1000 * 60; //1 min
+const limitInterval = 1000 * 60 * 60; //60 mins
 
 export interface TimeViewProps {
   style?: StyleProp<ViewStyle>;
@@ -31,14 +32,24 @@ const TimeView: FC<TimeViewProps> = ({
 
   useEffect(() => {
     getDisplayTime();
-  }, [time]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getDisplayTime();
-    }, intervalTime);
-    return () => clearInterval(interval);
-  }, []);
+    //start interval if delta time < 60 mins
+    let interval: any;
+    const date = moment.utc(time).unix();
+    const now = moment().unix();
+    const deltaSecond = Math.max(now - date, date - now);
+    if (deltaSecond < limitInterval) {
+      interval = setInterval(() => {
+        getDisplayTime();
+      }, intervalTime);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [time]);
 
   const getDisplayTime = useCallback(() => {
     let result = '';
@@ -51,7 +62,7 @@ const TimeView: FC<TimeViewProps> = ({
       result = formatShortTime(time, t, language);
     }
     setDisplayTime(result);
-  }, []);
+  }, [time]);
 
   return (
     <Text.BodyS color={colors.textSecondary} style={style}>
