@@ -251,6 +251,13 @@ export default {
     type: Actions.SET_CONVERSATION_NOTIFICATIONS,
     payload,
   }),
+  toggleConversationNotifications: (payload: {
+    roomId: string;
+    currentDisableNotifications: boolean;
+  }) => ({
+    type: Actions.TOGGLE_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
   turnOnConversationNotifications: (payload?: {roomId: string}) => ({
     type: Actions.TURN_ON_CONVERSATION_NOTIFICATIONS,
     payload,

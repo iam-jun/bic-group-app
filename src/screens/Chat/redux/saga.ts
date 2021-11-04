@@ -79,6 +79,10 @@ export default function* saga() {
     types.TURN_ON_CONVERSATION_NOTIFICATIONS,
     turnOnConversationNotifications,
   );
+  yield takeLatest(
+    types.TOGGLE_CONVERSATION_NOTIFICATIONS,
+    toggleConversationNotifications,
+  );
   yield takeLatest(types.LEAVE_CHAT, leaveChat);
 }
 
@@ -706,6 +710,34 @@ function* turnOnConversationNotifications({
       actions.setConversationNotifications({
         roomId,
         disableNotifications: false,
+      }),
+    );
+  } catch (error) {
+    yield showError(error);
+  }
+}
+
+function* toggleConversationNotifications({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string; currentDisableNotifications: boolean};
+}) {
+  try {
+    const {roomId, currentDisableNotifications} = payload;
+    const newDisableNotifications = !currentDisableNotifications;
+
+    yield makeHttpRequest(
+      apiConfig.Chat.setConversationNotifications(
+        roomId,
+        newDisableNotifications,
+      ),
+    );
+
+    yield put(
+      actions.setConversationNotifications({
+        roomId,
+        disableNotifications: newDisableNotifications,
       }),
     );
   } catch (error) {
