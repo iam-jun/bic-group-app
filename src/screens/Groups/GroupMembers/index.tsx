@@ -61,6 +61,7 @@ const GroupMembers = (props: any) => {
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
+  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const loadingGroupMember = useKeySelector(
     groupsKeySelector.loadingGroupMember,
   );
@@ -152,6 +153,30 @@ const GroupMembers = (props: any) => {
     dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
   };
 
+  const handleLeaveInnerGroups = (
+    username: string,
+    callback: (innerGroups: any) => void,
+  ) => {
+    // Get inner groups info (if any) when user leave/being removed from a group
+    groupsDataHelper
+      .getUserInnerGroups(groupId, username)
+      .then(res => {
+        const innerGroups = res.data.inner_groups.map(
+          (group: IGroup) => group.name,
+        );
+        callback(innerGroups);
+      })
+      .catch(err => {
+        console.error('Error while fetching user inner groups', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
+  };
+
   const alertRemovingMember = () => {
     if (!selectedMember) {
       dispatch(
@@ -164,7 +189,6 @@ const GroupMembers = (props: any) => {
     }
 
     const {id: userId, fullname, username} = selectedMember;
-    console.log(`selectedMember`, selectedMember);
 
     const content = i18next
       .t(`groups:modal_confirm_remove_member:description`)
@@ -186,31 +210,63 @@ const GroupMembers = (props: any) => {
       ConfirmBtnComponent: Button.Danger,
     };
 
-    groupsDataHelper
-      .getUserInnerGroups(groupId, username)
-      .then(res => {
-        const innerGroups = res.data.inner_groups.map(
-          (group: IGroup) => group.name,
-        );
-        const groupsRemovedFrom = [...innerGroups];
+    const getInnerGroupsNames = (innerGroups: any) => {
+      const groupsRemovedFrom = [...innerGroups];
 
-        if (groupsRemovedFrom.length === 0) {
-          alertPayload.content = alertPayload.content.replace(
-            '{other groups}',
-            '',
-          );
+      if (groupsRemovedFrom.length === 0) {
+        alertPayload.content = alertPayload.content.replace(
+          '{other groups}',
+          '',
+        );
+      } else {
+        const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
+        alertPayload.content = alertPayload.content.replace(
+          '{other groups}',
+          ` and ${otherGroups}`,
+        );
+      }
+
+      dispatch(modalActions.showAlert(alertPayload));
+    };
+
+    handleLeaveInnerGroups(username, getInnerGroupsNames);
+  };
+
+  const onPressMemberButton = () => {
+    dispatch(modalActions.clearToastMessage());
+  };
+
+  const onPressLeave = () => {
+    // check if the current user is admin or member
+    if (can_setting) return checkLastAdmin();
+    alertLeaveGroup();
+  };
+
+  const checkLastAdmin = () => {
+    groupsDataHelper
+      .getGroupMembers(groupId, {offset: 0, limit: 1})
+      .then(data => {
+        const adminCount = data?.GROUP_ADMIN?.user_count;
+        if (adminCount > 1) {
+          alertLeaveGroup();
         } else {
-          const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
-          alertPayload.content = alertPayload.content.replace(
-            '{other groups}',
-            ` and ${otherGroups}`,
+          dispatch(
+            modalActions.showHideToastMessage({
+              content: 'groups:error:last_admin',
+              props: {
+                type: 'error',
+                textProps: {useI18n: true},
+                rightIcon: 'UsersAlt',
+                rightText: 'Members',
+                onButtonPress: onPressMemberButton,
+              },
+              toastType: 'normal',
+            }),
           );
         }
-
-        dispatch(modalActions.showAlert(alertPayload));
       })
       .catch(err => {
-        console.error('Error while fetching user inner groups', err);
+        console.error('[ERROR] error while fetching group members', err);
         dispatch(
           modalActions.showHideToastMessage({
             content: 'error:http:unknown',
@@ -220,8 +276,53 @@ const GroupMembers = (props: any) => {
       });
   };
 
+  const alertLeaveGroup = () => {
+    const alertPayload = {
+      iconName: 'SignOutAlt',
+      title: i18next.t('groups:modal_confirm_leave_group:title'),
+      content: i18next.t('groups:modal_confirm_leave_group:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => doLeaveGroup(),
+      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
+      ConfirmBtnComponent: Button.Danger,
+    };
+
+    const getInnerGroupsNames = (innerGroups: any) => {
+      if (innerGroups.length > 0) {
+        alertPayload.content =
+          alertPayload.content +
+          ` ${i18next.t(
+            'groups:modal_confirm_leave_group:leave_inner_groups',
+          )}`;
+
+        const groupsLeaveToString = innerGroups.join(', ');
+        alertPayload.content = alertPayload.content.replace(
+          '{0}',
+          groupsLeaveToString,
+        );
+      }
+
+      dispatch(modalActions.showAlert(alertPayload));
+    };
+
+    handleLeaveInnerGroups(user.username, getInnerGroupsNames);
+  };
+
+  const doLeaveGroup = () => {
+    dispatch(groupsActions.leaveGroup(groupId));
+  };
+
   const onPressMenuOption = (
-    type: 'view-profile' | 'send-message' | 'set-admin' | 'remove-member',
+    type:
+      | 'view-profile'
+      | 'send-message'
+      | 'set-admin'
+      | 'remove-member'
+      | 'leave-group',
   ) => {
     baseSheetRef.current?.close();
     switch (type) {
@@ -233,6 +334,9 @@ const GroupMembers = (props: any) => {
         break;
       case 'remove-member':
         alertRemovingMember();
+        break;
+      case 'leave-group':
+        onPressLeave();
         break;
       default:
         dispatch(showAlertNewFeature());
@@ -323,16 +427,27 @@ const GroupMembers = (props: any) => {
                   title={i18next.t('groups:member_menu:label_set_as_admin')}
                   onPress={() => onPressMenuOption('set-admin')}
                 />
-                <PrimaryItem
-                  style={styles.menuOption}
-                  leftIcon={'TrashAlt'}
-                  leftIconProps={{icon: 'TrashAlt', size: 24}}
-                  title={i18next.t(
-                    'groups:member_menu:label_remove_from_group',
-                  )}
-                  onPress={() => onPressMenuOption('remove-member')}
-                />
+                {selectedMember?.username !== user?.username && (
+                  <PrimaryItem
+                    style={styles.menuOption}
+                    leftIcon={'TrashAlt'}
+                    leftIconProps={{icon: 'TrashAlt', size: 24}}
+                    title={i18next.t(
+                      'groups:member_menu:label_remove_from_group',
+                    )}
+                    onPress={() => onPressMenuOption('remove-member')}
+                  />
+                )}
               </>
+            )}
+            {selectedMember?.username === user?.username && (
+              <PrimaryItem
+                style={styles.menuOption}
+                leftIcon={'TrashAlt'}
+                leftIconProps={{icon: 'TrashAlt', size: 24}}
+                title={i18next.t('groups:member_menu:label_leave_group')}
+                onPress={() => onPressMenuOption('leave-group')}
+              />
             )}
           </View>
         }

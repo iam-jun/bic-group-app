@@ -14,7 +14,10 @@ import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
-import modalActions, {showHideToastMessage} from '~/store/modal/actions';
+import modalActions, {
+  showHideToastMessage,
+  clearToastMessage,
+} from '~/store/modal/actions';
 import {getLink, LINK_GROUP} from '~/utils/link';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -27,6 +30,8 @@ import Button from '~/beinComponents/Button';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
 import useAuth from '~/hooks/auth';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface GroupHeaderMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -42,8 +47,10 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const {user} = useAuth();
+  const {rootNavigation} = useRootNavigation();
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const isMember = join_status === groupJoinStatus.member;
 
   const isWeb = Platform.OS === 'web';
@@ -79,7 +86,49 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
 
   const onPressLeave = () => {
     dispatch(modalActions.hideModal());
+
+    // check if the current user is admin or member
+    if (can_setting) return checkLastAdmin();
     alertLeaveGroup();
+  };
+
+  const navigateToMembers = () => {
+    dispatch(clearToastMessage());
+    rootNavigation.navigate(groupStack.groupMembers, {groupId});
+  };
+
+  const checkLastAdmin = () => {
+    groupsDataHelper
+      .getGroupMembers(Number(groupId), {offset: 0, limit: 1})
+      .then(data => {
+        const adminCount = data?.GROUP_ADMIN?.user_count;
+        if (adminCount > 1) {
+          alertLeaveGroup();
+        } else {
+          dispatch(
+            modalActions.showHideToastMessage({
+              content: 'groups:error:last_admin',
+              props: {
+                type: 'error',
+                textProps: {useI18n: true},
+                rightIcon: 'UsersAlt',
+                rightText: 'Members',
+                onButtonPress: navigateToMembers,
+              },
+              toastType: 'normal',
+            }),
+          );
+        }
+      })
+      .catch(err => {
+        console.log('[ERROR] error while fetching group members', err);
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'error:http:unknown',
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      });
   };
 
   const alertLeaveGroup = () => {
@@ -141,7 +190,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <PrimaryItem
         height={48}
         leftIconProps={{icon: 'Link', size: 24}}
@@ -181,7 +230,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
     container: {},
     item: {

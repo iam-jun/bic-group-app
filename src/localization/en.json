@@ -497,7 +497,8 @@
       "label_view_profile": "View profile",
       "label_set_as_admin": "Set as admin",
       "label_direct_message": "Direct message",
-      "label_remove_from_group_chat": "Remove from group chat"
+      "label_remove_from_group_chat": "Remove from group chat",
+      "label_leave_group": "Leave Group"
     },
     "text_mention_all": "All",
     "modal_confirm_remove_member": {
@@ -599,7 +600,8 @@
       "label_view_profile": "View profile",
       "label_direct_message": "Direct message",
       "label_set_as_admin": "Set as admin",
-      "label_remove_from_group": "Remove from this group"
+      "label_remove_from_group": "Remove from this group",
+      "label_leave_group": "Leave Group"
     },
     "private_group_welcome_message": {
       "title": "This group is private.",
@@ -616,6 +618,9 @@
       "leave_inner_groups": "You will also leave: {0}.",
       "button_leave": "Leave Group",
       "success_message": "You have left the group"
+    },
+    "error": {
+      "last_admin": "You are the last admin of the group. Set another admin before leaving"
     }
   },
   "profile": {

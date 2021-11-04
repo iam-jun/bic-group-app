@@ -14,21 +14,30 @@ import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {useDispatch} from 'react-redux';
 import {clearToastMessage} from '~/store/modal/actions';
+import ButtonWrapper from '../Button/ButtonWrapper';
 
 export interface ToastMessageProps {
   type?: 'error' | 'success' | 'informative';
   children?: React.ReactNode;
   textProps?: TextProps;
+  leftIcon?: IconType;
+  rightIcon?: IconType;
+  rightText?: string;
   style?: StyleProp<ViewStyle>;
   onActionPress?: () => void;
+  onButtonPress?: () => void;
 }
 
 const ToastMessage: FC<ToastMessageProps> = ({
   type = 'informative',
   children,
   textProps,
+  leftIcon,
+  rightIcon,
+  rightText,
   style,
   onActionPress,
+  onButtonPress,
 }: ToastMessageProps) => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -42,26 +51,23 @@ const ToastMessage: FC<ToastMessageProps> = ({
 
   const ToastMessageStyle = {
     success: {
-      leftIcon: 'Check' as IconType,
       iconColor: colors.success,
       textColor: colors.iconTintReversed,
       backgroundColor: colors.success,
     },
     error: {
-      leftIcon: 'Globe' as IconType,
       iconColor: colors.error,
       textColor: colors.iconTintReversed,
       backgroundColor: colors.error,
     },
     informative: {
-      leftIcon: 'TrashAlt' as IconType,
       iconColor: colors.iconTint,
       textColor: colors.iconTintReversed,
       backgroundColor: colors.borderFocus,
     },
   };
 
-  const {leftIcon, iconColor, textColor, backgroundColor} =
+  const {iconColor, textColor, backgroundColor} =
     ToastMessageStyle[type] || ToastMessageStyle.success;
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
@@ -71,6 +77,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
       padding: spacing.padding.base,
       borderRadius: 6,
       alignSelf: 'baseline',
+      alignItems: 'center',
     },
     style,
   ]);
@@ -80,21 +87,41 @@ const ToastMessage: FC<ToastMessageProps> = ({
       activeOpacity={1}
       style={containerStyle}
       onPress={_onPress}>
-      <Icon
-        isButton
-        iconStyle={[
-          styles.iconStyle,
-          {backgroundColor: colors.iconTintReversed},
-        ]}
-        style={styles.leftIcon}
-        size={18}
-        icon={leftIcon}
-        tintColor={iconColor}
-      />
+      {leftIcon && (
+        <Icon
+          isButton
+          iconStyle={[
+            styles.leftIconStyle,
+            {backgroundColor: colors.iconTintReversed},
+          ]}
+          style={styles.leftIcon}
+          size={18}
+          icon={leftIcon}
+          tintColor={iconColor}
+        />
+      )}
+
       <View style={styles.textContainer}>
-        <Text.Body {...textProps} color={textColor}>
-          {children}
-        </Text.Body>
+        <View style={styles.childrenStyle}>
+          <Text.Body {...textProps} color={textColor}>
+            {children}
+          </Text.Body>
+        </View>
+
+        {rightIcon && rightText && (
+          <ButtonWrapper style={styles.button} onPress={onButtonPress}>
+            <Icon
+              icon={rightIcon}
+              tintColor={theme.colors.background}
+              style={styles.marginRightIcon}
+            />
+            <Text.ButtonBase
+              style={styles.rightText}
+              color={theme.colors.background}>
+              {rightText}
+            </Text.ButtonBase>
+          </ButtonWrapper>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -105,14 +132,22 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     textContainer: {
       flex: 1,
-      justifyContent: 'center',
-      marginRight: spacing.margin.base,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    childrenStyle: {
+      flex: 1,
     },
     leftIcon: {
-      marginLeft: spacing.margin.base,
       marginRight: spacing.margin.base,
     },
-    iconStyle: {padding: 2, borderRadius: 6},
+    leftIconStyle: {padding: 2, borderRadius: 6},
+    marginRightIcon: {marginRight: spacing.margin.tiny},
+    button: {
+      marginLeft: spacing.margin.base,
+    },
+    rightText: {textDecorationLine: 'underline'},
   });
 };
 

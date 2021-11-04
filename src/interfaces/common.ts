@@ -55,6 +55,7 @@ export interface IToastMessage {
   content: string;
   props: ToastMessageProps;
   duration?: number;
+  toastType?: 'simple' | 'normal';
 }
 
 export interface IPayloadShowModal {
