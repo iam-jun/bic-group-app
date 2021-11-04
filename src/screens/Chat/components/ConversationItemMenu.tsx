@@ -30,18 +30,14 @@ const ConversationItemMenu: FC<ConversationItemMenuProps> = ({
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const onPressNotificationToggle = (action: IAction) => {
-    if (action === commonActions.checkBox) {
-      dispatch(
-        chatActions.turnOnConversationNotifications({roomId: conversationId}),
-      );
-      setIsMute(false);
-    } else if (action === commonActions.uncheckBox) {
-      dispatch(
-        chatActions.turnOffConversationNotifications({roomId: conversationId}),
-      );
-      setIsMute(true);
-    }
+  const onPressNotificationToggle = () => {
+    dispatch(
+      chatActions.toggleConversationNotifications({
+        roomId: conversationId,
+        currentDisableNotifications: isMute,
+      }),
+    );
+    setIsMute(!isMute);
   };
 
   return (

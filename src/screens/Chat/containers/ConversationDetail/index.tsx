@@ -247,9 +247,12 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const onPressMute = () => {
-    if (disableNotifications)
-      dispatch(actions.turnOnConversationNotifications({roomId: _id}));
-    else dispatch(actions.turnOffConversationNotifications({roomId: _id}));
+    dispatch(
+      actions.toggleConversationNotifications({
+        roomId: _id,
+        currentDisableNotifications: disableNotifications,
+      }),
+    );
   };
 
   const renderButtonMute = () => {
