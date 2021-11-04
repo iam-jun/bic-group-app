@@ -6,7 +6,6 @@ import {useTheme} from 'react-native-paper';
 import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {countTime} from '~/utils/formatData';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
@@ -29,6 +28,7 @@ import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 import ReactionView from '~/beinComponents/ReactionView';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
+import TimeView from '~/beinComponents/TimeView';
 
 export interface CommentViewProps {
   postId: string;
@@ -64,11 +64,6 @@ const CommentView: React.FC<CommentViewProps> = ({
   const {content, images} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
-
-  let postTime = '';
-  if (created_at) {
-    postTime = countTime(created_at);
-  }
 
   const onPressUser = (e?: any) => {
     const id = user?.id;
@@ -255,11 +250,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                   <ButtonWrapper onPress={onPressUser}>
                     <Text.H6>{name}</Text.H6>
                   </ButtonWrapper>
-                  <Text.Subtitle
-                    color={colors.textSecondary}
-                    style={styles.textTime}>
-                    {postTime}
-                  </Text.Subtitle>
+                  <TimeView time={created_at} style={styles.textTime} />
                 </View>
                 <CollapsibleText
                   useMarkdown
@@ -327,6 +318,7 @@ const createStyle = (theme: ITheme) => {
     },
     textTime: {
       marginLeft: spacing.margin.small,
+      color: colors.textSecondary,
     },
   });
 };
