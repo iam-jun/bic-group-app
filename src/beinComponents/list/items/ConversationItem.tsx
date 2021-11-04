@@ -36,19 +36,10 @@ const ConversationItem: React.FC<Props> = ({
   isActive = false,
   disableNotifications,
 }: Props): React.ReactElement => {
-  const AVG_CHAR_ON_ONE_LINE = 32;
-  let twoLineLastMessage = false;
-  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
-    twoLineLastMessage = true;
   const dispatch = useDispatch();
 
   const theme = useTheme() as ITheme;
-  const styles = createStyles(
-    theme,
-    unreadCount > 0,
-    twoLineLastMessage,
-    isActive,
-  );
+  const styles = createStyles(theme, unreadCount > 0, isActive);
   const welcomeText =
     type === 'direct'
       ? 'chat:label_init_direct_message:short'
@@ -179,15 +170,13 @@ const ConversationItem: React.FC<Props> = ({
 const createStyles = (
   theme: ITheme,
   unreadMessage: boolean,
-  twoLineLastMessage: boolean,
   isActive: boolean,
 ) => {
   const {colors, spacing} = theme;
-  const isWeb = Platform.OS === 'web';
 
   const contentHeight = 72;
   const headerHeight = 22;
-  const messageHeight = 42;
+  const messageMaxHeight = 42;
 
   return StyleSheet.create({
     container: {
@@ -242,7 +231,6 @@ const createStyles = (
     },
     body: {
       flexDirection: 'row',
-      alignItems: twoLineLastMessage ? 'center' : 'flex-start',
     },
     bottomDivider: {
       borderBottomColor: colors.borderDivider,
@@ -250,16 +238,15 @@ const createStyles = (
     },
     lastMessage: {
       flex: 1,
-      height: messageHeight,
+      maxHeight: messageMaxHeight,
       lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     optionsContainer: {
       flexDirection: 'column',
-      justifyContent: 'center',
+      marginRight: 1, // just to avoid it being hidden on web
     },
     badge: {
-      marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
     },
     menuButton: {
