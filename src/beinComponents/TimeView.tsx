@@ -33,12 +33,12 @@ const TimeView: FC<TimeViewProps> = ({
   useEffect(() => {
     getDisplayTime();
 
-    //start interval if delta time < 60 mins
+    //start interval if delta time < 60 mins and type short
     let interval: any;
     const date = moment.utc(time).unix();
     const now = moment().unix();
     const deltaSecond = Math.max(now - date, date - now);
-    if (deltaSecond < limitInterval) {
+    if (deltaSecond < limitInterval && type === 'short') {
       interval = setInterval(() => {
         getDisplayTime();
       }, intervalTime);
