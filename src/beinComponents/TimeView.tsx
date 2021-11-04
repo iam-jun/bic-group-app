@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -27,8 +27,7 @@ const TimeView: FC<TimeViewProps> = ({
   const {language} = useContext(AppContext);
   const theme = useTheme() as ITheme;
   const {t} = useBaseHook();
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = theme;
 
   useEffect(() => {
     getDisplayTime();
@@ -59,16 +58,6 @@ const TimeView: FC<TimeViewProps> = ({
       {displayTime}
     </Text.BodyS>
   );
-};
-
-const localize = {
-  now: 'vài giây',
-  short_sec: 'giây',
-  short_min: 'phút',
-  short_hour: 'giờ',
-  short_day: 'ngày',
-  short_week: 'tuần',
-  short_year: 'năm',
 };
 
 export const formatShortTime = (time: any, t: any, lang: any) => {
@@ -124,13 +113,6 @@ export const formatFullTime = (time: any, t: any, lang: any) => {
     sameElse: formatPreviousDay,
   });
   return result;
-};
-
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-  });
 };
 
 export default TimeView;
