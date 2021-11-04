@@ -16,6 +16,8 @@ const images = {
   img_chat_group_cover_default: require('../../assets/images/chat_group_cover_default.png'),
   img_quick_chat_cover_default: require('../../assets/images/quick_chat_cover_default.png'),
   img_direct_chat_cover_default: require('../../assets/images/direct_chat_cover_default.png'),
+  img_empty_no_post: require('../../assets/images/img_empty_no_post.png'),
+  img_empty_cant_load_more: require('../../assets/images/img_empty_cant_load_more.png'),
 };
 
 export default images;

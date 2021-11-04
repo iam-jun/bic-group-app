@@ -40,12 +40,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
   badgeColor,
 }: MenuItemProps) => {
   const theme = useTheme() as ITheme;
+  const {colors} = theme || {};
   const styles = themeStyles(theme);
 
   let badgeNumber;
   if (type === 'draftPost') {
     const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
     badgeNumber = draftPost?.length || 0;
+    badgeColor = colors.textSecondary;
     if (badgeNumber > 9) {
       badgeNumber = '9+';
     }

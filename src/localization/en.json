@@ -197,7 +197,7 @@
     "title_language": "Language",
     "title_speaking_languages": "Speaking Languages",
     "title_relationship_status": "Relationship Status",
-    "title_currency": "Currency",
+    "title_currency": "Token",
     "title_about": "About",
     "title_about_bein": "About Bein",
     "title_name": "Name",
@@ -380,6 +380,12 @@
     "post_exit_option_save": "Save as Draft",
     "post_exit_option_discard": "Discard Post",
     "post_exit_option_continue": "Continue Editing",
+    "newsfeed": {
+      "title_empty_no_post": "This place looks lonely...",
+      "text_empty_no_post": "Join in a community to get updated",
+      "title_empty_cant_load_more": "You have seen it all",
+      "text_empty_cant_load_more": "Take a break time & chill"
+    },
     "draft": {
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
