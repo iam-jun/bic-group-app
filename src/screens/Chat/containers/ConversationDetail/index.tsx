@@ -51,7 +51,6 @@ const _ConversationDetail = (): React.ReactElement => {
 
   const {conversation} = useChat();
   const {_id, disableNotifications} = conversation;
-  const [isMute, setIsMute] = useState(disableNotifications);
 
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
@@ -64,10 +63,6 @@ const _ConversationDetail = (): React.ReactElement => {
       dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.clearSelectedUsers());
   }, [route?.params?.roomId]);
-
-  useEffect(() => {
-    setIsMute(disableNotifications);
-  }, [disableNotifications]);
 
   const onPressBack = () => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
@@ -252,15 +247,13 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const onPressMute = () => {
-    if (isMute)
+    if (disableNotifications)
       dispatch(actions.turnOnConversationNotifications({roomId: _id}));
     else dispatch(actions.turnOffConversationNotifications({roomId: _id}));
-
-    setIsMute(!isMute);
   };
 
   const renderButtonMute = () => {
-    if (isMute)
+    if (disableNotifications)
       return (
         <Button.Icon
           icon="BellSlash"
