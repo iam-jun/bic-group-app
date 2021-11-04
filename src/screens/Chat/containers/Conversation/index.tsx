@@ -211,23 +211,26 @@ const _Conversation = () => {
     [],
   );
 
-  const onReactionPress = useCallback(async (type: string) => {
-    if (!!selectedMessage) {
-      if (type === 'add_react') {
-        onReactPress(null, selectedMessage, 'left');
-      } else {
-        dispatch(
-          actions.reactMessage({
-            emoji: type,
-            messageId: selectedMessage._id,
-            shouldReact: true,
-          }),
-        );
+  const onReactionPress = useCallback(
+    async (type: string) => {
+      if (!!selectedMessage) {
+        if (type === 'add_react') {
+          onReactPress(null, selectedMessage, 'left');
+        } else {
+          dispatch(
+            actions.reactMessage({
+              emoji: type,
+              messageId: selectedMessage._id,
+              shouldReact: true,
+            }),
+          );
+        }
       }
-    }
 
-    messageOptionsModalRef.current?.close();
-  }, []);
+      messageOptionsModalRef.current?.close();
+    },
+    [selectedMessage],
+  );
 
   const deleteMessage = () => {
     selectedMessage && dispatch(actions.deleteMessage(selectedMessage));

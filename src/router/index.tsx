@@ -58,7 +58,7 @@ const StackNavigator = (): React.ReactElement => {
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
-  const toastMessage = useKeySelector('modal.toastMessage') || {};
+  const toastMessage: any = useKeySelector('modal.toastMessage') || {};
 
   const checkAuthKickout = async () => {
     try {
@@ -151,16 +151,29 @@ const StackNavigator = (): React.ReactElement => {
   const renderToastMessage = () => {
     if (!toastMessage?.content) return null;
 
-    return Platform.OS === 'web' ? (
-      <NormalToastMessage style={styles.toastStyle} {...toastMessage?.props}>
+    let ToastMessageComponent;
+
+    if (toastMessage?.toastType) {
+      if (toastMessage.toastType === 'normal')
+        ToastMessageComponent = NormalToastMessage;
+      else ToastMessageComponent = SimpleToastMessage;
+
+      return (
+        <ToastMessageComponent
+          style={styles.toastStyle}
+          {...toastMessage?.props}>
+          {toastMessage?.content}
+        </ToastMessageComponent>
+      );
+    }
+
+    if (Platform.OS === 'web') ToastMessageComponent = NormalToastMessage;
+    else ToastMessageComponent = SimpleToastMessage;
+
+    return (
+      <ToastMessageComponent style={styles.toastStyle} {...toastMessage?.props}>
         {toastMessage?.content}
-      </NormalToastMessage>
-    ) : (
-      <SimpleToastMessage
-        style={styles.smallToastStyle}
-        {...toastMessage?.props}>
-        {toastMessage?.content}
-      </SimpleToastMessage>
+      </ToastMessageComponent>
     );
   };
 
@@ -272,8 +285,19 @@ const styles = StyleSheet.create({
   },
   toastStyle: {
     position: 'absolute',
-    left: 40,
-    bottom: 40,
+    bottom: 110,
+    alignSelf: 'center',
+    marginHorizontal: 12,
+    marginBottom: 4,
+    ...Platform.select({
+      web: {
+        left: 40,
+        bottom: 40,
+        alignSelf: undefined,
+        marginHorizontal: undefined,
+        marginBottom: undefined,
+      },
+    }),
   },
   smallToastStyle: {
     position: 'absolute',
