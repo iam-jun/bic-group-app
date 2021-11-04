@@ -48,20 +48,26 @@ const _ConversationDetail = (): React.ReactElement => {
   const insets = useSafeAreaInsets();
   const styles = createStyles(theme, coverHeight, insets);
   const {colors, spacing} = theme;
+
   const {conversation} = useChat();
+  const {_id, disableNotifications} = conversation;
+  const [isMute, setIsMute] = useState(disableNotifications);
+
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
   const permissions = conversation.permissions || {};
   const {user} = useAuth();
 
-  const [dummyIsMute, setDummyIsMute] = useState(false);
-
   useEffect(() => {
     if (route?.params?.roomId)
       dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.clearSelectedUsers());
   }, [route?.params?.roomId]);
+
+  useEffect(() => {
+    setIsMute(disableNotifications);
+  }, [disableNotifications]);
 
   const onPressBack = () => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
@@ -246,14 +252,15 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const onPressMute = () => {
-    const _dummyIsMute = !dummyIsMute;
-    setDummyIsMute(_dummyIsMute);
-    // TODO: update this function when API chat/{id}/info can return disableNotifications
-    dispatch(modalActions.showAlertNewFeature());
+    if (isMute)
+      dispatch(actions.turnOnConversationNotifications({roomId: _id}));
+    else dispatch(actions.turnOffConversationNotifications({roomId: _id}));
+
+    setIsMute(!isMute);
   };
 
   const renderButtonMute = () => {
-    if (dummyIsMute)
+    if (isMute)
       return (
         <Button.Icon
           icon="BellSlash"
