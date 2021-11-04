@@ -121,7 +121,12 @@ const _ConversationsList = (): React.ReactElement => {
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: <ConversationItemMenu conversationId={item._id} />,
+        ContentComponent: (
+          <ConversationItemMenu
+            conversationId={item._id}
+            disableNotifications={item.disableNotifications}
+          />
+        ),
         props: {
           webModalStyle: {minHeight: undefined},
           isContextMenu: true,

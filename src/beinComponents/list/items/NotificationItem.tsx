@@ -458,6 +458,7 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     iconOptions: {},
     timeCreated: {
       marginTop: 1,
+      marginLeft: spacing.margin.base,
       color: colors.textSecondary,
     },
     reactIcon: {
