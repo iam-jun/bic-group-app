@@ -46,10 +46,12 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigator = (): React.ReactElement => {
+  const {leftNavigation, rootNavigation} = useRootNavigation();
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -93,7 +95,6 @@ const StackNavigator = (): React.ReactElement => {
     if (Platform.OS !== 'web') {
       return;
     }
-    const {leftNavigation} = useRootNavigation();
     const initialUrl = await Linking.getInitialURL();
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const parse = require('url-parse');
@@ -172,11 +173,16 @@ const StackNavigator = (): React.ReactElement => {
   const configLink =
     Platform.OS === 'web' && isLaptop ? linkingConfigLaptop : linkingConfig;
 
+  const linking = getLinkingCustomConfig(
+    user ? configLinkFull : configLink,
+    rootNavigation,
+  );
+
   return (
     <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
       <View style={styles.container}>
         <NavigationContainer
-          linking={user ? configLinkFull : configLink}
+          linking={linking}
           ref={rootNavigationRef}
           onReady={onReady}
           theme={navigationTheme}
@@ -226,6 +232,34 @@ const getOptions = (t: any) => {
   }
 
   return {headerShown: false, title: t('web:title_not_found')};
+};
+
+const getLinkingCustomConfig = (config: any, navigation: any) => {
+  if (Platform.OS === 'web') {
+    return config;
+  }
+  return {
+    ...config,
+    subscribe(listener: any) {
+      const onReceiveURL = ({url}: {url: string}) => {
+        if (url.includes('bein:///post/t/')) {
+          const postId = url?.replace('bein:///post/t/', '');
+          if (postId && navigation) {
+            navigation?.navigate?.(homeStack.postDetail, {post_id: postId});
+          } else {
+            listener(url);
+          }
+        } else {
+          listener(url);
+        }
+      };
+      Linking.addEventListener('url', onReceiveURL);
+
+      return () => {
+        Linking.removeEventListener('url', onReceiveURL);
+      };
+    },
+  };
 };
 
 const styles = StyleSheet.create({

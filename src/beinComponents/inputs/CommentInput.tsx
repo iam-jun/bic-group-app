@@ -382,6 +382,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     setUploadError('');
     setUploading(false);
     setSelectedImage(undefined);
+    onChangeText?.('');
   };
 
   const focus = () => textInputRef.current?.focus?.();

@@ -46,12 +46,8 @@ const MainTabs = () => {
   const {streamClient, streamNotiSubClient} = useContext(AppContext);
 
   const userId = useUserIdAuth();
-
   useEffect(() => {
     dispatch(chatActions.initChat());
-  }, []);
-
-  useEffect(() => {
     dispatch(postActions.getDraftPosts({userId, streamClient}));
     if (streamClient?.currentUser?.token) {
       dispatch(

@@ -9,6 +9,7 @@ const chatStack = {
   userProfile: 'user-profile',
   postDetail: 'post-detail',
   searchConversations: 'search-conversation',
+  editChatDescription: 'edit-chat-description',
 };
 
 export default chatStack;

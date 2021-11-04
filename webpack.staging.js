@@ -16,7 +16,7 @@ module.exports = merge(common('production'), {
   output: {
     path: path.resolve(appDirectory, 'dist'),
     publicPath: '/',
-    filename: 'web.bundle.js',
+    filename: '[name].[contenthash].js',
   },
   plugins: [
     new webpack.DefinePlugin({
