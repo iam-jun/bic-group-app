@@ -323,21 +323,35 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         },
       };
     }
-    case types.SET_CONVERSATION_NOTIFICATIONS:
+    case types.SET_CONVERSATION_NOTIFICATIONS: {
+      const _conversation = {
+        ...conversation,
+      };
+      const {roomId: _id, disableNotifications} = payload;
+
+      if (_conversation._id === _id) {
+        _conversation.disableNotifications = disableNotifications;
+      }
+
       return {
         ...state,
+        conversation: {
+          ..._conversation,
+        },
         rooms: {
           ...rooms,
           data: rooms.data.map((room: IConversation) =>
-            room._id === payload.roomId
+            room._id === _id
               ? {
                   ...room,
-                  disableNotifications: payload.disableNotifications,
+                  disableNotifications: disableNotifications,
                 }
               : room,
           ),
         },
       };
+    }
+
     case types.SET_UPDATED_CONVERSATION_DETAIL:
       return {
         ...state,
