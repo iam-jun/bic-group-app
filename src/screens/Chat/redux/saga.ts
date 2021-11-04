@@ -71,11 +71,11 @@ export default function* saga() {
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
   yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
-  yield takeEvery(
+  yield takeLatest(
     types.TURN_OFF_CONVERSATION_NOTIFICATIONS,
     turnOffConversationNotifications,
   );
-  yield takeEvery(
+  yield takeLatest(
     types.TURN_ON_CONVERSATION_NOTIFICATIONS,
     turnOnConversationNotifications,
   );
