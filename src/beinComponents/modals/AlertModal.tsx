@@ -21,6 +21,7 @@ import TextInput from '../inputs/TextInput';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
+  children?: React.ReactNode;
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
@@ -53,6 +54,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     showCloseButton,
     style: alertModalStyle,
     stretchOnWeb,
+    children,
   } = alert;
   const _cancelLabel = cancelLabel
     ? cancelLabel
@@ -110,6 +112,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               </View>
             )}
           </View>
+          {children}
           {!!content && (
             <_ContentComponent style={styles.content} {...contentProps}>
               {content}

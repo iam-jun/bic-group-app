@@ -24,6 +24,7 @@ export const initState = {
     showCloseButton: false,
     style: {},
     stretchOnWeb: false,
+    children: undefined,
   },
   alertNewFeature: {
     visible: false,
