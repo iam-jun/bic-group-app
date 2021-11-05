@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import Amplify from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking} from 'react-native';
+import {Linking, LogBox} from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -11,6 +11,8 @@ import Root from '~/Root';
 import rootSaga from '~/store/sagas';
 import awsconfig from './aws-exports';
 import Store from './src/store';
+
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
 i18Next.language;
 i18Next.options.resources;
