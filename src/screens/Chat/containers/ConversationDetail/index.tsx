@@ -48,14 +48,15 @@ const _ConversationDetail = (): React.ReactElement => {
   const insets = useSafeAreaInsets();
   const styles = createStyles(theme, coverHeight, insets);
   const {colors, spacing} = theme;
+
   const {conversation} = useChat();
+  const {_id, disableNotifications} = conversation;
+
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
   const baseSheetRef: any = useRef();
   const permissions = conversation.permissions || {};
   const {user} = useAuth();
-
-  const [dummyIsMute, setDummyIsMute] = useState(false);
 
   useEffect(() => {
     if (route?.params?.roomId)
@@ -246,13 +247,16 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const onPressMute = () => {
-    const _dummyIsMute = !dummyIsMute;
-    setDummyIsMute(_dummyIsMute);
-    alert('Set mute: ' + _dummyIsMute);
+    dispatch(
+      actions.toggleConversationNotifications({
+        roomId: _id,
+        currentDisableNotifications: disableNotifications,
+      }),
+    );
   };
 
   const renderButtonMute = () => {
-    if (dummyIsMute)
+    if (disableNotifications)
       return (
         <Button.Icon
           icon="BellSlash"

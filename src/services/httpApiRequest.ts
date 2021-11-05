@@ -196,8 +196,8 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
     isRefreshingToken = true;
     countLimitRetry++;
     if (countLimitRetry > 10) {
-      const timeNow = moment.now();
-      if (timeNow >= timeEndCountLimit) {
+      const timeNow = moment().unix();
+      if (timeNow <= timeEndCountLimit) {
         refreshFailKickOut();
         return;
       } else {
@@ -206,7 +206,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       }
     }
     if (countLimitRetry == 1) {
-      timeEndCountLimit = moment.now() + 60; // 1 minute from now
+      timeEndCountLimit = moment(moment.now()).add(1, 'minutes').unix(); // 1 minute from now
     }
     let isSuccess = true;
 
