@@ -140,7 +140,7 @@ const Section1 = () => {
             style={{margin: spacing.margin.base}}
             rightIcon={'UsersAlt'}
             rightText={'Members'}
-            onButtonPress={() => alert('Press')}>
+            onPressRight={() => alert('Press')}>
             You are the last admin of the group. Set another admin before
             leaving
           </NormalToastMessage>
@@ -152,7 +152,7 @@ const Section1 = () => {
             leftIcon={'Check'}
             rightIcon={'UsersAlt'}
             rightText={'Members'}
-            onButtonPress={() => alert('Press')}>
+            onPressRight={() => alert('Press')}>
             You are the last admin of the group. Set another admin before
             leaving
           </NormalToastMessage>
