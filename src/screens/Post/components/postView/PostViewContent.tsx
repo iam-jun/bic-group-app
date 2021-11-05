@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -28,11 +28,11 @@ const PostViewContent: FC<PostViewContentProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const onPressMentionAudience = useCallback((audience: any) => {
+  const onPressMentionAudience = useRef((audience: any) => {
     if (audience?.id) {
       rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
     }
-  }, []);
+  }).current;
 
   const onLayout = () => {
     onContentLayout?.();
