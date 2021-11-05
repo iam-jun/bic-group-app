@@ -113,7 +113,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
                 textProps: {useI18n: true},
                 rightIcon: 'UsersAlt',
                 rightText: 'Members',
-                onButtonPress: navigateToMembers,
+                onPressRight: navigateToMembers,
               },
               toastType: 'normal',
             }),

@@ -258,7 +258,7 @@ const GroupMembers = (props: any) => {
                 textProps: {useI18n: true},
                 rightIcon: 'UsersAlt',
                 rightText: 'Members',
-                onButtonPress: onPressMemberButton,
+                onPressRight: onPressMemberButton,
               },
               toastType: 'normal',
             }),
