@@ -54,7 +54,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     showCloseButton,
     style: alertModalStyle,
     stretchOnWeb,
-    children,
+    children = null,
   } = alert;
   const _cancelLabel = cancelLabel
     ? cancelLabel
