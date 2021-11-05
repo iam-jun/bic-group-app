@@ -512,7 +512,11 @@ const GroupMembers = (props: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
-      <Header titleTextProps={{useI18n: true}} title={'chat:title_members'} />
+      <Header
+        titleTextProps={{useI18n: true}}
+        title={'chat:title_members'}
+        hideBackOnLaptop={rootNavigation?.canGoBack ? false : true}
+      />
       <View style={styles.searchAndInvite}>
         <SearchInput
           value={searchText}
