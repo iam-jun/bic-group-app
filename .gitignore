@@ -66,6 +66,7 @@ android/app/src/staging/*
 android/app/src/production/*
 amplify/*
 src/aws-exports.js
+.firebaserc
 android/app/production/
 *.dSYM.zip
 .env.production

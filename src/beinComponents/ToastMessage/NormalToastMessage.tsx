@@ -25,7 +25,7 @@ export interface ToastMessageProps {
   rightText?: string;
   style?: StyleProp<ViewStyle>;
   onActionPress?: () => void;
-  onButtonPress?: () => void;
+  onPressRight?: () => void;
 }
 
 const ToastMessage: FC<ToastMessageProps> = ({
@@ -37,7 +37,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
   rightText,
   style,
   onActionPress,
-  onButtonPress,
+  onPressRight,
 }: ToastMessageProps) => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -108,8 +108,8 @@ const ToastMessage: FC<ToastMessageProps> = ({
           </Text.Body>
         </View>
 
-        {rightIcon && rightText && (
-          <ButtonWrapper style={styles.button} onPress={onButtonPress}>
+        {!!rightIcon && !!rightText && (
+          <ButtonWrapper style={styles.button} onPress={onPressRight}>
             <Icon
               icon={rightIcon}
               tintColor={theme.colors.background}

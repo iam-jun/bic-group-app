@@ -77,10 +77,10 @@ const AddWork = () => {
 
   const onSave = () => {
     const data = {
-      company: companyValue,
-      titlePosition: positionValue,
-      location: locationValue,
-      description: descriptionValue,
+      company: companyValue.trim(),
+      titlePosition: positionValue.trim(),
+      location: locationValue.trim(),
+      description: descriptionValue.trim(),
       currentlyWorkHere: isWorkHere,
       startDate: startDateValue ? startDateValue : undefined,
       endDate: endDateValue ? endDateValue : undefined,
@@ -269,7 +269,7 @@ const AddWork = () => {
         buttonText={'common:text_save'}
         buttonProps={{
           useI18n: true,
-          disabled: companyValue && positionValue ? false : true,
+          disabled: companyValue.trim() && positionValue.trim() ? false : true,
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}

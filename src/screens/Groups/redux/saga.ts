@@ -447,6 +447,7 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
     yield put(
       groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
     );
+    yield put(groupsActions.getGroupDetail(payload));
 
     const toastMessage: IToastMessage = {
       content: i18next.t('groups:modal_confirm_leave_group:success_message'),

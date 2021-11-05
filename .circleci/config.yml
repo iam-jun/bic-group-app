@@ -1,0 +1,127 @@
+version: 2.1
+jobs:
+  dev:
+    docker:
+      - image: circleci/node:14
+    working_directory: ~/dist
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Install Firebase
+          command: |
+            npm install --save-dev firebase-tools
+      - run:
+          name: Install NPM
+          command: |
+            npm install
+      - run:
+          name: Build Project
+          command: |
+            npm run build-dev
+      - run:
+          name: Deploy to Firebase Hosting
+          command: |
+            ./node_modules/.bin/firebase deploy --project=$FIREBASE_PROJECT_ID --token=$FIREBASE_TOKEN
+  sbx:
+    docker:
+      - image: circleci/node:14
+    working_directory: ~/dist
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Install Firebase
+          command: |
+            npm install --save-dev firebase-tools
+      - run:
+          name: Install NPM
+          command: |
+            npm install
+      - run:
+          name: Build Project
+          command: |
+            npm run build-dev
+      - run:
+          name: Deploy to Firebase Hosting
+          command: |
+            ./node_modules/.bin/firebase deploy --project=$FIREBASE_PROJECT_ID --token=$FIREBASE_TOKEN
+  stg:
+    docker:
+      - image: circleci/node:14
+    working_directory: ~/dist
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Install Firebase
+          command: |
+            npm install --save-dev firebase-tools
+      - run:
+          name: Install NPM
+          command: |
+            npm install
+      - run:
+          name: Build Project
+          command: |
+            npm run build-stag
+      - run:
+          name: Deploy to Firebase Hosting
+          command: |
+            ./node_modules/.bin/firebase deploy --project=$FIREBASE_PROJECT_ID --token=$FIREBASE_TOKEN
+  pro:
+    docker:
+      - image: circleci/node:14
+    working_directory: ~/dist
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Install Firebase
+          command: |
+            npm install --save-dev firebase-tools
+      - run:
+          name: Install NPM
+          command: |
+            npm install
+      - run:
+          name: Build Project
+          command: |
+            npm run build
+      - run:
+          name: Deploy to Firebase Hosting
+          command: |
+            ./node_modules/.bin/firebase deploy --project=$FIREBASE_PROJECT_ID --token=$FIREBASE_TOKEN
+
+workflows:
+  version: 2
+  dev-sbx-stg-pro:
+    jobs:
+      - dev:
+          filters:
+            branches:
+              only: develop
+          context:
+            - bein-group-dev
+      - sbx:
+          filters:
+            branches:
+              only: develop
+          context:
+            - bein-group-sbx
+      - stg:
+          filters:
+            branches:
+              only: staging
+          context:
+            - bein-group-stg
+      - pro:
+          filters:
+            branches:
+              only: master
+          context:
+            - bein-group-pro
