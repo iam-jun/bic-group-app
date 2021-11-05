@@ -321,6 +321,7 @@ const GroupMembers = (props: any) => {
       | 'view-profile'
       | 'send-message'
       | 'set-admin'
+      | 'remove-admin'
       | 'remove-member'
       | 'leave-group',
   ) => {
@@ -346,6 +347,12 @@ const GroupMembers = (props: any) => {
 
   const onLoadMore = () => {
     getMembers();
+  };
+
+  const isGroupAdmin = () => {
+    return !!selectedMember?.roles?.find(
+      (role: any) => role.type === 'GROUP_ADMIN',
+    );
   };
 
   const renderItem = ({item}: any) => {
@@ -414,12 +421,20 @@ const GroupMembers = (props: any) => {
                 style={styles.menuOption}
                 leftIcon={'iconSend'}
                 leftIconProps={{icon: 'iconSend', size: 24}}
-                title={i18next.t('groups:member_menu:label_direct_message')}
+                title={i18next.t('groups:member_menu:label_send_message')}
                 onPress={() => onPressMenuOption('send-message')}
               />
             )}
-            {can_manage_member && (
-              <>
+            {can_setting &&
+              (isGroupAdmin() ? (
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon={'Star'}
+                  leftIconProps={{icon: 'Star', size: 24}}
+                  title={i18next.t('groups:member_menu:label_remove_as_admin')}
+                  onPress={() => onPressMenuOption('remove-admin')}
+                />
+              ) : (
                 <PrimaryItem
                   style={styles.menuOption}
                   leftIcon={'Star'}
@@ -427,19 +442,17 @@ const GroupMembers = (props: any) => {
                   title={i18next.t('groups:member_menu:label_set_as_admin')}
                   onPress={() => onPressMenuOption('set-admin')}
                 />
-                {selectedMember?.username !== user?.username && (
-                  <PrimaryItem
-                    style={styles.menuOption}
-                    leftIcon={'TrashAlt'}
-                    leftIconProps={{icon: 'TrashAlt', size: 24}}
-                    title={i18next.t(
-                      'groups:member_menu:label_remove_from_group',
-                    )}
-                    onPress={() => onPressMenuOption('remove-member')}
-                  />
-                )}
-              </>
-            )}
+              ))}
+            {can_manage_member &&
+              selectedMember?.username !== user?.username && (
+                <PrimaryItem
+                  style={styles.menuOption}
+                  leftIcon={'TrashAlt'}
+                  leftIconProps={{icon: 'TrashAlt', size: 24}}
+                  title={i18next.t('groups:member_menu:label_remove_member')}
+                  onPress={() => onPressMenuOption('remove-member')}
+                />
+              )}
             {selectedMember?.username === user?.username && (
               <PrimaryItem
                 style={styles.menuOption}
