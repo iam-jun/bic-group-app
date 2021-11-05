@@ -208,7 +208,7 @@ const GroupMembers = (props: any) => {
         'groups:modal_confirm_remove_member:button_remove',
       ),
       ConfirmBtnComponent: Button.Danger,
-      children: undefined as React.ReactNode,
+      children: null as React.ReactNode,
     };
 
     const renderAlertInnerGroups = (innerGroups: string[]) => {
