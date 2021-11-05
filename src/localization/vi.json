@@ -400,7 +400,8 @@
     },
     "modal_confirm_remove_member": {
       "title": "Xóa khỏi nhóm",
-      "description": "Xóa {name} khỏi nhóm, thành viên này sẽ không còn trong nhóm của bạn{other groups}.",
+      "alert_inner_groups": "Thành viên này cũng sẽ bị xóa khỏi {0} nhóm khác:",
+      "final_alert": "Bạn có chắc muốn xóa người này khỏi nhóm?",
       "button_remove": "Xác nhận"
     }
   },
