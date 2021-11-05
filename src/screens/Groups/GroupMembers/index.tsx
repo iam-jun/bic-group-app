@@ -191,7 +191,7 @@ const GroupMembers = (props: any) => {
     const {id: userId, fullname, username} = selectedMember;
 
     const content = i18next
-      .t(`groups:modal_confirm_remove_member:description`)
+      .t(`groups:modal_confirm_remove_member:final_alert`)
       .replace('{name}', `"${fullname}"`);
 
     const alertPayload = {
@@ -208,6 +208,41 @@ const GroupMembers = (props: any) => {
         'groups:modal_confirm_remove_member:button_remove',
       ),
       ConfirmBtnComponent: Button.Danger,
+      children: undefined as React.ReactNode,
+    };
+
+    const renderAlertInnerGroups = (innerGroups: string[]) => {
+      if (innerGroups.length === 0) return null;
+
+      const count = innerGroups.length;
+      let message = i18next
+        .t('groups:modal_confirm_remove_member:alert_inner_groups')
+        .replace('{0}', `${count}`);
+
+      if (count === 1)
+        message = message.replace(
+          '1 other inner groups',
+          'another inner group',
+        );
+
+      const first3groups = innerGroups.slice(0, 3);
+      const groupsList = () => (
+        <View style={styles.alertRemoveGroupsList}>
+          {first3groups.map((name, index) => (
+            <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
+              • {name}
+            </Text.BodyM>
+          ))}
+          {count > 3 && <Text.BodyS>...</Text.BodyS>}
+        </View>
+      );
+
+      return (
+        <>
+          <Text.BodyS>{message}</Text.BodyS>
+          {groupsList()}
+        </>
+      );
     };
 
     const getInnerGroupsNames = (innerGroups: any) => {
@@ -224,6 +259,7 @@ const GroupMembers = (props: any) => {
           '{other groups}',
           ` and ${otherGroups}`,
         );
+        alertPayload.children = renderAlertInnerGroups(innerGroups);
       }
 
       dispatch(modalActions.showAlert(alertPayload));
@@ -577,6 +613,12 @@ const createStyle = (theme: ITheme) => {
     menuOption: {
       height: 44,
       paddingHorizontal: spacing.padding.large,
+    },
+    alertRemoveGroupsList: {
+      marginBottom: spacing.margin.small,
+    },
+    alertRemoveGroupsListItem: {
+      marginLeft: spacing.margin.small,
     },
   });
 };
