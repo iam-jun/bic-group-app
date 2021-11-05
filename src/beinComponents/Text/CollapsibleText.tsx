@@ -41,6 +41,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   useEffect(() => {
     if (content && content?.length > limitLength) {
       setShortContent(`${content.substr(0, shortLength)}...`);
+    } else {
+      setShortContent('');
     }
   }, [content]);
 
