@@ -617,6 +617,12 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
             (member: IUser) => member.username !== payload.msg,
           ),
         },
+        roles: {
+          ...state.roles,
+          data: state.roles.data.filter(
+            (admin: IUser) => admin.username !== payload.msg,
+          ),
+        },
         conversation: {
           ...conversation,
           usersCount: conversation.usersCount - 1,
