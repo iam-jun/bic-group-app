@@ -22,7 +22,6 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import {appScreens} from '~/configs/navigator';
 import {MessageOptionType, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
@@ -44,7 +43,6 @@ import {
   UnreadBanner,
 } from '~/screens/Chat/components';
 import actions from '~/screens/Chat/redux/actions';
-import appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
@@ -77,11 +75,6 @@ const _Conversation = () => {
   const listRef = useRef<FlatList>(null);
   const [editingMessage, setEditingMessage] = useState<IMessage>();
 
-  const setNewRootScreenName = () => {
-    const newRootScreenName = `${appScreens.chat}/${conversation['_id']}`;
-    dispatch(appActions.setRootScreenName(newRootScreenName));
-  };
-
   useEffect(() => {
     const emmiterCallback = (index: number) => {
       listRef.current?.flashScrollIndicators();
@@ -100,9 +93,7 @@ const _Conversation = () => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      if (isFocused) {
-        if (Platform.OS === 'web') setNewRootScreenName();
-      } else {
+      if (!isFocused) {
         dispatch(actions.readSubscriptions(conversation._id));
       }
     });
@@ -113,7 +104,6 @@ const _Conversation = () => {
       if (route?.params?.roomId) {
         dispatch(actions.getConversationDetail(route.params.roomId));
         dispatch(actions.readSubscriptions(route.params.roomId));
-        if (Platform.OS === 'web') setNewRootScreenName();
       }
     });
   }, [route?.params?.roomId]);
@@ -239,23 +229,26 @@ const _Conversation = () => {
     [],
   );
 
-  const onReactionPress = useCallback(async (type: string) => {
-    if (!!selectedMessage) {
-      if (type === 'add_react') {
-        onReactPress(null, selectedMessage, 'left');
-      } else {
-        dispatch(
-          actions.reactMessage({
-            emoji: type,
-            messageId: selectedMessage._id,
-            shouldReact: true,
-          }),
-        );
+  const onReactionPress = useCallback(
+    async (type: string) => {
+      if (!!selectedMessage) {
+        if (type === 'add_react') {
+          onReactPress(null, selectedMessage, 'left');
+        } else {
+          dispatch(
+            actions.reactMessage({
+              emoji: type,
+              messageId: selectedMessage._id,
+              shouldReact: true,
+            }),
+          );
+        }
       }
-    }
 
-    messageOptionsModalRef.current?.close();
-  }, []);
+      messageOptionsModalRef.current?.close();
+    },
+    [selectedMessage],
+  );
 
   const deleteMessage = () => {
     selectedMessage && dispatch(actions.deleteMessage(selectedMessage));

@@ -22,8 +22,6 @@ import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
-import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
-import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import {AppConfig} from '~/configs';
 import {
   linkingConfig,
@@ -34,7 +32,6 @@ import {
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {signOut} from '~/screens/Auth/redux/actions';
@@ -47,6 +44,7 @@ import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -57,8 +55,6 @@ const StackNavigator = (): React.ReactElement => {
   const dispatch = useDispatch();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
-
-  const toastMessage = useKeySelector('modal.toastMessage') || {};
 
   const checkAuthKickout = async () => {
     try {
@@ -148,22 +144,6 @@ const StackNavigator = (): React.ReactElement => {
     }
   };
 
-  const renderToastMessage = () => {
-    if (!toastMessage?.content) return null;
-
-    return Platform.OS === 'web' ? (
-      <NormalToastMessage style={styles.toastStyle} {...toastMessage?.props}>
-        {toastMessage?.content}
-      </NormalToastMessage>
-    ) : (
-      <SimpleToastMessage
-        style={styles.smallToastStyle}
-        {...toastMessage?.props}>
-        {toastMessage?.content}
-      </SimpleToastMessage>
-    );
-  };
-
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
   const configLinkFull =
@@ -215,12 +195,10 @@ const StackNavigator = (): React.ReactElement => {
             />
           </Stack.Navigator>
         </NavigationContainer>
-
         <AlertModal />
         <AlertNewFeatureModal />
         <LoadingModal />
-
-        {renderToastMessage()}
+        <ToastMessage />
       </View>
     </Div>
   );
@@ -269,16 +247,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-  },
-  toastStyle: {
-    position: 'absolute',
-    left: 40,
-    bottom: 40,
-  },
-  smallToastStyle: {
-    position: 'absolute',
-    alignSelf: 'center',
-    bottom: 110,
   },
 });
 

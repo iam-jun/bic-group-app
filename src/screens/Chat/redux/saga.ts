@@ -1,17 +1,12 @@
-import {StackActions, CommonActions} from '@react-navigation/native';
+import {CommonActions, StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import i18next from 'i18next';
 import {DeviceEventEmitter, Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
-import {
-  chatSocketId,
-  messageEventTypes,
-  messageStatus,
-  roomTypes,
-} from '~/constants/chat';
-import chat from '~/hooks/chat';
+import {appScreens} from '~/configs/navigator';
+import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
 import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
@@ -29,6 +24,7 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
+import appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
 import {generateRoomName} from '~/utils/generator';
 import {
@@ -40,7 +36,6 @@ import {
 } from './../helper';
 import actions from './actions';
 import types from './constants';
-
 /**
  * Chat
  * @param payload
@@ -76,6 +71,11 @@ export default function* saga() {
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
   yield takeLatest(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
+  yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
+  yield takeLatest(
+    types.TOGGLE_CONVERSATION_NOTIFICATIONS,
+    toggleConversationNotifications,
+  );
   yield takeLatest(types.LEAVE_CHAT, leaveChat);
 }
 
@@ -204,6 +204,7 @@ function* getConversationDetail({payload}: {type: string; payload: string}) {
         unreadCount: conversation?.unreadCount || sub?.unread || 0,
       }),
     );
+    yield put(appActions.setRootScreenName(`${appScreens.chat}/${payload}`));
   } catch (err) {
     console.log('getConversationDetail', err);
   }
@@ -668,6 +669,34 @@ function* getSurroundingMessages({payload}: {type: string; payload: string}) {
   } catch (err) {
     console.log('getSurroundingMessages', err);
     yield put(actions.setMessagesError(err));
+  }
+}
+
+function* toggleConversationNotifications({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string; currentDisableNotifications: boolean};
+}) {
+  try {
+    const {roomId, currentDisableNotifications} = payload;
+    const newDisableNotifications = !currentDisableNotifications;
+
+    yield makeHttpRequest(
+      apiConfig.Chat.setConversationNotifications(
+        roomId,
+        newDisableNotifications,
+      ),
+    );
+
+    yield put(
+      actions.setConversationNotifications({
+        roomId,
+        disableNotifications: newDisableNotifications,
+      }),
+    );
+  } catch (error) {
+    yield showError(error);
   }
 }
 

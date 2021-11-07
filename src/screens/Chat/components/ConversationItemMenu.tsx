@@ -6,18 +6,22 @@ import {useDispatch} from 'react-redux';
 import {ITheme} from '~/theme/interfaces';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import * as modalActions from '~/store/modal/actions';
-import {IAction} from '~/constants/commonActions';
+import commonActions, {IAction} from '~/constants/commonActions';
+import chatActions from '~/screens/Chat/redux/actions';
 
 export interface ConversationItemMenuProps {
   conversationId: string;
+  disableNotifications?: boolean;
 }
 
 const ConversationItemMenu: FC<ConversationItemMenuProps> = ({
   conversationId,
+  disableNotifications = false,
 }: ConversationItemMenuProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
-  console.log(`conversationId`, conversationId);
+  const [isMute, setIsMute] = useState(disableNotifications);
+  const notificationsIcon = isMute ? 'BellSlash' : 'Bell';
 
   const dispatch = useDispatch();
 
@@ -26,20 +30,26 @@ const ConversationItemMenu: FC<ConversationItemMenuProps> = ({
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const onPressNotificationToggle = (action: IAction) => {
-    console.log(`action`, action);
-    alert('Notification toggle pressed, ' + action);
+  const onPressNotificationToggle = () => {
+    dispatch(
+      chatActions.toggleConversationNotifications({
+        roomId: conversationId,
+        currentDisableNotifications: isMute,
+      }),
+    );
+    setIsMute(!isMute);
   };
 
   return (
     <View style={styles.container}>
       <PrimaryItem
         style={styles.item}
-        leftIcon={'Bell'}
-        leftIconProps={{icon: 'Bell', size: 24}}
+        leftIcon={notificationsIcon}
+        leftIconProps={{icon: notificationsIcon, size: 24}}
         title={'chat:conversation_options:notifications'}
         titleProps={{useI18n: true}}
         onPressToggle={onPressNotificationToggle}
+        toggleChecked={!isMute}
       />
       <PrimaryItem
         style={styles.item}

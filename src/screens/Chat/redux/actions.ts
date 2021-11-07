@@ -248,4 +248,18 @@ export default {
     type: Actions.SET_NEXT_MESSAGES,
     payload,
   }),
+  setConversationNotifications: (payload?: {
+    roomId: string;
+    disableNotifications: boolean;
+  }) => ({
+    type: Actions.SET_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
+  toggleConversationNotifications: (payload: {
+    roomId: string;
+    currentDisableNotifications: boolean;
+  }) => ({
+    type: Actions.TOGGLE_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
 };

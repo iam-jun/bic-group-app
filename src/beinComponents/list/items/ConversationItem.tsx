@@ -14,8 +14,9 @@ import ConversationItemMenu from '~/screens/Chat/components/ConversationItemMenu
 import modalActions from '~/store/modal/actions';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
-import {countTime, escapeMarkDown} from '~/utils/formatData';
+import {escapeMarkDown} from '~/utils/formatData';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import TimeView from '~/beinComponents/TimeView';
 
 interface Props extends IConversation {
   total?: number;
@@ -34,20 +35,12 @@ const ConversationItem: React.FC<Props> = ({
   total,
   index,
   isActive = false,
+  disableNotifications,
 }: Props): React.ReactElement => {
-  const AVG_CHAR_ON_ONE_LINE = 32;
-  let twoLineLastMessage = false;
-  if (lastMessage && lastMessage.length >= AVG_CHAR_ON_ONE_LINE)
-    twoLineLastMessage = true;
   const dispatch = useDispatch();
 
   const theme = useTheme() as ITheme;
-  const styles = createStyles(
-    theme,
-    unreadCount > 0,
-    twoLineLastMessage,
-    isActive,
-  );
+  const styles = createStyles(theme, unreadCount > 0, isActive);
   const welcomeText =
     type === 'direct'
       ? 'chat:label_init_direct_message:short'
@@ -63,7 +56,12 @@ const ConversationItem: React.FC<Props> = ({
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: <ConversationItemMenu conversationId={_id} />,
+        ContentComponent: (
+          <ConversationItemMenu
+            conversationId={_id}
+            disableNotifications={disableNotifications}
+          />
+        ),
         props: {
           webModalStyle: {minHeight: undefined},
           isContextMenu: true,
@@ -85,6 +83,33 @@ const ConversationItem: React.FC<Props> = ({
       }
     />
   );
+
+  const renderMuteIndicator = () => {
+    if (!disableNotifications) return null;
+
+    return (
+      <Icon
+        icon={'BellSlash'}
+        size={14}
+        tintColor={theme.colors.textSecondary}
+        style={styles.muteIndicator}
+      />
+    );
+  };
+
+  const renderNotificationsBadge = () => {
+    if (!unreadCount) return null;
+
+    const variant = disableNotifications ? 'default' : 'alert';
+    return (
+      <NotificationsBadge
+        style={styles.badge}
+        number={unreadCount}
+        maxNumber={99}
+        variant={variant}
+      />
+    );
+  };
 
   const renderMenuButton = () => {
     if (Platform.OS !== 'web') return null;
@@ -118,27 +143,22 @@ const ConversationItem: React.FC<Props> = ({
             <Text.H6 style={styles.title} numberOfLines={1}>
               {name}
             </Text.H6>
-            <Text.Subtitle
+            {renderMuteIndicator()}
+            <TimeView
               style={styles.textUpdate}
-              color={theme.colors.textSecondary}>
-              {countTime(_updatedAt)}
-            </Text.Subtitle>
+              time={_updatedAt}
+              type={'short'}
+            />
           </View>
           <View style={styles.body}>
             <Text
-              variant={unreadCount ? 'bodyM' : 'body'}
+              variant={unreadCount && !disableNotifications ? 'bodyM' : 'body'}
               numberOfLines={2}
               style={styles.lastMessage}>
               {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
             </Text>
             <View style={styles.optionsContainer}>
-              {!!unreadCount && (
-                <NotificationsBadge.Alert
-                  style={styles.badge}
-                  number={unreadCount}
-                  maxNumber={99}
-                />
-              )}
+              {renderNotificationsBadge()}
               {renderMenuButton()}
             </View>
           </View>
@@ -151,15 +171,13 @@ const ConversationItem: React.FC<Props> = ({
 const createStyles = (
   theme: ITheme,
   unreadMessage: boolean,
-  twoLineLastMessage: boolean,
   isActive: boolean,
 ) => {
   const {colors, spacing} = theme;
-  const isWeb = Platform.OS === 'web';
 
   const contentHeight = 72;
   const headerHeight = 22;
-  const messageHeight = 42;
+  const messageMaxHeight = 42;
 
   return StyleSheet.create({
     container: {
@@ -204,13 +222,16 @@ const createStyles = (
         },
       }),
     },
+    muteIndicator: {
+      marginTop: 2,
+      marginRight: spacing.margin.tiny,
+    },
     textUpdate: {
       height: 20,
       lineHeight: 20,
     },
     body: {
       flexDirection: 'row',
-      alignItems: twoLineLastMessage ? 'center' : 'flex-start',
     },
     bottomDivider: {
       borderBottomColor: colors.borderDivider,
@@ -218,16 +239,15 @@ const createStyles = (
     },
     lastMessage: {
       flex: 1,
-      height: messageHeight,
+      maxHeight: messageMaxHeight,
       lineHeight: 20,
       color: unreadMessage ? colors.textPrimary : colors.textSecondary,
     },
     optionsContainer: {
       flexDirection: 'column',
-      justifyContent: 'center',
+      marginRight: 1, // just to avoid it being hidden on web
     },
     badge: {
-      marginTop: !isWeb ? spacing.margin.tiny : 0,
       marginLeft: spacing.margin.base,
     },
     menuButton: {
