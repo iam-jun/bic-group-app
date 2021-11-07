@@ -1,7 +1,7 @@
 import {StackActions, CommonActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import i18next from 'i18next';
-import {Platform} from 'react-native';
+import {DeviceEventEmitter, Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
@@ -11,6 +11,7 @@ import {
   messageStatus,
   roomTypes,
 } from '~/constants/chat';
+import chat from '~/hooks/chat';
 import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
@@ -74,7 +75,7 @@ export default function* saga() {
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
-  yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
+  yield takeLatest(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
   yield takeLatest(types.LEAVE_CHAT, leaveChat);
 }
 
@@ -184,16 +185,24 @@ function* readSubscriptions({payload}: {type: string; payload: string}) {
 
 function* getConversationDetail({payload}: {type: string; payload: string}) {
   try {
-    const {auth} = yield select();
+    const {auth, chat} = yield select();
+    const {subscriptions, conversation} = chat;
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getChatInfo(payload),
     );
 
+    const _conversation = mapConversation(auth.user, response.data?.data);
+
+    const sub: any = (subscriptions || []).find(
+      (item: any) => item.rid === _conversation?._id,
+    );
+
     yield put(
-      actions.setConversationDetail(
-        mapConversation(auth.user, response.data?.data),
-      ),
+      actions.setConversationDetail({
+        ..._conversation,
+        unreadCount: conversation?.unreadCount || sub?.unread || 0,
+      }),
     );
   } catch (err) {
     console.log('getConversationDetail', err);
@@ -788,24 +797,6 @@ function* leaveChat({
   yield put(modalActions.showHideToastMessage(toastMessage));
 }
 
-// function* searchConversations({payload}: {type: string; payload?: string}) {
-//   try {
-//     const {auth} = yield select();
-
-//     const response: AxiosResponse = yield makeHttpRequest(
-//       apiConfig.Chat.search(payload ? {name: payload} : undefined),
-//     );
-
-//     yield put(
-//       actions.setConversationDetail(
-//         mapConversation(auth.user, response.data?.data),
-//       ),
-//     );
-//   } catch (err) {
-//     console.log('searchConversations', err);
-//   }
-// }
-
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
@@ -850,18 +841,15 @@ function* handleNewMessage(data: any) {
       messages.unreadMessage &&
       conversation.unreadCount > appConfig.messagesPerPage;
 
-    // const newMessages =
-    //   !haveUnreadMessages && !include
-    //     ? [...messages.data, {...message, status: messageStatus.SENT}]
-    //     : messages.data.map((item: IMessage) =>
-    //         item._id === message._id ||
-    //         (item.localId && item.localId === message.localId)
-    //           ? {...item, ...message}
-    //           : item,
-    //       );
-
     if (existed) {
-      yield put(actions.addNewMessage(message));
+      if (!include) {
+        if (!haveUnreadMessages) {
+          yield put(actions.addNewMessage(message));
+          DeviceEventEmitter.emit('chat-new-message', messages.data.length);
+        }
+      } else {
+        yield put(actions.updateMessage(message));
+      }
     } else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({

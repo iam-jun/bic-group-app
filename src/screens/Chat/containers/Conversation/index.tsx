@@ -5,6 +5,7 @@ import {debounce, isEmpty} from 'lodash';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  DeviceEventEmitter,
   FlatList,
   InteractionManager,
   Keyboard,
@@ -17,6 +18,7 @@ import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
@@ -67,6 +69,7 @@ const _Conversation = () => {
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
+  const initiated = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
   const [unreadBannerVisible, setUnreadBannerVisible] =
@@ -80,8 +83,18 @@ const _Conversation = () => {
   };
 
   useEffect(() => {
+    const emmiterCallback = (index: number) => {
+      listRef.current?.flashScrollIndicators();
+      scrollToBottom(true, index);
+    };
+
+    const _emmiter = DeviceEventEmitter.addListener(
+      'chat-new-message',
+      emmiterCallback,
+    );
     return () => {
       dispatch(actions.setAttachmentMedia());
+      _emmiter.remove();
     };
   }, []);
 
@@ -106,50 +119,65 @@ const _Conversation = () => {
   }, [route?.params?.roomId]);
 
   useEffect(() => {
-    if (!messages.loading) jumpToMessage(route?.params?.message_id);
+    InteractionManager.runAfterInteractions(() => {
+      if (!messages.loading) jumpToMessage(route?.params?.message_id);
+    });
   }, [route?.params?.message_id]);
 
   useEffect(() => {
-    const roomId = route?.params?.roomId;
-    const isDirectMessage = conversation?.type === roomTypes.DIRECT;
-    if (roomId && conversation?._id && roomId === conversation?._id) {
-      dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
-    }
-    getAttachments();
+    InteractionManager.runAfterInteractions(() => {
+      const roomId = route?.params?.roomId;
+      const isDirectMessage = conversation?.type === roomTypes.DIRECT;
+      if (roomId && conversation?._id && roomId === conversation?._id) {
+        dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
+      }
+      getAttachments();
+    });
   }, [route?.params?.roomId, conversation?._id]);
 
   useEffect(() => {
-    if (conversation?._id) {
-      setIsScrolled(false);
-      getMessages(conversation.unreadCount);
-      setUnreadBannerVisible(conversation.unreadCount > 0);
-      setDownButtonVisible(
-        conversation.unreadCount > appConfig.messagesPerPage,
-      );
-    }
-  }, [conversation?._id]);
+    InteractionManager.runAfterInteractions(() => {
+      // mean conversation detail has been fetched
+      if (conversation?.msgs) {
+        setIsScrolled(false);
+        getMessages(conversation.unreadCount);
+        setDownButtonVisible(
+          conversation.unreadCount > appConfig.messagesPerPage,
+        );
+      }
+    });
+  }, [conversation?.msgs]);
 
   useEffect(() => {
-    if (!!error) {
-      dispatch(
-        showHideToastMessage({
-          content: error,
-          props: {
-            textProps: {useI18n: true},
-            type: 'error',
-          },
-        }),
+    InteractionManager.runAfterInteractions(() => {
+      setUnreadBannerVisible(
+        conversation?.unreadCount && conversation.unreadCount > 0,
       );
-    }
+    });
+  }, [conversation?.unreadCount]);
+
+  useEffect(() => {
+    InteractionManager.runAfterInteractions(() => {
+      if (!!error) {
+        dispatch(
+          showHideToastMessage({
+            content: error,
+            props: {
+              textProps: {useI18n: true},
+              type: 'error',
+            },
+          }),
+        );
+      }
+    });
   }, [error]);
 
   const getMessages = (unreadCount: number) => {
-    dispatch(actions.resetData('messages'));
     if (route.params?.message_id) {
       dispatch(actions.getSurroundingMessages(route.params.message_id));
     } else if (unreadCount > appConfig.messagesPerPage) {
       dispatch(actions.getUnreadMessage());
-    } else {
+    } else if (conversation.msgs > 0) {
       dispatch(actions.getMessagesHistory());
     }
   };
@@ -381,8 +409,9 @@ const _Conversation = () => {
           animated: false,
         });
       }
+      setIsScrolled(true);
     }
-    setIsScrolled(true);
+    initiated.current = true;
   };
 
   const onUnreadBannerPress = () => {
@@ -407,43 +436,54 @@ const _Conversation = () => {
     );
   };
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (animated?: boolean, index?: number) => {
+    if ((!index || index < 0) && isEmpty(messages.data)) return;
+
     listRef.current?.scrollToIndex({
-      index: messages.data.length - 1,
-      animated: false,
+      index: index || messages.data.length - 1,
+      animated: animated || false,
     });
   };
 
   const onContentLayoutChange = () => {
-    if (messages.canLoadNext) setDownButtonVisible(true);
-    if (
-      (!isScrolled || offsetY.current > 500) &&
-      !messages.canLoadNext &&
-      !isEmpty(messages.data) &&
-      conversation.unreadCount === 0 &&
-      !route.params?.message_id
-    ) {
-      scrollToBottom();
-      // only first time
-      setIsScrolled(true);
-    } else if (isEmpty(messages.data)) {
-      setIsScrolled(true);
-    }
+    InteractionManager.runAfterInteractions(() => {
+      if (messages.canLoadNext) setDownButtonVisible(true);
+      if (
+        !isScrolled &&
+        !isEmpty(messages.data) &&
+        // !messages.loading &&
+        !messages.canLoadNext &&
+        conversation.unreadCount === 0 &&
+        !route.params?.message_id
+      ) {
+        scrollToBottom(initiated.current);
+        // only first time
+        initiated.current = true;
+        setIsScrolled(true);
+      }
+    });
   };
 
   const handleScroll = (event: any) => {
-    const _offsetY = event?.contentOffset.y;
-    const contentHeight = event?.contentSize.height;
-    const delta = Platform.OS === 'web' ? 100 : 10;
-    const condition1 = contentHeight - dimension.deviceHeight * 2 > _offsetY;
-    const condition2 = messages.canLoadNext;
-    setDownButtonVisible(condition1 || condition2);
-    offsetY.current = _offsetY;
+    InteractionManager.runAfterInteractions(() => {
+      const _offsetY = event?.contentOffset.y;
+      const contentHeight = event?.contentSize.height;
+      const delta = 0;
+      const condition1 = contentHeight - dimension.deviceHeight * 2 > _offsetY;
+      const condition2 = messages.canLoadNext;
+      setDownButtonVisible(condition1 || condition2);
+      offsetY.current = _offsetY;
 
-    if (!messages.loadingMore && !isEmpty(messages.extra) && _offsetY < delta) {
-      // reach top
-      loadMoreMessages();
-    }
+      if (
+        isScrolled &&
+        !messages.loadingMore &&
+        !isEmpty(messages.extra) &&
+        _offsetY <= delta
+      ) {
+        // reach top
+        loadMoreMessages();
+      }
+    });
   };
 
   const scrollHandler = debounce(handleScroll, 10);
@@ -456,7 +496,6 @@ const _Conversation = () => {
     if (!messages.loadingNext && messages.canLoadNext) {
       dispatch(actions.getNextMessages());
     } else if (conversation.unreadCount > 0) {
-      setUnreadBannerVisible(false);
       dispatch(actions.readConversation());
     }
   };
@@ -464,30 +503,30 @@ const _Conversation = () => {
   const onDownPress = () => {
     setDownButtonVisible(false);
     if (messages.canLoadNext) {
-      setUnreadBannerVisible(false);
       setIsScrolled(false);
       dispatch(actions.readConversation());
       getMessages(0);
     } else {
-      listRef.current?.scrollToIndex({
-        index: messages.data.length - 1,
-        animated: true,
-      });
+      scrollToBottom(true);
     }
+  };
+
+  const onSendCallBack = () => {
+    setIsScrolled(false);
   };
 
   const renderChatMessages = () => {
     if (messages.error) return <MessageNotFound />;
-    if (!messages.loading && isEmpty(messages.data) && isScrolled)
+    if (!messages.loading && conversation.msgs === 0)
       return <ChatWelcome type={conversation.type} />;
 
     // show loading until calculation has done and flatlist has scrolled
     return (
       <View style={styles.messagesContainer}>
-        {(messages.loading || (!isScrolled && !messages.canLoadNext)) && (
-          <LoadingMessages />
-        )}
-        {messages.loadingMore && <ActivityIndicator />}
+        {!initiated.current && !messages.canLoadNext && <LoadingMessages />}
+
+        {messages.loadingMore && <LoadingIndicator />}
+
         {!messages.loading && (
           <ListMessages
             listRef={listRef}
@@ -499,7 +538,7 @@ const _Conversation = () => {
             scrollEventThrottle={0.5}
             removeClippedSubviews={true}
             onScrollToIndexFailed={scrollToIndexFailed}
-            // onContentSizeChange={onContentLayoutChange}
+            onContentSizeChange={onContentLayoutChange}
             onScroll={onScroll}
             showsHorizontalScrollIndicator={false}
             maxToRenderPerBatch={appConfig.messagesPerPage}
@@ -567,7 +606,7 @@ const _Conversation = () => {
         replyingMessage={replyingMessage}
         onCancelEditing={onCancelEditingMessage}
         onCancelReplying={onCancelReplyingMessage}
-        onSendCallback={onDownPress}
+        onSendCallback={onSendCallBack}
         onError={setError}
         onSentAttachment={getAttachments}
       />

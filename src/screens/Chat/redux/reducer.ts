@@ -3,7 +3,6 @@ import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IUser} from '~/interfaces/IAuth';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
-import {timestampToISODate} from '~/utils/formatData';
 import {getLastMessage} from '../helper';
 import types from './constants';
 
@@ -295,21 +294,9 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ),
       };
     case types.SET_CONVERSATION_DETAIL: {
-      const sub: any = (state.subscriptions || []).find(
-        (item: any) => item.rid === payload?._id,
-      );
-
       return {
         ...state,
-        conversation: {
-          ...conversation,
-          ...payload,
-          unreadCount:
-            conversation.unreadCount ||
-            payload?.unreadCount ||
-            sub?.unread ||
-            0,
-        },
+        conversation: payload,
         rooms: {
           ...rooms,
           data: rooms.data.map((room: IConversation) =>
@@ -339,10 +326,13 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
     case types.ADD_NEW_MESSAGE:
       return {
         ...state,
-        messages: {
-          ...messages,
-          data: [...messages.data, payload],
-        },
+        messages:
+          payload.room_id === conversation._id
+            ? {
+                ...messages,
+                data: [...messages.data, payload],
+              }
+            : messages,
         rooms: payload.system
           ? rooms
           : {
@@ -368,6 +358,19 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
               },
             }
           : quotedMessages,
+      };
+    case types.UPDATE_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          data: messages.data.map((item: IMessage) =>
+            item._id === payload._id ||
+            (item.localId && item.localId === payload.localId)
+              ? {...item, ...payload}
+              : item,
+          ),
+        },
       };
     case types.SELECT_USER:
       return {
@@ -475,15 +478,13 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
-          // Update offset when add new item
-          offset: messages.offset + 1,
           data: messages.data.map((item: IMessage) =>
-            (item._id === action.payload._id ||
-              (item.localId && item.localId === action.payload.localId)) &&
+            (item._id === payload._id ||
+              (item.localId && item.localId === payload.localId)) &&
             // message has updated from event
             item.status !== messageStatus.SENT
               ? {
-                  ...action.payload,
+                  ...payload,
                   status: messageStatus.SENT,
                 }
               : item,
