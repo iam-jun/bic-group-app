@@ -24,8 +24,7 @@ export const getConversations = createSelector(chatState, data => {
 
         return {
           ...item,
-          // unreadCount: sub?.unread,
-          unreadCount: 37,
+          unreadCount: sub?.unread,
           name,
         };
       })

@@ -468,7 +468,7 @@ const _Conversation = () => {
       offsetY.current = _offsetY;
 
       if (
-        isScrolled &&
+        initiated.current &&
         !messages.loadingMore &&
         !isEmpty(messages.extra) &&
         _offsetY <= delta
@@ -498,6 +498,7 @@ const _Conversation = () => {
     if (messages.canLoadNext) {
       setIsScrolled(false);
       dispatch(actions.readConversation());
+      dispatch(actions.resetData('messages'));
       getMessages(0);
     } else {
       scrollToBottom(true);
