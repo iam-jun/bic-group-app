@@ -1,5 +1,17 @@
 {
   "common": {
+    "time": {
+      "today": "Hôm nay",
+      "yesterday": "Hôm qua",
+      "at": "lúc",
+      "now": "vài giây",
+      "short_sec": "giây",
+      "short_min": "phút",
+      "short_hour": "giờ",
+      "short_day": "ngày",
+      "short_week": "tuần",
+      "short_year": "năm"
+    },
     "text_update_title": "Đã có bản cập nhật mới",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Cập nhật",
@@ -146,11 +158,11 @@
     "subtitle_login_logs": "It's always better to use a strong password that you not using it elsewhere",
     "title_privacy": "Bảo mật",
     "title_notification": "Thông báo",
-    "title_appearance": "Appearance",
+    "title_appearance": "Hiển thị",
     "title_language": "Ngôn ngữ",
     "title_speaking_languages": "Ngôn ngữ",
     "title_relationship_status": "Tình trạng hôn nhân",
-    "title_currency": "Currency",
+    "title_currency": "Xu",
     "title_about": "About",
     "title_name": "Name",
     "title_gender": "Gender",
@@ -297,6 +309,12 @@
     "post_exit_option_save": "Lưu bản nháp",
     "post_exit_option_discard": "Huỷ bài viết",
     "post_exit_option_continue": "Tiếp tục viết bài",
+    "newsfeed": {
+      "title_empty_no_post": "Nơi đây cô đơn quá...",
+      "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
+      "title_empty_cant_load_more": "Bạn đã xem hết rồi",
+      "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi"
+    },
     "draft": {
       "btn_post_now": "Đăng ngay",
       "btn_edit": "Sửa",
@@ -314,6 +332,8 @@
   "chat": {
     "placeholder_search": "Tìm kiếm ...",
     "title_members": "Thành viên",
+    "label_mute": "Mute",
+    "label_unmute": "Unmute",
     "label_init_group_message": {
       "short": "Say hello to your group",
       "full": "🤗 Say hello to your group!"
@@ -321,6 +341,12 @@
     "label_init_direct_message": {
       "short": "Say hello to your friend",
       "full": "🤗 Say hello to your friend!"
+    },
+    "conversation_options": {
+      "notifications": "Thông báo",
+      "pin": "Ghim",
+      "mark_as_read": "Đánh dấu đã xem",
+      "delete_chat": "Xóa tin nhắn"
     }
   },
   "comment": {

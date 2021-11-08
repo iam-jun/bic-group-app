@@ -2,8 +2,8 @@ import React, {useContext, useEffect} from 'react';
 import {DeviceEventEmitter, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
-import RedDot from '~/beinComponents/Badge/RedDot';
 import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
@@ -100,7 +100,10 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
                     style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
                     {renderIcon(name, focused)}
                     {!!unreadCount && (
-                      <RedDot style={styles.badge} number={unreadCount} />
+                      <NotificationsBadge.Alert
+                        style={styles.badge}
+                        number={unreadCount}
+                      />
                     )}
                   </Div>
                 );

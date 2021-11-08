@@ -7,6 +7,7 @@ import {
   AddMembersToGroup,
   ReviewConversation,
   SearchConversation,
+  EditConversationDescription,
 } from '~/screens/Chat';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostDetail from '~/screens/Post/PostDetail';
@@ -22,4 +23,5 @@ export default {
   'user-profile': UserProfile,
   'post-detail': PostDetail,
   'search-conversation': SearchConversation,
+  'edit-chat-description': EditConversationDescription,
 };

@@ -22,8 +22,6 @@ import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
-import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
-import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import {AppConfig} from '~/configs';
 import {
   linkingConfig,
@@ -34,7 +32,6 @@ import {
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {signOut} from '~/screens/Auth/redux/actions';
@@ -46,17 +43,18 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigator = (): React.ReactElement => {
+  const {leftNavigation, rootNavigation} = useRootNavigation();
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
-
-  const toastMessage = useKeySelector('modal.toastMessage') || {};
 
   const checkAuthKickout = async () => {
     try {
@@ -93,7 +91,6 @@ const StackNavigator = (): React.ReactElement => {
     if (Platform.OS !== 'web') {
       return;
     }
-    const {leftNavigation} = useRootNavigation();
     const initialUrl = await Linking.getInitialURL();
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const parse = require('url-parse');
@@ -147,22 +144,6 @@ const StackNavigator = (): React.ReactElement => {
     }
   };
 
-  const renderToastMessage = () => {
-    if (!toastMessage?.content) return null;
-
-    return Platform.OS === 'web' ? (
-      <NormalToastMessage style={styles.toastStyle} {...toastMessage?.props}>
-        {toastMessage?.content}
-      </NormalToastMessage>
-    ) : (
-      <SimpleToastMessage
-        style={styles.smallToastStyle}
-        {...toastMessage?.props}>
-        {toastMessage?.content}
-      </SimpleToastMessage>
-    );
-  };
-
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
   const configLinkFull =
@@ -172,11 +153,16 @@ const StackNavigator = (): React.ReactElement => {
   const configLink =
     Platform.OS === 'web' && isLaptop ? linkingConfigLaptop : linkingConfig;
 
+  const linking = getLinkingCustomConfig(
+    user ? configLinkFull : configLink,
+    rootNavigation,
+  );
+
   return (
     <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
       <View style={styles.container}>
         <NavigationContainer
-          linking={user ? configLinkFull : configLink}
+          linking={linking}
           ref={rootNavigationRef}
           onReady={onReady}
           theme={navigationTheme}
@@ -209,12 +195,10 @@ const StackNavigator = (): React.ReactElement => {
             />
           </Stack.Navigator>
         </NavigationContainer>
-
         <AlertModal />
         <AlertNewFeatureModal />
         <LoadingModal />
-
-        {renderToastMessage()}
+        <ToastMessage />
       </View>
     </Div>
   );
@@ -228,6 +212,34 @@ const getOptions = (t: any) => {
   return {headerShown: false, title: t('web:title_not_found')};
 };
 
+const getLinkingCustomConfig = (config: any, navigation: any) => {
+  if (Platform.OS === 'web') {
+    return config;
+  }
+  return {
+    ...config,
+    subscribe(listener: any) {
+      const onReceiveURL = ({url}: {url: string}) => {
+        if (url.includes('bein:///post/t/')) {
+          const postId = url?.replace('bein:///post/t/', '');
+          if (postId && navigation) {
+            navigation?.navigate?.(homeStack.postDetail, {post_id: postId});
+          } else {
+            listener(url);
+          }
+        } else {
+          listener(url);
+        }
+      };
+      Linking.addEventListener('url', onReceiveURL);
+
+      return () => {
+        Linking.removeEventListener('url', onReceiveURL);
+      };
+    },
+  };
+};
+
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -235,16 +247,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-  },
-  toastStyle: {
-    position: 'absolute',
-    left: 40,
-    bottom: 40,
-  },
-  smallToastStyle: {
-    position: 'absolute',
-    alignSelf: 'center',
-    bottom: 110,
   },
 });
 

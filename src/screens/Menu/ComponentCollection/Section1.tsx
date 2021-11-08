@@ -137,22 +137,33 @@ const Section1 = () => {
         {showError && (
           <NormalToastMessage
             type={'error'}
-            style={{margin: spacing.margin.base}}>
-            No Internet Connection
+            style={{margin: spacing.margin.base}}
+            rightIcon={'UsersAlt'}
+            rightText={'Members'}
+            onPressRight={() => alert('Press')}>
+            You are the last admin of the group. Set another admin before
+            leaving
           </NormalToastMessage>
         )}
         {showSuccess && (
           <NormalToastMessage
             type={'success'}
-            style={{margin: spacing.margin.base}}>
-            Group Description Saved!
+            style={{margin: spacing.margin.base}}
+            leftIcon={'Check'}
+            rightIcon={'UsersAlt'}
+            rightText={'Members'}
+            onPressRight={() => alert('Press')}>
+            You are the last admin of the group. Set another admin before
+            leaving
           </NormalToastMessage>
         )}
         {showWarning && (
           <NormalToastMessage
             type={'informative'}
-            style={{margin: spacing.margin.base}}>
-            Informative
+            style={{margin: spacing.margin.base}}
+            leftIcon={'TrashAlt'}>
+            You are the last admin of the group. Set another admin before
+            leaving
           </NormalToastMessage>
         )}
       </>,

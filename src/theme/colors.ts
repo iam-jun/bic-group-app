@@ -33,6 +33,7 @@ export default {
       success: '#3BB774',
       error: '#E25050',
       warning: '#FFE351',
+      statusOrange: '#E98A32',
 
       textPrimary: '#29272A',
       textSecondary: '#828085',
@@ -101,6 +102,7 @@ export default {
       success: '#3BB774',
       error: '#E25050',
       warning: '#FFE351',
+      statusOrange: '#E98A32',
 
       textPrimary: '#29272A',
       textSecondary: '#828085',

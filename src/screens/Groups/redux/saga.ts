@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
@@ -21,6 +22,11 @@ import FileUploader from '~/services/fileUploader';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import {isArray} from 'lodash';
+import {withNavigation} from '~/router/helper';
+import {rootNavigationRef} from '~/router/navigator/refs';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+
+const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
@@ -39,6 +45,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.JOIN_NEW_GROUP, joinNewGroup);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
   yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
+  yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -415,6 +422,42 @@ function* joinNewGroup({payload}: {type: string; payload: {groupId: number}}) {
     yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
     console.error('joinNewGroup catch', err);
+    yield showError(err);
+  }
+}
+
+function* leaveGroup({payload}: {payload: number; type: string}) {
+  try {
+    const {groups} = yield select();
+    const privacy = groups?.groupDetail?.group?.privacy;
+
+    yield groupsDataHelper.leaveGroup(payload);
+    yield put(groupsActions.getJoinedGroups());
+
+    if (privacy === groupPrivacy.secret) {
+      if (Platform.OS !== 'web') navigation.replace(groupStack.groups);
+      else {
+        const topParentGroupId = groups?.joinedGroups[0]?.id;
+        navigation.navigate(groupStack.groupDetail, {
+          groupId: topParentGroupId,
+          initial: true,
+        });
+      }
+    }
+    yield put(
+      groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
+    );
+    yield put(groupsActions.getGroupDetail(payload));
+
+    const toastMessage: IToastMessage = {
+      content: i18next.t('groups:modal_confirm_leave_group:success_message'),
+      props: {
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.log('leaveGroup:', err);
     yield showError(err);
   }
 }

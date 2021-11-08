@@ -29,7 +29,7 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
 
-const GroupMembers = (): React.ReactElement => {
+const _GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<RootStackParamList, 'GroupMembers'>>();
 
@@ -335,4 +335,6 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
+const GroupMembers = React.memo(_GroupMembers);
+GroupMembers.whyDidYouRender = true;
 export default GroupMembers;

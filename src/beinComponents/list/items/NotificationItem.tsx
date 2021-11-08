@@ -5,11 +5,11 @@ import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {countTime} from '~/utils/formatData';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NodeEmoji from 'node-emoji';
+import TimeView from '~/beinComponents/TimeView';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -140,7 +140,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <Avatar.Group
           variant={'large'}
           source={actorAvatars}
-          totalMember={actorIds.length}
+          totalMember={actorIds.length - 3} // used when numers of avatars >= 5
         />
       );
     } else {
@@ -396,11 +396,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       {renderIndicator()}
       <View style={styles.avatarContainer}>{renderAvatar(activities)}</View>
       <View style={styles.flex1}>{renderNotiContent(activities)}</View>
-      <View>
-        <Text.BodyS style={styles.timeCreated}>
-          {countTime(`${updated_at}`)}
-        </Text.BodyS>
-      </View>
+      <TimeView time={updated_at} style={styles.timeCreated} type={'short'} />
       {/*<Icon style={styles.iconOptions} icon="EllipsisH" size={16} />*/}
     </View>
   );
@@ -432,6 +428,7 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     },
     stateIndicatorActive: {
       ...stateIndicator,
+      top: 20,
       width: 6,
       height: 48,
       borderTopRightRadius: 6,
@@ -461,6 +458,7 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     iconOptions: {},
     timeCreated: {
       marginTop: 1,
+      marginLeft: spacing.margin.base,
       color: colors.textSecondary,
     },
     reactIcon: {

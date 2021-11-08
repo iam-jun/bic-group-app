@@ -1,4 +1,3 @@
-import {ISearchChatReq} from './../interfaces/IChatHttpRequest';
 import {AxiosRequestConfig} from 'axios';
 import {
   IPayloadGetAttachmentFiles,
@@ -22,6 +21,9 @@ import {
   IRemoveMemberReq,
   ISendMessageReq,
   IUpdateGroupName,
+  ISearchChatReq,
+  IUpdateConversationDescription,
+  IUpdateConversationDetailReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
@@ -226,6 +228,16 @@ const Chat = {
       data,
     };
   },
+  updateConversationDetail: (
+    id: number | string,
+    data: IUpdateConversationDetailReq,
+  ): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}groups/${id}`,
+    method: 'put',
+    provider: providers.bein,
+    useRetry: true,
+    data,
+  }),
   uploadFile: (roomId: string, data: FormData): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}rooms.upload/${roomId}`,
@@ -245,6 +257,23 @@ const Chat = {
       useRetry: true,
       provider: providers.chat,
       data,
+    };
+  },
+  leaveQuickChat: (roomId: string): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.chat.url}groups.leave`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      data: {
+        roomId,
+      },
     };
   },
   mentionUsers: (params: IGetMentionUsersReq): HttpApiRequestConfig => {
@@ -374,6 +403,25 @@ const Chat = {
         'X-User-Id': auth.userId,
       },
       params,
+    };
+  },
+  setConversationNotifications: (
+    roomId: string,
+    disableNotifications: boolean,
+  ): HttpApiRequestConfig => {
+    const data = {
+      roomId,
+      notifications: {
+        disableNotifications: disableNotifications ? '1' : '0',
+      },
+    };
+
+    return {
+      url: `${providers.chat.url}rooms.saveNotification`,
+      method: 'post',
+      useRetry: true,
+      provider: providers.chat,
+      data: data,
     };
   },
 };

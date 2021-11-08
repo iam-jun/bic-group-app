@@ -188,6 +188,14 @@ export type IConversation = {
   _updatedAt: string;
   type: IRoomType;
   beinGroupId?: number;
+  disableNotifications?: boolean;
+};
+
+export type IConversationInfo = {
+  name?: string;
+  description?: string;
+  avatar?: string;
+  cover?: string;
 };
 
 export interface ISendMessageAction {
@@ -223,4 +231,11 @@ export interface IPayloadGetAttachmentFiles {
   sort?: any;
   query?: any;
   fields?: any;
+}
+
+export interface IUpdateConversationDetail {
+  name?: string;
+  description?: string | null;
+  avatar?: string;
+  cover?: string;
 }

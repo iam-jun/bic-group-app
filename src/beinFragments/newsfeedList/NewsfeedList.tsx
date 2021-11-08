@@ -14,12 +14,16 @@ import {useTheme} from 'react-native-paper';
 import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
 
 import {ITheme} from '~/theme/interfaces';
-import {deviceDimensions} from '~/theme/dimension';
+import {deviceDimensions, scaleSize} from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import {useTabPressListener} from '~/hooks/navigation';
+import {ITabTypes} from '~/interfaces/IRouter';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -80,9 +84,24 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     [data, HeaderComponent],
   );
 
+  useTabPressListener(
+    (tabName: ITabTypes) => {
+      if (tabName === 'home') {
+        listView?.current?.scrollToOffset?.(0, 0, true);
+      }
+    },
+    [listView?.current],
+  );
+
   useEffect(() => {
     console.log(`\x1b[36m🐣️ NewsfeedList ${data?.length}\x1b[0m`);
   }, [data]);
+
+  useEffect(() => {
+    if (!canLoadMore && !refreshing) {
+      setInitializing(false);
+    }
+  }, [canLoadMore, refreshing]);
 
   const _onItemLayout = debounce(() => {
     if (initializing) {
@@ -104,7 +123,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const renderPlaceholder = () => {
-    if ((refreshing || data?.length > 0) && !initializing) {
+    if (!initializing) {
       return null;
     }
     return (
@@ -120,6 +139,29 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     );
   };
 
+  const renderEmpty = () => {
+    if (data?.length === 0 && !canLoadMore) {
+      //todo waiting for design
+      return (
+        <View>
+          {!!HeaderComponent && HeaderComponent}
+          <View style={styles.listFooter}>
+            <Image
+              resizeMode={'contain'}
+              style={styles.imgEmpty}
+              source={images.img_empty_no_post}
+            />
+            <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
+            <Text.Subtitle useI18n color={theme.colors.textSecondary}>
+              post:newsfeed:text_empty_no_post
+            </Text.Subtitle>
+          </View>
+        </View>
+      );
+    }
+    return null;
+  };
+
   const renderFooter = () => {
     return (
       <View style={styles.listFooter}>
@@ -127,9 +169,20 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           <ActivityIndicator color={theme.colors.bgFocus} />
         )}
         {!refreshing && !canLoadMore && (
-          <Text.Subtitle color={theme.colors.textSecondary}>
-            No more homeposts
-          </Text.Subtitle>
+          <>
+            <Image
+              resizeMode={'contain'}
+              style={[styles.imgEmpty, {marginTop: spacing.margin.base}]}
+              source={images.img_empty_cant_load_more}
+            />
+            <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
+            <Text.Subtitle
+              useI18n
+              color={theme.colors.textSecondary}
+              style={{marginBottom: spacing.margin.large}}>
+              post:newsfeed:text_empty_cant_load_more
+            </Text.Subtitle>
+          </>
         )}
       </View>
     );
@@ -162,6 +215,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           }}
         />
       )}
+      {renderEmpty()}
       {renderPlaceholder()}
     </View>
   );
@@ -185,9 +239,10 @@ const createStyle = (theme: ITheme) => {
       marginBottom: spacing.margin.large,
     },
     listFooter: {
-      height: 150,
+      minHeight: 150,
       justifyContent: 'center',
       alignItems: 'center',
+      paddingVertical: spacing.padding.large,
     },
     placeholder: {
       opacity: 1,
@@ -197,6 +252,13 @@ const createStyle = (theme: ITheme) => {
       left: 0,
       right: 0,
       backgroundColor: colors.bgSecondary,
+    },
+    imgEmpty: {
+      width: scaleSize(240),
+      height: scaleSize(160),
+      maxWidth: 240,
+      maxHeight: 160,
+      marginBottom: spacing.margin.large,
     },
   });
 };

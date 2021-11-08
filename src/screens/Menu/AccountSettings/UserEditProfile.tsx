@@ -47,7 +47,7 @@ const UserEditProfile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const myProfile = useKeySelector(menuKeySelector.myProfile);
+  const myProfile: any = useKeySelector(menuKeySelector.myProfile);
   const {
     id,
     fullname,
@@ -368,7 +368,10 @@ const UserEditProfile = () => {
 
   return (
     <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
-      <Header title={i18next.t('settings:title_user_profile')} />
+      <Header
+        title={i18next.t('settings:title_user_profile')}
+        hideBackOnLaptop={navigation.canGoBack() ? false : true}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}
         {renderCover()}

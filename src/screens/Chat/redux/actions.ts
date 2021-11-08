@@ -1,9 +1,11 @@
 import {
   IChatUser,
   IConversation,
+  IConversationInfo,
   IMessage,
   IPayloadReactMessage,
   ISendMessageAction,
+  IUpdateConversationDetail,
   IUploadFileAction,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
@@ -76,6 +78,10 @@ export default {
     type: Actions.READ_SUBCRIPTIONS,
     payload,
   }),
+  updateSubscription: (payload: any) => ({
+    type: Actions.UPDATE_SUBSCRIPTION,
+    payload,
+  }),
   handleEvent: (payload: ISocketEvent) => ({
     type: Actions.HANDLE_EVENT,
     payload,
@@ -144,6 +150,20 @@ export default {
     type: Actions.UPDATE_CONVERSATION_NAME,
     payload,
   }),
+  updateConversationDetail: (
+    payload: IUpdateConversationDetail,
+    editFieldName?: string,
+    callback?: (roomId?: string) => void,
+  ) => ({
+    type: Actions.UPDATE_CONVERSATION_DETAIL,
+    payload,
+    editFieldName,
+    callback,
+  }),
+  setUpdatedConversationDetail: (payload: IConversationInfo) => ({
+    type: Actions.SET_UPDATED_CONVERSATION_DETAIL,
+    payload,
+  }),
   uploadFile: (payload: IUploadFileAction) => ({
     type: Actions.UPLOAD_FILE,
     payload,
@@ -167,6 +187,11 @@ export default {
   kickMeOut: (payload: IMessage) => ({
     type: Actions.KICK_ME_OUT,
     payload,
+  }),
+  leaveChat: (payload: string, roomType: string) => ({
+    type: Actions.LEAVE_CHAT,
+    payload,
+    roomType,
   }),
   readConversation: () => ({
     type: Actions.READ_CONVERSATION,
@@ -219,8 +244,18 @@ export default {
     type: Actions.SET_NEXT_MESSAGES,
     payload,
   }),
-  // searchConversations: (payload?: string) => ({
-  //   type: Actions.SEARCH_CONVERSATIONS,
-  //   payload,
-  // }),
+  setConversationNotifications: (payload?: {
+    roomId: string;
+    disableNotifications: boolean;
+  }) => ({
+    type: Actions.SET_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
+  toggleConversationNotifications: (payload: {
+    roomId: string;
+    currentDisableNotifications: boolean;
+  }) => ({
+    type: Actions.TOGGLE_CONVERSATION_NOTIFICATIONS,
+    payload,
+  }),
 };

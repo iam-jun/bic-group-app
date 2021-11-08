@@ -77,27 +77,6 @@ export const timestampToISODate = (date: any): string => {
   return date;
 };
 
-export const countTime = (timeIso: string) => {
-  let result = '';
-  const time = moment.utc(timeIso).unix();
-  const now = moment().unix();
-  const deltaSecond = Math.max(now - time, time - now);
-  if (deltaSecond < 60) {
-    result = 'now';
-  } else if (deltaSecond < 60 * 60) {
-    result = Math.round(deltaSecond / 60) + 'm';
-  } else if (deltaSecond < 60 * 60 * 24) {
-    result = Math.round(deltaSecond / (60 * 60)) + 'h';
-  } else if (deltaSecond < 60 * 60 * 24 * 7) {
-    result = Math.round(deltaSecond / (60 * 60 * 24)) + 'd';
-  } else if (deltaSecond < 60 * 60 * 24 * 7 * 52) {
-    result = Math.round(deltaSecond / (60 * 60 * 24 * 7)) + 'w';
-  } else if (deltaSecond >= 60 * 60 * 24 * 7 * 52) {
-    result = Math.round(deltaSecond / (60 * 60 * 24 * 7 * 52)) + 'y';
-  }
-  return result;
-};
-
 export const formatPhoneNumber = (text: string) => {
   if (!text) return text;
   const cleaned = ('' + text).replace(/\D/g, '');

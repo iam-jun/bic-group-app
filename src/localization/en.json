@@ -1,5 +1,17 @@
 {
   "common": {
+    "time": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "at": "at",
+      "now": "now",
+      "short_sec": "s",
+      "short_min": "m",
+      "short_hour": "h",
+      "short_day": "d",
+      "short_week": "w",
+      "short_year": "y"
+    },
     "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Update",
@@ -197,7 +209,7 @@
     "title_language": "Language",
     "title_speaking_languages": "Speaking Languages",
     "title_relationship_status": "Relationship Status",
-    "title_currency": "Currency",
+    "title_currency": "Token",
     "title_about": "About",
     "title_about_bein": "About Bein",
     "title_name": "Name",
@@ -380,6 +392,12 @@
     "post_exit_option_save": "Save as Draft",
     "post_exit_option_discard": "Discard Post",
     "post_exit_option_continue": "Continue Editing",
+    "newsfeed": {
+      "title_empty_no_post": "This place looks lonely...",
+      "text_empty_no_post": "Join in a community to get updated",
+      "title_empty_cant_load_more": "You have seen it all",
+      "text_empty_cant_load_more": "Take a break time & chill"
+    },
     "draft": {
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
@@ -418,6 +436,7 @@
     "label_invite": "Invite",
     "label_notification": "Notifications",
     "label_mute": "Mute",
+    "label_unmute": "Unmute",
     "label_pin_chat": "Pin Chat",
     "label_attachments": "Files",
     "label_gallery": "Gallery",
@@ -426,10 +445,11 @@
     "placeholder_users_search": "Search for someone to chat...",
     "placeholder_members_search": "Search members",
     "system_message": {
-      "au": "{1} joined to this group",
-      "ru": "{1} was removed from the group.",
-      "room_changed_description": "{0} has changed the chat description.",
-      "room_changed_announcement": "{0} has changed the chat announcement.",
+      "au": "{1} joined the group",
+      "ru": "{1} was removed from the group",
+      "ul": "{1} left the group",
+      "room_changed_description": "{0} has changed the chat description",
+      "room_changed_announcement": "{0} has changed the chat announcement",
       "room_changed_topic": "{0} has changed the group chat topic to {1}",
       "room_changed_avatar": "{0} has changed the group avatar",
       "r": "{0} has changed the group chat name to {1}",
@@ -488,8 +508,9 @@
     "member_menu": {
       "label_view_profile": "View profile",
       "label_set_as_admin": "Set as admin",
-      "label_direct_message": "Direct message",
-      "label_remove_from_group_chat": "Remove from group chat"
+      "label_direct_message": "Send message",
+      "label_remove_from_group_chat": "Remove from group chat",
+      "label_leave_group": "Leave Group"
     },
     "text_mention_all": "All",
     "modal_confirm_remove_member": {
@@ -526,6 +547,20 @@
     "search_result": {
       "job_title": " at ",
       "member_count": " & {0} others"
+    },
+    "text_chat_description": "Chat Description",
+    "conversation_options": {
+      "notifications": "Notifications",
+      "pin": "Pin",
+      "mark_as_read": "Mark as Read",
+      "delete_chat": "Delete Chat"
+    },
+    "modal_confirm_leave_chat": {
+      "title": "Leave Group",
+      "description": "Are you sure you want to leave this group chat?",
+      "leave_inner_groups": "You will also leave: {0}.",
+      "button_leave": "Leave Chat",
+      "success_message": "You have left the group chat"
     }
   },
   "comment": {
@@ -575,9 +610,11 @@
     },
     "member_menu": {
       "label_view_profile": "View profile",
-      "label_direct_message": "Direct message",
+      "label_send_message": "Send message",
       "label_set_as_admin": "Set as admin",
-      "label_remove_from_group": "Remove from this group"
+      "label_remove_as_admin": "Remove as admin",
+      "label_remove_member": "Remove member",
+      "label_leave_group": "Leave Group"
     },
     "private_group_welcome_message": {
       "title": "This group is private.",
@@ -587,6 +624,16 @@
       "title": "Remove this member",
       "description": "Do you want to remove {name}, this member will no longer be in this group{other groups}.",
       "button_remove": "Remove"
+    },
+    "modal_confirm_leave_group": {
+      "title": "Leave Group",
+      "description": "Are you sure you want to leave this group?",
+      "leave_inner_groups": "You will also leave: {0}.",
+      "button_leave": "Leave Group",
+      "success_message": "You have left the group"
+    },
+    "error": {
+      "last_admin": "You are the last admin of the group. Set another admin before leaving"
     }
   },
   "profile": {

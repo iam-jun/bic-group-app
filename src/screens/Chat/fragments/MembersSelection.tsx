@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import React from 'react';
-import {StyleSheet, View, Image as RNImage} from 'react-native';
+import {Image as RNImage, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
@@ -10,10 +10,9 @@ import SearchInput, {
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
-import {Image, Text, ViewSpacing} from '~/components';
+import {Text, ViewSpacing} from '~/components';
 import useChat from '~/hooks/chat';
 import {IChatUser} from '~/interfaces/IChat';
-import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import {getDefaultAvatar} from '../helper';
 import actions from '../redux/actions';
@@ -33,7 +32,7 @@ export interface MembersSelectionProps {
   onLoadMore: () => void;
 }
 
-const MembersSelection: React.FC<MembersSelectionProps> = ({
+const _MembersSelection: React.FC<MembersSelectionProps> = ({
   selectable,
   searchInputProps,
   title,
@@ -170,5 +169,8 @@ const createStyles = (theme: ITheme) => {
     },
   });
 };
+
+const MembersSelection = React.memo(_MembersSelection);
+MembersSelection.whyDidYouRender = true;
 
 export default MembersSelection;

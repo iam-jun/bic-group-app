@@ -50,4 +50,17 @@ platform :android do
 #     upload_to_play_store_internal_app_sharing
   end
 
+    lane :deploy_production do
+        Dotenv.overload('../../.env.sample', '../../.env.production')
+        appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+        gradle(task: "clean")
+        gradle(
+          task: "assemble",
+          build_type: "Release",
+          flavor: "Production",
+        )
+        rocket_chat(
+          message: "🟢 [PROD] 🤖 -Android- New build version #{appVersionText} can be download on Internal Testing",
+        )
+    end
 end

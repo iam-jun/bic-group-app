@@ -90,6 +90,7 @@ const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
     switch (messageType) {
       case 'au':
       case 'ru':
+      case 'ul':
         return renderAddRemoveUser();
       case 'room_changed_description':
       case 'room_changed_announcement':
@@ -116,6 +117,7 @@ const SystemMessage: React.FC<IMessage> = (currentMessage: IMessage) => {
             style={styles.icon}
           />
         );
+      case 'ul':
       case 'ru':
         return (
           <Icon

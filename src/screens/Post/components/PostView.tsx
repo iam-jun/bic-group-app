@@ -196,7 +196,7 @@ const _PostView: FC<PostViewProps> = ({
 
   if (deleted) {
     return (
-      <View style={styles.deletedContainer}>
+      <View style={StyleSheet.flatten([styles.deletedContainer, style])}>
         <Image style={styles.imageDelete} source={resourceImages.img_delete} />
         <Text.H6 useI18n>post:label_post_deleted</Text.H6>
       </View>
