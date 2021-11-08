@@ -19,6 +19,7 @@ import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Div from '~/beinComponents/Div';
 
 import {ITheme} from '~/theme/interfaces';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -292,23 +293,27 @@ const AddWork = () => {
       </View>
 
       {selectingStartDate && (
-        <DateTimePicker
-          isVisible={selectingStartDate}
-          date={new Date()}
-          mode={Platform.OS === 'web' ? 'time' : 'date'}
-          onConfirm={onSetStartDate}
-          onCancel={onStartDateEditClose}
-        />
+        <Div className="react-datepicker-container">
+          <DateTimePicker
+            isVisible={selectingStartDate}
+            date={new Date()}
+            mode={Platform.OS === 'web' ? 'time' : 'date'}
+            onConfirm={onSetStartDate}
+            onCancel={onStartDateEditClose}
+          />
+        </Div>
       )}
 
       {selectingEndDate && (
-        <DateTimePicker
-          isVisible={selectingEndDate}
-          date={new Date()}
-          mode={Platform.OS === 'web' ? 'time' : 'date'}
-          onConfirm={onSetEndDate}
-          onCancel={onEndDateEditClose}
-        />
+        <Div className="react-datepicker-container">
+          <DateTimePicker
+            isVisible={selectingEndDate}
+            date={new Date()}
+            mode={Platform.OS === 'web' ? 'time' : 'date'}
+            onConfirm={onSetEndDate}
+            onCancel={onEndDateEditClose}
+          />
+        </Div>
       )}
     </ScreenWrapper>
   );
