@@ -555,7 +555,7 @@ const _ConversationDetail = (): React.ReactElement => {
             {renderDescription()}
             {renderMembers()}
           </View>
-          {renderAdminTool()}
+          {permissions[chatPermissions.CAN_MANAGE_MEMBER] && renderAdminTool()}
           {renderActions()}
           {renderPrivacy()}
         </View>
