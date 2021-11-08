@@ -17,6 +17,7 @@ export interface CollapsibleTextProps extends TextProps {
   useMarkdown?: boolean;
   onPressAudience?: (audience: any) => any;
   limitMarkdownTypes?: boolean;
+  testID?: string;
   [x: string]: any;
 }
 
@@ -30,6 +31,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   useMarkdown,
   onPressAudience,
   limitMarkdownTypes,
+  testID,
   ...textProps
 }: CollapsibleTextProps) => {
   const [contentShowAll, setContentShowAll] = useState(false);
@@ -96,6 +98,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
 
   return (
     <TouchableOpacity
+      testID={testID}
       activeOpacity={0.6}
       disabled={!(onPress || (toggleOnPress && shortContent))}
       onPress={_onPress}>

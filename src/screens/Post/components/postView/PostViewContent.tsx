@@ -51,6 +51,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
           </MarkdownView>
         ) : (
           <CollapsibleText
+            testID={'post_view_content'}
             content={content}
             limitLength={400}
             shortLength={400}
