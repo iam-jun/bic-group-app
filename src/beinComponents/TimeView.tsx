@@ -2,11 +2,12 @@ import React, {FC, useCallback, useContext, useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {ITheme} from '~/theme/interfaces';
+import moment from 'moment';
+import 'moment/locale/vi';
 
+import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
-import moment from 'moment';
 import {AppContext} from '~/contexts/AppContext';
 
 const intervalTime = 1000 * 60; //1 min
@@ -49,7 +50,7 @@ const TimeView: FC<TimeViewProps> = ({
         clearInterval(interval);
       }
     };
-  }, [time]);
+  }, [time, language]);
 
   const getDisplayTime = useCallback(() => {
     let result = '';
@@ -62,7 +63,7 @@ const TimeView: FC<TimeViewProps> = ({
       result = formatShortTime(time, t, language);
     }
     setDisplayTime(result);
-  }, [time]);
+  }, [time, language]);
 
   return (
     <Text.BodyS color={colors.textSecondary} style={style}>
@@ -72,6 +73,7 @@ const TimeView: FC<TimeViewProps> = ({
 };
 
 export const formatShortTime = (time: any, t: any, lang: any) => {
+  moment.locale(lang);
   let result = '';
   const date = moment.utc(time).unix();
   const now = moment().unix();
@@ -103,9 +105,12 @@ export const formatShortTime = (time: any, t: any, lang: any) => {
 };
 
 export const formatFullTime = (time: any, t: any, lang: any) => {
+  moment.locale(lang);
   let result = '';
+  const dateUtc = moment.utc(time);
+  const localDate = dateUtc.local();
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-  const date = moment(time, formats, true);
+  const date = moment(localDate, formats, true);
   const isSameYear = date?.year?.() === moment().year();
 
   let formatPreviousDay = '';
