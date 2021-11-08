@@ -12,7 +12,10 @@ import rootSaga from '~/store/sagas';
 import awsconfig from './aws-exports';
 import Store from './src/store';
 
-LogBox.ignoreLogs(['EventEmitter.removeListener']);
+LogBox.ignoreLogs([
+  'EventEmitter.removeListener',
+  "Warning: why-did-you-render couldn't handle circular references in props",
+]);
 
 i18Next.language;
 i18Next.options.resources;
