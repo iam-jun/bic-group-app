@@ -39,7 +39,7 @@ export interface CommentViewProps {
   contentBackgroundColor?: string;
 }
 
-const CommentView: React.FC<CommentViewProps> = ({
+const _CommentView: React.FC<CommentViewProps> = ({
   postId,
   groupIds,
   parentCommentId,
@@ -323,4 +323,6 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
+const CommentView = React.memo(_CommentView);
+// CommentView.whyDidYouRender = true;
 export default CommentView;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -32,7 +32,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const _onPressReply = () => {
+  const _onPressReply = useCallback(() => {
     dispatch(
       postActions.setPostDetailReplyingComment({
         comment: commentData,
@@ -40,7 +40,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       }),
     );
     onPressReply?.(commentData);
-  };
+  }, [commentData, commentParent]);
 
   const childCommentCount = commentData?.children_counts?.comment || 0;
   const loadedChildComment = commentData?.latest_children?.comment?.length || 0;
