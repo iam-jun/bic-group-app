@@ -136,4 +136,22 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
       message: "🟡 [STG] 🍎 -iOS- New build version #{appVersionText} can be download on TestFlight",
     )
   end
+
+    lane :deploy_production do
+        Dotenv.overload('../../.env.sample', '../../.env.production')
+        appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+        build_app(
+            workspace: "#{ENV['SCHEME_NAME']}.xcworkspace",
+            scheme: "#{ENV['SCHEME_NAME_IOS']}",
+            configuration: "Release",
+            output_directory:"./fastlane/production/",
+            output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+            export_method: "app-store",
+            silent: true,
+            clean: true,
+        )
+        rocket_chat(
+            message: "🟢 [PROD] 🍎 -iOS- New build version #{appVersionText} can be download on TestFlight",
+        )
+    end
 end
