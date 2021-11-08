@@ -16,13 +16,13 @@ const limitInterval = 1000 * 60 * 60; //60 mins
 export interface TimeViewProps {
   style?: StyleProp<ViewStyle>;
   time: any;
-  type?: 'full' | 'short';
+  type?: 'fullDateTime' | 'dateTime' | 'short';
 }
 
 const TimeView: FC<TimeViewProps> = ({
   style,
   time,
-  type = 'full',
+  type = 'fullDateTime',
 }: TimeViewProps) => {
   const [displayTime, setDisplayTime] = useState('');
 
@@ -57,8 +57,10 @@ const TimeView: FC<TimeViewProps> = ({
     if (!time) {
       return;
     }
-    if (type === 'full') {
+    if (type === 'fullDateTime') {
       result = formatFullTime(time, t, language);
+    } else if (type === 'dateTime') {
+      result = formatDateTime(time, t, language);
     } else {
       result = formatShortTime(time, t, language);
     }
@@ -125,6 +127,25 @@ export const formatFullTime = (time: any, t: any, lang: any) => {
   result = date.calendar(null, {
     lastDay: `[${t('common:time:yesterday')} ${t('common:time:at')}] hh:mm A`,
     sameDay: `[${t('common:time:today')} ${t('common:time:at')}] hh:mm A`,
+    lastWeek: formatPreviousDay,
+    sameElse: formatPreviousDay,
+  });
+  return result;
+};
+
+export const formatDateTime = (time: any, t: any, lang: any) => {
+  moment.locale(lang);
+  let result = '';
+  const dateUtc = moment.utc(time);
+  const localDate = dateUtc.local();
+  const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
+  const date = moment(localDate, formats, true);
+
+  const formatPreviousDay = lang === 'vi' ? 'DD/MM/yyyy' : 'MMM DD, yyyy';
+
+  result = date.calendar(null, {
+    lastDay: `[${t('common:time:yesterday')}]`,
+    sameDay: `[${t('common:time:today')}]`,
     lastWeek: formatPreviousDay,
     sameElse: formatPreviousDay,
   });

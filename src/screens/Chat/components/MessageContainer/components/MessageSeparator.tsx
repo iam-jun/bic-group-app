@@ -4,8 +4,8 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
 import moment from 'moment';
+import TimeView from '~/beinComponents/TimeView';
 
 export interface MessageSeparatorProps {
   style?: StyleProp<ViewStyle>;
@@ -18,7 +18,6 @@ const MessageSeparator: FC<MessageSeparatorProps> = ({
   previousTime,
 }: MessageSeparatorProps) => {
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
   const styles = createStyle(theme);
 
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
@@ -29,19 +28,10 @@ const MessageSeparator: FC<MessageSeparatorProps> = ({
     return null;
   }
 
-  const formatDate = () => {
-    return date.calendar(null, {
-      lastDay: '[Yesterday]',
-      sameDay: '[Today]',
-      lastWeek: 'MMM DD, yyyy',
-      sameElse: 'MMM DD, yyyy',
-    });
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.line} />
-      <Text color={colors.textSecondary}>{formatDate()}</Text>
+      <TimeView time={time} type={'dateTime'} />
       <View style={styles.line} />
     </View>
   );
