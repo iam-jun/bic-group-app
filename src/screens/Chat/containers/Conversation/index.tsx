@@ -67,6 +67,7 @@ const _Conversation = () => {
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
+  const contentHeight = useRef(dimension.deviceHeight);
   const initiated = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
@@ -78,7 +79,12 @@ const _Conversation = () => {
   useEffect(() => {
     const emmiterCallback = (index: number) => {
       listRef.current?.flashScrollIndicators();
-      scrollToBottom(true, index);
+      // if user scroll up, do not scroll to bottom automatically
+      if (
+        offsetY.current >=
+        contentHeight.current - dimension.deviceHeight - 100
+      )
+        scrollToBottom(true, index);
     };
 
     const _emmiter = DeviceEventEmitter.addListener(
@@ -460,12 +466,13 @@ const _Conversation = () => {
   const handleScroll = (event: any) => {
     InteractionManager.runAfterInteractions(() => {
       const _offsetY = event?.contentOffset.y;
-      const contentHeight = event?.contentSize.height;
+      const _contentHeight = event?.contentSize.height;
       const delta = 0;
-      const condition1 = contentHeight - dimension.deviceHeight * 2 > _offsetY;
+      const condition1 = _contentHeight - dimension.deviceHeight * 2 > _offsetY;
       const condition2 = messages.canLoadNext;
       setDownButtonVisible(condition1 || condition2);
       offsetY.current = _offsetY;
+      contentHeight.current = _contentHeight;
 
       if (
         initiated.current &&
