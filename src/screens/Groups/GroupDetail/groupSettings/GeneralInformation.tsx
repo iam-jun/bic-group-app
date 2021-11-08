@@ -83,7 +83,7 @@ const GeneralInformation = (props: any) => {
   };
 
   const editGroupDescripton = () =>
-    rootNavigation.navigate(groupStack.editGroupDescription);
+    rootNavigation.navigate(groupStack.editGroupDescription, {groupId: id});
 
   const uploadFile = (
     file: IFilePicked,
