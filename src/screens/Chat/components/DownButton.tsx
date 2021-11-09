@@ -1,7 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, Platform, Animated} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 
@@ -42,20 +41,23 @@ const DownButton = ({visible, onDownPress}: Props) => {
   }, [visible]);
 
   return (
-    <ButtonWrapper onPress={onDownPress}>
-      <Animated.View
-        nativeID="down-button"
-        style={[
-          styles.container,
-          Platform.OS !== 'web' && styles.shadow,
-          {
-            opacity: fadeAnimation,
-            transform: [{translateY: translateYAnimation}],
-          },
-        ]}>
-        <Icon tintColor={theme.colors.accent} icon="ArrowDown" />
-      </Animated.View>
-    </ButtonWrapper>
+    <Animated.View
+      nativeID="down-button"
+      style={[
+        styles.container,
+        Platform.OS !== 'web' && styles.shadow,
+        {
+          opacity: fadeAnimation,
+          transform: [{translateY: translateYAnimation}],
+        },
+      ]}
+      pointerEvents="box-none">
+      <Icon
+        tintColor={theme.colors.accent}
+        icon="ArrowDown"
+        onPress={onDownPress}
+      />
+    </Animated.View>
   );
 };
 
