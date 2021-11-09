@@ -29,12 +29,12 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      width: 48,
-      height: 48,
+      width: 40,
+      height: 40,
       alignItems: 'center',
       justifyContent: 'center',
       position: 'absolute',
-      bottom: 24,
+      bottom: 32,
       right: 24,
       borderWidth: 1,
       padding: spacing.padding.small,
