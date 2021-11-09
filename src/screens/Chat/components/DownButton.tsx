@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, Platform} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {StyleSheet, Platform, Animated} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
@@ -11,16 +11,50 @@ interface Props {
 }
 
 const DownButton = ({visible, onDownPress}: Props) => {
-  if (!visible) return null;
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
+  const translateYAnimation = useRef(new Animated.Value(0)).current;
+  const fadeAnimation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    /**
+     * if (visible) fade in and move up
+     * else fade out and move down.
+     * FYI, 72 =  32            + 40
+     *            from bottom     button's size
+     * and -72 is reverse of the Y axis direction
+     */
+    const newTranslateY = visible ? -72 : 0;
+    const newOpacity = visible ? 1 : 0;
+    const duration = 300;
+
+    Animated.timing(translateYAnimation, {
+      toValue: newTranslateY,
+      useNativeDriver: false,
+      duration,
+    }).start();
+    Animated.timing(fadeAnimation, {
+      toValue: newOpacity,
+      useNativeDriver: false,
+      duration,
+    }).start();
+  }, [visible]);
+
   return (
-    <ButtonWrapper
-      nativeID="down-button"
-      style={[styles.container, Platform.OS !== 'web' && styles.shadow]}
-      onPress={onDownPress}>
-      <Icon tintColor={theme.colors.accent} icon="ArrowDown" />
+    <ButtonWrapper onPress={onDownPress}>
+      <Animated.View
+        nativeID="down-button"
+        style={[
+          styles.container,
+          Platform.OS !== 'web' && styles.shadow,
+          {
+            opacity: fadeAnimation,
+            transform: [{translateY: translateYAnimation}],
+          },
+        ]}>
+        <Icon tintColor={theme.colors.accent} icon="ArrowDown" />
+      </Animated.View>
     </ButtonWrapper>
   );
 };
@@ -34,7 +68,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
       justifyContent: 'center',
       position: 'absolute',
-      bottom: 32,
+      bottom: -40,
       right: 24,
       borderWidth: 1,
       padding: spacing.padding.small,
