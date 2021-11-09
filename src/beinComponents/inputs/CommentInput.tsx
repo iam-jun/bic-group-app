@@ -320,11 +320,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const handleKeyEvent = (event: any) => {
-    if (!event?.shiftKey && event?.key === 'Enter') {
-      if (!text.trim()) return;
-      event.preventDefault();
-      _onPressSend();
-    } else if (
+    if (
       (event.metaKey || event.ctrlKey) &&
       Object.keys(supportedMarkdownKey).includes(event.key)
     ) {
@@ -404,7 +400,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const _onKeyPress = (e: any) => {
     onKeyPress?.(e);
-    Platform.OS !== 'web' ? undefined : handleKeyEvent;
+    if (Platform.OS === 'web') {
+      handleKeyEvent(e);
+    }
   };
 
   const inputStyle: any = StyleSheet.flatten([
