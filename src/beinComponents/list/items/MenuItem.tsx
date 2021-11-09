@@ -21,6 +21,7 @@ interface MenuItemProps extends IOption {
   notificationsBadgeNumber?: number;
   notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
+  testID?: string;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -38,6 +39,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   notificationsBadgeNumber,
   notificationsBadgeProps,
   badgeColor,
+  testID,
 }: MenuItemProps) => {
   const theme = useTheme() as ITheme;
   const {colors} = theme || {};
@@ -59,7 +61,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   if (disable) className = '';
 
   return (
-    <TouchableOpacity disabled={disable} onPress={onPress}>
+    <TouchableOpacity disabled={disable} onPress={onPress} testID={testID}>
       <Div className={className}>
         {Platform.OS === 'web' && isActive && (
           <View style={styles.itemActiveIndicator} />
