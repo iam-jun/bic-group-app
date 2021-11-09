@@ -318,7 +318,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }
   };
 
-  const checkSendWhenEnter = debounce((event: any) => {
+  const checkSendWhenEnter = (event: any) => {
     if (
       event?.key === 'Enter' &&
       !event?.shiftKey &&
@@ -327,7 +327,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
       event.preventDefault();
       componentInputProps?.commentInputRef?.current?.send();
     }
-  }, 200);
+  };
 
   const _onKeyPress = (event: any) => {
     if (mentioning) {
