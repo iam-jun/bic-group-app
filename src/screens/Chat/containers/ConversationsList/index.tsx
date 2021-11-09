@@ -1,6 +1,7 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  InteractionManager,
   Platform,
   Pressable,
   StyleSheet,
@@ -51,47 +52,51 @@ const _ConversationsList = (): React.ReactElement => {
   const [currentPath, setCurrentPath] = useState('');
 
   useEffect(() => {
-    /**
-     * Get 'chat' in init url
-     * to handle user access the deeper level
-     * in account setting by url
-     */
-    if (Platform.OS === 'web') {
-      const initUrl = window.location.href;
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const parse = require('url-parse');
-      const url = parse(initUrl, true);
-      const paths = url.pathname.split('/');
-
-      if (!paths || paths.length === 0) return;
+    InteractionManager.runAfterInteractions(() => {
+      isFocused && dispatch(actions.getSubscriptions());
 
       /**
-       * set new currentPath directly, not through dispatch as
-       * there is errors, when access through url
+       * Get 'chat' in init url
+       * to handle user access the deeper level
+       * in account setting by url
        */
-      setCurrentPath(paths[2]);
-      // const newRootScreenName = `${paths[1]}/${paths[2]}}`;
-      // dispatch(appActions.setRootScreenName(newRootScreenName));
-    }
+      if (Platform.OS === 'web') {
+        const initUrl = window.location.href;
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const parse = require('url-parse');
+        const url = parse(initUrl, true);
+        const paths = url.pathname.split('/');
+
+        if (!paths || paths.length === 0) return;
+
+        /**
+         * set new currentPath directly, not through dispatch as
+         * there is errors, when access through url
+         */
+        setCurrentPath(paths[2]);
+        // const newRootScreenName = `${paths[1]}/${paths[2]}}`;
+        // dispatch(appActions.setRootScreenName(newRootScreenName));
+      }
+    });
   }, [isFocused]);
 
   useEffect(() => {
-    const paths = rootScreenName.split('/');
-    if (!paths || paths.length === 0 || paths[0] !== appScreens.chat) return;
+    InteractionManager.runAfterInteractions(() => {
+      const paths = rootScreenName.split('/');
+      if (!paths || paths.length === 0 || paths[0] !== appScreens.chat) return;
 
-    const roomId = paths[1];
+      const roomId = paths[1];
 
-    if (!roomId) return;
+      if (!roomId) return;
 
-    setCurrentPath(paths[1]);
+      setCurrentPath(paths[1]);
+    });
   }, [rootScreenName]);
 
   useEffect(() => {
-    isFocused && dispatch(actions.getSubscriptions());
-  }, [isFocused]);
-
-  useEffect(() => {
-    Platform.OS === 'web' && searchInputFocus && goSearch();
+    InteractionManager.runAfterInteractions(() => {
+      Platform.OS === 'web' && searchInputFocus && goSearch();
+    });
   }, [searchInputFocus]);
 
   useTabPressListener(
@@ -108,6 +113,11 @@ const _ConversationsList = (): React.ReactElement => {
   };
 
   const onChatPress = (item: IConversation) => {
+    dispatch(actions.setConversationDetail(item));
+
+    // Will update when data structure is refactored
+    dispatch(actions.resetData('messages'));
+
     rootNavigation.navigate(chatStack.conversation, {
       roomId: item._id,
       message_id: undefined,
