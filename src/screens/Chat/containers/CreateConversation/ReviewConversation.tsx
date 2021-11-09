@@ -44,6 +44,14 @@ const ReviewConversation = () => {
     );
   };
 
+  const onRemovePress = (user: IChatUser) => {
+    /**
+     * ACTION chat/selectUser will remove the user from the list
+     * as the field "selected" in the parameter of the user is true
+     */
+    dispatch(actions.selectUser(user));
+  };
+
   const renderListHeader = () => {
     return (
       <View style={styles.chatMembersHeader}>
@@ -58,18 +66,25 @@ const ReviewConversation = () => {
     item: IChatUser & IUserProfile;
     index: number;
   }) => {
+    const isMe = item.username === user.username;
+
     return (
       <PrimaryItem
         showAvatar
         style={styles.itemContainer}
         title={
-          item.username === user.username
-            ? `${item.fullname} (${i18next.t('chat:text_me')})`
-            : item.name
+          isMe ? `${item.fullname} (${i18next.t('chat:text_me')})` : item.name
         }
         avatar={item.avatar}
         RightComponent={
-          <Icon style={styles.iconClose} icon={'iconClose'} size={14} />
+          isMe ? null : (
+            <Icon
+              style={styles.iconClose}
+              icon={'iconClose'}
+              size={14}
+              onPress={() => onRemovePress(item)}
+            />
+          )
         }
       />
     );
@@ -94,7 +109,6 @@ const ReviewConversation = () => {
         placeholder={i18next.t('chat:placeholder_input_group_chat_name')}
         helperContent={i18next.t('chat:text_create_quick_chat_name_note')}
       />
-
       <ListView
         data={[myProfile, ...selectedUsers]}
         style={styles.listView}
