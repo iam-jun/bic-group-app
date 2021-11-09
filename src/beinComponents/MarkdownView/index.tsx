@@ -51,7 +51,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
 
   const _children = replaceLineBreak(children);
 
-  const markdownIt = MarkdownIt({typographer: true, linkify: true})
+  const markdownIt = MarkdownIt({typographer: false, linkify: true})
     .use(emojiPlugin, {
       defs: emojiDefs,
       shortcuts: emojiShortcuts,
