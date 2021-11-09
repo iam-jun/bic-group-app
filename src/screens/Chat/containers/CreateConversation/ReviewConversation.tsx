@@ -44,6 +44,14 @@ const ReviewConversation = () => {
     );
   };
 
+  const onRemovePress = (user: IChatUser) => {
+    /**
+     * ACTION chat/selectUser will remove the user from the list
+     * as the field "selected" in the parameter of the user is true
+     */
+    dispatch(actions.selectUser(user));
+  };
+
   const renderListHeader = () => {
     return (
       <View style={styles.chatMembersHeader}>
@@ -69,7 +77,12 @@ const ReviewConversation = () => {
         }
         avatar={item.avatar}
         RightComponent={
-          <Icon style={styles.iconClose} icon={'iconClose'} size={14} />
+          <Icon
+            style={styles.iconClose}
+            icon={'iconClose'}
+            size={14}
+            onPress={() => onRemovePress(item)}
+          />
         }
       />
     );
