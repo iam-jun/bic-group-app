@@ -71,6 +71,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
 
   return (
     <TouchableOpacity
+      testID={'post_view_header'}
       disabled={!onPressHeader}
       onPress={() => onPressHeader?.()}
       style={styles.headerContainer}>
@@ -79,6 +80,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       </TouchableOpacity>
       <View style={{flex: 1}}>
         <TouchableOpacity
+          testID={'post_view_actor'}
           onPress={onPressActor}
           style={{alignSelf: 'flex-start'}}>
           <Text.H6>{actorName}</Text.H6>
@@ -87,7 +89,11 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           <Text.H6S useI18n color={colors.textSecondary} style={styles.textTo}>
             post:to
           </Text.H6S>
-          <Text.H6 onPress={onPressShowAudiences}>{textAudiences}</Text.H6>
+          <Text.H6
+            testID={'post_view_audiences'}
+            onPress={onPressShowAudiences}>
+            {textAudiences}
+          </Text.H6>
         </View>
         <View style={styles.rowCenter}>
           <TimeView time={time} />

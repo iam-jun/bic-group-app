@@ -1,31 +1,42 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, TextInput, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
 
 import {ITheme} from '~/theme/interfaces';
-import useGroups from '~/hooks/groups';
-import i18next from 'i18next';
-
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
-import TextInput from '~/beinComponents/inputs/TextInput';
 import groupsActions from '../../redux/actions';
+import {fontFamilies} from '~/theme/fonts';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
 
-const EditGroupDescription = () => {
+const EditGroupDescription = (props: any) => {
+  const params = props.route.params;
+  const {groupId} = params || {};
+
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {groupDetail} = useGroups();
-  const {id, description} = groupDetail.group;
+  const {id, description} =
+    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const navigation = useNavigation();
 
   const [text, setText] = useState<string>(description);
   const _onChangeText = (value: string) => {
     setText(value);
   };
+
+  useEffect(() => {
+    // in case for refreshing page on web
+    Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(groupId));
+  }, [groupId]);
+
+  useEffect(() => {
+    !text && setText(description);
+  }, [description]);
 
   const onSave = () => {
     dispatch(groupsActions.editGroupDetail({id, description: text}));
@@ -38,26 +49,29 @@ const EditGroupDescription = () => {
       style={styles.container}
       isFullView>
       <Header
-        title={i18next.t('settings:title_group_description')}
-        buttonText={'Save'}
+        title={'settings:title_group_description'}
+        titleTextProps={{useI18n: true}}
+        buttonText={'common:btn_save'}
+        buttonProps={{
+          useI18n: true,
+        }}
         onPressButton={onSave}
+        hideBackOnLaptop={navigation.canGoBack() ? false : true}
       />
 
       <View style={styles.content}>
-        <Text.H6
-          style={styles.textEdit}
-          color={theme.colors.textPrimary}
-          useI18n>
+        <Text.H6 color={theme.colors.textPrimary} useI18n>
           settings:title_edit_description
         </Text.H6>
-        <TextInput
-          value={text}
-          onChangeText={_onChangeText}
-          maxLength={500}
-          multiline
-          // @ts-ignore
-          minHeight={224}
-        />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textEdit}
+            value={text}
+            onChangeText={_onChangeText}
+            maxLength={500}
+            multiline
+          />
+        </View>
         <Text.BodyS color={theme.colors.textSecondary} useI18n>
           settings:text_maximum_character
         </Text.BodyS>
@@ -69,7 +83,7 @@ const EditGroupDescription = () => {
 export default EditGroupDescription;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors, dimension} = theme;
 
   return StyleSheet.create({
     container: {
@@ -80,7 +94,19 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
     },
     textEdit: {
-      marginBottom: spacing.margin.small,
+      minHeight: 224,
+      fontFamily: fontFamilies.Segoe,
+      fontSize: dimension.sizes.body,
+      color: colors.textPrimary,
+    },
+    inputView: {
+      marginTop: spacing.margin.large,
+      marginBottom: spacing.margin.tiny,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderBottomColor: colors.textPrimary,
+      padding: spacing.margin.base,
+      minHeight: 224,
     },
   });
 };

@@ -88,12 +88,14 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
     onPress: any,
     onLongPress: any,
     disabled?: boolean,
+    testID?: string,
   ) => {
     return (
       <Div
         className="button-react"
         style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
         <Button
+          testID={testID}
           useI18n
           onPress={onPress}
           onLongPress={onLongPress}
@@ -122,6 +124,8 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         'iconReact',
         onPressReact,
         onPressReact,
+        false,
+        'post_view_button_react',
       )}
       <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
       {renderReactButtonItem(
@@ -130,6 +134,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         onPressComment,
         onPressComment,
         !onPressComment,
+        'post_view_button_comment',
       )}
     </View>
   );

@@ -185,7 +185,7 @@ const ListView: React.FC<ListViewProps> = ({
         );
       }
       return (
-        <View>
+        <View style={{marginTop: spacing.margin.large}}>
           <ActivityIndicator color={colors.borderDisable} />
         </View>
       );

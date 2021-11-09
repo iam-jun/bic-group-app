@@ -115,6 +115,15 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
   };
 
+  const onVisibleIndicesChanged = debounce((indexes: any) => {
+    if (
+      indexes?.length > 0 &&
+      data?.length === indexes?.[indexes?.length - 1]
+    ) {
+      onEndReach?.();
+    }
+  }, 1000);
+
   const rowRenderer = (type: any, data: any, index: number) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
       return HeaderComponent;
@@ -201,6 +210,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           forceNonDeterministicRendering={true}
           onEndReached={_onEndReached}
           onEndReachedThreshold={2 * screenHeight}
+          onVisibleIndicesChanged={onVisibleIndicesChanged}
           onItemLayout={_onItemLayout}
           renderFooter={renderFooter}
           renderAheadOffset={screenHeight} //pixels in advance to be rendered

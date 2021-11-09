@@ -1,10 +1,11 @@
-import {StackActions, CommonActions} from '@react-navigation/native';
+import {CommonActions, StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import i18next from 'i18next';
-import {Platform} from 'react-native';
+import {DeviceEventEmitter, Platform} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
+import {appScreens} from '~/configs/navigator';
 import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
 import {IToastMessage} from '~/interfaces/common';
 import {
@@ -23,6 +24,7 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {makeHttpRequest} from '~/services/httpApiRequest';
+import appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
 import {generateRoomName} from '~/utils/generator';
 import {
@@ -34,8 +36,6 @@ import {
 } from './../helper';
 import actions from './actions';
 import types from './constants';
-import appActions from '~/store/app/actions';
-import {appScreens} from '~/configs/navigator';
 /**
  * Chat
  * @param payload
@@ -70,6 +70,7 @@ export default function* saga() {
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
   yield takeEvery(types.GET_MESSAGE_DETAIL, getMessageDetail);
+  yield takeLatest(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
   yield takeEvery(types.GET_SURROUNDING_MESSAGES, getSurroundingMessages);
   yield takeLatest(
     types.TOGGLE_CONVERSATION_NOTIFICATIONS,
@@ -184,16 +185,24 @@ function* readSubscriptions({payload}: {type: string; payload: string}) {
 
 function* getConversationDetail({payload}: {type: string; payload: string}) {
   try {
-    const {auth} = yield select();
+    const {auth, chat} = yield select();
+    const {subscriptions, conversation} = chat;
 
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getChatInfo(payload),
     );
 
+    const _conversation = mapConversation(auth.user, response.data?.data);
+
+    const sub: any = (subscriptions || []).find(
+      (item: any) => item.rid === _conversation?._id,
+    );
+
     yield put(
-      actions.setConversationDetail(
-        mapConversation(auth.user, response.data?.data),
-      ),
+      actions.setConversationDetail({
+        ..._conversation,
+        unreadCount: conversation?.unreadCount || sub?.unread || 0,
+      }),
     );
     yield put(appActions.setRootScreenName(`${appScreens.chat}/${payload}`));
   } catch (err) {
@@ -817,24 +826,6 @@ function* leaveChat({
   yield put(modalActions.showHideToastMessage(toastMessage));
 }
 
-// function* searchConversations({payload}: {type: string; payload?: string}) {
-//   try {
-//     const {auth} = yield select();
-
-//     const response: AxiosResponse = yield makeHttpRequest(
-//       apiConfig.Chat.search(payload ? {name: payload} : undefined),
-//     );
-
-//     yield put(
-//       actions.setConversationDetail(
-//         mapConversation(auth.user, response.data?.data),
-//       ),
-//     );
-//   } catch (err) {
-//     console.log('searchConversations', err);
-//   }
-// }
-
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
@@ -863,15 +854,31 @@ function handleAddMember() {
 function* handleNewMessage(data: any) {
   try {
     const {chat, auth} = yield select();
+    const {messages, conversation} = chat;
     const message = mapMessage(auth.user, data);
     const existed = chat.rooms.data.find(
       (item: IConversation) => item._id === message?.room_id,
     );
 
-    yield put(groupsActions.getJoinedGroups());
+    const include: any = messages.data.find(
+      (item: IMessage) =>
+        item._id === message._id ||
+        (item.localId && item.localId === message.localId),
+    );
+
+    const haveUnreadMessages =
+      messages.unreadMessage &&
+      conversation.unreadCount > appConfig.messagesPerPage;
 
     if (existed) {
-      yield put(actions.addNewMessage(message));
+      if (!include) {
+        if (!haveUnreadMessages) {
+          yield put(actions.addNewMessage(message));
+          DeviceEventEmitter.emit('chat-new-message', messages.data.length);
+        }
+      } else {
+        yield put(actions.updateMessage(message));
+      }
     } else {
       const response: AxiosResponse = yield makeHttpRequest(
         apiConfig.Chat.groupInfo({
@@ -919,6 +926,7 @@ function* handleAddNewRoom(data: any) {
     yield put(
       actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
+    yield put(groupsActions.getJoinedGroups());
     yield getSubscriptions();
   } catch (err) {
     console.log('handleAddNewRoom', err);
