@@ -294,6 +294,11 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       alignContent: 'center',
       width: '100%',
       maxWidth: 375,
+      ...Platform.select({
+        web: {
+          paddingTop: 15,
+        },
+      }),
     },
     logo: {
       alignSelf: 'center',
