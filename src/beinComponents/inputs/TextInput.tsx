@@ -5,6 +5,7 @@ import {
   View,
   ViewStyle,
   KeyboardTypeOptions,
+  TextInput as RNTextInput,
 } from 'react-native';
 import {TextInput as TextInputPaper, useTheme} from 'react-native-paper';
 import {TextInputProps as TextInputPaperProps} from 'react-native-paper/lib/typescript/components/TextInput/TextInput';
@@ -40,6 +41,7 @@ export interface TextInputProps extends TextInputPaperProps {
   value?: string;
   onChangeText?: ((text: string) => void) | undefined;
   clearText?: boolean;
+  textInputRef?: React.Ref<RNTextInput>;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -56,6 +58,7 @@ const TextInput: React.FC<TextInputProps> = ({
   value,
   onChangeText,
   clearText,
+  textInputRef,
   ...props
 }: TextInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -146,6 +149,7 @@ const TextInput: React.FC<TextInputProps> = ({
             />
           )
         }
+        ref={textInputRef}
         {...props}
       />
       {!!helperContent && (
@@ -195,4 +199,10 @@ const helperActionStyle = StyleSheet.create({
   style: {textDecorationLine: 'underline'},
 });
 
-export default TextInput;
+const _TextInput = React.forwardRef(
+  (props: TextInputProps, ref?: React.Ref<RNTextInput>) => (
+    <TextInput textInputRef={ref} {...props} />
+  ),
+);
+
+export default React.memo(_TextInput);

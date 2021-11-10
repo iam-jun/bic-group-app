@@ -622,7 +622,8 @@
     },
     "modal_confirm_remove_member": {
       "title": "Remove this member",
-      "description": "Do you want to remove {name}, this member will no longer be in this group{other groups}.",
+      "alert_inner_groups": "This member will also be removed from {0} other inner groups:",
+      "final_alert": "Are you sure want to remove this member?",
       "button_remove": "Remove"
     },
     "modal_confirm_leave_group": {

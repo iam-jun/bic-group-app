@@ -91,7 +91,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
-    if (postId) {
+    if (postId && !loading) {
       const images: IActivityDataImage[] = [];
       if (sendData?.image) {
         images.push(sendData?.image);

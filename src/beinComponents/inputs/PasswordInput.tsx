@@ -1,14 +1,19 @@
 import React from 'react';
+import {TextInput as RNTextInput} from 'react-native';
 import {TextInput as TextInputPaper} from 'react-native-paper';
 import TextInput, {TextInputProps} from './TextInput';
 import Icon from '~/beinComponents/Icon';
-import {View} from 'react-native';
 
 interface Props extends TextInputProps {
   hideEyeIcon?: boolean;
+  passwordInputRef?: React.Ref<RNTextInput>;
 }
 
-const InputPassword: React.FC<Props> = ({hideEyeIcon = false, ...props}) => {
+const PasswordInput: React.FC<Props> = ({
+  hideEyeIcon = false,
+  passwordInputRef,
+  ...props
+}) => {
   const [hidePassword, setHidePassword] = React.useState(true);
   const EyeIcon = (
     <TextInputPaper.Icon
@@ -23,14 +28,19 @@ const InputPassword: React.FC<Props> = ({hideEyeIcon = false, ...props}) => {
   );
 
   return (
-    <View>
-      <TextInput
-        secureTextEntry={hidePassword}
-        right={!hideEyeIcon && EyeIcon}
-        {...props}
-      />
-    </View>
+    <TextInput
+      secureTextEntry={hidePassword}
+      right={!hideEyeIcon && EyeIcon}
+      ref={passwordInputRef}
+      {...props}
+    />
   );
 };
 
-export default InputPassword;
+const _PasswordInput = React.forwardRef(
+  (props: TextInputProps, ref?: React.Ref<RNTextInput>) => (
+    <PasswordInput passwordInputRef={ref} {...props} />
+  ),
+);
+
+export default React.memo(_PasswordInput);

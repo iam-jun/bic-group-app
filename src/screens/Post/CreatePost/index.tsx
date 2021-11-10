@@ -41,6 +41,7 @@ import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
+import Div from '~/beinComponents/Div';
 
 export interface CreatePostProps {
   route?: {
@@ -403,7 +404,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       )}
       {renderContent()}
       {!isEditContentOnly && (
-        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+        <Div className="post-toolbar-container">
+          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+        </Div>
       )}
     </ScreenWrapper>
   );
