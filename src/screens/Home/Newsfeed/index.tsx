@@ -1,9 +1,10 @@
+import {useIsFocused} from '@react-navigation/core';
 import React, {
+  useCallback,
   useContext,
   useEffect,
-  useState,
   useRef,
-  useCallback,
+  useState,
 } from 'react';
 import {
   InteractionManager,
@@ -15,24 +16,23 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
+import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
+import {appScreens} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {ITabTypes} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import appActions from '~/store/app/actions';
+import {deviceDimensions} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
-import {ITabTypes} from '~/interfaces/IRouter';
-import {useIsFocused} from '@react-navigation/core';
-import {appScreens} from '~/configs/navigator';
-import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 
 const Newsfeed = () => {
   const listRef = useRef<any>();
@@ -45,6 +45,8 @@ const Newsfeed = () => {
   const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
+  const streamRef = useRef<any>({}).current;
+  streamRef.value = streamClient;
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -64,6 +66,7 @@ const Newsfeed = () => {
   }, [isFocused]);
 
   const getData = (isRefresh?: boolean) => {
+    const streamClient = streamRef.value;
     if (streamClient) {
       dispatch(
         homeActions.getHomePosts({

@@ -28,6 +28,7 @@ import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import PostViewMenu from '~/screens/Post/components/PostViewMenu';
+import {isEqual} from 'lodash';
 
 export interface PostViewProps {
   style?: any;
@@ -273,6 +274,11 @@ const createStyle = (theme: ITheme) => {
     imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
   });
 };
-const PostView = memo(_PostView);
+
+function propsAreEqual(prev: any, next: any) {
+  return isEqual(prev, next);
+}
+
+const PostView = memo(_PostView, propsAreEqual);
 PostView.whyDidYouRender = true;
 export default PostView;

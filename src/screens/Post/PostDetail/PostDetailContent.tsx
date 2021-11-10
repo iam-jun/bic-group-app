@@ -2,6 +2,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {useFocusEffect} from '@react-navigation/native';
 import React, {
   memo,
+  useMemo,
   useCallback,
   useContext,
   useEffect,
@@ -62,7 +63,7 @@ const _PostDetailContent = (props: any) => {
 
   const textInputRef = useRef<any>();
   const listRef = useRef<any>();
-  let layoutSetted = useRef(false).current;
+  const layoutSet = useRef(false);
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -71,7 +72,7 @@ const _PostDetailContent = (props: any) => {
   const {colors} = theme;
   const windowDimension = useWindowDimensions();
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
-  const styles = createStyle(theme, isLaptop);
+  const styles = useMemo(() => createStyle(theme, isLaptop), [theme, isLaptop]);
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
@@ -205,15 +206,15 @@ const _PostDetailContent = (props: any) => {
     countRetryScrollToBottom = countRetryScrollToBottom + 1;
     if (countRetryScrollToBottom < 20) {
       setTimeout(() => {
-        scrollTo(-1, -1);
+        scrollTo(Math.min(9, sectionData.length - 1), -1);
       }, 100);
     }
   };
 
-  const onPressComment = () => {
+  const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     textInputRef.current?.focus?.();
-  };
+  }, [textInputRef.current]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -223,10 +224,6 @@ const _PostDetailContent = (props: any) => {
       newCommentId: string;
       parentCommentId?: string;
     }) => {
-      console.log(`\x1b[36m🐣️ index newCommentId: ${newCommentId}\x1b[0m`);
-      console.log(
-        `\x1b[36m🐣️ index parentCommentId: ${parentCommentId}\x1b[0m`,
-      );
       let sectionIndex;
       let itemIndex = 0;
       if (parentCommentId) {
@@ -277,37 +274,13 @@ const _PostDetailContent = (props: any) => {
     );
   };
 
-  const renderPostContent = () => {
-    if (!id) {
-      return null;
-    }
-    return (
-      <>
-        <PostView
-          postId={id}
-          isPostDetail
-          onPressComment={onPressComment}
-          onContentLayout={props?.onContentLayout}
-        />
-        <Divider />
-        {commentLeft > 0 && (
-          <LoadMoreComment
-            title={'post:text_load_more_comments'}
-            postId={id}
-            idLessThan={listComment?.[0]?.id}
-          />
-        )}
-      </>
-    );
-  };
-
   const renderFooter = () => {
     return <View style={styles.footer} />;
   };
 
   const onLayout = useCallback(() => {
-    if (!layoutSetted) {
-      layoutSetted = true;
+    if (!layoutSet.current) {
+      layoutSet.current = true;
       if (focus_comment && listComment?.length > 0) {
         //limit section index to default comment length = 10 to avoid scroll crash. it happen when init with large amount of comment, then scroll, then reload, result only 10 latest comment, scroll to out of index
         const sectionIndex = Math.min(9, sectionData.length - 1);
@@ -317,10 +290,10 @@ const _PostDetailContent = (props: any) => {
         textInputRef.current?.focus?.();
       }
     }
-  }, [layoutSetted]);
+  }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.flex1}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_post_detail'}
@@ -336,7 +309,15 @@ const _PostDetailContent = (props: any) => {
               sections={deleted ? [] : sectionData}
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
-              ListHeaderComponent={renderPostContent}
+              ListHeaderComponent={
+                <PostDetailContentHeader
+                  id={id}
+                  commentLeft={commentLeft}
+                  onPressComment={onPressComment}
+                  onContentLayout={props?.onContentLayout}
+                  idLessThan={listComment?.[0]?.id}
+                />
+              }
               ListFooterComponent={commentCount && renderFooter}
               stickySectionHeadersEnabled={false}
               ItemSeparatorComponent={() => <View />}
@@ -367,6 +348,35 @@ const _PostDetailContent = (props: any) => {
   );
 };
 
+const PostDetailContentHeader = ({
+  id,
+  onPressComment,
+  onContentLayout,
+  commentLeft,
+  idLessThan,
+}: any) => {
+  if (!id) {
+    return null;
+  }
+  return (
+    <>
+      <PostView
+        postId={id}
+        onPressComment={onPressComment}
+        onContentLayout={onContentLayout}
+      />
+      <Divider />
+      {commentLeft > 0 && (
+        <LoadMoreComment
+          title={'post:text_load_more_comments'}
+          postId={id}
+          idLessThan={idLessThan}
+        />
+      )}
+    </>
+  );
+};
+
 const getSectionData = (listComment: IReaction[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
@@ -379,10 +389,10 @@ const getSectionData = (listComment: IReaction[]) => {
   return result;
 };
 
-const createStyle = (theme: ITheme, isLaptop: boolean) => {
+const createStyle = (theme: ITheme, isLaptop: boolean): any => {
   const {colors, dimension, spacing} = theme;
-
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flex: 1,
       ...Platform.select({
@@ -394,7 +404,6 @@ const createStyle = (theme: ITheme, isLaptop: boolean) => {
     },
     postDetailContainer: {
       flex: 1,
-
       ...Platform.select({
         web: {
           width: '100%',
