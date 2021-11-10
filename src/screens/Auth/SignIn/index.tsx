@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -31,7 +30,6 @@ import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import images from '~/resources/images';
 import * as modalActions from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import * as actions from '../redux/actions';
@@ -43,13 +41,11 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const {loading, signingInError} = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
-  const dimensions = useWindowDimensions();
 
   const inputPasswordRef = useRef<any>();
 
   const theme: ITheme = useTheme() as ITheme;
-  const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const styles = themeStyles(theme, isPhone);
+  const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
 
@@ -274,7 +270,7 @@ const SignIn = () => {
   );
 };
 
-const themeStyles = (theme: ITheme, isPhone: boolean) => {
+const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
   const {spacing, colors} = theme;
   const textStyle = createTextStyle(theme);
@@ -287,7 +283,6 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       backgroundColor: colors.background,
       alignContent: 'center',
       alignItems: 'center',
-      justifyContent: !isPhone ? 'center' : undefined,
     },
     container: {
       flex: 1,
