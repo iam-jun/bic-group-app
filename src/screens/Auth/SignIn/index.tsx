@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
@@ -45,6 +46,8 @@ const SignIn = () => {
   const theme: ITheme = useTheme() as ITheme;
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const styles = themeStyles(theme, isPhone);
+
+  const isWeb = Platform.OS === 'web';
 
   const {
     control,
@@ -144,8 +147,12 @@ const SignIn = () => {
             render={({field: {onChange, value}}) => (
               <Input
                 testID="inputEmail"
-                label={!loading ? t('auth:input_label_email') : undefined}
-                placeholder={'sample@email.com'}
+                label={
+                  !isWeb && !loading ? t('auth:input_label_email') : undefined
+                }
+                placeholder={
+                  !isWeb ? 'sample@email.com' : t('auth:input_label_email')
+                }
                 keyboardType="email-address"
                 autoCapitalize="none"
                 disabled={loading}
@@ -180,7 +187,11 @@ const SignIn = () => {
             render={({field: {onChange, value}}) => (
               <PasswordInput
                 testID="inputPassword"
-                label={!loading ? t('auth:input_label_password') : undefined}
+                label={
+                  !isWeb && !loading
+                    ? t('auth:input_label_password')
+                    : undefined
+                }
                 placeholder={t('auth:input_label_password')}
                 error={errors.password}
                 autoCapitalize="none"
