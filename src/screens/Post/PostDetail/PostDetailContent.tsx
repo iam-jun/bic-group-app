@@ -2,6 +2,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {useFocusEffect} from '@react-navigation/native';
 import React, {
   memo,
+  useMemo,
   useCallback,
   useContext,
   useEffect,
@@ -71,7 +72,7 @@ const _PostDetailContent = (props: any) => {
   const {colors} = theme;
   const windowDimension = useWindowDimensions();
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
-  const styles = createStyle(theme, isLaptop);
+  const styles = useMemo(() => createStyle(theme, isLaptop), [theme, isLaptop]);
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
@@ -210,10 +211,10 @@ const _PostDetailContent = (props: any) => {
     }
   };
 
-  const onPressComment = () => {
+  const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     textInputRef.current?.focus?.();
-  };
+  }, [textInputRef.current]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -277,30 +278,6 @@ const _PostDetailContent = (props: any) => {
     );
   };
 
-  const renderPostContent = () => {
-    if (!id) {
-      return null;
-    }
-    return (
-      <>
-        <PostView
-          postId={id}
-          isPostDetail
-          onPressComment={onPressComment}
-          onContentLayout={props?.onContentLayout}
-        />
-        <Divider />
-        {commentLeft > 0 && (
-          <LoadMoreComment
-            title={'post:text_load_more_comments'}
-            postId={id}
-            idLessThan={listComment?.[0]?.id}
-          />
-        )}
-      </>
-    );
-  };
-
   const renderFooter = () => {
     return <View style={styles.footer} />;
   };
@@ -320,7 +297,7 @@ const _PostDetailContent = (props: any) => {
   }, [layoutSetted]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.flex1}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_post_detail'}
@@ -336,7 +313,15 @@ const _PostDetailContent = (props: any) => {
               sections={deleted ? [] : sectionData}
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
-              ListHeaderComponent={renderPostContent}
+              ListHeaderComponent={
+                <PostDetailContentHeader
+                  id={id}
+                  commentLeft={commentLeft}
+                  onPressComment={onPressComment}
+                  onContentLayout={props?.onContentLayout}
+                  idLessThan={listComment?.[0]?.id}
+                />
+              }
               ListFooterComponent={commentCount && renderFooter}
               stickySectionHeadersEnabled={false}
               ItemSeparatorComponent={() => <View />}
@@ -367,6 +352,35 @@ const _PostDetailContent = (props: any) => {
   );
 };
 
+const PostDetailContentHeader = ({
+  id,
+  onPressComment,
+  onContentLayout,
+  commentLeft,
+  idLessThan,
+}: any) => {
+  if (!id) {
+    return null;
+  }
+  return (
+    <>
+      <PostView
+        postId={id}
+        onPressComment={onPressComment}
+        onContentLayout={onContentLayout}
+      />
+      <Divider />
+      {commentLeft > 0 && (
+        <LoadMoreComment
+          title={'post:text_load_more_comments'}
+          postId={id}
+          idLessThan={idLessThan}
+        />
+      )}
+    </>
+  );
+};
+
 const getSectionData = (listComment: IReaction[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
@@ -379,10 +393,10 @@ const getSectionData = (listComment: IReaction[]) => {
   return result;
 };
 
-const createStyle = (theme: ITheme, isLaptop: boolean) => {
+const createStyle = (theme: ITheme, isLaptop: boolean): any => {
   const {colors, dimension, spacing} = theme;
-
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flex: 1,
       ...Platform.select({
@@ -394,7 +408,6 @@ const createStyle = (theme: ITheme, isLaptop: boolean) => {
     },
     postDetailContainer: {
       flex: 1,
-
       ...Platform.select({
         web: {
           width: '100%',
