@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
@@ -42,6 +42,8 @@ const SignIn = () => {
   const {loading, signingInError} = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const dimensions = useWindowDimensions();
+
+  const inputPasswordRef = useRef<any>();
 
   const theme: ITheme = useTheme() as ITheme;
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
@@ -97,6 +99,15 @@ const SignIn = () => {
 
     if (error.message === signingInError) clearAllErrors();
     else clearErrors(name);
+  };
+
+  const onSubmitEmail = () => {
+    if (getValues('password')) {
+      onSignIn();
+      return;
+    }
+
+    inputPasswordRef?.current?.focus();
   };
 
   const onSignIn = async () => {
@@ -163,7 +174,7 @@ const SignIn = () => {
                   clearFieldError('email');
                   checkDisableSignIn();
                 }}
-                onSubmitEditing={() => onSignIn()}
+                onSubmitEditing={onSubmitEmail}
                 helperType={errors.email?.message ? 'error' : undefined}
                 helperContent={
                   errors?.email?.message === signingInError
@@ -187,6 +198,7 @@ const SignIn = () => {
             render={({field: {onChange, value}}) => (
               <PasswordInput
                 testID="inputPassword"
+                ref={inputPasswordRef}
                 label={
                   !isWeb && !loading
                     ? t('auth:input_label_password')
