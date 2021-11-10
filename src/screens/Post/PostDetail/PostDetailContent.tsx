@@ -224,10 +224,6 @@ const _PostDetailContent = (props: any) => {
       newCommentId: string;
       parentCommentId?: string;
     }) => {
-      console.log(`\x1b[36m🐣️ index newCommentId: ${newCommentId}\x1b[0m`);
-      console.log(
-        `\x1b[36m🐣️ index parentCommentId: ${parentCommentId}\x1b[0m`,
-      );
       let sectionIndex;
       let itemIndex = 0;
       if (parentCommentId) {
