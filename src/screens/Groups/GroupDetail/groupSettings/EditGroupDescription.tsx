@@ -39,7 +39,12 @@ const EditGroupDescription = (props: any) => {
   }, [description]);
 
   const onSave = () => {
-    dispatch(groupsActions.editGroupDetail({id, description: text}));
+    dispatch(
+      groupsActions.editGroupDetail({
+        id,
+        description: text.trim() ? text.trim() : null,
+      }),
+    );
     navigation.goBack();
   };
 

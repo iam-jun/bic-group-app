@@ -43,7 +43,7 @@ export interface IGroupDetailEdit {
   id?: number;
   parent_id?: number;
   name?: string;
-  description?: string;
+  description?: string | null;
   level?: number;
   owner_id?: number;
   icon?: string;
