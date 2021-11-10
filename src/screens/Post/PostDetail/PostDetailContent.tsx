@@ -63,7 +63,7 @@ const _PostDetailContent = (props: any) => {
 
   const textInputRef = useRef<any>();
   const listRef = useRef<any>();
-  let layoutSetted = useRef(false).current;
+  const layoutSet = useRef(false);
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -206,7 +206,7 @@ const _PostDetailContent = (props: any) => {
     countRetryScrollToBottom = countRetryScrollToBottom + 1;
     if (countRetryScrollToBottom < 20) {
       setTimeout(() => {
-        scrollTo(-1, -1);
+        scrollTo(Math.min(9, sectionData.length - 1), -1);
       }, 100);
     }
   };
@@ -283,8 +283,8 @@ const _PostDetailContent = (props: any) => {
   };
 
   const onLayout = useCallback(() => {
-    if (!layoutSetted) {
-      layoutSetted = true;
+    if (!layoutSet.current) {
+      layoutSet.current = true;
       if (focus_comment && listComment?.length > 0) {
         //limit section index to default comment length = 10 to avoid scroll crash. it happen when init with large amount of comment, then scroll, then reload, result only 10 latest comment, scroll to out of index
         const sectionIndex = Math.min(9, sectionData.length - 1);
@@ -294,7 +294,7 @@ const _PostDetailContent = (props: any) => {
         textInputRef.current?.focus?.();
       }
     }
-  }, [layoutSetted]);
+  }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
   return (
     <View style={styles.flex1}>
