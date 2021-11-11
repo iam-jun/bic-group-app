@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import {isEmpty} from 'lodash';
-import {RouteProp, useFocusEffect, useRoute} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {ITheme} from '~/theme/interfaces';
 import {AppContext} from '~/contexts/AppContext';
@@ -16,7 +16,6 @@ import {groupPrivacy} from '~/constants/privacyTypes';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
-import {RootStackParamList} from '~/interfaces/IRouter';
 import {useRootNavigation} from '~/hooks/navigation';
 
 import GroupTopBar from './components/GroupTopBar';
@@ -96,11 +95,8 @@ const GroupDetail = (props: any) => {
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
-    // console.log('[DEBUG] groupInfo', groupInfo);
-    // console.log('[getGroupPosts] isMember', isMember);
 
     if (!isMember && privacy === groupPrivacy.private) {
-      // console.log('[DEBUG] render group about only');
       return <GroupPrivateWelcome parentWidth={viewWidth} />;
     }
 
