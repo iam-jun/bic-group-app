@@ -142,9 +142,9 @@ const SignIn = () => {
   return (
     <ScreenWrapper testID="SignInScreen" style={styles.root} isFullView>
       <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
+        onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}
         accessible={false}
-        style={{flex: 1, backgroundColor: 'pink'}}>
+        style={{flex: 1}}>
         <View style={styles.container}>
           <View>
             <Image
