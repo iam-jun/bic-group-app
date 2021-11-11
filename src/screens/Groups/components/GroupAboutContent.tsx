@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
@@ -14,8 +14,13 @@ import groupsKeySelector from '../redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import {useDispatch} from 'react-redux';
+import groupsActions from '../redux/actions';
+import {isEmpty} from 'lodash';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 const GroupAboutContent = () => {
+  const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -30,12 +35,27 @@ const GroupAboutContent = () => {
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
   const {icon, title, subtitle}: any = privacyData || {};
 
+  useEffect(() => {
+    // just to fetch group detail when first access on Web
+    if (Platform.OS === 'web' && isEmpty(groupData)) {
+      const initUrl = window.location.href;
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parse = require('url-parse');
+      const url = parse(initUrl, true);
+      const paths = url.pathname.split('/');
+      // paths = ['', 'groups', '{id}', 'about']
+      const id = parseInt(paths[2], 10);
+
+      dispatch(groupsActions.getGroupDetail(id));
+    }
+  }, []);
+
   const onPressMembers = () => {
     rootNavigation.navigate(groupStack.groupMembers, {groupId});
   };
 
-  return (
-    <View style={styles.container}>
+  const renderContent = () => (
+    <>
       {!!description && (
         <>
           <Text.H5 useI18n style={styles.labelDescription}>
@@ -71,6 +91,12 @@ const GroupAboutContent = () => {
         subTitle={i18next.t(subtitle)}
         subTitleProps={{variant: 'subtitle'}}
       />
+    </>
+  );
+
+  return (
+    <View style={styles.container}>
+      {isEmpty(groupData) ? <LoadingIndicator /> : renderContent()}
     </View>
   );
 };
