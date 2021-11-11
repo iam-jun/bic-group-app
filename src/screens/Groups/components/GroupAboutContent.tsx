@@ -13,6 +13,7 @@ import privacyTypes from '~/constants/privacyTypes';
 import groupsKeySelector from '../redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const GroupAboutContent = () => {
   const {rootNavigation} = useRootNavigation();
@@ -20,6 +21,9 @@ const GroupAboutContent = () => {
   const styles = createStyle(theme);
 
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const isMember = join_status === groupJoinStatus.member;
+
   const groupId = groupData.id;
   const {description, user_count, privacy} = groupData;
 
@@ -52,9 +56,9 @@ const GroupAboutContent = () => {
           icon: 'UsersAlt',
           size: 24,
         }}
-        onPress={onPressMembers}
+        onPress={isMember ? onPressMembers : undefined}
         title={`${user_count} ${i18next.t('common:text_member')}`}
-        RightComponent={<Icon icon={'AngleRightB'} />}
+        RightComponent={isMember ? <Icon icon={'AngleRightB'} /> : null}
       />
       <PrimaryItem
         style={styles.privacyItem}
