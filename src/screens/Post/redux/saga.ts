@@ -172,6 +172,8 @@ function* postCreateNewComment({
       userId: Number(userId),
     };
     const resComment = yield call(postDataHelper.postNewComment, requestData);
+    //callback success first time for delete content in text input
+    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
 
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
@@ -205,6 +207,7 @@ function* postCreateNewComment({
     yield put(postActions.setCreateComment({loading: false, content: ''}));
 
     yield timeOut(800);
+    //callback success second time for scroll to item
     onSuccess?.({newCommentId: resComment?.id, parentCommentId});
   } catch (e) {
     yield put(postActions.setCreateComment({loading: false}));

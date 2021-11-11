@@ -94,10 +94,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 
   useEffect(() => {
-    console.log(`\x1b[36m🐣️ NewsfeedList ${data?.length}\x1b[0m`);
-  }, [data]);
-
-  useEffect(() => {
     if (!canLoadMore && !refreshing) {
       setInitializing(false);
     }
