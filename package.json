@@ -22,8 +22,10 @@
     "setup-dev": "cd ios && fastlane setup",
     "ios-deploy-dev": "cd ios && fastlane deploy_dev",
     "ios-deploy-staging": "cd ios && fastlane deploy_staging",
+    "ios-deploy-production": "cd ios && fastlane deploy_production",
     "android-deploy-dev": "cd android && fastlane deploy_dev",
     "android-deploy-staging": "cd android && fastlane deploy_staging",
+    "android-deploy-production": "cd android && fastlane deploy_production",
     "test": "detox"
   },
   "jest": {

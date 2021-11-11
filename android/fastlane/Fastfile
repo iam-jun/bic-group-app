@@ -59,8 +59,14 @@ platform :android do
           build_type: "Release",
           flavor: "Production",
         )
+        diawi(
+          token: ENV['DIAWI_TOKEN'],
+          file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+          timeout: 600,
+        )
         rocket_chat(
-          message: "🟢 [PROD] 🤖 -Android- New build version #{appVersionText} can be download on Internal Testing",
+#           message: "🟢 [PROD] 🤖 -Android- New build version #{appVersionText} can be download on Internal Testing",
+          message: "🟢 [PROD] 🤖 -Android- New build version #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
         )
     end
 end
