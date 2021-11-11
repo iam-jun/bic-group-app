@@ -88,11 +88,14 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
     style,
   ]);
 
+  const disabled = !onPress;
+  if (disabled) className = '';
+
   return (
     <Div className={className}>
       <TouchableOpacity
         style={containerStyle}
-        disabled={!onPress}
+        disabled={disabled}
         onPress={onPress}>
         {LeftComponent}
         {(showAvatar || !!avatar) && (
