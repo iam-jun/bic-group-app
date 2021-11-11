@@ -17,7 +17,7 @@ interface MenuItemProps extends IOption {
   isActive?: boolean;
   RightComponent?: React.ReactNode | React.ReactElement;
   onPress?: () => void;
-  disable?: boolean;
+  disabled?: boolean;
   notificationsBadgeNumber?: number;
   notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
@@ -35,7 +35,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   isActive = false,
   RightComponent,
   onPress,
-  disable,
+  disabled,
   notificationsBadgeNumber,
   notificationsBadgeProps,
   badgeColor,
@@ -58,10 +58,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
   let className = 'menu-item';
   if (isActive) className = className + ` ${className}--active`;
 
-  if (disable) className = '';
+  if (disabled) className = '';
 
   return (
-    <TouchableOpacity disabled={disable} onPress={onPress} testID={testID}>
+    <TouchableOpacity disabled={disabled} onPress={onPress} testID={testID}>
       <Div className={className}>
         {Platform.OS === 'web' && isActive && (
           <View style={styles.itemActiveIndicator} />
