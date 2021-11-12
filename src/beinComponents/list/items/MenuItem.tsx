@@ -61,8 +61,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   if (disabled) className = '';
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={onPress} testID={testID}>
-      <Div className={className}>
+    <Div className={className}>
+      <TouchableOpacity disabled={disabled} onPress={onPress} testID={testID}>
         {Platform.OS === 'web' && isActive && (
           <View style={styles.itemActiveIndicator} />
         )}
@@ -105,8 +105,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
           )}
           {RightComponent}
         </View>
-      </Div>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Div>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
@@ -72,6 +72,7 @@ const GroupAboutContent = () => {
         style={styles.memberItem}
         icon={'UsersAlt'}
         onPress={isMember ? onPressMembers : undefined}
+        disabled={!isMember}
         title={`${user_count} ${i18next.t('common:text_member')}`}
         rightSubIcon={isMember ? 'AngleRightB' : undefined}
       />
@@ -80,6 +81,7 @@ const GroupAboutContent = () => {
         icon={icon}
         title={i18next.t(title)}
         subTitle={i18next.t(subtitle)}
+        disabled
       />
     </>
   );
@@ -93,11 +95,14 @@ const GroupAboutContent = () => {
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
+  const baseItem: ViewStyle = {
+    paddingHorizontal: spacing.padding.large,
+  };
+
   return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.background,
-      paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,
     },
     labelDescription: {
@@ -107,12 +112,12 @@ const createStyle = (theme: ITheme) => {
       paddingBottom: spacing.padding.small,
     },
     memberItem: {
+      ...baseItem,
       height: 44,
-      paddingHorizontal: 0,
     },
     privacyItem: {
+      ...baseItem,
       height: 56,
-      paddingHorizontal: 0,
     },
   });
 };
