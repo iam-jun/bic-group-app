@@ -7,8 +7,6 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
 import groupsKeySelector from '../redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -18,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import groupsActions from '../redux/actions';
 import {isEmpty} from 'lodash';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GroupAboutContent = () => {
   const dispatch = useDispatch();
@@ -69,27 +68,18 @@ const GroupAboutContent = () => {
           />
         </>
       )}
-      <PrimaryItem
+      <MenuItem
         style={styles.memberItem}
-        leftIcon={'UsersAlt'}
-        leftIconProps={{
-          icon: 'UsersAlt',
-          size: 24,
-        }}
+        icon={'UsersAlt'}
         onPress={isMember ? onPressMembers : undefined}
         title={`${user_count} ${i18next.t('common:text_member')}`}
-        RightComponent={isMember ? <Icon icon={'AngleRightB'} /> : null}
+        rightSubIcon={isMember ? 'AngleRightB' : undefined}
       />
-      <PrimaryItem
+      <MenuItem
         style={styles.privacyItem}
-        leftIcon={icon}
-        leftIconProps={{
-          icon: icon,
-          size: 24,
-        }}
+        icon={icon}
         title={i18next.t(title)}
         subTitle={i18next.t(subtitle)}
-        subTitleProps={{variant: 'subtitle'}}
       />
     </>
   );
