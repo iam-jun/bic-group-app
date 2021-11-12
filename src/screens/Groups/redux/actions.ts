@@ -9,6 +9,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupSearchPayload,
+  IGroupSetAdmin,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -145,6 +146,10 @@ const groupsActions = {
     };
   },
 
+  setGroupAdmin: (payload: IGroupSetAdmin) => ({
+    type: groupsTypes.SET_GROUP_ADMIN,
+    payload,
+  }),
   joinNewGroup: function (payload: {groupId: number}) {
     return {
       type: groupsTypes.JOIN_NEW_GROUP,

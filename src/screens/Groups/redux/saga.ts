@@ -8,6 +8,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
+  IGroupSetAdmin,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -46,6 +47,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
   yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
+  yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -458,6 +460,29 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('leaveGroup:', err);
+    yield showError(err);
+  }
+}
+
+function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
+  try {
+    const {groupId, userIds} = payload;
+
+    yield groupsDataHelper.setGroupAdmin(groupId, userIds);
+
+    const toastMessage: IToastMessage = {
+      content: 'groups:modal_confirm_set_admin:success_message',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+
+    // refresh group detail after adding new admins
+    yield refreshGroupMembers(groupId);
+  } catch (err) {
+    console.log('setGroupAdmin: ', err);
     yield showError(err);
   }
 }
