@@ -95,15 +95,12 @@ const GroupAboutContent = () => {
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
-  const baseItem: ViewStyle = {
-    paddingHorizontal: spacing.padding.large,
-  };
 
   return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.background,
-      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.small,
     },
     labelDescription: {
       paddingVertical: spacing.padding.small,
@@ -112,11 +109,9 @@ const createStyle = (theme: ITheme) => {
       paddingBottom: spacing.padding.small,
     },
     memberItem: {
-      ...baseItem,
       height: 44,
     },
     privacyItem: {
-      ...baseItem,
       height: 56,
     },
   });
