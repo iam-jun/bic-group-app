@@ -60,6 +60,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
   if (disabled) className = '';
 
+  // TODO: remove cursor pointer on web when disabled is set to true
+  /**
+   * As it still render class cursor pointer although disabled state in TouchableOpacity is set to true
+   * However, in PrimaryItem.tsx still works with this approach, don't know why
+   */
   return (
     <Div className={className}>
       <TouchableOpacity disabled={disabled} onPress={onPress} testID={testID}>
