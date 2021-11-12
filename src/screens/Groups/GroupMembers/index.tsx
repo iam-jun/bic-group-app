@@ -20,7 +20,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
 import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
 import groupsDataHelper from '../helper/GroupsDataHelper';
-import {IGroup, IGroupMembers} from '~/interfaces/IGroup';
+import {IGroup, IGroupMemberRole, IGroupMembers} from '~/interfaces/IGroup';
 import mainStack from '~/router/navigator/MainStack/stack';
 import chatActions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -65,6 +65,13 @@ const _GroupMembers = (props: any) => {
     groupsKeySelector.loadingGroupMember,
   );
 
+  const getGroupProfile = () => {
+    // in case for refreshing page on web
+    Platform.OS === 'web' &&
+      groupId &&
+      dispatch(groupsActions.getGroupDetail(groupId));
+  };
+
   const getMembers = () => {
     if (groupId) {
       dispatch(
@@ -94,19 +101,14 @@ const _GroupMembers = (props: any) => {
   }, [groupMember]);
 
   useEffect(() => {
-    getMembers();
-  }, [groupId]);
-
-  useEffect(() => {
     dispatch(groupsActions.clearGroupMembers());
+    getMembers();
+    getGroupProfile();
+
     return () => {
       dispatch(groupsActions.clearGroupMembers());
     };
-  }, []);
-
-  // const onPressUser = (userId: string) => {
-  //   alert('onPress userId: ' + userId);
-  // };
+  }, [groupId]);
 
   const onPressMenu = (e: any, item: IGroupMembers) => {
     if (!item || !item.id) return;
@@ -172,6 +174,41 @@ const _GroupMembers = (props: any) => {
   const doSetAdmin = () => {
     dispatch(
       groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
+    );
+  };
+
+  const onPressRemoveAdmin = () => {
+    // check if the current user is the last admin before revoking admin
+    if (can_setting) return checkLastAdmin('remove', alertRemovingAdmin);
+    alertRemovingAdmin();
+  };
+
+  const alertRemovingAdmin = () => {
+    const alertPayload = {
+      iconName: 'StarHalfAlt',
+      title: i18next.t('groups:modal_confirm_remove_admin:title'),
+      content: i18next.t('groups:modal_confirm_remove_admin:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => doRemoveAdmin(),
+      confirmLabel: i18next.t(
+        'groups:modal_confirm_remove_admin:button_confirm',
+      ),
+      ConfirmBtnComponent: Button.Danger,
+    };
+    alertPayload.content = alertPayload.content.replace(
+      '{0}',
+      `"${selectedMember?.fullname}"`,
+    );
+    dispatch(modalActions.showAlert(alertPayload));
+  };
+
+  const doRemoveAdmin = () => {
+    dispatch(
+      groupsActions.removeGroupAdmin({groupId, userId: selectedMember?.id}),
     );
   };
 
@@ -299,22 +336,22 @@ const _GroupMembers = (props: any) => {
   };
 
   const onPressLeave = () => {
-    // check if the current user is admin or member
-    if (can_setting) return checkLastAdmin();
+    // check if the current user is the last admin before leaving group
+    if (can_setting) return checkLastAdmin('leave', alertLeaveGroup);
     alertLeaveGroup();
   };
 
-  const checkLastAdmin = () => {
+  const checkLastAdmin = (type: string, callback: () => void) => {
     groupsDataHelper
       .getGroupMembers(groupId, {offset: 0, limit: 1})
       .then(data => {
         const adminCount = data?.GROUP_ADMIN?.user_count;
         if (adminCount > 1) {
-          alertLeaveGroup();
+          callback();
         } else {
           dispatch(
             modalActions.showHideToastMessage({
-              content: 'groups:error:last_admin',
+              content: `groups:error:last_admin_${type}`,
               props: {
                 type: 'error',
                 textProps: {useI18n: true},
@@ -398,6 +435,9 @@ const _GroupMembers = (props: any) => {
       case 'set-admin':
         alertSettingAdmin();
         break;
+      case 'remove-admin':
+        onPressRemoveAdmin();
+        break;
       case 'remove-member':
         alertRemovingMember();
         break;
@@ -416,7 +456,7 @@ const _GroupMembers = (props: any) => {
 
   const isGroupAdmin = () => {
     return !!selectedMember?.roles?.find(
-      (role: any) => role.type === 'GROUP_ADMIN',
+      (role: IGroupMemberRole) => role.type === 'GROUP_ADMIN',
     );
   };
 

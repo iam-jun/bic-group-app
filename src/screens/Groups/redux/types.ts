@@ -33,6 +33,7 @@ const groupsTypes = {
   LEAVE_GROUP: 'group/LEAVE_GROUP',
 
   SET_GROUP_ADMIN: 'groups/SET_GROUP_ADMIN',
+  REMOVE_GROUP_ADMIN: 'groups/REMOVE_GROUP_ADMIN',
 
   UPLOAD_IMAGE: 'groups/UPLOAD_IMAGE',
 
