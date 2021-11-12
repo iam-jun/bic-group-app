@@ -77,14 +77,13 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   const {spacing} = theme;
   const styles = createStyle(theme);
 
-  // @ts-ignore
-  const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
+  const containerStyle: ViewStyle = StyleSheet.flatten([
     {
       flexDirection: 'row',
       height: height,
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
-    },
+    } as ViewStyle,
     style,
   ]);
 
