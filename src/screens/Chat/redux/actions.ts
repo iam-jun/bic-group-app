@@ -1,3 +1,4 @@
+import {IObject} from '~/interfaces/common';
 import {
   IChatUser,
   IConversation,
@@ -39,6 +40,13 @@ export default {
   resetData: (dataType: string) => ({
     type: Actions.RESET_DATA,
     dataType,
+  }),
+  getRooms: () => ({
+    type: Actions.GET_ROOMS,
+  }),
+  setRooms: (payload: IObject<IConversation>) => ({
+    type: Actions.SET_ROOMS,
+    payload,
   }),
   getConversationDetail: (payload: string) => ({
     type: Actions.GET_CONVERSATION_DETAIL,
@@ -197,8 +205,9 @@ export default {
     payload,
     roomType,
   }),
-  readConversation: () => ({
+  readConversation: (payload: string) => ({
     type: Actions.READ_CONVERSATION,
+    payload,
   }),
   getMessageDetail: (payload: string) => ({
     type: Actions.GET_MESSAGE_DETAIL,
@@ -208,8 +217,9 @@ export default {
     type: Actions.SET_MESSAGE_DETAIL,
     payload,
   }),
-  getUnreadMessage: () => ({
+  getUnreadMessage: (payload: IConversation) => ({
     type: Actions.GET_UNREAD_MESSAGE,
+    payload,
   }),
   setUnreadMessage: (payload: IMessage | null) => ({
     type: Actions.SET_UNREAD_MESSAGE,
@@ -219,7 +229,7 @@ export default {
     type: Actions.SET_JUMPED_MESSAGE,
     payload,
   }),
-  getSurroundingMessages: (payload: string) => ({
+  getSurroundingMessages: (payload: {roomId: string; messageId: string}) => ({
     type: Actions.GET_SURROUNDING_MESSAGES,
     payload,
   }),
@@ -227,24 +237,39 @@ export default {
     type: Actions.SET_MESSAGES_ERROR,
     payload,
   }),
-  getMessagesHistory: () => ({
+  getMessagesHistory: (payload: string) => ({
     type: Actions.GET_MESSAGES_HISTORY,
+    payload,
   }),
-  setMessages: (payload: IMessage[]) => ({
+  setMessages: (payload: {
+    roomId: string;
+    messageIds: string[];
+    messagesData: IObject<IMessage>;
+  }) => ({
     type: Actions.SET_MESSAGES,
     payload,
   }),
-  setMessagesHistory: (payload: IMessage[]) => ({
+  setMessagesHistory: (payload: {
+    roomId: string;
+    messageIds: string[];
+    messagesData: IObject<IMessage>;
+  }) => ({
     type: Actions.SET_MESSAGES_HISTORY,
     payload,
   }),
-  mergeMessagesHistory: () => ({
+  mergeMessagesHistory: (payload: string) => ({
     type: Actions.MERGE_MESSAGES_HISTORY,
+    payload,
   }),
-  getNextMessages: () => ({
+  getNextMessages: (payload: string) => ({
     type: Actions.GET_NEXT_MESSAGES,
+    payload,
   }),
-  setNextMessages: (payload: IMessage[]) => ({
+  setNextMessages: (payload: {
+    roomId: string;
+    messageIds: string[];
+    messagesData: IObject<IMessage>;
+  }) => ({
     type: Actions.SET_NEXT_MESSAGES,
     payload,
   }),

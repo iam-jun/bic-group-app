@@ -1,7 +1,7 @@
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IconType} from '~/resources/icons';
-import {IFilePicked} from './common';
+import {IFilePicked, IObject} from './common';
 import {IActivityDataImage, IOwnReaction, IReactionCounts} from './IPost';
 export interface IReaction {
   type: ReactionType;
@@ -238,4 +238,17 @@ export interface IUpdateConversationDetail {
   description?: string | null;
   avatar?: string;
   cover?: string;
+}
+
+export interface IMessagesData {
+  loading: boolean;
+  loadingNext: boolean;
+  data: string[]; // just store id
+  extra: string[]; // just store id
+  items: IObject<IMessage>; // message item
+  offset: number;
+  downOffset: number;
+  canLoadMore: boolean;
+  canLoadNext: boolean;
+  error: any;
 }

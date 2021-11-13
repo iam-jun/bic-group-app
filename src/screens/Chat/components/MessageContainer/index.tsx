@@ -60,7 +60,7 @@ const _MessageItem = (props: MessageItemProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {messages, attachmentMedia} = useChat();
+  const {unreadMessage, jumpedMessage, attachmentMedia} = useChat();
   const {
     previousMessage,
     currentMessage,
@@ -109,12 +109,12 @@ const _MessageItem = (props: MessageItemProps) => {
     sameUser &&
     sameType &&
     within5Mins &&
-    messages.unreadMessage?._id !== _id;
+    unreadMessage !== _id;
 
   const [blinking, setBlinking] = useState(false);
 
   useEffect(() => {
-    if (messages.jumpedMessage?._id === _id) {
+    if (jumpedMessage?._id === _id) {
       setBlinking(true);
 
       setTimeout(() => {
@@ -126,7 +126,7 @@ const _MessageItem = (props: MessageItemProps) => {
         });
       }, 2000);
     }
-  }, [messages.jumpedMessage]);
+  }, [jumpedMessage]);
 
   const _onLongPress = useCallback(
     (e: any) => {
@@ -299,7 +299,7 @@ const _MessageItem = (props: MessageItemProps) => {
 
   return (
     <View>
-      {messages.unreadMessage?._id === _id && renderDivider()}
+      {unreadMessage === _id && renderDivider()}
       {system ? <SystemMessage {...currentMessage} /> : renderMessage()}
     </View>
   );

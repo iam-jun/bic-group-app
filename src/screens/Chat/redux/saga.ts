@@ -29,6 +29,7 @@ import * as modalActions from '~/store/modal/actions';
 import {generateRoomName} from '~/utils/generator';
 import {
   mapConversation,
+  mapConversations,
   mapData,
   mapMessage,
   mapMessages,
@@ -46,8 +47,9 @@ const navigation = withNavigation(rootNavigationRef);
 
 export default function* saga() {
   yield takeLatest(types.INIT_CHAT, initChat);
-  yield takeEvery(types.GET_DATA, getData);
+  yield takeLatest(types.GET_DATA, getData);
   yield takeLatest(types.MERGE_EXTRA_DATA, mergeExtraData);
+  yield takeLatest(types.GET_ROOMS, getRooms);
   yield takeLatest(types.GET_MESSAGES_HISTORY, getMessagesHistory);
   yield takeLatest(types.MERGE_MESSAGES_HISTORY, mergeMessagesHistory);
   yield takeLatest(types.GET_NEXT_MESSAGES, getNextMessages);
@@ -81,8 +83,8 @@ export default function* saga() {
 
 function* initChat() {
   yield put(actions.getSubscriptions());
-  yield put(actions.resetData('rooms'));
-  yield put(actions.getData('rooms', null, 'data'));
+  // yield put(actions.resetData('rooms'));
+  yield put(actions.getRooms());
 }
 
 function* getData({
@@ -139,6 +141,21 @@ function* mergeExtraData({
   const {canLoadMore, loading, params} = chat[dataType];
   if (!loading && canLoadMore) {
     yield put(actions.getData(dataType, params, field));
+  }
+}
+
+function* getRooms() {
+  try {
+    const {auth} = yield select();
+
+    const response: AxiosResponse = yield makeHttpRequest(
+      apiConfig.Chat.rooms(),
+    );
+
+    const result = mapConversations(auth.user, response.data.data);
+    yield put(actions.setRooms(result));
+  } catch (err: any) {
+    console.error('getRooms', err);
   }
 }
 
@@ -623,88 +640,88 @@ function* getMessageDetail({payload}: {payload: string; type: string}) {
   }
 }
 
-function* getUnreadMessage() {
+function* getUnreadMessage({payload}: {type: string; payload: IConversation}) {
   try {
-    const {auth, chat} = yield select();
-    const {conversation} = chat;
+    const {auth} = yield select();
     const response: AxiosResponse = yield makeHttpRequest(
       //@ts-ignore
       apiConfig.Chat.messages({
-        roomId: conversation._id,
-        type: conversation.type,
+        roomId: payload._id,
+        type: payload.type,
         count: 1,
-        offset: conversation.unreadCount,
+        offset: payload.unreadCount,
       }),
     );
     const message = mapMessage(auth.user, response.data.messages[0]);
     yield put(actions.setUnreadMessage(message));
-    yield put(actions.getSurroundingMessages(message._id));
+    yield put(
+      actions.getSurroundingMessages({
+        roomId: payload._id,
+        messageId: message._id,
+      }),
+    );
   } catch (err) {
     console.error('getUnreadMessage', err);
   }
 }
 
-function* getSurroundingMessages({payload}: {type: string; payload: string}) {
+function* getSurroundingMessages({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string; messageId: string};
+}) {
   try {
-    const {auth, chat} = yield select();
+    const {auth} = yield select();
     const response: AxiosResponse = yield makeHttpRequest(
       apiConfig.Chat.getSurroundingMessages({
-        room_id: chat.conversation?._id,
-        message_id: payload,
+        room_id: payload.roomId,
+        message_id: payload.messageId,
         count: appConfig.messagesPerPage,
       }),
     );
 
-    const result = mapMessages(auth.user, response.data.data).reverse();
+    const result = response.data.data;
+
+    const messageIds = result.map((item: any) => item._id).reverse();
+
+    const messagesData = mapMessages(auth.user, result);
+
     if (result.length === 0) return;
 
-    const index = result.findIndex((item: IMessage) => item._id === payload);
-    yield put(actions.setMessages(result.slice(0, index + 1).reverse()));
-    yield put(
-      actions.setMessagesHistory(
-        result.slice(index + 1, result.length).reverse(),
-      ),
+    const index = messageIds.findIndex(
+      (item: string) => item === payload.messageId,
     );
-    yield put(actions.setJumpedMessage(result[index]));
+    yield put(
+      actions.setMessages({
+        roomId: payload.roomId,
+        messageIds: messageIds.slice(0, index + 1).reverse(),
+        messagesData,
+      }),
+    );
+    yield put(
+      actions.setMessagesHistory({
+        roomId: payload.roomId,
+        messageIds: messageIds.slice(index + 1, result.length).reverse(),
+        messagesData: {},
+      }),
+    );
+    yield put(actions.setJumpedMessage(messageIds[index]));
   } catch (err) {
     console.log('getSurroundingMessages', err);
     yield put(actions.setMessagesError(err));
   }
 }
 
-function* toggleConversationNotifications({
-  payload,
-}: {
-  type: string;
-  payload: {roomId: string; currentDisableNotifications: boolean};
-}) {
-  try {
-    const {roomId, currentDisableNotifications} = payload;
-    const newDisableNotifications = !currentDisableNotifications;
-
-    yield makeHttpRequest(
-      apiConfig.Chat.setConversationNotifications(
-        roomId,
-        newDisableNotifications,
-      ),
-    );
-
-    yield put(
-      actions.setConversationNotifications({
-        roomId,
-        disableNotifications: newDisableNotifications,
-      }),
-    );
-  } catch (error) {
-    yield showError(error);
-  }
-}
-
-function* getMessagesHistory() {
+function* getMessagesHistory({payload}: {type: string; payload: string}) {
   try {
     const {auth, chat} = yield select();
-    const {conversation, messages} = chat;
-    const {data} = messages;
+
+    const {rooms, messages: messagesStore} = chat;
+    const messages = messagesStore?.[payload] || {};
+    const conversation = rooms.data?.[payload] || {};
+
+    const data = messages.data || [];
     const lastDate =
       data.length > 0
         ? {
@@ -725,37 +742,47 @@ function* getMessagesHistory() {
       }),
     );
     const result = JSON.parse(response.data.message);
+    const resultData = result.result?.messages;
+    const messageIds = resultData.map((item: any) => item._id).reverse();
 
-    const messagesData = mapMessages(
-      auth.user,
-      result.result?.messages,
-    ).reverse();
+    const messagesData = mapMessages(auth.user, resultData);
 
     if (data.length === 0) {
       if (conversation.unreadCount < messagesData.length) {
         yield put(
           actions.setUnreadMessage(
-            messagesData[messagesData.length - conversation.unreadCount],
+            messageIds[messageIds.length - conversation.unreadCount],
           ),
         );
       }
-      yield put(actions.setMessages(messagesData));
+      yield put(
+        actions.setMessages({
+          roomId: payload,
+          messageIds,
+          messagesData,
+        }),
+      );
 
-      if (messagesData.length === appConfig.messagesPerPage) {
-        yield put(actions.getMessagesHistory());
+      if (messageIds.length === appConfig.messagesPerPage) {
+        yield put(actions.getMessagesHistory(payload));
       }
     } else {
-      yield put(actions.setMessagesHistory(messagesData));
+      yield put(
+        actions.setMessagesHistory({roomId: payload, messageIds, messagesData}),
+      );
     }
   } catch (err: any) {
     console.log('getMessagesHistory', err);
   }
 }
 
-function* getNextMessages() {
+function* getNextMessages({payload}: {type: string; payload: string}) {
   try {
     const {auth, chat} = yield select();
-    const {conversation, messages} = chat;
+    const {rooms, messages: messagesStore} = chat;
+    const messages = messagesStore?.[payload] || {};
+    const conversation = rooms.data?.[payload] || {};
+
     const {data} = messages;
     const lastDate = data.length > 1 ? data[data.length - 1].createdAt : '';
 
@@ -772,19 +799,23 @@ function* getNextMessages() {
       }),
     );
     const result = JSON.parse(response.data.message);
+    const resultData = result.result?.messages;
+    const messageIds = resultData.map((item: any) => item._id);
 
-    const messagesData = mapMessages(auth.user, result.result?.messages);
-    yield put(actions.setNextMessages(messagesData));
+    const messagesData = mapMessages(auth.user, resultData);
+    yield put(
+      actions.setNextMessages({roomId: payload, messageIds, messagesData}),
+    );
   } catch (err: any) {
     console.log('getMessagesHistory', err);
   }
 }
 
-function* mergeMessagesHistory() {
+function* mergeMessagesHistory({payload}: {type: string; payload: string}) {
   const {chat} = yield select();
   const {canLoadMore} = chat.messages;
   if (canLoadMore) {
-    yield put(actions.getMessagesHistory());
+    yield put(actions.getMessagesHistory(payload));
   }
 }
 
@@ -826,6 +857,34 @@ function* leaveChat({
   yield put(modalActions.showHideToastMessage(toastMessage));
 }
 
+function* toggleConversationNotifications({
+  payload,
+}: {
+  type: string;
+  payload: {roomId: string; currentDisableNotifications: boolean};
+}) {
+  try {
+    const {roomId, currentDisableNotifications} = payload;
+    const newDisableNotifications = !currentDisableNotifications;
+
+    yield makeHttpRequest(
+      apiConfig.Chat.setConversationNotifications(
+        roomId,
+        newDisableNotifications,
+      ),
+    );
+
+    yield put(
+      actions.setConversationNotifications({
+        roomId,
+        disableNotifications: newDisableNotifications,
+      }),
+    );
+  } catch (error) {
+    yield showError(error);
+  }
+}
+
 function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
   /* Because subscription "stream-room-messages" event
       always return id: "id" so we can't handle it by id.
@@ -854,7 +913,7 @@ function handleAddMember() {
 function* handleNewMessage(data: any) {
   try {
     const {chat, auth} = yield select();
-    const {messages, conversation} = chat;
+    const {messages, conversation, unreadMessage} = chat;
     const message = mapMessage(auth.user, data);
     const existed = chat.rooms.data.find(
       (item: IConversation) => item._id === message?.room_id,
@@ -867,8 +926,7 @@ function* handleNewMessage(data: any) {
     );
 
     const haveUnreadMessages =
-      messages.unreadMessage &&
-      conversation.unreadCount > appConfig.messagesPerPage;
+      unreadMessage && conversation.unreadCount > appConfig.messagesPerPage;
 
     if (existed) {
       if (!include) {

@@ -13,6 +13,7 @@ import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 import {messageStatus} from './../../constants/chat';
 import apiConfig from '~/configs/apiConfig';
+import {IObject} from '~/interfaces/common';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -32,11 +33,22 @@ export const mapData = (user: IChatUser, dataType: string, data: any) => {
   }
 };
 
-export const mapConversations = (user: IChatUser, data?: []): IConversation[] =>
-  (data || []).map((item: any) => mapConversation(user, item));
+export const mapConversations = (
+  user: IChatUser,
+  data?: [],
+): IObject<IConversation> => {
+  const conversations = (data || []).map((item: any) =>
+    mapConversation(user, item),
+  );
+  //@ts-ignore
+  return conversations.reduce((obj, item) => ((obj[item._id] = item), obj), {});
+};
 
-export const mapMessages = (user: IChatUser, data?: []): IMessage[] =>
-  (data || []).map((item: any) => mapMessage(user, item));
+export const mapMessages = (user: IChatUser, data?: []): IObject<IMessage> => {
+  const messages = (data || []).map((item: any) => mapMessage(user, item));
+  //@ts-ignore
+  return messages.reduce((obj, item) => ((obj[item._id] = item), obj), {});
+};
 
 export const mapUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapUser(item));
@@ -97,13 +109,6 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
         : null
       : getRoomAvatar(_id);
 
-  const name =
-    (typeof item?.customFields?.beinChatName === 'string'
-      ? item?.customFields?.beinChatName
-      : item?.customFields?.beinChatName?.name) ||
-    item?.fname ||
-    item?.name;
-
   const lastMessage = item.lastMessage
     ? getLastMessage(
         mapMessage(user, item.lastMessage),
@@ -115,7 +120,6 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
     ...item,
     ...item.customFields,
     _id,
-    name,
     description: item.description || null,
     type,
     avatar,

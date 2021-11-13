@@ -27,6 +27,7 @@ import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
 import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {RootStackParamList} from '~/interfaces/IRouter';
@@ -52,8 +53,16 @@ import LoadingMessages from '../../components/LoadingMessages';
 import {getReactionStatistics} from '../../helper';
 
 const _Conversation = () => {
+  const {rootNavigation} = useRootNavigation();
+  const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
+  const roomId = route?.params?.roomId || '';
   const {user} = useAuth();
-  const {conversation, messages, unreadMessagePosition} = useChat();
+  const {rooms, messages: messagesData, unreadMessage} = useChat();
+  // const conversation = rooms.data?.[roomId] || {};
+  const conversation = useKeySelector(`chat.rooms.data.${roomId}`);
+  const messages = messagesData?.[roomId] || {};
+  const roomMessageData = messages.data;
+
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
@@ -61,8 +70,6 @@ const _Conversation = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme, insets);
-  const {rootNavigation} = useRootNavigation();
-  const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
 
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -169,12 +176,18 @@ const _Conversation = () => {
   }, [error]);
 
   const getMessages = (unreadCount: number) => {
+    if (!roomId) return;
     if (route.params?.message_id) {
-      dispatch(actions.getSurroundingMessages(route.params.message_id));
+      dispatch(
+        actions.getSurroundingMessages({
+          roomId,
+          messageId: route.params.message_id,
+        }),
+      );
     } else if (unreadCount > appConfig.messagesPerPage) {
-      dispatch(actions.getUnreadMessage());
+      dispatch(actions.getUnreadMessage(conversation));
     } else if (conversation.msgs > 0) {
-      dispatch(actions.getMessagesHistory());
+      dispatch(actions.getMessagesHistory(roomId));
     }
   };
 
@@ -187,7 +200,8 @@ const _Conversation = () => {
   };
 
   const loadMoreMessages = () => {
-    if (!messages.loading) dispatch(actions.mergeMessagesHistory());
+    if (!messages.loading && roomId)
+      dispatch(actions.mergeMessagesHistory(roomId));
   };
 
   const onOptionsClosed = () => {
@@ -299,17 +313,17 @@ const _Conversation = () => {
   };
 
   const jumpToMessage = useCallback((messageId?: string) => {
-    if (!messageId) return;
+    if (!roomId || !messageId) return;
 
-    const index = messages.data.findIndex(
+    const index = roomMessageData.findIndex(
       (item: IMessage) => item._id === messageId,
     );
     if (index >= 0) {
-      dispatch(actions.setJumpedMessage(messages.data[index]));
+      dispatch(actions.setJumpedMessage(roomMessageData[index]));
       listRef.current?.scrollToIndex({index, animated: true});
     } else {
       // dispatch(actions.resetData('messages'));
-      dispatch(actions.getSurroundingMessages(messageId));
+      dispatch(actions.getSurroundingMessages({roomId, messageId}));
     }
   }, []);
 
@@ -377,52 +391,38 @@ const _Conversation = () => {
 
   const onCancelReplyingMessage = () => setReplyingMessage(undefined);
 
-  const renderItem = ({item, index}: {item: IMessage; index: number}) => {
-    const props = {
-      previousMessage: index > 0 && messages.data[index - 1],
-      currentMessage: item,
-      index,
-      onReactPress,
-      onReplyPress,
-      onLongPress,
-      onQuotedMessagePress: jumpToMessage,
-    };
-    return <MessageContainer {...props} />;
-  };
-
   const onViewableItemsChanged = (changed: any[]) => {
     if (
       conversation.unreadCount < appConfig.messagesPerPage &&
-      messages.unreadMessage &&
+      unreadMessage &&
       changed &&
       changed.length > 0
     ) {
       const item = changed[0].item;
 
-      if (
-        item._id !== messages.unreadMessage?._id &&
-        messages.data.length > unreadMessagePosition
-      ) {
-        listRef.current?.scrollToIndex({
-          index: unreadMessagePosition,
-          animated: false,
-        });
+      if (item._id !== unreadMessage) {
+        scrollToUnreadMessage();
       }
       setIsScrolled(true);
     }
     initiated.current = true;
   };
 
-  const onUnreadBannerPress = () => {
-    try {
-      listRef.current?.scrollToIndex({
-        index: unreadMessagePosition,
-        animated: true,
-      });
-    } catch (e: any) {
-      scrollToIndexFailed({index: unreadMessagePosition});
+  const scrollToUnreadMessage = useCallback(() => {
+    const unreadMessagePosition = roomMessageData.findIndex(
+      (item: IMessage) => item._id === unreadMessage,
+    );
+    if (roomMessageData.length > unreadMessagePosition) {
+      try {
+        listRef.current?.scrollToIndex({
+          index: unreadMessagePosition,
+          animated: true,
+        });
+      } catch (e: any) {
+        scrollToIndexFailed({index: unreadMessagePosition});
+      }
     }
-  };
+  }, [roomMessageData]);
 
   const onCloseUnreadBannerPress = () => {
     setUnreadBannerVisible(false);
@@ -436,10 +436,10 @@ const _Conversation = () => {
   };
 
   const scrollToBottom = (animated?: boolean, index?: number) => {
-    if ((!index || index < 0) && isEmpty(messages.data)) return;
+    if ((!index || index < 0) && isEmpty(roomMessageData)) return;
 
     listRef.current?.scrollToIndex({
-      index: index || messages.data.length - 1,
+      index: index || roomMessageData.length - 1,
       animated: animated || false,
     });
   };
@@ -449,7 +449,7 @@ const _Conversation = () => {
       if (messages.canLoadNext) setDownButtonVisible(true);
       if (
         !isScrolled &&
-        !isEmpty(messages.data) &&
+        !isEmpty(roomMessageData) &&
         // !messages.loading &&
         !messages.canLoadNext &&
         conversation.unreadCount === 0 &&
@@ -467,7 +467,7 @@ const _Conversation = () => {
     InteractionManager.runAfterInteractions(() => {
       const _offsetY = event?.contentOffset.y;
       const _contentHeight = event?.contentSize.height;
-      const delta = 0;
+      const delta = 1;
       const condition1 = _contentHeight - dimension.deviceHeight * 2 > _offsetY;
       const condition2 = messages.canLoadNext;
       setDownButtonVisible(condition1 || condition2);
@@ -486,17 +486,17 @@ const _Conversation = () => {
     });
   };
 
-  const scrollHandler = debounce(handleScroll, 10);
+  const scrollHandler = debounce(handleScroll, 1);
 
   const onScroll = (event: any) => {
     scrollHandler(event.nativeEvent);
   };
 
   const onEndReached = () => {
-    if (!messages.loadingNext && messages.canLoadNext) {
-      dispatch(actions.getNextMessages());
+    if (!messages.loadingNext && messages.canLoadNext && roomId) {
+      dispatch(actions.getNextMessages(roomId));
     } else if (conversation.unreadCount > 0) {
-      dispatch(actions.readConversation());
+      dispatch(actions.readConversation(roomId));
     }
   };
 
@@ -504,7 +504,7 @@ const _Conversation = () => {
     setDownButtonVisible(false);
     if (messages.canLoadNext) {
       setIsScrolled(false);
-      dispatch(actions.readConversation());
+      dispatch(actions.readConversation(roomId));
       dispatch(actions.resetData('messages'));
       getMessages(0);
     } else {
@@ -514,6 +514,19 @@ const _Conversation = () => {
 
   const onSendCallBack = () => {
     setIsScrolled(false);
+  };
+
+  const renderItem = ({item, index}: {item: string; index: number}) => {
+    const props = {
+      previousMessage: index > 0 && messages.items[roomMessageData[index - 1]],
+      currentMessage: messages.items[item],
+      index,
+      onReactPress,
+      onReplyPress,
+      onLongPress,
+      onQuotedMessagePress: jumpToMessage,
+    };
+    return <MessageContainer {...props} />;
   };
 
   const renderChatMessages = () => {
@@ -532,7 +545,7 @@ const _Conversation = () => {
           <ListMessages
             listRef={listRef}
             nativeID={'list-messages'}
-            data={messages.data}
+            data={roomMessageData}
             keyboardShouldPersistTaps="handled"
             onEndReached={onEndReached}
             onEndReachedThreshold={0.5}
@@ -549,7 +562,7 @@ const _Conversation = () => {
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
             windowSize={5000}
             renderItem={renderItem}
-            keyExtractor={item => item._id}
+            keyExtractor={item => item}
             onViewableItemsChanged={onViewableItemsChanged}
             ListFooterComponent={() => (
               <ViewSpacing height={theme.spacing.margin.large} />
@@ -598,7 +611,7 @@ const _Conversation = () => {
         count={conversation.unreadCount}
         time="now"
         visible={unreadBannerVisible}
-        onPress={onUnreadBannerPress}
+        onPress={scrollToUnreadMessage}
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}

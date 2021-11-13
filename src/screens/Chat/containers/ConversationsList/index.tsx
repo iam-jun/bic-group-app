@@ -108,10 +108,6 @@ const _ConversationsList = (): React.ReactElement => {
     [listRef],
   );
 
-  const loadMore = () => {
-    dispatch(actions.mergeExtraData('rooms'));
-  };
-
   const onChatPress = (item: IConversation) => {
     dispatch(actions.setConversationDetail(item));
 
@@ -190,7 +186,7 @@ const _ConversationsList = (): React.ReactElement => {
         onItemLongPress={onChatLongPress}
         onRefresh={() => dispatch(actions.getSubscriptions())}
         ListEmptyComponent={renderEmpty}
-        onEndReached={loadMore}
+        // onEndReached={loadMore}
         onEndReachedThreshold={0.5}
         showItemSeparator={false}
         containerStyle={styles.listContainer}
