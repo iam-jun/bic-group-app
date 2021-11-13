@@ -50,8 +50,7 @@ const GeneralInformation = (props: any) => {
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const {groupDetail, isPrivacyModalOpen, loadingAvatar, loadingCover} =
-    useGroups();
+  const {groupDetail, loadingAvatar, loadingCover} = useGroups();
   const {name, icon, background_img_url, description, privacy} =
     groupDetail.group;
 
@@ -75,11 +74,8 @@ const GeneralInformation = (props: any) => {
     );
   };
 
-  const onPrivacyModalClose = () =>
-    dispatch(groupsActions.setPrivacyModalOpen(false));
-
-  const editGroupPrivacy = () =>
-    dispatch(groupsActions.setPrivacyModalOpen(true));
+  const editGroupPrivacy = (e: any) =>
+    baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   const onPrivacyMenuPress = (item: any) => {
     baseSheetRef.current?.close();
@@ -87,7 +83,7 @@ const GeneralInformation = (props: any) => {
   };
 
   const editGroupDescripton = () =>
-    rootNavigation.navigate(groupStack.editGroupDescription);
+    rootNavigation.navigate(groupStack.editGroupDescription, {groupId: id});
 
   const uploadFile = (
     file: IFilePicked,
@@ -239,7 +235,7 @@ const GeneralInformation = (props: any) => {
           title={'settings:title_privacy'}
           subtitle={titleCase(privacy) || ''}
           rightIcon={'EditAlt'}
-          onPress={editGroupPrivacy}
+          onPress={e => editGroupPrivacy(e)}
         />
       </View>
     );
@@ -257,8 +253,6 @@ const GeneralInformation = (props: any) => {
         {renderGroupInfo()}
 
         <BottomSheet
-          isOpen={isPrivacyModalOpen}
-          onClose={onPrivacyModalClose}
           modalizeRef={baseSheetRef}
           ContentComponent={
             <View style={styles.contentBottomSheet}>

@@ -14,7 +14,7 @@ interface GroupSectionItemProps {
   subtitle: string;
   rightIcon: IconType;
   privacyIcon?: IconType;
-  onPress?: () => void;
+  onPress?: (e: any) => void;
 }
 
 const GroupSectionItem = ({

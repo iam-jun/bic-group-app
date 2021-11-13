@@ -26,6 +26,11 @@ fastlane android deploy_dev
 fastlane android deploy_staging
 ```
 
+### android deploy_production
+```
+fastlane android deploy_production
+```
+
 
 ----
 

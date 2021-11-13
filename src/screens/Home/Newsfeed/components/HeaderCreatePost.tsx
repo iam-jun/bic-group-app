@@ -69,6 +69,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
       ])}>
       <Avatar.Medium isRounded={true} source={avatar} />
       <Button
+        testID={'header_create_post'}
         TouchableComponent={TouchableHighlight}
         onPress={onPressCreate}
         underlayColor={colors.bgHover}

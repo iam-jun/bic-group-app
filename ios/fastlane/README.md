@@ -31,6 +31,11 @@ fastlane ios deploy_dev
 fastlane ios deploy_staging
 ```
 
+### ios deploy_production
+```
+fastlane ios deploy_production
+```
+
 
 ----
 

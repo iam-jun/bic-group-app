@@ -71,6 +71,7 @@
     #down-button:active {
       border-color: var(--primary-3);
       box-shadow: none;
+      cursor: pointer;
     }
 
     #down-button:hover,
@@ -156,6 +157,10 @@
 
     span {
       overflow-wrap: anywhere !important;
+    }
+
+    .post-toolbar-container {
+      z-index: -1;
     }
 
     #chat-wrapper {
@@ -358,6 +363,12 @@
       height: auto;
       background-color: var(--placeholder);
       margin: 0 0.75rem;
+    }
+
+    .react-datepicker-container {
+      position: absolute;
+      top: 55%;
+      left: 20%;
     }
   </style>
 </head>

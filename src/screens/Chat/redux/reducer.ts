@@ -611,12 +611,22 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         },
       };
     case types.REMOVE_MEMBER_SUCCESS:
+      /**
+       * Only need to update roles, as the screen Chat/GroupMembers will reset members,
+       * and fetch new list of members.
+       */
       return {
         ...state,
         members: {
           ...members,
           data: members.data.filter(
             (member: IChatUser) => member.username !== payload.msg,
+          ),
+        },
+        roles: {
+          ...state.roles,
+          data: state.roles.data.filter(
+            (admin: IChatUser) => admin.username !== payload.msg,
           ),
         },
         rooms: {

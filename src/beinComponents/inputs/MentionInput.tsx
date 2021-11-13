@@ -318,11 +318,16 @@ const MentionInput: React.FC<MentionInputProps> = ({
     }
   };
 
-  const checkSendWhenEnter = debounce((event: any) => {
-    if (event?.key === 'Enter') {
+  const checkSendWhenEnter = (event: any) => {
+    if (
+      event?.key === 'Enter' &&
+      !event?.shiftKey &&
+      content?.trim?.()?.length > 0
+    ) {
+      event.preventDefault();
       componentInputProps?.commentInputRef?.current?.send();
     }
-  }, 200);
+  };
 
   const _onKeyPress = (event: any) => {
     if (mentioning) {
@@ -412,39 +417,44 @@ const MentionInput: React.FC<MentionInputProps> = ({
   };
 
   return (
-    <View
-      style={[styles.containerWrapper, style]}
-      onLayout={_onLayoutContainer}>
-      {Platform.OS === 'web' && (
-        /*
+    <>
+      <View
+        style={[styles.containerWrapper, style]}
+        onLayout={_onLayoutContainer}>
+        {Platform.OS === 'web' && (
+          /*
         Duplicate ComponentInput because _onContentSizeChange
         in the below component could not work some times on web.
         Make sure this and the below ComponentInput share the same styling
         */
+          <ComponentInput
+            nativeID="component-input--hidden"
+            value={content}
+            multiline
+            style={styles.hidden}
+            onContentSizeChange={_onContentSizeChange}
+            editable={!disabled}
+            onKeyPress={_onKeyPress}
+          />
+        )}
         <ComponentInput
-          nativeID="component-input--hidden"
+          {...componentInputProps}
           value={content}
-          multiline
-          style={styles.hidden}
-          onContentSizeChange={_onContentSizeChange}
+          textInputRef={inputRef}
+          onChangeText={_onChangeText}
+          placeholder={placeholderText}
+          onContentSizeChange={
+            Platform.OS === 'web' ? undefined : _onContentSizeChange
+          }
+          style={[
+            textInputStyle,
+            disabled ? {color: colors.textSecondary} : {},
+          ]}
+          onSelectionChange={onSelectionChange}
           editable={!disabled}
           onKeyPress={_onKeyPress}
         />
-      )}
-      <ComponentInput
-        {...componentInputProps}
-        value={content}
-        textInputRef={inputRef}
-        onChangeText={_onChangeText}
-        placeholder={placeholderText}
-        onContentSizeChange={
-          Platform.OS === 'web' ? undefined : _onContentSizeChange
-        }
-        style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
-        onSelectionChange={onSelectionChange}
-        editable={!disabled}
-        onKeyPress={_onKeyPress}
-      />
+      </View>
       {mentioning && (
         <View
           style={[
@@ -472,7 +482,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           />
         </View>
       )}
-    </View>
+    </>
   );
 };
 
@@ -500,7 +510,7 @@ const createStyles = (
   switch (position) {
     case 'top':
       stylePosition = {
-        bottom: '100%',
+        bottom: measuredHeight,
       };
       break;
     case 'above-keyboard':

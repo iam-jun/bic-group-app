@@ -94,10 +94,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 
   useEffect(() => {
-    console.log(`\x1b[36m🐣️ NewsfeedList ${data?.length}\x1b[0m`);
-  }, [data]);
-
-  useEffect(() => {
     if (!canLoadMore && !refreshing) {
       setInitializing(false);
     }
@@ -114,6 +110,15 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       onEndReach?.();
     }
   };
+
+  const onVisibleIndicesChanged = debounce((indexes: any) => {
+    if (
+      indexes?.length > 0 &&
+      data?.length === indexes?.[indexes?.length - 1]
+    ) {
+      onEndReach?.();
+    }
+  }, 1000);
 
   const rowRenderer = (type: any, data: any, index: number) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
@@ -201,6 +206,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           forceNonDeterministicRendering={true}
           onEndReached={_onEndReached}
           onEndReachedThreshold={2 * screenHeight}
+          onVisibleIndicesChanged={onVisibleIndicesChanged}
           onItemLayout={_onItemLayout}
           renderFooter={renderFooter}
           renderAheadOffset={screenHeight} //pixels in advance to be rendered

@@ -1,5 +1,5 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
-import {isArray, get} from 'lodash';
+import {isArray, get, isEmpty} from 'lodash';
 
 import {
   IOwnReaction,
@@ -43,7 +43,7 @@ function timeOut(ms: number) {
 
 export default function* postSaga() {
   yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
-  yield takeLatest(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
+  yield takeEvery(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeEvery(postTypes.DELETE_POST, deletePost);
@@ -77,7 +77,7 @@ function* postCreateNewPost({
 }: {
   type: string;
   payload: IPostCreatePost;
-}) {
+}): any {
   const {userId, streamClient, createFromGroupId, ...postPayload} =
     payload || {};
   try {
@@ -139,14 +139,30 @@ function* postCreateNewComment({
 }: {
   type: string;
   payload: IPayloadCreateComment;
-}) {
+}): any {
   const {postId, parentCommentId, commentData, userId, onSuccess} =
     payload || {};
-  if (!postId || !commentData || !userId) {
+  if (
+    !postId ||
+    !commentData ||
+    !userId ||
+    (!commentData?.content &&
+      isEmpty(commentData?.images) &&
+      isEmpty(commentData?.files) &&
+      isEmpty(commentData?.videos))
+  ) {
     console.log(`\x1b[31m🐣️ saga postCreateNewComment: invalid param\x1b[0m`);
     return;
   }
   try {
+    const creatingComment = yield select(
+      state => state?.post?.createComment?.loading,
+    );
+    if (creatingComment) {
+      console.log(`\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m`);
+      return;
+    }
+
     yield put(postActions.setCreateComment({loading: true}));
 
     const requestData: IRequestPostComment = {
@@ -156,6 +172,8 @@ function* postCreateNewComment({
       userId: Number(userId),
     };
     const resComment = yield call(postDataHelper.postNewComment, requestData);
+    //callback success first time for delete content in text input
+    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
 
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
@@ -189,6 +207,7 @@ function* postCreateNewComment({
     yield put(postActions.setCreateComment({loading: false, content: ''}));
 
     yield timeOut(800);
+    //callback success second time for scroll to item
     onSuccess?.({newCommentId: resComment?.id, parentCommentId});
   } catch (e) {
     yield put(postActions.setCreateComment({loading: false}));
@@ -196,7 +215,12 @@ function* postCreateNewComment({
   }
 }
 
-function* putEditPost({payload}: {type: string; payload: IPayloadPutEditPost}) {
+function* putEditPost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadPutEditPost;
+}): any {
   const {id, data, replaceWithDetail = true} = payload;
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
@@ -260,7 +284,7 @@ function* putEditComment({
   }
 }
 
-function* deletePost({payload}: {type: string; payload: string}) {
+function* deletePost({payload}: {type: string; payload: string}): any {
   if (!payload) {
     console.log(`\x1b[31m🐣️ saga deletePost: id not found\x1b[0m`);
     return;
@@ -296,7 +320,7 @@ function* addToAllPosts({
 }: {
   type: string;
   payload: IPayloadAddToAllPost;
-}) {
+}): any {
   const {data, handleComment} = payload || {};
   const allPosts = yield select(state => state?.post?.allPosts) || {};
   const newAllPosts = {...allPosts};
@@ -353,7 +377,7 @@ function* addToAllComments({
 }: {
   type: string;
   payload: IReaction[] | IReaction;
-}) {
+}): any {
   try {
     const allComments = yield select(state => state?.post?.allComments) || {};
     const newAllComments = {...allComments};
@@ -379,7 +403,7 @@ function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
-) {
+): any {
   try {
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),
@@ -397,7 +421,7 @@ function* postReactToPost({
 }: {
   type: string;
   payload: IPayloadReactToPost;
-}) {
+}): any {
   const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
   try {
     const post1 = yield select(s => get(s, postKeySelector.postById(id)));
@@ -452,7 +476,7 @@ function* deleteReactToPost({
 }: {
   type: string;
   payload: IPayloadReactToPost;
-}) {
+}): any {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
     const post1 = yield select(s => get(s, postKeySelector.postById(id)));
@@ -494,7 +518,7 @@ function* onUpdateReactionOfCommentById(
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
   defaultComment: IReaction,
-) {
+): any {
   try {
     const allComments = yield select(state =>
       get(state, postKeySelector.allComments),
@@ -515,7 +539,7 @@ function* postReactToComment({
 }: {
   type: string;
   payload: IPayloadReactToComment;
-}) {
+}): any {
   const {
     id,
     comment,
@@ -596,7 +620,7 @@ function* deleteReactToComment({
 }: {
   type: string;
   payload: IPayloadReactToComment;
-}) {
+}): any {
   const {id, comment, reactionId, reactionCounts, ownReaction} = payload;
   try {
     const rId = ownReaction?.[reactionId]?.[0]?.id;
@@ -656,7 +680,7 @@ function* showPostAudienceBottomSheet({
 }: {
   type: string;
   payload: {postId: string; fromStack?: any};
-}) {
+}): any {
   const {postId, fromStack} = payload;
   if (!postId) {
     console.log(`\x1b[31m🐣️saga showPostAudienceBottomSheet no postId\x1b[0m`);
@@ -717,7 +741,7 @@ function* updateAllCommentsByParentIds({
 }: {
   type: string;
   payload: {[postId: string]: IReaction[]};
-}) {
+}): any {
   const allCommentsByParentIds = yield select(
     state => state?.post?.allCommentsByParentIds,
   ) || {};
@@ -730,7 +754,7 @@ function* updateAllCommentsByParentIdsWithComments({
 }: {
   type: string;
   payload: IPayloadUpdateCommentsById;
-}) {
+}): any {
   const {id, comments, isMerge} = payload || {};
   const allComments = yield select(state =>
     get(state, postKeySelector.allCommentsByParentIds),
@@ -782,7 +806,7 @@ function* getDraftPosts({
 }: {
   type: string;
   payload: IPayloadGetDraftPosts;
-}) {
+}): any {
   const {userId, streamClient, isRefresh = true} = payload;
   const draftPostsData = yield select(s =>
     get(s, postKeySelector.draftPostsData),
@@ -832,7 +856,7 @@ function* postPublishDraftPost({
 }: {
   type: string;
   payload: IPayloadPublishDraftPost;
-}) {
+}): any {
   const {
     draftPostId,
     onSuccess,
@@ -876,7 +900,7 @@ function* putEditDraftPost({
 }: {
   type: string;
   payload: IPayloadPutEditDraftPost;
-}) {
+}): any {
   const {id, data, replaceWithDetail, userId, streamClient, publishNow} =
     payload || {};
   if (!id || !data) {
@@ -926,7 +950,7 @@ function* getCommentsByPostId({
 }: {
   type: string;
   payload: IPayloadGetCommentsById;
-}) {
+}): any {
   const {postId, commentId, isMerge, callbackLoading} = payload || {};
   try {
     callbackLoading?.(true);
@@ -967,7 +991,7 @@ function* getPostDetail({
 }: {
   type: string;
   payload: IPayloadGetPostDetail;
-}) {
+}): any {
   const {userId, postId, streamClient, callbackLoading} = payload || {};
   if (!userId || !postId || !streamClient) {
     console.log(`\x1b[31m🐣️ saga getPostDetail invalid params\x1b[0m`);

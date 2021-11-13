@@ -130,7 +130,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
     upload_to_testflight(
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
-      changelog: "Version #{ENV['APP_VERSION']}",
+      changelog: "Staging version #{ENV['APP_VERSION']}",
     )
     rocket_chat(
       message: "🟡 [STG] 🍎 -iOS- New build version #{appVersionText} can be download on TestFlight",
@@ -149,6 +149,11 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             export_method: "app-store",
             silent: true,
             clean: true,
+        )
+        upload_to_testflight(
+          app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+          ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
+          changelog: "Production version #{ENV['APP_VERSION']}",
         )
         rocket_chat(
             message: "🟢 [PROD] 🍎 -iOS- New build version #{appVersionText} can be download on TestFlight",

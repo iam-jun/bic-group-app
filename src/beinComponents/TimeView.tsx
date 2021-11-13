@@ -2,11 +2,12 @@ import React, {FC, useCallback, useContext, useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {ITheme} from '~/theme/interfaces';
+import moment from 'moment';
+import 'moment/locale/vi';
 
+import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
-import moment from 'moment';
 import {AppContext} from '~/contexts/AppContext';
 
 const intervalTime = 1000 * 60; //1 min
@@ -15,13 +16,13 @@ const limitInterval = 1000 * 60 * 60; //60 mins
 export interface TimeViewProps {
   style?: StyleProp<ViewStyle>;
   time: any;
-  type?: 'full' | 'short';
+  type?: 'fullDateTime' | 'dateTime' | 'short';
 }
 
 const TimeView: FC<TimeViewProps> = ({
   style,
   time,
-  type = 'full',
+  type = 'fullDateTime',
 }: TimeViewProps) => {
   const [displayTime, setDisplayTime] = useState('');
 
@@ -49,20 +50,22 @@ const TimeView: FC<TimeViewProps> = ({
         clearInterval(interval);
       }
     };
-  }, [time]);
+  }, [time, language]);
 
   const getDisplayTime = useCallback(() => {
     let result = '';
     if (!time) {
       return;
     }
-    if (type === 'full') {
+    if (type === 'fullDateTime') {
       result = formatFullTime(time, t, language);
+    } else if (type === 'dateTime') {
+      result = formatDateTime(time, t, language);
     } else {
       result = formatShortTime(time, t, language);
     }
     setDisplayTime(result);
-  }, [time]);
+  }, [time, language]);
 
   return (
     <Text.BodyS color={colors.textSecondary} style={style}>
@@ -72,6 +75,7 @@ const TimeView: FC<TimeViewProps> = ({
 };
 
 export const formatShortTime = (time: any, t: any, lang: any) => {
+  moment.locale(lang);
   let result = '';
   const date = moment.utc(time).unix();
   const now = moment().unix();
@@ -103,9 +107,12 @@ export const formatShortTime = (time: any, t: any, lang: any) => {
 };
 
 export const formatFullTime = (time: any, t: any, lang: any) => {
+  moment.locale(lang);
   let result = '';
+  const dateUtc = moment.utc(time);
+  const localDate = dateUtc.local();
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-  const date = moment(time, formats, true);
+  const date = moment(localDate, formats, true);
   const isSameYear = date?.year?.() === moment().year();
 
   let formatPreviousDay = '';
@@ -120,6 +127,25 @@ export const formatFullTime = (time: any, t: any, lang: any) => {
   result = date.calendar(null, {
     lastDay: `[${t('common:time:yesterday')} ${t('common:time:at')}] hh:mm A`,
     sameDay: `[${t('common:time:today')} ${t('common:time:at')}] hh:mm A`,
+    lastWeek: formatPreviousDay,
+    sameElse: formatPreviousDay,
+  });
+  return result;
+};
+
+export const formatDateTime = (time: any, t: any, lang: any) => {
+  moment.locale(lang);
+  let result = '';
+  const dateUtc = moment.utc(time);
+  const localDate = dateUtc.local();
+  const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
+  const date = moment(localDate, formats, true);
+
+  const formatPreviousDay = lang === 'vi' ? 'DD/MM/yyyy' : 'MMM DD, yyyy';
+
+  result = date.calendar(null, {
+    lastDay: `[${t('common:time:yesterday')}]`,
+    sameDay: `[${t('common:time:today')}]`,
     lastWeek: formatPreviousDay,
     sameElse: formatPreviousDay,
   });

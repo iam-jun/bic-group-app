@@ -77,7 +77,13 @@ const _Conversation = () => {
   const contentHeight = useRef(dimension.deviceHeight);
   const initiated = useRef(false);
   const [error, setError] = useState<string | null>(null);
+
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
+  const _setDownButtonVisible = debounce(
+    (value: boolean) => setDownButtonVisible(value),
+    Platform.OS === 'web' ? 50 : 20,
+  );
+
   const [unreadBannerVisible, setUnreadBannerVisible] =
     useState<boolean>(false);
   const listRef = useRef<FlatList>(null);
@@ -144,7 +150,7 @@ const _Conversation = () => {
       if (conversation?.msgs) {
         setIsScrolled(false);
         getMessages(conversation.unreadCount);
-        setDownButtonVisible(
+        _setDownButtonVisible(
           conversation.unreadCount > appConfig.messagesPerPage,
         );
       }
@@ -446,7 +452,7 @@ const _Conversation = () => {
 
   const onContentLayoutChange = () => {
     InteractionManager.runAfterInteractions(() => {
-      if (messages.canLoadNext) setDownButtonVisible(true);
+      if (messages.canLoadNext) _setDownButtonVisible(true);
       if (
         !isScrolled &&
         !isEmpty(roomMessageData) &&
@@ -470,7 +476,7 @@ const _Conversation = () => {
       const delta = 1;
       const condition1 = _contentHeight - dimension.deviceHeight * 2 > _offsetY;
       const condition2 = messages.canLoadNext;
-      setDownButtonVisible(condition1 || condition2);
+      _setDownButtonVisible(condition1 || condition2);
       offsetY.current = _offsetY;
       contentHeight.current = _contentHeight;
 
@@ -501,7 +507,7 @@ const _Conversation = () => {
   };
 
   const onDownPress = () => {
-    setDownButtonVisible(false);
+    _setDownButtonVisible(false);
     if (messages.canLoadNext) {
       setIsScrolled(false);
       dispatch(actions.readConversation(roomId));
