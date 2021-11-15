@@ -19,9 +19,8 @@ import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
 import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
-import {IObject} from '~/interfaces/common';
 import groupsDataHelper from '../helper/GroupsDataHelper';
-import {IGroup} from '~/interfaces/IGroup';
+import {IGroup, IGroupMembers} from '~/interfaces/IGroup';
 import mainStack from '~/router/navigator/MainStack/stack';
 import chatActions from '~/screens/Chat/redux/actions';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -38,13 +37,13 @@ import NoSearchResult from '~/beinFragments/NoSearchResult';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 
-const GroupMembers = (props: any) => {
+const _GroupMembers = (props: any) => {
   const params = props.route.params;
   const {groupId} = params || {};
 
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedMember, setSelectedMember] = useState<IObject<any>>({});
+  const [selectedMember, setSelectedMember] = useState<IGroupMembers>({});
   const clearSelectedMember = () => setSelectedMember({});
 
   const dispatch = useDispatch();
@@ -109,7 +108,7 @@ const GroupMembers = (props: any) => {
   //   alert('onPress userId: ' + userId);
   // };
 
-  const onPressMenu = (e: any, item: any) => {
+  const onPressMenu = (e: any, item: IGroupMembers) => {
     if (!item || !item.id) return;
 
     setSelectedMember({
@@ -147,6 +146,33 @@ const GroupMembers = (props: any) => {
       screen: chatStack.conversation,
       params: {roomId: roomId, initial: false},
     });
+  };
+
+  const alertSettingAdmin = () => {
+    const alertPayload = {
+      iconName: 'Star',
+      title: i18next.t('groups:modal_confirm_set_admin:title'),
+      content: i18next.t('groups:modal_confirm_set_admin:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => doSetAdmin(),
+      confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
+      ConfirmBtnComponent: Button.Danger,
+    };
+    alertPayload.content = alertPayload.content.replace(
+      '{0}',
+      `"${selectedMember?.fullname}"`,
+    );
+    dispatch(modalActions.showAlert(alertPayload));
+  };
+
+  const doSetAdmin = () => {
+    dispatch(
+      groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
+    );
   };
 
   const removeMember = (userId: string, userFullname: string) => {
@@ -369,6 +395,9 @@ const GroupMembers = (props: any) => {
       case 'send-message':
         goToDirectChat();
         break;
+      case 'set-admin':
+        alertSettingAdmin();
+        break;
       case 'remove-member':
         alertRemovingMember();
         break;
@@ -391,8 +420,8 @@ const GroupMembers = (props: any) => {
     );
   };
 
-  const renderItem = ({item}: any) => {
-    const {fullname, avatar, title} = item || {};
+  const renderItem = ({item}: {item: IGroupMembers}) => {
+    const {fullname, avatar} = item || {};
 
     return (
       <PrimaryItem
@@ -401,8 +430,6 @@ const GroupMembers = (props: any) => {
         avatar={avatar}
         title={fullname}
         onPressMenu={(e: any) => onPressMenu(e, item)}
-        subTitle={title}
-        subTitleProps={{variant: 'subtitle', color: colors.textSecondary}}
       />
     );
   };
@@ -640,6 +667,8 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
+const GroupMembers = React.memo(_GroupMembers);
+GroupMembers.whyDidYouRender = true;
 export default GroupMembers;
 
 const groupsRemovedFromToString = (groupList: string[]) => {

@@ -8,6 +8,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
+  IGroupSetAdmin,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -46,6 +47,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
   yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
+  yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -107,23 +109,25 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
 
 function* editGroupDetail({
   payload,
+  editFieldName,
+  callback,
 }: {
   type: string;
   payload: IGroupDetailEdit;
+  editFieldName?: string;
+  callback?: () => void;
 }) {
   try {
     // @ts-ignore
     const result = yield requestEditGroupDetail(payload);
 
-    // checking if uploading avatar/cover image
-    // to use different toast message content
-    const {icon, background_img_url} = payload;
+    // this field is used to indicate which parts of
+    // the profile have been updated
     let toastContent: string;
-
-    if (!!icon) {
-      toastContent = 'common:avatar_changed';
-    } else if (!!background_img_url) {
-      toastContent = 'common:cover_changed';
+    if (editFieldName) {
+      toastContent = `${editFieldName} ${i18next.t(
+        'common:text_updated_successfully',
+      )}`;
     } else {
       toastContent = 'common:text_edit_success';
     }
@@ -138,6 +142,7 @@ function* editGroupDetail({
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     yield put(groupsActions.setGroupDetail(result));
+    if (callback) callback();
 
     yield put(groupsActions.getJoinedGroups());
   } catch (err) {
@@ -281,7 +286,14 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
       uploadType,
     });
 
-    yield put(groupsActions.editGroupDetail({id, [fieldName]: data}));
+    yield put(
+      groupsActions.editGroupDetail(
+        {id, [fieldName]: data},
+        fieldName === 'icon'
+          ? i18next.t('common:text_avatar')
+          : i18next.t('common:text_cover'),
+      ),
+    );
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);
@@ -458,6 +470,29 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('leaveGroup:', err);
+    yield showError(err);
+  }
+}
+
+function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
+  try {
+    const {groupId, userIds} = payload;
+
+    yield groupsDataHelper.setGroupAdmin(groupId, userIds);
+
+    const toastMessage: IToastMessage = {
+      content: 'groups:modal_confirm_set_admin:success_message',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+
+    // refresh group detail after adding new admins
+    yield refreshGroupMembers(groupId);
+  } catch (err) {
+    console.log('setGroupAdmin: ', err);
     yield showError(err);
   }
 }

@@ -9,6 +9,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupSearchPayload,
+  IGroupSetAdmin,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -126,10 +127,16 @@ const groupsActions = {
     };
   },
 
-  editGroupDetail: function (payload: IGroupDetailEdit) {
+  editGroupDetail: function (
+    payload: IGroupDetailEdit,
+    editFieldName?: string,
+    callback?: () => void,
+  ) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
       payload,
+      editFieldName,
+      callback,
     };
   },
   uploadImage: function (payload: IGroupImageUpload) {
@@ -145,6 +152,10 @@ const groupsActions = {
     };
   },
 
+  setGroupAdmin: (payload: IGroupSetAdmin) => ({
+    type: groupsTypes.SET_GROUP_ADMIN,
+    payload,
+  }),
   joinNewGroup: function (payload: {groupId: number}) {
     return {
       type: groupsTypes.JOIN_NEW_GROUP,
