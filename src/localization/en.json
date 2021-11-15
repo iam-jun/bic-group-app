@@ -101,7 +101,11 @@
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
     "text_group": "Group",
-    "text_at": "at"
+    "text_at": "at",
+    "text_updated_successfully": "updated successfully",
+    "text_avatar": "Avatar",
+    "text_cover": "Cover",
+    "text_privacy": "Privacy"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -273,7 +277,6 @@
     "title_edit_email_address": "Edit Email Address",
     "title_edit_address": "Edit Address",
     "text_wrong_email_format": "Wrong Email format",
-    "text_updated_successfully": "updated successfully",
     "text_email_is_used": "This Email is used",
     "text_wrong_phone_number_format": "Wrong number format",
     "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",

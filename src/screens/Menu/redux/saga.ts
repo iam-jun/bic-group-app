@@ -85,7 +85,7 @@ function* editMyProfile({
       // user profile have been updated
       if (editFieldName) {
         toastContent = `${editFieldName} ${i18next.t(
-          'settings:text_updated_successfully',
+          'common:text_updated_successfully',
         )}`;
       } else {
         toastContent = 'common:text_edit_success';

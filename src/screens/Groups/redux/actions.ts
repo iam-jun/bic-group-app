@@ -127,10 +127,16 @@ const groupsActions = {
     };
   },
 
-  editGroupDetail: function (payload: IGroupDetailEdit) {
+  editGroupDetail: function (
+    payload: IGroupDetailEdit,
+    editFieldName?: string,
+    callback?: () => void,
+  ) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
       payload,
+      editFieldName,
+      callback,
     };
   },
   uploadImage: function (payload: IGroupImageUpload) {
