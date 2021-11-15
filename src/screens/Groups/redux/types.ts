@@ -32,6 +32,8 @@ const groupsTypes = {
   JOIN_NEW_GROUP: 'group/JOIN_NEW_GROUP',
   LEAVE_GROUP: 'group/LEAVE_GROUP',
 
+  SET_GROUP_ADMIN: 'groups/SET_GROUP_ADMIN',
+
   UPLOAD_IMAGE: 'groups/UPLOAD_IMAGE',
 
   SET_LOADING_AVATAR: 'groups/SET_LOADING_AVATAR',

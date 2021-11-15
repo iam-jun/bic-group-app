@@ -87,9 +87,29 @@ export interface IGroupAddMembers {
   userIds: number[];
 }
 
+export interface IGroupSetAdmin {
+  groupId: number;
+  userIds: number[];
+}
+
 export interface IGroupSearchPayload {
   isShow?: boolean;
   loading?: boolean;
   searchKey?: string;
   result?: [];
+}
+
+export interface IGroupMembers {
+  id?: number;
+  username?: string;
+  fullname?: string;
+  avatar?: string;
+  roles_ids?: number[];
+  roles?: IGroupMemberRole[];
+}
+
+export interface IGroupMemberRole {
+  id?: number;
+  name?: 'Admin' | 'Member';
+  type?: 'GROUP_ADMIN' | 'MEMBER';
 }
