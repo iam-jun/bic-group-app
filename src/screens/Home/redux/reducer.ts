@@ -10,6 +10,8 @@ const initialHomeState = {
     isShow: false,
     searchText: '',
     isSuggestion: true,
+    loadingSuggestion: false,
+    loadingResult: false,
     suggestionResults: [],
     searchResults: [],
   },

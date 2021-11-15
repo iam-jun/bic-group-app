@@ -4,9 +4,10 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
+import NewsfeedSearchSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NewsfeedSearchSuggestion';
+import NewsfeedSearchResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NewsfeedSearchResult';
 
 const NewsfeedSearch = () => {
   const theme = useTheme() as ITheme;
@@ -18,15 +19,13 @@ const NewsfeedSearch = () => {
     homeKeySelector.newsfeedSearch.isSuggestion,
   );
 
-  const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
-
   if (!isShow) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Text>{`See results for "${searchText}"`}</Text>
+      {isSuggestion ? <NewsfeedSearchSuggestion /> : <NewsfeedSearchResult />}
     </View>
   );
 };

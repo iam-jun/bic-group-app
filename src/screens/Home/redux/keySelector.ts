@@ -8,6 +8,7 @@ const homeKeySelector = {
     isShow: 'home.newsfeedSearch.isShow',
     isSuggestion: 'home.newsfeedSearch.isSuggestion',
     searchText: 'home.newsfeedSearch.searchText',
+    searchInputRef: 'home.newsfeedSearch.searchInputRef',
   },
 };
 

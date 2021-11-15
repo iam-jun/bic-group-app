@@ -35,6 +35,7 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import {useBaseHook} from '~/hooks';
+import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 
 const Newsfeed = () => {
   const listRef = useRef<any>();
@@ -104,16 +105,25 @@ const Newsfeed = () => {
     });
   }, [homePosts]);
 
-  const onShowSearch = (isShow: boolean) => {
+  const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
-      dispatch(homeActions.setNewsfeedSearch({isShow: isShow}));
+      dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
     } else {
       dispatch(homeActions.clearNewsfeedSearch());
     }
   };
 
-  const onSearchText = (text: string) => {
-    dispatch(homeActions.setNewsfeedSearch({searchText: text}));
+  const onSearchText = (text: string, searchInputRef: any) => {
+    const payload: IPayloadSetNewsfeedSearch = {searchText: text};
+    if (!text) {
+      payload.isSuggestion = true;
+      searchInputRef?.current?.focus?.();
+    }
+    dispatch(homeActions.setNewsfeedSearch(payload));
+  };
+
+  const onFocusSearch = () => {
+    dispatch(homeActions.setNewsfeedSearch({isSuggestion: true}));
   };
 
   const renderHeader = () => {
@@ -127,7 +137,9 @@ const Newsfeed = () => {
           removeBorderAndShadow
           onShowSearch={onShowSearch}
           onSearchText={onSearchText}
-          searchPlaceholder={t('input:search_posts')}
+          searchPlaceholder={t('input:search_post')}
+          autoFocusSearch
+          onFocusSearch={onFocusSearch}
         />
       );
 
@@ -140,6 +152,8 @@ const Newsfeed = () => {
         onShowSearch={onShowSearch}
         onSearchText={onSearchText}
         searchPlaceholder={t('input:search_post')}
+        autoFocusSearch
+        onFocusSearch={onFocusSearch}
       />
     );
   };
