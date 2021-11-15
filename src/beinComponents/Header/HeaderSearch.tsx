@@ -21,12 +21,14 @@ export interface HeaderSearchProps {
   isShowSearch: boolean;
   onSearchText?: (searchText: string) => void;
   onPressBack?: () => void;
+  placeholder?: string;
 }
 
 const HeaderSearch: FC<HeaderSearchProps> = ({
   isShowSearch,
   onSearchText,
   onPressBack,
+  placeholder,
 }: HeaderSearchProps) => {
   const [isShow, setIsShow] = useState(false);
   const showValue = useSharedValue(0);
@@ -96,7 +98,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
           <SearchInput
             style={styles.searchInput}
             onChangeText={_onChangeText}
-            placeholder={i18next.t('input:search_group')}
+            placeholder={placeholder || i18next.t('input:search_group')}
           />
         </Animated.View>
       </View>

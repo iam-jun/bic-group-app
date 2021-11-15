@@ -1,6 +1,9 @@
 import {IPostActivity} from '~/interfaces/IPost';
 import homeTypes from './types';
-import {IPayloadGetHomePost} from '~/interfaces/IHome';
+import {
+  IPayloadGetHomePost,
+  IPayloadSetNewsfeedSearch,
+} from '~/interfaces/IHome';
 
 const homeActions = {
   setLoadingHomePosts: (payload: boolean) => {
@@ -26,6 +29,19 @@ const homeActions = {
     return {
       type: homeTypes.SET_HOME_POSTS,
       payload,
+    };
+  },
+
+  setNewsfeedSearch: (payload: IPayloadSetNewsfeedSearch) => {
+    return {
+      type: homeTypes.SET_NEWSFEED_SEARCH,
+      payload,
+    };
+  },
+
+  clearNewsfeedSearch: () => {
+    return {
+      type: homeTypes.CLEAR_NEWSFEED_SEARCH,
     };
   },
 

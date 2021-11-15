@@ -377,7 +377,9 @@
     "scroll_bottom": "Xuống cuối trang"
   },
   "input": {
-    "search": "Tìm kiếm người để trò chuyện..."
+    "search": "Tìm kiếm người để trò chuyện...",
+    "search_group": "Tìm kiếm nhóm hoặc người...",
+    "search_post": "Tìm kiếm bài viết..."
   },
   "groups": {
     "search_results": "Kết quả tìm kiếm",

@@ -15,7 +15,7 @@ function* getHomePosts({
 }: {
   payload: IPayloadGetHomePost;
   type: string;
-}) {
+}): any {
   try {
     const {userId, streamClient, isRefresh} = payload;
     let homePosts, offset;

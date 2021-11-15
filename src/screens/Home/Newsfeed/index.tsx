@@ -33,6 +33,8 @@ import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
+import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
+import {useBaseHook} from '~/hooks';
 
 const Newsfeed = () => {
   const listRef = useRef<any>();
@@ -43,6 +45,7 @@ const Newsfeed = () => {
     deviceDimensions.phone,
   );
   const styles = createStyle(theme);
+  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
   const streamRef = useRef<any>({}).current;
@@ -101,6 +104,18 @@ const Newsfeed = () => {
     });
   }, [homePosts]);
 
+  const onShowSearch = (isShow: boolean) => {
+    if (isShow) {
+      dispatch(homeActions.setNewsfeedSearch({isShow: isShow}));
+    } else {
+      dispatch(homeActions.clearNewsfeedSearch());
+    }
+  };
+
+  const onSearchText = (text: string) => {
+    dispatch(homeActions.setNewsfeedSearch({searchText: text}));
+  };
+
   const renderHeader = () => {
     if (isLaptop)
       return (
@@ -110,6 +125,9 @@ const Newsfeed = () => {
           titleTextProps={{useI18n: true}}
           style={styles.headerOnLaptop}
           removeBorderAndShadow
+          onShowSearch={onShowSearch}
+          onSearchText={onSearchText}
+          searchPlaceholder={t('input:search_posts')}
         />
       );
 
@@ -119,6 +137,9 @@ const Newsfeed = () => {
         hideBack
         menuIcon={'Edit'}
         onPressMenu={navigateToCreatePost}
+        onShowSearch={onShowSearch}
+        onSearchText={onSearchText}
+        searchPlaceholder={t('input:search_post')}
       />
     );
   };
@@ -136,19 +157,22 @@ const Newsfeed = () => {
       style={styles.container}
       onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {renderHeader()}
-      <NewsfeedList
-        data={homePosts}
-        refreshing={refreshing}
-        canLoadMore={!noMoreHomePosts}
-        onEndReach={onEndReach}
-        onRefresh={onRefresh}
-        HeaderComponent={
-          <HeaderCreatePost
-            style={styles.headerCreatePost}
-            parentWidth={newsfeedWidth}
-          />
-        }
-      />
+      <View style={styles.flex1}>
+        <NewsfeedList
+          data={homePosts}
+          refreshing={refreshing}
+          canLoadMore={!noMoreHomePosts}
+          onEndReach={onEndReach}
+          onRefresh={onRefresh}
+          HeaderComponent={
+            <HeaderCreatePost
+              style={styles.headerCreatePost}
+              parentWidth={newsfeedWidth}
+            />
+          }
+        />
+        <NewsfeedSearch />
+      </View>
     </View>
   );
 };
@@ -157,6 +181,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flex: 1,
       backgroundColor:

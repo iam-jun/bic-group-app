@@ -52,6 +52,7 @@ export interface HeaderProps {
   removeBorderAndShadow?: boolean;
   onShowSearch?: (isShow: boolean) => void;
   onSearchText?: (searchText: string) => void;
+  searchPlaceholder?: string;
   onPressHeader?: () => void;
 }
 
@@ -80,6 +81,7 @@ const Header: React.FC<HeaderProps> = ({
   removeBorderAndShadow = false,
   onShowSearch,
   onSearchText,
+  searchPlaceholder,
   onPressHeader,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
@@ -223,6 +225,7 @@ const Header: React.FC<HeaderProps> = ({
           isShowSearch={isShowSearch}
           onSearchText={onSearchText}
           onPressBack={hideSearch}
+          placeholder={searchPlaceholder}
         />
       </View>
     );

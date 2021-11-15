@@ -6,6 +6,13 @@ const initialHomeState = {
   noMoreHomePosts: false,
   homePosts: [],
   homePostsImportantCount: '',
+  newsfeedSearch: {
+    isShow: false,
+    searchText: '',
+    isSuggestion: true,
+    suggestionResults: [],
+    searchResults: [],
+  },
 };
 
 const homeReducer = (state = initialHomeState, action: any = {}) => {
@@ -31,6 +38,19 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
       return {
         ...state,
         homePosts: payload || [],
+      };
+    case homeTypes.SET_NEWSFEED_SEARCH:
+      return {
+        ...state,
+        newsfeedSearch: {
+          ...state.newsfeedSearch,
+          ...payload,
+        },
+      };
+    case homeTypes.CLEAR_NEWSFEED_SEARCH:
+      return {
+        ...state,
+        newsfeedSearch: initialHomeState.newsfeedSearch,
       };
 
     default:
