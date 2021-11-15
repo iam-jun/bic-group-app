@@ -1,15 +1,15 @@
 import React, {FC, useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
 
 import MarkdownView from '~/beinComponents/MarkdownView';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IActivityDataImage} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+
+import {ITheme} from '~/theme/interfaces';
 
 export interface PostViewContentProps {
   content?: string;
