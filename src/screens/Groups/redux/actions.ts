@@ -196,7 +196,7 @@ const groupsActions = {
 
   removeMember: (payload: {
     groupId: number;
-    userId: string;
+    userId: number;
     userFullname: string;
   }) => ({
     type: groupsTypes.REMOVE_MEMBER,

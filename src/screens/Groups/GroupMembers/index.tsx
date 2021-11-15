@@ -18,13 +18,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
-import modalActions, {showAlertNewFeature} from '~/store/modal/actions';
-import groupsDataHelper from '../helper/GroupsDataHelper';
-import {IGroup, IGroupMemberRole, IGroupMembers} from '~/interfaces/IGroup';
-import mainStack from '~/router/navigator/MainStack/stack';
-import chatActions from '~/screens/Chat/redux/actions';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import useAuth from '~/hooks/auth';
+import {IGroupMembers} from '~/interfaces/IGroup';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -34,8 +28,7 @@ import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
-import BottomSheet from '~/beinComponents/BottomSheet';
-import Button from '~/beinComponents/Button';
+import MemberOptionsMenu from './components/MemberOptionsMenu';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -43,8 +36,7 @@ const _GroupMembers = (props: any) => {
 
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedMember, setSelectedMember] = useState<IGroupMembers>({});
-  const clearSelectedMember = () => setSelectedMember({});
+  const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -52,15 +44,11 @@ const _GroupMembers = (props: any) => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
-  const {user} = useAuth();
-
-  //todo handle get data if group data not loaded
 
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const loadingGroupMember = useKeySelector(
     groupsKeySelector.loadingGroupMember,
   );
@@ -110,354 +98,17 @@ const _GroupMembers = (props: any) => {
     };
   }, [groupId]);
 
+  const clearSelectedMember = () => setSelectedMember(undefined);
+
   const onPressMenu = (e: any, item: IGroupMembers) => {
     if (!item || !item.id) return;
 
-    setSelectedMember({
-      ...item,
-    });
+    setSelectedMember(item);
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
-  };
-
-  const goToUserProfile = () => {
-    const {id: userId} = selectedMember;
-    rootNavigation.navigate(mainStack.userProfile, {userId});
-  };
-
-  const goToDirectChat = () => {
-    const {username, fullname} = selectedMember;
-    if (!!username)
-      dispatch(
-        chatActions.createConversation(
-          // @ts-ignore
-          [{username, name: fullname}],
-          true,
-          navigateToChatScreen,
-        ),
-      );
-  };
-
-  const navigateToChatScreen = (roomId: string) => {
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(chatStack.conversation, {
-        roomId: roomId,
-      });
-      return;
-    }
-    rootNavigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: roomId, initial: false},
-    });
-  };
-
-  const alertSettingAdmin = () => {
-    const alertPayload = {
-      iconName: 'Star',
-      title: i18next.t('groups:modal_confirm_set_admin:title'),
-      content: i18next.t('groups:modal_confirm_set_admin:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doSetAdmin(),
-      confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
-      ConfirmBtnComponent: Button.Danger,
-    };
-    alertPayload.content = alertPayload.content.replace(
-      '{0}',
-      `"${selectedMember?.fullname}"`,
-    );
-    dispatch(modalActions.showAlert(alertPayload));
-  };
-
-  const doSetAdmin = () => {
-    dispatch(
-      groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
-    );
-  };
-
-  const onPressRemoveAdmin = () => {
-    // check if the current user is the last admin before revoking admin
-    if (can_setting) return checkLastAdmin('remove', alertRemovingAdmin);
-    alertRemovingAdmin();
-  };
-
-  const alertRemovingAdmin = () => {
-    const alertPayload = {
-      iconName: 'StarHalfAlt',
-      title: i18next.t('groups:modal_confirm_remove_admin:title'),
-      content: i18next.t('groups:modal_confirm_remove_admin:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doRemoveAdmin(),
-      confirmLabel: i18next.t(
-        'groups:modal_confirm_remove_admin:button_confirm',
-      ),
-      ConfirmBtnComponent: Button.Danger,
-    };
-    alertPayload.content = alertPayload.content.replace(
-      '{0}',
-      `"${selectedMember?.fullname}"`,
-    );
-    dispatch(modalActions.showAlert(alertPayload));
-  };
-
-  const doRemoveAdmin = () => {
-    dispatch(
-      groupsActions.removeGroupAdmin({groupId, userId: selectedMember?.id}),
-    );
-  };
-
-  const removeMember = (userId: string, userFullname: string) => {
-    dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
-  };
-
-  const handleLeaveInnerGroups = (
-    username: string,
-    callback: (innerGroups: any) => void,
-  ) => {
-    // Get inner groups info (if any) when user leave/being removed from a group
-    groupsDataHelper
-      .getUserInnerGroups(groupId, username)
-      .then(res => {
-        const innerGroups = res.data.inner_groups.map(
-          (group: IGroup) => group.name,
-        );
-        callback(innerGroups);
-      })
-      .catch(err => {
-        console.error('Error while fetching user inner groups', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
-  };
-
-  const alertRemovingMember = () => {
-    if (!selectedMember) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'No member selected',
-          props: {type: 'error'},
-        }),
-      );
-      return;
-    }
-
-    const {id: userId, fullname, username} = selectedMember;
-
-    const content = i18next
-      .t(`groups:modal_confirm_remove_member:final_alert`)
-      .replace('{name}', `"${fullname}"`);
-
-    const alertPayload = {
-      iconName: 'RemoveUser',
-      title: i18next.t('groups:modal_confirm_remove_member:title'),
-      content: content,
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: colors.primary7,
-      },
-      onConfirm: () => removeMember(userId, fullname),
-      confirmLabel: i18next.t(
-        'groups:modal_confirm_remove_member:button_remove',
-      ),
-      ConfirmBtnComponent: Button.Danger,
-      children: null as React.ReactNode,
-    };
-
-    const renderAlertInnerGroups = (innerGroups: string[]) => {
-      if (innerGroups.length === 0) return null;
-
-      const count = innerGroups.length;
-      let message = i18next
-        .t('groups:modal_confirm_remove_member:alert_inner_groups')
-        .replace('{0}', `${count}`);
-
-      if (count === 1)
-        message = message.replace(
-          '1 other inner groups',
-          'another inner group',
-        );
-
-      const first3groups = innerGroups.slice(0, 3);
-      const groupsList = () => (
-        <View style={styles.alertRemoveGroupsList}>
-          {first3groups.map((name, index) => (
-            <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
-              • {name}
-            </Text.BodyM>
-          ))}
-          {count > 3 && <Text.BodyS>...</Text.BodyS>}
-        </View>
-      );
-
-      return (
-        <>
-          <Text.BodyS>{message}</Text.BodyS>
-          {groupsList()}
-        </>
-      );
-    };
-
-    const getInnerGroupsNames = (innerGroups: any) => {
-      const groupsRemovedFrom = [...innerGroups];
-
-      if (groupsRemovedFrom.length === 0) {
-        alertPayload.content = alertPayload.content.replace(
-          '{other groups}',
-          '',
-        );
-      } else {
-        const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
-        alertPayload.content = alertPayload.content.replace(
-          '{other groups}',
-          ` and ${otherGroups}`,
-        );
-        alertPayload.children = renderAlertInnerGroups(innerGroups);
-      }
-
-      dispatch(modalActions.showAlert(alertPayload));
-    };
-
-    handleLeaveInnerGroups(username, getInnerGroupsNames);
-  };
-
-  const onPressMemberButton = () => {
-    dispatch(modalActions.clearToastMessage());
-  };
-
-  const onPressLeave = () => {
-    // check if the current user is the last admin before leaving group
-    if (can_setting) return checkLastAdmin('leave', alertLeaveGroup);
-    alertLeaveGroup();
-  };
-
-  const checkLastAdmin = (type: string, callback: () => void) => {
-    groupsDataHelper
-      .getGroupMembers(groupId, {offset: 0, limit: 1})
-      .then(data => {
-        const adminCount = data?.GROUP_ADMIN?.user_count;
-        if (adminCount > 1) {
-          callback();
-        } else {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: `groups:error:last_admin_${type}`,
-              props: {
-                type: 'error',
-                textProps: {useI18n: true},
-                rightIcon: 'UsersAlt',
-                rightText: 'Members',
-                onPressRight: onPressMemberButton,
-              },
-              toastType: 'normal',
-            }),
-          );
-        }
-      })
-      .catch(err => {
-        console.error('[ERROR] error while fetching group members', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
-  };
-
-  const alertLeaveGroup = () => {
-    const alertPayload = {
-      iconName: 'SignOutAlt',
-      title: i18next.t('groups:modal_confirm_leave_group:title'),
-      content: i18next.t('groups:modal_confirm_leave_group:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doLeaveGroup(),
-      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
-      ConfirmBtnComponent: Button.Danger,
-    };
-
-    const getInnerGroupsNames = (innerGroups: any) => {
-      if (innerGroups.length > 0) {
-        alertPayload.content =
-          alertPayload.content +
-          ` ${i18next.t(
-            'groups:modal_confirm_leave_group:leave_inner_groups',
-          )}`;
-
-        const groupsLeaveToString = innerGroups.join(', ');
-        alertPayload.content = alertPayload.content.replace(
-          '{0}',
-          groupsLeaveToString,
-        );
-      }
-
-      dispatch(modalActions.showAlert(alertPayload));
-    };
-
-    handleLeaveInnerGroups(user.username, getInnerGroupsNames);
-  };
-
-  const doLeaveGroup = () => {
-    dispatch(groupsActions.leaveGroup(groupId));
-  };
-
-  const onPressMenuOption = (
-    type:
-      | 'view-profile'
-      | 'send-message'
-      | 'set-admin'
-      | 'remove-admin'
-      | 'remove-member'
-      | 'leave-group',
-  ) => {
-    baseSheetRef.current?.close();
-    switch (type) {
-      case 'view-profile':
-        goToUserProfile();
-        break;
-      case 'send-message':
-        goToDirectChat();
-        break;
-      case 'set-admin':
-        alertSettingAdmin();
-        break;
-      case 'remove-admin':
-        onPressRemoveAdmin();
-        break;
-      case 'remove-member':
-        alertRemovingMember();
-        break;
-      case 'leave-group':
-        onPressLeave();
-        break;
-      default:
-        dispatch(showAlertNewFeature());
-        break;
-    }
   };
 
   const onLoadMore = () => {
     getMembers();
-  };
-
-  const isGroupAdmin = () => {
-    return !!selectedMember?.roles?.find(
-      (role: IGroupMemberRole) => role.type === 'GROUP_ADMIN',
-    );
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
@@ -502,72 +153,6 @@ const _GroupMembers = (props: any) => {
           </Text.ButtonBase>
         </ButtonWrapper>
       )
-    );
-  };
-
-  const renderBottomSheet = () => {
-    return (
-      <BottomSheet
-        modalizeRef={baseSheetRef}
-        onClosed={clearSelectedMember}
-        ContentComponent={
-          <View style={styles.bottomSheet}>
-            <PrimaryItem
-              style={styles.menuOption}
-              leftIcon={'UsersAlt'}
-              leftIconProps={{icon: 'UsersAlt', size: 24}}
-              title={i18next.t('groups:member_menu:label_view_profile')}
-              onPress={() => onPressMenuOption('view-profile')}
-            />
-            {selectedMember?.username !== user?.username && (
-              <PrimaryItem
-                style={styles.menuOption}
-                leftIcon={'iconSend'}
-                leftIconProps={{icon: 'iconSend', size: 24}}
-                title={i18next.t('groups:member_menu:label_send_message')}
-                onPress={() => onPressMenuOption('send-message')}
-              />
-            )}
-            {can_setting &&
-              (isGroupAdmin() ? (
-                <PrimaryItem
-                  style={styles.menuOption}
-                  leftIcon={'Star'}
-                  leftIconProps={{icon: 'Star', size: 24}}
-                  title={i18next.t('groups:member_menu:label_remove_as_admin')}
-                  onPress={() => onPressMenuOption('remove-admin')}
-                />
-              ) : (
-                <PrimaryItem
-                  style={styles.menuOption}
-                  leftIcon={'Star'}
-                  leftIconProps={{icon: 'Star', size: 24}}
-                  title={i18next.t('groups:member_menu:label_set_as_admin')}
-                  onPress={() => onPressMenuOption('set-admin')}
-                />
-              ))}
-            {can_manage_member &&
-              selectedMember?.username !== user?.username && (
-                <PrimaryItem
-                  style={styles.menuOption}
-                  leftIcon={'TrashAlt'}
-                  leftIconProps={{icon: 'TrashAlt', size: 24}}
-                  title={i18next.t('groups:member_menu:label_remove_member')}
-                  onPress={() => onPressMenuOption('remove-member')}
-                />
-              )}
-            {selectedMember?.username === user?.username && (
-              <PrimaryItem
-                style={styles.menuOption}
-                leftIcon={'TrashAlt'}
-                leftIconProps={{icon: 'TrashAlt', size: 24}}
-                title={i18next.t('groups:member_menu:label_leave_group')}
-                onPress={() => onPressMenuOption('leave-group')}
-              />
-            )}
-          </View>
-        }
-      />
     );
   };
 
@@ -646,7 +231,13 @@ const _GroupMembers = (props: any) => {
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
       />
-      {renderBottomSheet()}
+
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={clearSelectedMember}
+      />
     </ScreenWrapper>
   );
 };
@@ -691,30 +282,9 @@ const createStyle = (theme: ITheme) => {
     loadingMember: {
       marginTop: spacing.margin.large,
     },
-    bottomSheet: {
-      paddingVertical: spacing.padding.tiny,
-    },
-    menuOption: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-    alertRemoveGroupsList: {
-      marginBottom: spacing.margin.small,
-    },
-    alertRemoveGroupsListItem: {
-      marginLeft: spacing.margin.small,
-    },
   });
 };
 
 const GroupMembers = React.memo(_GroupMembers);
 GroupMembers.whyDidYouRender = true;
 export default GroupMembers;
-
-const groupsRemovedFromToString = (groupList: string[]) => {
-  if (groupList.length === 1) {
-    return groupList[0];
-  }
-
-  return `${groupList.length} other inner groups: ${groupList.join(', ')}`;
-};
