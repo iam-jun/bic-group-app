@@ -8,5 +8,6 @@ const homeTypes = {
 
   // for saga
   GET_HOME_POSTS: 'home/GET_HOME_POSTS',
+  GET_SEARCH_POSTS: 'home/GET_SEARCH_POSTS',
 };
 export default homeTypes;

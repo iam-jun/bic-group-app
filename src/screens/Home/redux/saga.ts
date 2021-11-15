@@ -1,13 +1,19 @@
-import {put, takeLatest, select, takeEvery} from 'redux-saga/effects';
+import {put, select, takeEvery, call} from 'redux-saga/effects';
 import {get} from 'lodash';
 import homeTypes from '~/screens/Home/redux/types';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
-import {IPayloadGetHomePost} from '~/interfaces/IHome';
+import {
+  IParamGetSearchPost,
+  IPayloadGetHomePost,
+  IPayloadGetSearchPosts,
+} from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
+import postActions from '~/screens/Post/redux/actions';
 
 export default function* homeSaga() {
   yield takeEvery(homeTypes.GET_HOME_POSTS, getHomePosts);
+  yield takeEvery(homeTypes.GET_SEARCH_POSTS, getSearchPosts);
 }
 
 function* getHomePosts({
@@ -59,5 +65,29 @@ function* getHomePosts({
   } catch (error) {
     yield put(homeActions.setRefreshingHomePosts(false));
     yield put(homeActions.setLoadingHomePosts(false));
+  }
+}
+
+function* getSearchPosts({
+  payload,
+}: {
+  payload: IPayloadGetSearchPosts;
+  type: string;
+}): any {
+  const {searchText} = payload || {};
+  try {
+    yield put(homeActions.setNewsfeedSearch({loadingResult: true}));
+    const params: IParamGetSearchPost = {content: searchText};
+    const response = yield call(homeDataHelper.getSearchPost, params);
+    const searchResults = response || [];
+    yield put(
+      postActions.addToAllPosts({data: searchResults, handleComment: false}),
+    );
+    yield put(
+      homeActions.setNewsfeedSearch({loadingResult: false, searchResults}),
+    );
+  } catch (e) {
+    yield put(homeActions.setNewsfeedSearch({loadingResult: false}));
+    console.log(`\x1b[31m🐣️ saga getSearchPosts error: `, e, `\x1b[0m`);
   }
 }

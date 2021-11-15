@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, FlatList, RefreshControl} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-
-import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
+import {IPayloadGetSearchPosts} from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import homeActions from '~/screens/Home/redux/actions';
-import {useDispatch} from 'react-redux';
+
+import PostView from '~/screens/Post/components/PostView';
 
 const NewsfeedSearchResult = () => {
   const dispatch = useDispatch();
@@ -16,15 +17,19 @@ const NewsfeedSearchResult = () => {
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
-  const {loadingResult = false, searchResults = []} =
-    useKeySelector(homeKeySelector.newsfeedSearchState) || {};
+  const {
+    loadingResult = false,
+    searchResults = [],
+    searchText = '',
+  } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
 
-  const renderItem = () => {
-    return <Text>item here</Text>;
+  const renderItem = ({item, index}: any) => {
+    return <PostView postId={item?.id} />;
   };
 
   const getData = () => {
-    dispatch(homeActions.setNewsfeedSearch({loadingResult: true}));
+    const payload: IPayloadGetSearchPosts = {searchText};
+    dispatch(homeActions.getSearchPosts(payload));
   };
 
   useEffect(() => {
@@ -38,8 +43,9 @@ const NewsfeedSearchResult = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={[]}
+        data={searchResults || []}
         renderItem={renderItem}
+        keyExtractor={item => `newsfeed_item_${item?.id}`}
         refreshControl={
           <RefreshControl
             refreshing={loadingResult}

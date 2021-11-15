@@ -16,3 +16,11 @@ export interface IPayloadSetNewsfeedSearch {
   searchResults?: any[];
   searchInputRef?: any;
 }
+
+export interface IParamGetSearchPost {
+  content: string;
+}
+
+export interface IPayloadGetSearchPosts {
+  searchText: string;
+}

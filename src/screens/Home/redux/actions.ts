@@ -2,6 +2,7 @@ import {IPostActivity} from '~/interfaces/IPost';
 import homeTypes from './types';
 import {
   IPayloadGetHomePost,
+  IPayloadGetSearchPosts,
   IPayloadSetNewsfeedSearch,
 } from '~/interfaces/IHome';
 
@@ -49,6 +50,13 @@ const homeActions = {
   getHomePosts: (payload: IPayloadGetHomePost) => {
     return {
       type: homeTypes.GET_HOME_POSTS,
+      payload,
+    };
+  },
+
+  getSearchPosts: (payload?: IPayloadGetSearchPosts) => {
+    return {
+      type: homeTypes.GET_SEARCH_POSTS,
       payload,
     };
   },

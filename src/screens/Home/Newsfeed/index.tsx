@@ -123,7 +123,9 @@ const Newsfeed = () => {
   };
 
   const onFocusSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({isSuggestion: true}));
+    dispatch(
+      homeActions.setNewsfeedSearch({isSuggestion: true, searchResults: []}),
+    );
   };
 
   const renderHeader = () => {
