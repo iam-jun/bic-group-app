@@ -457,7 +457,13 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
           initial: true,
         });
       }
+    } else {
+      navigation.navigate(groupStack.groupDetail, {
+        groupId: payload,
+        initial: true,
+      });
     }
+
     yield put(
       groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
     );
