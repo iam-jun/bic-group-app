@@ -79,7 +79,12 @@ const GeneralInformation = (props: any) => {
 
   const onPrivacyMenuPress = (item: any) => {
     baseSheetRef.current?.close();
-    dispatch(groupsActions.editGroupDetail({id, privacy: item.type}));
+    dispatch(
+      groupsActions.editGroupDetail(
+        {id, privacy: item.type},
+        i18next.t('common:text_privacy'),
+      ),
+    );
   };
 
   const editGroupDescripton = () =>

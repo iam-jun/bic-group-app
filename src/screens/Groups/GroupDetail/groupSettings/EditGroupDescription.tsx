@@ -3,6 +3,7 @@ import {StyleSheet, View, TextInput, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
+import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -39,9 +40,19 @@ const EditGroupDescription = (props: any) => {
   }, [description]);
 
   const onSave = () => {
-    dispatch(groupsActions.editGroupDetail({id, description: text}));
-    navigation.goBack();
+    dispatch(
+      groupsActions.editGroupDetail(
+        {
+          id,
+          description: text.trim() ? text.trim() : null,
+        },
+        i18next.t('common:text_description'),
+        onNavigateBack,
+      ),
+    );
   };
+
+  const onNavigateBack = () => navigation.goBack();
 
   return (
     <ScreenWrapper
