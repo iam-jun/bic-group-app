@@ -399,7 +399,8 @@
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
       "title_empty_cant_load_more": "You have seen it all",
-      "text_empty_cant_load_more": "Take a break time & chill"
+      "text_empty_cant_load_more": "Take a break time & chill",
+      "text_empty_search_post": "Sorry, we couldn’t find anything related\nto your search."
     },
     "draft": {
       "btn_post_now": "Post Now",

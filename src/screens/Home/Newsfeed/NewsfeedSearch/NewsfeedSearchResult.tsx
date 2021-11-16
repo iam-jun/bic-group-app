@@ -10,6 +10,10 @@ import homeKeySelector from '~/screens/Home/redux/keySelector';
 import homeActions from '~/screens/Home/redux/actions';
 
 import PostView from '~/screens/Post/components/PostView';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
+import Text from '~/beinComponents/Text';
+import {scaleSize} from '~/theme/dimension';
 
 const NewsfeedSearchResult = () => {
   const dispatch = useDispatch();
@@ -47,11 +51,30 @@ const NewsfeedSearchResult = () => {
     console.log(`\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m`);
   };
 
+  const renderEmpty = () => {
+    if (loadingResult) {
+      return null;
+    }
+    return (
+      <View style={styles.emptyContainer}>
+        <Image
+          resizeMode={'contain'}
+          style={styles.imgEmpty}
+          source={images.img_empty_search_post}
+        />
+        <Text useI18n style={styles.textEmpty}>
+          post:newsfeed:text_empty_search_post
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={searchResults || []}
         renderItem={renderItem}
+        ListEmptyComponent={renderEmpty()}
         keyExtractor={item => `newsfeed_item_${item?.id}`}
         refreshControl={
           <RefreshControl
@@ -75,6 +98,20 @@ const createStyle = (theme: ITheme) => {
     },
     itemContainer: {
       marginTop: spacing.margin.small,
+    },
+    imgEmpty: {
+      width: scaleSize(240),
+      height: scaleSize(160),
+      maxWidth: 240,
+      maxHeight: 160,
+    },
+    emptyContainer: {
+      alignItems: 'center',
+      marginTop: spacing.margin.extraLarge,
+    },
+    textEmpty: {
+      color: colors.textSecondary,
+      textAlign: 'center',
     },
   });
 };

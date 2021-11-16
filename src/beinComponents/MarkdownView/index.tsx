@@ -170,7 +170,7 @@ const createStyle = (theme: ITheme) => {
     regex_linebreak: {},
     regex_highlight: {
       backgroundColor: '#F6EF79',
-      borderRadius: 16,
+      borderRadius: 6,
       overflow: 'hidden',
     },
 
