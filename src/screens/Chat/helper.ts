@@ -44,6 +44,11 @@ export const mapConversations = (
   return conversations.reduce((obj, item) => ((obj[item._id] = item), obj), {});
 };
 
+export const mapSubscriptions = (data?: []): IObject<any> => {
+  //@ts-ignore
+  return (data || []).reduce((obj, item) => ((obj[item.rid] = item), obj), {});
+};
+
 export const mapMessages = (user: IChatUser, data?: []): IObject<IMessage> => {
   const messages = (data || []).map((item: any) => mapMessage(user, item));
   //@ts-ignore
@@ -292,3 +297,10 @@ export const getReactionStatistics = async (param: {
     return Promise.reject();
   }
 };
+
+export const getRoomName = (sub: any) =>
+  (typeof sub?.customFields?.beinChatName === 'string'
+    ? sub?.customFields?.beinChatName
+    : sub?.customFields?.beinChatName?.name) ||
+  sub?.fname ||
+  sub?.name;

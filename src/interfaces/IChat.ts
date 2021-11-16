@@ -192,6 +192,7 @@ export type IConversation = {
 };
 
 export type IConversationInfo = {
+  _id: string;
   name?: string;
   description?: string;
   avatar?: string;
@@ -246,8 +247,6 @@ export interface IMessagesData {
   data: string[]; // just store id
   extra: string[]; // just store id
   items: IObject<IMessage>; // message item
-  offset: number;
-  downOffset: number;
   canLoadMore: boolean;
   canLoadNext: boolean;
   error: any;

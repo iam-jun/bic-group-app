@@ -1,4 +1,5 @@
 export {default as ListMessages} from './ListMessages';
+export {default as ConversationItemMenu} from './ConversationItemMenu';
 export {default as MessageContainer} from './MessageContainer';
 export {default as ChatInput} from './ChatInput';
 export {default as MessageOptionsModal} from './MessageOptions';

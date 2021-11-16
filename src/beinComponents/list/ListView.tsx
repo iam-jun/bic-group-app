@@ -16,7 +16,6 @@ import items, {IListViewItem} from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {appScreens} from '~/configs/navigator';
 import {IAction} from '~/constants/commonActions';
 
 import {spacing} from '~/theme';

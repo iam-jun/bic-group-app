@@ -1,46 +1,33 @@
 /* eslint-disable no-array-constructor */
 import {createSelector} from 'reselect';
-import {IConversation} from '~/interfaces/IChat';
+import {getRoomName} from '~/screens/Chat/helper';
 
 export const chatState = (state: any) => state.chat;
 
 export const getConversations = createSelector(chatState, data => {
-  return {
-    ...data?.rooms,
-    data: Object.keys(data?.rooms?.data || {})
-      .map((key: string) => {
-        const item = data?.rooms?.data?.[key];
-        const sub: any = (data?.subscriptions || []).find(
-          (sub: any) => sub.rid === item._id,
-        );
+  const {data: roomsData, items} = data.rooms || {};
 
-        const name =
-          (typeof sub?.customFields?.beinChatName === 'string'
-            ? sub?.customFields?.beinChatName
-            : sub?.customFields?.beinChatName?.name) ||
-          sub?.fname ||
-          sub?.name;
+  return (roomsData || [])
+    .map((key: string) => {
+      const item = items?.[key];
+      const sub = data?.subscriptions[key];
 
-        return {
-          ...item,
-          unreadCount: sub?.unread,
-          name,
-        };
-      })
-      .sort(function (a: IConversation, b: IConversation) {
-        //@ts-ignore
-        return new Date(b._updatedAt) - new Date(a._updatedAt);
-      }),
-  };
+      return {
+        ...item,
+        name: getRoomName(sub),
+        unreadCount: sub?.unread,
+      };
+    })
+    .sort(function (a: any, b: any) {
+      //@ts-ignore
+      return new Date(b._updatedAt) - new Date(a._updatedAt);
+    });
 });
 
 export const getUnreadConversationCount = createSelector(chatState, data => {
   let count = 0;
-  Object.keys(data?.rooms?.data || {}).forEach((key: string) => {
-    const item = data?.rooms?.data?.[key];
-    const sub: any = (data?.subscriptions || []).find(
-      (sub: any) => sub.rid === item._id,
-    );
+  (data?.rooms?.data || []).forEach((key: string) => {
+    const sub: any = data?.subscriptions?.[key];
     if (typeof sub !== 'undefined' && sub.unread > 0) count++;
   });
   return count;

@@ -1,5 +1,5 @@
 import {useIsFocused} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   InteractionManager,
   Platform,
@@ -9,7 +9,8 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+
 import Header from '~/beinComponents/Header';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ListView from '~/beinComponents/list/ListView';
@@ -17,7 +18,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {appScreens} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
-import useChat from '~/hooks/chat';
 import useModal from '~/hooks/modal';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
@@ -25,10 +25,11 @@ import {IConversation} from '~/interfaces/IChat';
 import {ITabTypes} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import actions from '~/screens/Chat/redux/actions';
+import {getConversations} from '~/selectors/chat';
 import modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import ConversationItemMenu from '../../components/ConversationItemMenu';
+import {ConversationItemMenu} from '../../components';
 
 const _ConversationsList = (): React.ReactElement => {
   const listRef = useRef<any>();
@@ -43,10 +44,10 @@ const _ConversationsList = (): React.ReactElement => {
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  const loading = useKeySelector('chat.rooms.loading');
+  const conversations = useSelector(state => getConversations(state));
 
-  const {conversations} = useChat();
   const {searchInputFocus} = useModal();
-  const {data, loading} = conversations;
 
   const rootScreenName = useKeySelector('app.rootScreenName');
   const [currentPath, setCurrentPath] = useState('');
@@ -109,11 +110,6 @@ const _ConversationsList = (): React.ReactElement => {
   );
 
   const onChatPress = (item: IConversation) => {
-    dispatch(actions.setConversationDetail(item));
-
-    // Will update when data structure is refactored
-    dispatch(actions.resetData('messages'));
-
     rootNavigation.navigate(chatStack.conversation, {
       roomId: item._id,
       message_id: undefined,
@@ -121,7 +117,7 @@ const _ConversationsList = (): React.ReactElement => {
     if (Platform.OS === 'web') setCurrentPath(item._id);
   };
 
-  const onChatLongPress = (item: IConversation) => {
+  const onChatLongPress = useCallback((item: IConversation) => {
     if (Platform.OS === 'web') return;
 
     dispatch(
@@ -139,22 +135,26 @@ const _ConversationsList = (): React.ReactElement => {
         },
       }),
     );
-  };
+  }, []);
 
-  const onMenuPress = async () => {
+  const onMenuPress = useCallback(() => {
     dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.createConversation);
-  };
+  }, []);
 
   const renderEmpty = () => {
     return <NoSearchResult />;
   };
 
-  const goSearch = () => {
+  const goSearch = useCallback(() => {
     if (Platform.OS === 'web')
       leftNavigation.navigate(chatStack.searchConversations);
     else rootNavigation.navigate(chatStack.searchConversations);
-  };
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    dispatch(actions.getSubscriptions());
+  }, []);
 
   return (
     <ScreenWrapper testID="ChatScreen" isFullView>
@@ -181,16 +181,15 @@ const _ConversationsList = (): React.ReactElement => {
         type="conversation"
         isFullView
         loading={loading}
-        data={data}
-        onItemPress={onChatPress}
-        onItemLongPress={onChatLongPress}
-        onRefresh={() => dispatch(actions.getSubscriptions())}
-        ListEmptyComponent={renderEmpty}
-        // onEndReached={loadMore}
+        data={conversations}
         onEndReachedThreshold={0.5}
         showItemSeparator={false}
         containerStyle={styles.listContainer}
         currentPath={currentPath}
+        onItemPress={onChatPress}
+        onItemLongPress={onChatLongPress}
+        onRefresh={onRefresh}
+        ListEmptyComponent={renderEmpty}
       />
     </ScreenWrapper>
   );

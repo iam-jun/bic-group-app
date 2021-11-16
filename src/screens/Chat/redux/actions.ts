@@ -44,7 +44,7 @@ export default {
   getRooms: () => ({
     type: Actions.GET_ROOMS,
   }),
-  setRooms: (payload: IObject<IConversation>) => ({
+  setRooms: (payload: {data: string[]; items: IObject<IConversation>}) => ({
     type: Actions.SET_ROOMS,
     payload,
   }),
@@ -78,7 +78,7 @@ export default {
   getSubscriptions: () => ({
     type: Actions.GET_SUBSCRIPTIONS,
   }),
-  setSubscriptions: (payload: IConversation[]) => ({
+  setSubscriptions: (payload: IObject<any>) => ({
     type: Actions.SET_SUBSCRIPTIONS,
     payload,
   }),
@@ -158,19 +158,18 @@ export default {
     type: Actions.UPDATE_MESSAGE,
     payload,
   }),
-  updateConversationName: (payload: string) => ({
+  updateConversationName: (payload: {roomId: string; name: string}) => ({
     type: Actions.UPDATE_CONVERSATION_NAME,
     payload,
   }),
-  updateConversationDetail: (
-    payload: IUpdateConversationDetail,
-    editFieldName?: string,
-    callback?: (roomId?: string) => void,
-  ) => ({
+  updateConversationDetail: (payload: {
+    roomId: number | string;
+    body: IUpdateConversationDetail;
+    editFieldName?: string;
+    callback?: (roomId?: number | string) => void;
+  }) => ({
     type: Actions.UPDATE_CONVERSATION_DETAIL,
     payload,
-    editFieldName,
-    callback,
   }),
   setUpdatedConversationDetail: (payload: IConversationInfo) => ({
     type: Actions.SET_UPDATED_CONVERSATION_DETAIL,
@@ -180,11 +179,11 @@ export default {
     type: Actions.UPLOAD_FILE,
     payload,
   }),
-  addMembersToGroup: (payload: number[]) => ({
+  addMembersToGroup: (payload: {roomId: string; userIds: number[]}) => ({
     type: Actions.ADD_MEMBERS_TO_GROUP,
     payload,
   }),
-  removeMember: (payload: IChatUser) => ({
+  removeMember: (payload: {roomId: string; user: IChatUser}) => ({
     type: Actions.REMOVE_MEMBER,
     payload,
   }),
@@ -192,7 +191,7 @@ export default {
     type: Actions.REMOVE_MEMBER_SUCCESS,
     payload,
   }),
-  addMembersToGroupSuccess: (payload: number) => ({
+  addMembersToGroupSuccess: (payload: any) => ({
     type: Actions.ADD_MEMBERS_TO_GROUP_SUCCESS,
     payload,
   }),
@@ -200,10 +199,9 @@ export default {
     type: Actions.KICK_ME_OUT,
     payload,
   }),
-  leaveChat: (payload: string, roomType: string) => ({
+  leaveChat: (payload: string) => ({
     type: Actions.LEAVE_CHAT,
     payload,
-    roomType,
   }),
   readConversation: (payload: string) => ({
     type: Actions.READ_CONVERSATION,
@@ -221,11 +219,11 @@ export default {
     type: Actions.GET_UNREAD_MESSAGE,
     payload,
   }),
-  setUnreadMessage: (payload: IMessage | null) => ({
+  setUnreadMessage: (payload: string) => ({
     type: Actions.SET_UNREAD_MESSAGE,
     payload,
   }),
-  setJumpedMessage: (payload: IMessage | null) => ({
+  setJumpedMessage: (payload: string | null) => ({
     type: Actions.SET_JUMPED_MESSAGE,
     payload,
   }),
@@ -241,24 +239,12 @@ export default {
     type: Actions.GET_MESSAGES_HISTORY,
     payload,
   }),
-  setMessages: (payload: {
-    roomId: string;
-    messageIds: string[];
-    messagesData: IObject<IMessage>;
-  }) => ({
-    type: Actions.SET_MESSAGES,
-    payload,
-  }),
   setMessagesHistory: (payload: {
     roomId: string;
     messageIds: string[];
     messagesData: IObject<IMessage>;
   }) => ({
     type: Actions.SET_MESSAGES_HISTORY,
-    payload,
-  }),
-  mergeMessagesHistory: (payload: string) => ({
-    type: Actions.MERGE_MESSAGES_HISTORY,
     payload,
   }),
   getNextMessages: (payload: string) => ({
@@ -271,6 +257,14 @@ export default {
     messagesData: IObject<IMessage>;
   }) => ({
     type: Actions.SET_NEXT_MESSAGES,
+    payload,
+  }),
+  resetRoomMessages: (payload: string) => ({
+    type: Actions.RESET_ROOM_MESSAGES,
+    payload,
+  }),
+  clearRoomMessages: (payload: string) => ({
+    type: Actions.CLEAR_ROOM_MESSAGES,
     payload,
   }),
   setConversationNotifications: (payload?: {

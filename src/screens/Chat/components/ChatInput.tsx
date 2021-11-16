@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import uuid from 'react-native-uuid';
@@ -10,7 +10,6 @@ import CommentInput, {
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import Text from '~/beinComponents/Text';
 import apiConfig from '~/configs/apiConfig';
-import useChat from '~/hooks/chat';
 import {useKeySelector} from '~/hooks/selector';
 import {IFilePicked} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
@@ -23,6 +22,7 @@ import {ITheme} from '~/theme/interfaces';
 import {validateFile} from '~/utils/validation';
 
 interface Props {
+  roomId: string;
   replyingMessage?: IMessage;
   editingMessage?: IMessage;
   onCancelEditing: () => void;
@@ -33,6 +33,7 @@ interface Props {
 }
 
 const ChatInput: React.FC<Props> = ({
+  roomId,
   editingMessage,
   replyingMessage,
   onCancelEditing,
@@ -44,18 +45,11 @@ const ChatInput: React.FC<Props> = ({
   const commentInputRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const [text, setText] = useState(editingMessage?.text || '');
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
   const user = useKeySelector(menuKeySelector.myProfile);
-  const {conversation} = useChat();
-
-  useEffect(() => {
-    if (!text) {
-      commentInputRef?.current?.setText?.('');
-    }
-  }, [text]);
+  const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
 
   useEffect(() => {
     if (
@@ -70,12 +64,8 @@ const ChatInput: React.FC<Props> = ({
     commentInputRef?.current?.setText?.(editingMessage?.text || '');
   }, [editingMessage?.text]);
 
-  const _onChangeText = (value: string) => {
-    setText(value);
-  };
-
   const onSend = (sendData?: ICommentInputSendParam) => {
-    if (!text.trim() && !sendData?.image) {
+    if (!commentInputRef?.current.getText().trim() && !sendData?.image) {
       return;
     }
 
@@ -87,7 +77,7 @@ const ChatInput: React.FC<Props> = ({
           _id: uuid.v4().toString(),
           room_id: conversation._id,
           createdAt: new Date().toISOString(),
-          text: text.trim(),
+          text: commentInputRef?.current.getText().trim(),
           user,
           replyingMessage,
           image: sendData?.image,
@@ -98,7 +88,7 @@ const ChatInput: React.FC<Props> = ({
       dispatch(
         actions.editMessage({
           ...editingMessage,
-          text: text.trim(),
+          text: commentInputRef?.current.getText().trim(),
         }),
       );
     }
@@ -106,7 +96,7 @@ const ChatInput: React.FC<Props> = ({
       //slowdown for web
       commentInputRef?.current?.clear();
     }, 100);
-    setText('');
+    // setText('');
     onCancelEditing();
   };
 
@@ -232,7 +222,7 @@ const ChatInput: React.FC<Props> = ({
   return (
     <MentionInput
       modalPosition="top"
-      onChangeText={_onChangeText}
+      // onChangeText={_onChangeText}
       ComponentInput={CommentInput}
       mentionField="beinUserId"
       componentInputProps={{

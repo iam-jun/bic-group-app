@@ -52,17 +52,14 @@ const initState = {
   selectedUsers: new Array<IChatUser>(),
   rooms: {
     loading: false,
-    data: {} as IObject<IConversation>,
-    extra: {} as IObject<IConversation>,
-    searchResult: {},
-    offset: 0,
-    canLoadMore: true,
+    data: new Array<string>(),
+    items: {} as IObject<IConversation>,
   },
   roles: {
     loading: false,
     data: [],
   },
-  subscriptions: [],
+  subscriptions: {} as IObject<any>,
   mention: {
     mentionKey: '',
     mentionUsers: [],
@@ -147,10 +144,11 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
       };
     case types.SET_ROOMS:
       return {
+        ...state,
         rooms: {
           ...rooms,
+          ...payload,
           loading: false,
-          data: payload,
         },
       };
     case types.GET_MESSAGES_HISTORY:
@@ -161,20 +159,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
           [payload]: {
             ...messages?.[payload],
             loading: !messages?.[payload],
-          },
-        },
-      };
-    case types.SET_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          [payload.roomId]: {
-            ...messages[payload.roomId],
-            data: payload.messageIds,
-            items: payload.messagesData,
-            loading: false,
-            canLoadMore: payload.length >= appConfig.messagesPerPage,
+            loadingMore: messages?.[payload]?.data?.length > 0,
           },
         },
       };
@@ -183,23 +168,18 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         messages: {
           ...messages,
-          [payload._id]: {
-            ...messages[payload.roomId],
-            extra: payload.messageIds,
-            items: {...messages[payload.roomId].items, ...payload.messagesData},
-            canLoadMore: payload.length >= appConfig.messagesPerPage,
-          },
-        },
-      };
-    case types.MERGE_MESSAGES_HISTORY:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          [payload]: {
-            ...messages[payload],
-            data: [...messages[payload].extra, ...messages[payload].data],
-            extra: [],
+          [payload.roomId]: {
+            ...messages?.[payload.roomId],
+            loading: false,
+            loadingMore: false,
+            data: messages?.[payload.roomId]?.data
+              ? [...payload.messageIds, ...messages?.[payload.roomId]?.data]
+              : payload.messageIds,
+            items: {
+              ...messages?.[payload.roomId]?.items,
+              ...payload.messagesData,
+            },
+            canLoadMore: payload.messageIds.length >= appConfig.messagesPerPage,
           },
         },
       };
@@ -209,7 +189,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload]: {
-            ...messages[payload],
+            ...messages?.[payload],
             loadingNext: true,
           },
         },
@@ -220,21 +200,61 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.roomId]: {
-            ...messages[payload.roomId],
+            ...messages?.[payload.roomId],
             loadingNext: false,
-            data: [...messages[payload.roomId].data, ...payload.messagesIds],
-            items: {...messages[payload.roomId].items, ...payload.messagesIds},
-            canLoadNext: payload.length === appConfig.messagesPerPage,
+            data: messages?.[payload.roomId]?.data
+              ? [...messages?.[payload.roomId]?.data, ...payload.messageIds]
+              : payload.messageIds,
+            items: {
+              ...messages?.[payload.roomId]?.items,
+              ...payload.messagesData,
+            },
+            canLoadNext:
+              payload.messageIds.length === appConfig.messagesPerPage,
           },
         },
       };
+    case types.RESET_ROOM_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          [payload]: {},
+        },
+      };
+    case types.CLEAR_ROOM_MESSAGES: {
+      // keep only first 25 messages
+      let roomMessages = {};
+      if (!messages?.[payload]?.canLoadNext) {
+        const messageData = messages?.[payload]?.data;
+        const data =
+          messageData?.length <= appConfig.messagesPerPage
+            ? messageData
+            : messageData?.slice(
+                messageData.length - appConfig.messagesPerPage,
+                messageData.length,
+              );
+        const items: any = {};
+        data?.forEach((id: string) => {
+          items[id] = messages?.[payload]?.items[id];
+          roomMessages = {...messages?.[payload], loading: false, data, items};
+        });
+      }
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          [payload]: roomMessages,
+        },
+      };
+    }
     case types.GET_SURROUNDING_MESSAGES:
       return {
         ...state,
         messages: {
           ...messages,
-          [payload]: {
-            ...messages[payload],
+          [payload.roomId]: {
+            ...messages?.[payload.roomId],
             canLoadNext: true,
             loading: true,
           },
@@ -246,7 +266,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.roomId]: {
-            ...messages[payload.roomId],
+            ...messages?.[payload.roomId],
             error: payload.error,
           },
         },
@@ -264,23 +284,11 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
     case types.READ_CONVERSATION:
       return {
         ...state,
-        rooms: {
-          ...rooms,
-          data: {
-            ...rooms.data,
-            [payload]: {
-              ...rooms.data[payload],
-              unreadCount: 0,
-            },
-          },
-        },
         unreadMessage: null,
       };
     case types.GET_GROUP_ROLES:
       return {
         ...state,
-        // conversation: conversation?._id ? conversation : {_id: payload},
-
         roles: {
           ...roles,
           loading: true,
@@ -303,24 +311,26 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
     case types.READ_SUBCRIPTIONS:
       return {
         ...state,
-        subscriptions: subscriptions?.map((sub: any) =>
-          sub.rid === payload ? {...sub, unread: 0} : sub,
-        ),
+        subscriptions: {
+          ...subscriptions,
+          [payload]: {...subscriptions[payload], unread: 0},
+        },
       };
     case types.UPDATE_SUBSCRIPTION:
       return {
         ...state,
-        subscriptions: subscriptions?.map((sub: any) =>
-          sub.rid === payload.rid ? {...sub, ...payload} : sub,
-        ),
+        subscriptions: {
+          ...subscriptions,
+          [payload.rid]: {...subscriptions[payload], ...payload},
+        },
       };
     case types.SET_CONVERSATION_DETAIL: {
       return {
         ...state,
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
+          items: {
+            ...rooms.items,
             [payload._id]: payload,
           },
         },
@@ -331,10 +341,10 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
+          items: {
+            ...rooms.items,
             [payload._id]: {
-              ...rooms.data[payload._id],
+              ...rooms.items[payload._id],
               disableNotifications: payload.disableNotifications,
             },
           },
@@ -346,10 +356,10 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
+          items: {
+            ...rooms.items,
             [payload._id]: {
-              ...rooms.data[payload._id],
+              ...rooms.items[payload._id],
               ...payload,
             },
           },
@@ -365,29 +375,37 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         messages: {
           ...messages,
-          [payload.room_id]: {
-            ...messages[payload.room_id],
-            data: [...messages[payload.room_id].data, payload],
-          },
+          [payload.room_id]: messages?.[payload.room_id]
+            ? {
+                ...messages?.[payload.room_id],
+                data: messages?.[payload.room_id]?.data
+                  ? [...messages?.[payload.room_id]?.data, payload._id]
+                  : [payload._id],
+                items: {
+                  ...messages?.[payload.room_id]?.items,
+                  [payload._id]: payload,
+                },
+              }
+            : messages?.[payload.room_id],
         },
         rooms: payload.system
           ? rooms
           : {
               ...rooms,
-              data: {
-                ...rooms.data,
+              items: {
+                ...rooms.items,
                 [payload.room_id]: {
-                  ...rooms.data[payload.room_id],
+                  ...rooms.items[payload.room_id],
                   lastMessage: payload.lastMessage,
                   _updatedAt: payload.createAt,
                 },
               },
             },
-        quotedMessages: quotedMessages[payload._id]
+        quotedMessages: quotedMessages?.[payload._id]
           ? {
               ...quotedMessages,
               [payload._id]: {
-                ...quotedMessages[payload._id],
+                ...quotedMessages?.[payload._id],
                 ...payload,
               },
             }
@@ -401,23 +419,17 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
+            ...messages?.[payload.room_id],
             items: {
-              ...messages[payload.room_id].items,
-              [id]: {
-                ...messages[payload.room_id].items[id],
-                ...payload,
-              },
+              ...messages?.[payload.room_id].items,
+              [id]: payload,
             },
           },
         },
-        quotedMessages: quotedMessages[payload._id]
+        quotedMessages: quotedMessages?.[payload._id]
           ? {
               ...quotedMessages,
-              [payload._id]: {
-                ...quotedMessages[payload._id],
-                ...payload,
-              },
+              [payload._id]: payload,
             }
           : quotedMessages,
       };
@@ -452,9 +464,15 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         rooms: {
           ...rooms,
-          data: {
-            [payload._id]: payload,
-            ...rooms.data,
+          data: !rooms.data.includes(payload._id)
+            ? [payload._id, ...rooms.data]
+            : rooms.data,
+          items: {
+            [payload._id]: {
+              ...payload,
+              msgs: 0, // do not get message
+            },
+            ...rooms.items,
           },
         },
       };
@@ -464,25 +482,29 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
+            ...messages?.[payload.room_id],
             items: {
-              ...messages[payload.room_id].items,
+              ...messages?.[payload.room_id]?.items,
               [payload._id]: payload,
             },
           },
         },
       };
     case types.UPLOAD_FILE:
-    case types.SEND_MESSAGE:
+    case types.SEND_MESSAGE: {
+      const id = payload._id || payload.localId;
       return {
         ...state,
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
-            data: [
-              ...messages[payload.room_id].data,
-              {
+            ...messages?.[payload.room_id],
+            data: messages?.[payload.room_id]?.data
+              ? [...messages?.[payload.room_id]?.data, id]
+              : [id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [id]: {
                 ...payload,
                 user: {
                   ...payload.user,
@@ -490,15 +512,15 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
                 },
                 status: messageStatus.SENDING,
               },
-            ],
+            },
           },
         },
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
+          items: {
+            ...rooms.items,
             [payload.room_id]: {
-              ...rooms.data[payload.room_id],
+              ...rooms.items[payload.room_id],
               lastMessage: getLastMessage(payload, true),
               _updatedAt: payload.createdAt,
             },
@@ -511,6 +533,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
             }
           : quotedMessages,
       };
+    }
     case types.RETRY_SEND_MESSAGE:
       if (!payload._id || !payload.localId) return state;
 
@@ -519,9 +542,9 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
+            ...messages?.[payload.room_id],
             items: {
-              ...messages[payload.room_id].items,
+              ...messages?.[payload.room_id]?.items,
               [payload._id || payload.localId]: {
                 ...payload,
                 status: messageStatus.SENDING,
@@ -532,25 +555,19 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
       };
     case types.SEND_MESSAGE_SUCCESS:
       // message has updated from event
-      if (
-        !payload._id ||
-        !payload.localId ||
-        messages[payload.room_id].items[payload._id].status ===
-          messageStatus.SENT
-      )
-        return state;
+      if (!payload._id || !payload.localId) return state;
 
       return {
         ...state,
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
+            ...messages?.[payload.room_id],
             items: {
-              ...messages[payload.room_id].items,
+              ...messages?.[payload.room_id]?.items,
               [payload._id || payload.localId]: {
                 ...payload,
-                status: messageStatus.SENDING,
+                status: messageStatus.SENT,
               },
             },
           },
@@ -563,9 +580,9 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
+            ...messages?.[payload.room_id],
             items: {
-              ...messages[payload.room_id].items,
+              ...messages?.[payload.room_id]?.items,
               [payload._id || payload.localId]: {
                 ...payload,
                 status: messageStatus.FAILED,
@@ -581,11 +598,11 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         messages: {
           ...messages,
           [payload.room_id]: {
-            ...messages[payload.room_id],
+            ...messages?.[payload.room_id],
             items: {
-              ...messages[payload.room_id].items,
+              ...messages?.[payload.room_id]?.items,
               [payload._id]: {
-                ...messages[payload.room_id].items?.[payload._id],
+                ...messages?.[payload.room_id]?.items?.[payload._id],
                 type: messageEventTypes.REMOVE_MESSAGE,
                 removed: true,
                 text: i18next.t('chat:system_message:rm:me'),
@@ -600,12 +617,11 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
-            // TODO: add id to payload
-            [payload._id]: {
-              ...rooms.data[payload._id],
-              ...payload,
+          items: {
+            ...rooms.items,
+            [payload.roomId]: {
+              ...rooms.items[payload.roomId],
+              name: payload.name,
             },
           },
         },
@@ -631,46 +647,32 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         },
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
-            // TODO: add id to payload
+          items: {
+            ...rooms.items,
             [payload._id]: {
-              ...rooms.data[payload._id],
-              usersCount: rooms.data[payload._id]?.usersCount - 1,
+              ...rooms.items[payload._id],
+              usersCount: rooms.items[payload._id]?.usersCount - 1,
             },
           },
         },
       };
-    case types.ADD_MEMBERS_TO_GROUP_SUCCESS:
+    case types.ADD_MEMBERS_TO_GROUP_SUCCESS: {
+      const id = payload._id || payload.rid;
       return {
         ...state,
         rooms: {
           ...rooms,
-          data: {
-            ...rooms.data,
-            // TODO: add id to payload
-            [payload._id]: {
-              ...rooms.data[payload._id],
-              usersCount: rooms.data[payload._id]?.usersCount + payload.count,
+          items: {
+            ...rooms.items,
+            [id]: {
+              ...rooms.items[id],
+              usersCount: rooms.items[id]?.usersCount + 1,
             },
           },
         },
       };
+    }
     case types.LEAVE_CHAT:
-      return {
-        ...state,
-        rooms: {
-          ...rooms,
-          data: {
-            ...rooms.data,
-            // TODO: add id to payload
-            [payload._id]: {
-              ...rooms.data[payload._id],
-              usersCount: rooms.data[payload._id]?.usersCount + payload.count,
-            },
-          },
-        },
-      };
     case types.KICK_ME_OUT: {
       const _rooms = rooms.data;
       delete _rooms[payload._id];
@@ -678,7 +680,8 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         rooms: {
           ...rooms,
-          data: _rooms,
+          data: rooms.data.filter((id: string) => id !== payload._id),
+          items: _rooms,
         },
       };
     }
