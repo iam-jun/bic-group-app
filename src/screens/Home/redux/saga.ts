@@ -79,7 +79,7 @@ function* getSearchPosts({
     yield put(homeActions.setNewsfeedSearch({loadingResult: true}));
     const params: IParamGetSearchPost = {content: searchText};
     const response = yield call(homeDataHelper.getSearchPost, params);
-    const searchResults = response || [];
+    const searchResults = response?.results || [];
     yield put(
       postActions.addToAllPosts({data: searchResults, handleComment: false}),
     );

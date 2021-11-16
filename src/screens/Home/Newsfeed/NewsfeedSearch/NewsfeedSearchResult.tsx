@@ -24,7 +24,14 @@ const NewsfeedSearchResult = () => {
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
 
   const renderItem = ({item, index}: any) => {
-    return <PostView postId={item?.id} />;
+    return (
+      <PostView
+        style={styles.itemContainer}
+        postId={item?.id}
+        isLite
+        pressNavigateToDetail
+      />
+    );
   };
 
   const getData = () => {
@@ -65,6 +72,9 @@ const createStyle = (theme: ITheme) => {
     container: {
       flex: 1,
       backgroundColor: colors.bgSecondary,
+    },
+    itemContainer: {
+      marginTop: spacing.margin.small,
     },
   });
 };
