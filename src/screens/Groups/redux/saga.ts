@@ -8,6 +8,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
+  IGroupRemoveAdmin,
   IGroupSetAdmin,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
@@ -48,6 +49,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
+  yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -455,7 +457,13 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
           initial: true,
         });
       }
+    } else {
+      navigation.navigate(groupStack.groupDetail, {
+        groupId: payload,
+        initial: true,
+      });
     }
+
     yield put(
       groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
     );
@@ -482,6 +490,34 @@ function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_set_admin:success_message',
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+
+    // refresh group detail after adding new admins
+    yield refreshGroupMembers(groupId);
+  } catch (err) {
+    console.log('setGroupAdmin: ', err);
+    yield showError(err);
+  }
+}
+
+function* removeGroupAdmin({
+  payload,
+}: {
+  type: string;
+  payload: IGroupRemoveAdmin;
+}) {
+  try {
+    const {groupId, userId} = payload;
+
+    yield groupsDataHelper.removeGroupAdmin(groupId, userId);
+
+    const toastMessage: IToastMessage = {
+      content: 'groups:modal_confirm_remove_admin:success_message',
       props: {
         textProps: {useI18n: true},
         type: 'success',

@@ -114,10 +114,19 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/assign-admin`,
     method: 'post',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
     data: {
       user_ids: userIds,
     },
+  }),
+  removeGroupAdmin: (
+    groupId: number,
+    userId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/revoke-admin/${userId}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
   }),
 };
 
@@ -332,6 +341,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.setGroupAdmin(groupId, userIds),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  removeGroupAdmin: async (groupId: number, userId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.removeGroupAdmin(groupId, userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

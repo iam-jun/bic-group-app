@@ -92,6 +92,11 @@ export interface IGroupSetAdmin {
   userIds: number[];
 }
 
+export interface IGroupRemoveAdmin {
+  groupId: number;
+  userId: number;
+}
+
 export interface IGroupSearchPayload {
   isShow?: boolean;
   loading?: boolean;
@@ -100,16 +105,16 @@ export interface IGroupSearchPayload {
 }
 
 export interface IGroupMembers {
-  id?: number;
-  username?: string;
-  fullname?: string;
-  avatar?: string;
-  roles_ids?: number[];
-  roles?: IGroupMemberRole[];
+  id: number;
+  username: string;
+  fullname: string;
+  avatar: string;
+  roles_ids: number[];
+  roles: IGroupMemberRole[];
 }
 
 export interface IGroupMemberRole {
-  id?: number;
-  name?: 'Admin' | 'Member';
-  type?: 'GROUP_ADMIN' | 'MEMBER';
+  id: number;
+  name: 'Admin' | 'Member';
+  type: 'GROUP_ADMIN' | 'MEMBER';
 }

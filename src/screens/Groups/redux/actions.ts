@@ -10,6 +10,7 @@ import {
   IGroupGetMembers,
   IGroupSearchPayload,
   IGroupSetAdmin,
+  IGroupRemoveAdmin,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -156,6 +157,11 @@ const groupsActions = {
     type: groupsTypes.SET_GROUP_ADMIN,
     payload,
   }),
+  removeGroupAdmin: (payload: IGroupRemoveAdmin) => ({
+    type: groupsTypes.REMOVE_GROUP_ADMIN,
+    payload,
+  }),
+
   joinNewGroup: function (payload: {groupId: number}) {
     return {
       type: groupsTypes.JOIN_NEW_GROUP,
@@ -190,7 +196,7 @@ const groupsActions = {
 
   removeMember: (payload: {
     groupId: number;
-    userId: string;
+    userId: number;
     userFullname: string;
   }) => ({
     type: groupsTypes.REMOVE_MEMBER,
