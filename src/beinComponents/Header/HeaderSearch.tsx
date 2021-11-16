@@ -25,6 +25,7 @@ export interface HeaderSearchProps {
   placeholder?: string;
   autoFocus?: boolean;
   onFocus?: () => void;
+  onSubmitSearch?: () => void;
 }
 
 const HeaderSearch: FC<HeaderSearchProps> = ({
@@ -35,6 +36,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   placeholder,
   autoFocus = false,
   onFocus,
+  onSubmitSearch,
 }: HeaderSearchProps) => {
   const [isShow, setIsShow] = useState(false);
   const _inputRef = inputRef || useRef();
@@ -109,6 +111,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
             style={styles.searchInput}
             onChangeText={_onChangeText}
             placeholder={placeholder || i18next.t('input:search_group')}
+            onSubmitEditing={onSubmitSearch}
           />
         </Animated.View>
       </View>

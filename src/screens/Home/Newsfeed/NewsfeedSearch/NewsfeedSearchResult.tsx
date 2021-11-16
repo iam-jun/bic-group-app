@@ -69,12 +69,17 @@ const NewsfeedSearchResult = () => {
     );
   };
 
+  const renderFooter = () => {
+    return <View style={styles.footer}></View>;
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={searchResults || []}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty()}
+        ListFooterComponent={renderFooter()}
         keyExtractor={item => `newsfeed_item_${item?.id}`}
         refreshControl={
           <RefreshControl
@@ -112,6 +117,9 @@ const createStyle = (theme: ITheme) => {
     textEmpty: {
       color: colors.textSecondary,
       textAlign: 'center',
+    },
+    footer: {
+      marginBottom: spacing.margin.base,
     },
   });
 };

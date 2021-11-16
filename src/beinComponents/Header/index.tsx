@@ -52,6 +52,7 @@ export interface HeaderProps {
   removeBorderAndShadow?: boolean;
   autoFocusSearch?: boolean;
   onFocusSearch?: () => void;
+  onSubmitSearch?: () => void;
   onShowSearch?: (isShow: boolean, inputRef?: any) => void;
   onSearchText?: (searchText: string, inputRef?: any) => void;
   searchPlaceholder?: string;
@@ -83,6 +84,7 @@ const Header: React.FC<HeaderProps> = ({
   removeBorderAndShadow = false,
   autoFocusSearch = false,
   onFocusSearch,
+  onSubmitSearch,
   onShowSearch,
   onSearchText,
   searchPlaceholder,
@@ -238,6 +240,7 @@ const Header: React.FC<HeaderProps> = ({
           placeholder={searchPlaceholder}
           autoFocus={autoFocusSearch}
           onFocus={onFocusSearch}
+          onSubmitSearch={onSubmitSearch}
         />
       </View>
     );

@@ -128,6 +128,12 @@ const Newsfeed = () => {
     );
   };
 
+  const onSubmitSearch = () => {
+    dispatch(
+      homeActions.setNewsfeedSearch({isSuggestion: false, searchResults: []}),
+    );
+  };
+
   const renderHeader = () => {
     if (isLaptop)
       return (
@@ -142,6 +148,7 @@ const Newsfeed = () => {
           searchPlaceholder={t('input:search_post')}
           autoFocusSearch
           onFocusSearch={onFocusSearch}
+          onSubmitSearch={onSubmitSearch}
         />
       );
 
@@ -156,6 +163,7 @@ const Newsfeed = () => {
         searchPlaceholder={t('input:search_post')}
         autoFocusSearch
         onFocusSearch={onFocusSearch}
+        onSubmitSearch={onSubmitSearch}
       />
     );
   };
