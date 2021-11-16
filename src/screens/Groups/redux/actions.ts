@@ -9,6 +9,8 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupSearchPayload,
+  IGroupSetAdmin,
+  IGroupRemoveAdmin,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -126,10 +128,16 @@ const groupsActions = {
     };
   },
 
-  editGroupDetail: function (payload: IGroupDetailEdit) {
+  editGroupDetail: function (
+    payload: IGroupDetailEdit,
+    editFieldName?: string,
+    callback?: () => void,
+  ) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
       payload,
+      editFieldName,
+      callback,
     };
   },
   uploadImage: function (payload: IGroupImageUpload) {
@@ -144,6 +152,15 @@ const groupsActions = {
       payload,
     };
   },
+
+  setGroupAdmin: (payload: IGroupSetAdmin) => ({
+    type: groupsTypes.SET_GROUP_ADMIN,
+    payload,
+  }),
+  removeGroupAdmin: (payload: IGroupRemoveAdmin) => ({
+    type: groupsTypes.REMOVE_GROUP_ADMIN,
+    payload,
+  }),
 
   joinNewGroup: function (payload: {groupId: number}) {
     return {
@@ -179,7 +196,7 @@ const groupsActions = {
 
   removeMember: (payload: {
     groupId: number;
-    userId: string;
+    userId: number;
     userFullname: string;
   }) => ({
     type: groupsTypes.REMOVE_MEMBER,

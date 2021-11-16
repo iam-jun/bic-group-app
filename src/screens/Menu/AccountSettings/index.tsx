@@ -8,7 +8,6 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
@@ -24,6 +23,7 @@ import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import appActions from '~/store/app/actions';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -64,11 +64,10 @@ const GeneralSettings = () => {
   const renderLanguageOption = ({item}: {item: ILanguage}) => {
     return (
       <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
-        <PrimaryItem
+        <MenuItem
           style={styles.languageOption}
           title={t(item.title)}
-          leftIcon={item.icon}
-          leftIconProps={{icon: item.icon, size: 24}}
+          icon={item.icon}
           RightComponent={
             language === item.code ? (
               <Icon

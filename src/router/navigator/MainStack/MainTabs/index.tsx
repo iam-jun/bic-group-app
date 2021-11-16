@@ -49,6 +49,9 @@ const MainTabs = () => {
   useEffect(() => {
     dispatch(chatActions.initChat());
     dispatch(postActions.getDraftPosts({userId, streamClient}));
+  }, []);
+
+  useEffect(() => {
     if (streamClient?.currentUser?.token) {
       dispatch(
         notificationsActions.getNotifications({
@@ -71,7 +74,7 @@ const MainTabs = () => {
         subscription && subscription.cancel();
       };
     }
-  }, [streamClient]);
+  }, [streamClient?.currentUser?.token]);
 
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)

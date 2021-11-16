@@ -101,7 +101,11 @@
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
     "text_group": "Group",
-    "text_at": "at"
+    "text_at": "at",
+    "text_updated_successfully": "updated successfully",
+    "text_avatar": "Avatar",
+    "text_cover": "Cover",
+    "text_privacy": "Privacy"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -273,7 +277,6 @@
     "title_edit_email_address": "Edit Email Address",
     "title_edit_address": "Edit Address",
     "text_wrong_email_format": "Wrong Email format",
-    "text_updated_successfully": "updated successfully",
     "text_email_is_used": "This Email is used",
     "text_wrong_phone_number_format": "Wrong number format",
     "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
@@ -620,10 +623,22 @@
       "title": "This group is private.",
       "subtitle": "Join this group to view or participate on discussions"
     },
+    "modal_confirm_set_admin": {
+      "title": "Set as Admin",
+      "description": "Do you want to assign {0} as admin of this group?",
+      "button_confirm": "Set as Admin",
+      "success_message": "Member Role Saved"
+    },
+    "modal_confirm_remove_admin": {
+      "title": "Remove as Admin",
+      "description": "Do you want to remove {0} as admin of this group?",
+      "button_confirm": "Remove",
+      "success_message": "Member Role Saved"
+    },
     "modal_confirm_remove_member": {
       "title": "Remove this member",
       "alert_inner_groups": "This member will also be removed from {0} other inner groups:",
-      "final_alert": "Are you sure want to remove this member?",
+      "final_alert": "Are you sure to remove this member?",
       "button_remove": "Remove"
     },
     "modal_confirm_leave_group": {
@@ -634,7 +649,8 @@
       "success_message": "You have left the group"
     },
     "error": {
-      "last_admin": "You are the last admin of the group. Set another admin before leaving"
+      "last_admin_leave": "You are the last admin of the group. Kindly set another admin before leaving",
+      "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     }
   },
   "profile": {
