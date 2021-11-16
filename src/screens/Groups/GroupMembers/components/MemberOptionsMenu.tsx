@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
@@ -81,15 +81,15 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const goToUserProfile = useCallback((selectedMember?: IGroupMembers) => {
+  const goToUserProfile = (selectedMember?: IGroupMembers) => {
     if (selectedMember) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: selectedMember.id,
       });
     }
-  }, []);
+  };
 
-  const navigateToChatScreen = useCallback((roomId: string) => {
+  const navigateToChatScreen = (roomId: string) => {
     if (Platform.OS === 'web') {
       rootNavigation.navigate(chatStack.conversation, {
         roomId: roomId,
@@ -100,9 +100,9 @@ const MemberOptionsMenu = ({
       screen: chatStack.conversation,
       params: {roomId: roomId, initial: false},
     });
-  }, []);
+  };
 
-  const goToDirectChat = useCallback((selectedMember?: IGroupMembers) => {
+  const goToDirectChat = (selectedMember?: IGroupMembers) => {
     if (selectedMember) {
       const {username, fullname} = selectedMember;
       if (!!username)
@@ -115,9 +115,9 @@ const MemberOptionsMenu = ({
           ),
         );
     }
-  }, []);
+  };
 
-  const alertSettingAdmin = useCallback((selectedMember?: IGroupMembers) => {
+  const alertSettingAdmin = (selectedMember?: IGroupMembers) => {
     if (selectedMember) {
       const alertPayload = {
         iconName: 'Star',
@@ -141,15 +141,15 @@ const MemberOptionsMenu = ({
       );
       dispatch(modalActions.showAlert(alertPayload));
     }
-  }, []);
+  };
 
-  const doSetAdmin = useCallback((selectedMember: IGroupMembers) => {
+  const doSetAdmin = (selectedMember: IGroupMembers) => {
     dispatch(
       groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
     );
-  }, []);
+  };
 
-  const onPressRemoveAdmin = useCallback((selectedMember?: IGroupMembers) => {
+  const onPressRemoveAdmin = (selectedMember?: IGroupMembers) => {
     if (selectedMember) {
       // check if the current user is the last admin before revoking admin
       if (can_setting)
@@ -158,9 +158,9 @@ const MemberOptionsMenu = ({
         );
       alertRemovingAdmin(selectedMember);
     }
-  }, []);
+  };
 
-  const alertRemovingAdmin = useCallback((selectedMember: IGroupMembers) => {
+  const alertRemovingAdmin = (selectedMember: IGroupMembers) => {
     const alertPayload = {
       iconName: 'StarHalfAlt',
       title: i18next.t('groups:modal_confirm_remove_admin:title'),
@@ -181,17 +181,17 @@ const MemberOptionsMenu = ({
       `"${selectedMember?.fullname}"`,
     );
     dispatch(modalActions.showAlert(alertPayload));
-  }, []);
+  };
 
-  const doRemoveAdmin = useCallback((selectedMember: IGroupMembers) => {
+  const doRemoveAdmin = (selectedMember: IGroupMembers) => {
     dispatch(
       groupsActions.removeGroupAdmin({groupId, userId: selectedMember?.id}),
     );
-  }, []);
+  };
 
-  const onPressMemberButton = useCallback(() => {
+  const onPressMemberButton = () => {
     dispatch(modalActions.clearToastMessage());
-  }, []);
+  };
 
   const checkLastAdmin = (type: string, callback: () => void) => {
     groupsDataHelper
@@ -318,17 +318,17 @@ const MemberOptionsMenu = ({
     handleLeaveInnerGroups(username, getInnerGroupsNames);
   };
 
-  const removeMember = useCallback((userId: number, userFullname: string) => {
+  const removeMember = (userId: number, userFullname: string) => {
     dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
-  }, []);
+  };
 
-  const groupsRemovedFromToString = useCallback((groupList: string[]) => {
+  const groupsRemovedFromToString = (groupList: string[]) => {
     if (groupList.length === 1) {
       return groupList[0];
     }
 
     return `${groupList.length} other inner groups: ${groupList.join(', ')}`;
-  }, []);
+  };
 
   const handleLeaveInnerGroups = (
     username: string,
@@ -354,11 +354,11 @@ const MemberOptionsMenu = ({
       });
   };
 
-  const onPressLeave = useCallback(() => {
+  const onPressLeave = () => {
     // check if the current user is the last admin before leaving group
     if (can_setting) return checkLastAdmin('leave', alertLeaveGroup);
     alertLeaveGroup();
-  }, []);
+  };
 
   const alertLeaveGroup = () => {
     const alertPayload = {
@@ -396,15 +396,15 @@ const MemberOptionsMenu = ({
     handleLeaveInnerGroups(user.username, getInnerGroupsNames);
   };
 
-  const doLeaveGroup = useCallback(() => {
+  const doLeaveGroup = () => {
     dispatch(groupsActions.leaveGroup(groupId));
-  }, []);
+  };
 
-  const isGroupAdmin = useCallback(() => {
+  const isGroupAdmin = () => {
     return !!selectedMember?.roles?.find(
       (role: IGroupMemberRole) => role.type === 'GROUP_ADMIN',
     );
-  }, [selectedMember]);
+  };
 
   return (
     <BottomSheet
