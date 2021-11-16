@@ -629,6 +629,12 @@
       "button_confirm": "Set as Admin",
       "success_message": "Member Role Saved"
     },
+    "modal_confirm_remove_admin": {
+      "title": "Remove as Admin",
+      "description": "Do you want to remove {0} as admin of this group?",
+      "button_confirm": "Remove",
+      "success_message": "Member Role Saved"
+    },
     "modal_confirm_remove_member": {
       "title": "Remove this member",
       "alert_inner_groups": "This member will also be removed from {0} other inner groups:",
@@ -643,7 +649,8 @@
       "success_message": "You have left the group"
     },
     "error": {
-      "last_admin": "You are the last admin of the group. Set another admin before leaving"
+      "last_admin_leave": "You are the last admin of the group. Kindly set another admin before leaving",
+      "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     }
   },
   "profile": {

@@ -92,6 +92,11 @@ export interface IGroupSetAdmin {
   userIds: number[];
 }
 
+export interface IGroupRemoveAdmin {
+  groupId: number;
+  userId: number;
+}
+
 export interface IGroupSearchPayload {
   isShow?: boolean;
   loading?: boolean;
