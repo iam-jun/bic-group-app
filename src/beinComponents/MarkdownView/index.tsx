@@ -58,6 +58,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
     })
     .use(regexPlugin, 'audience', audienceRegex, '@')
     .use(regexPlugin, 'linebreak', /<br>/, '<')
+    .use(regexPlugin, 'highlight', /<em>([^<]+)<\/em>/, '<')
     .disable(limitMarkdownTypes ? blacklistLimit : blacklistDefault);
 
   if (debugPrintTree) {
@@ -101,6 +102,14 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
     },
     regex_linebreak: (node: any) => {
       return <Text key={node.key}>{'\n'}</Text>;
+    },
+    regex_highlight: (node: any, children: any, parent: any, styles: any) => {
+      const highlight = node?.sourceMeta?.match?.[1] || '';
+      return (
+        <Text key={node.key} style={styles.regex_highlight}>
+          {highlight}
+        </Text>
+      );
     },
   };
 
@@ -159,6 +168,11 @@ const createStyle = (theme: ITheme) => {
       color: colors.link,
     },
     regex_linebreak: {},
+    regex_highlight: {
+      backgroundColor: '#F6EF79',
+      borderRadius: 16,
+      overflow: 'hidden',
+    },
 
     // The main container
     body: {...textStyles.body},
