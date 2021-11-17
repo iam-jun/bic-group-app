@@ -14,8 +14,9 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import {scaleSize} from '~/theme/dimension';
+import NFSFilterToolbar from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterToolbar';
 
-const NewsfeedSearchResult = () => {
+const NFSResult = () => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -75,7 +76,9 @@ const NewsfeedSearchResult = () => {
 
   return (
     <View style={styles.container}>
+      <NFSFilterToolbar />
       <FlatList
+        style={styles.flex1}
         data={searchResults || []}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty()}
@@ -97,6 +100,7 @@ const NewsfeedSearchResult = () => {
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flex: 1,
       backgroundColor: colors.bgSecondary,
@@ -124,4 +128,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default NewsfeedSearchResult;
+export default NFSResult;

@@ -17,6 +17,11 @@ export interface IPayloadSetNewsfeedSearch {
   searchInputRef?: any;
 }
 
+export interface IPayloadSetNewsfeedSearchFilter {
+  createdBy?: 'me' | undefined | any;
+  date?: any;
+}
+
 export interface IParamGetSearchPost {
   content: string;
 }

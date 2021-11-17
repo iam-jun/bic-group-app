@@ -4,6 +4,7 @@ import {
   IPayloadGetHomePost,
   IPayloadGetSearchPosts,
   IPayloadSetNewsfeedSearch,
+  IPayloadSetNewsfeedSearchFilter,
 } from '~/interfaces/IHome';
 
 const homeActions = {
@@ -39,10 +40,20 @@ const homeActions = {
       payload,
     };
   },
-
   clearNewsfeedSearch: () => {
     return {
       type: homeTypes.CLEAR_NEWSFEED_SEARCH,
+    };
+  },
+  setNewsfeedSearchFilter: (payload: IPayloadSetNewsfeedSearchFilter) => {
+    return {
+      type: homeTypes.SET_NEWSFEED_SEARCH_FILTER,
+      payload,
+    };
+  },
+  clearNewsfeedSearchFilter: () => {
+    return {
+      type: homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER,
     };
   },
 

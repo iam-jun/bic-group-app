@@ -218,7 +218,14 @@
     "saved_posts": "Bài viết đã lưu",
     "draft_post": "Bài nháp",
     "newsfeed_search": {
-      "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\""
+      "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
+      "clear": "Xoá hết",
+      "filter": "Lọc",
+      "filter_created_by": "Người đăng",
+      "filter_created_by_all": "Tất cả",
+      "filter_created_by_me": "Chính mình",
+      "filter_created_by_specific": "Người chỉ định",
+      "filter_date": "Ngày đăng"
     }
   },
   "post": {

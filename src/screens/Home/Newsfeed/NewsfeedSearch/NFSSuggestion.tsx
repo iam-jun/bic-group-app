@@ -12,7 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
 
-const NewsfeedSearchSuggestion = () => {
+const NFSSuggestion = () => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -67,4 +67,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default NewsfeedSearchSuggestion;
+export default NFSSuggestion;
