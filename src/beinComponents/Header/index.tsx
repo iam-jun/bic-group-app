@@ -153,7 +153,7 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         {!!avatar && (
-          <TouchableOpacity onPress={onPressHeader}>
+          <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
             <Avatar.Group
               source={avatar}
               style={styles.avatar}
@@ -173,14 +173,14 @@ const Header: React.FC<HeaderProps> = ({
         )}
         <View style={styles.titleContainer}>
           {!!title && (
-            <TouchableOpacity onPress={onPressHeader}>
+            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
               <Text.H5 style={styles.title} {...titleTextProps}>
                 {title}
               </Text.H5>
             </TouchableOpacity>
           )}
           {!!subTitle && (
-            <TouchableOpacity onPress={onPressHeader}>
+            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
               <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
                 {subTitle}
               </Text.Subtitle>
