@@ -45,17 +45,19 @@ const NFSResult = () => {
 
   const getData = () => {
     if (searchText) {
-      const payload: IPayloadGetSearchPosts = {searchText};
-      if (filterCreatedBy?.id) {
-        payload.actors = filterCreatedBy?.id;
-      }
+      const payload: IPayloadGetSearchPosts = {
+        searchText,
+        actors: filterCreatedBy?.id,
+        startDate: filterDate?.startDate,
+        endDate: filterDate?.endDate,
+      };
       dispatch(homeActions.getSearchPosts(payload));
     }
   };
 
   useEffect(() => {
     getData();
-  }, [searchText, filterCreatedBy, filterDate]);
+  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
 
   const onRefresh = () => {
     console.log(`\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m`);

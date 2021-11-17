@@ -76,7 +76,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         }
       />
       <PrimaryItem
-        height={48}
+        height={52}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:filter_created_by_specific')}
         RightComponent={renderSpecificRightComponent()}

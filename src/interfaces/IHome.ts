@@ -25,9 +25,13 @@ export interface IPayloadSetNewsfeedSearchFilter {
 export interface IParamGetSearchPost {
   content: string;
   actors?: string;
+  start_time?: string;
+  end_time?: string;
 }
 
 export interface IPayloadGetSearchPosts {
   searchText: string;
   actors?: string;
+  startDate?: string;
+  endDate?: string;
 }

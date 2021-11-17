@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -13,6 +13,9 @@ import homeActions from '~/screens/Home/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
 import {useUserIdAuth} from '~/hooks/auth';
+import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
+import {AppContext} from '~/contexts/AppContext';
+import {formatDateTime} from '~/beinComponents/TimeView';
 
 export interface NewsfeedSearchFilterToolbarProps {
   style?: StyleProp<ViewStyle>;
@@ -22,6 +25,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
   style,
 }: NewsfeedSearchFilterToolbarProps) => {
   const dispatch = useDispatch();
+  const {language} = useContext(AppContext);
   const theme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const {colors, spacing} = theme;
@@ -32,6 +36,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
     homeKeySelector.newsfeedSearchFilterCreatedBy,
   );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
+  const {startDate, endDate} = filterDate || {};
 
   let countFilter = 0;
   if (filterCreatedBy) {
@@ -47,19 +52,18 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
       : filterCreatedBy
     : t('home:newsfeed_search:filter_created_by');
   const textDate = filterDate
-    ? filterDate
+    ? `${formatDateTime(startDate, t, language)} - ${formatDateTime(
+        endDate,
+        t,
+        language,
+      )}`
     : t('home:newsfeed_search:filter_date');
 
-  const onPressFilterCreatedBy = (event?: any) => {
+  const showModal = (ContentComponent: any, event?: any) => {
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: (
-          <NFSFilterCreatedBy
-            selectedCreatedBy={filterCreatedBy}
-            onSelect={onSelectCreatedBy}
-          />
-        ),
+        ContentComponent: ContentComponent,
         props: {
           webModalStyle: {minHeight: undefined},
           isContextMenu: true,
@@ -67,6 +71,35 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
           position: {x: event?.pageX, y: event?.pageY},
         },
       }),
+    );
+  };
+
+  const onPressFilterCreatedBy = (event?: any) => {
+    showModal(
+      <NFSFilterCreatedBy
+        selectedCreatedBy={filterCreatedBy}
+        onSelect={onSelectCreatedBy}
+      />,
+      event,
+    );
+  };
+
+  const onSelectDate = (startDate?: string, endDate?: string) => {
+    if (startDate && endDate) {
+      dispatch(
+        homeActions.setNewsfeedSearchFilter({date: {startDate, endDate}}),
+      );
+    }
+  };
+
+  const onPressFilterDate = (event?: any) => {
+    showModal(
+      <NFSFilterDate
+        startDate={startDate}
+        endDate={endDate}
+        onSelect={onSelectDate}
+      />,
+      event,
     );
   };
 
@@ -105,6 +138,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
             {textCreatedBy}
           </Button.Secondary>
           <Button.Secondary
+            onPress={onPressFilterDate}
             style={styles.button}
             color={filterDate ? colors.primary3 : colors.primary1}
             textColor={colors.primary6}>
