@@ -10,6 +10,9 @@ import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
+import {useUserIdAuth} from '~/hooks/auth';
 
 export interface NewsfeedSearchFilterToolbarProps {
   style?: StyleProp<ViewStyle>;
@@ -23,6 +26,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
   const {t} = useBaseHook();
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+  const userId = useUserIdAuth();
 
   const filterCreatedBy = useKeySelector(
     homeKeySelector.newsfeedSearchFilterCreatedBy,
@@ -31,13 +35,37 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
 
   const countFilter = 0;
   const textCreatedBy = filterCreatedBy
-    ? filterCreatedBy === 'me'
+    ? filterCreatedBy?.id === userId
       ? t('home:newsfeed_search:filter_created_by_me')
       : filterCreatedBy
     : t('home:newsfeed_search:filter_created_by');
   const textDate = filterDate
     ? filterDate
     : t('home:newsfeed_search:filter_date');
+
+  const onPressFilterCreatedBy = (event?: any) => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <NFSFilterCreatedBy
+            selectedCreatedBy={filterCreatedBy}
+            onSelect={onSelectCreatedBy}
+          />
+        ),
+        props: {
+          webModalStyle: {minHeight: undefined},
+          isContextMenu: true,
+          side: 'right',
+          position: {x: event?.pageX, y: event?.pageY},
+        },
+      }),
+    );
+  };
+
+  const onSelectCreatedBy = (selected?: any) => {
+    dispatch(homeActions.setNewsfeedSearchFilter({createdBy: selected}));
+  };
 
   const onPressClear = () => {
     dispatch(homeActions.clearNewsfeedSearchFilter());
@@ -63,6 +91,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
               : t('home:newsfeed_search:filter')}
           </Button.Secondary>
           <Button.Secondary
+            onPress={onPressFilterCreatedBy}
             style={styles.button}
             color={filterCreatedBy ? colors.primary3 : colors.primary1}
             textColor={colors.primary6}>

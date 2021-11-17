@@ -27,6 +27,10 @@ const NFSResult = () => {
     searchResults = [],
     searchText = '',
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
+  const filterCreatedBy = useKeySelector(
+    homeKeySelector.newsfeedSearchFilterCreatedBy,
+  );
+  const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
   const renderItem = ({item, index}: any) => {
     return (
@@ -41,12 +45,15 @@ const NFSResult = () => {
 
   const getData = () => {
     const payload: IPayloadGetSearchPosts = {searchText};
+    if (filterCreatedBy?.id) {
+      payload.actors = filterCreatedBy?.id;
+    }
     dispatch(homeActions.getSearchPosts(payload));
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchText, filterCreatedBy, filterDate]);
 
   const onRefresh = () => {
     console.log(`\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m`);

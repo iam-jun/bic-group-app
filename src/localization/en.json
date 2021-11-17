@@ -305,11 +305,12 @@
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
       "clear": "Clear",
+      "choose_creator": "Choose creator",
       "filter": "Filter",
       "filter_created_by": "Created by",
       "filter_created_by_all": "All",
       "filter_created_by_me": "Me",
-      "filter_created_by_specific": "Specific",
+      "filter_created_by_specific": "Specific person",
       "filter_date": "Date"
     }
   },

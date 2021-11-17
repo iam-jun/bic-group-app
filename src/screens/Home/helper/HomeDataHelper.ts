@@ -11,6 +11,7 @@ const homeApiConfig = {
     useRetry: true,
     params: {
       content: param?.content,
+      actors: param?.actors,
     },
   }),
 };
