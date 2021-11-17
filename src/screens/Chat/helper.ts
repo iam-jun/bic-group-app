@@ -61,8 +61,9 @@ export const mapUsers = (data?: []): IChatUser[] =>
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
-export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
-  if (!item) return null;
+export const getLastMessage = (item: IMessage, user: IChatUser): string => {
+  if (!item) return '';
+  const isMyMessage = item.user?.username === user?.username;
   let lastMessage = `${item.user?.name || item.user?.fullname}: ${item?.text}`;
 
   if ((item.attachments && item.attachments.length > 0) || item.quotedMessage) {
@@ -115,10 +116,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
       : getRoomAvatar(_id);
 
   const lastMessage = item.lastMessage
-    ? getLastMessage(
-        mapMessage(user, item.lastMessage),
-        item.lastMessage?.u.username === user.username,
-      )
+    ? mapMessage(user, item.lastMessage)
     : null;
 
   return {
@@ -212,7 +210,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
 
   return {
     ..._message,
-    lastMessage: getLastMessage(_message, item.u?.username === _user.username),
   };
 };
 

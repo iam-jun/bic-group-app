@@ -21,7 +21,6 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {IReactionCounts} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {
   getMessageAttachmentUrl,
@@ -61,7 +60,6 @@ const _MessageContainer = (props: MessageContainerProps) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const unreadMessage = useKeySelector('chat.unreadMessage');
   const jumpedMessage = useKeySelector('chat.jumpedMessage');
   const attachmentMedia = useKeySelector('chat.attachmentMedia');
 
@@ -74,6 +72,9 @@ const _MessageContainer = (props: MessageContainerProps) => {
     onLongPress,
     onQuotedMessagePress,
   } = props;
+
+  const unreadMessage = useKeySelector(`chat.unreadMessage.${roomId}`);
+
   const previousMessage = useKeySelector(
     `chat.messages.${roomId}.items.${previousMessageId}`,
   );
@@ -182,14 +183,11 @@ const _MessageContainer = (props: MessageContainerProps) => {
     );
   };
 
-  const onLongPressReaction = (
-    reactionType: ReactionType,
-    reactionCounts?: IReactionCounts,
-  ) => {
-    if (reactionCounts) {
+  const onLongPressReaction = (reactionType: ReactionType) => {
+    if (reaction_counts) {
       const payload: IPayloadReactionDetailBottomSheet = {
         isOpen: true,
-        reactionCounts: reactionCounts,
+        reactionCounts: reaction_counts,
         initReaction: reactionType,
         getDataParam: {messageId: _id},
         getDataPromise: getReactionStatistics,

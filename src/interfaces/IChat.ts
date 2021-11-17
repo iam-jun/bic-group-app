@@ -184,7 +184,7 @@ export type IConversation = {
   usersCount: number;
   unreadCount: number;
   unreadCountText?: string;
-  lastMessage: string;
+  lastMessage: IMessage;
   _updatedAt: string;
   type: IRoomType;
   beinGroupId?: number;

@@ -56,7 +56,7 @@ const _Conversation = ({route}: {route: any}) => {
   const {user} = useAuth();
   const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
   const messages = useKeySelector(`chat.messages.${roomId}`) || {};
-  const unreadMessage = useKeySelector(`chat.unreadMessage`);
+  const unreadMessage = useKeySelector(`chat.unreadMessages.${roomId}`);
   const sub = useKeySelector(`chat.subscriptions.${roomId}`);
   const name = useMemo(() => getRoomName(sub), [sub]);
   const roomMessageData = messages?.data || [];
@@ -72,6 +72,10 @@ const _Conversation = ({route}: {route: any}) => {
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
+  /* Change room on the web component doesn't unmount
+      Need to store roomId to compare nextProps and prevProps
+  */
+  const currentRoomId = useRef(roomId);
   const contentHeight = useRef(dimension.deviceHeight);
   const initiated = useRef(false);
   const [error, setError] = useState<string | null>(null);
@@ -100,6 +104,11 @@ const _Conversation = ({route}: {route: any}) => {
       'chat-kick-me',
       kickMeOut,
     );
+    // incase detect view items changed takes too long
+    setTimeout(() => {
+      if (!initiated.current) initScroll();
+    }, 2000);
+
     return () => {
       dispatch(actions.clearRoomMessages(roomId));
       dispatch(actions.setAttachmentMedia());
@@ -118,7 +127,14 @@ const _Conversation = ({route}: {route: any}) => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
+      if (currentRoomId.current !== roomId && Platform.OS === 'web') {
+        dispatch(actions.readSubscriptions(currentRoomId.current));
+        dispatch(actions.clearRoomMessages(currentRoomId.current));
+        currentRoomId.current = roomId;
+        scrollToBottom();
+      }
       if (roomId && !conversation.msgs) {
+        setIsScrolled(false);
         setUnreadCount(sub?.unread || 0);
         getAttachments();
         dispatch(actions.getConversationDetail(roomId));
@@ -137,7 +153,6 @@ const _Conversation = ({route}: {route: any}) => {
     InteractionManager.runAfterInteractions(() => {
       // mean conversation detail has been fetched
       if (conversation?.msgs && isEmpty(roomMessageData)) {
-        setIsScrolled(false);
         getMessages(unreadCount);
         _setDownButtonVisible(unreadCount > appConfig.messagesPerPage);
       }
@@ -322,9 +337,7 @@ const _Conversation = ({route}: {route: any}) => {
     (messageId?: string) => {
       if (!roomId || !messageId) return;
 
-      const index = roomMessageData.findIndex(
-        (item: IMessage) => item._id === messageId,
-      );
+      const index = roomMessageData.findIndex((id: string) => id === messageId);
       if (index >= 0) {
         dispatch(actions.setJumpedMessage(roomMessageData[index]));
         scrollToBottom(true, index);
@@ -466,12 +479,16 @@ const _Conversation = ({route}: {route: any}) => {
         unreadCount === 0 &&
         !route.params?.message_id
       ) {
-        scrollToBottom(initiated.current);
-        // only first time
-        initiated.current = true;
-        setIsScrolled(true);
+        initScroll();
       }
     });
+  };
+
+  const initScroll = () => {
+    scrollToBottom(initiated.current);
+    // only first time
+    initiated.current = true;
+    setIsScrolled(true);
   };
 
   const handleScroll = (event: any) => {
@@ -503,7 +520,7 @@ const _Conversation = ({route}: {route: any}) => {
       dispatch(actions.getNextMessages(roomId));
     } else if (unreadCount > 0) {
       setUnreadCount(0);
-      dispatch(actions.readConversation(roomId));
+      dispatch(actions.setUnreadMessage({roomId, msgId: null}));
     }
   };
 
@@ -512,7 +529,7 @@ const _Conversation = ({route}: {route: any}) => {
     if (messages.canLoadNext) {
       setIsScrolled(false);
       setUnreadCount(0);
-      dispatch(actions.readConversation(roomId));
+      dispatch(actions.setUnreadMessage({roomId, msgId: null}));
       getMessages(0);
     } else {
       scrollToBottom(true);
@@ -574,7 +591,6 @@ const _Conversation = ({route}: {route: any}) => {
             }}
             viewabilityConfig={{
               itemVisiblePercentThreshold: 50,
-              waitForInteraction: true,
             }}
             onScrollToIndexFailed={scrollToIndexFailed}
             onContentSizeChange={onContentLayoutChange}

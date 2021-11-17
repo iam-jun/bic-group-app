@@ -606,6 +606,7 @@ function* reactMessage({
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
   if (payload.attachment) yield uploadFile({payload, type});
   else if (payload.createdAt) yield editMessage({payload, type});
+  //@ts-ignore
   else yield sendMessage({payload, type});
 }
 
@@ -638,7 +639,9 @@ function* getUnreadMessage({payload}: {type: string; payload: IConversation}) {
       }),
     );
     const message = mapMessage(auth.user, response.data.messages[0]);
-    yield put(actions.setUnreadMessage(message._id));
+    yield put(
+      actions.setUnreadMessage({roomId: payload._id, msgId: message._id}),
+    );
     yield put(
       actions.getSurroundingMessages({
         roomId: payload._id,
@@ -729,9 +732,10 @@ function* getMessagesHistory({payload}: {type: string; payload: string}) {
 
     if (data.length === 0 && conversation.unreadCount < messagesResult.length) {
       yield put(
-        actions.setUnreadMessage(
-          messageIds[messageIds.length - conversation.unreadCount],
-        ),
+        actions.setUnreadMessage({
+          roomId: payload,
+          msgId: messageIds[messageIds.length - conversation.unreadCount],
+        }),
       );
     }
     yield put(
@@ -895,7 +899,7 @@ function* handleNewMessage(data: any) {
       unreadMessage && conversation.unreadCount > appConfig.messagesPerPage;
 
     if (conversation) {
-      if (!include) {
+      if (!include && roomMessages) {
         if (!haveUnreadMessages) {
           yield put(actions.addNewMessage(message));
           DeviceEventEmitter.emit('chat-new-message', {
@@ -950,11 +954,11 @@ function* handleAddNewRoom(data: any) {
   try {
     const {auth} = yield select();
 
+    yield getSubscriptions();
     yield put(
       actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
     yield put(groupsActions.getJoinedGroups());
-    yield getSubscriptions();
   } catch (err) {
     console.log('handleAddNewRoom', err);
   }

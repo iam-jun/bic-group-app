@@ -143,6 +143,7 @@ const _ConversationsList = (): React.ReactElement => {
   }, []);
 
   const renderEmpty = () => {
+    if (loading) return null;
     return <NoSearchResult />;
   };
 

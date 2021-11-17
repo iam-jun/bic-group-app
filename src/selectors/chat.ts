@@ -11,11 +11,20 @@ export const getConversations = createSelector(chatState, data => {
     .map((key: string) => {
       const item = items?.[key];
       const sub = data?.subscriptions[key];
+      const {data: messagesData, items: messageItems} =
+        data?.messages?.[key] || {};
+
+      const _lastMessage =
+        messageItems?.[messagesData?.[messagesData?.length - 1]];
+      const lastMessage =
+        _lastMessage && !_lastMessage.system ? _lastMessage : item.lastMessage;
 
       return {
         ...item,
         name: getRoomName(sub),
         unreadCount: sub?.unread,
+        lastMessage,
+        _updatedAt: lastMessage ? lastMessage?.createAt : item._updatedAt,
       };
     })
     .sort(function (a: any, b: any) {

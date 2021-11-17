@@ -203,10 +203,6 @@ export default {
     type: Actions.LEAVE_CHAT,
     payload,
   }),
-  readConversation: (payload: string) => ({
-    type: Actions.READ_CONVERSATION,
-    payload,
-  }),
   getMessageDetail: (payload: string) => ({
     type: Actions.GET_MESSAGE_DETAIL,
     payload,
@@ -219,7 +215,7 @@ export default {
     type: Actions.GET_UNREAD_MESSAGE,
     payload,
   }),
-  setUnreadMessage: (payload: string) => ({
+  setUnreadMessage: (payload: {roomId: string; msgId: string | null}) => ({
     type: Actions.SET_UNREAD_MESSAGE,
     payload,
   }),

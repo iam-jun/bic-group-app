@@ -3,7 +3,6 @@ import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
 import {IObject} from '~/interfaces/common';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
-import {getLastMessage} from '../helper';
 import {IMessagesData} from './../../../interfaces/IChat';
 import types from './constants';
 
@@ -67,7 +66,7 @@ const initState = {
   searchInputFocus: '',
   quotedMessages: {} as IObject<IMessage>,
   messages: {} as IObject<IMessagesData>,
-  unreadMessage: null,
+  unreadMessages: {} as IObject<any>,
   jumpedMessage: null,
 };
 
@@ -87,6 +86,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
     subscriptions,
     members,
     roles,
+    unreadMessages,
   } = state;
 
   switch (type) {
@@ -237,7 +237,11 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         const items: any = {};
         data?.forEach((id: string) => {
           items[id] = messages?.[payload]?.items[id];
-          roomMessages = {...messages?.[payload], loading: false, data, items};
+          roomMessages = {
+            canLoadMore: data.length >= appConfig.messagesPerPage,
+            data,
+            items,
+          };
         });
       }
       return {
@@ -274,17 +278,15 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
     case types.SET_UNREAD_MESSAGE:
       return {
         ...state,
-        unreadMessage: payload,
+        unreadMessages: {
+          ...unreadMessages,
+          [payload.roomId]: payload.msgId,
+        },
       };
     case types.SET_JUMPED_MESSAGE:
       return {
         ...state,
         jumpedMessage: payload,
-      };
-    case types.READ_CONVERSATION:
-      return {
-        ...state,
-        unreadMessage: null,
       };
     case types.GET_GROUP_ROLES:
       return {
@@ -370,23 +372,32 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         ...state,
         attachmentMedia: payload || [],
       };
-    case types.ADD_NEW_MESSAGE:
+    case types.ADD_NEW_MESSAGE: {
+      const roomMessages = messages?.[payload.room_id];
+      const roomUnreadMessage = unreadMessages?.[payload.room_id];
       return {
         ...state,
         messages: {
           ...messages,
-          [payload.room_id]: messages?.[payload.room_id]
+          [payload.room_id]: roomMessages
             ? {
-                ...messages?.[payload.room_id],
-                data: messages?.[payload.room_id]?.data
-                  ? [...messages?.[payload.room_id]?.data, payload._id]
+                ...roomMessages,
+                data: roomMessages.data
+                  ? [...roomMessages?.data, payload._id]
                   : [payload._id],
                 items: {
-                  ...messages?.[payload.room_id]?.items,
+                  ...roomMessages.items,
                   [payload._id]: payload,
                 },
               }
-            : messages?.[payload.room_id],
+            : roomMessages,
+        },
+        unreadMessages: {
+          ...unreadMessages,
+          [payload.room_id]:
+            roomMessages?.data && !roomUnreadMessage
+              ? payload._id
+              : roomUnreadMessage,
         },
         rooms: payload.system
           ? rooms
@@ -411,8 +422,10 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
             }
           : quotedMessages,
       };
+    }
     case types.UPDATE_MESSAGE: {
-      if (!payload._id || !payload.localId) return state;
+      if ((!payload._id && !payload.localId_) || !messages?.[payload.room_id])
+        return state;
       const id = payload._id || payload.localId;
       return {
         ...state,
@@ -421,7 +434,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
           [payload.room_id]: {
             ...messages?.[payload.room_id],
             items: {
-              ...messages?.[payload.room_id].items,
+              ...messages?.[payload.room_id]?.items,
               [id]: payload,
             },
           },
@@ -515,17 +528,6 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
             },
           },
         },
-        rooms: {
-          ...rooms,
-          items: {
-            ...rooms.items,
-            [payload.room_id]: {
-              ...rooms.items[payload.room_id],
-              lastMessage: getLastMessage(payload, true),
-              _updatedAt: payload.createdAt,
-            },
-          },
-        },
         quotedMessages: payload.quotedMessage
           ? {
               ...quotedMessages,
@@ -535,7 +537,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
       };
     }
     case types.RETRY_SEND_MESSAGE:
-      if (!payload._id || !payload.localId) return state;
+      if (!payload._id && !payload.localId) return state;
 
       return {
         ...state,
@@ -555,7 +557,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
       };
     case types.SEND_MESSAGE_SUCCESS:
       // message has updated from event
-      if (!payload._id || !payload.localId) return state;
+      if (!payload._id && !payload.localId) return state;
 
       return {
         ...state,
@@ -574,7 +576,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
         },
       };
     case types.SEND_MESSAGE_FAILED:
-      if (!payload._id || !payload.localId) return state;
+      if (!payload._id && !payload.localId) return state;
       return {
         ...state,
         messages: {
