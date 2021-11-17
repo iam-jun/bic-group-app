@@ -33,7 +33,14 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
   );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const countFilter = 0;
+  let countFilter = 0;
+  if (filterCreatedBy) {
+    countFilter++;
+  }
+  if (filterDate) {
+    countFilter++;
+  }
+
   const textCreatedBy = filterCreatedBy
     ? filterCreatedBy?.id === userId
       ? t('home:newsfeed_search:filter_created_by_me')

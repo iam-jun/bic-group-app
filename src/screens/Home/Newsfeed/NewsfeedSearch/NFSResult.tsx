@@ -44,11 +44,13 @@ const NFSResult = () => {
   };
 
   const getData = () => {
-    const payload: IPayloadGetSearchPosts = {searchText};
-    if (filterCreatedBy?.id) {
-      payload.actors = filterCreatedBy?.id;
+    if (searchText) {
+      const payload: IPayloadGetSearchPosts = {searchText};
+      if (filterCreatedBy?.id) {
+        payload.actors = filterCreatedBy?.id;
+      }
+      dispatch(homeActions.getSearchPosts(payload));
     }
-    dispatch(homeActions.getSearchPosts(payload));
   };
 
   useEffect(() => {
