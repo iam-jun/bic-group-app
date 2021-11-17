@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -95,7 +95,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity activeOpacity={1} style={styles.container}>
       <Text.ButtonSmall style={styles.textHeader}>
         {t('home:newsfeed_search:choose_date')}
       </Text.ButtonSmall>
@@ -133,7 +133,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         {t('home:newsfeed_search:apply')}
       </Button.Primary>
       {renderDatePicker()}
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -152,6 +152,8 @@ const createStyle = (theme: ITheme, insets: any) => {
         Platform.OS === 'web'
           ? spacing.padding.tiny
           : spacing.padding.extraLarge + insets?.bottom,
+      minWidth: Platform.OS === 'web' ? 300 : undefined,
+      minHeight: Platform.OS === 'web' ? 250 : undefined,
     },
     itemContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
@@ -161,7 +163,9 @@ const createStyle = (theme: ITheme, insets: any) => {
     },
     textHeader: {
       color: colors.textSecondary,
-      marginVertical: spacing.margin.tiny,
+      marginTop:
+        Platform.OS === 'web' ? spacing.margin.base : spacing.margin.tiny,
+      marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,
     },
     buttonRight: {

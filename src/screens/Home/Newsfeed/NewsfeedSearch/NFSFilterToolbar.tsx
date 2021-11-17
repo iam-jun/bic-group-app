@@ -65,7 +65,6 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
         isOpen: true,
         ContentComponent: ContentComponent,
         props: {
-          webModalStyle: {minHeight: undefined},
           isContextMenu: true,
           side: 'right',
           position: {x: event?.pageX, y: event?.pageY},
@@ -113,7 +112,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
 
   return (
     <View>
-      <ScrollView contentContainerStyle={styles.scrollContainer} horizontal>
+      <ScrollView style={styles.scrollContainer} horizontal>
         <View style={styles.container}>
           <Button.Secondary
             leftIcon={'SlidersAlt'}
@@ -167,7 +166,6 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     scrollContainer: {
-      flex: 1,
       backgroundColor: colors.background,
     },
     container: {

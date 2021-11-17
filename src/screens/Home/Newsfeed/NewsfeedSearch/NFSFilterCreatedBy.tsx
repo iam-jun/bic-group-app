@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -48,7 +48,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity activeOpacity={1} style={styles.container}>
       <Text.ButtonSmall style={styles.textHeader}>
         {t('home:newsfeed_search:choose_creator')}
       </Text.ButtonSmall>
@@ -81,7 +81,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         title={t('home:newsfeed_search:filter_created_by_specific')}
         RightComponent={renderSpecificRightComponent()}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -93,6 +93,7 @@ const createStyle = (theme: ITheme, insets: any) => {
         Platform.OS === 'web'
           ? spacing.padding.tiny
           : spacing.padding.extraLarge + insets?.bottom,
+      minWidth: Platform.OS === 'web' ? 300 : undefined,
     },
     itemContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
@@ -102,7 +103,9 @@ const createStyle = (theme: ITheme, insets: any) => {
     },
     textHeader: {
       color: colors.textSecondary,
-      marginVertical: spacing.margin.tiny,
+      marginTop:
+        Platform.OS === 'web' ? spacing.margin.base : spacing.margin.tiny,
+      marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,
     },
     buttonSpecificRight: {
