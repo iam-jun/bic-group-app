@@ -16,6 +16,7 @@ import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import {default as chatActions} from '~/screens/Chat/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
+import {initPushTokenMessage} from '~/services/helper';
 import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -47,9 +48,29 @@ const MainTabs = () => {
 
   const userId = useUserIdAuth();
   useEffect(() => {
+    // only valid if user logged in
+    if (!userId) {
+      return;
+    }
     dispatch(chatActions.initChat());
     dispatch(postActions.getDraftPosts({userId, streamClient}));
-  }, []);
+    if (Platform.OS !== 'web') {
+      dispatch(notificationsActions.registerPushToken());
+      let tokenRefreshSubscription;
+      initPushTokenMessage()
+        .then(messaging => {
+          tokenRefreshSubscription = messaging().onTokenRefresh(
+            (token: string) =>
+              dispatch(notificationsActions.registerPushToken({token})),
+          );
+        })
+        .catch(e =>
+          console.log('error when delete push token at auth stack', e),
+        );
+      // @ts-ignore
+      return tokenRefreshSubscription && tokenRefreshSubscription();
+    }
+  }, [userId]);
 
   useEffect(() => {
     if (streamClient?.currentUser?.token) {
