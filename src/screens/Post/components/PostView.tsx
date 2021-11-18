@@ -1,5 +1,11 @@
 import React, {FC, useEffect, useState, memo} from 'react';
-import {View, StyleSheet, Keyboard, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Keyboard,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -29,6 +35,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import PostViewMenu from '~/screens/Post/components/PostViewMenu';
 import {isEqual} from 'lodash';
+import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFooterLite';
 
 export interface PostViewProps {
   style?: any;
@@ -37,6 +44,9 @@ export interface PostViewProps {
   onPressComment?: (postId: string) => void;
   onPressHeader?: (postId: string) => void;
   onContentLayout?: () => void;
+  onPress?: () => void;
+  pressNavigateToDetail?: boolean;
+  isLite?: boolean;
 }
 
 const _PostView: FC<PostViewProps> = ({
@@ -46,6 +56,9 @@ const _PostView: FC<PostViewProps> = ({
   onPressComment,
   onPressHeader,
   onContentLayout,
+  onPress,
+  pressNavigateToDetail,
+  isLite,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
 
@@ -70,7 +83,7 @@ const _PostView: FC<PostViewProps> = ({
     postKeySelector.postObjectDataById(postId),
   );
 
-  const {content, images} = postObjectData || {};
+  const {content, images, highlight} = postObjectData || {};
 
   const userId = useUserIdAuth();
 
@@ -195,6 +208,14 @@ const _PostView: FC<PostViewProps> = ({
     }
   };
 
+  const _onPress = () => {
+    if (pressNavigateToDetail) {
+      rootNavigation.navigate(homeStack.postDetail, {post_id: postId});
+    } else {
+      onPress?.();
+    }
+  };
+
   if (deleted) {
     return (
       <View style={StyleSheet.flatten([styles.deletedContainer, style])}>
@@ -205,12 +226,16 @@ const _PostView: FC<PostViewProps> = ({
   }
 
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={0.8}
+      disabled={!onPress && !pressNavigateToDetail}
+      onPress={_onPress}
       style={StyleSheet.flatten([
         Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {},
         style,
       ])}>
       <PostViewImportant
+        isLite={isLite}
         isImportant={isImportant}
         expireTime={important?.expiresTime}
       />
@@ -224,25 +249,32 @@ const _PostView: FC<PostViewProps> = ({
           onPressShowAudiences={onPressShowAudiences}
         />
         <PostViewContent
-          content={content}
+          isLite={isLite}
+          content={isLite && highlight ? highlight : content}
           images={images}
           isPostDetail={isPostDetail}
           onContentLayout={onContentLayout}
         />
-        <ReactionView
-          ownReactions={own_reactions}
-          reactionCounts={reaction_counts}
-          onAddReaction={onAddReaction}
-          onRemoveReaction={onRemoveReaction}
-          onLongPressReaction={onLongPressReaction}
-        />
-        <PostViewFooter
-          labelButtonComment={labelButtonComment}
-          onAddReaction={onAddReaction}
-          onPressComment={_onPressComment}
-        />
+        {!isLite && (
+          <ReactionView
+            ownReactions={own_reactions}
+            reactionCounts={reaction_counts}
+            onAddReaction={onAddReaction}
+            onRemoveReaction={onRemoveReaction}
+            onLongPressReaction={onLongPressReaction}
+          />
+        )}
+        {isLite ? (
+          <PostViewFooterLite reactionCounts={reaction_counts} />
+        ) : (
+          <PostViewFooter
+            labelButtonComment={labelButtonComment}
+            onAddReaction={onAddReaction}
+            onPressComment={_onPressComment}
+          />
+        )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

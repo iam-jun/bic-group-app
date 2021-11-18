@@ -366,6 +366,7 @@ const PostDetailContentHeader = ({
         postId={id}
         onPressComment={onPressComment}
         onContentLayout={onContentLayout}
+        isPostDetail
       />
       <Divider />
       {commentLeft > 0 && (

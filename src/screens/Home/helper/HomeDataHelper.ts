@@ -1,5 +1,19 @@
 import {StreamClient} from 'getstream';
-import {makeGetStreamRequest} from '~/services/httpApiRequest';
+import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
+import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
+import {IParamGetSearchPost} from '~/interfaces/IHome';
+
+const homeApiConfig = {
+  getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      content: param?.content,
+    },
+  }),
+};
 
 const homeDataHelper = {
   getHomePosts: async (
@@ -35,6 +49,20 @@ const homeDataHelper = {
       }
     }
     return Promise.reject('StreamClient or UserId not found');
+  },
+  getSearchPost: async (param: IParamGetSearchPost) => {
+    try {
+      const response: any = await makeHttpRequest(
+        homeApiConfig.getSearchPost(param),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
   },
 };
 
