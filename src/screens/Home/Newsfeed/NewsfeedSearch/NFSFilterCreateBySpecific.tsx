@@ -57,11 +57,11 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
     return (
       <TouchableOpacity onPress={() => onPressUser(item)}>
         <PrimaryItem
-          height={40}
+          height={Platform.OS === 'web' ? 48 : 40}
           title={item?.fullname}
           showAvatar
           avatar={item?.avatar}
-          avatarProps={{variant: 'small'}}
+          avatarProps={{variant: Platform.OS === 'web' ? 'medium' : 'small'}}
           style={styles.item}
         />
       </TouchableOpacity>
@@ -113,6 +113,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       height:
         Platform.select({web: 0.55, default: 0.5}) * dimension?.deviceHeight,
+      paddingTop: Platform.OS === 'web' ? spacing.padding.base : 0,
       paddingHorizontal: 0,
       paddingBottom: 0,
     },

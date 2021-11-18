@@ -21,7 +21,7 @@ const initialHomeState = {
   },
   newsfeedSearchUsers: {
     key: '',
-    limit: 10,
+    limit: 20,
     offset: 0,
     data: [],
     loading: false,

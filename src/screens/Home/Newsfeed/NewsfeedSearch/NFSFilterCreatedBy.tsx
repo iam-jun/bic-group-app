@@ -45,7 +45,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
       modalActions.showModal({
         isOpen: true,
         ContentComponent: <NFSFilterCreateBySpecific onSelect={_onSelect} />,
-        props: {},
+        props: {webModalStyle: {minWidth: 400}},
       }),
     );
   };
