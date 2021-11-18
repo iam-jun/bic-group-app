@@ -75,7 +75,7 @@ const UserProfile = (props: any) => {
 
   useEffect(() => {
     isFocused && getUserProfile();
-  }, [isFocused]);
+  }, [isFocused, userId]);
 
   const onPressChat = () => {
     if (!!username)
