@@ -1,6 +1,5 @@
 /* eslint-disable no-array-constructor */
 import {createSelector} from 'reselect';
-import {getRoomName} from '~/screens/Chat/helper';
 
 export const chatState = (state: any) => state.chat;
 
@@ -21,7 +20,6 @@ export const getConversations = createSelector(chatState, data => {
 
       return {
         ...item,
-        name: getRoomName(sub),
         unreadCount: sub?.unread,
         lastMessage,
         _updatedAt: lastMessage ? lastMessage?.createAt : item._updatedAt,
