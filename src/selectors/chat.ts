@@ -1,53 +1,43 @@
-import {IMessage} from './../interfaces/IChat';
 /* eslint-disable no-array-constructor */
 import {createSelector} from 'reselect';
-import {IConversation} from '~/interfaces/IChat';
+import {getRoomName} from '~/screens/Chat/helper';
 
 export const chatState = (state: any) => state.chat;
 
 export const getConversations = createSelector(chatState, data => {
-  return {
-    ...data?.rooms,
-    data: (data?.rooms?.data || [])
-      .map((item: IConversation) => {
-        const sub: any = (data?.subscriptions || []).find(
-          (sub: any) => sub.rid === item._id,
-        );
+  const {data: roomsData, items} = data.rooms || {};
 
-        const name =
-          item.name ||
-          (typeof sub?.customFields?.beinChatName === 'string'
-            ? sub?.customFields?.beinChatName
-            : sub?.customFields?.beinChatName?.name) ||
-          sub?.fname ||
-          sub?.name;
+  return (roomsData || [])
+    .map((key: string) => {
+      const item = items?.[key];
+      const sub = data?.subscriptions[key];
+      const {data: messagesData, items: messageItems} =
+        data?.messages?.[key] || {};
 
-        return {
-          ...item,
-          unreadCount: sub?.unread,
-          name,
-        };
-      })
-      .sort(function (a: IConversation, b: IConversation) {
-        //@ts-ignore
-        return new Date(b._updatedAt) - new Date(a._updatedAt);
-      }),
-  };
+      const _lastMessage =
+        messageItems?.[messagesData?.[messagesData?.length - 1]];
+      const lastMessage =
+        _lastMessage && !_lastMessage.system ? _lastMessage : item.lastMessage;
+
+      return {
+        ...item,
+        name: getRoomName(sub),
+        unreadCount: sub?.unread,
+        lastMessage,
+        _updatedAt: lastMessage ? lastMessage?.createAt : item._updatedAt,
+      };
+    })
+    .sort(function (a: any, b: any) {
+      //@ts-ignore
+      return new Date(b._updatedAt) - new Date(a._updatedAt);
+    });
 });
 
 export const getUnreadConversationCount = createSelector(chatState, data => {
   let count = 0;
-  (data?.rooms?.data || []).forEach((item: IConversation) => {
-    const sub: any = (data?.subscriptions || []).find(
-      (sub: any) => sub.rid === item._id,
-    );
+  (data?.rooms?.data || []).forEach((key: string) => {
+    const sub: any = data?.subscriptions?.[key];
     if (typeof sub !== 'undefined' && sub.unread > 0) count++;
   });
   return count;
-});
-
-export const getUnreadMessagePosition = createSelector(chatState, data => {
-  return data.messages.data.findIndex(
-    (item: IMessage) => item._id === data.messages?.unreadMessage?._id,
-  );
 });

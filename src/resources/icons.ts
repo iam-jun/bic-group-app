@@ -182,6 +182,7 @@ const icons = {
   Phone: 'Phone',
   Envelope: 'Envelope',
   EnvelopeAlt: 'EnvelopeAlt',
+  SlidersAlt: 'SlidersVAlt',
   EditAlt: 'EditAlt',
   TextFields: 'TextFields',
   UserSquare: 'UserSquare',

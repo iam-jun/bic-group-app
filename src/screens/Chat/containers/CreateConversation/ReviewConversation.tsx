@@ -11,7 +11,6 @@ import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import useAuth from '~/hooks/auth';
-import useChat from '~/hooks/chat';
 import {useKeySelector} from '~/hooks/selector';
 import {IUserProfile} from '~/interfaces/IAuth';
 import {IChatUser} from '~/interfaces/IChat';
@@ -24,7 +23,7 @@ const ReviewConversation = () => {
   const styles = createStyles(theme);
   const dispatch = useDispatch();
 
-  const {selectedUsers} = useChat();
+  const selectedUsers = useKeySelector('chat.selectedUsers');
   const [text, setText] = useState<string>('');
   const myProfile = useKeySelector(menuKeySelector.myProfile) || {};
   const {user} = useAuth();

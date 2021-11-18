@@ -417,15 +417,20 @@ function* removeMember({
   }
 }
 
-function* joinNewGroup({payload}: {type: string; payload: {groupId: number}}) {
+function* joinNewGroup({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; groupName: string};
+}) {
   try {
     console.log(`payload`, payload);
-    const {groupId} = payload;
+    const {groupId, groupName} = payload;
 
     yield groupsDataHelper.joinGroup(groupId);
 
     const toastMessage: IToastMessage = {
-      content: 'You are now a member of this group ' + groupId,
+      content: 'You are now a member of ' + groupName,
       props: {
         type: 'success',
       },

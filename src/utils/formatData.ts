@@ -1,4 +1,5 @@
 import moment from 'moment';
+import removeMd from 'remove-markdown';
 
 export const formatNumber = (n: number) => {
   return n.toFixed(0).replace(/./g, function (c, i, a) {
@@ -130,7 +131,7 @@ export const escapeMarkDown = (text: string) => {
     text = text.replace(match[0], match[2]);
     MENTION_USER_REG.lastIndex = 0;
   }
-  return text;
+  return removeMd(text);
 };
 
 export const formatTextRemoveSpace = (text: string) => {

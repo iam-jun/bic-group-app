@@ -1,10 +1,9 @@
 import Clipboard from '@react-native-clipboard/clipboard';
-import {RouteProp, useIsFocused, useRoute} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import i18next from 'i18next';
 import {debounce, isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
-  ActivityIndicator,
   DeviceEventEmitter,
   FlatList,
   InteractionManager,
@@ -25,11 +24,10 @@ import appConfig from '~/configs/appConfig';
 import {MessageOptionType, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
-import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {RootStackParamList} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {
@@ -49,11 +47,20 @@ import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
-import {getReactionStatistics} from '../../helper';
+import {getReactionStatistics, getRoomName} from '../../helper';
 
-const _Conversation = () => {
+const _Conversation = ({route}: {route: any}) => {
+  const {rootNavigation} = useRootNavigation();
+
+  const roomId = route?.params?.roomId || '';
   const {user} = useAuth();
-  const {conversation, messages, unreadMessagePosition} = useChat();
+  const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
+  const messages = useKeySelector(`chat.messages.${roomId}`) || {};
+  const unreadMessage = useKeySelector(`chat.unreadMessages.${roomId}`);
+  const sub = useKeySelector(`chat.subscriptions.${roomId}`);
+  const name = useMemo(() => getRoomName(sub), [sub]);
+  const roomMessageData = messages?.data || [];
+
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
   const [replyingMessage, setReplyingMessage] = useState<IMessage>();
   const messageOptionsModalRef = React.useRef<any>();
@@ -61,15 +68,21 @@ const _Conversation = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme, insets);
-  const {rootNavigation} = useRootNavigation();
-  const route = useRoute<RouteProp<RootStackParamList, 'Conversation'>>();
 
   const isFocused = useIsFocused();
   const [isScrolled, setIsScrolled] = useState(false);
   const offsetY = useRef(0);
+  /* Change room on the web component doesn't unmount
+      Need to store roomId to compare nextProps and prevProps
+  */
+  const currentRoomId = useRef(roomId);
   const contentHeight = useRef(dimension.deviceHeight);
   const initiated = useRef(false);
   const [error, setError] = useState<string | null>(null);
+  /* unread logic in the conversation detail
+    is independent from the conversation list
+  */
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const [downButtonVisible, setDownButtonVisible] = useState<boolean>(false);
   const _setDownButtonVisible = debounce(
@@ -83,80 +96,74 @@ const _Conversation = () => {
   const [editingMessage, setEditingMessage] = useState<IMessage>();
 
   useEffect(() => {
-    const emmiterCallback = (index: number) => {
-      listRef.current?.flashScrollIndicators();
-      // if user scroll up, do not scroll to bottom automatically
-      if (
-        offsetY.current >=
-        contentHeight.current - dimension.deviceHeight - 100
-      )
-        scrollToBottom(true, index);
-    };
-
-    const _emmiter = DeviceEventEmitter.addListener(
+    const newMessageEmmiter = DeviceEventEmitter.addListener(
       'chat-new-message',
-      emmiterCallback,
+      onNewMessage,
     );
+    const kickMeEmmiter = DeviceEventEmitter.addListener(
+      'chat-kick-me',
+      kickMeOut,
+    );
+    // incase detect view items changed takes too long
+    setTimeout(() => {
+      if (!initiated.current) initScroll();
+    }, 2000);
+
     return () => {
+      dispatch(actions.clearRoomMessages(roomId));
       dispatch(actions.setAttachmentMedia());
-      _emmiter.remove();
+      newMessageEmmiter.remove();
+      kickMeEmmiter.remove();
     };
   }, []);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       if (!isFocused) {
-        dispatch(actions.readSubscriptions(conversation._id));
+        dispatch(actions.readSubscriptions(roomId));
       }
     });
   }, [isFocused]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      if (route?.params?.roomId) {
-        dispatch(actions.getConversationDetail(route.params.roomId));
-        dispatch(actions.readSubscriptions(route.params.roomId));
+      if (currentRoomId.current !== roomId && Platform.OS === 'web') {
+        dispatch(actions.readSubscriptions(currentRoomId.current));
+        dispatch(actions.clearRoomMessages(currentRoomId.current));
+        currentRoomId.current = roomId;
+        scrollToBottom();
+      }
+      if (roomId && !conversation.msgs) {
+        setIsScrolled(false);
+        setUnreadCount(sub?.unread || 0);
+        getAttachments();
+        dispatch(actions.getConversationDetail(roomId));
+        dispatch(actions.readSubscriptions(roomId));
       }
     });
-  }, [route?.params?.roomId]);
+  }, [roomId]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      if (!messages.loading) jumpToMessage(route?.params?.message_id);
+      if (!messages.loadingMore) jumpToMessage(route?.params?.message_id);
     });
   }, [route?.params?.message_id]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      const roomId = route?.params?.roomId;
-      const isDirectMessage = conversation?.type === roomTypes.DIRECT;
-      if (roomId && conversation?._id && roomId === conversation?._id) {
-        dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
-      }
-      getAttachments();
-    });
-  }, [route?.params?.roomId, conversation?._id]);
-
-  useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
       // mean conversation detail has been fetched
-      if (conversation?.msgs) {
-        setIsScrolled(false);
-        getMessages(conversation.unreadCount);
-        _setDownButtonVisible(
-          conversation.unreadCount > appConfig.messagesPerPage,
-        );
+      if (conversation?.msgs && isEmpty(roomMessageData)) {
+        getMessages(unreadCount);
+        _setDownButtonVisible(unreadCount > appConfig.messagesPerPage);
       }
     });
   }, [conversation?.msgs]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      setUnreadBannerVisible(
-        conversation?.unreadCount && conversation.unreadCount > 0,
-      );
+      setUnreadBannerVisible(unreadCount > 0);
     });
-  }, [conversation?.unreadCount]);
+  }, [unreadCount]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
@@ -174,26 +181,48 @@ const _Conversation = () => {
     });
   }, [error]);
 
-  const getMessages = (unreadCount: number) => {
-    if (route.params?.message_id) {
-      dispatch(actions.getSurroundingMessages(route.params.message_id));
-    } else if (unreadCount > appConfig.messagesPerPage) {
-      dispatch(actions.getUnreadMessage());
-    } else if (conversation.msgs > 0) {
-      dispatch(actions.getMessagesHistory());
+  const onNewMessage = (params: {message: IMessage; index: number}) => {
+    // if user scroll up, do not scroll to bottom automatically
+    if (
+      params.message.room_id === roomId &&
+      offsetY.current >= contentHeight.current - dimension.deviceHeight - 100
+    ) {
+      listRef.current?.flashScrollIndicators();
+      scrollToBottom(true, params.index);
     }
   };
 
-  const getAttachments = () => {
-    const roomId = route?.params?.roomId;
+  const kickMeOut = (id: string) => {
+    if (roomId === id) rootNavigation.replace(chatStack.conversationList);
+  };
+
+  const getMessages = (unreadCount: number) => {
+    if (!roomId) return;
+    dispatch(actions.resetRoomMessages(roomId));
+    if (route.params?.message_id) {
+      dispatch(
+        actions.getSurroundingMessages({
+          roomId,
+          messageId: route.params.message_id,
+        }),
+      );
+    } else if (unreadCount > appConfig.messagesPerPage) {
+      dispatch(actions.getUnreadMessage({...conversation, unreadCount}));
+    } else if (conversation.msgs > 0) {
+      dispatch(actions.getMessagesHistory(roomId));
+    }
+  };
+
+  const getAttachments = useCallback(() => {
     const isDirectMessage = conversation?.type === roomTypes.DIRECT;
     if (roomId && conversation?._id && roomId === conversation?._id) {
       dispatch(actions.getAttachmentMedia({roomId, isDirectMessage}));
     }
-  };
+  }, [conversation, roomId]);
 
   const loadMoreMessages = () => {
-    if (!messages.loading) dispatch(actions.mergeMessagesHistory());
+    if (roomId && !messages.loadingMore && messages.canLoadMore)
+      dispatch(actions.getMessagesHistory(roomId));
   };
 
   const onOptionsClosed = () => {
@@ -289,7 +318,7 @@ const _Conversation = () => {
 
   const getMessageLink = () => {
     Clipboard.setString(
-      getLink(LINK_CHAT_MESSAGE, route.params?.roomId, {
+      getLink(LINK_CHAT_MESSAGE, roomId, {
         message_id: selectedMessage?._id,
       }),
     );
@@ -304,22 +333,23 @@ const _Conversation = () => {
     );
   };
 
-  const jumpToMessage = useCallback((messageId?: string) => {
-    if (!messageId) return;
+  const jumpToMessage = useCallback(
+    (messageId?: string) => {
+      if (!roomId || !messageId) return;
 
-    const index = messages.data.findIndex(
-      (item: IMessage) => item._id === messageId,
-    );
-    if (index >= 0) {
-      dispatch(actions.setJumpedMessage(messages.data[index]));
-      listRef.current?.scrollToIndex({index, animated: true});
-    } else {
-      // dispatch(actions.resetData('messages'));
-      dispatch(actions.getSurroundingMessages(messageId));
-    }
-  }, []);
+      const index = roomMessageData.findIndex((id: string) => id === messageId);
+      if (index >= 0) {
+        dispatch(actions.setJumpedMessage(roomMessageData[index]));
+        scrollToBottom(true, index);
+      } else {
+        dispatch(actions.resetRoomMessages(roomId));
+        dispatch(actions.getSurroundingMessages({roomId, messageId}));
+      }
+    },
+    [roomId, roomMessageData],
+  );
 
-  const onPressBack = useCallback(async () => {
+  const onPressBack = useCallback(() => {
     if (route.params?.initial === false)
       rootNavigation.replace(chatStack.conversationList);
     else rootNavigation.goBack();
@@ -334,7 +364,7 @@ const _Conversation = () => {
   );
 
   const onMenuPress = useCallback(
-    async (menu: MessageOptionType) => {
+    (menu: MessageOptionType) => {
       switch (menu) {
         case 'delete':
           deleteMessage();
@@ -360,7 +390,7 @@ const _Conversation = () => {
     [selectedMessage],
   );
 
-  const onSearchPress = async () => {
+  const onSearchPress = () => {
     alert('Searching is in development');
   };
 
@@ -379,56 +409,41 @@ const _Conversation = () => {
     [],
   );
 
-  const onCancelEditingMessage = () => setEditingMessage(undefined);
+  const onCancelEditingMessage = useCallback(
+    () => setEditingMessage(undefined),
+    [],
+  );
 
-  const onCancelReplyingMessage = () => setReplyingMessage(undefined);
-
-  const renderItem = ({item, index}: {item: IMessage; index: number}) => {
-    const props = {
-      previousMessage: index > 0 && messages.data[index - 1],
-      currentMessage: item,
-      index,
-      onReactPress,
-      onReplyPress,
-      onLongPress,
-      onQuotedMessagePress: jumpToMessage,
-    };
-    return <MessageContainer {...props} />;
-  };
+  const onCancelReplyingMessage = useCallback(
+    () => setReplyingMessage(undefined),
+    [],
+  );
 
   const onViewableItemsChanged = (changed: any[]) => {
     if (
-      conversation.unreadCount < appConfig.messagesPerPage &&
-      messages.unreadMessage &&
+      unreadCount < appConfig.messagesPerPage &&
+      unreadMessage &&
       changed &&
       changed.length > 0
     ) {
       const item = changed[0].item;
 
-      if (
-        item._id !== messages.unreadMessage?._id &&
-        messages.data.length > unreadMessagePosition
-      ) {
-        listRef.current?.scrollToIndex({
-          index: unreadMessagePosition,
-          animated: false,
-        });
+      if (item._id !== unreadMessage) {
+        scrollToUnreadMessage();
       }
       setIsScrolled(true);
     }
     initiated.current = true;
   };
 
-  const onUnreadBannerPress = () => {
-    try {
-      listRef.current?.scrollToIndex({
-        index: unreadMessagePosition,
-        animated: true,
-      });
-    } catch (e: any) {
-      scrollToIndexFailed({index: unreadMessagePosition});
+  const scrollToUnreadMessage = useCallback(() => {
+    const unreadMessagePosition = roomMessageData.findIndex(
+      (id: string) => id === unreadMessage,
+    );
+    if (roomMessageData.length > unreadMessagePosition) {
+      scrollToBottom(true, unreadMessagePosition);
     }
-  };
+  }, [roomMessageData]);
 
   const onCloseUnreadBannerPress = () => {
     setUnreadBannerVisible(false);
@@ -442,50 +457,52 @@ const _Conversation = () => {
   };
 
   const scrollToBottom = (animated?: boolean, index?: number) => {
-    if ((!index || index < 0) && isEmpty(messages.data)) return;
-
-    listRef.current?.scrollToIndex({
-      index: index || messages.data.length - 1,
-      animated: animated || false,
-    });
+    if ((!index || index < 0) && isEmpty(roomMessageData)) return;
+    try {
+      listRef.current?.scrollToIndex({
+        index: index || roomMessageData.length - 1,
+        animated: animated || false,
+      });
+    } catch (e) {
+      console.log('scrollToBottom', e);
+    }
   };
 
   const onContentLayoutChange = () => {
     InteractionManager.runAfterInteractions(() => {
       if (messages.canLoadNext) _setDownButtonVisible(true);
+
       if (
         !isScrolled &&
-        !isEmpty(messages.data) &&
-        // !messages.loading &&
+        !isEmpty(roomMessageData) &&
         !messages.canLoadNext &&
-        conversation.unreadCount === 0 &&
+        unreadCount === 0 &&
         !route.params?.message_id
       ) {
-        scrollToBottom(initiated.current);
-        // only first time
-        initiated.current = true;
-        setIsScrolled(true);
+        initScroll();
       }
     });
+  };
+
+  const initScroll = () => {
+    scrollToBottom(initiated.current);
+    // only first time
+    initiated.current = true;
+    setIsScrolled(true);
   };
 
   const handleScroll = (event: any) => {
     InteractionManager.runAfterInteractions(() => {
       const _offsetY = event?.contentOffset.y;
       const _contentHeight = event?.contentSize.height;
-      const delta = 0;
+      const delta = 1;
       const condition1 = _contentHeight - dimension.deviceHeight * 2 > _offsetY;
       const condition2 = messages.canLoadNext;
       _setDownButtonVisible(condition1 || condition2);
       offsetY.current = _offsetY;
       contentHeight.current = _contentHeight;
 
-      if (
-        initiated.current &&
-        !messages.loadingMore &&
-        !isEmpty(messages.extra) &&
-        _offsetY <= delta
-      ) {
+      if (initiated.current && _offsetY <= delta) {
         // reach top
         loadMoreMessages();
       }
@@ -499,10 +516,11 @@ const _Conversation = () => {
   };
 
   const onEndReached = () => {
-    if (!messages.loadingNext && messages.canLoadNext) {
-      dispatch(actions.getNextMessages());
-    } else if (conversation.unreadCount > 0) {
-      dispatch(actions.readConversation());
+    if (!messages.loadingNext && messages.canLoadNext && roomId) {
+      dispatch(actions.getNextMessages(roomId));
+    } else if (unreadCount > 0) {
+      setUnreadCount(0);
+      dispatch(actions.setUnreadMessage({roomId, msgId: null}));
     }
   };
 
@@ -510,16 +528,30 @@ const _Conversation = () => {
     _setDownButtonVisible(false);
     if (messages.canLoadNext) {
       setIsScrolled(false);
-      dispatch(actions.readConversation());
-      dispatch(actions.resetData('messages'));
+      setUnreadCount(0);
+      dispatch(actions.setUnreadMessage({roomId, msgId: null}));
       getMessages(0);
     } else {
       scrollToBottom(true);
     }
   };
 
-  const onSendCallBack = () => {
+  const onSendCallBack = useCallback(() => {
     setIsScrolled(false);
+  }, []);
+
+  const renderItem = ({item, index}: {item: string; index: number}) => {
+    const props = {
+      previousMessageId: index > 0 && roomMessageData[index - 1],
+      currentMessageId: item,
+      index,
+      roomId,
+      onReactPress,
+      onReplyPress,
+      onLongPress,
+      onQuotedMessagePress: jumpToMessage,
+    };
+    return <MessageContainer {...props} />;
   };
 
   const renderChatMessages = () => {
@@ -538,25 +570,19 @@ const _Conversation = () => {
           <ListMessages
             listRef={listRef}
             nativeID={'list-messages'}
-            data={messages.data}
+            data={roomMessageData}
             keyboardShouldPersistTaps="handled"
-            onEndReached={onEndReached}
             onEndReachedThreshold={0.5}
             scrollEventThrottle={0.5}
             removeClippedSubviews={true}
-            onScrollToIndexFailed={scrollToIndexFailed}
-            onContentSizeChange={onContentLayoutChange}
-            onScroll={onScroll}
             showsHorizontalScrollIndicator={false}
             maxToRenderPerBatch={appConfig.messagesPerPage}
             initialNumToRender={appConfig.messagesPerPage}
             contentContainerStyle={styles.listContainer}
+            keyExtractor={item => item}
             /* means that the component will render the visible screen
         area plus (up to) 4999 screens above and 4999 below the viewport.*/
             windowSize={5000}
-            renderItem={renderItem}
-            keyExtractor={item => item._id}
-            onViewableItemsChanged={onViewableItemsChanged}
             ListFooterComponent={() => (
               <ViewSpacing height={theme.spacing.margin.large} />
             )}
@@ -565,12 +591,16 @@ const _Conversation = () => {
             }}
             viewabilityConfig={{
               itemVisiblePercentThreshold: 50,
-              // waitForInteraction: true,
-              // viewAreaCoveragePercentThreshold: 95,
             }}
+            onScrollToIndexFailed={scrollToIndexFailed}
+            onContentSizeChange={onContentLayoutChange}
+            onEndReached={onEndReached}
+            onScroll={onScroll}
+            renderItem={renderItem}
+            onViewableItemsChanged={onViewableItemsChanged}
           />
         )}
-        {messages.loadingNext && <ActivityIndicator />}
+        {messages.loadingNext && <LoadingIndicator />}
         <DownButton visible={downButtonVisible} onDownPress={onDownPress} />
       </View>
     );
@@ -588,11 +618,7 @@ const _Conversation = () => {
               ? images.img_user_avatar_default
               : images.img_group_avatar_default,
         }}
-        title={
-          messages.error
-            ? i18next.t('chat:title_invalid_msg_link')
-            : conversation.name
-        }
+        title={messages.error ? i18next.t('chat:title_invalid_msg_link') : name}
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"
         onPressIcon={!messages.error ? onSearchPress : undefined}
@@ -601,14 +627,15 @@ const _Conversation = () => {
         hideBackOnLaptop
       />
       <UnreadBanner
-        count={conversation.unreadCount}
+        count={unreadCount}
         time="now"
         visible={unreadBannerVisible}
-        onPress={onUnreadBannerPress}
+        onPress={scrollToUnreadMessage}
         onClosePress={onCloseUnreadBannerPress}
       />
       {renderChatMessages()}
       <ChatInput
+        roomId={roomId}
         editingMessage={editingMessage}
         replyingMessage={replyingMessage}
         onCancelEditing={onCancelEditingMessage}

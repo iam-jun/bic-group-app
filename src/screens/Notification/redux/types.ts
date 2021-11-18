@@ -13,6 +13,10 @@ const notificationsTypes = {
   LOADMORE: 'notifications/LOADMORE',
   LOAD_NEW_NOTIFICATIONS: 'notifications/LOAD_NEW_NOTIFICATIONS',
   DELETE_NOTIFICATIONS: 'notifications/DELETE_NOTIFICATIONS',
+
+  // For Firebase
+  REGISTER_PUSH_TOKEN: 'notifications/REGISTER_PUSH_TOKEN',
+  SAVE_PUSH_TOKEN: 'notifications/SAVE_PUSH_TOKEN',
 };
 
 export default notificationsTypes;

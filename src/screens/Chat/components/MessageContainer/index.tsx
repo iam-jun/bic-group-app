@@ -17,11 +17,10 @@ import MarkdownView from '~/beinComponents/MarkdownView';
 import ReactionView from '~/beinComponents/ReactionView';
 import {Text} from '~/components';
 import {ReactionType} from '~/constants/reactions';
-import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {IMessage} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {IReactionCounts} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {
   getMessageAttachmentUrl,
@@ -40,10 +39,11 @@ import {
 } from './components';
 import AttachmentView from './components/AttachmentView';
 
-export interface MessageItemProps {
-  previousMessage: IMessage;
-  currentMessage: IMessage;
+export interface MessageContainerProps {
+  previousMessageId: string;
+  currentMessageId: string;
   index: number;
+  roomId: string;
   onReactPress: (
     event: any,
     item: IMessage,
@@ -54,21 +54,34 @@ export interface MessageItemProps {
   onQuotedMessagePress: (msgId: string) => void;
 }
 
-const _MessageItem = (props: MessageItemProps) => {
+const _MessageContainer = (props: MessageContainerProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
-  const {messages, attachmentMedia} = useChat();
+  const jumpedMessage = useKeySelector('chat.jumpedMessage');
+  const attachmentMedia = useKeySelector('chat.attachmentMedia');
+
   const {
-    previousMessage,
-    currentMessage,
+    previousMessageId,
+    currentMessageId,
+    roomId,
     onReactPress,
     onReplyPress,
     onLongPress,
     onQuotedMessagePress,
   } = props;
+
+  const unreadMessage = useKeySelector(`chat.unreadMessage.${roomId}`);
+
+  const previousMessage = useKeySelector(
+    `chat.messages.${roomId}.items.${previousMessageId}`,
+  );
+  const currentMessage = useKeySelector(
+    `chat.messages.${roomId}.items.${currentMessageId}`,
+  );
+
   const {
     _id,
     text,
@@ -81,6 +94,8 @@ const _MessageItem = (props: MessageItemProps) => {
     type,
     reaction_counts,
     own_reactions,
+    attachments,
+    editedBy,
   } = currentMessage;
 
   const sameUser = user?.username === previousMessage?.user?.username;
@@ -96,7 +111,7 @@ const _MessageItem = (props: MessageItemProps) => {
     });
   });
 
-  const minutes = moment(createdAt).diff(previousMessage.createdAt, 'minutes');
+  const minutes = moment(createdAt).diff(previousMessage?.createdAt, 'minutes');
   const within5Mins = minutes <= 5;
 
   const _onRetryPress = () => {
@@ -109,12 +124,12 @@ const _MessageItem = (props: MessageItemProps) => {
     sameUser &&
     sameType &&
     within5Mins &&
-    messages.unreadMessage?._id !== _id;
+    unreadMessage !== _id;
 
   const [blinking, setBlinking] = useState(false);
 
   useEffect(() => {
-    if (messages.jumpedMessage?._id === _id) {
+    if (jumpedMessage === _id) {
       setBlinking(true);
 
       setTimeout(() => {
@@ -126,7 +141,7 @@ const _MessageItem = (props: MessageItemProps) => {
         });
       }, 2000);
     }
-  }, [messages.jumpedMessage]);
+  }, [jumpedMessage]);
 
   const _onLongPress = useCallback(
     (e: any) => {
@@ -168,14 +183,11 @@ const _MessageItem = (props: MessageItemProps) => {
     );
   };
 
-  const onLongPressReaction = (
-    reactionType: ReactionType,
-    reactionCounts?: IReactionCounts,
-  ) => {
-    if (reactionCounts) {
+  const onLongPressReaction = (reactionType: ReactionType) => {
+    if (reaction_counts) {
       const payload: IPayloadReactionDetailBottomSheet = {
         isOpen: true,
-        reactionCounts: reactionCounts,
+        reactionCounts: reaction_counts,
         initReaction: reactionType,
         getDataParam: {messageId: _id},
         getDataPromise: getReactionStatistics,
@@ -202,8 +214,8 @@ const _MessageItem = (props: MessageItemProps) => {
     return (
       <Div className="chat-message">
         <MessageSeparator
-          previousTime={previousMessage.createdAt}
-          time={currentMessage.createdAt}
+          previousTime={previousMessage?.createdAt}
+          time={createdAt}
         />
         <TouchableWithoutFeedback onLongPress={onMenuPress}>
           <View
@@ -230,24 +242,22 @@ const _MessageItem = (props: MessageItemProps) => {
                 </Text>
               ) : (
                 <>
-                  {currentMessage?.attachments?.map?.(
-                    (attach: any, i: number) => (
-                      <AttachmentView
-                        key={`${_id}_attachment_${attach?.msgId}_${attach?.ts}_${i}`}
-                        {...currentMessage}
-                        attachment={attach}
-                        attachmentMedia={mediaSource}
-                        onLongPress={_onLongPress}
-                      />
-                    ),
-                  )}
+                  {attachments?.map?.((attach: any, i: number) => (
+                    <AttachmentView
+                      key={`${_id}_attachment_${attach?.msgId}_${attach?.ts}_${i}`}
+                      {...currentMessage}
+                      attachment={attach}
+                      attachmentMedia={mediaSource}
+                      onLongPress={_onLongPress}
+                    />
+                  ))}
                   <View style={styles.textContainer}>
                     <MarkdownView
                       limitMarkdownTypes
                       onPressAudience={onMentionPress}>
                       {text}
                     </MarkdownView>
-                    {currentMessage.editedBy && (
+                    {editedBy && (
                       <Text.Subtitle
                         color={theme.colors.textSecondary}
                         style={styles.editedText}>
@@ -299,7 +309,7 @@ const _MessageItem = (props: MessageItemProps) => {
 
   return (
     <View>
-      {messages.unreadMessage?._id === _id && renderDivider()}
+      {unreadMessage === _id && renderDivider()}
       {system ? <SystemMessage {...currentMessage} /> : renderMessage()}
     </View>
   );
@@ -356,7 +366,7 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
-const MessageItem = React.memo(_MessageItem);
-MessageItem.whyDidYouRender = true;
+const MessageContainer = React.memo(_MessageContainer);
+MessageContainer.whyDidYouRender = true;
 
-export default MessageItem;
+export default MessageContainer;

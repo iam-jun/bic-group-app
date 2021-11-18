@@ -75,9 +75,8 @@ const GroupInfoHeader = () => {
   };
 
   const onPressJoin = () => {
-    const groupId = groupDetail.id;
-    console.log(`Joining`, groupId);
-    dispatch(groupsActions.joinNewGroup({groupId}));
+    const {id: groupId, name: groupName} = groupDetail;
+    dispatch(groupsActions.joinNewGroup({groupId, groupName}));
   };
 
   const renderJoinButton = () => {

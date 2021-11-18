@@ -22,11 +22,11 @@ import {
   ISendMessageReq,
   IUpdateGroupName,
   ISearchChatReq,
-  IUpdateConversationDescription,
   IUpdateConversationDetailReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
 import {getEnv} from '~/utils/env';
+import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 const providers = {
   bein: {
@@ -114,7 +114,7 @@ const Chat = {
     };
   },
   addMembersToGroup: (
-    id: string,
+    id: number,
     data: IAddUsersToGroupReq,
   ): HttpApiRequestConfig => {
     return {
@@ -504,6 +504,15 @@ const App = {
       method: 'get',
       provider: providers.bein,
       useRetry: true,
+    };
+  },
+  getUsers: (params: IParamsGetUsers): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}users`,
+      method: 'get',
+      useRetry: true,
+      provider: providers.bein,
+      params,
     };
   },
 };

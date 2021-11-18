@@ -19,6 +19,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import appConfig from '~/configs/appConfig';
 import {IGroupMembers} from '~/interfaces/IGroup';
+import images from '~/resources/images';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -118,7 +119,7 @@ const _GroupMembers = (props: any) => {
       <PrimaryItem
         showAvatar
         style={styles.itemContainer}
-        avatar={avatar}
+        avatar={avatar || images.img_user_avatar_default}
         title={fullname}
         onPressMenu={(e: any) => onPressMenu(e, item)}
       />

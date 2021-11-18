@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -50,8 +50,12 @@ export interface HeaderProps {
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
   removeBorderAndShadow?: boolean;
-  onShowSearch?: (isShow: boolean) => void;
-  onSearchText?: (searchText: string) => void;
+  autoFocusSearch?: boolean;
+  onFocusSearch?: () => void;
+  onSubmitSearch?: () => void;
+  onShowSearch?: (isShow: boolean, inputRef?: any) => void;
+  onSearchText?: (searchText: string, inputRef?: any) => void;
+  searchPlaceholder?: string;
   onPressHeader?: () => void;
 }
 
@@ -78,11 +82,16 @@ const Header: React.FC<HeaderProps> = ({
   disableInsetTop,
   style,
   removeBorderAndShadow = false,
+  autoFocusSearch = false,
+  onFocusSearch,
+  onSubmitSearch,
   onShowSearch,
   onSearchText,
+  searchPlaceholder,
   onPressHeader,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
+  const inputRef = useRef();
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -103,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({
 
   const showSearch = () => {
     setIsShowSearch(true);
-    onShowSearch?.(true);
+    onShowSearch?.(true, inputRef);
   };
 
   const hideSearch = () => {
@@ -126,6 +135,10 @@ const Header: React.FC<HeaderProps> = ({
     } else {
       showSearch();
     }
+  };
+
+  const _onSearchText = (text: string) => {
+    onSearchText?.(text, inputRef);
   };
 
   const renderContent = () => {
@@ -153,7 +166,7 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         {!!avatar && (
-          <TouchableOpacity onPress={onPressHeader}>
+          <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
             <Avatar.Group
               source={avatar}
               style={styles.avatar}
@@ -173,14 +186,14 @@ const Header: React.FC<HeaderProps> = ({
         )}
         <View style={styles.titleContainer}>
           {!!title && (
-            <TouchableOpacity onPress={onPressHeader}>
+            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
               <Text.H5 style={styles.title} {...titleTextProps}>
                 {title}
               </Text.H5>
             </TouchableOpacity>
           )}
           {!!subTitle && (
-            <TouchableOpacity onPress={onPressHeader}>
+            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
               <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
                 {subTitle}
               </Text.Subtitle>
@@ -220,9 +233,14 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         <HeaderSearch
+          inputRef={inputRef}
           isShowSearch={isShowSearch}
-          onSearchText={onSearchText}
+          onSearchText={_onSearchText}
           onPressBack={hideSearch}
+          placeholder={searchPlaceholder}
+          autoFocus={autoFocusSearch}
+          onFocus={onFocusSearch}
+          onSubmitSearch={onSubmitSearch}
         />
       </View>
     );

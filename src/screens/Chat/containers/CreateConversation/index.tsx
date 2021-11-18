@@ -7,8 +7,8 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../../fragments/MembersSelection';
@@ -19,7 +19,8 @@ const CreateConversation = (): React.ReactElement => {
   const {spacing} = theme;
 
   const dispatch = useDispatch();
-  const {selectedUsers, users} = useChat();
+  const selectedUsers = useKeySelector('chat.selectedUsers');
+  const users = useKeySelector('chat.users');
   const [searchQuery, setSearchQuery] = useState('');
   const {rootNavigation} = useRootNavigation();
 

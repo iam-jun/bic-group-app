@@ -162,7 +162,7 @@ const groupsActions = {
     payload,
   }),
 
-  joinNewGroup: function (payload: {groupId: number}) {
+  joinNewGroup: function (payload: {groupId: number; groupName: string}) {
     return {
       type: groupsTypes.JOIN_NEW_GROUP,
       payload,
