@@ -37,10 +37,14 @@ const MessageHeader: React.FC<Props> = ({user, createdAt}: Props) => {
     <View style={styles.container}>
       <ButtonWrapper style={styles.avatarContainer} onPress={onPressUser}>
         <Avatar.Medium
-          source={{
-            uri: user?.avatar,
-            cache: 'web',
-          }}
+          source={
+            Platform.OS === 'web'
+              ? user?.avatar
+              : {
+                  uri: user?.avatar,
+                  cache: 'web',
+                }
+          }
           cache={false}
           placeholderSource={getDefaultAvatar(user?.name)}
         />
