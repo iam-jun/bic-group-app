@@ -12,6 +12,8 @@ const homeApiConfig = {
     params: {
       content: param?.content,
       actors: param?.actors,
+      start_time: param?.start_time,
+      end_time: param?.end_time,
     },
   }),
 };

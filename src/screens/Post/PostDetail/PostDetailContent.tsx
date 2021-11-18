@@ -189,10 +189,13 @@ const _PostDetailContent = (props: any) => {
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
-      if (sectionIndex === -1) {
+      if (sectionIndex > sectionData.length - 1 || sectionIndex === -1) {
         sectionIndex = sectionData.length - 1;
       }
-      if (itemIndex === -1) {
+      if (
+        itemIndex > sectionData?.[sectionIndex]?.data?.length ||
+        itemIndex === -1
+      ) {
         itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
       }
 
@@ -216,7 +219,7 @@ const _PostDetailContent = (props: any) => {
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     textInputRef.current?.focus?.();
-  }, [textInputRef.current]);
+  }, [textInputRef.current, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
