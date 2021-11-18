@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Platform,
   FlatList,
-  RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {debounce} from 'lodash';
@@ -68,8 +68,22 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
     );
   };
 
-  const onRefresh = () => {
-    console.log(`\x1b[36m🐣️ NFSFilterCreateBySpecific onRefresh\x1b[0m`);
+  const onEndReached = () => {
+    if (canLoadMore) {
+      dispatch(homeActions.getSearchUsers());
+    }
+  };
+
+  const renderFooter = () => {
+    if (canLoadMore) {
+      return (
+        <ActivityIndicator
+          style={{marginVertical: spacing.margin.base}}
+          color={theme.colors.bgFocus}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -86,14 +100,8 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         keyExtractor={item => `newsfeed_search_user_${item?.id}`}
         keyboardShouldPersistTaps={'always'}
         ListHeaderComponent={<View style={{height: spacing.margin.base}} />}
-        refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={colors.primary6}
-            colors={[colors.primary6 || 'grey']}
-          />
-        }
+        ListFooterComponent={renderFooter}
+        onEndReached={onEndReached}
       />
     </View>
   );
