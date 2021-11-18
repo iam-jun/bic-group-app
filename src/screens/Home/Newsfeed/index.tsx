@@ -110,6 +110,7 @@ const Newsfeed = () => {
       dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
     } else {
       dispatch(homeActions.clearNewsfeedSearch());
+      dispatch(homeActions.clearNewsfeedSearchFilter());
     }
   };
 

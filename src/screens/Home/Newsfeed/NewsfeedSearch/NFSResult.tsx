@@ -14,8 +14,9 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import {scaleSize} from '~/theme/dimension';
+import NFSFilterToolbar from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterToolbar';
 
-const NewsfeedSearchResult = () => {
+const NFSResult = () => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -26,6 +27,10 @@ const NewsfeedSearchResult = () => {
     searchResults = [],
     searchText = '',
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
+  const filterCreatedBy = useKeySelector(
+    homeKeySelector.newsfeedSearchFilterCreatedBy,
+  );
+  const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
   const renderItem = ({item, index}: any) => {
     return (
@@ -39,13 +44,18 @@ const NewsfeedSearchResult = () => {
   };
 
   const getData = () => {
-    const payload: IPayloadGetSearchPosts = {searchText};
-    dispatch(homeActions.getSearchPosts(payload));
+    if (searchText) {
+      const payload: IPayloadGetSearchPosts = {searchText};
+      if (filterCreatedBy?.id) {
+        payload.actors = filterCreatedBy?.id;
+      }
+      dispatch(homeActions.getSearchPosts(payload));
+    }
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchText, filterCreatedBy, filterDate]);
 
   const onRefresh = () => {
     console.log(`\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m`);
@@ -75,7 +85,9 @@ const NewsfeedSearchResult = () => {
 
   return (
     <View style={styles.container}>
+      <NFSFilterToolbar />
       <FlatList
+        style={styles.flex1}
         data={searchResults || []}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty()}
@@ -97,6 +109,7 @@ const NewsfeedSearchResult = () => {
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flex: 1,
       backgroundColor: colors.bgSecondary,
@@ -124,4 +137,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default NewsfeedSearchResult;
+export default NFSResult;

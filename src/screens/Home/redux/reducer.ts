@@ -15,6 +15,10 @@ const initialHomeState = {
     suggestionResults: [],
     searchResults: [],
   },
+  newsfeedSearchFilter: {
+    createdBy: undefined,
+    date: undefined,
+  },
 };
 
 const homeReducer = (state = initialHomeState, action: any = {}) => {
@@ -53,6 +57,19 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
       return {
         ...state,
         newsfeedSearch: initialHomeState.newsfeedSearch,
+      };
+    case homeTypes.SET_NEWSFEED_SEARCH_FILTER:
+      return {
+        ...state,
+        newsfeedSearchFilter: {
+          ...state.newsfeedSearchFilter,
+          ...payload,
+        },
+      };
+    case homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER:
+      return {
+        ...state,
+        newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
       };
 
     default:

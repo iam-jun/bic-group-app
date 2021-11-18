@@ -6,8 +6,8 @@ import {ITheme} from '~/theme/interfaces';
 
 import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
-import NewsfeedSearchSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NewsfeedSearchSuggestion';
-import NewsfeedSearchResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NewsfeedSearchResult';
+import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion';
+import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
 
 const NewsfeedSearch = () => {
   const theme = useTheme() as ITheme;
@@ -25,7 +25,7 @@ const NewsfeedSearch = () => {
 
   return (
     <View style={styles.container}>
-      {isSuggestion ? <NewsfeedSearchSuggestion /> : <NewsfeedSearchResult />}
+      {isSuggestion ? <NFSSuggestion /> : <NFSResult />}
     </View>
   );
 };

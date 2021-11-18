@@ -74,10 +74,13 @@ function* getSearchPosts({
   payload: IPayloadGetSearchPosts;
   type: string;
 }): any {
-  const {searchText} = payload || {};
+  const {searchText, actors} = payload || {};
   try {
     yield put(homeActions.setNewsfeedSearch({loadingResult: true}));
     const params: IParamGetSearchPost = {content: searchText};
+    if (actors) {
+      params.actors = actors;
+    }
     const response = yield call(homeDataHelper.getSearchPost, params);
     const searchResults = response?.results || [];
     yield put(
