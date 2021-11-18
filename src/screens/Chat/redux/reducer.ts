@@ -1,58 +1,37 @@
 import i18next from 'i18next';
 import appConfig from '~/configs/appConfig';
 import {messageEventTypes, messageStatus} from '~/constants/chat';
-import {IUser} from '~/interfaces/IAuth';
+import {IObject} from '~/interfaces/common';
 import {IChatUser, IConversation, IMessage} from '~/interfaces/IChat';
-import {getLastMessage} from '../helper';
+import {IMessagesData} from './../../../interfaces/IChat';
 import types from './constants';
 
 export const initDataState = {
-  rooms: {
-    loading: false,
-    data: [],
-    extra: [],
-    searchResult: [],
-    offset: 0,
-    canLoadMore: true,
-  },
   users: {
     loading: false,
-    data: [],
-    extra: [],
+    data: new Array<IChatUser>(),
+    extra: new Array<IChatUser>(),
     offset: 0,
     canLoadMore: true,
   },
   joinableUsers: {
     loading: false,
-    data: [],
-    extra: [],
+    data: new Array<IChatUser>(),
+    extra: new Array<IChatUser>(),
     offset: 0,
     canLoadMore: true,
   },
   members: {
     loading: false,
-    data: [],
-    extra: [],
+    data: new Array<IChatUser>(),
+    extra: new Array<IChatUser>(),
     offset: 0,
     canLoadMore: true,
   },
-  messages: {
-    loading: false,
-    loadingNext: false,
-    data: [],
-    extra: [],
-    offset: -1,
-    downOffset: 0,
-    canLoadMore: true,
-    canLoadNext: false,
-    unreadMessage: null,
-    jumpedMessage: null,
-    error: null,
-  },
   search: {
     loading: false,
-    data: [],
-    extra: [],
+    data: new Array<IConversation>(),
+    extra: new Array<IConversation>(),
     offset: 0,
     canLoadMore: true,
   },
@@ -68,21 +47,27 @@ export interface IAction {
 
 const initState = {
   ...initDataState,
-  conversation: {} as IConversation,
   attachmentMedia: [],
   selectedUsers: new Array<IChatUser>(),
+  rooms: {
+    loading: false,
+    data: new Array<string>(),
+    items: {} as IObject<IConversation>,
+  },
   roles: {
     loading: false,
     data: [],
   },
-  subscriptions: [],
+  subscriptions: {} as IObject<any>,
   mention: {
     mentionKey: '',
     mentionUsers: [],
   },
   searchInputFocus: '',
-  hoverMessage: null,
-  quotedMessages: {},
+  quotedMessages: {} as IObject<IMessage>,
+  messages: {} as IObject<IMessagesData>,
+  unreadMessages: {} as IObject<any>,
+  jumpedMessage: null,
 };
 
 /**
@@ -91,9 +76,18 @@ const initState = {
  * @param action
  * @returns {*}
  */
-function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
+function reducer(state = initState, action: IAction = {dataType: 'users'}) {
   const {type, dataType, payload} = action;
-  const {rooms, conversation, messages, selectedUsers, quotedMessages} = state;
+  const {
+    rooms,
+    messages,
+    selectedUsers,
+    quotedMessages,
+    subscriptions,
+    members,
+    roles,
+    unreadMessages,
+  } = state;
 
   switch (type) {
     case types.GET_DATA:
@@ -140,22 +134,33 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         [dataType]: initDataState[dataType],
       };
+    case types.GET_ROOMS:
+      return {
+        ...state,
+        rooms: {
+          ...rooms,
+          loading: true,
+        },
+      };
+    case types.SET_ROOMS:
+      return {
+        ...state,
+        rooms: {
+          ...rooms,
+          ...payload,
+          loading: false,
+        },
+      };
     case types.GET_MESSAGES_HISTORY:
       return {
         ...state,
         messages: {
           ...messages,
-          loading: messages.data.length === 0,
-        },
-      };
-    case types.SET_MESSAGES:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          data: payload,
-          loading: false,
-          canLoadMore: payload.length >= appConfig.messagesPerPage,
+          [payload]: {
+            ...messages?.[payload],
+            loading: !messages?.[payload],
+            loadingMore: messages?.[payload]?.data?.length > 0,
+          },
         },
       };
     case types.SET_MESSAGES_HISTORY:
@@ -163,17 +168,19 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
-          extra: payload,
-          canLoadMore: payload.length >= appConfig.messagesPerPage,
-        },
-      };
-    case types.MERGE_MESSAGES_HISTORY:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          data: [...messages.extra, ...messages.data],
-          extra: [],
+          [payload.roomId]: {
+            ...messages?.[payload.roomId],
+            loading: false,
+            loadingMore: false,
+            data: messages?.[payload.roomId]?.data
+              ? [...payload.messageIds, ...messages?.[payload.roomId]?.data]
+              : payload.messageIds,
+            items: {
+              ...messages?.[payload.roomId]?.items,
+              ...payload.messagesData,
+            },
+            canLoadMore: payload.messageIds.length >= appConfig.messagesPerPage,
+          },
         },
       };
     case types.GET_NEXT_MESSAGES:
@@ -181,7 +188,10 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
-          loadingNext: true,
+          [payload]: {
+            ...messages?.[payload],
+            loadingNext: true,
+          },
         },
       };
     case types.SET_NEXT_MESSAGES:
@@ -189,18 +199,69 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
-          loadingNext: false,
-          data: [...messages.data, ...payload],
-          canLoadNext: payload.length === appConfig.messagesPerPage,
+          [payload.roomId]: {
+            ...messages?.[payload.roomId],
+            loadingNext: false,
+            data: messages?.[payload.roomId]?.data
+              ? [...messages?.[payload.roomId]?.data, ...payload.messageIds]
+              : payload.messageIds,
+            items: {
+              ...messages?.[payload.roomId]?.items,
+              ...payload.messagesData,
+            },
+            canLoadNext:
+              payload.messageIds.length === appConfig.messagesPerPage,
+          },
         },
       };
+    case types.RESET_ROOM_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          [payload]: {},
+        },
+      };
+    case types.CLEAR_ROOM_MESSAGES: {
+      // keep only first 25 messages
+      let roomMessages = {};
+      if (!messages?.[payload]?.canLoadNext) {
+        const messageData = messages?.[payload]?.data;
+        const data =
+          messageData?.length <= appConfig.messagesPerPage
+            ? messageData
+            : messageData?.slice(
+                messageData.length - appConfig.messagesPerPage,
+                messageData.length,
+              );
+        const items: any = {};
+        data?.forEach((id: string) => {
+          items[id] = messages?.[payload]?.items[id];
+          roomMessages = {
+            canLoadMore: data.length >= appConfig.messagesPerPage,
+            data,
+            items,
+          };
+        });
+      }
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          [payload]: roomMessages,
+        },
+      };
+    }
     case types.GET_SURROUNDING_MESSAGES:
       return {
         ...state,
         messages: {
           ...messages,
-          canLoadNext: true,
-          loading: true,
+          [payload.roomId]: {
+            ...messages?.[payload.roomId],
+            canLoadNext: true,
+            loading: true,
+          },
         },
       };
     case types.SET_MESSAGES_ERROR:
@@ -208,55 +269,30 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
-          error: payload,
+          [payload.roomId]: {
+            ...messages?.[payload.roomId],
+            error: payload.error,
+          },
         },
       };
     case types.SET_UNREAD_MESSAGE:
       return {
         ...state,
-        messages: {
-          ...messages,
-          unreadMessage: payload,
+        unreadMessages: {
+          ...unreadMessages,
+          [payload.roomId]: payload.msgId,
         },
       };
     case types.SET_JUMPED_MESSAGE:
       return {
         ...state,
-        messages: {
-          ...messages,
-          jumpedMessage: payload,
-        },
-      };
-    case types.READ_CONVERSATION:
-      return {
-        ...state,
-        conversation: {
-          ...conversation,
-          unreadCount: 0,
-        },
-        messages: {
-          ...messages,
-          unreadMessage: null,
-        },
-      };
-    case types.SEARCH_CONVERSATIONS:
-      return {
-        ...state,
-        rooms: {
-          ...state.rooms,
-          searchResult: !payload
-            ? rooms.data
-            : rooms.data.filter((item: IConversation) =>
-                item?.name?.toLowerCase().includes(payload.toLowerCase()),
-              ),
-        },
+        jumpedMessage: payload,
       };
     case types.GET_GROUP_ROLES:
       return {
         ...state,
-        conversation: conversation?._id ? conversation : {_id: payload},
         roles: {
-          ...state.roles,
+          ...roles,
           loading: true,
         },
       };
@@ -264,87 +300,71 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
       return {
         ...state,
         roles: {
-          ...state.roles,
+          ...roles,
           loading: false,
-          data: action.payload,
+          data: payload,
         },
       };
-    // case types.GET_SUBSCRIPTIONS:
-    //   return {
-    //     ...state,
-    //     conversation: initState.conversation,
-    //   };
     case types.SET_SUBSCRIPTIONS:
       return {
         ...state,
-        subscriptions: action.payload,
+        subscriptions: payload,
       };
     case types.READ_SUBCRIPTIONS:
       return {
         ...state,
-        subscriptions: state.subscriptions.map((sub: any) =>
-          sub.rid === action.payload ? {...sub, unread: 0} : sub,
-        ),
+        subscriptions: {
+          ...subscriptions,
+          [payload]: {...subscriptions[payload], unread: 0},
+        },
       };
     case types.UPDATE_SUBSCRIPTION:
       return {
         ...state,
-        subscriptions: state.subscriptions.map((sub: any) =>
-          sub.rid === payload.rid ? {...sub, ...payload} : sub,
-        ),
+        subscriptions: {
+          ...subscriptions,
+          [payload.rid]: {...subscriptions[payload], ...payload},
+        },
       };
     case types.SET_CONVERSATION_DETAIL: {
       return {
         ...state,
-        conversation: payload,
         rooms: {
           ...rooms,
-          data: rooms.data.map((room: IConversation) =>
-            room._id === payload._id
-              ? {
-                  ...room,
-                  ...payload,
-                }
-              : room,
-          ),
+          items: {
+            ...rooms.items,
+            [payload._id]: payload,
+          },
         },
       };
     }
     case types.SET_CONVERSATION_NOTIFICATIONS: {
-      const _conversation = {
-        ...conversation,
-      };
-      const {roomId: _id, disableNotifications} = payload;
-
-      if (_conversation._id === _id) {
-        _conversation.disableNotifications = disableNotifications;
-      }
-
       return {
         ...state,
-        conversation: {
-          ..._conversation,
-        },
         rooms: {
           ...rooms,
-          data: rooms.data.map((room: IConversation) =>
-            room._id === _id
-              ? {
-                  ...room,
-                  disableNotifications: disableNotifications,
-                }
-              : room,
-          ),
+          items: {
+            ...rooms.items,
+            [payload._id]: {
+              ...rooms.items[payload._id],
+              disableNotifications: payload.disableNotifications,
+            },
+          },
         },
       };
     }
-
     case types.SET_UPDATED_CONVERSATION_DETAIL:
       return {
         ...state,
-        conversation: {
-          ...conversation,
-          ...payload,
+        rooms: {
+          ...rooms,
+          items: {
+            ...rooms.items,
+            [payload._id]: {
+              ...rooms.items[payload._id],
+              ...payload,
+            },
+          },
         },
       };
     case types.SET_ATTACHMENT_MEDIA:
@@ -352,55 +372,81 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         attachmentMedia: payload || [],
       };
-    case types.ADD_NEW_MESSAGE:
+    case types.ADD_NEW_MESSAGE: {
+      const roomMessages = messages?.[payload.room_id];
+      const roomUnreadMessage = unreadMessages?.[payload.room_id];
       return {
         ...state,
-        messages:
-          payload.room_id === conversation._id
+        messages: {
+          ...messages,
+          [payload.room_id]: roomMessages
             ? {
-                ...messages,
-                data: [...messages.data, payload],
+                ...roomMessages,
+                data: roomMessages.data
+                  ? [...roomMessages?.data, payload._id]
+                  : [payload._id],
+                items: {
+                  ...roomMessages.items,
+                  [payload._id]: payload,
+                },
               }
-            : messages,
+            : roomMessages,
+        },
+        unreadMessages: {
+          ...unreadMessages,
+          [payload.room_id]:
+            roomMessages?.data && !roomUnreadMessage
+              ? payload._id
+              : roomUnreadMessage,
+        },
         rooms: payload.system
           ? rooms
           : {
               ...rooms,
-              data: rooms.data.map((item: any) =>
-                item._id === payload.room_id
-                  ? {
-                      ...item,
-                      lastMessage: payload.lastMessage,
-                      _updatedAt: payload.createAt,
-                    }
-                  : item,
-              ),
+              items: {
+                ...rooms.items,
+                [payload.room_id]: {
+                  ...rooms.items[payload.room_id],
+                  lastMessage: payload.lastMessage,
+                  _updatedAt: payload.createAt,
+                },
+              },
             },
-        //@ts-ignore
-        quotedMessages: quotedMessages[payload._id]
+        quotedMessages: quotedMessages?.[payload._id]
           ? {
               ...quotedMessages,
               [payload._id]: {
-                //@ts-ignore
-                ...quotedMessages[payload._id],
+                ...quotedMessages?.[payload._id],
                 ...payload,
               },
             }
           : quotedMessages,
       };
-    case types.UPDATE_MESSAGE:
+    }
+    case types.UPDATE_MESSAGE: {
+      if ((!payload._id && !payload.localId_) || !messages?.[payload.room_id])
+        return state;
+      const id = payload._id || payload.localId;
       return {
         ...state,
         messages: {
           ...messages,
-          data: messages.data.map((item: IMessage) =>
-            item._id === payload._id ||
-            (item.localId && item.localId === payload.localId)
-              ? {...item, ...payload}
-              : item,
-          ),
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [id]: payload,
+            },
+          },
         },
+        quotedMessages: quotedMessages?.[payload._id]
+          ? {
+              ...quotedMessages,
+              [payload._id]: payload,
+            }
+          : quotedMessages,
       };
+    }
     case types.SELECT_USER:
       return {
         ...state,
@@ -431,109 +477,120 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         rooms: {
           ...rooms,
-          data: [action.payload, ...rooms.data],
+          data: !rooms.data.includes(payload._id)
+            ? [payload._id, ...rooms.data]
+            : rooms.data,
+          items: {
+            [payload._id]: {
+              ...payload,
+              msgs: 0, // do not get message
+            },
+            ...rooms.items,
+          },
         },
       };
-    case types.EDIT_MESSAGE: {
-      const editingMsgInd = messages.data.findIndex(
-        (msg: IMessage) => msg._id === action.payload._id,
-      );
-      const newEditedMsgList: IMessage[] = [...messages.data];
-      newEditedMsgList[editingMsgInd] = action.payload;
+    case types.EDIT_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [payload._id]: payload,
+            },
+          },
+        },
+      };
+    case types.UPLOAD_FILE:
+    case types.SEND_MESSAGE: {
+      const id = payload._id || payload.localId;
+      return {
+        ...state,
+        messages: {
+          ...messages,
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            data: messages?.[payload.room_id]?.data
+              ? [...messages?.[payload.room_id]?.data, id]
+              : [id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [id]: {
+                ...payload,
+                user: {
+                  ...payload.user,
+                  name: payload.user.name || payload.user.fullname,
+                },
+                status: messageStatus.SENDING,
+              },
+            },
+          },
+        },
+        quotedMessages: payload.quotedMessage
+          ? {
+              ...quotedMessages,
+              [payload.quotedMessage._id]: payload.quotedMessage,
+            }
+          : quotedMessages,
+      };
+    }
+    case types.RETRY_SEND_MESSAGE:
+      if (!payload._id && !payload.localId) return state;
 
       return {
         ...state,
         messages: {
           ...messages,
-          data: [...newEditedMsgList],
-        },
-      };
-    }
-    case types.UPLOAD_FILE:
-    case types.SEND_MESSAGE:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          data: [
-            ...messages.data,
-            {
-              ...payload,
-              user: {
-                ...payload.user,
-                name: payload.user.name || payload.user.fullname,
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [payload._id || payload.localId]: {
+                ...payload,
+                status: messageStatus.SENDING,
               },
-              status: messageStatus.SENDING,
             },
-          ],
-        },
-        rooms: {
-          ...rooms,
-          data: rooms.data.map((item: any) =>
-            item._id === action.payload.room_id
-              ? {
-                  ...item,
-                  lastMessage: getLastMessage(action.payload, true),
-                  _updatedAt: action.payload.createdAt,
-                }
-              : item,
-          ),
-        },
-        quotedMessages: payload.quotedMessage
-          ? {
-              ...state.quotedMessages,
-              [payload.quotedMessage._id]: payload.quotedMessage,
-            }
-          : state.quotedMessages,
-      };
-    case types.RETRY_SEND_MESSAGE:
-      return {
-        ...state,
-        messages: {
-          ...messages,
-          data: messages.data.map((item: IMessage) =>
-            item._id === action.payload._id ||
-            (item.localId && item.localId === action.payload.localId)
-              ? {
-                  ...action.payload,
-                  status: messageStatus.SENDING,
-                }
-              : item,
-          ),
+          },
         },
       };
     case types.SEND_MESSAGE_SUCCESS:
+      // message has updated from event
+      if (!payload._id && !payload.localId) return state;
+
       return {
         ...state,
         messages: {
           ...messages,
-          data: messages.data.map((item: IMessage) =>
-            (item._id === payload._id ||
-              (item.localId && item.localId === payload.localId)) &&
-            // message has updated from event
-            item.status !== messageStatus.SENT
-              ? {
-                  ...payload,
-                  status: messageStatus.SENT,
-                }
-              : item,
-          ),
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [payload._id || payload.localId]: {
+                ...payload,
+                status: messageStatus.SENT,
+              },
+            },
+          },
         },
       };
     case types.SEND_MESSAGE_FAILED:
+      if (!payload._id && !payload.localId) return state;
       return {
         ...state,
         messages: {
           ...messages,
-          data: messages.data.map((item: IMessage) =>
-            item._id === action.payload._id ||
-            (item.localId && item.localId === action.payload.localId)
-              ? {
-                  ...item,
-                  status: messageStatus.FAILED,
-                }
-              : item,
-          ),
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [payload._id || payload.localId]: {
+                ...payload,
+                status: messageStatus.FAILED,
+              },
+            },
+          },
         },
       };
     case types.DELETE_MESSAGE_SUCCESS:
@@ -542,33 +599,33 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
         ...state,
         messages: {
           ...messages,
-          data: messages.data.map((item: IMessage) =>
-            item._id === action.payload._id
-              ? {
-                  ...item,
-                  type: messageEventTypes.REMOVE_MESSAGE,
-                  removed: true,
-                  text: i18next.t('chat:system_message:rm:me'),
-                }
-              : item,
-          ),
+          [payload.room_id]: {
+            ...messages?.[payload.room_id],
+            items: {
+              ...messages?.[payload.room_id]?.items,
+              [payload._id]: {
+                ...messages?.[payload.room_id]?.items?.[payload._id],
+                type: messageEventTypes.REMOVE_MESSAGE,
+                removed: true,
+                text: i18next.t('chat:system_message:rm:me'),
+              },
+            },
+          },
         },
       };
     }
     case types.UPDATE_CONVERSATION_NAME:
       return {
         ...state,
-        conversation: {
-          ...state.conversation,
-          name: action.payload,
-        },
         rooms: {
-          ...state.rooms,
-          data: state.rooms.data.map((item: IConversation) =>
-            item._id === conversation._id
-              ? {...item, name: action.payload}
-              : item,
-          ),
+          ...rooms,
+          items: {
+            ...rooms.items,
+            [payload.roomId]: {
+              ...rooms.items[payload.roomId],
+              name: payload.name,
+            },
+          },
         },
       };
     case types.REMOVE_MEMBER_SUCCESS:
@@ -578,51 +635,63 @@ function reducer(state = initState, action: IAction = {dataType: 'rooms'}) {
        */
       return {
         ...state,
+        members: {
+          ...members,
+          data: members.data.filter(
+            (member: IChatUser) => member.username !== payload.msg,
+          ),
+        },
         roles: {
           ...state.roles,
           data: state.roles.data.filter(
-            (admin: IUser) => admin.username !== payload.msg,
+            (admin: IChatUser) => admin.username !== payload.msg,
           ),
         },
-        conversation: {
-          ...conversation,
-          usersCount: conversation.usersCount - 1,
+        rooms: {
+          ...rooms,
+          items: {
+            ...rooms.items,
+            [payload._id]: {
+              ...rooms.items[payload._id],
+              usersCount: rooms.items[payload._id]?.usersCount - 1,
+            },
+          },
         },
       };
-    case types.ADD_MEMBERS_TO_GROUP_SUCCESS:
+    case types.ADD_MEMBERS_TO_GROUP_SUCCESS: {
+      const id = payload._id || payload.rid;
       return {
         ...state,
-        conversation: {
-          ...conversation,
-          usersCount: conversation.usersCount + payload,
+        rooms: {
+          ...rooms,
+          items: {
+            ...rooms.items,
+            [id]: {
+              ...rooms.items[id],
+              usersCount: rooms.items[id]?.usersCount + 1,
+            },
+          },
         },
       };
+    }
     case types.LEAVE_CHAT:
+    case types.KICK_ME_OUT: {
+      const _rooms = rooms.data;
+      delete _rooms[payload._id];
       return {
         ...state,
         rooms: {
-          ...state.rooms,
-          data: state.rooms.data.filter(
-            (group: IConversation) =>
-              group._id !== payload && group.beinGroupId !== payload,
-          ),
+          ...rooms,
+          data: rooms.data.filter((id: string) => id !== payload._id),
+          items: _rooms,
         },
       };
-    case types.KICK_ME_OUT:
-      return {
-        ...state,
-        rooms: {
-          ...state.rooms,
-          data: state.rooms.data.filter(
-            (group: IConversation) => group._id !== payload.rid,
-          ),
-        },
-      };
+    }
     case types.SET_MESSAGE_DETAIL:
       return {
         ...state,
         quotedMessages: {
-          ...state.quotedMessages,
+          ...quotedMessages,
           [payload._id]: payload,
         },
       };

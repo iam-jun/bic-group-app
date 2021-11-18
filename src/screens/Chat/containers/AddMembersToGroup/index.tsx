@@ -1,23 +1,22 @@
+import {RouteProp, useRoute} from '@react-navigation/core';
 import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {RouteProp, useRoute} from '@react-navigation/core';
-
-import {RootStackParamList} from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import appConfig from '~/configs/appConfig';
 import {chatSocketId, roomTypes} from '~/constants/chat';
-import useChat from '~/hooks/chat';
+import {useKeySelector} from '~/hooks/selector';
 import {IChatUser} from '~/interfaces/IChat';
+import {RootStackParamList} from '~/interfaces/IRouter';
 import {sendMessage} from '~/services/chatSocket';
+import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../../fragments/MembersSelection';
 import actions from '../../redux/actions';
-import * as modalActions from '~/store/modal/actions';
-import appConfig from '~/configs/appConfig';
 
 const AddMembersToGroup = (): React.ReactElement => {
   const route = useRoute<RouteProp<RootStackParamList, 'AddMembersToGroup'>>();
@@ -26,23 +25,24 @@ const AddMembersToGroup = (): React.ReactElement => {
   const {spacing} = theme;
 
   const dispatch = useDispatch();
-  const {selectedUsers, joinableUsers, conversation} = useChat();
+  const roomId = route?.params?.roomId || '';
+  const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
+  const selectedUsers = useKeySelector('chat.selectedUsers');
+  const joinableUsers = useKeySelector('chat.joinableUsers');
 
   useEffect(() => {
-    if (!conversation._id && route?.params?.roomId)
-      dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.resetData('joinableUsers'));
     dispatch(
       actions.getData(
         'joinableUsers',
         {
-          groupId: route?.params?.roomId,
+          groupId: roomId,
           limit: appConfig.recordsPerPage,
         },
         'data',
       ),
     );
-  }, [route?.params?.roomId]);
+  }, [roomId]);
 
   const loadMoreData = () => dispatch(actions.mergeExtraData('joinableUsers'));
 
@@ -70,9 +70,10 @@ const AddMembersToGroup = (): React.ReactElement => {
 
   const doAddUsersToGroupChat = () => {
     dispatch(
-      actions.addMembersToGroup(
-        selectedUsers.map((user: IChatUser) => user.beinUserId),
-      ),
+      actions.addMembersToGroup({
+        roomId,
+        userIds: selectedUsers.map((user: IChatUser) => user.beinUserId),
+      }),
     );
   };
 
@@ -83,7 +84,7 @@ const AddMembersToGroup = (): React.ReactElement => {
       id: chatSocketId.ADD_MEMBERS_TO_GROUP,
       params: [
         {
-          rid: route?.params?.roomId,
+          rid: roomId,
           users: selectedUsers.map((user: IChatUser) => user.username),
         },
       ],
@@ -96,7 +97,7 @@ const AddMembersToGroup = (): React.ReactElement => {
       actions.getData(
         'joinableUsers',
         {
-          groupId: route?.params?.roomId,
+          groupId: roomId,
           offset: 0,
           limit: appConfig.recordsPerPage,
           key: searchQuery,

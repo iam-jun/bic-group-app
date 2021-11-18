@@ -17,6 +17,8 @@ import {ITheme} from '~/theme/interfaces';
 import {escapeMarkDown} from '~/utils/formatData';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import TimeView from '~/beinComponents/TimeView';
+import useAuth from '~/hooks/auth';
+import {getLastMessage} from '~/screens/Chat/helper';
 
 interface Props extends IConversation {
   total?: number;
@@ -38,7 +40,8 @@ const ConversationItem: React.FC<Props> = ({
   disableNotifications,
 }: Props): React.ReactElement => {
   const dispatch = useDispatch();
-
+  const {user} = useAuth();
+  const lastMessageText = getLastMessage(lastMessage, user);
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme, unreadCount > 0, isActive);
   const welcomeText =
@@ -155,7 +158,7 @@ const ConversationItem: React.FC<Props> = ({
               variant={unreadCount && !disableNotifications ? 'bodyM' : 'body'}
               numberOfLines={2}
               style={styles.lastMessage}>
-              {escapeMarkDown(lastMessage) || i18next.t(welcomeText)}
+              {escapeMarkDown(lastMessageText) || i18next.t(welcomeText)}
             </Text>
             <View style={styles.optionsContainer}>
               {renderNotificationsBadge()}

@@ -22,7 +22,6 @@ import {
   ISendMessageReq,
   IUpdateGroupName,
   ISearchChatReq,
-  IUpdateConversationDescription,
   IUpdateConversationDetailReq,
 } from '~/interfaces/IChatHttpRequest';
 import {getChatAuthInfo} from '~/services/httpApiRequest';
@@ -114,7 +113,7 @@ const Chat = {
     };
   },
   addMembersToGroup: (
-    id: string,
+    id: number,
     data: IAddUsersToGroupReq,
   ): HttpApiRequestConfig => {
     return {
