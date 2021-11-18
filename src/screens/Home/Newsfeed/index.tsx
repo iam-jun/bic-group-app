@@ -111,6 +111,7 @@ const Newsfeed = () => {
     } else {
       dispatch(homeActions.clearNewsfeedSearch());
       dispatch(homeActions.clearNewsfeedSearchFilter());
+      dispatch(homeActions.clearNewsfeedSearchUsers());
     }
   };
 

@@ -22,6 +22,15 @@ export interface IPayloadSetNewsfeedSearchFilter {
   date?: any;
 }
 
+export interface IPayloadSetNewsfeedSearchUsers {
+  key?: string;
+  limit?: number;
+  offset?: number;
+  data?: any[];
+  loading?: boolean;
+  canLoadMore?: boolean;
+}
+
 export interface IParamGetSearchPost {
   content: string;
   actors?: string;
@@ -34,4 +43,9 @@ export interface IPayloadGetSearchPosts {
   actors?: string;
   startDate?: string;
   endDate?: string;
+}
+
+export interface ISelectedFilterUser {
+  id?: string;
+  name?: string;
 }

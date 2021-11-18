@@ -2,6 +2,8 @@ import {StreamClient} from 'getstream';
 import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {IParamGetSearchPost} from '~/interfaces/IHome';
+import apiConfig from '~/configs/apiConfig';
+import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 const homeApiConfig = {
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
@@ -57,6 +59,20 @@ const homeDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         homeApiConfig.getSearchPost(param),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getUsers: async (params: IParamsGetUsers) => {
+    try {
+      const response: any = await makeHttpRequest(
+        apiConfig.App.getUsers(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);

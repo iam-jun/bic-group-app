@@ -16,6 +16,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
 import {AppContext} from '~/contexts/AppContext';
 import {formatDateTime} from '~/beinComponents/TimeView';
+import {ISelectedFilterUser} from '~/interfaces/IHome';
 
 export interface NewsfeedSearchFilterToolbarProps {
   style?: StyleProp<ViewStyle>;
@@ -49,7 +50,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
   const textCreatedBy = filterCreatedBy
     ? filterCreatedBy?.id === userId
       ? t('home:newsfeed_search:filter_created_by_me')
-      : filterCreatedBy
+      : `${filterCreatedBy?.name}`
     : t('home:newsfeed_search:filter_created_by');
   const textDate = filterDate
     ? `${formatDateTime(startDate, t, language)} - ${formatDateTime(
@@ -102,7 +103,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
     );
   };
 
-  const onSelectCreatedBy = (selected?: any) => {
+  const onSelectCreatedBy = (selected?: ISelectedFilterUser) => {
     dispatch(homeActions.setNewsfeedSearchFilter({createdBy: selected}));
   };
 
