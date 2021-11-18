@@ -87,6 +87,18 @@ const notificationsActions = {
       payload,
     };
   },
+  registerPushToken: (payload?: any) => {
+    return {
+      type: notificationsTypes.REGISTER_PUSH_TOKEN,
+      payload,
+    };
+  },
+  savePushToken: (payload: string) => {
+    return {
+      type: notificationsTypes.SAVE_PUSH_TOKEN,
+      payload,
+    };
+  },
 };
 
 export default notificationsActions;

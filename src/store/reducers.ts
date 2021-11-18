@@ -24,6 +24,12 @@ const authPersistConfig = {
   blacklist: ['loading'],
 };
 
+const notiPersistConfig = {
+  key: 'notifications',
+  storage: AsyncStorage,
+  whitelist: ['pushToken'],
+};
+
 const appReducer = combineReducers({
   app,
   modal,
@@ -32,7 +38,7 @@ const appReducer = combineReducers({
   post: postReducer,
   groups: groupsReducer,
   home: homeReducer,
-  notifications: notificationsReducer,
+  notifications: persistReducer(notiPersistConfig, notificationsReducer),
   menu: menuReducer,
 });
 
@@ -52,7 +58,7 @@ const rootReducers = (state, action) => {
       }
       initPushTokenMessage()
         .then(messaging => {
-          messaging().deleteToken();
+          return messaging().deleteToken();
         })
         .catch(e => console.log('error when delete token', e));
     }

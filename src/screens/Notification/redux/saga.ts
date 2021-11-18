@@ -8,6 +8,8 @@ import {
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import notificationsTypes from '~/screens/Notification/redux/types';
+import {initPushTokenMessage} from '~/services/helper';
+import {makePushTokenRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import notificationSelector from './selector';
 
@@ -21,6 +23,7 @@ export default function* notificationsSaga() {
     notificationsTypes.LOAD_NEW_NOTIFICATIONS,
     loadNewNotifications,
   );
+  yield takeLatest(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
 }
 
 function* getNotifications({
@@ -235,6 +238,27 @@ function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
     }
   } catch (err) {
     console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
+  }
+}
+
+// register push token
+function* registerPushToken({payload}: any) {
+  try {
+    const {auth, notifications} = yield select();
+    const requestToken = payload?.token || notifications?.pushToken;
+    const messaging = yield initPushTokenMessage();
+    const newToken = yield messaging().getToken();
+    if (requestToken === newToken) {
+      return;
+    }
+    yield makePushTokenRequest(
+      newToken,
+      auth.chat?.accessToken,
+      auth.chat?.userId,
+    );
+    yield put(notificationsActions.savePushToken(newToken));
+  } catch (e) {
+    console.log('register push token failed', e);
   }
 }
 
