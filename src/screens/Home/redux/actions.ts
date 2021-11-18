@@ -5,6 +5,7 @@ import {
   IPayloadGetSearchPosts,
   IPayloadSetNewsfeedSearch,
   IPayloadSetNewsfeedSearchFilter,
+  IPayloadSetNewsfeedSearchUsers,
 } from '~/interfaces/IHome';
 
 const homeActions = {
@@ -56,6 +57,17 @@ const homeActions = {
       type: homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER,
     };
   },
+  setNewsfeedSearchUsers: (payload: IPayloadSetNewsfeedSearchUsers) => {
+    return {
+      type: homeTypes.SET_NEWSFEED_SEARCH_USERS,
+      payload,
+    };
+  },
+  clearNewsfeedSearchUsers: () => {
+    return {
+      type: homeTypes.CLEAR_NEWSFEED_SEARCH_USERS,
+    };
+  },
 
   // FOR SAGA:
   getHomePosts: (payload: IPayloadGetHomePost) => {
@@ -68,6 +80,12 @@ const homeActions = {
   getSearchPosts: (payload?: IPayloadGetSearchPosts) => {
     return {
       type: homeTypes.GET_SEARCH_POSTS,
+      payload,
+    };
+  },
+  getSearchUsers: (payload?: string) => {
+    return {
+      type: homeTypes.GET_SEARCH_POSTS_USERS,
       payload,
     };
   },

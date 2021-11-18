@@ -14,10 +14,12 @@ import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
+import {ISelectedFilterUser} from '~/interfaces/IHome';
 
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
-  onSelect?: (selected?: any) => void;
+  onSelect?: (selected?: ISelectedFilterUser) => void;
 }
 
 const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
@@ -37,12 +39,25 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
     onSelect?.(selected);
   };
 
+  const _onPressSelectSpecific = () => {
+    dispatch(modalActions.hideModal());
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <NFSFilterCreateBySpecific onSelect={_onSelect} />,
+        props: {},
+      }),
+    );
+  };
+
   const renderSpecificRightComponent = () => {
     return (
       <Button.Secondary
+        onPress={_onPressSelectSpecific}
         style={styles.buttonSpecificRight}
-        textColor={colors.primary6}>
-        {t('home:newsfeed_search:choose_creator')}
+        textColor={colors.primary6}
+        rightIcon={selectedCreatedBy?.name && 'EditAlt'}>
+        {selectedCreatedBy?.name || t('home:newsfeed_search:choose_creator')}
       </Button.Secondary>
     );
   };

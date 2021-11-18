@@ -19,6 +19,14 @@ const initialHomeState = {
     createdBy: undefined,
     date: undefined,
   },
+  newsfeedSearchUsers: {
+    key: '',
+    limit: 10,
+    offset: 0,
+    data: [],
+    loading: false,
+    canLoadMore: false,
+  },
 };
 
 const homeReducer = (state = initialHomeState, action: any = {}) => {
@@ -70,6 +78,19 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
       return {
         ...state,
         newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
+      };
+    case homeTypes.SET_NEWSFEED_SEARCH_USERS:
+      return {
+        ...state,
+        newsfeedSearchUsers: {
+          ...state.newsfeedSearchUsers,
+          ...payload,
+        },
+      };
+    case homeTypes.CLEAR_NEWSFEED_SEARCH_USERS:
+      return {
+        ...state,
+        newsfeedSearchUsers: initialHomeState.newsfeedSearchUsers,
       };
 
     default:

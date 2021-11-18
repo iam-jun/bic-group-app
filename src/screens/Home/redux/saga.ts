@@ -10,10 +10,12 @@ import {
 } from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
+import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 export default function* homeSaga() {
   yield takeEvery(homeTypes.GET_HOME_POSTS, getHomePosts);
   yield takeEvery(homeTypes.GET_SEARCH_POSTS, getSearchPosts);
+  yield takeEvery(homeTypes.GET_SEARCH_POSTS_USERS, getSearchPostUsers);
 }
 
 function* getHomePosts({
@@ -98,5 +100,43 @@ function* getSearchPosts({
   } catch (e) {
     yield put(homeActions.setNewsfeedSearch({loadingResult: false}));
     console.log(`\x1b[31m🐣️ saga getSearchPosts error: `, e, `\x1b[0m`);
+  }
+}
+
+function* getSearchPostUsers({payload}: {payload: string; type: string}): any {
+  try {
+    const state = yield select(state => state?.home?.newsfeedSearchUsers);
+    //if doesnt have payload a.k.a search key => action load more page
+    let params: IParamsGetUsers = {};
+    if (payload || payload === '') {
+      yield put(
+        homeActions.setNewsfeedSearchUsers({
+          key: payload,
+          loading: true,
+          canLoadMore: true,
+          offset: 0,
+          data: [],
+        }),
+      );
+      params = {key: payload, offset: 0, limit: state.limit};
+    } else {
+      //todo handle load more
+    }
+
+    const response = yield homeDataHelper.getUsers(params);
+    const newCanLoadMore = false;
+    //todo check canload more
+    yield put(
+      homeActions.setNewsfeedSearchUsers({
+        key: params.key,
+        limit: params.limit,
+        offset: params.offset,
+        data: response || [],
+        loading: false,
+        canLoadMore: newCanLoadMore,
+      }),
+    );
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ saga getSearchPostUsers error: `, e, `\x1b[0m`);
   }
 }
