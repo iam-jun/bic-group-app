@@ -71,6 +71,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           style={styles.textInput}
           value={text}
           autoFocus={autoFocus}
+          autoComplete={'off'}
           onChangeText={_onChangeText}
           placeholder={placeholder}
           placeholderTextColor={theme.colors.textSecondary}
