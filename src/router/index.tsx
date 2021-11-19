@@ -142,6 +142,12 @@ const StackNavigator = (): React.ReactElement => {
       event.preventDefault();
       dispatch(modalActions.focusSearchInput(new Date().getTime().toString()));
     }
+
+    // press ESC key to close alert modal
+    if (event.keyCode === 27) {
+      event.preventDefault();
+      dispatch(modalActions.hideAlertNewFeature());
+    }
   };
 
   const dimensions = useWindowDimensions();
