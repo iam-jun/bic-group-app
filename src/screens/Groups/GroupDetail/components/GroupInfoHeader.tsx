@@ -105,7 +105,9 @@ const GroupInfoHeader = () => {
       <View style={styles.infoContainer}>
         <View style={styles.header}>
           <Avatar.LargeAlt source={icon} style={styles.avatar} />
-          {renderGroupInfoHeader()}
+          <View style={styles.groupInfoHeaderContainer}>
+            {renderGroupInfoHeader()}
+          </View>
           {renderJoinButton()}
         </View>
       </View>
@@ -128,6 +130,9 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     avatar: {
       marginRight: spacing?.margin.base,
+    },
+    groupInfoHeaderContainer: {
+      flex: 1,
     },
     cover: {
       width: '100%',
@@ -162,8 +167,8 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     nameHeader: {},
     btnJoin: {
-      position: 'absolute',
-      right: 0,
+      marginLeft: spacing.margin.large,
+      alignSelf: 'flex-start',
     },
   });
 };
