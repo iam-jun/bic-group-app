@@ -345,8 +345,8 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
           ...rooms,
           items: {
             ...rooms.items,
-            [payload._id]: {
-              ...rooms.items[payload._id],
+            [payload.roomId]: {
+              ...rooms.items[payload.roomId],
               disableNotifications: payload.disableNotifications,
             },
           },
