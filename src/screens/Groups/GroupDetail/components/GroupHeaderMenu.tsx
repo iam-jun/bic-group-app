@@ -107,7 +107,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
         } else {
           dispatch(
             modalActions.showHideToastMessage({
-              content: 'groups:error:last_admin',
+              content: 'groups:error:last_admin_leave',
               props: {
                 type: 'error',
                 textProps: {useI18n: true},

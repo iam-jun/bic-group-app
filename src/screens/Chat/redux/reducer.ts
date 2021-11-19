@@ -345,8 +345,8 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
           ...rooms,
           items: {
             ...rooms.items,
-            [payload._id]: {
-              ...rooms.items[payload._id],
+            [payload.roomId]: {
+              ...rooms.items[payload.roomId],
               disableNotifications: payload.disableNotifications,
             },
           },
@@ -407,7 +407,7 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
                 ...rooms.items,
                 [payload.room_id]: {
                   ...rooms.items[payload.room_id],
-                  lastMessage: payload.lastMessage,
+                  lastMessage: payload,
                   _updatedAt: payload.createAt,
                 },
               },
@@ -439,6 +439,20 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
             },
           },
         },
+        rooms:
+          rooms?.items?.[payload.room_id] &&
+          rooms?.items?.[payload.room_id]?.lastMessage._id === payload._id
+            ? {
+                ...rooms,
+                items: {
+                  ...rooms.items,
+                  [payload.room_id]: {
+                    ...rooms.items[payload.room_id],
+                    lastMessage: payload,
+                  },
+                },
+              }
+            : rooms,
         quotedMessages: quotedMessages?.[payload._id]
           ? {
               ...quotedMessages,

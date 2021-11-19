@@ -2,7 +2,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {useIsFocused} from '@react-navigation/native';
 import i18next from 'i18next';
 import {debounce, isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   DeviceEventEmitter,
   FlatList,
@@ -47,7 +47,7 @@ import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_CHAT_MESSAGE} from '~/utils/link';
 import LoadingMessages from '../../components/LoadingMessages';
-import {getReactionStatistics, getRoomName} from '../../helper';
+import {getReactionStatistics} from '../../helper';
 
 const _Conversation = ({route}: {route: any}) => {
   const {rootNavigation} = useRootNavigation();
@@ -58,7 +58,6 @@ const _Conversation = ({route}: {route: any}) => {
   const messages = useKeySelector(`chat.messages.${roomId}`) || {};
   const unreadMessage = useKeySelector(`chat.unreadMessages.${roomId}`);
   const sub = useKeySelector(`chat.subscriptions.${roomId}`);
-  const name = useMemo(() => getRoomName(sub), [sub]);
   const roomMessageData = messages?.data || [];
 
   const [selectedMessage, setSelectedMessage] = useState<IMessage>();
@@ -106,8 +105,8 @@ const _Conversation = ({route}: {route: any}) => {
     );
     // incase detect view items changed takes too long
     setTimeout(() => {
-      if (!initiated.current) initScroll();
-    }, 2000);
+      if (!initiated.current && !isEmpty(roomMessageData)) initScroll();
+    }, 5000);
 
     return () => {
       dispatch(actions.clearRoomMessages(roomId));
@@ -131,7 +130,7 @@ const _Conversation = ({route}: {route: any}) => {
         dispatch(actions.readSubscriptions(currentRoomId.current));
         dispatch(actions.clearRoomMessages(currentRoomId.current));
         currentRoomId.current = roomId;
-        scrollToBottom();
+        scrollToBottom(false);
       }
       if (roomId && !conversation.msgs) {
         setIsScrolled(false);
@@ -556,17 +555,18 @@ const _Conversation = ({route}: {route: any}) => {
 
   const renderChatMessages = () => {
     if (messages.error) return <MessageNotFound />;
-    if (!messages.loading && conversation.msgs === 0)
+    if (!messages.loading && isEmpty(roomMessageData))
       return <ChatWelcome type={conversation.type} />;
 
     // show loading until calculation has done and flatlist has scrolled
     return (
       <View style={styles.messagesContainer}>
-        {!initiated.current && !messages.canLoadNext && <LoadingMessages />}
+        {((!initiated.current && !messages.canLoadNext) ||
+          messages.loading) && <LoadingMessages />}
 
         {messages.loadingMore && <LoadingIndicator />}
 
-        {!messages.loading && (
+        {!isEmpty(roomMessageData) && (
           <ListMessages
             listRef={listRef}
             nativeID={'list-messages'}
@@ -618,7 +618,11 @@ const _Conversation = ({route}: {route: any}) => {
               ? images.img_user_avatar_default
               : images.img_group_avatar_default,
         }}
-        title={messages.error ? i18next.t('chat:title_invalid_msg_link') : name}
+        title={
+          messages.error
+            ? i18next.t('chat:title_invalid_msg_link')
+            : conversation.name
+        }
         titleTextProps={{numberOfLines: 1, style: styles.headerTitle}}
         icon="search"
         onPressIcon={!messages.error ? onSearchPress : undefined}
