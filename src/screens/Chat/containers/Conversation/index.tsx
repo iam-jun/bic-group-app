@@ -555,7 +555,7 @@ const _Conversation = ({route}: {route: any}) => {
 
   const renderChatMessages = () => {
     if (messages.error) return <MessageNotFound />;
-    if (!messages.loading && conversation.msgs === 0)
+    if (!messages.loading && isEmpty(roomMessageData))
       return <ChatWelcome type={conversation.type} />;
 
     // show loading until calculation has done and flatlist has scrolled
