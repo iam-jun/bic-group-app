@@ -63,6 +63,15 @@ const _ConversationDetail = (): React.ReactElement => {
     dispatch(actions.clearSelectedUsers());
   }, [roomId]);
 
+  useEffect(() => {
+    /*
+      For web: if user reload page, check if rooms list have been
+      loaded then get room detail.
+    */
+    if (conversation._id && !conversation.background_img_url)
+      dispatch(actions.getConversationDetail(roomId));
+  }, [conversation._id]);
+
   const onPressBack = () => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
     else
