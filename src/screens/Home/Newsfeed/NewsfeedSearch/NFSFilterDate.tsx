@@ -20,6 +20,7 @@ export interface NFSFilterDateProps {
   startDate?: string;
   endDate?: string;
   onSelect?: (startDate?: string, endDate?: string) => void;
+  dismissModalOnPress?: boolean;
 }
 
 const DEFAULT_DAYS_AGO = 7;
@@ -28,6 +29,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   startDate,
   endDate,
   onSelect,
+  dismissModalOnPress,
 }: NFSFilterDateProps) => {
   const [selectingStartDate, setSelectingStartDate] = useState(false);
   const [selectingEndDate, setSelectingEndDate] = useState(false);
@@ -47,7 +49,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   const styles = createStyle(theme, insets);
 
   const onPressApply = () => {
-    dispatch(modalActions.hideModal());
+    dismissModalOnPress && dispatch(modalActions.hideModal());
     onSelect?.(selectedStartDate, selectedEndDate);
   };
 

@@ -74,6 +74,7 @@ const NFSFilterToolbar = () => {
       <NFSFilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={onSelectCreatedBy}
+        dismissModalOnPress
       />,
       event,
     );
@@ -93,6 +94,7 @@ const NFSFilterToolbar = () => {
         startDate={startDate}
         endDate={endDate}
         onSelect={onSelectDate}
+        dismissModalOnPress
       />,
       event,
     );

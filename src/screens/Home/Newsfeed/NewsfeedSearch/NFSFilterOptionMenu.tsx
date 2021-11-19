@@ -16,16 +16,26 @@ import {formatDateTime} from '~/beinComponents/TimeView';
 import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
 import homeActions from '~/screens/Home/redux/actions';
+import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
+import {ISelectedFilterUser} from '~/interfaces/IHome';
+import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
 
 export interface NFSFilterOptionMenuProps {
   filterCreatedBy?: any;
   filterDate?: any;
 }
 
+const Stage = {
+  MENU: 'MENU',
+  FILTER_DATE: 'FILTER_DATE',
+  FILTER_CREATOR: 'FILTER_CREATOR',
+};
+
 const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   filterCreatedBy,
   filterDate,
 }: NFSFilterOptionMenuProps) => {
+  const [stage, setStage] = useState(Stage.MENU);
   const [createdBy, setCreatedBy] = useState(filterCreatedBy);
   const [date, setDate] = useState(filterDate);
 
@@ -38,14 +48,16 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   const userId = useUserIdAuth();
   const {language} = useContext(AppContext);
 
+  const {startDate, endDate} = date || {};
+
   const textCreatedBy = createdBy
     ? createdBy?.id === userId
       ? t('home:newsfeed_search:filter_created_by_me')
       : `${createdBy?.name}`
     : t('home:newsfeed_search:label_anyone');
   const textDate = date
-    ? `${formatDateTime(date?.startDate, t, language)} - ${formatDateTime(
-        date?.endDate,
+    ? `${formatDateTime(startDate, t, language)} - ${formatDateTime(
+        endDate,
         t,
         language,
       )}`
@@ -53,21 +65,50 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
 
   const _onPressApply = () => {
     dispatch(modalActions.hideModal());
-    console.log(`\x1b[36m🐣️ NFSFilterOptionMenu _onPressApply\x1b[0m`);
+    dispatch(homeActions.setNewsfeedSearchFilter({date, createdBy}));
   };
 
   const _onPressDate = () => {
-    console.log(`\x1b[36m🐣️ NFSFilterOptionMenu _onPressDate\x1b[0m`);
+    setStage(Stage.FILTER_DATE);
+  };
+
+  const _onSelectDate = (startDate?: string, endDate?: string) => {
+    if (startDate && endDate) {
+      setDate({date: {startDate, endDate}});
+    }
+    setStage(Stage.MENU);
   };
 
   const _onPressCreatedBy = () => {
-    console.log(`\x1b[36m🐣️ NFSFilterOptionMenu _onPressCreatedBy\x1b[0m`);
+    setStage(Stage.FILTER_CREATOR);
+  };
+
+  const _onSelectCreatedBy = (selected?: ISelectedFilterUser) => {
+    setCreatedBy(selected);
+    setStage(Stage.MENU);
   };
 
   const _onPressReset = () => {
     setCreatedBy(undefined);
     setDate(undefined);
   };
+
+  if (stage === Stage.FILTER_CREATOR) {
+    return (
+      <NFSFilterCreatedBy
+        selectedCreatedBy={filterCreatedBy}
+        onSelect={_onSelectCreatedBy}
+      />
+    );
+  } else if (stage === Stage.FILTER_DATE) {
+    return (
+      <NFSFilterDate
+        startDate={startDate}
+        endDate={endDate}
+        onSelect={_onSelectDate}
+      />
+    );
+  }
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>

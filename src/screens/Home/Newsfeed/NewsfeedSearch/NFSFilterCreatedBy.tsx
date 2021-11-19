@@ -20,11 +20,13 @@ import {ISelectedFilterUser} from '~/interfaces/IHome';
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
   onSelect?: (selected?: ISelectedFilterUser) => void;
+  dismissModalOnPress?: boolean;
 }
 
 const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   selectedCreatedBy,
   onSelect,
+  dismissModalOnPress,
 }: NFSFilterCreatedByProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -35,12 +37,12 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   const userId = useUserIdAuth();
 
   const _onSelect = (selected?: any) => {
-    dispatch(modalActions.hideModal());
+    dismissModalOnPress && dispatch(modalActions.hideModal());
     onSelect?.(selected);
   };
 
   const _onPressSelectSpecific = () => {
-    dispatch(modalActions.hideModal());
+    dismissModalOnPress && dispatch(modalActions.hideModal());
     dispatch(
       modalActions.showModal({
         isOpen: true,
