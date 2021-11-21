@@ -54,7 +54,7 @@ export default class FileUploader {
     const result: IGetFile = {
       fileName: fileName,
       uploading: this.fileUploading[fileName],
-      url: this.fileUploaded[fileName],
+      url: this.fileUploaded[fileName]?.url,
     };
     return result;
   }
@@ -67,8 +67,15 @@ export default class FileUploader {
       return Promise.reject({meta: {message: 'Input file not found'}});
     }
     if (this.fileUploaded[file.name]) {
-      onSuccess?.(this.fileUploaded[file.name]);
-      return Promise.resolve(this.fileUploaded[file.name]);
+      const uploaded = this.fileUploaded[file.name];
+      if (
+        uploaded.url &&
+        uploaded?.uploadType === uploadType &&
+        uploaded?.size === file?.size
+      ) {
+        onSuccess?.(uploaded.url);
+        return Promise.resolve(uploaded.url);
+      }
     }
     if (file.size > AppConfig.maxFileSize) {
       const error = i18next.t('common:error:file:over_file_size');
@@ -107,7 +114,7 @@ export default class FileUploader {
       this.fileUploading[file.name] = false;
       if (response?.data?.data?.src) {
         const url = response?.data?.data?.src;
-        this.fileUploaded[file.name] = url;
+        this.fileUploaded[file.name] = {url, uploadType, size: file?.size};
         onSuccess?.(url);
         this.callbackSuccess?.[file.name]?.(url);
         return Promise.resolve(url);
