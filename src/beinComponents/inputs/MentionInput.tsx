@@ -325,8 +325,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
       (content?.trim?.()?.length > 0 ||
         componentInputProps?.commentInputRef?.current?.getSelectedImage?.())
     ) {
-      event.preventDefault();
-      componentInputProps?.commentInputRef?.current?.send();
+      if (componentInputProps?.commentInputRef?.current?.send) {
+        event.preventDefault();
+        componentInputProps.commentInputRef.current.send();
+      }
     }
   };
 
