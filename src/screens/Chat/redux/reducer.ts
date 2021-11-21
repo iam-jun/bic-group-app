@@ -690,14 +690,15 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
     }
     case types.LEAVE_CHAT:
     case types.KICK_ME_OUT: {
-      const _rooms = rooms.data;
-      delete _rooms[payload._id];
+      const roomItems = rooms.items;
+      const roomId = payload.rid || payload._id;
+      delete roomItems[roomId];
       return {
         ...state,
         rooms: {
           ...rooms,
-          data: rooms.data.filter((id: string) => id !== payload._id),
-          items: _rooms,
+          data: rooms.data.filter((id: string) => id !== roomId),
+          items: roomItems,
         },
       };
     }
