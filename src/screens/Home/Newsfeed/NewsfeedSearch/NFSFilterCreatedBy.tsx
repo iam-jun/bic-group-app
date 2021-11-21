@@ -20,12 +20,14 @@ import {ISelectedFilterUser} from '~/interfaces/IHome';
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
   onSelect?: (selected?: ISelectedFilterUser) => void;
+  onPressSelectSpecific?: () => void;
   dismissModalOnPress?: boolean;
 }
 
 const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   selectedCreatedBy,
   onSelect,
+  onPressSelectSpecific,
   dismissModalOnPress,
 }: NFSFilterCreatedByProps) => {
   const dispatch = useDispatch();
@@ -41,15 +43,29 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
     onSelect?.(selected);
   };
 
-  const _onPressSelectSpecific = () => {
-    dismissModalOnPress && dispatch(modalActions.hideModal());
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: <NFSFilterCreateBySpecific onSelect={_onSelect} />,
-        props: {webModalStyle: {minWidth: 400}},
-      }),
-    );
+  const _onPressSelectSpecific = (event?: any) => {
+    if (onPressSelectSpecific) {
+      onPressSelectSpecific?.();
+    } else {
+      dismissModalOnPress && dispatch(modalActions.hideModal());
+      dispatch(
+        modalActions.showModal({
+          isOpen: true,
+          ContentComponent: (
+            <NFSFilterCreateBySpecific
+              onSelect={_onSelect}
+              dismissModalOnPress
+            />
+          ),
+          // props: {webModalStyle: {minWidth: 400}},
+          props: {
+            isContextMenu: true,
+            side: 'right',
+            position: {x: event?.pageX, y: event?.pageY},
+          },
+        }),
+      );
+    }
   };
 
   const renderSpecificRightComponent = () => {

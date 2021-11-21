@@ -19,6 +19,7 @@ import homeActions from '~/screens/Home/redux/actions';
 import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
 import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
+import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
 
 export interface NFSFilterOptionMenuProps {
   filterCreatedBy?: any;
@@ -29,6 +30,7 @@ const Stage = {
   MENU: 'MENU',
   FILTER_DATE: 'FILTER_DATE',
   FILTER_CREATOR: 'FILTER_CREATOR',
+  FILTER_CREATOR_SPECIFIC: 'FILTER_CREATOR_SPECIFIC',
 };
 
 const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
@@ -74,7 +76,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
 
   const _onSelectDate = (startDate?: string, endDate?: string) => {
     if (startDate && endDate) {
-      setDate({date: {startDate, endDate}});
+      setDate({startDate, endDate});
     }
     setStage(Stage.MENU);
   };
@@ -93,11 +95,16 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
     setDate(undefined);
   };
 
+  const _onPressSelectSpecific = () => {
+    setStage(Stage.FILTER_CREATOR_SPECIFIC);
+  };
+
   if (stage === Stage.FILTER_CREATOR) {
     return (
       <NFSFilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={_onSelectCreatedBy}
+        onPressSelectSpecific={_onPressSelectSpecific}
       />
     );
   } else if (stage === Stage.FILTER_DATE) {
@@ -108,15 +115,19 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         onSelect={_onSelectDate}
       />
     );
+  } else if (stage === Stage.FILTER_CREATOR_SPECIFIC) {
+    return <NFSFilterCreateBySpecific onSelect={_onSelectCreatedBy} />;
   }
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
       <View style={styles.header}>
         <Text.ButtonSmall style={styles.textHeader}>
-          {t('home:newsfeed_search:choose_creator')}
+          {t('home:newsfeed_search:label_all_filters')}
         </Text.ButtonSmall>
-        <Button onPress={_onPressReset}>
+        <Button
+          onPress={_onPressReset}
+          style={{justifyContent: 'center', alignSelf: 'center'}}>
           <Text.ButtonSmall style={styles.btnReset}>
             {t('home:newsfeed_search:btn_reset').toUpperCase()}
           </Text.ButtonSmall>
@@ -192,6 +203,7 @@ const createStyle = (theme: ITheme, insets: any) => {
     },
     header: {
       flexDirection: 'row',
+      alignItems: 'center',
     },
     btnReset: {
       color: colors.primary6,
