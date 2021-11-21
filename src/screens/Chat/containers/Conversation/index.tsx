@@ -179,13 +179,16 @@ const _Conversation = ({route}: {route: any}) => {
   }, [error]);
 
   const handleChatEvents = (event: IChatEvent) => {
+    console.log('handleChatEvents', event);
     switch (event.type) {
       case chatEvents.KICK_ME_OUT:
-        return kickMeOut(event.payload);
+        kickMeOut(event.payload);
+        break;
       case chatEvents.NEW_MESSAGE:
-        return onNewMessage(event.payload);
-      case chatEvents.ADD_MEMBERS:
-        return onAddMember(event.payload);
+        onNewMessage(event.payload);
+        break;
+
+        break;
     }
   };
 
@@ -205,21 +208,15 @@ const _Conversation = ({route}: {route: any}) => {
       if (Platform.OS !== 'web') {
         rootNavigation.replace(chatStack.conversationList);
       } else {
-        console.log('conversations', conversations);
+        const _id =
+          id === conversations[0]._id
+            ? conversations[1]._id
+            : conversations[0]._id;
         // navigate to the top conversation in the list
         rootNavigation.replace(chatStack.conversation, {
-          roomId: conversations[0]._id,
+          roomId: _id,
         });
       }
-    }
-  };
-
-  const onAddMember = (id: string) => {
-    if (roomId === id) {
-      rootNavigation.replace(chatStack.conversation, {
-        roomId: id,
-        initial: false,
-      });
     }
   };
 

@@ -6,7 +6,12 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {appScreens} from '~/configs/navigator';
-import {chatEvents, messageEventTypes, roomTypes} from '~/constants/chat';
+import {
+  chatEvents,
+  messageEventTypes,
+  roomTypes,
+  chatSocketId,
+} from '~/constants/chat';
 import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
@@ -546,7 +551,7 @@ function* addMembersToGroup({
         user_ids: payload.userIds,
       }),
     );
-    handleAddMember(payload.roomId);
+    handleAddMember();
   } catch (err: any) {
     yield put(
       modalActions.showAlert({
@@ -802,7 +807,7 @@ function* leaveChat({payload}: {type: string; payload: IConversation}) {
     }
 
     rootNavigationRef?.current?.dispatch(state => {
-      // Remove the createConversation route from the stack
+      // Remove the conversationDetail route from the stack
       const routes = state.routes.filter(
         r => r.name !== chatStack.conversationDetail,
       );
@@ -872,18 +877,32 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
       yield handleNotifyUser(payload);
   }
 
-  // if (payload.msg !== 'result') return;
-  // switch (payload.id) {
-  //   case chatSocketId.ADD_MEMBERS_TO_GROUP:
-  //     handleAddMember(payload?.fields?.args?.[0]?.rid);
-  //     break;
-  // }
+  if (payload.msg !== 'result') return;
+  switch (payload.id) {
+    case chatSocketId.ADD_MEMBERS_TO_GROUP:
+      handleAddMember();
+      break;
+  }
 }
 
-function handleAddMember(roomId: string) {
-  DeviceEventEmitter.emit('chat-event', {
-    type: chatEvents.ADD_MEMBERS,
-    payload: roomId,
+function handleAddMember() {
+  // DeviceEventEmitter.emit('chat-event', {
+  //   type: chatEvents.ADD_MEMBERS,
+  //   payload: roomId,
+  // });
+  rootNavigationRef?.current?.dispatch(state => {
+    // Remove the conversationDetail route from the stack
+    const routes = state.routes.filter(
+      r =>
+        r.name === chatStack.conversation ||
+        r.name === chatStack.conversationList,
+    );
+
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
   });
 }
 
@@ -997,7 +1016,6 @@ function* handleRoomsMessage(payload?: any) {
       {
         yield handleNewMessage(data);
         yield put(actions.addMembersToGroupSuccess(data));
-        handleAddMember(data);
       }
       yield put(actions.addMembersToGroupSuccess(data));
       break;

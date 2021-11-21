@@ -114,5 +114,4 @@ export const reactions = {
 export const chatEvents = {
   KICK_ME_OUT: 'kick-me-out',
   NEW_MESSAGE: 'new-message',
-  ADD_MEMBERS: 'add-members',
 };
