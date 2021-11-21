@@ -12,6 +12,7 @@ const initialHomeState = {
     isSuggestion: true,
     loadingSuggestion: false,
     loadingResult: false,
+    totalResult: -1,
     suggestionResults: [],
     searchResults: [],
   },
