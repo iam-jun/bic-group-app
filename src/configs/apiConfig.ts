@@ -114,7 +114,7 @@ const Chat = {
     };
   },
   addMembersToGroup: (
-    id: number,
+    id: string,
     data: IAddUsersToGroupReq,
   ): HttpApiRequestConfig => {
     return {

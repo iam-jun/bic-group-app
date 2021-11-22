@@ -251,3 +251,8 @@ export interface IMessagesData {
   canLoadNext: boolean;
   error: any;
 }
+
+export interface IChatEvent {
+  type: string;
+  payload?: any;
+}

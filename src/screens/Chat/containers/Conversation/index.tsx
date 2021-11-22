@@ -14,19 +14,19 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Header from '~/beinComponents/Header';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
-import {MessageOptionType, roomTypes} from '~/constants/chat';
+import {chatEvents, MessageOptionType, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import useAuth from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
-import {IMessage} from '~/interfaces/IChat';
+import {IMessage, IChatEvent} from '~/interfaces/IChat';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
@@ -41,6 +41,7 @@ import {
   UnreadBanner,
 } from '~/screens/Chat/components';
 import actions from '~/screens/Chat/redux/actions';
+import {getConversations} from '~/selectors/chat';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature, showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
@@ -54,6 +55,7 @@ const _Conversation = ({route}: {route: any}) => {
 
   const roomId = route?.params?.roomId || '';
   const {user} = useAuth();
+  const conversations = useSelector(state => getConversations(state));
   const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
   const messages = useKeySelector(`chat.messages.${roomId}`) || {};
   const unreadMessage = useKeySelector(`chat.unreadMessages.${roomId}`);
@@ -95,14 +97,11 @@ const _Conversation = ({route}: {route: any}) => {
   const [editingMessage, setEditingMessage] = useState<IMessage>();
 
   useEffect(() => {
-    const newMessageEmmiter = DeviceEventEmitter.addListener(
-      'chat-new-message',
-      onNewMessage,
+    const eventEmmiter = DeviceEventEmitter.addListener(
+      'chat-event',
+      handleChatEvents,
     );
-    const kickMeEmmiter = DeviceEventEmitter.addListener(
-      'chat-kick-me',
-      kickMeOut,
-    );
+
     // incase detect view items changed takes too long
     setTimeout(() => {
       if (!initiated.current && !isEmpty(roomMessageData)) initScroll();
@@ -111,8 +110,7 @@ const _Conversation = ({route}: {route: any}) => {
     return () => {
       dispatch(actions.clearRoomMessages(roomId));
       dispatch(actions.setAttachmentMedia());
-      newMessageEmmiter.remove();
-      kickMeEmmiter.remove();
+      eventEmmiter.remove();
     };
   }, []);
 
@@ -180,6 +178,20 @@ const _Conversation = ({route}: {route: any}) => {
     });
   }, [error]);
 
+  const handleChatEvents = (event: IChatEvent) => {
+    console.log('handleChatEvents', event);
+    switch (event.type) {
+      case chatEvents.KICK_ME_OUT:
+        kickMeOut(event.payload);
+        break;
+      case chatEvents.NEW_MESSAGE:
+        onNewMessage(event.payload);
+        break;
+
+        break;
+    }
+  };
+
   const onNewMessage = (params: {message: IMessage; index: number}) => {
     // if user scroll up, do not scroll to bottom automatically
     if (
@@ -192,7 +204,20 @@ const _Conversation = ({route}: {route: any}) => {
   };
 
   const kickMeOut = (id: string) => {
-    if (roomId === id) rootNavigation.replace(chatStack.conversationList);
+    if (roomId === id) {
+      if (Platform.OS !== 'web') {
+        rootNavigation.replace(chatStack.conversationList);
+      } else {
+        const _id =
+          id === conversations[0]._id
+            ? conversations[1]._id
+            : conversations[0]._id;
+        // navigate to the top conversation in the list
+        rootNavigation.replace(chatStack.conversation, {
+          roomId: _id,
+        });
+      }
+    }
   };
 
   const getMessages = (unreadCount: number) => {
@@ -555,7 +580,10 @@ const _Conversation = ({route}: {route: any}) => {
 
   const renderChatMessages = () => {
     if (messages.error) return <MessageNotFound />;
-    if (!messages.loading && isEmpty(roomMessageData))
+    if (
+      (initiated.current && !messages.loading && isEmpty(roomMessageData)) ||
+      conversation.msgs === 0
+    )
       return <ChatWelcome type={conversation.type} />;
 
     // show loading until calculation has done and flatlist has scrolled

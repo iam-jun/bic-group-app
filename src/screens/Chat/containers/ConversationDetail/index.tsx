@@ -177,7 +177,7 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const doLeaveChat = () => {
-    dispatch(actions.leaveChat(roomId));
+    dispatch(actions.leaveChat(conversation));
   };
 
   const onItemPress = (type: string) => {

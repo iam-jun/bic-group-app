@@ -199,7 +199,7 @@ export default {
     type: Actions.KICK_ME_OUT,
     payload,
   }),
-  leaveChat: (payload: string) => ({
+  leaveChat: (payload: IConversation) => ({
     type: Actions.LEAVE_CHAT,
     payload,
   }),
