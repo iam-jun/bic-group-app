@@ -76,10 +76,34 @@ function* getSearchPosts({
   payload: IPayloadGetSearchPosts;
   type: string;
 }): any {
-  const {searchText, actors, startDate, endDate} = payload || {};
+  const {searchText, actors, startDate, endDate, isLoadMore} = payload || {};
   try {
-    yield put(homeActions.setNewsfeedSearch({loadingResult: true}));
+    let data: any[] = [];
+    const state = yield select(state => state?.home?.newsfeedSearch);
+    const {searchResults, totalResult, loadingResult} = state || {};
     const params: IParamGetSearchPost = {content: searchText};
+
+    if (loadingResult) {
+      console.log(`\x1b[36m🐣️ saga getSearchPosts loading result\x1b[0m`);
+      return;
+    }
+
+    if (isLoadMore) {
+      if (
+        totalResult > 0 &&
+        searchResults?.length &&
+        totalResult > searchResults.length
+      ) {
+        data = searchResults;
+        params.offset = data.length;
+      } else {
+        console.log(`\x1b[36m🐣️ saga getSearchPosts cant load more\x1b[0m`);
+        return;
+      }
+    }
+
+    yield put(homeActions.setNewsfeedSearch({loadingResult: true}));
+
     if (actors) {
       params.actors = actors;
     }
@@ -90,12 +114,14 @@ function* getSearchPosts({
       params.end_time = endDate;
     }
     const response = yield call(homeDataHelper.getSearchPost, params);
-    const searchResults = response?.results || [];
+    data = data.concat(response?.results);
+    yield put(postActions.addToAllPosts({data, handleComment: false}));
     yield put(
-      postActions.addToAllPosts({data: searchResults, handleComment: false}),
-    );
-    yield put(
-      homeActions.setNewsfeedSearch({loadingResult: false, searchResults}),
+      homeActions.setNewsfeedSearch({
+        loadingResult: false,
+        searchResults: data,
+        totalResult: response?.total,
+      }),
     );
   } catch (e) {
     yield put(homeActions.setNewsfeedSearch({loadingResult: false}));

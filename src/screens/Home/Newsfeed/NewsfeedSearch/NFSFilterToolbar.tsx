@@ -1,5 +1,5 @@
-import React, {FC, useContext} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
+import React, {useContext} from 'react';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -17,14 +17,9 @@ import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate'
 import {AppContext} from '~/contexts/AppContext';
 import {formatDateTime} from '~/beinComponents/TimeView';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
+import NFSFilterOptionMenu from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterOptionMenu';
 
-export interface NewsfeedSearchFilterToolbarProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
-  style,
-}: NewsfeedSearchFilterToolbarProps) => {
+const NFSFilterToolbar = () => {
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
   const theme = useTheme() as ITheme;
@@ -79,6 +74,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
       <NFSFilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={onSelectCreatedBy}
+        dismissModalOnPress
       />,
       event,
     );
@@ -98,6 +94,17 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
         startDate={startDate}
         endDate={endDate}
         onSelect={onSelectDate}
+        dismissModalOnPress
+      />,
+      event,
+    );
+  };
+
+  const onPressFilterOptions = (event?: any) => {
+    showModal(
+      <NFSFilterOptionMenu
+        filterCreatedBy={filterCreatedBy}
+        filterDate={filterDate}
       />,
       event,
     );
@@ -116,6 +123,7 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
       <ScrollView style={styles.scrollContainer} horizontal>
         <View style={styles.container}>
           <Button.Secondary
+            onPress={onPressFilterOptions}
             leftIcon={'SlidersAlt'}
             leftIconProps={{
               icon: 'SlidersAlt',

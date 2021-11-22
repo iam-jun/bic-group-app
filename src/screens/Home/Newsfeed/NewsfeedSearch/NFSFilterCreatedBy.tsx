@@ -20,11 +20,15 @@ import {ISelectedFilterUser} from '~/interfaces/IHome';
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
   onSelect?: (selected?: ISelectedFilterUser) => void;
+  onPressSelectSpecific?: () => void;
+  dismissModalOnPress?: boolean;
 }
 
 const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   selectedCreatedBy,
   onSelect,
+  onPressSelectSpecific,
+  dismissModalOnPress,
 }: NFSFilterCreatedByProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -35,19 +39,33 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   const userId = useUserIdAuth();
 
   const _onSelect = (selected?: any) => {
-    dispatch(modalActions.hideModal());
+    dismissModalOnPress && dispatch(modalActions.hideModal());
     onSelect?.(selected);
   };
 
-  const _onPressSelectSpecific = () => {
-    dispatch(modalActions.hideModal());
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: <NFSFilterCreateBySpecific onSelect={_onSelect} />,
-        props: {webModalStyle: {minWidth: 400}},
-      }),
-    );
+  const _onPressSelectSpecific = (event?: any) => {
+    if (onPressSelectSpecific) {
+      onPressSelectSpecific?.();
+    } else {
+      dismissModalOnPress && dispatch(modalActions.hideModal());
+      dispatch(
+        modalActions.showModal({
+          isOpen: true,
+          ContentComponent: (
+            <NFSFilterCreateBySpecific
+              onSelect={_onSelect}
+              dismissModalOnPress
+            />
+          ),
+          // props: {webModalStyle: {minWidth: 400}},
+          props: {
+            isContextMenu: true,
+            side: 'right',
+            position: {x: event?.pageX, y: event?.pageY},
+          },
+        }),
+      );
+    }
   };
 
   const renderSpecificRightComponent = () => {
@@ -107,7 +125,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       paddingBottom:
         Platform.OS === 'web'
           ? spacing.padding.tiny
-          : spacing.padding.extraLarge + insets?.bottom,
+          : spacing.padding.extraLarge,
       minWidth: Platform.OS === 'web' ? 300 : undefined,
     },
     itemContainer: {
