@@ -14,7 +14,7 @@ import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
 import {showHideToastMessage} from '~/store/modal/actions';
-import BannerMessage from '~/beinComponents/BannerMessage';
+import BannerMessage from '~/screens/NoInternet/components/BannerMessage';
 
 const Section1 = () => {
   const {spacing, colors}: ITheme = useTheme() as ITheme;

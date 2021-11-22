@@ -12,8 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
-import {useDispatch} from 'react-redux';
-import Button from '../Button';
+import Button from '~/beinComponents/Button';
 
 export interface BannerMessageProps {
   type?: 'error' | 'success';
@@ -38,7 +37,6 @@ const BannerMessage: FC<BannerMessageProps> = ({
   onActionPress,
   onPressRight,
 }: BannerMessageProps) => {
-  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
