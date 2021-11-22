@@ -43,13 +43,14 @@ const NFSResult = () => {
     );
   };
 
-  const getData = () => {
+  const getData = (isLoadMore = false) => {
     if (searchText) {
       const payload: IPayloadGetSearchPosts = {
         searchText,
         actors: filterCreatedBy?.id,
         startDate: filterDate?.startDate,
         endDate: filterDate?.endDate,
+        isLoadMore,
       };
       dispatch(homeActions.getSearchPosts(payload));
     }
@@ -61,6 +62,10 @@ const NFSResult = () => {
 
   const onRefresh = () => {
     console.log(`\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m`);
+  };
+
+  const onEndReached = () => {
+    getData(true);
   };
 
   const renderEmpty = () => {
@@ -95,6 +100,7 @@ const NFSResult = () => {
         ListEmptyComponent={renderEmpty()}
         ListFooterComponent={renderFooter()}
         keyExtractor={item => `newsfeed_item_${item?.id}`}
+        onEndReached={onEndReached}
         refreshControl={
           <RefreshControl
             refreshing={loadingResult}
