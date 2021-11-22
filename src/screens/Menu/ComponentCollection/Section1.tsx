@@ -14,6 +14,7 @@ import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
 import {showHideToastMessage} from '~/store/modal/actions';
+import BannerMessage from '~/beinComponents/BannerMessage';
 
 const Section1 = () => {
   const {spacing, colors}: ITheme = useTheme() as ITheme;
@@ -107,6 +108,27 @@ const Section1 = () => {
             time. Please try again later
           </FlashMessage>
         )}
+      </>,
+    );
+  };
+
+  const renderBannerMessage = () => {
+    return renderSection(
+      'Banner Message',
+      <>
+        <BannerMessage
+          leftIcon={'WifiSlash'}
+          rightText={'Refresh'}
+          textProps={{useI18n: true}}
+          onPressRight={() => alert('Press')}>
+          You are currently offline. Please check it and try again.
+        </BannerMessage>
+        <BannerMessage
+          type={'success'}
+          leftIcon={'Globe'}
+          textProps={{useI18n: true}}>
+          You are back online
+        </BannerMessage>
       </>,
     );
   };
@@ -399,6 +421,7 @@ const Section1 = () => {
       {renderButton()}
       {renderFlashMessage()}
       {renderToastMessage()}
+      {renderBannerMessage()}
       {renderIcon()}
       {renderText()}
       <Button.BottomFixed
