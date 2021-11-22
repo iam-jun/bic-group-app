@@ -10,7 +10,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {debounce} from 'lodash';
 import {useDispatch} from 'react-redux';
-import {TouchableOpacity as Touchable} from 'react-native-gesture-handler';
+import {TouchableOpacity as TouchableGestureHandler} from 'react-native-gesture-handler';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -56,9 +56,12 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
     onSelect?.({id: `${user?.id}`, name: user?.fullname});
   };
 
+  const ItemWrapper: any =
+    Platform.OS === 'android' ? TouchableGestureHandler : View;
+
   const renderItem = ({item}: any) => {
     return (
-      <Touchable onPress={() => onPressUser(item)}>
+      <ItemWrapper onPress={() => onPressUser(item)}>
         <PrimaryItem
           height={Platform.OS === 'web' ? 48 : 40}
           title={item?.fullname}
@@ -66,8 +69,9 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
           avatar={item?.avatar}
           avatarProps={{variant: Platform.OS === 'web' ? 'medium' : 'small'}}
           style={styles.item}
+          onPress={() => onPressUser(item)}
         />
-      </Touchable>
+      </ItemWrapper>
     );
   };
 

@@ -153,7 +153,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       paddingBottom:
         Platform.OS === 'web'
           ? spacing.padding.tiny
-          : spacing.padding.extraLarge + insets?.bottom,
+          : spacing.padding.extraLarge,
       minWidth: Platform.OS === 'web' ? 300 : undefined,
       minHeight: Platform.OS === 'web' ? 250 : undefined,
     },
