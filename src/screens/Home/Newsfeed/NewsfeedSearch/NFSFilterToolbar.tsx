@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useRef} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -25,6 +25,7 @@ export interface NewsfeedSearchFilterToolbarProps {
 const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
   style,
 }: NewsfeedSearchFilterToolbarProps) => {
+  const scrollRef = useRef<any>();
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
   const theme = useTheme() as ITheme;
@@ -109,11 +110,12 @@ const NFSFilterToolbar: FC<NewsfeedSearchFilterToolbarProps> = ({
 
   const onPressClear = () => {
     dispatch(homeActions.clearNewsfeedSearchFilter());
+    scrollRef?.current?.scrollTo?.({y: 0, animated: true});
   };
 
   return (
     <View>
-      <ScrollView style={styles.scrollContainer} horizontal>
+      <ScrollView ref={scrollRef} style={styles.scrollContainer} horizontal>
         <View style={styles.container}>
           <Button.Secondary
             leftIcon={'SlidersAlt'}
