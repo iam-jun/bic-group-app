@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ViewProps, Platform} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Avatar from '~/beinComponents/Avatar';
@@ -48,6 +48,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme, is_read, isActive);
+  const {colors} = theme;
 
   const activity = activities[0];
   const avatar = activity.actor.data?.avatar || activity.actor.data?.avatarUrl;
@@ -137,7 +138,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     });
     if (actorAvatars.length > 1) {
       return (
-        <Avatar.Group
+        <Avatar.Large
           variant={'large'}
           source={actorAvatars}
           totalMember={actorIds.length - 3} // used when numers of avatars >= 5
@@ -157,12 +158,20 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     verbText: any,
     groupText: any = null,
   ) => {
+    const textColor = isActive
+      ? colors.background
+      : is_read
+      ? colors.textSecondary
+      : colors.textPrimary;
+
     return (
-      <Text.BodyM style={styles.title}>
+      <Text.BodyM color={textColor} style={styles.title}>
         {actorName + ' '}
-        <Text.Body>
+        <Text.Body color={textColor}>
           {verbText}
-          {groupText && <Text.BodyM>{' ' + groupText}</Text.BodyM>}
+          {groupText && (
+            <Text.BodyM color={textColor}>{' ' + groupText}</Text.BodyM>
+          )}
         </Text.Body>
       </Text.BodyM>
     );
@@ -170,7 +179,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   // render notification body, it can be post content, comment content
   const renderNotiBody = (body: any) => {
-    return <Text.BodyS style={styles.subContent}>{body}</Text.BodyS>;
+    return (
+      <Text.BodyS color={isActive ? colors.background : colors.textSecondary}>
+        {body}
+      </Text.BodyS>
+    );
   };
 
   // render content of default notification type
@@ -405,45 +418,35 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
   const {colors, spacing} = theme;
 
-  const notiBackgroundColor = isActive
-    ? colors.primary2
-    : isRead
-    ? colors.background
-    : colors.primary1;
-
-  const stateIndicator = {
-    position: 'absolute',
-    left: 0,
-    backgroundColor: colors.primary5,
-  } as ViewProps;
-
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       flexDirection: 'row',
       alignItems: 'flex-start',
-      backgroundColor: notiBackgroundColor,
       paddingVertical: spacing?.padding.base,
       paddingHorizontal: spacing?.padding.large,
+      backgroundColor: isActive ? colors.primary5 : colors.background,
     },
     stateIndicatorActive: {
-      ...stateIndicator,
-      top: 20,
-      width: 6,
-      height: 48,
+      position: 'absolute',
+      left: 0,
+      backgroundColor: colors.primary2,
+      width: 4,
+      height: 60,
       borderTopRightRadius: 6,
       borderBottomRightRadius: 6,
     },
     stateIndicatorUnread: {
-      ...stateIndicator,
-      top: 40,
+      position: 'absolute',
+      backgroundColor: colors.primary6,
+      top: 35,
       left: 4,
-      width: 6,
-      height: 6,
+      width: 8,
+      height: 8,
       borderRadius: 6,
     },
     avatarContainer: {
-      marginTop: spacing.margin.small,
+      marginTop: spacing.margin.tiny,
     },
     content: {
       marginStart: spacing?.margin.base,
@@ -451,9 +454,7 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
     },
     title: {
       alignItems: 'baseline',
-    },
-    subContent: {
-      color: colors.textSecondary,
+      fontSize: 15,
     },
     iconOptions: {},
     timeCreated: {
