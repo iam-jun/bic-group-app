@@ -10,16 +10,14 @@ import CommentInput, {
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import Text from '~/beinComponents/Text';
 import apiConfig from '~/configs/apiConfig';
+import {messageStatus} from '~/constants/chat';
 import {useKeySelector} from '~/hooks/selector';
-import {IFilePicked} from '~/interfaces/common';
 import {IMessage} from '~/interfaces/IChat';
-import {getDownloadUrl, mapUsers} from '~/screens/Chat/helper';
+import {getDownloadUrl, mapMessage, mapUsers} from '~/screens/Chat/helper';
 import actions from '~/screens/Chat/redux/actions';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
-import {validateFile} from '~/utils/validation';
 
 interface Props {
   roomId: string;
@@ -40,7 +38,6 @@ const ChatInput: React.FC<Props> = ({
   onCancelReplying,
   onSendCallback,
   onSentAttachment,
-  onError,
 }: Props) => {
   const commentInputRef = useRef<any>();
 
@@ -81,6 +78,7 @@ const ChatInput: React.FC<Props> = ({
           user,
           replyingMessage,
           image: sendData?.image,
+          status: messageStatus.SENDING,
         }),
       );
       onCancelReplying();
@@ -98,39 +96,6 @@ const ChatInput: React.FC<Props> = ({
     }, 100);
     // setText('');
     onCancelEditing();
-  };
-
-  const onPressFile = (file: IFilePicked) => {
-    const _error = validateFile(file);
-    onError(_error);
-    if (_error) return;
-    showUploadConfirmation(file, 'file');
-  };
-
-  const showUploadConfirmation = (file: IFilePicked, type: string) => {
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t(`chat:label_confirm_send_${type}`),
-        content: file.name,
-        cancelBtn: true,
-        onConfirm: () => uploadFile(file),
-        confirmLabel: i18next.t('common:text_send'),
-      }),
-    );
-  };
-
-  const uploadFile = (file: IFilePicked) => {
-    const _id = uuid.v4().toString();
-    dispatch(
-      actions.uploadFile({
-        _id,
-        localId: _id,
-        user,
-        room_id: conversation._id,
-        _updatedAt: new Date().toISOString(),
-        attachment: file,
-      }),
-    );
   };
 
   const uploadFilePromise = async (param: any) => {
@@ -152,9 +117,16 @@ const ChatInput: React.FC<Props> = ({
         apiConfig.Chat.uploadFile(conversation._id, formData),
       );
       if (response?.data?.success) {
+        onSendCallback();
+
         const attachment: any = response?.data?.message?.attachments?.[0];
         const link = getDownloadUrl(attachment?.title_link);
+        const message = mapMessage(user, response.data.message);
+        //@ts-ignore
+        dispatch(actions.uploadFile(message));
+
         onSentAttachment?.();
+
         return Promise.resolve(link);
       } else {
         return Promise.reject(response?.data);
@@ -231,7 +203,6 @@ const ChatInput: React.FC<Props> = ({
         isHandleUpload: true,
         clearWhenUploadDone: true,
         onPressSend: onSend,
-        onPressFile,
         uploadFilePromise,
       }}
       showItemAll

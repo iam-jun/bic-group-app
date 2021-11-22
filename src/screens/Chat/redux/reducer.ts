@@ -537,7 +537,6 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
                   ...payload.user,
                   name: payload.user.name || payload.user.fullname,
                 },
-                status: messageStatus.SENDING,
               },
             },
           },

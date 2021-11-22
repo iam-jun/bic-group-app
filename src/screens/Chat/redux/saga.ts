@@ -1,7 +1,7 @@
 import {CommonActions, StackActions} from '@react-navigation/native';
 import {AxiosResponse} from 'axios';
 import i18next from 'i18next';
-import {DeviceEventEmitter, Platform} from 'react-native';
+import {DeviceEventEmitter} from 'react-native';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
@@ -67,7 +67,6 @@ export default function* saga() {
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
   yield takeEvery(types.EDIT_MESSAGE, editMessage);
   yield takeLatest(types.DELETE_MESSAGE, deleteMessage);
-  yield takeLatest(types.UPLOAD_FILE, uploadFile);
   yield takeLatest(types.RETRY_SEND_MESSAGE, retrySendMessage);
   yield takeLatest(types.GET_SUBSCRIPTIONS, getSubscriptions);
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
@@ -328,10 +327,18 @@ function* createConversation({
 
     if (callBack) return callBack(conversation._id);
 
+    rootNavigationRef?.current?.dispatch(
+      StackActions.replace(chatStack.conversation, {
+        roomId: conversation._id,
+        initial: false,
+      }),
+    );
     rootNavigationRef?.current?.dispatch(state => {
       // Remove the createConversation route from the stack
       const routes = state.routes.filter(
-        r => r.name !== chatStack.createConversation,
+        r =>
+          r.name === chatStack.conversation ||
+          r.name === chatStack.conversationList,
       );
 
       return CommonActions.reset({
@@ -341,12 +348,6 @@ function* createConversation({
       });
     });
 
-    rootNavigationRef?.current?.dispatch(
-      StackActions.replace(chatStack.conversation, {
-        roomId: conversation._id,
-        initial: false,
-      }),
-    );
     yield put(actions.clearSelectedUsers());
   } catch (err: any) {
     yield put(
@@ -356,49 +357,6 @@ function* createConversation({
         confirmLabel: i18next.t('common:text_ok'),
       }),
     );
-  }
-}
-
-function* uploadFile({payload}: {payload: IMessage; type: string}) {
-  try {
-    if (!payload.attachment) return;
-    const {auth} = yield select();
-
-    const formData = new FormData();
-    if (Platform.OS === 'web') {
-      formData.append(
-        'file',
-        // @ts-ignore
-        payload.attachment,
-        payload.attachment.name || 'fileMessage',
-      );
-    } else {
-      formData.append('file', {
-        type: payload.attachment.type,
-        //@ts-ignore
-        name: payload.attachment.name || 'fileMessage',
-        uri: payload.attachment.uri,
-      });
-    }
-
-    formData.append(
-      'description',
-      JSON.stringify({
-        localId: payload.localId,
-        size: payload.attachment.size,
-        type: payload.attachment.type,
-      }),
-    );
-
-    const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.uploadFile(payload.room_id, formData),
-    );
-
-    const message = mapMessage(auth.user, response.data.message);
-    yield put(actions.sendMessageSuccess({...payload, ...message}));
-  } catch (err) {
-    console.log('uploadFile', err);
-    yield put(actions.sendMessageFailed(payload));
   }
 }
 
@@ -609,8 +567,7 @@ function* reactMessage({
 }
 
 function* retrySendMessage({payload, type}: {payload: IMessage; type: string}) {
-  if (payload.attachment) yield uploadFile({payload, type});
-  else if (payload.createdAt) yield editMessage({payload, type});
+  if (payload.createdAt) yield editMessage({payload, type});
   //@ts-ignore
   else yield sendMessage({payload, type});
 }
@@ -886,10 +843,6 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
 }
 
 function handleAddMember() {
-  // DeviceEventEmitter.emit('chat-event', {
-  //   type: chatEvents.ADD_MEMBERS,
-  //   payload: roomId,
-  // });
   rootNavigationRef?.current?.dispatch(state => {
     // Remove the conversationDetail route from the stack
     const routes = state.routes.filter(
