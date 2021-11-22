@@ -322,10 +322,13 @@ const MentionInput: React.FC<MentionInputProps> = ({
     if (
       event?.key === 'Enter' &&
       !event?.shiftKey &&
-      content?.trim?.()?.length > 0
+      (content?.trim?.()?.length > 0 ||
+        componentInputProps?.commentInputRef?.current?.getSelectedImage?.())
     ) {
-      event.preventDefault();
-      componentInputProps?.commentInputRef?.current?.send();
+      if (componentInputProps?.commentInputRef?.current?.send) {
+        event.preventDefault();
+        componentInputProps.commentInputRef.current.send();
+      }
     }
   };
 
