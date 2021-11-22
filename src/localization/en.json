@@ -721,5 +721,11 @@
     "button_not_really_need": "😋 Not really need",
     "text_thanks_for_your_feedback": "Thanks for your feedback!",
     "text_we_will_notify_you": "We will notify you when this features is ready."
+  },
+  "no_internet": {
+    "system_issue": {
+      "title": "System Issue Occurred",
+      "desc": "Please re-login to continue"
+    }
   }
 }
