@@ -17,7 +17,7 @@ const SystemIssueModal = () => {
 
   return (
     <Modal
-      visible={true}
+      visible={systemIssue}
       dismissable={false}
       contentContainerStyle={styles.modal}>
       <SvgIcon
