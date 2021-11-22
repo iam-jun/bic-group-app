@@ -17,7 +17,7 @@ const SystemIssueModal = () => {
 
   return (
     <Modal
-      visible={systemIssue}
+      visible={true}
       dismissable={false}
       contentContainerStyle={styles.modal}>
       <SvgIcon
@@ -30,7 +30,7 @@ const SystemIssueModal = () => {
       <Text.H4 useI18n>no_internet:system_issue:title</Text.H4>
       <Text.Body useI18n>no_internet:system_issue:desc</Text.Body>
       <View style={styles.loadingContainer}>
-        <LoadingIndicator color={theme.colors.accent} size={24} />
+        <LoadingIndicator color={theme.colors.primary5} size={24} />
       </View>
     </Modal>
   );
@@ -52,6 +52,13 @@ const themeStyles = (theme: ITheme) => {
       justifyContent: 'center',
     },
     loadingContainer: {
+      width: 40,
+      height: 40,
+      borderRadius: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 0,
+      backgroundColor: colors.background,
       marginVertical: spacing.margin.extraLarge,
       shadowColor: '#000',
       shadowOffset: {
