@@ -292,7 +292,7 @@ const handleResponseError = async (
     console.log('error.request', error.config);
     handleSystemIssue();
 
-    // FIXME: Remove below if
+    // FIXME: Remove below if after finish handleSystemIssue
     // if (!alertShow) {
     //   alertShow = true;
     //   // Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
@@ -309,10 +309,12 @@ const handleResponseError = async (
       code: error.request.status, // request made, no response
       data: null,
       meta: {
-        message: i18n.t('error:no_internet'),
+        message: i18n.t('common:text_error_message'),
       },
     };
   } else {
+    handleSystemIssue();
+
     return {
       code: 600, // request config error?
       data: null,
