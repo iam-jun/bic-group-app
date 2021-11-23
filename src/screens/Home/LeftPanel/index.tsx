@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {DeviceEventEmitter, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -24,6 +24,7 @@ const LeftPanel = () => {
 
   const onPressNewsfeed = () => {
     rootNavigation.navigate(homeStack.newsfeed);
+    DeviceEventEmitter.emit('onTabPress', 'home');
   };
 
   const onPressSavedPosts = () => {

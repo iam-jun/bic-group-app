@@ -5,11 +5,12 @@ import {
   Platform,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {debounce} from 'lodash';
 import {useDispatch} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity as TouchableGestureHandler} from 'react-native-gesture-handler';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -26,10 +27,12 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 export interface NFSFilterCreateBySpecificProps {
   onSelect?: (selected?: ISelectedFilterUser) => void;
+  dismissModalOnPress?: boolean;
 }
 
 const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   onSelect,
+  dismissModalOnPress,
 }: NFSFilterCreateBySpecificProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -49,13 +52,16 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   }, 200);
 
   const onPressUser = (user: any) => {
-    dispatch(modalActions.hideModal());
+    dismissModalOnPress && dispatch(modalActions.hideModal());
     onSelect?.({id: `${user?.id}`, name: user?.fullname});
   };
 
+  const ItemWrapper: any =
+    Platform.OS === 'android' ? TouchableGestureHandler : View;
+
   const renderItem = ({item}: any) => {
     return (
-      <TouchableOpacity onPress={() => onPressUser(item)}>
+      <ItemWrapper onPress={() => onPressUser(item)}>
         <PrimaryItem
           height={Platform.OS === 'web' ? 48 : 40}
           title={item?.fullname}
@@ -63,8 +69,9 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
           avatar={item?.avatar}
           avatarProps={{variant: Platform.OS === 'web' ? 'medium' : 'small'}}
           style={styles.item}
+          onPress={() => onPressUser(item)}
         />
-      </TouchableOpacity>
+      </ItemWrapper>
     );
   };
 
@@ -87,7 +94,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity activeOpacity={1} style={styles.container}>
       <SearchInput
         style={styles.searchInput}
         placeholder={t('home:newsfeed_search:search_people')}
@@ -103,7 +110,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         ListFooterComponent={renderFooter}
         onEndReached={onEndReached}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -113,6 +120,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       height:
         Platform.select({web: 0.55, default: 0.5}) * dimension?.deviceHeight,
+      minWidth: Platform.OS === 'web' ? 340 : undefined,
       paddingTop: Platform.OS === 'web' ? spacing.padding.base : 0,
       paddingHorizontal: 0,
       paddingBottom: 0,

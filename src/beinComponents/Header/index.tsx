@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useImperativeHandle} from 'react';
 import {
   View,
   StyleSheet,
@@ -27,6 +27,7 @@ import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 
 export interface HeaderProps {
+  headerRef?: any;
   children?: React.ReactNode;
   title?: string;
   titleTextProps?: TextProps;
@@ -60,6 +61,7 @@ export interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
+  headerRef,
   children,
   title,
   titleTextProps,
@@ -92,6 +94,7 @@ const Header: React.FC<HeaderProps> = ({
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef();
+  const _headerRef = headerRef || useRef();
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -119,6 +122,11 @@ const Header: React.FC<HeaderProps> = ({
     setIsShowSearch(false);
     onShowSearch?.(false);
   };
+
+  useImperativeHandle(_headerRef, () => ({
+    hideSearch,
+    showSearch,
+  }));
 
   useBackHandler(() => {
     if (isShowSearch) {

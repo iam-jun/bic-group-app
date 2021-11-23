@@ -15,6 +15,7 @@ export interface IPayloadSetNewsfeedSearch {
   suggestionResults?: any[];
   searchResults?: any[];
   searchInputRef?: any;
+  totalResult?: number;
 }
 
 export interface IPayloadSetNewsfeedSearchFilter {
@@ -36,6 +37,8 @@ export interface IParamGetSearchPost {
   actors?: string;
   start_time?: string;
   end_time?: string;
+  offset?: number;
+  limit?: number;
 }
 
 export interface IPayloadGetSearchPosts {
@@ -43,6 +46,7 @@ export interface IPayloadGetSearchPosts {
   actors?: string;
   startDate?: string;
   endDate?: string;
+  isLoadMore?: boolean;
 }
 
 export interface ISelectedFilterUser {

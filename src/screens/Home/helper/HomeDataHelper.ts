@@ -16,6 +16,8 @@ const homeApiConfig = {
       actors: param?.actors,
       start_time: param?.start_time,
       end_time: param?.end_time,
+      offset: param?.offset,
+      limit: param?.limit,
     },
   }),
 };

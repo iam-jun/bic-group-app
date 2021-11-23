@@ -6,7 +6,12 @@ import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
 import appConfig from '~/configs/appConfig';
 import {appScreens} from '~/configs/navigator';
-import {chatSocketId, messageEventTypes, roomTypes} from '~/constants/chat';
+import {
+  chatEvents,
+  messageEventTypes,
+  roomTypes,
+  chatSocketId,
+} from '~/constants/chat';
 import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
@@ -538,7 +543,7 @@ function* addMembersToGroup({
   payload,
 }: {
   type: string;
-  payload: {roomId: number; userIds: number[]};
+  payload: {roomId: string; userIds: number[]};
 }) {
   try {
     yield makeHttpRequest(
@@ -791,34 +796,33 @@ function* getNextMessages({payload}: {type: string; payload: string}) {
   }
 }
 
-function* leaveChat({payload}: {type: string; payload: string}) {
+function* leaveChat({payload}: {type: string; payload: IConversation}) {
   try {
-    const {chat} = yield select();
-
-    const conversation = chat?.rooms?.items[payload] || {};
-    const roomId =
-      conversation.type !== roomTypes.GROUP
-        ? conversation._id
-        : conversation.beinGroupId;
-
-    if (conversation.type !== roomTypes.GROUP) {
-      yield makeHttpRequest(apiConfig.Chat.leaveQuickChat(roomId));
+    if (payload.type !== roomTypes.GROUP) {
+      yield makeHttpRequest(apiConfig.Chat.leaveQuickChat(payload._id));
     } else {
-      yield groupsDataHelper.leaveGroup(Number(roomId));
+      yield groupsDataHelper.leaveGroup(Number(payload.beinGroupId));
       yield put(groupsActions.getJoinedGroups());
-      yield put(groupsActions.getGroupDetail(Number(roomId)));
+      yield put(groupsActions.getGroupDetail(Number(payload.beinGroupId)));
     }
 
-    if (Platform.OS === 'web') {
-      // navigate to the top conversation in the list
-      const {chat} = yield select();
-      const {data, items} = chat.rooms;
-      const roomData = data.sort(function (a: string, b: string) {
-        //@ts-ignore
-        return new Date(items[b]._updatedAt) - new Date(items[a]._updatedAt);
+    rootNavigationRef?.current?.dispatch(state => {
+      // Remove the conversationDetail route from the stack
+      const routes = state.routes.filter(
+        r => r.name !== chatStack.conversationDetail,
+      );
+
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
       });
-      navigation.navigate(chatStack.conversation, {roomId: roomData[0]?._id});
-    }
+    });
+
+    DeviceEventEmitter.emit('chat-event', {
+      type: chatEvents.KICK_ME_OUT,
+      payload: payload._id,
+    });
 
     const toastMessage: IToastMessage = {
       content: i18next.t('chat:modal_confirm_leave_chat:success_message'),
@@ -882,7 +886,24 @@ function* handleEvent({payload}: {type: string; payload: ISocketEvent}) {
 }
 
 function handleAddMember() {
-  navigation.replace(chatStack.conversation);
+  // DeviceEventEmitter.emit('chat-event', {
+  //   type: chatEvents.ADD_MEMBERS,
+  //   payload: roomId,
+  // });
+  rootNavigationRef?.current?.dispatch(state => {
+    // Remove the conversationDetail route from the stack
+    const routes = state.routes.filter(
+      r =>
+        r.name === chatStack.conversation ||
+        r.name === chatStack.conversationList,
+    );
+
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
 }
 
 function* handleNewMessage(data: any) {
@@ -902,9 +923,12 @@ function* handleNewMessage(data: any) {
       if (!include && roomMessages) {
         if (!haveUnreadMessages) {
           yield put(actions.addNewMessage(message));
-          DeviceEventEmitter.emit('chat-new-message', {
-            message,
-            index: roomMessages.data.length,
+          DeviceEventEmitter.emit('chat-event', {
+            type: chatEvents.NEW_MESSAGE,
+            payload: {
+              message,
+              index: roomMessages.data.length,
+            },
           });
         }
       } else {
@@ -989,7 +1013,10 @@ function* handleRoomsMessage(payload?: any) {
       yield handleNewMessage(data);
       break;
     case messageEventTypes.ADD_USER:
-      yield handleNewMessage(data);
+      {
+        yield handleNewMessage(data);
+        yield put(actions.addMembersToGroupSuccess(data));
+      }
       yield put(actions.addMembersToGroupSuccess(data));
       break;
     case messageEventTypes.REMOVE_MESSAGE:
@@ -1007,8 +1034,11 @@ function* handleNotifyUser(payload?: any) {
     case 'removed':
       {
         yield put(actions.kickMeOut(data[1]));
-        DeviceEventEmitter.emit('chat-kick-me', data[1].rid);
         yield put(groupsActions.getJoinedGroups());
+        DeviceEventEmitter.emit('chat-event', {
+          type: chatEvents.KICK_ME_OUT,
+          payload: data[1].rid,
+        });
       }
       break;
     case 'inserted':

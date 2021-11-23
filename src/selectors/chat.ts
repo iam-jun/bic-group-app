@@ -16,7 +16,7 @@ export const getConversations = createSelector(chatState, data => {
       const _lastMessage =
         messageItems?.[messagesData?.[messagesData?.length - 1]];
       const lastMessage =
-        _lastMessage && !_lastMessage.system ? _lastMessage : item.lastMessage;
+        _lastMessage && !_lastMessage.system ? _lastMessage : item?.lastMessage;
 
       return {
         ...item,

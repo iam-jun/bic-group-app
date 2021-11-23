@@ -39,6 +39,7 @@ import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 
 const Newsfeed = () => {
   const listRef = useRef<any>();
+  const headerRef = useRef<any>();
 
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
@@ -86,6 +87,7 @@ const Newsfeed = () => {
     (tabName: ITabTypes) => {
       if (tabName === 'home') {
         listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+        headerRef?.current?.hideSearch?.();
       }
     },
     [listRef],
@@ -140,6 +142,7 @@ const Newsfeed = () => {
     if (isLaptop)
       return (
         <Header
+          headerRef={headerRef}
           hideBack
           title={'post:news_feed'}
           titleTextProps={{useI18n: true}}
@@ -156,6 +159,7 @@ const Newsfeed = () => {
 
     return (
       <Header
+        headerRef={headerRef}
         avatar={images.logo_bein}
         hideBack
         menuIcon={'Edit'}
