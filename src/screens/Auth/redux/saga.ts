@@ -11,6 +11,7 @@ import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
+import {initPushTokenMessage} from '~/services/helper';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
@@ -35,6 +36,14 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
   try {
     yield put(actions.setLoading(true));
     yield put(actions.setSigningInError(''));
+    // make sure to delete push token of older logged in acc in case delete token in AuthStack failed
+    const messaging = yield initPushTokenMessage();
+    yield messaging()
+      .deleteToken()
+      .catch(e => {
+        console.log('error when delete push token before log in', e);
+        return true;
+      });
     const {email, password} = payload;
     yield Auth.signIn(email, password); //handle result in useAuthHub
   } catch (error) {
@@ -138,7 +147,6 @@ function* onSignInSuccess(user: IUserResponse) {
 
   yield put(actions.setUser(userResponse));
 
-  // get Tokens after login success.
   const refreshSuccess = yield refreshAuthTokens();
   if (!refreshSuccess) {
     yield put(actions.signOut(false));
