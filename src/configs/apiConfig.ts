@@ -85,7 +85,7 @@ const Chat = {
     const auth = getChatAuthInfo();
 
     return {
-      url: `${providers.bein.url}chat`,
+      url: `${providers.bein.url}chats`,
       method: 'get',
       provider: providers.bein,
       useRetry: true,
