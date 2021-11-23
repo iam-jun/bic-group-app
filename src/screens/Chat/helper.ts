@@ -197,7 +197,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     type,
     system: !!item.t && item.t !== messageEventTypes.REMOVE_MESSAGE,
     removed: !!item.t && item.t === messageEventTypes.REMOVE_MESSAGE,
-    createdAt: timestampToISODate(item.ts?.$date),
+    createdAt: timestampToISODate(item.ts?.$date || item.ts),
     _updatedAt: timestampToISODate(item._updatedAt),
     status: messageStatus.SENT,
     text,

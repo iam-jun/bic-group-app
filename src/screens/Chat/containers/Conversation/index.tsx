@@ -150,6 +150,7 @@ const _Conversation = ({route}: {route: any}) => {
     InteractionManager.runAfterInteractions(() => {
       // mean conversation detail has been fetched
       if (conversation?.msgs && isEmpty(roomMessageData)) {
+        initiated.current = conversation.msgs === 0;
         getMessages(unreadCount);
         _setDownButtonVisible(unreadCount > appConfig.messagesPerPage);
       }
@@ -179,15 +180,12 @@ const _Conversation = ({route}: {route: any}) => {
   }, [error]);
 
   const handleChatEvents = (event: IChatEvent) => {
-    console.log('handleChatEvents', event);
     switch (event.type) {
       case chatEvents.KICK_ME_OUT:
         kickMeOut(event.payload);
         break;
       case chatEvents.NEW_MESSAGE:
         onNewMessage(event.payload);
-        break;
-
         break;
     }
   };
@@ -495,7 +493,6 @@ const _Conversation = ({route}: {route: any}) => {
   const onContentLayoutChange = () => {
     InteractionManager.runAfterInteractions(() => {
       if (messages.canLoadNext) _setDownButtonVisible(true);
-
       if (
         !isScrolled &&
         !isEmpty(roomMessageData) &&
@@ -580,12 +577,8 @@ const _Conversation = ({route}: {route: any}) => {
 
   const renderChatMessages = () => {
     if (messages.error) return <MessageNotFound />;
-    if (
-      (initiated.current && !messages.loading && isEmpty(roomMessageData)) ||
-      conversation.msgs === 0
-    )
+    if (initiated.current && !messages.loading && isEmpty(roomMessageData))
       return <ChatWelcome type={conversation.type} />;
-
     // show loading until calculation has done and flatlist has scrolled
     return (
       <View style={styles.messagesContainer}>
