@@ -289,7 +289,7 @@ const Chat = {
     const auth = getChatAuthInfo();
 
     return {
-      url: `${providers.bein.url}chat/${roomId}/info`,
+      url: `${providers.bein.url}chats/${roomId}/info`,
       method: 'get',
       provider: providers.bein,
       useRetry: true,
@@ -336,7 +336,7 @@ const Chat = {
     const auth = getChatAuthInfo();
 
     return {
-      url: `${providers.bein.url}chat/reactions`,
+      url: `${providers.bein.url}chats/reactions`,
       method: 'get',
       provider: providers.bein,
       useRetry: true,
@@ -362,7 +362,7 @@ const Chat = {
     const auth = getChatAuthInfo();
 
     return {
-      url: `${providers.bein.url}chat/surrounding-messages`,
+      url: `${providers.bein.url}chats/surrounding-messages`,
       method: 'get',
       useRetry: true,
       provider: providers.bein,
@@ -394,7 +394,7 @@ const Chat = {
   search: (params?: ISearchChatReq): HttpApiRequestConfig => {
     const auth = getChatAuthInfo();
     return {
-      url: `${providers.bein.url}chat/search`,
+      url: `${providers.bein.url}chats/search`,
       method: 'get',
       useRetry: true,
       provider: providers.bein,
