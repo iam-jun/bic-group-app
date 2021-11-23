@@ -22,7 +22,7 @@ export const getConversations = createSelector(chatState, data => {
         ...item,
         unreadCount: sub?.unread,
         lastMessage,
-        _updatedAt: lastMessage ? lastMessage?.createAt : item._updatedAt,
+        _updatedAt: lastMessage ? lastMessage?.createdAt : item._updatedAt,
       };
     })
     .sort(function (a: any, b: any) {

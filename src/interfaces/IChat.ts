@@ -207,6 +207,7 @@ export interface ISendMessageAction {
   createdAt: string;
   replyingMessage?: IMessage;
   image?: IActivityDataImage;
+  status?: string;
 }
 
 export interface IUploadFileAction {
