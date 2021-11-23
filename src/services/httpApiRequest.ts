@@ -89,6 +89,8 @@ const refreshFailKickOut = () => {
 };
 
 const handleSystemIssue = () => {
+  // TODO: Add checking if there is no internet => show banner and return
+
   Store.store.dispatch(noInternetActions.showSystemIssue());
 
   setTimeout(() => {
