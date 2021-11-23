@@ -93,20 +93,11 @@ const handleSystemIssue = () => {
 
   Store.store.dispatch(noInternetActions.showSystemIssue());
 
+  const modalVisibleDuration = 2000;
   setTimeout(() => {
     _dispatchLogout();
     _dispatchHideSystemIssue();
-
-    // FIXME: Can we replace belows with refreshFailKickOut?
-    isRefreshingToken = false;
-    // count retry limit
-    countLimitRetry = 0;
-    timeEndCountLimit = 0;
-    // bein
-    unauthorizedReqQueue = [];
-    // get stream
-    unauthorizedGetStreamReqQueue = [];
-  }, 1000);
+  }, modalVisibleDuration);
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
