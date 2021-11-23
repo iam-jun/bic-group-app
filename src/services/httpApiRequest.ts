@@ -4,7 +4,7 @@ import {connect, StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
 import moment from 'moment';
-import {Alert, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
 
@@ -15,6 +15,7 @@ import apiConfig, {
 } from '~/configs/apiConfig';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
+import * as noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 
@@ -243,7 +244,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   }
 };
 
-let alertShow = false;
+// let alertShow = false;
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
@@ -262,18 +263,28 @@ const handleResponseError = async (
         return mapResponseSuccessBein(error.response);
     }
   } else if (error.request) {
+    // TODO: Add handling => check if there is internet connection, show SystemIssueModal, then throw the user to login screen
+
     console.log('error.request', error.config);
-    if (!alertShow) {
-      alertShow = true;
-      // Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
-      Alert.alert(i18n.t('error:alert_title'), error.message, [
-        {
-          onPress: () => {
-            alertShow = false;
-          },
-        },
-      ]);
-    }
+    Store.store.dispatch(noInternetActions.showSystemIssue());
+
+    refreshFailKickOut();
+    setTimeout(() => {
+      Store.store.dispatch(noInternetActions.hideSystemIssue());
+    }, 1000);
+
+    // FIXME: Remove below if
+    // if (!alertShow) {
+    //   alertShow = true;
+    //   // Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
+    //   Alert.alert(i18n.t('error:alert_title'), error.message, [
+    //     {
+    //       onPress: () => {
+    //         alertShow = false;
+    //       },
+    //     },
+    //   ]);
+    // }
 
     return {
       code: error.request.status, // request made, no response
