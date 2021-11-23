@@ -140,6 +140,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
     lane :deploy_production do
         Dotenv.overload('../../.env.sample', '../../.env.production')
         appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+        increment_build_number(build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
         build_app(
             workspace: "#{ENV['SCHEME_NAME']}.xcworkspace",
             scheme: "#{ENV['SCHEME_NAME_IOS']}",
