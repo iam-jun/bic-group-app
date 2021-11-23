@@ -45,7 +45,7 @@ import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
-import SystemIssueModal from '~/screens/NoInternet/Components/SystemIssueModal';
+import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import * as noInternetActions from '~/screens/NoInternet/redux/actions';
 
 const Stack = createStackNavigator<RootStackParamList>();
