@@ -3,17 +3,18 @@ import {StyleSheet, View} from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import useNoInternet from '~/hooks/noInternet';
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import SystemIssueImg from '~/../assets/images/SystemIssue.svg';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import noInternetKeySelector from '../redux/keySelector';
+import {useKeySelector} from '~/hooks/selector';
 
 const SystemIssueModal = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const {systemIssue} = useNoInternet();
+  const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);
 
   return (
     <Modal
