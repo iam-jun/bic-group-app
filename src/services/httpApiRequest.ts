@@ -70,9 +70,14 @@ const dispatchStoreAuthTokens = (
   );
 };
 
+const _dispatchHideSystemIssue = () => {
+  Store.store.dispatch(noInternetActions.hideSystemIssue());
+};
+
 const refreshFailKickOut = () => {
   _dispatchLogout();
   _dispatchSessionExpire();
+  _dispatchHideSystemIssue;
   isRefreshingToken = false;
   // count retry limit
   countLimitRetry = 0;
@@ -81,6 +86,25 @@ const refreshFailKickOut = () => {
   unauthorizedReqQueue = [];
   // get stream
   unauthorizedGetStreamReqQueue = [];
+};
+
+const handleSystemIssue = () => {
+  Store.store.dispatch(noInternetActions.showSystemIssue());
+
+  setTimeout(() => {
+    _dispatchLogout();
+    _dispatchHideSystemIssue();
+
+    // FIXME: Can we replace belows with refreshFailKickOut?
+    isRefreshingToken = false;
+    // count retry limit
+    countLimitRetry = 0;
+    timeEndCountLimit = 0;
+    // bein
+    unauthorizedReqQueue = [];
+    // get stream
+    unauthorizedGetStreamReqQueue = [];
+  }, 1000);
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
@@ -263,15 +287,8 @@ const handleResponseError = async (
         return mapResponseSuccessBein(error.response);
     }
   } else if (error.request) {
-    // TODO: Add handling => check if there is internet connection, show SystemIssueModal, then throw the user to login screen
-
     console.log('error.request', error.config);
-    Store.store.dispatch(noInternetActions.showSystemIssue());
-
-    refreshFailKickOut();
-    setTimeout(() => {
-      Store.store.dispatch(noInternetActions.hideSystemIssue());
-    }, 1000);
+    handleSystemIssue();
 
     // FIXME: Remove below if
     // if (!alertShow) {
@@ -515,6 +532,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   );
 
   // return
+  console.log(`requestConfig`, requestConfig);
   return axiosInstance(requestConfig);
 };
 
