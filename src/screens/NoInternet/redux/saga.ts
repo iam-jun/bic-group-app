@@ -18,5 +18,5 @@ function* showSystemIssue() {
 }
 
 function* hideSystemIssue() {
-  yield put(actions.hideSystemIssue());
+  yield put(actions.setSystemIssue(false));
 }
