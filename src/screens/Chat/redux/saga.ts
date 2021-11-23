@@ -873,7 +873,14 @@ function* handleNewMessage(data: any) {
       unreadMessage && conversation.unreadCount > appConfig.messagesPerPage;
 
     if (conversation) {
-      if (!include && roomMessages) {
+      const lastMessage = conversation.lastMessage;
+      const lastDate = new Date(lastMessage?.createdAt).getTime();
+      const msgDate = new Date(message.createdAt).getTime();
+      if (!lastMessage || msgDate >= lastDate) {
+        yield put(actions.updateLastMessage(message));
+      }
+
+      if (!include) {
         if (!haveUnreadMessages) {
           yield put(actions.addNewMessage(message));
           DeviceEventEmitter.emit('chat-event', {
