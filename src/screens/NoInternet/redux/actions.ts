@@ -9,7 +9,7 @@ export function setNoInternet(payload: boolean) {
 
 export function setSystemIssue(payload: boolean) {
   return {
-    type: types.SET_NO_INTERNET,
+    type: types.SET_SYSTEM_ISSUE,
     payload,
   };
 }
