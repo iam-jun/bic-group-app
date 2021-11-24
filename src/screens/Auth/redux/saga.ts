@@ -1,6 +1,7 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
+import {Platform} from 'react-native';
 import {delay, put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
@@ -38,13 +39,15 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
     yield put(actions.setLoading(true));
     yield put(actions.setSigningInError(''));
     // make sure to delete push token of older logged in acc in case delete token in AuthStack failed
-    const messaging = yield initPushTokenMessage();
-    yield messaging()
-      .deleteToken()
-      .catch(e => {
-        console.log('error when delete push token before log in', e);
-        return true;
-      });
+    if (Platform.OS !== 'web') {
+      const messaging = yield initPushTokenMessage();
+      yield messaging()
+        .deleteToken()
+        .catch(e => {
+          console.log('error when delete push token before log in', e);
+          return true;
+        });
+    }
     const {email, password} = payload;
     yield Auth.signIn(email, password); //handle result in useAuthHub
   } catch (error) {
