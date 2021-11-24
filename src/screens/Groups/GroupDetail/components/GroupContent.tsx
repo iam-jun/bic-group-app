@@ -108,9 +108,11 @@ const GroupContent = ({
               settings:title_about
             </Button.Secondary>
             <ViewSpacing width={spacing.margin.base} />
-            <Button.Secondary useI18n onPress={onPressMembers}>
-              chat:title_members
-            </Button.Secondary>
+            {isMember && (
+              <Button.Secondary useI18n onPress={onPressMembers}>
+                chat:title_members
+              </Button.Secondary>
+            )}
             <ViewSpacing width={spacing.margin.base} />
             <Button.Secondary useI18n onPress={onPressFiles}>
               common:text_files

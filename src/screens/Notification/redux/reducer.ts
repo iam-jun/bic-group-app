@@ -8,6 +8,7 @@ const initNotificationsState = {
   noMoreNotification: false,
   isLoadingMore: false,
   showMarkedAsReadToast: false,
+  pushToken: '',
 };
 
 function notificationsReducer(
@@ -70,6 +71,12 @@ function notificationsReducer(
       return {
         ...state,
         isLoadingMore: payload,
+      };
+    }
+    case notificationsTypes.SAVE_PUSH_TOKEN: {
+      return {
+        ...state,
+        pushToken: payload,
       };
     }
 

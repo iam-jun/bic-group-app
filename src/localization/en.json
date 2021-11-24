@@ -101,7 +101,11 @@
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
     "text_group": "Group",
-    "text_at": "at"
+    "text_at": "at",
+    "text_updated_successfully": "updated successfully",
+    "text_avatar": "Avatar",
+    "text_cover": "Cover",
+    "text_privacy": "Privacy"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -273,7 +277,6 @@
     "title_edit_email_address": "Edit Email Address",
     "title_edit_address": "Edit Address",
     "text_wrong_email_format": "Wrong Email format",
-    "text_updated_successfully": "updated successfully",
     "text_email_is_used": "This Email is used",
     "text_wrong_phone_number_format": "Wrong number format",
     "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
@@ -298,7 +301,30 @@
   "home": {
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
-    "draft_post": "Draft Posts"
+    "draft_post": "Draft Posts",
+    "newsfeed_search": {
+      "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
+      "clear": "Clear",
+      "choose_creator": "Choose creator",
+      "choose_date": "Choose creation date",
+      "from": "From",
+      "to": "To",
+      "label_all_filters": "All filters",
+      "label_creator": "Creator",
+      "label_creation_date": "Creation date",
+      "label_anyone": "Anyone",
+      "label_anytime": "Anytime",
+      "btn_reset": "Reset",
+      "btn_show_results": "Show Results",
+      "search_people": "Search people...",
+      "apply": "Apply",
+      "filter": "Filter",
+      "filter_created_by": "Created by",
+      "filter_created_by_all": "All",
+      "filter_created_by_me": "Me",
+      "filter_created_by_specific": "Specific person",
+      "filter_date": "Date"
+    }
   },
   "post": {
     "news_feed": "News Feed",
@@ -396,7 +422,8 @@
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
       "title_empty_cant_load_more": "You have seen it all",
-      "text_empty_cant_load_more": "Take a break time & chill"
+      "text_empty_cant_load_more": "Take a break time & chill",
+      "text_empty_search_post": "Sorry, we couldn’t find anything related\nto your search."
     },
     "draft": {
       "btn_post_now": "Post Now",
@@ -593,6 +620,7 @@
   "input": {
     "search": "Search for someone to chat...",
     "search_group": "Search for groups or people...",
+    "search_post": "Search for posts...",
     "search_country": "Search Country",
     "search_location": "Search for City/Province/Country"
   },
@@ -620,10 +648,22 @@
       "title": "This group is private.",
       "subtitle": "Join this group to view or participate on discussions"
     },
+    "modal_confirm_set_admin": {
+      "title": "Set as Admin",
+      "description": "Do you want to assign {0} as admin of this group?",
+      "button_confirm": "Set as Admin",
+      "success_message": "Member Role Saved"
+    },
+    "modal_confirm_remove_admin": {
+      "title": "Remove as Admin",
+      "description": "Do you want to remove {0} as admin of this group?",
+      "button_confirm": "Remove",
+      "success_message": "Member Role Saved"
+    },
     "modal_confirm_remove_member": {
       "title": "Remove this member",
       "alert_inner_groups": "This member will also be removed from {0} other inner groups:",
-      "final_alert": "Are you sure want to remove this member?",
+      "final_alert": "Are you sure to remove this member?",
       "button_remove": "Remove"
     },
     "modal_confirm_leave_group": {
@@ -634,7 +674,8 @@
       "success_message": "You have left the group"
     },
     "error": {
-      "last_admin": "You are the last admin of the group. Set another admin before leaving"
+      "last_admin_leave": "You are the last admin of the group. Kindly set another admin before leaving",
+      "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     }
   },
   "profile": {

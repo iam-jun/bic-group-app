@@ -1,24 +1,25 @@
+import i18next from 'i18next';
 import React, {useState} from 'react';
-import {StyleSheet, View, TextInput} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-
-import {ITheme} from '~/theme/interfaces';
-import actions from '../../redux/actions';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import {roomTypes} from '~/constants/chat';
 import {useRootNavigation} from '~/hooks/navigation';
-import useChat from '~/hooks/chat';
+import {useKeySelector} from '~/hooks/selector';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
+import actions from '../../redux/actions';
 
 const EditConversationDescription = ({route}: {route: any}) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {conversation} = useChat();
+  const roomId = route?.params?.roomId || '';
+  const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
   const {rootNavigation} = useRootNavigation();
 
   const [text, setText] = useState<string>(conversation?.description || '');
@@ -28,19 +29,23 @@ const EditConversationDescription = ({route}: {route: any}) => {
 
   const onSave = () => {
     dispatch(
-      actions.updateConversationDetail(
-        {description: text.trim() ? text.trim() : null},
-        i18next.t('chat:text_chat_description'),
-        onPressBack,
-      ),
+      actions.updateConversationDetail({
+        roomId:
+          conversation?.type === roomTypes.GROUP
+            ? conversation.beinGroupId
+            : conversation._id,
+        body: {description: text.trim() ? text.trim() : null},
+        editFieldName: i18next.t('chat:text_chat_description'),
+        callback: onPressBack,
+      }),
     );
   };
 
-  const onPressBack = (roomId?: string) => {
+  const onPressBack = (_roomId?: number | string) => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
     else
       rootNavigation.replace(chatStack.conversationDetail, {
-        roomId: roomId || route?.params?.roomId,
+        roomId: _roomId || roomId,
       });
   };
 

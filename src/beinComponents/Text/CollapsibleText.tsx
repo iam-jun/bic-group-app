@@ -34,17 +34,24 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   testID,
   ...textProps
 }: CollapsibleTextProps) => {
+  const getShortContent = (c?: string) => {
+    if (c && c?.length > limitLength) {
+      return `${c.substr(0, shortLength)}...`;
+    } else {
+      return '';
+    }
+  };
+
   const [contentShowAll, setContentShowAll] = useState(false);
-  const [shortContent, setShortContent] = useState('');
+  const [shortContent, setShortContent] = useState(getShortContent(content));
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
 
   useEffect(() => {
-    if (content && content?.length > limitLength) {
-      setShortContent(`${content.substr(0, shortLength)}...`);
-    } else {
-      setShortContent('');
+    const newShort = getShortContent(content);
+    if (newShort !== shortContent) {
+      setShortContent(newShort);
     }
   }, [content]);
 

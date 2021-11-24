@@ -13,6 +13,7 @@ import {getEnv} from '~/utils/env';
 import {timestampToISODate} from '~/utils/formatData';
 import {messageStatus} from './../../constants/chat';
 import apiConfig from '~/configs/apiConfig';
+import {IObject} from '~/interfaces/common';
 
 export const mapData = (user: IChatUser, dataType: string, data: any) => {
   switch (dataType) {
@@ -32,11 +33,27 @@ export const mapData = (user: IChatUser, dataType: string, data: any) => {
   }
 };
 
-export const mapConversations = (user: IChatUser, data?: []): IConversation[] =>
-  (data || []).map((item: any) => mapConversation(user, item));
+export const mapConversations = (
+  user: IChatUser,
+  data?: [],
+): IObject<IConversation> => {
+  const conversations = (data || []).map((item: any) =>
+    mapConversation(user, item),
+  );
+  //@ts-ignore
+  return conversations.reduce((obj, item) => ((obj[item._id] = item), obj), {});
+};
 
-export const mapMessages = (user: IChatUser, data?: []): IMessage[] =>
-  (data || []).map((item: any) => mapMessage(user, item));
+export const mapSubscriptions = (data?: []): IObject<any> => {
+  //@ts-ignore
+  return (data || []).reduce((obj, item) => ((obj[item.rid] = item), obj), {});
+};
+
+export const mapMessages = (user: IChatUser, data?: []): IObject<IMessage> => {
+  const messages = (data || []).map((item: any) => mapMessage(user, item));
+  //@ts-ignore
+  return messages.reduce((obj, item) => ((obj[item._id] = item), obj), {});
+};
 
 export const mapUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapUser(item));
@@ -44,8 +61,9 @@ export const mapUsers = (data?: []): IChatUser[] =>
 export const mapJoinableUsers = (data?: []): IChatUser[] =>
   (data || []).map((item: any) => mapJoinableUser(item));
 
-export const getLastMessage = (item: IMessage, isMyMessage: boolean) => {
-  if (!item) return null;
+export const getLastMessage = (item: IMessage, user: IChatUser): string => {
+  if (!item) return '';
+  const isMyMessage = item.user?.username === user?.username;
   let lastMessage = `${item.user?.name || item.user?.fullname}: ${item?.text}`;
 
   if ((item.attachments && item.attachments.length > 0) || item.quotedMessage) {
@@ -97,25 +115,14 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
         : null
       : getRoomAvatar(_id);
 
-  const name =
-    (typeof item?.customFields?.beinChatName === 'string'
-      ? item?.customFields?.beinChatName
-      : item?.customFields?.beinChatName?.name) ||
-    item?.fname ||
-    item?.name;
-
   const lastMessage = item.lastMessage
-    ? getLastMessage(
-        mapMessage(user, item.lastMessage),
-        item.lastMessage?.u.username === user.username,
-      )
+    ? mapMessage(user, item.lastMessage)
     : null;
 
   return {
     ...item,
     ...item.customFields,
     _id,
-    name,
     description: item.description || null,
     type,
     avatar,
@@ -190,7 +197,7 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
     type,
     system: !!item.t && item.t !== messageEventTypes.REMOVE_MESSAGE,
     removed: !!item.t && item.t === messageEventTypes.REMOVE_MESSAGE,
-    createdAt: timestampToISODate(item.ts?.$date),
+    createdAt: timestampToISODate(item.ts?.$date || item.ts),
     _updatedAt: timestampToISODate(item._updatedAt),
     status: messageStatus.SENT,
     text,
@@ -203,7 +210,6 @@ export const mapMessage = (_user: IChatUser, item: any): IMessage => {
 
   return {
     ..._message,
-    lastMessage: getLastMessage(_message, item.u?.username === _user.username),
   };
 };
 
@@ -288,3 +294,10 @@ export const getReactionStatistics = async (param: {
     return Promise.reject();
   }
 };
+
+export const getRoomName = (sub: any) =>
+  (typeof sub?.customFields?.beinChatName === 'string'
+    ? sub?.customFields?.beinChatName
+    : sub?.customFields?.beinChatName?.name) ||
+  sub?.fname ||
+  sub?.name;

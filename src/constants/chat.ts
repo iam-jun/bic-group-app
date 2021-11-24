@@ -110,3 +110,8 @@ export const reactions = {
     icon: 'iconReact',
   },
 };
+
+export const chatEvents = {
+  KICK_ME_OUT: 'kick-me-out',
+  NEW_MESSAGE: 'new-message',
+};

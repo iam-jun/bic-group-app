@@ -3,6 +3,7 @@ import React from 'react';
 import {Image as RNImage, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import Avatar from '~/beinComponents/Avatar';
 import SearchInput, {
   SearchInputProps,
@@ -11,7 +12,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {Text, ViewSpacing} from '~/components';
-import useChat from '~/hooks/chat';
+import {useKeySelector} from '~/hooks/selector';
 import {IChatUser} from '~/interfaces/IChat';
 import {ITheme} from '~/theme/interfaces';
 import {getDefaultAvatar} from '../helper';
@@ -48,7 +49,7 @@ const _MembersSelection: React.FC<MembersSelectionProps> = ({
   const {spacing} = theme;
 
   const dispatch = useDispatch();
-  const {selectedUsers} = useChat();
+  const selectedUsers = useKeySelector('chat.selectedUsers');
 
   const onSelectUser = (user: IChatUser) => {
     dispatch(actions.selectUser(user, field));

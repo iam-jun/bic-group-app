@@ -17,7 +17,7 @@ interface MenuItemProps extends IOption {
   isActive?: boolean;
   RightComponent?: React.ReactNode | React.ReactElement;
   onPress?: () => void;
-  disable?: boolean;
+  disabled?: boolean;
   notificationsBadgeNumber?: number;
   notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
@@ -35,7 +35,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   isActive = false,
   RightComponent,
   onPress,
-  disable,
+  disabled,
   notificationsBadgeNumber,
   notificationsBadgeProps,
   badgeColor,
@@ -58,11 +58,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
   let className = 'menu-item';
   if (isActive) className = className + ` ${className}--active`;
 
-  if (disable) className = '';
+  if (disabled) className = '';
 
+  // TODO: remove cursor pointer on web when disabled is set to true
+  /**
+   * As it still render class cursor pointer although disabled state in TouchableOpacity is set to true
+   * However, in PrimaryItem.tsx still works with this approach, don't know why
+   */
   return (
-    <TouchableOpacity disabled={disable} onPress={onPress} testID={testID}>
-      <Div className={className}>
+    <Div className={className}>
+      <TouchableOpacity disabled={disabled} onPress={onPress} testID={testID}>
         {Platform.OS === 'web' && isActive && (
           <View style={styles.itemActiveIndicator} />
         )}
@@ -105,8 +110,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
           )}
           {RightComponent}
         </View>
-      </Div>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Div>
   );
 };
 

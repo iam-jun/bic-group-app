@@ -1,13 +1,21 @@
-import {put, takeLatest, select, takeEvery} from 'redux-saga/effects';
+import {put, select, takeEvery, call} from 'redux-saga/effects';
 import {get} from 'lodash';
 import homeTypes from '~/screens/Home/redux/types';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
-import {IPayloadGetHomePost} from '~/interfaces/IHome';
+import {
+  IParamGetSearchPost,
+  IPayloadGetHomePost,
+  IPayloadGetSearchPosts,
+} from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
+import postActions from '~/screens/Post/redux/actions';
+import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 export default function* homeSaga() {
   yield takeEvery(homeTypes.GET_HOME_POSTS, getHomePosts);
+  yield takeEvery(homeTypes.GET_SEARCH_POSTS, getSearchPosts);
+  yield takeEvery(homeTypes.GET_SEARCH_POSTS_USERS, getSearchPostUsers);
 }
 
 function* getHomePosts({
@@ -15,7 +23,7 @@ function* getHomePosts({
 }: {
   payload: IPayloadGetHomePost;
   type: string;
-}) {
+}): any {
   try {
     const {userId, streamClient, isRefresh} = payload;
     let homePosts, offset;
@@ -59,5 +67,115 @@ function* getHomePosts({
   } catch (error) {
     yield put(homeActions.setRefreshingHomePosts(false));
     yield put(homeActions.setLoadingHomePosts(false));
+  }
+}
+
+function* getSearchPosts({
+  payload,
+}: {
+  payload: IPayloadGetSearchPosts;
+  type: string;
+}): any {
+  const {searchText, actors, startDate, endDate, isLoadMore} = payload || {};
+  try {
+    let data: any[] = [];
+    const state = yield select(state => state?.home?.newsfeedSearch);
+    const {searchResults, totalResult, loadingResult} = state || {};
+    const params: IParamGetSearchPost = {content: searchText};
+
+    if (loadingResult) {
+      console.log(`\x1b[36m🐣️ saga getSearchPosts loading result\x1b[0m`);
+      return;
+    }
+
+    if (isLoadMore) {
+      if (
+        totalResult > 0 &&
+        searchResults?.length &&
+        totalResult > searchResults.length
+      ) {
+        data = searchResults;
+        params.offset = data.length;
+      } else {
+        console.log(`\x1b[36m🐣️ saga getSearchPosts cant load more\x1b[0m`);
+        return;
+      }
+    }
+
+    yield put(homeActions.setNewsfeedSearch({loadingResult: true}));
+
+    if (actors) {
+      params.actors = actors;
+    }
+    if (startDate) {
+      params.start_time = startDate;
+    }
+    if (endDate) {
+      params.end_time = endDate;
+    }
+    const response = yield call(homeDataHelper.getSearchPost, params);
+    data = data.concat(response?.results);
+    yield put(postActions.addToAllPosts({data, handleComment: false}));
+    yield put(
+      homeActions.setNewsfeedSearch({
+        loadingResult: false,
+        searchResults: data,
+        totalResult: response?.total,
+      }),
+    );
+  } catch (e) {
+    yield put(homeActions.setNewsfeedSearch({loadingResult: false}));
+    console.log(`\x1b[31m🐣️ saga getSearchPosts error: `, e, `\x1b[0m`);
+  }
+}
+
+function* getSearchPostUsers({payload}: {payload: string; type: string}): any {
+  try {
+    const state = yield select(state => state?.home?.newsfeedSearchUsers);
+    let data = state?.data || [];
+
+    //if doesnt have payload a.k.a search key => action load more page
+    let params: IParamsGetUsers | undefined = undefined;
+    if (payload || payload === '') {
+      data = [];
+      yield put(
+        homeActions.setNewsfeedSearchUsers({
+          key: payload,
+          loading: true,
+          canLoadMore: true,
+          offset: 0,
+          data: data,
+        }),
+      );
+      params = {key: payload, offset: 0, limit: state.limit};
+    } else {
+      if (state && state.canLoadMore && state.data?.length) {
+        params = {
+          key: state.key,
+          offset: state.data.length,
+          limit: state.limit,
+        };
+      }
+    }
+
+    if (state && params) {
+      const response = yield homeDataHelper.getUsers(params);
+      const newData = data.concat(response || []) || [];
+      const newCanLoadMore = newData?.length > state.data?.length;
+      yield put(
+        homeActions.setNewsfeedSearchUsers({
+          key: params.key,
+          limit: params.limit,
+          offset: params.offset,
+          data: newData,
+          loading: false,
+          canLoadMore: newCanLoadMore,
+        }),
+      );
+    } else {
+      console.log(`\x1b[36m🐣️ saga getSearchPostUsers: cant load more\x1b[0m`);
+    }
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ saga getSearchPostUsers error: `, e, `\x1b[0m`);
   }
 }

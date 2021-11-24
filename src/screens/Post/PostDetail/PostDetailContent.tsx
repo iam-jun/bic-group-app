@@ -1,11 +1,11 @@
 import {useBackHandler} from '@react-native-community/hooks';
-import {useFocusEffect} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import React, {
   memo,
-  useMemo,
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -26,6 +26,7 @@ import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 
 import {AppContext} from '~/contexts/AppContext';
+import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
@@ -46,11 +47,10 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
+import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
-import {showHideToastMessage} from '~/store/modal/actions';
-import {useBaseHook} from '~/hooks';
 
 const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -95,11 +95,13 @@ const _PostDetailContent = (props: any) => {
   const commentLeft = commentCount - listComment.length;
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
-  useFocusEffect(() => {
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
     if (!user && Platform.OS === 'web') {
       rootNavigation.replace(rootSwitch.authStack);
     }
-  });
+  }, [isFocused, user]);
 
   useEffect(() => {
     if (id && userId && streamClient) {
@@ -122,7 +124,7 @@ const _PostDetailContent = (props: any) => {
         }
       });
     }
-  }, [id, userId, streamClient]);
+  }, [id, userId]);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -187,10 +189,13 @@ const _PostDetailContent = (props: any) => {
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
-      if (sectionIndex === -1) {
+      if (sectionIndex > sectionData.length - 1 || sectionIndex === -1) {
         sectionIndex = sectionData.length - 1;
       }
-      if (itemIndex === -1) {
+      if (
+        itemIndex > sectionData?.[sectionIndex]?.data?.length ||
+        itemIndex === -1
+      ) {
         itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
       }
 
@@ -214,7 +219,7 @@ const _PostDetailContent = (props: any) => {
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     textInputRef.current?.focus?.();
-  }, [textInputRef.current]);
+  }, [textInputRef.current, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -364,6 +369,7 @@ const PostDetailContentHeader = ({
         postId={id}
         onPressComment={onPressComment}
         onContentLayout={onContentLayout}
+        isPostDetail
       />
       <Divider />
       {commentLeft > 0 && (

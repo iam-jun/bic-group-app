@@ -21,6 +21,8 @@ export interface SearchInputProps extends TextInputProps {
   autoFocus?: boolean;
   value?: string;
   onChangeText?: (value: string) => void;
+  onFocus?: () => void;
+  onSubmitEditing?: () => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
@@ -30,6 +32,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
   autoFocus,
   value,
   onChangeText,
+  onFocus,
+  onSubmitEditing,
 }: SearchInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -43,6 +47,14 @@ const SearchInput: React.FC<SearchInputProps> = ({
   const _onChangeText = (text: string) => {
     setText(text);
     onChangeText?.(text);
+  };
+
+  const _onFocus = () => {
+    onFocus?.();
+  };
+
+  const _onSubmitEditing = () => {
+    onSubmitEditing?.();
   };
 
   return (
@@ -59,10 +71,14 @@ const SearchInput: React.FC<SearchInputProps> = ({
           style={styles.textInput}
           value={text}
           autoFocus={autoFocus}
+          autoComplete={'off'}
           onChangeText={_onChangeText}
           placeholder={placeholder}
           placeholderTextColor={theme.colors.textSecondary}
           selectionColor={theme.colors.textSecondary}
+          onFocus={_onFocus}
+          returnKeyType={'search'}
+          onSubmitEditing={_onSubmitEditing}
         />
         {!!text && (
           <Icon

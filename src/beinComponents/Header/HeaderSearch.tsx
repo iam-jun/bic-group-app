@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -18,17 +18,28 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export interface HeaderSearchProps {
+  inputRef?: any;
   isShowSearch: boolean;
   onSearchText?: (searchText: string) => void;
   onPressBack?: () => void;
+  placeholder?: string;
+  autoFocus?: boolean;
+  onFocus?: () => void;
+  onSubmitSearch?: () => void;
 }
 
 const HeaderSearch: FC<HeaderSearchProps> = ({
+  inputRef,
   isShowSearch,
   onSearchText,
   onPressBack,
+  placeholder,
+  autoFocus = false,
+  onFocus,
+  onSubmitSearch,
 }: HeaderSearchProps) => {
   const [isShow, setIsShow] = useState(false);
+  const _inputRef = inputRef || useRef();
   const showValue = useSharedValue(0);
 
   const theme = useTheme() as ITheme;
@@ -94,9 +105,13 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
       <View style={styles.searchWrapper}>
         <Animated.View style={[searchContainerStyle, styles.searchContainer]}>
           <SearchInput
+            inputRef={_inputRef}
+            autoFocus={autoFocus}
+            onFocus={onFocus}
             style={styles.searchInput}
             onChangeText={_onChangeText}
-            placeholder={i18next.t('input:search_group')}
+            placeholder={placeholder || i18next.t('input:search_group')}
+            onSubmitEditing={onSubmitSearch}
           />
         </Animated.View>
       </View>

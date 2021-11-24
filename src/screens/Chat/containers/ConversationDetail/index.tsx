@@ -25,8 +25,8 @@ import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {ViewSpacing} from '~/components';
 import {chatPermissions, roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
-import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {IGroup} from '~/interfaces/IGroup';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
@@ -49,8 +49,9 @@ const _ConversationDetail = (): React.ReactElement => {
   const styles = createStyles(theme, coverHeight, insets);
   const {colors, spacing} = theme;
 
-  const {conversation} = useChat();
-  const {_id, disableNotifications} = conversation;
+  const roomId = route?.params?.roomId || '';
+  const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
+  const {disableNotifications} = conversation;
 
   const {rootNavigation} = useRootNavigation();
   const isDirect = conversation.type === roomTypes.DIRECT;
@@ -59,33 +60,40 @@ const _ConversationDetail = (): React.ReactElement => {
   const {user} = useAuth();
 
   useEffect(() => {
-    if (route?.params?.roomId)
-      dispatch(actions.getConversationDetail(route?.params?.roomId));
     dispatch(actions.clearSelectedUsers());
-  }, [route?.params?.roomId]);
+  }, [roomId]);
+
+  useEffect(() => {
+    /*
+      For web: if user reload page, check if rooms list have been
+      loaded then get room detail.
+    */
+    if (conversation._id && !conversation.background_img_url)
+      dispatch(actions.getConversationDetail(roomId));
+  }, [conversation._id]);
 
   const onPressBack = () => {
     if (rootNavigation.canGoBack) rootNavigation.goBack();
     else
       rootNavigation.replace(chatStack.conversation, {
-        roomId: route?.params?.roomId,
+        roomId,
       });
   };
 
   const goGroupMembers = () => {
     rootNavigation.navigate(chatStack.chatGroupMembers, {
-      roomId: conversation._id,
+      roomId,
     });
   };
 
   const goAddMembers = () => {
     dispatch(actions.clearSelectedUsers());
-    rootNavigation.navigate(chatStack.addMembers, {roomId: conversation._id});
+    rootNavigation.navigate(chatStack.addMembers, {roomId});
   };
 
   const saveChatName = (text: string) => {
     dispatch(modalActions.hideAlert());
-    dispatch(actions.updateConversationName(text));
+    dispatch(actions.updateConversationName({roomId, name: text}));
   };
 
   const showChangeNameModal = () => {
@@ -107,7 +115,7 @@ const _ConversationDetail = (): React.ReactElement => {
 
   const goToEditConversationDescription = () => {
     rootNavigation.navigate(chatStack.editChatDescription, {
-      roomId: conversation._id,
+      roomId,
     });
   };
 
@@ -169,11 +177,7 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const doLeaveChat = () => {
-    if (conversation.type !== roomTypes.GROUP) {
-      dispatch(actions.leaveChat(conversation?._id, roomTypes.QUICK));
-    } else {
-      dispatch(actions.leaveChat(conversation?.beinGroupId, roomTypes.GROUP));
-    }
+    dispatch(actions.leaveChat(conversation));
   };
 
   const onItemPress = (type: string) => {
@@ -249,7 +253,7 @@ const _ConversationDetail = (): React.ReactElement => {
   const onPressMute = () => {
     dispatch(
       actions.toggleConversationNotifications({
-        roomId: _id,
+        roomId,
         currentDisableNotifications: disableNotifications,
       }),
     );

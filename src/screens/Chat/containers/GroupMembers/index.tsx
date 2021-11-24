@@ -5,36 +5,40 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
+import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import {chatPermissions, roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
-import useChat from '~/hooks/chat';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {IChatUser} from '~/interfaces/IChat';
+import {IGroup} from '~/interfaces/IGroup';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import mainStack from '~/router/navigator/MainStack/stack';
+import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import {showAlertNewFeature} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import MembersSelection from '../../fragments/MembersSelection';
 import actions from '../../redux/actions';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import {IGroup} from '~/interfaces/IGroup';
-import Button from '~/beinComponents/Button';
-import Text from '~/beinComponents/Text';
-import mainStack from '~/router/navigator/MainStack/stack';
 
 const _GroupMembers = (): React.ReactElement => {
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<RootStackParamList, 'GroupMembers'>>();
 
   const {spacing} = useTheme() as ITheme;
-  const {conversation, members, roles} = useChat();
+  const roomId = route?.params?.roomId || '';
+  const conversation = useKeySelector(`chat.rooms.items.${roomId}`) || {};
+  const roles = useKeySelector('chat.roles');
+  const members = useKeySelector('chat.members');
   const {rootNavigation} = useRootNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMember, setSelectedMember] = useState<IChatUser>();
@@ -204,7 +208,7 @@ const _GroupMembers = (): React.ReactElement => {
   };
 
   const doRemoveUser = (user: IChatUser) => {
-    dispatch(actions.removeMember(user));
+    dispatch(actions.removeMember({roomId, user}));
   };
 
   const onRemovePress = () => {

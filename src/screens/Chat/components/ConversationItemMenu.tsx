@@ -1,13 +1,11 @@
-import React, {FC, useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {FC, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
-import {ITheme} from '~/theme/interfaces';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import * as modalActions from '~/store/modal/actions';
-import commonActions, {IAction} from '~/constants/commonActions';
 import chatActions from '~/screens/Chat/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 export interface ConversationItemMenuProps {
   conversationId: string;

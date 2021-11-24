@@ -1,6 +1,9 @@
 import React, {FC, memo} from 'react';
 import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+// @ts-ignore
+import mark from 'markdown-it-mark';
+
 import Icon from '~/beinComponents/Icon';
 import {
   blacklistDefault,
@@ -52,6 +55,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   const _children = replaceLineBreak(children);
 
   const markdownIt = MarkdownIt({typographer: false, linkify: true})
+    .use(mark, {})
     .use(emojiPlugin, {
       defs: emojiDefs,
       shortcuts: emojiShortcuts,
@@ -101,6 +105,13 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
     },
     regex_linebreak: (node: any) => {
       return <Text key={node.key}>{'\n'}</Text>;
+    },
+    mark: (node: any, children: any, parent: any, styles: any) => {
+      return (
+        <Text key={node.key} style={styles.mark}>
+          {children}
+        </Text>
+      );
     },
   };
 
@@ -159,6 +170,11 @@ const createStyle = (theme: ITheme) => {
       color: colors.link,
     },
     regex_linebreak: {},
+    mark: {
+      backgroundColor: '#F6EF79',
+      borderRadius: 6,
+      overflow: 'hidden',
+    },
 
     // The main container
     body: {...textStyles.body},

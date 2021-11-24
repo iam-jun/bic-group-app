@@ -50,6 +50,8 @@
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_read_more": "Read more",
+    "text_show_less": "Show less",
     "error": {
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
@@ -214,7 +216,30 @@
   "home": {
     "newsfeed": "Bản tin",
     "saved_posts": "Bài viết đã lưu",
-    "draft_post": "Bài nháp"
+    "draft_post": "Bài nháp",
+    "newsfeed_search": {
+      "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
+      "clear": "Xoá hết",
+      "choose_creator": "Chọn người đăng",
+      "choose_date": "Chọn ngày đăng",
+      "from": "Từ ngày",
+      "to": "Đến ngày",
+      "label_all_filters": "Tất cả bộ lọc",
+      "label_creator": "Người đăng",
+      "label_creation_date": "Ngày đăng",
+      "label_anyone": "Mọi người",
+      "label_anytime": "Mọi lúc",
+      "btn_reset": "Đặt lại",
+      "btn_show_results": "Xem kết quả",
+      "search_people": "Tìm người dùng...",
+      "apply": "Xác nhận",
+      "filter": "Lọc",
+      "filter_created_by": "Người đăng",
+      "filter_created_by_all": "Tất cả",
+      "filter_created_by_me": "Chính mình",
+      "filter_created_by_specific": "Bài viết của",
+      "filter_date": "Ngày đăng"
+    }
   },
   "post": {
     "news_feed": "News Feed",
@@ -313,7 +338,8 @@
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
       "title_empty_cant_load_more": "Bạn đã xem hết rồi",
-      "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi"
+      "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi",
+      "text_empty_search_post": "Xin lỗi, chúng tôi không tìm thấy\nnội dung bạn tìm kiếm"
     },
     "draft": {
       "btn_post_now": "Đăng ngay",
@@ -377,7 +403,9 @@
     "scroll_bottom": "Xuống cuối trang"
   },
   "input": {
-    "search": "Tìm kiếm người để trò chuyện..."
+    "search": "Tìm kiếm người để trò chuyện...",
+    "search_group": "Tìm kiếm nhóm hoặc người...",
+    "search_post": "Tìm kiếm bài viết..."
   },
   "groups": {
     "search_results": "Kết quả tìm kiếm",

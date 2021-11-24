@@ -33,9 +33,13 @@ import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
+import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
+import {useBaseHook} from '~/hooks';
+import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 
 const Newsfeed = () => {
   const listRef = useRef<any>();
+  const headerRef = useRef<any>();
 
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
@@ -43,6 +47,7 @@ const Newsfeed = () => {
     deviceDimensions.phone,
   );
   const styles = createStyle(theme);
+  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {streamClient} = useContext(AppContext);
   const streamRef = useRef<any>({}).current;
@@ -82,6 +87,7 @@ const Newsfeed = () => {
     (tabName: ITabTypes) => {
       if (tabName === 'home') {
         listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+        headerRef?.current?.hideSearch?.();
       }
     },
     [listRef],
@@ -101,24 +107,69 @@ const Newsfeed = () => {
     });
   }, [homePosts]);
 
+  const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
+    if (isShow) {
+      dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
+    } else {
+      dispatch(homeActions.clearNewsfeedSearch());
+      dispatch(homeActions.clearNewsfeedSearchFilter());
+      dispatch(homeActions.clearNewsfeedSearchUsers());
+    }
+  };
+
+  const onSearchText = (text: string, searchInputRef: any) => {
+    const payload: IPayloadSetNewsfeedSearch = {searchText: text};
+    if (!text) {
+      payload.isSuggestion = true;
+      searchInputRef?.current?.focus?.();
+    }
+    dispatch(homeActions.setNewsfeedSearch(payload));
+  };
+
+  const onFocusSearch = () => {
+    dispatch(
+      homeActions.setNewsfeedSearch({isSuggestion: true, searchResults: []}),
+    );
+  };
+
+  const onSubmitSearch = () => {
+    dispatch(
+      homeActions.setNewsfeedSearch({isSuggestion: false, searchResults: []}),
+    );
+  };
+
   const renderHeader = () => {
     if (isLaptop)
       return (
         <Header
+          headerRef={headerRef}
           hideBack
           title={'post:news_feed'}
           titleTextProps={{useI18n: true}}
           style={styles.headerOnLaptop}
           removeBorderAndShadow
+          onShowSearch={onShowSearch}
+          onSearchText={onSearchText}
+          searchPlaceholder={t('input:search_post')}
+          autoFocusSearch
+          onFocusSearch={onFocusSearch}
+          onSubmitSearch={onSubmitSearch}
         />
       );
 
     return (
       <Header
+        headerRef={headerRef}
         avatar={images.logo_bein}
         hideBack
         menuIcon={'Edit'}
         onPressMenu={navigateToCreatePost}
+        onShowSearch={onShowSearch}
+        onSearchText={onSearchText}
+        searchPlaceholder={t('input:search_post')}
+        autoFocusSearch
+        onFocusSearch={onFocusSearch}
+        onSubmitSearch={onSubmitSearch}
       />
     );
   };
@@ -136,19 +187,22 @@ const Newsfeed = () => {
       style={styles.container}
       onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {renderHeader()}
-      <NewsfeedList
-        data={homePosts}
-        refreshing={refreshing}
-        canLoadMore={!noMoreHomePosts}
-        onEndReach={onEndReach}
-        onRefresh={onRefresh}
-        HeaderComponent={
-          <HeaderCreatePost
-            style={styles.headerCreatePost}
-            parentWidth={newsfeedWidth}
-          />
-        }
-      />
+      <View style={styles.flex1}>
+        <NewsfeedList
+          data={homePosts}
+          refreshing={refreshing}
+          canLoadMore={!noMoreHomePosts}
+          onEndReach={onEndReach}
+          onRefresh={onRefresh}
+          HeaderComponent={
+            <HeaderCreatePost
+              style={styles.headerCreatePost}
+              parentWidth={newsfeedWidth}
+            />
+          }
+        />
+        <NewsfeedSearch />
+      </View>
     </View>
   );
 };
@@ -157,6 +211,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing, dimension} = theme;
 
   return StyleSheet.create({
+    flex1: {flex: 1},
     container: {
       flex: 1,
       backgroundColor:
