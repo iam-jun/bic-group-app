@@ -10,6 +10,7 @@ import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NodeEmoji from 'node-emoji';
 import TimeView from '~/beinComponents/TimeView';
+import Div from '~/beinComponents/Div';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -47,11 +48,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   isActive = false,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme, is_read, isActive);
+  const styles = createStyles(theme);
   const {colors} = theme;
 
   const activity = activities[0];
   const avatar = activity.actor.data?.avatar || activity.actor.data?.avatarUrl;
+
+  let className = 'notification-item';
+  if (isActive) className = 'notification-item--active';
 
   // this function is used to determine type of each notification
   // then render them with defference content corresponding their type
@@ -405,17 +409,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   // render notification item
   return (
-    <View style={styles.container}>
-      {renderIndicator()}
-      <View style={styles.avatarContainer}>{renderAvatar(activities)}</View>
-      <View style={styles.flex1}>{renderNotiContent(activities)}</View>
-      <TimeView time={updated_at} style={styles.timeCreated} type={'short'} />
-      {/*<Icon style={styles.iconOptions} icon="EllipsisH" size={16} />*/}
-    </View>
+    <Div className={className}>
+      <View style={styles.container}>
+        {renderIndicator()}
+        <View style={styles.avatarContainer}>{renderAvatar(activities)}</View>
+        <View style={styles.flex1}>{renderNotiContent(activities)}</View>
+        <TimeView time={updated_at} style={styles.timeCreated} type={'short'} />
+        {/*<Icon style={styles.iconOptions} icon="EllipsisH" size={16} />*/}
+      </View>
+    </Div>
   );
 };
 
-const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
+const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
@@ -425,7 +431,6 @@ const createStyles = (theme: ITheme, isRead: boolean, isActive: boolean) => {
       alignItems: 'flex-start',
       paddingVertical: spacing?.padding.base,
       paddingHorizontal: spacing?.padding.large,
-      backgroundColor: isActive ? colors.primary5 : colors.background,
     },
     stateIndicatorActive: {
       position: 'absolute',
