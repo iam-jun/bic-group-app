@@ -461,26 +461,17 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
           : quotedMessages,
       };
     }
-    case types.SELECT_USER:
+    case types.SELECT_USER: {
+      const included = selectedUsers.find(
+        (item: IChatUser) => payload._id === item._id,
+      );
       return {
         ...state,
-        selectedUsers: !action.payload.selected
-          ? [...selectedUsers, {...action.payload, selected: true}]
-          : selectedUsers.filter(user => user._id !== action.payload._id),
-        [action.field || 'users']: {
-          // @ts-ignore
-          ...state[action.field || 'users'],
-          // @ts-ignore
-          data: state[action.field || 'users'].data.map((item: IChatUser) =>
-            item._id === action.payload._id
-              ? {
-                  ...item,
-                  selected: !item.selected,
-                }
-              : item,
-          ),
-        },
+        selectedUsers: !included
+          ? [...selectedUsers, payload]
+          : selectedUsers.filter(user => user._id !== payload._id),
       };
+    }
     case types.CLEAR_SELECTED_USERS:
       return {
         ...state,

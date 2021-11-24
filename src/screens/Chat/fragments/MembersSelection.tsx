@@ -56,10 +56,13 @@ const _MembersSelection: React.FC<MembersSelectionProps> = ({
   };
 
   const renderItemUser = ({item}: {item: IChatUser; index: number}) => {
+    const selected = selectedUsers.find(
+      (user: IChatUser) => user._id === item._id,
+    );
     return (
       <PrimaryItem
         title={item.name}
-        isChecked={item.selected}
+        isChecked={selected}
         onPressMenu={onPressMenu ? (e: any) => onPressMenu(e, item) : undefined}
         LeftComponent={
           <Avatar.Large
@@ -98,6 +101,7 @@ const _MembersSelection: React.FC<MembersSelectionProps> = ({
         <ListView
           title={i18next.t('chat:title_admin')}
           {...roles}
+          loading={false}
           renderItem={renderItemUser}
         />
       )}
