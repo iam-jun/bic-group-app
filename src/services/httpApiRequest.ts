@@ -304,8 +304,7 @@ const handleResponseError = async (
       },
     };
   } else {
-    handleSystemIssue();
-
+    // TODO: Does this case need to handleSystemIssue?
     return {
       code: 600, // request config error?
       data: null,
@@ -527,7 +526,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   );
 
   // return
-  console.log(`requestConfig`, requestConfig);
   return axiosInstance(requestConfig);
 };
 
