@@ -12,6 +12,7 @@ import {
   roomTypes,
   chatSocketId,
 } from '~/constants/chat';
+import errorCode from '~/constants/errorCode';
 import {IToastMessage} from '~/interfaces/common';
 import {
   IChatUser,
@@ -1004,6 +1005,8 @@ function* handleNotifyUser(payload?: any) {
 }
 
 function* showError(err: any) {
+  if (err.code === errorCode.systemIssue) return;
+
   const toastMessage: IToastMessage = {
     content:
       err?.meta?.message ||
