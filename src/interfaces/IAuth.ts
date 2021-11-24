@@ -123,7 +123,7 @@ export interface IUserWorkExperience {
   description?: string;
   currentlyWorkHere?: boolean;
   startDate?: string;
-  endDate?: string;
+  endDate?: string | null;
 }
 
 export interface IUserAddWorkExperience {
@@ -133,5 +133,5 @@ export interface IUserAddWorkExperience {
   description?: string;
   currentlyWorkHere?: boolean;
   startDate?: string;
-  endDate?: string;
+  endDate?: string | null;
 }
