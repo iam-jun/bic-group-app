@@ -1,12 +1,5 @@
 import types from './types';
 
-export function setNoInternet(payload: boolean) {
-  return {
-    type: types.SET_NO_INTERNET,
-    payload,
-  };
-}
-
 export function setSystemIssue(payload: boolean) {
   return {
     type: types.SET_SYSTEM_ISSUE,
