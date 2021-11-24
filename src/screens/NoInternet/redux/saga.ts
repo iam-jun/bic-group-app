@@ -1,6 +1,6 @@
 import {put, takeLatest} from 'redux-saga/effects';
 
-import * as actions from './actions';
+import actions from './actions';
 import types from './types';
 
 export default function* noInternetSaga() {

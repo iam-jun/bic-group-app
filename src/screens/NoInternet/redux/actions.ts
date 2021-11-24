@@ -1,20 +1,18 @@
 import types from './types';
 
-export function setSystemIssue(payload: boolean) {
-  return {
+const noInternetActions = {
+  setSystemIssue: (payload: boolean) => ({
     type: types.SET_SYSTEM_ISSUE,
     payload,
-  };
-}
+  }),
 
-export function showSystemIssue() {
-  return {
+  showSystemIssue: () => ({
     type: types.SHOW_SYSTEM_ISSUE,
-  };
-}
+  }),
 
-export function hideSystemIssue() {
-  return {
+  hideSystemIssue: () => ({
     type: types.HIDE_SYSTEM_ISSUE,
-  };
-}
+  }),
+};
+
+export default noInternetActions;

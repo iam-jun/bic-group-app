@@ -16,7 +16,7 @@ import apiConfig, {
 } from '~/configs/apiConfig';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
-import * as noInternetActions from '~/screens/NoInternet/redux/actions';
+import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 
