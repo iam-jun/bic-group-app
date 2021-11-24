@@ -1,7 +1,7 @@
 import {put, takeLatest} from 'redux-saga/effects';
 
 import * as actions from './actions';
-import * as types from './types';
+import types from './types';
 
 export default function* noInternetSaga() {
   yield takeLatest(types.SHOW_SYSTEM_ISSUE, showSystemIssue);
