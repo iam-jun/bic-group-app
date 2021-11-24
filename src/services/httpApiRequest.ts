@@ -7,6 +7,7 @@ import moment from 'moment';
 import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
+import NetInfo from '@react-native-community/netinfo';
 
 import apiConfig, {
   FeedResponseError,
@@ -88,8 +89,22 @@ const refreshFailKickOut = () => {
   unauthorizedGetStreamReqQueue = [];
 };
 
-const handleSystemIssue = () => {
-  // TODO: Add checking if there is no internet => show banner and return
+const handleSystemIssue = async () => {
+  const isInternetReachable = await NetInfo.fetch().then(
+    state => state.isInternetReachable,
+  );
+
+  // NOTE: sometimes, isInternetReachable = null, as it is not defined yet
+  if (!isInternetReachable) {
+    // FIXME: replace with showing no internet banner
+    Store.store.dispatch(
+      modalActions.showHideToastMessage({
+        content: 'error:no_internet',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+    return;
+  }
 
   Store.store.dispatch(noInternetActions.showSystemIssue());
 
