@@ -372,6 +372,8 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
+
+    navigation.navigate(groupStack.groupMembers, {groupId});
   } catch (err) {
     console.log(
       '\x1b[33m',
