@@ -283,7 +283,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           const countKey = piece.split('​').length - 1;
           //if a pair ​ in piece, it mean user alter content inside mention text, just ignore it, not show in input
           //but if only one ​ in piece, mean user press delete from last, should remove invalid content and keep header
-          if (countKey < 2) {
+          if (countKey < 3) {
             const keyIndex = piece.lastIndexOf('​@​');
             const pieceHeader = piece.slice(0, keyIndex);
             parseDisplay.push(pieceHeader);
