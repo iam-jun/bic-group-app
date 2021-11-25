@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import React, {
   useCallback,
   useEffect,
@@ -93,12 +94,15 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const _mentionInputRef = mentionInputRef || useRef<any>();
   const inputRef = textInputRef || useRef<TextInput>();
   const listRef = useRef<any>();
+  const mentionMap = useRef<any>({});
+  const inputSelection = useRef<any>({});
+
   const [mentioning, setMentioning] = useState(false);
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [key, setKey] = useState('');
+  const [contentDisplay, setContentDisplay] = useState<any>([]);
   const [content, setContent] = useState('');
-  const [inputSelection, setInputSelection] = useState<any>();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
   const [highlightItem, sethHighlightItem] = useState<any>();
@@ -106,6 +110,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
+
+  //because of issue textInput cant use as container in web, we should check to disable children mode
+  const {value: compInputValue, ...restCompInputProps} = componentInputProps;
+  const value = Platform.OS === 'web' ? compInputValue || content : undefined;
+  const children = Platform.OS === 'web' ? undefined : contentDisplay;
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -121,6 +130,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   useEffect(() => {
     onChangeText?.(content);
+
+    //update value of comment input if it
+    componentInputProps?.commentInputRef?.current?.setText?.(content);
   }, [content]);
 
   useEffect(() => {
@@ -136,8 +148,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const getContent = () => content;
 
+  const _setContent = (c: string) => {
+    _onChangeText(c);
+  };
+
   useImperativeHandle(_mentionInputRef, () => ({
-    setContent,
+    setContent: _setContent,
     getContent,
   }));
 
@@ -180,19 +196,24 @@ const MentionInput: React.FC<MentionInputProps> = ({
       });
   }, 50);
 
-  const _onStartMention = () => {
-    getData('', getDataParam);
-  };
+  const _onStartMention = useCallback(
+    debounce(() => {
+      getData('', getDataParam);
+    }, 50),
+    [getDataParam],
+  );
 
   const _onMentionText = useRef(
     debounce((mentionKey: string, getDataParam: any) => {
       onMentionText?.(mentionKey);
+      setKey(mentionKey);
       getData(mentionKey, getDataParam);
     }, 200),
   ).current;
 
   const checkMention = (text: string, sIndex: number) => {
     const cutText = text?.substr?.(0, sIndex) || '';
+    // console.log(`\x1b[36m🐣️ MentionInput checkMention cutText: ${cutText} - ${sIndex} - ${text}\x1b[0m`);
     let isMention = false;
     const matches = cutText?.match?.(mentionRegex);
     let mentionKey = '';
@@ -210,9 +231,71 @@ const MentionInput: React.FC<MentionInputProps> = ({
     setMentioning(isMention);
   };
 
+  //Replace mention syntax with highlight syntax
+  const getReplacedMention = (text: string) => {
+    let result = text;
+    const audienceRegexAll = /@\[([^:@]+):([^:@]+):([^@\]]+)\]/g;
+    const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)\]/;
+    const matches = text?.match?.(audienceRegexAll);
+    matches?.map(match => {
+      const test = match.match?.(audienceRegex);
+      mentionMap.current[match] = `​@​${test?.[3]}​`;
+      result = result.replace(match, mentionMap.current[match]);
+    });
+    return result;
+  };
+
   const _onChangeText = (text: string) => {
-    checkMention(text, inputSelection?.end);
-    setContent(text);
+    //if new content is same as old content, just skip
+    if (text === content) {
+      return;
+    }
+
+    //Replace origin mention syntax with highlight syntax
+    const replacedMention = getReplacedMention(text);
+
+    //Parse highlight syntax to display view
+    const parseDisplay: any[] = [];
+    const split = replacedMention.split(/(​@​.*?​)/g);
+    split.map((piece: string, index: number) => {
+      if (piece.includes('​')) {
+        //validate if each piece is a valid mention, include in mention map
+        let validMention = false;
+        Object.keys(mentionMap.current).map(key => {
+          if (mentionMap.current[key] === piece) {
+            validMention = true;
+          }
+        });
+        if (validMention) {
+          parseDisplay.push(
+            <Text.BodyM key={`piece_${index}_${piece}`} color={colors.link}>
+              {piece}
+            </Text.BodyM>,
+          );
+        } else {
+          //when piece is not a valid mention, its means user changed content, handle to remove invalid content
+          const countKey = piece.split('​').length - 1;
+          //if a pair ​ in piece, it mean user alter content inside mention text, just ignore it, not show in input
+          //but if only one ​ in piece, mean user press delete from last, should remove invalid content and keep header
+          if (countKey < 2) {
+            const keyIndex = piece.lastIndexOf('​@​');
+            const pieceHeader = piece.slice(0, keyIndex);
+            parseDisplay.push(pieceHeader);
+          }
+        }
+      } else {
+        parseDisplay.push(piece);
+      }
+    });
+
+    //Revert origin mention syntax to set content
+    let originContent = text;
+    Object.keys(mentionMap.current).map(key => {
+      originContent = originContent.replace(mentionMap.current[key], key);
+    });
+
+    setContentDisplay(parseDisplay);
+    setContent(originContent);
   };
 
   const replaceContent = (
@@ -221,7 +304,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
     replacer: string,
   ) => {
     if (searchValue === '@') {
-      const selectionStart = inputSelection?.start || 0;
+      const selectionStart = inputSelection.current?.start || 0;
       let head = content?.substr(0, selectionStart) || '';
       if (head?.[head.length - 1] === '@') {
         head = head.substr(0, head.length - 1);
@@ -238,14 +321,14 @@ const MentionInput: React.FC<MentionInputProps> = ({
       const mention = `@[u:${item[mentionField]}:${
         item.fullname || item.name
       }] `;
-      inputRef.current?.focus();
-      const newContent = replaceContent(content, `@${key}`, mention);
-      setContent(newContent);
-      componentInputProps?.commentInputRef?.current?.setText?.(
-        newContent || '',
-      );
+      const replacedMention = getReplacedMention(content);
+      const newContent = replaceContent(replacedMention, `@${key}`, mention);
+      _onChangeText(newContent || '');
       onPress?.(item);
       setMentioning(false);
+      setTimeout(() => {
+        inputRef.current?.focus?.();
+      }, 500);
     },
     [key, content],
   );
@@ -255,17 +338,17 @@ const MentionInput: React.FC<MentionInputProps> = ({
     onPressAll?.();
     if (allReplacer) {
       const newContent = replaceContent(content, `@${key}`, allReplacer);
-      setContent(newContent);
-      componentInputProps?.commentInputRef?.current?.setText?.(
-        newContent || '',
-      );
+      _onChangeText(newContent);
     }
     setMentioning(false);
   };
 
   const onSelectionChange = (event: any) => {
-    checkMention(content, event?.nativeEvent?.selection?.end);
-    setInputSelection(event.nativeEvent.selection);
+    inputSelection.current = event.nativeEvent.selection;
+
+    //Replace origin mention syntax with highlight syntax
+    const replacedMention = getReplacedMention(content);
+    checkMention(replacedMention, inputSelection.current?.end);
   };
 
   // @ts-ignore
@@ -432,17 +515,18 @@ const MentionInput: React.FC<MentionInputProps> = ({
         */
           <ComponentInput
             nativeID="component-input--hidden"
-            value={content}
+            value={value}
             multiline
             style={styles.hidden}
             onContentSizeChange={_onContentSizeChange}
             editable={!disabled}
-            onKeyPress={_onKeyPress}
-          />
+            onKeyPress={_onKeyPress}>
+            {children}
+          </ComponentInput>
         )}
         <ComponentInput
-          {...componentInputProps}
-          value={content}
+          {...restCompInputProps}
+          value={value}
           textInputRef={inputRef}
           onChangeText={_onChangeText}
           placeholder={placeholderText}
@@ -455,8 +539,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
           ]}
           onSelectionChange={onSelectionChange}
           editable={!disabled}
-          onKeyPress={_onKeyPress}
-        />
+          onKeyPress={_onKeyPress}>
+          {children}
+        </ComponentInput>
       </View>
       {mentioning && (
         <View
