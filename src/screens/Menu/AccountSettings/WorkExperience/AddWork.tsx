@@ -1,12 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import i18next from 'i18next';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -29,6 +23,8 @@ import menuActions from '../../redux/actions';
 import {formatDate} from '~/utils/formatData';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
+import {showHideToastMessage} from '~/store/modal/actions';
+import {IToastMessage} from '~/interfaces/common';
 
 const AddWork = () => {
   const theme = useTheme() as ITheme;
@@ -65,8 +61,14 @@ const AddWork = () => {
   );
   const [selectingStartDate, setSelectingStartDate] = useState<boolean>(false);
 
-  const [endDateValue, setEndDateValue] = useState<string>(endDate || '');
+  const [endDateValue, setEndDateValue] = useState<string | null>(
+    endDate || null,
+  );
   const [selectingEndDate, setSelectingEndDate] = useState<boolean>(false);
+
+  useEffect(() => {
+    isWorkHere && setEndDateValue(null);
+  }, [isWorkHere]);
 
   const navigateBack = () => {
     if (rootNavigation.canGoBack) {
@@ -77,6 +79,21 @@ const AddWork = () => {
   };
 
   const onSave = () => {
+    if (
+      endDateValue &&
+      new Date(startDateValue).getTime() > new Date(endDateValue).getTime()
+    ) {
+      const toastMessage: IToastMessage = {
+        content: 'settings:text_enddate_after_startdate',
+        props: {
+          textProps: {useI18n: true},
+          type: 'error',
+        },
+      };
+      dispatch(showHideToastMessage(toastMessage));
+      return;
+    }
+
     const data = {
       company: companyValue.trim(),
       titlePosition: positionValue.trim(),
@@ -84,7 +101,7 @@ const AddWork = () => {
       description: descriptionValue.trim(),
       currentlyWorkHere: isWorkHere,
       startDate: startDateValue ? startDateValue : undefined,
-      endDate: endDateValue ? endDateValue : undefined,
+      endDate: endDateValue,
     };
     selectedWorkItem
       ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
@@ -144,6 +161,7 @@ const AddWork = () => {
         value={companyValue}
         maxLength={50}
         left={
+          // @ts-ignore
           <TextInputPaper.Icon
             name={() => (
               <Icon
@@ -232,7 +250,7 @@ const AddWork = () => {
           <Text.H6 useI18n>common:text_end_date</Text.H6>
           <ButtonWrapper onPress={onEndDateEditOpen}>
             <Text.ButtonSmall color={theme.colors.primary7}>
-              {formatDate(endDateValue, 'MMM Do, YYYY') ||
+              {(endDateValue && formatDate(endDateValue, 'MMM Do, YYYY')) ||
                 i18next.t('common:text_not_set')}
             </Text.ButtonSmall>
           </ButtonWrapper>
@@ -297,7 +315,7 @@ const AddWork = () => {
           <DateTimePicker
             isVisible={selectingStartDate}
             date={new Date()}
-            mode={Platform.OS === 'web' ? 'time' : 'date'}
+            mode={'date'}
             onConfirm={onSetStartDate}
             onCancel={onStartDateEditClose}
           />
@@ -309,7 +327,7 @@ const AddWork = () => {
           <DateTimePicker
             isVisible={selectingEndDate}
             date={new Date()}
-            mode={Platform.OS === 'web' ? 'time' : 'date'}
+            mode={'date'}
             onConfirm={onSetEndDate}
             onCancel={onEndDateEditClose}
           />
