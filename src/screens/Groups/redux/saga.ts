@@ -372,6 +372,8 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
+
+    navigation.navigate(groupStack.groupMembers, {groupId});
   } catch (err) {
     console.log(
       '\x1b[33m',
@@ -424,10 +426,10 @@ function* joinNewGroup({
   payload: {groupId: number; groupName: string};
 }) {
   try {
-    console.log(`payload`, payload);
     const {groupId, groupName} = payload;
 
     yield groupsDataHelper.joinGroup(groupId);
+    yield put(groupsActions.getJoinedGroups());
 
     const toastMessage: IToastMessage = {
       content: 'You are now a member of ' + groupName,

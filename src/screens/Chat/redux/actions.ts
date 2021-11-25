@@ -158,6 +158,10 @@ export default {
     type: Actions.UPDATE_MESSAGE,
     payload,
   }),
+  updateLastMessage: (payload: IMessage) => ({
+    type: Actions.UPDATE_LAST_MESSAGE,
+    payload,
+  }),
   updateConversationName: (payload: {roomId: string; name: string}) => ({
     type: Actions.UPDATE_CONVERSATION_NAME,
     payload,

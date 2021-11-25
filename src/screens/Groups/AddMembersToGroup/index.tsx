@@ -3,7 +3,6 @@ import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
 
 import {IUser} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
@@ -17,13 +16,12 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-const AddMembersToGroup = (props: any): React.ReactElement => {
+const AddMembersToGroup = (props: any) => {
   const params = props.route.params;
   const {groupId} = params || {};
 
   const theme: ITheme = useTheme() as ITheme;
   const {spacing} = theme;
-  const navigation = useNavigation();
 
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
@@ -68,7 +66,6 @@ const AddMembersToGroup = (props: any): React.ReactElement => {
   const doAddUsers = () => {
     const userIds = selectedUsers.map((user: IUser) => user.id);
     dispatch(groupsActions.addMembers({groupId, userIds}));
-    navigation.goBack();
   };
 
   return (

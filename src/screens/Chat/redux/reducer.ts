@@ -399,19 +399,6 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
               ? payload._id
               : roomUnreadMessage,
         },
-        rooms: payload.system
-          ? rooms
-          : {
-              ...rooms,
-              items: {
-                ...rooms.items,
-                [payload.room_id]: {
-                  ...rooms.items[payload.room_id],
-                  lastMessage: payload,
-                  _updatedAt: payload.createAt,
-                },
-              },
-            },
         quotedMessages: quotedMessages?.[payload._id]
           ? {
               ...quotedMessages,
@@ -472,6 +459,23 @@ function reducer(state = initState, action: IAction = {dataType: 'users'}) {
           : selectedUsers.filter(user => user._id !== payload._id),
       };
     }
+    case types.UPDATE_LAST_MESSAGE:
+      return {
+        ...state,
+        rooms: payload.system
+          ? rooms
+          : {
+              ...rooms,
+              items: {
+                ...rooms.items,
+                [payload.room_id]: {
+                  ...rooms.items[payload.room_id],
+                  lastMessage: payload,
+                  _updatedAt: payload.createdAt,
+                },
+              },
+            },
+      };
     case types.CLEAR_SELECTED_USERS:
       return {
         ...state,
