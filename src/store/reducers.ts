@@ -62,9 +62,11 @@ const rootReducers = (state, action) => {
         })
         .catch(e => console.log('error when delete token', e));
     }
-    AsyncStorage.multiRemove(['persist:root', 'persist:auth']).catch(e =>
-      console.log('error when logout', e),
-    );
+    AsyncStorage.multiRemove([
+      'persist:root',
+      'persist:auth',
+      'persist:notifications',
+    ]).catch(e => console.log('error when logout', e));
     return appReducer(undefined, action);
   }
 
