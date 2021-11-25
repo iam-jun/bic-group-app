@@ -251,6 +251,12 @@ const MentionInput: React.FC<MentionInputProps> = ({
       return;
     }
 
+    //use old flow for web
+    if (Platform.OS === 'web') {
+      setContent(text);
+      return;
+    }
+
     //Replace origin mention syntax with highlight syntax
     const replacedMention = getReplacedMention(text);
 
@@ -321,14 +327,17 @@ const MentionInput: React.FC<MentionInputProps> = ({
       const mention = `@[u:${item[mentionField]}:${
         item.fullname || item.name
       }] `;
-      const replacedMention = getReplacedMention(content);
-      const newContent = replaceContent(replacedMention, `@${key}`, mention);
-      _onChangeText(newContent || '');
+      if (Platform.OS === 'web') {
+        inputRef.current?.focus();
+        const newContent = replaceContent(content, `@${key}`, mention);
+        setContent(newContent);
+      } else {
+        const replacedMention = getReplacedMention(content);
+        const newContent = replaceContent(replacedMention, `@${key}`, mention);
+        _onChangeText(newContent || '');
+      }
       onPress?.(item);
       setMentioning(false);
-      setTimeout(() => {
-        inputRef.current?.focus?.();
-      }, 500);
     },
     [key, content],
   );
@@ -337,8 +346,16 @@ const MentionInput: React.FC<MentionInputProps> = ({
     inputRef.current?.focus();
     onPressAll?.();
     if (allReplacer) {
-      const newContent = replaceContent(content, `@${key}`, allReplacer);
-      _onChangeText(newContent);
+      if (Platform.OS === 'web') {
+        const newContent = replaceContent(content, `@${key}`, allReplacer);
+        setContent(newContent);
+        componentInputProps?.commentInputRef?.current?.setText?.(
+          newContent || '',
+        );
+      } else {
+        const newContent = replaceContent(content, `@${key}`, allReplacer);
+        _onChangeText(newContent);
+      }
     }
     setMentioning(false);
   };
@@ -347,8 +364,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
     inputSelection.current = event.nativeEvent.selection;
 
     //Replace origin mention syntax with highlight syntax
-    const replacedMention = getReplacedMention(content);
-    checkMention(replacedMention, inputSelection.current?.end);
+    const contentToCheck =
+      Platform.OS === 'web' ? content : getReplacedMention(content);
+    checkMention(contentToCheck, inputSelection.current?.end);
   };
 
   // @ts-ignore
