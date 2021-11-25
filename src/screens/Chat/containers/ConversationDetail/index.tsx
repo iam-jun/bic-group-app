@@ -32,6 +32,7 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import {scaleCoverHeight} from '~/theme/dimension';
@@ -89,6 +90,23 @@ const _ConversationDetail = (): React.ReactElement => {
   const goAddMembers = () => {
     dispatch(actions.clearSelectedUsers());
     rootNavigation.navigate(chatStack.addMembers, {roomId});
+  };
+
+  const goToGroupProfile = () => {
+    if (Platform.OS === 'web') {
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: conversation.beinGroupId,
+        initial: false,
+      });
+    } else {
+      rootNavigation.navigate('groups', {
+        screen: groupStack.groupDetail,
+        params: {
+          groupId: conversation.beinGroupId,
+          initial: false,
+        },
+      });
+    }
   };
 
   const saveChatName = (text: string) => {
@@ -495,7 +513,10 @@ const _ConversationDetail = (): React.ReactElement => {
   const renderGroupIcon = () => {
     return (
       conversation?.type === roomTypes.GROUP && (
-        <Button.Secondary leftIcon={'UsersAlt'} useI18n>
+        <Button.Secondary
+          leftIcon={'UsersAlt'}
+          useI18n
+          onPress={goToGroupProfile}>
           common:text_group
         </Button.Secondary>
       )
