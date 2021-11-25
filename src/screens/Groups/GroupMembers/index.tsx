@@ -47,6 +47,9 @@ const _GroupMembers = (props: any) => {
   const baseSheetRef: any = useRef();
 
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
+  const {user_count: userCount} = useKeySelector(
+    groupsKeySelector.groupDetail.group,
+  );
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
@@ -71,6 +74,10 @@ const _GroupMembers = (props: any) => {
       );
     }
   };
+
+  useEffect(() => {
+    setSearchText('');
+  }, [userCount]);
 
   useEffect(() => {
     if (groupMember) {
