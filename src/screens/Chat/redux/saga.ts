@@ -937,11 +937,10 @@ function* handleRemoveMessage(data: any) {
 function* handleAddNewRoom(data: any) {
   try {
     const {auth} = yield select();
-
-    yield getSubscriptions();
     yield put(
       actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
+    yield getSubscriptions();
     yield put(groupsActions.getJoinedGroups());
   } catch (err) {
     console.log('handleAddNewRoom', err);
