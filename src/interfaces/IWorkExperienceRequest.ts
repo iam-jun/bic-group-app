@@ -5,5 +5,5 @@ export interface IAddWorkExperienceReq {
   description?: string;
   currently_work_here?: boolean;
   start_date?: string;
-  end_date?: string;
+  end_date?: string | null;
 }

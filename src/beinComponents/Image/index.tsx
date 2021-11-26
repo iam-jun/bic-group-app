@@ -59,7 +59,8 @@ const Image: React.FC<ImageProps> = ({
       typeof source === 'string' &&
       source.toLowerCase?.().startsWith?.('http')
     ) {
-      setSource({uri: cache ? source : source + '?' + Date.now()});
+      const char = source.includes('?') ? '&' : '?';
+      setSource({uri: cache ? source : source + char + Date.now()});
     } else {
       setSource(source);
     }

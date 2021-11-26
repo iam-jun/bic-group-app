@@ -555,7 +555,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 placeholder={placeholder}
                 placeholderTextColor={colors.textSecondary}
                 editable={!_loading}
-                value={text}
+                value={Platform.OS === 'web' ? text : undefined} //if mobile, use props children
                 onFocus={_onFocus}
                 onChangeText={_onChangeText}
                 onSelectionChange={_onSelectionChange}
