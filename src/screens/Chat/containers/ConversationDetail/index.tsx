@@ -109,6 +109,13 @@ const _ConversationDetail = (): React.ReactElement => {
     }
   };
 
+  const goToGroupAdmin = () => {
+    rootNavigation.navigate(chatStack.groupAdmin, {
+      groupId: conversation.beinGroupId,
+      roomId,
+    });
+  };
+
   const saveChatName = (text: string) => {
     dispatch(modalActions.hideAlert());
     dispatch(actions.updateConversationName({roomId, name: text}));
@@ -506,6 +513,15 @@ const _ConversationDetail = (): React.ReactElement => {
             onPress={onPressMenu}
           />
         )}
+        {conversation.type === roomTypes.GROUP &&
+          permissions[chatPermissions.CAN_SETTING] && (
+            <Icon
+              icon="iconShieldStar"
+              size={24}
+              tintColor={colors.background}
+              onPress={goToGroupAdmin}
+            />
+          )}
       </LinearGradient>
     );
   };
