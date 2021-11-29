@@ -487,7 +487,7 @@ function* updateConversationDetail({
     let toastContent: string;
     if (payload.editFieldName) {
       toastContent = `${payload.editFieldName} ${i18next.t(
-        'settings:text_updated_successfully',
+        'common:text_updated_successfully',
       )}`;
     } else {
       toastContent = 'common:text_edit_success';
