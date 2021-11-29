@@ -696,7 +696,6 @@ const createStyles = (
       height: 44,
     },
     bottomSheet: {
-      paddingHorizontal: spacing.padding.big,
       paddingTop: spacing.padding.tiny,
     },
     buttonMuteEnable: {
