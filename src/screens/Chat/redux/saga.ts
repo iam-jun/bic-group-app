@@ -461,10 +461,16 @@ function* updateConversationDetail({
   };
 }) {
   try {
-    const {name, description, avatar, cover} = payload.body;
+    const {roomId, body} = payload;
+    const {name, description, avatar, cover} = body;
+
+    const updateRequest =
+      typeof roomId === 'number'
+        ? apiConfig.Chat.updateConversationDetail
+        : apiConfig.Chat.updateQuickChatDetail;
 
     const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.updateConversationDetail(payload.roomId, {
+      updateRequest(roomId, {
         name,
         description,
         icon: avatar,

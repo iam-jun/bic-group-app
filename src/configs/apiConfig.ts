@@ -238,6 +238,24 @@ const Chat = {
     useRetry: true,
     data,
   }),
+  updateQuickChatDetail: (
+    id: number | string,
+    data: IUpdateConversationDetailReq,
+  ): HttpApiRequestConfig => {
+    const auth = getChatAuthInfo();
+
+    return {
+      url: `${providers.bein.url}chats/${id}`,
+      method: 'put',
+      provider: providers.bein,
+      useRetry: true,
+      headers: {
+        'X-Auth-Token': auth.accessToken,
+        'X-User-Id': auth.userId,
+      },
+      data,
+    };
+  },
   uploadFile: (roomId: string, data: FormData): HttpApiRequestConfig => {
     return {
       url: `${providers.chat.url}rooms.upload/${roomId}`,
