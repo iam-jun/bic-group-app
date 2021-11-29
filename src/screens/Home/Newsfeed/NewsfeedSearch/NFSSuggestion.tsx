@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -11,6 +11,7 @@ import {useBaseHook} from '~/hooks';
 import Icon from '~/beinComponents/Icon';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
+import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
 
 const NFSSuggestion = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,15 @@ const NFSSuggestion = () => {
     'home:newsfeed_search:text_cta_see_result_for_search_text',
   ).replace('%SEARCH_TEXT%', searchText);
 
+  useEffect(() => {
+    dispatch(
+      homeActions.getRecentSearchKeywords({
+        target: 'post',
+        sort: 'desc',
+      }),
+    );
+  }, []);
+
   const onPressCtaSearch = () => {
     searchInputRef?.current?.blur?.();
     dispatch(homeActions.setNewsfeedSearch({isSuggestion: false}));
@@ -35,13 +45,15 @@ const NFSSuggestion = () => {
 
   return (
     <View style={styles.container}>
-      {!!searchText && (
+      {!!searchText ? (
         <TouchableOpacity
           style={styles.ctaContainer}
           onPress={onPressCtaSearch}>
           <Icon icon={'search'} tintColor={colors.primary6} />
           <Text style={styles.ctaText}>{ctaText}</Text>
         </TouchableOpacity>
+      ) : (
+        <NFSRecentSearchKeyword />
       )}
     </View>
   );

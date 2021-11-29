@@ -4,7 +4,9 @@ import homeTypes from '~/screens/Home/redux/types';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
 import {
+  IParamGetRecentSearchKeywords,
   IParamGetSearchPost,
+  IParamPostNewRecentSearchKeyword,
   IPayloadGetHomePost,
   IPayloadGetSearchPosts,
 } from '~/interfaces/IHome';
@@ -16,6 +18,10 @@ export default function* homeSaga() {
   yield takeEvery(homeTypes.GET_HOME_POSTS, getHomePosts);
   yield takeEvery(homeTypes.GET_SEARCH_POSTS, getSearchPosts);
   yield takeEvery(homeTypes.GET_SEARCH_POSTS_USERS, getSearchPostUsers);
+  yield takeEvery(
+    homeTypes.GET_RECENT_SEARCH_KEYWORDS,
+    getRecentSearchKeywords,
+  );
 }
 
 function* getHomePosts({
@@ -123,6 +129,15 @@ function* getSearchPosts({
         totalResult: response?.total,
       }),
     );
+
+    //save keyword to recent search
+    if (!isLoadMore) {
+      const recentParam: IParamPostNewRecentSearchKeyword = {
+        keyword: searchText,
+        target: 'post',
+      };
+      yield call(homeDataHelper.postNewRecentSearchKeyword, recentParam);
+    }
   } catch (e) {
     yield put(homeActions.setNewsfeedSearch({loadingResult: false}));
     console.log(`\x1b[31m🐣️ saga getSearchPosts error: `, e, `\x1b[0m`);
@@ -177,5 +192,29 @@ function* getSearchPostUsers({payload}: {payload: string; type: string}): any {
     }
   } catch (e) {
     console.log(`\x1b[31m🐣️ saga getSearchPostUsers error: `, e, `\x1b[0m`);
+  }
+}
+
+function* getRecentSearchKeywords({
+  payload,
+}: {
+  payload: IParamGetRecentSearchKeywords;
+  type: string;
+}): any {
+  try {
+    yield put(homeActions.setNewsfeedSearchRecentKeywords({loading: true}));
+    const response = yield call(
+      homeDataHelper.getRecentSearchKeywords,
+      payload,
+    );
+    yield put(
+      homeActions.setNewsfeedSearchRecentKeywords({
+        data: response?.recentSearches || [],
+        loading: false,
+      }),
+    );
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ saga getSearchPostUsers error: `, e, `\x1b[0m`);
+    yield put(homeActions.setNewsfeedSearchRecentKeywords({loading: false}));
   }
 }
