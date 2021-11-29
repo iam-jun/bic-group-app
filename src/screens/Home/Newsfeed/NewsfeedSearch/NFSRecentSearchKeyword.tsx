@@ -1,12 +1,10 @@
-import React from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import React, {FC} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
-import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 
 import Icon from '~/beinComponents/Icon';
@@ -15,8 +13,17 @@ import Button from '~/beinComponents/Button';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-const NFSRecentSearchKeyword = () => {
-  const dispatch = useDispatch();
+export interface NFSRecentSearchKeywordProps {
+  onSelectKeyword?: (keyword: string) => void;
+  onDeleteKeyword?: (keyword: string) => void;
+  onClearAllKeyword?: () => void;
+}
+
+const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
+  onSelectKeyword,
+  onDeleteKeyword,
+  onClearAllKeyword,
+}: NFSRecentSearchKeywordProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -25,21 +32,15 @@ const NFSRecentSearchKeyword = () => {
     useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const onPressClear = () => {
-    alert('clear');
+    onClearAllKeyword?.();
   };
 
   const onPressDeleteItem = (item: any) => {
-    alert('delete item');
+    onDeleteKeyword?.(item?.keyword);
   };
 
   const onPressItem = (item: any) => {
-    dispatch(
-      homeActions.setNewsfeedSearch({
-        isSuggestion: false,
-        searchResults: [],
-        searchText: item?.keyword,
-      }),
-    );
+    onSelectKeyword?.(item?.keyword);
   };
 
   const renderItem = (item: any) => {
@@ -61,24 +62,20 @@ const NFSRecentSearchKeyword = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View>
-          <View style={styles.header}>
-            <Text.H6 style={styles.flex1}>
-              {t('home:newsfeed_search:label_recent_search')}
-            </Text.H6>
-            <Button
-              onPress={onPressClear}
-              style={{justifyContent: 'center', alignSelf: 'center'}}>
-              <Text.ButtonSmall style={styles.btnClear}>
-                {t('home:newsfeed_search:clear').toUpperCase()}
-              </Text.ButtonSmall>
-            </Button>
-          </View>
-          {!!loading && <LoadingIndicator style={styles.loading} />}
-          {data?.map?.(renderItem)}
-        </View>
-      </ScrollView>
+      <View style={styles.header}>
+        <Text.H6 style={styles.flex1}>
+          {t('home:newsfeed_search:label_recent_search')}
+        </Text.H6>
+        <Button
+          onPress={onPressClear}
+          style={{justifyContent: 'center', alignSelf: 'center'}}>
+          <Text.ButtonSmall style={styles.btnClear}>
+            {t('home:newsfeed_search:clear').toUpperCase()}
+          </Text.ButtonSmall>
+        </Button>
+      </View>
+      {!!loading && <LoadingIndicator style={styles.loading} />}
+      {data?.map?.(renderItem)}
     </View>
   );
 };

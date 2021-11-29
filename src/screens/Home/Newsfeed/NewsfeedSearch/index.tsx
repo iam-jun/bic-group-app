@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {FC} from 'react';
+import {View, StyleSheet, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -8,8 +8,17 @@ import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion';
 import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
+import {useDispatch} from 'react-redux';
+import homeActions from '~/screens/Home/redux/actions';
 
-const NewsfeedSearch = () => {
+export interface NewsfeedSearchProps {
+  headerRef?: any;
+}
+
+const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
+  headerRef,
+}: NewsfeedSearchProps) => {
+  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
@@ -19,13 +28,29 @@ const NewsfeedSearch = () => {
     homeKeySelector.newsfeedSearch.isSuggestion,
   );
 
+  const onSelectKeyword = (keyword: string) => {
+    headerRef?.current?.setSearchText?.(keyword);
+    dispatch(
+      homeActions.setNewsfeedSearch({
+        isSuggestion: false,
+        searchResults: [],
+        searchText: keyword,
+      }),
+    );
+    Keyboard.dismiss();
+  };
+
   if (!isShow) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      {isSuggestion ? <NFSSuggestion /> : <NFSResult />}
+      {isSuggestion ? (
+        <NFSSuggestion onSelectKeyword={onSelectKeyword} />
+      ) : (
+        <NFSResult />
+      )}
     </View>
   );
 };

@@ -199,7 +199,7 @@ const Newsfeed = () => {
             />
           }
         />
-        <NewsfeedSearch />
+        <NewsfeedSearch headerRef={headerRef} />
       </View>
     </View>
   );
