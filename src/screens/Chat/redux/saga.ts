@@ -874,7 +874,14 @@ function* handleNewMessage(data: any) {
       unreadMessage && conversation.unreadCount > appConfig.messagesPerPage;
 
     if (conversation) {
-      if (!include && roomMessages) {
+      const lastMessage = conversation.lastMessage;
+      const lastDate = new Date(lastMessage?.createdAt).getTime();
+      const msgDate = new Date(message.createdAt).getTime();
+      if (!lastMessage || msgDate >= lastDate) {
+        yield put(actions.updateLastMessage(message));
+      }
+
+      if (!include) {
         if (!haveUnreadMessages) {
           yield put(actions.addNewMessage(message));
           DeviceEventEmitter.emit('chat-event', {
@@ -931,11 +938,10 @@ function* handleRemoveMessage(data: any) {
 function* handleAddNewRoom(data: any) {
   try {
     const {auth} = yield select();
-
-    yield getSubscriptions();
     yield put(
       actions.createConversationSuccess(mapConversation(auth.user, data)),
     );
+    yield getSubscriptions();
     yield put(groupsActions.getJoinedGroups());
   } catch (err) {
     console.log('handleAddNewRoom', err);

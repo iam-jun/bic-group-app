@@ -292,7 +292,8 @@
     "text_currently_work_here": "Currently work here",
     "text_location_optional": "Location (optional)",
     "text_description_optional": "Description (optional)",
-    "text_since": "Since"
+    "text_since": "Since",
+    "text_enddate_after_startdate": "The End Date must come after the Start Date"
   },
   "languages": {
     "title_en": "English",

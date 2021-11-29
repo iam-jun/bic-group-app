@@ -24,7 +24,7 @@ export default function* notificationsSaga() {
     notificationsTypes.LOAD_NEW_NOTIFICATIONS,
     loadNewNotifications,
   );
-  yield takeLatest(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
+  yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
 }
 
 function* getNotifications({

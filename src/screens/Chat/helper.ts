@@ -138,7 +138,7 @@ export const mapConversation = (user: IChatUser, item: any): IConversation => {
 };
 
 export const mapMessage = (_user: IChatUser, item: any): IMessage => {
-  const user = mapUser(item?.u);
+  const user = mapUser(item?.u || {});
   const attachments: IAttachment[] = [];
   let quotedMessage = null;
   let type = item.t;

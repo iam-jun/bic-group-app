@@ -130,7 +130,12 @@ const _Conversation = ({route}: {route: any}) => {
         currentRoomId.current = roomId;
         scrollToBottom(false);
       }
-      if (roomId && !conversation.msgs) {
+    });
+  }, [roomId]);
+
+  useEffect(() => {
+    InteractionManager.runAfterInteractions(() => {
+      if (conversation._id && !conversation.msgs) {
         setIsScrolled(false);
         setUnreadCount(sub?.unread || 0);
         getAttachments();
@@ -138,7 +143,7 @@ const _Conversation = ({route}: {route: any}) => {
         dispatch(actions.readSubscriptions(roomId));
       }
     });
-  }, [roomId]);
+  }, [conversation._id]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
@@ -149,13 +154,14 @@ const _Conversation = ({route}: {route: any}) => {
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       // mean conversation detail has been fetched
-      if (conversation?.msgs && isEmpty(roomMessageData)) {
+      if (!isNaN(conversation?.msgs) && isEmpty(roomMessageData)) {
         initiated.current = conversation.msgs === 0;
+
         getMessages(unreadCount);
         _setDownButtonVisible(unreadCount > appConfig.messagesPerPage);
       }
     });
-  }, [conversation?.msgs]);
+  }, [conversation._id, conversation?.msgs]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
