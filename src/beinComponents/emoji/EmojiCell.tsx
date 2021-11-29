@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {Platform, TouchableOpacity} from 'react-native';
 import NodeEmoji from 'node-emoji';
 
 import Text from '~/beinComponents/Text';
@@ -28,7 +28,11 @@ const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
         }}
         onLongPress={_onLongPress}
         {...other}>
-        <Text style={{color: '#FFFFFF', fontSize: (colSize - 12) * 0.7}}>
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontSize: (colSize - (Platform.OS === 'web' ? 0 : 12)) * 0.7,
+          }}>
           {charFromEmojiObject(emoji)}
         </Text>
       </TouchableOpacity>

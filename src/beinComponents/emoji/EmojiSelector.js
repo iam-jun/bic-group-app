@@ -61,6 +61,8 @@ export const Categories = {
   },
 };
 
+const PADDING_HORIZONTAL = Platform.OS === 'web' ? 12 : 0;
+
 const charFromUtf16 = utf16 =>
   String.fromCodePoint(...utf16.split('-').map(u => '0x' + u));
 export const charFromEmojiObject = obj => charFromUtf16(obj.unified);
@@ -267,7 +269,9 @@ export default class EmojiSelector extends Component {
     this.setState(
       {
         emojiList,
-        colSize: Math.floor(this.state.width / this.props.columns),
+        colSize: Math.floor(
+          (this.state.width - PADDING_HORIZONTAL * 2) / this.props.columns,
+        ),
       },
       callback,
     );
@@ -380,6 +384,7 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     // flex: 1,
+    paddingHorizontal: PADDING_HORIZONTAL,
   },
   searchbar_container: {
     width: '100%',
