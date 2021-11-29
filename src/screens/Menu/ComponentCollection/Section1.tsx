@@ -120,12 +120,14 @@ const Section1 = () => {
           leftIcon={'WifiSlash'}
           rightText={'Refresh'}
           textProps={{useI18n: true}}
+          style={{margin: 12}}
           onPressRight={() => alert('Press')}>
           You are currently offline. Please check it and try again.
         </BannerMessage>
         <BannerMessage
           type={'success'}
-          leftIcon={'Globe'}
+          leftIcon={'Check'}
+          style={{margin: 12}}
           textProps={{useI18n: true}}>
           You are back online
         </BannerMessage>

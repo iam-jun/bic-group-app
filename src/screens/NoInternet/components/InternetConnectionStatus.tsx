@@ -38,7 +38,7 @@ const InternetConnectionStatus = ({
     <BannerMessage
       style={styles.banner}
       type={'success'}
-      leftIcon={'Globe'}
+      leftIcon={'Check'}
       textProps={{useI18n: true}}>
       internet_connection:online
     </BannerMessage>

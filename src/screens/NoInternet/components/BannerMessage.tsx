@@ -38,60 +38,31 @@ const BannerMessage: FC<BannerMessageProps> = ({
   onPressRight,
 }: BannerMessageProps) => {
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = theme;
+  const styles = createStyle(theme, type);
 
   const _onPress = () => {
     onActionPress?.();
   };
 
-  const BannerMessageStyle = {
-    success: {
-      iconColor: colors.background,
-      textColor: colors.iconTintReversed,
-      backgroundColor: colors.success,
-    },
-    error: {
-      iconColor: colors.background,
-      textColor: colors.iconTintReversed,
-      backgroundColor: colors.error,
-    },
-  };
-
-  const {iconColor, textColor, backgroundColor} =
-    BannerMessageStyle[type] || BannerMessageStyle.success;
-
-  const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
-    {
-      flexDirection: 'row',
-      backgroundColor: backgroundColor,
-      padding: spacing.padding.small,
-      alignSelf: 'baseline',
-      alignItems: 'center',
-    },
-    style,
-  ]);
-
   return (
     <TouchableOpacity
       activeOpacity={1}
-      style={containerStyle}
+      style={[styles.container, style]}
       onPress={_onPress}>
       {leftIcon && (
         <Icon
-          iconStyle={styles.leftIconStyle}
+          isButton
+          iconStyle={[styles.leftIconStyle]}
           style={styles.leftIcon}
           icon={leftIcon}
-          tintColor={iconColor}
+          tintColor={colors.iconTintReversed}
         />
       )}
 
       <View style={styles.textContainer}>
         <View style={styles.childrenStyle}>
-          <Text.Body
-            {...textProps}
-            color={textColor}
-            style={styles.descriptionText}>
+          <Text.Body {...textProps} style={styles.descriptionText}>
             {children}
           </Text.Body>
         </View>
@@ -111,9 +82,30 @@ const BannerMessage: FC<BannerMessageProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+const createStyle = (theme: ITheme, type: 'success' | 'error') => {
+  const {spacing, colors} = theme;
+
   return StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      backgroundColor: 'rgba(255, 255, 255, 0.92)',
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
+      alignSelf: 'baseline',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: '#D0D5DD',
+      borderRadius: 2,
+
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 12,
+      },
+      shadowOpacity: 0.12,
+      shadowRadius: 10.32,
+      elevation: 16,
+    },
     textContainer: {
       flex: 1,
       flexDirection: 'row',
@@ -129,7 +121,11 @@ const createStyle = (theme: ITheme) => {
     leftIcon: {
       marginRight: spacing.margin.small,
     },
-    leftIconStyle: {padding: 2, borderRadius: 6},
+    leftIconStyle: {
+      padding: spacing.padding.tiny,
+      borderRadius: 4,
+      backgroundColor: type === 'success' ? colors.success : colors.error,
+    },
     marginRightIcon: {marginRight: spacing.margin.tiny},
     button: {
       marginLeft: spacing.margin.base,
