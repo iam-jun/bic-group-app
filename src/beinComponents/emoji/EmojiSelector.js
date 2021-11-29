@@ -12,6 +12,7 @@ import emoji from 'emoji-datasource';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import emojiShortNameBlacklist from '~/beinComponents/emoji/emojiShortNameBlacklist';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
+import EmojiCell from '~/beinComponents/emoji/EmojiCell';
 
 export const Categories = {
   all: {
@@ -108,22 +109,6 @@ const TabBar = ({
   });
 };
 
-const EmojiCell = ({emoji, colSize, ...other}) => (
-  <TouchableOpacity
-    activeOpacity={0.5}
-    style={{
-      width: colSize,
-      height: colSize,
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-    {...other}>
-    <Text style={{color: '#FFFFFF', fontSize: (colSize - 12) * 0.7}}>
-      {charFromEmojiObject(emoji)}
-    </Text>
-  </TouchableOpacity>
-);
-
 export const emojiStorageKey = '@react-native-emoji-selector:HISTORY';
 
 export const getEmojiHistory = async (limit = 6) => {
@@ -164,6 +149,10 @@ export default class EmojiSelector extends Component {
         category,
       });
     }
+  };
+
+  onLongPress = emojiKey => {
+    this.props.onEmojiLongPress?.(emojiKey);
   };
 
   handleEmojiSelect = emoji => {
@@ -216,6 +205,7 @@ export default class EmojiSelector extends Component {
     <EmojiCell
       key={item.key}
       emoji={item.emoji}
+      onLongPress={this.onLongPress}
       onPress={() => this.handleEmojiSelect(item.emoji)}
       colSize={this.state.colSize}
     />
