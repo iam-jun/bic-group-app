@@ -39,6 +39,8 @@ const NFSResult = () => {
         postId={item?.id}
         isLite
         pressNavigateToDetail
+        postData={item}
+        isUseReduxState={false}
       />
     );
   };
