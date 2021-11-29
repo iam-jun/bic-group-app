@@ -292,7 +292,7 @@ export const linkingConfigFull = {
                     path: 'chat/:roomId/info',
                   },
                   'create-conversation': {
-                    path: 'chat/create',
+                    path: 'chat/create/room',
                   },
                   'chat-group-members': {
                     path: 'chat/:roomId/members',
@@ -419,7 +419,7 @@ export const linkingConfigFullLaptop = {
                 path: 'chat/:roomId/info',
               },
               'create-conversation': {
-                path: 'chat/create',
+                path: 'chat/create/room',
               },
               'chat-group-members': {
                 path: 'chat/:roomId/members',
