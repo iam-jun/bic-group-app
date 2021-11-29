@@ -230,9 +230,9 @@ const _ConversationDetail = (): React.ReactElement => {
     });
   };
 
-  const onPressChangeQuickChatAvatar = () => {
+  const onPressChangeQuickChatImage = (type: 'icon' | 'background_img_url') => {
     baseSheetRef.current?.close();
-    openImagePicker('icon', uploadTypes.groupAvatar);
+    openImagePicker(type, uploadTypes.groupAvatar);
   };
 
   const onItemPress = (type: string) => {
@@ -251,7 +251,10 @@ const _ConversationDetail = (): React.ReactElement => {
         onPressLeave();
         break;
       case 'changeAvatar':
-        onPressChangeQuickChatAvatar();
+        onPressChangeQuickChatImage('icon');
+        break;
+      case 'changeCover':
+        onPressChangeQuickChatImage('background_img_url');
         break;
       default:
         baseSheetRef.current?.close();
@@ -481,6 +484,12 @@ const _ConversationDetail = (): React.ReactElement => {
               true,
             )}
             {renderActionItem(
+              'changeCover',
+              'ImageV',
+              i18next.t('chat:detail_menu:change_cover'),
+              true,
+            )}
+            {renderActionItem(
               'editDescription',
               'EditAlt',
               i18next.t('chat:detail_menu:edit_description'),
@@ -516,11 +525,16 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const renderCover = () => {
+    const cover =
+      conversation?.type === roomTypes.GROUP
+        ? conversation?.background_img_url
+        : conversation?.backgroundImgUrl;
+
     return (
       <View onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
-          source={conversation?.background_img_url}
+          source={cover}
           placeholderSource={getDefaultCoverImage(conversation?.type)}
         />
       </View>
