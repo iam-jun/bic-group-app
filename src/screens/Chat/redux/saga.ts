@@ -21,6 +21,7 @@ import {
   IPayloadReactMessage,
   ISendMessageAction,
   IUpdateConversationDetail,
+  IUploadQuickChatImage,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import {withNavigation} from '~/router/helper';
@@ -28,6 +29,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
+import FileUploader from '~/services/fileUploader';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import appActions from '~/store/app/actions';
 import * as modalActions from '~/store/modal/actions';
@@ -72,6 +74,7 @@ export default function* saga() {
   yield takeLatest(types.READ_SUBCRIPTIONS, readSubscriptions);
   yield takeLatest(types.UPDATE_CONVERSATION_NAME, updateConversationName);
   yield takeLatest(types.UPDATE_CONVERSATION_DETAIL, updateConversationDetail);
+  yield takeLatest(types.UPLOAD_QUICK_CHAT_IMAGE, uploadQuickChatImage);
   yield takeLatest(types.ADD_MEMBERS_TO_GROUP, addMembersToGroup);
   yield takeLatest(types.REMOVE_MEMBER, removeMember);
   yield takeLatest(types.REACT_MESSAGE, reactMessage);
@@ -493,6 +496,38 @@ function* updateConversationDetail({
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('updateConversationDetail', err);
+    yield showError(err);
+  }
+}
+
+function* uploadQuickChatImage({
+  payload,
+}: {
+  type: string;
+  payload: IUploadQuickChatImage;
+}) {
+  try {
+    const {file, roomId, fieldName, uploadType} = payload;
+    const fieldTitle = fieldName === 'icon' ? 'avatar' : 'cover';
+    const editFieldName =
+      fieldName === 'icon' ? 'common:text_avatar' : 'common:text_cover';
+    // yield updateLoadingImageState(fieldName, true);
+
+    const data: string = yield FileUploader.getInstance().upload({
+      file,
+      uploadType,
+    });
+
+    yield put(
+      actions.updateConversationDetail({
+        roomId,
+        body: {
+          [fieldTitle]: data,
+        },
+        editFieldName: i18next.t(editFieldName),
+      }),
+    );
+  } catch (err) {
     yield showError(err);
   }
 }

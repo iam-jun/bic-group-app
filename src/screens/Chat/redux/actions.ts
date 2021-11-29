@@ -8,6 +8,7 @@ import {
   ISendMessageAction,
   IUpdateConversationDetail,
   IUploadFileAction,
+  IUploadQuickChatImage,
 } from '~/interfaces/IChat';
 import {ISocketEvent} from '~/interfaces/ISocket';
 import Actions from './constants';
@@ -177,6 +178,10 @@ export default {
   }),
   setUpdatedConversationDetail: (payload: IConversationInfo) => ({
     type: Actions.SET_UPDATED_CONVERSATION_DETAIL,
+    payload,
+  }),
+  uploadQuickChatImage: (payload: IUploadQuickChatImage) => ({
+    type: Actions.UPLOAD_QUICK_CHAT_IMAGE,
     payload,
   }),
   uploadFile: (payload: IUploadFileAction) => ({
