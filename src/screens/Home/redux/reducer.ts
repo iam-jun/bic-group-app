@@ -29,7 +29,7 @@ const initialHomeState = {
     canLoadMore: false,
   },
   newsfeedSearchRecentKeyword: {
-    loading: false,
+    loading: true,
     data: [],
   },
 };

@@ -36,12 +36,15 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   ).replace('%SEARCH_TEXT%', searchText);
 
   useEffect(() => {
-    dispatch(
-      homeActions.getRecentSearchKeywords({
-        target: 'post',
-        sort: 'desc',
-      }),
-    );
+    //timeout wait animation of header finish to avoid lagging
+    setTimeout(() => {
+      dispatch(
+        homeActions.getRecentSearchKeywords({
+          target: 'post',
+          sort: 'desc',
+        }),
+      );
+    }, 500);
   }, []);
 
   const onPressCtaSearch = () => {
