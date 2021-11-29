@@ -506,6 +506,7 @@
     "label_permission_management": "Permissions Management",
     "detail_menu": {
       "change_avatar": "Change Group Avatar",
+      "change_cover": "Change Cover",
       "edit_description": "Edit Description",
       "edit_name": "Edit Group Chat Name"
     },
