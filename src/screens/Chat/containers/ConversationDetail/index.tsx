@@ -18,15 +18,18 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
+import ImagePicker from '~/beinComponents/ImagePicker';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {ViewSpacing} from '~/components';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import {chatPermissions, roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {IFilePicked} from '~/interfaces/common';
 import {IGroup} from '~/interfaces/IGroup';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
@@ -34,8 +37,9 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {scaleCoverHeight} from '~/theme/dimension';
+import {groupProfileImageCropRatio, scaleCoverHeight} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
 import actions from '../../redux/actions';
@@ -198,6 +202,39 @@ const _ConversationDetail = (): React.ReactElement => {
     dispatch(actions.leaveChat(conversation));
   };
 
+  const uploadFile = (
+    file: IFilePicked,
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    dispatch(
+      actions.uploadQuickChatImage({
+        roomId,
+        fieldName,
+        file,
+        uploadType,
+      }),
+    );
+  };
+
+  const openImagePicker = (
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
+      ...groupProfileImageCropRatio[fieldName],
+      cropping: true,
+      mediaType: 'photo',
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
+    });
+  };
+
+  const onPressChangeQuickChatAvatar = () => {
+    baseSheetRef.current?.close();
+    openImagePicker('icon', uploadTypes.groupAvatar);
+  };
+
   const onItemPress = (type: string) => {
     switch (type) {
       case 'members':
@@ -212,6 +249,9 @@ const _ConversationDetail = (): React.ReactElement => {
         break;
       case 'leavesGroup':
         onPressLeave();
+        break;
+      case 'changeAvatar':
+        onPressChangeQuickChatAvatar();
         break;
       default:
         baseSheetRef.current?.close();
