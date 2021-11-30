@@ -117,6 +117,7 @@ const createStyle = (theme: ITheme) => {
     textEmpty: {
       textAlign: 'center',
       margin: spacing.margin.extraLarge,
+      color: colors.textSecondary
     },
   });
 };
