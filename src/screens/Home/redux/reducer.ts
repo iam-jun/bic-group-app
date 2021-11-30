@@ -28,6 +28,10 @@ const initialHomeState = {
     loading: false,
     canLoadMore: false,
   },
+  newsfeedSearchRecentKeyword: {
+    loading: true,
+    data: [],
+  },
 };
 
 const homeReducer = (state = initialHomeState, action: any = {}) => {
@@ -62,11 +66,6 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
           ...payload,
         },
       };
-    case homeTypes.CLEAR_NEWSFEED_SEARCH:
-      return {
-        ...state,
-        newsfeedSearch: initialHomeState.newsfeedSearch,
-      };
     case homeTypes.SET_NEWSFEED_SEARCH_FILTER:
       return {
         ...state,
@@ -74,11 +73,6 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
           ...state.newsfeedSearchFilter,
           ...payload,
         },
-      };
-    case homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER:
-      return {
-        ...state,
-        newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
       };
     case homeTypes.SET_NEWSFEED_SEARCH_USERS:
       return {
@@ -88,10 +82,22 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
           ...payload,
         },
       };
-    case homeTypes.CLEAR_NEWSFEED_SEARCH_USERS:
+    case homeTypes.SET_NEWSFEED_SEARCH_RECENT_KEYWORDS:
       return {
         ...state,
+        newsfeedSearchRecentKeyword: {
+          ...state.newsfeedSearchRecentKeyword,
+          ...payload,
+        },
+      };
+    case homeTypes.CLEAR_ALL_NEWSFEED_SEARCH:
+      return {
+        ...state,
+        newsfeedSearch: initialHomeState.newsfeedSearch,
+        newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
         newsfeedSearchUsers: initialHomeState.newsfeedSearchUsers,
+        newsfeedSearchRecentKeyword:
+          initialHomeState.newsfeedSearchRecentKeyword,
       };
 
     default:

@@ -32,6 +32,11 @@ export interface IPayloadSetNewsfeedSearchUsers {
   canLoadMore?: boolean;
 }
 
+export interface IPayloadSetNewsfeedSearchRecentKeywords {
+  loading?: boolean;
+  data?: any[];
+}
+
 export interface IParamGetSearchPost {
   content: string;
   actors?: string;
@@ -39,6 +44,17 @@ export interface IParamGetSearchPost {
   end_time?: string;
   offset?: number;
   limit?: number;
+}
+
+export interface IParamGetRecentSearchKeywords {
+  sort?: 'desc' | 'asc';
+  limit?: number;
+  target?: 'post' | 'user' | 'article' | 'all';
+}
+
+export interface IParamPostNewRecentSearchKeyword {
+  keyword: string;
+  target: 'post' | 'user' | 'article' | 'all';
 }
 
 export interface IPayloadGetSearchPosts {

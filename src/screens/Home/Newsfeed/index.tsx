@@ -111,9 +111,7 @@ const Newsfeed = () => {
     if (isShow) {
       dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
     } else {
-      dispatch(homeActions.clearNewsfeedSearch());
-      dispatch(homeActions.clearNewsfeedSearchFilter());
-      dispatch(homeActions.clearNewsfeedSearchUsers());
+      dispatch(homeActions.clearAllNewsfeedSearch());
     }
   };
 
@@ -201,7 +199,7 @@ const Newsfeed = () => {
             />
           }
         />
-        <NewsfeedSearch />
+        <NewsfeedSearch headerRef={headerRef} />
       </View>
     </View>
   );
