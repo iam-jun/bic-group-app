@@ -454,7 +454,7 @@ function* updateConversationDetail({
 }: {
   type: string;
   payload: {
-    roomId: number | string;
+    roomId: string;
     body: IUpdateConversationDetail;
     editFieldName?: string;
     callback?: (roomId?: number | string) => void;
@@ -464,13 +464,8 @@ function* updateConversationDetail({
     const {roomId, body} = payload;
     const {name, description, avatar, cover} = body;
 
-    const updateRequest =
-      typeof roomId === 'number'
-        ? apiConfig.Chat.updateConversationDetail
-        : apiConfig.Chat.updateQuickChatDetail;
-
     const response: AxiosResponse = yield makeHttpRequest(
-      updateRequest(roomId, {
+      apiConfig.Chat.updateQuickChatDetail(roomId, {
         name,
         description,
         icon: avatar,
@@ -483,6 +478,8 @@ function* updateConversationDetail({
 
     payload?.callback?.(payload.roomId);
 
+    yield put(actions.getConversationDetail(roomId));
+
     // show success toast message
     let toastContent: string;
     if (payload.editFieldName) {
@@ -492,6 +489,7 @@ function* updateConversationDetail({
     } else {
       toastContent = 'common:text_edit_success';
     }
+
     const toastMessage: IToastMessage = {
       content: toastContent,
       props: {
@@ -499,6 +497,7 @@ function* updateConversationDetail({
         type: 'success',
       },
     };
+
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('updateConversationDetail', err);
