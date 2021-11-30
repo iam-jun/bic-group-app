@@ -28,8 +28,8 @@ const SystemIssueModal = () => {
         height={200}
         tintColor="none"
       />
-      <Text.H4 useI18n>no_internet:system_issue:title</Text.H4>
-      <Text.Body useI18n>no_internet:system_issue:desc</Text.Body>
+      <Text.H4 useI18n>internet_connection:system_issue:title</Text.H4>
+      <Text.Body useI18n>internet_connection:system_issue:desc</Text.Body>
       <View style={styles.loadingContainer}>
         <LoadingIndicator color={theme.colors.primary5} size={24} />
       </View>
