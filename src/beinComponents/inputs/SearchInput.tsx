@@ -1,4 +1,10 @@
-import React, {Ref, useEffect, useState} from 'react';
+import React, {
+  Ref,
+  useEffect,
+  useRef,
+  useState,
+  useImperativeHandle,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,6 +21,7 @@ import {fontFamilies} from '~/theme/fonts';
 import {TextInputProps} from './TextInput';
 
 export interface SearchInputProps extends TextInputProps {
+  searchInputRef?: Ref<TextInput>;
   inputRef?: Ref<TextInput>;
   style?: StyleProp<ViewStyle>;
   placeholder?: string;
@@ -26,6 +33,7 @@ export interface SearchInputProps extends TextInputProps {
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
+  searchInputRef,
   inputRef,
   style,
   placeholder,
@@ -35,6 +43,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
   onFocus,
   onSubmitEditing,
 }: SearchInputProps) => {
+  const _searchInputRef = searchInputRef || useRef<any>();
+
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
@@ -43,6 +53,10 @@ const SearchInput: React.FC<SearchInputProps> = ({
   useEffect(() => {
     setText(value || '');
   }, [value]);
+
+  useImperativeHandle(_searchInputRef, () => ({
+    setText,
+  }));
 
   const _onChangeText = (text: string) => {
     setText(text);

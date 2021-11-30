@@ -12,6 +12,7 @@ import emoji from 'emoji-datasource';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import emojiShortNameBlacklist from '~/beinComponents/emoji/emojiShortNameBlacklist';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
+import EmojiCell from '~/beinComponents/emoji/EmojiCell';
 
 export const Categories = {
   all: {
@@ -59,6 +60,8 @@ export const Categories = {
     name: 'Flags',
   },
 };
+
+const PADDING_HORIZONTAL = Platform.OS === 'web' ? 12 : 0;
 
 const charFromUtf16 = utf16 =>
   String.fromCodePoint(...utf16.split('-').map(u => '0x' + u));
@@ -108,22 +111,6 @@ const TabBar = ({
   });
 };
 
-const EmojiCell = ({emoji, colSize, ...other}) => (
-  <TouchableOpacity
-    activeOpacity={0.5}
-    style={{
-      width: colSize,
-      height: colSize,
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-    {...other}>
-    <Text style={{color: '#FFFFFF', fontSize: (colSize - 12) * 0.7}}>
-      {charFromEmojiObject(emoji)}
-    </Text>
-  </TouchableOpacity>
-);
-
 export const emojiStorageKey = '@react-native-emoji-selector:HISTORY';
 
 export const getEmojiHistory = async (limit = 6) => {
@@ -164,6 +151,10 @@ export default class EmojiSelector extends Component {
         category,
       });
     }
+  };
+
+  onLongPress = emojiKey => {
+    this.props.onEmojiLongPress?.(emojiKey);
   };
 
   handleEmojiSelect = emoji => {
@@ -216,6 +207,7 @@ export default class EmojiSelector extends Component {
     <EmojiCell
       key={item.key}
       emoji={item.emoji}
+      onLongPress={this.onLongPress}
       onPress={() => this.handleEmojiSelect(item.emoji)}
       colSize={this.state.colSize}
     />
@@ -277,7 +269,9 @@ export default class EmojiSelector extends Component {
     this.setState(
       {
         emojiList,
-        colSize: Math.floor(this.state.width / this.props.columns),
+        colSize: Math.floor(
+          (this.state.width - PADDING_HORIZONTAL * 2) / this.props.columns,
+        ),
       },
       callback,
     );
@@ -390,6 +384,7 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     // flex: 1,
+    paddingHorizontal: PADDING_HORIZONTAL,
   },
   searchbar_container: {
     width: '100%',

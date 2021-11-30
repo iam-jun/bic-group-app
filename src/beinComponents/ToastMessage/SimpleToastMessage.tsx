@@ -21,6 +21,7 @@ interface SimpleToastMessageProps {
   icon?: IconType;
   style?: StyleProp<ViewStyle>;
   onActionPress?: () => void;
+  disabled?: boolean;
 }
 
 const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
@@ -29,6 +30,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   icon,
   style,
   onActionPress,
+  disabled,
 }: SimpleToastMessageProps) => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -40,7 +42,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   };
 
   return (
-    <TouchableOpacity onPress={_onPress}>
+    <TouchableOpacity disabled={disabled} onPress={_onPress}>
       <View style={[styles.container, style]}>
         <Text.BodyS {...textProps} color={theme.colors.primary7}>
           {children}

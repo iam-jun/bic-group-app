@@ -8,6 +8,7 @@ import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IconType} from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '../../redux/actions';
@@ -16,14 +17,13 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
 import ListView from '~/beinComponents/list/ListView';
 import {groupSettings} from '~/constants/groupAdminSettings';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
-  const {groupId} = params || {};
+  const {groupId, roomId} = params || {};
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -32,8 +32,7 @@ const GroupAdministration = (props: any) => {
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
 
   useEffect(() => {
-    // in case for refreshing page on web
-    Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail(groupId));
   }, [groupId]);
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
@@ -50,8 +49,15 @@ const GroupAdministration = (props: any) => {
     }
   };
 
-  const goToGeneralInfo = () =>
+  const goToGeneralInfo = () => {
+    if (roomId) {
+      return rootNavigation.navigate(chatStack.generalInfo, {
+        groupId,
+        roomId,
+      });
+    }
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
+  };
 
   const renderItem = (
     icon: IconType,

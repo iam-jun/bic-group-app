@@ -18,6 +18,8 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
+import {useNetInfo} from '@react-native-community/netinfo';
+
 import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
@@ -47,6 +49,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
+import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -55,6 +58,7 @@ const StackNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const netInfo = useNetInfo();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
@@ -209,6 +213,9 @@ const StackNavigator = (): React.ReactElement => {
         <SystemIssueModal />
         <LoadingModal />
         <ToastMessage />
+        <InternetConnectionStatus
+          isInternetReachable={netInfo.isInternetReachable}
+        />
       </View>
     </Div>
   );

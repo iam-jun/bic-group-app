@@ -13,6 +13,7 @@ const homeKeySelector = {
   newsfeedSearchFilterCreatedBy: 'home.newsfeedSearchFilter.createdBy',
   newsfeedSearchFilterDate: 'home.newsfeedSearchFilter.date',
   newsfeedSearchUsers: 'home.newsfeedSearchUsers',
+  newsfeedSearchRecentKeyword: 'home.newsfeedSearchRecentKeyword',
 };
 
 export default homeKeySelector;
