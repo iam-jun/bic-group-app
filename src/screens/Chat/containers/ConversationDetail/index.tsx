@@ -18,15 +18,18 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
+import ImagePicker from '~/beinComponents/ImagePicker';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {ViewSpacing} from '~/components';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import {chatPermissions, roomTypes} from '~/constants/chat';
 import useAuth from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {IFilePicked} from '~/interfaces/common';
 import {IGroup} from '~/interfaces/IGroup';
 import {RootStackParamList} from '~/interfaces/IRouter';
 import {IconType} from '~/resources/icons';
@@ -35,7 +38,7 @@ import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import {scaleCoverHeight} from '~/theme/dimension';
+import {groupProfileImageCropRatio, scaleCoverHeight} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
 import actions from '../../redux/actions';
@@ -205,6 +208,40 @@ const _ConversationDetail = (): React.ReactElement => {
     dispatch(actions.leaveChat(conversation));
   };
 
+  const uploadFile = (
+    file: IFilePicked,
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    dispatch(
+      actions.uploadQuickChatImage({
+        roomId,
+        fieldName,
+        file,
+        uploadType,
+      }),
+    );
+  };
+
+  const openImagePicker = (
+    fieldName: 'icon' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
+      ...groupProfileImageCropRatio[fieldName],
+      cropping: true,
+      mediaType: 'photo',
+      compressImageQuality: 1,
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
+    });
+  };
+
+  const onPressChangeQuickChatImage = (type: 'icon' | 'background_img_url') => {
+    baseSheetRef.current?.close();
+    openImagePicker(type, uploadTypes.groupAvatar);
+  };
+
   const onItemPress = (type: string) => {
     switch (type) {
       case 'members':
@@ -219,6 +256,12 @@ const _ConversationDetail = (): React.ReactElement => {
         break;
       case 'leavesGroup':
         onPressLeave();
+        break;
+      case 'changeAvatar':
+        onPressChangeQuickChatImage('icon');
+        break;
+      case 'changeCover':
+        onPressChangeQuickChatImage('background_img_url');
         break;
       default:
         baseSheetRef.current?.close();
@@ -448,6 +491,12 @@ const _ConversationDetail = (): React.ReactElement => {
               true,
             )}
             {renderActionItem(
+              'changeCover',
+              'ImageV',
+              i18next.t('chat:detail_menu:change_cover'),
+              true,
+            )}
+            {renderActionItem(
               'editDescription',
               'EditAlt',
               i18next.t('chat:detail_menu:edit_description'),
@@ -483,11 +532,16 @@ const _ConversationDetail = (): React.ReactElement => {
   };
 
   const renderCover = () => {
+    const cover =
+      conversation?.type === roomTypes.GROUP
+        ? conversation?.background_img_url
+        : conversation?.backgroundImgUrl;
+
     return (
       <View onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
-          source={conversation?.background_img_url}
+          source={cover}
           placeholderSource={getDefaultCoverImage(conversation?.type)}
         />
       </View>
@@ -672,7 +726,6 @@ const createStyles = (
       height: 44,
     },
     bottomSheet: {
-      paddingHorizontal: spacing.padding.big,
       paddingTop: spacing.padding.tiny,
     },
     buttonMuteEnable: {
