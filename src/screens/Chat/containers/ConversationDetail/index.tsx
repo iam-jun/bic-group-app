@@ -224,6 +224,7 @@ const _ConversationDetail = (): React.ReactElement => {
       ...groupProfileImageCropRatio[fieldName],
       cropping: true,
       mediaType: 'photo',
+      compressImageQuality: 1,
     }).then(file => {
       uploadFile(file, fieldName, uploadType);
     });
