@@ -37,7 +37,6 @@ import images from '~/resources/images';
 import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import groupActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {groupProfileImageCropRatio, scaleCoverHeight} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
