@@ -10,7 +10,14 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-import {IPayloadReactToPost} from '~/interfaces/IPost';
+import {
+  IActivityImportant,
+  IAudienceUser,
+  IPayloadReactToPost,
+  IPostActivity,
+  IPostAudience,
+} from '~/interfaces/IPost';
+import {IObject} from '~/interfaces/common';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import resourceImages from '~/resources/images';
@@ -47,6 +54,8 @@ export interface PostViewProps {
   onPress?: () => void;
   pressNavigateToDetail?: boolean;
   isLite?: boolean;
+  postData?: IPostActivity;
+  isUseReduxState?: boolean;
 }
 
 const _PostView: FC<PostViewProps> = ({
@@ -59,6 +68,8 @@ const _PostView: FC<PostViewProps> = ({
   onPress,
   pressNavigateToDetail,
   isLite,
+  postData,
+  isUseReduxState = true,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
 
@@ -68,20 +79,36 @@ const _PostView: FC<PostViewProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const actor = useKeySelector(postKeySelector.postActorById(postId));
-  const audience = useKeySelector(postKeySelector.postAudienceById(postId));
-  const time = useKeySelector(postKeySelector.postTimeById(postId));
-  const important = useKeySelector(postKeySelector.postImportantById(postId));
-  const deleted = useKeySelector(postKeySelector.postDeletedById(postId));
-  const own_reactions = useKeySelector(
-    postKeySelector.postOwnReactionById(postId),
-  );
-  const reaction_counts = useKeySelector(
-    postKeySelector.postReactionCountsById(postId),
-  );
-  const postObjectData = useKeySelector(
-    postKeySelector.postObjectDataById(postId),
-  );
+  let actor: IAudienceUser | undefined,
+    audience: IPostAudience | undefined,
+    time: string | undefined,
+    important: IActivityImportant | undefined,
+    deleted: boolean,
+    own_reactions: any,
+    reaction_counts: IObject<number>,
+    postObjectData: any;
+
+  if (isUseReduxState) {
+    actor = useKeySelector(postKeySelector.postActorById(postId));
+    audience = useKeySelector(postKeySelector.postAudienceById(postId));
+    time = useKeySelector(postKeySelector.postTimeById(postId));
+    important = useKeySelector(postKeySelector.postImportantById(postId));
+    deleted = useKeySelector(postKeySelector.postDeletedById(postId));
+    own_reactions = useKeySelector(postKeySelector.postOwnReactionById(postId));
+    reaction_counts = useKeySelector(
+      postKeySelector.postReactionCountsById(postId),
+    );
+    postObjectData = useKeySelector(postKeySelector.postObjectDataById(postId));
+  } else {
+    actor = postData?.actor;
+    audience = postData?.audience;
+    time = postData?.time;
+    important = postData?.important;
+    deleted = false;
+    own_reactions = postData?.own_reactions;
+    reaction_counts = postData?.reaction_counts || {};
+    postObjectData = postData?.object?.data;
+  }
 
   const {content, images, highlight} = postObjectData || {};
 
@@ -105,7 +132,7 @@ const _PostView: FC<PostViewProps> = ({
     if (own_reactions?.mark_as_read?.length > 0) {
       notMarkAsRead = false;
     }
-    setIsImportant(active && notMarkAsRead);
+    setIsImportant(!!active && notMarkAsRead);
   };
 
   useEffect(() => {

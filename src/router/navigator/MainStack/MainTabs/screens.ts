@@ -70,6 +70,9 @@ export const screensWebLaptop = {
   'add-members': AddMembersToGroupChat,
   'search-conversation': SearchConversation,
   'edit-chat-description': EditConversationDescription,
+  'chat-group-admin': GroupAdministration,
+  'chat-general-info': GeneralInformation,
+  'chat-edit-group-description': EditGroupDescription,
 
   //GROUP STACK
   // 'group-list': Groups,

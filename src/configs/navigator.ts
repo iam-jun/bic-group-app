@@ -19,6 +19,9 @@ export const hideBottomTabRoutes = [
   'create-conversation',
   'chat-group-members',
   'add-members',
+  'chat-group-admin',
+  'chat-general-info',
+  'chat-edit-group-description',
   //Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'security-and-login',
@@ -97,6 +100,9 @@ export const appScreens = {
   chatGroupMembers: 'chat-group-members',
   chatAddMembers: 'add-members',
   chatEditDescription: 'edit-chat-description',
+  chatGroupAdmin: 'chat-group-admin',
+  chatGroupGeneralInfo: 'chat-general-info',
+  chatGroupEditDescription: 'chat-edit-group-description',
 
   // Group
   groupList: 'group-list',
@@ -429,6 +435,15 @@ export const linkingConfigFullLaptop = {
               },
               'edit-chat-description': {
                 path: 'chat/:roomId/edit/description',
+              },
+              'chat-group-admin': {
+                path: 'chat/:roomId/groups/:groupId/admin',
+              },
+              'chat-general-info': {
+                path: 'chat/:roomId/groups/:groupId/general-info',
+              },
+              'chat-edit-group-description': {
+                path: 'chat/:roomId/groups/:groupId/edit/description',
               },
               'not-select-notification': {
                 path: 'notifications',
