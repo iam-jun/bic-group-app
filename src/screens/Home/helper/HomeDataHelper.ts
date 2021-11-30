@@ -1,7 +1,11 @@
 import {StreamClient} from 'getstream';
 import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IParamGetSearchPost} from '~/interfaces/IHome';
+import {
+  IParamGetRecentSearchKeywords,
+  IParamGetSearchPost,
+  IParamPostNewRecentSearchKeyword,
+} from '~/interfaces/IHome';
 import apiConfig from '~/configs/apiConfig';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
@@ -19,6 +23,28 @@ const homeApiConfig = {
       offset: param?.offset,
       limit: param?.limit,
     },
+  }),
+  getRecentSearchKeyword: (
+    param: IParamGetRecentSearchKeywords,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}recent-searches`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      limit: param?.limit,
+      target: param?.target,
+      sort: param?.sort,
+    },
+  }),
+  postNewRecentSearchKeyword: (
+    data: IParamPostNewRecentSearchKeyword,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}recent-searches`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data,
   }),
 };
 
@@ -75,6 +101,37 @@ const homeDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         apiConfig.App.getUsers(params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getRecentSearchKeywords: async (param: IParamGetRecentSearchKeywords) => {
+    try {
+      const response: any = await makeHttpRequest(
+        homeApiConfig.getRecentSearchKeyword(param),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postNewRecentSearchKeyword: async (
+    param: IParamPostNewRecentSearchKeyword,
+  ) => {
+    console.log(`\x1b[36m🐣️ HomeDataHelper postNewRecentSearchKeyword\x1b[0m`);
+    try {
+      const response: any = await makeHttpRequest(
+        homeApiConfig.postNewRecentSearchKeyword(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);

@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {FC, useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -11,8 +11,15 @@ import {useBaseHook} from '~/hooks';
 import Icon from '~/beinComponents/Icon';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
+import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
 
-const NFSSuggestion = () => {
+export interface NFSSuggestionProps {
+  onSelectKeyword?: (keyword: string) => void;
+}
+
+const NFSSuggestion: FC<NFSSuggestionProps> = ({
+  onSelectKeyword,
+}: NFSSuggestionProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -28,22 +35,50 @@ const NFSSuggestion = () => {
     'home:newsfeed_search:text_cta_see_result_for_search_text',
   ).replace('%SEARCH_TEXT%', searchText);
 
+  useEffect(() => {
+    //timeout wait animation of header finish to avoid lagging
+    setTimeout(() => {
+      dispatch(
+        homeActions.getRecentSearchKeywords({
+          target: 'post',
+          sort: 'desc',
+        }),
+      );
+    }, 500);
+  }, []);
+
   const onPressCtaSearch = () => {
     searchInputRef?.current?.blur?.();
     dispatch(homeActions.setNewsfeedSearch({isSuggestion: false}));
   };
 
+  const onDeleteKeyword = (keyword: string) => {
+    console.log(`\x1b[36m🐣️ NFSSuggestion onDeleteKeyword ${keyword}\x1b[0m`);
+  };
+
+  const onClearAllKeyword = () => {
+    console.log(`\x1b[36m🐣️ NFSSuggestion onClearAllKeyword\x1b[0m`);
+  };
+
   return (
-    <View style={styles.container}>
-      {!!searchText && (
-        <TouchableOpacity
-          style={styles.ctaContainer}
-          onPress={onPressCtaSearch}>
-          <Icon icon={'search'} tintColor={colors.primary6} />
-          <Text style={styles.ctaText}>{ctaText}</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+    <ScrollView keyboardShouldPersistTaps={'always'}>
+      <View style={styles.container}>
+        {!!searchText ? (
+          <TouchableOpacity
+            style={styles.ctaContainer}
+            onPress={onPressCtaSearch}>
+            <Icon icon={'search'} tintColor={colors.primary6} />
+            <Text style={styles.ctaText}>{ctaText}</Text>
+          </TouchableOpacity>
+        ) : (
+          <NFSRecentSearchKeyword
+            onSelectKeyword={onSelectKeyword}
+            onDeleteKeyword={onDeleteKeyword}
+            onClearAllKeyword={onClearAllKeyword}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
 };
 

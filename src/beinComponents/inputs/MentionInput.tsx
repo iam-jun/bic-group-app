@@ -157,44 +157,43 @@ const MentionInput: React.FC<MentionInputProps> = ({
     getContent,
   }));
 
-  /**
-   * Need to put debounce as checkMention is called in 2 places
-   * and useRef as the debounce-only solution doesn't work
-   */
-  const getData = debounce((mentionKey: string, getDataParam: any) => {
-    if (!getDataPromise || !getDataParam || getDataParam.group_ids === '') {
-      setList([]);
-      return;
-    }
-
-    const param = {...getDataParam, key: mentionKey};
-    setIsLoading(true);
-    getDataPromise?.(param)
-      ?.then?.((response: any) => {
-        setIsLoading(false);
-        const newList = get(response, getDataResponseKey) || [];
-
-        if (newList?.length === 0) {
-          setList([]);
-          setMentioning(false);
-          return;
-        }
-
-        setList(newList);
-        setKey(mentionKey);
-      })
-      ?.catch((e: any) => {
-        console.log(
-          `\x1b[34m🐣️ MentionInput get data error: `,
-          `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-        );
-        setIsLoading(false);
-        setMentioning(false);
+  const getData = useCallback(
+    debounce((mentionKey: string, getDataParam: any) => {
+      if (!getDataPromise || !getDataParam || getDataParam.group_ids === '') {
         setList([]);
-        setHighlightIndex(DEFAULT_INDEX);
-        sethHighlightItem(undefined);
-      });
-  }, 50);
+        return;
+      }
+
+      const param = {...getDataParam, key: mentionKey};
+      setIsLoading(true);
+      getDataPromise?.(param)
+        ?.then?.((response: any) => {
+          setIsLoading(false);
+          const newList = get(response, getDataResponseKey) || [];
+
+          if (newList?.length === 0) {
+            setList([]);
+            setMentioning(false);
+            return;
+          }
+
+          setList(newList);
+          setKey(mentionKey);
+        })
+        ?.catch((e: any) => {
+          console.log(
+            `\x1b[34m🐣️ MentionInput get data error: `,
+            `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+          );
+          setIsLoading(false);
+          setMentioning(false);
+          setList([]);
+          setHighlightIndex(DEFAULT_INDEX);
+          sethHighlightItem(undefined);
+        });
+    }, 300),
+    [getDataPromise],
+  );
 
   const _onStartMention = useCallback(
     debounce(() => {
@@ -213,7 +212,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
   const checkMention = (text: string, sIndex: number) => {
     const cutText = text?.substr?.(0, sIndex) || '';
-    // console.log(`\x1b[36m🐣️ MentionInput checkMention cutText: ${cutText} - ${sIndex} - ${text}\x1b[0m`);
+    // console.log(
+    //   `\x1b[35m🐣️ MentionInput checkMention cutText: cut:${cutText} - sIndex:${sIndex} - text:${text}\x1b[0m`,
+    // );
     let isMention = false;
     const matches = cutText?.match?.(mentionRegex);
     let mentionKey = '';
@@ -259,6 +260,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
 
     //Replace origin mention syntax with highlight syntax
     const replacedMention = getReplacedMention(text);
+
+    //Check mention
+    checkMention(replacedMention, inputSelection.current?.end);
 
     //Parse highlight syntax to display view
     const parseDisplay: any[] = [];

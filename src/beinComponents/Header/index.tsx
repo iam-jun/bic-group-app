@@ -93,7 +93,8 @@ const Header: React.FC<HeaderProps> = ({
   onPressHeader,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
-  const inputRef = useRef();
+  const inputRef = useRef<any>();
+  const headerSearchRef = useRef<any>();
   const _headerRef = headerRef || useRef();
 
   const theme: ITheme = useTheme() as ITheme;
@@ -123,9 +124,14 @@ const Header: React.FC<HeaderProps> = ({
     onShowSearch?.(false);
   };
 
+  const setSearchText = (searchText: string) => {
+    headerSearchRef?.current?.setSearchText?.(searchText);
+  };
+
   useImperativeHandle(_headerRef, () => ({
     hideSearch,
     showSearch,
+    setSearchText,
   }));
 
   useBackHandler(() => {
@@ -241,6 +247,7 @@ const Header: React.FC<HeaderProps> = ({
           />
         )}
         <HeaderSearch
+          headerSearchRef={headerSearchRef}
           inputRef={inputRef}
           isShowSearch={isShowSearch}
           onSearchText={_onSearchText}
