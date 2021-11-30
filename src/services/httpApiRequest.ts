@@ -95,7 +95,7 @@ const handleSystemIssue = async () => {
   );
 
   // NOTE: sometimes, isInternetReachable = null, as it is not defined yet
-  if (!isInternetReachable) return;
+  if (isInternetReachable === false) return;
 
   Store.store.dispatch(noInternetActions.showSystemIssue());
 
