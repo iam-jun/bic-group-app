@@ -730,5 +730,9 @@
     "button_not_really_need": "😋 Not really need",
     "text_thanks_for_your_feedback": "Thanks for your feedback!",
     "text_we_will_notify_you": "We will notify you when this features is ready."
+  },
+  "internet_connection": {
+    "online": "You are back online",
+    "offline": "You are currently offline. Please check it and try again"
   }
 }
