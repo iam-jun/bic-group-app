@@ -95,16 +95,7 @@ const handleSystemIssue = async () => {
   );
 
   // NOTE: sometimes, isInternetReachable = null, as it is not defined yet
-  if (!isInternetReachable) {
-    // FIXME: replace with showing no internet banner
-    Store.store.dispatch(
-      modalActions.showHideToastMessage({
-        content: 'error:no_internet',
-        props: {textProps: {useI18n: true}, type: 'error'},
-      }),
-    );
-    return;
-  }
+  if (!isInternetReachable) return;
 
   Store.store.dispatch(noInternetActions.showSystemIssue());
 
