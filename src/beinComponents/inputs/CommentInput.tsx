@@ -190,8 +190,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
           isOpen: true,
           ContentComponent: (
             <EmojiBoard
-              width={400}
-              height={300}
+              width={320}
+              height={280}
               onEmojiSelected={onEmojiSelected}
             />
           ),
