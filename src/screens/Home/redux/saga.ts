@@ -146,6 +146,14 @@ function* getSearchPosts({
         target: 'post',
       };
       yield call(homeDataHelper.postNewRecentSearchKeyword, recentParam);
+      yield put(
+        homeActions.getRecentSearchKeywords({
+          target: 'post',
+          sort: 'desc',
+          limit: 10,
+          showLoading: false,
+        }),
+      );
     }
   } catch (e) {
     yield put(homeActions.setNewsfeedSearch({loadingResult: false}));
