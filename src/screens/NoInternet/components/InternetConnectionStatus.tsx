@@ -12,13 +12,15 @@ const InternetConnectionStatus = ({
   const firstRender = useRef(true);
 
   const [showBanner, setShowBanner] = useState<boolean>(false);
+  const timeoutRef = useRef<any>();
 
   useEffect(() => {
     // avoid rendering when initializing the app/component
     if (!firstRender.current) {
       setShowBanner(true);
       if (isInternetReachable) {
-        setTimeout(() => {
+        timeoutRef.current && clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
           setShowBanner(false);
         }, 2000);
       }
@@ -31,6 +33,12 @@ const InternetConnectionStatus = ({
       firstRender.current = false;
     }
   }, [isInternetReachable]);
+
+  useEffect(() => {
+    return () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   if (!showBanner) return null;
 
