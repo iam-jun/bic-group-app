@@ -1,3 +1,4 @@
+import {IUploadType} from '~/configs/resourceConfig';
 import {messageStatus, roomTypes} from '~/constants/chat';
 import {ReactionType} from '~/constants/reactions';
 import {IconType} from '~/resources/icons';
@@ -208,6 +209,13 @@ export interface ISendMessageAction {
   replyingMessage?: IMessage;
   image?: IActivityDataImage;
   status?: string;
+}
+
+export interface IUploadQuickChatImage {
+  roomId: string;
+  fieldName: 'icon' | 'background_img_url';
+  file: IFilePicked;
+  uploadType: IUploadType;
 }
 
 export interface IUploadFileAction {

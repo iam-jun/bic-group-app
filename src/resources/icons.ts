@@ -227,6 +227,7 @@ const icons = {
   ExclamationTriangle: 'ExclamationTriangle',
   ChatInfo: 'ChatInfo',
   FileTimesAlt: 'FileTimesAlt',
+  WifiSlash: 'WifiSlash',
 };
 
 export default icons;

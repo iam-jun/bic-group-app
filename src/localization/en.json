@@ -169,7 +169,7 @@
     "navigate_sign_in": "Go to Login",
     "navigate_sign_up": "Create account",
     "btn_landing_start": "Start now",
-    "text_landing_title": "Everybody needs a place to bein",
+    "text_landing_title": "Everybody needs a place to be in",
     "text_landing_title_group": "Welcome to {0}",
     "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
     "text_or": "Or",
@@ -508,6 +508,7 @@
     "label_permission_management": "Permissions Management",
     "detail_menu": {
       "change_avatar": "Change Group Avatar",
+      "change_cover": "Change Cover",
       "edit_description": "Edit Description",
       "edit_name": "Edit Group Chat Name"
     },
@@ -731,5 +732,9 @@
     "button_not_really_need": "😋 Not really need",
     "text_thanks_for_your_feedback": "Thanks for your feedback!",
     "text_we_will_notify_you": "We will notify you when this features is ready."
+  },
+  "internet_connection": {
+    "online": "You are back online",
+    "offline": "You are currently offline. Please check it and try again"
   }
 }
