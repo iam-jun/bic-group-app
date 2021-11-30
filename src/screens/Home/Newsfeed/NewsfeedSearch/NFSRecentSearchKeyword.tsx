@@ -15,7 +15,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 export interface NFSRecentSearchKeywordProps {
   onSelectKeyword?: (keyword: string) => void;
-  onDeleteKeyword?: (keyword: string) => void;
+  onDeleteKeyword?: (id: string, keyword: string) => void;
   onClearAllKeyword?: () => void;
 }
 
@@ -36,7 +36,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   };
 
   const onPressDeleteItem = (item: any) => {
-    onDeleteKeyword?.(item?.keyword);
+    onDeleteKeyword?.(item?.id, item?.keyword);
   };
 
   const onPressItem = (item: any) => {
