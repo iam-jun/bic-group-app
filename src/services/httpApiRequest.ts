@@ -267,7 +267,6 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   }
 };
 
-// let alertShow = false;
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
@@ -286,21 +285,8 @@ const handleResponseError = async (
         return mapResponseSuccessBein(error.response);
     }
   } else if (error.request) {
-    console.log('error.request', error.config);
+    console.error(error.request);
     handleSystemIssue();
-
-    // FIXME: Remove below if after finish handleSystemIssue
-    // if (!alertShow) {
-    //   alertShow = true;
-    //   // Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
-    //   Alert.alert(i18n.t('error:alert_title'), error.message, [
-    //     {
-    //       onPress: () => {
-    //         alertShow = false;
-    //       },
-    //     },
-    //   ]);
-    // }
 
     return {
       code: error.request.status, // request made, no response
@@ -310,7 +296,6 @@ const handleResponseError = async (
       },
     };
   } else {
-    // TODO: Does this case need to handleSystemIssue?
     return {
       code: 600, // request config error?
       data: null,
