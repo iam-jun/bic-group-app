@@ -432,7 +432,9 @@ function* joinNewGroup({
     yield put(groupsActions.getJoinedGroups());
 
     const toastMessage: IToastMessage = {
-      content: 'You are now a member of ' + groupName,
+      content: `${i18next.t(
+        'groups:text_successfully_join_group',
+      )} ${groupName}`,
       props: {
         type: 'success',
       },
