@@ -49,6 +49,10 @@ const GroupAdministration = (props: any) => {
     }
   };
 
+  const goToPendingMembers = () => {
+    rootNavigation.navigate(groupStack.pendingMembers);
+  };
+
   const goToGeneralInfo = () => {
     if (roomId) {
       return rootNavigation.navigate(chatStack.generalInfo, {
@@ -89,7 +93,7 @@ const GroupAdministration = (props: any) => {
       {renderItem(
         'UserExclamation',
         'settings:title_pending_members',
-        displayNewFeature,
+        goToPendingMembers,
         1,
       )}
       {renderItem(

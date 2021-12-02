@@ -25,6 +25,11 @@ export const hideBottomTabRoutes = [
   //Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'security-and-login',
+  // groups
+  'group-admin',
+  'general-info',
+  'edit-group-description',
+  'pending-members',
 ];
 
 export const navigationSetting = {
@@ -114,6 +119,7 @@ export const appScreens = {
   groupGeneralInfo: 'general-info',
   groupEditDescription: 'edit-group-description',
   groupInviteMembers: 'invite-members',
+  groupPendingMembers: 'pending-members',
 
   // Menu, settings
   menu: 'menu',
@@ -396,6 +402,9 @@ export const linkingConfigFullLaptop = {
               },
               'group-detail': {
                 path: 'groups/:groupId?',
+              },
+              'pending-members': {
+                path: 'groups/:groupId/pending-members',
               },
               'group-about': {
                 path: 'groups/:groupId/about',
