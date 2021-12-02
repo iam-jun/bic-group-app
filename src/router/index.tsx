@@ -78,11 +78,9 @@ const StackNavigator = (): React.ReactElement => {
   };
 
   useEffect(() => {
-    const unsubscribeNetInfo = NetInfo.addEventListener(state => {
-      console.log('isConnected', state.isConnected);
-      console.log('isInternetReachable', state.isInternetReachable);
-      validateInternetConnection(state);
-    });
+    const unsubscribeNetInfo = NetInfo.addEventListener(state =>
+      validateInternetConnection(state),
+    );
 
     return () => {
       unsubscribeNetInfo();
