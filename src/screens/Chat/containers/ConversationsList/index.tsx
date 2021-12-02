@@ -32,6 +32,8 @@ import {ITheme} from '~/theme/interfaces';
 import {ConversationItemMenu} from '../../components';
 
 const _ConversationsList = (): React.ReactElement => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const listRef = useRef<any>();
 
   const theme: ITheme = useTheme() as ITheme;
@@ -167,7 +169,7 @@ const _ConversationsList = (): React.ReactElement => {
         onPressMenu={onMenuPress}
         removeBorderAndShadow={isLaptop}
       />
-      <Pressable onPress={goSearch}>
+      <Pressable disabled={!isInternetReachable} onPress={goSearch}>
         <View pointerEvents="none">
           <SearchInput
             style={styles.inputSearch}

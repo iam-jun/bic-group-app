@@ -8,6 +8,7 @@ import BottomSecondary from './ButtonBottomSecondary';
 import Icon from './ButtonIcon';
 import {StyleProp, ViewStyle} from 'react-native';
 import {TextProps, TextVariant} from '~/beinComponents/Text';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface ButtonProps extends ButtonWrapperProps {
   children?: React.ReactNode;
@@ -20,7 +21,9 @@ export interface ButtonProps extends ButtonWrapperProps {
 }
 
 const ButtonComponent: React.FC<ButtonProps> = (props: ButtonProps) => {
-  return <ButtonWrapper {...props} />;
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
+  return <ButtonWrapper {...props} disabled={!isInternetReachable === false} />;
 };
 
 const Button = Object.assign(ButtonComponent, {

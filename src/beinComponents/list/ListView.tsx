@@ -17,6 +17,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {IAction} from '~/constants/commonActions';
+import {useKeySelector} from '~/hooks/selector';
 
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
@@ -103,6 +104,8 @@ const ListView: React.FC<ListViewProps> = ({
   currentPath,
   ...props
 }: ListViewProps) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const {colors} = useTheme() as ITheme;
 
   const ItemComponent = items[type] || PrimaryItem;
@@ -134,11 +137,12 @@ const ListView: React.FC<ListViewProps> = ({
 
     return (
       <TouchableOpacity
-        disabled={!onItemPress || item.disableClick}
+        disabled={!isInternetReachable || !onItemPress || item.disableClick}
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
         onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
         <ItemComponent
           {...item}
+          disabled={!isInternetReachable}
           title={item[titleField || 'title']}
           subTitle={item[subTitleField || 'subTitle']}
           style={itemStyle}
