@@ -23,4 +23,4 @@ export type RootStackParamList = {
   };
 };
 
-export type ITabTypes = 'home' | 'groups' | 'chat' | 'notification' | 'menus';
+export type ITabTypes = 'home' | 'groups' | 'notification' | 'menus';

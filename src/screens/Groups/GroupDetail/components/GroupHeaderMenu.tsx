@@ -184,11 +184,6 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
     dispatch(groupsActions.leaveGroup(Number(groupId)));
   };
 
-  const onPressShareChat = () => {
-    dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
   return (
     <View style={[styles.container, style]}>
       <PrimaryItem
@@ -205,15 +200,6 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           leftIcon={'ShareAlt'}
           title={t('groups:group_menu:label_share_group')}
           onPress={onPressShare}
-        />
-      )}
-      {isWeb && (
-        <PrimaryItem
-          height={48}
-          leftIconProps={{icon: 'iconSend', size: 24}}
-          leftIcon={'iconSend'}
-          title={t('groups:group_menu:label_share_to_chat')}
-          onPress={onPressShareChat}
         />
       )}
       {isMember && (

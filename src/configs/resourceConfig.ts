@@ -14,10 +14,6 @@ export const uploadTypes = {
   commentImage: 'commentImage',
   commentVideo: 'commentVideo',
   commentFile: 'commentFile',
-
-  chatImage: 'chatImage',
-  chatVideo: 'chatVideo',
-  chatFile: 'chatFile',
 };
 
 export type IUploadType = typeof uploadTypes[keyof typeof uploadTypes];
@@ -36,10 +32,6 @@ export const uploadEndpoints: any = {
   commentImage: 'comment/images/',
   commentVideo: 'comment/videos/',
   commentFile: 'comment/files/',
-
-  chatImage: 'chat/images/',
-  chatVideo: 'chat/videos/',
-  chatFile: 'chat/files/',
 };
 
 export const resourceVariants = {

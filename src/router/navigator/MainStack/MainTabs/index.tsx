@@ -13,7 +13,6 @@ import {useUserIdAuth} from '~/hooks/auth';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
-import {default as chatActions} from '~/screens/Chat/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {initPushTokenMessage} from '~/services/helper';
@@ -52,7 +51,6 @@ const MainTabs = () => {
     if (!userId) {
       return;
     }
-    dispatch(chatActions.initChat());
     dispatch(postActions.getDraftPosts({userId, streamClient}));
     if (Platform.OS !== 'web') {
       dispatch(notificationsActions.registerPushToken());

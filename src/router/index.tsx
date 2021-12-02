@@ -103,7 +103,6 @@ const StackNavigator = (): React.ReactElement => {
     const route = paths.length > 0 ? paths[1] : '';
     let navigateRoute = '';
     switch (route) {
-      case 'chat':
       case 'groups':
       case 'menus':
         navigateRoute = route;

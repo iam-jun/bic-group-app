@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -23,9 +17,7 @@ import {ITheme} from '~/theme/interfaces';
 import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
-import chatActions from '~/screens/Chat/redux/actions';
 import AboutProfile from './components/AboutProfile';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import menuActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
@@ -37,7 +29,7 @@ const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, background_img_url, username} =
+  const {fullname, description, avatar, background_img_url} =
     userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
@@ -55,19 +47,6 @@ const UserProfile = (props: any) => {
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
 
-  const navigateToChatScreen = (roomId: string) => {
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(chatStack.conversation, {
-        roomId: roomId,
-      });
-      return;
-    }
-    rootNavigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: roomId, initial: false},
-    });
-  };
-
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
     if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
@@ -76,18 +55,6 @@ const UserProfile = (props: any) => {
   useEffect(() => {
     isFocused && getUserProfile();
   }, [isFocused, userId]);
-
-  const onPressChat = () => {
-    if (!!username)
-      dispatch(
-        chatActions.createConversation(
-          // @ts-ignore
-          [{username, name: fullname}],
-          true,
-          navigateToChatScreen,
-        ),
-      );
-  };
 
   const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit);
 
@@ -141,8 +108,7 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         style={styles.button}
         highEmphasis
-        rightIcon={'Message'}
-        onPress={onPressChat}>
+        rightIcon={'Message'}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
     );

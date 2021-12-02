@@ -7,13 +7,8 @@ import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
-import iconTabChat from '../../assets/icons/icon_chat.svg';
-import iconTabChatBein from '../../assets/icons/icon_chat_bein.svg';
-import iconMessages from '../../assets/icons/icon_chat_bein.svg';
-import iconChatPurple from '../../assets/icons/icon_chat_purple.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
-import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
 import iconEyeSeen from '../../assets/icons/icon_eye.svg';
 import iconTabGroups from '../../assets/icons/icon_groups.svg';
 import iconTabGroupsBein from '../../assets/icons/icon_groups_bein.svg';
@@ -71,8 +66,6 @@ const icons = {
   iconTabHomeBein,
   iconTabGroups,
   iconTabGroupsBein,
-  iconTabChat,
-  iconTabChatBein,
   iconTabNotification,
   iconTabNotificationBein,
   iconTabMenu,
@@ -142,7 +135,6 @@ const icons = {
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
-  iconCreateChat,
   users: 'UsersAlt',
   search: 'Search',
   addUser: 'UserPlus',
@@ -152,8 +144,6 @@ const icons = {
   attachment: 'Paperclip',
   images: 'Images',
   leavesGroup: 'SignOutAlt',
-  iconMessages,
-  iconChatPurple,
   iconAddPost,
   iconAddSquareDone,
   iconAddSquareGroup,
@@ -202,8 +192,6 @@ const icons = {
   Heart: 'Heart',
   ...reactionIcons,
   Feedback: 'Feedback',
-  ChatBlock: 'CommentBlock',
-  ChatPermission: 'KeyholeSquareFull',
   Save: 'Save',
   File: 'File',
   PlayVideo: iconPlay,
@@ -225,7 +213,6 @@ const icons = {
   iconSuitcase: 'Suitcase',
   FileExclamationAlt: 'FileExclamationAlt',
   ExclamationTriangle: 'ExclamationTriangle',
-  ChatInfo: 'ChatInfo',
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
 };
