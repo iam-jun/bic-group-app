@@ -89,19 +89,22 @@ const refreshFailKickOut = () => {
   unauthorizedGetStreamReqQueue = [];
 };
 
-const handleSystemIssue = async () => {
-  const isInternetReachable = await NetInfo.fetch().then(
-    state => state.isInternetReachable,
+const handleSystemIssue = () => {
+  const state = Store.store.getState();
+
+  const isInternetReachable: boolean = _.get(
+    state,
+    'noInternet.isInternetReachable',
+    false,
   );
 
-  // NOTE: sometimes, isInternetReachable = null, as it is not defined yet
   if (isInternetReachable === false) return;
 
   Store.store.dispatch(noInternetActions.showSystemIssue());
 
   const modalVisibleDuration = 2000;
   setTimeout(() => {
-    _dispatchLogout();
+    // _dispatchLogout();
     _dispatchHideSystemIssue();
   }, modalVisibleDuration);
 };
