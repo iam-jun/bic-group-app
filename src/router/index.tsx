@@ -66,7 +66,7 @@ const StackNavigator = (): React.ReactElement => {
   const setIsInternetReachable = debounce((state: NetInfoState) => {
     const result = state.isInternetReachable ? state.isConnected : false;
     dispatch(noInternetActions.setIsInternetReachable(result));
-  }, 500);
+  }, 100);
 
   const validateInternetConnection = (state: NetInfoState) => {
     if (state.isInternetReachable === null) {
