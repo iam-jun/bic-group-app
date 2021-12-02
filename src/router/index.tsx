@@ -18,7 +18,8 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
-import {useNetInfo} from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
+import {NetInfoState} from '@react-native-community/netinfo';
 
 import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
@@ -50,6 +51,7 @@ import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
+import {debounce} from 'lodash';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -58,9 +60,34 @@ const StackNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const netInfo = useNetInfo();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
+
+  const setIsInternetReachable = debounce((state: NetInfoState) => {
+    const result = state.isInternetReachable ? state.isConnected : false;
+    dispatch(noInternetActions.setIsInternetReachable(result));
+  }, 500);
+
+  const validateInternetConnection = (state: NetInfoState) => {
+    if (state.isInternetReachable === null) {
+      NetInfo.fetch().then(state => setIsInternetReachable(state));
+      return;
+    }
+
+    setIsInternetReachable(state);
+  };
+
+  useEffect(() => {
+    const unsubscribeNetInfo = NetInfo.addEventListener(state => {
+      console.log('isConnected', state.isConnected);
+      console.log('isInternetReachable', state.isInternetReachable);
+      validateInternetConnection(state);
+    });
+
+    return () => {
+      unsubscribeNetInfo();
+    };
+  }, []);
 
   const checkAuthKickout = async () => {
     try {
@@ -213,9 +240,7 @@ const StackNavigator = (): React.ReactElement => {
         <SystemIssueModal />
         <LoadingModal />
         <ToastMessage />
-        <InternetConnectionStatus
-          isInternetReachable={netInfo.isInternetReachable}
-        />
+        <InternetConnectionStatus />
       </View>
     </Div>
   );

@@ -1,6 +1,11 @@
 import types from './types';
 
 const noInternetActions = {
+  setIsInternetReachable: (payload: boolean) => ({
+    type: types.SET_IS_INTERNET_REACHABLE,
+    payload,
+  }),
+
   setSystemIssue: (payload: boolean) => ({
     type: types.SET_SYSTEM_ISSUE,
     payload,

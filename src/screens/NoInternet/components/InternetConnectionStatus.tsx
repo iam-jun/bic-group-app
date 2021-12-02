@@ -1,13 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Platform} from 'react-native';
+import {useKeySelector} from '~/hooks/selector';
 
 import BannerMessage from './BannerMessage';
 
-const InternetConnectionStatus = ({
-  isInternetReachable,
-}: {
-  isInternetReachable: boolean | null;
-}) => {
+const InternetConnectionStatus = () => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const styles = createStyle();
   const firstRender = useRef(true);
 
@@ -26,10 +25,7 @@ const InternetConnectionStatus = ({
       }
     }
 
-    if (firstRender.current && isInternetReachable !== null) {
-      // when initializing the app/component, the variable `isInternetReachable`
-      // is set to null, then changes to true/false.
-      // So this will avoid unwanted render at first.
+    if (firstRender.current) {
       firstRender.current = false;
     }
   }, [isInternetReachable]);
