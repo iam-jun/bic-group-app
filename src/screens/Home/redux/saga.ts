@@ -9,6 +9,7 @@ import {
   IParamPostNewRecentSearchKeyword,
   IPayloadGetHomePost,
   IPayloadGetSearchPosts,
+  IRecentSearchTarget,
 } from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
@@ -21,6 +22,14 @@ export default function* homeSaga() {
   yield takeEvery(
     homeTypes.GET_RECENT_SEARCH_KEYWORDS,
     getRecentSearchKeywords,
+  );
+  yield takeEvery(
+    homeTypes.DELETE_CLEAR_RECENT_SEARCH_KEYWORDS,
+    deleteClearRecentSearch,
+  );
+  yield takeEvery(
+    homeTypes.DELETE_RECENT_SEARCH_KEYWORD_BY_ID,
+    deleteRecentSearchById,
   );
 }
 
@@ -137,6 +146,14 @@ function* getSearchPosts({
         target: 'post',
       };
       yield call(homeDataHelper.postNewRecentSearchKeyword, recentParam);
+      yield put(
+        homeActions.getRecentSearchKeywords({
+          target: 'post',
+          sort: 'desc',
+          limit: 10,
+          showLoading: false,
+        }),
+      );
     }
   } catch (e) {
     yield put(homeActions.setNewsfeedSearch({loadingResult: false}));
@@ -202,11 +219,11 @@ function* getRecentSearchKeywords({
   type: string;
 }): any {
   try {
-    yield put(homeActions.setNewsfeedSearchRecentKeywords({loading: true}));
-    const response = yield call(
-      homeDataHelper.getRecentSearchKeywords,
-      payload,
-    );
+    const {showLoading = true, ...param} = payload;
+    if (showLoading) {
+      yield put(homeActions.setNewsfeedSearchRecentKeywords({loading: true}));
+    }
+    const response = yield call(homeDataHelper.getRecentSearchKeywords, param);
     yield put(
       homeActions.setNewsfeedSearchRecentKeywords({
         data: response?.recentSearches || [],
@@ -214,7 +231,49 @@ function* getRecentSearchKeywords({
       }),
     );
   } catch (e) {
-    console.log(`\x1b[31m🐣️ saga getSearchPostUsers error: `, e, `\x1b[0m`);
+    console.log(`\x1b[31m🐣️ saga getRecentSearch error: `, e, `\x1b[0m`);
     yield put(homeActions.setNewsfeedSearchRecentKeywords({loading: false}));
+  }
+}
+
+function* deleteClearRecentSearch({
+  payload,
+}: {
+  payload: IRecentSearchTarget;
+  type: string;
+}): any {
+  try {
+    yield call(homeDataHelper.deleteCleanRecentSearch, payload);
+    yield put(
+      homeActions.getRecentSearchKeywords({
+        target: 'post',
+        sort: 'desc',
+        limit: 10,
+        showLoading: false,
+      }),
+    );
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ saga clear Recent Search error: `, e, `\x1b[0m`);
+  }
+}
+
+function* deleteRecentSearchById({
+  payload,
+}: {
+  payload: string;
+  type: string;
+}): any {
+  try {
+    yield call(homeDataHelper.deleteRecentSearchById, payload);
+    yield put(
+      homeActions.getRecentSearchKeywords({
+        target: 'post',
+        sort: 'desc',
+        limit: 10,
+        showLoading: false,
+      }),
+    );
+  } catch (e) {
+    console.log(`\x1b[31m🐣️ saga delete Recent Search error: `, e, `\x1b[0m`);
   }
 }

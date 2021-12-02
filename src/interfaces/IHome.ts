@@ -46,15 +46,18 @@ export interface IParamGetSearchPost {
   limit?: number;
 }
 
+export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
+
 export interface IParamGetRecentSearchKeywords {
   sort?: 'desc' | 'asc';
   limit?: number;
-  target?: 'post' | 'user' | 'article' | 'all';
+  target?: IRecentSearchTarget;
+  showLoading?: boolean;
 }
 
 export interface IParamPostNewRecentSearchKeyword {
   keyword: string;
-  target: 'post' | 'user' | 'article' | 'all';
+  target: IRecentSearchTarget;
 }
 
 export interface IPayloadGetSearchPosts {
