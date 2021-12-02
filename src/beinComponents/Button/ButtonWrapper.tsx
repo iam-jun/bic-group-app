@@ -11,6 +11,7 @@ import {ITheme} from '~/theme/interfaces';
 import {ActivityIndicator, useTheme} from 'react-native-paper';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface ButtonWrapperProps {
   nativeID?: string;
@@ -63,6 +64,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonBase';
 
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {
       // In order to fix the title on web is pushed beneath the avg line
@@ -99,7 +102,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     <TouchableComponent
       nativeID={nativeID}
       testID={testID}
-      disabled={disabled}
+      disabled={!isInternetReachable || disabled}
       onPress={onPress}
       onLongPress={onLongPress}
       underlayColor={underlayColor}
