@@ -1,5 +1,13 @@
 import React, {FC, useContext, useEffect, useRef} from 'react';
-import {Keyboard, Platform, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Animated,
+  Keyboard,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text as RNText,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
@@ -42,12 +50,16 @@ import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptio
 import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
 import Div from '~/beinComponents/Div';
+import {fontFamilies} from '~/theme/fonts';
 
 export interface CreatePostProps {
   route?: {
     params?: ICreatePostParams;
   };
 }
+
+const webContentMinHeight = 80;
+const webContentInsetHeight = 18;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -59,6 +71,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     initAudience,
     createFromGroupId,
   } = route?.params || {};
+
+  const webInputHeightAnimated = useRef(
+    new Animated.Value(webContentMinHeight),
+  ).current;
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -89,6 +105,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
+
+  const shouldScroll = selectingImages?.length > 0;
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange = content !== initPostData?.object?.data?.content;
@@ -338,31 +356,70 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     // }
   };
 
+  const onLayoutCloneText = (e: any) => {
+    const newHeight = Math.max(
+      e.nativeEvent.layout.height + webContentInsetHeight,
+      webContentMinHeight,
+    );
+    Animated.timing(webInputHeightAnimated, {
+      toValue: newHeight,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  };
+
   const renderContent = () => {
-    const shouldScroll = selectingImages?.length > 0;
     const Container = shouldScroll ? ScrollView : View;
 
     return (
       <Container style={shouldScroll ? {} : styles.flex1}>
         <View style={shouldScroll ? {} : styles.flex1}>
-          <MentionInput
-            mentionInputRef={mentionInputRef}
-            style={shouldScroll ? {} : styles.flex1}
-            textInputStyle={shouldScroll ? {} : styles.flex1}
-            modalPosition={'bottom'}
-            onPress={onPressMentionAudience}
-            onChangeText={onChangeText}
-            ComponentInput={PostInput}
-            title={i18n.t('post:mention_title')}
-            emptyContent={i18n.t('post:mention_empty_content')}
-            getDataPromise={postDataHelper.getSearchMentionAudiences}
-            getDataParam={{group_ids: strGroupIds}}
-            getDataResponseKey={'data'}
-            disabled={loading}
-            fullWidth={!isWeb}
-            modalStyle={isWeb ? {maxHeight: 350} : {}}
-            showShadow={isWeb}
-          />
+          {isWeb ? (
+            <Animated.View
+              style={
+                shouldScroll ? {height: webInputHeightAnimated} : styles.flex1
+              }>
+              <RNText
+                onLayout={onLayoutCloneText}
+                style={styles.textContentClone}>
+                {content}
+              </RNText>
+              <MentionInput
+                mentionInputRef={mentionInputRef}
+                style={styles.flex1}
+                textInputStyle={styles.flex1}
+                modalPosition={'bottom'}
+                onPress={onPressMentionAudience}
+                onChangeText={onChangeText}
+                ComponentInput={PostInput}
+                title={i18n.t('post:mention_title')}
+                emptyContent={i18n.t('post:mention_empty_content')}
+                getDataPromise={postDataHelper.getSearchMentionAudiences}
+                getDataParam={{group_ids: strGroupIds}}
+                getDataResponseKey={'data'}
+                disabled={loading}
+                modalStyle={{maxHeight: 350}}
+                showShadow
+              />
+            </Animated.View>
+          ) : (
+            <MentionInput
+              mentionInputRef={mentionInputRef}
+              style={shouldScroll ? {} : styles.flex1}
+              textInputStyle={shouldScroll ? {} : styles.flex1}
+              modalPosition={'bottom'}
+              onPress={onPressMentionAudience}
+              onChangeText={onChangeText}
+              ComponentInput={PostInput}
+              title={i18n.t('post:mention_title')}
+              emptyContent={i18n.t('post:mention_empty_content')}
+              getDataPromise={postDataHelper.getSearchMentionAudiences}
+              getDataParam={{group_ids: strGroupIds}}
+              getDataResponseKey={'data'}
+              disabled={loading}
+              fullWidth={true}
+            />
+          )}
           <PostPhotoPreview
             data={images || []}
             style={{alignSelf: 'center'}}
@@ -448,7 +505,7 @@ const validateImages = (
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, dimension, colors} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -486,6 +543,16 @@ const themeStyles = (theme: ITheme) => {
     audienceList: {
       marginBottom: spacing.margin.large,
       marginHorizontal: spacing.margin.large,
+    },
+    textContentClone: {
+      position: 'absolute',
+      top: 1,
+      left: 1,
+      opacity: 0,
+      padding: spacing?.padding.base,
+      fontSize: dimension?.sizes.body,
+      fontFamily: fontFamilies.Segoe,
+      color: colors.success,
     },
   });
 };
