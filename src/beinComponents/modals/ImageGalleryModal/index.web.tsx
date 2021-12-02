@@ -29,6 +29,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 }: ImageGalleryModalProps) => {
   const [activeIndex, _setActiveIndex] = useState(initIndex);
   const [zoomIn, setZoomIn] = useState(false);
+  const [layoutSize, setLayoutSize] = useState<any>();
 
   const footerListRef = useRef<any>();
 
@@ -156,18 +157,28 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     );
   };
 
+  const onLayout = (e: any) => {
+    const {width, height} = e.nativeEvent.layout || {};
+    setLayoutSize({width, height});
+  };
+
   return (
     <Modal visible={visible} transparent={true}>
       {visible && (
         <Pressable onPress={onPressClose} style={styles.container}>
           {renderHeader()}
-          <View style={styles.imageContainer}>
-            <Pressable onPress={() => setZoomIn(!zoomIn)}>
-              <Image
-                source={imageUrls?.[activeIndex]?.url}
-                className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
-              />
-            </Pressable>
+          <View onLayout={onLayout} style={styles.imageContainer}>
+            {!!layoutSize && (
+              <Pressable
+                style={{width: layoutSize.width, height: layoutSize.height}}
+                onPress={() => setZoomIn(!zoomIn)}>
+                <Image
+                  style={{height: layoutSize.height}}
+                  source={imageUrls?.[activeIndex]?.url}
+                  className={zoomIn ? 'image-zoom-out' : 'image-zoom-in'}
+                />
+              </Pressable>
+            )}
             {renderControlButton()}
           </View>
           {renderFooter()}
