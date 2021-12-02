@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {forgotPasswordStages} from '~/constants/authConstants';
 import {ActionTypes} from '~/utils';
-import * as types from './types';
+import types from './types';
 
 export const initAuthState = {
   user: undefined,

@@ -10,7 +10,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import PasswordInput from '~/beinComponents/inputs/PasswordInput';
-import * as actions from '~/screens/Auth/redux/actions';
+import actions from '~/screens/Auth/redux/actions';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';

@@ -3,7 +3,7 @@ import {Auth, Hub} from 'aws-amplify';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import * as actions from '~/screens/Auth/redux/actions';
+import actions from '~/screens/Auth/redux/actions';
 
 const useAuthAmplifyHub = () => {
   const dispatch = useDispatch();

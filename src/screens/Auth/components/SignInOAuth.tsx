@@ -8,7 +8,7 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
 import Text from '~/components/texts/Text';
-import * as actions from '~/screens/Auth/redux/actions';
+import actions from '~/screens/Auth/redux/actions';
 import authProviders from '~/constants/authProviders';
 import {Container} from '~/components';
 
