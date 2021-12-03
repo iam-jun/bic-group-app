@@ -165,12 +165,12 @@ const _PostDetailContent = (props: any) => {
     if (newCommentInput !== '' || newCommentSelectedImage) {
       dispatch(
         modalActions.showAlert({
-          title: i18n.t('common:label_discard_changes'),
-          content: i18n.t('common:text_discard_warning'),
+          title: i18n.t('post:title_discard_comment'),
+          content: i18n.t('post:text_discard_comment'),
           showCloseButton: true,
           cancelBtn: true,
-          cancelLabel: i18n.t('common:btn_continue_editing'),
-          confirmLabel: i18n.t('common:btn_discard'),
+          cancelLabel: i18n.t('post:btn_continue_comment'),
+          confirmLabel: i18n.t('post:btn_discard_comment'),
           onConfirm: () => rootNavigation.goBack(),
           stretchOnWeb: true,
         }),
