@@ -52,6 +52,8 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
 
+const defaultList = [{title: '', type: 'empty', data: []}];
+
 const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
@@ -250,6 +252,10 @@ const _PostDetailContent = (props: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
 
+    if (sectionData?.section?.type === 'empty') {
+      return <View />;
+    }
+
     return (
       <CommentItem
         postId={id}
@@ -311,7 +317,7 @@ const _PostDetailContent = (props: any) => {
           <View style={styles.postDetailContainer}>
             <SectionList
               ref={listRef}
-              sections={deleted ? [] : sectionData}
+              sections={deleted ? defaultList : sectionData}
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
               ListHeaderComponent={
@@ -392,7 +398,9 @@ const getSectionData = (listComment: IReaction[]) => {
     item.data = comment?.latest_children?.comment || [];
     result.push(item);
   });
-  return result;
+  // long post without comment cant scroll to bottom
+  // so need default list with an empty item to trigger scroll
+  return result?.length > 0 ? result : defaultList;
 };
 
 const createStyle = (theme: ITheme, isLaptop: boolean): any => {
