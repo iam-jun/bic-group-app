@@ -301,7 +301,10 @@ const MentionInput: React.FC<MentionInputProps> = ({
     //Revert origin mention syntax to set content
     let originContent = text;
     Object.keys(mentionMap.current).map(key => {
-      originContent = originContent.replace(mentionMap.current[key], key);
+      originContent = originContent.replace(
+        new RegExp(mentionMap.current[key], 'g'),
+        key,
+      );
     });
 
     setContentDisplay(parseDisplay);

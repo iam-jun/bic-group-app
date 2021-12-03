@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useTheme} from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
@@ -15,8 +16,13 @@ import {deviceDimensions} from '~/theme/dimension';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import useAuth from '~/hooks/auth';
+import {rootSwitch} from '~/router/stack';
 
 const Landing = () => {
+  const {user} = useAuth();
+  const isFocused = useIsFocused();
+
   const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
   const dimensions = useWindowDimensions();
@@ -28,6 +34,10 @@ const Landing = () => {
   const imgPadding = theme.spacing.margin.base || 12;
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
+
+  useEffect(() => {
+    isFocused && user && navigation.replace(rootSwitch.mainStack);
+  }, [isFocused]);
 
   return (
     <ScreenWrapper isFullView style={styles.root}>

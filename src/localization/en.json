@@ -319,6 +319,7 @@
       "btn_reset": "Reset",
       "btn_show_results": "Show Results",
       "search_people": "Search people...",
+      "no_recent_search": "No recent search",
       "apply": "Apply",
       "filter": "Filter",
       "filter_created_by": "Created by",
@@ -679,7 +680,8 @@
     "error": {
       "last_admin_leave": "You are the last admin of the group. Kindly set another admin before leaving",
       "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
-    }
+    },
+    "text_successfully_join_group": "Successfully join group"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

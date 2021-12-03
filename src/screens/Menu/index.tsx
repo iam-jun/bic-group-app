@@ -29,7 +29,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {ISetting} from '~/interfaces/common';
 import images from '~/resources/images';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import * as authActions from '~/screens/Auth/redux/actions';
+import authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';

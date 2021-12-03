@@ -8,6 +8,7 @@ import {
   IPayloadSetNewsfeedSearchFilter,
   IPayloadSetNewsfeedSearchRecentKeywords,
   IPayloadSetNewsfeedSearchUsers,
+  IRecentSearchTarget,
 } from '~/interfaces/IHome';
 
 const homeActions = {
@@ -97,6 +98,18 @@ const homeActions = {
   getRecentSearchKeywords: (payload?: IParamGetRecentSearchKeywords) => {
     return {
       type: homeTypes.GET_RECENT_SEARCH_KEYWORDS,
+      payload,
+    };
+  },
+  deleteClearRecentSearch: (payload: IRecentSearchTarget) => {
+    return {
+      type: homeTypes.DELETE_CLEAR_RECENT_SEARCH_KEYWORDS,
+      payload,
+    };
+  },
+  deleteRecentSearchById: (payload: string) => {
+    return {
+      type: homeTypes.DELETE_RECENT_SEARCH_KEYWORD_BY_ID,
       payload,
     };
   },
