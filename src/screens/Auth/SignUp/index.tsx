@@ -16,7 +16,7 @@ import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {rootNavigationRef} from '~/router/navigator/refs';
-import * as actions from '~/screens/Auth/redux/actions';
+import actions from '~/screens/Auth/redux/actions';
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
 

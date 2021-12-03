@@ -12,7 +12,7 @@ import Button from '~/beinComponents/Button';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
 import {IObject} from '~/interfaces/common';
-import * as actions from '~/screens/Auth/redux/actions';
+import actions from '~/screens/Auth/redux/actions';
 import useAuth from '~/hooks/auth';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';

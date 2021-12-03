@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
-import * as types from '~/screens/Auth/redux/types';
+import types from '~/screens/Auth/redux/types';
 import groupsReducer from '~/screens/Groups/redux/reducer';
 import homeReducer from '~/screens/Home/redux/reducer';
 import menuReducer from '~/screens/Menu/redux/reducer';
