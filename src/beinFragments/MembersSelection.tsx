@@ -89,7 +89,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     <View>
       {roles && roles.data.length > 0 && (
         <ListView
-          title={i18next.t('common:title_admin')}
+          title={i18next.t('common:text_admin')}
           {...roles}
           renderItem={renderItemUser}
         />

@@ -106,7 +106,7 @@
     "text_avatar": "Avatar",
     "text_cover": "Cover",
     "text_privacy": "Privacy",
-    "title_admin": "Admin"
+    "text_admin": "Admin"
   },
   "auth": {
     "text_kickout_title": "Notice",
