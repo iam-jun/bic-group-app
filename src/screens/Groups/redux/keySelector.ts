@@ -4,6 +4,7 @@ const groupsKeySelector = {
     can_setting: 'groups.groupDetail.can_setting',
     can_manage_member: 'groups.groupDetail.can_manage_member',
     join_status: 'groups.groupDetail.join_status',
+    total_pending_members: 'groups.groupDetail.total_pending_members',
   },
   groupSearch: 'groups.groupSearch',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
@@ -18,6 +19,7 @@ const groupsKeySelector = {
   loadingJoinedGroups: 'groups.loadingJoinedGroups',
   loadingGroupDetail: 'groups.loadingGroupDetail',
   loadingPage: 'groups.loadingPage',
+  pendingMemberRequests: 'groups.pendingMemberRequests',
 };
 
 export default groupsKeySelector;

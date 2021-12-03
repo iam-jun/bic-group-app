@@ -3,6 +3,7 @@ import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
+  IGetPendingMemberRequests,
   IGroupAddMembers,
   IGroupDetailEdit,
   IGroupGetJoinableMembers,
@@ -51,6 +52,10 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
+  yield takeLatest(
+    groupsTypes.GET_PENDING_MEMBER_REQUESTS,
+    getPendingMemberRequests,
+  );
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -539,6 +544,33 @@ function* removeGroupAdmin({
     yield refreshGroupMembers(groupId);
   } catch (err) {
     console.log('setGroupAdmin: ', err);
+    yield showError(err);
+  }
+}
+
+function* getPendingMemberRequests({
+  payload,
+}: {
+  type: string;
+  payload: IGetPendingMemberRequests;
+}) {
+  try {
+    const {groups} = yield select();
+
+    const {groupId, params} = payload;
+    const {offset, data} = groups.pendingMemberRequests;
+
+    // @ts-ignore
+    const response = yield groupsDataHelper.getPendingMemberRequests(groupId, {
+      // offset,
+      limit: appConfig.recordsPerPage,
+      ...params,
+    });
+
+    console.log('data:', response?.data);
+    yield put(groupsActions.setPendingMemberRequests(response?.data));
+  } catch (err) {
+    console.log('getPendingMemberRequests: ', err);
     yield showError(err);
   }
 }

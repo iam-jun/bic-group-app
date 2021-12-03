@@ -11,6 +11,7 @@ import {
   IGroupSearchPayload,
   IGroupSetAdmin,
   IGroupRemoveAdmin,
+  IGetPendingMemberRequests,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -201,6 +202,22 @@ const groupsActions = {
   }) => ({
     type: groupsTypes.REMOVE_MEMBER,
     payload,
+  }),
+
+  getPendingMemberRequests: (payload: IGetPendingMemberRequests) => ({
+    type: groupsTypes.GET_PENDING_MEMBER_REQUESTS,
+    payload,
+  }),
+  setPendingMemberRequests: (payload: any) => ({
+    type: groupsTypes.SET_PENDING_MEMBER_REQUESTS,
+    payload,
+  }),
+  removePendingRequest: (payload: number) => ({
+    type: groupsTypes.REMOVE_PENDING_REQUEST,
+    payload,
+  }),
+  clearAllPendingRequests: () => ({
+    type: groupsTypes.CLEAR_ALL_PENDING_REQUESTS,
   }),
 };
 

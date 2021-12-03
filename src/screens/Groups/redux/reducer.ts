@@ -1,6 +1,8 @@
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
+import {IObject} from '~/interfaces/common';
+import {IMemberRequestsData} from '~/interfaces/IGroup';
 
 const initGroupsState = {
   isPrivacyModalOpen: false,
@@ -45,11 +47,14 @@ const initGroupsState = {
 
   loadingAvatar: false,
   loadingCover: false,
+
+  pendingMemberRequests: [],
+  // pendingMemberRequests: {} as IObject<IMemberRequestsData>,
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
   const {type, payload} = action;
-  const {users, selectedUsers} = state;
+  const {users, selectedUsers, pendingMemberRequests} = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -256,6 +261,38 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           ...payload,
         },
       };
+
+    // case groupsTypes.GET_PENDING_MEMBER_REQUESTS:
+    //   return {
+    //     ...state,
+    //     // pendingMemberRequests: {
+    //     //   ...pendingMemberRequests,
+    //     //   loading: pendingMemberRequests.data.data,
+    //     //   params: payload.params,
+    //     // },
+    //   };
+    case groupsTypes.SET_PENDING_MEMBER_REQUESTS:
+      return {
+        ...state,
+        // pendingMemberRequests: {
+        //   ...pendingMemberRequests,
+        //   loading: false,
+        // },
+        pendingMemberRequests:
+          payload.filter((item: any) => item.status !== 'waiting') || [],
+      };
+    case groupsTypes.REMOVE_PENDING_REQUEST:
+      // TODO: complete logic for removing single pending request from list
+      return {
+        ...state,
+        pendingMemberRequests: [],
+      };
+    case groupsTypes.CLEAR_ALL_PENDING_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: [],
+      };
+
     default:
       return state;
   }
