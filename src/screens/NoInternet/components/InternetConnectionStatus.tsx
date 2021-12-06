@@ -1,37 +1,37 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Platform} from 'react-native';
+import {useKeySelector} from '~/hooks/selector';
 
 import BannerMessage from './BannerMessage';
 
-const InternetConnectionStatus = ({
-  isInternetReachable,
-}: {
-  isInternetReachable: boolean | null;
-}) => {
+const InternetConnectionStatus = () => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const styles = createStyle();
   const firstRender = useRef(true);
 
   const [showBanner, setShowBanner] = useState<boolean>(false);
   const timeoutRef = useRef<any>();
 
+  const doShowBanner = () => {
+    setShowBanner(true);
+    if (isInternetReachable) {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        setShowBanner(false);
+      }, 2000);
+    }
+  };
+
   useEffect(() => {
-    // avoid rendering when initializing the app/component
-    if (!firstRender.current) {
-      setShowBanner(true);
-      if (isInternetReachable) {
-        timeoutRef.current && clearTimeout(timeoutRef.current);
-        timeoutRef.current = setTimeout(() => {
-          setShowBanner(false);
-        }, 2000);
-      }
+    if (firstRender.current) {
+      if (!isInternetReachable) doShowBanner();
+
+      firstRender.current = false;
+      return;
     }
 
-    if (firstRender.current && isInternetReachable !== null) {
-      // when initializing the app/component, the variable `isInternetReachable`
-      // is set to null, then changes to true/false.
-      // So this will avoid unwanted render at first.
-      firstRender.current = false;
-    }
+    doShowBanner();
   }, [isInternetReachable]);
 
   useEffect(() => {

@@ -21,6 +21,7 @@ import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 import Div from '../Div';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;
@@ -52,11 +53,13 @@ const Icon: React.FC<IconProps> = ({
   disabled,
   hitSlop = {top: 10, left: 10, bottom: 10, right: 10},
 }: IconProps) => {
-  if (isLoading) return <ActivityIndicator size="small" />;
+  const NetInfo = useNetInfo();
+  const noInternet = NetInfo.isInternetReachable === false;
 
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
+  if (isLoading) return <ActivityIndicator size="small" />;
 
+  const {colors} = theme;
   const styles = StyleSheet.create(createStyles(theme));
   tintColor = tintColor || colors.iconTint;
 
@@ -97,7 +100,7 @@ const Icon: React.FC<IconProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={disabled || !onPress}
+      disabled={noInternet || disabled || !onPress}
       onPress={onPress}
       hitSlop={hitSlop}>
       <Wrapper style={[styles.container, style, {backgroundColor}]}>

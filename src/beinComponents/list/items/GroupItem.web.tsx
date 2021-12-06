@@ -48,6 +48,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableOnPressItem,
   } = props;
 
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
@@ -151,7 +153,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   return (
     <Div className={className}>
-      <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
+      <TouchableOpacity
+        disabled={!isInternetReachable || disableOnPressItem}
+        onPress={_onPressItem}>
         <View style={styles.container}>
           {Platform.OS === 'web' && isActive && (
             <View style={styles.itemActiveIndicator} />

@@ -41,6 +41,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   badgeColor,
   testID,
 }: MenuItemProps) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const theme = useTheme() as ITheme;
   const {colors} = theme || {};
   const styles = themeStyles(theme);
@@ -67,7 +69,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
    */
   return (
     <Div className={className}>
-      <TouchableOpacity disabled={disabled} onPress={onPress} testID={testID}>
+      <TouchableOpacity
+        disabled={!isInternetReachable || disabled}
+        onPress={onPress}
+        testID={testID}>
         {Platform.OS === 'web' && isActive && (
           <View style={styles.itemActiveIndicator} />
         )}

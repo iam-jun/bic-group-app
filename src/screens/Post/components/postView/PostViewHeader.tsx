@@ -15,6 +15,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 import TimeView from '~/beinComponents/TimeView';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
@@ -38,6 +39,8 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const {language} = useContext(AppContext);
 
@@ -72,14 +75,18 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   return (
     <TouchableOpacity
       testID={'post_view_header'}
-      disabled={!onPressHeader}
+      disabled={!isInternetReachable || !onPressHeader}
       onPress={() => onPressHeader?.()}
       style={styles.headerContainer}>
-      <TouchableOpacity onPress={onPressActor} style={styles.avatar}>
+      <TouchableOpacity
+        disabled={!isInternetReachable}
+        onPress={onPressActor}
+        style={styles.avatar}>
         <Avatar.LargeAlt source={avatar} />
       </TouchableOpacity>
       <View style={{flex: 1}}>
         <TouchableOpacity
+          disabled={!isInternetReachable}
           testID={'post_view_actor'}
           onPress={onPressActor}
           style={{alignSelf: 'flex-start'}}>
@@ -91,7 +98,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           </Text.H6S>
           <Text.H6
             testID={'post_view_audiences'}
-            onPress={onPressShowAudiences}>
+            onPress={!isInternetReachable ? undefined : onPressShowAudiences}>
             {textAudiences}
           </Text.H6>
         </View>
