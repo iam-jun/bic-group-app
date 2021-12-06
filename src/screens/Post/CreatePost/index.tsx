@@ -379,11 +379,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
               style={
                 shouldScroll ? {height: webInputHeightAnimated} : styles.flex1
               }>
-              <RNText
-                onLayout={onLayoutCloneText}
-                style={styles.textContentClone}>
-                {content}
-              </RNText>
+              <View style={styles.textCloneContainer}>
+                <RNText
+                  onLayout={onLayoutCloneText}
+                  style={styles.textContentClone}>
+                  {content}
+                </RNText>
+              </View>
               <MentionInput
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}
@@ -554,6 +556,7 @@ const themeStyles = (theme: ITheme) => {
       fontFamily: fontFamilies.Segoe,
       color: colors.success,
     },
+    textCloneContainer: {height: 0, overflow: 'hidden'},
   });
 };
 
