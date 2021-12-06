@@ -2,7 +2,7 @@ import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth'
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {Platform} from 'react-native';
-import {delay, put, takeLatest} from 'redux-saga/effects';
+import {delay, put, select, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
@@ -19,8 +19,8 @@ import {refreshAuthTokens} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
-import * as actions from './actions';
-import * as types from './types';
+import actions from './actions';
+import types from './types';
 
 const navigation = withNavigation(rootNavigationRef);
 

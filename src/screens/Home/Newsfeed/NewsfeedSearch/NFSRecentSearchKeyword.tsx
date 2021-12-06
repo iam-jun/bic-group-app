@@ -15,7 +15,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 export interface NFSRecentSearchKeywordProps {
   onSelectKeyword?: (keyword: string) => void;
-  onDeleteKeyword?: (keyword: string) => void;
+  onDeleteKeyword?: (id: string, keyword: string) => void;
   onClearAllKeyword?: () => void;
 }
 
@@ -36,7 +36,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   };
 
   const onPressDeleteItem = (item: any) => {
-    onDeleteKeyword?.(item?.keyword);
+    onDeleteKeyword?.(item?.id, item?.keyword);
   };
 
   const onPressItem = (item: any) => {
@@ -66,16 +66,23 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
         <Text.H6 style={styles.flex1}>
           {t('home:newsfeed_search:label_recent_search')}
         </Text.H6>
-        <Button
-          onPress={onPressClear}
-          style={{justifyContent: 'center', alignSelf: 'center'}}>
-          <Text.ButtonSmall style={styles.btnClear}>
-            {t('home:newsfeed_search:clear').toUpperCase()}
-          </Text.ButtonSmall>
-        </Button>
+        {data?.length > 0 && (
+          <Button
+            onPress={onPressClear}
+            style={{justifyContent: 'center', alignSelf: 'center'}}>
+            <Text.ButtonSmall style={styles.btnClear}>
+              {t('home:newsfeed_search:clear').toUpperCase()}
+            </Text.ButtonSmall>
+          </Button>
+        )}
       </View>
       {!!loading && <LoadingIndicator style={styles.loading} />}
       {data?.map?.(renderItem)}
+      {!loading && data?.length === 0 && (
+        <Text style={styles.textEmpty} useI18n>
+          home:newsfeed_search:no_recent_search
+        </Text>
+      )}
     </View>
   );
 };
@@ -106,6 +113,11 @@ const createStyle = (theme: ITheme) => {
       paddingLeft: Platform.OS === 'web' ? spacing.padding.base : 0,
       paddingRight:
         Platform.OS === 'web' ? spacing.padding.large : spacing.padding.small,
+    },
+    textEmpty: {
+      textAlign: 'center',
+      margin: spacing.margin.extraLarge,
+      color: colors.textSecondary,
     },
   });
 };

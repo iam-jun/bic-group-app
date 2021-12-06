@@ -8,116 +8,85 @@ import {
   IUser,
   IUserResponse,
 } from '~/interfaces/IAuth';
-import * as types from './types';
+import types from './types';
 
-export function setUser(payload?: IUser) {
-  return {
+export default {
+  setUser: (payload?: IUser) => ({
     type: types.SET_USER,
     payload,
-  };
-}
+  }),
 
-export function setLoading(payload: boolean) {
-  return {
+  setLoading: (payload: boolean) => ({
     type: types.SET_LOADING,
     payload,
-  };
-}
+  }),
 
-export function setSigningInError(payload: string) {
-  return {
+  setSigningInError: (payload: string) => ({
     type: types.SET_SIGNING_IN_ERROR,
     payload,
-  };
-}
-
-export function setForgotPasswordLoading(payload: boolean) {
-  return {
+  }),
+  setForgotPasswordLoading: (payload: boolean) => ({
     type: types.SET_FORGOT_PASSWORD_LOADING,
     payload,
-  };
-}
+  }),
 
-export function setForgotPasswordStage(payload: string) {
-  return {
+  setForgotPasswordStage: (payload: string) => ({
     type: types.SET_FORGOT_PASSWORD_STAGE,
     payload,
-  };
-}
+  }),
 
-export function setForgotPasswordError(payload: IForgotPasswordError) {
-  return {
+  setForgotPasswordError: (payload: IForgotPasswordError) => ({
     type: types.SET_FORGOT_PASSWORD_ERROR,
     payload,
-  };
-}
+  }),
 
-export function setChangePasswordLoading(payload: boolean) {
-  return {
+  setChangePasswordLoading: (payload: boolean) => ({
     type: types.SET_CHANGE_PASSWORD_LOADING,
     payload,
-  };
-}
+  }),
 
-export function setChangePasswordError(payload: IChangePasswordError) {
-  return {
+  setChangePasswordError: (payload: IChangePasswordError) => ({
     type: types.SET_CHANGE_PASSWORD_ERROR,
     payload,
-  };
-}
+  }),
 
-export function signIn(payload: ISignIn) {
-  return {
+  signIn: (payload: ISignIn) => ({
     type: types.SIGN_IN,
     payload,
-  };
-}
+  }),
 
-export function signInOAuth(payload: string) {
-  return {
+  signInOAuth: (payload: string) => ({
     type: types.SIGN_IN_OAUTH,
     payload,
-  };
-}
+  }),
 
-export function signInSuccess(payload: IUserResponse) {
-  return {
+  signInSuccess: (payload: IUserResponse) => ({
     type: types.SIGN_IN_SUCCESS,
     payload,
-  };
-}
+  }),
 
-export function signUp(payload: ISignUp) {
-  return {
+  signUp: (payload: ISignUp) => ({
     type: types.SIGN_UP,
     payload,
-  };
-}
+  }),
 
-export function signOut(shouldNavigate = true) {
-  return {
+  signOut: (shouldNavigate = true) => ({
     type: types.SIGN_OUT,
     payload: shouldNavigate,
-  };
-}
+  }),
 
-export function forgotPasswordRequest(payload: string) {
-  return {
+  forgotPasswordRequest: (payload: string) => ({
     type: types.FORGOT_PASSWORD_REQUEST,
     payload,
-  };
-}
+  }),
 
-export function forgotPasswordConfirm(payload: IForgotPasswordConfirm) {
-  return {
+  forgotPasswordConfirm: (payload: IForgotPasswordConfirm) => ({
     type: types.FORGOT_PASSWORD_CONFIRM,
     payload,
-  };
-}
+  }),
 
-export function changePassword(payload: IChangePasswordPayload) {
-  return {
+  changePassword: (payload: IChangePasswordPayload) => ({
     type: types.CHANGE_PASSWORD,
     payload,
-  };
-}
+  }),
+};

@@ -233,6 +233,7 @@
       "btn_reset": "Đặt lại",
       "btn_show_results": "Xem kết quả",
       "search_people": "Tìm người dùng...",
+      "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
       "filter_created_by": "Người đăng",
@@ -335,6 +336,10 @@
     "post_exit_option_save": "Lưu bản nháp",
     "post_exit_option_discard": "Huỷ bài viết",
     "post_exit_option_continue": "Tiếp tục viết bài",
+    "title_discard_comment": "Huỷ bình luận",
+    "text_discard_comment": "Nếu huỷ, bạn sẽ mất những nội dung đã nhập.",
+    "btn_continue_comment": "Tiếp tục",
+    "btn_discard_comment": "Bỏ",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
