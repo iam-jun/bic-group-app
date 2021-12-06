@@ -490,7 +490,9 @@
     "text_thanks_for_your_feedback": "Thanks for your feedback!",
     "text_we_will_notify_you": "We will notify you when this features is ready."
   },
-  "no_internet": {
+  "internet_connection": {
+    "online": "Đã có kết nối internet",
+    "offline": "Hiện bạn không có kết nối internet. Vui lòng kiểm tra lại",
     "system_issue": {
       "title": "Đã có lỗi xảy ra",
       "desc": "Vui lòng đăng nhập lại"
