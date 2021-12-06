@@ -37,7 +37,7 @@ import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
-import {signOut} from '~/screens/Auth/redux/actions';
+import authActions from '~/screens/Auth/redux/actions';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
@@ -102,7 +102,7 @@ const StackNavigator = (): React.ReactElement => {
       if (!user) {
         return;
       }
-      dispatch(signOut());
+      dispatch(authActions.signOut());
       dispatch(
         modalActions.showAlert({
           title: t('auth:text_kickout_title'),
