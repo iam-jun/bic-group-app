@@ -104,7 +104,7 @@ const handleSystemIssue = () => {
 
   const modalVisibleDuration = 2000;
   setTimeout(() => {
-    // _dispatchLogout();
+    _dispatchLogout();
     _dispatchHideSystemIssue();
   }, modalVisibleDuration);
 };
