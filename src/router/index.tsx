@@ -47,6 +47,8 @@ import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
+import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
+import noInternetActions from '~/screens/NoInternet/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -88,6 +90,7 @@ const StackNavigator = (): React.ReactElement => {
     checkAuthKickout();
     handleDeepLink();
     // Linking.addEventListener('url', handleOpenURL);
+    dispatch(noInternetActions.hideSystemIssue());
   }, []);
 
   /*Handle when app killed*/
@@ -207,6 +210,7 @@ const StackNavigator = (): React.ReactElement => {
         </NavigationContainer>
         <AlertModal />
         <AlertNewFeatureModal />
+        <SystemIssueModal />
         <LoadingModal />
         <ToastMessage />
         <InternetConnectionStatus

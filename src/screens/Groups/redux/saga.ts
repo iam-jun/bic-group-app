@@ -27,6 +27,7 @@ import {isArray} from 'lodash';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import errorCode from '~/constants/errorCode';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -543,6 +544,8 @@ function* removeGroupAdmin({
 }
 
 function* showError(err: any) {
+  if (err.code === errorCode.systemIssue) return;
+
   const toastMessage: IToastMessage = {
     content:
       err?.meta?.message ||
