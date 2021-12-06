@@ -20,7 +20,7 @@ import icons from '~/resources/icons';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
-import * as actions from '~/screens/Auth/redux/actions';
+import actions from '~/screens/Auth/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import LockImg from '../../../../assets/images/auth_forgot_password_complete.svg';

@@ -42,6 +42,8 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
         homeActions.getRecentSearchKeywords({
           target: 'post',
           sort: 'desc',
+          limit: 10,
+          showLoading: false,
         }),
       );
     }, 500);
@@ -52,12 +54,12 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
     dispatch(homeActions.setNewsfeedSearch({isSuggestion: false}));
   };
 
-  const onDeleteKeyword = (keyword: string) => {
-    console.log(`\x1b[36m🐣️ NFSSuggestion onDeleteKeyword ${keyword}\x1b[0m`);
+  const onDeleteKeyword = (id: string, keyword: string) => {
+    dispatch(homeActions.deleteRecentSearchById(id));
   };
 
   const onClearAllKeyword = () => {
-    console.log(`\x1b[36m🐣️ NFSSuggestion onClearAllKeyword\x1b[0m`);
+    dispatch(homeActions.deleteClearRecentSearch('post'));
   };
 
   return (

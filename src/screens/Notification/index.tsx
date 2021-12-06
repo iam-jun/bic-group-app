@@ -250,6 +250,7 @@ const Notification = () => {
         <ListView
           listRef={listRef}
           style={styles.list}
+          containerStyle={styles.listContainer}
           type="notification"
           isFullView
           renderItemSeparator={() => <ViewSpacing height={2} />}
@@ -269,7 +270,7 @@ const Notification = () => {
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
@@ -277,6 +278,9 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     list: {},
+    listContainer: {
+      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
+    },
     listFooter: {
       height: 150,
       justifyContent: 'center',
