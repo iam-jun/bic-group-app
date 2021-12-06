@@ -116,12 +116,14 @@ const Newsfeed = () => {
   };
 
   const onSearchText = (text: string, searchInputRef: any) => {
-    const payload: IPayloadSetNewsfeedSearch = {searchText: text};
-    if (!text) {
+    const searchText = text?.trim?.() || '';
+    const payload: IPayloadSetNewsfeedSearch = {searchText};
+    if (searchText) {
+      dispatch(homeActions.setNewsfeedSearch(payload));
+    } else {
       payload.isSuggestion = true;
       searchInputRef?.current?.focus?.();
     }
-    dispatch(homeActions.setNewsfeedSearch(payload));
   };
 
   const onFocusSearch = () => {
