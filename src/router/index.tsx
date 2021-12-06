@@ -63,6 +63,11 @@ const StackNavigator = (): React.ReactElement => {
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
+  /**
+   * Sometimes it toggle from true -> false -> true or vice versa
+   * in a small amount of time, so we need to set a debounce here
+   * to avoid toggling the "no internet" toast message
+   */
   const setIsInternetReachable = debounce((state: NetInfoState) => {
     const result = state.isInternetReachable ? state.isConnected : false;
     dispatch(noInternetActions.setIsInternetReachable(result));
