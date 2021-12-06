@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   Linking,
   Platform,
@@ -68,10 +68,13 @@ const StackNavigator = (): React.ReactElement => {
    * in a small amount of time, so we need to set a debounce here
    * to avoid toggling the "no internet" toast message
    */
-  const setIsInternetReachable = debounce((state: NetInfoState) => {
-    const result = state.isInternetReachable ? state.isConnected : false;
-    dispatch(noInternetActions.setIsInternetReachable(result));
-  }, 100);
+  const setIsInternetReachable = useCallback(
+    debounce((state: NetInfoState) => {
+      const result = state.isInternetReachable ? state.isConnected : false;
+      dispatch(noInternetActions.setIsInternetReachable(result));
+    }, 100),
+    [],
+  );
 
   const validateInternetConnection = (state: NetInfoState) => {
     if (state.isInternetReachable === null) {
