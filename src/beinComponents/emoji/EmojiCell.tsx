@@ -4,8 +4,11 @@ import NodeEmoji from 'node-emoji';
 
 import Text from '~/beinComponents/Text';
 import Div from '~/beinComponents/Div';
+import {useKeySelector} from '~/hooks/selector';
 
 const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const charFromUtf16 = (utf16: any) =>
     String.fromCodePoint(...utf16.split('-').map((u: any) => '0x' + u));
   const charFromEmojiObject = (obj: any) => charFromUtf16(obj.unified);
@@ -20,6 +23,7 @@ const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
     <Div title={emojiKey}>
       <TouchableOpacity
         activeOpacity={0.5}
+        disabled={!isInternetReachable}
         style={{
           width: colSize,
           height: colSize,

@@ -74,6 +74,11 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
           ...payload,
         },
       };
+    case homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER:
+      return {
+        ...state,
+        newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
+      };
     case homeTypes.SET_NEWSFEED_SEARCH_USERS:
       return {
         ...state,

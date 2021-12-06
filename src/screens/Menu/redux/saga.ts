@@ -14,6 +14,7 @@ import {mapProfile, mapWorkExperience} from './helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import FileUploader from '~/services/fileUploader';
+import errorCode from '~/constants/errorCode';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
@@ -287,6 +288,8 @@ function* deleteWorkExperience({
 }
 
 function* showError(err: any) {
+  if (err.code === errorCode.systemIssue) return;
+
   const toastMessage: IToastMessage = {
     content:
       err?.meta?.message ||

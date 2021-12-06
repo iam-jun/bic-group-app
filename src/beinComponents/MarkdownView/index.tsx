@@ -52,7 +52,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
     return null;
   }
 
-  const _children = replaceLineBreak(children);
+  const _children = children;
 
   const markdownIt = MarkdownIt({typographer: false, linkify: true})
     .use(mark, {})

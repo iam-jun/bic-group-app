@@ -34,6 +34,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
+import errorCode from '~/constants/errorCode';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -1030,12 +1031,14 @@ const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
   }
 };
 
-function* showError(e: any) {
+function* showError(err: any) {
+  if (err.code === errorCode.systemIssue) return;
+
   yield put(
     modalActions.showHideToastMessage({
       content:
-        e?.meta?.message ||
-        e?.meta?.errors?.[0]?.message ||
+        err?.meta?.message ||
+        err?.meta?.errors?.[0]?.message ||
         'common:text_error_message',
       props: {
         textProps: {useI18n: true},
