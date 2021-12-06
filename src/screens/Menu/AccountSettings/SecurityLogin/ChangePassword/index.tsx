@@ -147,7 +147,7 @@ const ChangePassword = () => {
               testID="inputPassword"
               label={t('auth:input_label_current_password')}
               placeholder={t('auth:input_label_current_password')}
-              autoCompleteType="off"
+              autoComplete="off"
               error={errors.password}
               autoCapitalize="none"
               editable={!changePasswordLoading}
@@ -177,7 +177,7 @@ const ChangePassword = () => {
               testID="inputNewPassword"
               label={t('auth:input_label_new_password')}
               placeholder={t('auth:input_label_new_password')}
-              autoCompleteType="off"
+              autoComplete="off"
               error={errors.newPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}
@@ -208,7 +208,7 @@ const ChangePassword = () => {
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
               placeholder={t('auth:input_label_confirm_new_password')}
-              autoCompleteType="off"
+              autoComplete="off"
               error={errors.confirmNewPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}
