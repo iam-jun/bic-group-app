@@ -133,6 +133,7 @@ export default (): React.ReactElement => {
       setTimeout(() => {
         handleInitialNotification(remoteMessage);
       }, 2000);
+      return;
     }
 
     if (!user) return;
