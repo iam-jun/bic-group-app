@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -20,11 +20,15 @@ export interface NFSSuggestionProps {
 const NFSSuggestion: FC<NFSSuggestionProps> = ({
   onSelectKeyword,
 }: NFSSuggestionProps) => {
+  const [lossInternet, setLossInternet] = useState(false);
+
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
   const searchInputRef = useKeySelector(
@@ -34,6 +38,24 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   const ctaText = t(
     'home:newsfeed_search:text_cta_see_result_for_search_text',
   ).replace('%SEARCH_TEXT%', searchText);
+
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet) {
+        setLossInternet(false);
+        dispatch(
+          homeActions.getRecentSearchKeywords({
+            target: 'post',
+            sort: 'desc',
+            limit: 10,
+            showLoading: true,
+          }),
+        );
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   useEffect(() => {
     //timeout wait animation of header finish to avoid lagging
@@ -46,7 +68,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
           showLoading: false,
         }),
       );
-    }, 500);
+    }, 3000);
   }, []);
 
   const onPressCtaSearch = () => {
