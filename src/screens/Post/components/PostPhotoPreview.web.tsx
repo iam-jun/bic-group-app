@@ -43,9 +43,6 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const styles = createStyle(theme);
 
   useEffect(() => {
-    console.log(
-      `\x1b[36m🐣️ PostPhotoPreview.web ${data?.[0]?.height} \x1b[0m`,
-    );
     setCalSize(undefined);
     const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
     const isVertical = imageRatio <= 0.5;
