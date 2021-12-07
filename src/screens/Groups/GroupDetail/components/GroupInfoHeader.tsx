@@ -23,12 +23,20 @@ const GroupInfoHeader = () => {
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
+  const dispatch = useDispatch();
+
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
-  const dispatch = useDispatch();
-
-  const {name, user_count, icon, background_img_url, privacy} = groupDetail;
+  const hasRequested = join_status === groupJoinStatus.requested;
+  const {
+    id: groupId,
+    name: groupName,
+    user_count,
+    icon,
+    background_img_url,
+    privacy,
+  } = groupDetail;
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -51,7 +59,7 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <Text.H5 style={styles.nameHeader}>{name}</Text.H5>
+        <Text.H5 style={styles.nameHeader}>{groupName}</Text.H5>
 
         <View style={styles.groupInfo}>
           <Icon
@@ -75,8 +83,11 @@ const GroupInfoHeader = () => {
   };
 
   const onPressJoin = () => {
-    const {id: groupId, name: groupName} = groupDetail;
     dispatch(groupsActions.joinNewGroup({groupId, groupName}));
+  };
+
+  const onPressCancelRequest = () => {
+    dispatch(groupsActions.cancelJoinGroup({groupId, groupName}));
   };
 
   const renderJoinButton = () => {
@@ -86,13 +97,25 @@ const GroupInfoHeader = () => {
       <Button.Secondary
         rightIcon={'Plus'}
         rightIconProps={{icon: 'Plus', size: 20}}
-        style={styles.btnJoin}
+        style={styles.btnGroupAction}
         onPress={onPressJoin}
         color={theme.colors.primary7}
         textColor={theme.colors.background}
         colorHover={theme.colors.primary6}
         useI18n>
         common:btn_join
+      </Button.Secondary>
+    );
+  };
+
+  const renderCancelRequestButton = () => {
+    return (
+      <Button.Secondary
+        style={styles.btnGroupAction}
+        onPress={onPressCancelRequest}
+        textColor={theme.colors.primary}
+        useI18n>
+        common:btn_cancel_request
       </Button.Secondary>
     );
   };
@@ -108,7 +131,7 @@ const GroupInfoHeader = () => {
           <View style={styles.groupInfoHeaderContainer}>
             {renderGroupInfoHeader()}
           </View>
-          {renderJoinButton()}
+          {hasRequested ? renderCancelRequestButton() : renderJoinButton()}
         </View>
       </View>
     </View>
@@ -166,7 +189,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       }),
     },
     nameHeader: {},
-    btnJoin: {
+    btnGroupAction: {
       marginLeft: spacing.margin.large,
       alignSelf: 'flex-start',
     },
