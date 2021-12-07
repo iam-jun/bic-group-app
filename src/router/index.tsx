@@ -72,7 +72,7 @@ const StackNavigator = (): React.ReactElement => {
     debounce((state: NetInfoState) => {
       const result = state.isInternetReachable ? state.isConnected : false;
       dispatch(noInternetActions.setIsInternetReachable(result));
-    }, 100),
+    }, 1000),
     [],
   );
 
