@@ -30,6 +30,9 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
+  const {data: listRecentKeywords} =
+    useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
+
   const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
   const searchInputRef = useKeySelector(
     homeKeySelector.newsfeedSearch.searchInputRef,
@@ -41,7 +44,10 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
 
   useEffect(() => {
     if (isInternetReachable) {
-      if (lossInternet) {
+      if (
+        lossInternet &&
+        (!listRecentKeywords || listRecentKeywords?.length === 0)
+      ) {
         setLossInternet(false);
         dispatch(
           homeActions.getRecentSearchKeywords({
