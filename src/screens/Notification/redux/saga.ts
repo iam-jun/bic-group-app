@@ -1,6 +1,7 @@
 import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import {IGetStreamDispatch, IObject, IToastMessage} from '~/interfaces/common';
+import errorCode from '~/constants/errorCode';
 import {
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
@@ -259,6 +260,8 @@ function* registerPushToken({payload}: any) {
 }
 
 function* showError(err: any) {
+  if (err.code === errorCode.systemIssue) return;
+
   const toastMessage: IToastMessage = {
     content:
       err?.meta?.message ||

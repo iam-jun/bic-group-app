@@ -11,6 +11,7 @@ import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import {ITheme} from '~/theme/interfaces';
+import {useKeySelector} from '~/hooks/selector';
 
 interface HeaderAvatarViewProps {
   firstLabel: string;
@@ -27,11 +28,14 @@ const HeaderAvatarView = ({
   containerStyle,
   onPress,
 }: HeaderAvatarViewProps) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   return (
     <TouchableOpacity
+      disabled={!isInternetReachable}
       style={StyleSheet.flatten([styles.container, containerStyle])}
       onPress={onPress}>
       <Avatar.LargeAlt source={avatar} style={styles.avatar} />

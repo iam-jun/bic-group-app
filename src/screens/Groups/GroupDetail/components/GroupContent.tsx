@@ -20,6 +20,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import {groupPrivacy} from '~/constants/privacyTypes';
 
 const GroupContent = ({
   getGroupPosts,
@@ -41,6 +42,7 @@ const GroupContent = ({
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
   const {id: groupId} = groupData;
+  const isPublicGroup = groupData.privacy === groupPrivacy.public;
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
@@ -84,7 +86,7 @@ const GroupContent = ({
               settings:title_about
             </Button.Secondary>
             <ViewSpacing width={spacing.margin.base} />
-            {isMember && (
+            {(isMember || isPublicGroup) && (
               <Button.Secondary useI18n onPress={onPressMembers}>
                 groups:title_members
               </Button.Secondary>

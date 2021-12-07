@@ -421,6 +421,10 @@
     "post_exit_option_save": "Save as Draft",
     "post_exit_option_discard": "Discard Post",
     "post_exit_option_continue": "Continue Editing",
+    "title_discard_comment": "Discard Comment",
+    "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
+    "btn_continue_comment": "Continue Comment",
+    "btn_discard_comment": "Discard",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
@@ -585,6 +589,10 @@
   },
   "internet_connection": {
     "online": "You are back online",
-    "offline": "You are currently offline. Please check it and try again"
+    "offline": "You are currently offline. Please check it and try again",
+    "system_issue": {
+      "title": "System Issue Occurred",
+      "desc": "Please re-login to continue"
+    }
   }
 }

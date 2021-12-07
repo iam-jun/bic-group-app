@@ -22,7 +22,7 @@ const persistConfig = {
   // transforms: [immutableTransform()],
   // transforms: [transformCircular],
   storage: AsyncStorage,
-  blacklist: ['modal', 'groups', 'post', 'home'],
+  blacklist: ['modal', 'groups', 'post', 'home', 'noInternet'],
   // whitelist: ['chat', 'language'],
 };
 

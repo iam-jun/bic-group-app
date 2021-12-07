@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'lodash';
 import debounce from 'lodash/debounce';
 import {Controller, useForm} from 'react-hook-form';
-import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -13,10 +13,7 @@ import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
-import {
-  changePassword,
-  setChangePasswordError,
-} from '~/screens/Auth/redux/actions';
+import authActions from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {IChangePasswordError} from '~/interfaces/IAuth';
@@ -34,7 +31,7 @@ const ChangePassword = () => {
 
   useEffect(() => {
     dispatch(
-      setChangePasswordError({
+      authActions.setChangePasswordError({
         errCurrentPassword: '',
       }),
     );
@@ -134,7 +131,9 @@ const ChangePassword = () => {
 
     const oldPassword = getValues('password');
     const newPassword = getValues('confirmNewPassword');
-    dispatch(changePassword({oldPassword, newPassword, global: false}));
+    dispatch(
+      authActions.changePassword({oldPassword, newPassword, global: false}),
+    );
   };
 
   return (
@@ -148,7 +147,7 @@ const ChangePassword = () => {
               testID="inputPassword"
               label={t('auth:input_label_current_password')}
               placeholder={t('auth:input_label_current_password')}
-              autoCompleteType="off"
+              autoComplete="off"
               error={errors.password}
               autoCapitalize="none"
               editable={!changePasswordLoading}
@@ -178,7 +177,7 @@ const ChangePassword = () => {
               testID="inputNewPassword"
               label={t('auth:input_label_new_password')}
               placeholder={t('auth:input_label_new_password')}
-              autoCompleteType="off"
+              autoComplete="off"
               error={errors.newPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}
@@ -209,7 +208,7 @@ const ChangePassword = () => {
               testID="inputConfirmPassword"
               label={t('auth:input_label_confirm_new_password')}
               placeholder={t('auth:input_label_confirm_new_password')}
-              autoCompleteType="off"
+              autoComplete="off"
               error={errors.confirmNewPassword}
               autoCapitalize="none"
               editable={!changePasswordLoading}

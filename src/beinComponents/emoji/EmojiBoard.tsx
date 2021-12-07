@@ -16,6 +16,7 @@ import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
 import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
@@ -36,6 +37,8 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
   onPressBackSpace,
   onPressKeyboard,
 }: EmojiBoardProps) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const emojiRef = useRef<any>();
 
   const theme = useTheme() as ITheme;
@@ -54,6 +57,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 
   return (
     <TouchableOpacity
+      disabled={!isInternetReachable}
       activeOpacity={1}
       style={[styles.container, {width, height}]}>
       <EmojiSelector

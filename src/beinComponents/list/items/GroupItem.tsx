@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 
 import {IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
@@ -15,6 +14,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {generateUniqueId} from '~/utils/generator';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface GroupItemProps extends IParsedGroup {
   uiLevel: number;
@@ -43,6 +43,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onCheckedItem,
     disableOnPressItem,
   } = props;
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -111,7 +113,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   return (
-    <TouchableOpacity disabled={disableOnPressItem} onPress={_onPressItem}>
+    <TouchableOpacity
+      disabled={!isInternetReachable || disableOnPressItem}
+      onPress={_onPressItem}>
       <View style={{flexDirection: 'row'}}>
         {renderUiLevelLines()}
         {renderToggle()}

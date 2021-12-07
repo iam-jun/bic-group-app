@@ -6,6 +6,7 @@ import {delay, put, select, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
+import errorCode from '~/constants/errorCode';
 import {IToastMessage} from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
 import {IUserResponse} from '~/interfaces/IAuth';
@@ -302,6 +303,8 @@ function* signOut({payload}: any) {
 }
 
 function* showError(err: any) {
+  if (err.code === errorCode.systemIssue) return;
+
   const toastMessage: IToastMessage = {
     content:
       err?.meta?.message ||

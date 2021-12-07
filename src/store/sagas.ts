@@ -7,6 +7,7 @@ import postSaga from '~/screens/Post/redux/saga';
 import homeSaga from '~/screens/Home/redux/saga';
 import notifications from '~/screens/Notification/redux/saga';
 import menuSaga from '~/screens/Menu/redux/saga';
+import noInternetSaga from '~/screens/NoInternet/redux/saga';
 
 export default function* rootSagas() {
   yield all([
@@ -18,5 +19,6 @@ export default function* rootSagas() {
     homeSaga(),
     notifications(),
     menuSaga(),
+    noInternetSaga(),
   ]);
 }

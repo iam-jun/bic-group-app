@@ -13,6 +13,7 @@ import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 import {ActionTypes} from '~/utils';
 import auth from '../screens/Auth/redux/reducer';
+import noInternetReducer from '../screens/NoInternet/redux/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';
@@ -38,6 +39,7 @@ const appReducer = combineReducers({
   home: homeReducer,
   notifications: persistReducer(notiPersistConfig, notificationsReducer),
   menu: menuReducer,
+  noInternet: noInternetReducer,
 });
 
 // @ts-ignore
