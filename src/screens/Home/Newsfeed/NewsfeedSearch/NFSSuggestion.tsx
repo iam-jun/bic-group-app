@@ -68,7 +68,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
           showLoading: false,
         }),
       );
-    }, 3000);
+    }, 500);
   }, []);
 
   const onPressCtaSearch = () => {
