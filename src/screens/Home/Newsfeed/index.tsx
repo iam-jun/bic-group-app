@@ -56,6 +56,8 @@ const Newsfeed = () => {
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
@@ -94,12 +96,15 @@ const Newsfeed = () => {
   );
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      if (streamClient && (!homePosts || homePosts?.length === 0)) {
-        getData(true);
-      }
-    });
-  }, [streamClient]);
+    if (
+      isInternetReachable &&
+      streamClient &&
+      (!homePosts || homePosts?.length === 0) &&
+      !refreshing
+    ) {
+      getData(true);
+    }
+  }, [streamClient, isInternetReachable, homePosts, refreshing]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
