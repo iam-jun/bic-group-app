@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -25,6 +25,7 @@ import appActions from '~/store/app/actions';
 import {appScreens} from '~/configs/navigator';
 
 const DraftPost = () => {
+  const [lossInternet, setLossInternet] = useState(false);
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -37,9 +38,22 @@ const DraftPost = () => {
 
   const isFocused = useIsFocused();
 
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   useEffect(() => {
     if (isFocused) dispatch(appActions.setRootScreenName(appScreens.draftPost));
   }, [isFocused]);
+
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet) {
+        setLossInternet(false);
+        getData(false);
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   //get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
