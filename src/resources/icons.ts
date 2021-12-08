@@ -228,6 +228,7 @@ const icons = {
   ChatInfo: 'ChatInfo',
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
+  SignInAlt: 'SignInAlt',
 };
 
 export default icons;
