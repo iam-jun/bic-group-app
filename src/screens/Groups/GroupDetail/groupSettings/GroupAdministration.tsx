@@ -30,6 +30,9 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
+  const total_pending_members = useKeySelector(
+    groupsKeySelector.groupDetail.total_pending_members,
+  );
 
   useEffect(() => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -50,7 +53,7 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.pendingMembers);
+    rootNavigation.navigate(groupStack.pendingMembers, {groupId});
   };
 
   const goToGeneralInfo = () => {
@@ -94,7 +97,7 @@ const GroupAdministration = (props: any) => {
         'UserExclamation',
         'settings:title_pending_members',
         goToPendingMembers,
-        1,
+        total_pending_members,
       )}
       {renderItem(
         'FileExclamationAlt',

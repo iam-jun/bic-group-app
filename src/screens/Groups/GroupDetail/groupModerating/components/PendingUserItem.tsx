@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
+import {useDispatch} from 'react-redux';
 
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
@@ -8,11 +10,41 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
-import Divider from '~/beinComponents/Divider';
+import {formatFullTime} from '~/beinComponents/TimeView';
+import {AppContext} from '~/contexts/AppContext';
+import groupsActions from '~/screens/Groups/redux/actions';
+import {useKeySelector} from '~/hooks/selector';
 
-const PendingUserItem = () => {
+const PendingUserItem = ({requestId}: {requestId: number}) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+  const {language} = useContext(AppContext);
+  const dispatch = useDispatch();
+
+  const currentRequestMember = useKeySelector(
+    `groups.pendingMemberRequests.items.${requestId}`,
+  );
+
+  const {user, group_id: groupId} = currentRequestMember || {};
+  const {
+    avatar,
+    fullname: fullName,
+    updated_at: updatedAt,
+    email,
+    country_code: countryCode,
+    phone,
+    latest_work: latestWork,
+  } = user;
+
+  const onApproveRequest = () => {
+    alert(`Approve req ID ${requestId} for group ${groupId}`);
+    dispatch(groupsActions.approveSingleMemberRequest({groupId, requestId}));
+  };
+
+  const onDeclineRequest = () => {
+    alert(`Decline req ID ${requestId} for group ${groupId}`);
+    dispatch(groupsActions.declineSingleMemberRequest({groupId, requestId}));
+  };
 
   const renderItem = ({
     icon,
@@ -37,17 +69,16 @@ const PendingUserItem = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.header}>
-        <Avatar.Large
-          source={
-            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/990c8cba-cdb0-4704-848c-4752e0e65ae3.jpg'
-          }
-        />
+        <Avatar.Large source={avatar} />
         <View style={styles.textHeader}>
-          <Text.ButtonBase>Huỳnh Khanh</Text.ButtonBase>
+          <Text.ButtonBase>{fullName}</Text.ButtonBase>
           <Text.Body color={theme.colors.textSecondary}>
-            Requested 3 minutes ago
+            {`${i18next.t('groups:text_requested_at')} ${formatFullTime(
+              updatedAt,
+              language,
+            )}`}
           </Text.Body>
         </View>
       </View>
@@ -55,30 +86,36 @@ const PendingUserItem = () => {
       <View style={styles.aboutProfile}>
         {renderItem({
           icon: 'iconSuitcase',
-          title: 'Designer at EVOL GROUP',
+          title:
+            latestWork &&
+            `${latestWork?.title_position} ${i18next.t('common:text_at')} ${
+              latestWork?.company
+            }`,
         })}
+        {renderItem({icon: 'Envelope', title: email})}
         {renderItem({
-          icon: 'LocationPoint',
-          title: 'TP.HCM',
+          icon: 'Phone',
+          title:
+            countryCode && phone ? `(+${countryCode}) ${phone}` : undefined,
         })}
-        {renderItem({icon: 'Envelope', title: 'phuongkhanh@evolgroup.vn'})}
       </View>
 
       <View style={styles.buttons}>
         <Button.Secondary
           style={styles.buttonDecline}
-          onPress={() => alert('onPress')}>
-          Decline
+          onPress={onDeclineRequest}
+          useI18n>
+          common:btn_decline
         </Button.Secondary>
         <Button.Secondary
           highEmphasis
           style={styles.buttonApprove}
           color={theme.colors.primary6}
-          onPress={() => alert('onPress')}>
-          Approve
+          onPress={onApproveRequest}
+          useI18n>
+          common:btn_approve
         </Button.Secondary>
       </View>
-      <Divider />
     </View>
   );
 };
@@ -87,6 +124,9 @@ const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
+    container: {
+      marginVertical: spacing.margin.tiny,
+    },
     header: {
       flexDirection: 'row',
     },

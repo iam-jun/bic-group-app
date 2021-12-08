@@ -72,6 +72,11 @@ export interface IGroupImageUpload {
   uploadType: IUploadType;
 }
 
+export interface IGetMemberRequests {
+  groupId: number;
+  params?: any;
+}
+
 export interface IGroupGetJoinableMembers {
   groupId: number;
   params?: any;
@@ -117,4 +122,14 @@ export interface IGroupMemberRole {
   id: number;
   name: 'Admin' | 'Member';
   type: 'GROUP_ADMIN' | 'MEMBER';
+}
+
+export interface IJoiningMember {
+  id: number;
+  group_id: number;
+  user_id: number;
+  status: 'waiting' | 'approved' | 'rejected' | 'canceled';
+  created_at: string;
+  updated_at: string;
+  user: any;
 }

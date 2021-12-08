@@ -35,10 +35,9 @@ const themeStyles = (theme: ITheme) => {
     container: {
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 40,
+      marginTop: 30,
     },
     text: {
-      marginHorizontal: 55,
       textAlign: 'center',
       marginVertical: spacing.margin.tiny,
     },

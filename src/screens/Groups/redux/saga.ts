@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
-  IGetPendingMemberRequests,
+  IGetMemberRequests,
   IGroupAddMembers,
   IGroupDetailEdit,
   IGroupGetJoinableMembers,
@@ -11,6 +11,7 @@ import {
   IGroupImageUpload,
   IGroupRemoveAdmin,
   IGroupSetAdmin,
+  IJoiningMember,
   IPayloadGetGroupPost,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -19,7 +20,7 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData} from '../helper/mapper';
+import {mapData, mapRequestMembers} from '../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -29,6 +30,7 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import errorCode from '~/constants/errorCode';
+import memberRequestStatus from '~/constants/memberRequestStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -52,9 +54,14 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
+  yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getMemberRequests);
   yield takeLatest(
-    groupsTypes.GET_PENDING_MEMBER_REQUESTS,
-    getPendingMemberRequests,
+    groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    approveAllMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    declineAllMemberRequests,
   );
 }
 
@@ -548,29 +555,54 @@ function* removeGroupAdmin({
   }
 }
 
-function* getPendingMemberRequests({
+function* getMemberRequests({
   payload,
 }: {
   type: string;
-  payload: IGetPendingMemberRequests;
+  payload: IGetMemberRequests;
 }) {
   try {
     const {groups} = yield select();
 
     const {groupId, params} = payload;
-    const {offset, data} = groups.pendingMemberRequests;
+    const {data, canLoadMore} = groups.pendingMemberRequests || {};
+
+    if (!canLoadMore) return;
 
     // @ts-ignore
-    const response = yield groupsDataHelper.getPendingMemberRequests(groupId, {
-      // offset,
+    const response = yield groupsDataHelper.getMemberRequests(groupId, {
+      offset: data.length,
       limit: appConfig.recordsPerPage,
+      key: memberRequestStatus.waiting,
       ...params,
     });
 
-    console.log('data:', response?.data);
-    yield put(groupsActions.setPendingMemberRequests(response?.data));
+    const requestIds = response?.data.map((item: IJoiningMember) => item.id);
+    const requestItems = mapRequestMembers(response?.data);
+
+    yield put(groupsActions.setMemberRequests({requestIds, requestItems}));
   } catch (err) {
-    console.log('getPendingMemberRequests: ', err);
+    console.log('getMemberRequests: ', err);
+    yield showError(err);
+  }
+}
+
+function* approveAllMemberRequests({payload}: {type: string; payload: number}) {
+  try {
+    // yield groupsDataHelper.approveAllMemberRequests(payload);
+    yield put(groupsActions.getMemberRequests({groupId: payload}));
+  } catch (err) {
+    console.log('approveAllMemberRequests: ', err);
+    yield showError(err);
+  }
+}
+
+function* declineAllMemberRequests({payload}: {type: string; payload: number}) {
+  try {
+    // yield groupsDataHelper.declineAllMemberRequests(payload);
+    yield put(groupsActions.getMemberRequests({groupId: payload}));
+  } catch (err) {
+    console.log('declineAllMemberRequests: ', err);
     yield showError(err);
   }
 }

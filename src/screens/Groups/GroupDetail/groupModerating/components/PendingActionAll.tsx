@@ -9,8 +9,14 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import modalActions from '~/store/modal/actions';
 import i18next from 'i18next';
+import groupsActions from '~/screens/Groups/redux/actions';
 
-const PendingActionAll = ({style}: {style?: StyleProp<ViewStyle>}) => {
+interface PendingActionAllProps {
+  groupId: number;
+  style?: StyleProp<ViewStyle>;
+}
+
+const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
@@ -46,7 +52,7 @@ const PendingActionAll = ({style}: {style?: StyleProp<ViewStyle>}) => {
   };
 
   const doApproveAll = () => {
-    alert('Approve All');
+    dispatch(groupsActions.approveAllMemberRequests(groupId));
   };
 
   const onDeclineAll = () => {
@@ -58,22 +64,26 @@ const PendingActionAll = ({style}: {style?: StyleProp<ViewStyle>}) => {
   };
 
   const doDeclineAll = () => {
-    alert('Decline All');
+    dispatch(groupsActions.declineAllMemberRequests(groupId));
   };
 
   return (
     <View style={[styles.container, style]}>
       <Divider />
       <View style={styles.buttons}>
-        <Button.Secondary style={styles.buttonDecline} onPress={onDeclineAll}>
-          Decline All
+        <Button.Secondary
+          style={styles.buttonDecline}
+          onPress={onDeclineAll}
+          useI18n>
+          common:btn_decline_all
         </Button.Secondary>
         <Button.Secondary
           highEmphasis
           style={styles.buttonApprove}
           color={theme.colors.primary6}
-          onPress={onApproveAll}>
-          Approve All
+          onPress={onApproveAll}
+          useI18n>
+          common:btn_approve_all
         </Button.Secondary>
       </View>
     </View>
@@ -81,13 +91,12 @@ const PendingActionAll = ({style}: {style?: StyleProp<ViewStyle>}) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     container: {
-      position: 'absolute',
-      bottom: spacing.margin.large,
-      width: '100%',
+      backgroundColor: colors.background,
+      marginBottom: spacing.margin.large,
     },
     buttons: {
       flexDirection: 'row',

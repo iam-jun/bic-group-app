@@ -105,7 +105,12 @@
     "text_updated_successfully": "updated successfully",
     "text_avatar": "Avatar",
     "text_cover": "Cover",
-    "text_privacy": "Privacy"
+    "text_privacy": "Privacy",
+    "btn_approve": "Approve",
+    "btn_decline": "Decline",
+    "btn_approve_all": "Approve All",
+    "btn_decline_all": "Decline All",
+    "text_requests": "Requests"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -697,7 +702,8 @@
         "approve": "You're about to add {m} to {g}",
         "decline": "You're about to decline {m} member requests"
       }
-    }
+    },
+    "text_requested_at": "Requested at"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

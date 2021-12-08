@@ -1,8 +1,8 @@
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
+import {IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
-import {IMemberRequestsData} from '~/interfaces/IGroup';
 
 const initGroupsState = {
   isPrivacyModalOpen: false,
@@ -48,8 +48,12 @@ const initGroupsState = {
   loadingAvatar: false,
   loadingCover: false,
 
-  pendingMemberRequests: [],
-  // pendingMemberRequests: {} as IObject<IMemberRequestsData>,
+  pendingMemberRequests: {
+    loading: false,
+    data: [],
+    items: {} as IObject<IJoiningMember>,
+    canLoadMore: true,
+  },
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -262,35 +266,42 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         },
       };
 
-    // case groupsTypes.GET_PENDING_MEMBER_REQUESTS:
-    //   return {
-    //     ...state,
-    //     // pendingMemberRequests: {
-    //     //   ...pendingMemberRequests,
-    //     //   loading: pendingMemberRequests.data.data,
-    //     //   params: payload.params,
-    //     // },
-    //   };
-    case groupsTypes.SET_PENDING_MEMBER_REQUESTS:
+    // PENDING MEMBER REQUESTS
+    case groupsTypes.GET_MEMBER_REQUESTS:
       return {
         ...state,
-        // pendingMemberRequests: {
-        //   ...pendingMemberRequests,
-        //   loading: false,
-        // },
-        pendingMemberRequests:
-          payload.filter((item: any) => item.status !== 'waiting') || [],
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          loading: pendingMemberRequests.data.length === 0,
+          params: payload.params,
+        },
       };
-    case groupsTypes.REMOVE_PENDING_REQUEST:
+    case groupsTypes.SET_MEMBER_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          loading: false,
+          data: [...pendingMemberRequests.data, ...payload.requestIds],
+          items: {
+            ...pendingMemberRequests.items,
+            ...payload.requestItems,
+          },
+          canLoadMore: payload.requestIds.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST:
       // TODO: complete logic for removing single pending request from list
       return {
         ...state,
         pendingMemberRequests: [],
       };
-    case groupsTypes.CLEAR_ALL_PENDING_REQUESTS:
+    case groupsTypes.APPROVE_ALL_MEMBER_REQUESTS:
+    case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
+    case groupsTypes.CLEAR_ALL_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: [],
+        pendingMemberRequests: initGroupsState.pendingMemberRequests,
       };
 
     default:

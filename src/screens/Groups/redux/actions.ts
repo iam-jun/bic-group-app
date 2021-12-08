@@ -11,7 +11,7 @@ import {
   IGroupSearchPayload,
   IGroupSetAdmin,
   IGroupRemoveAdmin,
-  IGetPendingMemberRequests,
+  IGetMemberRequests,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 
@@ -204,20 +204,42 @@ const groupsActions = {
     payload,
   }),
 
-  getPendingMemberRequests: (payload: IGetPendingMemberRequests) => ({
-    type: groupsTypes.GET_PENDING_MEMBER_REQUESTS,
+  getMemberRequests: (payload: IGetMemberRequests) => ({
+    type: groupsTypes.GET_MEMBER_REQUESTS,
     payload,
   }),
-  setPendingMemberRequests: (payload: any) => ({
-    type: groupsTypes.SET_PENDING_MEMBER_REQUESTS,
+  setMemberRequests: (payload: any) => ({
+    type: groupsTypes.SET_MEMBER_REQUESTS,
     payload,
   }),
-  removePendingRequest: (payload: number) => ({
-    type: groupsTypes.REMOVE_PENDING_REQUEST,
+  removeSingleMemberRequest: (payload: number) => ({
+    type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
-  clearAllPendingRequests: () => ({
-    type: groupsTypes.CLEAR_ALL_PENDING_REQUESTS,
+  clearAllMemberRequests: () => ({
+    type: groupsTypes.CLEAR_ALL_MEMBER_REQUESTS,
+  }),
+  approveSingleMemberRequest: (payload: {
+    groupId: number;
+    requestId: number;
+  }) => ({
+    type: groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    payload,
+  }),
+  approveAllMemberRequests: (payload: number) => ({
+    type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    payload,
+  }),
+  declineSingleMemberRequest: (payload: {
+    groupId: number;
+    requestId: number;
+  }) => ({
+    type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    payload,
+  }),
+  declineAllMemberRequests: (payload: number) => ({
+    type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    payload,
   }),
 };
 
