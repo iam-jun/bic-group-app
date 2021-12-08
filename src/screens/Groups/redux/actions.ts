@@ -168,6 +168,10 @@ const groupsActions = {
       payload,
     };
   },
+  cancelJoinGroup: (payload: {groupId: number; groupName: string}) => ({
+    type: groupsTypes.CANCEL_JOIN_GROUP,
+    payload,
+  }),
   leaveGroup: (payload: number) => ({
     type: groupsTypes.LEAVE_GROUP,
     payload,

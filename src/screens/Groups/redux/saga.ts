@@ -46,6 +46,7 @@ export default function* groupsSaga() {
   );
   yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
   yield takeLatest(groupsTypes.JOIN_NEW_GROUP, joinNewGroup);
+  yield takeLatest(groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
   yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
@@ -69,6 +70,7 @@ function* getJoinedGroups({payload}: {type: string; payload?: any}) {
 
 function* getGroupDetail({payload}: {type: string; payload: number}) {
   try {
+    // @ts-ignore
     const result = yield requestGroupDetail(payload);
     yield put(groupsActions.setGroupDetail(result));
 
@@ -91,6 +93,7 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
   try {
     yield put(groupsActions.setGroupSearch({loading: true}));
     const params = {key: payload || '', discover: true};
+    // @ts-ignore
     const response = yield groupsDataHelper.getSearchGroups(params);
     if (isArray(response?.data)) {
       yield put(
@@ -180,13 +183,16 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
       let newCanLoadMore = canLoadMore;
       if (response) {
         Object.keys(response)?.map?.((role: any) => {
+          // @ts-ignore
           newSkip = newSkip + response?.[role]?.data?.length || 0;
           if (newGroupMembers?.[role]) {
             const roleData = {...newGroupMembers[role]};
             newGroupMembers[role].data = roleData.data?.concat(
+              // @ts-ignore
               response?.[role]?.data || [],
             );
           } else {
+            // @ts-ignore
             newGroupMembers[role] = response?.[role];
           }
           newGroupMembers.skip = newSkip;
@@ -429,7 +435,23 @@ function* joinNewGroup({
   try {
     const {groupId, groupName} = payload;
 
-    yield groupsDataHelper.joinGroup(groupId);
+    // @ts-ignore
+    const response = yield groupsDataHelper.joinGroup(groupId);
+    const join_status = response?.data?.join_status;
+    const hasRequested = join_status === groupJoinStatus.requested;
+
+    if (hasRequested) {
+      yield put(groupsActions.getGroupDetail(groupId));
+      const toastMessage: IToastMessage = {
+        content: `${i18next.t('groups:text_request_join_group')} ${groupName}`,
+        props: {
+          type: 'success',
+        },
+      };
+      yield put(modalActions.showHideToastMessage(toastMessage));
+      return;
+    }
+
     yield put(groupsActions.getJoinedGroups());
 
     const toastMessage: IToastMessage = {
@@ -446,6 +468,52 @@ function* joinNewGroup({
     yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
     console.error('joinNewGroup catch', err);
+    yield showError(err);
+  }
+}
+
+function* cancelJoinGroup({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; groupName: string};
+}) {
+  try {
+    const {groupId, groupName} = payload;
+
+    yield groupsDataHelper.cancelJoinGroup(groupId);
+
+    yield put(groupsActions.getGroupDetail(groupId));
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
+      props: {
+        type: 'success',
+      },
+    };
+
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err: any) {
+    console.error('cancelJoinGroup catch', err);
+
+    if (
+      err?.meta?.message ===
+      'You have been approved to be a member of this group'
+    ) {
+      const toastMessage: IToastMessage = {
+        content: `${i18next.t('groups:text_approved_member_group')}`,
+        props: {
+          type: 'error',
+        },
+      };
+      yield put(modalActions.showHideToastMessage(toastMessage));
+      yield put(groupsActions.setLoadingPage(true));
+      yield put(groupsActions.getGroupDetail(payload.groupId));
+      yield put(groupsActions.getJoinedGroups());
+
+      return;
+    }
+
     yield showError(err);
   }
 }
