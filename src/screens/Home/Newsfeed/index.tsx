@@ -38,6 +38,7 @@ import {useBaseHook} from '~/hooks';
 import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 
 const Newsfeed = () => {
+  const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
@@ -111,6 +112,17 @@ const Newsfeed = () => {
       dispatch(postActions.addToAllPosts({data: homePosts}));
     });
   }, [homePosts]);
+
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet && homePosts?.length > 0) {
+        setLossInternet(false);
+        getData();
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
