@@ -55,6 +55,7 @@ import {sortComments} from '../helper/PostUtils';
 const defaultList = [{title: '', type: 'empty', data: []}];
 
 const _PostDetailContent = (props: any) => {
+  const [lossInternet, setLossInternet] = useState(false);
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
@@ -75,6 +76,8 @@ const _PostDetailContent = (props: any) => {
   const windowDimension = useWindowDimensions();
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
   const styles = useMemo(() => createStyle(theme, isLaptop), [theme, isLaptop]);
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
@@ -106,9 +109,20 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet && id && userId && streamClient) {
+        setLossInternet(false);
+        onRefresh();
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
+
+  useEffect(() => {
     if (id && userId && streamClient) {
       getPostDetail((loading, success) => {
-        if (!loading && !success) {
+        if (!loading && !success && isInternetReachable) {
           if (Platform.OS === 'web') {
             rootNavigation.replace(rootSwitch.notFound);
           } else {
