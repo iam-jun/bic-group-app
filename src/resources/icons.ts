@@ -151,7 +151,7 @@ const icons = {
   iconPinGroup,
   attachment: 'Paperclip',
   images: 'Images',
-  leavesGroup: 'SignOutAlt',
+  leavesGroup: 'SignOutAlt', // FIXME: Remove this icon after remove src/constants/chatDetailActions.ts
   iconMessages,
   iconChatPurple,
   iconAddPost,
@@ -228,6 +228,7 @@ const icons = {
   ChatInfo: 'ChatInfo',
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
+  SignInAlt: 'SignInAlt',
 };
 
 export default icons;
