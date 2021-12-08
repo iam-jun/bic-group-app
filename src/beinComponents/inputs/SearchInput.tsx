@@ -68,7 +68,9 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   const _onSubmitEditing = () => {
-    onSubmitEditing?.();
+    if (text?.trim?.()) {
+      onSubmitEditing?.();
+    }
   };
 
   return (
