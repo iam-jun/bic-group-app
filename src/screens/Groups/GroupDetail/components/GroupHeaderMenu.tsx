@@ -219,8 +219,8 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
       {isMember && (
         <PrimaryItem
           height={48}
-          leftIconProps={{icon: 'leavesGroup', size: 24}}
-          leftIcon={'leavesGroup'}
+          leftIconProps={{icon: 'SignInAlt', size: 24}}
+          leftIcon={'SignInAlt'}
           title={t('groups:group_menu:label_leave_group')}
           onPress={onPressLeave}
         />
