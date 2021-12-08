@@ -11,6 +11,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
+import Div from '~/beinComponents/Div';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -90,6 +91,14 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     return result;
   };
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    // close gallery modal when press ESC on web
+    if (event.keyCode === 27) {
+      event.preventDefault();
+      setGalleryVisible(false);
+    }
+  };
+
   const renderMore = () => {
     return (
       <View style={styles.moreContainer}>
@@ -161,11 +170,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
         )}
       </View>
       {enableGalleryModal && (
-        <ImageGalleryModal
-          visible={galleryVisible}
-          source={getImageUrls()}
-          onPressClose={() => setGalleryVisible(false)}
-        />
+        <Div onKeyDown={onKeyDown}>
+          <ImageGalleryModal
+            visible={galleryVisible}
+            source={getImageUrls()}
+            onPressClose={() => setGalleryVisible(false)}
+          />
+        </Div>
       )}
     </Button>
   );
