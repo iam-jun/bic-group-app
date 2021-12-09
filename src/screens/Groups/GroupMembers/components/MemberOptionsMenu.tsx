@@ -449,9 +449,14 @@ const MemberOptionsMenu = ({
           {can_manage_member && selectedMember?.username !== user?.username && (
             <PrimaryItem
               style={styles.menuOption}
-              leftIcon={'TrashAlt'}
-              leftIconProps={{icon: 'TrashAlt', size: 24}}
+              leftIcon={'UserTimes'}
+              leftIconProps={{
+                icon: 'UserTimes',
+                size: 24,
+                tintColor: theme.colors.error,
+              }}
               title={i18next.t('groups:member_menu:label_remove_member')}
+              titleProps={{color: theme.colors.error}}
               onPress={() => onPressMenuOption('remove-member')}
             />
           )}

@@ -186,6 +186,7 @@ const icons = {
   EditAlt: 'EditAlt',
   TextFields: 'TextFields',
   UserSquare: 'UserSquare',
+  UserTimes: 'UserTimes',
   Calender: 'Calender',
   Globe: 'Globe',
   Lock: 'Lock',
