@@ -31,7 +31,7 @@ function* checkIsInternetReachable() {
     yield NetInfo.fetch().then(state => (netInfoState = state));
 
     if (netInfoState.isInternetReachable === null) {
-      const threshold = 5000;
+      const threshold = 5000; // 5000 is for slow 3G, the faster network, the smaller threshold is
       yield timeOut(threshold);
       yield NetInfo.fetch().then(state => (netInfoState = state));
     }
