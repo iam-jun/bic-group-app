@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   Linking,
   Platform,
@@ -19,7 +19,6 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
 import NetInfo from '@react-native-community/netinfo';
-import {NetInfoState} from '@react-native-community/netinfo';
 
 import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
@@ -51,7 +50,6 @@ import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
-import {debounce} from 'lodash';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -63,31 +61,9 @@ const StackNavigator = (): React.ReactElement => {
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
-  /**
-   * Sometimes it toggle from true -> false -> true or vice versa
-   * in a small amount of time, so we need to set a debounce here
-   * to avoid toggling the "no internet" toast message
-   */
-  const setIsInternetReachable = useCallback(
-    debounce((state: NetInfoState) => {
-      const result = state.isInternetReachable ? state.isConnected : false;
-      dispatch(noInternetActions.setIsInternetReachable(result));
-    }, 1000),
-    [],
-  );
-
-  const validateInternetConnection = (state: NetInfoState) => {
-    if (state.isInternetReachable === null) {
-      NetInfo.fetch().then(state => setIsInternetReachable(state));
-      return;
-    }
-
-    setIsInternetReachable(state);
-  };
-
   useEffect(() => {
-    const unsubscribeNetInfo = NetInfo.addEventListener(state =>
-      validateInternetConnection(state),
+    const unsubscribeNetInfo = NetInfo.addEventListener(() =>
+      dispatch(noInternetActions.checkInternetReachable()),
     );
 
     return () => {
