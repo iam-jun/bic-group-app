@@ -14,12 +14,16 @@ import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
+import {clearToastMessage} from '~/store/modal/actions';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 const PendingUserItem = ({requestId}: {requestId: number}) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {language} = useContext(AppContext);
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const currentRequestMember = useKeySelector(
     `groups.pendingMemberRequests.items.${requestId}`,
@@ -36,14 +40,26 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
     latest_work: latestWork,
   } = user;
 
-  const onApproveRequest = () => {
-    alert(`Approve req ID ${requestId} for group ${groupId}`);
-    dispatch(groupsActions.approveSingleMemberRequest({groupId, requestId}));
+  const navigateToGroupMembers = () => {
+    dispatch(clearToastMessage());
+    rootNavigation.navigate(groupStack.groupMembers, {groupId});
   };
 
-  const onDeclineRequest = () => {
-    alert(`Decline req ID ${requestId} for group ${groupId}`);
-    dispatch(groupsActions.declineSingleMemberRequest({groupId, requestId}));
+  const onPressApprove = () => {
+    dispatch(
+      groupsActions.approveSingleMemberRequest({
+        groupId,
+        requestId,
+        fullName,
+        callback: navigateToGroupMembers,
+      }),
+    );
+  };
+
+  const onPressDecline = () => {
+    dispatch(
+      groupsActions.declineSingleMemberRequest({groupId, requestId, fullName}),
+    );
   };
 
   const renderItem = ({
@@ -103,7 +119,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
       <View style={styles.buttons}>
         <Button.Secondary
           style={styles.buttonDecline}
-          onPress={onDeclineRequest}
+          onPress={onPressDecline}
           useI18n>
           common:btn_decline
         </Button.Secondary>
@@ -111,7 +127,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
           highEmphasis
           style={styles.buttonApprove}
           color={theme.colors.primary6}
-          onPress={onApproveRequest}
+          onPress={onPressApprove}
           useI18n>
           common:btn_approve
         </Button.Secondary>

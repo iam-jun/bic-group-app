@@ -290,12 +290,22 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           canLoadMore: payload.requestIds.length === appConfig.recordsPerPage,
         },
       };
-    case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST:
-      // TODO: complete logic for removing single pending request from list
+    case groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST:
+    case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST: {
+      const requestItems = pendingMemberRequests.items;
+      const requestId = payload.requestId;
+      delete requestItems[requestId];
       return {
         ...state,
-        pendingMemberRequests: [],
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          data: pendingMemberRequests.data.filter(
+            (item: number) => item !== requestId,
+          ),
+          items: requestItems,
+        },
       };
+    }
     case groupsTypes.APPROVE_ALL_MEMBER_REQUESTS:
     case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
     case groupsTypes.CLEAR_ALL_MEMBER_REQUESTS:

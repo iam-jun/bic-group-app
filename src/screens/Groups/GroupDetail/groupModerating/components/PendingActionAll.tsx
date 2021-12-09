@@ -7,9 +7,13 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import modalActions from '~/store/modal/actions';
+import modalActions, {clearToastMessage} from '~/store/modal/actions';
 import i18next from 'i18next';
 import groupsActions from '~/screens/Groups/redux/actions';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 interface PendingActionAllProps {
   groupId: number;
@@ -20,6 +24,17 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
+
+  const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const totalPendingMembers = useKeySelector(
+    groupsKeySelector.groupDetail.total_pending_members,
+  );
+
+  const navigateToGroupMembers = () => {
+    dispatch(clearToastMessage());
+    rootNavigation.navigate(groupStack.groupMembers, {groupId});
+  };
 
   const alertAction = (
     title: string,
@@ -43,22 +58,32 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(modalActions.showAlert(alertPayload));
   };
 
-  const onApproveAll = () => {
+  const onPressApproveAll = () => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:approve'),
-      i18next.t('groups:text_respond_all_member_requests:content:approve'),
+      i18next
+        .t('groups:text_respond_all_member_requests:content:approve')
+        .replace('{0}', totalPendingMembers)
+        .replace('{1}', groupDetail?.name),
       doApproveAll,
     );
   };
 
   const doApproveAll = () => {
-    dispatch(groupsActions.approveAllMemberRequests(groupId));
+    dispatch(
+      groupsActions.approveAllMemberRequests({
+        groupId,
+        callback: navigateToGroupMembers,
+      }),
+    );
   };
 
-  const onDeclineAll = () => {
+  const onPressDeclineAll = () => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:decline'),
-      i18next.t('groups:text_respond_all_member_requests:content:decline'),
+      i18next
+        .t('groups:text_respond_all_member_requests:content:decline')
+        .replace('{0}', totalPendingMembers),
       doDeclineAll,
     );
   };
@@ -73,7 +98,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
       <View style={styles.buttons}>
         <Button.Secondary
           style={styles.buttonDecline}
-          onPress={onDeclineAll}
+          onPress={onPressDeclineAll}
           useI18n>
           common:btn_decline_all
         </Button.Secondary>
@@ -81,7 +106,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
           highEmphasis
           style={styles.buttonApprove}
           color={theme.colors.primary6}
-          onPress={onApproveAll}
+          onPress={onPressApproveAll}
           useI18n>
           common:btn_approve_all
         </Button.Secondary>

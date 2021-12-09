@@ -693,17 +693,23 @@
     "text_successfully_join_group": "Successfully join group",
     "text_no_pending_members_notice": "There's no pending members",
     "text_pending_request_notice": "People who request to join your group will show here.",
+    "pending_members": {},
     "text_respond_all_member_requests": {
       "title": {
         "approve": "Approve all member requests?",
-        "decline": "Decline all members requests?"
+        "decline": "Decline all member requests?"
       },
       "content": {
-        "approve": "You're about to add {m} to {g}",
-        "decline": "You're about to decline {m} member requests"
+        "approve": "You're about to add {0} person(s) to {1}",
+        "decline": "You're about to decline {0} member request(s)"
       }
     },
-    "text_requested_at": "Requested at"
+    "text_requested_at": "Requested at",
+    "text_is_added_as_member": "is added as member",
+    "text_declined_user": "Declined user",
+    "text_approved_user": "Approved user",
+    "text_approved_all": "Approved {0} user(s)",
+    "text_declined_all": "Declined {0} user(s)"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

@@ -64,7 +64,8 @@ const PendingMembers = (props: any) => {
   const renderListFooter = () => {
     return (
       !loading &&
-      canLoadMore && (
+      canLoadMore &&
+      data.length > 0 && (
         <View style={styles.listFooter}>
           <ActivityIndicator />
         </View>
@@ -89,9 +90,7 @@ const PendingMembers = (props: any) => {
         renderItemSeparator={() => <Divider style={styles.divider} />}
       />
 
-      {pendingMemberRequests.data.length > 0 && (
-        <PendingActionAll groupId={groupId} />
-      )}
+      {data.length > 0 && <PendingActionAll groupId={groupId} />}
     </ScreenWrapper>
   );
 };

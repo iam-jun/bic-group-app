@@ -54,10 +54,19 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
+
   yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getMemberRequests);
+  yield takeLatest(
+    groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    approveSingleMemberRequest,
+  );
   yield takeLatest(
     groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
     approveAllMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    declineSingleMemberRequest,
   );
   yield takeLatest(
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
@@ -587,20 +596,120 @@ function* getMemberRequests({
   }
 }
 
-function* approveAllMemberRequests({payload}: {type: string; payload: number}) {
+function* approveSingleMemberRequest({
+  payload,
+}: {
+  type: string;
+  payload: {
+    groupId: number;
+    requestId: number;
+    fullName: string;
+    callback: () => void;
+  };
+}) {
   try {
-    // yield groupsDataHelper.approveAllMemberRequests(payload);
-    yield put(groupsActions.getMemberRequests({groupId: payload}));
+    const {groupId, requestId, fullName, callback} = payload;
+    yield groupsDataHelper.approveSingleMemberRequest(groupId, requestId);
+
+    yield put(groupsActions.getGroupDetail(groupId));
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+        rightIcon: 'UsersAlt',
+        rightText: 'Members',
+        onPressRight: callback,
+      },
+      toastType: 'normal',
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.log('approveSingleMemberRequest: ', err);
+    yield showError(err);
+  }
+}
+
+function* approveAllMemberRequests({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; callback: () => void};
+}) {
+  try {
+    const {groupId, callback} = payload;
+
+    // @ts-ignore
+    const response = yield groupsDataHelper.approveAllMemberRequests(groupId);
+    const total = response?.data?.total;
+
+    yield put(groupsActions.getGroupDetail(groupId));
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_approved_all')}`.replace(
+        '{0}',
+        `${total}`,
+      ),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+        rightIcon: 'UsersAlt',
+        rightText: 'Members',
+        onPressRight: callback,
+      },
+      toastType: 'normal',
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('approveAllMemberRequests: ', err);
     yield showError(err);
   }
 }
 
+function* declineSingleMemberRequest({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; requestId: number; fullName: string};
+}) {
+  try {
+    const {groupId, requestId, fullName} = payload;
+    yield groupsDataHelper.declineSingleMemberRequest(groupId, requestId);
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+      toastType: 'normal',
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+  } catch (err) {
+    console.log('declineSingleMemberRequest: ', err);
+    yield showError(err);
+  }
+}
+
 function* declineAllMemberRequests({payload}: {type: string; payload: number}) {
   try {
-    // yield groupsDataHelper.declineAllMemberRequests(payload);
-    yield put(groupsActions.getMemberRequests({groupId: payload}));
+    // @ts-ignore
+    const response = yield groupsDataHelper.declineAllMemberRequests(payload);
+    const total = response?.data?.total;
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_declined_all')}`.replace(
+        '{0}',
+        `${total}`,
+      ),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+      },
+      toastType: 'normal',
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('declineAllMemberRequests: ', err);
     yield showError(err);

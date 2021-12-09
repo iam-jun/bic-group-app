@@ -212,27 +212,29 @@ const groupsActions = {
     type: groupsTypes.SET_MEMBER_REQUESTS,
     payload,
   }),
-  removeSingleMemberRequest: (payload: number) => ({
-    type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
-    payload,
-  }),
   clearAllMemberRequests: () => ({
     type: groupsTypes.CLEAR_ALL_MEMBER_REQUESTS,
   }),
   approveSingleMemberRequest: (payload: {
     groupId: number;
     requestId: number;
+    fullName: string;
+    callback: () => void;
   }) => ({
     type: groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
-  approveAllMemberRequests: (payload: number) => ({
+  approveAllMemberRequests: (payload: {
+    groupId: number;
+    callback: () => void;
+  }) => ({
     type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
     payload,
   }),
   declineSingleMemberRequest: (payload: {
     groupId: number;
     requestId: number;
+    fullName: string;
   }) => ({
     type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
     payload,
