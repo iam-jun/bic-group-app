@@ -125,7 +125,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       isOpen: true,
       ContentComponent: (
         <EmojiBoard
-          width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+          width={Platform.OS === 'web' ? 320 : dimension.deviceWidth}
           height={280}
           onEmojiSelected={onEmojiSelected}
         />

@@ -279,7 +279,7 @@ const _Conversation = ({route}: {route: any}) => {
         isOpen: true,
         ContentComponent: (
           <EmojiBoard
-            width={Platform.OS === 'web' ? 400 : dimension.deviceWidth}
+            width={Platform.OS === 'web' ? 320 : dimension.deviceWidth}
             height={280}
             onEmojiSelected={(emoji: string, key: string) =>
               onEmojiSelected(emoji, key, item._id)

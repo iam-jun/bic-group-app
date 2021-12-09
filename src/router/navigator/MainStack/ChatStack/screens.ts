@@ -9,6 +9,9 @@ import {
   SearchConversation,
   EditConversationDescription,
 } from '~/screens/Chat';
+import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
+import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/GeneralInformation';
+import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/GroupAdministration';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostDetail from '~/screens/Post/PostDetail';
 
@@ -24,4 +27,9 @@ export default {
   'post-detail': PostDetail,
   'search-conversation': SearchConversation,
   'edit-chat-description': EditConversationDescription,
+
+  // Group
+  'chat-group-admin': GroupAdministration,
+  'chat-general-info': GeneralInformation,
+  'chat-edit-group-description': EditGroupDescription,
 };

@@ -22,6 +22,7 @@ const openPickerSingle = async (option = {}) => {
       mediaType: 'any',
       multiple: false,
       compressVideoPreset: 'Passthrough',
+      forceJpg: true,
       ...option,
     });
     if (image) {
@@ -42,6 +43,7 @@ const openPickerMultiple = async (option = {}) => {
       mediaType: 'any',
       multiple: true,
       compressVideoPreset: 'Passthrough',
+      forceJpg: true,
       ...option,
     });
     if (images?.length > 0) {

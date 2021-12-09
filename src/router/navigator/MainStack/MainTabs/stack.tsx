@@ -15,6 +15,9 @@ const mainTabStack = {
   'create-conversation': 'create-conversation',
   'review-conversation': 'review-conversation',
   'edit-chat-description': 'edit-chat-description',
+  'chat-group-admin': 'chat-group-admin',
+  'chat-general-info': 'chat-general-info',
+  'chat-edit-group-description': 'chat-edit-group-description',
 
   //GROUP
   // 'group-list': Groups,

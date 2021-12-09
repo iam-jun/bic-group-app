@@ -4,7 +4,7 @@ import messaging, {
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   LogBox,
@@ -41,6 +41,9 @@ import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
 import {useRootNavigation} from './hooks/navigation';
 import {rootSwitch} from './router/stack';
+import Store from '~/store';
+import {IUserResponse} from './interfaces/IAuth';
+import {isNavigationRefReady} from '~/router/helper';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
@@ -122,6 +125,19 @@ export default (): React.ReactElement => {
   const handleInitialNotification = (
     remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
   ) => {
+    // Do not call user outside this scope, as it will get outdated value
+    const user: IUserResponse | boolean = Store.getCurrentUser();
+
+    if (!isNavigationRefReady?.current) {
+      // On low performance device, retry until navigation ready
+      setTimeout(() => {
+        handleInitialNotification(remoteMessage);
+      }, 2000);
+      return;
+    }
+
+    if (!user) return;
+
     const data = handleMessageData(remoteMessage);
     if (data)
       rootNavigation.navigate(rootSwitch.mainStack, {

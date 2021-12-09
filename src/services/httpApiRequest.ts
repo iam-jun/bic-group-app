@@ -4,9 +4,10 @@ import {connect, StreamClient} from 'getstream';
 import i18n from 'i18next';
 import _ from 'lodash';
 import moment from 'moment';
-import {Alert, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
+import NetInfo from '@react-native-community/netinfo';
 
 import apiConfig, {
   FeedResponseError,
@@ -15,6 +16,7 @@ import apiConfig, {
 } from '~/configs/apiConfig';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
+import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 
@@ -69,9 +71,14 @@ const dispatchStoreAuthTokens = (
   );
 };
 
+const _dispatchHideSystemIssue = () => {
+  Store.store.dispatch(noInternetActions.hideSystemIssue());
+};
+
 const refreshFailKickOut = () => {
   _dispatchLogout();
   _dispatchSessionExpire();
+  _dispatchHideSystemIssue;
   isRefreshingToken = false;
   // count retry limit
   countLimitRetry = 0;
@@ -80,6 +87,26 @@ const refreshFailKickOut = () => {
   unauthorizedReqQueue = [];
   // get stream
   unauthorizedGetStreamReqQueue = [];
+};
+
+const handleSystemIssue = () => {
+  const state = Store.store.getState();
+
+  const isInternetReachable: boolean = _.get(
+    state,
+    'noInternet.isInternetReachable',
+    false,
+  );
+
+  if (isInternetReachable === false) return;
+
+  Store.store.dispatch(noInternetActions.showSystemIssue());
+
+  const modalVisibleDuration = 2000;
+  setTimeout(() => {
+    _dispatchLogout();
+    _dispatchHideSystemIssue();
+  }, modalVisibleDuration);
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
@@ -243,7 +270,6 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   }
 };
 
-let alertShow = false;
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
@@ -262,24 +288,14 @@ const handleResponseError = async (
         return mapResponseSuccessBein(error.response);
     }
   } else if (error.request) {
-    console.log('error.request', error.config);
-    if (!alertShow) {
-      alertShow = true;
-      // Alert.alert(i18n.t('error:alert_title'), i18n.t('error:no_internet'), [
-      Alert.alert(i18n.t('error:alert_title'), error.message, [
-        {
-          onPress: () => {
-            alertShow = false;
-          },
-        },
-      ]);
-    }
+    console.error(error.request);
+    handleSystemIssue();
 
     return {
       code: error.request.status, // request made, no response
       data: null,
       meta: {
-        message: i18n.t('error:no_internet'),
+        message: i18n.t('common:text_error_message'),
       },
     };
   } else {

@@ -1,4 +1,10 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {
+  FC,
+  useEffect,
+  useRef,
+  useState,
+  useImperativeHandle,
+} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -18,6 +24,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export interface HeaderSearchProps {
+  headerSearchRef?: any;
   inputRef?: any;
   isShowSearch: boolean;
   onSearchText?: (searchText: string) => void;
@@ -29,6 +36,7 @@ export interface HeaderSearchProps {
 }
 
 const HeaderSearch: FC<HeaderSearchProps> = ({
+  headerSearchRef,
   inputRef,
   isShowSearch,
   onSearchText,
@@ -39,6 +47,8 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   onSubmitSearch,
 }: HeaderSearchProps) => {
   const [isShow, setIsShow] = useState(false);
+  const searchInputRef = useRef<any>();
+  const _headerSearchRef = headerSearchRef || useRef();
   const _inputRef = inputRef || useRef();
   const showValue = useSharedValue(0);
 
@@ -80,6 +90,14 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
     }
   }, [isShowSearch]);
 
+  const setSearchText = (searchText: string) => {
+    searchInputRef?.current?.setText?.(searchText);
+  };
+
+  useImperativeHandle(_headerSearchRef, () => ({
+    setSearchText,
+  }));
+
   if (!isShow) {
     return null;
   }
@@ -105,6 +123,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
       <View style={styles.searchWrapper}>
         <Animated.View style={[searchContainerStyle, styles.searchContainer]}>
           <SearchInput
+            searchInputRef={searchInputRef}
             inputRef={_inputRef}
             autoFocus={autoFocus}
             onFocus={onFocus}

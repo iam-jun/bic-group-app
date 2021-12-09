@@ -1,11 +1,14 @@
 import {IPostActivity} from '~/interfaces/IPost';
 import homeTypes from './types';
 import {
+  IParamGetRecentSearchKeywords,
   IPayloadGetHomePost,
   IPayloadGetSearchPosts,
   IPayloadSetNewsfeedSearch,
   IPayloadSetNewsfeedSearchFilter,
+  IPayloadSetNewsfeedSearchRecentKeywords,
   IPayloadSetNewsfeedSearchUsers,
+  IRecentSearchTarget,
 } from '~/interfaces/IHome';
 
 const homeActions = {
@@ -41,11 +44,6 @@ const homeActions = {
       payload,
     };
   },
-  clearNewsfeedSearch: () => {
-    return {
-      type: homeTypes.CLEAR_NEWSFEED_SEARCH,
-    };
-  },
   setNewsfeedSearchFilter: (payload: IPayloadSetNewsfeedSearchFilter) => {
     return {
       type: homeTypes.SET_NEWSFEED_SEARCH_FILTER,
@@ -63,9 +61,17 @@ const homeActions = {
       payload,
     };
   },
-  clearNewsfeedSearchUsers: () => {
+  setNewsfeedSearchRecentKeywords: (
+    payload: IPayloadSetNewsfeedSearchRecentKeywords,
+  ) => {
     return {
-      type: homeTypes.CLEAR_NEWSFEED_SEARCH_USERS,
+      type: homeTypes.SET_NEWSFEED_SEARCH_RECENT_KEYWORDS,
+      payload,
+    };
+  },
+  clearAllNewsfeedSearch: () => {
+    return {
+      type: homeTypes.CLEAR_ALL_NEWSFEED_SEARCH,
     };
   },
 
@@ -86,6 +92,24 @@ const homeActions = {
   getSearchUsers: (payload?: string) => {
     return {
       type: homeTypes.GET_SEARCH_POSTS_USERS,
+      payload,
+    };
+  },
+  getRecentSearchKeywords: (payload?: IParamGetRecentSearchKeywords) => {
+    return {
+      type: homeTypes.GET_RECENT_SEARCH_KEYWORDS,
+      payload,
+    };
+  },
+  deleteClearRecentSearch: (payload: IRecentSearchTarget) => {
+    return {
+      type: homeTypes.DELETE_CLEAR_RECENT_SEARCH_KEYWORDS,
+      payload,
+    };
+  },
+  deleteRecentSearchById: (payload: string) => {
+    return {
+      type: homeTypes.DELETE_RECENT_SEARCH_KEYWORD_BY_ID,
       payload,
     };
   },

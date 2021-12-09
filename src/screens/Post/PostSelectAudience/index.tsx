@@ -22,11 +22,11 @@ import {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IUser} from '~/interfaces/IAuth';
-import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
+import {useKeySelector} from '~/hooks/selector';
 
 const PostSelectAudience = () => {
+  const [lossInternet, setLossInternet] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectingAudiences, setSelectingAudiences] = useState<
     (IGroup | IUser)[]
@@ -37,6 +37,8 @@ const PostSelectAudience = () => {
   const [selectingUsers, setSelectingUsers] = useState<{[x: string]: IUser}>(
     {},
   );
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -88,6 +90,17 @@ const PostSelectAudience = () => {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet && sectionListData.length === 0) {
+        setLossInternet(false);
+        onSearch('');
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   useEffect(() => {
     if (selectingAudiences?.length === 0) {

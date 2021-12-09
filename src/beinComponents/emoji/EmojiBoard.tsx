@@ -1,10 +1,11 @@
-import React, {FC} from 'react';
+import React, {FC, useRef} from 'react';
 import {
   View,
   StyleSheet,
   StyleProp,
   ViewStyle,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import NodeEmoji from 'node-emoji';
@@ -14,6 +15,8 @@ import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
+import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
@@ -34,6 +37,10 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
   onPressBackSpace,
   onPressKeyboard,
 }: EmojiBoardProps) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
+  const emojiRef = useRef<any>();
+
   const theme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const {colors, spacing} = theme;
@@ -44,8 +51,13 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
     onEmojiSelected?.(emoji, emojiResult?.key);
   };
 
+  const _onEmojiLongPress = (emoji: string) => {
+    emojiRef?.current?.show?.(emoji);
+  };
+
   return (
     <TouchableOpacity
+      disabled={!isInternetReachable}
       activeOpacity={1}
       style={[styles.container, {width, height}]}>
       <EmojiSelector
@@ -58,6 +70,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
         showSectionTitles={false}
         columns={7}
         onEmojiSelected={_onEmojiSelected}
+        onEmojiLongPress={_onEmojiLongPress}
       />
       {(!!onPressKeyboard || !!onPressSpace || onPressBackSpace) && (
         <View style={styles.buttonContainer}>
@@ -76,6 +89,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
           )}
         </View>
       )}
+      {Platform.OS !== 'web' && <EmojiNameToast toastRef={emojiRef} />}
     </TouchableOpacity>
   );
 };

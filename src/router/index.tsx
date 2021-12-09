@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   Linking,
   Platform,
@@ -18,6 +18,9 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
+import NetInfo from '@react-native-community/netinfo';
+import {NetInfoState} from '@react-native-community/netinfo';
+
 import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
@@ -34,7 +37,7 @@ import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
-import {signOut} from '~/screens/Auth/redux/actions';
+import authActions from '~/screens/Auth/redux/actions';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
@@ -45,6 +48,10 @@ import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
+import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
+import noInternetActions from '~/screens/NoInternet/redux/actions';
+import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
+import {debounce} from 'lodash';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -56,6 +63,38 @@ const StackNavigator = (): React.ReactElement => {
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
+  /**
+   * Sometimes it toggle from true -> false -> true or vice versa
+   * in a small amount of time, so we need to set a debounce here
+   * to avoid toggling the "no internet" toast message
+   */
+  const setIsInternetReachable = useCallback(
+    debounce((state: NetInfoState) => {
+      const result = state.isInternetReachable ? state.isConnected : false;
+      dispatch(noInternetActions.setIsInternetReachable(result));
+    }, 1000),
+    [],
+  );
+
+  const validateInternetConnection = (state: NetInfoState) => {
+    if (state.isInternetReachable === null) {
+      NetInfo.fetch().then(state => setIsInternetReachable(state));
+      return;
+    }
+
+    setIsInternetReachable(state);
+  };
+
+  useEffect(() => {
+    const unsubscribeNetInfo = NetInfo.addEventListener(state =>
+      validateInternetConnection(state),
+    );
+
+    return () => {
+      unsubscribeNetInfo();
+    };
+  }, []);
+
   const checkAuthKickout = async () => {
     try {
       await Auth.currentAuthenticatedUser({
@@ -66,7 +105,7 @@ const StackNavigator = (): React.ReactElement => {
       if (!user) {
         return;
       }
-      dispatch(signOut());
+      dispatch(authActions.signOut());
       dispatch(
         modalActions.showAlert({
           title: t('auth:text_kickout_title'),
@@ -84,6 +123,7 @@ const StackNavigator = (): React.ReactElement => {
     checkAuthKickout();
     handleDeepLink();
     // Linking.addEventListener('url', handleOpenURL);
+    dispatch(noInternetActions.hideSystemIssue());
   }, []);
 
   /*Handle when app killed*/
@@ -203,8 +243,10 @@ const StackNavigator = (): React.ReactElement => {
         </NavigationContainer>
         <AlertModal />
         <AlertNewFeatureModal />
+        <SystemIssueModal />
         <LoadingModal />
         <ToastMessage />
+        <InternetConnectionStatus />
       </View>
     </Div>
   );

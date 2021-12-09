@@ -32,7 +32,7 @@ import images from '~/resources/images';
 import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
-import * as actions from '../redux/actions';
+import actions from '../redux/actions';
 
 const SignIn = () => {
   useAuthAmplifyHub();

@@ -13,6 +13,7 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
 import NodeEmoji from 'node-emoji';
+import {useKeySelector} from '~/hooks/selector';
 
 interface ReactionProps {
   value: number;
@@ -35,6 +36,8 @@ const Reaction: React.FC<ReactionProps> = ({
   disableUpdateState,
   loading,
 }: ReactionProps) => {
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -66,7 +69,7 @@ const Reaction: React.FC<ReactionProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={loading}
+      disabled={!isInternetReachable || loading}
       style={[styles.container, style]}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}>

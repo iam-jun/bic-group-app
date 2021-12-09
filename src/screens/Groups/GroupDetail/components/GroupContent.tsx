@@ -21,6 +21,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import {groupPrivacy} from '~/constants/privacyTypes';
 
 const GroupContent = ({
   getGroupPosts,
@@ -41,6 +42,7 @@ const GroupContent = ({
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
+  const isPublicGroup = groupData.privacy === groupPrivacy.public;
   const {rocket_chat_id, id: groupId} = groupData;
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
@@ -108,7 +110,7 @@ const GroupContent = ({
               settings:title_about
             </Button.Secondary>
             <ViewSpacing width={spacing.margin.base} />
-            {isMember && (
+            {(isMember || isPublicGroup) && (
               <Button.Secondary useI18n onPress={onPressMembers}>
                 chat:title_members
               </Button.Secondary>

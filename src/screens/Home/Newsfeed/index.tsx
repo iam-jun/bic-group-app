@@ -56,6 +56,8 @@ const Newsfeed = () => {
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
@@ -94,12 +96,15 @@ const Newsfeed = () => {
   );
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      if (streamClient && (!homePosts || homePosts?.length === 0)) {
-        getData(true);
-      }
-    });
-  }, [streamClient]);
+    if (
+      isInternetReachable &&
+      streamClient &&
+      (!homePosts || homePosts?.length === 0) &&
+      !refreshing
+    ) {
+      getData(true);
+    }
+  }, [streamClient, isInternetReachable, homePosts, refreshing]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
@@ -111,19 +116,19 @@ const Newsfeed = () => {
     if (isShow) {
       dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
     } else {
-      dispatch(homeActions.clearNewsfeedSearch());
-      dispatch(homeActions.clearNewsfeedSearchFilter());
-      dispatch(homeActions.clearNewsfeedSearchUsers());
+      dispatch(homeActions.clearAllNewsfeedSearch());
     }
   };
 
   const onSearchText = (text: string, searchInputRef: any) => {
-    const payload: IPayloadSetNewsfeedSearch = {searchText: text};
-    if (!text) {
+    const searchText = text?.trim?.() || '';
+    const payload: IPayloadSetNewsfeedSearch = {searchText};
+    if (searchText) {
+      dispatch(homeActions.setNewsfeedSearch(payload));
+    } else {
       payload.isSuggestion = true;
       searchInputRef?.current?.focus?.();
     }
-    dispatch(homeActions.setNewsfeedSearch(payload));
   };
 
   const onFocusSearch = () => {
@@ -201,7 +206,7 @@ const Newsfeed = () => {
             />
           }
         />
-        <NewsfeedSearch />
+        <NewsfeedSearch headerRef={headerRef} />
       </View>
     </View>
   );

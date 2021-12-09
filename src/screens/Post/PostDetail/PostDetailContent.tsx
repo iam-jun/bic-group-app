@@ -52,7 +52,10 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
 
+const defaultList = [{title: '', type: 'empty', data: []}];
+
 const _PostDetailContent = (props: any) => {
+  const [lossInternet, setLossInternet] = useState(false);
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
@@ -73,6 +76,8 @@ const _PostDetailContent = (props: any) => {
   const windowDimension = useWindowDimensions();
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
   const styles = useMemo(() => createStyle(theme, isLaptop), [theme, isLaptop]);
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
@@ -104,9 +109,20 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet && id && userId && streamClient) {
+        setLossInternet(false);
+        onRefresh();
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
+
+  useEffect(() => {
     if (id && userId && streamClient) {
       getPostDetail((loading, success) => {
-        if (!loading && !success) {
+        if (!loading && !success && isInternetReachable) {
           if (Platform.OS === 'web') {
             rootNavigation.replace(rootSwitch.notFound);
           } else {
@@ -163,12 +179,12 @@ const _PostDetailContent = (props: any) => {
     if (newCommentInput !== '' || newCommentSelectedImage) {
       dispatch(
         modalActions.showAlert({
-          title: i18n.t('common:label_discard_changes'),
-          content: i18n.t('common:text_discard_warning'),
+          title: i18n.t('post:title_discard_comment'),
+          content: i18n.t('post:text_discard_comment'),
           showCloseButton: true,
           cancelBtn: true,
-          cancelLabel: i18n.t('common:btn_continue_editing'),
-          confirmLabel: i18n.t('common:btn_discard'),
+          cancelLabel: i18n.t('post:btn_continue_comment'),
+          confirmLabel: i18n.t('post:btn_discard_comment'),
           onConfirm: () => rootNavigation.goBack(),
           stretchOnWeb: true,
         }),
@@ -250,6 +266,10 @@ const _PostDetailContent = (props: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
 
+    if (sectionData?.section?.type === 'empty') {
+      return <View />;
+    }
+
     return (
       <CommentItem
         postId={id}
@@ -311,7 +331,7 @@ const _PostDetailContent = (props: any) => {
           <View style={styles.postDetailContainer}>
             <SectionList
               ref={listRef}
-              sections={deleted ? [] : sectionData}
+              sections={deleted ? defaultList : sectionData}
               renderItem={renderCommentItem}
               renderSectionHeader={renderSectionHeader}
               ListHeaderComponent={
@@ -392,7 +412,9 @@ const getSectionData = (listComment: IReaction[]) => {
     item.data = comment?.latest_children?.comment || [];
     result.push(item);
   });
-  return result;
+  // long post without comment cant scroll to bottom
+  // so need default list with an empty item to trigger scroll
+  return result?.length > 0 ? result : defaultList;
 };
 
 const createStyle = (theme: ITheme, isLaptop: boolean): any => {

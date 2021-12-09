@@ -120,7 +120,7 @@
     "navigate_sign_in": "Tới trang đăng nhập",
     "navigate_sign_up": "Tạo tài khoản mới",
     "btn_landing_start": "Bắt đầu ngay",
-    "text_landing_title": "Everybody needs a place to bein",
+    "text_landing_title": "Everybody needs a place to be in",
     "text_landing_title_group": "Welcome to {0}",
     "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
     "text_or": "Hoặc",
@@ -229,9 +229,11 @@
       "label_creation_date": "Ngày đăng",
       "label_anyone": "Mọi người",
       "label_anytime": "Mọi lúc",
+      "label_recent_search": "Tìm kiếm gần đây",
       "btn_reset": "Đặt lại",
       "btn_show_results": "Xem kết quả",
       "search_people": "Tìm người dùng...",
+      "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
       "filter_created_by": "Người đăng",
@@ -334,6 +336,10 @@
     "post_exit_option_save": "Lưu bản nháp",
     "post_exit_option_discard": "Huỷ bài viết",
     "post_exit_option_continue": "Tiếp tục viết bài",
+    "title_discard_comment": "Huỷ bình luận",
+    "text_discard_comment": "Nếu huỷ, bạn sẽ mất những nội dung đã nhập.",
+    "btn_continue_comment": "Tiếp tục",
+    "btn_discard_comment": "Bỏ",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
@@ -483,5 +489,13 @@
     "button_not_really_need": "😋 Not really need",
     "text_thanks_for_your_feedback": "Thanks for your feedback!",
     "text_we_will_notify_you": "We will notify you when this features is ready."
+  },
+  "internet_connection": {
+    "online": "Đã có kết nối internet",
+    "offline": "Hiện bạn không có kết nối internet. Vui lòng kiểm tra lại",
+    "system_issue": {
+      "title": "Đã có lỗi xảy ra",
+      "desc": "Vui lòng đăng nhập lại"
+    }
   }
 }
