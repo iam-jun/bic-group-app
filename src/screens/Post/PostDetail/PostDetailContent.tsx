@@ -55,7 +55,6 @@ import {sortComments} from '../helper/PostUtils';
 const defaultList = [{title: '', type: 'empty', data: []}];
 
 const _PostDetailContent = (props: any) => {
-  const [lossInternet, setLossInternet] = useState(false);
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
@@ -109,18 +108,7 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
-    if (isInternetReachable) {
-      if (lossInternet && id && userId && streamClient) {
-        setLossInternet(false);
-        onRefresh();
-      }
-    } else {
-      setLossInternet(true);
-    }
-  }, [isInternetReachable]);
-
-  useEffect(() => {
-    if (id && userId && streamClient) {
+    if (id && userId && streamClient && isInternetReachable) {
       getPostDetail((loading, success) => {
         if (!loading && !success && isInternetReachable) {
           if (Platform.OS === 'web') {
@@ -140,7 +128,7 @@ const _PostDetailContent = (props: any) => {
         }
       });
     }
-  }, [id, userId]);
+  }, [id, userId, isInternetReachable]);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
