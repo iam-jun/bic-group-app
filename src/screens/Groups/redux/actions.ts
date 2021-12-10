@@ -220,6 +220,13 @@ const groupsActions = {
     type: groupsTypes.SET_MEMBER_REQUESTS,
     payload,
   }),
+  removeSingleMemberRequest: (payload: number) => ({
+    type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
+    payload,
+  }),
+  undoDeclineMemberRequests: () => ({
+    type: groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS,
+  }),
   clearAllMemberRequests: () => ({
     type: groupsTypes.CLEAR_ALL_MEMBER_REQUESTS,
   }),
@@ -242,13 +249,19 @@ const groupsActions = {
   declineSingleMemberRequest: (payload: {
     groupId: number;
     requestId: number;
-    fullName: string;
   }) => ({
     type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
   declineAllMemberRequests: (payload: number) => ({
     type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    payload,
+  }),
+  storeUndoData: (payload: {
+    requestIds: number[];
+    requestItems: IObject<IJoiningMember>;
+  }) => ({
+    type: groupsTypes.STORE_UNDO_DATA,
     payload,
   }),
 };

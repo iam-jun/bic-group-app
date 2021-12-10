@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
@@ -14,9 +14,11 @@ import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
-import {clearToastMessage} from '~/store/modal/actions';
+import {clearToastMessage, showHideToastMessage} from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import {IToastMessage} from '~/interfaces/common';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 
 const PendingUserItem = ({requestId}: {requestId: number}) => {
   const theme = useTheme() as ITheme;
@@ -24,16 +26,17 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
   const {language} = useContext(AppContext);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+  const timeoutRef = useRef<any>();
 
-  const currentRequestMember = useKeySelector(
-    `groups.pendingMemberRequests.items.${requestId}`,
+  const pendingMemberRequests = useKeySelector(
+    groupsKeySelector.pendingMemberRequests,
   );
+  const {data: requestIds, items: requestItems} = pendingMemberRequests;
 
-  const {
-    user,
-    group_id: groupId,
-    created_at: createdAt,
-  } = currentRequestMember || {};
+  const currentRequest = requestItems[requestId];
+
+  const {user, group_id: groupId, created_at: createdAt} = currentRequest || {};
+
   const {
     avatar,
     fullname: fullName,
@@ -41,7 +44,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
     country_code: countryCode,
     phone,
     latest_work: latestWork,
-  } = user;
+  } = user || {};
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
@@ -59,10 +62,37 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
     );
   };
 
+  const onPressUndo = () => {
+    timeoutRef?.current && clearTimeout(timeoutRef?.current);
+    dispatch(clearToastMessage());
+    dispatch(groupsActions.undoDeclineMemberRequests());
+  };
+
   const onPressDecline = () => {
-    dispatch(
-      groupsActions.declineSingleMemberRequest({groupId, requestId, fullName}),
-    );
+    dispatch(groupsActions.storeUndoData({requestIds, requestItems}));
+    dispatch(groupsActions.removeSingleMemberRequest(requestId));
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+        rightText: 'Undo',
+        onPressRight: onPressUndo,
+      },
+      duration: 4000,
+      toastType: 'normal',
+    };
+    dispatch(showHideToastMessage(toastMessage));
+
+    timeoutRef.current = setTimeout(() => {
+      dispatch(
+        groupsActions.declineSingleMemberRequest({
+          groupId,
+          requestId,
+        }),
+      );
+    }, 4500);
   };
 
   const renderItem = ({

@@ -3,7 +3,6 @@ import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
-  IGetMemberRequests,
   IGroupAddMembers,
   IGroupDetailEdit,
   IGroupGetJoinableMembers,
@@ -636,7 +635,7 @@ function* getMemberRequests({
   payload,
 }: {
   type: string;
-  payload: IGetMemberRequests;
+  payload: {groupId: number; params?: any};
 }) {
   try {
     const {groups} = yield select();
@@ -739,21 +738,11 @@ function* declineSingleMemberRequest({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; requestId: number; fullName: string};
+  payload: {groupId: number; requestId: number};
 }) {
   try {
-    const {groupId, requestId, fullName} = payload;
+    const {groupId, requestId} = payload;
     yield groupsDataHelper.declineSingleMemberRequest(groupId, requestId);
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-      toastType: 'normal',
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log('declineSingleMemberRequest: ', err);
     yield showError(err);

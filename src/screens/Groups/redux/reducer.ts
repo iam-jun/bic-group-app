@@ -54,6 +54,11 @@ const initGroupsState = {
     items: {} as IObject<IJoiningMember>,
     canLoadMore: true,
   },
+  // temporarily stores data for `undo` action
+  undoData: {
+    data: [],
+    items: {} as IObject<IJoiningMember>,
+  },
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
@@ -291,16 +296,15 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         },
       };
     case groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST:
-    case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST: {
-      const requestItems = pendingMemberRequests.items;
-      const requestId = payload.requestId;
-      delete requestItems[requestId];
+    case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST: {
+      const requestItems = {...pendingMemberRequests.items};
+      delete requestItems[payload];
       return {
         ...state,
         pendingMemberRequests: {
           ...pendingMemberRequests,
           data: pendingMemberRequests.data.filter(
-            (item: number) => item !== requestId,
+            (item: number) => item !== payload,
           ),
           items: requestItems,
         },
@@ -311,6 +315,30 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         pendingMemberRequests: initGroupsState.pendingMemberRequests,
+      };
+    case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST:
+    case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
+      return {
+        ...state,
+        undoData: initGroupsState.undoData,
+      };
+    case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: {
+          ...state.pendingMemberRequests,
+          data: state.undoData.data,
+          items: state.undoData.items,
+        },
+        undoData: initGroupsState.undoData,
+      };
+    case groupsTypes.STORE_UNDO_DATA:
+      return {
+        ...state,
+        undoData: {
+          data: payload.requestIds,
+          items: payload.requestItems,
+        },
       };
 
     default:
