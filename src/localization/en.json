@@ -36,6 +36,7 @@
     "btn_confirm": "Confirm",
     "btn_create": "Create",
     "btn_join": "Join",
+    "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
     "text_clear": "Clear",
@@ -709,7 +710,10 @@
     "text_declined_user": "Declined user",
     "text_approved_user": "Approved user",
     "text_approved_all": "Approved {0} user(s)",
-    "text_declined_all": "Declined {0} user(s)"
+    "text_declined_all": "Declined {0} user(s)",
+    "text_request_join_group": "Requested to join group",
+    "text_cancel_join_group": "Cancelled the member request to group",
+    "text_approved_member_group": "You have been approved to be a member of this group"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

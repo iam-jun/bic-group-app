@@ -76,6 +76,8 @@ const _PostDetailContent = (props: any) => {
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
   const styles = useMemo(() => createStyle(theme, isLaptop), [theme, isLaptop]);
 
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
@@ -106,9 +108,9 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
-    if (id && userId && streamClient) {
+    if (id && userId && streamClient && isInternetReachable) {
       getPostDetail((loading, success) => {
-        if (!loading && !success) {
+        if (!loading && !success && isInternetReachable) {
           if (Platform.OS === 'web') {
             rootNavigation.replace(rootSwitch.notFound);
           } else {
@@ -126,7 +128,7 @@ const _PostDetailContent = (props: any) => {
         }
       });
     }
-  }, [id, userId]);
+  }, [id, userId, isInternetReachable]);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {

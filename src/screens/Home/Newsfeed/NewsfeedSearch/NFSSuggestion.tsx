@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -12,6 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface NFSSuggestionProps {
   onSelectKeyword?: (keyword: string) => void;
@@ -20,11 +21,18 @@ export interface NFSSuggestionProps {
 const NFSSuggestion: FC<NFSSuggestionProps> = ({
   onSelectKeyword,
 }: NFSSuggestionProps) => {
+  const [lossInternet, setLossInternet] = useState(false);
+
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
+  const {data: listRecentKeywords} =
+    useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
   const searchInputRef = useKeySelector(
@@ -34,6 +42,27 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   const ctaText = t(
     'home:newsfeed_search:text_cta_see_result_for_search_text',
   ).replace('%SEARCH_TEXT%', searchText);
+
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (
+        lossInternet &&
+        (!listRecentKeywords || listRecentKeywords?.length === 0)
+      ) {
+        setLossInternet(false);
+        dispatch(
+          homeActions.getRecentSearchKeywords({
+            target: 'post',
+            sort: 'desc',
+            limit: 10,
+            showLoading: true,
+          }),
+        );
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   useEffect(() => {
     //timeout wait animation of header finish to avoid lagging
@@ -80,6 +109,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
           />
         )}
       </View>
+      <KeyboardSpacer iosOnly />
     </ScrollView>
   );
 };

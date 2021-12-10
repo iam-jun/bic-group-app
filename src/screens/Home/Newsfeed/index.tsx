@@ -38,6 +38,7 @@ import {useBaseHook} from '~/hooks';
 import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 
 const Newsfeed = () => {
+  const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
@@ -112,6 +113,17 @@ const Newsfeed = () => {
     });
   }, [homePosts]);
 
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet && homePosts?.length > 0) {
+        setLossInternet(false);
+        getData();
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
+
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
       dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
@@ -123,12 +135,11 @@ const Newsfeed = () => {
   const onSearchText = (text: string, searchInputRef: any) => {
     const searchText = text?.trim?.() || '';
     const payload: IPayloadSetNewsfeedSearch = {searchText};
-    if (searchText) {
-      dispatch(homeActions.setNewsfeedSearch(payload));
-    } else {
+    if (!searchText) {
       payload.isSuggestion = true;
       searchInputRef?.current?.focus?.();
     }
+    dispatch(homeActions.setNewsfeedSearch(payload));
   };
 
   const onFocusSearch = () => {
