@@ -11,9 +11,10 @@ import {
   IGroupSearchPayload,
   IGroupSetAdmin,
   IGroupRemoveAdmin,
-  IGetMemberRequests,
+  IJoiningMember,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
+import {IObject} from '~/interfaces/common';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -208,11 +209,14 @@ const groupsActions = {
     payload,
   }),
 
-  getMemberRequests: (payload: IGetMemberRequests) => ({
+  getMemberRequests: (payload: {groupId: number; params?: any}) => ({
     type: groupsTypes.GET_MEMBER_REQUESTS,
     payload,
   }),
-  setMemberRequests: (payload: any) => ({
+  setMemberRequests: (payload: {
+    requestIds: number[];
+    requestItems: IObject<IJoiningMember>;
+  }) => ({
     type: groupsTypes.SET_MEMBER_REQUESTS,
     payload,
   }),

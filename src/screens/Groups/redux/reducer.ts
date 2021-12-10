@@ -307,7 +307,6 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       };
     }
     case groupsTypes.APPROVE_ALL_MEMBER_REQUESTS:
-    case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
     case groupsTypes.CLEAR_ALL_MEMBER_REQUESTS:
       return {
         ...state,

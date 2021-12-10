@@ -29,11 +29,14 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
     `groups.pendingMemberRequests.items.${requestId}`,
   );
 
-  const {user, group_id: groupId} = currentRequestMember || {};
+  const {
+    user,
+    group_id: groupId,
+    created_at: createdAt,
+  } = currentRequestMember || {};
   const {
     avatar,
     fullname: fullName,
-    updated_at: updatedAt,
     email,
     country_code: countryCode,
     phone,
@@ -92,7 +95,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
           <Text.ButtonBase>{fullName}</Text.ButtonBase>
           <Text.Body color={theme.colors.textSecondary}>
             {`${i18next.t('groups:text_requested_at')} ${formatFullTime(
-              updatedAt,
+              createdAt,
               language,
             )}`}
           </Text.Body>

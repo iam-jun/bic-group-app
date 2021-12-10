@@ -762,22 +762,7 @@ function* declineSingleMemberRequest({
 
 function* declineAllMemberRequests({payload}: {type: string; payload: number}) {
   try {
-    // @ts-ignore
-    const response = yield groupsDataHelper.declineAllMemberRequests(payload);
-    const total = response?.data?.total;
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declined_all')}`.replace(
-        '{0}',
-        `${total}`,
-      ),
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-      toastType: 'normal',
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    yield groupsDataHelper.declineAllMemberRequests(payload);
   } catch (err) {
     console.log('declineAllMemberRequests: ', err);
     yield showError(err);

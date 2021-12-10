@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -14,6 +14,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import {IToastMessage} from '~/interfaces/common';
 
 interface PendingActionAllProps {
   groupId: number;
@@ -25,6 +26,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+  const timeOutRef = useRef<any>();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const totalPendingMembers = useKeySelector(
@@ -88,8 +90,34 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     );
   };
 
+  const onPressUndo = () => {
+    timeOutRef?.current && clearTimeout(timeOutRef?.current);
+    dispatch(clearToastMessage());
+    dispatch(groupsActions.getMemberRequests({groupId}));
+  };
+
   const doDeclineAll = () => {
-    dispatch(groupsActions.declineAllMemberRequests(groupId));
+    dispatch(groupsActions.clearAllMemberRequests());
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_declined_all')}`.replace(
+        '{0}',
+        `${totalPendingMembers}`,
+      ),
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+        rightText: 'Undo',
+        onPressRight: onPressUndo,
+      },
+      duration: 4000,
+      toastType: 'normal',
+    };
+    dispatch(modalActions.showHideToastMessage(toastMessage));
+
+    timeOutRef.current = setTimeout(() => {
+      dispatch(groupsActions.declineAllMemberRequests(groupId));
+    }, 4500);
   };
 
   return (

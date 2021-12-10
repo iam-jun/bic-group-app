@@ -72,11 +72,6 @@ export interface IGroupImageUpload {
   uploadType: IUploadType;
 }
 
-export interface IGetMemberRequests {
-  groupId: number;
-  params?: any;
-}
-
 export interface IGroupGetJoinableMembers {
   groupId: number;
   params?: any;
