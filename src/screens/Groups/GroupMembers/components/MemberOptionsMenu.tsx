@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
@@ -17,8 +17,6 @@ import useAuth from '~/hooks/auth';
 import modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import chatActions from '~/screens/Chat/redux/actions';
 import groupsActions from '../../redux/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 
@@ -60,9 +58,6 @@ const MemberOptionsMenu = ({
       case 'view-profile':
         goToUserProfile(selectedMember);
         break;
-      case 'send-message':
-        goToDirectChat(selectedMember);
-        break;
       case 'set-admin':
         alertSettingAdmin(selectedMember);
         break;
@@ -86,34 +81,6 @@ const MemberOptionsMenu = ({
       rootNavigation.navigate(mainStack.userProfile, {
         userId: selectedMember.id,
       });
-    }
-  };
-
-  const navigateToChatScreen = (roomId: string) => {
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(chatStack.conversation, {
-        roomId: roomId,
-      });
-      return;
-    }
-    rootNavigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: roomId, initial: false},
-    });
-  };
-
-  const goToDirectChat = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
-      const {username, fullname} = selectedMember;
-      if (!!username)
-        dispatch(
-          chatActions.createConversation(
-            // @ts-ignore
-            [{username, name: fullname}],
-            true,
-            navigateToChatScreen,
-          ),
-        );
     }
   };
 

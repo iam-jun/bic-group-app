@@ -2,14 +2,6 @@ export type RootStackParamList = {
   MainStack: {
     initialRouteName: string | undefined;
   };
-  Conversation: {
-    roomId?: string;
-    message_id?: string;
-    initial?: boolean;
-  };
-  ConversationDetail: {
-    roomId?: string;
-  };
   GroupMembers: {
     roomId?: string;
   };
@@ -23,4 +15,4 @@ export type RootStackParamList = {
   };
 };
 
-export type ITabTypes = 'home' | 'groups' | 'chat' | 'notification' | 'menus';
+export type ITabTypes = 'home' | 'groups' | 'notification' | 'menus';

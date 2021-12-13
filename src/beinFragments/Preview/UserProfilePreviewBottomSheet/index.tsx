@@ -13,15 +13,12 @@ import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import speakingLanguages from '~/constants/speakingLanguages';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IObject} from '~/interfaces/common';
 import {IconType} from '~/resources/icons';
 import images from '~/resources/images';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
-import chatActions from '~/screens/Chat/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import modalActions from '~/store/modal/actions';
@@ -43,22 +40,11 @@ const UserProfilePreviewBottomSheet = () => {
   );
   const {isOpen, userId, params, position} = bottomSheetData || {};
 
-  const currentUserId = useUserIdAuth();
-  const myProfileData = useKeySelector(menuKeySelector.myProfile);
-  const {username: currentUsername} = myProfileData || {};
-
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {
-    fullname,
-    description,
-    avatar,
-    background_img_url,
-    language,
-    phone,
-    username,
-  } = userProfileData || {};
+  const {fullname, description, avatar, background_img_url, language, phone} =
+    userProfileData || {};
 
   const userLanguageList = language?.map(
     // @ts-ignore
@@ -87,32 +73,6 @@ const UserProfilePreviewBottomSheet = () => {
         <ActivityIndicator size="large" />
       </View>
     );
-  };
-
-  const navigateToChatScreen = (roomId: string) => {
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(chatStack.conversation, {
-        roomId: roomId,
-      });
-      return;
-    }
-    rootNavigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: roomId, initial: false},
-    });
-  };
-
-  const navigateToChat = () => {
-    if (!!username)
-      dispatch(
-        chatActions.createConversation(
-          // @ts-ignore
-          [{username, name: fullname}],
-          true,
-          navigateToChatScreen,
-        ),
-      );
-    userPreviewRef?.current?.close?.();
   };
 
   const navigateToUserProfile = () => {
@@ -170,24 +130,8 @@ const UserProfilePreviewBottomSheet = () => {
   };
 
   const renderButtons = () => {
-    const hideButtonChat =
-      userId === currentUserId || userId === currentUsername;
-
     return (
       <View style={styles.buttonsContainer}>
-        {!hideButtonChat && (
-          <Button.Secondary
-            onPress={navigateToChat}
-            style={styles.button}
-            leftIcon={'iconChatPurple'}
-            leftIconProps={{
-              icon: 'iconChatPurple',
-              size: 16,
-              tintColor: 'none',
-            }}>
-            {i18next.t('profile:title_direct_message')}
-          </Button.Secondary>
-        )}
         <Button.Secondary
           onPress={navigateToUserProfile}
           style={styles.button}

@@ -1,7 +1,7 @@
 import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
+import {IGetStreamDispatch, IObject, IToastMessage} from '~/interfaces/common';
 import errorCode from '~/constants/errorCode';
-import {IGetStreamDispatch, IToastMessage} from '~/interfaces/common';
 import {
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
@@ -36,10 +36,8 @@ function* getNotifications({
   try {
     const {userId, streamClient} = payload;
     yield put(notificationsActions.setLoadingNotifications(true));
-    const response = yield notificationsDataHelper.getNotificationList(
-      userId,
-      streamClient,
-    );
+    const response: IObject<any> =
+      yield notificationsDataHelper.getNotificationList(userId, streamClient);
 
     yield put(notificationsActions.setLoadingNotifications(false));
     yield put(
@@ -68,12 +66,13 @@ function* loadNewNotifications({
 }) {
   try {
     const {userId, notiGroupId, streamClient, limit} = payload;
-    const response = yield notificationsDataHelper.loadNewNotification(
-      userId,
-      notiGroupId,
-      limit, // only load a number of notifiations equal number of new notifications
-      streamClient,
-    );
+    const response: IObject<any> =
+      yield notificationsDataHelper.loadNewNotification(
+        userId,
+        notiGroupId,
+        limit, // only load a number of notifiations equal number of new notifications
+        streamClient,
+      );
 
     yield put(
       notificationsActions.addNewNotifications({
@@ -143,7 +142,7 @@ function* markAsSeenAll({
     notificationsDataHelper.markAsSeenAll(userId, streamClient);
 
     // get all notifications from store
-    const notifications = yield select(state =>
+    const notifications: IObject<any> = yield select(state =>
       get(state, notificationSelector.notifications),
     ) || [];
 
@@ -177,7 +176,7 @@ function* markAsRead({
     notificationsDataHelper.markAsRead(userId, activityId, streamClient);
 
     // get all notifications from store
-    const notifications =
+    const notifications: IObject<any> =
       cloneDeep(
         yield select(state => get(state, notificationSelector.notifications)),
       ) || [];
@@ -210,17 +209,18 @@ function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
     const {userId, streamClient} = payload;
 
     // get all notifications from store
-    const notifications = yield select(state =>
+    const notifications: IObject<any> = yield select(state =>
       get(state, notificationSelector.notifications),
     ) || [];
 
     // load more from the last notification
     const bottomNoti = notifications[notifications.length - 1];
-    const response = yield notificationsDataHelper.getNotificationList(
-      userId,
-      streamClient,
-      bottomNoti.id,
-    );
+    const response: IObject<any> =
+      yield notificationsDataHelper.getNotificationList(
+        userId,
+        streamClient,
+        bottomNoti.id,
+      );
 
     // hide loading more spinner, set isLoadingMore = false
     yield put(notificationsActions.setIsLoadingMore(false));
@@ -245,18 +245,14 @@ function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
 // register push token
 function* registerPushToken({payload}: any) {
   try {
-    const {auth, notifications} = yield select();
+    const {notifications} = yield select();
     const requestToken = payload?.token || notifications?.pushToken;
-    const messaging = yield initPushTokenMessage();
-    const newToken = yield messaging().getToken();
+    const messaging: IObject<any> = yield initPushTokenMessage();
+    const newToken: string = yield messaging().getToken();
     if (requestToken === newToken) {
       return;
     }
-    yield makePushTokenRequest(
-      newToken,
-      auth.chat?.accessToken,
-      auth.chat?.userId,
-    );
+    yield makePushTokenRequest(newToken);
     yield put(notificationsActions.savePushToken(newToken));
   } catch (e) {
     console.log('register push token failed', e);

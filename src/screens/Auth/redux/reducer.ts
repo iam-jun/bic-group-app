@@ -5,7 +5,6 @@ import types from './types';
 
 export const initAuthState = {
   user: undefined,
-  chat: undefined,
   feed: undefined,
   loading: false,
   signingInError: '',
@@ -77,10 +76,6 @@ function authReducer(state = initAuthState, action: any = {}) {
       });
     case ActionTypes.SaveAuthTokens:
       return _.merge({}, state, {
-        chat: {
-          userId: action.payload.chatUserId,
-          accessToken: action.payload.chatAccessToken,
-        },
         feed: {
           accessToken: action.payload.feedAccessToken,
           notiSubscribeToken: action.payload.notiSubscribeToken,
