@@ -198,6 +198,9 @@ const createStyle = (theme: ITheme, insets: any) => {
     buttonRight: {
       marginLeft:
         Platform.OS === 'web' ? spacing.margin.extraLarge : spacing.margin.tiny,
+      borderWidth: 1,
+      borderColor: colors.primary1,
+      backgroundColor: colors.primary1,
     },
     buttonRightErr: {
       marginLeft:
