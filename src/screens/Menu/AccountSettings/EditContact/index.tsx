@@ -68,6 +68,7 @@ const EditContact = () => {
           }
           leftIcon={'Phone'}
           rightIcon={'EditAlt'}
+          testID="edit_contact.phone"
           onPress={goToEditPhoneNumber}
         />
         <SettingItem
@@ -79,6 +80,7 @@ const EditContact = () => {
           }
           leftIcon={'LocationPoint'}
           rightIcon={'EditAlt'}
+          testID="edit_contact.location"
           onPress={goToEditLocation}
         />
       </View>

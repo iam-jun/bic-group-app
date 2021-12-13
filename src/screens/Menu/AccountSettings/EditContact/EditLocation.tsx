@@ -65,9 +65,10 @@ const EditLocation = () => {
     );
   };
 
-  const renderItem = ({item}: {item: ILocation}) => {
+  const renderItem = ({item, index}: {item: ILocation; index: number}) => {
     return (
       <PrimaryItem
+        testID={`edit_location.item.${index}`}
         height={34}
         title={`${item.name}, ${item.country}`}
         onPress={() => onSelectLocation(item)}
@@ -84,6 +85,7 @@ const EditLocation = () => {
       />
 
       <SearchInput
+        testID="edit_location.search"
         style={styles.searchInput}
         autoFocus
         placeholder={i18next.t('input:search_location')}

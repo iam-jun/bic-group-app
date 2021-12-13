@@ -148,9 +148,16 @@ const EditPhoneNumber = () => {
     setSearchQuery('');
   };
 
-  const renderItem = ({item}: {item: ICountryCodeList}) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: ICountryCodeList;
+    index: number;
+  }) => {
     return (
       <PrimaryItem
+        testID={`edit_phone_number.country_code.item.${index}`}
         height={34}
         title={`${item.name} (+${item.code})`}
         leftIcon={item.flag}
@@ -170,6 +177,7 @@ const EditPhoneNumber = () => {
           </TouchableOpacity>
           <View style={styles.countryCodeModalList}>
             <SearchInput
+              testID="edit_phone_number.country_code.search"
               onChangeText={onQueryChanged}
               placeholder={i18next.t('input:search_country')}
             />
@@ -193,9 +201,11 @@ const EditPhoneNumber = () => {
       <ButtonWrapper onPress={onOpenCountryCode}>
         <View pointerEvents="none">
           <TextInput
+            testID="edit_phone_number.country_code"
             value={`+${codeValue}`}
             style={styles.countryExtension}
             left={
+              // @ts-ignore
               <TextInputPaper.Icon
                 name={() => (
                   <View style={styles.iconStyle}>
@@ -221,6 +231,7 @@ const EditPhoneNumber = () => {
             <TextInput
               label={i18next.t('settings:title_phone_number')}
               value={value}
+              testID="edit_phone_number.phone"
               onChangeText={(text: string) => {
                 onChange(formatTextRemoveSpace(text));
                 !showSaveButton && setShowSaveButton(true);

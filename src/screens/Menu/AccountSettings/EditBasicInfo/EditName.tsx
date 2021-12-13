@@ -48,6 +48,7 @@ const EditName = ({onChangeName}: EditNameProps) => {
             label={i18next.t('settings:title_edit_name')}
             value={name}
             style={styles.textinput}
+            testID="edit_basic_info.name"
             onChangeText={_onChangeName}
             error={error}
             helperContent={

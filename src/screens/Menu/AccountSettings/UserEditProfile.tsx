@@ -141,7 +141,10 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+          <ButtonWrapper
+            onPress={onEditAvatar}
+            disabled={loadingAvatar}
+            testID="user_edit_profile.avatar.edit">
             <Text.H6
               color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
               useI18n>
@@ -173,7 +176,10 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+          <ButtonWrapper
+            onPress={onEditCover}
+            disabled={loadingCover}
+            testID="user_edit_profile.cover.edit">
             <Text.H6
               color={!loadingCover ? colors.primary7 : colors.textDisabled}
               useI18n>
@@ -205,7 +211,9 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_basic_info
           </Text.H5>
-          <ButtonWrapper onPress={goToEditInfo}>
+          <ButtonWrapper
+            onPress={goToEditInfo}
+            testID="user_edit_profile.basic_info.edit">
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
@@ -265,7 +273,9 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_contact
           </Text.H5>
-          <ButtonWrapper onPress={goToEditContact}>
+          <ButtonWrapper
+            onPress={goToEditContact}
+            testID="user_edit_profile.contact.edit">
             <Text.H6 color={theme.colors.primary7} useI18n>
               settings:title_edit
             </Text.H6>
@@ -304,9 +314,16 @@ const UserEditProfile = () => {
     );
   };
 
-  const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
+  const renderWorkItem = ({
+    item,
+    index,
+  }: {
+    item: IUserWorkExperience;
+    index: number;
+  }) => {
     return (
       <PrimaryItem
+        testID={`user_edit_profile.work.item.${index}`}
         height={null}
         leftIcon={'iconSuitcase'}
         leftIconProps={{
@@ -358,7 +375,10 @@ const UserEditProfile = () => {
         <View style={styles.infoItem}>
           <ListView data={myWorkExperience} renderItem={renderWorkItem} />
         </View>
-        <Button.Secondary onPress={goToAddWork} style={styles.buttonAddWork}>
+        <Button.Secondary
+          onPress={goToAddWork}
+          style={styles.buttonAddWork}
+          testID="user_edit_profile.work.add_work">
           {i18next.t('settings:text_add_work')}
         </Button.Secondary>
         <Divider style={styles.divider} />

@@ -24,6 +24,7 @@ import {primaryItemHeight} from '~/theme/dimension';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
+  testID?: string;
   height?: number | null;
   title?: string | React.ReactNode;
   titleProps?: TextProps;
@@ -50,6 +51,7 @@ export interface PrimaryItemProps {
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
+  testID,
   height = primaryItemHeight,
   title,
   titleProps,
@@ -94,6 +96,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
     <Div className={className}>
       <TouchableOpacity
         style={containerStyle}
+        testID={testID}
         disabled={disabled}
         onPress={onPress}>
         {LeftComponent}
