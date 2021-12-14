@@ -592,7 +592,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = bein_group/Info.plist;
@@ -626,7 +626,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -724,7 +724,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = bein_group/Info.plist;
@@ -844,7 +844,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -960,7 +960,7 @@
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
