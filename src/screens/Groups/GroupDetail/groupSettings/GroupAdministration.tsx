@@ -8,7 +8,6 @@ import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IconType} from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '../../redux/actions';
@@ -23,7 +22,7 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
-  const {groupId, roomId} = params || {};
+  const {groupId} = params || {};
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -57,12 +56,6 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToGeneralInfo = () => {
-    if (roomId) {
-      return rootNavigation.navigate(chatStack.generalInfo, {
-        groupId,
-        roomId,
-      });
-    }
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
   };
 
@@ -108,12 +101,6 @@ const GroupAdministration = (props: any) => {
       {renderItem(
         'ExclamationTriangle',
         'settings:title_reported_posts',
-        displayNewFeature,
-        1,
-      )}
-      {renderItem(
-        'ChatInfo',
-        'settings:title_reported_chats',
         displayNewFeature,
         1,
       )}

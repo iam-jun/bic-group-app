@@ -13,15 +13,7 @@ export const hideBottomTabRoutes = [
   'create-post',
   'create-comment',
   'comment-view',
-  //Chat: Create new chat, Conversation, Conversation info, Conversation member
-  'conversation',
-  'conversation-detail',
-  'create-conversation',
-  'chat-group-members',
   'add-members',
-  'chat-group-admin',
-  'chat-general-info',
-  'chat-edit-group-description',
   //Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'security-and-login',
@@ -59,7 +51,6 @@ export const navigationSetting = {
 export const bottomTabIcons = {
   home: 'iconTabHome',
   groups: 'iconTabGroups',
-  chat: 'iconTabChat',
   notification: 'iconTabNotification',
   menus: 'iconTabMenu',
 };
@@ -67,7 +58,6 @@ export const bottomTabIcons = {
 export const bottomTabIconsFocused = {
   home: 'iconTabHomeBein',
   groups: 'iconTabGroupsBein',
-  chat: 'iconTabChatBein',
   notification: 'iconTabNotificationBein',
   menus: 'iconTabMenuBein',
 };
@@ -79,7 +69,6 @@ export const appScreens = {
   notFound: 'NotFound',
   home: 'home',
   groups: 'groups',
-  chat: 'chat',
   notification: 'notification',
   menus: 'menus',
 
@@ -96,18 +85,6 @@ export const appScreens = {
   postSelectImage: 'post-select-image',
   postSelectAudience: 'post-select-audience',
   draftPost: 'draft-post',
-
-  // Chat
-  chatConversationList: 'conversation-list',
-  chatConversation: 'conversation',
-  chatConversationDetail: 'conversation-detail',
-  chatCreateConversation: 'create-conversation',
-  chatGroupMembers: 'chat-group-members',
-  chatAddMembers: 'add-members',
-  chatEditDescription: 'edit-chat-description',
-  chatGroupAdmin: 'chat-group-admin',
-  chatGroupGeneralInfo: 'chat-general-info',
-  chatGroupEditDescription: 'chat-edit-group-description',
 
   // Group
   groupList: 'group-list',
@@ -202,9 +179,6 @@ export const linkingConfigLaptop = {
               'group-detail': {
                 path: 'groups/:groupId?',
               },
-              conversation: {
-                path: 'chat/:roomId?',
-              },
             },
           },
         },
@@ -292,28 +266,6 @@ export const linkingConfigFull = {
                   },
                   'edit-group-description': {
                     path: 'groups/:groupId/edit/description',
-                  },
-                },
-              },
-              chat: {
-                screens: {
-                  conversation: {
-                    path: 'chat/:roomId?',
-                  },
-                  'conversation-detail': {
-                    path: 'chat/:roomId/info',
-                  },
-                  'create-conversation': {
-                    path: 'chat/create/room',
-                  },
-                  'chat-group-members': {
-                    path: 'chat/:roomId/members',
-                  },
-                  'add-members': {
-                    path: 'chat/:roomId/invite',
-                  },
-                  'edit-chat-description': {
-                    path: 'chat/:roomId/edit/description',
                   },
                 },
               },
@@ -426,33 +378,6 @@ export const linkingConfigFullLaptop = {
               },
               'edit-group-description': {
                 path: 'groups/:groupId/edit/description',
-              },
-              conversation: {
-                path: 'chat/:roomId?',
-              },
-              'conversation-detail': {
-                path: 'chat/:roomId/info',
-              },
-              'create-conversation': {
-                path: 'chat/create/room',
-              },
-              'chat-group-members': {
-                path: 'chat/:roomId/members',
-              },
-              'add-members': {
-                path: 'chat/:roomId/invite',
-              },
-              'edit-chat-description': {
-                path: 'chat/:roomId/edit/description',
-              },
-              'chat-group-admin': {
-                path: 'chat/:roomId/groups/:groupId/admin',
-              },
-              'chat-general-info': {
-                path: 'chat/:roomId/groups/:groupId/general-info',
-              },
-              'chat-edit-group-description': {
-                path: 'chat/:roomId/groups/:groupId/edit/description',
               },
               'not-select-notification': {
                 path: 'notifications',

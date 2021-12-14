@@ -1,13 +1,3 @@
-import {
-  AddMembersToGroup as AddMembersToGroupChat,
-  Conversation,
-  ConversationDetail,
-  CreateConversation,
-  EditConversationDescription,
-  GroupMembers as GroupChatMembers,
-  ReviewConversation,
-  SearchConversation,
-} from '~/screens/Chat';
 import GroupAbout from '~/screens/Groups/GroupAbout';
 import GroupMembers from '~/screens/Groups/GroupMembers';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
@@ -34,7 +24,6 @@ import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import PostSelectImage from '~/screens/Post/PostSelectImage';
-import ChatStack from '../ChatStack';
 import GroupStack from '../GroupStack';
 import HomeStack from '../HomeStack';
 import MenuStack from '../MenuStack';
@@ -46,7 +35,6 @@ import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/Pending
 export const screens = {
   home: HomeStack,
   groups: GroupStack,
-  chat: ChatStack,
   notification: NotiStack,
   menus: MenuStack,
 };
@@ -60,20 +48,6 @@ export const screensWebLaptop = {
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'draft-post': DraftPost,
-
-  //CHAT STACK
-  // 'conversation-list': ConversationsList,
-  conversation: Conversation,
-  'conversation-detail': ConversationDetail,
-  'create-conversation': CreateConversation,
-  'review-conversation': ReviewConversation,
-  'chat-group-members': GroupChatMembers,
-  'add-members': AddMembersToGroupChat,
-  'search-conversation': SearchConversation,
-  'edit-chat-description': EditConversationDescription,
-  'chat-group-admin': GroupAdministration,
-  'chat-general-info': GeneralInformation,
-  'chat-edit-group-description': EditGroupDescription,
 
   //GROUP STACK
   // 'group-list': Groups,

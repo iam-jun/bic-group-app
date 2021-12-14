@@ -8,20 +8,8 @@ const mainTabStack = {
   'post-detail': 'post-detail',
   'draft-post': 'draft-post',
 
-  //CHAT
-  // 'conversation-list': ConversationsList,
-  conversation: 'conversation',
-  'conversation-detail': 'conversation-detail',
-  'create-conversation': 'create-conversation',
-  'review-conversation': 'review-conversation',
-  'edit-chat-description': 'edit-chat-description',
-  'chat-group-admin': 'chat-group-admin',
-  'chat-general-info': 'chat-general-info',
-  'chat-edit-group-description': 'chat-edit-group-description',
-
   //GROUP
   // 'group-list': Groups,
-  'chat-group-members': 'chat-group-members',
   'add-members': 'add-members',
   'group-detail': 'group-detail',
   'group-about': 'group-about',

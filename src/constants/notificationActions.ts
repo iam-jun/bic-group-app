@@ -113,10 +113,4 @@ export default {
       screen: 'post-detail',
     },
   },
-  'new-message': {
-    screen: 'chat',
-    params: {
-      screen: 'conversation',
-    },
-  },
 };

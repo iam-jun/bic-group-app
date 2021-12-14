@@ -13,7 +13,6 @@ import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 import {ActionTypes} from '~/utils';
 import auth from '../screens/Auth/redux/reducer';
-import chat from '../screens/Chat/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
 
 import app from './app/reducer';
@@ -35,7 +34,6 @@ const appReducer = combineReducers({
   app,
   modal,
   auth: persistReducer(authPersistConfig, auth),
-  chat,
   post: postReducer,
   groups: groupsReducer,
   home: homeReducer,
@@ -54,8 +52,6 @@ const rootReducers = (state, action) => {
       if (state?.auth?.user) {
         makeRemovePushTokenRequest(
           state?.auth?.user?.signInUserSession.idToken.jwtToken,
-          state?.auth?.chat?.accessToken,
-          state?.auth?.chat?.userId,
         ).catch(e => console.log('error when call api logout', e));
       }
       initPushTokenMessage()

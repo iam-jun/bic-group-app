@@ -3,7 +3,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
 
@@ -11,14 +10,8 @@ import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
-import chatActions from '~/screens/Chat/redux/actions';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
-import {
-  addOnMessageCallback,
-  closeConnectChat,
-  connectChat,
-} from '~/services/chatSocket';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
@@ -34,22 +27,6 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    connectChat();
-    const removeOnMessageCallback = addOnMessageCallback(
-      'callback-of-list-chat-screen',
-      event => {
-        dispatch(chatActions.handleEvent(JSON.parse(event.data)));
-      },
-    );
-
-    return () => {
-      removeOnMessageCallback();
-      closeConnectChat();
-    };
-  }, []);
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>
