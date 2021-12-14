@@ -148,16 +148,10 @@ const EditPhoneNumber = () => {
     setSearchQuery('');
   };
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: ICountryCodeList;
-    index: number;
-  }) => {
+  const renderItem = ({item}: {item: ICountryCodeList}) => {
     return (
       <PrimaryItem
-        testID={`edit_phone_number.country_code.item.${index}`}
+        testID={'edit_phone_number.country_code.item'}
         height={34}
         title={`${item.name} (+${item.code})`}
         leftIcon={item.flag}

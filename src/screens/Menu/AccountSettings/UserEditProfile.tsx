@@ -314,16 +314,10 @@ const UserEditProfile = () => {
     );
   };
 
-  const renderWorkItem = ({
-    item,
-    index,
-  }: {
-    item: IUserWorkExperience;
-    index: number;
-  }) => {
+  const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
     return (
       <PrimaryItem
-        testID={`user_edit_profile.work.item.${index}`}
+        testID={'user_edit_profile.work.item'}
         height={null}
         leftIcon={'iconSuitcase'}
         leftIconProps={{

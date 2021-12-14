@@ -65,10 +65,10 @@ const EditLocation = () => {
     );
   };
 
-  const renderItem = ({item, index}: {item: ILocation; index: number}) => {
+  const renderItem = ({item}: {item: ILocation}) => {
     return (
       <PrimaryItem
-        testID={`edit_location.item.${index}`}
+        testID={'edit_location.item'}
         height={34}
         title={`${item.name}, ${item.country}`}
         onPress={() => onSelectLocation(item)}
