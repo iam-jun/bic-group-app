@@ -1009,12 +1009,12 @@ function* getPostDetail({
     yield timeOut(500);
     yield put(postActions.addToAllPosts({data: response, handleComment: true}));
     callbackLoading?.(false, true);
-  } catch (e) {
+  } catch (e: any) {
     callbackLoading?.(false, false);
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),
     );
-    if (post) {
+    if (post && e?.results?.length === 0) {
       post.deleted = true;
       yield put(postActions.addToAllPosts({data: post}));
     }

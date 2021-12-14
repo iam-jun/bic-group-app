@@ -7,7 +7,6 @@ import moment from 'moment';
 import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
-import NetInfo from '@react-native-community/netinfo';
 
 import apiConfig, {
   FeedResponseError,
@@ -90,8 +89,9 @@ const refreshFailKickOut = () => {
 };
 
 const handleSystemIssue = () => {
-  const state = Store.store.getState();
+  Store.store.dispatch(noInternetActions.checkInternetReachable());
 
+  const state = Store.store.getState();
   const isInternetReachable: boolean = _.get(
     state,
     'noInternet.isInternetReachable',

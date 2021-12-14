@@ -98,7 +98,7 @@ function* getSearchPosts({
     const {searchResults, totalResult, loadingResult} = state || {};
     const params: IParamGetSearchPost = {content: searchText};
 
-    if (loadingResult) {
+    if (loadingResult || !searchText?.trim?.()) {
       console.log(`\x1b[36m🐣️ saga getSearchPosts loading result\x1b[0m`);
       return;
     }

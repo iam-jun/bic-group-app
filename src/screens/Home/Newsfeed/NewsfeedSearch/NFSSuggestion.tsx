@@ -12,6 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface NFSSuggestionProps {
   onSelectKeyword?: (keyword: string) => void;
@@ -108,6 +109,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
           />
         )}
       </View>
+      <KeyboardSpacer iosOnly />
     </ScrollView>
   );
 };
