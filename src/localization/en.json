@@ -317,6 +317,7 @@
       "label_anyone": "Anyone",
       "label_anytime": "Anytime",
       "label_recent_search": "Recent Search",
+      "text_error_date": "Invalid Date",
       "btn_reset": "Reset",
       "btn_show_results": "Show Results",
       "search_people": "Search people...",
