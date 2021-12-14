@@ -176,6 +176,7 @@ const icons = {
   EditAlt: 'EditAlt',
   TextFields: 'TextFields',
   UserSquare: 'UserSquare',
+  UserTimes: 'UserTimes',
   Calender: 'Calender',
   Globe: 'Globe',
   Lock: 'Lock',
@@ -214,6 +215,7 @@ const icons = {
   ExclamationTriangle: 'ExclamationTriangle',
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
+  SignOutAlt: 'SignOutAlt',
 };
 
 export default icons;

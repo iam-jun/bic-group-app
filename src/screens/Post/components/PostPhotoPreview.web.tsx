@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -37,19 +37,29 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   uploadType,
 }: PostPhotoPreviewProps) => {
   const [galleryVisible, setGalleryVisible] = useState(false);
+  const [calSize, setCalSize] = useState<any>();
 
   const theme = useTheme() as ITheme;
   const {colors, dimension} = theme;
   const styles = createStyle(theme);
 
-  if (data?.length === 0) {
+  useEffect(() => {
+    setCalSize(undefined);
+    const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
+    const isVertical = imageRatio <= 0.5;
+    const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
+    const _width = data?.length === 1 ? dfSize : dfSize;
+    const _height = data?.length === 1 ? dfSize / imageRatio : dfSize;
+    setTimeout(() => {
+      setCalSize({isVertical, dfSize, _width, _height});
+    }, 100);
+  }, [data?.[0]?.height]);
+
+  if (data?.length === 0 || !calSize) {
     return null;
   }
-  const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
-  const isVertical = imageRatio <= 0.5;
-  const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
-  const _width = data?.length === 1 ? dfSize : dfSize;
-  const _height = data?.length === 1 ? dfSize / imageRatio : dfSize;
+
+  const {isVertical, dfSize, _width, _height} = calSize || {};
 
   const containerStyle: any = {
     flexDirection: isVertical ? 'row' : 'column',
@@ -183,7 +193,6 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {},
     image: {borderRadius: 0},

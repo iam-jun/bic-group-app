@@ -38,6 +38,7 @@ import {useBaseHook} from '~/hooks';
 import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 
 const Newsfeed = () => {
+  const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
@@ -55,6 +56,8 @@ const Newsfeed = () => {
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
@@ -94,18 +97,32 @@ const Newsfeed = () => {
   );
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      if (streamClient && (!homePosts || homePosts?.length === 0)) {
-        getData(true);
-      }
-    });
-  }, [streamClient]);
+    if (
+      isInternetReachable &&
+      streamClient &&
+      (!homePosts || homePosts?.length === 0) &&
+      !refreshing
+    ) {
+      getData(true);
+    }
+  }, [streamClient, isInternetReachable, homePosts, refreshing]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       dispatch(postActions.addToAllPosts({data: homePosts}));
     });
   }, [homePosts]);
+
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet && homePosts?.length > 0) {
+        setLossInternet(false);
+        getData();
+      }
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
@@ -116,8 +133,9 @@ const Newsfeed = () => {
   };
 
   const onSearchText = (text: string, searchInputRef: any) => {
-    const payload: IPayloadSetNewsfeedSearch = {searchText: text};
-    if (!text) {
+    const searchText = text?.trim?.() || '';
+    const payload: IPayloadSetNewsfeedSearch = {searchText};
+    if (!searchText) {
       payload.isSuggestion = true;
       searchInputRef?.current?.focus?.();
     }

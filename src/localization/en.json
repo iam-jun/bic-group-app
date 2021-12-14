@@ -36,6 +36,7 @@
     "btn_confirm": "Confirm",
     "btn_create": "Create",
     "btn_join": "Join",
+    "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
     "text_clear": "Clear",
@@ -316,6 +317,7 @@
       "label_anyone": "Anyone",
       "label_anytime": "Anytime",
       "label_recent_search": "Recent Search",
+      "text_error_date": "Invalid Date",
       "btn_reset": "Reset",
       "btn_show_results": "Show Results",
       "search_people": "Search people...",
@@ -534,7 +536,10 @@
       "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     },
     "text_successfully_join_group": "Successfully join group",
-    "title_members": "Members"
+    "title_members": "Members",
+    "text_request_join_group": "Requested to join group",
+    "text_cancel_join_group": "Cancelled the member request to group",
+    "text_approved_member_group": "You have been approved to be a member of this group"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
