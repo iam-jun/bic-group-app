@@ -38,6 +38,8 @@ export interface HeaderProps {
   leftIcon?: IconType;
   leftIconProps?: IconProps;
   icon?: IconType;
+  rightIcon?: IconType;
+  rightIconProps?: IconProps;
   onPressIcon?: () => void;
   buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;
@@ -58,6 +60,7 @@ export interface HeaderProps {
   onSearchText?: (searchText: string, inputRef?: any) => void;
   searchPlaceholder?: string;
   onPressHeader?: () => void;
+  onRightPress?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -72,6 +75,8 @@ const Header: React.FC<HeaderProps> = ({
   leftIcon,
   leftIconProps,
   icon,
+  rightIcon,
+  rightIconProps,
   onPressIcon,
   buttonText,
   onPressButton,
@@ -91,6 +96,7 @@ const Header: React.FC<HeaderProps> = ({
   onSearchText,
   searchPlaceholder,
   onPressHeader,
+  onRightPress,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
@@ -244,6 +250,15 @@ const Header: React.FC<HeaderProps> = ({
             size={20}
             style={{marginRight: spacing?.margin.large}}
             onPress={_onPressSearch}
+          />
+        )}
+        {!!rightIcon && (
+          <Icon
+            size={20}
+            icon={rightIcon}
+            style={{marginRight: spacing?.margin.large}}
+            onPress={onRightPress}
+            {...rightIconProps}
           />
         )}
         <HeaderSearch

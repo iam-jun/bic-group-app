@@ -12,7 +12,7 @@ export const openLink = async (link: string) => {
   if (supported) {
     await Linking.openURL(link);
   } else {
-    console.log('\x1b[31m', '🐣️ openLink : cant open url ', '\x1b[0m');
+    console.log('\x1b[31m', `🐣️ openLink : cant open url ${link}`, '\x1b[0m');
   }
 };
 
