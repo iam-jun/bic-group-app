@@ -100,23 +100,35 @@ const GroupContent = ({
           <View style={styles.buttonContainer}>
             {isMember && (
               <>
-                <Button.Secondary useI18n onPress={onPressChat}>
+                <Button.Secondary
+                  useI18n
+                  onPress={onPressChat}
+                  testID="group_content.chat">
                   chat:title
                 </Button.Secondary>
                 <ViewSpacing width={spacing.margin.base} />
               </>
             )}
-            <Button.Secondary useI18n onPress={onPressAbout}>
+            <Button.Secondary
+              useI18n
+              onPress={onPressAbout}
+              testID="group_content.about">
               settings:title_about
             </Button.Secondary>
             <ViewSpacing width={spacing.margin.base} />
             {(isMember || isPublicGroup) && (
-              <Button.Secondary useI18n onPress={onPressMembers}>
+              <Button.Secondary
+                useI18n
+                onPress={onPressMembers}
+                testID="group_content.members">
                 chat:title_members
               </Button.Secondary>
             )}
             <ViewSpacing width={spacing.margin.base} />
-            <Button.Secondary useI18n onPress={onPressFiles}>
+            <Button.Secondary
+              useI18n
+              onPress={onPressFiles}
+              testID="group_content.files">
               common:text_files
             </Button.Secondary>
           </View>

@@ -43,6 +43,7 @@ export interface PrimaryItemProps {
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: (e: any) => void;
+  menuIconTestID?: string;
   LeftComponent?: React.ReactNode | React.ReactElement;
   RightComponent?: React.ReactNode | React.ReactElement;
   ContentComponent?: React.ReactNode | React.ReactElement;
@@ -71,6 +72,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   onPressCheckbox,
   onPressEdit,
   onPressMenu,
+  menuIconTestID,
   RightComponent,
   ContentComponent,
   className = 'button',
@@ -163,6 +165,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
             style={styles.iconMarginLeft}
             onPress={onPressMenu}
             icon={'EllipsisV'}
+            testID={menuIconTestID}
           />
         )}
         {RightComponent}

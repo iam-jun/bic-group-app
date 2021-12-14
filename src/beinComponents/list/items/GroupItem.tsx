@@ -115,7 +115,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   return (
     <TouchableOpacity
       disabled={!isInternetReachable || disableOnPressItem}
-      onPress={_onPressItem}>
+      onPress={_onPressItem}
+      testID="group_item">
       <View style={{flexDirection: 'row'}}>
         {renderUiLevelLines()}
         {renderToggle()}
