@@ -6,6 +6,10 @@ const noInternetActions = {
     payload,
   }),
 
+  checkInternetReachable: () => ({
+    type: types.CHECK_IS_INTERNET_REACHABLE,
+  }),
+
   setSystemIssue: (payload: boolean) => ({
     type: types.SET_SYSTEM_ISSUE,
     payload,

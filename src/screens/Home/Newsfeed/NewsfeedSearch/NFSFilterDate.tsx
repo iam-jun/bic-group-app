@@ -15,6 +15,7 @@ import {formatDateTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
+import moment from 'moment';
 
 export interface NFSFilterDateProps {
   startDate?: string;
@@ -39,6 +40,8 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   const [selectedEndDate, setSelectedEndDate] = useState<any>(
     endDate || new Date(),
   );
+  const [startDateErr, setStartDateErr] = useState(false);
+  const [endDateErr, setEndDateErr] = useState(false);
 
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
@@ -48,21 +51,34 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
+  const isValidDate = (sd: any, ed: any) => {
+    const start = moment(sd);
+    const end = moment(ed);
+    return end > start;
+  };
+
   const onPressApply = () => {
     dismissModalOnPress && dispatch(modalActions.hideModal());
     onSelect?.(selectedStartDate, selectedEndDate);
   };
 
   const onChangeDatePicker = (date?: Date) => {
+    let isValid;
     if (selectingStartDate) {
       setSelectingStartDate(false);
       if (date) {
         setSelectedStartDate(date);
+        isValid = isValidDate(date, selectedEndDate);
+        setStartDateErr(!isValid);
+        setEndDateErr(false);
       }
     } else if (selectedEndDate) {
       setSelectingEndDate(false);
       if (date) {
         setSelectedEndDate(date);
+        isValid = isValidDate(selectedStartDate, date);
+        setEndDateErr(!isValid);
+        setStartDateErr(false);
       }
     }
   };
@@ -106,11 +122,15 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         height={52}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:from')}
+        subTitle={
+          startDateErr ? t('home:newsfeed_search:text_error_date') : undefined
+        }
+        subTitleProps={{variant: 'subtitle', color: colors.error}}
         RightComponent={
           <Button.Secondary
             onPress={() => setSelectingStartDate(true)}
-            style={styles.buttonRight}
-            textColor={colors.primary6}>
+            style={startDateErr ? styles.buttonRightErr : styles.buttonRight}
+            textColor={startDateErr ? colors.error : colors.primary6}>
             {formatDateTime(selectedStartDate, t, language)}
           </Button.Secondary>
         }
@@ -119,11 +139,15 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         height={52}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:to')}
+        subTitle={
+          endDateErr ? t('home:newsfeed_search:text_error_date') : undefined
+        }
+        subTitleProps={{variant: 'subtitle', color: colors.error}}
         RightComponent={
           <Button.Secondary
             onPress={() => setSelectingEndDate(true)}
-            style={styles.buttonRight}
-            textColor={colors.primary6}>
+            style={endDateErr ? styles.buttonRightErr : styles.buttonRight}
+            textColor={endDateErr ? colors.error : colors.primary6}>
             {formatDateTime(selectedEndDate, t, language)}
           </Button.Secondary>
         }
@@ -131,6 +155,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
       <Button.Primary
         onPress={onPressApply}
         style={styles.buttonApply}
+        disabled={startDateErr || endDateErr}
         color={colors.primary6}>
         {t('home:newsfeed_search:apply')}
       </Button.Primary>
@@ -173,6 +198,16 @@ const createStyle = (theme: ITheme, insets: any) => {
     buttonRight: {
       marginLeft:
         Platform.OS === 'web' ? spacing.margin.extraLarge : spacing.margin.tiny,
+      borderWidth: 1,
+      borderColor: colors.primary1,
+      backgroundColor: colors.primary1,
+    },
+    buttonRightErr: {
+      marginLeft:
+        Platform.OS === 'web' ? spacing.margin.extraLarge : spacing.margin.tiny,
+      borderWidth: 1,
+      borderColor: colors.error,
+      backgroundColor: colors.background,
     },
     buttonApply: {
       marginHorizontal: spacing.margin.extraLarge,

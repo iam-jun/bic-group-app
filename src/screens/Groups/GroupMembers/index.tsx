@@ -39,6 +39,10 @@ const _GroupMembers = (props: any) => {
   const [searchText, setSearchText] = useState<string>('');
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
 
+  const [needReloadWhenReconnected, setNeedReloadWhenReconnected] =
+    useState(false);
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -74,6 +78,20 @@ const _GroupMembers = (props: any) => {
       );
     }
   };
+
+  useEffect(() => {
+    if (!isInternetReachable) {
+      setNeedReloadWhenReconnected(true);
+      return;
+    }
+
+    const isDataEmpty = !groupMember?.GROUP_ADMIN || !groupMember?.MEMBER;
+    if (needReloadWhenReconnected && isDataEmpty) {
+      getMembers();
+      getGroupProfile();
+      setNeedReloadWhenReconnected(false);
+    }
+  }, [isInternetReachable]);
 
   useEffect(() => {
     setSearchText('');
