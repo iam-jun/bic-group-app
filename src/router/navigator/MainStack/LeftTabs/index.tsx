@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {DeviceEventEmitter, Platform, StyleSheet, View} from 'react-native';
+import {DeviceEventEmitter, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';

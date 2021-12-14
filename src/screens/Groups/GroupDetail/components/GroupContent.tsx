@@ -1,6 +1,6 @@
 import {StreamClient} from 'getstream';
 import React from 'react';
-import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -12,7 +12,6 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -42,27 +41,12 @@ const GroupContent = ({
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
+  const {id: groupId} = groupData;
   const isPublicGroup = groupData.privacy === groupPrivacy.public;
-  const {rocket_chat_id, id: groupId} = groupData;
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
   const userId = useUserIdAuth();
-  const dimensions = useWindowDimensions();
-  const onPressChat = () => {
-    const isLaptop = dimensions.width >= deviceDimensions.laptop;
-    const isLaptopWeb = Platform.OS === 'web' && isLaptop;
-    if (isLaptopWeb) {
-      rootNavigation.navigate(chatStack.conversation, {
-        roomId: rocket_chat_id,
-      });
-      return;
-    }
-    rootNavigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: rocket_chat_id, initial: false},
-    });
-  };
 
   const onPressAbout = () => {
     rootNavigation.navigate(groupStack.groupAbout, {groupId});
@@ -98,21 +82,13 @@ const GroupContent = ({
         <View style={styles.groupInfo}>
           <GroupInfoHeader />
           <View style={styles.buttonContainer}>
-            {isMember && (
-              <>
-                <Button.Secondary useI18n onPress={onPressChat}>
-                  chat:title
-                </Button.Secondary>
-                <ViewSpacing width={spacing.margin.base} />
-              </>
-            )}
             <Button.Secondary useI18n onPress={onPressAbout}>
               settings:title_about
             </Button.Secondary>
             <ViewSpacing width={spacing.margin.base} />
             {(isMember || isPublicGroup) && (
               <Button.Secondary useI18n onPress={onPressMembers}>
-                chat:title_members
+                groups:title_members
               </Button.Secondary>
             )}
             <ViewSpacing width={spacing.margin.base} />

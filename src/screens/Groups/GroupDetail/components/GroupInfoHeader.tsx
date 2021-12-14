@@ -174,11 +174,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.small,
     },
-    chatButton: {
-      backgroundColor: colors.bgButtonSecondary,
-      padding: spacing.padding.small,
-      borderRadius: 6,
-    },
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
