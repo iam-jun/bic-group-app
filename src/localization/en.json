@@ -106,7 +106,8 @@
     "text_updated_successfully": "updated successfully",
     "text_avatar": "Avatar",
     "text_cover": "Cover",
-    "text_privacy": "Privacy"
+    "text_privacy": "Privacy",
+    "text_admin": "Admin"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -188,7 +189,6 @@
   "tabs": {
     "home": "News feed",
     "groups": "Groups",
-    "chat": "Chat",
     "notification": "Notifications",
     "menus": "Menu"
   },
@@ -448,158 +448,6 @@
       "text_draft_deleted": "Your draft has been deleted"
     }
   },
-  "chat": {
-    "title": "Chat",
-    "title_chat_detail": "Group chat info",
-    "title_room_members": "Group Chat Members",
-    "title_invite_members": "Invite members",
-    "placeholder_search": "Search...",
-    "title_admin": "Admin",
-    "title_members": "Members",
-    "title_add_participants": "Add participants",
-    "title_create_group_chat": "Create group chat",
-    "title_create_quick_chat": "Create Quick Chat",
-    "text_create_quick_chat_name_note": "Note: If you leave the Quick Chat name empty, the system will use names of members by default",
-    "text_me": "me",
-    "title_group_add_member": {
-      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
-      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
-    },
-    "button_add_member": "Add member",
-    "button_remove_member": "Remove member",
-    "title_modal_confirm_add_member": "Add members",
-    "placeholder_input_group_chat_name": "Name your group chat (Optional)",
-    "label_invite": "Invite",
-    "label_notification": "Notifications",
-    "label_mute": "Mute",
-    "label_unmute": "Unmute",
-    "label_pin_chat": "Pin Chat",
-    "label_attachments": "Files",
-    "label_gallery": "Gallery",
-    "label_leaves_group": "Leaves Group Chat",
-    "label_create_group_chat_with": "Create group chat with",
-    "placeholder_users_search": "Search for someone to chat...",
-    "placeholder_members_search": "Search members",
-    "system_message": {
-      "au": "{1} joined the group",
-      "ru": "{1} was removed from the group",
-      "ul": "{1} left the group",
-      "room_changed_description": "{0} has changed the chat description",
-      "room_changed_announcement": "{0} has changed the chat announcement",
-      "room_changed_topic": "{0} has changed the group chat topic to {1}",
-      "room_changed_avatar": "{0} has changed the group avatar",
-      "r": "{0} has changed the group chat name to {1}",
-      "rm": {
-        "me": "You deleted this message.",
-        "other": "This message has been deleted",
-        "list": "deleted a message"
-      }
-    },
-    "message_status": {
-      "sending": "Sending",
-      "sent": "Sent",
-      "received": "Received",
-      "failed": "Failed"
-    },
-    "upload_status": {
-      "sending": "Uploading"
-    },
-    "title_privacy": "Privacy",
-    "title_more_actions": "More actions",
-    "title_files_images_links": "Files & Images & Links",
-    "title_admin_tool": "Admin Tool",
-    "text_block": "Block",
-    "text_feedback": "Feedback this chat",
-    "label_pin_messages": "Pin Messages",
-    "label_permission_management": "Permissions Management",
-    "detail_menu": {
-      "change_avatar": "Change Group Avatar",
-      "change_cover": "Change Cover",
-      "edit_description": "Edit Description",
-      "edit_name": "Edit Group Chat Name"
-    },
-    "label_init_group_message": {
-      "short": "Say hello to your group",
-      "full": "🤗 Say hello to your group!"
-    },
-    "label_init_direct_message": {
-      "short": "Say hello to your friend",
-      "full": "🤗 Say hello to your friend!"
-    },
-    "label_last_message": {
-      "my_attachment": "You sent an attachment",
-      "other_attachment": "{0} sent an attachment",
-      "my_photo": "You sent a photo",
-      "other_photo": "{0} sent a photo"
-    },
-    "label_confirm_send_file": "Send this file?",
-    "label_confirm_send_image": "Send this photo?",
-    "label_confirm_send_video": "Send this video?",
-    "error": {
-      "file": {
-        "over_file_size": "Your file must be less than 10MB"
-      },
-      "existing_direct_chat": "You already have a conversation with this person. Do you want to go to this conversation?"
-    },
-    "text_search_empty": "No people here to chat",
-    "member_menu": {
-      "label_view_profile": "View profile",
-      "label_set_as_admin": "Set as admin",
-      "label_direct_message": "Send message",
-      "label_remove_from_group_chat": "Remove from group chat",
-      "label_leave_group": "Leave Group"
-    },
-    "text_mention_all": "All",
-    "modal_confirm_remove_member": {
-      "title": "Remove Member",
-      "description": "This member will be removed from this chat conversation. Do you want to continue?",
-      "description_group_chat": "This member will be removed from groups: {0}. Do you want to continue?"
-    },
-    "message_option": {
-      "pin": "Pin this message",
-      "edit_message": "Edit message",
-      "create_thread": "Create Thread",
-      "copy": "Copy Text",
-      "reply": "Reply",
-      "get_link": "Copy Message Link",
-      "delete": "Delete Message",
-      "reactions": "View Reactions"
-    },
-    "label_my_message": "You",
-    "label_deleted_message": {
-      "me": "You deleted this message.",
-      "other": "This message has been deleted",
-      "list": "deleted a message"
-    },
-    "label_no_description": "No Description",
-    "label_unread_messages_banner": "Unread messages since",
-    "label_unread_messages": "Unread messages",
-    "text_editing_message": "Editing message",
-    "text_edited": "edited",
-    "label_replied_messsage_attachment": "Tap to view attachment",
-    "title_msg_not_found": "No message found",
-    "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
-    "title_invalid_msg_link": "Invalid message link",
-    "button_go_back_to_chat": "Go back to Chat",
-    "search_result": {
-      "job_title": " at ",
-      "member_count": " & {0} others"
-    },
-    "text_chat_description": "Chat Description",
-    "conversation_options": {
-      "notifications": "Notifications",
-      "pin": "Pin",
-      "mark_as_read": "Mark as Read",
-      "delete_chat": "Delete Chat"
-    },
-    "modal_confirm_leave_chat": {
-      "title": "Leave Group",
-      "description": "Are you sure you want to leave this group chat?",
-      "leave_inner_groups": "You will also leave: {0}.",
-      "button_leave": "Leave Chat",
-      "success_message": "You have left the group chat"
-    }
-  },
   "comment": {
     "placeholder_comment": "Write a comment...",
     "view_previous_comments": "View previous comments...",
@@ -635,6 +483,12 @@
     "search_location": "Search for City/Province/Country"
   },
   "groups": {
+    "group_content": {
+      "btn_chat": "Chat",
+      "btn_about": "About",
+      "btn_members": "Members",
+      "btn_files": "Files"
+    },
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
@@ -688,6 +542,7 @@
       "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     },
     "text_successfully_join_group": "Successfully join group",
+    "title_members": "Members",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
     "text_approved_member_group": "You have been approved to be a member of this group"

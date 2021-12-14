@@ -122,10 +122,6 @@ const ListView: React.FC<ListViewProps> = ({
     let isActive = false;
 
     switch (type) {
-      case 'conversation':
-        itemPath = item['_id'];
-        break;
-
       case 'menu':
         itemPath = item['path'];
         break;

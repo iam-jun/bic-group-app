@@ -38,11 +38,10 @@ import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
 import GroupSectionItem from '../components/GroupSectionItem';
 import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
-  const {groupId: id, roomId} = params || {};
+  const {groupId: id} = params || {};
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
@@ -87,12 +86,6 @@ const GeneralInformation = (props: any) => {
   };
 
   const editGroupDescripton = () => {
-    if (roomId)
-      return rootNavigation.navigate(chatStack.editGroupDescription, {
-        groupId: id,
-        roomId,
-      });
-
     rootNavigation.navigate(groupStack.editGroupDescription, {groupId: id});
   };
 
