@@ -54,11 +54,13 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
         <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
         <ButtonWrapper
           textProps={{color: colors.primary7, variant: 'buttonSmall'}}
-          onPress={onPressShowAll}>
+          onPress={onPressShowAll}
+          testID="selecting_audiences.show">
           {showAll ? 'Show less' : `Show all(${list?.length})`}
         </ButtonWrapper>
       </View>
       <View
+        testID="selecting_audiences"
         style={{
           flexDirection: 'row',
           flexWrap: showAll ? 'wrap' : 'nowrap',

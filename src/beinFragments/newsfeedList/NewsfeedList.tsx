@@ -124,7 +124,13 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (type === ViewTypes.HEADER && HeaderComponent) {
       return HeaderComponent;
     }
-    return <PostView style={itemStyle} postId={data.id} />;
+    return (
+      <PostView
+        style={itemStyle}
+        postId={data.id}
+        testID="newsfeed_list.post.item"
+      />
+    );
   };
 
   const renderPlaceholder = () => {

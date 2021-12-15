@@ -57,6 +57,7 @@ const TagComponent: React.FC<TagProps> = ({
 
   return (
     <TouchableOpacity
+      testID="tag.item"
       disabled={disabled}
       style={StyleSheet.flatten([styles.container, style])}
       onPress={_onChangeValue}>
@@ -64,6 +65,7 @@ const TagComponent: React.FC<TagProps> = ({
       <Text style={StyleSheet.flatten([styles.labelText])}>{label}</Text>
       {!disabled && onPressIcon && (
         <Icon
+          testID="tag.icon"
           style={styles.icon}
           icon={icon}
           size={12}

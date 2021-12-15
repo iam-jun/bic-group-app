@@ -34,13 +34,14 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
     <TouchableOpacity
       disabled={disabled}
       style={[styles.container, {opacity: disabled ? 0.5 : 1}]}
-      onPress={onPressSelectAudience}>
+      onPress={onPressSelectAudience}
+      testID="create_post_chosen_audiences">
       <View style={styles.contentContainer}>
         <Text.BodyS
           color={theme.colors.textSecondary}
           style={styles.textSendTo}>
           {`${t('post:send_to')} `}
-          <Text.H6>{names}</Text.H6>
+          <Text.H6 testID="create_post_chosen_audiences.names">{names}</Text.H6>
         </Text.BodyS>
         {chosenAudiences?.length === 0 && (
           <Button.Secondary
@@ -51,7 +52,8 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
             }}
             borderRadius={theme.spacing?.borderRadius.large}
             style={styles.buttonChoose}
-            onPress={onPressSelectAudience}>
+            onPress={onPressSelectAudience}
+            testID="create_post_chosen_audiences.choose_group">
             post:choose_group_people
           </Button.Secondary>
         )}
