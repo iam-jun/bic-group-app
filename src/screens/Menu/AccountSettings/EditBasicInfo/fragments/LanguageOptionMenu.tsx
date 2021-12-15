@@ -103,6 +103,7 @@ const LanguageOptionMenu = ({
         }
         leftIcon={'CommentsAlt'}
         rightIcon={'EditAlt'}
+        testID="edit_basic_info.language"
         onPress={e => onLanguageEditOpen(e)}
       />
 

@@ -38,6 +38,7 @@ const SecurityLogin = () => {
       <Header title={t('settings:title_security_login')} />
       <ListView
         type="menu"
+        itemTestID="security_login"
         data={securityLoginMenu.password}
         scrollEnabled={false}
         onItemPress={onSecurityLoginPress}

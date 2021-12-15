@@ -100,18 +100,24 @@ const Menu = (): React.ReactElement => {
       case 'component':
         return rootNavigation.navigate(menuStack.componentCollection);
 
-      case 'logOut':
-        dispatch(
-          modalActions.showAlert({
-            title: i18next.t('auth:text_sign_out'),
-            content: 'Do you want to Log Out?',
-            iconName: 'SignOutAlt',
-            cancelBtn: true,
-            onConfirm: () => dispatch(authActions.signOut()),
-            confirmLabel: i18next.t('auth:text_sign_out'),
-          }),
-        );
+      case 'logOut': {
+        const alertPayload = {
+          title: i18next.t('auth:text_sign_out'),
+          content: 'Do you want to Log Out?',
+          iconName: 'SignOutAlt',
+          cancelBtn: true,
+          cancelBtnProps: {
+            testID: 'logout.cancel',
+          },
+          onConfirm: () => dispatch(authActions.signOut()),
+          confirmBtnProps: {
+            testID: 'logout.confirm',
+          },
+          confirmLabel: i18next.t('auth:text_sign_out'),
+        };
+        dispatch(modalActions.showAlert(alertPayload));
         break;
+      }
 
       default:
         dispatch(modalActions.showAlertNewFeature());
@@ -188,6 +194,7 @@ const Menu = (): React.ReactElement => {
         {renderDivider()}
         {renderListView({
           data: logoutMenu,
+          itemTestID: 'menu.logout',
         })}
 
         {__DEV__ && (
