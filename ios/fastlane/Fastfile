@@ -49,6 +49,9 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
 
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
     match(git_private_key: "-----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
 NhAAAAAwEAAQAAAYEAwE/iSE4LgND882LKnAvTijE0GH5s1po6P0h7Y3a+52eMRFvoGRjC
@@ -106,8 +109,14 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
         timeout: 600,
         file: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
     )
-    rocket_chat(
-        message: "🟣 [DEV] 🍎 -iOS- New build version #{appVersionText} can be download at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}",
+    mattermost(
+        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+        text: "@all\n🟣 [DEV] 🍎 -iOS- New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}",
+        username: "bein.bot",
+        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
     )
   end
 
@@ -115,6 +124,9 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
     Dotenv.overload('../../.env.sample', '../../.env.staging')
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
     increment_build_number(build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
     build_app(
@@ -132,14 +144,23 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
-    rocket_chat(
-      message: "🟡 [STG] 🍎 -iOS- New build version #{appVersionText} can be download on TestFlight",
+    mattermost(
+        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+        text: "@all\n🟡 [STG] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}",
+        username: "bein.bot",
+        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
     )
   end
 
     lane :deploy_production do
         Dotenv.overload('../../.env.sample', '../../.env.production')
         appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+        commit = last_git_commit
+        git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
         increment_build_number(build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
         build_app(
             workspace: "#{ENV['SCHEME_NAME']}.xcworkspace",
@@ -156,8 +177,14 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
           ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
           changelog: "Production version #{ENV['APP_VERSION']}",
         )
-        rocket_chat(
-            message: "🟢 [PROD] 🍎 -iOS- New build version #{appVersionText} can be download on TestFlight",
+        mattermost(
+            url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+            text: "@all\n🟢 [PROD] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+                \n > **Git Branch**: #{git_branch}
+                \n **Git Author**: #{commit[:author]}
+                \n **Git Commit**: #{git_mess}",
+            username: "bein.bot",
+            icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
         )
     end
 end
