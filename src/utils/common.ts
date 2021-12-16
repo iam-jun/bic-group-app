@@ -1,5 +1,6 @@
-import {linkRegex} from './../constants/commonRegex';
 import {Linking} from 'react-native';
+import {linkRegex} from '~/constants/commonRegex';
+import {getEnv} from '~/utils/env';
 
 export const generateAvatar = (name?: string, color?: string) => {
   return `https://ui-avatars.com/api/?name=${
@@ -19,6 +20,22 @@ export const openLink = async (link: string) => {
 export function timeOut(ms?: number) {
   return new Promise(resolve => setTimeout(resolve, ms || 100));
 }
+
+export const setChatAuthenticationInfo = (username, token) => {
+  const chatDomain = getEnv('CHAT_DOMAIN');
+  let secureStart = '',
+    secureEnd = '';
+  if (getEnv('SELF_DOMAIN')?.includes('https')) {
+    secureStart = '__Secure-';
+    secureEnd = 'Secure';
+  }
+  if (username) {
+    document.cookie = `${secureStart}bac_n=${username}; Domain=${chatDomain}; SameSite=strict; Path=/login; ${secureEnd}`;
+  }
+  if (token) {
+    document.cookie = `${secureStart}bac_t=${token}; Domain=${chatDomain}; SameSite=strict; Path=/login; ${secureEnd}`;
+  }
+};
 
 export function titleCase(str: string | undefined) {
   if (!str) return str;
