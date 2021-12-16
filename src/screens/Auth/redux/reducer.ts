@@ -1,6 +1,8 @@
 import _ from 'lodash';
+import {Platform} from 'react-native';
 import {forgotPasswordStages} from '~/constants/authConstants';
 import {ActionTypes} from '~/utils';
+import {setChatAuthenticationInfo} from '~/utils/common';
 import types from './types';
 
 export const initAuthState = {
@@ -59,6 +61,9 @@ function authReducer(state = initAuthState, action: any = {}) {
         changePasswordLoading: action.payload,
       };
     case ActionTypes.RefreshTokenSuccessBein:
+      if (Platform.OS === 'web') {
+        setChatAuthenticationInfo(undefined, action.payload.idToken);
+      }
       return _.merge({}, state, {
         user: {
           signInUserSession: {
