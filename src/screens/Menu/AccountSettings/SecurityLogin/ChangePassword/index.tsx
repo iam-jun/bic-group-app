@@ -144,7 +144,7 @@ const ChangePassword = () => {
           control={control}
           render={({field: {onChange, value}}) => (
             <PasswordInput
-              testID="inputPassword"
+              testID="change_password.current_password"
               label={t('auth:input_label_current_password')}
               placeholder={t('auth:input_label_current_password')}
               autoComplete="off"
@@ -174,7 +174,7 @@ const ChangePassword = () => {
           control={control}
           render={({field: {onChange, value}}) => (
             <PasswordInput
-              testID="inputNewPassword"
+              testID="change_password.new_password"
               label={t('auth:input_label_new_password')}
               placeholder={t('auth:input_label_new_password')}
               autoComplete="off"
@@ -205,7 +205,7 @@ const ChangePassword = () => {
           control={control}
           render={({field: {onChange, value}}) => (
             <PasswordInput
-              testID="inputConfirmPassword"
+              testID="change_password.confirm_password"
               label={t('auth:input_label_confirm_new_password')}
               placeholder={t('auth:input_label_confirm_new_password')}
               autoComplete="off"
@@ -237,7 +237,7 @@ const ChangePassword = () => {
         {/*  onPressCheckbox={handleOnCheckLogoutGlobal}*/}
         {/*/>*/}
         <Button.Primary
-          testID="btnChangePasswordSave"
+          testID="change_password.save"
           style={styles.btnSave}
           disabled={disableSaveButton}
           onPress={handleOnSaveChangePassword}>
@@ -245,7 +245,7 @@ const ChangePassword = () => {
         </Button.Primary>
         <View style={styles.forgotPasswordContainer}>
           <TouchableOpacity
-            testID="btnSignInForgotPassword"
+            testID="change_password.forgot_password"
             onPress={handleForgotPassword}>
             <Text.H6 style={styles.forgotPasswordText}>
               {t('auth:btn_forgot_password')}

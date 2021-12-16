@@ -65,6 +65,7 @@ const EditGroupDescription = (props: any) => {
         buttonText={'common:btn_save'}
         buttonProps={{
           useI18n: true,
+          testID: 'edit_group_description.save',
         }}
         onPressButton={onSave}
         hideBackOnLaptop={navigation.canGoBack() ? false : true}
@@ -81,6 +82,7 @@ const EditGroupDescription = (props: any) => {
             onChangeText={_onChangeText}
             maxLength={500}
             multiline
+            testID="edit_group_description.text"
           />
         </View>
         <Text.BodyS color={theme.colors.textSecondary} useI18n>

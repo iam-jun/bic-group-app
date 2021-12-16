@@ -41,6 +41,7 @@ export interface ListViewProps {
   loadMoreColor?: string;
   onEndReachedThreshold?: number;
 
+  itemTestID?: string;
   renderItem?: ({
     item,
     index,
@@ -86,6 +87,7 @@ const ListView: React.FC<ListViewProps> = ({
   onEndReachedThreshold = 0.1,
 
   renderItem,
+  itemTestID,
   renderItemSeparator,
   showItemSeparator = true,
   renderLoading,
@@ -120,10 +122,6 @@ const ListView: React.FC<ListViewProps> = ({
     let isActive = false;
 
     switch (type) {
-      case 'conversation':
-        itemPath = item['_id'];
-        break;
-
       case 'menu':
         itemPath = item['path'];
         break;
@@ -139,7 +137,8 @@ const ListView: React.FC<ListViewProps> = ({
       <TouchableOpacity
         disabled={!isInternetReachable || !onItemPress || item.disableClick}
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
-        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
+        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}
+        testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}>
         <ItemComponent
           {...item}
           disabled={!isInternetReachable}

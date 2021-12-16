@@ -151,6 +151,7 @@ const EditBasicInfo = () => {
         buttonProps={{
           useI18n: true,
           highEmphasis: true,
+          testID: 'edit_basic_info.save',
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
@@ -164,6 +165,7 @@ const EditBasicInfo = () => {
           subtitle={titleCase(genderState) || i18next.t('common:text_not_set')}
           leftIcon={'UserSquare'}
           rightIcon={'EditAlt'}
+          testID="edit_basic_info.gender"
           onPress={e => onGenderEditOpen(e)}
         />
         <SettingItem
@@ -174,6 +176,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'Calender'}
           rightIcon={'EditAlt'}
+          testID="edit_basic_info.birthday"
           onPress={onDateEditOpen}
         />
         <LanguageOptionMenu
@@ -188,6 +191,7 @@ const EditBasicInfo = () => {
           }
           leftIcon={'Heart'}
           rightIcon={'EditAlt'}
+          testID="edit_basic_info.relationship"
           onPress={e => onRelationshipEditOpen(e)}
         />
       </View>

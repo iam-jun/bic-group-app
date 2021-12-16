@@ -27,6 +27,7 @@ export interface SearchInputProps extends TextInputProps {
   placeholder?: string;
   autoFocus?: boolean;
   value?: string;
+  testID?: string;
   onChangeText?: (value: string) => void;
   onFocus?: () => void;
   onSubmitEditing?: () => void;
@@ -39,6 +40,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   placeholder,
   autoFocus,
   value,
+  testID,
   onChangeText,
   onFocus,
   onSubmitEditing,
@@ -84,6 +86,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         />
         <TextInput
           ref={inputRef}
+          testID={testID}
           style={styles.textInput}
           value={text}
           autoFocus={autoFocus}

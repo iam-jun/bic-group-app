@@ -2,7 +2,7 @@ import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth'
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {Platform} from 'react-native';
-import {delay, put, select, takeLatest} from 'redux-saga/effects';
+import {delay, put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
@@ -19,6 +19,7 @@ import {refreshAuthTokens} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
+import {setChatAuthenticationInfo} from '~/utils/common';
 import actions from './actions';
 import types from './types';
 
@@ -161,9 +162,16 @@ function* onSignInSuccess(user: IUserResponse) {
     return;
   }
 
+  // Authentication for Chat
+  if (Platform.OS === 'web') {
+    setChatAuthenticationInfo(
+      userResponse.username,
+      userResponse.signInUserSession.idToken.jwtToken,
+    );
+  }
+
   navigation.replace(rootSwitch.mainStack);
   yield put(actions.setLoading(false));
-
   yield delay(500); // Delay to avoid showing authStack
   yield put(modalActions.hideLoading());
 }

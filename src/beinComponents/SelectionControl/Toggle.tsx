@@ -14,12 +14,14 @@ import {ITheme} from '~/theme/interfaces';
 interface ToggleProps {
   style?: StyleProp<ViewStyle>;
   isChecked?: boolean;
+  testID?: string;
   onActionPress: (action: IAction) => void;
 }
 
 const Toggle: React.FC<ToggleProps> = ({
   style,
   isChecked = false,
+  testID,
   onActionPress,
 }: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
@@ -42,7 +44,7 @@ const Toggle: React.FC<ToggleProps> = ({
   };
 
   return (
-    <TouchableOpacity style={style} onPress={_onChangeValue}>
+    <TouchableOpacity style={style} onPress={_onChangeValue} testID={testID}>
       <View style={styles.outsideRectangle}>
         <View style={styles.insideCircle} />
       </View>

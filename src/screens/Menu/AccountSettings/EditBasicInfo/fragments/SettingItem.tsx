@@ -16,6 +16,7 @@ interface SettingItemProps {
   leftIcon?: IconType;
   privacyIcon?: IconType;
   isTouchDisabled?: boolean;
+  testID?: string;
   onPress?: (...params: any) => void;
 }
 
@@ -26,13 +27,17 @@ const SettingItem = ({
   leftIcon,
   privacyIcon,
   isTouchDisabled,
+  testID,
   onPress,
 }: SettingItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={isTouchDisabled}>
+    <TouchableOpacity
+      testID={testID}
+      onPress={onPress}
+      disabled={isTouchDisabled}>
       <PrimaryItem
         title={i18next.t(title)}
         subTitle={subtitle}

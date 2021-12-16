@@ -1,11 +1,12 @@
 import _ from 'lodash';
+import {Platform} from 'react-native';
 import {forgotPasswordStages} from '~/constants/authConstants';
 import {ActionTypes} from '~/utils';
+import {setChatAuthenticationInfo} from '~/utils/common';
 import types from './types';
 
 export const initAuthState = {
   user: undefined,
-  chat: undefined,
   feed: undefined,
   loading: false,
   signingInError: '',
@@ -60,6 +61,9 @@ function authReducer(state = initAuthState, action: any = {}) {
         changePasswordLoading: action.payload,
       };
     case ActionTypes.RefreshTokenSuccessBein:
+      if (Platform.OS === 'web') {
+        setChatAuthenticationInfo(undefined, action.payload.idToken);
+      }
       return _.merge({}, state, {
         user: {
           signInUserSession: {
@@ -77,10 +81,6 @@ function authReducer(state = initAuthState, action: any = {}) {
       });
     case ActionTypes.SaveAuthTokens:
       return _.merge({}, state, {
-        chat: {
-          userId: action.payload.chatUserId,
-          accessToken: action.payload.chatAccessToken,
-        },
         feed: {
           accessToken: action.payload.feedAccessToken,
           notiSubscribeToken: action.payload.notiSubscribeToken,

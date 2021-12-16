@@ -2,7 +2,6 @@ import ItemUser from './ItemUser';
 import TagItem from './TagItem';
 import CommentItem from './CommentItem';
 import NotificationItem from './NotificationItem';
-import ChatItem from './ChatItem';
 import OptionItem from './OptionItem';
 import MenuItem from './MenuItem';
 import PeopleAudienceItem from './PeopleAudienceItem';
@@ -13,7 +12,6 @@ const items: {[key: string]: any} = {
   tag: TagItem,
   comment: CommentItem,
   notification: NotificationItem,
-  chat: ChatItem,
   option: OptionItem,
   menu: MenuItem,
   people: PeopleAudienceItem,

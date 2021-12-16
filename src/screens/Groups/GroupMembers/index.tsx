@@ -143,6 +143,7 @@ const _GroupMembers = (props: any) => {
     return (
       <PrimaryItem
         showAvatar
+        menuIconTestID={'group_members.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
         title={fullname}
@@ -167,7 +168,10 @@ const _GroupMembers = (props: any) => {
     // only admin or moderator can see this button
     return (
       can_manage_member && (
-        <ButtonWrapper style={styles.inviteButton} onPress={goInviteMembers}>
+        <ButtonWrapper
+          testID="group_members.invite"
+          style={styles.inviteButton}
+          onPress={goInviteMembers}>
           <Icon
             style={styles.iconSmall}
             icon={'iconUserPlus'}
@@ -228,11 +232,12 @@ const _GroupMembers = (props: any) => {
     <ScreenWrapper isFullView backgroundColor={colors.background}>
       <Header
         titleTextProps={{useI18n: true}}
-        title={'chat:title_members'}
+        title={'groups:title_members'}
         hideBackOnLaptop={rootNavigation?.canGoBack ? false : true}
       />
       <View style={styles.searchAndInvite}>
         <SearchInput
+          testID="group_members.search"
           value={searchText}
           style={styles.inputSearch}
           placeholder={i18next.t('groups:text_search_member')}
