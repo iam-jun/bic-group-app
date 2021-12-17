@@ -51,10 +51,12 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   const {spacing} = theme;
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
+    const selected = selectedUsers.find((user: IUser) => user.id === item.id);
+
     return (
       <PrimaryItem
         title={item.name}
-        isChecked={item.selected}
+        isChecked={!!selected}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
         LeftComponent={
           <Avatar.Large
