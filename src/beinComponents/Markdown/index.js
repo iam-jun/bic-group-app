@@ -1,9 +1,19 @@
 import React from 'react';
+import {Dimensions, Platform, TouchableOpacity} from 'react-native';
+import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
+
 import Md from './Md';
 import colors from '~/theme/colors';
-import {mmTheme} from '~/beinComponents/Markdown/utils/config';
+import {mmTheme} from './utils/config';
+
+import Header from '~/beinComponents/Header';
+import modalActions from '~/store/modal/actions';
+
+const DeviceHeight = Dimensions.get('window').height;
 
 const Markdown = ({value, ...rest}) => {
+  const dispatch = useDispatch();
   const theme = mmTheme;
   const baseTextStyle = {
     color: colors.light.colors.textPrimary,
@@ -105,6 +115,34 @@ const Markdown = ({value, ...rest}) => {
     },
   };
 
+  const hideModal = () => dispatch(modalActions.hideModal());
+
+  const showModal = (Component, title = '') => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              flex: 1,
+              backgroundColor: theme.centerChannelBg,
+              maxHeight: DeviceHeight,
+            }}>
+            <Header
+              disableInsetTop={Platform.OS === 'android'}
+              onPressBack={hideModal}
+              title={title}
+            />
+            {Component}
+          </TouchableOpacity>
+        ),
+        useAppBottomSheet: false,
+        props: {webModalStyle: {minHeight: undefined}},
+      }),
+    );
+  };
+
   return (
     <Md
       autolinkedUrlSchemes={[]}
@@ -115,9 +153,13 @@ const Markdown = ({value, ...rest}) => {
       baseTextStyle={baseTextStyle}
       blockStyles={blockStyles}
       textStyles={textStyles}
+      showModal={showModal}
       {...rest}
     />
   );
+};
+Markdown.propTypes = {
+  value: PropTypes.string,
 };
 
 export default Markdown;

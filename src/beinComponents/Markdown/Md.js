@@ -58,6 +58,7 @@ export default class Md extends PureComponent {
     disableChannelLink: PropTypes.bool,
     disableAtChannelMentionHighlight: PropTypes.bool,
     disableGallery: PropTypes.bool,
+    showModal: PropTypes.func,
   };
 
   static defaultProps = {
@@ -70,6 +71,7 @@ export default class Md extends PureComponent {
     disableAtChannelMentionHighlight: false,
     disableGallery: false,
     value: '',
+    showModal: () => true,
   };
 
   constructor(props) {
@@ -290,6 +292,7 @@ export default class Md extends PureComponent {
         content={content}
         language={props.language}
         textStyle={this.props.textStyles.codeBlock}
+        showModal={this.props.showModal}
       />
     );
   };

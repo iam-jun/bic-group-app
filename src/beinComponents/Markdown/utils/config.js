@@ -2,6 +2,8 @@ export const CURRENT_SERVER = 'https://team.bein.group';
 
 export const ExperimentalNormalizeMarkdownLinks = false;
 
+export const CODE_FONT_FAMILY = 'JetBrainsMono-Regular';
+
 export const DeepLinkTypes = {
   CHANNEL: 'channel',
   DMCHANNEL: 'dmchannel',

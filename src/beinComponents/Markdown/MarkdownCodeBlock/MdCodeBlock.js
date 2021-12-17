@@ -2,7 +2,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Keyboard, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {
   changeOpacity,
@@ -10,6 +10,7 @@ import {
   makeStyleSheetFromTheme,
   preventDoubleTap,
 } from '../utils/utils';
+import CodeDetail from './CodeDetail';
 
 const MAX_LINES = 5;
 
@@ -23,6 +24,7 @@ export default class MdCodeBlock extends React.PureComponent {
       PropTypes.number,
       PropTypes.array,
     ]),
+    showModal: PropTypes.func,
   };
 
   static defaultProps = {
@@ -30,25 +32,21 @@ export default class MdCodeBlock extends React.PureComponent {
   };
 
   handlePress = preventDoubleTap(() => {
-    // const {language, content} = this.props;
-    // const screen = 'Code';
-    // const passProps = {
-    //   content,
-    // };
-    //
-    // const languageDisplayName = getDisplayNameForLanguage(language);
-    // let title;
-    // if (languageDisplayName) {
-    //   title = `${languageDisplayName} Code`;
-    // } else {
-    //   title = 'Code';
-    // }
-    //
-    // Keyboard.dismiss();
-    // requestAnimationFrame(() => {
-    //   goToScreen(screen, title, passProps);
-    // });
-    console.log(`\x1b[36m🐣️ MarkdownCodeBlock onPressCode\x1b[0m`);
+    const {language, content} = this.props;
+    const languageDisplayName = getDisplayNameForLanguage(language);
+    let title;
+    if (languageDisplayName) {
+      title = `${languageDisplayName} Code`;
+    } else {
+      title = 'Code';
+    }
+
+    Keyboard.dismiss();
+
+    this.props.showModal(
+      <CodeDetail theme={this.props.theme} content={this.props.content} />,
+      title,
+    );
   });
 
   handleLongPress = async () => {

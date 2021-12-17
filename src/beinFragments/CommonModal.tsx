@@ -33,7 +33,12 @@ const CommonModal = () => {
 
   if (Platform.OS !== 'web' && !useAppBottomSheet) {
     return (
-      <Modal visible={isOpen} transparent={true}>
+      <Modal
+        visible={isOpen}
+        transparent={true}
+        onRequestClose={() => {
+          dispatch(modalActions.hideModal());
+        }}>
         <TouchableOpacity
           activeOpacity={1}
           style={StyleSheet.flatten([appModalStyle, styles.appModalContainer])}
