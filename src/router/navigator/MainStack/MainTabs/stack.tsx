@@ -10,7 +10,7 @@ const mainTabStack = {
 
   //GROUP
   // 'group-list': Groups,
-  'add-members': 'add-members',
+  // 'add-members': 'add-members',
   'group-detail': 'group-detail',
   'group-about': 'group-about',
   'group-members': 'group-members',

@@ -488,6 +488,12 @@
     "search_location": "Search for City/Province/Country"
   },
   "groups": {
+    "group_content": {
+      "btn_chat": "Chat",
+      "btn_about": "About",
+      "btn_members": "Members",
+      "btn_files": "Files"
+    },
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",

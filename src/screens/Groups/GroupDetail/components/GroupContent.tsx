@@ -21,6 +21,7 @@ import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePos
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {groupPrivacy} from '~/constants/privacyTypes';
+import {showAlertNewFeature} from '~/store/modal/actions';
 
 const GroupContent = ({
   getGroupPosts,
@@ -47,6 +48,10 @@ const GroupContent = ({
     groupsKeySelector.refreshingGroupPosts,
   );
   const userId = useUserIdAuth();
+
+  const onPressChat = () => {
+    dispatch(showAlertNewFeature());
+  };
 
   const onPressAbout = () => {
     rootNavigation.navigate(groupStack.groupAbout, {groupId});
@@ -82,18 +87,38 @@ const GroupContent = ({
         <View style={styles.groupInfo}>
           <GroupInfoHeader />
           <View style={styles.buttonContainer}>
-            <Button.Secondary useI18n onPress={onPressAbout}>
-              settings:title_about
+            {isMember && (
+              <>
+                <Button.Secondary
+                  useI18n
+                  onPress={onPressChat}
+                  testID="group_content.chat">
+                  groups:group_content:btn_chat
+                </Button.Secondary>
+                <ViewSpacing width={spacing.margin.base} />
+              </>
+            )}
+            <Button.Secondary
+              useI18n
+              onPress={onPressAbout}
+              testID="group_content.about">
+              groups:group_content:btn_about
             </Button.Secondary>
             <ViewSpacing width={spacing.margin.base} />
             {(isMember || isPublicGroup) && (
-              <Button.Secondary useI18n onPress={onPressMembers}>
-                groups:title_members
+              <Button.Secondary
+                useI18n
+                onPress={onPressMembers}
+                testID="group_content.members">
+                groups:group_content:btn_members
               </Button.Secondary>
             )}
             <ViewSpacing width={spacing.margin.base} />
-            <Button.Secondary useI18n onPress={onPressFiles}>
-              common:text_files
+            <Button.Secondary
+              useI18n
+              onPress={onPressFiles}
+              testID="group_content.files">
+              groups:group_content:btn_files
             </Button.Secondary>
           </View>
         </View>
