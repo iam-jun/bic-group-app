@@ -358,7 +358,11 @@ export default class Md extends PureComponent {
   };
 
   renderTable = ({children, numColumns}) => {
-    return <MarkdownTable numColumns={numColumns}>{children}</MarkdownTable>;
+    return (
+      <MarkdownTable showModal={this.props.showModal} numColumns={numColumns}>
+        {children}
+      </MarkdownTable>
+    );
   };
 
   renderTableRow = args => {

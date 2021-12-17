@@ -21,15 +21,17 @@ import {
 
 // import {DeviceTypes} from '@constants';
 import Icon from '~/beinComponents/Icon';
+import TableDetail from '~/beinComponents/Markdown/MarkdownTable/TableDetail';
 
 const MAX_HEIGHT = 300;
-const MAX_PREVIEW_COLUMNS = 99;
+const MAX_PREVIEW_COLUMNS = 5;
 
 export default class MdTable extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
     numColumns: PropTypes.number.isRequired,
     theme: PropTypes.object.isRequired,
+    showModal: PropTypes.func,
   };
 
   constructor(props) {
@@ -72,20 +74,14 @@ export default class MdTable extends React.PureComponent {
   };
 
   handlePress = preventDoubleTap(() => {
-    // const {intl} = this.context;
-    // const screen = 'Table';
-    // const title = intl.formatMessage({
-    //   id: 'mobile.routes.table',
-    //   defaultMessage: 'Table',
-    // });
-    // const passProps = {
-    //   renderRows: this.renderRows,
-    //   tableWidth: this.getTableWidth(true),
-    //   renderAsFlex: this.shouldRenderAsFlex(true),
-    // };
-    //
-    // goToScreen(screen, title, passProps);
-    console.log(`\x1b[36m🐣️ MarkdownTable handlePress\x1b[0m`);
+    this.props.showModal(
+      <TableDetail
+        renderRows={this.renderRows}
+        tableWidth={this.getTableWidth(true)}
+        renderAsFlex={this.shouldRenderAsFlex(true)}
+      />,
+      'Table',
+    );
   });
 
   handleContainerLayout = e => {
@@ -196,7 +192,11 @@ export default class MdTable extends React.PureComponent {
       isFirstRow: true,
     });
 
-    return <View style={tableStyle}>{rows}</View>;
+    return (
+      <TouchableOpacity activeOpacity={1} style={tableStyle}>
+        {rows}
+      </TouchableOpacity>
+    );
   };
 
   render() {
@@ -257,24 +257,22 @@ export default class MdTable extends React.PureComponent {
     }
 
     let expandButton = null;
-    //todo expand detail screen
 
-    // if (expandButtonOffset > 0) {
-    //   expandButton = (
-    //     <TouchableOpacity
-    //       activeOpacity={1}
-    //       type="opacity"
-    //       onPress={this.handlePress}
-    //       style={[style.expandButton, {left: expandButtonOffset}]}
-    //       testID="markdown_table.expand.button">
-    //       <View style={[style.iconContainer, {width: this.getTableWidth()}]}>
-    //         <View style={style.iconButton}>
-    //           <Icon icon={'ExpandArrows'} style={style.icon} />
-    //         </View>
-    //       </View>
-    //     </TouchableOpacity>
-    //   );
-    // }
+    if (expandButtonOffset > 0) {
+      expandButton = (
+        <TouchableOpacity
+          type="opacity"
+          onPress={this.handlePress}
+          style={[style.expandButton, {left: expandButtonOffset}]}
+          testID="markdown_table.expand.button">
+          <View style={[style.iconContainer, {width: this.getTableWidth()}]}>
+            <View style={style.iconButton}>
+              <Icon icon={'ExpandArrows'} style={style.icon} />
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
 
     return (
       <TouchableOpacity
