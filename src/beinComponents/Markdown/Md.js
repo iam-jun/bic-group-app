@@ -5,9 +5,6 @@ import React, {PureComponent} from 'react';
 import {Platform, View, Text} from 'react-native';
 
 // import AtMention from '@components/at_mention';
-// import Emoji from '@components/emoji';
-// import FormattedText from '@components/formatted_text';
-// import Hashtag from '@components/markdown/hashtag';
 
 import {
   blendColors,
@@ -30,6 +27,7 @@ import {
   pullOutImages,
 } from './utils/transform';
 import {getScheme} from './utils/utils';
+import NodeEmoji from 'node-emoji';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -230,14 +228,11 @@ export default class Md extends PureComponent {
   };
 
   renderEmoji = ({context, emojiName, literal}) => {
+    // Just render unicode emoji, image custom emoji need a story
     return (
-      // <Emoji
-      //   emojiName={emojiName}
-      //   literal={literal}
-      //   testID="markdown_emoji"
-      //   textStyle={this.computeTextStyle(this.props.baseTextStyle, context)}
-      // />
-      <Text>{context}A emoji</Text>
+      <Text style={this.props.baseTextStyle}>
+        {NodeEmoji.find(emojiName || '')?.emoji || literal}
+      </Text>
     );
   };
 
@@ -245,11 +240,6 @@ export default class Md extends PureComponent {
     if (this.props.disableHashtags) {
       return this.renderText({context, literal: `#${hashtag}`});
     }
-
-    return (
-      // <Hashtag hashtag={hashtag} linkStyle={this.props.textStyles.link} />
-      <Text>{context}A hashtag</Text>
-    );
   };
 
   renderParagraph = ({children, first}) => {
@@ -390,11 +380,7 @@ export default class Md extends PureComponent {
     return (
       <Text style={styles}>
         {spacer}
-        {/*<FormattedText*/}
-        {/*  id="post_message_view.edited"*/}
-        {/*  defaultMessage="(edited)"*/}
-        {/*/>*/}
-        <Text>{context}A formatted text edited</Text>
+        <Text style={this.props.baseTextStyle}>{'(edited)'}</Text>
       </Text>
     );
   };
