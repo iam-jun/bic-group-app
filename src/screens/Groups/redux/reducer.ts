@@ -1,7 +1,7 @@
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
-import {IJoiningMember} from '~/interfaces/IGroup';
+import {IGroupDetail, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 
 const initGroupsState = {
@@ -13,7 +13,7 @@ const initGroupsState = {
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
-  },
+  } as IGroupDetail,
   groupSearch: {
     isShow: false,
     loading: false,
@@ -56,6 +56,7 @@ const initGroupsState = {
   },
   // temporarily stores data for `undo` action
   undoData: {
+    total: 0,
     data: [],
     items: {} as IObject<IJoiningMember>,
   },
@@ -301,6 +302,10 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       delete requestItems[payload];
       return {
         ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          total_pending_members: state.groupDetail.total_pending_members - 1,
+        },
         pendingMemberRequests: {
           ...pendingMemberRequests,
           data: pendingMemberRequests.data.filter(
@@ -314,6 +319,10 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.CLEAR_ALL_MEMBER_REQUESTS:
       return {
         ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          total_pending_members: 0,
+        },
         pendingMemberRequests: initGroupsState.pendingMemberRequests,
       };
     case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST:
@@ -325,10 +334,14 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
       return {
         ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          total_pending_members: state.undoData.total,
+        },
         pendingMemberRequests: {
           ...state.pendingMemberRequests,
-          data: state.undoData.data,
-          items: state.undoData.items,
+          data: [...state.undoData.data],
+          items: {...state.undoData.items},
         },
         undoData: initGroupsState.undoData,
       };
@@ -336,8 +349,9 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         undoData: {
-          data: payload.requestIds,
-          items: payload.requestItems,
+          total: state.groupDetail.total_pending_members,
+          data: [...pendingMemberRequests.data],
+          items: {...pendingMemberRequests.items},
         },
       };
 

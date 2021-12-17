@@ -257,12 +257,8 @@ const groupsActions = {
     type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
     payload,
   }),
-  storeUndoData: (payload: {
-    requestIds: number[];
-    requestItems: IObject<IJoiningMember>;
-  }) => ({
+  storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
-    payload,
   }),
 };
 

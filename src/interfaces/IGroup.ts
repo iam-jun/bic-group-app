@@ -1,6 +1,6 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
 import {StreamClient} from 'getstream';
-import {IFilePicked} from './common';
+import {IFilePicked, IObject} from './common';
 import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IGroup {
@@ -57,6 +57,7 @@ export interface IGroupDetail {
   can_manage_member: boolean;
   can_setting: boolean;
   join_status: number;
+  total_pending_members: number;
 }
 
 export interface IPayloadGetGroupPost {
@@ -121,10 +122,8 @@ export interface IGroupMemberRole {
 
 export interface IJoiningMember {
   id: number;
-  group_id: number;
   user_id: number;
-  status: 'waiting' | 'approved' | 'rejected' | 'canceled';
+  group_id: number;
   created_at: string;
-  updated_at: string;
-  user: any;
+  user: IObject<any>;
 }

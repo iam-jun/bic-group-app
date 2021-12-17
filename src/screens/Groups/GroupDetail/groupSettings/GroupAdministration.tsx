@@ -29,7 +29,7 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
-  const total_pending_members = useKeySelector(
+  const totalPendingMembers = useKeySelector(
     groupsKeySelector.groupDetail.total_pending_members,
   );
 
@@ -90,7 +90,7 @@ const GroupAdministration = (props: any) => {
         'UserExclamation',
         'settings:title_pending_members',
         goToPendingMembers,
-        total_pending_members,
+        totalPendingMembers,
       )}
       {renderItem(
         'FileExclamationAlt',

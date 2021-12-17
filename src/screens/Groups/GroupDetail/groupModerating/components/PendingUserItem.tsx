@@ -31,7 +31,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
   const pendingMemberRequests = useKeySelector(
     groupsKeySelector.pendingMemberRequests,
   );
-  const {data: requestIds, items: requestItems} = pendingMemberRequests;
+  const {items: requestItems} = pendingMemberRequests;
 
   const currentRequest = requestItems[requestId];
 
@@ -69,7 +69,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
   };
 
   const onPressDecline = () => {
-    dispatch(groupsActions.storeUndoData({requestIds, requestItems}));
+    dispatch(groupsActions.storeUndoData());
     dispatch(groupsActions.removeSingleMemberRequest(requestId));
 
     const toastMessage: IToastMessage = {

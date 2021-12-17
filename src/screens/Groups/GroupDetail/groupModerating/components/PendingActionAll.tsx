@@ -32,10 +32,6 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const totalPendingMembers = useKeySelector(
     groupsKeySelector.groupDetail.total_pending_members,
   );
-  const pendingMemberRequests = useKeySelector(
-    groupsKeySelector.pendingMemberRequests,
-  );
-  const {data: requestIds, items: requestItems} = pendingMemberRequests;
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
@@ -101,7 +97,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   };
 
   const doDeclineAll = () => {
-    dispatch(groupsActions.storeUndoData({requestIds, requestItems}));
+    dispatch(groupsActions.storeUndoData());
     dispatch(groupsActions.clearAllMemberRequests());
 
     const toastMessage: IToastMessage = {
