@@ -2,6 +2,10 @@ default_platform(:ios)
 fastlane_require "dotenv"
 
 platform :ios do
+  before_all do
+    setup_circle_ci
+  end
+
   lane :setup do
     match(git_private_key: "-----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
@@ -187,4 +191,105 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
         )
     end
+
+    lane :deploy_staging_ci do
+          Dotenv.overload('../../.env.sample', '../../.env.staging')
+
+          app_store_connect_api_key
+
+          match(
+            type: "appstore",
+            app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
+            git_url: "git@bitbucket.org:nhamchanvi/certificates.git",
+            storage_mode: "git",
+            team_id: "44S5N8GAPS",
+            team_name: "UFUTURE CORPORATION",
+            readonly: false,
+            force: true,
+            # profile_name: "match AppStore com.evol.bein.group.staging",
+            verbose: true,
+    )
+
+          appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+          commit = last_git_commit
+          git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+          increment_build_number(build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
+          build_app(
+            workspace: "#{ENV['SCHEME_NAME']}.xcworkspace",
+            scheme: "#{ENV['SCHEME_NAME_IOS']}",
+            configuration: "ReleaseStaging",
+            output_directory:"./fastlane/staging/",
+            output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+            export_method: "app-store",
+            silent: true,
+            clean: true,
+          )
+          upload_to_testflight(
+            app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
+            ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
+            changelog: "Staging version #{ENV['APP_VERSION']}",
+          )
+          mattermost(
+              url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+              text: "@all\n🟡 [STG] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+                  \n > **Git Branch**: #{git_branch}
+                  \n **Git Author**: #{commit[:author]}
+                  \n **Git Commit**: #{git_mess}",
+              username: "bein.bot",
+              icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
+          )
+        end
+
+          lane :deploy_production_ci do
+              Dotenv.overload('../../.env.sample', '../../.env.production')
+
+              app_store_connect_api_key
+
+              match(
+                type: "appstore",
+                app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
+                git_url: "git@bitbucket.org:nhamchanvi/certificates.git",
+
+                storage_mode: "git",
+                team_id: "44S5N8GAPS",
+                team_name: "UFUTURE CORPORATION",
+                readonly: false,
+                force: true,
+                # profile_name: "match AppStore com.evol.bein.group.staging",
+                verbose: true,
+    )
+
+
+              appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+
+              commit = last_git_commit
+              git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+              increment_build_number(build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}") + 1, xcodeproj: "./#{ENV['SCHEME_NAME']}.xcodeproj")
+              build_app(
+                  workspace: "#{ENV['SCHEME_NAME']}.xcworkspace",
+                  scheme: "#{ENV['SCHEME_NAME_IOS']}",
+                  configuration: "Release",
+                  output_directory:"./fastlane/production/",
+                  output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+                  export_method: "app-store",
+                  silent: true,
+                  clean: true,
+              )
+              upload_to_testflight(
+                app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+                ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
+                changelog: "Production version #{ENV['APP_VERSION']}",
+              )
+              mattermost(
+                  url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+                  text: "@all\n🟢 [PROD] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+                      \n > **Git Branch**: #{git_branch}
+                      \n **Git Author**: #{commit[:author]}
+                      \n **Git Commit**: #{git_mess}",
+                  username: "bein.bot",
+                  icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
+              )
+  end
 end
