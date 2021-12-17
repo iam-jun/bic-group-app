@@ -208,45 +208,6 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             force: true,
             # profile_name: "match AppStore com.evol.bein.group.staging",
             verbose: true,
-            git_private_key: "-----BEGIN OPENSSH PRIVATE KEY-----
-    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
-    -----END OPENSSH PRIVATE KEY-----
-    ",
     )
 
           appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
@@ -298,45 +259,6 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
                 force: true,
                 # profile_name: "match AppStore com.evol.bein.group.staging",
                 verbose: true,
-                git_private_key: "-----BEGIN OPENSSH PRIVATE KEY-----
-    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
-    NhAAAAAwEAAQAAAYEAo5iQxIc6DF8/qi+6CFutUx5PabmzPz4jxP9j3liiJyOOWE83vYlq
-    G9u79LHkQeSh8fZEqiLFMSYoOGRZOc1KN1rh07/WooLlr5hmfWG+oWP/Xzh1otIMi7ckjk
-    wfMmNuFZj0wkbbsJAF9XbW7Cy2E1WdmRDJSM1dFizG+lAHEUyYbv7edW5FXEetqcdNOI5I
-    yPVTKMvM/PaoawoJx8sbsF4fLyqyLEHJwTsCndDqhqHapovRLAC27fpnZWAESrLbZy6GpB
-    6MbEtib2TVpzBOLqRjj5nybBIK6/Elw6LNHZ6+srpY0zUF4P+oo/OT7kH+dY5tc1uPb7C4
-    RRhWcbKfjs3va7pKpU5bexZKo+eU12yc4tvvNeWCkBmRf7EkGxYV3JrD/zJrUAD4X6N+f3
-    heVAlSamdQbz33BeoVAAfz4CA0dBKWqEEHBUZTw4L71xg5GcPC/qkcnitKwJOWRYBPtpVK
-    rgS/Tp8XDxgAA82RZSP5lUsrBQhVOI64/JIFqXqNAAAFiBKh6jwSoeo8AAAAB3NzaC1yc2
-    EAAAGBAKOYkMSHOgxfP6ovughbrVMeT2m5sz8+I8T/Y95YoicjjlhPN72Jahvbu/Sx5EHk
-    ofH2RKoixTEmKDhkWTnNSjda4dO/1qKC5a+YZn1hvqFj/184daLSDIu3JI5MHzJjbhWY9M
-    JG27CQBfV21uwsthNVnZkQyUjNXRYsxvpQBxFMmG7+3nVuRVxHranHTTiOSMj1UyjLzPz2
-    qGsKCcfLG7BeHy8qsixBycE7Ap3Q6oah2qaL0SwAtu36Z2VgBEqy22cuhqQejGxLYm9k1a
-    cwTi6kY4+Z8mwSCuvxJcOizR2evrK6WNM1BeD/qKPzk+5B/nWObXNbj2+wuEUYVnGyn47N
-    72u6SqVOW3sWSqPnlNdsnOLb7zXlgpAZkX+xJBsWFdyaw/8ya1AA+F+jfn94XlQJUmpnUG
-    899wXqFQAH8+AgNHQSlqhBBwVGU8OC+9cYORnDwv6pHJ4rSsCTlkWAT7aVSq4Ev06fFw8Y
-    AAPNkWUj+ZVLKwUIVTiOuPySBal6jQAAAAMBAAEAAAGBAIeHO99kO8XGHsMJuO91q5hhUt
-    6+le19uDpabUzlVqhf/2vPbNkbfwlHN2XW/cdM9pCyOV5NYdl+x/E3yOdm1+YV52H52oFV
-    OZ0H/1g94qRnaEdlSacypmwUtDcifvHKh4di6NoNw7B5EEazRgfwXoKT+fS1gFtMrqJRRC
-    JYrBI7x0ik4nycdt+lDgzJ7II+9bNt8Y+pjs++M/ZBIasf63dn8iOsFmEtu0vWbCt7yN7y
-    NWamDAqNKP7r5D6KleOgWWoClteumy7xrhq/ZOp0mXXk6ltrsHleldxiDiCFwFKDSY3DLz
-    S6v/vmAagEV8IBz3/vahK0jc60nXpwqL2rA14hDrBE6vV6MVPO8BiZZePoFQcB63iJw421
-    cRsa/f//ft0Ln71oO5+X76mincW7wab8SpgLOKx1Hj3G7rHS5muuJE0KW5FiWFjlLapz3M
-    eXt8adaTkp/rkMuWUFmaTIa2145LEIMwdRtfrCXH3JNcGVTrlvIWgi12aoIPt149FjrQAA
-    AMAcHLcj8dZC5/ObeBFaez9AReX32UJSyNxHiA+tTq3JMxqfHnIuhQkLhvqR/oRtZrLQWG
-    u1tKEzH38RFr8P+2YcdYm2emGIOxCjECG54m+hfiIUbire50wsiAX+3swS5HHQc/FZT+71
-    dqjirDRNRif2eqdnWJI9B06SSoRBqARf+xIbsg5bHPkv5dag7B0vlICJ7UyviMpAg22AFf
-    Fer13Tc8vIllxah5SeIOP8Ao51Ot3XDnIWcX5sANVm70PW4nQAAADBAM4CcdtxBXRsCsTO
-    4FrGPYEDaMLn305gYAzInHGv4NB+nelVf4t/nHcuoYiERhjfE9hL5Ec2ddJGjsehC+LYY4
-    AnaFhBBtM2/vYdHeM16uwLqGxJgDg8Xpt5i2n0B/89eTcPv1ZC+QusJjmVefmiQ1tOutrw
-    BWVjFY0v9zEFHvWMYbm9GF+ZaFJzjt6gg9B4syR5jfDBFmXtMFSLTwEslQ++bJ51y/J0wZ
-    yujEO9gyobpKzodxkbz/rf670vaShldwAAAMEAy0tWsh+Ff85rZbMffsFv+VQyZ2KyDKwJ
-    VwvbPkS3tQkGA4h2ZO29icHMxp5ZJL/NewTS5eetkhFq0El8w3JNjfP4YTbepoDuElPote
-    E7j00gxWVBYQWn9q0b9LkEPGlQ5SXwvjD/Dr7jGztuoFZ22P8CzOQmB97zi5dvKkPxMLx/
-    BgcpiOibAC6yqFghOO+sqwQOT9eRpYwYMpjXihoGJryHHRdm+lnFhO5zjmUIx+XF2K4YHg
-    3lgz43Bk8PnTEbAAAADWNoYW52aUB0Z20udm4BAgMEBQ==
-    -----END OPENSSH PRIVATE KEY-----
-    ",
     )
 
 

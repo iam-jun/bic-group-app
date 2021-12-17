@@ -25,7 +25,7 @@ export const setChatAuthenticationInfo = (username: string, expire: number) => {
   const chatDomain = getEnv('CHAT_DOMAIN');
   let secureStart = '',
     secureEnd = '';
-  const expireStr = (new Date(expire * 1000)).toString();
+  const expireStr = new Date(expire * 1000).toString();
   if (getEnv('SELF_DOMAIN')?.includes('https')) {
     secureStart = '__Secure-';
     secureEnd = 'Secure';

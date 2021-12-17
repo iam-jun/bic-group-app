@@ -75,10 +75,10 @@ function authReducer(state = initAuthState, action: any = {}) {
           },
         },
       });
-    case ActionTypes.SaveAuthTokens:{
+    case ActionTypes.SaveAuthTokens: {
       const username = state?.user?.username;
       const exp = state?.user?.signInUserSession?.idToken?.payload?.exp;
-      username && exp && setChatAuthenticationInfo(username, exp)
+      username && exp && setChatAuthenticationInfo(username, exp);
       return _.merge({}, state, {
         feed: {
           accessToken: action.payload.feedAccessToken,
