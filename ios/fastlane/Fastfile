@@ -290,7 +290,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
                 type: "appstore",
                 app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
                 git_url: "git@bitbucket.org:nhamchanvi/certificates.git",
-                
+
                 storage_mode: "git",
                 team_id: "44S5N8GAPS",
                 team_name: "UFUTURE CORPORATION",

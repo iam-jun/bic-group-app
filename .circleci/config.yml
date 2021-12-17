@@ -305,6 +305,13 @@ workflows:
 
   Staging_Web-iOS-Android:
     jobs:
+      - Web-Approval:
+          type: approval
+      - iOS-Approval:
+          type: approval
+      - Android-Approval:
+          type: approval
+
       - web-stg:
           filters:
             branches:
@@ -312,6 +319,9 @@ workflows:
           context:
             - bein-group-stg
             - bein-group-stg-web
+          requires:
+            - Web-Approval
+
       - ios-stg:
           filters:
             branches:
@@ -319,6 +329,9 @@ workflows:
           context:
             - bein-group-stg
             - bein-group-stg-ios
+          requires:
+            - iOS-Approval
+
       - android-stg:
           filters:
             branches:
@@ -326,6 +339,8 @@ workflows:
           context:
             - bein-group-stg
             - bein-group-stg-android
+          requires:
+            - Android-Approval
 
   Production_Web-iOS-Android:
     jobs:

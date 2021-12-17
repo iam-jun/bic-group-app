@@ -21,20 +21,16 @@ export function timeOut(ms?: number) {
   return new Promise(resolve => setTimeout(resolve, ms || 100));
 }
 
-export const setChatAuthenticationInfo = (username, token) => {
+export const setChatAuthenticationInfo = (username: string, expire: number) => {
   const chatDomain = getEnv('CHAT_DOMAIN');
   let secureStart = '',
     secureEnd = '';
+  const expireStr = (new Date(expire * 1000)).toString();
   if (getEnv('SELF_DOMAIN')?.includes('https')) {
     secureStart = '__Secure-';
     secureEnd = 'Secure';
   }
-  if (username) {
-    document.cookie = `${secureStart}bac_n=${username}; Domain=${chatDomain}; SameSite=strict; Path=/login; ${secureEnd}`;
-  }
-  if (token) {
-    document.cookie = `${secureStart}bac_t=${token}; Domain=${chatDomain}; SameSite=strict; Path=/login; ${secureEnd}`;
-  }
+  document.cookie = `${secureStart}ba_u=${username}; Domain=${chatDomain}; Expires=${expireStr}; SameSite=strict; ${secureEnd}`;
 };
 
 export function titleCase(str: string | undefined) {
