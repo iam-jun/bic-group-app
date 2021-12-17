@@ -98,7 +98,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
 
   const doDeclineAll = () => {
     dispatch(groupsActions.storeUndoData());
-    dispatch(groupsActions.clearAllMemberRequests());
+    dispatch(groupsActions.removeAllMemberRequests());
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_all')}`.replace(

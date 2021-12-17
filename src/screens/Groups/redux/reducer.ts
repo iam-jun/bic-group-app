@@ -296,6 +296,11 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           canLoadMore: payload.requestIds.length === appConfig.recordsPerPage,
         },
       };
+    case groupsTypes.RESET_MEMBER_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: initGroupsState.pendingMemberRequests,
+      };
     case groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST:
     case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST: {
       const requestItems = {...pendingMemberRequests.items};
@@ -316,7 +321,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       };
     }
     case groupsTypes.APPROVE_ALL_MEMBER_REQUESTS:
-    case groupsTypes.CLEAR_ALL_MEMBER_REQUESTS:
+    case groupsTypes.REMOVE_ALL_MEMBER_REQUESTS:
       return {
         ...state,
         groupDetail: {
