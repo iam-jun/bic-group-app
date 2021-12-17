@@ -223,7 +223,7 @@ const groupsActions = {
   resetMemberRequests: () => ({
     type: groupsTypes.RESET_MEMBER_REQUESTS,
   }),
-  removeSingleMemberRequest: (payload: number) => ({
+  removeSingleMemberRequest: (payload: {requestId: number}) => ({
     type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
     payload,
   }),

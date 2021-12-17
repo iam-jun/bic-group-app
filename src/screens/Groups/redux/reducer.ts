@@ -314,7 +314,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
         pendingMemberRequests: {
           ...pendingMemberRequests,
           data: pendingMemberRequests.data.filter(
-            (item: number) => item !== payload,
+            (item: number) => item !== payload.requestId,
           ),
           items: requestItems,
         },

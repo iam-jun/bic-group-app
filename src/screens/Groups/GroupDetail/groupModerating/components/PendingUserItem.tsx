@@ -70,7 +70,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
 
   const onPressDecline = () => {
     dispatch(groupsActions.storeUndoData());
-    dispatch(groupsActions.removeSingleMemberRequest(requestId));
+    dispatch(groupsActions.removeSingleMemberRequest({requestId}));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,

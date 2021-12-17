@@ -37,6 +37,7 @@ const PendingMembers = (props: any) => {
 
     return () => {
       dispatch(groupsActions.resetMemberRequests());
+      dispatch(groupsActions.getGroupDetail(groupId));
     };
   }, [groupId]);
 
