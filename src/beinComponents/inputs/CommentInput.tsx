@@ -435,6 +435,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             marginRight: spacing?.margin.small,
           }}>
           <Button
+            testID="comment_input.photo"
             style={styles.iconContainer}
             onPress={_onPressSelectImage}
             disabled={_loading}>
@@ -445,6 +446,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
           <Button
+            testID="comment_input.file"
             style={styles.iconContainer}
             onPress={_onPressFile}
             disabled={_loading}>
@@ -455,6 +457,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             />
           </Button>
           <Button
+            testID="comment_input.sticker"
             style={[styles.iconContainer, isWeb && {marginRight: 0}]}
             onPress={onPressSticker}
             disabled={_loading}>
@@ -544,6 +547,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             }}>
             <Animated.View style={{flex: 1, height: heightAnimated}}>
               <TextInput
+                testID="comment_input"
                 selection={inputSelection}
                 {...props}
                 onContentSizeChange={_onContentSizeChange}
@@ -586,6 +590,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             </Button>
           </Animated.View>
           <Button
+            testID="comment_input.send"
             onPress={_onPressSend}
             disabled={(!text.trim() && !selectedImage) || _loading}>
             {_loading ? (

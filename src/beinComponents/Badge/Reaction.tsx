@@ -69,6 +69,7 @@ const Reaction: React.FC<ReactionProps> = ({
 
   return (
     <TouchableOpacity
+      testID="reaction.item"
       disabled={!isInternetReachable || loading}
       style={[styles.container, style]}
       onPress={_onChangeValue}
@@ -82,7 +83,9 @@ const Reaction: React.FC<ReactionProps> = ({
         <Text.BodySM
           color={isSelected ? colors.primary7 : colors.textPrimary}
           style={styles.text}>
-          <Text.BodySM style={styles.emoji}>{emoji}</Text.BodySM>
+          <Text.BodySM style={styles.emoji} testID={`reaction.${icon}`}>
+            {emoji}
+          </Text.BodySM>
           {` ${value}`}
         </Text.BodySM>
       )}

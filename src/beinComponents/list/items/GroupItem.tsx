@@ -17,6 +17,7 @@ import {generateUniqueId} from '~/utils/generator';
 import {useKeySelector} from '~/hooks/selector';
 
 export interface GroupItemProps extends IParsedGroup {
+  testID?: string;
   uiLevel: number;
   isCollapsing: boolean;
   onPressItem?: (item: GroupItemProps) => void;
@@ -31,6 +32,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     name,
     user_count,
     icon,
+    testID = 'group_item',
 
     childrenUiIds = [],
     isChecked = false,
@@ -116,7 +118,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     <TouchableOpacity
       disabled={!isInternetReachable || disableOnPressItem}
       onPress={_onPressItem}
-      testID="group_item">
+      testID={testID}>
       <View style={{flexDirection: 'row'}}>
         {renderUiLevelLines()}
         {renderToggle()}
