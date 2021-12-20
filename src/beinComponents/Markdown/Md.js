@@ -57,6 +57,7 @@ export default class Md extends PureComponent {
     disableAtChannelMentionHighlight: PropTypes.bool,
     disableGallery: PropTypes.bool,
     showModal: PropTypes.func,
+    onPressAudience: PropTypes.func,
   };
 
   static defaultProps = {
@@ -188,7 +189,7 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderImage = ({linkDestination, reactChildren, context, src}) => {
+  renderImage = ({src}) => {
     //Just render as link because of not have metadata from server
     return (
       <Text testID="markdown_text" style={this.props.baseTextStyle}>
@@ -197,29 +198,18 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderAtMention = ({context, mentionName}) => {
-    if (this.props.disableAtMentions) {
-      return this.renderText({context, literal: `@${mentionName}`});
-    }
-
-    const style = getStyleSheet(this.props.theme);
-
+  renderAtMention = ({mentionName}) => {
+    const audience = {
+      id: mentionName?.[2],
+      name: mentionName?.[3],
+      type: mentionName?.[1] === 'u' ? 'user' : 'group',
+    };
     return (
-      // <AtMention
-      //   disableAtChannelMentionHighlight={
-      //     this.props.disableAtChannelMentionHighlight
-      //   }
-      //   mentionStyle={this.props.textStyles.mention}
-      //   textStyle={[
-      //     this.computeTextStyle(this.props.baseTextStyle, context),
-      //     style.atMentionOpacity,
-      //   ]}
-      //   isSearchResult={this.props.isSearchResult}
-      //   mentionName={mentionName}
-      //   onPostPress={this.props.onPostPress}
-      //   mentionKeys={this.props.mentionKeys}
-      // />
-      <Text>A mention</Text>
+      <Text
+        onPress={() => this.props?.onPressAudience?.(audience)}
+        style={[this.props.textStyles?.mention || this.props.baseTextStyle]}>
+        @{mentionName?.[3]}
+      </Text>
     );
   };
 
@@ -227,7 +217,7 @@ export default class Md extends PureComponent {
     return this.renderText({context, literal: `~${channelName}`});
   };
 
-  renderEmoji = ({context, emojiName, literal}) => {
+  renderEmoji = ({emojiName, literal}) => {
     // Just render unicode emoji, image custom emoji need a story
     return (
       <Text style={this.props.baseTextStyle}>
@@ -391,7 +381,7 @@ export default class Md extends PureComponent {
     ast = combineTextNodes(ast);
     ast = addListItemIndices(ast);
     ast = pullOutImages(ast);
-    ast = highlightMentions(ast, this.props.mentionKeys);
+    // ast = highlightMentions(ast, this.props.mentionKeys); //highlight all, here, current username in chat
 
     if (this.props.isEdited) {
       const editIndicatorNode = new Node('edited_indicator');

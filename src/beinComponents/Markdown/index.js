@@ -9,6 +9,7 @@ import {mmTheme} from './utils/config';
 
 import Header from '~/beinComponents/Header';
 import modalActions from '~/store/modal/actions';
+import {fontFamilies} from '~/theme/fonts';
 
 const DeviceHeight = Dimensions.get('window').height;
 
@@ -22,16 +23,16 @@ const Markdown = ({value, ...rest}) => {
     code: {
       alignSelf: 'center',
       backgroundColor: 'rgba(63,67,80,0.07)',
-      fontFamily: 'SegoeUI',
+      fontFamily: fontFamilies.JetBrainsMono,
     },
     codeBlock: {
-      fontFamily: 'SegoeUI',
+      fontFamily: fontFamilies.JetBrainsMono,
     },
     del: {
       textDecorationLine: 'line-through',
     },
     emph: {
-      fontStyle: 'italic',
+      fontFamily: fontFamilies.SegoeItalic,
     },
     error: {
       color: '#d24b4e',
@@ -89,6 +90,7 @@ const Markdown = ({value, ...rest}) => {
     },
     mention: {
       color: '#386fe5',
+      fontFamily: fontFamilies.SegoeSemibold,
     },
     mention_highlight: {
       backgroundColor: '#ffd470',

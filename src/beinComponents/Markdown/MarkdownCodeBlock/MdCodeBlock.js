@@ -149,6 +149,7 @@ export default class MdCodeBlock extends React.PureComponent {
 const getStyleSheet = makeStyleSheetFromTheme(theme => {
   return {
     container: {
+      overflow: 'hidden',
       borderColor: changeOpacity(theme.centerChannelColor, 0.15),
       borderRadius: 3,
       borderWidth: StyleSheet.hairlineWidth,
