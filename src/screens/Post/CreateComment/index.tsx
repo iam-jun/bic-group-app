@@ -46,7 +46,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const content = useKeySelector(postKeySelector.createComment.content);
 
   const isEditHasChange = content !== oldContent;
-  const disableButton = content === oldContent || loading;
+  const disableButton = !content || content === oldContent || loading;
 
   useEffect(() => {
     if (oldContent) {
