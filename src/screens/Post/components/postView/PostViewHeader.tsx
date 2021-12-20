@@ -147,6 +147,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing?.margin.tiny,
     },
     avatar: {
+      marginTop: spacing?.margin.tiny,
       marginLeft: spacing?.margin.large,
       marginRight: spacing?.margin.base,
     },

@@ -286,7 +286,8 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     backButton: {
-      marginRight: spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
+      marginRight: spacing.margin.large,
     },
     avatar: {
       marginLeft: 6,

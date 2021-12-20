@@ -82,6 +82,7 @@ const _PostDetailContent = (props: any) => {
   const {streamClient} = useContext(AppContext);
 
   const id = post_id;
+  const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const postTime = useKeySelector(postKeySelector.postTimeById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -100,6 +101,10 @@ const _PostDetailContent = (props: any) => {
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
+
+  const headerTitle = actor?.data?.fullname
+    ? t('post:title_post_detail_of').replace('%NAME%', actor?.data?.fullname)
+    : t('post:title_post_detail');
 
   useEffect(() => {
     if (!user && Platform.OS === 'web') {
@@ -307,11 +312,7 @@ const _PostDetailContent = (props: any) => {
 
   return (
     <View style={styles.flex1}>
-      <Header
-        titleTextProps={{useI18n: true}}
-        title={'post:title_post_detail'}
-        onPressBack={onPressBack}
-      />
+      <Header title={headerTitle} onPressBack={onPressBack} />
       {!postTime ? (
         <PostViewPlaceholder />
       ) : (
