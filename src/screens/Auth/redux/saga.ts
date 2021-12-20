@@ -2,7 +2,7 @@ import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth'
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {Platform} from 'react-native';
-import {delay, put, select, takeLatest} from 'redux-saga/effects';
+import {delay, put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
@@ -163,7 +163,6 @@ function* onSignInSuccess(user: IUserResponse) {
 
   navigation.replace(rootSwitch.mainStack);
   yield put(actions.setLoading(false));
-
   yield delay(500); // Delay to avoid showing authStack
   yield put(modalActions.hideLoading());
 }

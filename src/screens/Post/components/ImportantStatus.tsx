@@ -55,7 +55,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   ]);
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} testID="important_status">
       <Icon
         isButton
         iconStyle={[styles.iconStyle, {backgroundColor: iconBackgroundColor}]}

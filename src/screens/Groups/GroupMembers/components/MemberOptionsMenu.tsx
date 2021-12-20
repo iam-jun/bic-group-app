@@ -94,13 +94,17 @@ const MemberOptionsMenu = ({
         cancelBtn: true,
         cancelBtnProps: {
           textColor: theme.colors.primary7,
+          testID: 'member_options_menu.set_admin.cancel',
         },
         onConfirm: () => doSetAdmin(selectedMember),
         confirmLabel: i18next.t(
           'groups:modal_confirm_set_admin:button_confirm',
         ),
         ConfirmBtnComponent: Button.Secondary,
-        confirmBtnProps: {highEmphasis: true},
+        confirmBtnProps: {
+          highEmphasis: true,
+          testID: 'member_options_menu.set_admin.confirm',
+        },
       };
       alertPayload.content = alertPayload.content.replace(
         '{0}',
@@ -136,11 +140,15 @@ const MemberOptionsMenu = ({
       cancelBtn: true,
       cancelBtnProps: {
         textColor: theme.colors.primary7,
+        testID: 'member_options_menu.remove_admin.cancel',
       },
       onConfirm: () => doRemoveAdmin(selectedMember),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_admin:button_confirm',
       ),
+      confirmBtnProps: {
+        testID: 'member_options_menu.remove_admin.confirm',
+      },
       ConfirmBtnComponent: Button.Danger,
     };
     alertPayload.content = alertPayload.content.replace(
@@ -219,11 +227,15 @@ const MemberOptionsMenu = ({
       cancelBtn: true,
       cancelBtnProps: {
         textColor: theme.colors.primary7,
+        testID: 'member_options_menu.remove_member.cancel',
       },
       onConfirm: () => removeMember(userId, fullname),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_member:button_remove',
       ),
+      confirmBtnProps: {
+        testID: 'member_options_menu.remove_member.confirm',
+      },
       ConfirmBtnComponent: Button.Danger,
       children: null as React.ReactNode,
     };
@@ -380,6 +392,7 @@ const MemberOptionsMenu = ({
       ContentComponent={
         <View style={styles.bottomSheet}>
           <PrimaryItem
+            testID="member_options_menu.view_profile"
             style={styles.menuOption}
             leftIcon={'UsersAlt'}
             leftIconProps={{icon: 'UsersAlt', size: 24}}
@@ -388,6 +401,7 @@ const MemberOptionsMenu = ({
           />
           {selectedMember?.username !== user?.username && (
             <PrimaryItem
+              testID="member_options_menu.send_message"
               style={styles.menuOption}
               leftIcon={'iconSend'}
               leftIconProps={{icon: 'iconSend', size: 24}}
@@ -398,6 +412,7 @@ const MemberOptionsMenu = ({
           {can_setting &&
             (isGroupAdmin() ? (
               <PrimaryItem
+                testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
@@ -406,6 +421,7 @@ const MemberOptionsMenu = ({
               />
             ) : (
               <PrimaryItem
+                testID="member_options_menu.set_admin"
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
@@ -415,6 +431,7 @@ const MemberOptionsMenu = ({
             ))}
           {can_manage_member && selectedMember?.username !== user?.username && (
             <PrimaryItem
+              testID="member_options_menu.remove_member"
               style={styles.menuOption}
               leftIcon={'UserTimes'}
               leftIconProps={{

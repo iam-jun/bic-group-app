@@ -192,6 +192,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   return (
     <View style={[styles.container, style]}>
       <PrimaryItem
+        testID="group_header_menu.copy_link"
         height={48}
         leftIconProps={{icon: 'Link', size: 24}}
         leftIcon={'Link'}
@@ -200,6 +201,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
       />
       {!isWeb && (
         <PrimaryItem
+          testID="group_header_menu.share_group"
           height={48}
           leftIconProps={{icon: 'ShareAlt', size: 24}}
           leftIcon={'ShareAlt'}
@@ -209,6 +211,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
       )}
       {isWeb && (
         <PrimaryItem
+          testID="group_header_menu.share_chat"
           height={48}
           leftIconProps={{icon: 'iconSend', size: 24}}
           leftIcon={'iconSend'}
@@ -218,6 +221,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
       )}
       {isMember && (
         <PrimaryItem
+          testID="group_header_menu.leave_group"
           height={48}
           leftIconProps={{icon: 'SignOutAlt', size: 24}}
           leftIcon={'SignOutAlt'}

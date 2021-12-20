@@ -15,6 +15,9 @@ const groupStack = {
   editGroupDescription: 'edit-group-description',
   inviteMembers: 'invite-members',
   userProfile: 'user-profile',
+
+  // group moderating
+  pendingMembers: 'pending-members',
 };
 
 export default groupStack;

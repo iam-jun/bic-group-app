@@ -60,7 +60,9 @@ const GroupTopBar = () => {
     // only admin can see this button
     return (
       can_setting && (
-        <ButtonWrapper onPress={navigateToGroupAdmin}>
+        <ButtonWrapper
+          testID="group_top_bar.admin_button"
+          onPress={navigateToGroupAdmin}>
           <Icon
             icon={'iconShieldStar'}
             fill={theme.colors.iconTint}
@@ -76,7 +78,9 @@ const GroupTopBar = () => {
     // only members can see this icon
     return (
       join_status === groupJoinStatus.member && (
-        <ButtonWrapper onPress={() => alert('Press search')}>
+        <ButtonWrapper
+          testID="group_top_bar.search"
+          onPress={() => alert('Press search')}>
           <Icon
             icon={'iconSearch'}
             size={22}
@@ -90,7 +94,7 @@ const GroupTopBar = () => {
 
   const renderGroupOption = () => {
     return (
-      <ButtonWrapper onPress={onPressMenu}>
+      <ButtonWrapper testID="group_top_bar.option_menu" onPress={onPressMenu}>
         <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
       </ButtonWrapper>
     );

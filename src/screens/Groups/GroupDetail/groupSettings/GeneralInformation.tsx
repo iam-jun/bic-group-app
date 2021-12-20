@@ -133,7 +133,9 @@ const GeneralInformation = (props: any) => {
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
-      <TouchableOpacity onPress={() => onPrivacyMenuPress(item)}>
+      <TouchableOpacity
+        onPress={() => onPrivacyMenuPress(item)}
+        testID={`general_information.privacy.${item.type}`.toLowerCase()}>
         <PrimaryItem
           title={i18next.t(item.title)}
           subTitle={
@@ -164,7 +166,10 @@ const GeneralInformation = (props: any) => {
           <Text.H5 color={colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+          <ButtonWrapper
+            onPress={onEditAvatar}
+            disabled={loadingAvatar}
+            testID="general_information.avatar.edit">
             <Text.H6
               color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
               useI18n>
@@ -195,7 +200,10 @@ const GeneralInformation = (props: any) => {
           <Text.H5 color={colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+          <ButtonWrapper
+            onPress={onEditCover}
+            disabled={loadingCover}
+            testID="general_information.cover.edit">
             <Text.H6
               color={!loadingCover ? colors.primary7 : colors.textDisabled}
               useI18n>
@@ -229,6 +237,7 @@ const GeneralInformation = (props: any) => {
         />
 
         <GroupSectionItem
+          testID="general_information.description"
           title={'settings:title_group_description'}
           subtitle={description}
           onPress={editGroupDescripton}
@@ -236,6 +245,7 @@ const GeneralInformation = (props: any) => {
         />
 
         <GroupSectionItem
+          testID="general_information.privacy"
           title={'settings:title_privacy'}
           subtitle={titleCase(privacy) || ''}
           rightIcon={'EditAlt'}
@@ -267,7 +277,6 @@ const GeneralInformation = (props: any) => {
                 settings:title_privacy_type
               </Text.H5>
               <ListView
-                type="primary"
                 data={privacyTypes}
                 renderItem={renderBottomSheet}
                 onItemPress={onPrivacyMenuPress}

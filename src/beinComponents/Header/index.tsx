@@ -178,6 +178,7 @@ const Header: React.FC<HeaderProps> = ({
         <ViewSpacing width={spacing.margin.large} />
         {!hideBack && !(hideBackOnLaptop && isLaptop) && (
           <Icon
+            testID="header.back"
             icon="iconBack"
             onPress={_onPressBack}
             size={28}
@@ -207,7 +208,10 @@ const Header: React.FC<HeaderProps> = ({
         <View style={styles.titleContainer}>
           {!!title && (
             <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
-              <Text.H5 style={styles.title} {...titleTextProps}>
+              <Text.H5
+                style={styles.title}
+                {...titleTextProps}
+                testID="header.text">
                 {title}
               </Text.H5>
             </TouchableOpacity>
@@ -297,7 +301,8 @@ const createStyle = (theme: ITheme) => {
       elevation: 2,
     },
     backButton: {
-      marginRight: spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
+      marginRight: spacing.margin.large,
     },
     avatar: {
       marginLeft: 6,

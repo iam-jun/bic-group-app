@@ -107,6 +107,11 @@
     "text_avatar": "Avatar",
     "text_cover": "Cover",
     "text_privacy": "Privacy",
+    "btn_approve": "Approve",
+    "btn_decline": "Decline",
+    "btn_approve_all": "Approve All",
+    "btn_decline_all": "Decline All",
+    "text_requests": "Requests",
     "text_admin": "Admin"
   },
   "auth": {
@@ -334,6 +339,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
+    "title_post_detail_of": "%NAME%'s Post",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
@@ -379,7 +385,7 @@
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
     "someone": "someone",
-    "other_places": "more",
+    "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
     "mark_as_important": "Mark as Important",
@@ -483,6 +489,12 @@
     "search_location": "Search for City/Province/Country"
   },
   "groups": {
+    "group_content": {
+      "btn_chat": "Chat",
+      "btn_about": "About",
+      "btn_members": "Members",
+      "btn_files": "Files"
+    },
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
@@ -536,6 +548,25 @@
       "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     },
     "text_successfully_join_group": "Successfully join group",
+    "text_no_pending_members_notice": "There's no pending members",
+    "text_pending_request_notice": "People who request to join your group will show here.",
+    "pending_members": {},
+    "text_respond_all_member_requests": {
+      "title": {
+        "approve": "Approve all member requests?",
+        "decline": "Decline all member requests?"
+      },
+      "content": {
+        "approve": "You're about to add {0} person(s) to {1}",
+        "decline": "You're about to decline {0} member request(s)"
+      }
+    },
+    "text_requested_at": "Requested at",
+    "text_is_added_as_member": "is added as member",
+    "text_declined_user": "Declined user",
+    "text_approved_user": "Approved user",
+    "text_approved_all": "Approved {0} user(s)",
+    "text_declined_all": "Declined {0} user(s)",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
     "text_approved_member_group": "You have been approved to be a member of this group",

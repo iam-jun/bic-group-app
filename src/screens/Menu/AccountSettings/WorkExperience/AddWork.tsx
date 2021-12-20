@@ -160,6 +160,7 @@ const AddWork = () => {
         label={i18next.t('settings:text_compamny')}
         value={companyValue}
         maxLength={50}
+        testID="add_work.company"
         left={
           // @ts-ignore
           <TextInputPaper.Icon
@@ -182,6 +183,7 @@ const AddWork = () => {
         style={styles.textInput}
         value={positionValue}
         maxLength={50}
+        testID="add_work.title_position"
         placeholder={i18next.t('settings:text_title_position')}
         placeholderTextColor={theme.colors.textSecondary}
         onChangeText={onChangePosition}
@@ -195,6 +197,7 @@ const AddWork = () => {
         style={styles.textInput}
         value={locationValue}
         maxLength={25}
+        testID="add_work.location"
         placeholder={i18next.t('settings:text_location_optional')}
         placeholderTextColor={theme.colors.textSecondary}
         onChangeText={onChangeLocation}
@@ -208,6 +211,7 @@ const AddWork = () => {
         style={styles.textInput}
         value={descriptionValue}
         maxLength={200}
+        testID="add_work.description"
         placeholder={i18next.t('settings:text_description_optional')}
         placeholderTextColor={theme.colors.textSecondary}
         onChangeText={onChangeDescription}
@@ -221,6 +225,7 @@ const AddWork = () => {
         <Text.H6 useI18n>settings:text_currently_work_here</Text.H6>
         <Toggle
           isChecked={isWorkHere}
+          testID="add_work.currently_work_here"
           onActionPress={onToggleCurrentlyWorkHere}
         />
       </View>
@@ -233,7 +238,9 @@ const AddWork = () => {
         <Text.H6 useI18n>
           {isWorkHere ? 'settings:text_since' : 'common:text_start_date'}
         </Text.H6>
-        <ButtonWrapper onPress={onStartDateEditOpen}>
+        <ButtonWrapper
+          onPress={onStartDateEditOpen}
+          testID="add_work.start_date">
           <Text.ButtonSmall color={theme.colors.primary7}>
             {formatDate(startDateValue, 'MMM Do, YYYY') ||
               i18next.t('common:text_not_set')}
@@ -248,7 +255,7 @@ const AddWork = () => {
       !isWorkHere && (
         <View style={styles.selectionLineView}>
           <Text.H6 useI18n>common:text_end_date</Text.H6>
-          <ButtonWrapper onPress={onEndDateEditOpen}>
+          <ButtonWrapper onPress={onEndDateEditOpen} testID="add_work.end_date">
             <Text.ButtonSmall color={theme.colors.primary7}>
               {(endDateValue && formatDate(endDateValue, 'MMM Do, YYYY')) ||
                 i18next.t('common:text_not_set')}
@@ -265,7 +272,7 @@ const AddWork = () => {
         <View>
           <Divider />
           <View style={styles.deleteWork}>
-            <TouchableOpacity onPress={onDelete}>
+            <TouchableOpacity onPress={onDelete} testID="add_work.delete">
               <Text.H6 color={theme.colors.error} useI18n>
                 settings:text_delete_work
               </Text.H6>
@@ -289,6 +296,7 @@ const AddWork = () => {
         buttonProps={{
           useI18n: true,
           disabled: companyValue.trim() && positionValue.trim() ? false : true,
+          testID: 'add_work.save',
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}

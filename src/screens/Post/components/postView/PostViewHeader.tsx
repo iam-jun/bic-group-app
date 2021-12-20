@@ -87,7 +87,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       <View style={{flex: 1}}>
         <TouchableOpacity
           disabled={!isInternetReachable}
-          testID={'post_view_actor'}
+          testID={'post_view_header.actor'}
           onPress={onPressActor}
           style={{alignSelf: 'flex-start'}}>
           <Text.H6>{actorName}</Text.H6>
@@ -97,12 +97,12 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
             post:to
           </Text.H6S>
           <Text.H6
-            testID={'post_view_audiences'}
+            testID={'post_view_header.audiences'}
             onPress={!isInternetReachable ? undefined : onPressShowAudiences}>
             {textAudiences}
           </Text.H6>
         </View>
-        <View style={styles.rowCenter}>
+        <View style={styles.rowCenter} testID="post_view_header.time">
           <TimeView time={time} />
         </View>
       </View>
@@ -147,6 +147,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing?.margin.tiny,
     },
     avatar: {
+      marginTop: spacing?.margin.tiny,
       marginLeft: spacing?.margin.large,
       marginRight: spacing?.margin.base,
     },

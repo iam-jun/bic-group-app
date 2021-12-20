@@ -1,13 +1,13 @@
 import React, {FC, useCallback, useContext, useEffect, useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
 
 import moment from 'moment';
 import 'moment/locale/vi';
 
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
 import {AppContext} from '~/contexts/AppContext';
 
 const intervalTime = 1000 * 60; //1 min
@@ -28,7 +28,6 @@ const TimeView: FC<TimeViewProps> = ({
 
   const {language} = useContext(AppContext);
   const theme = useTheme() as ITheme;
-  const {t} = useBaseHook();
   const {colors} = theme;
 
   useEffect(() => {
@@ -58,11 +57,11 @@ const TimeView: FC<TimeViewProps> = ({
       return;
     }
     if (type === 'fullDateTime') {
-      result = formatFullTime(time, t, language);
+      result = formatFullTime(time, language);
     } else if (type === 'dateTime') {
-      result = formatDateTime(time, t, language);
+      result = formatDateTime(time, language);
     } else {
-      result = formatShortTime(time, t, language);
+      result = formatShortTime(time, language);
     }
     setDisplayTime(result);
   }, [time, language]);
@@ -74,30 +73,30 @@ const TimeView: FC<TimeViewProps> = ({
   );
 };
 
-export const formatShortTime = (time: any, t: any, lang: any) => {
+export const formatShortTime = (time: any, lang: any) => {
   moment.locale(lang);
   let result = '';
   const date = moment.utc(time).unix();
   const now = moment().unix();
   const deltaSecond = Math.max(now - date, date - now);
   if (deltaSecond < 60) {
-    result = t('common:time:now');
+    result = i18next.t('common:time:now');
   } else if (deltaSecond < 60 * 60) {
-    result = `${Math.round(deltaSecond / 60)}${lang === 'vi' ? ' ' : ''}${t(
-      'common:time:short_min',
-    )}`;
+    result = `${Math.round(deltaSecond / 60)}${
+      lang === 'vi' ? ' ' : ''
+    }${i18next.t('common:time:short_min')}`;
   } else if (deltaSecond < 60 * 60 * 24) {
     result = `${Math.round(deltaSecond / (60 * 60))}${
       lang === 'vi' ? ' ' : ''
-    }${t('common:time:short_hour')}`;
+    }${i18next.t('common:time:short_hour')}`;
   } else if (deltaSecond < 60 * 60 * 24 * 7) {
     result = `${Math.round(deltaSecond / (60 * 60 * 24))}${
       lang === 'vi' ? ' ' : ''
-    }${t('common:time:short_day')}`;
+    }${i18next.t('common:time:short_day')}`;
   } else if (deltaSecond < 60 * 60 * 24 * 7 * 52) {
     result = `${Math.round(deltaSecond / (60 * 60 * 24 * 7))}${
       lang === 'vi' ? ' ' : ''
-    }${t('common:time:short_week')}`;
+    }${i18next.t('common:time:short_week')}`;
   } else {
     const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
     const d = moment(time, formats, true);
@@ -106,7 +105,7 @@ export const formatShortTime = (time: any, t: any, lang: any) => {
   return result;
 };
 
-export const formatFullTime = (time: any, t: any, lang: any) => {
+export const formatFullTime = (time: any, lang: any) => {
   moment.locale(lang);
   let result = '';
   const dateUtc = moment.utc(time);
@@ -120,20 +119,24 @@ export const formatFullTime = (time: any, t: any, lang: any) => {
     formatPreviousDay = isSameYear ? 'DD/MM, hh:mm A' : 'DD/MM/yyyy';
   } else {
     formatPreviousDay = isSameYear
-      ? `MMM DD [${t('common:time:at')}] hh:mm A`
+      ? `MMM DD [${i18next.t('common:time:at')}] hh:mm A`
       : 'MMM DD, yyyy';
   }
 
   result = date.calendar(null, {
-    lastDay: `[${t('common:time:yesterday')} ${t('common:time:at')}] hh:mm A`,
-    sameDay: `[${t('common:time:today')} ${t('common:time:at')}] hh:mm A`,
+    lastDay: `[${i18next.t('common:time:yesterday')} ${i18next.t(
+      'common:time:at',
+    )}] hh:mm A`,
+    sameDay: `[${i18next.t('common:time:today')} ${i18next.t(
+      'common:time:at',
+    )}] hh:mm A`,
     lastWeek: formatPreviousDay,
     sameElse: formatPreviousDay,
   });
   return result;
 };
 
-export const formatDateTime = (time: any, t: any, lang: any) => {
+export const formatDateTime = (time: any, lang: any) => {
   moment.locale(lang);
   let result = '';
   const dateUtc = moment.utc(time);
@@ -144,8 +147,8 @@ export const formatDateTime = (time: any, t: any, lang: any) => {
   const formatPreviousDay = lang === 'vi' ? 'DD/MM/yyyy' : 'MMM DD, yyyy';
 
   result = date.calendar(null, {
-    lastDay: `[${t('common:time:yesterday')}]`,
-    sameDay: `[${t('common:time:today')}]`,
+    lastDay: `[${i18next.t('common:time:yesterday')}]`,
+    sameDay: `[${i18next.t('common:time:today')}]`,
     lastWeek: formatPreviousDay,
     sameElse: formatPreviousDay,
   });

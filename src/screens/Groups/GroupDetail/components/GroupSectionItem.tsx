@@ -14,6 +14,7 @@ interface GroupSectionItemProps {
   subtitle: string;
   rightIcon: IconType;
   privacyIcon?: IconType;
+  testID?: string;
   onPress?: (e: any) => void;
 }
 
@@ -22,6 +23,7 @@ const GroupSectionItem = ({
   subtitle,
   rightIcon,
   privacyIcon,
+  testID,
   onPress,
 }: GroupSectionItemProps) => {
   const {t} = useBaseHook();
@@ -29,7 +31,7 @@ const GroupSectionItem = ({
   const styles = themeStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} testID={testID}>
       <PrimaryItem
         title={t(title)}
         subTitle={subtitle}
