@@ -5,7 +5,7 @@ import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessag
 import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 
 export interface IObject<T> {
-  [key: string]: T;
+  [key: string | number]: T;
 }
 
 export interface ILanguage {

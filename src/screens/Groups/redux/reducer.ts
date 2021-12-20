@@ -1,6 +1,8 @@
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
+import {IGroupDetail, IJoiningMember} from '~/interfaces/IGroup';
+import {IObject} from '~/interfaces/common';
 
 const initGroupsState = {
   isPrivacyModalOpen: false,
@@ -11,7 +13,7 @@ const initGroupsState = {
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
-  },
+  } as IGroupDetail,
   groupSearch: {
     isShow: false,
     loading: false,
@@ -45,11 +47,24 @@ const initGroupsState = {
 
   loadingAvatar: false,
   loadingCover: false,
+
+  pendingMemberRequests: {
+    loading: false,
+    data: [],
+    items: {} as IObject<IJoiningMember>,
+    canLoadMore: true,
+  },
+  // temporarily stores data for `undo` action
+  undoData: {
+    total: 0,
+    data: [],
+    items: {} as IObject<IJoiningMember>,
+  },
 };
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers} = state;
+  const {selectedUsers, pendingMemberRequests} = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -249,6 +264,95 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           ...payload,
         },
       };
+
+    // PENDING MEMBER REQUESTS
+    case groupsTypes.GET_MEMBER_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          loading: pendingMemberRequests.data.length === 0,
+          params: payload.params,
+        },
+      };
+    case groupsTypes.SET_MEMBER_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          loading: false,
+          data: [...pendingMemberRequests.data, ...payload.requestIds],
+          items: {
+            ...pendingMemberRequests.items,
+            ...payload.requestItems,
+          },
+          canLoadMore: payload.requestIds.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.RESET_MEMBER_REQUESTS:
+      return {
+        ...state,
+        pendingMemberRequests: initGroupsState.pendingMemberRequests,
+      };
+    case groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST:
+    case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST: {
+      const requestItems = {...pendingMemberRequests.items};
+      delete requestItems[payload];
+      return {
+        ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          total_pending_members: state.groupDetail.total_pending_members - 1,
+        },
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          data: pendingMemberRequests.data.filter(
+            (item: number) => item !== payload.requestId,
+          ),
+          items: requestItems,
+        },
+      };
+    }
+    case groupsTypes.APPROVE_ALL_MEMBER_REQUESTS:
+    case groupsTypes.REMOVE_ALL_MEMBER_REQUESTS:
+      return {
+        ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          total_pending_members: 0,
+        },
+        pendingMemberRequests: initGroupsState.pendingMemberRequests,
+      };
+    case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST:
+    case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
+      return {
+        ...state,
+        undoData: initGroupsState.undoData,
+      };
+    case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
+      return {
+        ...state,
+        groupDetail: {
+          ...state.groupDetail,
+          total_pending_members: state.undoData.total,
+        },
+        pendingMemberRequests: {
+          ...state.pendingMemberRequests,
+          data: [...state.undoData.data],
+          items: {...state.undoData.items},
+        },
+        undoData: initGroupsState.undoData,
+      };
+    case groupsTypes.STORE_UNDO_DATA:
+      return {
+        ...state,
+        undoData: {
+          total: state.groupDetail.total_pending_members,
+          data: [...pendingMemberRequests.data],
+          items: {...pendingMemberRequests.items},
+        },
+      };
+
     default:
       return state;
   }

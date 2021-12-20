@@ -14,6 +14,7 @@ import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 import NewFeature from '~/screens/NewFeature';
 import DraftPost from '~/screens/Post/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
+import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 
 export default {
   'group-list': Groups,
@@ -32,4 +33,7 @@ export default {
   'edit-group-description': EditGroupDescription,
   'invite-members': AddMembersToGroup,
   'user-profile': UserProfile,
+
+  // group moderating
+  'pending-members': PendingMembers,
 };
