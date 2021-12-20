@@ -2,7 +2,6 @@ import React, {FC, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import MarkdownView from '~/beinComponents/MarkdownView';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IActivityDataImage} from '~/interfaces/IPost';
@@ -12,6 +11,7 @@ import Image from '~/beinComponents/Image';
 import {getResourceUrl} from '~/configs/resourceConfig';
 
 import {ITheme} from '~/theme/interfaces';
+import Markdown from '~/beinComponents/Markdown';
 
 export interface PostViewContentProps {
   content?: string;
@@ -63,6 +63,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               limitLength={400}
               shortLength={400}
               useMarkdown
+              useMarkdownIt
               limitMarkdownTypes
               onPressAudience={onPressMentionAudience}
             />
@@ -75,9 +76,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
     if (isPostDetail) {
       return (
-        <MarkdownView onPressAudience={onPressMentionAudience}>
-          {content}
-        </MarkdownView>
+        <Markdown value={content} onPressAudience={onPressMentionAudience} />
       );
     }
     return (
