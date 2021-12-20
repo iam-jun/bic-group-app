@@ -12,6 +12,7 @@ import {initPushTokenMessage} from '~/services/helper';
 import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 import {ActionTypes} from '~/utils';
+import {setChatAuthenticationInfo} from '~/utils/common';
 import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
 
@@ -59,6 +60,8 @@ const rootReducers = (state, action) => {
           return messaging().deleteToken();
         })
         .catch(e => console.log('error when delete token', e));
+    } else {
+      setChatAuthenticationInfo('', 0);
     }
     AsyncStorage.multiRemove([
       'persist:root',

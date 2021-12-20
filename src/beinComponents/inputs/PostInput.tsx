@@ -61,6 +61,7 @@ const PostInput: React.FC<PostInputProps> = ({
 
   return (
     <TextInput
+      testID="post_input"
       textAlignVertical={textAlignVertical}
       style={inputStyle}
       selectionColor={colors.textInput}

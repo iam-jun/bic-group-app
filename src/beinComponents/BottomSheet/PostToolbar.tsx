@@ -175,7 +175,8 @@ const PostToolbar = ({
             activeOpacity={1}
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
             disabled={disabled}
-            onPress={openModal}>
+            onPress={openModal}
+            testID="post_toolbar">
             <Text.Subtitle style={{flex: 1}} useI18n>
               post:text_add_to_post
             </Text.Subtitle>
@@ -227,6 +228,7 @@ const PostToolbar = ({
         </View>
         <View style={styles.importantButtons}>
           <Button.Secondary
+            testID="post_toolbar.date"
             leftIcon={'CalendarAlt'}
             leftIconProps={{icon: 'CalendarAlt', size: 14}}
             style={styles.buttonDate}
@@ -234,6 +236,7 @@ const PostToolbar = ({
             {date}
           </Button.Secondary>
           <Button.Secondary
+            testID="post_toolbar.time"
             leftIcon={'Clock'}
             leftIconProps={{icon: 'Clock', size: 16}}
             style={styles.buttonTime}
@@ -258,6 +261,7 @@ const PostToolbar = ({
           <Toggle
             isChecked={important?.active}
             onActionPress={onToggleImportant}
+            testID="post_toolbar.toggle"
           />
         </View>
         {!!active && renderImportantDate()}
@@ -270,6 +274,7 @@ const PostToolbar = ({
       <View style={styles.contentContainer}>
         {renderImportant()}
         <PrimaryItem
+          testID="post_toolbar.add_photo"
           height={48}
           title={t('post:add_photo')}
           leftIcon={'ImagePlus'}
@@ -282,6 +287,7 @@ const PostToolbar = ({
           onPress={_onPressSelectImage}
         />
         <PrimaryItem
+          testID="post_toolbar.add_file"
           height={48}
           title={t('post:add_file')}
           leftIcon={'Link'}

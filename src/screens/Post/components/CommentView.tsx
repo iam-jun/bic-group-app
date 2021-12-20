@@ -233,11 +233,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
   return (
     <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       <View style={styles.container}>
-        <ButtonWrapper onPress={onPressUser}>
+        <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
           <Avatar source={avatar} />
         </ButtonWrapper>
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
-          <Button onLongPress={onLongPress}>
+          <Button
+            onLongPress={onLongPress}
+            testID="comment_view.comment_content">
             <View style={{flex: 1}}>
               <View
                 style={StyleSheet.flatten([
@@ -271,7 +273,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
               onPressSelectReaction={onPressReact}
               onLongPressReaction={onLongPressReaction}
             />
-            <ButtonWrapper onPress={_onPressReply}>
+            <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
               <Text.ButtonSmall
                 style={styles.buttonReply}
                 color={colors.textSecondary}>

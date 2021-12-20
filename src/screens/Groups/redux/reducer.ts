@@ -64,7 +64,7 @@ const initGroupsState = {
 
 function groupsReducer(state = initGroupsState, action: any = {}) {
   const {type, payload} = action;
-  const {users, selectedUsers, pendingMemberRequests} = state;
+  const {selectedUsers, pendingMemberRequests} = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -218,24 +218,17 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           extra: [],
         },
       };
-    case groupsTypes.SELECT_JOINABLE_USERS:
+    case groupsTypes.SELECT_JOINABLE_USERS: {
+      const included = selectedUsers.find(
+        (item: IUser) => payload.id === item.id,
+      );
       return {
         ...state,
-        selectedUsers: !payload.selected
-          ? [...selectedUsers, {...payload, selected: true}]
+        selectedUsers: !included
+          ? [...selectedUsers, payload]
           : selectedUsers.filter(user => user.id !== payload.id),
-        users: {
-          ...users,
-          data: users.data.map((item: IUser) =>
-            item.id === payload.id
-              ? {
-                  ...item,
-                  selected: !item.selected,
-                }
-              : item,
-          ),
-        },
       };
+    }
     case groupsTypes.CLEAR_SELECTED_USERS:
       return {
         ...state,

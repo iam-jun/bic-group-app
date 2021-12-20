@@ -46,6 +46,7 @@ import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFoote
 
 export interface PostViewProps {
   style?: any;
+  testID?: string;
   postId: string;
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
@@ -60,6 +61,7 @@ export interface PostViewProps {
 
 const _PostView: FC<PostViewProps> = ({
   style,
+  testID,
   postId,
   isPostDetail = false,
   onPressComment,
@@ -254,6 +256,7 @@ const _PostView: FC<PostViewProps> = ({
 
   return (
     <TouchableOpacity
+      testID={testID}
       activeOpacity={0.8}
       disabled={!onPress && !pressNavigateToDetail}
       onPress={_onPress}
