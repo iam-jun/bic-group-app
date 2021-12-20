@@ -4,10 +4,11 @@ import PostView from '~/screens/Post/components/PostView';
 
 export interface PostItemProps {
   postData: IPostActivity;
+  testID?: string;
 }
 
-const PostItem = ({postData}: any) => {
-  return <PostView postId={postData?.id} />;
+const PostItem = ({postData, testID}: any) => {
+  return <PostView postId={postData?.id} testID={testID} />;
 };
 
 export default memo(PostItem);

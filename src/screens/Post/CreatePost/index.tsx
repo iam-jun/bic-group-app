@@ -450,6 +450,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           disabled: disableButtonPost,
           useI18n: true,
           highEmphasis: true,
+          testID: 'create_post.button',
         }}
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}

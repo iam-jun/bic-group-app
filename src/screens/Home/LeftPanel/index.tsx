@@ -74,7 +74,7 @@ const LeftPanel = () => {
         title: 'home:newsfeed',
         path: appScreens.newsfeed,
         onPress: onPressNewsfeed,
-        testID: 'left_panel_newsfeed',
+        testID: 'left_panel.newsfeed',
       })}
       {renderItem({
         icon: 'iconMenuDraft',
@@ -83,13 +83,13 @@ const LeftPanel = () => {
         onPress: onPressDraftPost,
         type: 'draftPost',
         badgeColor: colors.textSecondary,
-        testID: 'left_panel_draft',
+        testID: 'left_panel.draft',
       })}
       {renderItem({
         icon: 'iconMenuBookmarkRed',
         title: 'home:saved_posts',
         onPress: onPressSavedPosts,
-        testID: 'left_panel_saved',
+        testID: 'left_panel.saved',
       })}
     </ScreenWrapper>
   );

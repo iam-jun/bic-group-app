@@ -19,6 +19,7 @@ const mainTabStack = {
   'general-info': 'general-info',
   'edit-group-description': 'edit-group-description',
   'invite-members': 'invite-members',
+  'pending-members': 'pending-members',
 
   //MENU
   // menu: Menu,

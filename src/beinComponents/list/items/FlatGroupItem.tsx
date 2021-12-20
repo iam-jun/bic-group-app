@@ -14,6 +14,7 @@ import Button from '~/beinComponents/Button';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
+  groupItemTestID?: string;
   showSmallestChild?: boolean;
   selectingData?: OnChangeCheckedGroupsData;
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
@@ -35,6 +36,7 @@ const limitLengthShort = 35;
 
 const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   style,
+  groupItemTestID,
   showSmallestChild,
   onChangeCheckedGroups,
   selectingData,
@@ -169,6 +171,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
       ) : (
         <GroupItem
           {...(group as GroupItemProps)}
+          testID={groupItemTestID}
           isChecked={!!selectingData?.[group.id]}
           onPressItem={_onPressGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}

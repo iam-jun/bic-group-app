@@ -125,7 +125,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         onPressReact,
         onPressReact,
         false,
-        'post_view_button_react',
+        'post_view_footer.react',
       )}
       <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
       {renderReactButtonItem(
@@ -134,7 +134,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         onPressComment,
         onPressComment,
         !onPressComment,
-        'post_view_button_comment',
+        'post_view_footer.comment',
       )}
     </View>
   );

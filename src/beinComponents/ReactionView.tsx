@@ -74,7 +74,10 @@ const ReactionView: FC<ReactionViewProps> = ({
     return (
       <View style={styles.containerButtonOnly}>
         {!!onPressSelectReaction && showSelectReactionWhenEmpty && (
-          <Button style={styles.buttonReact} onPress={onPressSelectReaction}>
+          <Button
+            style={styles.buttonReact}
+            onPress={onPressSelectReaction}
+            testID="reaction_view.react">
             <Icon size={16} icon={'iconReact'} />
           </Button>
         )}
@@ -88,7 +91,7 @@ const ReactionView: FC<ReactionViewProps> = ({
           <Button
             style={[styles.buttonReact, styles.marginHorizontal6]}
             onPress={onPressSelectReaction}>
-            <Icon size={16} icon={'iconReact'} />
+            <Icon size={16} icon={'iconReact'} testID="reaction_view.react" />
           </Button>
         )}
       </View>

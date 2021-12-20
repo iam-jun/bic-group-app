@@ -19,7 +19,6 @@ import {refreshAuthTokens} from '~/services/httpApiRequest';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
-import {setChatAuthenticationInfo} from '~/utils/common';
 import actions from './actions';
 import types from './types';
 
@@ -160,14 +159,6 @@ function* onSignInSuccess(user: IUserResponse) {
     yield put(actions.signOut(false));
     yield onSignInFailed(i18n.t('error:http:unknown'));
     return;
-  }
-
-  // Authentication for Chat
-  if (Platform.OS === 'web') {
-    setChatAuthenticationInfo(
-      userResponse.username,
-      userResponse.signInUserSession.idToken.jwtToken,
-    );
   }
 
   navigation.replace(rootSwitch.mainStack);

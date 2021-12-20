@@ -108,13 +108,15 @@ const ToastMessage: FC<ToastMessageProps> = ({
           </Text.Body>
         </View>
 
-        {!!rightIcon && !!rightText && (
+        {!!rightText && (
           <ButtonWrapper style={styles.button} onPress={onPressRight}>
-            <Icon
-              icon={rightIcon}
-              tintColor={theme.colors.background}
-              style={styles.marginRightIcon}
-            />
+            {!!rightIcon && (
+              <Icon
+                icon={rightIcon}
+                tintColor={theme.colors.background}
+                style={styles.marginRightIcon}
+              />
+            )}
             <Text.ButtonBase
               style={styles.rightText}
               color={theme.colors.background}>

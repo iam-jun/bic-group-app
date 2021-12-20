@@ -30,6 +30,7 @@ import MenuStack from '../MenuStack';
 import NotiStack from '../NotiStack';
 import DraftPost from '~/screens/Post/DraftPost';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
+import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 
 export const screens = {
   home: HomeStack,
@@ -58,6 +59,7 @@ export const screensWebLaptop = {
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
   'invite-members': AddMembersToGroup,
+  'pending-members': PendingMembers,
 
   //MENU STACK
   // menu: Menu,

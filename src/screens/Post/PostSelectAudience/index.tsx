@@ -214,6 +214,7 @@ const PostSelectAudience = () => {
       return (
         <FlatGroupItem
           {...item}
+          groupItemTestID="post_select_audience.groups.item"
           initShowTree={false}
           hidePath={false}
           selectingData={selectingGroups}
@@ -285,12 +286,13 @@ const PostSelectAudience = () => {
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}
         buttonText={'common:btn_done'}
-        buttonProps={{useI18n: true}}
+        buttonProps={{useI18n: true, testID: 'post_select_audience.done'}}
         onPressButton={onPressSave}
         hideBackOnLaptop
       />
       <SearchInput
         autoFocus
+        testID="post_select_audience.search"
         style={styles.searchInput}
         onChangeText={onChangeTextSearch}
         placeholder={t('post:search_audiences_placeholder')}
