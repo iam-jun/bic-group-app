@@ -339,6 +339,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
+    "title_post_detail_of": "%NAME%'s Post",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
@@ -384,7 +385,7 @@
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
     "someone": "someone",
-    "other_places": "more",
+    "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
     "mark_as_important": "Mark as Important",
