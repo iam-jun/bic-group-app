@@ -115,6 +115,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           title={i18next.t('common:text_chosen')}
           data={selectedUsers}
           horizontal
+          showsHorizontalScrollIndicator={false}
           renderItem={renderItemSelectedUser}
           renderItemSeparator={() => (
             <ViewSpacing width={spacing?.margin.base} />
@@ -155,7 +156,7 @@ const createStyles = (theme: ITheme) => {
       marginRight: spacing?.margin.base,
     },
     selectedUsers: {
-      paddingHorizontal: spacing?.margin.base,
+      marginHorizontal: spacing.margin.base,
     },
     itemSelectedUser: {
       width: dimension?.avatarSizes.large,
