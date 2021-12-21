@@ -29,6 +29,7 @@ import iconMenuInfo from '../../assets/icons/icon_menu_info.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
+import iconSendComment from '../../assets/icons/icon_send_comment.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -132,6 +133,7 @@ const icons = {
   iconSticker,
   iconSmileSolid,
   iconSend: 'Message',
+  iconSendComment: iconSendComment,
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,

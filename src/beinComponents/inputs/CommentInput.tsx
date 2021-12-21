@@ -424,6 +424,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <Button.Secondary
           testID="comment_input.send"
           onPress={_onPressSend}
+          style={styles.buttonSend}
+          rightIcon={'iconSendComment'}
           loading={_loading}
           disabled={_loading || (!text.trim() && !selectedImage)}
           useI18n
@@ -643,6 +645,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       paddingBottom: spacing.margin.tiny,
     },
     icon: {marginRight: spacing.margin.large},
+    buttonSend: {paddingLeft: spacing.padding.large},
   });
 };
 
