@@ -166,7 +166,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     container: {},
@@ -174,8 +174,12 @@ const createStyle = (theme: ITheme) => {
     row: {flexDirection: 'row'},
     commentInputHeader: {
       flexDirection: 'row',
-      marginHorizontal: spacing?.margin.base,
-      marginTop: spacing?.margin.tiny,
+      paddingHorizontal: spacing.padding.small,
+      paddingBottom: spacing.padding.small,
+      marginHorizontal: spacing?.margin.small,
+      marginTop: spacing?.margin.small,
+      borderBottomWidth: 1,
+      borderColor: colors.borderDivider,
     },
     headerContent: {
       flex: 1,

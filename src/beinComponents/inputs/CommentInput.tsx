@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
 import {
-  ActivityIndicator,
   Animated,
   Keyboard,
   NativeSyntheticEvent,
@@ -33,6 +32,7 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import EmojiBoardAnimated from '~/beinComponents/emoji/EmojiBoardAnimated';
 import modalActions from '~/store/modal/actions';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -129,7 +129,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
-  const styles = createStyle(theme, _loading);
+  const insets = useSafeAreaInsets();
+  const styles = createStyle(theme, insets, _loading);
   const [inputSelection, setInputSelection] = useState<any>();
   const supportedMarkdownKey = {
     b: '**',
@@ -173,12 +174,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onPressFile = async () => {
-    const file: any = await DocumentPicker.openPickerSingle();
-    onPressFile?.(file);
+    // const file: any = await DocumentPicker.openPickerSingle();
+    // onPressFile?.(file);
+    dispatch(modalActions.showAlertNewFeature());
   };
 
-  const onPressSticker = () => {
-    alert('onPressSticker');
+  const onPressCamera = (event: any) => {
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressEmoji = (event: any) => {
@@ -428,55 +430,46 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const renderButtons = () => {
     return (
       <View style={styles.buttonsContainer}>
-        <Animated.View
-          style={{
-            flexDirection: 'row',
-            marginLeft: isWeb ? 16 : buttonsMarginLeft,
-            marginRight: spacing?.margin.small,
-          }}>
-          <Button
-            testID="comment_input.photo"
-            style={styles.iconContainer}
-            onPress={_onPressSelectImage}
-            disabled={_loading}>
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+          <Button onPress={_onPressFile}>
             <Icon
-              size={13}
+              style={styles.icon}
+              tintColor={colors.iconTintLight}
+              icon={'Paperclip'}
+            />
+          </Button>
+          <Button onPress={_onPressSelectImage}>
+            <Icon
+              size={18}
+              style={styles.icon}
+              tintColor={colors.iconTintLight}
               icon={'ImageV'}
-              tintColor={theme.colors.iconTintReversed}
             />
           </Button>
-          <Button
-            testID="comment_input.file"
-            style={styles.iconContainer}
-            onPress={_onPressFile}
-            disabled={_loading}>
+          <Button onPress={onPressCamera}>
             <Icon
-              size={13}
-              icon={'attachment'}
-              tintColor={theme.colors.iconTintReversed}
+              style={styles.icon}
+              tintColor={colors.iconTintLight}
+              icon={'Camera'}
             />
           </Button>
-          <Button
-            testID="comment_input.sticker"
-            style={[styles.iconContainer, isWeb && {marginRight: 0}]}
-            onPress={onPressSticker}
-            disabled={_loading}>
+          <Button onPress={onPressEmoji}>
             <Icon
-              size={13}
-              icon={'iconSticker'}
-              tintColor={theme.colors.iconTintReversed}
+              style={styles.icon}
+              tintColor={colors.iconTintLight}
+              icon={'Smile'}
             />
           </Button>
-        </Animated.View>
-        {!isWeb && (
-          <Button onPress={() => showButtons(true)} disabled={_loading}>
-            <Icon
-              size={24}
-              icon={'AngleRightB'}
-              tintColor={theme.colors.primary7}
-            />
-          </Button>
-        )}
+        </View>
+        <Button.Secondary
+          testID="comment_input.send"
+          onPress={_onPressSend}
+          loading={_loading}
+          disabled={!text.trim() && !selectedImage}
+          useI18n
+          highEmphasis>
+          common:text_send
+        </Button.Secondary>
       </View>
     );
   };
@@ -486,7 +479,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       return null;
     }
     return (
-      <View>
+      <View style={{backgroundColor: colors.background}}>
         {!!uploadError && (
           <View style={styles.selectedImageErrorContainer}>
             <Text color={colors.error}>
@@ -534,16 +527,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
     <View>
       <View style={[styles.root, style]}>
         {HeaderComponent}
-        {renderSelectedImage()}
         <View style={styles.container}>
-          {renderButtons()}
           <Animated.View
             style={{
               flexDirection: 'row',
               flex: 1,
               zIndex: 1,
-              marginLeft: isWeb ? 0 : textInputMarginLeft,
-              marginRight: isWeb ? 0 : textInputMarginRight,
             }}>
             <Animated.View style={{flex: 1, height: heightAnimated}}>
               <TextInput
@@ -578,38 +567,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 </Text>
               )}
             </Animated.View>
-            <Button
-              style={{position: 'absolute', right: 10, bottom: 10}}
-              onPress={onPressEmoji}
-              disabled={_loading}>
-              <Icon
-                size={24}
-                icon={'iconSmileSolid'}
-                tintColor={theme.colors.iconTintReversed}
-              />
-            </Button>
           </Animated.View>
-          <Button
-            testID="comment_input.send"
-            onPress={_onPressSend}
-            disabled={(!text.trim() && !selectedImage) || _loading}>
-            {_loading ? (
-              <ActivityIndicator
-                style={styles.loadingContainer}
-                size={'small'}
-                color={colors.disabled}
-              />
-            ) : (
-              <Icon
-                style={styles.iconSend}
-                size={16}
-                icon={'iconSend'}
-                tintColor={theme.colors.primary7}
-                disabled={!text.trim() && !selectedImage}
-              />
-            )}
-          </Button>
         </View>
+        {renderSelectedImage()}
+        {renderButtons()}
       </View>
       {!isWeb && (
         <EmojiBoardAnimated
@@ -625,7 +586,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, loading: boolean) => {
+const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
   const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     root: {
@@ -640,9 +601,10 @@ const createStyle = (theme: ITheme, loading: boolean) => {
     },
     buttonsContainer: {
       flexDirection: 'row',
-      paddingBottom: 10,
-      paddingRight: spacing?.padding.base,
-      overflow: 'hidden',
+      backgroundColor: colors.background,
+      paddingLeft: spacing.padding.large,
+      paddingRight: spacing.padding.small,
+      paddingBottom: spacing.padding.small,
     },
     iconContainer: {
       width: 24,
@@ -656,13 +618,10 @@ const createStyle = (theme: ITheme, loading: boolean) => {
     textInput: {
       width: '100%',
       lineHeight: 22,
-      paddingRight: 36,
       paddingTop: spacing?.padding.small,
       paddingBottom: spacing?.padding.small,
-      paddingLeft: spacing?.padding.base,
+      paddingHorizontal: spacing?.padding.large,
       color: loading ? colors.textSecondary : colors.textPrimary,
-      backgroundColor: colors.placeholder,
-      borderRadius: spacing?.borderRadius.large,
       fontFamily: fontFamilies.Segoe,
       fontSize: dimension?.sizes.body,
     },
@@ -686,9 +645,9 @@ const createStyle = (theme: ITheme, loading: boolean) => {
     buttonEmoji: {position: 'absolute', right: 10, bottom: 10},
     selectedImageWrapper: {
       alignSelf: 'flex-start',
-      marginTop: spacing.margin.base,
       marginHorizontal: spacing.margin.small,
       paddingTop: spacing.padding.tiny,
+      paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.tiny,
     },
     selectedImageContainer: {
@@ -727,7 +686,9 @@ const createStyle = (theme: ITheme, loading: boolean) => {
       flexDirection: 'row',
       marginTop: spacing.margin.tiny,
       marginHorizontal: spacing.margin.base,
+      paddingBottom: spacing.margin.tiny,
     },
+    icon: {marginRight: spacing.margin.large},
   });
 };
 

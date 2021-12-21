@@ -7,7 +7,7 @@ export default {
       primary2: '#ECE7F8',
       primary3: '#CBC0EC',
       primary4: '#AB99E0',
-      primary5: '#917AD7',
+      primary5: '#9562D0',
       primary6: '#7052CB',
       primary7: '#5234AD',
 
@@ -26,6 +26,7 @@ export default {
       placeholder: '#F0F0F0',
       surface: '#FAFAFA', //background color for elements containing content, such as cards.
       iconTint: '#0C0D0E',
+      iconTintLight: '#77879C',
       iconTintReversed: '#FFFFFF',
 
       link: '#174BE2',
@@ -76,7 +77,7 @@ export default {
       primary2: '#ECE7F8',
       primary3: '#CBC0EC',
       primary4: '#AB99E0',
-      primary5: '#917AD7',
+      primary5: '#9562D0',
       primary6: '#7052CB',
       primary7: '#5234AD',
 
@@ -90,11 +91,12 @@ export default {
       borderFocus: '#29272A',
       borderDisable: '#BDBDBD',
       borderCard: '#E0E0E0',
-      borderDivider: '#F0F0F0',
+      borderDivider: '#EAEDF0',
       textInput: '#524F55',
       placeholder: '#F0F0F0',
       surface: '#FAFAFA', //background color for elements containing content, such as cards.
       iconTint: '#0C0D0E',
+      iconTintLight: '#77879C',
       iconTintReversed: '#FFFFFF',
 
       link: '#174BE2',

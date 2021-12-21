@@ -182,6 +182,8 @@ const icons = {
   Lock: 'Lock',
   UserExclamation: 'UserExclamation',
   Cog: 'Cog',
+  At: 'At',
+  Camera: 'Camera',
   ChatBubbleUser: 'ChatBubbleUser',
   UserCircle: 'UserCircle',
   FileCopyAlt: 'FileCopyAlt',

@@ -36,7 +36,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   let _textColor = textColor || colors.primary;
 
   if (highEmphasis) {
-    _backgroundColor = colors.primary7;
+    _backgroundColor = colors.primary5;
     _textColor = colors.background;
     _colorHover = colors.primary6;
   }
