@@ -425,7 +425,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           testID="comment_input.send"
           onPress={_onPressSend}
           loading={_loading}
-          disabled={!text.trim() && !selectedImage}
+          disabled={_loading || (!text.trim() && !selectedImage)}
           useI18n
           highEmphasis>
           common:text_send
