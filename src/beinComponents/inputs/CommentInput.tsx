@@ -549,6 +549,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       borderColor: colors.borderDivider,
       backgroundColor: colors.background,
       paddingTop: spacing.padding.small,
+      paddingBottom: spacing.padding.small,
     },
     container: {
       flexDirection: 'row',
