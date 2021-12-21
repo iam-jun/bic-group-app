@@ -119,8 +119,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
-  const showSendAnim = useRef(new Animated.Value(0)).current;
-  const showButtonsAnim = useRef(new Animated.Value(1)).current;
   const emojiBoardRef = useRef<any>();
 
   const _loading = loading || uploading;
@@ -139,13 +137,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
-    if (text?.length > 0 || selectedImage) {
-      showButtons(false);
-      showSend(true);
-    } else {
-      showSend(false);
-    }
-
     /**
      * Clone text in order to handling empty newline
      * as the <Text> does not adding the height of
@@ -305,22 +296,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
     addTextToCursor(emoji);
   };
 
-  const showButtons = (show: boolean) => {
-    Animated.timing(showButtonsAnim, {
-      toValue: show ? 1 : 0,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const showSend = (show: boolean) => {
-    Animated.timing(showSendAnim, {
-      toValue: show ? 1 : 0,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
-  };
-
   const handleKeyEvent = (event: any) => {
     if (
       (event.metaKey || event.ctrlKey) &&
@@ -411,21 +386,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
     styles.textInput,
     Platform.OS === 'web' ? {outlineWidth: 0, height: textTextInputHeight} : {},
   ]);
-
-  const buttonsMarginLeft = showButtonsAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-88, 16],
-  });
-
-  const textInputMarginLeft = showButtonsAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -40],
-  });
-
-  const textInputMarginRight = showSendAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-34, 0],
-  });
 
   const renderButtons = () => {
     return (
@@ -527,51 +487,47 @@ const CommentInput: React.FC<CommentInputProps> = ({
     <View>
       <View style={[styles.root, style]}>
         {HeaderComponent}
-        <View style={styles.container}>
-          <Animated.View
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              zIndex: 1,
-            }}>
-            <Animated.View style={{flex: 1, height: heightAnimated}}>
-              <TextInput
-                testID="comment_input"
-                selection={inputSelection}
-                {...props}
-                onContentSizeChange={_onContentSizeChange}
-                ref={textInputRef}
-                style={inputStyle}
-                selectionColor={colors.textInput}
-                multiline={true}
-                autoFocus={autoFocus}
-                placeholder={placeholder}
-                placeholderTextColor={colors.textSecondary}
-                editable={!_loading}
-                value={Platform.OS === 'web' ? text : undefined} //if mobile, use props children
-                onFocus={_onFocus}
-                onChangeText={_onChangeText}
-                onSelectionChange={_onSelectionChange}
-                onKeyPress={_onKeyPress}
-              />
-              {isWeb && (
-                /**
-                 * Add duplicated Text on web to handle changing
-                 * content size more precisely
-                 */
-                <Text
-                  nativeID="lol-text"
-                  onLayout={_onLayout}
-                  style={[styles.textInput, styles.textDuplicatedOnWeb]}>
-                  {cloneTextForWeb || placeholder}
-                </Text>
-              )}
-            </Animated.View>
-          </Animated.View>
-        </View>
-        {renderSelectedImage()}
-        {renderButtons()}
+        <Animated.View
+          style={{
+            zIndex: 1,
+            marginBottom: spacing.margin.small,
+            height: heightAnimated,
+          }}>
+          <TextInput
+            testID="comment_input"
+            selection={inputSelection}
+            {...props}
+            onContentSizeChange={_onContentSizeChange}
+            ref={textInputRef}
+            style={inputStyle}
+            selectionColor={colors.textInput}
+            multiline={true}
+            autoFocus={autoFocus}
+            placeholder={placeholder}
+            placeholderTextColor={colors.textSecondary}
+            editable={!_loading}
+            value={Platform.OS === 'web' ? text : undefined} //if mobile, use props children
+            onFocus={_onFocus}
+            onChangeText={_onChangeText}
+            onSelectionChange={_onSelectionChange}
+            onKeyPress={_onKeyPress}
+          />
+          {isWeb && (
+            /**
+             * Add duplicated Text on web to handle changing
+             * content size more precisely
+             */
+            <Text
+              nativeID="lol-text"
+              onLayout={_onLayout}
+              style={[styles.textInput, styles.textDuplicatedOnWeb]}>
+              {cloneTextForWeb || placeholder}
+            </Text>
+          )}
+        </Animated.View>
       </View>
+      {renderSelectedImage()}
+      {renderButtons()}
       {!isWeb && (
         <EmojiBoardAnimated
           emojiBoardRef={emojiBoardRef}
@@ -593,11 +549,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       borderTopWidth: 1,
       borderColor: colors.borderDivider,
       backgroundColor: colors.background,
-    },
-    container: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      paddingVertical: spacing?.padding.small,
+      paddingTop: spacing.padding.small,
     },
     buttonsContainer: {
       flexDirection: 'row',

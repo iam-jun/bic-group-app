@@ -153,6 +153,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         HeaderComponent: renderCommentInputHeader(),
         loading: loading,
         isHandleUpload: true,
+        placeholder: t('post:placeholder_write_comment'),
       }}
       title={t('post:mention_title')}
       emptyContent={t('post:mention_empty_content')}
