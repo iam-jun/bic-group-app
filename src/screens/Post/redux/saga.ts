@@ -1010,6 +1010,7 @@ function* getPostDetail({
     yield put(postActions.addToAllPosts({data: response, handleComment: true}));
     callbackLoading?.(false, true);
   } catch (e: any) {
+    yield timeOut(500);
     callbackLoading?.(false, false);
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),

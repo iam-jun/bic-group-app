@@ -59,6 +59,7 @@ const _PostDetailContent = (props: any) => {
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
+  const internetReachableRef = useRef(true);
 
   const params = props?.route?.params;
   const {post_id, focus_comment} = params || {};
@@ -113,9 +114,13 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
-    if (id && userId && streamClient && isInternetReachable) {
+    internetReachableRef.current = isInternetReachable;
+  }, [isInternetReachable]);
+
+  useEffect(() => {
+    if (id && userId && streamClient && internetReachableRef.current) {
       getPostDetail((loading, success) => {
-        if (!loading && !success && isInternetReachable) {
+        if (!loading && !success && internetReachableRef.current) {
           if (Platform.OS === 'web') {
             rootNavigation.replace(rootSwitch.notFound);
           } else {
@@ -133,7 +138,7 @@ const _PostDetailContent = (props: any) => {
         }
       });
     }
-  }, [id, userId, isInternetReachable]);
+  }, [id, userId, internetReachableRef]);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
