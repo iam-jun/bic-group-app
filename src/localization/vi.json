@@ -52,6 +52,7 @@
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
     "text_read_more": "Read more",
     "text_show_less": "Show less",
+    "text_send": "Gửi",
     "error": {
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
@@ -282,6 +283,7 @@
     "add_photo": "Thêm Ảnh",
     "add_file": "Thêm File",
     "placeholder_write_post": "Bạn đang nghĩ gì...",
+    "placeholder_write_comment": "Viết bình luận của bạn...",
     "create_post": "Tạo bài viết",
     "create_new_post": "Tạo bài viết",
     "post_button": "Tạo",
