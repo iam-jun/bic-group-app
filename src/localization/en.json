@@ -339,6 +339,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
+    "title_post_detail_of": "%NAME%'s Post",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
@@ -373,6 +374,7 @@
     "add_photo": "Add Photo",
     "add_file": "Add Files",
     "placeholder_write_post": "Writing your post...",
+    "placeholder_write_comment": "Write your comment...",
     "create_post": "Create Post",
     "create_new_post": "Create new post",
     "post_button": "Post",
@@ -384,7 +386,7 @@
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
     "someone": "someone",
-    "other_places": "more",
+    "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
     "mark_as_important": "Mark as Important",
@@ -566,10 +568,10 @@
     "text_approved_user": "Approved user",
     "text_approved_all": "Approved {0} user(s)",
     "text_declined_all": "Declined {0} user(s)",
-    "title_members": "Members",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
-    "text_approved_member_group": "You have been approved to be a member of this group"
+    "text_approved_member_group": "You have been approved to be a member of this group",
+    "title_members": "Members"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

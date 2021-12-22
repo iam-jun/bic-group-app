@@ -24,10 +24,10 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
 
   const ImportantStatusStyle = {
     active: {
-      iconColor: colors.primary7,
-      iconBackgroundColor: colors.background,
-      textColor: colors.textReversed,
-      backgroundColor: colors.primary6,
+      iconColor: colors.background,
+      iconBackgroundColor: colors.primary6,
+      textColor: colors.primary6,
+      backgroundColor: colors.primary2,
     },
     inactive: {
       iconColor: colors.iconTintReversed,
@@ -84,7 +84,7 @@ const createStyle = (theme: ITheme) => {
     leftIcon: {
       marginRight: spacing.margin.small,
     },
-    iconStyle: {padding: 3, borderRadius: 100},
+    iconStyle: {padding: 3, borderRadius: 6},
   });
 };
 

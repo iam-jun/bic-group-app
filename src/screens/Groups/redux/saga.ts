@@ -115,16 +115,15 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
     const params = {key: payload || '', discover: true};
     // @ts-ignore
     const response = yield groupsDataHelper.getSearchGroups(params);
-    if (isArray(response?.data)) {
-      yield put(
-        groupsActions.setGroupSearch({
-          result: response.data || [],
-          loading: false,
-        }),
-      );
-    } else {
-      yield put(groupsActions.setGroupSearch({loading: false}));
-      yield showError(response);
+
+    yield put(
+      groupsActions.setGroupSearch({
+        result: response.data || [],
+        loading: false,
+      }),
+    );
+    if (response.code !== 200) {
+      console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
     }
   } catch (err) {
     console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);

@@ -59,6 +59,7 @@ const _PostDetailContent = (props: any) => {
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
+  const internetReachableRef = useRef(true);
 
   const params = props?.route?.params;
   const {post_id, focus_comment} = params || {};
@@ -82,6 +83,7 @@ const _PostDetailContent = (props: any) => {
   const {streamClient} = useContext(AppContext);
 
   const id = post_id;
+  const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const postTime = useKeySelector(postKeySelector.postTimeById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -101,6 +103,10 @@ const _PostDetailContent = (props: any) => {
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
 
+  const headerTitle = actor?.data?.fullname
+    ? t('post:title_post_detail_of').replace('%NAME%', actor?.data?.fullname)
+    : t('post:title_post_detail');
+
   useEffect(() => {
     if (!user && Platform.OS === 'web') {
       rootNavigation.replace(rootSwitch.authStack);
@@ -108,9 +114,13 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
-    if (id && userId && streamClient && isInternetReachable) {
+    internetReachableRef.current = isInternetReachable;
+  }, [isInternetReachable]);
+
+  useEffect(() => {
+    if (id && userId && streamClient && internetReachableRef.current) {
       getPostDetail((loading, success) => {
-        if (!loading && !success && isInternetReachable) {
+        if (!loading && !success && internetReachableRef.current) {
           if (Platform.OS === 'web') {
             rootNavigation.replace(rootSwitch.notFound);
           } else {
@@ -128,7 +138,7 @@ const _PostDetailContent = (props: any) => {
         }
       });
     }
-  }, [id, userId, isInternetReachable]);
+  }, [id, userId, internetReachableRef]);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -307,11 +317,7 @@ const _PostDetailContent = (props: any) => {
 
   return (
     <View style={styles.flex1}>
-      <Header
-        titleTextProps={{useI18n: true}}
-        title={'post:title_post_detail'}
-        onPressBack={onPressBack}
-      />
+      <Header title={headerTitle} onPressBack={onPressBack} />
       {!postTime ? (
         <PostViewPlaceholder />
       ) : (

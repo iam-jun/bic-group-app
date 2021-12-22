@@ -35,6 +35,7 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
   placeholder: string;
   surface: string;
   iconTint?: string;
+  iconTintLight?: string;
   iconTintReversed?: string;
 
   link?: string;

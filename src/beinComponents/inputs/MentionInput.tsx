@@ -112,7 +112,11 @@ const MentionInput: React.FC<MentionInputProps> = ({
   const windowDimension = useWindowDimensions();
 
   //because of issue textInput cant use as container in web, we should check to disable children mode
-  const {value: compInputValue, ...restCompInputProps} = componentInputProps;
+  const {
+    value: compInputValue,
+    placeholder,
+    ...restCompInputProps
+  } = componentInputProps;
   const value = Platform.OS === 'web' ? compInputValue || content : undefined;
   const children = Platform.OS === 'web' ? undefined : contentDisplay;
 
@@ -554,7 +558,7 @@ const MentionInput: React.FC<MentionInputProps> = ({
           value={value}
           textInputRef={inputRef}
           onChangeText={_onChangeText}
-          placeholder={placeholderText}
+          placeholder={placeholderText || placeholder}
           onContentSizeChange={
             Platform.OS === 'web' ? undefined : _onContentSizeChange
           }
