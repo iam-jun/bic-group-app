@@ -20,11 +20,10 @@ import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import {appScreens} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
+import {useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {ITabTypes} from '~/interfaces/IRouter';
 import images from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
@@ -36,13 +35,14 @@ import {ITheme} from '~/theme/interfaces';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import {useBaseHook} from '~/hooks';
 import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
+import {openLink} from '~/utils/common';
+import {chatSchemes} from '~/constants/chat';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
-  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
@@ -178,20 +178,20 @@ const Newsfeed = () => {
         headerRef={headerRef}
         avatar={images.logo_bein}
         hideBack
-        menuIcon={'Edit'}
-        onPressMenu={navigateToCreatePost}
-        onShowSearch={onShowSearch}
-        onSearchText={onSearchText}
+        rightIcon="CommentsAlt"
         searchPlaceholder={t('input:search_post')}
         autoFocusSearch
+        onRightPress={navigateToChat}
+        onShowSearch={onShowSearch}
+        onSearchText={onSearchText}
         onFocusSearch={onFocusSearch}
         onSubmitSearch={onSubmitSearch}
       />
     );
   };
 
-  const navigateToCreatePost = () => {
-    rootNavigation.navigate(homeStack.createPost);
+  const navigateToChat = () => {
+    openLink(chatSchemes.CHANNELS);
   };
 
   const onEndReach = useCallback(() => getData(), []);

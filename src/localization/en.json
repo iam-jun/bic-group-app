@@ -568,10 +568,10 @@
     "text_approved_user": "Approved user",
     "text_approved_all": "Approved {0} user(s)",
     "text_declined_all": "Declined {0} user(s)",
-    "title_members": "Members",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
-    "text_approved_member_group": "You have been approved to be a member of this group"
+    "text_approved_member_group": "You have been approved to be a member of this group",
+    "title_members": "Members"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
