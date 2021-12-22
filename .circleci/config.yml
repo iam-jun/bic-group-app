@@ -110,10 +110,6 @@ jobs:
       FASTLANE_LANE: deploy_staging_ci
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            # - "89:78:d6:1d:fe:5f:5a:56:8a:26:1c:4d:bb:09:36:1d"
-            - "9d:69:e6:39:9b:39:b6:dd:9b:50:6c:6d:b8:fd:54:26"
       - run:
           name: Import environment variables from Contexts
           command: |
@@ -148,6 +144,11 @@ jobs:
       - run:
           name: Install Pod
           command: cd ios && pod install
+      - add_ssh_keys:
+          fingerprints:
+            - "9d:69:e6:39:9b:39:b6:dd:9b:50:6c:6d:b8:fd:54:26"
+            - "c2:82:e5:3f:3b:bf:32:02:ab:0b:08:1d:ff:bc:ec:75"
+            - "00:1c:a5:d9:5b:4c:15:02:55:4a:bf:24:22:ea:2e:35"
       - run:
           name: Fastlane build and deploy TestFlight
           command: cd ios && bundle exec fastlane $FASTLANE_LANE
