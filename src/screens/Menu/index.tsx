@@ -106,13 +106,7 @@ const Menu = (): React.ReactElement => {
           content: 'Do you want to Log Out?',
           iconName: 'SignOutAlt',
           cancelBtn: true,
-          cancelBtnProps: {
-            testID: 'logout.cancel',
-          },
           onConfirm: () => dispatch(authActions.signOut()),
-          confirmBtnProps: {
-            testID: 'logout.confirm',
-          },
           confirmLabel: i18next.t('auth:text_sign_out'),
         };
         dispatch(modalActions.showAlert(alertPayload));
@@ -185,6 +179,7 @@ const Menu = (): React.ReactElement => {
         {renderDivider()}
         {renderListView({
           data: appSettingsMenu,
+          itemTestID: 'menu.account_settings',
         })}
         {renderDivider()}
         {renderListView({

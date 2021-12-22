@@ -128,6 +128,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
           <View style={styles.displayBtn}>
             {!!cancelBtn && (
               <_CancelBtnComponent
+                testID="alert_modal.cancel"
                 style={{marginEnd: theme.spacing?.margin.base}}
                 onPress={_onDismiss}
                 {...cancelBtnProps}>
@@ -138,6 +139,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
             {!!confirmLabel && (
               <_ConfirmBtnComponent
                 highEmphasis
+                testID="alert_modal.confirm"
                 disabled={input && !text}
                 onPress={() => {
                   dispatch(actions.hideAlert());

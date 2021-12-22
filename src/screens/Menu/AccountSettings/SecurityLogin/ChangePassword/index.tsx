@@ -244,10 +244,10 @@ const ChangePassword = () => {
           {t('common:text_save')}
         </Button.Primary>
         <View style={styles.forgotPasswordContainer}>
-          <TouchableOpacity
-            testID="change_password.forgot_password"
-            onPress={handleForgotPassword}>
-            <Text.H6 style={styles.forgotPasswordText}>
+          <TouchableOpacity onPress={handleForgotPassword}>
+            <Text.H6
+              testID="change_password.forgot_password"
+              style={styles.forgotPasswordText}>
               {t('auth:btn_forgot_password')}
             </Text.H6>
           </TouchableOpacity>

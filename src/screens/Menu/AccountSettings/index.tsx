@@ -87,6 +87,7 @@ const GeneralSettings = () => {
       <Header title={t('settings:title_account_settings')} hideBackOnLaptop />
       <ListView
         type="menu"
+        itemTestID="account_settings"
         data={accountSettingsMenu}
         scrollEnabled={false}
         listStyle={styles.menuList}

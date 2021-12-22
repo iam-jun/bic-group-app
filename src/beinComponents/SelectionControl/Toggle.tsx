@@ -45,7 +45,7 @@ const Toggle: React.FC<ToggleProps> = ({
 
   return (
     <TouchableOpacity style={style} onPress={_onChangeValue} testID={testID}>
-      <View style={styles.outsideRectangle}>
+      <View testID={testID} style={styles.outsideRectangle}>
         <View style={styles.insideCircle} />
       </View>
     </TouchableOpacity>

@@ -96,6 +96,7 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
 
                 return (
                   <Div
+                    testID={`tab_${name}`}
                     className={className}
                     style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
                     {renderIcon(name, focused)}

@@ -141,11 +141,9 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper
-            onPress={onEditAvatar}
-            disabled={loadingAvatar}
-            testID="user_edit_profile.avatar.edit">
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
             <Text.H6
+              testID="user_edit_profile.avatar.edit"
               color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
               useI18n>
               settings:title_edit
@@ -176,11 +174,9 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper
-            onPress={onEditCover}
-            disabled={loadingCover}
-            testID="user_edit_profile.cover.edit">
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
             <Text.H6
+              testID="user_edit_profile.cover.edit"
               color={!loadingCover ? colors.primary7 : colors.textDisabled}
               useI18n>
               settings:title_edit
@@ -211,10 +207,11 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_basic_info
           </Text.H5>
-          <ButtonWrapper
-            onPress={goToEditInfo}
-            testID="user_edit_profile.basic_info.edit">
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={goToEditInfo}>
+            <Text.H6
+              testID="user_edit_profile.basic_info.edit"
+              color={theme.colors.primary7}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
@@ -273,10 +270,11 @@ const UserEditProfile = () => {
           <Text.H5 color={theme.colors.iconTint} useI18n>
             settings:title_contact
           </Text.H5>
-          <ButtonWrapper
-            onPress={goToEditContact}
-            testID="user_edit_profile.contact.edit">
-            <Text.H6 color={theme.colors.primary7} useI18n>
+          <ButtonWrapper onPress={goToEditContact}>
+            <Text.H6
+              testID="user_edit_profile.contact.edit"
+              color={theme.colors.primary7}
+              useI18n>
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>

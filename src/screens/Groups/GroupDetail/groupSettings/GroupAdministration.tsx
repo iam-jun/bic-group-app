@@ -64,10 +64,12 @@ const GroupAdministration = (props: any) => {
     title: string,
     onPress?: () => void,
     notificationsBadgeNumber?: number,
+    testID?: string,
   ) => {
     return (
       <TouchableOpacity onPress={onPress}>
         <MenuItem
+          testID={testID}
           title={title}
           icon={icon}
           notificationsBadgeNumber={notificationsBadgeNumber}
@@ -91,18 +93,21 @@ const GroupAdministration = (props: any) => {
         'settings:title_pending_members',
         goToPendingMembers,
         totalPendingMembers,
+        'group_administration.pending_members',
       )}
       {renderItem(
         'FileExclamationAlt',
         'settings:title_pending_posts',
         displayNewFeature,
         23,
+        'group_administration.pending_posts',
       )}
       {renderItem(
         'ExclamationTriangle',
         'settings:title_reported_posts',
         displayNewFeature,
         1,
+        'group_administration.reported_post',
       )}
     </>
   );
@@ -117,6 +122,7 @@ const GroupAdministration = (props: any) => {
       </Text.H5>
       <ListView
         type="menu"
+        itemTestID="group_administration.settings"
         data={groupSettings}
         scrollEnabled={false}
         onItemPress={onGroupAdminPress}
