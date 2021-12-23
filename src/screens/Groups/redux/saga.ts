@@ -561,9 +561,7 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
       });
     }
 
-    yield put(
-      groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
-    );
+    yield put(groupsActions.setLoadingPage(true));
     yield put(groupsActions.getGroupDetail(payload));
 
     const toastMessage: IToastMessage = {
