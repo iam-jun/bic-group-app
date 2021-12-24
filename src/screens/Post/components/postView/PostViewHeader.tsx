@@ -87,10 +87,9 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       <View style={{flex: 1}}>
         <TouchableOpacity
           disabled={!isInternetReachable}
-          testID={'post_view_header.actor'}
           onPress={onPressActor}
           style={{alignSelf: 'flex-start'}}>
-          <Text.H6>{actorName}</Text.H6>
+          <Text.H6 testID="post_view_header.actor">{actorName}</Text.H6>
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
           <Text.H6S useI18n color={colors.textSecondary} style={styles.textTo}>
@@ -102,7 +101,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
             {textAudiences}
           </Text.H6>
         </View>
-        <View style={styles.rowCenter} testID="post_view_header.time">
+        <View style={styles.rowCenter}>
           <TimeView time={time} />
         </View>
       </View>
