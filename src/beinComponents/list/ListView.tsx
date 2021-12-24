@@ -137,9 +137,9 @@ const ListView: React.FC<ListViewProps> = ({
       <TouchableOpacity
         disabled={!isInternetReachable || !onItemPress || item.disableClick}
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
-        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}
-        testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}>
+        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
         <ItemComponent
+          testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
           {...item}
           disabled={!isInternetReachable}
           title={item[titleField || 'title']}

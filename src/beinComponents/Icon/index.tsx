@@ -104,8 +104,7 @@ const Icon: React.FC<IconProps> = ({
     <TouchableOpacity
       disabled={noInternet || disabled || !onPress}
       onPress={onPress}
-      hitSlop={hitSlop}
-      testID={testID}>
+      hitSlop={hitSlop}>
       <Wrapper style={[styles.container, style, {backgroundColor}]}>
         <Div
           style={[
@@ -113,7 +112,7 @@ const Icon: React.FC<IconProps> = ({
             disabled && isButton && styles.disabled,
             iconStyle,
           ]}>
-          <Div className="icon-wrapper">
+          <Div className="icon-wrapper" testID={testID}>
             <IconComponent
               style={_style}
               tintColor={_tintColor}

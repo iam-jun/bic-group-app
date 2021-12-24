@@ -35,6 +35,7 @@ const HeaderAvatarView = ({
 
   return (
     <TouchableOpacity
+      testID="header_avatar_view"
       disabled={!isInternetReachable}
       style={StyleSheet.flatten([styles.container, containerStyle])}
       onPress={onPress}>

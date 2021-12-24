@@ -65,7 +65,6 @@ const EditGroupDescription = (props: any) => {
         buttonText={'common:btn_save'}
         buttonProps={{
           useI18n: true,
-          testID: 'edit_group_description.save',
         }}
         onPressButton={onSave}
         hideBackOnLaptop={navigation.canGoBack() ? false : true}

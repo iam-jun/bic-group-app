@@ -242,6 +242,7 @@ const Header: React.FC<HeaderProps> = ({
         )}
         {buttonText && onPressButton && (
           <Button.Secondary
+            testID="header.button"
             style={{marginRight: spacing?.margin.large}}
             onPress={onPressButton}
             {...buttonProps}>

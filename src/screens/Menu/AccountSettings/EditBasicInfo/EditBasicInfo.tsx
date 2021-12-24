@@ -151,7 +151,6 @@ const EditBasicInfo = () => {
         buttonProps={{
           useI18n: true,
           highEmphasis: true,
-          testID: 'edit_basic_info.save',
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}

@@ -99,6 +99,7 @@ const UserProfile = (props: any) => {
   const renderButton = () => {
     return userId == currentUserId || userId == currentUsername ? (
       <Button.Secondary
+        testID="user_profile.edit"
         style={styles.button}
         rightIcon={'EditAlt'}
         onPress={onEditProfileButton}>
@@ -106,6 +107,7 @@ const UserProfile = (props: any) => {
       </Button.Secondary>
     ) : (
       <Button.Secondary
+        testID="user_profile.message"
         style={styles.button}
         highEmphasis
         rightIcon={'Message'}>
