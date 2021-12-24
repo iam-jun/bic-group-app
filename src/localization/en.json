@@ -551,29 +551,25 @@
     "text_successfully_join_group": "Successfully join group",
     "text_no_pending_members_notice": "There's no pending members",
     "text_pending_request_notice": "People who request to join your group will show here.",
-    "pending_members": {},
     "text_respond_all_member_requests": {
       "title": {
         "approve": "Approve all member requests?",
         "decline": "Decline all member requests?"
       },
       "content": {
-        "approve": "You're about to add {0} person(s) to {1}",
-        "decline": "You're about to decline {0} member request(s)"
+        "approve_one": "You're about to add {{count}} person to {0}",
+        "approve_other": "You're about to add {{count}} people to {0}",
+        "decline_one": "You're about to decline {{count}} member request",
+        "decline_other": "You're about to decline {{count}} member requests"
       }
     },
-    "approve_one": "You're about to add {{count}} person to {0}",
-    "approve_zero": "You're about to add {{count}} person to {0}",
-    "approve_other": "You're about to add {{count}} people to {0}",
-    "decline_one": "You're about to decline {{count}} member request",
-    "decline_zero": "You're about to decline {{count}} member request",
-    "decline_other": "You're about to decline {{count}} member requests",
     "text_requested_at": "Requested at",
-    "text_is_added_as_member": "is added as member",
     "text_declined_user": "Declined user",
     "text_approved_user": "Approved user",
-    "text_approved_all": "Approved {0} user(s)",
-    "text_declined_all": "Declined {0} user(s)",
+    "text_approved_all_one": "Approved {{count}} user",
+    "text_approved_all_other": "Approved {{count}} users",
+    "text_declined_all_one": "Declined {{count}} user",
+    "text_declined_all_other": "Declined {{count}} users",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
     "text_approved_member_group": "You have been approved to be a member of this group",
