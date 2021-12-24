@@ -31,8 +31,9 @@ const GroupSectionItem = ({
   const styles = themeStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onPress} testID={testID}>
+    <TouchableOpacity onPress={onPress}>
       <PrimaryItem
+        testID={testID}
         title={t(title)}
         subTitle={subtitle}
         RightComponent={

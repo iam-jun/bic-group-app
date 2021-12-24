@@ -549,7 +549,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
             style={styles.hidden}
             onContentSizeChange={_onContentSizeChange}
             editable={!disabled}
-            onKeyPress={_onKeyPress}>
+            onKeyPress={_onKeyPress}
+            testID={null}>
             {children}
           </ComponentInput>
         )}

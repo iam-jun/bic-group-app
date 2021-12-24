@@ -95,6 +95,7 @@ const GroupInfoHeader = () => {
 
     return (
       <Button.Secondary
+        testID="group_info_header.join"
         rightIcon={'Plus'}
         rightIconProps={{icon: 'Plus', size: 20}}
         style={styles.btnGroupAction}
@@ -111,6 +112,7 @@ const GroupInfoHeader = () => {
   const renderCancelRequestButton = () => {
     return (
       <Button.Secondary
+        testID="group_info_header.cancel"
         style={styles.btnGroupAction}
         onPress={onPressCancelRequest}
         textColor={theme.colors.primary}
