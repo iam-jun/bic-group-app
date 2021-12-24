@@ -43,6 +43,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   onCommentSuccess,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
+  const mentionInputRef = useRef<any>();
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -72,6 +73,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     dispatch(postActions.setPostDetailReplyingComment());
     return () => {
       dispatch(postActions.setCreateComment({content: '', loading: false}));
+      dispatch(postActions.setPostDetailReplyingComment());
     };
   }, []);
 
@@ -81,7 +83,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       if (replyTargetUserId === userId) {
         content = '';
       }
-      _commentInputRef?.current?.setText?.(content);
+      // difference ref because of android use mention input children, web use prop value
+      Platform.OS === 'web'
+        ? _commentInputRef?.current?.setText?.(content)
+        : mentionInputRef?.current?.setContent(content);
     }
   }, [replyTargetName, replyTargetUserId]);
 
@@ -141,6 +146,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   return (
     <MentionInput
+      mentionInputRef={mentionInputRef}
       modalPosition={'top'}
       onChangeText={onChangeText}
       ComponentInput={CommentInput}

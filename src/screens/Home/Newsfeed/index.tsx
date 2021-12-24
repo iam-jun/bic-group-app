@@ -105,7 +105,7 @@ const Newsfeed = () => {
     ) {
       getData(true);
     }
-  }, [streamClient, isInternetReachable, homePosts, refreshing]);
+  }, [streamClient, isInternetReachable, homePosts]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
