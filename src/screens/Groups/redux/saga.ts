@@ -711,10 +711,7 @@ function* approveAllMemberRequests({
     yield put(groupsActions.getGroupDetail(groupId));
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all')}`.replace(
-        '{0}',
-        `${total}`,
-      ),
+      content: `${i18next.t('groups:text_approved_all', {count: total})}`,
       props: {
         textProps: {useI18n: true},
         type: 'success',
