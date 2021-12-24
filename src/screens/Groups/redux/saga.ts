@@ -648,7 +648,7 @@ function* getMemberRequests({
     const response = yield groupsDataHelper.getMemberRequests(groupId, {
       offset: data.length,
       limit: appConfig.recordsPerPage,
-      key: memberRequestStatus.waiting,
+      // key: memberRequestStatus.waiting,
       ...params,
     });
 

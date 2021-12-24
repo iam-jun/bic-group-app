@@ -63,10 +63,8 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const onPressApproveAll = () => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:approve'),
-      i18next
-        .t('groups:text_respond_all_member_requests:content:approve')
-        .replace('{0}', totalPendingMembers)
-        .replace('{1}', groupDetail?.name),
+      i18next.t('groups:approve', {count: 5}),
+      // .replace('{0}', groupDetail?.name),
       doApproveAll,
     );
   };
@@ -83,9 +81,8 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const onPressDeclineAll = () => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:decline'),
-      i18next
-        .t('groups:text_respond_all_member_requests:content:decline')
-        .replace('{0}', totalPendingMembers),
+      i18next.t('groups:decline', {count: 5}),
+      // .replace('{0}', totalPendingMembers),
       doDeclineAll,
     );
   };

@@ -562,6 +562,10 @@
         "decline": "You're about to decline {0} member request(s)"
       }
     },
+    "approve_one": "You're about to add {{count}} person to {0}",
+    "approve_other": "You're about to add {{count}} people to {0}",
+    "decline_one": "You're about to decline {{count} member request",
+    "decline_other": "You're about to decline {{count}} member requests",
     "text_requested_at": "Requested at",
     "text_is_added_as_member": "is added as member",
     "text_declined_user": "Declined user",
