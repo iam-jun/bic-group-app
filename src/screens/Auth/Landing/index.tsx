@@ -51,6 +51,7 @@ const Landing = () => {
           <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
         </View>
         <Button.Primary
+          testID="landing.start"
           style={styles.button}
           onPress={() => navigation.navigate(authStack.login)}
           textVariant="h5">

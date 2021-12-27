@@ -6,7 +6,6 @@ import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
-import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
@@ -44,6 +43,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   onCommentSuccess,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
+  const mentionInputRef = useRef<any>();
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -73,6 +73,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     dispatch(postActions.setPostDetailReplyingComment());
     return () => {
       dispatch(postActions.setCreateComment({content: '', loading: false}));
+      dispatch(postActions.setPostDetailReplyingComment());
     };
   }, []);
 
@@ -82,7 +83,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       if (replyTargetUserId === userId) {
         content = '';
       }
-      _commentInputRef?.current?.setText?.(content);
+      // difference ref because of android use mention input children, web use prop value
+      Platform.OS === 'web'
+        ? _commentInputRef?.current?.setText?.(content)
+        : mentionInputRef?.current?.setContent(content);
     }
   }, [replyTargetName, replyTargetUserId]);
 
@@ -140,33 +144,32 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     );
   };
 
-  return <_MentionInput postId="" groupIds={groupIds} />;
-
-  // return (
-  //   <MentionInput
-  //     modalPosition={'top'}
-  //     onChangeText={onChangeText}
-  //     ComponentInput={CommentInput}
-  //     textInputRef={textInputRef}
-  //     componentInputProps={{
-  //       commentInputRef: _commentInputRef,
-  //       value: content,
-  //       autoFocus: autoFocus,
-  //       onPressSend: onPressSend,
-  //       HeaderComponent: renderCommentInputHeader(),
-  //       loading: loading,
-  //       isHandleUpload: true,
-  //       placeholder: t('post:placeholder_write_comment'),
-  //     }}
-  //     title={t('post:mention_title')}
-  //     emptyContent={t('post:mention_empty_content')}
-  //     getDataPromise={postDataHelper.getSearchMentionAudiences}
-  //     getDataParam={{group_ids: groupIds}}
-  //     getDataResponseKey={'data'}
-  //     fullWidth={Platform.OS !== 'web'}
-  //     showShadow={Platform.OS === 'web'}
-  //   />
-  // );
+  return (
+    <MentionInput
+      mentionInputRef={mentionInputRef}
+      modalPosition={'top'}
+      onChangeText={onChangeText}
+      ComponentInput={CommentInput}
+      textInputRef={textInputRef}
+      componentInputProps={{
+        commentInputRef: _commentInputRef,
+        value: content,
+        autoFocus: autoFocus,
+        onPressSend: onPressSend,
+        HeaderComponent: renderCommentInputHeader(),
+        loading: loading,
+        isHandleUpload: true,
+        placeholder: t('post:placeholder_write_comment'),
+      }}
+      title={t('post:mention_title')}
+      emptyContent={t('post:mention_empty_content')}
+      getDataPromise={postDataHelper.getSearchMentionAudiences}
+      getDataParam={{group_ids: groupIds}}
+      getDataResponseKey={'data'}
+      fullWidth={Platform.OS !== 'web'}
+      showShadow={Platform.OS === 'web'}
+    />
+  );
 };
 
 const createStyle = (theme: ITheme) => {

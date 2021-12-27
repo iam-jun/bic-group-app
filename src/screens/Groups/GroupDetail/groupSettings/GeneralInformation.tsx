@@ -133,10 +133,9 @@ const GeneralInformation = (props: any) => {
 
   const renderBottomSheet = ({item}: {item: any}) => {
     return (
-      <TouchableOpacity
-        onPress={() => onPrivacyMenuPress(item)}
-        testID={`general_information.privacy.${item.type}`.toLowerCase()}>
+      <TouchableOpacity onPress={() => onPrivacyMenuPress(item)}>
         <PrimaryItem
+          testID={`general_information.privacy.${item.type}`.toLowerCase()}
           title={i18next.t(item.title)}
           subTitle={
             <Text>
@@ -166,11 +165,9 @@ const GeneralInformation = (props: any) => {
           <Text.H5 color={colors.iconTint} useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper
-            onPress={onEditAvatar}
-            disabled={loadingAvatar}
-            testID="general_information.avatar.edit">
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
             <Text.H6
+              testID="general_information.avatar.edit"
               color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
               useI18n>
               settings:title_edit
@@ -200,11 +197,9 @@ const GeneralInformation = (props: any) => {
           <Text.H5 color={colors.iconTint} useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper
-            onPress={onEditCover}
-            disabled={loadingCover}
-            testID="general_information.cover.edit">
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
             <Text.H6
+              testID="general_information.cover.edit"
               color={!loadingCover ? colors.primary7 : colors.textDisabled}
               useI18n>
               settings:title_edit

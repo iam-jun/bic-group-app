@@ -192,10 +192,11 @@ const EditPhoneNumber = () => {
 
   const renderCountryCodeInput = () => {
     return (
-      <ButtonWrapper onPress={onOpenCountryCode}>
+      <ButtonWrapper
+        testID="edit_phone_number.country_code"
+        onPress={onOpenCountryCode}>
         <View pointerEvents="none">
           <TextInput
-            testID="edit_phone_number.country_code"
             value={`+${codeValue}`}
             style={styles.countryExtension}
             left={

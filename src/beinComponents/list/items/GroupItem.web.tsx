@@ -21,6 +21,7 @@ import appActions from '~/store/app/actions';
 import {appScreens} from '~/configs/navigator';
 
 export interface GroupItemProps extends IParsedGroup {
+  testID?: string;
   uiLevel: number;
   isCollapsing: boolean;
   onPressItem?: (item: GroupItemProps) => void;
@@ -35,6 +36,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     name,
     user_count,
     icon,
+    testID = 'group_item',
 
     childrenUiIds = [],
     isChecked = false,
@@ -156,7 +158,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       <TouchableOpacity
         disabled={!isInternetReachable || disableOnPressItem}
         onPress={_onPressItem}>
-        <View style={styles.container}>
+        <View style={styles.container} testID={testID}>
           {Platform.OS === 'web' && isActive && (
             <View style={styles.itemActiveIndicator} />
           )}

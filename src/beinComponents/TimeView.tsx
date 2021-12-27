@@ -67,7 +67,7 @@ const TimeView: FC<TimeViewProps> = ({
   }, [time, language]);
 
   return (
-    <Text.BodyS color={colors.textSecondary} style={style}>
+    <Text.BodyS testID="time_view" color={colors.textSecondary} style={style}>
       {displayTime}
     </Text.BodyS>
   );

@@ -561,9 +561,7 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
       });
     }
 
-    yield put(
-      groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
-    );
+    yield put(groupsActions.setLoadingPage(true));
     yield put(groupsActions.getGroupDetail(payload));
 
     const toastMessage: IToastMessage = {
@@ -713,10 +711,7 @@ function* approveAllMemberRequests({
     yield put(groupsActions.getGroupDetail(groupId));
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all')}`.replace(
-        '{0}',
-        `${total}`,
-      ),
+      content: `${i18next.t('groups:text_approved_all', {count: total})}`,
       props: {
         textProps: {useI18n: true},
         type: 'success',

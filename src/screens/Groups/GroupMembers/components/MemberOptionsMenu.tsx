@@ -94,7 +94,6 @@ const MemberOptionsMenu = ({
         cancelBtn: true,
         cancelBtnProps: {
           textColor: theme.colors.primary7,
-          testID: 'member_options_menu.set_admin.cancel',
         },
         onConfirm: () => doSetAdmin(selectedMember),
         confirmLabel: i18next.t(
@@ -103,7 +102,6 @@ const MemberOptionsMenu = ({
         ConfirmBtnComponent: Button.Secondary,
         confirmBtnProps: {
           highEmphasis: true,
-          testID: 'member_options_menu.set_admin.confirm',
         },
       };
       alertPayload.content = alertPayload.content.replace(
@@ -140,15 +138,11 @@ const MemberOptionsMenu = ({
       cancelBtn: true,
       cancelBtnProps: {
         textColor: theme.colors.primary7,
-        testID: 'member_options_menu.remove_admin.cancel',
       },
       onConfirm: () => doRemoveAdmin(selectedMember),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_admin:button_confirm',
       ),
-      confirmBtnProps: {
-        testID: 'member_options_menu.remove_admin.confirm',
-      },
       ConfirmBtnComponent: Button.Danger,
     };
     alertPayload.content = alertPayload.content.replace(
@@ -227,15 +221,11 @@ const MemberOptionsMenu = ({
       cancelBtn: true,
       cancelBtnProps: {
         textColor: theme.colors.primary7,
-        testID: 'member_options_menu.remove_member.cancel',
       },
       onConfirm: () => removeMember(userId, fullname),
       confirmLabel: i18next.t(
         'groups:modal_confirm_remove_member:button_remove',
       ),
-      confirmBtnProps: {
-        testID: 'member_options_menu.remove_member.confirm',
-      },
       ConfirmBtnComponent: Button.Danger,
       children: null as React.ReactNode,
     };

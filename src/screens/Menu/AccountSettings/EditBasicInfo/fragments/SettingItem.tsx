@@ -34,11 +34,9 @@ const SettingItem = ({
   const styles = themeStyles(theme);
 
   return (
-    <TouchableOpacity
-      testID={testID}
-      onPress={onPress}
-      disabled={isTouchDisabled}>
+    <TouchableOpacity onPress={onPress} disabled={isTouchDisabled}>
       <PrimaryItem
+        testID={testID}
         title={i18next.t(title)}
         subTitle={subtitle}
         subTitleProps={
