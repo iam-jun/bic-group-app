@@ -2,6 +2,7 @@ import types from './types';
 
 const initMenuState = {
   text: '',
+  cursorPosition: -2,
   data: [],
   highlightItem: null,
 };
@@ -14,6 +15,11 @@ const reducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         text: payload,
+      };
+    case types.SET_CURSOR_POSITION:
+      return {
+        ...state,
+        cursorPosition: payload,
       };
     case types.SET_DATA:
       return {
