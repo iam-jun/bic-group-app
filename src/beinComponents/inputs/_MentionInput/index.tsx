@@ -1,13 +1,9 @@
-import React from 'react';
-import {
-  View,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputEndEditingEventData,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, TextInput, Platform, KeyboardTypeOptions} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useKeySelector} from '~/hooks/selector';
 import Autocomplete from './Autocomplete';
+import {switchKeyboardForCodeBlocks} from './helper';
 import actions from './redux/actions';
 
 interface Props {
@@ -17,18 +13,36 @@ interface Props {
 
 const _MentionInput = ({postId, groupIds}: Props) => {
   const dispatch = useDispatch();
-  const text = useKeySelector('mentionInput.text');
+  const {text, cursorPosition} = useKeySelector('mentionInput');
+  const [keyboardType, setKeyboardType] =
+    useState<KeyboardTypeOptions>('default');
 
-  const onEndEditing = (
-    e: NativeSyntheticEvent<TextInputEndEditingEventData>,
-  ) => {
-    dispatch(actions.setText(e.nativeEvent.text));
+  const onChangeText = (text: string) => {
+    dispatch(actions.setText(text));
+  };
+
+  const onSelectionChange = (event: any, fromHandleTextChange = false) => {
+    const _cursorPosition = fromHandleTextChange
+      ? cursorPosition
+      : event.nativeEvent.selection.end;
+
+    if (Platform.OS === 'ios') {
+      const _keyboardType = switchKeyboardForCodeBlocks(text, _cursorPosition);
+      setKeyboardType(_keyboardType);
+    }
+    dispatch(actions.setCursorPosition(_cursorPosition));
   };
 
   return (
-    <View>
+    <View style={{backgroundColor: 'grey', height: 100}}>
       <Autocomplete groupIds={groupIds} modalPosition="above-keyboard" />
-      <TextInput value={text} onEndEditing={onEndEditing} />
+      <TextInput
+        autoFocus
+        value={text}
+        keyboardType={keyboardType}
+        onChangeText={onChangeText}
+        onSelectionChange={onSelectionChange}
+      />
     </View>
   );
 };

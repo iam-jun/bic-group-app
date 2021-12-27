@@ -8,6 +8,12 @@ export default {
       payload,
     };
   },
+  setCursorPosition: (payload: number) => {
+    return {
+      type: types.SET_CURSOR_POSITION,
+      payload,
+    };
+  },
   runSearch: (payload: IParamSearchMentionAudiences) => {
     return {
       type: types.RUN_SEARCH,

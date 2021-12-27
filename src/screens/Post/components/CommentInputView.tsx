@@ -6,6 +6,7 @@ import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
+import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
@@ -144,32 +145,34 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     );
   };
 
-  return (
-    <MentionInput
-      mentionInputRef={mentionInputRef}
-      modalPosition={'top'}
-      onChangeText={onChangeText}
-      ComponentInput={CommentInput}
-      textInputRef={textInputRef}
-      componentInputProps={{
-        commentInputRef: _commentInputRef,
-        value: content,
-        autoFocus: autoFocus,
-        onPressSend: onPressSend,
-        HeaderComponent: renderCommentInputHeader(),
-        loading: loading,
-        isHandleUpload: true,
-        placeholder: t('post:placeholder_write_comment'),
-      }}
-      title={t('post:mention_title')}
-      emptyContent={t('post:mention_empty_content')}
-      getDataPromise={postDataHelper.getSearchMentionAudiences}
-      getDataParam={{group_ids: groupIds}}
-      getDataResponseKey={'data'}
-      fullWidth={Platform.OS !== 'web'}
-      showShadow={Platform.OS === 'web'}
-    />
-  );
+  return <_MentionInput postId="" groupIds={groupIds} />;
+
+  // return (
+  //   <MentionInput
+  //     mentionInputRef={mentionInputRef}
+  //     modalPosition={'top'}
+  //     onChangeText={onChangeText}
+  //     ComponentInput={CommentInput}
+  //     textInputRef={textInputRef}
+  //     componentInputProps={{
+  //       commentInputRef: _commentInputRef,
+  //       value: content,
+  //       autoFocus: autoFocus,
+  //       onPressSend: onPressSend,
+  //       HeaderComponent: renderCommentInputHeader(),
+  //       loading: loading,
+  //       isHandleUpload: true,
+  //       placeholder: t('post:placeholder_write_comment'),
+  //     }}
+  //     title={t('post:mention_title')}
+  //     emptyContent={t('post:mention_empty_content')}
+  //     getDataPromise={postDataHelper.getSearchMentionAudiences}
+  //     getDataParam={{group_ids: groupIds}}
+  //     getDataResponseKey={'data'}
+  //     fullWidth={Platform.OS !== 'web'}
+  //     showShadow={Platform.OS === 'web'}
+  //   />
+  // );
 };
 
 const createStyle = (theme: ITheme) => {

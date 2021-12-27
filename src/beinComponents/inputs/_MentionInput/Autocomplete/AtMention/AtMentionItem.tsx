@@ -12,6 +12,7 @@ import actions from '../../redux/actions';
 
 const AtMentionItem = ({item, onPressItem}: any) => {
   const dispatch = useDispatch();
+  const text = useKeySelector('mentionInput.text');
   const highlightItem = useKeySelector('mentionInput.highlightItem');
 
   const theme = useTheme() as ITheme;
@@ -32,7 +33,29 @@ const AtMentionItem = ({item, onPressItem}: any) => {
   };
 
   const _onPressItem = () => {
-    onPressItem(item);
+    // onPressItem(item);
+    completeMention = mention => {
+      //    const {cursorPosition, isSearch, onChangeText, value} = this.props;
+      const mentionPart = text.substring(0, cursorPosition);
+
+      let completedDraft;
+      if (isSearch) {
+        completedDraft = mentionPart.replace(
+          AT_MENTION_SEARCH_REGEX,
+          `from: ${mention} `,
+        );
+      } else {
+        completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
+      }
+      if (value.length > cursorPosition) {
+        completedDraft += value.substring(cursorPosition);
+      }
+
+      onChangeText(completedDraft);
+      this.setState({
+        sections: [],
+      });
+    };
   };
 
   return (

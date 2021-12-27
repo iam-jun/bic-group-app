@@ -1,6 +1,12 @@
 import _ from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import ListView from '~/beinComponents/list/ListView';
@@ -43,10 +49,11 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
 
   useEffect(() => {
     const matchTerm = getMatchTermForAtMention(text, false);
+    console.log('matchTerm', matchTerm);
     if (matchTerm) {
       dispatch(actions.runSearch({group_ids: groupIds}));
     }
-  }, text);
+  }, [text]);
 
   // @ts-ignore
   const onContentSizeChange = e => {
@@ -69,11 +76,14 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
   };
 
   return (
-    <ListView
-      data={data}
-      renderItem={renderItem}
-      onContentSizeChange={onContentSizeChange}
-    />
+    <View style={styles.containerModal}>
+      <FlatList
+        data={data}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        // onContentSizeChange={onContentSizeChange}
+      />
+    </View>
   );
 };
 

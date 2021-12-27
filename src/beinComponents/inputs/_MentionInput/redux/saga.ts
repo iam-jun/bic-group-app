@@ -20,7 +20,7 @@ function* runSearch({
     const response: AxiosResponse = yield makeHttpRequest(
       postApiConfig.getSearchMentionAudiences(payload),
     );
-    yield put(actions.setData(response.data));
+    if (response.data?.data) yield put(actions.setData(response.data?.data));
   } catch (e) {
     console.log('runSearch', e);
   }
