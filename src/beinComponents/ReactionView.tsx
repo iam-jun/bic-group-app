@@ -87,7 +87,7 @@ const ReactionView: FC<ReactionViewProps> = ({
     return (
       <View style={styles.container}>
         {renderReactions()}
-        {!!onPressSelectReaction && (
+        {!!onPressSelectReaction && renderedReactions.length < 21 && (
           <Button
             style={[styles.buttonReact, styles.marginHorizontal6]}
             onPress={onPressSelectReaction}>
@@ -105,7 +105,7 @@ const createStyle = (theme: ITheme) => {
     containerButtonOnly: {
       flex: 1,
       alignItems: 'flex-start',
-      marginLeft: spacing.margin.small,
+      paddingTop: spacing.padding.small,
     },
     container: {
       flex: 1,
@@ -113,14 +113,13 @@ const createStyle = (theme: ITheme) => {
       flexWrap: 'wrap',
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.base,
     },
     buttonReact: {
       marginVertical: 2,
       borderWidth: 1,
       borderColor: colors.borderCard,
       borderRadius: spacing?.borderRadius.small,
-      paddingHorizontal: spacing.padding.small,
+      paddingHorizontal: spacing.padding.tiny,
       paddingVertical: 4,
       justifyContent: 'center',
       alignItems: 'center',

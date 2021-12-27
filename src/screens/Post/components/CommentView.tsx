@@ -234,7 +234,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       <View style={styles.container}>
         <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
-          <Avatar source={avatar} />
+          <Avatar isRounded source={avatar} />
         </ButtonWrapper>
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
           <Button
@@ -248,15 +248,24 @@ const _CommentView: React.FC<CommentViewProps> = ({
                     ? {backgroundColor: contentBackgroundColor}
                     : {},
                 ])}>
-                <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                  <ButtonWrapper onPress={onPressUser}>
-                    <Text.H6>{name}</Text.H6>
-                  </ButtonWrapper>
-                  <TimeView time={created_at} style={styles.textTime} />
+                <View style={styles.header}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <ButtonWrapper onPress={onPressUser}>
+                      <Text.H6 numberOfLines={1}>{`${name}`}</Text.H6>
+                    </ButtonWrapper>
+                    <Text.H6 color={theme.colors.textSecondary}>{` •`}</Text.H6>
+                    <TimeView
+                      time={created_at}
+                      style={styles.textTime}
+                      type="short"
+                    />
+                  </View>
+                  {/* <Icon icon="EllipsisH" size={16} /> */}
                 </View>
                 <CollapsibleText
                   useMarkdown
                   limitMarkdownTypes
+                  shortLength={200}
                   content={content || ''}
                   onPressAudience={onPressAudience}
                 />
@@ -296,8 +305,7 @@ const createStyle = (theme: ITheme) => {
     },
     contentContainer: {
       flex: 1,
-      paddingTop: spacing?.padding.tiny,
-      paddingBottom: spacing?.padding.small,
+      paddingVertical: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.small,
       backgroundColor: colors.placeholder,
       borderRadius: spacing?.borderRadius.small,
@@ -307,7 +315,7 @@ const createStyle = (theme: ITheme) => {
     },
     buttonReply: {
       marginRight: spacing?.margin.tiny,
-      paddingTop: spacing?.margin.small,
+      paddingTop: spacing?.margin.base,
     },
     webMenuButton: {
       width: 32,
@@ -319,8 +327,13 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.base,
     },
     textTime: {
-      marginLeft: spacing.margin.small,
+      marginLeft: 2,
       color: colors.textSecondary,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: spacing.margin.tiny,
     },
   });
 };
