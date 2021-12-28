@@ -131,7 +131,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
             onPress={() => setSelectingStartDate(true)}
             style={startDateErr ? styles.buttonRightErr : styles.buttonRight}
             textColor={startDateErr ? colors.error : colors.primary6}>
-            {formatDateTime(selectedStartDate, t, language)}
+            {formatDateTime(selectedStartDate, language)}
           </Button.Secondary>
         }
       />
@@ -148,7 +148,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
             onPress={() => setSelectingEndDate(true)}
             style={endDateErr ? styles.buttonRightErr : styles.buttonRight}
             textColor={endDateErr ? colors.error : colors.primary6}>
-            {formatDateTime(selectedEndDate, t, language)}
+            {formatDateTime(selectedEndDate, language)}
           </Button.Secondary>
         }
       />
