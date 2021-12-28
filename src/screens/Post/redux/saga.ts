@@ -51,7 +51,7 @@ export default function* postSaga() {
   yield takeEvery(postTypes.DELETE_POST, deletePost);
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
-  yield takeEvery(postTypes.POST_REACT_TO_POST, postReactToPost);
+  yield takeEvery(postTypes.POST_REACT_TO_POST, putReactionToPost);
   yield takeEvery(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
   yield takeEvery(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
   yield takeEvery(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
@@ -412,7 +412,7 @@ function* onUpdateReactionOfPostById(
   }
 }
 
-function* postReactToPost({
+function* putReactionToPost({
   payload,
 }: {
   type: string;
@@ -437,13 +437,10 @@ function* postReactToPost({
         (newReactionCounts?.[reactionId] || 0) + 1;
       yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
-      const response = yield call(
-        postDataHelper.postReaction,
-        id,
-        'post',
+      const response = yield postDataHelper.putReactionToPost({
+        postId: id,
         data,
-        userId,
-      );
+      });
       if (response?.data?.[0]) {
         const post2 = yield select(s => get(s, postKeySelector.postById(id)));
         const cReactionCounts2 = post2.reaction_counts || {};
