@@ -453,7 +453,7 @@ function* putReactionToPost({
         const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
 
         const reactionArr2: IReaction[] = [];
-        reactionArr2.push({id: response?.data?.[0]});
+        reactionArr2.push({id: response?.data?.[0]?.id});
         newOwnReaction2[reactionId] = reactionArr2;
 
         yield onUpdateReactionOfPostById(
@@ -549,7 +549,9 @@ function* putReactionToComment({
   } = payload;
   const isChildComment = !!parentCommentId;
   if (!postId) {
-    console.log(`\x1b[31m🐣️ saga putReactionToComment: postId not found\x1b[0m`);
+    console.log(
+      `\x1b[31m🐣️ saga putReactionToComment: postId not found\x1b[0m`,
+    );
     return;
   }
   try {
@@ -588,7 +590,7 @@ function* putReactionToComment({
         const cOwnReactions2 = cComment2.own_children || {};
         const newOwnChildren2 = {...cOwnReactions2};
         const reactionArr2: IReaction[] = [];
-        reactionArr2.push({id: response?.data?.[0]});
+        reactionArr2.push({id: response?.data?.[0]?.id});
         newOwnChildren2[reactionId] = reactionArr2;
         yield onUpdateReactionOfCommentById(
           id,

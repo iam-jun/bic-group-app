@@ -182,9 +182,9 @@ export const postApiConfig = {
     },
   }),
   deleteReaction: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/${id}`,
+    url: `${provider.url}api/reactions/${id}`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
   }),
   getReactionDetail: (
