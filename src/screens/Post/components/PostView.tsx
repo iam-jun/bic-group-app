@@ -175,7 +175,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.postReactToPost(payload));
   };
@@ -186,7 +185,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.deleteReactToPost(payload));
   };

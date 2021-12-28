@@ -52,7 +52,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeEvery(postTypes.POST_REACT_TO_POST, putReactionToPost);
   yield takeEvery(postTypes.DELETE_REACT_TO_POST, deleteReactToPost);
-  yield takeEvery(postTypes.POST_REACT_TO_COMMENT, postReactToComment);
+  yield takeEvery(postTypes.POST_REACT_TO_COMMENT, putReactionToComment);
   yield takeEvery(postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment);
   yield takeLatest(
     postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
@@ -423,7 +423,7 @@ function* putReactionToPost({
   type: string;
   payload: IPayloadReactToPost;
 }): any {
-  const {id, reactionId, reactionCounts, ownReaction, userId} = payload;
+  const {id, reactionId, reactionCounts, ownReaction} = payload;
   try {
     const post1 = yield select(s => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reaction_counts || {};
@@ -532,7 +532,7 @@ function* onUpdateReactionOfCommentById(
   }
 }
 
-function* postReactToComment({
+function* putReactionToComment({
   payload,
 }: {
   type: string;
@@ -546,11 +546,10 @@ function* postReactToComment({
     reactionId,
     reactionCounts,
     ownReaction,
-    userId,
   } = payload;
   const isChildComment = !!parentCommentId;
   if (!postId) {
-    console.log(`\x1b[31m🐣️ saga postReactToComment: postId not found\x1b[0m`);
+    console.log(`\x1b[31m🐣️ saga putReactionToComment: postId not found\x1b[0m`);
     return;
   }
   try {
@@ -577,13 +576,10 @@ function* postReactToComment({
         comment,
       );
 
-      const response = yield call(
-        postDataHelper.postReaction,
-        id,
-        'comment',
+      const response = yield postDataHelper.putReactionToComment({
+        commentId: id,
         data,
-        userId,
-      );
+      });
       if (response?.data?.[0]) {
         const cComment2 =
           (yield select(s => get(s, postKeySelector.commentById(id)))) ||

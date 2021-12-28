@@ -91,7 +91,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionId: reactionId,
         ownReaction: own_children,
         reactionCounts: children_counts,
-        userId: currentUserId,
       };
       dispatch(postActions.postReactToComment(payload));
     }
@@ -107,7 +106,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionId: reactionId,
         ownReaction: own_children,
         reactionCounts: children_counts,
-        userId: currentUserId,
       };
       dispatch(postActions.deleteReactToComment(payload));
     }

@@ -282,7 +282,6 @@ export interface IPayloadReactToPost {
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
-  userId: number;
 }
 
 export interface IPayloadReactToComment {
@@ -293,7 +292,16 @@ export interface IPayloadReactToComment {
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
-  userId: number;
+}
+
+export interface IParamPutReactionToPost {
+  postId: string;
+  data: string[];
+}
+
+export interface IParamPutReactionToComment {
+  commentId: string;
+  data: string[];
 }
 
 export interface IPayloadUpdateReactionOfPostById {

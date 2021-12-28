@@ -4,6 +4,8 @@ import {
   IActivityData,
   IParamGetPostDetail,
   IParamGetReactionDetail,
+  IParamPutReactionToComment,
+  IParamPutReactionToPost,
   IParamSearchMentionAudiences,
   IPayloadGetDraftPosts,
   IPostCreatePost,
@@ -34,7 +36,9 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  putReactionToPost: (params: any): HttpApiRequestConfig => {
+  putReactionToPost: (
+    params: IParamPutReactionToPost,
+  ): HttpApiRequestConfig => {
     const {postId, ...restParams} = params;
     return {
       url: `${provider.url}api/posts/${postId}/react`,
@@ -112,6 +116,18 @@ export const postApiConfig = {
       data: {
         data,
       },
+    };
+  },
+  putReactionToComment: (
+    params: IParamPutReactionToComment,
+  ): HttpApiRequestConfig => {
+    const {commentId, ...restParams} = params;
+    return {
+      url: `${provider.url}api/comments/${commentId}/react`,
+      method: 'put',
+      provider,
+      useRetry: true,
+      data: restParams,
     };
   },
   postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
@@ -213,7 +229,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToPost: async (param: any) => {
+  putReactionToPost: async (param: IParamPutReactionToPost) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putReactionToPost(param),
@@ -339,6 +355,20 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putReactionToComment: async (param: IParamPutReactionToComment) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.putReactionToComment(param),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }
