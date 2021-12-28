@@ -2,6 +2,7 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamSearchMentionAudiences,
   IPayloadGetDraftPosts,
@@ -11,13 +12,24 @@ import {
 } from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
-import {StreamClient} from 'getstream';
+
+const provider = ApiConfig.providers.beinFeed;
 
 export const postApiConfig = {
+  getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
+    const {postId, ...restParams} = params;
+    return {
+      url: `${provider.url}api/posts/${postId}`,
+      method: 'get',
+      provider,
+      useRetry: true,
+      params: restParams,
+    };
+  },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts`,
+    url: `${provider.url}api/posts`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
     data,
   }),
@@ -387,43 +399,27 @@ const postDataHelper = {
     }
   },
 
-  getPostDetail: async (
-    userId: string,
-    streamClient?: StreamClient,
-    postId?: string,
-  ) => {
-    if (streamClient && userId && postId) {
-      const streamOptions = {
-        limit: 1,
-        // id_lte: postId,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        recentReactionsLimit: 10,
-        withOwnReactions: true,
-        withOwnChildren: true, //return own_children of reaction to comment
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'newsfeed',
-          `u-${userId}`,
-          'getActivityDetail',
-          postId,
-          streamOptions,
-        );
-        if (data?.results?.[0]) {
-          return Promise.resolve(data?.results?.[0]);
-        } else {
-          return Promise.reject(data);
-        }
-      } catch (e) {
-        return Promise.reject(e);
+  getPostDetail: async (params: IParamGetPostDetail) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getPostDetail({
+          enrich: true,
+          own_reactions: true,
+          with_own_reactions: true,
+          with_own_children: true,
+          with_recent_reactions: true,
+          with_reaction_counts: true,
+          ...params,
+        }),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient or UserId not found');
   },
   getDraftPosts: async (payload: IPayloadGetDraftPosts) => {
     const {userId, streamClient, offset = 0} = payload || {};

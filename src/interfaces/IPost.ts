@@ -107,10 +107,10 @@ export interface IPostCreatePost {
   getstream_id?: string;
   data?: IActivityData;
   audience?: {
-    users: number[];
-    groups: number[];
+    user_ids: number[];
+    group_ids: number[];
   };
-  tags?: number[];
+  tag_ids?: number[];
   important?: IActivityImportant;
   is_draft?: boolean;
 
@@ -139,10 +139,19 @@ export interface IPayloadPutEditComment {
   data: IActivityData;
 }
 
-export interface IPayloadGetPostDetail {
-  userId: string;
-  streamClient: StreamClient;
+export interface IParamGetPostDetail {
   postId: string;
+
+  is_draft?: boolean;
+  enrich?: boolean;
+  own_reactions?: boolean;
+  with_own_reactions?: boolean;
+  with_own_children?: boolean;
+  with_recent_reactions?: boolean;
+  with_reaction_counts?: boolean;
+}
+
+export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
 }
 

@@ -257,7 +257,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   ) => {
     const users: number[] = [];
     const groups: number[] = [];
-    const audience = {groups, users};
+    const audience = {group_ids: groups, user_ids: users};
 
     const {imageError, images} = validateImages(selectingImages, t);
 

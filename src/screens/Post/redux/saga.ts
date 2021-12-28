@@ -3,6 +3,7 @@ import {isArray, get, isEmpty} from 'lodash';
 
 import {
   IOwnReaction,
+  IParamGetPostDetail,
   IPayloadAddToAllPost,
   IPayloadCreateComment,
   IPayloadGetCommentsById,
@@ -101,13 +102,7 @@ function* postCreateNewPost({
           };
           yield put(groupsActions.getGroupPosts(getGroupPostsPayload));
         } else {
-          yield put(
-            homeActions.getHomePosts({
-              streamClient,
-              userId: `${userId}`,
-              isRefresh: true,
-            }),
-          );
+          yield put(homeActions.getHomePosts({isRefresh: true}));
         }
       }
 
@@ -993,19 +988,18 @@ function* getPostDetail({
   type: string;
   payload: IPayloadGetPostDetail;
 }): any {
-  const {userId, postId, streamClient, callbackLoading} = payload || {};
-  if (!userId || !postId || !streamClient) {
-    console.log(`\x1b[31m🐣️ saga getPostDetail invalid params\x1b[0m`);
+  const {callbackLoading, postId, ...restParams} = payload || {};
+  if (!postId) {
     return;
   }
   try {
     callbackLoading?.(true, false);
-    const response = yield call(
-      postDataHelper.getPostDetail,
-      userId,
-      streamClient,
+    const params: IParamGetPostDetail = {
       postId,
-    );
+      //is_draft
+      ...restParams,
+    };
+    const response = yield call(postDataHelper.getPostDetail, params);
     yield timeOut(500);
     yield put(postActions.addToAllPosts({data: response, handleComment: true}));
     callbackLoading?.(false, true);
