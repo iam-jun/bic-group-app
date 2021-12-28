@@ -9,6 +9,7 @@ import {
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
+  IRequestReplyComment,
 } from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
@@ -92,17 +93,27 @@ export const postApiConfig = {
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/comments`,
+    url: `${provider.url}api/comments`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
+    provider: provider,
     useRetry: true,
     data: {
-      userId: params.userId,
-      referenceId: params.referenceId,
-      referenceType: params.referenceType || 'post',
-      data: params.commentData,
+      post_id: params.postId,
+      data: params.data,
     },
   }),
+  postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
+    const {parentCommentId, data} = params;
+    return {
+      url: `${provider.url}api/comments/${parentCommentId}/reply`,
+      method: 'post',
+      provider: provider,
+      useRetry: true,
+      data: {
+        data,
+      },
+    };
+  },
   postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
     method: 'post',
@@ -311,6 +322,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postNewComment(params),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postReplyComment: async (params: IRequestReplyComment) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postReplyComment(params),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);

@@ -168,10 +168,13 @@ export interface IGetStreamUser {
 }
 
 export interface IRequestPostComment {
-  referenceId: string;
-  referenceType: 'post' | 'comment';
-  commentData: IActivityData;
-  userId: number;
+  postId: string;
+  data: IActivityData;
+}
+
+export interface IRequestReplyComment {
+  parentCommentId: string;
+  data: IActivityData;
 }
 
 export interface IRequestGetPostComment {

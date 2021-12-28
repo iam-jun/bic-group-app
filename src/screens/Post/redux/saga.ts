@@ -20,7 +20,6 @@ import {
   IPostCreatePost,
   IReaction,
   IReactionCounts,
-  IRequestPostComment,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -161,13 +160,19 @@ function* postCreateNewComment({
 
     yield put(postActions.setCreateComment({loading: true}));
 
-    const requestData: IRequestPostComment = {
-      referenceId: parentCommentId || postId,
-      referenceType: parentCommentId ? 'comment' : 'post',
-      commentData,
-      userId: Number(userId),
-    };
-    const resComment = yield call(postDataHelper.postNewComment, requestData);
+    let resComment;
+    if (parentCommentId) {
+      resComment = yield postDataHelper.postReplyComment({
+        parentCommentId,
+        data: commentData,
+      });
+    } else {
+      resComment = yield postDataHelper.postNewComment({
+        postId,
+        data: commentData,
+      });
+    }
+
     //callback success first time for delete content in text input
     onSuccess?.({newCommentId: resComment?.id, parentCommentId});
 
