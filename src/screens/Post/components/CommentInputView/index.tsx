@@ -17,11 +17,11 @@ import {
   IPayloadCreateComment,
   IPayloadReplying,
 } from '~/interfaces/IPost';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
 import {ITheme} from '~/theme/interfaces';
+import ReplyingView from './ReplyingView';
 
 export interface CommentInputViewProps {
   postId: string;
@@ -117,35 +117,26 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     dispatch(postActions.setCreateComment({content: value}));
   };
 
-  const renderCommentInputHeader = () => {
-    if (!replying) {
-      return null;
-    }
-    return (
-      <View style={styles.commentInputHeader}>
-        <View style={styles.headerContent}>
-          <Text color={colors.textSecondary}>
-            {t('post:label_replying_to')}
-            <Text.BodyM>{replyTargetName || t('post:someone')}</Text.BodyM>
-            <Text.BodyS color={colors.textSecondary}>
-              {'  • '}
-              <Text.BodyM
-                useI18n
-                color={colors.textSecondary}
-                onPress={() =>
-                  !loading &&
-                  dispatch(postActions.setPostDetailReplyingComment())
-                }>
-                common:btn_cancel
-              </Text.BodyM>
-            </Text.BodyS>
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  return <_MentionInput postId="" groupIds={groupIds} />;
+  return (
+    <View>
+      <_MentionInput
+        postId=""
+        groupIds={groupIds}
+        ComponentInput={CommentInput}
+        componentInputProps={{
+          commentInputRef: _commentInputRef,
+          value: content,
+          autoFocus: autoFocus,
+          HeaderComponent: <ReplyingView />,
+          loading: loading,
+          isHandleUpload: true,
+          placeholder: t('post:placeholder_write_comment'),
+          onChangeText,
+          onPressSend,
+        }}
+      />
+    </View>
+  );
 
   // return (
   //   <MentionInput

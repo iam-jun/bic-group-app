@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import ListView from '~/beinComponents/list/ListView';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
@@ -26,13 +25,13 @@ const MENTION_ALL_INDEX = -1;
 const AtMention = ({groupIds, modalPosition}: Props) => {
   const dispatch = useDispatch();
 
-  const text = useKeySelector('mentionInput.text');
-  const data = useKeySelector('mentionInput.data');
+  const {text, cursorPosition, data} = useKeySelector('mentionInput');
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
 
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
+  const [matchTerm, setMatchTerm] = useState<string | null>(null);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -48,12 +47,19 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
   );
 
   useEffect(() => {
-    const matchTerm = getMatchTermForAtMention(text, false);
-    console.log('matchTerm', matchTerm);
+    const value = text.substring(0, cursorPosition);
+    const _matchTerm = getMatchTermForAtMention(value, false);
+
+    if (_matchTerm !== matchTerm) setMatchTerm(_matchTerm);
+  }, [cursorPosition]);
+
+  useEffect(() => {
     if (matchTerm) {
-      dispatch(actions.runSearch({group_ids: groupIds}));
+      dispatch(actions.runSearch({group_ids: groupIds, key: matchTerm}));
+    } else {
+      dispatch(actions.setData([]));
     }
-  }, [text]);
+  }, [matchTerm]);
 
   // @ts-ignore
   const onContentSizeChange = e => {
@@ -74,6 +80,8 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
   const renderItem = ({item, index}: {item: any; index: number}) => {
     return <AtMentionItem item={item} index={index} />;
   };
+
+  if (_.isEmpty(data)) return null;
 
   return (
     <View style={styles.containerModal}>
