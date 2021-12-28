@@ -249,18 +249,19 @@ const _CommentView: React.FC<CommentViewProps> = ({
                     : {},
                 ])}>
                 <View style={styles.header}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.userName}>
                     <ButtonWrapper onPress={onPressUser}>
                       <Text.H6 numberOfLines={1}>{`${name}`}</Text.H6>
                     </ButtonWrapper>
-                    <Text.H6 color={theme.colors.textSecondary}>{` •`}</Text.H6>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
                     <TimeView
                       time={created_at}
                       style={styles.textTime}
                       type="short"
                     />
+                    {/* <Icon icon="EllipsisH" size={16} style={styles.options} /> */}
                   </View>
-                  {/* <Icon icon="EllipsisH" size={16} /> */}
                 </View>
                 <CollapsibleText
                   useMarkdown
@@ -328,12 +329,18 @@ const createStyle = (theme: ITheme) => {
     },
     textTime: {
       marginLeft: 2,
-      color: colors.textSecondary,
+    },
+    userName: {
+      flex: 1,
+      flexDirection: 'row',
     },
     header: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       marginBottom: spacing.margin.tiny,
+    },
+    options: {
+      marginLeft: spacing.margin.tiny,
+      marginTop: 2,
     },
   });
 };
