@@ -79,9 +79,9 @@ export const postApiConfig = {
     data,
   }),
   deletePost: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/${id}`,
+    url: `${provider.url}api/posts/${id}`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider: provider,
     useRetry: true,
   }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
