@@ -151,6 +151,11 @@ export interface IParamGetPostDetail {
   with_reaction_counts?: boolean;
 }
 
+export interface IParamPutEditPost {
+  postId: string;
+  data: IPostCreatePost;
+}
+
 export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
 }

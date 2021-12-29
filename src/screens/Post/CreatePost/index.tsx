@@ -300,7 +300,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.putEditDraftPost(payload));
     } else if (isEditPost && initPostData?.id) {
       const newEditData: IPostCreatePost = {
-        getstream_id: initPostData.id,
         data,
         audience,
       };

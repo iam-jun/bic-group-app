@@ -229,7 +229,7 @@ function* putEditPost({
   }
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.putEditPost, id, data);
+    const response = yield postDataHelper.putEditPost({postId: id, data});
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
       const post = yield select(state =>

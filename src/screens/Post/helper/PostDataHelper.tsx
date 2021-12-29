@@ -5,6 +5,7 @@ import {
   IParamGetDraftPosts,
   IParamGetPostDetail,
   IParamGetReactionDetail,
+  IParamPutEditPost,
   IParamPutReactionToComment,
   IParamPutReactionToPost,
   IParamSearchMentionAudiences,
@@ -60,13 +61,16 @@ export const postApiConfig = {
       data: restParams,
     };
   },
-  putPost: (id: string, data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/${id}`,
-    method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    data,
-  }),
+  putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
+    const {postId, data} = param || {};
+    return {
+      url: `${provider.url}api/posts/${postId}`,
+      method: 'put',
+      provider: provider,
+      useRetry: true,
+      data,
+    };
+  },
   putEditComment: (id: string, data: IActivityData): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/comments/${id}`,
     method: 'put',
@@ -255,10 +259,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putEditPost: async (id: string, data: IPostCreatePost) => {
+  putEditPost: async (param: IParamPutEditPost) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.putPost(id, data),
+        postApiConfig.putEditPost(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
