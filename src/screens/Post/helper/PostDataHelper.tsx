@@ -66,22 +66,22 @@ export const postApiConfig = {
     return {
       url: `${provider.url}api/posts/${postId}`,
       method: 'put',
-      provider: provider,
+      provider,
       useRetry: true,
       data,
     };
   },
   putEditComment: (id: string, data: IActivityData): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/comments/${id}`,
+    url: `${provider.url}api/comments/${id}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
-    data,
+    data: {data},
   }),
   deletePost: (id: string): HttpApiRequestConfig => ({
     url: `${provider.url}api/posts/${id}`,
     method: 'delete',
-    provider: provider,
+    provider,
     useRetry: true,
   }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
@@ -115,7 +115,7 @@ export const postApiConfig = {
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
     url: `${provider.url}api/comments`,
     method: 'post',
-    provider: provider,
+    provider,
     useRetry: true,
     data: {
       post_id: params.postId,
@@ -127,7 +127,7 @@ export const postApiConfig = {
     return {
       url: `${provider.url}api/comments/${parentCommentId}/reply`,
       method: 'post',
-      provider: provider,
+      provider,
       useRetry: true,
       data: {
         data,
