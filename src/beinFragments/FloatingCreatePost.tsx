@@ -25,7 +25,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   audience,
   createFromGroupId,
 }: FloatingCreatePostProps) => {
-  const showValue = useSharedValue(1);
+  const showValue = useSharedValue(0);
 
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
@@ -58,8 +58,9 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
 
   const containerStyle = useAnimatedStyle(() => ({
     position: 'absolute',
-    right: interpolate(showValue.value, [0, 1], [-50, 8]),
-    bottom: spacing.margin.small,
+    right: spacing.margin.small,
+    bottom: interpolate(showValue.value, [0, 0.1, 1], [-50, 8, 8]),
+    opacity: interpolate(showValue.value, [0, 1], [0, 1]),
   }));
 
   const show = (duration = 150) => {

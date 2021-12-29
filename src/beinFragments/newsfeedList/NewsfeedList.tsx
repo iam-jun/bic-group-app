@@ -132,27 +132,26 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       const isUp5Percent =
         ((prevOffsetYRef.current - offsetY) * 100) / screenHeight >= 5;
 
+      const createPostHeaderHeight = 50;
+      const showFloating = offsetY > createPostHeaderHeight;
+
       if (isDown5Percent) {
         DeviceEventEmitter.emit('showHeader', false);
         DeviceEventEmitter.emit('showBottomBar', false);
+        DeviceEventEmitter.emit('showFloatingCreatePost', false);
       } else if (isDown) {
         DeviceEventEmitter.emit('showHeader', false);
       }
       if (isUp5Percent) {
         DeviceEventEmitter.emit('showHeader', true);
         DeviceEventEmitter.emit('showBottomBar', true);
+        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
       } else if (isUp) {
         DeviceEventEmitter.emit('showBottomBar', true);
+        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
         if (offsetY < 50) {
           DeviceEventEmitter.emit('showHeader', true);
         }
-      }
-
-      const createPostHeaderHeight = 50;
-      if (offsetY > createPostHeaderHeight) {
-        DeviceEventEmitter.emit('showFloatingCreatePost', true);
-      } else {
-        DeviceEventEmitter.emit('showFloatingCreatePost', false);
       }
 
       prevOffsetYRef.current = offsetY;
