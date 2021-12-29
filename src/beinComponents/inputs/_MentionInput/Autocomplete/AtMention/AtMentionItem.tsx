@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
@@ -50,6 +50,30 @@ const AtMentionItem = ({item}: any) => {
     completeMention(item.username);
   };
 
+  const _onPressAll = () => {
+    completeMention('all');
+  };
+
+  const renderMentionAll = () => {
+    const backgroundColor =
+      highlightItem?.id === 'all' ? colors.placeholder : colors.background;
+
+    return (
+      <Div onMouseOver={onHoverItem} onMouseLeave={onLeaveItem}>
+        <TouchableOpacity onPress={_onPressAll}>
+          <View style={[styles.mentionAll, {backgroundColor}]}>
+            <Text.ButtonBase style={styles.textMentionAll}>
+              @all
+            </Text.ButtonBase>
+            <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
+          </View>
+        </TouchableOpacity>
+      </Div>
+    );
+  };
+
+  if (item.id === 'all') return renderMentionAll();
+
   return (
     <Div
       style={{backgroundColor}}
@@ -77,6 +101,14 @@ const createStyles = (theme: ITheme) => {
     avatar: {
       marginHorizontal: spacing.margin.base,
       marginVertical: spacing.margin.small,
+    },
+    mentionAll: {
+      flexDirection: 'row',
+      padding: spacing?.padding.base,
+      alignItems: 'center',
+    },
+    textMentionAll: {
+      marginEnd: spacing?.margin.base,
     },
   });
 };

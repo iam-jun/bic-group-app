@@ -5,6 +5,8 @@ import AtMention from './AtMention';
 export interface AutocompleteProps {
   groupIds: string;
   modalPosition: 'top' | 'bottom' | 'above-keyboard';
+  showSpectialItems?: boolean;
+  emptyContent?: string;
 }
 
 const Autocomplete = (props: AutocompleteProps) => {

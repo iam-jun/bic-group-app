@@ -26,6 +26,12 @@ export default {
       payload,
     };
   },
+  sethHighlightIndex: (payload: number) => {
+    return {
+      type: types.SET_HIGHLIGHT_INDEX,
+      payload,
+    };
+  },
   sethHighlightItem: (payload: any) => {
     return {
       type: types.SET_HIGHLIGHT_ITEM,

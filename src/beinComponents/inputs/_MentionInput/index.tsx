@@ -1,5 +1,8 @@
-import React, {useState} from 'react';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
+  DeviceEventEmitter,
+  EventEmitter,
   KeyboardTypeOptions,
   Platform,
   StyleProp,
@@ -17,28 +20,31 @@ import {switchKeyboardForCodeBlocks} from './helper';
 import actions from './redux/actions';
 
 interface Props {
-  postId: string;
   groupIds: string;
   disabled?: boolean;
+  showItemAll?: boolean;
   placeholderText?: string;
   ComponentInput?: any;
   componentInputProps?: any;
   textInputStyle?: StyleProp<TextStyle>;
+  onKeyPress?: (e: any) => void;
 }
 
 const DEFAULT_INDEX = -2;
 const MENTION_ALL_INDEX = -1;
 
 const _MentionInput = ({
-  postId,
   groupIds,
   disabled,
+  showItemAll,
   ComponentInput = TextInput,
   componentInputProps = {},
   textInputStyle,
+  onKeyPress,
 }: Props) => {
   const dispatch = useDispatch();
-  const {text, cursorPosition} = useKeySelector('mentionInput');
+  const {text, cursorPosition, highlightIndex, highlightItem, data} =
+    useKeySelector('mentionInput');
   const [keyboardType, setKeyboardType] =
     useState<KeyboardTypeOptions>('default');
 
@@ -46,9 +52,12 @@ const _MentionInput = ({
   const {colors} = theme;
   const styles = createStyles(theme);
 
+  useEffect(() => {
+    componentInputProps.onChangeText?.(text);
+  }, [text]);
+
   const _onChangeText = (text: string) => {
     dispatch(actions.setText(text));
-    componentInputProps.onChangeText?.(text);
   };
 
   const onSelectionChange = (event: any, fromHandleTextChange = false) => {
@@ -61,6 +70,45 @@ const _MentionInput = ({
       setKeyboardType(_keyboardType);
     }
     dispatch(actions.setCursorPosition(_cursorPosition));
+  };
+
+  const handleKeyPress = (event: any) => {
+    DeviceEventEmitter.emit('autocomplete-on-key-press', event);
+  };
+
+  const _onKeyPress = (event: any) => {
+    if (!isEmpty(data)) {
+      if (Platform.OS === 'web') {
+        switch (event?.key) {
+          case 'Enter':
+          case 'ArrowDown':
+          case 'ArrowUp':
+            {
+              console.log('onKeyPress', event.key);
+              handleKeyPress(event);
+            }
+            break;
+        }
+      }
+    } else if (onKeyPress) {
+      onKeyPress?.(event);
+    } else {
+      checkSendWhenEnter(event);
+    }
+  };
+
+  const checkSendWhenEnter = (event: any) => {
+    if (
+      event?.key === 'Enter' &&
+      !event?.shiftKey &&
+      (text?.trim?.()?.length > 0 ||
+        componentInputProps?.commentInputRef?.current?.getSelectedImage?.())
+    ) {
+      if (componentInputProps?.commentInputRef?.current?.send) {
+        event.preventDefault();
+        componentInputProps.commentInputRef.current.send();
+      }
+    }
   };
 
   const _onContentSizeChange = (e: any) => {
@@ -80,11 +128,10 @@ const _MentionInput = ({
           nativeID="component-input--hidden"
           multiline
           value={text}
-          keyboardType={keyboardType}
           style={styles.hidden}
           onContentSizeChange={_onContentSizeChange}
           editable={!disabled}
-          //   onKeyPress={_onKeyPress}
+          onKeyPress={_onKeyPress}
           testID={null}
           onChangeText={_onChangeText}>
           {text}
@@ -96,15 +143,13 @@ const _MentionInput = ({
         keyboardType={keyboardType}
         // textInputRef={inputRef}
         onChangeText={_onChangeText}
-        // placeholder={placeholderText || placeholder}
         onContentSizeChange={
           Platform.OS === 'web' ? undefined : _onContentSizeChange
         }
         style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
         onSelectionChange={onSelectionChange}
         editable={!disabled}
-        // onKeyPress={_onKeyPress}
-      >
+        onKeyPress={_onKeyPress}>
         {text}
       </ComponentInput>
     </View>

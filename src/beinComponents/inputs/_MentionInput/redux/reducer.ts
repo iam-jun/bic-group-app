@@ -2,8 +2,9 @@ import types from './types';
 
 const initMenuState = {
   text: '',
-  cursorPosition: -2,
+  cursorPosition: -2, // follow MatterMost
   data: [],
+  highlightIndex: -1,
   highlightItem: null,
 };
 
@@ -25,6 +26,11 @@ const reducer = (state = initMenuState, action: any = {}) => {
       return {
         ...state,
         data: payload,
+      };
+    case types.SET_HIGHLIGHT_INDEX:
+      return {
+        ...state,
+        highlightIndex: payload,
       };
     case types.SET_HIGHLIGHT_ITEM:
       return {

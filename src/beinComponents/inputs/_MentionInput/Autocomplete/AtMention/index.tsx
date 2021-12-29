@@ -1,6 +1,8 @@
 import _ from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
+  DeviceEventEmitter,
   FlatList,
   Platform,
   StyleSheet,
@@ -9,6 +11,8 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {isEmpty} from 'lodash';
+import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
@@ -17,21 +21,27 @@ import {getMatchTermForAtMention} from '../../helper';
 import actions from '../../redux/actions';
 import AtMentionItem from './AtMentionItem';
 
-interface Props extends AutocompleteProps {}
-
-const DEFAULT_INDEX = -2;
+const DEFAULT_INDEX = -1;
 const MENTION_ALL_INDEX = -1;
 
-const AtMention = ({groupIds, modalPosition}: Props) => {
+const AtMention = ({
+  groupIds,
+  modalPosition,
+  showSpectialItems,
+  emptyContent,
+}: AutocompleteProps) => {
   const dispatch = useDispatch();
 
-  const {text, cursorPosition, data} = useKeySelector('mentionInput');
+  const {text, cursorPosition, data, isLoading, highlightIndex} =
+    useKeySelector('mentionInput');
   const {isOpen: isKeyboardOpen, height: keyboardHeight} = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
 
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
   const [matchTerm, setMatchTerm] = useState<string | null>(null);
+
+  const listRef = useRef<FlatList<any>>();
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -45,6 +55,16 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
     windowDimension.height,
     data.length === 0,
   );
+
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener(
+      'autocomplete-on-key-press',
+      handleMentionKey,
+    );
+    return () => {
+      listener?.remove?.();
+    };
+  }, []);
 
   useEffect(() => {
     const value = text.substring(0, cursorPosition);
@@ -77,6 +97,57 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
     [isKeyboardOpen],
   );
 
+  const handleMentionKey = (event: any) => {
+    if (!isEmpty(data)) {
+      event.preventDefault();
+      const {key} = event || {};
+      // if (key === 'Enter' && highlightItem) {
+      //   _onPressItem(highlightItem);
+      //   return;
+      // }
+      const step = key === 'ArrowUp' ? -1 : 1;
+      // const min = showSpectialItems ? MENTION_ALL_INDEX : 0;
+      const min = 0;
+      let newIndex =
+        highlightIndex === DEFAULT_INDEX ? min : highlightIndex + step;
+      if (newIndex >= data.length) {
+        newIndex = min;
+      }
+      if (newIndex < min) {
+        newIndex = data.length - 1;
+      }
+
+      console.log('handleMentionKey', key, highlightIndex, newIndex);
+
+      let newHighlightItem: any = data?.[newIndex];
+      if (newIndex === MENTION_ALL_INDEX) {
+        newHighlightItem = {id: 'all'};
+      }
+      if (newIndex >= 0 && newIndex < data?.length) {
+        listRef.current?.scrollToIndex({
+          index: newIndex,
+          viewPosition: 0.5,
+        });
+      }
+      dispatch(actions.sethHighlightIndex(newIndex));
+      dispatch(actions.sethHighlightItem(newHighlightItem));
+      // setHighlightIndex(newIndex);
+      // sethHighlightItem(newHighlightItem);
+    }
+  };
+
+  const renderEmpty = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        {isLoading ? (
+          <ActivityIndicator color={colors.disabled} />
+        ) : (
+          <Text.H6 style={styles.textEmpty}>{emptyContent}</Text.H6>
+        )}
+      </View>
+    );
+  };
+
   const renderItem = ({item, index}: {item: any; index: number}) => {
     return <AtMentionItem item={item} index={index} />;
   };
@@ -86,9 +157,11 @@ const AtMention = ({groupIds, modalPosition}: Props) => {
   return (
     <View style={styles.containerModal}>
       <FlatList
+        ref={listRef}
         data={data}
         keyExtractor={item => item.id}
         renderItem={renderItem}
+        ListEmptyComponent={renderEmpty}
         // onContentSizeChange={onContentSizeChange}
       />
     </View>

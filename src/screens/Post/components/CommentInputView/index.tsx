@@ -114,13 +114,13 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   };
 
   const onChangeText = (value: string) => {
+    _commentInputRef.current.setText(value);
     dispatch(postActions.setCreateComment({content: value}));
   };
 
   return (
     <View>
       <_MentionInput
-        postId=""
         groupIds={groupIds}
         ComponentInput={CommentInput}
         componentInputProps={{
