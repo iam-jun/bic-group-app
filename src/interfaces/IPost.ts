@@ -336,9 +336,12 @@ export interface IPayloadSetDraftPosts {
   refreshing?: boolean;
 }
 
+export interface IParamGetDraftPosts {
+  offset?: number;
+  limit?: number;
+}
+
 export interface IPayloadGetDraftPosts {
-  userId: string;
-  streamClient?: StreamClient;
   isRefresh?: boolean;
   offset?: number;
 }

@@ -90,7 +90,7 @@ function* postCreateNewPost({
 
       if (userId && streamClient) {
         if (payload?.is_draft) {
-          yield put(postActions.getDraftPosts({userId, streamClient}));
+          yield put(postActions.getDraftPosts({}));
         }
         if (createFromGroupId) {
           yield put(groupsActions.clearGroupPosts());
@@ -803,7 +803,7 @@ function* getDraftPosts({
   type: string;
   payload: IPayloadGetDraftPosts;
 }): any {
-  const {userId, streamClient, isRefresh = true} = payload;
+  const {isRefresh = true} = payload;
   const draftPostsData = yield select(s =>
     get(s, postKeySelector.draftPostsData),
   );
@@ -824,8 +824,7 @@ function* getDraftPosts({
       }
 
       const offset = isRefresh ? 0 : draftPosts?.length || 0;
-      const p = {userId, streamClient, offset: offset};
-      const response = yield call(postDataHelper.getDraftPosts, p);
+      const response = yield postDataHelper.getDraftPosts({offset: offset});
       const newPosts = isRefresh
         ? response?.data || []
         : draftPosts.concat(response?.data || []);
@@ -853,14 +852,8 @@ function* postPublishDraftPost({
   type: string;
   payload: IPayloadPublishDraftPost;
 }): any {
-  const {
-    draftPostId,
-    onSuccess,
-    onError,
-    replaceWithDetail,
-    userId,
-    streamClient,
-  } = payload || {};
+  const {draftPostId, onSuccess, onError, replaceWithDetail, userId} =
+    payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const res = yield call(postDataHelper.postPublishDraftPost, draftPostId);
@@ -872,10 +865,8 @@ function* postPublishDraftPost({
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
-      if (userId && streamClient) {
+      if (userId) {
         const payloadGetDraftPosts: IPayloadGetDraftPosts = {
-          userId,
-          streamClient,
           isRefresh: true,
         };
         yield put(postActions.getDraftPosts(payloadGetDraftPosts));
@@ -919,8 +910,6 @@ function* putEditDraftPost({
       } else {
         yield put(postActions.setLoadingCreatePost(false));
         const payloadGetDraftPosts: IPayloadGetDraftPosts = {
-          userId,
-          streamClient,
           isRefresh: true,
         };
         yield put(postActions.getDraftPosts(payloadGetDraftPosts));

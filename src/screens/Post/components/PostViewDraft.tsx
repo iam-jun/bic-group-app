@@ -85,11 +85,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const refreshDraftPosts = () => {
     if (userId && streamClient) {
-      const payload: IPayloadGetDraftPosts = {
-        userId: userId,
-        streamClient: streamClient,
-        isRefresh: true,
-      };
+      const payload: IPayloadGetDraftPosts = {isRefresh: true};
       dispatch(postActions.getDraftPosts(payload));
     }
   };

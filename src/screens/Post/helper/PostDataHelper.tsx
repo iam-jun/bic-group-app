@@ -1,13 +1,13 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
+import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamGetDraftPosts,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutReactionToComment,
   IParamPutReactionToPost,
   IParamSearchMentionAudiences,
-  IPayloadGetDraftPosts,
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
@@ -27,6 +27,18 @@ export const postApiConfig = {
       provider,
       useRetry: true,
       params: restParams,
+    };
+  },
+  getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => {
+    return {
+      url: `${provider.url}api/feeds/draft`,
+      method: 'get',
+      provider,
+      useRetry: true,
+      params: {
+        offset: params?.offset || 0,
+        limit: params?.limit || 10,
+      },
     };
   },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -499,38 +511,22 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getDraftPosts: async (payload: IPayloadGetDraftPosts) => {
-    const {userId, streamClient, offset = 0} = payload || {};
-    if (streamClient && userId) {
-      const streamOptions = {
-        offset: offset || 0,
-        limit: 10,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        recentReactionsLimit: 10,
-        withOwnReactions: true,
-        withOwnChildren: true, //return own_children of reaction to comment
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'draft',
-          `u-${userId}`,
-          'get',
-          streamOptions,
-        );
+  getDraftPosts: async (param: IParamGetDraftPosts) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getDraftPosts(param),
+      );
+      if (response && response?.data?.data) {
         return Promise.resolve({
-          data: data?.results || [],
-          canLoadMore: !!data?.next,
+          data: response?.data?.data?.results || [],
+          canLoadMore: !!response?.data?.data?.next?.offset,
         });
-      } catch (e) {
-        return Promise.reject(e);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient or UserId not found');
   },
   postPublishDraftPost: async (draftPostId: string) => {
     try {
