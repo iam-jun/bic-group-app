@@ -25,6 +25,7 @@ import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -147,6 +148,13 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         }
       }
 
+      const createPostHeaderHeight = 50;
+      if (offsetY > createPostHeaderHeight) {
+        DeviceEventEmitter.emit('showFloatingCreatePost', true);
+      } else {
+        DeviceEventEmitter.emit('showFloatingCreatePost', false);
+      }
+
       prevOffsetYRef.current = offsetY;
     },
     300,
@@ -263,6 +271,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       )}
       {renderEmpty()}
       {renderPlaceholder()}
+      <FloatingCreatePost />
     </View>
   );
 };
