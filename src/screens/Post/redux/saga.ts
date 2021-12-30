@@ -79,8 +79,7 @@ function* postCreateNewPost({
   type: string;
   payload: IPostCreatePost;
 }): any {
-  const {userId, streamClient, createFromGroupId, ...postPayload} =
-    payload || {};
+  const {createFromGroupId, ...postPayload} = payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(postDataHelper.postCreateNewPost, postPayload);
@@ -88,21 +87,14 @@ function* postCreateNewPost({
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts({data: postData}));
 
-      if (userId && streamClient) {
-        if (payload?.is_draft) {
-          yield put(postActions.getDraftPosts({}));
-        }
-        if (createFromGroupId) {
-          yield put(groupsActions.clearGroupPosts());
-          const getGroupPostsPayload = {
-            streamClient,
-            userId: Number(userId),
-            groupId: Number(createFromGroupId),
-          };
-          yield put(groupsActions.getGroupPosts(getGroupPostsPayload));
-        } else {
-          yield put(homeActions.getHomePosts({isRefresh: true}));
-        }
+      if (payload?.is_draft) {
+        yield put(postActions.getDraftPosts({}));
+      }
+      if (createFromGroupId) {
+        yield put(groupsActions.clearGroupPosts());
+        yield put(groupsActions.getGroupPosts(createFromGroupId));
+      } else {
+        yield put(homeActions.getHomePosts({isRefresh: true}));
       }
 
       yield timeOut(500);
@@ -852,8 +844,7 @@ function* postPublishDraftPost({
   type: string;
   payload: IPayloadPublishDraftPost;
 }): any {
-  const {draftPostId, onSuccess, onError, replaceWithDetail, userId} =
-    payload || {};
+  const {draftPostId, onSuccess, onError, replaceWithDetail} = payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const res = yield call(postDataHelper.postPublishDraftPost, draftPostId);
@@ -865,12 +856,10 @@ function* postPublishDraftPost({
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
-      if (userId) {
-        const payloadGetDraftPosts: IPayloadGetDraftPosts = {
-          isRefresh: true,
-        };
-        yield put(postActions.getDraftPosts(payloadGetDraftPosts));
-      }
+      const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+        isRefresh: true,
+      };
+      yield put(postActions.getDraftPosts(payloadGetDraftPosts));
     } else {
       onError?.();
       showError(res);
@@ -888,22 +877,19 @@ function* putEditDraftPost({
   type: string;
   payload: IPayloadPutEditDraftPost;
 }): any {
-  const {id, data, replaceWithDetail, userId, streamClient, publishNow} =
-    payload || {};
+  const {id, data, replaceWithDetail, publishNow} = payload || {};
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
     return;
   }
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.putEditPost, id, data);
+    const response = yield postDataHelper.putEditPost({postId: id, data});
     if (response?.data) {
       if (publishNow) {
         const p: IPayloadPublishDraftPost = {
           draftPostId: id,
           replaceWithDetail: replaceWithDetail,
-          userId,
-          streamClient,
           refreshDraftPosts: true,
         };
         yield put(postActions.postPublishDraftPost(p));
@@ -941,8 +927,7 @@ function* getCommentsByPostId({
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
     const newList = response?.results;
-    const canLoadMore = !!response?.next;
-    callbackLoading?.(false, canLoadMore);
+    callbackLoading?.(false);
     if (newList?.length > 0) {
       if (commentId) {
         //get child comment of comment

@@ -99,17 +99,17 @@ export const postApiConfig = {
   getCommentsByPostId: (
     data: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions`,
+    url: `${provider.url}api/comments`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
     params: {
       post_id: data?.commentId ? undefined : data?.postId, //accept only one of post_id, reaction_id or user_id
       reaction_id: data?.commentId,
       kind: data?.kind || 'comment',
       id_lt: data?.idLt,
-      limit: data?.limit || 10,
-      recent_reactions_limit: data?.recentReactionsLimit || 1,
+      recent_reactions_limit: data?.recentReactionsLimit || 10,
+      recent_child_reactions_limit: data?.recentChildReactionsLimit || 1,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
@@ -223,9 +223,9 @@ export const postApiConfig = {
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/public/${draftPostId}`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
+    url: `${provider.url}api/posts/${draftPostId}/publish`,
+    method: 'put',
+    provider: provider,
     useRetry: true,
   }),
 };
@@ -341,8 +341,10 @@ const postDataHelper = {
       const response: any = await makeHttpRequest(
         postApiConfig.getCommentsByPostId(data),
       );
-      if (response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
+      if (response?.data?.data?.comment) {
+        return Promise.resolve({
+          results: response?.data?.data?.comment,
+        });
       } else {
         return Promise.reject(response);
       }

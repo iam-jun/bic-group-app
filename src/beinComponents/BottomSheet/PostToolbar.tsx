@@ -89,7 +89,7 @@ const PostToolbar = ({
 
   const onToggleImportant = (action: IAction) => {
     const newImportant = {...important};
-    newImportant.active = action === commonActions.checkBox ? 1 : 0;
+    newImportant.active = action === commonActions.checkBox;
     if (!important.expiresTime) {
       newImportant.expiresTime = getDefaultExpire();
     }

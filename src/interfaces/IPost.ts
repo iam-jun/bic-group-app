@@ -104,7 +104,6 @@ export interface IAllComments {
 }
 
 export interface IPostCreatePost {
-  getstream_id?: string;
   data?: IActivityData;
   audience?: {
     user_ids: number[];
@@ -114,8 +113,6 @@ export interface IPostCreatePost {
   important?: IActivityImportant;
   is_draft?: boolean;
 
-  userId?: string;
-  streamClient?: StreamClient;
   createFromGroupId?: string | number;
 }
 
@@ -186,9 +183,9 @@ export interface IRequestGetPostComment {
   postId: string;
   commentId?: string;
   idLt?: string; //get comment before this id
-  limit?: number;
   kind?: string;
   recentReactionsLimit?: number;
+  recentChildReactionsLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
@@ -356,8 +353,6 @@ export interface IPayloadPublishDraftPost {
   replaceWithDetail?: boolean;
   onSuccess?: () => void;
   onError?: () => void;
-  userId?: string;
-  streamClient?: StreamClient;
   refreshDraftPosts?: boolean;
 }
 
@@ -365,7 +360,5 @@ export interface IPayloadPutEditDraftPost {
   id: string;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
-  userId: string;
-  streamClient?: StreamClient;
   publishNow: boolean;
 }
