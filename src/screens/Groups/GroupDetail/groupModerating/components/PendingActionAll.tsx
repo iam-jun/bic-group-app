@@ -64,9 +64,10 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:approve'),
       i18next
-        .t('groups:text_respond_all_member_requests:content:approve')
-        .replace('{0}', totalPendingMembers)
-        .replace('{1}', groupDetail?.name),
+        .t('groups:text_respond_all_member_requests:content:approve', {
+          count: totalPendingMembers,
+        })
+        .replace('{0}', groupDetail?.name),
       doApproveAll,
     );
   };
@@ -83,9 +84,9 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const onPressDeclineAll = () => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:decline'),
-      i18next
-        .t('groups:text_respond_all_member_requests:content:decline')
-        .replace('{0}', totalPendingMembers),
+      i18next.t('groups:text_respond_all_member_requests:content:decline', {
+        count: totalPendingMembers,
+      }),
       doDeclineAll,
     );
   };
@@ -101,10 +102,9 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(groupsActions.removeAllMemberRequests());
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declined_all')}`.replace(
-        '{0}',
-        `${totalPendingMembers}`,
-      ),
+      content: `${i18next.t('groups:text_declined_all', {
+        count: totalPendingMembers,
+      })}`,
       props: {
         textProps: {useI18n: true},
         type: 'success',

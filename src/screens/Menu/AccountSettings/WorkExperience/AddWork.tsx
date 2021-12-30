@@ -238,10 +238,10 @@ const AddWork = () => {
         <Text.H6 useI18n>
           {isWorkHere ? 'settings:text_since' : 'common:text_start_date'}
         </Text.H6>
-        <ButtonWrapper
-          onPress={onStartDateEditOpen}
-          testID="add_work.start_date">
-          <Text.ButtonSmall color={theme.colors.primary7}>
+        <ButtonWrapper onPress={onStartDateEditOpen}>
+          <Text.ButtonSmall
+            testID="add_work.start_date"
+            color={theme.colors.primary7}>
             {formatDate(startDateValue, 'MMM Do, YYYY') ||
               i18next.t('common:text_not_set')}
           </Text.ButtonSmall>
@@ -255,8 +255,10 @@ const AddWork = () => {
       !isWorkHere && (
         <View style={styles.selectionLineView}>
           <Text.H6 useI18n>common:text_end_date</Text.H6>
-          <ButtonWrapper onPress={onEndDateEditOpen} testID="add_work.end_date">
-            <Text.ButtonSmall color={theme.colors.primary7}>
+          <ButtonWrapper onPress={onEndDateEditOpen}>
+            <Text.ButtonSmall
+              testID="add_work.end_date"
+              color={theme.colors.primary7}>
               {(endDateValue && formatDate(endDateValue, 'MMM Do, YYYY')) ||
                 i18next.t('common:text_not_set')}
             </Text.ButtonSmall>
@@ -272,8 +274,11 @@ const AddWork = () => {
         <View>
           <Divider />
           <View style={styles.deleteWork}>
-            <TouchableOpacity onPress={onDelete} testID="add_work.delete">
-              <Text.H6 color={theme.colors.error} useI18n>
+            <TouchableOpacity onPress={onDelete}>
+              <Text.H6
+                testID="add_work.delete"
+                color={theme.colors.error}
+                useI18n>
                 settings:text_delete_work
               </Text.H6>
             </TouchableOpacity>
@@ -296,7 +301,6 @@ const AddWork = () => {
         buttonProps={{
           useI18n: true,
           disabled: companyValue.trim() && positionValue.trim() ? false : true,
-          testID: 'add_work.save',
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}

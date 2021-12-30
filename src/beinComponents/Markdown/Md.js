@@ -230,11 +230,12 @@ export default class Md extends PureComponent {
     if (this.props.disableHashtags) {
       return this.renderText({context, literal: `#${hashtag}`});
     }
+    return <Text style={this.props.baseTextStyle}>{hashtag}</Text>;
   };
 
   renderParagraph = ({children, first}) => {
     if (!children || children.length === 0) {
-      return null;
+      return <View />;
     }
 
     const style = getStyleSheet(this.props.theme);
