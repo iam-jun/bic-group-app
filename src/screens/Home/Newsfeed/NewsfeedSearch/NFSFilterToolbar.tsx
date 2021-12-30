@@ -49,9 +49,8 @@ const NFSFilterToolbar = () => {
       : `${filterCreatedBy?.name}`
     : t('home:newsfeed_search:filter_created_by');
   const textDate = filterDate
-    ? `${formatDateTime(startDate, t, language)} - ${formatDateTime(
+    ? `${formatDateTime(startDate, language)} - ${formatDateTime(
         endDate,
-        t,
         language,
       )}`
     : t('home:newsfeed_search:filter_date');

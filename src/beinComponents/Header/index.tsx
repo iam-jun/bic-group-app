@@ -264,6 +264,7 @@ const Header: React.FC<HeaderProps> = ({
                 disabled={!onPressHeader}>
                 <Text.H5
                   style={styles.title}
+                  numberOfLines={1}
                   {...titleTextProps}
                   testID="header.text">
                   {title}
@@ -382,6 +383,7 @@ const createStyle = (theme: ITheme) => {
     title: {
       height: 24,
       lineHeight: 24,
+      marginRight: spacing.margin.large,
     },
     subtitle: {
       height: 16,
