@@ -280,7 +280,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         audience,
       };
       if (important?.active) {
-        draftData.important = important;
+        draftData.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
       }
       const payload: IPayloadPutEditDraftPost = {
         id: initPostData?.id,
@@ -295,7 +298,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         audience,
       };
       if (important?.active) {
-        newEditData.important = important;
+        newEditData.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
       }
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
@@ -312,7 +318,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         createFromGroupId,
       };
       if (important?.active) {
-        payload.important = important;
+        payload.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
       }
       dispatch(postActions.postCreateNewPost(payload));
     }

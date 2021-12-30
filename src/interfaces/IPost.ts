@@ -49,7 +49,7 @@ export interface IActivityData {
 
 export interface IActivityImportant {
   active?: boolean;
-  expiresTime?: string;
+  expires_time?: string;
 }
 
 export interface ICreatePostImage {

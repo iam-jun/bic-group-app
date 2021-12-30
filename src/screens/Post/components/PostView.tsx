@@ -265,7 +265,7 @@ const _PostView: FC<PostViewProps> = ({
       <PostViewImportant
         isLite={isLite}
         isImportant={isImportant}
-        expireTime={important?.expiresTime}
+        expireTime={important?.expires_time}
       />
       <View style={[styles.container]}>
         <PostViewHeader
