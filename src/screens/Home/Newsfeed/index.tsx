@@ -174,19 +174,21 @@ const Newsfeed = () => {
       );
 
     return (
-      <Header
-        headerRef={headerRef}
-        avatar={images.logo_bein}
-        hideBack
-        rightIcon="CommentsAlt"
-        searchPlaceholder={t('input:search_post')}
-        autoFocusSearch
-        onRightPress={navigateToChat}
-        onShowSearch={onShowSearch}
-        onSearchText={onSearchText}
-        onFocusSearch={onFocusSearch}
-        onSubmitSearch={onSubmitSearch}
-      />
+      <View style={styles.headerMobile}>
+        <Header
+          headerRef={headerRef}
+          avatar={images.logo_bein}
+          hideBack
+          rightIcon="CommentsAlt"
+          searchPlaceholder={t('input:search_post')}
+          autoFocusSearch
+          onRightPress={navigateToChat}
+          onShowSearch={onShowSearch}
+          onSearchText={onSearchText}
+          onFocusSearch={onFocusSearch}
+          onSubmitSearch={onSubmitSearch}
+        />
+      </View>
     );
   };
 
@@ -264,6 +266,10 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.small,
     },
+    headerMobile:
+      Platform.OS !== 'web'
+        ? {position: 'absolute', top: 0, width: '100%', zIndex: 1}
+        : {},
   });
 };
 

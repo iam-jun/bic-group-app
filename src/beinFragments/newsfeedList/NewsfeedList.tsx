@@ -26,6 +26,7 @@ import {ITabTypes} from '~/interfaces/IRouter';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -62,7 +63,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const theme = useTheme() as ITheme;
   const {spacing} = theme;
-  const styles = createStyle(theme);
+  const insets = useSafeAreaInsets();
+  const styles = createStyle(theme, insets);
 
   const itemStyle = useRef({
     width: screenWidth,
@@ -139,7 +141,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         DeviceEventEmitter.emit('showHeader', false);
         DeviceEventEmitter.emit('showBottomBar', false);
         DeviceEventEmitter.emit('showFloatingCreatePost', false);
-      } else if (isDown) {
+      } else if (isDown && offsetY > 20) {
         DeviceEventEmitter.emit('showHeader', false);
       }
       if (isUp5Percent) {
@@ -161,7 +163,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const rowRenderer = (type: any, data: any, index: number) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
-      return HeaderComponent;
+      return <View style={styles.headerContainer}>{HeaderComponent}</View>;
     }
     return (
       <PostView
@@ -275,7 +277,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, insets: any) => {
   const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     container: {
@@ -313,6 +315,10 @@ const createStyle = (theme: ITheme) => {
       maxWidth: 240,
       maxHeight: 160,
       marginBottom: spacing.margin.large,
+    },
+    headerContainer: {
+      marginTop: insets.top + dimension.headerHeight,
+      width: '100%',
     },
   });
 };
