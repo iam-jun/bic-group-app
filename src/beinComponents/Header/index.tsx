@@ -1,4 +1,4 @@
-import React, {useRef, useState, useImperativeHandle} from 'react';
+import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,10 +7,18 @@ import {
   Platform,
   useWindowDimensions,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBackHandler} from '@react-native-community/hooks';
+
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  interpolate,
+  withTiming,
+} from 'react-native-reanimated';
 
 import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
@@ -104,13 +112,28 @@ const Header: React.FC<HeaderProps> = ({
   const _headerRef = headerRef || useRef();
 
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, dimension} = theme;
+  const {spacing, dimension, colors} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
   const windowDimension = useWindowDimensions();
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
 
+  const showValue = useSharedValue(1);
+
   const {navigation} = useBaseHook();
+
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener('showHeader', isShow => {
+      if (isShow) {
+        show();
+      } else {
+        hide();
+      }
+    });
+    return () => {
+      listener?.remove?.();
+    };
+  }, []);
 
   const _onPressBack = () => {
     if (onPressBack) {
@@ -161,123 +184,167 @@ const Header: React.FC<HeaderProps> = ({
     onSearchText?.(text, inputRef);
   };
 
+  const insetTop = disableInsetTop ? 0 : insets.top;
+  const contentHeight = dimension?.headerHeight || 44;
+
+  const heightStyle = useAnimatedStyle(() => ({
+    height: interpolate(
+      showValue.value,
+      [0, 1],
+      [insetTop, contentHeight + insetTop],
+    ),
+  }));
+
+  const show = (duration = 200) => {
+    showValue.value = withTiming(1, {duration});
+  };
+
+  const hide = (duration = 200) => {
+    showValue.value = withTiming(0, {duration});
+  };
+
   const renderContent = () => {
     return (
-      <View
-        style={StyleSheet.flatten([
+      <Animated.View
+        style={[
+          heightStyle,
           {
-            height:
-              (dimension?.headerHeight || 44) +
-              (disableInsetTop ? 0 : insets.top),
             paddingTop: disableInsetTop ? undefined : insets.top,
+            overflow: 'hidden',
+            alignItems: 'flex-end',
+            flexDirection: 'row',
+            backgroundColor: colors.background,
           },
-          styles.container,
           removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
           style,
-        ])}>
-        <ViewSpacing width={spacing.margin.large} />
-        {!hideBack && !(hideBackOnLaptop && isLaptop) && (
-          <Icon
-            testID="header.back"
-            icon="iconBack"
-            onPress={_onPressBack}
-            size={28}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-            style={styles.backButton}
-          />
-        )}
-        {!!avatar && (
-          <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
-            <Avatar.Group
-              source={avatar}
-              style={styles.avatar}
-              variant="small"
-              {...avatarProps}
+        ]}>
+        <View
+          style={{
+            height: contentHeight,
+            flex: 1,
+            flexDirection: 'row',
+            backgroundColor: colors.background,
+            overflow: 'hidden',
+            alignItems: 'center',
+          }}>
+          <ViewSpacing width={spacing.margin.large} />
+          {!hideBack && !(hideBackOnLaptop && isLaptop) && (
+            <Icon
+              testID="header.back"
+              icon="iconBack"
+              onPress={_onPressBack}
+              size={28}
+              hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+              style={styles.backButton}
             />
-          </TouchableOpacity>
-        )}
-        {!!leftIcon && (
-          <Icon
-            size={14}
-            style={styles.leftIcon}
-            icon={leftIcon}
-            onPress={onPressHeader}
-            {...leftIconProps}
+          )}
+          {!!avatar && (
+            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
+              <Avatar.Group
+                source={avatar}
+                style={styles.avatar}
+                variant="small"
+                {...avatarProps}
+              />
+            </TouchableOpacity>
+          )}
+          {!!leftIcon && (
+            <Icon
+              size={14}
+              style={styles.leftIcon}
+              icon={leftIcon}
+              onPress={onPressHeader}
+              {...leftIconProps}
+            />
+          )}
+          <View style={styles.titleContainer}>
+            {!!title && (
+              <TouchableOpacity
+                onPress={onPressHeader}
+                disabled={!onPressHeader}>
+                <Text.H5
+                  style={styles.title}
+                  numberOfLines={1}
+                  {...titleTextProps}
+                  testID="header.text">
+                  {title}
+                </Text.H5>
+              </TouchableOpacity>
+            )}
+            {!!subTitle && (
+              <TouchableOpacity
+                onPress={onPressHeader}
+                disabled={!onPressHeader}>
+                <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
+                  {subTitle}
+                </Text.Subtitle>
+              </TouchableOpacity>
+            )}
+          </View>
+          {!!icon && onPressIcon && (
+            <Icon
+              icon={icon}
+              size={20}
+              style={{marginRight: spacing?.margin.large}}
+              onPress={onPressIcon}
+            />
+          )}
+          {onPressMenu && (
+            <Icon
+              icon={menuIcon || 'menu'}
+              size={20}
+              style={{marginRight: spacing?.margin.large}}
+              onPress={onPressMenu}
+            />
+          )}
+          {buttonText && onPressButton && (
+            <Button.Secondary
+              testID="header.button"
+              style={{marginRight: spacing?.margin.large}}
+              onPress={onPressButton}
+              {...buttonProps}>
+              {buttonText}
+            </Button.Secondary>
+          )}
+          {onSearchText && (
+            <Icon
+              icon={'iconSearch'}
+              size={20}
+              style={{marginRight: spacing?.margin.large}}
+              onPress={_onPressSearch}
+            />
+          )}
+          {!!rightIcon && (
+            <Icon
+              size={20}
+              icon={rightIcon}
+              style={{marginRight: spacing?.margin.large}}
+              onPress={onRightPress}
+              {...rightIconProps}
+            />
+          )}
+          <HeaderSearch
+            headerSearchRef={headerSearchRef}
+            inputRef={inputRef}
+            isShowSearch={isShowSearch}
+            onSearchText={_onSearchText}
+            onPressBack={hideSearch}
+            placeholder={searchPlaceholder}
+            autoFocus={autoFocusSearch}
+            onFocus={onFocusSearch}
+            onSubmitSearch={onSubmitSearch}
           />
-        )}
-        <View style={styles.titleContainer}>
-          {!!title && (
-            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
-              <Text.H5
-                style={styles.title}
-                {...titleTextProps}
-                testID="header.text">
-                {title}
-              </Text.H5>
-            </TouchableOpacity>
-          )}
-          {!!subTitle && (
-            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
-              <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
-                {subTitle}
-              </Text.Subtitle>
-            </TouchableOpacity>
-          )}
         </View>
-        {!!icon && onPressIcon && (
-          <Icon
-            icon={icon}
-            size={20}
-            style={{marginRight: spacing?.margin.large}}
-            onPress={onPressIcon}
-          />
-        )}
-        {onPressMenu && (
-          <Icon
-            icon={menuIcon || 'menu'}
-            size={20}
-            style={{marginRight: spacing?.margin.large}}
-            onPress={onPressMenu}
-          />
-        )}
-        {buttonText && onPressButton && (
-          <Button.Secondary
-            testID="header.button"
-            style={{marginRight: spacing?.margin.large}}
-            onPress={onPressButton}
-            {...buttonProps}>
-            {buttonText}
-          </Button.Secondary>
-        )}
-        {onSearchText && (
-          <Icon
-            icon={'iconSearch'}
-            size={20}
-            style={{marginRight: spacing?.margin.large}}
-            onPress={_onPressSearch}
-          />
-        )}
-        {!!rightIcon && (
-          <Icon
-            size={20}
-            icon={rightIcon}
-            style={{marginRight: spacing?.margin.large}}
-            onPress={onRightPress}
-            {...rightIconProps}
-          />
-        )}
-        <HeaderSearch
-          headerSearchRef={headerSearchRef}
-          inputRef={inputRef}
-          isShowSearch={isShowSearch}
-          onSearchText={_onSearchText}
-          onPressBack={hideSearch}
-          placeholder={searchPlaceholder}
-          autoFocus={autoFocusSearch}
-          onFocus={onFocusSearch}
-          onSubmitSearch={onSubmitSearch}
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            width: '100%',
+            height: insetTop,
+            backgroundColor: colors.background,
+          }}
         />
-      </View>
+      </Animated.View>
     );
   };
 
@@ -287,11 +354,6 @@ const Header: React.FC<HeaderProps> = ({
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: colors.background,
-    },
     bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
       borderColor: colors.borderDivider,
@@ -321,6 +383,7 @@ const createStyle = (theme: ITheme) => {
     title: {
       height: 24,
       lineHeight: 24,
+      marginRight: spacing.margin.large,
     },
     subtitle: {
       height: 16,
