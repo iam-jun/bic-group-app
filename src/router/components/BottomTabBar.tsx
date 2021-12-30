@@ -104,11 +104,22 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const showListener = Keyboard.addListener('keyboardDidShow', onShow);
     const willHideListener = Keyboard.addListener('keyboardWillHide', onHide);
     const hideListener = Keyboard.addListener('keyboardDidHide', onHide);
+    const showBottomBarListener = DeviceEventEmitter.addListener(
+      'showBottomBar',
+      isShow => {
+        if (isShow) {
+          show();
+        } else {
+          hide();
+        }
+      },
+    );
     return () => {
       showListener.remove();
       hideListener.remove();
       willShowListener.remove();
       willHideListener.remove();
+      showBottomBarListener?.remove();
     };
   }, []);
 
