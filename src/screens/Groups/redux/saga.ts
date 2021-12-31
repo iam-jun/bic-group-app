@@ -689,8 +689,20 @@ function* approveSingleMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err) {
+    yield put(groupsActions.getGroupDetail(groupId));
+  } catch (err: any) {
     console.log('approveSingleMemberRequest: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot approve all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'approve');
+
+      return;
+    }
+
     yield showError(err);
   }
 }
@@ -699,14 +711,12 @@ function* approveAllMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; callback: () => void};
+  payload: {groupId: number; total: number; callback: () => void};
 }) {
   try {
-    const {groupId, callback} = payload;
+    const {groupId, total, callback} = payload;
 
-    // @ts-ignore
-    const response = yield groupsDataHelper.approveAllMemberRequests(groupId);
-    const total = response?.data?.total;
+    yield groupsDataHelper.approveAllMemberRequests(groupId, total);
 
     yield put(groupsActions.getGroupDetail(groupId));
 
@@ -722,8 +732,20 @@ function* approveAllMemberRequests({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err) {
+    yield put(groupsActions.getGroupDetail(groupId));
+  } catch (err: any) {
     console.log('approveAllMemberRequests: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot approve all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'approve');
+
+      return;
+    }
+
     yield showError(err);
   }
 }
@@ -737,17 +759,47 @@ function* declineSingleMemberRequest({
   try {
     const {groupId, requestId} = payload;
     yield groupsDataHelper.declineSingleMemberRequest(groupId, requestId);
-  } catch (err) {
+    yield put(groupsActions.getGroupDetail(groupId));
+  } catch (err: any) {
     console.log('declineSingleMemberRequest: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot decline all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'decline');
+
+      return;
+    }
+
     yield showError(err);
   }
 }
 
-function* declineAllMemberRequests({payload}: {type: string; payload: number}) {
+function* declineAllMemberRequests({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; total: number};
+}) {
   try {
-    yield groupsDataHelper.declineAllMemberRequests(payload);
-  } catch (err) {
+    const {groupId, total} = payload;
+    yield groupsDataHelper.declineAllMemberRequests(groupId, total);
+    yield put(groupsActions.getGroupDetail(groupId));
+  } catch (err: any) {
     console.log('declineAllMemberRequests: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot decline all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'decline');
+
+      return;
+    }
+
     yield showError(err);
   }
 }
@@ -784,4 +836,24 @@ function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
   yield put(groupsActions.getJoinedGroups());
+}
+
+function* approvalError(groupId: number, type: 'approve' | 'decline') {
+  yield put(
+    modalActions.showHideToastMessage({
+      content:
+        type === 'approve'
+          ? 'groups:text_cannot_approve_all'
+          : 'groups:text_cannot_decline_all',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
+    }),
+  );
+
+  // reload page
+  yield put(groupsActions.resetMemberRequests());
+  yield put(groupsActions.getMemberRequests({groupId}));
+  yield put(groupsActions.getGroupDetail(groupId));
 }
