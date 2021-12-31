@@ -51,6 +51,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
+import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 export interface CreatePostProps {
   route?: {
@@ -335,27 +336,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
-  const onPressMentionAudience = (audience: any) => {
-    //TEMP DISABLE AUTO ADD USER SELECTED TO AUDIENCE
-    // const newChosenAudience = [...chosenAudiences];
-    // const mentionUser = {
-    //   id: audience.id,
-    //   name: audience.name || audience.fullname,
-    //   avatar: audience.avatar,
-    //   type: 'user',
-    // };
-    // let isDuplicate = false;
-    // newChosenAudience.map(item => {
-    //   if (item?.id === mentionUser?.id && item?.type === mentionUser?.type) {
-    //     isDuplicate = true;
-    //   }
-    // });
-    // if (!isDuplicate) {
-    //   newChosenAudience.unshift(mentionUser);
-    //   dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
-    // }
-  };
-
   const onLayoutCloneText = (e: any) => {
     const newHeight = Math.max(
       e.nativeEvent.layout.height + webContentInsetHeight,
@@ -386,40 +366,46 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   {content}
                 </RNText>
               </View>
-              <MentionInput
+              <_MentionInput
+                groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}
                 textInputStyle={styles.flex1}
-                modalPosition={'bottom'}
-                onPress={onPressMentionAudience}
-                onChangeText={onChangeText}
+                autocompleteProps={{
+                  modalPosition: 'bottom',
+                  emptyContent: i18n.t('post:mention_empty_content'),
+                  showShadow: true,
+                  modalStyle: {maxHeight: 350},
+                }}
+                // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
-                title={i18n.t('post:mention_title')}
-                emptyContent={i18n.t('post:mention_empty_content')}
-                getDataPromise={postDataHelper.getSearchMentionAudiences}
-                getDataParam={{group_ids: strGroupIds}}
-                getDataResponseKey={'data'}
+                componentInputProps={{
+                  onChangeText,
+                }}
+                // title={i18n.t('post:mention_title')}
                 disabled={loading}
-                modalStyle={{maxHeight: 350}}
-                showShadow
               />
             </Animated.View>
           ) : (
-            <MentionInput
+            <_MentionInput
+              groupIds={strGroupIds}
               mentionInputRef={mentionInputRef}
               style={shouldScroll ? {} : styles.flex1}
               textInputStyle={shouldScroll ? {} : styles.flex1}
-              modalPosition={'bottom'}
-              onPress={onPressMentionAudience}
-              onChangeText={onChangeText}
               ComponentInput={PostInput}
-              title={i18n.t('post:mention_title')}
-              emptyContent={i18n.t('post:mention_empty_content')}
-              getDataPromise={postDataHelper.getSearchMentionAudiences}
-              getDataParam={{group_ids: strGroupIds}}
-              getDataResponseKey={'data'}
+              componentInputProps={{
+                value: content,
+                onChangeText,
+              }}
+              autocompleteProps={{
+                modalPosition: 'bottom',
+                emptyContent: i18n.t('post:mention_empty_content'),
+                showShadow: true,
+                modalStyle: {maxHeight: 350},
+                fullWidth: true,
+              }}
+              // title={i18n.t('post:mention_title')}
               disabled={loading}
-              fullWidth={true}
             />
           )}
           <PostPhotoPreview

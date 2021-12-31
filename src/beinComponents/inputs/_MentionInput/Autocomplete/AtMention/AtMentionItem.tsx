@@ -5,22 +5,26 @@ import {useDispatch} from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
-import {AT_MENTION_REGEX} from '~/constants/autocomplete';
 import {useKeySelector} from '~/hooks/selector';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 
-const AtMentionItem = ({item}: any) => {
+interface Props {
+  item: any;
+  onPress: (item: any) => void;
+}
+
+const AtMentionItem = ({item, onPress}: Props) => {
   const dispatch = useDispatch();
-  const {text, cursorPosition, highlightItem} = useKeySelector('mentionInput');
+  const {highlightItem} = useKeySelector('mentionInput');
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
 
   const backgroundColor =
-    highlightItem?.id && item?.id === highlightItem?.id
+    highlightItem?.username && item?.username === highlightItem?.username
       ? colors.placeholder
       : colors.background;
 
@@ -32,35 +36,19 @@ const AtMentionItem = ({item}: any) => {
     dispatch(actions.sethHighlightItem(null));
   };
 
-  const completeMention = (mention: string) => {
-    //    const {cursorPosition, isSearch, onChangeText, value} = this.props;
-    const mentionPart = text.substring(0, cursorPosition);
-
-    let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
-
-    if (text.length > cursorPosition) {
-      completedDraft += text.substring(cursorPosition);
-    }
-
-    dispatch(actions.setText(completedDraft));
-    dispatch(actions.setData([]));
-  };
-
   const _onPressItem = () => {
-    completeMention(item.username);
-  };
-
-  const _onPressAll = () => {
-    completeMention('all');
+    onPress(item);
   };
 
   const renderMentionAll = () => {
     const backgroundColor =
-      highlightItem?.id === 'all' ? colors.placeholder : colors.background;
+      highlightItem?.username === 'all'
+        ? colors.placeholder
+        : colors.background;
 
     return (
       <Div onMouseOver={onHoverItem} onMouseLeave={onLeaveItem}>
-        <TouchableOpacity onPress={_onPressAll}>
+        <TouchableOpacity onPress={_onPressItem}>
           <View style={[styles.mentionAll, {backgroundColor}]}>
             <Text.ButtonBase style={styles.textMentionAll}>
               @all
@@ -72,7 +60,7 @@ const AtMentionItem = ({item}: any) => {
     );
   };
 
-  if (item.id === 'all') return renderMentionAll();
+  if (item.username === 'all') return renderMentionAll();
 
   return (
     <Div

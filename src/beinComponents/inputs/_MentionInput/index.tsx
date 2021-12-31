@@ -1,8 +1,7 @@
-import {isEmpty} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import {debounce, isEmpty} from 'lodash';
+import React, {useCallback, useImperativeHandle, useRef, useState} from 'react';
 import {
   DeviceEventEmitter,
-  EventEmitter,
   KeyboardTypeOptions,
   Platform,
   StyleProp,
@@ -10,66 +9,80 @@ import {
   TextInput,
   TextStyle,
   View,
+  ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import Autocomplete from './Autocomplete';
 import {switchKeyboardForCodeBlocks} from './helper';
-import actions from './redux/actions';
 
 interface Props {
+  mentionInputRef?: any;
   groupIds: string;
   disabled?: boolean;
-  showItemAll?: boolean;
   placeholderText?: string;
   ComponentInput?: any;
   componentInputProps?: any;
+  autocompleteProps?: any;
+  style?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
   onKeyPress?: (e: any) => void;
 }
 
-const DEFAULT_INDEX = -2;
-const MENTION_ALL_INDEX = -1;
-
 const _MentionInput = ({
+  mentionInputRef,
   groupIds,
   disabled,
-  showItemAll,
   ComponentInput = TextInput,
   componentInputProps = {},
+  autocompleteProps,
+  style,
   textInputStyle,
   onKeyPress,
 }: Props) => {
-  const dispatch = useDispatch();
-  const {text, cursorPosition, highlightIndex, highlightItem, data} =
-    useKeySelector('mentionInput');
+  const _mentionInputRef = mentionInputRef || useRef<any>();
+
+  const {data} = useKeySelector('mentionInput');
   const [keyboardType, setKeyboardType] =
     useState<KeyboardTypeOptions>('default');
+  const {isOpen: isKeyboardOpen} = useKeyboardStatus();
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
 
-  useEffect(() => {
-    componentInputProps.onChangeText?.(text);
-  }, [text]);
-
   const _onChangeText = (text: string) => {
-    dispatch(actions.setText(text));
+    // dispatch(actions.setText(text));
+    componentInputProps.onChangeText?.(text);
+    // DeviceEventEmitter.emit('autocomplete-on-change-text', text);
   };
 
-  const onSelectionChange = (event: any, fromHandleTextChange = false) => {
-    const _cursorPosition = fromHandleTextChange
-      ? cursorPosition
-      : event.nativeEvent.selection.end;
+  const getContent = () => componentInputProps?.value;
+
+  const _setContent = (c: string) => {
+    _onChangeText(c);
+  };
+
+  useImperativeHandle(_mentionInputRef, () => ({
+    setContent: _setContent,
+    getContent,
+  }));
+
+  const onSelectionChange = (event: any) => {
+    const cursorPosition = event.nativeEvent.selection.end;
 
     if (Platform.OS === 'ios') {
-      const _keyboardType = switchKeyboardForCodeBlocks(text, _cursorPosition);
+      const text = componentInputProps?.value;
+      const _keyboardType = switchKeyboardForCodeBlocks(text, cursorPosition);
       setKeyboardType(_keyboardType);
     }
-    dispatch(actions.setCursorPosition(_cursorPosition));
+    DeviceEventEmitter.emit('autocomplete-on-selection-change', {
+      position: cursorPosition,
+      value: componentInputProps?.value,
+      groupIds,
+    });
   };
 
   const handleKeyPress = (event: any) => {
@@ -83,10 +96,7 @@ const _MentionInput = ({
           case 'Enter':
           case 'ArrowDown':
           case 'ArrowUp':
-            {
-              console.log('onKeyPress', event.key);
-              handleKeyPress(event);
-            }
+            handleKeyPress(event);
             break;
         }
       }
@@ -112,12 +122,29 @@ const _MentionInput = ({
   };
 
   const _onContentSizeChange = (e: any) => {
-    // setTopPosition(e.nativeEvent.contentSize.height);
+    DeviceEventEmitter.emit('autocomplete-on-content-size-change', e);
   };
 
+  const debounceSetMeasuredHeight = debounce(height => {
+    DeviceEventEmitter.emit('autocomplete-on-layout-container-change', height);
+  }, 80);
+
+  const _onLayoutContainer = useCallback(
+    e => {
+      debounceSetMeasuredHeight(e.nativeEvent.layout.height);
+    },
+    [isKeyboardOpen],
+  );
+
   return (
-    <View style={styles.containerWrapper}>
-      <Autocomplete groupIds={groupIds} modalPosition="above-keyboard" />
+    <View
+      style={[styles.containerWrapper, style]}
+      onLayout={_onLayoutContainer}>
+      <Autocomplete
+        {...autocompleteProps}
+        type="mentionInput"
+        onCompletePress={_onChangeText}
+      />
       {Platform.OS === 'web' && (
         /*
         Duplicate ComponentInput because _onContentSizeChange
@@ -127,19 +154,18 @@ const _MentionInput = ({
         <ComponentInput
           nativeID="component-input--hidden"
           multiline
-          value={text}
+          // value={text}
           style={styles.hidden}
           onContentSizeChange={_onContentSizeChange}
           editable={!disabled}
           onKeyPress={_onKeyPress}
           testID={null}
-          onChangeText={_onChangeText}>
-          {text}
-        </ComponentInput>
+          onChangeText={_onChangeText}
+        />
       )}
       <ComponentInput
         {...componentInputProps}
-        value={text}
+        // value={text}
         keyboardType={keyboardType}
         // textInputRef={inputRef}
         onChangeText={_onChangeText}
@@ -149,9 +175,8 @@ const _MentionInput = ({
         style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
         onSelectionChange={onSelectionChange}
         editable={!disabled}
-        onKeyPress={_onKeyPress}>
-        {text}
-      </ComponentInput>
+        onKeyPress={_onKeyPress}
+      />
     </View>
   );
 };
