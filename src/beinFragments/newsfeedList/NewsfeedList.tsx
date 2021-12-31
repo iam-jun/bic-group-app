@@ -8,8 +8,9 @@ import {
   Platform,
   ActivityIndicator,
   RefreshControl,
+  DeviceEventEmitter,
 } from 'react-native';
-import {debounce} from 'lodash';
+import {debounce, throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
 import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
 
@@ -24,6 +25,7 @@ import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -56,6 +58,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
   );
+  const prevOffsetYRef = useRef(0);
 
   const theme = useTheme() as ITheme;
   const {spacing} = theme;
@@ -119,6 +122,42 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       onEndReach?.();
     }
   }, 1000);
+
+  const onScroll = throttle(
+    (rawEvent: any, offsetX: number, offsetY: number) => {
+      const isDown = offsetY - prevOffsetYRef.current > 2;
+      const isDown5Percent =
+        ((offsetY - prevOffsetYRef.current) * 100) / screenHeight >= 5;
+      const isUp = prevOffsetYRef.current - offsetY > 2;
+      const isUp5Percent =
+        ((prevOffsetYRef.current - offsetY) * 100) / screenHeight >= 5;
+
+      const createPostHeaderHeight = 50;
+      const showFloating = offsetY > createPostHeaderHeight;
+
+      if (isDown5Percent) {
+        DeviceEventEmitter.emit('showHeader', false);
+        DeviceEventEmitter.emit('showBottomBar', false);
+        DeviceEventEmitter.emit('showFloatingCreatePost', false);
+      } else if (isDown) {
+        DeviceEventEmitter.emit('showHeader', false);
+      }
+      if (isUp5Percent) {
+        DeviceEventEmitter.emit('showHeader', true);
+        DeviceEventEmitter.emit('showBottomBar', true);
+        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
+      } else if (isUp) {
+        DeviceEventEmitter.emit('showBottomBar', true);
+        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
+        if (offsetY < 50) {
+          DeviceEventEmitter.emit('showHeader', true);
+        }
+      }
+
+      prevOffsetYRef.current = offsetY;
+    },
+    300,
+  );
 
   const rowRenderer = (type: any, data: any, index: number) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
@@ -209,7 +248,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           layoutProvider={layoutProvider}
           dataProvider={dataProvider}
           rowRenderer={rowRenderer}
+          bounces={false}
           forceNonDeterministicRendering={true}
+          onScroll={onScroll}
           onEndReached={_onEndReached}
           onEndReachedThreshold={2 * screenHeight}
           onVisibleIndicesChanged={onVisibleIndicesChanged}
@@ -229,6 +270,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       )}
       {renderEmpty()}
       {renderPlaceholder()}
+      <FloatingCreatePost />
     </View>
   );
 };
