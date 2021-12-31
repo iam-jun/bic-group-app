@@ -3,6 +3,7 @@ import {
   IDeleteNotifications,
   ILoadNewNotifications,
   IMarkAsReadAnActivity,
+  IParamGetNotifications,
 } from '~/interfaces/INotification';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
@@ -33,7 +34,7 @@ const notificationsActions = {
   },
 
   //for saga
-  getNotifications: function (payload: IGetStreamDispatch) {
+  getNotifications: function (payload?: IParamGetNotifications) {
     return {
       type: notificationsTypes.GET_NOTIFICATIONS,
       payload,
@@ -51,10 +52,9 @@ const notificationsActions = {
       payload,
     };
   },
-  markAsReadAll: function (payload: IGetStreamDispatch) {
+  markAsReadAll: function () {
     return {
       type: notificationsTypes.MARK_AS_READ_ALL,
-      payload,
     };
   },
   markAsSeenAll: function (payload: IGetStreamDispatch) {
@@ -69,10 +69,9 @@ const notificationsActions = {
       payload,
     };
   },
-  loadmore: function (payload: IGetStreamDispatch) {
+  loadmore: function () {
     return {
       type: notificationsTypes.LOADMORE,
-      payload,
     };
   },
   setIsLoadingMore: function (payload: boolean) {

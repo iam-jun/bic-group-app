@@ -51,7 +51,7 @@ const MainTabs = () => {
     if (!userId) {
       return;
     }
-    dispatch(postActions.getDraftPosts({userId, streamClient}));
+    dispatch(postActions.getDraftPosts({}));
     if (Platform.OS !== 'web') {
       dispatch(notificationsActions.registerPushToken());
       let tokenRefreshSubscription;
@@ -72,12 +72,7 @@ const MainTabs = () => {
 
   useEffect(() => {
     if (streamClient?.currentUser?.token) {
-      dispatch(
-        notificationsActions.getNotifications({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+      dispatch(notificationsActions.getNotifications());
 
       if (!streamNotiSubClient) {
         return;

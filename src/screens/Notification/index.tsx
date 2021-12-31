@@ -77,12 +77,7 @@ const Notification = () => {
 
   const refreshListNotification = () => {
     if (streamClient?.currentUser?.token) {
-      dispatch(
-        notificationsActions.getNotifications({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+      dispatch(notificationsActions.getNotifications());
     }
   };
 
@@ -208,13 +203,8 @@ const Notification = () => {
 
   // load more notification handler
   const loadMoreNotifications = () => {
-    if (streamClient && !noMoreNotification && !isLoadingMore) {
-      dispatch(
-        notificationsActions.loadmore({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+    if (!noMoreNotification && !isLoadingMore) {
+      dispatch(notificationsActions.loadmore());
     }
   };
 
