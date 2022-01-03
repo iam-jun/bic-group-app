@@ -8,7 +8,6 @@ import CommentInput, {
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
-import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
@@ -124,6 +123,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         groupIds={groupIds}
         ComponentInput={CommentInput}
         componentInputProps={{
+          textInputRef,
           commentInputRef: _commentInputRef,
           value: content,
           autoFocus: autoFocus,
@@ -135,7 +135,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           onPressSend,
         }}
         autocompleteProps={{
-          modalPosition: 'above-keyboard',
+          modalPosition: Platform.OS === 'web' ? 'top' : 'above-keyboard',
         }}
       />
     </View>

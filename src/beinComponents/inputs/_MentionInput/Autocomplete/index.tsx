@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
-  DeviceEventEmitter,
   Platform,
   StyleProp,
   StyleSheet,
@@ -17,6 +16,8 @@ import AtMention from './AtMention';
 export interface AutocompleteProps {
   type: string;
   modalPosition: 'top' | 'bottom' | 'above-keyboard';
+  topPosition: number;
+  measuredHeight: number;
   fullWidth?: boolean;
   showShadow?: boolean;
   modalStyle?: StyleProp<ViewStyle>;
@@ -28,6 +29,8 @@ export interface AutocompleteProps {
 const Autocomplete = ({
   type,
   modalPosition,
+  topPosition,
+  measuredHeight,
   modalStyle,
   fullWidth,
   showShadow = true,
@@ -36,8 +39,6 @@ const Autocomplete = ({
   const {height: keyboardHeight} = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
   const {data} = useKeySelector(type);
-  const [topPosition, setTopPosition] = useState<number>(0);
-  const [measuredHeight, setMeasuredHeight] = useState(0);
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(
@@ -49,36 +50,6 @@ const Autocomplete = ({
     windowDimension.height,
     data.length === 0,
   );
-
-  console.log('autocomplete', topPosition, measuredHeight);
-
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'autocomplete-on-content-size-change',
-      onContentSizeChange,
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, []);
-
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'autocomplete-on-layout-container-change',
-      onLayoutContainerChange,
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, []);
-
-  const onContentSizeChange = (e: any) => {
-    setTopPosition(e.nativeEvent.contentSize.height);
-  };
-
-  const onLayoutContainerChange = (height: number) => {
-    setMeasuredHeight(height);
-  };
 
   return (
     <View
@@ -103,6 +74,7 @@ const createStyles = (
   isListEmpty: boolean,
 ) => {
   const {colors} = theme;
+
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
 

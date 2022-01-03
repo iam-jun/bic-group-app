@@ -3,6 +3,7 @@ import types from './types';
 const initMenuState = {
   text: '',
   cursorPosition: -2, // follow MatterMost
+  topPosition: 0,
   data: [],
   highlightIndex: -1,
   highlightItem: null,

@@ -379,9 +379,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 }}
                 // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
-                componentInputProps={{
-                  onChangeText,
-                }}
+                // componentInputProps={{
+                //   onChangeText,
+                // }}
                 // title={i18n.t('post:mention_title')}
                 disabled={loading}
               />

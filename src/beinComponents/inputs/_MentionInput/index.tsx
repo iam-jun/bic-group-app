@@ -48,6 +48,8 @@ const _MentionInput = ({
   const [keyboardType, setKeyboardType] =
     useState<KeyboardTypeOptions>('default');
   const {isOpen: isKeyboardOpen} = useKeyboardStatus();
+  const [topPosition, setTopPosition] = useState<number>(0);
+  const [measuredHeight, setMeasuredHeight] = useState(0);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -111,7 +113,7 @@ const _MentionInput = ({
     if (
       event?.key === 'Enter' &&
       !event?.shiftKey &&
-      (text?.trim?.()?.length > 0 ||
+      (componentInputProps?.value?.trim?.()?.length > 0 ||
         componentInputProps?.commentInputRef?.current?.getSelectedImage?.())
     ) {
       if (componentInputProps?.commentInputRef?.current?.send) {
@@ -122,11 +124,11 @@ const _MentionInput = ({
   };
 
   const _onContentSizeChange = (e: any) => {
-    DeviceEventEmitter.emit('autocomplete-on-content-size-change', e);
+    setTopPosition(e.nativeEvent.contentSize.height);
   };
 
   const debounceSetMeasuredHeight = debounce(height => {
-    DeviceEventEmitter.emit('autocomplete-on-layout-container-change', height);
+    setMeasuredHeight(height);
   }, 80);
 
   const _onLayoutContainer = useCallback(
@@ -143,6 +145,8 @@ const _MentionInput = ({
       <Autocomplete
         {...autocompleteProps}
         type="mentionInput"
+        topPosition={topPosition}
+        measuredHeight={measuredHeight}
         onCompletePress={_onChangeText}
       />
       {Platform.OS === 'web' && (
@@ -154,7 +158,7 @@ const _MentionInput = ({
         <ComponentInput
           nativeID="component-input--hidden"
           multiline
-          // value={text}
+          value={componentInputProps.value}
           style={styles.hidden}
           onContentSizeChange={_onContentSizeChange}
           editable={!disabled}
