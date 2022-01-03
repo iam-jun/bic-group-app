@@ -11,11 +11,13 @@ import {useTheme} from 'react-native-paper';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
+import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
 
 export interface AutocompleteProps {
   type: string;
   modalPosition: 'top' | 'bottom' | 'above-keyboard';
+  title?: string;
   topPosition: number;
   measuredHeight: number;
   fullWidth?: boolean;
@@ -29,6 +31,7 @@ export interface AutocompleteProps {
 const Autocomplete = ({
   type,
   modalPosition,
+  title,
   topPosition,
   measuredHeight,
   modalStyle,
@@ -38,7 +41,7 @@ const Autocomplete = ({
 }: AutocompleteProps) => {
   const {height: keyboardHeight} = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
-  const {data} = useKeySelector(type);
+  const {data, key} = useKeySelector(type);
 
   const theme = useTheme() as ITheme;
   const styles = createStyles(
@@ -59,6 +62,9 @@ const Autocomplete = ({
         showShadow && styles.shadow,
         modalStyle,
       ]}>
+      {!!title && key === '' && data?.length === 0 && (
+        <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
+      )}
       <AtMention {...props} />
     </View>
   );
@@ -73,7 +79,7 @@ const createStyles = (
   screenHeight: number,
   isListEmpty: boolean,
 ) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
 
   const maxTopPosition =
     Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
@@ -160,6 +166,11 @@ const createStyles = (
           marginBottom: '0px important',
         },
       }),
+    },
+    textTitle: {
+      marginVertical: spacing.margin.small,
+      marginHorizontal: spacing.margin.base,
+      color: colors.textSecondary,
     },
   });
 };

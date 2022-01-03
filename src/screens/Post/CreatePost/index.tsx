@@ -373,16 +373,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 textInputStyle={styles.flex1}
                 autocompleteProps={{
                   modalPosition: 'bottom',
+                  title: i18n.t('post:mention_title'),
                   emptyContent: i18n.t('post:mention_empty_content'),
                   showShadow: true,
                   modalStyle: {maxHeight: 350},
                 }}
                 // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
-                // componentInputProps={{
-                //   onChangeText,
-                // }}
-                // title={i18n.t('post:mention_title')}
+                componentInputProps={{
+                  value: content,
+                  onChangeText,
+                }}
                 disabled={loading}
               />
             </Animated.View>

@@ -19,6 +19,7 @@ import Autocomplete from './Autocomplete';
 import {switchKeyboardForCodeBlocks} from './helper';
 
 interface Props {
+  textInputRef?: any;
   mentionInputRef?: any;
   groupIds: string;
   disabled?: boolean;
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const _MentionInput = ({
+  textInputRef,
   mentionInputRef,
   groupIds,
   disabled,
@@ -42,6 +44,7 @@ const _MentionInput = ({
   textInputStyle,
   onKeyPress,
 }: Props) => {
+  const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
 
   const {data} = useKeySelector('mentionInput');
@@ -55,16 +58,10 @@ const _MentionInput = ({
   const {colors} = theme;
   const styles = createStyles(theme);
 
-  const _onChangeText = (text: string) => {
-    // dispatch(actions.setText(text));
-    componentInputProps.onChangeText?.(text);
-    // DeviceEventEmitter.emit('autocomplete-on-change-text', text);
-  };
-
   const getContent = () => componentInputProps?.value;
 
   const _setContent = (c: string) => {
-    _onChangeText(c);
+    componentInputProps.onChangeText?.(c);
   };
 
   useImperativeHandle(_mentionInputRef, () => ({
@@ -147,7 +144,7 @@ const _MentionInput = ({
         type="mentionInput"
         topPosition={topPosition}
         measuredHeight={measuredHeight}
-        onCompletePress={_onChangeText}
+        onCompletePress={_setContent}
       />
       {Platform.OS === 'web' && (
         /*
@@ -164,15 +161,12 @@ const _MentionInput = ({
           editable={!disabled}
           onKeyPress={_onKeyPress}
           testID={null}
-          onChangeText={_onChangeText}
         />
       )}
       <ComponentInput
         {...componentInputProps}
-        // value={text}
         keyboardType={keyboardType}
-        // textInputRef={inputRef}
-        onChangeText={_onChangeText}
+        textInputRef={inputRef}
         onContentSizeChange={
           Platform.OS === 'web' ? undefined : _onContentSizeChange
         }

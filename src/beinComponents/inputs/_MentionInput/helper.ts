@@ -8,7 +8,7 @@ export const getMatchTermForAtMention = (() => {
   let lastMatchTerm: string | null = null;
   let lastValue: string;
   let lastIsSearch: boolean;
-  return (value: string, isSearch: boolean) => {
+  return (value: string, isSearch: boolean): string | null => {
     if (value !== lastValue || isSearch !== lastIsSearch) {
       const regex = isSearch ? AT_MENTION_SEARCH_REGEX : AT_MENTION_REGEX;
       let term = value;
