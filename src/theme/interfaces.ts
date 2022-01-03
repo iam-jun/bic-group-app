@@ -47,6 +47,7 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
 
   textPrimary?: string;
   textSecondary?: string;
+  textTertiary?: string;
   textSuccess?: string;
   textDanger?: string;
   textWarning?: string;
