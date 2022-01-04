@@ -15,8 +15,8 @@ export interface IMarkdownAudience {
 export interface ParseTextProps extends RNTextProps {
   children?: React.ReactNode;
   showRawText?: boolean;
-  parentId: string;
-  selector: string;
+  parentId?: string;
+  selector?: string;
   onPressAudience?: (audience: IMarkdownAudience) => void;
 }
 
