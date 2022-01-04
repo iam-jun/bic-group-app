@@ -1,9 +1,16 @@
-import React, {useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
-import {IReaction} from '~/interfaces/IPost';
+import React, {useCallback, useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {useTheme} from 'react-native-paper';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
+import {ITheme} from '~/theme/interfaces';
+import {IReaction} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
@@ -32,6 +39,19 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
+  const progress = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(progress.value, [0, 0.33, 1], [0, 0.5, 1]),
+  }));
+
+  useEffect(() => {
+    showComment();
+  }, []);
+
+  const showComment = (duration = 300) => {
+    progress.value = withTiming(1, {duration});
+  };
+
   const _onPressReply = useCallback(() => {
     dispatch(
       postActions.setPostDetailReplyingComment({
@@ -48,7 +68,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const idLessThan = commentData?.latest_children?.comment?.[0]?.id;
 
   return (
-    <View style={commentParent ? styles.containerChild : styles.container}>
+    <Animated.View
+      style={
+        commentParent
+          ? [styles.containerChild, animatedStyle]
+          : [styles.container, animatedStyle]
+      }>
       <CommentView
         postId={postId}
         groupIds={groupIds}
@@ -70,7 +95,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       ) : (
         <ViewSpacing height={0} />
       )}
-    </View>
+    </Animated.View>
   );
 };
 
