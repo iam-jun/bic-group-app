@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useContext, useEffect, useState} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, TextStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
@@ -14,13 +14,15 @@ const intervalTime = 1000 * 60; //1 min
 const limitInterval = 1000 * 60 * 60; //60 mins
 
 export interface TimeViewProps {
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
+  textProps?: any;
   time: any;
   type?: 'fullDateTime' | 'dateTime' | 'short';
 }
 
 const TimeView: FC<TimeViewProps> = ({
   style,
+  textProps,
   time,
   type = 'fullDateTime',
 }: TimeViewProps) => {
@@ -67,7 +69,11 @@ const TimeView: FC<TimeViewProps> = ({
   }, [time, language]);
 
   return (
-    <Text.BodyS testID="time_view" color={colors.textSecondary} style={style}>
+    <Text.BodyS
+      testID="time_view"
+      color={colors.textSecondary}
+      style={style}
+      {...textProps}>
       {displayTime}
     </Text.BodyS>
   );

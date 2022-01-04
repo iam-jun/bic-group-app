@@ -129,7 +129,7 @@ const GroupInfoHeader = () => {
       {/* Group info header */}
       <View style={styles.infoContainer}>
         <View style={styles.header}>
-          <Avatar.LargeAlt source={icon} style={styles.avatar} />
+          <Avatar.Large source={icon} style={styles.avatar} />
           <View style={styles.groupInfoHeaderContainer}>
             {renderGroupInfoHeader()}
           </View>
