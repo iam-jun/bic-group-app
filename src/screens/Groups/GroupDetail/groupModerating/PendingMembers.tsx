@@ -34,6 +34,7 @@ const PendingMembers = (props: any) => {
 
   useEffect(() => {
     dispatch(groupsActions.getMemberRequests({groupId}));
+    dispatch(groupsActions.getGroupDetail(groupId)); // need to update total pending requests
 
     return () => {
       dispatch(groupsActions.resetMemberRequests());
@@ -54,9 +55,9 @@ const PendingMembers = (props: any) => {
       !loading &&
       totalPendingMembers > 0 && (
         <View style={styles.requestHeader}>
-          <Text.H5>{`${totalPendingMembers} ${i18next.t(
-            'common:text_requests',
-          )}`}</Text.H5>
+          <Text.H5>{`${totalPendingMembers} ${i18next.t('common:text_request', {
+            count: totalPendingMembers,
+          })}`}</Text.H5>
         </View>
       )
     );

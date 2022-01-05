@@ -144,6 +144,7 @@ const icons = {
   iconPin,
   iconPinGroup,
   attachment: 'Paperclip',
+  Image: 'Image',
   images: 'Images',
   leavesGroup: 'SignOutAlt',
   iconAddPost,

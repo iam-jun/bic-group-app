@@ -265,6 +265,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   useMarkdown
                   limitMarkdownTypes
                   shortLength={200}
+                  limitLength={200}
                   content={content || ''}
                   onPressAudience={onPressAudience}
                 />
