@@ -53,6 +53,7 @@ const _MentionInput = ({
   const {isOpen: isKeyboardOpen} = useKeyboardStatus();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
+  const cursorPosition = useRef(0);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -70,16 +71,27 @@ const _MentionInput = ({
   }));
 
   const onSelectionChange = (event: any) => {
-    const cursorPosition = event.nativeEvent.selection.end;
+    const position = event.nativeEvent.selection.end;
+    const text = componentInputProps?.value;
 
     if (Platform.OS === 'ios') {
-      const text = componentInputProps?.value;
-      const _keyboardType = switchKeyboardForCodeBlocks(text, cursorPosition);
+      const _keyboardType = switchKeyboardForCodeBlocks(text, position);
       setKeyboardType(_keyboardType);
     }
+    cursorPosition.current = position;
+
     DeviceEventEmitter.emit('autocomplete-on-selection-change', {
-      position: cursorPosition,
-      value: componentInputProps?.value,
+      position,
+      value: text,
+      groupIds,
+    });
+  };
+
+  const onChangeText = (value: string) => {
+    componentInputProps.onChangeText?.(value);
+    DeviceEventEmitter.emit('autocomplete-on-selection-change', {
+      position: cursorPosition.current,
+      value,
       groupIds,
     });
   };
@@ -136,46 +148,54 @@ const _MentionInput = ({
   );
 
   return (
-    <View
-      style={[styles.containerWrapper, style]}
-      onLayout={_onLayoutContainer}>
+    <>
+      <View
+        style={[styles.containerWrapper, style]}
+        onLayout={_onLayoutContainer}>
+        {Platform.OS === 'web' && (
+          /*
+        Duplicate ComponentInput because _onContentSizeChange
+        in the below component could not work some times on web.
+        Make sure this and the below ComponentInput share the same styling
+        */
+          <ComponentInput
+            testID={null}
+            nativeID="component-input--hidden"
+            multiline
+            editable={!disabled}
+            style={styles.hidden}
+            value={componentInputProps.value}
+            onContentSizeChange={_onContentSizeChange}
+            onKeyPress={_onKeyPress}
+            onChangeText={onChangeText}
+          />
+        )}
+        <ComponentInput
+          {...componentInputProps}
+          keyboardType={keyboardType}
+          textInputRef={inputRef}
+          editable={!disabled}
+          style={[
+            textInputStyle,
+            disabled ? {color: colors.textSecondary} : {},
+          ]}
+          onContentSizeChange={
+            Platform.OS === 'web' ? undefined : _onContentSizeChange
+          }
+          onSelectionChange={onSelectionChange}
+          onKeyPress={_onKeyPress}
+          onChangeText={onChangeText}
+        />
+      </View>
       <Autocomplete
         {...autocompleteProps}
         type="mentionInput"
         topPosition={topPosition}
         measuredHeight={measuredHeight}
+        cursorPosition={cursorPosition.current}
         onCompletePress={_setContent}
       />
-      {Platform.OS === 'web' && (
-        /*
-        Duplicate ComponentInput because _onContentSizeChange
-        in the below component could not work some times on web.
-        Make sure this and the below ComponentInput share the same styling
-        */
-        <ComponentInput
-          nativeID="component-input--hidden"
-          multiline
-          value={componentInputProps.value}
-          style={styles.hidden}
-          onContentSizeChange={_onContentSizeChange}
-          editable={!disabled}
-          onKeyPress={_onKeyPress}
-          testID={null}
-        />
-      )}
-      <ComponentInput
-        {...componentInputProps}
-        keyboardType={keyboardType}
-        textInputRef={inputRef}
-        onContentSizeChange={
-          Platform.OS === 'web' ? undefined : _onContentSizeChange
-        }
-        style={[textInputStyle, disabled ? {color: colors.textSecondary} : {}]}
-        onSelectionChange={onSelectionChange}
-        editable={!disabled}
-        onKeyPress={_onKeyPress}
-      />
-    </View>
+    </>
   );
 };
 

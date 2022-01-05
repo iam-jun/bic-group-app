@@ -20,6 +20,7 @@ export interface AutocompleteProps {
   title?: string;
   topPosition: number;
   measuredHeight: number;
+  cursorPosition: number;
   fullWidth?: boolean;
   showShadow?: boolean;
   modalStyle?: StyleProp<ViewStyle>;
@@ -100,7 +101,7 @@ const createStyles = (
       break;
     case 'above-keyboard':
       stylePosition = {
-        bottom: 0,
+        bottom: measuredHeight,
       };
       break;
     default:
@@ -118,9 +119,6 @@ const createStyles = (
   }
 
   return StyleSheet.create({
-    containerWrapper: {
-      zIndex: 1,
-    },
     containerModal: {
       position: 'absolute',
       ...stylePosition,

@@ -26,6 +26,7 @@ interface Props extends Partial<AutocompleteProps> {}
 const AtMention = ({
   showSpectialItems,
   emptyContent,
+  cursorPosition,
   onCompletePress,
 }: Props) => {
   const dispatch = useDispatch();
@@ -33,7 +34,6 @@ const AtMention = ({
   const {data, isLoading, highlightIndex} = useKeySelector('mentionInput');
 
   const text = useRef('');
-  const cursorPosition = useRef(0);
 
   const listRef = useRef<any>();
 
@@ -72,10 +72,9 @@ const AtMention = ({
     groupIds: string;
   }) => {
     text.current = value;
-    cursorPosition.current = position;
-
     const _text = value.substring(0, position);
     const _matchTerm = getMatchTermForAtMention(_text, false);
+
     if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
       dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
     } else {
@@ -85,12 +84,12 @@ const AtMention = ({
 
   const completeMention = (item: any) => {
     const mention = item.username;
-    const mentionPart = text.current.substring(0, cursorPosition.current);
+    const mentionPart = text.current.substring(0, cursorPosition);
 
     let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
 
-    if (text.current.length > cursorPosition.current) {
-      completedDraft += text.current.substring(cursorPosition.current);
+    if (text.current.length > cursorPosition) {
+      completedDraft += text.current.substring(cursorPosition);
     }
     onCompletePress?.(completedDraft);
     dispatch(actions.setData([]));
