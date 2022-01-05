@@ -76,6 +76,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(
       groupsActions.approveAllMemberRequests({
         groupId,
+        total: totalPendingMembers,
         callback: navigateToGroupMembers,
       }),
     );
@@ -117,7 +118,12 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(modalActions.showHideToastMessage(toastMessage));
 
     timeOutRef.current = setTimeout(() => {
-      dispatch(groupsActions.declineAllMemberRequests(groupId));
+      dispatch(
+        groupsActions.declineAllMemberRequests({
+          groupId,
+          total: totalPendingMembers,
+        }),
+      );
     }, 4500);
   };
 
