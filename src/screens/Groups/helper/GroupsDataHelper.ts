@@ -150,11 +150,17 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  approveAllMemberRequests: (groupId: number): HttpApiRequestConfig => ({
+  approveAllMemberRequests: (
+    groupId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    data: {
+      totalJoiningRequests: total,
+    },
   }),
   declineSingleMemberRequest: (
     groupId: number,
@@ -165,11 +171,17 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  declineAllMemberRequests: (groupId: number): HttpApiRequestConfig => ({
+  declineAllMemberRequests: (
+    groupId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    data: {
+      totalJoiningRequests: total,
+    },
   }),
 };
 
@@ -450,10 +462,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveAllMemberRequests: async (groupId: number) => {
+  approveAllMemberRequests: async (groupId: number, total: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllMemberRequests(groupId),
+        groupsApiConfig.approveAllMemberRequests(groupId, total),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -478,10 +490,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  declineAllMemberRequests: async (groupId: number) => {
+  declineAllMemberRequests: async (groupId: number, total: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllMemberRequests(groupId),
+        groupsApiConfig.declineAllMemberRequests(groupId, total),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

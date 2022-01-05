@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useRef} from 'react';
 import {
-  Animated,
   DeviceEventEmitter,
   Keyboard,
   StyleSheet,
@@ -9,6 +8,13 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  interpolate,
+  withTiming,
+} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -32,7 +38,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   navigation,
 }: BottomTabBarProps) => {
   let tabBarVisible = useRef(true).current;
-  const visibleAnim = useRef(new Animated.Value(1)).current;
+
+  const showValue = useSharedValue(1);
 
   const theme = useTheme() as ITheme;
   const insets = useSafeAreaInsets();
@@ -46,28 +53,20 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   const bottomBarHeight = theme.dimension.bottomBarHeight + insets.bottom;
 
-  const height = visibleAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, bottomBarHeight],
-  });
+  const heightStyle = useAnimatedStyle(() => ({
+    height: interpolate(showValue.value, [0, 1], [0, bottomBarHeight]),
+    overflow: 'hidden',
+  }));
 
   const show = (duration = 150) => {
     if (!tabBarVisible) {
       return;
     }
-    Animated.timing(visibleAnim, {
-      toValue: 1,
-      duration,
-      useNativeDriver: false,
-    }).start();
+    showValue.value = withTiming(1, {duration});
   };
 
   const hide = (duration = 150) => {
-    Animated.timing(visibleAnim, {
-      toValue: 0,
-      duration,
-      useNativeDriver: false,
-    }).start();
+    showValue.value = withTiming(0, {duration});
   };
 
   const getActiveRouteName = (state: any): any => {
@@ -185,7 +184,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   };
 
   return (
-    <Animated.View style={{height, overflow: 'hidden'}}>
+    <Animated.View style={heightStyle}>
       <View style={styles.container}>{state.routes.map(renderItem)}</View>
     </Animated.View>
   );

@@ -133,6 +133,7 @@ export const avatarSizes = {
 export const headerHeight = 48;
 export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
+export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
 export const bottomBarHeight = 66;
 
@@ -149,6 +150,7 @@ export default {
   primaryItemHeight,
   avatarSizes,
   commentBarHeight,
+  postToolbarHeight,
   maxNewsfeedWidth,
   bottomBarHeight,
   deviceWidth: DeviceWidth,
