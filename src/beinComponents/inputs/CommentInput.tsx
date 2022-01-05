@@ -579,7 +579,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
       color: loading ? colors.textSecondary : colors.textPrimary,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension?.sizes.body,
     },
     textDuplicatedOnWeb: {

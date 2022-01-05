@@ -86,7 +86,7 @@ const createStyle = (theme: ITheme) => {
       margin: spacing?.padding.base,
       padding: 0,
       fontSize: dimension?.sizes.body,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       color: colors.textPrimary,
     },
   });

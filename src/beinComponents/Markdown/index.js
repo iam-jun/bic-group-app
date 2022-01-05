@@ -86,7 +86,7 @@ const Markdown = ({value, ...rest}) => {
     },
     mention: {
       color: '#386fe5',
-      fontFamily: fontFamilies.SegoeSemibold,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     mention_highlight: {
       backgroundColor: '#ffd470',

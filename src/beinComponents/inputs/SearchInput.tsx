@@ -138,7 +138,7 @@ const createStyles = (theme: ITheme) => {
     textInput: {
       flex: 1,
       height: '100%',
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
     },

@@ -359,7 +359,7 @@ const createStyles = (theme: ITheme) => {
       margin: spacing.margin.large,
     },
     textInput: {
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.h6,
       color: colors.textPrimary,
       margin: spacing.margin.large,

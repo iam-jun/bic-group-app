@@ -102,13 +102,13 @@ const createStyles = (
 
   let _textColor;
   let _backgroundColor = colors.primary1;
-  let _fontFamily = fontFamilies.Segoe;
+  let _fontFamily = fontFamilies.OpenSans;
   if (disabled) {
     _backgroundColor = colors.bgDisable;
     _textColor = colors.textDisabled;
   } else {
     _textColor = isSelected ? colors.primary : colors.primary7;
-    _fontFamily = isSelected ? fontFamilies.SegoeSemibold : fontFamilies.Segoe;
+    _fontFamily = isSelected ? fontFamilies.OpenSansSemiBold : fontFamilies.OpenSans;
   }
 
   return StyleSheet.create({
