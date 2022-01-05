@@ -236,6 +236,9 @@ export const linkingConfigFull = {
                   'post-select-image': {
                     path: 'post/create/image',
                   },
+                  'post-settings': {
+                    path: 'post/create/settings',
+                  },
                 },
               },
               groups: {

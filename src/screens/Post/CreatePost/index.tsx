@@ -51,6 +51,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
+import Button from '~/beinComponents/Button';
 
 export interface CreatePostProps {
   route?: {
@@ -368,6 +369,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }).start();
   };
 
+  const onPressSettings = () => {
+    rootNavigation.navigate(homeStack.postSettings);
+  };
+
   const renderContent = () => {
     const Container = shouldScroll ? ScrollView : View;
 
@@ -463,6 +468,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
+      <View style={styles.setting}>
+        <Button.Secondary
+          leftIcon={'CalendarAlt'}
+          leftIconProps={{icon: 'CalendarAlt', size: 14}}
+          style={styles.buttonSettings}
+          onPress={onPressSettings}
+          textProps={styles.textButtonSettings}>
+          {'Post Settings (2)'}
+        </Button.Secondary>
+      </View>
       {!isEditContentOnly && (
         <Div className="post-toolbar-container">
           <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
@@ -558,6 +573,17 @@ const themeStyles = (theme: ITheme) => {
       color: colors.success,
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},
+    setting: {
+      padding: spacing?.padding.small,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+    },
+    buttonSettings: {
+      backgroundColor: '#EAEDF2',
+      borderRadius: spacing.borderRadius.small,
+    },
+    textButtonSettings: {color: '#2F3945'},
   });
 };
 
