@@ -108,7 +108,9 @@ const createStyles = (
     _textColor = colors.textDisabled;
   } else {
     _textColor = isSelected ? colors.primary : colors.primary7;
-    _fontFamily = isSelected ? fontFamilies.OpenSansSemiBold : fontFamilies.OpenSans;
+    _fontFamily = isSelected
+      ? fontFamilies.OpenSansSemiBold
+      : fontFamilies.OpenSans;
   }
 
   return StyleSheet.create({
