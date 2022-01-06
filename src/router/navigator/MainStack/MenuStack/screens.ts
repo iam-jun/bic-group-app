@@ -10,6 +10,7 @@ import DraftPost from '~/screens/Post/DraftPost';
 import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import UserProfile from '~/screens/Menu/UserProfile';
+import PostSettings from '~/screens/Post/PostSettings';
 
 export default {
   menu: Menu,
@@ -26,4 +27,5 @@ export default {
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'draft-post': DraftPost,
+  'post-setttings': PostSettings,
 };

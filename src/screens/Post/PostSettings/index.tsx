@@ -17,7 +17,6 @@ import {useDispatch} from 'react-redux';
 
 import {useRootNavigation} from '~/hooks/navigation';
 import * as modalActions from '~/store/modal/actions';
-import i18n from '~/localization';
 
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
@@ -57,12 +56,12 @@ const PostSettings = () => {
   const onPressBack = () => {
     dispatch(
       modalActions.showAlert({
-        title: i18n.t('common:label_discard_changes'),
-        content: i18n.t('common:text_discard_warning'),
+        title: t('common:label_discard_changes'),
+        content: t('common:text_discard_warning'),
         showCloseButton: true,
         cancelBtn: true,
-        cancelLabel: i18n.t('common:btn_continue_editing'),
-        confirmLabel: i18n.t('common:btn_discard'),
+        cancelLabel: t('common:btn_continue_editing'),
+        confirmLabel: t('common:btn_discard'),
         onConfirm: () => {
           rootNavigation.goBack();
         },

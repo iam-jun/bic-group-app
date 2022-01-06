@@ -15,6 +15,7 @@ import NewFeature from '~/screens/NewFeature';
 import DraftPost from '~/screens/Post/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
+import PostSettings from '~/screens/Post/PostSettings';
 
 export default {
   'group-list': Groups,
@@ -27,6 +28,7 @@ export default {
   'post-select-audience': PostSelectAudience,
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
+  'post-setttings': PostSettings,
   'draft-post': DraftPost,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
