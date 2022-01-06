@@ -1,7 +1,8 @@
-import {Linking} from 'react-native';
+import {Linking, Platform} from 'react-native';
 
 import {latinise} from './latinise.js';
 import {CURRENT_SERVER, DeepLinkTypes, Files} from '../utils/config';
+import {getEnv} from '~/utils/env';
 
 export function escapeRegex(text) {
   return text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -222,5 +223,20 @@ export async function getURLAndMatch(href, serverURL, siteURL) {
 }
 
 export function tryOpenURL(url, onError = e => {}, onSuccess = () => {}) {
+  if (Platform.OS !== 'web' && url.includes(getEnv('SELF_DOMAIN'))) {
+    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
+    Linking.canOpenURL(newUrl)
+      .then(supported => {
+        if (supported) {
+          Linking.openURL(newUrl).then(onSuccess).catch(onError);
+        } else {
+          Linking.openURL(url).then(onSuccess).catch(onError);
+        }
+      })
+      .catch(e => {
+        console.log('error when open link:', e);
+      });
+    return;
+  }
   Linking.openURL(url).then(onSuccess).catch(onError);
 }
