@@ -19,9 +19,25 @@ export const notificationApiConfig = {
       },
     };
   },
+  putMarkAsReadById: (id: string): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications/${id}/mark-as-read`,
+      method: 'put',
+      provider: ApiConfig.providers.beinFeed,
+      useRetry: true,
+    };
+  },
   putMarkAllAsRead: (): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/mark-as-read`,
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications/all/mark-as-read`,
+      method: 'put',
+      provider: ApiConfig.providers.beinFeed,
+      useRetry: true,
+    };
+  },
+  putMarkAllAsSeen: (): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications/mark-as-seen`,
       method: 'put',
       provider: ApiConfig.providers.beinFeed,
       useRetry: true,
@@ -123,12 +139,6 @@ const notificationsDataHelper = {
     return {filteredNotis, userHisOwnNotiCount};
   },
 
-  /**
-   * Send request to getstream to mark notifications as read
-   * @param userId        integer       User id
-   * @param streamClient  StreamClient  Stream Client
-   * @returns
-   */
   markAsReadAll: async () => {
     try {
       const response: any = await makeHttpRequest(
@@ -144,49 +154,34 @@ const notificationsDataHelper = {
     }
   },
 
-  /**
-   * Send request to getstream to mark notifications as seen
-   * @param userId        integer       User id
-   * @param streamClient  StreamClient  Stream Client
-   * @returns
-   */
-  markAsSeenAll: async (userId: string, streamClient: StreamClient) => {
-    if (streamClient) {
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        {mark_seen: true},
+  markAsSeenAll: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAllAsSeen(),
       );
-
-      return data;
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 
-  /**
-   * Send request to getstream to mark notification as seen by activity id
-   * @param userId        integer       User id
-   * @param activityId    integer       Activity id
-   * @param streamClient  StreamClient  Stream Client
-   */
-  markAsRead: async (
-    userId: string,
-    activityId: string,
-    streamClient: StreamClient,
-  ) => {
-    if (streamClient) {
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        {mark_read: [activityId]},
+  markAsRead: async (activityId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAsReadById(activityId),
       );
-      return data;
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 };
 

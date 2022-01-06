@@ -128,16 +128,9 @@ function* markAsReadAll(): any {
   }
 }
 
-function* markAsSeenAll({
-  payload,
-}: {
-  payload: IGetStreamDispatch;
-  type: string;
-}) {
+function* markAsSeenAll() {
   try {
-    // send request to Getstream to mark notification as seen without waiting response
-    const {userId, streamClient} = payload;
-    notificationsDataHelper.markAsSeenAll(userId, streamClient);
+    notificationsDataHelper.markAsSeenAll();
 
     // get all notifications from store
     const notifications: IObject<any> = yield select(state =>
@@ -162,16 +155,9 @@ function* markAsSeenAll({
   }
 }
 
-function* markAsRead({
-  payload,
-}: {
-  payload: IMarkAsReadAnActivity;
-  type: string;
-}): any {
+function* markAsRead({payload}: {payload: string; type: string}): any {
   try {
-    // send request to Getstream to mark notification as read without waiting response
-    const {userId, streamClient, activityId} = payload;
-    notificationsDataHelper.markAsRead(userId, activityId, streamClient);
+    notificationsDataHelper.markAsRead(payload);
 
     // get all notifications from store
     const notifications: IObject<any> =
@@ -181,7 +167,7 @@ function* markAsRead({
 
     // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
     notifications.forEach((notificationGroup: any) => {
-      if (notificationGroup.id === activityId) {
+      if (notificationGroup.id === payload) {
         notificationGroup.is_read = true;
       }
     });

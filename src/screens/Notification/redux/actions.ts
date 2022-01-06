@@ -57,13 +57,12 @@ const notificationsActions = {
       type: notificationsTypes.MARK_AS_READ_ALL,
     };
   },
-  markAsSeenAll: function (payload: IGetStreamDispatch) {
+  markAsSeenAll: function () {
     return {
       type: notificationsTypes.MARK_AS_SEEN_ALL,
-      payload,
     };
   },
-  markAsRead: function (payload: IMarkAsReadAnActivity) {
+  markAsRead: function (payload: string) {
     return {
       type: notificationsTypes.MARK_AS_READ,
       payload,
