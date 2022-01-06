@@ -39,7 +39,7 @@ const HeaderAvatarView = ({
       disabled={!isInternetReachable}
       style={StyleSheet.flatten([styles.container, containerStyle])}
       onPress={onPress}>
-      <Avatar.LargeAlt source={avatar} style={styles.avatar} />
+      <Avatar.Large source={avatar} style={styles.avatar} />
       <View style={{flex: 1}}>
         <Text.H6>{firstLabel}</Text.H6>
         <Text.Subtitle>{secondLabel}</Text.Subtitle>

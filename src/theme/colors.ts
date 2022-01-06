@@ -38,6 +38,7 @@ export default {
 
       textPrimary: '#29272A',
       textSecondary: '#828085',
+      textTertiary: '#627286',
       textSuccess: '#29272A',
       textDanger: '#ffffff',
       textWarning: '#29272A',
@@ -90,7 +91,7 @@ export default {
       bgButtonSecondary: '#F9F7FD',
       borderFocus: '#29272A',
       borderDisable: '#BDBDBD',
-      borderCard: '#E0E0E0',
+      borderCard: '#D5DCE5',
       borderDivider: '#EAEDF0',
       textInput: '#524F55',
       placeholder: '#F0F0F0',
@@ -108,6 +109,7 @@ export default {
 
       textPrimary: '#29272A',
       textSecondary: '#828085',
+      textTertiary: '#627286',
       textSuccess: '#29272A',
       textDanger: '#ffffff',
       textWarning: '#29272A',

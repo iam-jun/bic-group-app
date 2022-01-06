@@ -11,6 +11,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
+import {isEqual} from 'lodash';
 
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
@@ -104,15 +105,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {loading, data, chosenAudiences = [], important} = createPostData || {};
   const {content} = data || {};
 
+  const initSelectingImagesRef = useRef();
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
 
   const shouldScroll = selectingImages?.length > 0;
 
   const isEditPost = !!initPostData?.id;
-  const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+  const isEditPostHasChange =
+    content !== initPostData?.object?.data?.content ||
+    !isEqual(selectingImages, initSelectingImagesRef.current);
   const isEditDraftPost = !!initPostData?.id && draftPostId;
-  const isEditContentOnly = isEditPost && !isEditDraftPost;
+  const isLimitEdit = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -152,7 +156,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, []);
 
   useEffect(() => {
-    if (initPostData && isEditDraftPost) {
+    if (!initSelectingImagesRef?.current && selectingImages?.length > 0) {
+      initSelectingImagesRef.current = selectingImages;
+    }
+  }, [selectingImages?.length]);
+
+  useEffect(() => {
+    if (initPostData && (isEditDraftPost || isEditPost)) {
       const initImages: any = [];
       initPostData?.object?.data?.images?.map(item => {
         initImages.push({
@@ -300,14 +310,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       dispatch(postActions.putEditDraftPost(payload));
     } else if (isEditPost && initPostData?.id) {
+      const editPostData = {content, images, videos: [], files: []};
       const newEditData: IPostCreatePost = {
         getstream_id: initPostData.id,
-        data,
+        data: editPostData,
         audience,
       };
-      if (important?.active) {
-        newEditData.important = important;
-      }
+      newEditData.important = important;
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
@@ -460,7 +469,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      {!isEditContentOnly && (
+      {!isLimitEdit && (
         <View>
           {!!important?.active && <ImportantStatus notExpired />}
           <CreatePostChosenAudiences disabled={loading} />
@@ -468,15 +477,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      <View
-        style={[
-          styles.setting,
-          {
-            paddingBottom: isEditContentOnly
-              ? spacing.padding.extraLarge
-              : spacing.padding.small,
-          },
-        ]}>
+      <View style={styles.setting}>
         <Button.Secondary
           //   color="#EAEDF2"
           leftIcon="SlidersVAlt"
@@ -486,11 +487,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           {t('post:settings')}
         </Button.Secondary>
       </View>
-      {!isEditContentOnly && (
-        <Div className="post-toolbar-container">
-          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-        </Div>
-      )}
+      <Div className="post-toolbar-container">
+        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+      </Div>
     </ScreenWrapper>
   );
 };
@@ -577,7 +576,7 @@ const themeStyles = (theme: ITheme) => {
       opacity: 0,
       padding: spacing?.padding.base,
       fontSize: dimension?.sizes.body,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       color: colors.success,
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},
@@ -586,6 +585,7 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
+      flexWrap: 'wrap',
     },
     buttonSettings: {
       backgroundColor: '#EAEDF2',

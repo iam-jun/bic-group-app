@@ -111,7 +111,8 @@
     "btn_decline": "Decline",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
-    "text_requests": "Requests",
+    "text_request": "Request",
+    "text_request_other": "Requests",
     "text_admin": "Admin"
   },
   "auth": {
@@ -349,6 +350,8 @@
     "button_reply": "Reply",
     "button_react": "React",
     "button_comment": "Comment",
+    "button_image": "Image",
+    "button_draft": "Draft",
     "button_comment_not_verify_user": "Verify your account to comment",
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",
@@ -376,7 +379,7 @@
     "placeholder_write_post": "Writing your post...",
     "placeholder_write_comment": "Write your comment...",
     "create_post": "Create Post",
-    "create_new_post": "Create new post",
+    "create_new_post": "Write your today discoveries...",
     "post_button": "Post",
     "send_to": "Send to",
     "save": "Save",
@@ -577,7 +580,9 @@
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
     "text_approved_member_group": "You have been approved to be a member of this group",
-    "title_members": "Members"
+    "title_members": "Members",
+    "text_cannot_approve_all": "Cannot approve all because there are changes in the pending member list. Please review again",
+    "text_cannot_decline_all": "Cannot decline all because there are changes in the pending member list. Please review again"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
