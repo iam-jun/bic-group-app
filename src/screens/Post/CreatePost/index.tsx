@@ -554,7 +554,7 @@ const themeStyles = (theme: ITheme) => {
       opacity: 0,
       padding: spacing?.padding.base,
       fontSize: dimension?.sizes.body,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       color: colors.success,
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},
