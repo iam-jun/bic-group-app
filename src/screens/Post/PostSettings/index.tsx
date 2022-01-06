@@ -198,7 +198,7 @@ const PostSettings = () => {
         buttonProps={{
           disabled: disableButtonSave,
           useI18n: true,
-          color: '#EAEDF2',
+          color: colors.bgHover,
           style: {
             borderWidth: disableButtonSave ? 0 : 1,
             borderColor: colors.primary,

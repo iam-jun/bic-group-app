@@ -82,7 +82,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
@@ -477,16 +477,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      <View style={styles.setting}>
-        <Button.Secondary
-          //   color="#EAEDF2"
-          leftIcon="SlidersVAlt"
-          style={styles.buttonSettings}
-          onPress={onPressSettings}
-          textProps={styles.textButtonSettings}>
-          {t('post:settings')}
-        </Button.Secondary>
-      </View>
+      {!isEditPost && (
+        <View style={styles.setting}>
+          <Button.Secondary
+            color={colors.bgHover}
+            leftIcon="SlidersVAlt"
+            style={styles.buttonSettings}
+            onPress={onPressSettings}
+            textProps={styles.textButtonSettings}>
+            {t('post:settings')}
+          </Button.Secondary>
+        </View>
+      )}
       <Div className="post-toolbar-container">
         <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
       </Div>
@@ -588,10 +590,10 @@ const themeStyles = (theme: ITheme) => {
       flexWrap: 'wrap',
     },
     buttonSettings: {
-      backgroundColor: '#EAEDF2',
+      backgroundColor: colors.bgHover,
       borderRadius: spacing.borderRadius.small,
     },
-    textButtonSettings: {color: '#2F3945'},
+    textButtonSettings: {color: colors.textPrimary},
   });
 };
 
