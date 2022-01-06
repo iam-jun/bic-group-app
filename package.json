@@ -105,6 +105,7 @@
     "remove-markdown": "0.3.0",
     "reselect": "4.0.0",
     "rn-placeholder": "3.0.3",
+    "socket.io-client": "4.4.0",
     "url-parse": "1.5.3"
   },
   "devDependencies": {

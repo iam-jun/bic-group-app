@@ -26,18 +26,19 @@ export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
   activityId: string;
 }
 
-export interface ILoadNewNotifications extends IGetStreamDispatch {
+export interface ILoadNewNotifications {
   notiGroupId: string;
   limit: number;
 }
 
-export interface IDeleteNotifications extends IGetStreamDispatch {
+export interface IDeleteNotifications {
   notiGroupIds: string[];
 }
 
 export interface IParamGetNotifications {
   limit?: number;
   id_lt?: string;
+  id_gte?: string;
   enrich?: boolean;
   own_reactions?: boolean;
   with_own_reactions?: boolean;

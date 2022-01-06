@@ -1,5 +1,4 @@
-import {StreamClient} from 'getstream';
-import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
+import {makeHttpRequest} from '~/services/httpApiRequest';
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {IParamGetNotifications} from '~/interfaces/INotification';
 
@@ -67,7 +66,7 @@ const notificationsDataHelper = {
       if (response && response?.data?.data) {
         return Promise.resolve({
           results: response?.data?.data?.results || [],
-          unseen: 101,
+          unseen: response?.data?.data?.unseen,
         });
       } else {
         return Promise.reject(response);
@@ -77,40 +76,25 @@ const notificationsDataHelper = {
     }
   },
 
-  loadNewNotification: async (
-    userId: string,
-    fromNotiGroupId: string,
-    limit: number,
-    streamClient?: StreamClient,
-  ) => {
-    if (streamClient) {
-      const streamOptions: any =
-        notificationsDataHelper.getDefaultLoadNotiOptions(userId);
-      streamOptions.id_gte = fromNotiGroupId;
-      streamOptions.limit = limit;
-      streamOptions.offset = 0;
-
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        streamOptions,
+  loadNewNotification: async (fromNotiGroupId: string, limit: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.getNotifications({
+          limit,
+          id_gte: fromNotiGroupId,
+        }),
       );
-
-      // because getstream not support check user own noti event
-      // so this is a trick to hide current user's post event
-      const {filteredNotis, userHisOwnNotiCount} =
-        notificationsDataHelper.filterCurrentUserNoti(userId, data.results);
-
-      data.results = filteredNotis;
-      // update unseen number if there is any noti is hidden
-      data.unseen =
-        limit - userHisOwnNotiCount > 0 ? limit - userHisOwnNotiCount : 0;
-
-      return data;
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          results: response?.data?.data?.results || [],
+          unseen: response?.data?.data?.unseen,
+        });
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 
   /**

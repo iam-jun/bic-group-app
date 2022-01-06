@@ -1,5 +1,4 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
-import {StreamClient} from 'getstream';
 import {IFilePicked, IObject} from './common';
 import {IUploadType} from '~/configs/resourceConfig';
 

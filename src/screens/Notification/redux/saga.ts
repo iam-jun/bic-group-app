@@ -1,10 +1,9 @@
 import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-import {IGetStreamDispatch, IObject, IToastMessage} from '~/interfaces/common';
+import {IObject, IToastMessage} from '~/interfaces/common';
 import errorCode from '~/constants/errorCode';
 import {
   ILoadNewNotifications,
-  IMarkAsReadAnActivity,
   IParamGetNotifications,
 } from '~/interfaces/INotification';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
@@ -69,13 +68,11 @@ function* loadNewNotifications({
   type: string;
 }) {
   try {
-    const {userId, notiGroupId, streamClient, limit} = payload;
+    const {notiGroupId, limit} = payload;
     const response: IObject<any> =
       yield notificationsDataHelper.loadNewNotification(
-        userId,
         notiGroupId,
         limit, // only load a number of notifiations equal number of new notifications
-        streamClient,
       );
 
     yield put(
