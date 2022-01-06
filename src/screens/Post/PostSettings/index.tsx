@@ -137,33 +137,27 @@ const PostSettings = () => {
     }
 
     return (
-      <View style={{marginTop: spacing.margin.large}}>
-        <View style={styles.row}>
-          <View style={styles.flex1}>
-            <Text.H6 useI18n>post:expiring_time</Text.H6>
-            <Text.Subtitle useI18n color={colors.textSecondary}>
-              post:expire_time_desc
-            </Text.Subtitle>
-          </View>
-        </View>
-        <View style={styles.importantButtons}>
-          <Button.Secondary
-            testID="post_toolbar.date"
-            leftIcon={'CalendarAlt'}
-            leftIconProps={{icon: 'CalendarAlt', size: 14}}
-            style={styles.buttonDate}
-            onPress={() => setSelectingDate(true)}>
-            {date}
-          </Button.Secondary>
-          <Button.Secondary
-            testID="post_toolbar.time"
-            leftIcon={'Clock'}
-            leftIconProps={{icon: 'Clock', size: 16}}
-            style={styles.buttonTime}
-            onPress={() => setSelectingTime(true)}>
-            {time}
-          </Button.Secondary>
-        </View>
+      <View style={styles.importantButtons}>
+        <Button.Secondary
+          testID="post_toolbar.date"
+          leftIcon={'CalendarAlt'}
+          leftIconProps={{icon: 'CalendarAlt', size: 14}}
+          style={styles.buttonDate}
+          onPress={() => setSelectingDate(true)}
+          color={colors.bgHover}
+          textProps={{color: colors.textPrimary}}>
+          {date}
+        </Button.Secondary>
+        <Button.Secondary
+          testID="post_toolbar.time"
+          leftIcon={'Clock'}
+          leftIconProps={{icon: 'Clock', size: 16}}
+          style={styles.buttonTime}
+          onPress={() => setSelectingTime(true)}
+          color={colors.bgHover}
+          textProps={{color: colors.textPrimary}}>
+          {time}
+        </Button.Secondary>
       </View>
     );
   };
@@ -174,9 +168,14 @@ const PostSettings = () => {
     return (
       <View style={styles.content}>
         <View style={styles.row}>
-          <Text.H6 style={styles.flex1} useI18n>
-            post:mark_as_important
-          </Text.H6>
+          <View style={styles.flex1}>
+            <Text.H6 style={styles.flex1} useI18n>
+              post:mark_as_important
+            </Text.H6>
+            <Text.Subtitle useI18n color={colors.textSecondary}>
+              post:expire_time_desc
+            </Text.Subtitle>
+          </View>
           <Toggle
             isChecked={sImportant?.active === 1}
             onActionPress={onToggleImportant}
@@ -290,7 +289,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {backgroundColor: colors.background, flex: 1},
-    row: {flexDirection: 'row'},
+    row: {flexDirection: 'row', alignItems: 'center'},
     flex1: {flex: 1},
     content: {
       paddingVertical: Platform.select({
@@ -307,8 +306,12 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing.padding.base,
       paddingBottom: spacing.padding.large,
     },
-    buttonDate: {flex: 1, marginRight: spacing.margin.base},
-    buttonTime: {flex: 1},
+    buttonDate: {
+      flex: 1,
+      marginRight: spacing.margin.base,
+      backgroundColor: colors.bgHover,
+    },
+    buttonTime: {flex: 1, backgroundColor: colors.bgHover},
   });
 };
 

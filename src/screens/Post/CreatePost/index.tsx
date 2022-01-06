@@ -484,7 +484,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             leftIcon="SlidersVAlt"
             style={styles.buttonSettings}
             onPress={onPressSettings}
-            textProps={styles.textButtonSettings}>
+            textProps={{color: colors.textPrimary}}>
             {t('post:settings')}
           </Button.Secondary>
         </View>
@@ -593,7 +593,6 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.bgHover,
       borderRadius: spacing.borderRadius.small,
     },
-    textButtonSettings: {color: colors.textPrimary},
   });
 };
 
