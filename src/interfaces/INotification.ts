@@ -11,8 +11,8 @@ export interface IGetStreamNotificationActivity {
   actor: IGetStreamUser;
   foreign_id: string;
   id: string;
-  notificationType: number;
-  object: IGetStreamPost;
+  notification_type: number;
+  object: IGetStreamPost | any;
   origin: null;
   reaction: IReaction;
   target: string;
@@ -36,6 +36,12 @@ export interface IDeleteNotifications extends IGetStreamDispatch {
 }
 
 export interface IParamGetNotifications {
-  offset?: number;
   limit?: number;
+  id_lt?: string;
+  enrich?: boolean;
+  own_reactions?: boolean;
+  with_own_reactions?: boolean;
+  with_own_children?: boolean;
+  with_recent_reactions?: boolean;
+  with_reaction_counts?: boolean;
 }

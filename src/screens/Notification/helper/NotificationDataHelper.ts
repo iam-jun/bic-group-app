@@ -7,14 +7,15 @@ const LIMIT = 20;
 
 export const notificationApiConfig = {
   getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
+    const {limit, ...restParams} = params || {};
     return {
       url: `${ApiConfig.providers.beinFeed.url}api/notifications`,
       method: 'get',
       provider: ApiConfig.providers.beinFeed,
       useRetry: true,
       params: {
-        offset: params?.offset || 0,
-        limit: params?.limit || LIMIT,
+        limit: limit || LIMIT,
+        ...restParams,
       },
     };
   },

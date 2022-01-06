@@ -246,7 +246,7 @@ export interface IGetStreamPost {
   verb: string;
   type: string;
   data: IActivityData;
-  object?: IGetStreamPost | string;
+  object?: IGetStreamPost | string | any;
   origin?: string | null;
   target?: string;
   time?: string;
