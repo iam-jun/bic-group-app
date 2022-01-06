@@ -103,6 +103,14 @@ function postReducer(state = initState, action: any = {}) {
           },
         },
       };
+    case postTypes.SET_CREATE_POST_SETTINGS:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          ...payload,
+        },
+      };
     case postTypes.SET_CREATE_COMMENT:
       return {
         ...state,

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -23,6 +23,8 @@ import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {formatDate} from '~/utils/formatData';
 
+import {IActivityImportant} from '~/interfaces/IPost';
+
 const MAX_DAYS = 7;
 
 const PostSettings = () => {
@@ -37,6 +39,20 @@ const PostSettings = () => {
 
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
+
+  const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
+  const [sImportant, setImportant] = useState<IActivityImportant>({
+    active: 0,
+    expiresTime: '',
+    ...important,
+  });
+  //   const [comments, setComments] = useState<boolean>(true);
+  //   const [shares, setShares] = useState<boolean>(true);
+  //   const [reacts, setReacts] = useState<boolean>(true);
+
+  useEffect(() => {
+    checkDisableButtonSave();
+  }, [sImportant]);
 
   const onPressBack = () => {
     dispatch(
@@ -56,33 +72,39 @@ const PostSettings = () => {
   };
 
   const onPressSave = () => {
+    dispatch(postActions.setCreatePostSettings({important: sImportant}));
     rootNavigation.goBack();
   };
 
+  const checkDisableButtonSave = () => {
+    const isDisable = sImportant.active === important?.active;
+    setDisableButtonSave(isDisable);
+  };
+
   const onToggleImportant = (action: IAction) => {
-    const newImportant = {...important};
+    const newImportant = {...sImportant};
     newImportant.active = action === commonActions.checkBox ? 1 : 0;
-    if (!important.expiresTime) {
+    if (!sImportant.expiresTime) {
       newImportant.expiresTime = getDefaultExpire();
     }
-    dispatch(postActions.setCreatePostImportant(newImportant));
+    setImportant(newImportant);
   };
 
   const onChangeDatePicker = (date?: Date) => {
     setSelectingDate(false);
     setSelectingTime(false);
     if (date) {
-      const newImportant = {...important};
+      const newImportant = {...sImportant};
       let expiresTime = '';
       if (date) {
-        const time = important.expiresTime
-          ? new Date(important.expiresTime)
+        const time = sImportant.expiresTime
+          ? new Date(sImportant.expiresTime)
           : new Date();
         date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
         expiresTime = date.toISOString();
       }
       newImportant.expiresTime = expiresTime;
-      dispatch(postActions.setCreatePostImportant(newImportant));
+      setImportant(newImportant);
     }
   };
 
@@ -90,19 +112,19 @@ const PostSettings = () => {
     setSelectingDate(false);
     setSelectingTime(false);
     if (time) {
-      const newImportant = {...important};
-      const date = important.expiresTime
-        ? new Date(important.expiresTime)
+      const newImportant = {...sImportant};
+      const date = sImportant.expiresTime
+        ? new Date(sImportant.expiresTime)
         : new Date();
       date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
       const expiresTime = date.toISOString();
       newImportant.expiresTime = expiresTime;
-      dispatch(postActions.setCreatePostImportant(newImportant));
+      setImportant(newImportant);
     }
   };
 
   const renderImportantDate = () => {
-    const {expiresTime} = important || {};
+    const {expiresTime} = sImportant || {};
     let date = t('common:text_set_date');
     let time = t('common:text_set_time');
 
@@ -144,16 +166,16 @@ const PostSettings = () => {
   };
 
   const renderImportant = () => {
-    const {active} = important || {};
+    const {active} = sImportant || {};
 
     return (
-      <View style={styles.importantContainer}>
+      <View style={styles.content}>
         <View style={styles.row}>
           <Text.H6 style={styles.flex1} useI18n>
             post:mark_as_important
           </Text.H6>
           <Toggle
-            isChecked={important?.active}
+            isChecked={sImportant?.active === 1}
             onActionPress={onToggleImportant}
           />
         </View>
@@ -165,29 +187,60 @@ const PostSettings = () => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.surface}>
       <Header
-        // titleTextProps={{useI18n: true}}
-        title={'Post Settings'}
-        buttonText={'Save'}
-        // buttonProps={{useI18n: true}}
+        titleTextProps={{useI18n: true}}
+        title="post:settings"
+        buttonText="post:save"
         onPressBack={onPressBack}
         onPressButton={onPressSave}
-        buttonProps={
-          {
-            //   disabled: disableButtonSave,
-            //   useI18n: true,
-            //   highEmphasis: true,
-          }
-        }
+        buttonProps={{
+          disabled: disableButtonSave,
+          useI18n: true,
+          color: '#EAEDF2',
+          style: {
+            borderWidth: disableButtonSave ? 0 : 1,
+            borderColor: colors.primary,
+            marginRight: spacing?.margin.large,
+          },
+        }}
       />
       <View style={styles.container}>
-        {renderImportant()}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {renderImportant()}
+          {/* <View style={[styles.content, styles.row]}>
+            <Text.H6 style={styles.flex1} useI18n>
+              post:people_can_comment
+            </Text.H6>
+            <Toggle
+              isChecked={comments}
+              onActionPress={() => setComments(!comments)}
+            />
+          </View>
+          <View style={[styles.content, styles.row]}>
+            <Text.H6 style={styles.flex1} useI18n>
+              post:people_can_share
+            </Text.H6>
+            <Toggle
+              isChecked={shares}
+              onActionPress={() => setShares(!shares)}
+            />
+          </View>
+          <View style={[styles.content, styles.row]}>
+            <Text.H6 style={styles.flex1} useI18n>
+              post:people_can_react
+            </Text.H6>
+            <Toggle
+              isChecked={reacts}
+              onActionPress={() => setReacts(!reacts)}
+            />
+          </View> */}
+        </ScrollView>
         <View style={{position: 'absolute', alignSelf: 'center'}}>
           {selectingDate && (
             <DateTimePicker
               isVisible={selectingDate}
               date={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
+                sImportant.expiresTime
+                  ? new Date(sImportant.expiresTime)
                   : new Date()
               }
               minDate={new Date()}
@@ -201,8 +254,8 @@ const PostSettings = () => {
             <DateTimePicker
               isVisible={selectingTime}
               date={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
+                sImportant.expiresTime
+                  ? new Date(sImportant.expiresTime)
                   : new Date()
               }
               minDate={new Date()}
@@ -236,7 +289,7 @@ const createStyle = (theme: ITheme) => {
     container: {backgroundColor: colors.background, flex: 1},
     row: {flexDirection: 'row'},
     flex1: {flex: 1},
-    importantContainer: {
+    content: {
       paddingVertical: Platform.select({
         web: spacing.padding.big,
         default: spacing.padding.small,

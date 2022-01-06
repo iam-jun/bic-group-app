@@ -58,6 +58,13 @@ export interface ICreatePostImage {
   url?: string;
 }
 
+export interface ICreatePostSettings {
+  important?: {
+    active?: 0 | 1;
+    expiresTime?: string;
+  };
+}
+
 /**
   actor: userId
   - Getstream saved as string

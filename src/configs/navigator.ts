@@ -85,6 +85,7 @@ export const appScreens = {
   postSelectImage: 'post-select-image',
   postSelectAudience: 'post-select-audience',
   draftPost: 'draft-post',
+  postSettings: 'post-settings',
 
   // Group
   groupList: 'group-list',
@@ -351,6 +352,9 @@ export const linkingConfigFullLaptop = {
               },
               'post-select-image': {
                 path: 'post/create/image',
+              },
+              'post-settings': {
+                path: 'post/create/settings',
               },
               'user-profile': {
                 path: 'profile/:userId?',

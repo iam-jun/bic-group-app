@@ -81,7 +81,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
@@ -468,14 +468,22 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      <View style={styles.setting}>
+      <View
+        style={[
+          styles.setting,
+          {
+            paddingBottom: isEditContentOnly
+              ? spacing.padding.extraLarge
+              : spacing.padding.small,
+          },
+        ]}>
         <Button.Secondary
-          leftIcon={'CalendarAlt'}
-          leftIconProps={{icon: 'CalendarAlt', size: 14}}
+          //   color="#EAEDF2"
+          leftIcon="SlidersVAlt"
           style={styles.buttonSettings}
           onPress={onPressSettings}
           textProps={styles.textButtonSettings}>
-          {'Post Settings (2)'}
+          {t('post:settings')}
         </Button.Secondary>
       </View>
       {!isEditContentOnly && (

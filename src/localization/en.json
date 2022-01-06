@@ -453,7 +453,11 @@
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted"
-    }
+    },
+    "settings": "Post Settings",
+    "people_can_comment": "People can comment on this post",
+    "people_can_share": "People can share on this post",
+    "people_can_react": "People can react on this post"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
