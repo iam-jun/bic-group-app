@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
+import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
@@ -32,6 +32,7 @@ const PostSettings = () => {
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
+
   const styles = createStyle(theme);
   const createPostData = useCreatePost();
   const {important} = createPostData || {};
@@ -149,7 +150,7 @@ const PostSettings = () => {
         <Button.Secondary
           testID="post_toolbar.date"
           leftIcon={'CalendarAlt'}
-          leftIconProps={{icon: 'CalendarAlt', size: 14}}
+          leftIconProps={{icon: 'CalendarAlt', size: 20}}
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
           color={colors.bgHover}
@@ -159,7 +160,7 @@ const PostSettings = () => {
         <Button.Secondary
           testID="post_toolbar.time"
           leftIcon={'Clock'}
-          leftIconProps={{icon: 'Clock', size: 16}}
+          leftIconProps={{icon: 'Clock', size: 20}}
           style={styles.buttonTime}
           onPress={() => setSelectingTime(true)}
           color={colors.bgHover}
@@ -175,13 +176,18 @@ const PostSettings = () => {
 
     return (
       <View style={styles.content}>
-        <View style={styles.row}>
+        <View style={[styles.row, styles.important]}>
           <View style={styles.flex1}>
-            <Text.H6 style={styles.flex1} useI18n>
+            <Text.H5
+              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
+              useI18n>
               post:mark_as_important
-            </Text.H6>
+            </Text.H5>
             {sImportant?.active === 1 && (
-              <Text.Subtitle useI18n color={colors.textSecondary}>
+              <Text.Subtitle
+                useI18n
+                color={colors.textSecondary}
+                style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
                 post:expire_time_desc
               </Text.Subtitle>
             )}
@@ -204,14 +210,15 @@ const PostSettings = () => {
         buttonText="post:save"
         onPressBack={onPressBack}
         onPressButton={onPressSave}
+        buttonVariant="Secondary"
         buttonProps={{
+          textColor: colors.primary6,
           disabled: disableButtonSave,
           useI18n: true,
-          color: colors.bgHover,
           style: {
             borderWidth: disableButtonSave ? 0 : 1,
-            borderColor: colors.primary,
-            marginRight: spacing?.margin.large,
+            borderColor: colors.primary6,
+            marginRight: spacing?.margin.base,
           },
         }}
       />
@@ -219,7 +226,9 @@ const PostSettings = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderImportant()}
           {/* <View style={[styles.content, styles.row]}>
-            <Text.H6 style={styles.flex1} useI18n>
+            <Text.H5
+              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
+              useI18n>
               post:people_can_comment
             </Text.H6>
             <Toggle
@@ -228,7 +237,9 @@ const PostSettings = () => {
             />
           </View>
           <View style={[styles.content, styles.row]}>
-            <Text.H6 style={styles.flex1} useI18n>
+           <Text.H5
+              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
+              useI18n>
               post:people_can_share
             </Text.H6>
             <Toggle
@@ -237,7 +248,9 @@ const PostSettings = () => {
             />
           </View>
           <View style={[styles.content, styles.row]}>
-            <Text.H6 style={styles.flex1} useI18n>
+            <Text.H5
+              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
+              useI18n>
               post:people_can_react
             </Text.H6>
             <Toggle
@@ -310,6 +323,7 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
       justifyContent: 'center',
     },
+    important: {marginBottom: spacing.margin.tiny},
     importantButtons: {
       flexDirection: 'row',
       alignItems: 'center',

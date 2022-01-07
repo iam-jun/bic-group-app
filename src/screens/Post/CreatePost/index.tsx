@@ -477,7 +477,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             leftIcon="SlidersVAlt"
             style={styles.buttonSettings}
             onPress={onPressSettings}
-            textProps={{color: colors.textPrimary}}>
+            textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
             {t('post:settings') + (count > 0 ? ` (${count})` : '')}
           </Button.Secondary>
         </View>
@@ -576,7 +576,7 @@ const themeStyles = (theme: ITheme) => {
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},
     setting: {
-      padding: spacing?.padding.small,
+      padding: spacing?.padding.large,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
