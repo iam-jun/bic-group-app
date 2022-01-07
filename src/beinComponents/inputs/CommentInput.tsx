@@ -504,7 +504,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               placeholder={placeholder}
               placeholderTextColor={colors.textSecondary}
               editable={!_loading}
-              value={Platform.OS === 'web' ? text : undefined} //if mobile, use props children
+              value={text}
               onFocus={_onFocus}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
@@ -579,7 +579,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
       color: loading ? colors.textSecondary : colors.textPrimary,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension?.sizes.body,
     },
     textDuplicatedOnWeb: {

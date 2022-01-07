@@ -107,7 +107,7 @@ const themeStyles = (theme: ITheme) => {
     },
     textEdit: {
       minHeight: 224,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
       color: colors.textPrimary,
     },

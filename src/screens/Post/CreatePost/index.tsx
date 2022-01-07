@@ -11,6 +11,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
+import {isEqual} from 'lodash';
 
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
@@ -49,6 +50,7 @@ import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
+import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 export interface CreatePostProps {
   route?: {
@@ -97,15 +99,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {loading, data, chosenAudiences = [], important} = createPostData || {};
   const {content} = data || {};
 
+  const initSelectingImagesRef = useRef();
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
 
   const shouldScroll = selectingImages?.length > 0;
 
   const isEditPost = !!initPostData?.id;
-  const isEditPostHasChange = content !== initPostData?.object?.data?.content;
+  const isEditPostHasChange =
+    content !== initPostData?.object?.data?.content ||
+    !isEqual(selectingImages, initSelectingImagesRef.current);
   const isEditDraftPost = !!initPostData?.id && draftPostId;
-  const isEditContentOnly = isEditPost && !isEditDraftPost;
+  const isLimitEdit = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -145,7 +150,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, []);
 
   useEffect(() => {
-    if (initPostData && isEditDraftPost) {
+    if (!initSelectingImagesRef?.current && selectingImages?.length > 0) {
+      initSelectingImagesRef.current = selectingImages;
+    }
+  }, [selectingImages?.length]);
+
+  useEffect(() => {
+    if (initPostData && (isEditDraftPost || isEditPost)) {
       const initImages: any = [];
       initPostData?.object?.data?.images?.map(item => {
         initImages.push({
@@ -293,16 +304,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       dispatch(postActions.putEditDraftPost(payload));
     } else if (isEditPost && initPostData?.id) {
+      const editPostData = {content, images, videos: [], files: []};
       const newEditData: IPostCreatePost = {
-        data,
+        data: editPostData,
         audience,
       };
-      if (important?.active) {
-        newEditData.important = {
-          active: important?.active,
-          expires_time: important?.expiresTime,
-        };
-      }
+      newEditData.important = {
+        active: !!important?.active,
+        expires_time: important?.expiresTime,
+      };
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
@@ -330,27 +340,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onChangeText = (text: string) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
-  };
-
-  const onPressMentionAudience = (audience: any) => {
-    //TEMP DISABLE AUTO ADD USER SELECTED TO AUDIENCE
-    // const newChosenAudience = [...chosenAudiences];
-    // const mentionUser = {
-    //   id: audience.id,
-    //   name: audience.name || audience.fullname,
-    //   avatar: audience.avatar,
-    //   type: 'user',
-    // };
-    // let isDuplicate = false;
-    // newChosenAudience.map(item => {
-    //   if (item?.id === mentionUser?.id && item?.type === mentionUser?.type) {
-    //     isDuplicate = true;
-    //   }
-    // });
-    // if (!isDuplicate) {
-    //   newChosenAudience.unshift(mentionUser);
-    //   dispatch(postActions.setCreatePostChosenAudiences(newChosenAudience));
-    // }
   };
 
   const onLayoutCloneText = (e: any) => {
@@ -383,40 +372,47 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   {content}
                 </RNText>
               </View>
-              <MentionInput
+              <_MentionInput
+                groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}
                 textInputStyle={styles.flex1}
-                modalPosition={'bottom'}
-                onPress={onPressMentionAudience}
-                onChangeText={onChangeText}
+                autocompleteProps={{
+                  modalPosition: 'bottom',
+                  title: i18n.t('post:mention_title'),
+                  emptyContent: i18n.t('post:mention_empty_content'),
+                  showShadow: true,
+                  modalStyle: {maxHeight: 350},
+                }}
+                // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
-                title={i18n.t('post:mention_title')}
-                emptyContent={i18n.t('post:mention_empty_content')}
-                getDataPromise={postDataHelper.getSearchMentionAudiences}
-                getDataParam={{group_ids: strGroupIds}}
-                getDataResponseKey={'data'}
+                componentInputProps={{
+                  value: content,
+                  onChangeText,
+                }}
                 disabled={loading}
-                modalStyle={{maxHeight: 350}}
-                showShadow
               />
             </Animated.View>
           ) : (
-            <MentionInput
+            <_MentionInput
+              groupIds={strGroupIds}
               mentionInputRef={mentionInputRef}
               style={shouldScroll ? {} : styles.flex1}
               textInputStyle={shouldScroll ? {} : styles.flex1}
-              modalPosition={'bottom'}
-              onPress={onPressMentionAudience}
-              onChangeText={onChangeText}
               ComponentInput={PostInput}
-              title={i18n.t('post:mention_title')}
-              emptyContent={i18n.t('post:mention_empty_content')}
-              getDataPromise={postDataHelper.getSearchMentionAudiences}
-              getDataParam={{group_ids: strGroupIds}}
-              getDataResponseKey={'data'}
+              componentInputProps={{
+                value: content,
+                onChangeText,
+              }}
+              autocompleteProps={{
+                modalPosition: 'bottom',
+                emptyContent: i18n.t('post:mention_empty_content'),
+                showShadow: true,
+                modalStyle: {maxHeight: 350},
+                fullWidth: true,
+              }}
+              // title={i18n.t('post:mention_title')}
               disabled={loading}
-              fullWidth={true}
             />
           )}
           <PostPhotoPreview
@@ -452,7 +448,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      {!isEditContentOnly && (
+      {!isLimitEdit && (
         <View>
           {!!important?.active && <ImportantStatus notExpired />}
           <CreatePostChosenAudiences disabled={loading} />
@@ -460,11 +456,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      {!isEditContentOnly && (
-        <Div className="post-toolbar-container">
-          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-        </Div>
-      )}
+      <Div className="post-toolbar-container">
+        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+      </Div>
     </ScreenWrapper>
   );
 };
@@ -551,7 +545,7 @@ const themeStyles = (theme: ITheme) => {
       opacity: 0,
       padding: spacing?.padding.base,
       fontSize: dimension?.sizes.body,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       color: colors.success,
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},

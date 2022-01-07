@@ -116,9 +116,9 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
           testID={'header_create_post'}
           onPress={onPressCreate}
           style={styles.buttonContainer}>
-          <Text.Body color={colors.textTertiary} useI18n>
+          <Text.BodyS color={colors.textTertiary} useI18n>
             {'post:create_new_post'}
-          </Text.Body>
+          </Text.BodyS>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonRow}>
@@ -128,7 +128,9 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
           leftIcon={'Image'}
           leftIconProps={{icon: 'Image', tintColor: colors.textTertiary}}
           onPress={onPressImage}>
-          Image
+          <Text.BodySM useI18n color={colors.textTertiary}>
+            post:button_image
+          </Text.BodySM>
         </Button>
         <Button
           style={styles.buttonSmall}
@@ -136,14 +138,16 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
           leftIcon={'edit'}
           leftIconProps={{icon: 'Edit', tintColor: colors.textTertiary}}
           onPress={onPressDraft}>
-          <Text.ButtonBase color={colors.textTertiary}>Draft</Text.ButtonBase>
+          <Text.ButtonBase color={colors.textTertiary}>
+            <Text.BodySM useI18n color={colors.textTertiary}>
+              post:button_draft
+            </Text.BodySM>
+          </Text.ButtonBase>
           {draftPost?.length > 0 && (
             <View style={styles.draftContainer}>
-              <Text.ButtonBase
-                style={{fontSize: 12}}
-                color={colors.textTertiary}>
+              <Text.Subtitle color={colors.textTertiary}>
                 {draftCount}
-              </Text.ButtonBase>
+              </Text.Subtitle>
             </View>
           )}
         </Button>

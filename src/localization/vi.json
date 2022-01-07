@@ -257,6 +257,8 @@
     "button_reply": "Trả lời",
     "button_react": "Tương tác",
     "button_comment": "Bình luận",
+    "button_image": "Ảnh",
+    "button_draft": "Nháp",
     "button_comment_not_verify_user": "Verify your account to comment",
     "label_view_more_replies": "Xem thêm {0} trả lời",
     "label_likes_with_me": "Bạn và {0} người khác",

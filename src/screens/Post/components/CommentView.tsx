@@ -1,34 +1,32 @@
 import React, {useCallback, useRef} from 'react';
-import {Animated, View, StyleSheet, Keyboard, Platform} from 'react-native';
-import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+import {Animated, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
-import Avatar from '~/beinComponents/Avatar';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
+import Avatar from '~/beinComponents/Avatar';
+import Button from '~/beinComponents/Button';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Div from '~/beinComponents/Div';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
+import Icon from '~/beinComponents/Icon';
+import ReactionView from '~/beinComponents/ReactionView';
+import Text from '~/beinComponents/Text';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import TimeView from '~/beinComponents/TimeView';
 import {ReactionType} from '~/constants/reactions';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import Button from '~/beinComponents/Button';
-
 import {useRootNavigation} from '~/hooks/navigation';
-import Div from '~/beinComponents/Div';
-import Icon from '~/beinComponents/Icon';
-import mainStack from '~/router/navigator/MainStack/stack';
+import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {showReactionDetailBottomSheet} from '~/store/modal/actions';
-import * as modalActions from '~/store/modal/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
+import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
-import ReactionView from '~/beinComponents/ReactionView';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
-import TimeView from '~/beinComponents/TimeView';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
+import {showReactionDetailBottomSheet} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 export interface CommentViewProps {
   postId: string;
@@ -49,7 +47,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
 }: CommentViewProps) => {
   const animated = useRef(new Animated.Value(0)).current;
 
-  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -61,7 +58,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
   const {id, user_id, data, created_at, user, children_counts, own_children} =
     comment || commentData || {};
-  const {content, images} = data || {};
+  const {content} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
@@ -267,6 +264,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
+                  selector={postKeySelector.allCommentsByParentIds}
+                  parentId={id}
                   onPressAudience={onPressAudience}
                 />
               </View>

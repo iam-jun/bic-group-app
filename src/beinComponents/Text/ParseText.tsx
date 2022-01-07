@@ -4,6 +4,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import ParsedText from 'react-native-parsed-text';
 import {openLink} from '~/utils/common';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface IMarkdownAudience {
   type?: 'u' | 'g' | string;
@@ -14,19 +15,23 @@ export interface IMarkdownAudience {
 export interface ParseTextProps extends RNTextProps {
   children?: React.ReactNode;
   showRawText?: boolean;
+  parentId?: string;
+  selector?: string;
   onPressAudience?: (audience: IMarkdownAudience) => void;
 }
 
 const ParseText: FC<ParseTextProps> = ({
   children,
   showRawText,
+  selector,
+  parentId,
   onPressAudience,
   ...props
 }: ParseTextProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)\]/;
+  const audienceRegex = /\B(@([^@\r\n]*))$/i;
 
   //params: url: string, matchIndex: number
   const onPressUrl = async (url: string) => {
@@ -65,7 +70,10 @@ const ParseText: FC<ParseTextProps> = ({
     if (showRawText) {
       return matched;
     } else {
-      return matches?.[3] || matched;
+      const name = useKeySelector(
+        `${selector}.${parentId}.mentions.${matched}.data.name`,
+      );
+      return name || matched;
     }
   };
 

@@ -10,6 +10,7 @@ import {mmTheme} from './utils/config';
 import Header from '~/beinComponents/Header';
 import modalActions from '~/store/modal/actions';
 import {fontFamilies} from '~/theme/fonts';
+import {sizes} from '~/theme/dimension';
 
 const DeviceHeight = Dimensions.get('window').height;
 
@@ -18,6 +19,7 @@ const Markdown = ({value, ...rest}) => {
   const theme = mmTheme;
   const baseTextStyle = {
     color: colors.light.colors.textPrimary,
+    fontFamily: fontFamilies.OpenSans,
   };
   const textStyles = {
     code: {
@@ -32,55 +34,49 @@ const Markdown = ({value, ...rest}) => {
       textDecorationLine: 'line-through',
     },
     emph: {
-      fontFamily: fontFamilies.SegoeItalic,
+      fontFamily: fontFamilies.OpenSansItalic,
     },
     error: {
       color: '#d24b4e',
     },
     heading1: {
-      fontSize: 17,
-      fontWeight: '700',
-      lineHeight: 25,
+      fontSize: sizes.h3,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     heading1Text: {
       paddingBottom: 8,
     },
     heading2: {
-      fontSize: 17,
-      fontWeight: '700',
-      lineHeight: 25,
+      fontSize: sizes.h4,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     heading2Text: {
       paddingBottom: 8,
     },
     heading3: {
-      fontSize: 17,
-      fontWeight: '700',
-      lineHeight: 25,
+      fontSize: sizes.h5,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     heading3Text: {
       paddingBottom: 8,
     },
     heading4: {
-      fontSize: 17,
-      fontWeight: '700',
-      lineHeight: 25,
+      fontSize: sizes.h5,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     heading4Text: {
       paddingBottom: 8,
     },
     heading5: {
-      fontSize: 17,
-      fontWeight: '700',
-      lineHeight: 25,
+      fontSize: sizes.h5,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     heading5Text: {
       paddingBottom: 8,
     },
     heading6: {
-      fontSize: 17,
-      fontWeight: '700',
-      lineHeight: 25,
+      fontSize: sizes.h5,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     heading6Text: {
       paddingBottom: 8,
@@ -90,7 +86,7 @@ const Markdown = ({value, ...rest}) => {
     },
     mention: {
       color: '#386fe5',
-      fontFamily: fontFamilies.SegoeSemibold,
+      fontFamily: fontFamilies.OpenSansSemiBold,
     },
     mention_highlight: {
       backgroundColor: '#ffd470',
@@ -147,7 +143,7 @@ const Markdown = ({value, ...rest}) => {
 
   return (
     <Md
-      autolinkedUrlSchemes={[]}
+      autolinkedUrlSchemes={['http', 'https', 'ftp', 'mailto', 'tel']}
       mentionKeys={[]}
       minimumHashtagLength={10}
       theme={theme}

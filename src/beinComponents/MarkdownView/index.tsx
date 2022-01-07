@@ -24,6 +24,7 @@ import {IAudience} from '~/interfaces/IPost';
 import {fontFamilies} from '~/theme/fonts';
 
 import {ITheme} from '~/theme/interfaces';
+import {sizes} from '~/theme/dimension';
 
 export interface MarkdownViewProps {
   style?: StyleProp<ViewStyle>;
@@ -181,31 +182,28 @@ const createStyle = (theme: ITheme) => {
 
     // Headings
     heading1: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 20,
-      lineHeight: 32,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h3,
     },
     heading2: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 18,
-      lineHeight: 32,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h4,
     },
     heading3: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
-      lineHeight: 28,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
     heading4: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
     heading5: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
     heading6: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
 
     // Horizontal Rule

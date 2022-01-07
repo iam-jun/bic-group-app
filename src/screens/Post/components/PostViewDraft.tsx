@@ -207,6 +207,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           // onPressShowAudiences={onPressShowAudiences}
         />
         <PostViewContent
+          postId={id || ''}
           content={content}
           images={images}
           isPostDetail={isPostDetail}
