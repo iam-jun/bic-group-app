@@ -43,7 +43,7 @@ function timeOut(ms: number) {
 }
 
 export default function* postSaga() {
-  yield takeLatest(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
+  yield takeEvery(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
   yield takeEvery(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
@@ -81,6 +81,13 @@ function* postCreateNewPost({
 }): any {
   const {createFromGroupId, ...postPayload} = payload || {};
   try {
+    const creatingPost = yield select(
+      state => state?.post?.createPost?.loading,
+    );
+    if (creatingPost) {
+      console.log(`\x1b[31m🐣️ saga postCreateNewPost: creating\x1b[0m`);
+      return;
+    }
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(postDataHelper.postCreateNewPost, postPayload);
     if (response.data) {

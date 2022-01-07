@@ -43,7 +43,7 @@ function notificationsReducer(
       return {
         ...state,
         notificationList: notificationList,
-        unseenNumber: state.unseenNumber + payload.unseen,
+        unseenNumber: payload.unseen,
       };
     }
     case notificationsTypes.DELETE_NOTIFICATIONS: {
