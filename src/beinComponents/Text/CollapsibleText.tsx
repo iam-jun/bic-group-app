@@ -73,12 +73,14 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       <View style={style}>
         {useMarkdownIt ? (
           <MarkdownView
+            {...textProps}
             limitMarkdownTypes={limitMarkdownTypes}
             onPressAudience={onPressAudience}>
             {!shortContent ? content : contentShowAll ? content : shortContent}
           </MarkdownView>
         ) : (
           <Markdown
+            {...textProps}
             onPressAudience={onPressAudience}
             value={
               !shortContent ? content : contentShowAll ? content : shortContent

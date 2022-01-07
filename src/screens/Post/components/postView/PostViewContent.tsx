@@ -12,8 +12,10 @@ import {getResourceUrl} from '~/configs/resourceConfig';
 
 import {ITheme} from '~/theme/interfaces';
 import Markdown from '~/beinComponents/Markdown';
+import postKeySelector from '../../redux/keySelector';
 
 export interface PostViewContentProps {
+  postId: string;
   content?: string;
   images?: IActivityDataImage[];
   isPostDetail: boolean;
@@ -22,6 +24,7 @@ export interface PostViewContentProps {
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
+  postId,
   content = '',
   images = [],
   isPostDetail,
@@ -65,6 +68,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdown
               useMarkdownIt
               limitMarkdownTypes
+              selector={postKeySelector.allPosts}
+              parentId={postId}
               onPressAudience={onPressMentionAudience}
             />
           </View>
@@ -76,7 +81,12 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
     if (isPostDetail) {
       return (
-        <Markdown value={content} onPressAudience={onPressMentionAudience} />
+        <Markdown
+          value={content}
+          selector={postKeySelector.allPosts}
+          parentId={postId}
+          onPressAudience={onPressMentionAudience}
+        />
       );
     }
     return (
@@ -87,6 +97,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
         shortLength={400}
         useMarkdown
         toggleOnPress
+        selector={postKeySelector.allPosts}
+        parentId={postId}
         onPressAudience={onPressMentionAudience}
       />
     );

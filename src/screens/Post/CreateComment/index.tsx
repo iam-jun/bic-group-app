@@ -15,9 +15,8 @@ import {useRootNavigation} from '~/hooks/navigation';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostInput from '~/beinComponents/inputs/PostInput';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import i18n from '~/localization';
+import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 export interface CreateCommentProps {
   route?: {
@@ -36,7 +35,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const comment: IReaction =
     useKeySelector(postKeySelector.commentById(commentId)) || {};
@@ -112,26 +111,32 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         onPressBack={onPressBack}
         onPressButton={onPressComment}
       />
-      <MentionInput
+      <_MentionInput
+        groupIds={groupIds || ''}
         mentionInputRef={mentionInputRef}
         style={styles.flex1}
         textInputStyle={styles.flex1}
-        modalStyle={styles.mentionInputModal}
-        modalPosition={'top'}
-        onChangeText={onChangeText}
         ComponentInput={PostInput}
-        title={i18n.t('post:mention_title')}
-        emptyContent={i18n.t('post:mention_empty_content')}
-        getDataPromise={postDataHelper.getSearchMentionAudiences}
-        getDataParam={{group_ids: groupIds}}
-        getDataResponseKey={'data'}
+        componentInputProps={{
+          modalStyle: styles.mentionInputModal,
+          value: content,
+          loading: loading,
+          isHandleUpload: true,
+          placeholder: i18n.t('post:placeholder_write_comment'),
+          onChangeText,
+        }}
+        autocompleteProps={{
+          modalPosition: 'top',
+          title: i18n.t('post:mention_title'),
+          emptyContent: i18n.t('post:mention_empty_content'),
+          modalStyle: styles.mentionInputModal,
+        }}
       />
     </ScreenWrapper>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = () => {
   return StyleSheet.create({
     container: {},
     flex1: {flex: 1},
