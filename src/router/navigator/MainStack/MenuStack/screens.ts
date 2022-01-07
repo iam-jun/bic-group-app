@@ -27,5 +27,5 @@ export default {
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'draft-post': DraftPost,
-  'post-setttings': PostSettings,
+  'post-settings': PostSettings,
 };

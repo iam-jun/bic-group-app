@@ -7,7 +7,7 @@ const mainTabStack = {
   'post-select-image': 'post-select-image',
   'post-detail': 'post-detail',
   'draft-post': 'draft-post',
-  'post-setttings': 'post-settings',
+  'post-settings': 'post-settings',
 
   //GROUP
   // 'group-list': Groups,

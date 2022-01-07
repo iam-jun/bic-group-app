@@ -13,7 +13,7 @@ const menuStack = {
   postSelectImage: 'post-select-image',
   postDetail: 'post-detail',
   draftPost: 'draft-post',
-  postSettings: 'post-setttings',
+  postSettings: 'post-settings',
 };
 
 export default menuStack;

@@ -28,7 +28,7 @@ export default {
   'post-select-audience': PostSelectAudience,
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
-  'post-setttings': PostSettings,
+  'post-settings': PostSettings,
   'draft-post': DraftPost,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
