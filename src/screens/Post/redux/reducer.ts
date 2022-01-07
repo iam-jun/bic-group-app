@@ -19,6 +19,7 @@ const initState = {
     },
     images: [],
     imagesDraft: [],
+    count: 0,
   },
   createComment: {
     loading: false,

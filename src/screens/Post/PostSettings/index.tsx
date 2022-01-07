@@ -48,6 +48,7 @@ const PostSettings = () => {
   //   const [comments, setComments] = useState<boolean>(true);
   //   const [shares, setShares] = useState<boolean>(true);
   //   const [reacts, setReacts] = useState<boolean>(true);
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     checkDisableButtonSave();
@@ -75,13 +76,20 @@ const PostSettings = () => {
   };
 
   const onPressSave = () => {
-    dispatch(postActions.setCreatePostSettings({important: sImportant}));
+    dispatch(postActions.setCreatePostSettings({important: sImportant, count}));
     rootNavigation.goBack();
   };
 
   const checkDisableButtonSave = () => {
-    const isDisable = sImportant.active === important?.active;
-    setDisableButtonSave(isDisable);
+    const dataCount = [
+      sImportant.active === important?.active,
+      //   comments,
+      //   shares,
+      //   reacts,
+    ];
+    const newCount = dataCount.filter(i => !i);
+    setCount(newCount.length);
+    setDisableButtonSave(newCount.length === 0);
   };
 
   const onToggleImportant = (action: IAction) => {
@@ -172,9 +180,11 @@ const PostSettings = () => {
             <Text.H6 style={styles.flex1} useI18n>
               post:mark_as_important
             </Text.H6>
-            <Text.Subtitle useI18n color={colors.textSecondary}>
-              post:expire_time_desc
-            </Text.Subtitle>
+            {sImportant?.active === 1 && (
+              <Text.Subtitle useI18n color={colors.textSecondary}>
+                post:expire_time_desc
+              </Text.Subtitle>
+            )}
           </View>
           <Toggle
             isChecked={sImportant?.active === 1}

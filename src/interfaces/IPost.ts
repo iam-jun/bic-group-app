@@ -63,6 +63,7 @@ export interface ICreatePostSettings {
     active?: 0 | 1;
     expiresTime?: string;
   };
+  count: number;
 }
 
 /**

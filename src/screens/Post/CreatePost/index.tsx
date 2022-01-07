@@ -102,7 +102,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {streamClient} = useContext(AppContext);
 
   const createPostData = useCreatePost();
-  const {loading, data, chosenAudiences = [], important} = createPostData || {};
+  const {
+    loading,
+    data,
+    chosenAudiences = [],
+    important,
+    count,
+  } = createPostData || {};
   const {content} = data || {};
 
   const initSelectingImagesRef = useRef();
@@ -485,7 +491,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             style={styles.buttonSettings}
             onPress={onPressSettings}
             textProps={{color: colors.textPrimary}}>
-            {t('post:settings')}
+            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
           </Button.Secondary>
         </View>
       )}
