@@ -56,6 +56,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
   const listView = useRef<any>();
+  const lockHeaderRef = useRef(true);
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
   );
@@ -114,6 +115,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (!initializing) {
       onEndReach?.();
     }
+    lockHeaderRef.current = true;
+    setTimeout(() => {
+      if (lockHeaderRef?.current) {
+        lockHeaderRef.current = false;
+      }
+    }, 1000);
   };
 
   const onVisibleIndicesChanged = debounce((indexes: any) => {
@@ -127,6 +134,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const onScroll = throttle(
     (rawEvent: any, offsetX: number, offsetY: number) => {
+      //on iOS, when add more item, callback scroll fired as scroll up
+      //so need lock 1 second to avoid header and bottom bar blink when load more
+      if (lockHeaderRef.current) {
+        return;
+      }
+
       const isDown = offsetY - prevOffsetYRef.current > 2;
       const isDown5Percent =
         ((offsetY - prevOffsetYRef.current) * 100) / screenHeight >= 5;

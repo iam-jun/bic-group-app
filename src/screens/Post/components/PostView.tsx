@@ -279,6 +279,7 @@ const _PostView: FC<PostViewProps> = ({
           onPressShowAudiences={onPressShowAudiences}
         />
         <PostViewContent
+          postId={postId}
           isLite={isLite}
           content={isLite && highlight ? highlight : content}
           images={images}

@@ -143,7 +143,7 @@ const Markdown = ({value, ...rest}) => {
 
   return (
     <Md
-      autolinkedUrlSchemes={[]}
+      autolinkedUrlSchemes={['http', 'https', 'ftp', 'mailto', 'tel']}
       mentionKeys={[]}
       minimumHashtagLength={10}
       theme={theme}

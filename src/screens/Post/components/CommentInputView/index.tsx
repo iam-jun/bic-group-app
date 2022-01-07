@@ -6,8 +6,8 @@ import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
+import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
-import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
@@ -16,11 +16,11 @@ import {
   IPayloadCreateComment,
   IPayloadReplying,
 } from '~/interfaces/IPost';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
 import {ITheme} from '~/theme/interfaces';
+import ReplyingView from './ReplyingView';
 
 export interface CommentInputViewProps {
   postId: string;
@@ -113,62 +113,32 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   };
 
   const onChangeText = (value: string) => {
+    _commentInputRef.current.setText(value);
     dispatch(postActions.setCreateComment({content: value}));
   };
 
-  const renderCommentInputHeader = () => {
-    if (!replying) {
-      return null;
-    }
-    return (
-      <View style={styles.commentInputHeader}>
-        <View style={styles.headerContent}>
-          <Text color={colors.textSecondary}>
-            {t('post:label_replying_to')}
-            <Text.BodyM>{replyTargetName || t('post:someone')}</Text.BodyM>
-            <Text.BodyS color={colors.textSecondary}>
-              {'  • '}
-              <Text.BodyM
-                useI18n
-                color={colors.textSecondary}
-                onPress={() =>
-                  !loading &&
-                  dispatch(postActions.setPostDetailReplyingComment())
-                }>
-                common:btn_cancel
-              </Text.BodyM>
-            </Text.BodyS>
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
   return (
-    <MentionInput
-      mentionInputRef={mentionInputRef}
-      modalPosition={'top'}
-      onChangeText={onChangeText}
-      ComponentInput={CommentInput}
-      textInputRef={textInputRef}
-      componentInputProps={{
-        commentInputRef: _commentInputRef,
-        value: content,
-        autoFocus: autoFocus,
-        onPressSend: onPressSend,
-        HeaderComponent: renderCommentInputHeader(),
-        loading: loading,
-        isHandleUpload: true,
-        placeholder: t('post:placeholder_write_comment'),
-      }}
-      title={t('post:mention_title')}
-      emptyContent={t('post:mention_empty_content')}
-      getDataPromise={postDataHelper.getSearchMentionAudiences}
-      getDataParam={{group_ids: groupIds}}
-      getDataResponseKey={'data'}
-      fullWidth={Platform.OS !== 'web'}
-      showShadow={Platform.OS === 'web'}
-    />
+    <View>
+      <_MentionInput
+        groupIds={groupIds}
+        ComponentInput={CommentInput}
+        componentInputProps={{
+          textInputRef,
+          commentInputRef: _commentInputRef,
+          value: content,
+          autoFocus: autoFocus,
+          HeaderComponent: <ReplyingView />,
+          loading: loading,
+          isHandleUpload: true,
+          placeholder: t('post:placeholder_write_comment'),
+          onChangeText,
+          onPressSend,
+        }}
+        autocompleteProps={{
+          modalPosition: Platform.OS === 'web' ? 'top' : 'above-keyboard',
+        }}
+      />
+    </View>
   );
 };
 

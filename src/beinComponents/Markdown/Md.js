@@ -23,11 +23,11 @@ import MarkdownLink from './MarkdownLink';
 import {
   addListItemIndices,
   combineTextNodes,
-  highlightMentions,
   pullOutImages,
 } from './utils/transform';
 import {getScheme} from './utils/utils';
 import NodeEmoji from 'node-emoji';
+import AtMention from './AtMention';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -58,6 +58,8 @@ export default class Md extends PureComponent {
     disableGallery: PropTypes.bool,
     showModal: PropTypes.func,
     onPressAudience: PropTypes.func,
+    selector: PropTypes.string,
+    parentId: PropTypes.string,
   };
 
   static defaultProps = {
@@ -199,17 +201,14 @@ export default class Md extends PureComponent {
   };
 
   renderAtMention = ({mentionName}) => {
-    const audience = {
-      id: mentionName?.[2],
-      name: mentionName?.[3],
-      type: mentionName?.[1] === 'u' ? 'user' : 'group',
-    };
     return (
-      <Text
-        onPress={() => this.props?.onPressAudience?.(audience)}
-        style={[this.props.textStyles?.mention || this.props.baseTextStyle]}>
-        @{mentionName?.[3]}
-      </Text>
+      <AtMention
+        mentionName={mentionName}
+        style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
+        parentId={this.props.parentId}
+        selector={this.props.selector}
+        onPress={this.props.onPressAudience}
+      />
     );
   };
 
