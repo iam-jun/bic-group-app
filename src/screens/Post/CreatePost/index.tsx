@@ -123,7 +123,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     content !== initPostData?.object?.data?.content ||
     !isEqual(selectingImages, initSelectingImagesRef.current);
   const isEditDraftPost = !!initPostData?.id && draftPostId;
-  console.log('isEditDraftPost: ', isEditDraftPost);
   const isLimitEdit = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
