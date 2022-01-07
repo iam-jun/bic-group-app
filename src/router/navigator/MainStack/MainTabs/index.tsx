@@ -24,6 +24,7 @@ import {screens, screensWebLaptop} from './screens';
 import {useKeySelector} from '~/hooks/selector';
 import {getEnv} from '~/utils/env';
 import {parseSafe} from '~/utils/common';
+import {getMsgPackParser} from '~/utils/socket';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -80,6 +81,7 @@ const MainTabs = () => {
       transports: ['websocket'],
       path: '/ws',
       auth: {token},
+      ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
     });
 
     socket.on('connect', () => {
