@@ -65,6 +65,7 @@ export interface CommentInputProps {
   uploadVideoType?: IUploadType;
   uploadFileType?: IUploadType;
   uploadFilePromise?: any;
+  useTestID?: boolean;
 }
 
 const DEFAULT_HEIGHT = 44;
@@ -94,6 +95,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   uploadVideoType = uploadTypes.commentVideo,
   uploadFileType = uploadTypes.commentFile,
   uploadFilePromise,
+  useTestID = true,
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -422,7 +424,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           </Button>
         </View>
         <Button.Secondary
-          testID="comment_input.send"
+          testID={useTestID ? 'comment_input.send' : undefined}
           onPress={_onPressSend}
           style={styles.buttonSend}
           rightIcon={'iconSendComment'}
@@ -492,7 +494,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <View style={styles.container}>
           <Animated.View style={{flex: 1, zIndex: 1, height: heightAnimated}}>
             <TextInput
-              testID="comment_input"
+              testID={useTestID ? 'comment_input' : undefined}
               selection={inputSelection}
               {...props}
               onContentSizeChange={_onContentSizeChange}

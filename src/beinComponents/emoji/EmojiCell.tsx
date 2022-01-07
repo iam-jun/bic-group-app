@@ -33,6 +33,7 @@ const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
         onLongPress={_onLongPress}
         {...other}>
         <Text
+          testID="emoji_cell"
           style={{
             color: '#FFFFFF',
             fontSize: (colSize - (Platform.OS === 'web' ? 0 : 12)) * 0.7,
