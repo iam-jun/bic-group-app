@@ -42,8 +42,8 @@ const PostSettings = () => {
 
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [sImportant, setImportant] = useState<IActivityImportant>({
-    active: 0,
-    expiresTime: '',
+    active: false,
+    expires_time: '',
     ...important,
   });
   //   const [comments, setComments] = useState<boolean>(true);
@@ -53,7 +53,7 @@ const PostSettings = () => {
 
   useEffect(() => {
     checkDisableButtonSave();
-  }, [sImportant]);
+  }, [sImportant?.active]);
 
   const onPressBack = () => {
     if (disableButtonSave) {
@@ -93,11 +93,11 @@ const PostSettings = () => {
     setDisableButtonSave(newCount.length === 0);
   };
 
-  const onToggleImportant = (action: IAction) => {
+  const onToggleImportant = () => {
     const newImportant = {...sImportant};
-    newImportant.active = action === commonActions.checkBox ? 1 : 0;
-    if (!sImportant.expiresTime) {
-      newImportant.expiresTime = getDefaultExpire();
+    newImportant.active = !sImportant.active;
+    if (!sImportant.expires_time) {
+      newImportant.expires_time = getDefaultExpire();
     }
     setImportant(newImportant);
   };
@@ -109,13 +109,13 @@ const PostSettings = () => {
       const newImportant = {...sImportant};
       let expiresTime = '';
       if (date) {
-        const time = sImportant.expiresTime
-          ? new Date(sImportant.expiresTime)
+        const time = sImportant.expires_time
+          ? new Date(sImportant.expires_time)
           : new Date();
         date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
         expiresTime = date.toISOString();
       }
-      newImportant.expiresTime = expiresTime;
+      newImportant.expires_time = expiresTime;
       setImportant(newImportant);
     }
   };
@@ -125,24 +125,24 @@ const PostSettings = () => {
     setSelectingTime(false);
     if (time) {
       const newImportant = {...sImportant};
-      const date = sImportant.expiresTime
-        ? new Date(sImportant.expiresTime)
+      const date = sImportant.expires_time
+        ? new Date(sImportant.expires_time)
         : new Date();
       date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
       const expiresTime = date.toISOString();
-      newImportant.expiresTime = expiresTime;
+      newImportant.expires_time = expiresTime;
       setImportant(newImportant);
     }
   };
 
   const renderImportantDate = () => {
-    const {expiresTime} = sImportant || {};
+    const {expires_time} = sImportant || {};
     let date = t('common:text_set_date');
     let time = t('common:text_set_time');
 
-    if (expiresTime) {
-      date = formatDate(expiresTime, 'MMM Do, YYYY');
-      time = formatDate(expiresTime, 'hh:mm A', undefined, 9999);
+    if (expires_time) {
+      date = formatDate(expires_time, 'MMM Do, YYYY');
+      time = formatDate(expires_time, 'hh:mm A', undefined, 9999);
     }
 
     return (
@@ -187,17 +187,17 @@ const PostSettings = () => {
             <Text style={styles.flex1} useI18n>
               post:mark_as_important
             </Text>
-            {sImportant?.active === 1 && (
+            {sImportant?.active ? (
               <Text.Subtitle
                 useI18n
                 color={colors.textSecondary}
                 style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
                 post:expire_time_desc
               </Text.Subtitle>
-            )}
+            ) : null}
           </View>
           <Toggle
-            isChecked={sImportant?.active === 1}
+            isChecked={sImportant?.active}
             onActionPress={onToggleImportant}
           />
         </View>
@@ -235,8 +235,8 @@ const PostSettings = () => {
             <DateTimePicker
               isVisible={selectingDate}
               date={
-                sImportant.expiresTime
-                  ? new Date(sImportant.expiresTime)
+                sImportant.expires_time
+                  ? new Date(sImportant.expires_time)
                   : new Date()
               }
               minDate={new Date()}
@@ -250,8 +250,8 @@ const PostSettings = () => {
             <DateTimePicker
               isVisible={selectingTime}
               date={
-                sImportant.expiresTime
-                  ? new Date(sImportant.expiresTime)
+                sImportant.expires_time
+                  ? new Date(sImportant.expires_time)
                   : new Date()
               }
               minDate={new Date()}

@@ -59,10 +59,7 @@ export interface ICreatePostImage {
 }
 
 export interface ICreatePostSettings {
-  important?: {
-    active?: 0 | 1;
-    expiresTime?: string;
-  };
+  important?: IActivityImportant;
   count: number;
 }
 

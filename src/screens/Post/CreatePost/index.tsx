@@ -81,6 +81,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
