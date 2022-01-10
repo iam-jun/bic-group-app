@@ -154,7 +154,10 @@ const PostSettings = () => {
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
           color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}>
+          textProps={{color: colors.textPrimary}}
+          contentStyle={
+            Platform.OS === 'web' ? {padding: spacing.padding.base} : {}
+          }>
           {date}
         </Button.Secondary>
         <Button.Secondary
@@ -164,7 +167,10 @@ const PostSettings = () => {
           style={styles.buttonTime}
           onPress={() => setSelectingTime(true)}
           color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}>
+          textProps={{color: colors.textPrimary}}
+          contentStyle={
+            Platform.OS === 'web' ? {padding: spacing.padding.base} : {}
+          }>
           {time}
         </Button.Secondary>
       </View>
@@ -288,7 +294,7 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
       justifyContent: 'center',
     },
-    important: {marginBottom: spacing.margin.tiny},
+    important: {},
     importantButtons: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -299,8 +305,19 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       marginRight: spacing.margin.base,
       backgroundColor: colors.bgHover,
+      padding: spacing.padding.base,
+      ...Platform.select({
+        web: {padding: 0},
+      }),
     },
-    buttonTime: {flex: 1, backgroundColor: colors.bgHover},
+    buttonTime: {
+      flex: 1,
+      backgroundColor: colors.bgHover,
+      padding: spacing.padding.base,
+      ...Platform.select({
+        web: {padding: 0},
+      }),
+    },
   });
 };
 
