@@ -16,7 +16,7 @@ export default {
       bgFocus: '#D5DCE5', //Neutral10
       bgHover: '#EAEDF2', //Neutral5
       bgDisable: '#D5DCE5', //Neutral10
-      bgButtonPrimary: '#7843DD ', //Primary50
+      bgButtonPrimary: '#7843DD', //Primary50
       bgButtonSecondary: '#FFFFFF', //Neutral0'
       BorderButtonSecondary: '#7843DD',
       borderFocus: '#B2BDCD', //Neutral20
@@ -88,7 +88,7 @@ export default {
       bgFocus: '#D5DCE5', //Neutral10
       bgHover: '#EAEDF2', //Neutral5
       bgDisable: '#D5DCE5', //Neutral10
-      bgButtonPrimary: '#7843DD ', //Primary50
+      bgButtonPrimary: '#7843DD', //Primary50
       bgButtonSecondary: '#FFFFFF', //Neutral0'
       BorderButtonSecondary: '#7843DD',
       borderFocus: '#B2BDCD', //Neutral20
