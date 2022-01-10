@@ -1,5 +1,4 @@
 import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
-import {StreamClient} from 'getstream';
 import {IFilePicked, IObject} from './common';
 import {IUploadType} from '~/configs/resourceConfig';
 
@@ -60,10 +59,18 @@ export interface IGroupDetail {
   total_pending_members: number;
 }
 
-export interface IPayloadGetGroupPost {
-  streamClient: StreamClient;
-  groupId: number;
-  userId: number;
+export interface IParamGetGroupPosts {
+  group_id: string;
+  offset?: number;
+  limit?: number;
+  recent_reactions_limit?: number;
+  enrich?: boolean;
+  own_reactions?: boolean;
+  with_own_reactions?: boolean;
+  with_own_children?: boolean;
+  with_recent_reactions?: boolean;
+  with_reaction_counts?: boolean;
+  ranking?: 'important_first' | string;
 }
 
 export interface IGroupImageUpload {

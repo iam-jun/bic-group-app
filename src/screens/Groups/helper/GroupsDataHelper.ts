@@ -1,8 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IGroupDetailEdit} from '~/interfaces/IGroup';
+import {IGroupDetailEdit, IParamGetGroupPosts} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {StreamClient} from 'getstream';
-import {makeGetStreamRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
@@ -10,6 +8,13 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}users/my-groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
+  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}api/feeds/timeline`,
+    method: 'get',
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params,
   }),
@@ -228,39 +233,29 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getMyGroupPosts: async (
-    userId: number,
-    groupId: number,
-    streamClient?: StreamClient,
-    offset?: number,
-  ) => {
-    if (streamClient) {
-      const streamOptions = {
-        offset: offset || 0,
-        limit: appConfig.recordsPerPage,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        withOwnReactions: true,
-        withOwnChildren: true,
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-        ranking: 'important_first', //important posts will on top of results
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'timeline',
-          `g-${groupId}`,
-          'get',
-          streamOptions,
-        );
-        return Promise.resolve(data?.results || []);
-      } catch (e) {
-        return Promise.reject(e);
+  getGroupPosts: async (param: IParamGetGroupPosts) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getGroupPosts({
+          offset: param?.offset || 0,
+          limit: param?.limit || appConfig.recordsPerPage,
+          enrich: true,
+          own_reactions: true,
+          with_own_reactions: true,
+          with_own_children: true,
+          with_recent_reactions: true,
+          with_reaction_counts: true,
+          ...param,
+        }),
+      );
+      if (response && response?.data?.data?.results) {
+        return Promise.resolve(response?.data?.data?.results);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient not found');
   },
   getInfoGroups: async (ids: string) => {
     try {

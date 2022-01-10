@@ -1,10 +1,10 @@
 import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-import {IGetStreamDispatch, IObject, IToastMessage} from '~/interfaces/common';
+import {IObject, IToastMessage} from '~/interfaces/common';
 import errorCode from '~/constants/errorCode';
 import {
   ILoadNewNotifications,
-  IMarkAsReadAnActivity,
+  IParamGetNotifications,
 } from '~/interfaces/INotification';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
@@ -30,14 +30,22 @@ export default function* notificationsSaga() {
 function* getNotifications({
   payload,
 }: {
-  payload: IGetStreamDispatch;
+  payload: IParamGetNotifications;
   type: string;
 }) {
   try {
-    const {userId, streamClient} = payload;
     yield put(notificationsActions.setLoadingNotifications(true));
+    yield put(notificationsActions.setNoMoreNoti(false));
+
+    const notifications: IObject<any> =
+      (yield select(state => get(state, notificationSelector.notifications))) ||
+      [];
+
+    // load more from the last notification
+    const bottomNoti = notifications[notifications.length - 1];
+
     const response: IObject<any> =
-      yield notificationsDataHelper.getNotificationList(userId, streamClient);
+      yield notificationsDataHelper.getNotificationList(payload || {});
 
     yield put(notificationsActions.setLoadingNotifications(false));
     yield put(
@@ -47,13 +55,8 @@ function* getNotifications({
       }),
     );
   } catch (err) {
-    yield put(notificationsActions.setLoadingNotifications(true));
-    console.log(
-      '\x1b[33m',
-      'khanh --- getNotifications | getNotifications : error',
-      err,
-      '\x1b[0m',
-    );
+    yield put(notificationsActions.setLoadingNotifications(false));
+    console.log(`\x1b[31m🐣️ saga getNotifications err: `, err, `\x1b[0m`);
   }
 }
 
@@ -65,13 +68,11 @@ function* loadNewNotifications({
   type: string;
 }) {
   try {
-    const {userId, notiGroupId, streamClient, limit} = payload;
+    const {notiGroupId, limit} = payload;
     const response: IObject<any> =
       yield notificationsDataHelper.loadNewNotification(
-        userId,
         notiGroupId,
         limit, // only load a number of notifiations equal number of new notifications
-        streamClient,
       );
 
     yield put(
@@ -85,16 +86,10 @@ function* loadNewNotifications({
   }
 }
 
-function* markAsReadAll({
-  payload,
-}: {
-  payload: IGetStreamDispatch;
-  type: string;
-}) {
+function* markAsReadAll(): any {
   try {
     // send request to Getstream to mark notification as read without waiting response
-    const {userId, streamClient} = payload;
-    notificationsDataHelper.markAsReadAll(userId, streamClient);
+    yield notificationsDataHelper.markAsReadAll();
 
     // get all notifications from store
     const notifications =
@@ -103,8 +98,8 @@ function* markAsReadAll({
       ) || [];
 
     // then set theirs is_read field by true to un-highlight them directly on device store
-    notifications.forEach(notificationGroup => {
-      notificationGroup.is_read = true;
+    notifications.forEach((item: any) => {
+      item.is_read = true;
     });
 
     // finally, set notification back to store,
@@ -130,16 +125,9 @@ function* markAsReadAll({
   }
 }
 
-function* markAsSeenAll({
-  payload,
-}: {
-  payload: IGetStreamDispatch;
-  type: string;
-}) {
+function* markAsSeenAll() {
   try {
-    // send request to Getstream to mark notification as seen without waiting response
-    const {userId, streamClient} = payload;
-    notificationsDataHelper.markAsSeenAll(userId, streamClient);
+    notificationsDataHelper.markAsSeenAll();
 
     // get all notifications from store
     const notifications: IObject<any> = yield select(state =>
@@ -147,7 +135,7 @@ function* markAsSeenAll({
     ) || [];
 
     // then set theirs is_seen field by true
-    notifications.forEach(notificationGroup => {
+    notifications.forEach((notificationGroup: any) => {
       notificationGroup.is_seen = true;
     });
 
@@ -164,16 +152,9 @@ function* markAsSeenAll({
   }
 }
 
-function* markAsRead({
-  payload,
-}: {
-  payload: IMarkAsReadAnActivity;
-  type: string;
-}) {
+function* markAsRead({payload}: {payload: string; type: string}): any {
   try {
-    // send request to Getstream to mark notification as read without waiting response
-    const {userId, streamClient, activityId} = payload;
-    notificationsDataHelper.markAsRead(userId, activityId, streamClient);
+    notificationsDataHelper.markAsRead(payload);
 
     // get all notifications from store
     const notifications: IObject<any> =
@@ -182,8 +163,8 @@ function* markAsRead({
       ) || [];
 
     // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
-    notifications.forEach(notificationGroup => {
-      if (notificationGroup.id === activityId) {
+    notifications.forEach((notificationGroup: any) => {
+      if (notificationGroup.id === payload) {
         notificationGroup.is_read = true;
       }
     });
@@ -201,26 +182,21 @@ function* markAsRead({
 }
 
 // load more old notifications
-function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
+function* loadmore() {
   try {
     // show loading more spinner, set isLoadingMore = true
     yield put(notificationsActions.setIsLoadingMore(true));
 
-    const {userId, streamClient} = payload;
-
     // get all notifications from store
-    const notifications: IObject<any> = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
-
-    // load more from the last notification
+    const notifications: IObject<any> =
+      (yield select(state => get(state, notificationSelector.notifications))) ||
+      [];
     const bottomNoti = notifications[notifications.length - 1];
+
     const response: IObject<any> =
-      yield notificationsDataHelper.getNotificationList(
-        userId,
-        streamClient,
-        bottomNoti.id,
-      );
+      yield notificationsDataHelper.getNotificationList({
+        id_lt: bottomNoti?.id,
+      });
 
     // hide loading more spinner, set isLoadingMore = false
     yield put(notificationsActions.setIsLoadingMore(false));
@@ -238,16 +214,17 @@ function* loadmore({payload}: {payload: IGetStreamDispatch; type: string}) {
       yield put(notificationsActions.setNoMoreNoti(true));
     }
   } catch (err) {
+    yield put(notificationsActions.setIsLoadingMore(false));
     console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
   }
 }
 
 // register push token
-function* registerPushToken({payload}: any) {
+function* registerPushToken({payload}: any): any {
   try {
     const {notifications} = yield select();
     const requestToken = payload?.token || notifications?.pushToken;
-    const messaging: IObject<any> = yield initPushTokenMessage();
+    const messaging: any = yield initPushTokenMessage();
     const newToken: string = yield messaging().getToken();
     if (requestToken === newToken) {
       return;
