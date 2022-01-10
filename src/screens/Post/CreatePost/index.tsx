@@ -53,6 +53,7 @@ import {AppContext} from '~/contexts/AppContext';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import {timeOut} from '~/utils/common';
 
 export interface CreatePostProps {
   route?: {
@@ -77,6 +78,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const webInputHeightAnimated = useRef(
     new Animated.Value(webContentMinHeight),
   ).current;
+
+  const refStopsTyping = useRef<any>();
+  const refAutoSave = useRef<any>();
+  const [isPause, setPause] = React.useState<boolean>(true);
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -139,6 +144,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     onPressBack();
     return true;
   });
+
+  useEffect(() => {
+    debouncedAutoSave();
+    return () => {
+      clearTimeout(refAutoSave?.current);
+      clearTimeout(refStopsTyping?.current);
+    };
+  }, [isPause]);
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -341,8 +354,27 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     Keyboard.dismiss();
   };
 
+  const debouncedAutoSave = () => {
+    if (!isPause) {
+      refAutoSave.current = setTimeout(() => {
+        setPause(true);
+      }, 5000);
+    }
+  };
+
+  const debouncedStopsTyping = () => {
+    refStopsTyping.current = setTimeout(() => {
+      clearTimeout(refAutoSave?.current);
+    }, 500);
+  };
+
   const onChangeText = (text: string) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
+    if (isPause) {
+      setPause(false);
+    }
+    clearTimeout(refStopsTyping?.current);
+    debouncedStopsTyping();
   };
 
   const onLayoutCloneText = (e: any) => {
