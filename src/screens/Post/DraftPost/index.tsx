@@ -67,8 +67,6 @@ const DraftPost = () => {
   const getData = (isRefreshing?: boolean) => {
     if (userId && streamClient) {
       const payload: IPayloadGetDraftPosts = {
-        userId: userId,
-        streamClient: streamClient,
         isRefresh: isRefreshing,
       };
       dispatch(postActions.getDraftPosts(payload));

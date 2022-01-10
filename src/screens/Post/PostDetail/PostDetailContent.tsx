@@ -159,9 +159,7 @@ const _PostDetailContent = (props: any) => {
   ) => {
     if (userId && id && streamClient) {
       const payload: IPayloadGetPostDetail = {
-        userId,
         postId: id,
-        streamClient,
         callbackLoading,
       };
       dispatch(postActions.getPostDetail(payload));

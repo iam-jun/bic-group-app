@@ -43,11 +43,11 @@ function notificationsReducer(
       return {
         ...state,
         notificationList: notificationList,
-        unseenNumber: state.unseenNumber + payload.unseen,
+        unseenNumber: payload.unseen,
       };
     }
     case notificationsTypes.DELETE_NOTIFICATIONS: {
-      const newListAfterDelete = state.notificationList.filter(item => {
+      const newListAfterDelete = state.notificationList.filter((item: any) => {
         return !payload.notiGroupIds.includes(item.group);
       });
       return {
@@ -65,7 +65,7 @@ function notificationsReducer(
     case notificationsTypes.SET_NO_MORE_NOTIFICATION:
       return {
         ...state,
-        noMoreNotification: true,
+        noMoreNotification: payload,
       };
     case notificationsTypes.SET_IS_LOADING_MORE: {
       return {

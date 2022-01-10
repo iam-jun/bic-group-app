@@ -11,7 +11,7 @@ import {
   IGroupRemoveAdmin,
   IGroupSetAdmin,
   IJoiningMember,
-  IPayloadGetGroupPost,
+  IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -24,7 +24,6 @@ import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {groupPrivacy} from '~/constants/privacyTypes';
-import {isArray} from 'lodash';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -229,24 +228,13 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   }
 }
 
-function* getGroupPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetGroupPost;
-}) {
+function* getGroupPosts({payload}: {type: string; payload: string}): any {
   try {
     const {groups} = yield select();
     const {offset, data} = groups.posts;
 
-    const {userId, groupId, streamClient} = payload;
-    // @ts-ignore
-    const result = yield groupsDataHelper.getMyGroupPosts(
-      userId,
-      groupId,
-      streamClient,
-      offset,
-    );
+    const param: IParamGetGroupPosts = {group_id: payload, offset};
+    const result = yield groupsDataHelper.getGroupPosts(param);
 
     if (data.length === 0) {
       yield put(postActions.addToAllPosts({data: result}));
@@ -271,17 +259,11 @@ function* getGroupPosts({
   }
 }
 
-function* mergeExtraGroupPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetGroupPost;
-}) {
+function* mergeExtraGroupPosts({payload}: {type: string; payload: string}) {
   const {groups} = yield select();
   const {canLoadMore, loading} = groups.posts;
   if (!loading && canLoadMore) {
-    const {userId, groupId, streamClient} = payload;
-    yield put(groupsActions.getGroupPosts({streamClient, groupId, userId}));
+    yield put(groupsActions.getGroupPosts(payload));
   }
 }
 

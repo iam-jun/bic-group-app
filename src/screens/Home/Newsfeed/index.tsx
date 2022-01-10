@@ -19,7 +19,6 @@ import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import {appScreens} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {ITabTypes} from '~/interfaces/IRouter';
@@ -59,7 +58,6 @@ const Newsfeed = () => {
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
@@ -76,13 +74,7 @@ const Newsfeed = () => {
   const getData = (isRefresh?: boolean) => {
     const streamClient = streamRef.value;
     if (streamClient) {
-      dispatch(
-        homeActions.getHomePosts({
-          streamClient,
-          userId: `${userId}`,
-          isRefresh,
-        }),
-      );
+      dispatch(homeActions.getHomePosts({isRefresh}));
     }
   };
 

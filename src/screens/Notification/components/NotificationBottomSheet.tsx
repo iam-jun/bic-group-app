@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -6,8 +6,6 @@ import {ITheme} from '~/theme/interfaces';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
-import {AppContext} from '~/contexts/AppContext';
-import {useUserIdAuth} from '~/hooks/auth';
 import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
 
@@ -22,16 +20,9 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   const styles = createStyle(theme);
 
   const dispatch = useDispatch();
-  const {streamClient} = useContext(AppContext);
-  const userId = useUserIdAuth();
 
   const markReadAllNotifications = () => {
-    dispatch(
-      notificationsActions.markAsReadAll({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
+    dispatch(notificationsActions.markAsReadAll());
     modalizeRef.current?.close();
   };
 

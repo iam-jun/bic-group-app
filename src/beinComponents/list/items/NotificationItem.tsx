@@ -66,8 +66,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     const act = activities[0];
     // for notification has a type
     try {
-      if (act.notificationType !== undefined) {
-        switch (act.notificationType) {
+      if (act.notification_type !== undefined) {
+        switch (act.notification_type) {
           // noti type 18, 8, 22, 17
           case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
           case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
@@ -101,7 +101,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
           default:
             console.log(
-              `Notification type ${act.notificationType} have not implemented yet`,
+              `Notification type ${act.notification_type} have not implemented yet`,
             );
             return null;
         }
@@ -242,7 +242,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   ) => {
     const act = activities[0];
     let verbText = '';
-    switch (act.notificationType) {
+    switch (act.notification_type) {
       case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
       case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
         verbText = i18n.t(
@@ -280,7 +280,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   ) => {
     const act = activities[0];
     let verbText = '';
-    switch (act.notificationType) {
+    switch (act.notification_type) {
       case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
         verbText = i18n.t('notification:commented_on_your_post');
         break;

@@ -1,4 +1,3 @@
-import {StreamClient} from 'getstream';
 import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -25,11 +24,9 @@ import {showAlertNewFeature} from '~/store/modal/actions';
 
 const GroupContent = ({
   getGroupPosts,
-  streamClient,
   parentWidth,
 }: {
   getGroupPosts: () => void;
-  streamClient: StreamClient;
   parentWidth?: number;
 }) => {
   const theme = useTheme() as ITheme;
@@ -47,7 +44,6 @@ const GroupContent = ({
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
-  const userId = useUserIdAuth();
 
   const onPressChat = () => {
     dispatch(showAlertNewFeature());
@@ -67,9 +63,7 @@ const GroupContent = ({
 
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
-      dispatch(
-        groupsActions.mergeExtraGroupPosts({streamClient, userId, groupId}),
-      );
+      dispatch(groupsActions.mergeExtraGroupPosts(groupId));
     }
   };
 

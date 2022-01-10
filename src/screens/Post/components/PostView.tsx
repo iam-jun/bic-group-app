@@ -179,7 +179,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.postReactToPost(payload));
   };
@@ -190,7 +189,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.deleteReactToPost(payload));
   };
@@ -271,7 +269,7 @@ const _PostView: FC<PostViewProps> = ({
       <PostViewImportant
         isLite={isLite}
         isImportant={isImportant}
-        expireTime={important?.expiresTime}
+        expireTime={important?.expires_time}
       />
       <View style={[styles.container]}>
         <PostViewHeader
