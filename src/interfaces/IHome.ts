@@ -1,8 +1,4 @@
-import {StreamClient} from 'getstream';
-
 export interface IPayloadGetHomePost {
-  streamClient: StreamClient;
-  userId: string;
   isRefresh?: boolean;
 }
 
@@ -35,6 +31,19 @@ export interface IPayloadSetNewsfeedSearchUsers {
 export interface IPayloadSetNewsfeedSearchRecentKeywords {
   loading?: boolean;
   data?: any[];
+}
+
+export interface IParamGetFeed {
+  offset?: number;
+  limit?: number;
+  recent_reactions_limit?: number;
+  enrich?: boolean;
+  own_reactions?: boolean;
+  with_own_reactions?: boolean;
+  with_own_children?: boolean;
+  with_recent_reactions?: boolean;
+  with_reaction_counts?: boolean;
+  ranking?: 'important_first' | string;
 }
 
 export interface IParamGetSearchPost {

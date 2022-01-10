@@ -44,9 +44,9 @@ const LoadMoreComment: FC<LoadMoreCommentProps> = ({
           postId: postId,
           idLt: idLessThan,
           commentId: commentId,
-          limit: commentId ? 3 : 10,
+          recentReactionsLimit: commentId ? 3 : 10,
           isMerge: true,
-          callbackLoading: (loading, canLoadMore) => setLoadingMore(loading),
+          callbackLoading: loading => setLoadingMore(loading),
         }),
       );
     }

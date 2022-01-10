@@ -1,7 +1,6 @@
 import postTypes from './types';
 import {
   IAudience,
-  IPostActivity,
   IPostCreatePost,
   IActivityData,
   IActivityImportant,

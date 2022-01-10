@@ -1,5 +1,5 @@
 import {useIsFocused} from '@react-navigation/native';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -16,8 +16,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
-import {AppContext} from '~/contexts/AppContext';
-import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {ITabTypes} from '~/interfaces/IRouter';
@@ -38,8 +36,6 @@ const Notification = () => {
   const {rootNavigation} = useRootNavigation();
   const isFocused = useIsFocused();
   const dimensions = useWindowDimensions();
-  const {streamClient} = useContext(AppContext);
-  const userId = useUserIdAuth();
 
   const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
   const loadingNotifications = useKeySelector(notificationSelector.isLoading);
@@ -56,13 +52,8 @@ const Notification = () => {
   useEffect(() => {
     if (!isFocused) setCurrentPath('');
 
-    if (isFocused && streamClient) {
-      dispatch(
-        notificationsActions.markAsSeenAll({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+    if (isFocused) {
+      dispatch(notificationsActions.markAsSeenAll());
     }
   }, [isFocused]);
 
@@ -76,14 +67,7 @@ const Notification = () => {
   );
 
   const refreshListNotification = () => {
-    if (streamClient?.currentUser?.token) {
-      dispatch(
-        notificationsActions.getNotifications({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
-    }
+    dispatch(notificationsActions.getNotifications());
   };
 
   const onPressMenu = (e: any) => {
@@ -195,26 +179,13 @@ const Notification = () => {
     }
 
     // finally mark the notification as read
-    if (streamClient) {
-      dispatch(
-        notificationsActions.markAsRead({
-          userId: userId,
-          activityId: item.id,
-          streamClient: streamClient,
-        }),
-      );
-    }
+    dispatch(notificationsActions.markAsRead(item.id));
   };
 
   // load more notification handler
   const loadMoreNotifications = () => {
-    if (streamClient && !noMoreNotification && !isLoadingMore) {
-      dispatch(
-        notificationsActions.loadmore({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+    if (!noMoreNotification && !isLoadingMore) {
+      dispatch(notificationsActions.loadmore());
     }
   };
 

@@ -1,7 +1,48 @@
-import {StreamClient} from 'getstream';
-import {makeGetStreamRequest} from '~/services/httpApiRequest';
+import {makeHttpRequest} from '~/services/httpApiRequest';
+import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
+import {IParamGetNotifications} from '~/interfaces/INotification';
 
 const LIMIT = 20;
+
+export const notificationApiConfig = {
+  getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
+    const {limit, ...restParams} = params || {};
+    return {
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications`,
+      method: 'get',
+      provider: ApiConfig.providers.beinFeed,
+      useRetry: true,
+      params: {
+        limit: limit || LIMIT,
+        ...restParams,
+      },
+    };
+  },
+  putMarkAsReadById: (id: string): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications/${id}/mark-as-read`,
+      method: 'put',
+      provider: ApiConfig.providers.beinFeed,
+      useRetry: true,
+    };
+  },
+  putMarkAllAsRead: (): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications/all/mark-as-read`,
+      method: 'put',
+      provider: ApiConfig.providers.beinFeed,
+      useRetry: true,
+    };
+  },
+  putMarkAllAsSeen: (): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinFeed.url}api/notifications/mark-as-seen`,
+      method: 'put',
+      provider: ApiConfig.providers.beinFeed,
+      useRetry: true,
+    };
+  },
+};
 
 const notificationsDataHelper = {
   getDefaultLoadNotiOptions: (userId: string) => {
@@ -17,79 +58,43 @@ const notificationsDataHelper = {
     return options;
   },
 
-  getNotificationList: async (
-    userId: string,
-    streamClient?: StreamClient,
-    bottomNotiId?: string,
-  ) => {
-    if (streamClient) {
-      const streamOptions: any =
-        notificationsDataHelper.getDefaultLoadNotiOptions(userId);
-      streamOptions.limit = LIMIT;
-
-      if (bottomNotiId) {
-        streamOptions.id_lt = bottomNotiId;
-      } else {
-        streamOptions.offset = 0;
-      }
-
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        streamOptions,
+  getNotificationList: async (param: IParamGetNotifications) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.getNotifications(param),
       );
-
-      // because getstream not support check user own noti event
-      // so this is a trick to hide current user's post event
-      const {filteredNotis, userHisOwnNotiCount} =
-        notificationsDataHelper.filterCurrentUserNoti(userId, data.results);
-      data.results = filteredNotis;
-      // update unseen number if there is any noti is hidden
-      data.unseen =
-        data.unseen - userHisOwnNotiCount > 0
-          ? data.unseen - userHisOwnNotiCount
-          : 0;
-      return data;
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          results: response?.data?.data?.results || [],
+          unseen: response?.data?.data?.unseen,
+        });
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 
-  loadNewNotification: async (
-    userId: string,
-    fromNotiGroupId: string,
-    limit: number,
-    streamClient?: StreamClient,
-  ) => {
-    if (streamClient) {
-      const streamOptions: any =
-        notificationsDataHelper.getDefaultLoadNotiOptions(userId);
-      streamOptions.id_gte = fromNotiGroupId;
-      streamOptions.limit = limit;
-      streamOptions.offset = 0;
-
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        streamOptions,
+  loadNewNotification: async (fromNotiGroupId: string, limit: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.getNotifications({
+          limit,
+          id_gte: fromNotiGroupId,
+        }),
       );
-
-      // because getstream not support check user own noti event
-      // so this is a trick to hide current user's post event
-      const {filteredNotis, userHisOwnNotiCount} =
-        notificationsDataHelper.filterCurrentUserNoti(userId, data.results);
-
-      data.results = filteredNotis;
-      // update unseen number if there is any noti is hidden
-      data.unseen =
-        limit - userHisOwnNotiCount > 0 ? limit - userHisOwnNotiCount : 0;
-
-      return data;
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          results: response?.data?.data?.results || [],
+          unseen: response?.data?.data?.unseen,
+        });
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 
   /**
@@ -118,70 +123,49 @@ const notificationsDataHelper = {
     return {filteredNotis, userHisOwnNotiCount};
   },
 
-  /**
-   * Send request to getstream to mark notifications as read
-   * @param userId        integer       User id
-   * @param streamClient  StreamClient  Stream Client
-   * @returns
-   */
-  markAsReadAll: async (userId: string, streamClient: StreamClient) => {
-    if (streamClient) {
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        {mark_read: true},
+  markAsReadAll: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAllAsRead(),
       );
-
-      return data;
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 
-  /**
-   * Send request to getstream to mark notifications as seen
-   * @param userId        integer       User id
-   * @param streamClient  StreamClient  Stream Client
-   * @returns
-   */
-  markAsSeenAll: async (userId: string, streamClient: StreamClient) => {
-    if (streamClient) {
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        {mark_seen: true},
+  markAsSeenAll: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAllAsSeen(),
       );
-
-      return data;
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 
-  /**
-   * Send request to getstream to mark notification as seen by activity id
-   * @param userId        integer       User id
-   * @param activityId    integer       Activity id
-   * @param streamClient  StreamClient  Stream Client
-   */
-  markAsRead: async (
-    userId: string,
-    activityId: string,
-    streamClient: StreamClient,
-  ) => {
-    if (streamClient) {
-      const data = await makeGetStreamRequest(
-        streamClient,
-        'notification',
-        'u-' + userId,
-        'get',
-        {mark_read: [activityId]},
+  markAsRead: async (activityId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAsReadById(activityId),
       );
-      return data;
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return;
   },
 };
 

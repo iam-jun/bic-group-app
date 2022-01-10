@@ -48,8 +48,8 @@ export interface IActivityData {
 }
 
 export interface IActivityImportant {
-  active?: 0 | 1;
-  expiresTime?: string;
+  active?: boolean;
+  expires_time?: string;
 }
 
 export interface ICreatePostImage {
@@ -112,18 +112,15 @@ export interface IAllComments {
 }
 
 export interface IPostCreatePost {
-  getstream_id?: string;
   data?: IActivityData;
   audience?: {
-    users: number[];
-    groups: number[];
+    user_ids: number[];
+    group_ids: number[];
   };
-  tags?: number[];
+  tag_ids?: number[];
   important?: IActivityImportant;
   is_draft?: boolean;
 
-  userId?: string;
-  streamClient?: StreamClient;
   createFromGroupId?: string | number;
 }
 
@@ -147,10 +144,24 @@ export interface IPayloadPutEditComment {
   data: IActivityData;
 }
 
-export interface IPayloadGetPostDetail {
-  userId: string;
-  streamClient: StreamClient;
+export interface IParamGetPostDetail {
   postId: string;
+
+  is_draft?: boolean;
+  enrich?: boolean;
+  own_reactions?: boolean;
+  with_own_reactions?: boolean;
+  with_own_children?: boolean;
+  with_recent_reactions?: boolean;
+  with_reaction_counts?: boolean;
+}
+
+export interface IParamPutEditPost {
+  postId: string;
+  data: IPostCreatePost;
+}
+
+export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
 }
 
@@ -167,19 +178,22 @@ export interface IGetStreamUser {
 }
 
 export interface IRequestPostComment {
-  referenceId: string;
-  referenceType: 'post' | 'comment';
-  commentData: IActivityData;
-  userId: number;
+  postId: string;
+  data: IActivityData;
+}
+
+export interface IRequestReplyComment {
+  parentCommentId: string;
+  data: IActivityData;
 }
 
 export interface IRequestGetPostComment {
   postId: string;
   commentId?: string;
   idLt?: string; //get comment before this id
-  limit?: number;
   kind?: string;
   recentReactionsLimit?: number;
+  recentChildReactionsLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
@@ -240,7 +254,7 @@ export interface IGetStreamPost {
   verb: string;
   type: string;
   data: IActivityData;
-  object?: IGetStreamPost | string;
+  object?: IGetStreamPost | string | any;
   origin?: string | null;
   target?: string;
   time?: string;
@@ -278,7 +292,6 @@ export interface IPayloadReactToPost {
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
-  userId: number;
 }
 
 export interface IPayloadReactToComment {
@@ -289,7 +302,16 @@ export interface IPayloadReactToComment {
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
-  userId: number;
+}
+
+export interface IParamPutReactionToPost {
+  postId: string;
+  data: string[];
+}
+
+export interface IParamPutReactionToComment {
+  commentId: string;
+  data: string[];
 }
 
 export interface IPayloadUpdateReactionOfPostById {
@@ -324,9 +346,12 @@ export interface IPayloadSetDraftPosts {
   refreshing?: boolean;
 }
 
+export interface IParamGetDraftPosts {
+  offset?: number;
+  limit?: number;
+}
+
 export interface IPayloadGetDraftPosts {
-  userId: string;
-  streamClient?: StreamClient;
   isRefresh?: boolean;
   offset?: number;
 }
@@ -336,8 +361,6 @@ export interface IPayloadPublishDraftPost {
   replaceWithDetail?: boolean;
   onSuccess?: () => void;
   onError?: () => void;
-  userId?: string;
-  streamClient?: StreamClient;
   refreshDraftPosts?: boolean;
 }
 
@@ -345,7 +368,5 @@ export interface IPayloadPutEditDraftPost {
   id: string;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
-  userId: string;
-  streamClient?: StreamClient;
   publishNow: boolean;
 }

@@ -57,6 +57,8 @@ export interface PostViewProps {
   isLite?: boolean;
   postData?: IPostActivity;
   isUseReduxState?: boolean;
+  btnReactTestID?: string;
+  btnCommentTestID?: string;
 }
 
 const _PostView: FC<PostViewProps> = ({
@@ -72,6 +74,8 @@ const _PostView: FC<PostViewProps> = ({
   isLite,
   postData,
   isUseReduxState = true,
+  btnReactTestID,
+  btnCommentTestID,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
 
@@ -175,7 +179,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.postReactToPost(payload));
   };
@@ -186,7 +189,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.deleteReactToPost(payload));
   };
@@ -267,7 +269,7 @@ const _PostView: FC<PostViewProps> = ({
       <PostViewImportant
         isLite={isLite}
         isImportant={isImportant}
-        expireTime={important?.expiresTime}
+        expireTime={important?.expires_time}
       />
       <View style={[styles.container]}>
         <PostViewHeader
@@ -288,6 +290,7 @@ const _PostView: FC<PostViewProps> = ({
         />
         {!isLite && (
           <ReactionView
+            style={styles.reactions}
             ownReactions={own_reactions}
             reactionCounts={reaction_counts}
             onAddReaction={onAddReaction}
@@ -302,6 +305,8 @@ const _PostView: FC<PostViewProps> = ({
             labelButtonComment={labelButtonComment}
             onAddReaction={onAddReaction}
             onPressComment={_onPressComment}
+            btnReactTestID={btnReactTestID}
+            btnCommentTestID={btnCommentTestID}
           />
         )}
       </View>
@@ -327,6 +332,9 @@ const createStyle = (theme: ITheme) => {
     },
     container: {
       backgroundColor: colors.background,
+    },
+    reactions: {
+      paddingHorizontal: spacing.padding.base,
     },
     deletedContainer: {
       flexDirection: 'row',

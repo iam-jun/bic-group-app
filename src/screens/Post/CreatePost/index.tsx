@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useRef} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {
   Animated,
   Keyboard,
@@ -48,8 +48,6 @@ import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
-import {useUserIdAuth} from '~/hooks/auth';
-import {AppContext} from '~/contexts/AppContext';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
@@ -83,7 +81,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
@@ -98,9 +95,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       (item: IPostActivity) => item?.id === draftPostId,
     );
   }
-
-  const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
   const createPostData = useCreatePost();
   const {
@@ -275,7 +269,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   ) => {
     const users: number[] = [];
     const groups: number[] = [];
-    const audience = {groups, users};
+    const audience = {group_ids: groups, user_ids: users};
 
     const {imageError, images} = validateImages(selectingImages, t);
 
@@ -300,30 +294,32 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (isEditDraftPost && initPostData?.id) {
       const postData = {content, images, videos: [], files: []};
       const draftData: IPostCreatePost = {
-        getstream_id: initPostData.id,
         data: postData,
         audience,
       };
       if (important?.active) {
-        draftData.important = important;
+        draftData.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
       }
       const payload: IPayloadPutEditDraftPost = {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
         data: draftData,
-        userId: userId,
-        streamClient: streamClient,
         publishNow: !isEditDraft,
       };
       dispatch(postActions.putEditDraftPost(payload));
     } else if (isEditPost && initPostData?.id) {
       const editPostData = {content, images, videos: [], files: []};
       const newEditData: IPostCreatePost = {
-        getstream_id: initPostData.id,
         data: editPostData,
         audience,
       };
-      newEditData.important = important;
+      newEditData.important = {
+        active: !!important?.active,
+        expires_time: important?.expiresTime,
+      };
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
@@ -336,12 +332,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         data: postData,
         audience,
         is_draft: isSaveAsDraft,
-        userId,
-        streamClient,
         createFromGroupId,
       };
       if (important?.active) {
-        payload.important = important;
+        payload.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
       }
       dispatch(postActions.postCreateNewPost(payload));
     }
@@ -457,7 +454,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           disabled: disableButtonPost,
           useI18n: true,
           highEmphasis: true,
-          testID: 'create_post.button',
         }}
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}

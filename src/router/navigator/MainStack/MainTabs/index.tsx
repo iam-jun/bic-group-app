@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   DeviceEventEmitter,
   Platform,
@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {AppContext} from '~/contexts/AppContext';
+import {io} from 'socket.io-client';
+
 import {useUserIdAuth} from '~/hooks/auth';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import BottomTabBar from '~/router/components/BottomTabBar';
@@ -16,11 +17,14 @@ import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {initPushTokenMessage} from '~/services/helper';
-import {subscribeGetstreamFeed} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
+import {useKeySelector} from '~/hooks/selector';
+import {getEnv} from '~/utils/env';
+import {parseSafe} from '~/utils/common';
+import {getMsgPackParser} from '~/utils/socket';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -43,7 +47,7 @@ const MainTabs = () => {
 
   const dispatch = useDispatch();
 
-  const {streamClient, streamNotiSubClient} = useContext(AppContext);
+  const token = useKeySelector('auth.user.signInUserSession.idToken.jwtToken');
 
   const userId = useUserIdAuth();
   useEffect(() => {
@@ -51,7 +55,7 @@ const MainTabs = () => {
     if (!userId) {
       return;
     }
-    dispatch(postActions.getDraftPosts({userId, streamClient}));
+    dispatch(postActions.getDraftPosts({}));
     if (Platform.OS !== 'web') {
       dispatch(notificationsActions.registerPushToken());
       let tokenRefreshSubscription;
@@ -71,29 +75,31 @@ const MainTabs = () => {
   }, [userId]);
 
   useEffect(() => {
-    if (streamClient?.currentUser?.token) {
-      dispatch(
-        notificationsActions.getNotifications({
-          streamClient,
-          userId: userId.toString(),
-        }),
-      );
+    dispatch(notificationsActions.getNotifications());
 
-      if (!streamNotiSubClient) {
-        return;
-      }
+    const socket = io(getEnv('BEIN_FEED'), {
+      transports: ['websocket'],
+      path: '/ws',
+      auth: {token},
+      ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
+    });
 
-      const subscription = subscribeGetstreamFeed(
-        streamNotiSubClient,
-        'notification',
-        'u-' + userId,
-        realtimeCallback,
+    socket.on('connect', () => {
+      console.log(
+        `\x1b[36m🐣️ Bein feed socket connected with id: ${socket.id}\x1b[0m`,
       );
-      return () => {
-        subscription && subscription.cancel();
-      };
-    }
-  }, [streamClient?.currentUser?.token]);
+    });
+    socket.on('disconnect', () => {
+      console.log(`\x1b[36m🐣️ Bein feed socket disconnected\x1b[0m`);
+    });
+    socket.on('notification', msg => {
+      const data = parseSafe(msg);
+      realtimeCallback(data?.data);
+    });
+    return () => {
+      socket?.disconnect?.();
+    };
+  }, []);
 
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
@@ -102,30 +108,21 @@ const MainTabs = () => {
     // for now realtime noti include "deleted" and "new"
     // for delete actitivity event "new" is empty
     // and we haven't handle "delete" event yet
-    if (data.new.length > 0) {
-      const actorId = data.new[0].actor.id;
-      const notiGroupId = data.new[0].id;
+    if (data?.new?.length > 0) {
+      const actorId = data.new[0]?.actor?.id;
+      const notiGroupId = data.new[0]?.id;
       const limit = data.new.length;
-      streamClient &&
-        actorId != userId &&
-        dispatch(
-          notificationsActions.loadNewNotifications({
-            streamClient,
-            userId: userId.toString(),
-            notiGroupId,
-            limit: limit,
-          }),
-        );
+      if (actorId != userId) {
+        const payload = {notiGroupId, limit: limit};
+        dispatch(notificationsActions.loadNewNotifications(payload));
+      }
     }
     if (data?.deleted?.length > 0) {
-      streamClient &&
-        dispatch(
-          notificationsActions.deleteNotifications({
-            streamClient,
-            notiGroupIds: data.deleted,
-            userId: userId.toString(),
-          }),
-        );
+      dispatch(
+        notificationsActions.deleteNotifications({
+          notiGroupIds: data.deleted,
+        }),
+      );
     }
   };
 
