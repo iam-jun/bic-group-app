@@ -208,7 +208,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (data?.length === 0 && !canLoadMore) {
       //todo waiting for design
       return (
-        <View>
+        <View style={styles.emptyContainer}>
           {!!HeaderComponent && HeaderComponent}
           <View style={styles.listFooter}>
             <Image
@@ -332,6 +332,9 @@ const createStyle = (theme: ITheme, insets: any) => {
     headerContainer: {
       marginTop: insets.top + dimension.headerHeight,
       width: '100%',
+    },
+    emptyContainer: {
+      marginTop: insets.top + dimension.headerHeight,
     },
   });
 };
