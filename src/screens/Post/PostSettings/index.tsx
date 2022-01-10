@@ -178,11 +178,9 @@ const PostSettings = () => {
       <View style={styles.content}>
         <View style={[styles.row, styles.important]}>
           <View style={styles.flex1}>
-            <Text.H5
-              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
-              useI18n>
+            <Text style={styles.flex1} useI18n>
               post:mark_as_important
-            </Text.H5>
+            </Text>
             {sImportant?.active === 1 && (
               <Text.Subtitle
                 useI18n
@@ -225,39 +223,6 @@ const PostSettings = () => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderImportant()}
-          {/* <View style={[styles.content, styles.row]}>
-            <Text.H5
-              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
-              useI18n>
-              post:people_can_comment
-            </Text.H6>
-            <Toggle
-              isChecked={comments}
-              onActionPress={() => setComments(!comments)}
-            />
-          </View>
-          <View style={[styles.content, styles.row]}>
-           <Text.H5
-              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
-              useI18n>
-              post:people_can_share
-            </Text.H6>
-            <Toggle
-              isChecked={shares}
-              onActionPress={() => setShares(!shares)}
-            />
-          </View>
-          <View style={[styles.content, styles.row]}>
-            <Text.H5
-              style={[styles.flex1, {fontFamily: fontFamilies.OpenSans}]}
-              useI18n>
-              post:people_can_react
-            </Text.H6>
-            <Toggle
-              isChecked={reacts}
-              onActionPress={() => setReacts(!reacts)}
-            />
-          </View> */}
         </ScrollView>
         <View style={{position: 'absolute', alignSelf: 'center'}}>
           {selectingDate && (
