@@ -384,6 +384,8 @@ const PostDetailContentHeader = ({
         onPressComment={onPressComment}
         onContentLayout={onContentLayout}
         isPostDetail
+        btnReactTestID="post_detail_content.btn_react"
+        btnCommentTestID="post_detail_content.btn_comment"
       />
       <Divider />
       {commentLeft > 0 && (

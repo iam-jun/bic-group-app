@@ -15,12 +15,16 @@ import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 export interface PostViewFooterProps {
   labelButtonComment: string;
   onAddReaction?: any;
+  btnReactTestID?: string;
+  btnCommentTestID?: string;
   onPressComment?: () => void;
 }
 
 const PostViewFooter: FC<PostViewFooterProps> = ({
   labelButtonComment,
   onAddReaction,
+  btnReactTestID,
+  btnCommentTestID,
   onPressComment,
 }: PostViewFooterProps) => {
   const dispatch = useDispatch();
@@ -125,7 +129,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         onPressReact,
         onPressReact,
         false,
-        'post_view_footer.react',
+        btnReactTestID,
       )}
       <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
       {renderReactButtonItem(
@@ -134,7 +138,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         onPressComment,
         onPressComment,
         !onPressComment,
-        'post_view_footer.comment',
+        btnCommentTestID,
       )}
     </View>
   );

@@ -183,6 +183,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         style={itemStyle}
         postId={data.id}
         testID="newsfeed_list.post.item"
+        btnReactTestID="newsfeed_list.post.btn_react"
+        btnCommentTestID="newsfeed_list.post.btn_comment"
       />
     );
   };
