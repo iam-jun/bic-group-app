@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IActivityDataImage} from '~/interfaces/IPost';
+import {IActivityDataImage, IMarkdownAudience} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
@@ -35,9 +35,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const onPressMentionAudience = useRef((audience: any) => {
-    if (audience?.id) {
-      rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
+  const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
+    if (audience) {
+      rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
     }
   }).current;
 
