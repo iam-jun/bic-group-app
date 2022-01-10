@@ -20,6 +20,8 @@ const groupsKeySelector = {
   loadingGroupDetail: 'groups.loadingGroupDetail',
   loadingPage: 'groups.loadingPage',
   pendingMemberRequests: 'groups.pendingMemberRequests',
+  loadingAvatar: 'groups.loadingAvatar',
+  loadingCover: 'groups.loadingCover',
 };
 
 export default groupsKeySelector;
