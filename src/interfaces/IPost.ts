@@ -23,6 +23,17 @@ export interface IAudienceGroup {
   };
 }
 
+export interface IMarkdownAudience {
+  id: string;
+  data: {
+    fullname: string;
+    username: string;
+    avatar?: string;
+  };
+  created_at: string;
+  updated_at: string;
+}
+
 export interface IAudience {
   id?: number | string;
   name?: string;

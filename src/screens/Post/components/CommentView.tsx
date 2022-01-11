@@ -17,7 +17,11 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
+import {
+  IMarkdownAudience,
+  IPayloadReactToComment,
+  IReaction,
+} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
@@ -73,8 +77,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
-  const onPressAudience = useCallback((audience: any) => {
-    if (!audience || !audience?.id) return;
+  const onPressAudience = useCallback((audience: IMarkdownAudience) => {
+    if (!audience) return;
     rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
   }, []);
 

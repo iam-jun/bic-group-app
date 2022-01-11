@@ -74,6 +74,7 @@ const Section1 = () => {
           onPressAudience={audience =>
             alert('onPressAudience: ' + JSON.stringify(audience))
           }>
+        <Text>
           {'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do' +
             'eiusmod tempor incididunt ut labore et dolore magna aliqua. Website:' +
             'https://join.bein.global. Email: join@bein.global. Ut enim ad minim' +
