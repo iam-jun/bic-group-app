@@ -301,7 +301,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (important?.active) {
         draftData.important = {
           active: important?.active,
-          expires_time: important?.expiresTime,
+          expires_time: important?.expires_time,
         };
       }
       const payload: IPayloadPutEditDraftPost = {
@@ -319,7 +319,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       newEditData.important = {
         active: !!important?.active,
-        expires_time: important?.expiresTime,
+        expires_time: important?.expires_time,
       };
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
@@ -338,7 +338,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (important?.active) {
         payload.important = {
           active: important?.active,
-          expires_time: important?.expiresTime,
+          expires_time: important?.expires_time,
         };
       }
       dispatch(postActions.postCreateNewPost(payload));
