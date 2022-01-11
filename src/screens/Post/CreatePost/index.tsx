@@ -51,7 +51,6 @@ import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptio
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
-import {timeOut} from '~/utils/common';
 
 export interface CreatePostProps {
   route?: {
@@ -351,27 +350,41 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     Keyboard.dismiss();
   };
 
+  const autoSaveDraftPost = () => {
+    if (content || images.length > 0) {
+      console.log('autoSaveDraftPost');
+    }
+  };
+
   const debouncedAutoSave = () => {
     if (!isPause) {
       refAutoSave.current = setTimeout(() => {
         setPause(true);
+        if (content) {
+          autoSaveDraftPost();
+        }
       }, 5000);
     }
   };
 
-  const debouncedStopsTyping = () => {
+  const debouncedStopsTyping = (text: string) => {
     refStopsTyping.current = setTimeout(() => {
       clearTimeout(refAutoSave?.current);
+      if (text) {
+        autoSaveDraftPost();
+      }
     }, 500);
   };
 
   const onChangeText = (text: string) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
-    if (isPause) {
-      setPause(false);
+    if (!isEditPost || isEditDraftPost) {
+      if (isPause) {
+        setPause(false);
+      }
+      clearTimeout(refStopsTyping?.current);
+      debouncedStopsTyping(text);
     }
-    clearTimeout(refStopsTyping?.current);
-    debouncedStopsTyping();
   };
 
   const onLayoutCloneText = (e: any) => {
