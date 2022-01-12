@@ -131,9 +131,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
-  const isAutoSave =
-    (isEditDraftPost && initPostData?.id) || !initPostData?.id ? true : false;
-
   const [sLoading, setsLoading] = React.useState<boolean>(true);
   const [isPause, setPause] = React.useState<boolean>(true);
   const [state, setState] = React.useState<IPostActivity>({...initPostData});
@@ -143,6 +140,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
   const refIsRefresh = useRef<boolean>(false);
+
+  const isEdit = state?.id ? true : false;
+  const isDraftPost = state?.id && state?.is_draft ? true : false;
+
+  const isAutoSave = isDraftPost || !isEdit ? true : false;
 
   useBackHandler(() => {
     onPressBack();
@@ -264,45 +266,48 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const onPressBack = () => {
     Keyboard.dismiss();
 
-    if (isEditPost && !isEditDraftPost) {
-      if (isEditPostHasChange) {
-        dispatch(
-          modalActions.showAlert({
-            title: i18n.t('common:label_discard_changes'),
-            content: i18n.t('post:alert_content_back_edit_post'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_continue_editing'),
-            confirmLabel: i18n.t('common:btn_discard'),
-            onConfirm: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
-          }),
-        );
-        return;
-      }
-    } else {
-      if (content || chosenAudiences?.length > 0) {
-        dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            ContentComponent: (
-              <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
-            ),
-            props: {webModalStyle: {minHeight: undefined}},
-          }),
-        );
-        return;
-      }
-    }
-
-    // if (state?.id) {
-    //   if (refIsRefresh.current) {
-    //     dispatch(postActions.getDraftPosts({isRefresh: true}));
+    // if (isEditPost && !isEditDraftPost) {
+    //   if (isEditPostHasChange) {
+    //     dispatch(
+    //       modalActions.showAlert({
+    //         title: i18n.t('common:label_discard_changes'),
+    //         content: i18n.t('post:alert_content_back_edit_post'),
+    //         showCloseButton: true,
+    //         cancelBtn: true,
+    //         cancelLabel: i18n.t('common:btn_continue_editing'),
+    //         confirmLabel: i18n.t('common:btn_discard'),
+    //         onConfirm: () => rootNavigation.goBack(),
+    //         stretchOnWeb: true,
+    //       }),
+    //     );
+    //     return;
     //   }
-    //   rootNavigation.replace(homeStack.draftPost);
+    // } else {
+    //   if (content || chosenAudiences?.length > 0) {
+    //     dispatch(
+    //       modalActions.showModal({
+    //         isOpen: true,
+    //         ContentComponent: (
+    //           <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
+    //         ),
+    //         props: {webModalStyle: {minHeight: undefined}},
+    //       }),
+    //     );
+    //     return;
+    //   }
     // }
 
-    rootNavigation.goBack();
+    // rootNavigation.goBack();
+
+    if (state?.id && refIsRefresh.current) {
+      dispatch(postActions.getDraftPosts({isRefresh: true}));
+    }
+
+    if (!initPostData?.id && isEdit) {
+      rootNavigation.replace(homeStack.draftPost);
+    } else {
+      rootNavigation.goBack();
+    }
   };
 
   const onPressSaveDraft = async () => {
@@ -451,7 +456,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
     }
 
-    if (isEditDraftPost && state?.id) {
+    if (isDraftPost && state?.id) {
       const newPayload: IPayloadPutEditAutoSave = {
         id: state?.id,
         data: payload,
@@ -464,25 +469,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         .then(() => {
           refIsRefresh.current = true;
         });
-    } else if (isEditPost && state?.id) {
+    } else if (isEdit && state?.id) {
       if (__DEV__) console.log('payload: ', payload);
     } else {
       payload.is_draft = true;
-      postDataHelper
-        .postCreateNewPost(payload)
-        .then(resp => {
-          refIsRefresh.current = true;
-          if (resp?.data) {
-            const newData = resp?.data || {};
-            setState({...newData});
-          }
-          console.log('resp: ', resp);
-          console.log('auto-save completed');
-        })
-        .catch(e => {
-          console.log('error: ', e);
-          console.log('newPayload: ', payload);
-        });
+      postDataHelper.postCreateNewPost(payload).then(resp => {
+        refIsRefresh.current = true;
+        if (resp?.data) {
+          const newData = resp?.data || {};
+          setState({...newData});
+        }
+      });
     }
     setPause(true);
   };
@@ -599,7 +596,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     <ScreenWrapper isFullView testID={'CreatePostScreen'}>
       <Header
         titleTextProps={{useI18n: true}}
-        title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
+        title={
+          isEditPost && !state?.is_draft
+            ? 'post:title_edit_post'
+            : 'post:create_post'
+        }
         buttonText={
           isEditPost
             ? isEditDraftPost
