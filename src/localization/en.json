@@ -582,7 +582,9 @@
     "text_approved_member_group": "You have been approved to be a member of this group",
     "title_members": "Members",
     "text_cannot_approve_all": "Cannot approve all because there are changes in the pending member list. Please review again",
-    "text_cannot_decline_all": "Cannot decline all because there are changes in the pending member list. Please review again"
+    "text_cannot_decline_all": "Cannot decline all because there are changes in the pending member list. Please review again",
+    "text_this_place_looks_lonely": "This place looks lonely",
+    "text_join_community_get_updated": "Join in a community to get updated"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

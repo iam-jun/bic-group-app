@@ -12,12 +12,12 @@ import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
 import {deviceDimensions} from '~/theme/dimension';
-import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import GroupSearch from '~/screens/Groups/components/GroupSearch';
 import appActions from '~/store/app/actions';
 import {debounce} from 'lodash';
+import EmptyScreen from '~/beinFragments/EmptyScreen';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();
@@ -81,7 +81,15 @@ const Groups: React.FC = () => {
   }, 300);
 
   const renderEmpty = () => {
-    return !loadingJoinedGroups && <NoSearchResult />;
+    return (
+      !loadingJoinedGroups && (
+        <EmptyScreen
+          source={'addUsers'}
+          title="groups:text_this_place_looks_lonely"
+          description="groups:text_join_community_get_updated"
+        />
+      )
+    );
   };
 
   const renderDataList = () => {
