@@ -467,7 +467,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      {(!isEditPost || isEditDraftPost) && (
+      {(!initPostData?.id || (isEditDraftPost && initPostData?.id)) && (
         <View style={styles.setting}>
           <Button.Secondary
             color={colors.bgHover}

@@ -286,20 +286,16 @@ const createStyle = (theme: ITheme) => {
     row: {flexDirection: 'row', alignItems: 'center'},
     flex1: {flex: 1},
     content: {
-      paddingVertical: Platform.select({
-        web: spacing.padding.big,
-        default: spacing.padding.small,
-      }),
-      paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
+      marginBottom: spacing.margin.extraLarge,
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.base,
       justifyContent: 'center',
     },
-    important: {},
+    important: {marginTop: spacing.margin.tiny},
     importantButtons: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingTop: spacing.padding.base,
-      paddingBottom: spacing.padding.large,
     },
     buttonDate: {
       flex: 1,
