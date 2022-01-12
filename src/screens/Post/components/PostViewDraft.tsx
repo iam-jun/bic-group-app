@@ -191,7 +191,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     <View>
       <PostViewImportant
         isImportant={isImportant}
-        expireTime={important?.expiresTime}
+        expireTime={important?.expires_time}
       />
       <View
         style={StyleSheet.flatten([

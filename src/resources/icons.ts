@@ -61,6 +61,7 @@ import iconSticker from '../../assets/icons/icon_sticker.svg';
 import iconFlagVn from '../../assets/icons/icon_flag_vn.svg';
 import iconFlagSg from '../../assets/icons/icon_flag_sg.svg';
 import iconFlagUs from '../../assets/icons/icon_flag_us.svg';
+import addUsers from '../../assets/icons/add_users.svg';
 
 const icons = {
   iconTabHome,
@@ -221,6 +222,7 @@ const icons = {
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
   SignOutAlt: 'SignOutAlt',
+  addUsers,
 };
 
 export default icons;

@@ -18,6 +18,7 @@ import {
   IPayloadReplying,
   IPayloadGetPostDetail,
   ICreatePostImage,
+  ICreatePostSettings,
   IPayloadGetDraftPosts,
   IPayloadSetDraftPosts,
   IPayloadPublishDraftPost,
@@ -66,6 +67,10 @@ const postActions = {
   }),
   setCreatePostImages: (payload: ICreatePostImage[]) => ({
     type: postTypes.SET_CREATE_POST_IMAGES,
+    payload,
+  }),
+  setCreatePostSettings: (payload: ICreatePostSettings) => ({
+    type: postTypes.SET_CREATE_POST_SETTINGS,
     payload,
   }),
   setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({

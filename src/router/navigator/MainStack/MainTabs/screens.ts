@@ -24,6 +24,7 @@ import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import PostSelectImage from '~/screens/Post/PostSelectImage';
+import PostSettings from '~/screens/Post/PostSettings';
 import GroupStack from '../GroupStack';
 import HomeStack from '../HomeStack';
 import MenuStack from '../MenuStack';
@@ -48,6 +49,7 @@ export const screensWebLaptop = {
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'draft-post': DraftPost,
+  'post-settings': PostSettings,
 
   //GROUP STACK
   // 'group-list': Groups,
