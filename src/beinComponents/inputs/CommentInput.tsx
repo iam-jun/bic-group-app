@@ -65,6 +65,7 @@ export interface CommentInputProps {
   uploadVideoType?: IUploadType;
   uploadFileType?: IUploadType;
   uploadFilePromise?: any;
+  useTestID?: boolean;
 }
 
 const DEFAULT_HEIGHT = 44;
@@ -94,6 +95,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   uploadVideoType = uploadTypes.commentVideo,
   uploadFileType = uploadTypes.commentFile,
   uploadFilePromise,
+  useTestID = true,
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -422,7 +424,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           </Button>
         </View>
         <Button.Secondary
-          testID="comment_input.send"
+          testID={useTestID ? 'comment_input.send' : undefined}
           onPress={_onPressSend}
           style={styles.buttonSend}
           rightIcon={'iconSendComment'}
@@ -492,7 +494,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <View style={styles.container}>
           <Animated.View style={{flex: 1, zIndex: 1, height: heightAnimated}}>
             <TextInput
-              testID="comment_input"
+              testID={useTestID ? 'comment_input' : undefined}
               selection={inputSelection}
               {...props}
               onContentSizeChange={_onContentSizeChange}
@@ -504,7 +506,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               placeholder={placeholder}
               placeholderTextColor={colors.textSecondary}
               editable={!_loading}
-              value={Platform.OS === 'web' ? text : undefined} //if mobile, use props children
+              value={text}
               onFocus={_onFocus}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
@@ -579,7 +581,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
       color: loading ? colors.textSecondary : colors.textPrimary,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension?.sizes.body,
     },
     textDuplicatedOnWeb: {

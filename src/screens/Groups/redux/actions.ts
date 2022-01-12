@@ -3,7 +3,6 @@ import {
   IGroup,
   IGroupDetail,
   IGroupDetailEdit,
-  IPayloadGetGroupPost,
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -65,7 +64,7 @@ const groupsActions = {
     };
   },
 
-  getGroupPosts: (payload: IPayloadGetGroupPost) => {
+  getGroupPosts: (payload: string | number) => {
     return {
       type: groupsTypes.GET_GROUP_POSTS,
       payload,
@@ -81,7 +80,7 @@ const groupsActions = {
     type: groupsTypes.SET_EXTRA_GROUP_POSTS,
     payload,
   }),
-  mergeExtraGroupPosts: (payload: IPayloadGetGroupPost) => ({
+  mergeExtraGroupPosts: (payload: string) => ({
     type: groupsTypes.MERGE_EXTRA_GROUP_POSTS,
     payload,
   }),

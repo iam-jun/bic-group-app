@@ -9,28 +9,32 @@ export const fontFamilies = {
   PoppinsMediumItalic: 'SVN-PoppinsMediumItalic',
   PoppinsSemiBold: 'SVN-PoppinsSemiBold',
   PoppinsSemiBoldItalic: 'SVN-PoppinsSemiBoldItalic',
+  OpenSans: 'OpenSans-Regular',
+  OpenSansItalic: 'OpenSans-Italic',
+  OpenSansSemiBold: 'OpenSans-SemiBold',
+  OpenSansSemiBoldItalic: 'OpenSans-SemiBoldItalic',
   JetBrainsMono: 'JetBrainsMono-Regular',
 };
 
 export default {
   light: {
-    fontFamily: fontFamilies.Segoe,
+    fontFamily: fontFamilies.OpenSans,
     fontWeight: 'normal',
   },
   medium: {
-    fontFamily: fontFamilies.PoppinsMedium,
+    fontFamily: fontFamilies.OpenSansSemiBold,
     fontWeight: 'normal',
   },
   regular: {
-    fontFamily: fontFamilies.Poppins,
+    fontFamily: fontFamilies.OpenSans,
     fontWeight: 'normal',
   },
   bold: {
-    fontFamily: fontFamilies.PoppinsSemiBold,
+    fontFamily: fontFamilies.OpenSansSemiBold,
     fontWeight: 'normal',
   },
   maxBold: {
-    fontFamily: fontFamilies.PoppinsSemiBold,
+    fontFamily: fontFamilies.OpenSansSemiBold,
     fontWeight: 'normal',
   },
 };

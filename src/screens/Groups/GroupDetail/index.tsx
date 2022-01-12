@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, Fragment, useState} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -7,7 +7,6 @@ import {isEmpty} from 'lodash';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {ITheme} from '~/theme/interfaces';
-import {AppContext} from '~/contexts/AppContext';
 import {useUserIdAuth} from '~/hooks/auth';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
@@ -36,7 +35,6 @@ const GroupDetail = (props: any) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const {streamClient} = useContext(AppContext);
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
 
@@ -73,15 +71,7 @@ const GroupDetail = (props: any) => {
     }
 
     dispatch(groupsActions.clearGroupPosts());
-    if (streamClient && userId) {
-      dispatch(
-        groupsActions.getGroupPosts({
-          streamClient,
-          userId,
-          groupId: groupId,
-        }),
-      );
-    }
+    dispatch(groupsActions.getGroupPosts(groupId));
   };
 
   useEffect(() => {
@@ -101,13 +91,7 @@ const GroupDetail = (props: any) => {
     }
 
     return (
-      !!streamClient && (
-        <GroupContent
-          getGroupPosts={getGroupPosts}
-          streamClient={streamClient}
-          parentWidth={viewWidth}
-        />
-      )
+      <GroupContent getGroupPosts={getGroupPosts} parentWidth={viewWidth} />
     );
   };
 

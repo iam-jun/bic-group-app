@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Reaction from '~/beinComponents/Badge/Reaction';
@@ -12,6 +12,7 @@ import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 
 export interface ReactionViewProps {
+  style?: StyleProp<ViewStyle>;
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
   showSelectReactionWhenEmpty?: boolean;
@@ -22,6 +23,7 @@ export interface ReactionViewProps {
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
+  style,
   ownReactions,
   reactionCounts,
   onAddReaction,
@@ -85,7 +87,7 @@ const ReactionView: FC<ReactionViewProps> = ({
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         {renderReactions()}
         {!!onPressSelectReaction && renderedReactions.length < 21 && (
           <Button

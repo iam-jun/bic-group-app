@@ -25,6 +25,10 @@ const commonHeaders = {
   'Content-Type': 'application/json',
 };
 
+const beinFeedHeaders = {
+  'X-Version': getEnv('BEIN_FEED_VERSION'),
+};
+
 const _dispatchLogout = () => {
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
 };
@@ -449,10 +453,22 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...tokenHeaders,
       };
       break;
+    case apiConfig.providers.beinFeed.name:
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorResponseError = interceptorsResponseError;
+      requestConfig.headers = {
+        ...commonHeaders,
+        ...requestConfig.headers,
+        ...tokenHeaders,
+        ...beinFeedHeaders,
+      };
+      break;
     case apiConfig.providers.getStream.name:
       // TODO: refactor
       break;
     default:
+      console.log(`\x1b[31m🐣️ httpApiRequest unknown provider name\x1b[0m`);
       return Promise.resolve(false);
   }
 

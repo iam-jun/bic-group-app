@@ -8,6 +8,10 @@ const providers = {
     url: getEnv('BEIN_API'),
     name: 'Bein',
   },
+  beinFeed: {
+    url: getEnv('BEIN_FEED'),
+    name: 'BeinFeed',
+  },
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',

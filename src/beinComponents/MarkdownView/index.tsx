@@ -20,10 +20,11 @@ import Markdown, {
 import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {audienceRegex} from '~/constants/commonRegex';
-import {IAudience} from '~/interfaces/IPost';
 import {fontFamilies} from '~/theme/fonts';
 
 import {ITheme} from '~/theme/interfaces';
+import {sizes} from '~/theme/dimension';
+import {IMarkdownAudience} from '~/interfaces/IPost';
 
 export interface MarkdownViewProps {
   style?: StyleProp<ViewStyle>;
@@ -32,7 +33,7 @@ export interface MarkdownViewProps {
   limitMarkdownTypes?: boolean;
 
   onLinkPress?: (url: string) => boolean;
-  onPressAudience?: (audience: IAudience) => void;
+  onPressAudience?: (audience: IMarkdownAudience, e?: any) => void;
 }
 
 const _MarkdownView: FC<MarkdownViewProps> = ({
@@ -86,22 +87,6 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
           </View>
         );
       }
-    },
-    regex_audience: (node: any, children: any, parent: any, styles: any) => {
-      const match = node.sourceMeta?.match;
-      const audience: IAudience = {
-        type: match?.[1],
-        id: match?.[2],
-        name: match?.[3],
-      };
-      return (
-        <Text
-          key={node.key}
-          style={styles.regex_audience}
-          onPress={() => onPressAudience?.(audience)}>
-          {audience.name}
-        </Text>
-      );
     },
     regex_linebreak: (node: any) => {
       return <Text key={node.key}>{'\n'}</Text>;
@@ -164,11 +149,6 @@ const createStyle = (theme: ITheme) => {
     },
     emojiIcon: {marginTop: Platform.OS === 'web' ? 0 : -3},
 
-    //Regex
-    regex_audience: {
-      ...textStyles.bodyM,
-      color: colors.link,
-    },
     regex_linebreak: {},
     mark: {
       backgroundColor: '#F6EF79',
@@ -181,31 +161,28 @@ const createStyle = (theme: ITheme) => {
 
     // Headings
     heading1: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 20,
-      lineHeight: 32,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h3,
     },
     heading2: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 18,
-      lineHeight: 32,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h4,
     },
     heading3: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
-      lineHeight: 28,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
     heading4: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
     heading5: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
     heading6: {
-      fontFamily: fontFamilies.SegoeSemibold,
-      fontSize: 16,
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.h5,
     },
 
     // Horizontal Rule

@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {useRootNavigation} from '~/hooks/navigation';
-import {IActivityDataImage} from '~/interfaces/IPost';
+import {IActivityDataImage, IMarkdownAudience} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
@@ -12,8 +12,10 @@ import {getResourceUrl} from '~/configs/resourceConfig';
 
 import {ITheme} from '~/theme/interfaces';
 import Markdown from '~/beinComponents/Markdown';
+import postKeySelector from '../../redux/keySelector';
 
 export interface PostViewContentProps {
+  postId: string;
   content?: string;
   images?: IActivityDataImage[];
   isPostDetail: boolean;
@@ -22,6 +24,7 @@ export interface PostViewContentProps {
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
+  postId,
   content = '',
   images = [],
   isPostDetail,
@@ -32,9 +35,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const onPressMentionAudience = useRef((audience: any) => {
-    if (audience?.id) {
-      rootNavigation.navigate(mainStack.userProfile, {userId: audience?.id});
+  const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
+    if (audience) {
+      rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
     }
   }).current;
 
@@ -65,6 +68,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdown
               useMarkdownIt
               limitMarkdownTypes
+              selector={postKeySelector.allPosts}
+              parentId={postId}
               onPressAudience={onPressMentionAudience}
             />
           </View>
@@ -76,7 +81,12 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
     if (isPostDetail) {
       return (
-        <Markdown value={content} onPressAudience={onPressMentionAudience} />
+        <Markdown
+          value={content}
+          selector={postKeySelector.allPosts}
+          parentId={postId}
+          onPressAudience={onPressMentionAudience}
+        />
       );
     }
     return (
@@ -87,6 +97,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
         shortLength={400}
         useMarkdown
         toggleOnPress
+        selector={postKeySelector.allPosts}
+        parentId={postId}
         onPressAudience={onPressMentionAudience}
       />
     );

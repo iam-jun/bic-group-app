@@ -195,7 +195,7 @@ const ListView: React.FC<ListViewProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
+    <View style={[isFullView && {flex: 1}, containerStyle]}>
       {title && (
         <Text.ButtonBase
           style={{
