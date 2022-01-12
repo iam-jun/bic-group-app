@@ -362,3 +362,20 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
 }
+
+export interface IPayloadCreateAutoSave {
+  data?: IActivityData;
+  audience?: {
+    user_ids: number[];
+    group_ids: number[];
+  };
+  tag_ids?: number[];
+  important?: IActivityImportant;
+  is_draft?: boolean;
+  createFromGroupId?: string | number;
+}
+
+export interface IPayloadPutEditAutoSave {
+  id: string;
+  data: IPayloadCreateAutoSave;
+}

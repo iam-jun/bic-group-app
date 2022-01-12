@@ -31,6 +31,8 @@ import {
   IPayloadPutEditPost,
   IPostActivity,
   IPostCreatePost,
+  IPayloadCreateAutoSave,
+  IPayloadPutEditAutoSave,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
@@ -75,10 +77,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const webInputHeightAnimated = useRef(
     new Animated.Value(webContentMinHeight),
   ).current;
-
-  const refStopsTyping = useRef<any>();
-  const refAutoSave = useRef<any>();
-  const [isPause, setPause] = React.useState<boolean>(true);
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -133,6 +131,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
+  const isAutoSave =
+    (isEditDraftPost && initPostData?.id) || !initPostData?.id ? true : false;
+
+  const [sLoading, setsLoading] = React.useState<boolean>(true);
+  const [isPause, setPause] = React.useState<boolean>(true);
+
+  const refStopsTyping = useRef<any>();
+  const refAutoSave = useRef<any>();
+  const refIsFocus = useRef<boolean>(false);
+
   useBackHandler(() => {
     onPressBack();
     return true;
@@ -145,6 +153,21 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       clearTimeout(refStopsTyping?.current);
     };
   }, [isPause]);
+
+  useEffect(() => {
+    if (isAutoSave && !sLoading && refIsFocus.current) {
+      clearTimeout(refStopsTyping?.current);
+      debouncedStopsTyping();
+    } else {
+      setsLoading(false);
+    }
+  }, [content]);
+
+  useEffect(() => {
+    if (isAutoSave) {
+      autoSaveDraftPost();
+    }
+  }, [images?.length, chosenAudiences?.length, important]);
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -351,8 +374,65 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const autoSaveDraftPost = () => {
-    if (content || images.length > 0) {
-      console.log('autoSaveDraftPost');
+    const {imageError, images} = validateImages(selectingImages, t);
+
+    if (imageError) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: imageError,
+          props: {textProps: {useI18n: true}, type: 'error'},
+        }),
+      );
+      return;
+    }
+
+    const users: number[] = [];
+    const groups: number[] = [];
+    const audience = {group_ids: groups, user_ids: users};
+
+    chosenAudiences.map((selected: IAudience) => {
+      if (selected.type === 'user') {
+        users.push(Number(selected.id));
+      } else {
+        groups.push(Number(selected.id));
+      }
+    });
+
+    const newContent = mentionInputRef?.current?.getContent?.() || content;
+
+    if (
+      (!newContent &&
+        images.length === 0 &&
+        chosenAudiences.length < 2 &&
+        !important?.active &&
+        !initPostData?.id) ||
+      !isAutoSave
+    ) {
+      return;
+    }
+
+    const payload: IPayloadCreateAutoSave = {
+      data: {
+        content: newContent,
+        images,
+        videos: [],
+        files: [],
+      },
+      audience,
+      is_draft: true,
+      createFromGroupId,
+      important,
+    };
+    if (isEditDraftPost && initPostData?.id) {
+      const newPayload: IPayloadPutEditAutoSave = {
+        id: initPostData?.id,
+        data: payload,
+      };
+      console.log('payload: ', newPayload);
+    } else if (isEditPost && initPostData?.id) {
+      console.log('payload: ', payload);
+    } else {
+      console.log('payload: ', payload);
     }
   };
 
@@ -360,30 +440,23 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (!isPause) {
       refAutoSave.current = setTimeout(() => {
         setPause(true);
-        if (content) {
-          autoSaveDraftPost();
-        }
+        autoSaveDraftPost();
       }, 5000);
     }
   };
 
-  const debouncedStopsTyping = (text: string) => {
+  const debouncedStopsTyping = () => {
     refStopsTyping.current = setTimeout(() => {
       clearTimeout(refAutoSave?.current);
-      if (text) {
-        autoSaveDraftPost();
-      }
+      autoSaveDraftPost();
     }, 500);
   };
 
   const onChangeText = (text: string) => {
+    refIsFocus.current = true;
     dispatch(postActions.setCreatePostData({...data, content: text}));
-    if (!isEditPost || isEditDraftPost) {
-      if (isPause) {
-        setPause(false);
-      }
-      clearTimeout(refStopsTyping?.current);
-      debouncedStopsTyping(text);
+    if (isAutoSave && isPause) {
+      setPause(false);
     }
   };
 
