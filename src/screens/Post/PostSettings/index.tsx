@@ -182,9 +182,13 @@ const PostSettings = () => {
 
     return (
       <View style={styles.content}>
-        <View style={[styles.row, styles.important]}>
-          <View style={styles.flex1}>
-            <Text style={styles.flex1} useI18n>
+        <View
+          style={[
+            styles.row,
+            sImportant.active ? styles.active : styles.important,
+          ]}>
+          <View style={[styles.flex1]}>
+            <Text style={[styles.flex1]} useI18n>
               post:mark_as_important
             </Text>
             {sImportant?.active ? (
@@ -291,7 +295,8 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing.margin.base,
       justifyContent: 'center',
     },
-    important: {marginTop: spacing.margin.tiny},
+    important: {marginTop: spacing.margin.base},
+    active: {marginTop: spacing.margin.tiny},
     importantButtons: {
       flexDirection: 'row',
       alignItems: 'center',
