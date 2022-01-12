@@ -16,7 +16,7 @@ import {isEqual} from 'lodash';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
+// import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -136,10 +136,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const [sLoading, setsLoading] = React.useState<boolean>(true);
   const [isPause, setPause] = React.useState<boolean>(true);
+  const [state, setState] = React.useState<IPostActivity>({...initPostData});
 
+  const prevData = useRef<any>({selectingImages, chosenAudiences, important});
   const refStopsTyping = useRef<any>();
   const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
+  const refIsRefresh = useRef<boolean>(false);
 
   useBackHandler(() => {
     onPressBack();
@@ -164,10 +167,21 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [content]);
 
   useEffect(() => {
-    if (isAutoSave) {
+    const list = [
+      selectingImages?.length === prevData?.current?.selectingImages?.length,
+      chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
+      important?.active === prevData?.current?.important?.active,
+    ];
+    const newList = list.filter(i => !i);
+    if (isAutoSave && newList.length > 0) {
+      prevData.current = {selectingImages, chosenAudiences, important};
       autoSaveDraftPost();
     }
-  }, [chosenAudiences?.length, important]);
+  }, [selectingImages?.length, chosenAudiences?.length, important]);
+
+  useEffect(() => {
+    setState({...initPostData});
+  }, [initPostData?.id]);
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -280,6 +294,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         return;
       }
     }
+
+    // if (state?.id) {
+    //   if (refIsRefresh.current) {
+    //     dispatch(postActions.getDraftPosts({isRefresh: true}));
+    //   }
+    //   rootNavigation.replace(homeStack.draftPost);
+    // }
+
     rootNavigation.goBack();
   };
 
@@ -376,19 +398,31 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const autoSaveDraftPost = () => {
     const {imageError, images} = validateImages(selectingImages, t);
 
-    if (imageError) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: imageError,
-          props: {textProps: {useI18n: true}, type: 'error'},
-        }),
-      );
+    const newContent = mentionInputRef?.current?.getContent?.() || content;
+
+    if (
+      (!newContent &&
+        images.length === 0 &&
+        chosenAudiences.length < 2 &&
+        !important?.active &&
+        !state?.id) ||
+      !isAutoSave ||
+      imageError
+    ) {
+      setPause(true);
+      if (imageError) {
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: imageError,
+            props: {textProps: {useI18n: true}, type: 'error'},
+          }),
+        );
+      }
       return;
     }
 
     const users: number[] = [];
     const groups: number[] = [];
-    const audience = {group_ids: groups, user_ids: users};
 
     chosenAudiences.map((selected: IAudience) => {
       if (selected.type === 'user') {
@@ -397,19 +431,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         groups.push(Number(selected.id));
       }
     });
-
-    const newContent = mentionInputRef?.current?.getContent?.() || content;
-
-    if (
-      (!newContent &&
-        images.length === 0 &&
-        chosenAudiences.length < 2 &&
-        !important?.active &&
-        !initPostData?.id) ||
-      !isAutoSave
-    ) {
-      return;
-    }
+    const audience = {group_ids: groups, user_ids: users};
 
     const payload: IPayloadCreateAutoSave = {
       data: {
@@ -419,21 +441,50 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         files: [],
       },
       audience,
-      is_draft: true,
       createFromGroupId,
-      important,
     };
-    if (isEditDraftPost && initPostData?.id) {
+
+    if (important?.active) {
+      payload.important = {
+        active: important?.active,
+        expires_time: important?.expiresTime,
+      };
+    }
+
+    if (isEditDraftPost && state?.id) {
       const newPayload: IPayloadPutEditAutoSave = {
-        id: initPostData?.id,
+        id: state?.id,
         data: payload,
       };
-      console.log('payload: ', newPayload);
-    } else if (isEditPost && initPostData?.id) {
-      console.log('payload: ', payload);
+      postDataHelper
+        .putEditPost({
+          postId: newPayload?.id,
+          data: newPayload?.data,
+        })
+        .then(() => {
+          refIsRefresh.current = true;
+        });
+    } else if (isEditPost && state?.id) {
+      if (__DEV__) console.log('payload: ', payload);
     } else {
-      console.log('payload: ', payload);
+      payload.is_draft = true;
+      postDataHelper
+        .postCreateNewPost(payload)
+        .then(resp => {
+          refIsRefresh.current = true;
+          if (resp?.data) {
+            const newData = resp?.data || {};
+            setState({...newData});
+          }
+          console.log('resp: ', resp);
+          console.log('auto-save completed');
+        })
+        .catch(e => {
+          console.log('error: ', e);
+          console.log('newPayload: ', payload);
+        });
     }
+    setPause(true);
   };
 
   const debouncedAutoSave = () => {
@@ -454,10 +505,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onChangeText = (text: string) => {
     refIsFocus.current = true;
-    dispatch(postActions.setCreatePostData({...data, content: text}));
     if (isAutoSave && isPause) {
       setPause(false);
     }
+    dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
   const onLayoutCloneText = (e: any) => {

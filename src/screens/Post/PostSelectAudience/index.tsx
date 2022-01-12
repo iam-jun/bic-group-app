@@ -127,7 +127,6 @@ const PostSelectAudience = () => {
   }, [selectingUsers]);
 
   const onPressSave = () => {
-    console.log('selectingAudiences: ', selectingAudiences);
     dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
     rootNavigation.goBack();
   };

@@ -14,8 +14,8 @@ const initState = {
     searchResultAudienceGroups: [],
     searchResultAudienceUsers: [],
     important: {
-      active: 0,
-      expiresTime: '',
+      active: false,
+      expires_time: '',
     },
     images: [],
     imagesDraft: [],
