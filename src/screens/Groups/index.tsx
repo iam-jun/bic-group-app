@@ -84,6 +84,7 @@ const Groups: React.FC = () => {
     return (
       !loadingJoinedGroups && (
         <EmptyScreen
+          source={'addUsers'}
           title="groups:text_this_place_looks_lonely"
           description="groups:text_join_community_get_updated"
         />

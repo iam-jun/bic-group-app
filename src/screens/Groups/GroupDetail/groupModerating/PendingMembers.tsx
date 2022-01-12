@@ -79,6 +79,7 @@ const PendingMembers = (props: any) => {
     return (
       !loading && (
         <EmptyScreen
+          source={'addUsers'}
           title="groups:text_no_pending_members_notice"
           description="groups:text_pending_request_notice"
         />
