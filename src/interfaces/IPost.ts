@@ -69,6 +69,11 @@ export interface ICreatePostImage {
   url?: string;
 }
 
+export interface ICreatePostSettings {
+  important?: IActivityImportant;
+  count: number;
+}
+
 /**
   actor: userId
   - Getstream saved as string

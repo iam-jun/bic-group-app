@@ -392,14 +392,14 @@
     "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
-    "mark_as_important": "Mark as Important",
+    "mark_as_important": "Mark this post as Important",
     "expire_on": "Expire on:",
     "choose_group_people": "Choose group",
     "placeholder_audience_search": "Search for groups",
     "audience_selected": "Selected audiences",
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
-    "expire_time_desc": "This post stay on top of feed until expire time.",
+    "expire_time_desc": "This post will stay on top of feed until",
     "delete_post_complete": "Your post has been deleted",
     "search_results": "Search results",
     "search_audiences_placeholder": "Search for groups or people",
@@ -456,7 +456,11 @@
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted"
-    }
+    },
+    "settings": "Post Settings",
+    "people_can_comment": "People can comment on this post",
+    "people_can_share": "People can share on this post",
+    "people_can_react": "People can react on this post"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

@@ -1,8 +1,7 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {
   Animated,
   Keyboard,
-  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -23,15 +22,10 @@ import Icon from '~/beinComponents/Icon';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 import {ITheme} from '~/theme/interfaces';
-import {useCreatePost} from '~/hooks/post';
-import commonActions, {IAction} from '~/constants/commonActions';
+
 import postActions from '~/screens/Post/redux/actions';
 import {useBaseHook} from '~/hooks';
-import DateTimePicker from '~/beinComponents/DateTimePicker';
-import {formatDate} from '~/utils/formatData';
-import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
-import Toggle from '~/beinComponents/SelectionControl/Toggle';
+
 import ImagePicker from '~/beinComponents/ImagePicker';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -40,8 +34,6 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
-
-const MAX_DAYS = 7;
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -57,8 +49,6 @@ const PostToolbar = ({
   disabled,
   ...props
 }: PostToolbarProps) => {
-  const [selectingDate, setSelectingDate] = useState<boolean>();
-  const [selectingTime, setSelectingTime] = useState<boolean>();
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
@@ -67,9 +57,6 @@ const PostToolbar = ({
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
-
-  const createPostData = useCreatePost();
-  const {important} = createPostData || {};
 
   const selectedImage: ICreatePostImage[] = useKeySelector(
     postKeySelector.createPost.images,
@@ -85,15 +72,6 @@ const PostToolbar = ({
     if (nativeEvent.velocityY < 0) {
       openModal();
     }
-  };
-
-  const onToggleImportant = (action: IAction) => {
-    const newImportant = {...important};
-    newImportant.active = action === commonActions.checkBox;
-    if (!important.expiresTime) {
-      newImportant.expiresTime = getDefaultExpire();
-    }
-    dispatch(postActions.setCreatePostImportant(newImportant));
   };
 
   const _onPressSelectImage = () => {
@@ -126,39 +104,6 @@ const PostToolbar = ({
     alert('select file');
   };
 
-  const onChangeDatePicker = (date?: Date) => {
-    setSelectingDate(false);
-    setSelectingTime(false);
-    if (date) {
-      const newImportant = {...important};
-      let expiresTime = '';
-      if (date) {
-        const time = important.expiresTime
-          ? new Date(important.expiresTime)
-          : new Date();
-        date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-        expiresTime = date.toISOString();
-      }
-      newImportant.expiresTime = expiresTime;
-      dispatch(postActions.setCreatePostImportant(newImportant));
-    }
-  };
-
-  const onChangeTimePicker = (time?: Date) => {
-    setSelectingDate(false);
-    setSelectingTime(false);
-    if (time) {
-      const newImportant = {...important};
-      const date = important.expiresTime
-        ? new Date(important.expiresTime)
-        : new Date();
-      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      const expiresTime = date.toISOString();
-      newImportant.expiresTime = expiresTime;
-      dispatch(postActions.setCreatePostImportant(newImportant));
-    }
-  };
-
   const renderToolbarButton = (icon: any) => {
     return (
       <View style={styles.toolbarButton}>
@@ -182,23 +127,6 @@ const PostToolbar = ({
             </Text.Subtitle>
             {renderToolbarButton('ImagePlus')}
             {renderToolbarButton('Link')}
-            <View
-              style={[
-                styles.toolbarButton,
-                {
-                  backgroundColor: important.active
-                    ? colors.primary7
-                    : colors.primary1,
-                },
-              ]}>
-              <Icon
-                size={16}
-                tintColor={
-                  important.active ? colors.iconTintReversed : colors.primary7
-                }
-                icon={'InfoCircle'}
-              />
-            </View>
           </TouchableOpacity>
           <KeyboardSpacer iosOnly />
         </Animated.View>
@@ -206,73 +134,9 @@ const PostToolbar = ({
     );
   };
 
-  const renderImportantDate = () => {
-    const {expiresTime} = important || {};
-    let date = t('common:text_set_date');
-    let time = t('common:text_set_time');
-
-    if (expiresTime) {
-      date = formatDate(expiresTime, 'MMM Do, YYYY');
-      time = formatDate(expiresTime, 'hh:mm A', undefined, 9999);
-    }
-
-    return (
-      <View style={{marginTop: spacing.margin.large}}>
-        <View style={styles.row}>
-          <View style={styles.flex1}>
-            <Text.H6 useI18n>post:expiring_time</Text.H6>
-            <Text.Subtitle useI18n color={colors.textSecondary}>
-              post:expire_time_desc
-            </Text.Subtitle>
-          </View>
-        </View>
-        <View style={styles.importantButtons}>
-          <Button.Secondary
-            testID="post_toolbar.date"
-            leftIcon={'CalendarAlt'}
-            leftIconProps={{icon: 'CalendarAlt', size: 14}}
-            style={styles.buttonDate}
-            onPress={() => setSelectingDate(true)}>
-            {date}
-          </Button.Secondary>
-          <Button.Secondary
-            testID="post_toolbar.time"
-            leftIcon={'Clock'}
-            leftIconProps={{icon: 'Clock', size: 16}}
-            style={styles.buttonTime}
-            onPress={() => setSelectingTime(true)}>
-            {time}
-          </Button.Secondary>
-        </View>
-        <Divider />
-      </View>
-    );
-  };
-
-  const renderImportant = () => {
-    const {active} = important || {};
-
-    return (
-      <View style={styles.importantContainer}>
-        <View style={styles.row}>
-          <Text.H6 style={styles.flex1} useI18n>
-            post:mark_as_important
-          </Text.H6>
-          <Toggle
-            isChecked={important?.active}
-            onActionPress={onToggleImportant}
-            testID="post_toolbar.toggle"
-          />
-        </View>
-        {!!active && renderImportantDate()}
-      </View>
-    );
-  };
-
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>
-        {renderImportant()}
         <PrimaryItem
           testID="post_toolbar.add_photo"
           height={48}
@@ -299,38 +163,6 @@ const PostToolbar = ({
           }}
           // onPress={onPressSelectFile}
         />
-        <View style={{position: 'absolute', alignSelf: 'center'}}>
-          {selectingDate && (
-            <DateTimePicker
-              isVisible={selectingDate}
-              date={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
-                  : new Date()
-              }
-              minDate={new Date()}
-              maxDate={getMaxDate()}
-              mode={Platform.OS === 'web' ? 'time' : 'date'}
-              onConfirm={onChangeDatePicker}
-              onCancel={onChangeDatePicker}
-            />
-          )}
-          {selectingTime && (
-            <DateTimePicker
-              isVisible={selectingTime}
-              date={
-                important.expiresTime
-                  ? new Date(important.expiresTime)
-                  : new Date()
-              }
-              minDate={new Date()}
-              maxDate={getMaxDate()}
-              mode={'time'}
-              onConfirm={onChangeTimePicker}
-              onCancel={onChangeTimePicker}
-            />
-          )}
-        </View>
       </View>
     );
   };
@@ -348,18 +180,6 @@ const PostToolbar = ({
       {renderToolbar()}
     </BottomSheet>
   );
-};
-
-const getMaxDate = () => {
-  const now = new Date();
-  const max = now.setDate(now.getDate() + MAX_DAYS);
-  return new Date(max);
-};
-
-const getDefaultExpire = () => {
-  const max = getMaxDate();
-  const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
-  return new Date(maxWithTime).toISOString();
 };
 
 const createStyle = (theme: ITheme) => {
@@ -388,31 +208,6 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       paddingHorizontal: spacing?.padding.base,
       paddingBottom: spacing?.padding.base,
-    },
-    importantContainer: {
-      paddingVertical: Platform.select({
-        web: spacing.padding.big,
-        default: spacing.padding.small,
-      }),
-      paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
-      justifyContent: 'center',
-    },
-    importantButtons: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingTop: spacing.padding.base,
-      paddingBottom: spacing.padding.large,
-    },
-    importantNotSetContainer: {
-      flexDirection: 'row',
-      marginBottom: spacing.margin.small,
-    },
-    buttonTime: {flex: 1},
-    buttonDate: {flex: 1, marginRight: spacing.margin.base},
-    textNotSet: {
-      marginLeft: spacing.margin.tiny,
-      textDecorationLine: 'underline',
     },
   });
 };

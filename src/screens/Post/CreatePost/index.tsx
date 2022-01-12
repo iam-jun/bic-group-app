@@ -50,6 +50,7 @@ import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
+import Button from '~/beinComponents/Button';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 export interface CreatePostProps {
@@ -80,6 +81,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
@@ -96,7 +98,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }
 
   const createPostData = useCreatePost();
-  const {loading, data, chosenAudiences = [], important} = createPostData || {};
+  const {
+    loading,
+    data,
+    chosenAudiences = [],
+    important,
+    count,
+  } = createPostData || {};
   const {content} = data || {};
 
   const initSelectingImagesRef = useRef();
@@ -293,7 +301,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (important?.active) {
         draftData.important = {
           active: important?.active,
-          expires_time: important?.expiresTime,
+          expires_time: important?.expires_time,
         };
       }
       const payload: IPayloadPutEditDraftPost = {
@@ -311,7 +319,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       newEditData.important = {
         active: !!important?.active,
-        expires_time: important?.expiresTime,
+        expires_time: important?.expires_time,
       };
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
@@ -330,7 +338,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (important?.active) {
         payload.important = {
           active: important?.active,
-          expires_time: important?.expiresTime,
+          expires_time: important?.expires_time,
         };
       }
       dispatch(postActions.postCreateNewPost(payload));
@@ -352,6 +360,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       duration: 100,
       useNativeDriver: false,
     }).start();
+  };
+
+  const onPressSettings = () => {
+    rootNavigation.navigate(homeStack.postSettings);
   };
 
   const renderContent = () => {
@@ -455,6 +467,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
+      {(!initPostData?.id || (isEditDraftPost && initPostData?.id)) && (
+        <View style={styles.setting}>
+          <Button.Secondary
+            color={colors.bgHover}
+            leftIcon="SlidersVAlt"
+            style={styles.buttonSettings}
+            onPress={onPressSettings}
+            textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
+            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
+          </Button.Secondary>
+        </View>
+      )}
       <Div className="post-toolbar-container">
         <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
       </Div>
@@ -548,6 +572,17 @@ const themeStyles = (theme: ITheme) => {
       color: colors.success,
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},
+    setting: {
+      padding: spacing?.padding.large,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      flexWrap: 'wrap',
+    },
+    buttonSettings: {
+      backgroundColor: colors.bgHover,
+      borderRadius: spacing.borderRadius.small,
+    },
   });
 };
 
