@@ -287,7 +287,7 @@ const createStyle = (theme: ITheme) => {
     flex1: {flex: 1},
     content: {
       marginBottom: spacing.margin.extraLarge,
-      marginLeft: spacing.margin.base,
+      marginLeft: spacing.margin.large,
       marginRight: spacing.margin.base,
       justifyContent: 'center',
     },
