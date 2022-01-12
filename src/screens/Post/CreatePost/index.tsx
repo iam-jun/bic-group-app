@@ -167,7 +167,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (isAutoSave) {
       autoSaveDraftPost();
     }
-  }, [images?.length, chosenAudiences?.length, important]);
+  }, [chosenAudiences?.length, important]);
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
