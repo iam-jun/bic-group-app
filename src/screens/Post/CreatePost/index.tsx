@@ -108,18 +108,35 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   } = createPostData || {};
   const {content} = data || {};
 
-  const initSelectingImagesRef = useRef();
+  const initSelectingImagesRef = useRef([]);
+  const initGroupsRef = useRef<any>([]);
+  const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
 
   const shouldScroll = selectingImages?.length > 0;
 
+  const users: number[] = [];
+  const groups: number[] = [];
+  const audience = {group_ids: groups, user_ids: users};
+  chosenAudiences.map((selected: IAudience) => {
+    if (selected.type === 'user') {
+      users.push(Number(selected.id));
+    } else {
+      groups.push(Number(selected.id));
+    }
+  });
+
+  const isAudienceHasChange =
+    !isEqual(initGroupsRef.current, groups) ||
+    !isEqual(initUsersRef.current, users);
+
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange =
     content !== initPostData?.object?.data?.content ||
-    !isEqual(selectingImages, initSelectingImagesRef.current);
+    !isEqual(selectingImages, initSelectingImagesRef.current) ||
+    isAudienceHasChange;
   const isEditDraftPost = !!initPostData?.id && draftPostId;
-  const isLimitEdit = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -129,9 +146,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   });
   const strGroupIds = groupIds.join(',');
 
-  //Enable  Post button if :
-  // + Has at least 1 audience AND
-  // + (text != empty OR at least 1 photo OR at least 1 file)
+  // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost =
     loading ||
     content?.length === 0 ||
@@ -166,10 +181,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     if (initPostData && (isEditDraftPost || isEditPost)) {
-      //get post audience for select audience screen
-      const groupsIds: any = [];
-      initPostData?.audience?.groups?.map?.(g => groupsIds.push(g?.id));
-      const p: IParamGetPostAudiences = {group_ids: groupsIds.join(',')};
+      //get post audience for select audience screen and check audience has changed
+      initPostData?.audience?.groups?.map?.(g =>
+        initGroupsRef.current.push(Number(g?.id)),
+      );
+      initPostData?.audience?.users?.map?.(u =>
+        initUsersRef.current.push(Number(u?.id)),
+      );
+      const p: IParamGetPostAudiences = {
+        group_ids: initGroupsRef.current.join(','),
+      };
       dispatch(postActions.getCreatePostInitAudience(p));
 
       //handle selected, uploaded post's image
@@ -276,10 +297,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     isSaveAsDraft?: boolean,
     isEditDraft?: boolean,
   ) => {
-    const users: number[] = [];
-    const groups: number[] = [];
-    const audience = {group_ids: groups, user_ids: users};
-
     const {imageError, images} = validateImages(selectingImages, t);
 
     if (imageError) {
@@ -291,14 +308,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       );
       return;
     }
-
-    chosenAudiences.map((selected: IAudience) => {
-      if (selected.type === 'user') {
-        users.push(Number(selected.id));
-      } else {
-        groups.push(Number(selected.id));
-      }
-    });
 
     if (isEditDraftPost && initPostData?.id) {
       const postData = {content, images, videos: [], files: []};
