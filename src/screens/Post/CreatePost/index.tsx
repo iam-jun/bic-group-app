@@ -83,7 +83,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
@@ -139,7 +139,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
-  const [sLoading, setsLoading] = React.useState<boolean>(true);
   const [isPause, setPause] = React.useState<boolean>(true);
   const [state, setState] = React.useState<IPostActivity>({...initPostData});
 
@@ -149,8 +148,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refIsFocus = useRef<boolean>(false);
   const refIsRefresh = useRef<boolean>(false);
 
-  const isEdit = state?.id ? true : false;
-  const isDraftPost = state?.id && state?.is_draft ? true : false;
+  const sPostId = state?.id;
+  const isEdit = sPostId && !state?.is_draft ? true : false;
+  const isDraftPost = sPostId && state?.is_draft ? true : false;
+  const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
 
   const isAutoSave = isDraftPost || !isEdit ? true : false;
 
@@ -168,12 +169,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [isPause]);
 
   useEffect(() => {
-    if (isAutoSave && !sLoading && refIsFocus.current) {
-      clearTimeout(refStopsTyping?.current);
-      debouncedStopsTyping();
-    } else {
-      setsLoading(false);
-    }
+    debouncedStopsTyping();
   }, [content]);
 
   useEffect(() => {
@@ -307,15 +303,68 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
     // rootNavigation.goBack();
 
-    if (state?.id && refIsRefresh.current) {
-      dispatch(postActions.getDraftPosts({isRefresh: true}));
+    if (isEditPost && !isEditDraftPost) {
+      if (isEditPostHasChange) {
+        dispatch(
+          modalActions.showAlert({
+            title: i18n.t('common:label_discard_changes'),
+            content: i18n.t('post:alert_content_back_edit_post'),
+            showCloseButton: true,
+            cancelBtn: true,
+            cancelLabel: i18n.t('common:btn_continue_editing'),
+            confirmLabel: i18n.t('common:btn_discard'),
+            onConfirm: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
+          }),
+        );
+        return;
+      }
+    } else if (sPostId && refIsRefresh.current) {
+      if (!isNewsfeed) {
+        dispatch(postActions.getDraftPosts({isRefresh: true}));
+      }
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'post:saved_to_draft',
+          props: {
+            textProps: {
+              useI18n: true,
+              variant: 'bodyS',
+              style: {color: colors.textPrimary},
+            },
+            type: 'informative',
+            leftIcon: 'InfoCircle',
+            leftIconColor: colors.iconTintReversed,
+            leftIconStyle: {
+              backgroundColor: colors.iconTintLight,
+              padding: spacing.padding.tiny,
+            },
+            leftStyle: {
+              marginRight: spacing.margin.small,
+            },
+            style: {
+              backgroundColor: colors.background,
+              borderLeftWidth: 4,
+              borderLeftColor: colors.iconTintLight,
+              paddingHorizontal: spacing.padding.large,
+              marginHorizontal: spacing.margin.base,
+              marginBottom: spacing.margin.small,
+              borderWidth: 1,
+              borderColor: colors.bgFocus,
+            },
+            rightText: isNewsfeed ? t('home:draft_post') : '',
+            rightTextColor: colors.textPrimary,
+            rightTextProps: {
+              variant: 'bodySM',
+            },
+            rightTextStyle: {textDecorationLine: 'none'},
+            onPressRight: onPressDraftPost,
+          },
+          toastType: 'normal',
+        }),
+      );
     }
-
-    if (!initPostData?.id && isEdit) {
-      rootNavigation.replace(homeStack.draftPost);
-    } else {
-      rootNavigation.goBack();
-    }
+    rootNavigation.goBack();
   };
 
   const onPressSaveDraft = async () => {
@@ -323,6 +372,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       await onPressPost(true, true);
     } else {
       await onPressPost(true);
+    }
+  };
+
+  const onPressDraftPost = () => {
+    if (isNewsfeed) {
+      dispatch(postActions.getDraftPosts({isRefresh: true}));
+      rootNavigation.navigate(homeStack.draftPost);
     }
   };
 
@@ -354,7 +410,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
     });
 
-    if (isEditDraftPost && initPostData?.id) {
+    if (isDraftPost && sPostId) {
       const postData = {content, images, videos: [], files: []};
       const draftData: IPostCreatePost = {
         data: postData,
@@ -367,7 +423,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         };
       }
       const payload: IPayloadPutEditDraftPost = {
-        id: initPostData?.id,
+        id: sPostId,
         replaceWithDetail: replaceWithDetail,
         data: draftData,
         publishNow: !isEditDraft,
@@ -408,88 +464,115 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     Keyboard.dismiss();
   };
 
-  const autoSaveDraftPost = () => {
-    const {imageError, images} = validateImages(selectingImages, t);
+  const autoSaveDraftPost = async () => {
+    setPause(true);
 
-    const newContent = mentionInputRef?.current?.getContent?.() || content;
+    try {
+      const {imageError, images} = validateImages(selectingImages, t);
 
-    if (
-      (!newContent &&
-        images.length === 0 &&
-        chosenAudiences.length < 2 &&
-        !important?.active &&
-        !state?.id) ||
-      !isAutoSave ||
-      imageError
-    ) {
-      setPause(true);
-      if (imageError) {
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: imageError,
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
+      const newContent = mentionInputRef?.current?.getContent?.() || content;
+
+      if (
+        (!newContent &&
+          images.length === 0 &&
+          chosenAudiences.length < 2 &&
+          !important?.active &&
+          !sPostId) ||
+        !isAutoSave ||
+        imageError
+      ) {
+        if (imageError) {
+          dispatch(
+            modalActions.showHideToastMessage({
+              content: imageError,
+              props: {textProps: {useI18n: true}, type: 'error'},
+            }),
+          );
+        }
+        return;
       }
-      return;
-    }
 
-    const users: number[] = [];
-    const groups: number[] = [];
+      const users: number[] = [];
+      const groups: number[] = [];
 
-    chosenAudiences.map((selected: IAudience) => {
-      if (selected.type === 'user') {
-        users.push(Number(selected.id));
-      } else {
-        groups.push(Number(selected.id));
+      chosenAudiences.map((selected: IAudience) => {
+        if (selected.type === 'user') {
+          users.push(Number(selected.id));
+        } else {
+          groups.push(Number(selected.id));
+        }
+      });
+      const audience = {group_ids: groups, user_ids: users};
+
+      const payload: IPayloadCreateAutoSave = {
+        data: {
+          content: newContent,
+          images,
+          videos: [],
+          files: [],
+        },
+        audience,
+        createFromGroupId,
+      };
+
+      if (important?.active) {
+        payload.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
       }
-    });
-    const audience = {group_ids: groups, user_ids: users};
 
-    const payload: IPayloadCreateAutoSave = {
-      data: {
-        content: newContent,
-        images,
-        videos: [],
-        files: [],
-      },
-      audience,
-      createFromGroupId,
-    };
-
-    if (important?.active) {
-      payload.important = {
-        active: important?.active,
-        expires_time: important?.expiresTime,
-      };
-    }
-
-    if (isDraftPost && state?.id) {
-      const newPayload: IPayloadPutEditAutoSave = {
-        id: state?.id,
-        data: payload,
-      };
-      postDataHelper
-        .putEditPost({
+      if (isDraftPost && sPostId) {
+        const newPayload: IPayloadPutEditAutoSave = {
+          id: sPostId,
+          data: payload,
+        };
+        await postDataHelper.putEditPost({
           postId: newPayload?.id,
           data: newPayload?.data,
-        })
-        .then(() => {
-          refIsRefresh.current = true;
         });
-    } else if (isEdit && state?.id) {
-      if (__DEV__) console.log('payload: ', payload);
-    } else {
-      payload.is_draft = true;
-      postDataHelper.postCreateNewPost(payload).then(resp => {
+        refIsRefresh.current = true;
+      } else if (isEdit && sPostId) {
+        if (__DEV__) console.log('payload: ', payload);
+      } else {
+        payload.is_draft = true;
+        const resp = await postDataHelper.postCreateNewPost(payload);
         refIsRefresh.current = true;
         if (resp?.data) {
           const newData = resp?.data || {};
           setState({...newData});
         }
-      });
+      }
+      if (!isEdit) {
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'post:auto_saved',
+            props: {
+              textProps: {
+                useI18n: true,
+                variant: 'bodyS',
+                style: {
+                  color: colors.textSecondary,
+                },
+              },
+              type: 'informative',
+              leftIcon: 'Save',
+              leftIconColor: colors.textSecondary,
+              leftStyle: {
+                marginRight: spacing.margin.tiny,
+              },
+              style: {
+                backgroundColor: colors.transparent,
+                paddingHorizontal: spacing.padding.large,
+              },
+            },
+            toastType: 'normal',
+          }),
+        );
+      }
+    } catch (error) {
+      if (__DEV__) console.log('error: ', error);
     }
-    setPause(true);
   };
 
   const debouncedAutoSave = () => {
@@ -502,10 +585,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const debouncedStopsTyping = () => {
-    refStopsTyping.current = setTimeout(() => {
-      clearTimeout(refAutoSave?.current);
-      autoSaveDraftPost();
-    }, 500);
+    if (isAutoSave && refIsFocus.current) {
+      clearTimeout(refStopsTyping?.current);
+      refStopsTyping.current = setTimeout(() => {
+        clearTimeout(refAutoSave?.current);
+        autoSaveDraftPost();
+      }, 500);
+    }
   };
 
   const onChangeText = (text: string) => {
@@ -608,18 +694,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     <ScreenWrapper isFullView testID={'CreatePostScreen'}>
       <Header
         titleTextProps={{useI18n: true}}
-        title={
-          isEditPost && !state?.is_draft
-            ? 'post:title_edit_post'
-            : 'post:create_post'
-        }
-        buttonText={
-          isEditPost
-            ? isEditDraftPost
-              ? 'common:btn_publish'
-              : 'common:btn_save'
-            : 'post:post_button'
-        }
+        title={isEdit ? 'post:title_edit_post' : 'post:create_post'}
+        buttonText={isEdit ? 'common:btn_publish' : 'post:post_button'}
         buttonProps={{
           loading: loading,
           disabled: disableButtonPost,
@@ -637,7 +713,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
       )}
       {renderContent()}
-      {(!initPostData?.id || (isEditDraftPost && initPostData?.id)) && (
+      {(!sPostId || isDraftPost) && (
         <View style={styles.setting}>
           <Button.Secondary
             color={colors.bgHover}
