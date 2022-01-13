@@ -18,6 +18,10 @@ import * as modalActions from '~/store/modal/actions';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
+import {
+  saveDataToSharedStorage,
+  updateUserFromSharedPreferences,
+} from './sharePreferences';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -237,6 +241,9 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         return;
       } else {
         _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+
+        //For sharing data between Group and Chat
+        await updateUserFromSharedPreferences({token: idToken});
       }
       const isRefreshSuccess = await refreshAuthTokens();
       if (!isRefreshSuccess) {
