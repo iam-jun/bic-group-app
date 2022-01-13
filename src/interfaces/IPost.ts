@@ -23,6 +23,17 @@ export interface IAudienceGroup {
   };
 }
 
+export interface IMarkdownAudience {
+  id: string;
+  data: {
+    fullname: string;
+    username: string;
+    avatar?: string;
+  };
+  created_at: string;
+  updated_at: string;
+}
+
 export interface IAudience {
   id?: number | string;
   name?: string;
@@ -56,6 +67,11 @@ export interface ICreatePostImage {
   fileName?: string;
   file?: IFilePicked;
   url?: string;
+}
+
+export interface ICreatePostSettings {
+  important?: IActivityImportant;
+  count: number;
 }
 
 /**

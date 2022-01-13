@@ -8,7 +8,6 @@ import {useTheme} from 'react-native-paper';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
-import ParseText, {ParseTextProps} from '~/beinComponents/Text/ParseText';
 
 export type TextVariant =
   | 'h1'
@@ -28,12 +27,11 @@ export type TextVariant =
   | 'subtitle'
   | undefined;
 
-export interface TextProps extends RNTextProps, ParseTextProps {
+export interface TextProps extends RNTextProps {
   variant?: TextVariant;
   children?: React.ReactNode;
   color?: string;
   useI18n?: boolean;
-  useParseText?: boolean;
 }
 
 const TextComponent: React.FC<TextProps> = ({
@@ -42,7 +40,6 @@ const TextComponent: React.FC<TextProps> = ({
   children,
   color,
   useI18n,
-  useParseText,
   ...props
 }: TextProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -50,14 +47,12 @@ const TextComponent: React.FC<TextProps> = ({
   const styles = createTextStyle(theme);
   const textStyle = styles[variant || 'body'];
 
-  const TextComp = useParseText ? ParseText : TextRN;
-
   return (
-    <TextComp
+    <TextRN
       {...props}
       style={StyleSheet.flatten([textStyle, color ? {color} : {}, style])}>
       {useI18n ? t(children) : children}
-    </TextComp>
+    </TextRN>
   );
 };
 
