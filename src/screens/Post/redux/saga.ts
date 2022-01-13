@@ -3,6 +3,7 @@ import {isArray, get, isEmpty} from 'lodash';
 
 import {
   IOwnReaction,
+  IParamGetPostAudiences,
   IParamGetPostDetail,
   IPayloadAddToAllPost,
   IPayloadCreateComment,
@@ -17,6 +18,7 @@ import {
   IPayloadReactToPost,
   IPayloadUpdateCommentsById,
   IPostActivity,
+  IPostAudience,
   IPostCreatePost,
   IReaction,
   IReactionCounts,
@@ -71,6 +73,10 @@ export default function* postSaga() {
   yield takeEvery(postTypes.GET_DRAFT_POSTS, getDraftPosts);
   yield takeEvery(postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost);
   yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
+  yield takeEvery(
+    postTypes.GET_CREATE_POST_INIT_AUDIENCES,
+    getCreatePostInitAudiences,
+  );
 }
 
 function* postCreateNewPost({
@@ -995,6 +1001,24 @@ function* getPostDetail({
       yield put(postActions.addToAllPosts({data: post}));
     }
     showError(e);
+  }
+}
+
+function* getCreatePostInitAudiences({
+  payload,
+}: {
+  type: string;
+  payload: IParamGetPostAudiences;
+}): any {
+  try {
+    const response = yield postDataHelper.getPostAudience(payload);
+    if (response?.data) {
+      yield put(
+        postActions.setCreatePostInitAudiences(response.data as IPostAudience),
+      );
+    }
+  } catch (e: any) {
+    console.log(`\x1b[31m🐣️ saga getCreatePostInitAudiences e:`, e, `\x1b[0m`);
   }
 }
 

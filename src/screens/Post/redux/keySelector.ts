@@ -6,6 +6,7 @@ const postKeySelector = {
   createPost: {
     images: 'post.createPost.images',
     imagesDraft: 'post.createPost.imagesDraft',
+    initAudiences: 'post.createPost.initAudiences',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   replyingComment: 'post.replyingComment',

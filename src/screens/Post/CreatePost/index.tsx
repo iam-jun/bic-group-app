@@ -27,6 +27,7 @@ import {
   IActivityDataImage,
   IAudience,
   ICreatePostParams,
+  IParamGetPostAudiences,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
@@ -165,6 +166,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     if (initPostData && (isEditDraftPost || isEditPost)) {
+      //get post audience for select audience screen
+      const groupsIds: any = [];
+      initPostData?.audience?.groups?.map?.(g => groupsIds.push(g?.id));
+      const p: IParamGetPostAudiences = {group_ids: groupsIds.join(',')};
+      dispatch(postActions.getCreatePostInitAudience(p));
+
+      //handle selected, uploaded post's image
       const initImages: any = [];
       initPostData?.object?.data?.images?.map(item => {
         initImages.push({
@@ -459,13 +467,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      {!isLimitEdit && (
-        <View>
-          {!!important?.active && <ImportantStatus notExpired />}
-          <CreatePostChosenAudiences disabled={loading} />
-          <Divider />
-        </View>
-      )}
+      <View>
+        {!!important?.active && <ImportantStatus notExpired />}
+        <CreatePostChosenAudiences disabled={loading} />
+        <Divider />
+      </View>
       {renderContent()}
       {(!initPostData?.id || (isEditDraftPost && initPostData?.id)) && (
         <View style={styles.setting}>

@@ -24,6 +24,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {IUser} from '~/interfaces/IAuth';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const PostSelectAudience = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -39,6 +40,9 @@ const PostSelectAudience = () => {
   );
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const initAudiences = useKeySelector(
+    postKeySelector.createPost.initAudiences,
+  );
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -84,7 +88,10 @@ const PostSelectAudience = () => {
   };
 
   useEffect(() => {
-    if (sectionListData.length === 0) {
+    if (initAudiences) {
+      handleSearchResult(initAudiences);
+      setLoading(false);
+    } else if (sectionListData.length === 0) {
       onSearch('');
     } else {
       setLoading(false);
@@ -163,26 +170,30 @@ const PostSelectAudience = () => {
     }
   };
 
+  const handleSearchResult = (data: any) => {
+    const {users = [], groups = []} = data || {};
+
+    dispatch(postActions.setSearchResultAudienceGroups(groups));
+
+    const newListUsers: any = [];
+    users?.map?.((item: any) => {
+      newListUsers.push({
+        id: item.id,
+        type: 'user',
+        name: item.fullname || item.username,
+        avatar: item.avatar,
+      });
+    });
+    dispatch(postActions.setSearchResultAudienceUsers(newListUsers));
+  };
+
   const onSearch = debounce((searchText: string) => {
     setLoading(true);
     postDataHelper
       .getSearchAudiences(searchText)
       .then(response => {
         if (response && response.data) {
-          const {users = [], groups = []} = response?.data || {};
-
-          dispatch(postActions.setSearchResultAudienceGroups(groups));
-
-          const newListUsers: any = [];
-          users?.map?.((item: any) => {
-            newListUsers.push({
-              id: item.id,
-              type: 'user',
-              name: item.fullname || item.username,
-              avatar: item.avatar,
-            });
-          });
-          dispatch(postActions.setSearchResultAudienceUsers(newListUsers));
+          handleSearchResult(response.data);
         }
         setLoading(false);
       })

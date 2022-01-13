@@ -378,3 +378,8 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
 }
+
+export interface IParamGetPostAudiences {
+  key?: string;
+  group_ids: string;
+}
