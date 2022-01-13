@@ -69,6 +69,11 @@ const Section1 = () => {
         <Text.Subtitle>
           Subtitle. Lorem Ipsum is simply dummy text
         </Text.Subtitle>
+        {/* <Text
+          useParseText
+          onPressAudience={audience =>
+            alert('onPressAudience: ' + JSON.stringify(audience))
+          }>
         <Text>
           {'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do' +
             'eiusmod tempor incididunt ut labore et dolore magna aliqua. Website:' +
@@ -79,7 +84,7 @@ const Section1 = () => {
             '*Excepteur sint occaecat* cupidatat non proident, sunt in culpa qui' +
             'officia deserunt mollit anim id est laborum. #BeinCoreTeam #EVOL' +
             '\n@@[u:9:Trần Nam Anh]'}
-        </Text>
+        </Text> */}
       </View>,
     );
   };

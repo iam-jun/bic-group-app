@@ -12,10 +12,10 @@ import Text from '~/beinComponents/Text';
 import PendingUserItem from './components/PendingUserItem';
 import {ITheme} from '~/theme/interfaces';
 import PendingActionAll from './components/PendingActionAll';
-import NoPendingMembers from './components/NoPendingMembers';
 import groupsActions from '../../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
+import EmptyScreen from '~/beinFragments/EmptyScreen';
 
 const PendingMembers = (props: any) => {
   const params = props.route.params;
@@ -75,6 +75,18 @@ const PendingMembers = (props: any) => {
     );
   };
 
+  const renderEmpty = () => {
+    return (
+      !loading && (
+        <EmptyScreen
+          source={'addUsers'}
+          title="groups:text_no_pending_members_notice"
+          description="groups:text_pending_request_notice"
+        />
+      )
+    );
+  };
+
   return (
     <ScreenWrapper testID="PendingMembers" isFullView>
       <Header title={i18next.t('settings:title_pending_members')} />
@@ -86,7 +98,7 @@ const PendingMembers = (props: any) => {
         isFullView
         renderItem={renderItem}
         onEndReached={onLoadMore}
-        ListEmptyComponent={!loading && <NoPendingMembers />}
+        ListEmptyComponent={renderEmpty}
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
         renderItemSeparator={() => <Divider style={styles.divider} />}

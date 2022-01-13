@@ -14,11 +14,12 @@ const initState = {
     searchResultAudienceGroups: [],
     searchResultAudienceUsers: [],
     important: {
-      active: 0,
-      expiresTime: '',
+      active: false,
+      expires_time: '',
     },
     images: [],
     imagesDraft: [],
+    count: 0,
   },
   createComment: {
     loading: false,
@@ -101,6 +102,14 @@ function postReducer(state = initState, action: any = {}) {
             ...state.createPost.data,
             images: payload,
           },
+        },
+      };
+    case postTypes.SET_CREATE_POST_SETTINGS:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          ...payload,
         },
       };
     case postTypes.SET_CREATE_COMMENT:

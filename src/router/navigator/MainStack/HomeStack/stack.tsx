@@ -7,6 +7,7 @@ const homeStack = {
   postSelectImage: 'post-select-image',
   draftPost: 'draft-post',
   userProfile: 'user-profile',
+  postSettings: 'post-settings',
 };
 
 export default homeStack;
