@@ -45,7 +45,9 @@ wtdRGxoCjQktAf0D3S7fWngSg0DAz7HXWBB3tZ8OZar716K/AlPMaFMvTPVRZpZp9sOWBL
 6BFHqBKgyEUbwq57WyaCzoRKoxX8bp/jdXMW2o/VgEGr6dmq+9aTdTSCpx9sPXJqLgAQ30
 DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
 -----END OPENSSH PRIVATE KEY-----
-", readonly: true)
+",  type: "development",
+    app_identifier: "com.evol.bein.group.development",
+    readonly: true)
   end
 
   lane :deploy_dev do
