@@ -566,7 +566,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 marginRight: spacing.margin.tiny,
               },
               style: {
-                backgroundColor: colors.transparent,
+                // backgroundColor: colors.transparent,
                 paddingHorizontal: spacing.padding.large,
               },
             },
