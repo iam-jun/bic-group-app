@@ -142,7 +142,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const [isPause, setPause] = React.useState<boolean>(true);
   const [state, setState] = React.useState<IPostActivity>({...initPostData});
 
-  const prevData = useRef<any>({selectingImages, chosenAudiences, important});
+  const prevData = useRef<any>({selectingImages, chosenAudiences, count});
   const refStopsTyping = useRef<any>();
   const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
@@ -176,14 +176,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     const list = [
       selectingImages?.length === prevData?.current?.selectingImages?.length,
       chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
-      important?.active === prevData?.current?.important?.active,
+      count === prevData?.current?.count,
     ];
     const newList = list.filter(i => !i);
     if (isAutoSave && newList.length > 0) {
-      prevData.current = {selectingImages, chosenAudiences, important};
+      prevData.current = {selectingImages, chosenAudiences, count};
       autoSaveDraftPost();
     }
-  }, [selectingImages?.length, chosenAudiences?.length, important]);
+  }, [selectingImages?.length, chosenAudiences?.length, count]);
 
   useEffect(() => {
     setState({...initPostData});
