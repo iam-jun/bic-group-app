@@ -37,6 +37,7 @@ import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
 import errorCode from '~/constants/errorCode';
+import i18n from 'i18next';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -227,7 +228,7 @@ function* putEditPost({
   type: string;
   payload: IPayloadPutEditPost;
 }): any {
-  const {id, data, replaceWithDetail = true} = payload;
+  const {id, data, replaceWithDetail = true, onRetry} = payload;
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
     return;
@@ -245,6 +246,12 @@ function* putEditPost({
       }
       //todo waiting for backend update response, replace whole object from response instead of local change
       yield put(postActions.addToAllPosts({data: post}));
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_edit_post_success',
+          props: {textProps: {useI18n: true}, type: 'success'},
+        }),
+      );
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: post?.id});
       } else {
@@ -252,7 +259,19 @@ function* putEditPost({
       }
     }
   } catch (e) {
-    yield showError(e);
+    yield put(postActions.setLoadingCreatePost(false));
+    yield put(
+      modalActions.showHideToastMessage({
+        content: i18n.t('post:text_edit_post_failed'),
+        toastType: 'normal',
+        props: {
+          textProps: {useI18n: true},
+          type: 'error',
+          rightText: i18n.t('common:text_retry'),
+          onPressRight: onRetry,
+        },
+      }),
+    );
   }
 }
 

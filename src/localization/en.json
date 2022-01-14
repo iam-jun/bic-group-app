@@ -437,6 +437,8 @@
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
     "btn_continue_comment": "Continue Comment",
     "btn_discard_comment": "Discard",
+    "text_edit_post_success": "Post has been published successfully",
+    "text_edit_post_failed": "Post was failed to publish",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",

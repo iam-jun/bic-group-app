@@ -344,6 +344,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
         data: newEditData,
+        onRetry: () => onPressPost(isSaveAsDraft, isEditDraft),
       };
       dispatch(postActions.putEditPost(payload));
     } else {

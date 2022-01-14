@@ -144,6 +144,7 @@ export interface IPayloadPutEditPost {
   id: string;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
+  onRetry?: () => void;
 }
 
 export interface IPayloadPutEditComment {
