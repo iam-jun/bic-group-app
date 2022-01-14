@@ -229,6 +229,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       });
       dispatch(postActions.setCreatePostImagesDraft(initImages));
       dispatch(postActions.setCreatePostImages(initImages));
+      const currentData = prevData.current;
+      prevData.current = {...currentData, selectingImages: initImages};
     }
   }, [initPostData]);
 
@@ -255,6 +257,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+      const currentData = prevData.current;
+      prevData.current = {...currentData, chosenAudiences: initChosenAudience};
 
       const initImportant = initPostData?.important || {};
       dispatch(postActions.setCreatePostImportant(initImportant));
