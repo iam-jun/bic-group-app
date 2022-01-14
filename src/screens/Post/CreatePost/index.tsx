@@ -256,13 +256,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('common:label_discard_changes'),
+            title: i18n.t('post:create_post:title_discard_changes'),
             content: i18n.t('post:alert_content_back_edit_post'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_continue_editing'),
-            confirmLabel: i18n.t('common:btn_discard'),
-            onConfirm: () => rootNavigation.goBack(),
+            cancelLabel: i18n.t('common:btn_discard'),
+            confirmLabel: i18n.t('post:create_post:btn_keep_edit'),
+            onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
         );
@@ -336,7 +336,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       newEditData.important = {
         active: !!important?.active,
-        expires_time: important?.expires_time,
+        ...(important?.expires_time
+          ? {expires_time: important?.expires_time}
+          : {}),
       };
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
@@ -459,7 +461,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     <ScreenWrapper isFullView testID={'CreatePostScreen'}>
       <Header
         titleTextProps={{useI18n: true}}
-        title={isEditPost ? 'post:title_edit_post' : 'post:create_post'}
+        title={isEditPost ? 'post:title_edit_post' : 'post:title_create_post'}
         buttonText={
           isEditPost
             ? isEditDraftPost

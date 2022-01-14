@@ -25,6 +25,9 @@ import {IUser} from '~/interfaces/IAuth';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import {isEqual} from 'lodash';
+import modalActions from '~/store/modal/actions';
+import i18n from '~/localization';
 
 const PostSelectAudience = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -42,6 +45,18 @@ const PostSelectAudience = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(
     postKeySelector.createPost.initAudiences,
+  );
+  const savedAudiences = useKeySelector(
+    postKeySelector.createPost.chosenAudiences,
+  );
+
+  const isEditAudience = !!initAudiences;
+
+  // check audience has been changed, currently check only group
+  // when allow select user as audience, this function should be updated
+  const isAudiencesHasChanged = checkChangeAudiences(
+    savedAudiences,
+    selectingAudiences,
   );
 
   const dispatch = useDispatch();
@@ -134,8 +149,53 @@ const PostSelectAudience = () => {
   }, [selectingUsers]);
 
   const onPressSave = () => {
-    dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
-    rootNavigation.goBack();
+    if (isEditAudience) {
+      if (isAudiencesHasChanged) {
+        dispatch(
+          modalActions.showAlert({
+            title: i18n.t('post:create_post:title_audience_changed'),
+            content: i18n.t('post:create_post:text_discard_change_audience'),
+            showCloseButton: true,
+            cancelBtn: true,
+            cancelLabel: i18n.t('common:btn_discard'),
+            confirmLabel: i18n.t('post:create_post:btn_save_change'),
+            onConfirm: () => {
+              dispatch(
+                postActions.setCreatePostChosenAudiences(selectingAudiences),
+              );
+              rootNavigation.goBack();
+            },
+            stretchOnWeb: true,
+          }),
+        );
+      }
+    } else {
+      dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
+      rootNavigation.goBack();
+    }
+  };
+
+  const onPressBack = () => {
+    if (isEditAudience) {
+      if (isAudiencesHasChanged) {
+        dispatch(
+          modalActions.showAlert({
+            title: i18n.t('post:create_post:title_audience_changed'),
+            content: i18n.t('post:create_post:text_discard_change'),
+            showCloseButton: true,
+            cancelBtn: true,
+            cancelLabel: i18n.t('common:btn_discard'),
+            confirmLabel: i18n.t('post:create_post:btn_keep_edit'),
+            onDismiss: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
+          }),
+        );
+      } else {
+        rootNavigation.goBack();
+      }
+    } else {
+      rootNavigation.goBack();
+    }
   };
 
   const onRemoveItem = (item: any) => {
@@ -299,6 +359,7 @@ const PostSelectAudience = () => {
         buttonText={'common:btn_done'}
         buttonProps={{useI18n: true}}
         onPressButton={onPressSave}
+        onPressBack={onPressBack}
         hideBackOnLaptop
       />
       <SearchInput
@@ -329,6 +390,18 @@ const PostSelectAudience = () => {
       />
     </ScreenWrapper>
   );
+};
+
+const checkChangeAudiences = (a1: any, a2: any) => {
+  if (a1?.length !== a2?.length) {
+    return true;
+  }
+  const compare = (x: any, y: any) => (x > y ? 1 : -1);
+  const ids1: number[] = [];
+  const ids2: number[] = [];
+  a1?.map?.((a: any) => ids1.push(Number(a?.id)));
+  a2?.map?.((a: any) => ids2.push(Number(a?.id)));
+  return !isEqual(ids1.sort(compare), ids2.sort(compare));
 };
 
 const createStyle = (theme: ITheme) => {

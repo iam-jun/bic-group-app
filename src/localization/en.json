@@ -378,7 +378,7 @@
     "add_file": "Add Files",
     "placeholder_write_post": "Writing your post...",
     "placeholder_write_comment": "Write your comment...",
-    "create_post": "Create Post",
+    "title_create_post": "Create Post",
     "create_new_post": "Write your today discoveries...",
     "post_button": "Post",
     "send_to": "Send to",
@@ -443,6 +443,14 @@
       "title_empty_cant_load_more": "You have seen it all",
       "text_empty_cant_load_more": "Take a break time & chill",
       "text_empty_search_post": "Sorry, we couldn’t find anything related\nto your search."
+    },
+    "create_post": {
+      "title_discard_changes": "Discard Changes",
+      "title_audience_changed": "Audience has changed",
+      "text_discard_change": "Are you sure to want to discard changes?",
+      "text_discard_change_audience": "Are you sure to change the audience? This change will also effect on post's permission",
+      "btn_save_change": "Save Changes",
+      "btn_keep_edit": "Keep Editing"
     },
     "draft": {
       "btn_post_now": "Post Now",
