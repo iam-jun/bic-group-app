@@ -16,10 +16,12 @@ import {
   IPayloadReactToComment,
   IPayloadReactToPost,
   IPayloadUpdateCommentsById,
+  IPayloadUpdateReaction,
   IPostActivity,
   IPostCreatePost,
   IReaction,
   IReactionCounts,
+  ISocketReaction,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -71,6 +73,11 @@ export default function* postSaga() {
   yield takeEvery(postTypes.GET_DRAFT_POSTS, getDraftPosts);
   yield takeEvery(postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost);
   yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
+  yield takeLatest(postTypes.UPDATE_REACTION_BY_SOCKET, updateReactionBySocket);
+  yield takeLatest(
+    postTypes.UPDATE_UN_REACTION_BY_SOCKET,
+    updateUnReactionBySocket,
+  );
 }
 
 function* postCreateNewPost({
@@ -441,26 +448,24 @@ function* putReactionToPost({
         (newReactionCounts?.[reactionId] || 0) + 1;
       yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
-      const response = yield postDataHelper.putReactionToPost({
-        postId: id,
-        data,
-      });
-      if (response?.data?.[0]) {
-        const post2 = yield select(s => get(s, postKeySelector.postById(id)));
-        const cReactionCounts2 = post2.reaction_counts || {};
-        const cOwnReaction2 = post2.own_reactions || {};
-        const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
-
-        const reactionArr2: IReaction[] = [];
-        reactionArr2.push({id: response?.data?.[0]?.id});
-        newOwnReaction2[reactionId] = reactionArr2;
-
-        yield onUpdateReactionOfPostById(
-          id,
-          {...newOwnReaction2},
-          {...cReactionCounts2},
-        );
-      }
+      yield postDataHelper.putReactionToPost({postId: id, data});
+      // Disable update data base on response because of calculate wrong value when receive socket msg
+      // if (response?.data?.[0]) {
+      //   const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+      //   const cReactionCounts2 = post2.reaction_counts || {};
+      //   const cOwnReaction2 = post2.own_reactions || {};
+      //   const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
+      //
+      //   const reactionArr2: IReaction[] = [];
+      //   reactionArr2.push({id: response?.data?.[0]?.id});
+      //   newOwnReaction2[reactionId] = reactionArr2;
+      //
+      //   yield onUpdateReactionOfPostById(
+      //     id,
+      //     {...newOwnReaction2},
+      //     {...cReactionCounts2},
+      //   );
+      // }
     }
   } catch (e) {
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
@@ -514,7 +519,7 @@ function* onUpdateReactionOfCommentById(
   commentId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
-  defaultComment: IReaction,
+  defaultComment?: IReaction,
 ): any {
   try {
     const allComments = yield select(state =>
@@ -529,6 +534,93 @@ function* onUpdateReactionOfCommentById(
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
   }
+}
+
+function* updateReactionBySocket({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadUpdateReaction;
+}): any {
+  const {userId, data} = payload || {};
+  const {actor, reaction, post, comment} = data as ISocketReaction;
+
+  const isCurrentUser = userId == actor?.id;
+
+  if (comment?.comment_id) {
+    const {comment_id = '', reaction_counts = {}} = comment || {};
+    // handle reaction to comment
+    // merge own children if reaction's actor is current user
+    const c =
+      (yield select(s => get(s, postKeySelector.commentById(comment_id)))) ||
+      {};
+    const ownReactions = {...c.own_children};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [reaction];
+    }
+    yield onUpdateReactionOfCommentById(
+      comment_id,
+      ownReactions,
+      reaction_counts,
+    );
+  } else if (post?.post_id) {
+    const {post_id = '', reaction_counts = {}} = post || {};
+    // handle reaction to post
+    // merge own reaction if reaction's actor is current user
+    const p =
+      (yield select(state => get(state, postKeySelector.postById(post_id)))) ||
+      {};
+    const ownReactions = {...p.own_reactions};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [reaction];
+    }
+    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+  }
+}
+
+function* updateUnReactionBySocket({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadUpdateReaction;
+}): any {
+  const {userId, data} = payload || {};
+  const {actor, post, comment, reaction} = (data as ISocketReaction) || {};
+
+  const isCurrentUser = userId == actor?.id;
+
+  if (comment?.comment_id) {
+    // handle un-react comment
+    const {comment_id, reaction_counts = {}} = comment || {};
+    const c =
+      (yield select(s => get(s, postKeySelector.commentById(comment_id)))) ||
+      {};
+    const ownReactions = {...c.own_children};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [];
+    }
+    yield onUpdateReactionOfCommentById(
+      comment?.comment_id,
+      ownReactions,
+      reaction_counts,
+    );
+  } else if (post?.post_id) {
+    const {post_id, reaction_counts = {}} = post;
+    // handle un-react post
+    const p =
+      (yield select(state => get(state, postKeySelector.postById(post_id)))) ||
+      {};
+    const ownReactions = {...p.own_reactions};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [];
+    }
+    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+  }
+
+  console.log(
+    `\x1b[35m🐣️ saga updateUnreactionBySocket`,
+    `${JSON.stringify(payload, undefined, 2)}\x1b[0m`,
+  );
 }
 
 function* putReactionToComment({
@@ -577,27 +669,25 @@ function* putReactionToComment({
         comment,
       );
 
-      const response = yield postDataHelper.putReactionToComment({
-        commentId: id,
-        data,
-      });
-      if (response?.data?.[0]) {
-        const cComment2 =
-          (yield select(s => get(s, postKeySelector.commentById(id)))) ||
-          comment;
-        const cReactionCount2 = cComment2.children_counts || {};
-        const cOwnReactions2 = cComment2.own_children || {};
-        const newOwnChildren2 = {...cOwnReactions2};
-        const reactionArr2: IReaction[] = [];
-        reactionArr2.push({id: response?.data?.[0]?.id});
-        newOwnChildren2[reactionId] = reactionArr2;
-        yield onUpdateReactionOfCommentById(
-          id,
-          newOwnChildren2,
-          {...cReactionCount2},
-          comment,
-        );
-      }
+      yield postDataHelper.putReactionToComment({commentId: id, data});
+      // Disable update data base on response because of calculate wrong value when receive socket msg
+      // if (response?.data?.[0]) {
+      //   const cComment2 =
+      //     (yield select(s => get(s, postKeySelector.commentById(id)))) ||
+      //     comment;
+      //   const cReactionCount2 = cComment2.children_counts || {};
+      //   const cOwnReactions2 = cComment2.own_children || {};
+      //   const newOwnChildren2 = {...cOwnReactions2};
+      //   const reactionArr2: IReaction[] = [];
+      //   reactionArr2.push({id: response?.data?.[0]?.id});
+      //   newOwnChildren2[reactionId] = reactionArr2;
+      //   yield onUpdateReactionOfCommentById(
+      //     id,
+      //     newOwnChildren2,
+      //     {...cReactionCount2},
+      //     comment,
+      //   );
+      // }
     }
   } catch (e) {
     yield onUpdateReactionOfCommentById(

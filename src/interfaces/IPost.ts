@@ -373,3 +373,21 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
 }
+
+export interface IPayloadUpdateReaction {
+  userId: string;
+  data: ISocketReaction;
+}
+
+export interface ISocketReaction {
+  actor: any;
+  reaction: any;
+  post: {
+    post_id?: string;
+    reaction_counts?: IReactionCounts;
+  };
+  comment: {
+    comment_id?: string;
+    reaction_counts?: IReactionCounts;
+  };
+}

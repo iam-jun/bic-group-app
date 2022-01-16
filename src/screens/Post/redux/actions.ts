@@ -23,6 +23,7 @@ import {
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
   IPayloadAddToAllPost,
+  IPayloadUpdateReaction,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -190,6 +191,14 @@ const postActions = {
   }),
   putEditDraftPost: (payload: IPayloadPutEditDraftPost) => ({
     type: postTypes.PUT_EDIT_DRAFT_POST,
+    payload,
+  }),
+  updateReactionBySocket: (payload: IPayloadUpdateReaction) => ({
+    type: postTypes.UPDATE_REACTION_BY_SOCKET,
+    payload,
+  }),
+  updateUnReactionBySocket: (payload: IPayloadUpdateReaction) => ({
+    type: postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     payload,
   }),
 };
