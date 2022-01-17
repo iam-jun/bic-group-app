@@ -380,6 +380,23 @@ export interface IPayloadPutEditDraftPost {
   publishNow: boolean;
 }
 
+export interface IPayloadCreateAutoSave {
+  data?: IActivityData;
+  audience?: {
+    user_ids: number[];
+    group_ids: number[];
+  };
+  tag_ids?: number[];
+  important?: IActivityImportant;
+  is_draft?: boolean;
+  createFromGroupId?: string | number;
+}
+
+export interface IPayloadPutEditAutoSave {
+  id: string;
+  data: IPayloadCreateAutoSave;
+}
+
 export interface IParamGetPostAudiences {
   key?: string;
   group_ids: string;

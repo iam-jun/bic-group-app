@@ -46,10 +46,9 @@ const PostSettings = () => {
     expires_time: '',
     ...important,
   });
-  //   const [comments, setComments] = useState<boolean>(true);
+  //   const [comments, setComments] = useState<boolean>(false);
   //   const [shares, setShares] = useState<boolean>(true);
   //   const [reacts, setReacts] = useState<boolean>(true);
-  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     checkDisableButtonSave();
@@ -77,7 +76,14 @@ const PostSettings = () => {
   };
 
   const onPressSave = () => {
-    dispatch(postActions.setCreatePostSettings({important: sImportant, count}));
+    const dataDefault = [sImportant.active === false];
+    const newCount = dataDefault.filter(i => !i);
+    dispatch(
+      postActions.setCreatePostSettings({
+        important: sImportant,
+        count: newCount?.length || 0,
+      }),
+    );
     rootNavigation.goBack();
   };
 
@@ -89,7 +95,6 @@ const PostSettings = () => {
       //   reacts,
     ];
     const newCount = dataCount.filter(i => !i);
-    setCount(newCount.length);
     setDisableButtonSave(newCount.length === 0);
   };
 

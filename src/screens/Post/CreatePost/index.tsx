@@ -16,7 +16,7 @@ import {isEqual} from 'lodash';
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
+// import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -32,6 +32,8 @@ import {
   IPayloadPutEditPost,
   IPostActivity,
   IPostCreatePost,
+  IPayloadCreateAutoSave,
+  IPayloadPutEditAutoSave,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
@@ -53,6 +55,8 @@ import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
 
 export interface CreatePostProps {
   route?: {
@@ -82,7 +86,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
@@ -153,10 +157,61 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
+  const [isPause, setPause] = React.useState<boolean>(true);
+  const [isShowToastAutoSave, setShowToastAutoSave] =
+    React.useState<boolean>(false);
+  const [sPostData, setPostData] = React.useState<IPostActivity>({
+    ...initPostData,
+  });
+
+  const prevData = useRef<any>({selectingImages, chosenAudiences, count});
+  const refStopsTyping = useRef<any>();
+  const refAutoSave = useRef<any>();
+  const refIsFocus = useRef<boolean>(false);
+  const refIsRefresh = useRef<boolean>(false);
+  const refToastAutoSave = useRef<any>();
+
+  const sPostId = sPostData?.id;
+  const isEdit = !!(sPostId && !sPostData?.is_draft);
+  const isDraftPost = !!(sPostId && sPostData?.is_draft);
+  const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
+
+  const isAutoSave = isDraftPost || !isEdit ? true : false;
+
   useBackHandler(() => {
     onPressBack();
     return true;
   });
+
+  useEffect(() => {
+    debouncedAutoSave();
+    return () => {
+      clearTimeout(refToastAutoSave?.current);
+      clearTimeout(refAutoSave?.current);
+      clearTimeout(refStopsTyping?.current);
+    };
+  }, [isPause]);
+
+  useEffect(() => {
+    debouncedStopsTyping();
+  }, [content]);
+
+  useEffect(() => {
+    const dataChangeList = [
+      selectingImages?.length === prevData?.current?.selectingImages?.length,
+      chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
+      count === prevData?.current?.count,
+    ];
+    const newDataChange = dataChangeList.filter(i => !i);
+    if (isAutoSave && newDataChange.length > 0) {
+      prevData.current = {selectingImages, chosenAudiences, count};
+      autoSaveDraftPost();
+    }
+  }, [selectingImages?.length, chosenAudiences?.length, count]);
+
+  useEffect(() => {
+    setPostData({...initPostData});
+  }, [initPostData?.id]);
 
   useEffect(() => {
     dispatch(postActions.clearCreatPostData());
@@ -211,6 +266,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       });
       dispatch(postActions.setCreatePostImagesDraft(initImages));
       dispatch(postActions.setCreatePostImages(initImages));
+      prevData.current = {...prevData.current, selectingImages: initImages};
     }
   }, [initPostData]);
 
@@ -237,6 +293,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+      prevData.current = {
+        ...prevData.current,
+        chosenAudiences: initChosenAudience,
+      };
 
       const initImportant = initPostData?.important || {};
       dispatch(postActions.setCreatePostImportant(initImportant));
@@ -251,6 +311,39 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
+
+    // if (isEditPost && !isEditDraftPost) {
+    //   if (isEditPostHasChange) {
+    //     dispatch(
+    //       modalActions.showAlert({
+    //         title: i18n.t('common:label_discard_changes'),
+    //         content: i18n.t('post:alert_content_back_edit_post'),
+    //         showCloseButton: true,
+    //         cancelBtn: true,
+    //         cancelLabel: i18n.t('common:btn_continue_editing'),
+    //         confirmLabel: i18n.t('common:btn_discard'),
+    //         onConfirm: () => rootNavigation.goBack(),
+    //         stretchOnWeb: true,
+    //       }),
+    //     );
+    //     return;
+    //   }
+    // } else {
+    //   if (content || chosenAudiences?.length > 0) {
+    //     dispatch(
+    //       modalActions.showModal({
+    //         isOpen: true,
+    //         ContentComponent: (
+    //           <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
+    //         ),
+    //         props: {webModalStyle: {minHeight: undefined}},
+    //       }),
+    //     );
+    //     return;
+    //   }
+    // }
+
+    // rootNavigation.goBack();
 
     if (isEditPost && !isEditDraftPost) {
       if (isEditPostHasChange) {
@@ -268,19 +361,50 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         );
         return;
       }
-    } else {
-      if (content || chosenAudiences?.length > 0) {
-        dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            ContentComponent: (
-              <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
-            ),
-            props: {webModalStyle: {minHeight: undefined}},
-          }),
-        );
-        return;
+    } else if (sPostId && refIsRefresh.current) {
+      if (!isNewsfeed) {
+        dispatch(postActions.getDraftPosts({isRefresh: true}));
       }
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'post:saved_to_draft',
+          props: {
+            textProps: {
+              useI18n: true,
+              variant: 'bodyS',
+              style: {color: colors.textPrimary},
+            },
+            type: 'informative',
+            leftIcon: 'InfoCircle',
+            leftIconColor: colors.iconTintReversed,
+            leftIconStyle: {
+              backgroundColor: colors.iconTintLight,
+              padding: spacing.padding.tiny,
+            },
+            leftStyle: {
+              marginRight: spacing.margin.small,
+            },
+            style: {
+              backgroundColor: colors.background,
+              borderLeftWidth: 4,
+              borderLeftColor: colors.iconTintLight,
+              paddingHorizontal: spacing.padding.large,
+              marginHorizontal: spacing.margin.base,
+              marginBottom: spacing.margin.small,
+              borderWidth: 1,
+              borderColor: colors.bgFocus,
+            },
+            rightText: isNewsfeed ? t('home:draft_post') : '',
+            rightTextColor: colors.textPrimary,
+            rightTextProps: {
+              variant: 'bodySM',
+            },
+            rightTextStyle: {textDecorationLine: 'none'},
+            onPressRight: onPressDraftPost,
+          },
+          toastType: 'normal',
+        }),
+      );
     }
     rootNavigation.goBack();
   };
@@ -290,6 +414,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       await onPressPost(true, true);
     } else {
       await onPressPost(true);
+    }
+  };
+
+  const onPressDraftPost = () => {
+    if (isNewsfeed) {
+      dispatch(postActions.getDraftPosts({isRefresh: true}));
+      rootNavigation.navigate(homeStack.draftPost);
     }
   };
 
@@ -309,7 +440,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       return;
     }
 
-    if (isEditDraftPost && initPostData?.id) {
+    if (isDraftPost && sPostId) {
       const postData = {content, images, videos: [], files: []};
       const draftData: IPostCreatePost = {
         data: postData,
@@ -322,7 +453,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         };
       }
       const payload: IPayloadPutEditDraftPost = {
-        id: initPostData?.id,
+        id: sPostId,
         replaceWithDetail: replaceWithDetail,
         data: draftData,
         publishNow: !isEditDraft,
@@ -366,7 +497,109 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     Keyboard.dismiss();
   };
 
+  const autoSaveDraftPost = async () => {
+    setPause(true);
+
+    try {
+      const {imageError, images} = validateImages(selectingImages, t);
+
+      const newContent = mentionInputRef?.current?.getContent?.() || content;
+
+      if (
+        (!newContent &&
+          images.length === 0 &&
+          chosenAudiences.length < 2 &&
+          !important?.active &&
+          !sPostId) ||
+        !isAutoSave ||
+        imageError
+      ) {
+        if (imageError) {
+          dispatch(
+            modalActions.showHideToastMessage({
+              content: imageError,
+              props: {textProps: {useI18n: true}, type: 'error'},
+            }),
+          );
+        }
+        return;
+      }
+
+      const payload: IPayloadCreateAutoSave = {
+        data: {
+          content: newContent,
+          images,
+          videos: [],
+          files: [],
+        },
+        audience,
+        createFromGroupId,
+      };
+
+      if (important?.active) {
+        payload.important = {
+          active: important?.active,
+          expires_time: important?.expiresTime,
+        };
+      }
+
+      if (isDraftPost && sPostId) {
+        const newPayload: IPayloadPutEditAutoSave = {
+          id: sPostId,
+          data: payload,
+        };
+        await postDataHelper.putEditPost({
+          postId: newPayload?.id,
+          data: newPayload?.data,
+        });
+        refIsRefresh.current = true;
+      } else if (isEdit && sPostId) {
+        if (__DEV__) console.log('payload: ', payload);
+      } else {
+        payload.is_draft = true;
+        const resp = await postDataHelper.postCreateNewPost(payload);
+        refIsRefresh.current = true;
+        if (resp?.data) {
+          const newData = resp?.data || {};
+          setPostData({...newData});
+        }
+      }
+      if (!isEdit) {
+        setShowToastAutoSave(true);
+        clearTimeout(refToastAutoSave?.current);
+        refToastAutoSave.current = setTimeout(() => {
+          setShowToastAutoSave(false);
+        }, 2000);
+      }
+    } catch (error) {
+      if (__DEV__) console.log('error: ', error);
+    }
+  };
+
+  const debouncedAutoSave = () => {
+    if (!isPause) {
+      refAutoSave.current = setTimeout(() => {
+        setPause(true);
+        autoSaveDraftPost();
+      }, 5000);
+    }
+  };
+
+  const debouncedStopsTyping = () => {
+    if (isAutoSave && refIsFocus.current) {
+      clearTimeout(refStopsTyping?.current);
+      refStopsTyping.current = setTimeout(() => {
+        clearTimeout(refAutoSave?.current);
+        autoSaveDraftPost();
+      }, 500);
+    }
+  };
+
   const onChangeText = (text: string) => {
+    refIsFocus.current = true;
+    if (isAutoSave && isPause) {
+      setPause(false);
+    }
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
@@ -458,18 +691,34 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     );
   };
 
+  const renderToastAutoSave = () => {
+    if (isShowToastAutoSave) {
+      return (
+        <View style={styles.toastAutoSave}>
+          <Icon
+            isButton
+            iconStyle={styles.iconToastAutoSave}
+            style={styles.iconToastAutoSaveContainer}
+            size={18}
+            icon="Save"
+            tintColor={colors.textSecondary}
+          />
+          <Text variant="bodyS" useI18n style={styles.textToastAutoSave}>
+            post:auto_saved
+          </Text>
+        </View>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <ScreenWrapper isFullView testID={'CreatePostScreen'}>
       <Header
         titleTextProps={{useI18n: true}}
-        title={isEditPost ? 'post:title_edit_post' : 'post:title_create_post'}
-        buttonText={
-          isEditPost
-            ? isEditDraftPost
-              ? 'common:btn_publish'
-              : 'common:btn_save'
-            : 'post:post_button'
-        }
+        title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
+        buttonText={isEdit ? 'common:btn_publish' : 'post:post_button'}
         buttonProps={{
           loading: loading,
           disabled: disableButtonPost,
@@ -485,7 +734,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <Divider />
       </View>
       {renderContent()}
-      {(!initPostData?.id || (isEditDraftPost && initPostData?.id)) && (
+      {renderToastAutoSave()}
+      {(!sPostId || isDraftPost) && (
         <View style={styles.setting}>
           <Button.Secondary
             color={colors.bgHover}
@@ -601,6 +851,19 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.bgHover,
       borderRadius: spacing.borderRadius.small,
     },
+    toastAutoSave: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.background,
+      paddingHorizontal: spacing.padding.large,
+    },
+    iconToastAutoSaveContainer: {marginRight: spacing.margin.tiny},
+    iconToastAutoSave: {
+      padding: 2,
+      borderRadius: 6,
+      backgroundColor: colors.iconTintReversed,
+    },
+    textToastAutoSave: {color: colors.textSecondary},
   });
 };
 
