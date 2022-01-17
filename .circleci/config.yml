@@ -115,11 +115,9 @@ jobs:
           command: |
             cat >.env.staging \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            GET_STREAM_APP_ID=${GET_STREAM_APP_ID}
-            GET_STREAM_API_KEY=${GET_STREAM_API_KEY}
-            SOCKET_ROCKET_CHAT=${SOCKET_ROCKET_CHAT}
-            ROCKET_CHAT_SERVER=${ROCKET_CHAT_SERVER}
-            ROCKET_CHAT_API=${ROCKET_CHAT_API}
+            BEIN_FEED=${BEIN_FEED}
+            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
+            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_RESOURCE=${BEIN_RESOURCE}
             BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
@@ -168,11 +166,9 @@ jobs:
           command: |
             cat >.env.production \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            GET_STREAM_APP_ID=${GET_STREAM_APP_ID}
-            GET_STREAM_API_KEY=${GET_STREAM_API_KEY}
-            SOCKET_ROCKET_CHAT=${SOCKET_ROCKET_CHAT}
-            ROCKET_CHAT_SERVER=${ROCKET_CHAT_SERVER}
-            ROCKET_CHAT_API=${ROCKET_CHAT_API}
+            BEIN_FEED=${BEIN_FEED}
+            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
+            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_RESOURCE=${BEIN_RESOURCE}
             BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
@@ -215,11 +211,9 @@ jobs:
           command: |
             cat >.env.staging \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            GET_STREAM_APP_ID=${GET_STREAM_APP_ID}
-            GET_STREAM_API_KEY=${GET_STREAM_API_KEY}
-            SOCKET_ROCKET_CHAT=${SOCKET_ROCKET_CHAT}
-            ROCKET_CHAT_SERVER=${ROCKET_CHAT_SERVER}
-            ROCKET_CHAT_API=${ROCKET_CHAT_API}
+            BEIN_FEED=${BEIN_FEED}
+            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
+            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_RESOURCE=${BEIN_RESOURCE}
             BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
@@ -256,11 +250,9 @@ jobs:
           command: |
             cat >.env.production \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            GET_STREAM_APP_ID=${GET_STREAM_APP_ID}
-            GET_STREAM_API_KEY=${GET_STREAM_API_KEY}
-            SOCKET_ROCKET_CHAT=${SOCKET_ROCKET_CHAT}
-            ROCKET_CHAT_SERVER=${ROCKET_CHAT_SERVER}
-            ROCKET_CHAT_API=${ROCKET_CHAT_API}
+            BEIN_FEED=${BEIN_FEED}
+            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
+            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_RESOURCE=${BEIN_RESOURCE}
             BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
