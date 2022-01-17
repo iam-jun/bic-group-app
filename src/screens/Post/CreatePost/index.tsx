@@ -27,6 +27,7 @@ import {
   IActivityDataImage,
   IAudience,
   ICreatePostParams,
+  IParamGetPostAudiences,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
@@ -109,18 +110,35 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   } = createPostData || {};
   const {content} = data || {};
 
-  const initSelectingImagesRef = useRef();
+  const initSelectingImagesRef = useRef([]);
+  const initGroupsRef = useRef<any>([]);
+  const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
 
   const shouldScroll = selectingImages?.length > 0;
 
+  const users: number[] = [];
+  const groups: number[] = [];
+  const audience = {group_ids: groups, user_ids: users};
+  chosenAudiences.map((selected: IAudience) => {
+    if (selected.type === 'user') {
+      users.push(Number(selected.id));
+    } else {
+      groups.push(Number(selected.id));
+    }
+  });
+
+  const isAudienceHasChange =
+    !isEqual(initGroupsRef.current, groups) ||
+    !isEqual(initUsersRef.current, users);
+
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange =
     content !== initPostData?.object?.data?.content ||
-    !isEqual(selectingImages, initSelectingImagesRef.current);
+    !isEqual(selectingImages, initSelectingImagesRef.current) ||
+    isAudienceHasChange;
   const isEditDraftPost = !!initPostData?.id && draftPostId;
-  const isLimitEdit = isEditPost && !isEditDraftPost;
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -130,9 +148,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   });
   const strGroupIds = groupIds.join(',');
 
-  //Enable  Post button if :
-  // + Has at least 1 audience AND
-  // + (text != empty OR at least 1 photo OR at least 1 file)
+  // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost =
     loading ||
     content?.length === 0 ||
@@ -140,7 +156,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
   const [isPause, setPause] = React.useState<boolean>(true);
-  const [state, setState] = React.useState<IPostActivity>({...initPostData});
+  const [sPostData, setPostData] = React.useState<IPostActivity>({
+    ...initPostData,
+  });
 
   const prevData = useRef<any>({selectingImages, chosenAudiences, count});
   const refStopsTyping = useRef<any>();
@@ -148,9 +166,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refIsFocus = useRef<boolean>(false);
   const refIsRefresh = useRef<boolean>(false);
 
-  const sPostId = state?.id;
-  const isEdit = !!(sPostId && !state?.is_draft);
-  const isDraftPost = !!(sPostId && state?.is_draft);
+  const sPostId = sPostData?.id;
+  const isEdit = !!(sPostId && !sPostData?.is_draft);
+  const isDraftPost = !!(sPostId && sPostData?.is_draft);
   const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
 
   const isAutoSave = isDraftPost || !isEdit ? true : false;
@@ -173,20 +191,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [content]);
 
   useEffect(() => {
-    const list = [
+    const dataChangeList = [
       selectingImages?.length === prevData?.current?.selectingImages?.length,
       chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
       count === prevData?.current?.count,
     ];
-    const newList = list.filter(i => !i);
-    if (isAutoSave && newList.length > 0) {
+    const newDataChange = dataChangeList.filter(i => !i);
+    if (isAutoSave && newDataChange.length > 0) {
       prevData.current = {selectingImages, chosenAudiences, count};
       autoSaveDraftPost();
     }
   }, [selectingImages?.length, chosenAudiences?.length, count]);
 
   useEffect(() => {
-    setState({...initPostData});
+    setPostData({...initPostData});
   }, [initPostData?.id]);
 
   useEffect(() => {
@@ -212,6 +230,19 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     if (initPostData && (isEditDraftPost || isEditPost)) {
+      //get post audience for select audience screen and check audience has changed
+      initPostData?.audience?.groups?.map?.(g =>
+        initGroupsRef.current.push(Number(g?.id)),
+      );
+      initPostData?.audience?.users?.map?.(u =>
+        initUsersRef.current.push(Number(u?.id)),
+      );
+      const p: IParamGetPostAudiences = {
+        group_ids: initGroupsRef.current.join(','),
+      };
+      dispatch(postActions.getCreatePostInitAudience(p));
+
+      //handle selected, uploaded post's image
       const initImages: any = [];
       initPostData?.object?.data?.images?.map(item => {
         initImages.push({
@@ -312,13 +343,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('common:label_discard_changes'),
+            title: i18n.t('post:create_post:title_discard_changes'),
             content: i18n.t('post:alert_content_back_edit_post'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_continue_editing'),
-            confirmLabel: i18n.t('common:btn_discard'),
-            onConfirm: () => rootNavigation.goBack(),
+            cancelLabel: i18n.t('common:btn_discard'),
+            confirmLabel: i18n.t('post:create_post:btn_keep_edit'),
+            onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
         );
@@ -391,10 +422,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     isSaveAsDraft?: boolean,
     isEditDraft?: boolean,
   ) => {
-    const users: number[] = [];
-    const groups: number[] = [];
-    const audience = {group_ids: groups, user_ids: users};
-
     const {imageError, images} = validateImages(selectingImages, t);
 
     if (imageError) {
@@ -406,14 +433,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       );
       return;
     }
-
-    chosenAudiences.map((selected: IAudience) => {
-      if (selected.type === 'user') {
-        users.push(Number(selected.id));
-      } else {
-        groups.push(Number(selected.id));
-      }
-    });
 
     if (isDraftPost && sPostId) {
       const postData = {content, images, videos: [], files: []};
@@ -442,12 +461,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       };
       newEditData.important = {
         active: !!important?.active,
-        expires_time: important?.expires_time,
+        ...(important?.expires_time
+          ? {expires_time: important?.expires_time}
+          : {}),
       };
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
         data: newEditData,
+        onRetry: () => onPressPost(isSaveAsDraft, isEditDraft),
       };
       dispatch(postActions.putEditPost(payload));
     } else {
@@ -497,18 +519,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         return;
       }
 
-      const users: number[] = [];
-      const groups: number[] = [];
-
-      chosenAudiences.map((selected: IAudience) => {
-        if (selected.type === 'user') {
-          users.push(Number(selected.id));
-        } else {
-          groups.push(Number(selected.id));
-        }
-      });
-      const audience = {group_ids: groups, user_ids: users};
-
       const payload: IPayloadCreateAutoSave = {
         data: {
           content: newContent,
@@ -545,7 +555,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         refIsRefresh.current = true;
         if (resp?.data) {
           const newData = resp?.data || {};
-          setState({...newData});
+          setPostData({...newData});
         }
       }
       if (!isEdit) {
@@ -699,7 +709,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     <ScreenWrapper isFullView testID={'CreatePostScreen'}>
       <Header
         titleTextProps={{useI18n: true}}
-        title={isEdit ? 'post:title_edit_post' : 'post:create_post'}
+        title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
         buttonText={isEdit ? 'common:btn_publish' : 'post:post_button'}
         buttonProps={{
           loading: loading,
@@ -710,13 +720,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      {!isLimitEdit && (
-        <View>
-          {!!important?.active && <ImportantStatus notExpired />}
-          <CreatePostChosenAudiences disabled={loading} />
-          <Divider />
-        </View>
-      )}
+      <View>
+        {!!important?.active && <ImportantStatus notExpired />}
+        <CreatePostChosenAudiences disabled={loading} />
+        <Divider />
+      </View>
       {renderContent()}
       {(!sPostId || isDraftPost) && (
         <View style={styles.setting}>

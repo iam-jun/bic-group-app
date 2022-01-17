@@ -24,6 +24,8 @@ import {
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
   IPayloadAddToAllPost,
+  IPostAudience,
+  IParamGetPostAudiences,
   IPayloadUpdateReaction,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
@@ -76,6 +78,10 @@ const postActions = {
   }),
   setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({
     type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
+    payload,
+  }),
+  setCreatePostInitAudiences: (payload: IPostAudience) => ({
+    type: postTypes.SET_CREATE_POST_INIT_AUDIENCES,
     payload,
   }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({
@@ -196,6 +202,10 @@ const postActions = {
   }),
   putEditDraftPost: (payload: IPayloadPutEditDraftPost) => ({
     type: postTypes.PUT_EDIT_DRAFT_POST,
+    payload,
+  }),
+  getCreatePostInitAudience: (payload: IParamGetPostAudiences) => ({
+    type: postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     payload,
   }),
   updateReactionBySocket: (payload: IPayloadUpdateReaction) => ({
