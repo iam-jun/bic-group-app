@@ -641,11 +641,6 @@ function* updateUnReactionBySocket({
     }
     yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
   }
-
-  console.log(
-    `\x1b[35m🐣️ saga updateUnreactionBySocket`,
-    `${JSON.stringify(payload, undefined, 2)}\x1b[0m`,
-  );
 }
 
 function* putReactionToComment({
