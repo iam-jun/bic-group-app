@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  TextStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -21,8 +22,14 @@ export interface ToastMessageProps {
   children?: React.ReactNode;
   textProps?: TextProps;
   leftIcon?: IconType;
+  leftIconColor?: string;
+  leftStyle?: StyleProp<ViewStyle>;
+  leftIconStyle?: StyleProp<ViewStyle>;
   rightIcon?: IconType;
   rightText?: string;
+  rightTextColor?: string;
+  rightTextProps?: TextProps;
+  rightTextStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
   onActionPress?: () => void;
   onPressRight?: () => void;
@@ -33,8 +40,14 @@ const ToastMessage: FC<ToastMessageProps> = ({
   children,
   textProps,
   leftIcon,
+  leftIconColor,
+  leftStyle,
+  leftIconStyle,
   rightIcon,
   rightText,
+  rightTextColor,
+  rightTextProps,
+  rightTextStyle,
   style,
   onActionPress,
   onPressRight,
@@ -93,11 +106,12 @@ const ToastMessage: FC<ToastMessageProps> = ({
           iconStyle={[
             styles.leftIconStyle,
             {backgroundColor: colors.iconTintReversed},
+            leftIconStyle,
           ]}
-          style={styles.leftIcon}
+          style={[styles.leftIcon, leftStyle]}
           size={18}
           icon={leftIcon}
-          tintColor={iconColor}
+          tintColor={leftIconColor || iconColor}
         />
       )}
 
@@ -107,7 +121,6 @@ const ToastMessage: FC<ToastMessageProps> = ({
             {children}
           </Text.Body>
         </View>
-
         {!!rightText && (
           <ButtonWrapper style={styles.button} onPress={onPressRight}>
             {!!rightIcon && (
@@ -118,8 +131,9 @@ const ToastMessage: FC<ToastMessageProps> = ({
               />
             )}
             <Text.ButtonBase
-              style={styles.rightText}
-              color={theme.colors.background}>
+              {...rightTextProps}
+              style={[styles.rightText, rightTextStyle]}
+              color={rightTextColor || theme.colors.background}>
               {rightText}
             </Text.ButtonBase>
           </ButtonWrapper>

@@ -13,6 +13,7 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
+import {isEmpty} from 'lodash';
 
 export interface AutocompleteProps {
   type: string;
@@ -62,6 +63,7 @@ const Autocomplete = ({
         fullWidth && styles.containerModalFullWidth,
         showShadow && styles.shadow,
         modalStyle,
+        isEmpty(data) ? styles.hidden : {},
       ]}>
       {!!title && key === '' && data?.length === 0 && (
         <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
