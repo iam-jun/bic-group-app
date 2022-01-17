@@ -55,6 +55,8 @@ import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
 
 export interface CreatePostProps {
   route?: {
@@ -156,6 +158,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
   const [isPause, setPause] = React.useState<boolean>(true);
+  const [isShowToastAutoSave, setShowToastAutoSave] =
+    React.useState<boolean>(false);
   const [sPostData, setPostData] = React.useState<IPostActivity>({
     ...initPostData,
   });
@@ -165,6 +169,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
   const refIsRefresh = useRef<boolean>(false);
+  const refToastAutoSave = useRef<any>();
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -181,6 +186,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   useEffect(() => {
     debouncedAutoSave();
     return () => {
+      clearTimeout(refToastAutoSave?.current);
       clearTimeout(refAutoSave?.current);
       clearTimeout(refStopsTyping?.current);
     };
@@ -559,31 +565,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         }
       }
       if (!isEdit) {
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'post:auto_saved',
-            props: {
-              textProps: {
-                useI18n: true,
-                variant: 'bodyS',
-                style: {
-                  color: colors.textSecondary,
-                },
-              },
-              type: 'informative',
-              leftIcon: 'Save',
-              leftIconColor: colors.textSecondary,
-              leftStyle: {
-                marginRight: spacing.margin.tiny,
-              },
-              style: {
-                backgroundColor: colors.background,
-                paddingHorizontal: spacing.padding.large,
-              },
-            },
-            toastType: 'normal',
-          }),
-        );
+        setShowToastAutoSave(true);
+        clearTimeout(refToastAutoSave?.current);
+        refToastAutoSave.current = setTimeout(() => {
+          setShowToastAutoSave(false);
+        }, 2000);
       }
     } catch (error) {
       if (__DEV__) console.log('error: ', error);
@@ -705,6 +691,28 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     );
   };
 
+  const renderToastAutoSave = () => {
+    if (isShowToastAutoSave) {
+      return (
+        <View style={styles.toastAutoSave}>
+          <Icon
+            isButton
+            iconStyle={styles.iconToastAutoSave}
+            style={styles.iconToastAutoSaveContainer}
+            size={18}
+            icon="Save"
+            tintColor={colors.textSecondary}
+          />
+          <Text variant="bodyS" useI18n style={styles.textToastAutoSave}>
+            post:auto_saved
+          </Text>
+        </View>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <ScreenWrapper isFullView testID={'CreatePostScreen'}>
       <Header
@@ -726,6 +734,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <Divider />
       </View>
       {renderContent()}
+      {renderToastAutoSave()}
       {(!sPostId || isDraftPost) && (
         <View style={styles.setting}>
           <Button.Secondary
@@ -842,6 +851,19 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.bgHover,
       borderRadius: spacing.borderRadius.small,
     },
+    toastAutoSave: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.background,
+      paddingHorizontal: spacing.padding.large,
+    },
+    iconToastAutoSaveContainer: {marginRight: spacing.margin.tiny},
+    iconToastAutoSave: {
+      padding: 2,
+      borderRadius: 6,
+      backgroundColor: colors.iconTintReversed,
+    },
+    textToastAutoSave: {color: colors.textSecondary},
   });
 };
 
