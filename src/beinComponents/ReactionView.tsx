@@ -10,6 +10,7 @@ import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
+import appConfig from '~/configs/appConfig';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -89,13 +90,14 @@ const ReactionView: FC<ReactionViewProps> = ({
     return (
       <View style={[styles.container, style]}>
         {renderReactions()}
-        {!!onPressSelectReaction && renderedReactions.length < 21 && (
-          <Button
-            style={[styles.buttonReact, styles.marginHorizontal6]}
-            onPress={onPressSelectReaction}>
-            <Icon size={16} icon={'iconReact'} testID="reaction_view.react" />
-          </Button>
-        )}
+        {!!onPressSelectReaction &&
+          renderedReactions.length < appConfig.limitReactionCount && (
+            <Button
+              style={[styles.buttonReact, styles.marginHorizontal6]}
+              onPress={onPressSelectReaction}>
+              <Icon size={16} icon={'iconReact'} testID="reaction_view.react" />
+            </Button>
+          )}
       </View>
     );
   }

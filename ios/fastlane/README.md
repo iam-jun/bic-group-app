@@ -36,6 +36,16 @@ fastlane ios deploy_staging
 fastlane ios deploy_production
 ```
 
+### ios deploy_staging_ci
+```
+fastlane ios deploy_staging_ci
+```
+
+### ios deploy_production_ci
+```
+fastlane ios deploy_production_ci
+```
+
 
 ----
 

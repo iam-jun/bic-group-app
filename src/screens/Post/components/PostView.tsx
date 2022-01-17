@@ -307,6 +307,7 @@ const _PostView: FC<PostViewProps> = ({
             onPressComment={_onPressComment}
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
+            reactionCounts={reaction_counts}
           />
         )}
       </View>

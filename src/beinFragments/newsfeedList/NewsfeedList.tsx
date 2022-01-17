@@ -63,9 +63,11 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const prevOffsetYRef = useRef(0);
 
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
+  const {spacing, dimension} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
+
+  const refreshControlOffset = insets.top + dimension.headerHeight;
 
   const itemStyle = useRef({
     width: screenWidth,
@@ -278,6 +280,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           scrollViewProps={{
             refreshControl: (
               <RefreshControl
+                progressViewOffset={refreshControlOffset}
                 refreshing={refreshing}
                 onRefresh={() => onRefresh?.()}
               />
