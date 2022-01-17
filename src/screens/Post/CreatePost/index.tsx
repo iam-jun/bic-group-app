@@ -367,11 +367,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const renderContent = () => {
-    const Container = shouldScroll ? ScrollView : View;
-
     return (
-      <Container style={shouldScroll ? {} : styles.flex1}>
-        <View style={shouldScroll ? {} : styles.flex1}>
+      <ScrollView>
+        <View style={styles.flex1}>
           {isWeb ? (
             <Animated.View
               style={
@@ -409,8 +407,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             <_MentionInput
               groupIds={strGroupIds}
               mentionInputRef={mentionInputRef}
-              style={shouldScroll ? {} : styles.flex1}
-              textInputStyle={shouldScroll ? {} : styles.flex1}
               ComponentInput={PostInput}
               componentInputProps={{
                 value: content,
@@ -434,7 +430,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
           />
         </View>
-      </Container>
+      </ScrollView>
     );
   };
 
