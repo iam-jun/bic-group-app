@@ -1,3 +1,4 @@
+import {IReaction} from '~/interfaces/IPost';
 import postTypes from './types';
 
 const initState = {
@@ -59,6 +60,7 @@ const initState = {
     data: undefined,
     fromStack: '',
   },
+  scrollToLatestItem: null,
 };
 
 function postReducer(state = initState, action: any = {}) {
@@ -223,6 +225,50 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         allCommentsByParentIds: payload,
       };
+    case postTypes.SET_SCROLL_TO_LATEST_ITEM:
+      return {
+        ...state,
+        scrollToLatestItem: payload,
+      };
+    case postTypes.UPDATE_COMMENT_SUCCESS: {
+      // update pre-comment with data receiving from API
+      const {localId, postId, resultComment, parentCommentId} = payload;
+      const allCommentsByPost = {...state.allCommentsByParentIds};
+      let comment;
+
+      // @ts-ignore
+      const postComments = allCommentsByPost[postId];
+
+      if (parentCommentId) {
+        // find parent comment
+        const parentCommentPosition = postComments.findIndex(
+          (item: IReaction) => item.id === parentCommentId,
+        );
+        // find and update target reply comment
+        const latestChildren =
+          postComments[parentCommentPosition].latest_children || {};
+        const childrenComments = latestChildren.comment || [];
+        const targetPosition = childrenComments.findIndex(
+          (item: IReaction & {localId: string}) => item?.localId === localId,
+        );
+        comment = {
+          ...childrenComments[targetPosition],
+          ...resultComment,
+        };
+        childrenComments[targetPosition] = comment;
+      } else {
+        const position = postComments.findIndex(
+          (item: IReaction & {localId: string}) => item?.localId === localId,
+        );
+        comment = {...postComments[position], ...resultComment};
+        postComments[position] = comment;
+      }
+
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
+      };
+    }
     case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
       return {
         ...state,

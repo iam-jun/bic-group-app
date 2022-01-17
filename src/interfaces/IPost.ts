@@ -137,7 +137,8 @@ export interface IPayloadCreateComment {
   parentCommentId?: string;
   commentData: IActivityData;
   userId: string | number;
-  onSuccess?: (data: {newCommentId: string; parentCommentId?: string}) => void;
+  preComment: IReaction & {localId: string | number[]};
+  onSuccess?: () => void;
 }
 
 export interface IPayloadPutEditPost {
@@ -188,6 +189,7 @@ export interface IGetStreamUser {
   data?: {
     avatar?: string;
     fullname?: string;
+    username?: string;
   };
 }
 

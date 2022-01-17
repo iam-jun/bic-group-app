@@ -149,7 +149,7 @@ function* postCreateNewComment({
   type: string;
   payload: IPayloadCreateComment;
 }): any {
-  const {postId, parentCommentId, commentData, userId, onSuccess} =
+  const {postId, parentCommentId, commentData, userId, preComment, onSuccess} =
     payload || {};
   if (
     !postId ||
@@ -173,6 +173,27 @@ function* postCreateNewComment({
     }
 
     yield put(postActions.setCreateComment({loading: true}));
+    yield put(postActions.setScrollToLatestItem({parentCommentId}));
+
+    // update comments or child comments
+    if (!parentCommentId) {
+      yield put(
+        postActions.updateAllCommentsByParentIdsWithComments({
+          id: postId,
+          comments: new Array(preComment),
+          isMerge: true,
+        }),
+      );
+    } else {
+      yield addChildCommentToCommentsOfPost({
+        postId: postId,
+        commentId: parentCommentId,
+        childComments: new Array(preComment),
+      });
+    }
+
+    // clear content in text input
+    onSuccess?.();
 
     let resComment;
     if (parentCommentId) {
@@ -187,9 +208,6 @@ function* postCreateNewComment({
       });
     }
 
-    //callback success first time for delete content in text input
-    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
-
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
     const newAllPosts = {...allPosts};
@@ -200,31 +218,21 @@ function* postCreateNewComment({
     newAllPosts[postId] = post;
     yield put(postActions.setAllPosts(newAllPosts));
 
-    //update comments or child comments
+    // update comments or child comments again when receiving from API
     yield put(postActions.addToAllComments(resComment));
-    if (!parentCommentId) {
-      yield put(
-        postActions.updateAllCommentsByParentIdsWithComments({
-          id: postId,
-          comments: new Array(resComment),
-          isMerge: true,
-        }),
-      );
-    } else {
-      yield addChildCommentToCommentsOfPost({
-        postId: postId,
-        commentId: parentCommentId,
-        childComments: new Array(resComment),
-      });
-    }
+    yield put(
+      postActions.updateCommentSuccess({
+        localId: preComment.localId,
+        postId,
+        resultComment: resComment,
+        parentCommentId: parentCommentId,
+      }),
+    );
 
     yield put(postActions.setPostDetailReplyingComment());
     yield put(postActions.setCreateComment({loading: false, content: ''}));
-
-    yield timeOut(800);
-    //callback success second time for scroll to item
-    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
   } catch (e) {
+    console.log('err:', e);
     yield put(postActions.setCreateComment({loading: false}));
     yield showError(e);
   }

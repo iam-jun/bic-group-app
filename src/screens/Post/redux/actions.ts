@@ -130,6 +130,19 @@ const postActions = {
     type: postTypes.POST_CREATE_NEW_COMMENT,
     payload,
   }),
+  updateCommentSuccess: (payload: {
+    localId: string | number[];
+    postId: string;
+    resultComment: IReaction;
+    parentCommentId?: string;
+  }) => ({
+    type: postTypes.UPDATE_COMMENT_SUCCESS,
+    payload,
+  }),
+  setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
+    type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
+    payload,
+  }),
   putEditPost: (payload: IPayloadPutEditPost) => ({
     type: postTypes.PUT_EDIT_POST,
     payload,
