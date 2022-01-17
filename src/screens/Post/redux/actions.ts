@@ -26,6 +26,7 @@ import {
   IPayloadAddToAllPost,
   IPostAudience,
   IParamGetPostAudiences,
+  IPayloadUpdateReaction,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -205,6 +206,14 @@ const postActions = {
   }),
   getCreatePostInitAudience: (payload: IParamGetPostAudiences) => ({
     type: postTypes.GET_CREATE_POST_INIT_AUDIENCES,
+    payload,
+  }),
+  updateReactionBySocket: (payload: IPayloadUpdateReaction) => ({
+    type: postTypes.UPDATE_REACTION_BY_SOCKET,
+    payload,
+  }),
+  updateUnReactionBySocket: (payload: IPayloadUpdateReaction) => ({
+    type: postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     payload,
   }),
 };

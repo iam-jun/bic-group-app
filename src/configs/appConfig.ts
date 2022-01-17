@@ -8,6 +8,7 @@ const appConfig = {
     headerShown: false,
   },
   postPhotoLimit: 10,
+  limitReactionCount: 21,
 };
 
 export default appConfig;
