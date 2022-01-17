@@ -144,6 +144,7 @@ export interface IPayloadPutEditPost {
   id: string;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
+  onRetry?: () => void;
 }
 
 export interface IPayloadPutEditComment {
@@ -377,6 +378,11 @@ export interface IPayloadPutEditDraftPost {
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   publishNow: boolean;
+}
+
+export interface IParamGetPostAudiences {
+  key?: string;
+  group_ids: string;
 }
 
 export interface IPayloadUpdateReaction {
