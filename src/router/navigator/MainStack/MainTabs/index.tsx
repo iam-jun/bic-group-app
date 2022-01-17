@@ -25,6 +25,7 @@ import {useKeySelector} from '~/hooks/selector';
 import {getEnv} from '~/utils/env';
 import {parseSafe} from '~/utils/common';
 import {getMsgPackParser} from '~/utils/socket';
+import {ISocketReaction} from '~/interfaces/IPost';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -92,19 +93,38 @@ const MainTabs = () => {
     socket.on('disconnect', () => {
       console.log(`\x1b[36m🐣️ Bein feed socket disconnected\x1b[0m`);
     });
-    socket.on('notification', msg => {
-      const data = parseSafe(msg);
-      realtimeCallback(data?.data);
-    });
+    socket.on('notification', handleSocketNoti);
+    socket.on('reaction', handleSocketReaction);
+    socket.on('un_reaction', handleSocketUnReaction);
     return () => {
       socket?.disconnect?.();
     };
-  }, []);
+  }, [token]);
+
+  // callback when someone react to a post or comment, update its ownReact and reactionCounts on UI
+  const handleSocketReaction = (msg: string) => {
+    console.log(`\x1b[32m🐣️ Maintab: received socket react\x1b[0m`);
+    const data: ISocketReaction = parseSafe(msg);
+    const payload = {userId, data};
+    dispatch(postActions.updateReactionBySocket(payload));
+  };
+
+  // callback when someone un-react to a post or comment, update its ownReact and reactionCounts on UI
+  const handleSocketUnReaction = (msg: string) => {
+    console.log(`\x1b[32m🐣️ Maintab: received socket un-react\x1b[0m`);
+    const data: ISocketReaction = parseSafe(msg);
+    const payload = {userId, data};
+    dispatch(postActions.updateUnReactionBySocket(payload));
+  };
 
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
-  const realtimeCallback = (data: any) => {
+  const handleSocketNoti = (msg: string) => {
+    console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`);
+    const msgData = parseSafe(msg);
+    const {data} = msgData || {};
+
     // for now realtime noti include "deleted" and "new"
     // for delete actitivity event "new" is empty
     // and we haven't handle "delete" event yet

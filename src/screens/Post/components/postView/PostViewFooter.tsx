@@ -11,6 +11,9 @@ import Button from '~/beinComponents/Button';
 import * as modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
+import {IReactionCounts} from '~/interfaces/IPost';
+import {blacklistReactions, ReactionType} from '~/constants/reactions';
+import appConfig from '~/configs/appConfig';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -18,7 +21,19 @@ export interface PostViewFooterProps {
   btnReactTestID?: string;
   btnCommentTestID?: string;
   onPressComment?: () => void;
+  reactionCounts: IReactionCounts;
 }
+
+const validateReactionCount = (reactionCounts: any) => {
+  let count = 0;
+  Object.keys(reactionCounts || {})?.map?.(key => {
+    const react = key as ReactionType;
+    if (!blacklistReactions?.[react] && reactionCounts?.[key]) {
+      count++;
+    }
+  });
+  return count < appConfig.limitReactionCount;
+};
 
 const PostViewFooter: FC<PostViewFooterProps> = ({
   labelButtonComment,
@@ -26,11 +41,14 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   btnReactTestID,
   btnCommentTestID,
   onPressComment,
+  reactionCounts,
 }: PostViewFooterProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors, spacing, dimension} = theme;
   const styles = createStyle(theme);
+
+  const validReactionCount = validateReactionCount(reactionCounts);
 
   const onEmojiSelected = (emoji: string, key?: string) => {
     dispatch(modalActions.hideModal());
@@ -123,15 +141,19 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 
   return (
     <View style={styles.reactButtons}>
-      {renderReactButtonItem(
-        'post:button_react',
-        'iconReact',
-        onPressReact,
-        onPressReact,
-        false,
-        btnReactTestID,
+      {validReactionCount && (
+        <>
+          {renderReactButtonItem(
+            'post:button_react',
+            'iconReact',
+            onPressReact,
+            onPressReact,
+            false,
+            btnReactTestID,
+          )}
+          <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
+        </>
       )}
-      <Divider style={{height: '66%', alignSelf: 'center'}} horizontal />
       {renderReactButtonItem(
         labelButtonComment,
         'CommentAltDots',
