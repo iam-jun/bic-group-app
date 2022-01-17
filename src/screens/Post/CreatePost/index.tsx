@@ -149,8 +149,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refIsRefresh = useRef<boolean>(false);
 
   const sPostId = state?.id;
-  const isEdit = sPostId && !state?.is_draft ? true : false;
-  const isDraftPost = sPostId && state?.is_draft ? true : false;
+  const isEdit = !!(sPostId && !state?.is_draft);
+  const isDraftPost = !!(sPostId && state?.is_draft);
   const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
 
   const isAutoSave = isDraftPost || !isEdit ? true : false;
@@ -229,8 +229,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       });
       dispatch(postActions.setCreatePostImagesDraft(initImages));
       dispatch(postActions.setCreatePostImages(initImages));
-      const currentData = prevData.current;
-      prevData.current = {...currentData, selectingImages: initImages};
+      prevData.current = {...prevData.current, selectingImages: initImages};
     }
   }, [initPostData]);
 
@@ -257,8 +256,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
-      const currentData = prevData.current;
-      prevData.current = {...currentData, chosenAudiences: initChosenAudience};
+      prevData.current = {
+        ...prevData.current,
+        chosenAudiences: initChosenAudience,
+      };
 
       const initImportant = initPostData?.important || {};
       dispatch(postActions.setCreatePostImportant(initImportant));
