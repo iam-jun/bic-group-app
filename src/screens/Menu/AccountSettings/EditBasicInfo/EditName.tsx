@@ -25,8 +25,10 @@ const EditName = ({onChangeName}: EditNameProps) => {
   const [error, setError] = useState<boolean>(false);
 
   const onDoneEditName = () => {
-    if (name) {
-      onChangeName(name);
+    const newName = name.trim();
+    setName(newName);
+    if (newName) {
+      onChangeName(newName);
       setEditName(false);
       error && setError(false);
     } else {
@@ -35,7 +37,8 @@ const EditName = ({onChangeName}: EditNameProps) => {
   };
 
   const _onChangeName = (text: string) => {
-    setName(text.trim());
+    // removed trim here to avoid issue when typing Vietnamese
+    setName(text);
   };
 
   const onNameEditOpen = () => setEditName(true);
