@@ -70,14 +70,9 @@ const dispatchStoreAuthTokens = (
   );
 };
 
-const _dispatchHideSystemIssue = () => {
-  Store.store.dispatch(noInternetActions.hideSystemIssue());
-};
-
 const refreshFailKickOut = () => {
   _dispatchLogout();
   _dispatchSessionExpire();
-  _dispatchHideSystemIssue;
   isRefreshingToken = false;
   // count retry limit
   countLimitRetry = 0;
@@ -101,12 +96,6 @@ const handleSystemIssue = () => {
   if (isInternetReachable === false) return;
 
   Store.store.dispatch(noInternetActions.showSystemIssue());
-
-  const modalVisibleDuration = 2000;
-  setTimeout(() => {
-    _dispatchLogout();
-    _dispatchHideSystemIssue();
-  }, modalVisibleDuration);
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
