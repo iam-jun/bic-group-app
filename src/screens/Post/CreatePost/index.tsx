@@ -11,7 +11,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
-import {isEqual} from 'lodash';
+import {isEqual, isEmpty, differenceWith} from 'lodash';
 
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
@@ -203,8 +203,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     const dataChangeList = [
-      isEqual(selectingImages, prevData?.current?.selectingImages),
-      isEqual(chosenAudiences, prevData?.current?.chosenAudiences),
+      isEmpty(
+        differenceWith(
+          selectingImages,
+          prevData?.current?.selectingImages,
+          isEqual,
+        ),
+      ),
+      isEmpty(
+        differenceWith(
+          chosenAudiences,
+          prevData?.current?.chosenAudiences,
+          isEqual,
+        ),
+      ),
       isEqual(important, prevData?.current?.important),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
