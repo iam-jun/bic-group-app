@@ -181,8 +181,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isDraftPost = !!(sPostId && sPostData?.is_draft);
   const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
 
-  console.log('prevData: ', prevData.current, selectingImages);
-
   const isAutoSave = isDraftPost || !isEdit ? true : false;
 
   useBackHandler(() => {
