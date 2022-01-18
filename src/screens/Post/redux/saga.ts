@@ -245,13 +245,7 @@ function* putEditPost({
     const response = yield postDataHelper.putEditPost({postId: id, data});
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
-      const post = yield select(state =>
-        get(state, postKeySelector.postById(id)),
-      );
-      if (post?.object) {
-        post.object.data = data?.data || {};
-      }
-      //todo waiting for backend update response, replace whole object from response instead of local change
+      const post = response?.data;
       yield put(postActions.addToAllPosts({data: post}));
       yield put(
         modalActions.showHideToastMessage({
@@ -493,7 +487,8 @@ function* putReactionToPost({
       // }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    // disable rollback in case error limit 21 reaction
+    // yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts);
     yield showError(e);
   }
 }
@@ -710,12 +705,13 @@ function* putReactionToComment({
       // }
     }
   } catch (e) {
-    yield onUpdateReactionOfCommentById(
-      id,
-      ownReaction,
-      reactionCounts,
-      comment,
-    );
+    // disable rollback in case limit 21 reaction
+    // yield onUpdateReactionOfCommentById(
+    //   id,
+    //   ownReaction,
+    //   reactionCounts,
+    //   comment,
+    // );
     yield showError(e);
   }
 }
@@ -976,6 +972,7 @@ function* postPublishDraftPost({
       const payloadGetDraftPosts: IPayloadGetDraftPosts = {
         isRefresh: true,
       };
+      yield put(homeActions.getHomePosts({isRefresh: true}));
       yield put(postActions.getDraftPosts(payloadGetDraftPosts));
     } else {
       onError?.();

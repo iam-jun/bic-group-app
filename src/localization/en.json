@@ -470,7 +470,9 @@
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
     "people_can_share": "People can share on this post",
-    "people_can_react": "People can react on this post"
+    "people_can_react": "People can react on this post",
+    "auto_saved": "Post auto-saved",
+    "saved_to_draft": "Post Saved to Draft."
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

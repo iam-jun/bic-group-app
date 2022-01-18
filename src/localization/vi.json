@@ -378,7 +378,9 @@
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
-    "people_can_react": "Mọi người có thể tương tác trên bài viết"
+    "people_can_react": "Mọi người có thể tương tác trên bài viết",
+    "auto_saved": "Bài viết đã lưu tự động",
+    "saved_to_draft": "Bài viết đã lưu vào nháp."
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",

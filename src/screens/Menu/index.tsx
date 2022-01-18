@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {
   Platform,
   ScrollView,
-  StyleProp,
   StyleSheet,
   useWindowDimensions,
-  ViewStyle,
+  View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -14,7 +13,6 @@ import i18next from 'i18next';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
-import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
@@ -39,6 +37,7 @@ import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import appActions from '~/store/app/actions';
+import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -126,27 +125,29 @@ const Menu = (): React.ReactElement => {
 
   const renderListView = ({
     data,
-    containerStyle,
-    onItemPress,
-    ...props
+    itemTestID,
   }: {
-    data?: Array<any>;
-    containerStyle?: StyleProp<ViewStyle>;
-    onItemPress?: (...params: any) => void;
-
-    [x: string]: any;
+    data: Array<any>;
+    itemTestID?: string;
   }) => {
     return (
-      <ListView
-        containerStyle={[styles.listContainerStyle, containerStyle]}
-        type="menu"
-        data={data}
-        scrollEnabled={false}
-        onItemPress={onItemPress ? onItemPress : onSettingPress}
-        currentPath={currentPath}
-        showItemSeparator={false}
-        {...props}
-      />
+      <View style={styles.listContainerStyle}>
+        {data.map((item, index) => {
+          const isActive = currentPath === item.path;
+
+          return (
+            <MenuItem
+              title={item.title}
+              key={`menu_${item.type}`}
+              onPress={() => onSettingPress(item)}
+              icon={item.icon}
+              testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
+              rightSubTitle={item.rightSubTitle}
+              isActive={isActive}
+            />
+          );
+        })}
+      </View>
     );
   };
 
