@@ -64,7 +64,7 @@ export interface CreatePostProps {
   };
 }
 
-const webContentMinHeight = 80;
+const webContentMinHeight = 45;
 const webContentInsetHeight = 0;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
@@ -703,7 +703,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const renderToastAutoSave = () => {
-    if (isShowToastAutoSave) {
+    if (!isShowToastAutoSave) {
       return (
         <View style={styles.toastAutoSave}>
           <Icon
