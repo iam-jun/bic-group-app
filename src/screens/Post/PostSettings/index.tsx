@@ -52,7 +52,7 @@ const PostSettings = () => {
 
   useEffect(() => {
     checkDisableButtonSave();
-  }, [sImportant?.active]);
+  }, [JSON.stringify(sImportant)]);
 
   const onPressBack = () => {
     if (disableButtonSave) {
@@ -89,8 +89,7 @@ const PostSettings = () => {
 
   const checkDisableButtonSave = () => {
     const dataCount = [
-      sImportant.active === important?.active,
-      sImportant.expires_time === important?.expires_time,
+      JSON.stringify(sImportant) === JSON.stringify(important),
       //   comments,
       //   shares,
       //   reacts,
@@ -134,8 +133,13 @@ const PostSettings = () => {
       const date = sImportant.expires_time
         ? new Date(sImportant.expires_time)
         : new Date();
+
       date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      const expiresTime = date.toISOString();
+      let expiresTime = date.toISOString();
+
+      if (date.getTime() < getMinDate().getTime()) {
+        expiresTime = getMinDate().toISOString();
+      }
       newImportant.expires_time = expiresTime;
       setImportant(newImportant);
     }
@@ -264,7 +268,7 @@ const PostSettings = () => {
                   ? new Date(sImportant.expires_time)
                   : new Date()
               }
-              minDate={new Date()}
+              minDate={getMinDate()}
               maxDate={getMaxDate()}
               mode={'time'}
               onConfirm={onChangeTimePicker}
@@ -275,6 +279,12 @@ const PostSettings = () => {
       </View>
     </ScreenWrapper>
   );
+};
+
+const getMinDate = () => {
+  const currentData = new Date();
+  currentData.setHours(currentData.getHours() + 1);
+  return new Date(currentData);
 };
 
 const getMaxDate = () => {

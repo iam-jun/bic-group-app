@@ -203,11 +203,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     const dataChangeList = [
-      selectingImages?.length === prevData?.current?.selectingImages?.length,
-      chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
-      //   count === prevData?.current?.count,
-      important?.active === prevData?.current?.important?.active,
-      important?.expires_time === prevData?.current?.important?.expires_time,
+      JSON.stringify(selectingImages) ===
+        JSON.stringify(prevData?.current?.selectingImages),
+      JSON.stringify(chosenAudiences) ===
+        JSON.stringify(prevData?.current?.chosenAudiences),
+      JSON.stringify(important) ===
+        JSON.stringify(prevData?.current?.important),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
     if (isAutoSave && newDataChange.length > 0) {
@@ -215,11 +216,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       autoSaveDraftPost();
     }
   }, [
-    selectingImages?.length,
-    chosenAudiences?.length,
-    // count,
-    important?.active,
-    important?.expires_time,
+    JSON.stringify(selectingImages),
+    JSON.stringify(chosenAudiences),
+    JSON.stringify(important),
   ]);
 
   useEffect(() => {
@@ -375,9 +374,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         return;
       }
     } else if (sPostId && refIsRefresh.current) {
-      if (!isNewsfeed) {
-        dispatch(postActions.getDraftPosts({isRefresh: true}));
-      }
+      dispatch(postActions.getDraftPosts({isRefresh: true}));
       dispatch(
         modalActions.showHideToastMessage({
           content: 'post:saved_to_draft',
@@ -703,7 +700,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const renderToastAutoSave = () => {
-    if (!isShowToastAutoSave) {
+    if (isShowToastAutoSave) {
       return (
         <View style={styles.toastAutoSave}>
           <Icon
