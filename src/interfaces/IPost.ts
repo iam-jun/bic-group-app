@@ -419,3 +419,7 @@ export interface ISocketReaction {
     reaction_counts?: IReactionCounts;
   };
 }
+
+export interface ICreatePostCurrentSettings {
+  important: IActivityImportant;
+}
