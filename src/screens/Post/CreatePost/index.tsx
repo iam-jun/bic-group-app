@@ -181,6 +181,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isDraftPost = !!(sPostId && sPostData?.is_draft);
   const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
 
+  console.log('prevData: ', prevData.current, selectingImages);
+
   const isAutoSave = isDraftPost || !isEdit ? true : false;
 
   useBackHandler(() => {
@@ -203,12 +205,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     const dataChangeList = [
-      JSON.stringify(selectingImages) ===
-        JSON.stringify(prevData?.current?.selectingImages),
-      JSON.stringify(chosenAudiences) ===
-        JSON.stringify(prevData?.current?.chosenAudiences),
-      JSON.stringify(important) ===
-        JSON.stringify(prevData?.current?.important),
+      isEqual(selectingImages, prevData?.current?.selectingImages),
+      isEqual(chosenAudiences, prevData?.current?.chosenAudiences),
+      isEqual(important, prevData?.current?.important),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
     if (isAutoSave && newDataChange.length > 0) {
@@ -223,7 +222,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [
     JSON.stringify(selectingImages),
     JSON.stringify(chosenAudiences),
-    JSON.stringify(important),
+    important,
   ]);
 
   useEffect(() => {
