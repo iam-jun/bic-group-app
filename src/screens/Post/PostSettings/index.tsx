@@ -21,6 +21,7 @@ import * as modalActions from '~/store/modal/actions';
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {formatDate} from '~/utils/formatData';
+import {isEqual} from 'lodash';
 
 import {IActivityImportant} from '~/interfaces/IPost';
 
@@ -52,7 +53,7 @@ const PostSettings = () => {
 
   useEffect(() => {
     checkDisableButtonSave();
-  }, [JSON.stringify(sImportant)]);
+  }, [sImportant]);
 
   const onPressBack = () => {
     if (disableButtonSave) {
@@ -89,7 +90,7 @@ const PostSettings = () => {
 
   const checkDisableButtonSave = () => {
     const dataCount = [
-      JSON.stringify(sImportant) === JSON.stringify(important),
+      isEqual(sImportant, important),
       //   comments,
       //   shares,
       //   reacts,
