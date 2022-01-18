@@ -2,6 +2,7 @@ import {put, select, takeLatest} from 'redux-saga/effects';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 import actions from './actions';
+import authActions from '~/screens/Auth/redux/actions';
 import types from './types';
 
 export default function* noInternetSaga() {
@@ -44,12 +45,26 @@ function* checkIsInternetReachable() {
 
 function* showSystemIssue() {
   try {
+    const {noInternet} = yield select();
+    const isShownAlready = noInternet.systemIssue;
+    if (isShownAlready) return;
+
     yield put(actions.setSystemIssue(true));
+
+    // Must run hideSystemIssue after 2 seconds
+    const MODAL_VISIBLE_DURATION = 2000;
+    yield timeOut(MODAL_VISIBLE_DURATION);
+    yield hideSystemIssue();
   } catch (error) {
     console.log(`error`, error);
   }
 }
 
 function* hideSystemIssue() {
+  const {noInternet} = yield select();
+  const isShownAlready = noInternet.systemIssue;
+  if (!isShownAlready) return;
+
   yield put(actions.setSystemIssue(false));
+  yield put(authActions.signOut());
 }
