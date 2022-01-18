@@ -253,7 +253,7 @@ const PostSettings = () => {
                   ? new Date(sImportant.expires_time)
                   : new Date()
               }
-              minDate={new Date()}
+              minDate={getMinDate()}
               maxDate={getMaxDate()}
               mode={Platform.OS === 'web' ? 'time' : 'date'}
               onConfirm={onChangeDatePicker}
@@ -283,8 +283,8 @@ const PostSettings = () => {
 
 const getMinDate = () => {
   const currentData = new Date();
-  currentData.setHours(currentData.getHours() + 1);
-  return new Date(currentData);
+  const minDate = currentData.setHours(currentData.getHours() + 1);
+  return new Date(minDate);
 };
 
 const getMaxDate = () => {
