@@ -493,7 +493,8 @@ function* putReactionToPost({
       // }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    // disable rollback in case error limit 21 reaction
+    // yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts);
     yield showError(e);
   }
 }
@@ -710,12 +711,13 @@ function* putReactionToComment({
       // }
     }
   } catch (e) {
-    yield onUpdateReactionOfCommentById(
-      id,
-      ownReaction,
-      reactionCounts,
-      comment,
-    );
+    // disable rollback in case limit 21 reaction
+    // yield onUpdateReactionOfCommentById(
+    //   id,
+    //   ownReaction,
+    //   reactionCounts,
+    //   comment,
+    // );
     yield showError(e);
   }
 }
