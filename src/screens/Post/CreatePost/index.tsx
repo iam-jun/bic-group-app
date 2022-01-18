@@ -321,6 +321,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
       const initImportant = initPostData?.important || {};
       dispatch(postActions.setCreatePostImportant(initImportant));
+      dispatch(
+        postActions.setCreatePostCurrentSettings({important: initImportant}),
+      );
       prevData.current = {
         ...prevData.current,
         chosenAudiences: initChosenAudience,
@@ -563,7 +566,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (important?.active) {
         payload.important = {
           active: important?.active,
-          expires_time: important?.expiresTime,
+          expires_time: important?.expires_time,
         };
       }
 

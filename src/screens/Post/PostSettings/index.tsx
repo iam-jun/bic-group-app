@@ -36,7 +36,7 @@ const PostSettings = () => {
 
   const styles = createStyle(theme);
   const createPostData = useCreatePost();
-  const {important} = createPostData || {};
+  const {important, currentSettings} = createPostData || {};
 
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
@@ -77,7 +77,10 @@ const PostSettings = () => {
   };
 
   const onPressSave = () => {
-    const dataDefault = [sImportant.active === false];
+    const dataDefault = [
+      sImportant.active === currentSettings?.important?.active,
+      sImportant.expires_time === currentSettings?.important?.expires_time,
+    ];
     const newCount = dataDefault.filter(i => !i);
     dispatch(
       postActions.setCreatePostSettings({
@@ -120,6 +123,9 @@ const PostSettings = () => {
           : new Date();
         date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
         expiresTime = date.toISOString();
+        if (date.getTime() < getMinDate().getTime()) {
+          expiresTime = getMinDate().toISOString();
+        }
       }
       newImportant.expires_time = expiresTime;
       setImportant(newImportant);
