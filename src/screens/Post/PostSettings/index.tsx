@@ -90,6 +90,7 @@ const PostSettings = () => {
   const checkDisableButtonSave = () => {
     const dataCount = [
       sImportant.active === important?.active,
+      sImportant.expires_time === important?.expires_time,
       //   comments,
       //   shares,
       //   reacts,

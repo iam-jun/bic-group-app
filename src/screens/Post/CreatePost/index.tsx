@@ -65,7 +65,7 @@ export interface CreatePostProps {
 }
 
 const webContentMinHeight = 80;
-const webContentInsetHeight = 18;
+const webContentInsetHeight = 0;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -164,7 +164,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     ...initPostData,
   });
 
-  const prevData = useRef<any>({selectingImages, chosenAudiences, count});
+  const prevData = useRef<any>({
+    selectingImages,
+    chosenAudiences,
+    count,
+    important,
+  });
   const refStopsTyping = useRef<any>();
   const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
@@ -200,14 +205,22 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     const dataChangeList = [
       selectingImages?.length === prevData?.current?.selectingImages?.length,
       chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
-      count === prevData?.current?.count,
+      //   count === prevData?.current?.count,
+      important?.active === prevData?.current?.important?.active,
+      important?.expires_time === prevData?.current?.important?.expires_time,
     ];
     const newDataChange = dataChangeList.filter(i => !i);
     if (isAutoSave && newDataChange.length > 0) {
       prevData.current = {selectingImages, chosenAudiences, count};
       autoSaveDraftPost();
     }
-  }, [selectingImages?.length, chosenAudiences?.length, count]);
+  }, [
+    selectingImages?.length,
+    chosenAudiences?.length,
+    // count,
+    important?.active,
+    important?.expires_time,
+  ]);
 
   useEffect(() => {
     setPostData({...initPostData});
@@ -293,13 +306,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+      const initImportant = initPostData?.important || {};
+      dispatch(postActions.setCreatePostImportant(initImportant));
       prevData.current = {
         ...prevData.current,
         chosenAudiences: initChosenAudience,
+        important: initImportant,
       };
-
-      const initImportant = initPostData?.important || {};
-      dispatch(postActions.setCreatePostImportant(initImportant));
     }
   }, [initPostData?.id]);
 
@@ -454,7 +467,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
       const payload: IPayloadPutEditDraftPost = {
         id: sPostId,
-        replaceWithDetail: replaceWithDetail,
+        replaceWithDetail: true,
         data: draftData,
         publishNow: !isEditDraft,
       };
@@ -620,16 +633,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const renderContent = () => {
-    const Container = shouldScroll ? ScrollView : View;
+    // const Container = shouldScroll ? ScrollView : View;
 
     return (
-      <Container style={shouldScroll ? {} : styles.flex1}>
-        <View style={shouldScroll ? {} : styles.flex1}>
+      <ScrollView>
+        <View style={styles.flex1}>
           {isWeb ? (
-            <Animated.View
-              style={
-                shouldScroll ? {height: webInputHeightAnimated} : styles.flex1
-              }>
+            <Animated.View style={{height: webInputHeightAnimated}}>
               <View style={styles.textCloneContainer}>
                 <RNText
                   onLayout={onLayoutCloneText}
@@ -662,8 +672,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             <_MentionInput
               groupIds={strGroupIds}
               mentionInputRef={mentionInputRef}
-              style={shouldScroll ? {} : styles.flex1}
-              textInputStyle={shouldScroll ? {} : styles.flex1}
+              style={{minHeight: 55}}
+              //   textInputStyle={shouldScroll ? {} : styles.flex1}
               ComponentInput={PostInput}
               componentInputProps={{
                 value: content,
@@ -680,6 +690,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
               disabled={loading}
             />
           )}
+          {renderToastAutoSave()}
           <PostPhotoPreview
             data={images || []}
             style={{alignSelf: 'center'}}
@@ -687,7 +698,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
           />
         </View>
-      </Container>
+      </ScrollView>
     );
   };
 
@@ -734,7 +745,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <Divider />
       </View>
       {renderContent()}
-      {renderToastAutoSave()}
       {(!sPostId || isDraftPost) && (
         <View style={styles.setting}>
           <Button.Secondary
@@ -856,6 +866,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
+      marginBottom: spacing.margin.base,
     },
     iconToastAutoSaveContainer: {marginRight: spacing.margin.tiny},
     iconToastAutoSave: {
