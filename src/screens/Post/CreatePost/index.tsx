@@ -212,7 +212,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     ];
     const newDataChange = dataChangeList.filter(i => !i);
     if (isAutoSave && newDataChange.length > 0) {
-      prevData.current = {selectingImages, chosenAudiences, count};
+      prevData.current = {
+        ...prevData.current,
+        selectingImages,
+        chosenAudiences,
+        important,
+      };
       autoSaveDraftPost();
     }
   }, [
