@@ -245,13 +245,7 @@ function* putEditPost({
     const response = yield postDataHelper.putEditPost({postId: id, data});
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
-      const post = yield select(state =>
-        get(state, postKeySelector.postById(id)),
-      );
-      if (post?.object) {
-        post.object.data = data?.data || {};
-      }
-      //todo waiting for backend update response, replace whole object from response instead of local change
+      const post = response?.data;
       yield put(postActions.addToAllPosts({data: post}));
       yield put(
         modalActions.showHideToastMessage({
