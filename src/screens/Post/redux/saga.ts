@@ -970,6 +970,7 @@ function* postPublishDraftPost({
       const payloadGetDraftPosts: IPayloadGetDraftPosts = {
         isRefresh: true,
       };
+      yield put(homeActions.getHomePosts({isRefresh: true}));
       yield put(postActions.getDraftPosts(payloadGetDraftPosts));
     } else {
       onError?.();
