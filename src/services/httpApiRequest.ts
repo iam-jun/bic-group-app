@@ -153,7 +153,7 @@ const handleRetry = async (error: AxiosError) => {
   // @ts-ignore
   switch (error.config?.provider?.name) {
     case apiConfig.providers.bein.name:
-      if (!error.config.headers.Authorization) {
+      if (!error.config.headers?.Authorization) {
         return Promise.reject(error);
       }
       break;
@@ -164,7 +164,7 @@ const handleRetry = async (error: AxiosError) => {
   // create new promise
   const newReqPromise = new Promise((resolve, reject) => {
     const newOrgConfig = {...error.config};
-    delete newOrgConfig.headers.Authorization;
+    delete newOrgConfig.headers?.Authorization;
 
     const callback: UnauthorizedReq = async (success: boolean) => {
       if (!success) {
@@ -185,7 +185,9 @@ const handleRetry = async (error: AxiosError) => {
   });
 
   // create request to refresh token
-  await getTokenAndCallBackBein(error.config.headers.Authorization);
+  if (error.config.headers) {
+    await getTokenAndCallBackBein(error.config.headers.Authorization);
+  }
 
   // next
   return newReqPromise;
