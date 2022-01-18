@@ -58,7 +58,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   }
 
   useEffect(() => {
-    if (!avatar) {
+    if (!avatar && userId) {
       dispatch(menuActions.getMyProfile({userId}));
     }
   }, [avatar]);

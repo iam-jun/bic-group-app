@@ -36,6 +36,7 @@ import {useBaseHook} from '~/hooks';
 import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
+import {useAuthToken} from '~/hooks/auth';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -49,9 +50,8 @@ const Newsfeed = () => {
   const styles = createStyle(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const {streamClient} = useContext(AppContext);
-  const streamRef = useRef<any>({}).current;
-  streamRef.value = streamClient;
+
+  const token = useAuthToken();
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -72,10 +72,7 @@ const Newsfeed = () => {
   }, [isFocused]);
 
   const getData = (isRefresh?: boolean) => {
-    const streamClient = streamRef.value;
-    if (streamClient) {
-      dispatch(homeActions.getHomePosts({isRefresh}));
-    }
+    dispatch(homeActions.getHomePosts({isRefresh}));
   };
 
   useTabPressListener(
@@ -91,13 +88,13 @@ const Newsfeed = () => {
   useEffect(() => {
     if (
       isInternetReachable &&
-      streamClient &&
+      token &&
       (!homePosts || homePosts?.length === 0) &&
       !refreshing
     ) {
       getData(true);
     }
-  }, [streamClient, isInternetReachable, homePosts]);
+  }, [token, isInternetReachable, homePosts]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
