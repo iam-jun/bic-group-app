@@ -1025,7 +1025,7 @@ function* putEditDraftPost({
       yield put(postActions.setLoadingCreatePost(false));
     }
   } catch (e) {
-    yield put(postActions.setLoadingCreatePost(true));
+    yield put(postActions.setLoadingCreatePost(false));
     yield showError(e);
   }
 }
