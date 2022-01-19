@@ -1,8 +1,10 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get, isEmpty} from 'lodash';
+import i18n from 'i18next';
 
 import {
   IOwnReaction,
+  IParamGetPostAudiences,
   IParamGetPostDetail,
   IPayloadAddToAllPost,
   IPayloadCreateComment,
@@ -18,6 +20,7 @@ import {
   IPayloadUpdateCommentsById,
   IPayloadUpdateReaction,
   IPostActivity,
+  IPostAudience,
   IPostCreatePost,
   IReaction,
   IReactionCounts,
@@ -77,6 +80,10 @@ export default function* postSaga() {
   yield takeLatest(
     postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     updateUnReactionBySocket,
+  );
+  yield takeEvery(
+    postTypes.GET_CREATE_POST_INIT_AUDIENCES,
+    getCreatePostInitAudiences,
   );
 }
 
@@ -228,7 +235,7 @@ function* putEditPost({
   type: string;
   payload: IPayloadPutEditPost;
 }): any {
-  const {id, data, replaceWithDetail = true} = payload;
+  const {id, data, replaceWithDetail = true, onRetry} = payload;
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
     return;
@@ -238,14 +245,14 @@ function* putEditPost({
     const response = yield postDataHelper.putEditPost({postId: id, data});
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
-      const post = yield select(state =>
-        get(state, postKeySelector.postById(id)),
-      );
-      if (post?.object) {
-        post.object.data = data?.data || {};
-      }
-      //todo waiting for backend update response, replace whole object from response instead of local change
+      const post = response?.data;
       yield put(postActions.addToAllPosts({data: post}));
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_edit_post_success',
+          props: {textProps: {useI18n: true}, type: 'success'},
+        }),
+      );
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: post?.id});
       } else {
@@ -253,7 +260,19 @@ function* putEditPost({
       }
     }
   } catch (e) {
-    yield showError(e);
+    yield put(postActions.setLoadingCreatePost(false));
+    yield put(
+      modalActions.showHideToastMessage({
+        content: i18n.t('post:text_edit_post_failed'),
+        toastType: 'normal',
+        props: {
+          textProps: {useI18n: true},
+          type: 'error',
+          rightText: i18n.t('common:text_retry'),
+          onPressRight: onRetry,
+        },
+      }),
+    );
   }
 }
 
@@ -468,7 +487,8 @@ function* putReactionToPost({
       // }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    // disable rollback in case error limit 21 reaction
+    // yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts);
     yield showError(e);
   }
 }
@@ -616,11 +636,6 @@ function* updateUnReactionBySocket({
     }
     yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
   }
-
-  console.log(
-    `\x1b[35m🐣️ saga updateUnreactionBySocket`,
-    `${JSON.stringify(payload, undefined, 2)}\x1b[0m`,
-  );
 }
 
 function* putReactionToComment({
@@ -690,12 +705,13 @@ function* putReactionToComment({
       // }
     }
   } catch (e) {
-    yield onUpdateReactionOfCommentById(
-      id,
-      ownReaction,
-      reactionCounts,
-      comment,
-    );
+    // disable rollback in case limit 21 reaction
+    // yield onUpdateReactionOfCommentById(
+    //   id,
+    //   ownReaction,
+    //   reactionCounts,
+    //   comment,
+    // );
     yield showError(e);
   }
 }
@@ -956,6 +972,7 @@ function* postPublishDraftPost({
       const payloadGetDraftPosts: IPayloadGetDraftPosts = {
         isRefresh: true,
       };
+      yield put(homeActions.getHomePosts({isRefresh: true}));
       yield put(postActions.getDraftPosts(payloadGetDraftPosts));
     } else {
       onError?.();
@@ -1085,6 +1102,24 @@ function* getPostDetail({
       yield put(postActions.addToAllPosts({data: post}));
     }
     showError(e);
+  }
+}
+
+function* getCreatePostInitAudiences({
+  payload,
+}: {
+  type: string;
+  payload: IParamGetPostAudiences;
+}): any {
+  try {
+    const response = yield postDataHelper.getPostAudience(payload);
+    if (response?.data) {
+      yield put(
+        postActions.setCreatePostInitAudiences(response.data as IPostAudience),
+      );
+    }
+  } catch (e: any) {
+    console.log(`\x1b[31m🐣️ saga getCreatePostInitAudiences e:`, e, `\x1b[0m`);
   }
 }
 

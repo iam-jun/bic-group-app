@@ -20,6 +20,13 @@ const initState = {
     images: [],
     imagesDraft: [],
     count: 0,
+    currentSettings: {
+      important: {
+        active: false,
+        expires_time: '',
+      },
+    },
+    initAudiences: null,
   },
   createComment: {
     loading: false,
@@ -112,6 +119,17 @@ function postReducer(state = initState, action: any = {}) {
           ...payload,
         },
       };
+    case postTypes.SET_CREATE_POST_CURRENT_SETTINGS:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          currentSettings: {
+            ...state?.createPost?.currentSettings,
+            ...payload,
+          },
+        },
+      };
     case postTypes.SET_CREATE_COMMENT:
       return {
         ...state,
@@ -126,6 +144,14 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           chosenAudiences: payload,
+        },
+      };
+    case postTypes.SET_CREATE_POST_INIT_AUDIENCES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          initAudiences: payload,
         },
       };
     case postTypes.SET_CREATE_POST_IMPORTANT:

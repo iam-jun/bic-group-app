@@ -3,6 +3,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
   IParamGetDraftPosts,
+  IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutEditPost,
@@ -157,13 +158,20 @@ export const postApiConfig = {
     },
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/search/audiences`,
+    url: `${ApiConfig.providers.bein.url}posts/audiences`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
       key,
     },
+  }),
+  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/audiences`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
   }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
@@ -538,6 +546,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postPublishDraftPost(draftPostId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getPostAudience: async (params: IParamGetPostAudiences) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getPostAudiences(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

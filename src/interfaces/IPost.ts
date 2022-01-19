@@ -144,6 +144,7 @@ export interface IPayloadPutEditPost {
   id: string;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
+  onRetry?: () => void;
 }
 
 export interface IPayloadPutEditComment {
@@ -379,6 +380,28 @@ export interface IPayloadPutEditDraftPost {
   publishNow: boolean;
 }
 
+export interface IPayloadCreateAutoSave {
+  data?: IActivityData;
+  audience?: {
+    user_ids: number[];
+    group_ids: number[];
+  };
+  tag_ids?: number[];
+  important?: IActivityImportant;
+  is_draft?: boolean;
+  createFromGroupId?: string | number;
+}
+
+export interface IPayloadPutEditAutoSave {
+  id: string;
+  data: IPayloadCreateAutoSave;
+}
+
+export interface IParamGetPostAudiences {
+  key?: string;
+  group_ids: string;
+}
+
 export interface IPayloadUpdateReaction {
   userId: string;
   data: ISocketReaction;
@@ -395,4 +418,8 @@ export interface ISocketReaction {
     comment_id?: string;
     reaction_counts?: IReactionCounts;
   };
+}
+
+export interface ICreatePostCurrentSettings {
+  important: IActivityImportant;
 }
