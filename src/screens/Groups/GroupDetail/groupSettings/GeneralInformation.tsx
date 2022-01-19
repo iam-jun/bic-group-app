@@ -20,9 +20,9 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
 
-import privacyTypes from '~/constants/privacyTypes';
-import useGroups from '~/hooks/groups';
+import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IFilePicked} from '~/interfaces/common';
 import images from '~/resources/images';
@@ -38,6 +38,9 @@ import {ITheme} from '~/theme/interfaces';
 import {titleCase} from '~/utils/common';
 import GroupSectionItem from '../components/GroupSectionItem';
 import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import Markdown from '~/beinComponents/Markdown';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
@@ -49,9 +52,14 @@ const GeneralInformation = (props: any) => {
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const {groupDetail, loadingAvatar, loadingCover} = useGroups();
   const {name, icon, background_img_url, description, privacy} =
-    groupDetail.group;
+    useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
+  const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
+
+  const totalPendingMembers = useKeySelector(
+    groupsKeySelector.groupDetail.total_pending_members,
+  );
 
   const baseSheetRef: any = useRef();
   const {rootNavigation} = useRootNavigation();
@@ -72,17 +80,85 @@ const GeneralInformation = (props: any) => {
     );
   };
 
-  const editGroupPrivacy = (e: any) =>
+  const openGroupPrivacyModal = (e: any) =>
     baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
-  const onPrivacyMenuPress = (item: any) => {
-    baseSheetRef.current?.close();
+  const editGroupPrivacy = (item: any) => {
     dispatch(
       groupsActions.editGroupDetail(
         {id, privacy: item.type},
         i18next.t('common:text_privacy'),
       ),
     );
+  };
+
+  const approveAllMemberRequests = () => {
+    dispatch(
+      groupsActions.approveAllMemberRequests({
+        groupId: id,
+        total: totalPendingMembers,
+      }),
+    );
+    editGroupPrivacy({type: groupPrivacy.public});
+  };
+
+  const declineAllMemberRequests = () => {
+    dispatch(
+      groupsActions.declineAllMemberRequests({
+        groupId: id,
+        total: totalPendingMembers,
+      }),
+    );
+    editGroupPrivacy({type: groupPrivacy.secret});
+  };
+
+  const alertAction = (
+    title: string,
+    content: string,
+    doAction: () => void,
+  ) => {
+    const alertPayload = {
+      title: title,
+      content: content,
+      ContentComponent: Markdown,
+      contentProps: {
+        value: content,
+      },
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => doAction(),
+      confirmLabel: i18next.t('common:btn_confirm'),
+      ConfirmBtnComponent: Button.Secondary,
+      confirmBtnProps: {highEmphasis: true},
+    };
+
+    dispatch(modalActions.showAlert(alertPayload));
+  };
+
+  const onPrivacyMenuPress = (item: any) => {
+    baseSheetRef.current?.close();
+
+    if (privacy === groupPrivacy.private && totalPendingMembers > 0) {
+      if (item.type === groupPrivacy.public) {
+        alertAction(
+          i18next.t('groups:update_privacy_modal:title'),
+          i18next.t('groups:update_privacy_modal:content:approve'),
+          approveAllMemberRequests,
+        );
+      }
+
+      if (item.type === groupPrivacy.secret) {
+        alertAction(
+          i18next.t('groups:update_privacy_modal:title'),
+          i18next.t('groups:update_privacy_modal:content:decline'),
+          declineAllMemberRequests,
+        );
+      }
+    } else {
+      editGroupPrivacy(item);
+    }
   };
 
   const editGroupDescripton = () => {
@@ -244,7 +320,7 @@ const GeneralInformation = (props: any) => {
           title={'settings:title_privacy'}
           subtitle={titleCase(privacy) || ''}
           rightIcon={'EditAlt'}
-          onPress={e => editGroupPrivacy(e)}
+          onPress={e => openGroupPrivacyModal(e)}
         />
       </View>
     );

@@ -693,7 +693,7 @@ function* approveAllMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; total: number; callback: () => void};
+  payload: {groupId: number; total: number; callback?: () => void};
 }) {
   try {
     const {groupId, total, callback} = payload;
@@ -702,19 +702,20 @@ function* approveAllMemberRequests({
 
     yield put(groupsActions.getGroupDetail(groupId));
 
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all', {count: total})}`,
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-        rightIcon: 'UsersAlt',
-        rightText: 'Members',
-        onPressRight: callback,
-      },
-      toastType: 'normal',
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId));
+    if (callback) {
+      const toastMessage: IToastMessage = {
+        content: `${i18next.t('groups:text_approved_all', {count: total})}`,
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+          rightIcon: 'UsersAlt',
+          rightText: 'Members',
+          onPressRight: callback,
+        },
+        toastType: 'normal',
+      };
+      yield put(modalActions.showHideToastMessage(toastMessage));
+    }
   } catch (err: any) {
     console.log('approveAllMemberRequests: ', err);
 
@@ -763,12 +764,14 @@ function* declineAllMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; total: number};
+  payload: {groupId: number; total: number; callback?: () => void};
 }) {
   try {
-    const {groupId, total} = payload;
+    const {groupId, total, callback} = payload;
     yield groupsDataHelper.declineAllMemberRequests(groupId, total);
     yield put(groupsActions.getGroupDetail(groupId));
+
+    if (callback) callback();
   } catch (err: any) {
     console.log('declineAllMemberRequests: ', err);
 
