@@ -59,6 +59,11 @@ function* showSystemIssueThenLogout() {
   try {
     const {noInternet} = yield select();
     const isShownAlready = noInternet.systemIssue;
+
+    /**
+     * Return if the system issue modal is already shown
+     * to avoid putting another logging out in 2 seconds
+     */
     if (isShownAlready) return;
 
     yield put(actions.setSystemIssue(true));
