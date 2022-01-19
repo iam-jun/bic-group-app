@@ -59,7 +59,8 @@ const PostSelectAudience = () => {
     selectingAudiences,
   );
 
-  const disableButtonSave = selectingAudiences?.length === 0;
+  const disableButtonSave =
+    selectingAudiences?.length === 0 || !isAudiencesHasChanged;
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
