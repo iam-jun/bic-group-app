@@ -31,7 +31,7 @@ function* setIsInternetReachable(state: NetInfoState) {
 
   const result = state.isInternetReachable ? state.isConnected : false;
 
-  if (isSystemIssueModalVisible) yield actions.setSystemIssue(false);
+  if (isSystemIssueModalVisible) yield put(actions.setSystemIssue(false));
 
   if (isInternetReachable !== result)
     yield put(actions.setIsInternetReachable(result));
