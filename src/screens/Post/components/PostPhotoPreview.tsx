@@ -162,10 +162,17 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             <ViewSpacing width={4} height={4} />
             <View
               style={{flex: 1, flexDirection: isVertical ? 'column' : 'row'}}>
-              {renderSmallImage(data?.[1]?.origin_name, data?.[1]?.name)}
-              {renderSmallImage(data?.[2]?.origin_name, data?.[2]?.name, true)}
               {renderSmallImage(
-                data?.[3]?.origin_name,
+                data?.[1]?.origin_name || data?.[1]?.name,
+                data?.[1]?.name,
+              )}
+              {renderSmallImage(
+                data?.[2]?.origin_name || data?.[2]?.name,
+                data?.[2]?.name,
+                true,
+              )}
+              {renderSmallImage(
+                data?.[3]?.origin_name || data?.[3]?.name,
                 data?.[3]?.name,
                 true,
                 data?.length > 4,
