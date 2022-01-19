@@ -112,7 +112,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   } = createPostData || {};
   const {content} = data || {};
 
-  const initSelectingImagesRef = useRef([]);
+  const initSelectingImagesRef = useRef();
   const initGroupsRef = useRef<any>([]);
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
