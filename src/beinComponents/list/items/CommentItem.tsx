@@ -1,9 +1,8 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 import Animated, {
-  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -39,17 +38,27 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
+  const [commentStatus, setCommentStatus] = useState(
+    commentData?.status || null,
+  );
+
   const progress = useSharedValue(0);
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(progress.value, [0, 0.33, 1], [0, 0.5, 1]),
-  }));
+  const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
 
   useEffect(() => {
-    showComment();
-  }, []);
+    if (commentStatus === 'success' || commentStatus === null) {
+      showComment(1);
+    } else if (commentStatus === 'pending') {
+      showComment(0.5);
+    }
+  }, [commentStatus]);
 
-  const showComment = (duration = 300) => {
-    progress.value = withTiming(1, {duration});
+  useEffect(() => {
+    setCommentStatus(commentData?.status || null);
+  }, [commentData?.status]);
+
+  const showComment = (value: number, duration = 300) => {
+    progress.value = withTiming(value, {duration});
   };
 
   const _onPressReply = useCallback(() => {
@@ -75,6 +84,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
           : [styles.container, animatedStyle]
       }>
       <CommentView
+        isActive={
+          commentStatus === 'success' || commentStatus === null ? true : false
+        }
         postId={postId}
         groupIds={groupIds}
         commentData={commentData}

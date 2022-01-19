@@ -110,6 +110,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         userId: userId,
         onSuccess: _onCommentSuccess,
         preComment: {
+          status: 'pending',
           // localId is used for finding and updating comment data from API later
           localId: uuid.v4(),
           user_id: userId,

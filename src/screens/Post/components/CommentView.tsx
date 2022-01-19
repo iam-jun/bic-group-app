@@ -33,6 +33,7 @@ import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 
 export interface CommentViewProps {
+  isActive: boolean;
   postId: string;
   groupIds: string;
   parentCommentId?: string;
@@ -42,6 +43,7 @@ export interface CommentViewProps {
 }
 
 const _CommentView: React.FC<CommentViewProps> = ({
+  isActive,
   postId,
   groupIds,
   parentCommentId,
@@ -216,16 +218,18 @@ const _CommentView: React.FC<CommentViewProps> = ({
     }
 
     return (
-      <Animated.View style={[styles.webMenuButton, {opacity: animated}]}>
-        <Button>
-          <Icon
-            style={{}}
-            onPress={onLongPress}
-            icon={'EllipsisH'}
-            tintColor={colors.textSecondary}
-          />
-        </Button>
-      </Animated.View>
+      isActive && (
+        <Animated.View style={[styles.webMenuButton, {opacity: animated}]}>
+          <Button>
+            <Icon
+              style={{}}
+              onPress={onLongPress}
+              icon={'EllipsisH'}
+              tintColor={colors.textSecondary}
+            />
+          </Button>
+        </Animated.View>
+      )
     );
   };
 
@@ -237,7 +241,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         </ButtonWrapper>
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
           <Button
-            onLongPress={onLongPress}
+            onLongPress={isActive ? onLongPress : undefined}
             testID="comment_view.comment_content">
             <View style={{flex: 1}}>
               <View
@@ -282,16 +286,20 @@ const _CommentView: React.FC<CommentViewProps> = ({
               reactionCounts={children_counts}
               onAddReaction={onAddReaction}
               onRemoveReaction={onRemoveReaction}
-              onPressSelectReaction={onPressReact}
+              onPressSelectReaction={isActive ? onPressReact : undefined}
               onLongPressReaction={onLongPressReaction}
             />
-            <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-              <Text.ButtonSmall
-                style={styles.buttonReply}
-                color={colors.textSecondary}>
-                Reply
-              </Text.ButtonSmall>
-            </ButtonWrapper>
+            {isActive && (
+              <ButtonWrapper
+                onPress={_onPressReply}
+                testID="comment_view.reply">
+                <Text.ButtonSmall
+                  style={styles.buttonReply}
+                  color={colors.textSecondary}>
+                  Reply
+                </Text.ButtonSmall>
+              </ButtonWrapper>
+            )}
           </View>
         </View>
         {renderWebMenuButton()}

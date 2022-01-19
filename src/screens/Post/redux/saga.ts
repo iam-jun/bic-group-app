@@ -173,7 +173,6 @@ function* postCreateNewComment({
     }
 
     yield put(postActions.setCreateComment({loading: true}));
-    yield put(postActions.setScrollToLatestItem({parentCommentId}));
 
     // update comments or child comments
     if (!parentCommentId) {
@@ -192,6 +191,7 @@ function* postCreateNewComment({
       });
     }
 
+    yield put(postActions.setScrollToLatestItem({parentCommentId}));
     // clear content in text input
     onSuccess?.();
 
@@ -222,6 +222,7 @@ function* postCreateNewComment({
     yield put(postActions.addToAllComments(resComment));
     yield put(
       postActions.updateCommentSuccess({
+        status: 'success',
         localId: preComment.localId,
         postId,
         resultComment: resComment,

@@ -232,12 +232,10 @@ function postReducer(state = initState, action: any = {}) {
       };
     case postTypes.UPDATE_COMMENT_SUCCESS: {
       // update pre-comment with data receiving from API
-      const {localId, postId, resultComment, parentCommentId} = payload;
-      const allCommentsByPost = {...state.allCommentsByParentIds};
+      const {status, localId, postId, resultComment, parentCommentId} = payload;
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const postComments = [...allCommentsByPost[postId]];
       let comment;
-
-      // @ts-ignore
-      const postComments = allCommentsByPost[postId];
 
       if (parentCommentId) {
         // find parent comment
@@ -249,21 +247,23 @@ function postReducer(state = initState, action: any = {}) {
           postComments[parentCommentPosition].latest_children || {};
         const childrenComments = latestChildren.comment || [];
         const targetPosition = childrenComments.findIndex(
-          (item: IReaction & {localId: string}) => item?.localId === localId,
+          (item: IReaction) => item?.localId === localId,
         );
         comment = {
           ...childrenComments[targetPosition],
           ...resultComment,
+          status,
         };
         childrenComments[targetPosition] = comment;
       } else {
         const position = postComments.findIndex(
-          (item: IReaction & {localId: string}) => item?.localId === localId,
+          (item: IReaction) => item?.localId === localId,
         );
-        comment = {...postComments[position], ...resultComment};
+        comment = {...postComments[position], ...resultComment, status};
         postComments[position] = comment;
       }
 
+      allCommentsByPost[postId] = postComments;
       return {
         ...state,
         allCommentsByParentIds: allCommentsByPost,

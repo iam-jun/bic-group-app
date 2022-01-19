@@ -231,6 +231,8 @@ export interface IReaction {
   children_counts?: any;
   own_children?: any;
   loading?: boolean;
+  status?: 'pending' | 'success' | 'failed';
+  localId?: string | number[]; // from uuid-v4
 }
 
 export interface IGetStreamAudienceUser {

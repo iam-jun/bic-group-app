@@ -132,6 +132,7 @@ const postActions = {
   }),
   updateCommentSuccess: (payload: {
     localId: string | number[];
+    status: 'pending' | 'success' | 'failed';
     postId: string;
     resultComment: IReaction;
     parentCommentId?: string;
