@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   Text as RNText,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -175,6 +176,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refIsFocus = useRef<boolean>(false);
   const refIsRefresh = useRef<boolean>(false);
   const refToastAutoSave = useRef<any>();
+  const refTextInput = useRef<any>();
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -646,6 +648,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.navigate(homeStack.postSettings);
   };
 
+  const onPressInput = () => {
+    refTextInput.current?.setFocus();
+  };
+
   const renderContent = () => {
     // const Container = shouldScroll ? ScrollView : View;
 
@@ -753,27 +759,32 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      <View>
-        {!!important?.active && <ImportantStatus notExpired />}
-        <CreatePostChosenAudiences disabled={loading} />
-        <Divider />
-      </View>
-      {renderContent()}
-      {(!sPostId || isDraftPost) && (
-        <View style={styles.setting}>
-          <Button.Secondary
-            color={colors.bgHover}
-            leftIcon="SlidersVAlt"
-            style={styles.buttonSettings}
-            onPress={onPressSettings}
-            textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
-            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
-          </Button.Secondary>
+      <TouchableOpacity
+        style={styles.flex1}
+        onPress={onPressInput}
+        activeOpacity={1}>
+        <View>
+          {!!important?.active && <ImportantStatus notExpired />}
+          <CreatePostChosenAudiences disabled={loading} />
+          <Divider />
         </View>
-      )}
-      <Div className="post-toolbar-container">
-        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-      </Div>
+        {renderContent()}
+        {(!sPostId || isDraftPost) && (
+          <View style={styles.setting}>
+            <Button.Secondary
+              color={colors.bgHover}
+              leftIcon="SlidersVAlt"
+              style={styles.buttonSettings}
+              onPress={onPressSettings}
+              textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
+              {t('post:settings') + (count > 0 ? ` (${count})` : '')}
+            </Button.Secondary>
+          </View>
+        )}
+        <Div className="post-toolbar-container">
+          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+        </Div>
+      </TouchableOpacity>
     </ScreenWrapper>
   );
 };

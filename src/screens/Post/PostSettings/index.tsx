@@ -106,7 +106,7 @@ const PostSettings = () => {
     const newImportant = {...sImportant};
     newImportant.active = !sImportant.active;
     if (!newImportant.expires_time) {
-      newImportant.expires_time = getDefaultExpire();
+      newImportant.expires_time = getMinDate().toDateString();
     }
     if (newImportant.active && newImportant.expires_time) {
       const date = new Date(newImportant.expires_time);
