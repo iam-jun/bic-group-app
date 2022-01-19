@@ -59,6 +59,8 @@ const PostSelectAudience = () => {
     selectingAudiences,
   );
 
+  const disableButtonSave = selectingAudiences?.length === 0;
+
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
@@ -357,7 +359,7 @@ const PostSelectAudience = () => {
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}
         buttonText={'common:btn_done'}
-        buttonProps={{useI18n: true}}
+        buttonProps={{useI18n: true, disabled: disableButtonSave}}
         onPressButton={onPressSave}
         onPressBack={onPressBack}
         hideBackOnLaptop
