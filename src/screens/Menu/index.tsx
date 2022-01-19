@@ -144,6 +144,7 @@ const Menu = (): React.ReactElement => {
               testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
               rightSubTitle={item.rightSubTitle}
               isActive={isActive}
+              type={item.type}
             />
           );
         })}
