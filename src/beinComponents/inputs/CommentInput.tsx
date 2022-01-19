@@ -122,6 +122,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const [uploadError, setUploadError] = useState('');
 
   const emojiBoardRef = useRef<any>();
+  const _textInputRef = textInputRef || useRef();
 
   const _loading = loading || uploading;
 
@@ -361,9 +362,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
     onChangeText?.('');
   };
 
-  const focus = () => textInputRef.current?.focus?.();
+  const focus = () => _textInputRef.current?.focus?.();
 
-  const isFocused = () => textInputRef.current?.isFocused?.();
+  const isFocused = () => _textInputRef.current?.isFocused?.();
 
   const send = () => _onPressSend();
 
@@ -498,7 +499,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               selection={inputSelection}
               {...props}
               onContentSizeChange={_onContentSizeChange}
-              ref={textInputRef}
+              ref={_textInputRef}
               style={inputStyle}
               selectionColor={colors.textInput}
               multiline={true}

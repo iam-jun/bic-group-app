@@ -105,8 +105,14 @@ const PostSettings = () => {
   const onToggleImportant = () => {
     const newImportant = {...sImportant};
     newImportant.active = !sImportant.active;
-    if (!sImportant.expires_time) {
+    if (!newImportant.expires_time) {
       newImportant.expires_time = getDefaultExpire();
+    }
+    if (newImportant.active && newImportant.expires_time) {
+      const date = new Date(newImportant.expires_time);
+      if (date.getTime() < getMinDate().getTime()) {
+        newImportant.expires_time = getMinDate().toISOString();
+      }
     }
     setImportant(newImportant);
   };
