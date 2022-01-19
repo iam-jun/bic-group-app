@@ -170,6 +170,9 @@ const PostSelectAudience = () => {
             stretchOnWeb: true,
           }),
         );
+      } else {
+        dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
+        rootNavigation.goBack();
       }
     } else {
       dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
