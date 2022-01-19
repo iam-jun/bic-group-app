@@ -63,6 +63,7 @@ const _MentionInput = ({
 
   const _setContent = (c: string) => {
     componentInputProps.onChangeText?.(c);
+    componentInputProps?.commentInputRef?.current?.focus?.();
   };
 
   useImperativeHandle(_mentionInputRef, () => ({
