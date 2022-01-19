@@ -95,7 +95,7 @@ const handleSystemIssue = () => {
 
   if (isInternetReachable === false) return;
 
-  Store.store.dispatch(noInternetActions.showSystemIssue());
+  Store.store.dispatch(noInternetActions.showSystemIssueThenLogout());
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {

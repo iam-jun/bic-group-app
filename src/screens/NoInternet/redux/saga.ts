@@ -1,4 +1,4 @@
-import {put, select, takeLatest} from 'redux-saga/effects';
+import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 import actions from './actions';
@@ -7,8 +7,17 @@ import types from './types';
 
 export default function* noInternetSaga() {
   yield takeLatest(types.CHECK_IS_INTERNET_REACHABLE, checkIsInternetReachable);
-  yield takeLatest(types.SHOW_SYSTEM_ISSUE, showSystemIssue);
-  yield takeLatest(types.HIDE_SYSTEM_ISSUE, hideSystemIssue);
+
+  /**
+   * Need to check every showSystemIssue instead of take latest to handle
+   * the issue immediately. But we'll check whether to continue executing
+   * logging user out to avoid kicking them out multiple times in a short period
+   */
+  yield takeEvery(
+    types.SHOW_SYSTEM_ISSUE_THEN_LOGOUT,
+    showSystemIssueThenLogout,
+  );
+  yield takeEvery(types.HIDE_SYSTEM_ISSUE_AND_LOGOUT, hideSystemIssueAndLogout);
 }
 
 function timeOut(ms: number) {
@@ -17,9 +26,12 @@ function timeOut(ms: number) {
 
 function* setIsInternetReachable(state: NetInfoState) {
   const {noInternet} = yield select();
-  const {isInternetReachable} = noInternet;
+  const {isInternetReachable, systemIssue: isSystemIssueModalVisible} =
+    noInternet;
 
   const result = state.isInternetReachable ? state.isConnected : false;
+
+  if (isSystemIssueModalVisible) yield actions.setSystemIssue(false);
 
   if (isInternetReachable !== result)
     yield put(actions.setIsInternetReachable(result));
@@ -43,7 +55,7 @@ function* checkIsInternetReachable() {
   }
 }
 
-function* showSystemIssue() {
+function* showSystemIssueThenLogout() {
   try {
     const {noInternet} = yield select();
     const isShownAlready = noInternet.systemIssue;
@@ -51,16 +63,15 @@ function* showSystemIssue() {
 
     yield put(actions.setSystemIssue(true));
 
-    // Must run hideSystemIssue after 2 seconds
     const MODAL_VISIBLE_DURATION = 2000;
     yield timeOut(MODAL_VISIBLE_DURATION);
-    yield hideSystemIssue();
+    yield hideSystemIssueAndLogout();
   } catch (error) {
     console.log(`error`, error);
   }
 }
 
-function* hideSystemIssue() {
+function* hideSystemIssueAndLogout() {
   const {noInternet} = yield select();
   const isShownAlready = noInternet.systemIssue;
   if (!isShownAlready) return;
