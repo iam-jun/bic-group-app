@@ -85,8 +85,8 @@ const Notification = () => {
     }
 
     try {
-      if (act.notificationType !== undefined) {
-        switch (act.notificationType) {
+      if (act.notification_type !== undefined) {
+        switch (act.notification_type) {
           case NOTIFICATION_TYPE.MENTION: {
             const postAct = act.object;
             rootNavigation.navigate(homeStack.postDetail, {
@@ -158,7 +158,7 @@ const Notification = () => {
           }
           default:
             console.log(
-              `Notification type ${act.notificationType} have not implemented yet`,
+              `Notification type ${act.notification_type} have not implemented yet`,
             );
             break;
         }

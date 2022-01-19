@@ -10,7 +10,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {io} from 'socket.io-client';
 
-import {useUserIdAuth} from '~/hooks/auth';
+import {useAuthToken, useUserIdAuth} from '~/hooks/auth';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
@@ -48,7 +48,7 @@ const MainTabs = () => {
 
   const dispatch = useDispatch();
 
-  const token = useKeySelector('auth.user.signInUserSession.idToken.jwtToken');
+  const token = useAuthToken();
 
   const userId = useUserIdAuth();
   useEffect(() => {
@@ -76,6 +76,11 @@ const MainTabs = () => {
   }, [userId]);
 
   useEffect(() => {
+    if (!token) {
+      console.log(`\x1b[33m🐣️ Maintab: empty token \x1b[0m`);
+      return;
+    }
+
     dispatch(notificationsActions.getNotifications());
 
     const socket = io(getEnv('BEIN_FEED'), {

@@ -102,6 +102,13 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 
   useEffect(() => {
+    if (data?.length === 0) {
+      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit('showBottomBar', true);
+    }
+  }, [data?.length]);
+
+  useEffect(() => {
     if (!canLoadMore && !refreshing) {
       setInitializing(false);
     }
@@ -139,6 +146,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       //on iOS, when add more item, callback scroll fired as scroll up
       //so need lock 1 second to avoid header and bottom bar blink when load more
       if (lockHeaderRef.current) {
+        return;
+      }
+      // on iOS, pull to refresh will fire onScroll with negative offsetY, ignore to avoid hide header
+      if (offsetY < 0) {
         return;
       }
 
@@ -267,7 +278,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           layoutProvider={layoutProvider}
           dataProvider={dataProvider}
           rowRenderer={rowRenderer}
-          bounces={false}
+          // bounces={false}
           forceNonDeterministicRendering={true}
           onScroll={onScroll}
           onEndReached={_onEndReached}

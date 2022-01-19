@@ -11,7 +11,7 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
-import {isEqual} from 'lodash';
+import {isEqual, isEmpty, differenceWith} from 'lodash';
 
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
@@ -64,8 +64,8 @@ export interface CreatePostProps {
   };
 }
 
-const webContentMinHeight = 80;
-const webContentInsetHeight = 18;
+const webContentMinHeight = 45;
+const webContentInsetHeight = 0;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -112,7 +112,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   } = createPostData || {};
   const {content} = data || {};
 
-  const initSelectingImagesRef = useRef([]);
+  const initSelectingImagesRef = useRef();
   const initGroupsRef = useRef<any>([]);
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
@@ -164,7 +164,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     ...initPostData,
   });
 
-  const prevData = useRef<any>({selectingImages, chosenAudiences, count});
+  const prevData = useRef<any>({
+    selectingImages,
+    chosenAudiences,
+    count,
+    important,
+  });
   const refStopsTyping = useRef<any>();
   const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
@@ -198,16 +203,37 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   useEffect(() => {
     const dataChangeList = [
-      selectingImages?.length === prevData?.current?.selectingImages?.length,
-      chosenAudiences?.length === prevData?.current?.chosenAudiences?.length,
-      count === prevData?.current?.count,
+      isEmpty(
+        differenceWith(
+          selectingImages,
+          prevData?.current?.selectingImages,
+          isEqual,
+        ),
+      ),
+      isEmpty(
+        differenceWith(
+          chosenAudiences,
+          prevData?.current?.chosenAudiences,
+          isEqual,
+        ),
+      ),
+      isEqual(important, prevData?.current?.important),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
     if (isAutoSave && newDataChange.length > 0) {
-      prevData.current = {selectingImages, chosenAudiences, count};
+      prevData.current = {
+        ...prevData.current,
+        selectingImages,
+        chosenAudiences,
+        important,
+      };
       autoSaveDraftPost();
     }
-  }, [selectingImages?.length, chosenAudiences?.length, count]);
+  }, [
+    JSON.stringify(selectingImages),
+    JSON.stringify(chosenAudiences),
+    important,
+  ]);
 
   useEffect(() => {
     setPostData({...initPostData});
@@ -293,13 +319,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+      const initImportant = initPostData?.important || {};
+      dispatch(postActions.setCreatePostImportant(initImportant));
+      dispatch(
+        postActions.setCreatePostCurrentSettings({important: initImportant}),
+      );
       prevData.current = {
         ...prevData.current,
         chosenAudiences: initChosenAudience,
+        important: initImportant,
       };
-
-      const initImportant = initPostData?.important || {};
-      dispatch(postActions.setCreatePostImportant(initImportant));
     }
   }, [initPostData?.id]);
 
@@ -362,9 +391,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         return;
       }
     } else if (sPostId && refIsRefresh.current) {
-      if (!isNewsfeed) {
-        dispatch(postActions.getDraftPosts({isRefresh: true}));
-      }
+      dispatch(postActions.getDraftPosts({isRefresh: true}));
       dispatch(
         modalActions.showHideToastMessage({
           content: 'post:saved_to_draft',
@@ -454,7 +481,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
       const payload: IPayloadPutEditDraftPost = {
         id: sPostId,
-        replaceWithDetail: replaceWithDetail,
+        replaceWithDetail: true,
         data: draftData,
         publishNow: !isEditDraft,
       };
@@ -539,7 +566,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (important?.active) {
         payload.important = {
           active: important?.active,
-          expires_time: important?.expiresTime,
+          expires_time: important?.expires_time,
         };
       }
 
@@ -620,14 +647,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const renderContent = () => {
+    // const Container = shouldScroll ? ScrollView : View;
+
     return (
       <ScrollView>
         <View style={styles.flex1}>
           {isWeb ? (
-            <Animated.View
-              style={
-                shouldScroll ? {height: webInputHeightAnimated} : styles.flex1
-              }>
+            <Animated.View style={{height: webInputHeightAnimated}}>
               <View style={styles.textCloneContainer}>
                 <RNText
                   onLayout={onLayoutCloneText}
@@ -660,6 +686,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             <_MentionInput
               groupIds={strGroupIds}
               mentionInputRef={mentionInputRef}
+              style={{minHeight: 55}}
+              //   textInputStyle={shouldScroll ? {} : styles.flex1}
               ComponentInput={PostInput}
               componentInputProps={{
                 value: content,
@@ -676,6 +704,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
               disabled={loading}
             />
           )}
+          {renderToastAutoSave()}
           <PostPhotoPreview
             data={images || []}
             style={{alignSelf: 'center'}}
@@ -730,7 +759,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <Divider />
       </View>
       {renderContent()}
-      {renderToastAutoSave()}
       {(!sPostId || isDraftPost) && (
         <View style={styles.setting}>
           <Button.Secondary
@@ -852,6 +880,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
+      marginBottom: spacing.margin.base,
     },
     iconToastAutoSaveContainer: {marginRight: spacing.margin.tiny},
     iconToastAutoSave: {

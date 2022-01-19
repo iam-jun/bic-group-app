@@ -26,7 +26,6 @@ export interface CommentInputViewProps {
   postId: string;
   groupIds: string;
   autoFocus?: boolean;
-  textInputRef?: any;
   commentInputRef?: any;
   onCommentSuccess?: (data: {
     newCommentId: string;
@@ -38,7 +37,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   postId,
   groupIds = '',
   autoFocus,
-  textInputRef,
   commentInputRef,
   onCommentSuccess,
 }: CommentInputViewProps) => {
@@ -123,7 +121,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         groupIds={groupIds}
         ComponentInput={CommentInput}
         componentInputProps={{
-          textInputRef,
           commentInputRef: _commentInputRef,
           value: content,
           autoFocus: autoFocus,
