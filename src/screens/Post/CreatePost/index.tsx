@@ -113,7 +113,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   } = createPostData || {};
   const {content} = data || {};
 
-  const initSelectingImagesRef = useRef();
+  const initSelectingImagesRef = useRef([]);
   const initGroupsRef = useRef<any>([]);
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
@@ -135,11 +135,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isAudienceHasChange =
     !isEqual(initGroupsRef.current, groups) ||
     !isEqual(initUsersRef.current, users);
+  const isImageHasChange = !isEqual(
+    selectingImages,
+    initSelectingImagesRef.current,
+  );
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange =
     content !== initPostData?.object?.data?.content ||
-    !isEqual(selectingImages, initSelectingImagesRef.current) ||
+    isImageHasChange ||
     isAudienceHasChange;
   const isEditDraftPost = !!initPostData?.id && draftPostId;
 
@@ -257,12 +261,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, []);
 
   useEffect(() => {
-    if (!initSelectingImagesRef?.current && selectingImages?.length > 0) {
-      initSelectingImagesRef.current = selectingImages;
-    }
-  }, [selectingImages?.length]);
-
-  useEffect(() => {
     if (initPostData && (isEditDraftPost || isEditPost)) {
       //get post audience for select audience screen and check audience has changed
       initPostData?.audience?.groups?.map?.(g =>
@@ -294,6 +292,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       });
       dispatch(postActions.setCreatePostImagesDraft(initImages));
       dispatch(postActions.setCreatePostImages(initImages));
+      initSelectingImagesRef.current = initImages;
       prevData.current = {...prevData.current, selectingImages: initImages};
     }
   }, [initPostData]);

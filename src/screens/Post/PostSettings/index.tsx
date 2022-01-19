@@ -114,6 +114,9 @@ const PostSettings = () => {
         newImportant.expires_time = getMinDate().toISOString();
       }
     }
+    if (!newImportant.active) {
+      newImportant.expires_time = currentSettings?.important?.expires_time;
+    }
     setImportant(newImportant);
   };
 
