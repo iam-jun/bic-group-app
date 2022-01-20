@@ -1,12 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useCallback} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 import {IReaction} from '~/interfaces/IPost';
@@ -38,29 +33,6 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const [commentStatus, setCommentStatus] = useState(
-    commentData?.status || null,
-  );
-
-  const progress = useSharedValue(0);
-  const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
-
-  useEffect(() => {
-    if (commentStatus === 'success' || commentStatus === null) {
-      showComment(1);
-    } else if (commentStatus === 'pending') {
-      showComment(0.5);
-    }
-  }, [commentStatus]);
-
-  useEffect(() => {
-    setCommentStatus(commentData?.status || null);
-  }, [commentData?.status]);
-
-  const showComment = (value: number, duration = 300) => {
-    progress.value = withTiming(value, {duration});
-  };
-
   const _onPressReply = useCallback(() => {
     dispatch(
       postActions.setPostDetailReplyingComment({
@@ -77,16 +49,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const idLessThan = commentData?.latest_children?.comment?.[0]?.id;
 
   return (
-    <Animated.View
-      style={
-        commentParent
-          ? [styles.containerChild, animatedStyle]
-          : [styles.container, animatedStyle]
-      }>
+    <View style={commentParent ? styles.containerChild : styles.container}>
       <CommentView
-        isActive={
-          commentStatus === 'success' || commentStatus === null ? true : false
-        }
         postId={postId}
         groupIds={groupIds}
         commentData={commentData}
@@ -107,7 +71,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       ) : (
         <ViewSpacing height={0} />
       )}
-    </Animated.View>
+    </View>
   );
 };
 

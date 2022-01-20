@@ -230,7 +230,7 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         scrollToLatestItem: payload,
       };
-    case postTypes.UPDATE_COMMENT_SUCCESS: {
+    case postTypes.UPDATE_COMMENT_API: {
       // update pre-comment with data receiving from API
       const {status, localId, postId, resultComment, parentCommentId} = payload;
       const allCommentsByPost: any = {...state.allCommentsByParentIds};

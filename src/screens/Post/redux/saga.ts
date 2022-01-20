@@ -221,7 +221,7 @@ function* postCreateNewComment({
     // update comments or child comments again when receiving from API
     yield put(postActions.addToAllComments(resComment));
     yield put(
-      postActions.updateCommentSuccess({
+      postActions.updateCommentAPI({
         status: 'success',
         localId: preComment.localId,
         postId,
@@ -234,6 +234,15 @@ function* postCreateNewComment({
     yield put(postActions.setCreateComment({loading: false, content: ''}));
   } catch (e) {
     console.log('err:', e);
+    yield put(
+      postActions.updateCommentAPI({
+        status: 'failed',
+        localId: preComment.localId,
+        postId,
+        resultComment: {},
+        parentCommentId: parentCommentId,
+      }),
+    );
     yield put(postActions.setCreateComment({loading: false}));
     yield showError(e);
   }

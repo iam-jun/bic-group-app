@@ -130,14 +130,14 @@ const postActions = {
     type: postTypes.POST_CREATE_NEW_COMMENT,
     payload,
   }),
-  updateCommentSuccess: (payload: {
+  updateCommentAPI: (payload: {
     localId: string | number[];
     status: 'pending' | 'success' | 'failed';
     postId: string;
     resultComment: IReaction;
     parentCommentId?: string;
   }) => ({
-    type: postTypes.UPDATE_COMMENT_SUCCESS,
+    type: postTypes.UPDATE_COMMENT_API,
     payload,
   }),
   setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
