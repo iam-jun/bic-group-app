@@ -270,7 +270,7 @@ const PostSettings = () => {
                   : new Date()
               }
               minDate={getMinDate()}
-              //   maxDate={getMaxDate()}
+              maxDate={getMaxDate()}
               mode={Platform.OS === 'web' ? 'time' : 'date'}
               onConfirm={onChangeDatePicker}
               onCancel={onChangeDatePicker}
@@ -285,7 +285,7 @@ const PostSettings = () => {
                   : new Date()
               }
               minDate={getMinDate()}
-              //   maxDate={getMaxDate()}
+              maxDate={getMaxDate()}
               mode={'time'}
               onConfirm={onChangeTimePicker}
               onCancel={onChangeTimePicker}
