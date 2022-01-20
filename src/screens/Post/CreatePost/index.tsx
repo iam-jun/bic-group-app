@@ -64,8 +64,8 @@ export interface CreatePostProps {
   };
 }
 
-const webContentMinHeight = 80;
-const webContentInsetHeight = 30;
+const webContentMinHeight = 46;
+const webContentInsetHeight = 0;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -630,6 +630,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onLayoutCloneText = (e: any) => {
+    webInputHeight.current = e.nativeEvent.layout.height + 22;
     const newHeight = Math.max(
       e.nativeEvent.layout.height + webContentInsetHeight,
       webContentMinHeight,
@@ -652,11 +653,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       <ScrollView>
         <View style={styles.flex1}>
           {isWeb ? (
-            <Animated.View
-              style={{
-                height: webInputHeightAnimated,
-                justifyContent: 'flex-start',
-              }}>
+            <Animated.View style={{height: webInputHeightAnimated}}>
               <View style={styles.textCloneContainer}>
                 <RNText
                   onLayout={onLayoutCloneText}
@@ -684,33 +681,30 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 }}
                 disabled={loading}
               />
-              <View style={{minHeight: 34}}>{renderToastAutoSave()}</View>
             </Animated.View>
           ) : (
-            <>
-              <_MentionInput
-                groupIds={strGroupIds}
-                mentionInputRef={mentionInputRef}
-                style={{minHeight: 55}}
-                //   textInputStyle={shouldScroll ? {} : styles.flex1}
-                ComponentInput={PostInput}
-                componentInputProps={{
-                  value: content,
-                  onChangeText,
-                }}
-                autocompleteProps={{
-                  modalPosition: 'bottom',
-                  emptyContent: i18n.t('post:mention_empty_content'),
-                  showShadow: true,
-                  modalStyle: {maxHeight: 350},
-                  fullWidth: true,
-                }}
-                // title={i18n.t('post:mention_title')}
-                disabled={loading}
-              />
-              {renderToastAutoSave()}
-            </>
+            <_MentionInput
+              groupIds={strGroupIds}
+              mentionInputRef={mentionInputRef}
+              style={{minHeight: 55}}
+              //   textInputStyle={shouldScroll ? {} : styles.flex1}
+              ComponentInput={PostInput}
+              componentInputProps={{
+                value: content,
+                onChangeText,
+              }}
+              autocompleteProps={{
+                modalPosition: 'bottom',
+                emptyContent: i18n.t('post:mention_empty_content'),
+                showShadow: true,
+                modalStyle: {maxHeight: 350},
+                fullWidth: true,
+              }}
+              // title={i18n.t('post:mention_title')}
+              disabled={loading}
+            />
           )}
+          {renderToastAutoSave()}
           <PostPhotoPreview
             data={images || []}
             style={{alignSelf: 'center'}}
