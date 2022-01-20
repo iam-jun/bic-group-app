@@ -270,7 +270,7 @@ const PostSettings = () => {
                   : new Date()
               }
               minDate={getMinDate()}
-              maxDate={getMaxDate()}
+              //   maxDate={getMaxDate()}
               mode={Platform.OS === 'web' ? 'time' : 'date'}
               onConfirm={onChangeDatePicker}
               onCancel={onChangeDatePicker}
@@ -285,7 +285,7 @@ const PostSettings = () => {
                   : new Date()
               }
               minDate={getMinDate()}
-              maxDate={getMaxDate()}
+              //   maxDate={getMaxDate()}
               mode={'time'}
               onConfirm={onChangeTimePicker}
               onCancel={onChangeTimePicker}
@@ -309,11 +309,11 @@ const getMaxDate = () => {
   return new Date(max);
 };
 
-const getDefaultExpire = () => {
-  const max = getMaxDate();
-  const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
-  return new Date(maxWithTime).toISOString();
-};
+// const getDefaultExpire = () => {
+//   const max = getMaxDate();
+//   const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
+//   return new Date(maxWithTime).toISOString();
+// };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
