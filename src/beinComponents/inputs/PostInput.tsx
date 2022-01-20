@@ -32,6 +32,7 @@ export interface PostInputProps extends TextInputProps {
     | undefined;
   value: string;
   inputRef?: any;
+  onLayout: (e: any) => void;
 }
 
 const PostInput: React.FC<PostInputProps> = ({
@@ -47,6 +48,7 @@ const PostInput: React.FC<PostInputProps> = ({
   onSelectionChange,
   value,
   inputRef,
+  onLayout,
   ...props
 }: PostInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -101,6 +103,7 @@ const PostInput: React.FC<PostInputProps> = ({
       onSubmitEditing={onSubmitEditing}
       onSelectionChange={onSelectionChange}
       value={value}
+      onLayout={onLayout}
       {...props}
     />
   );

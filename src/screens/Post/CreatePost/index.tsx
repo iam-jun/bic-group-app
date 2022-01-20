@@ -66,7 +66,7 @@ export interface CreatePostProps {
 }
 
 const webContentMinHeight = 46;
-const webContentInsetHeight = 0;
+const webContentInsetHeight = 34;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -632,7 +632,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onLayoutCloneText = (e: any) => {
-    webInputHeight.current = e.nativeEvent.layout.height + 22;
     const newHeight = Math.max(
       e.nativeEvent.layout.height + webContentInsetHeight,
       webContentMinHeight,
@@ -684,6 +683,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 componentInputProps={{
                   value: content,
                   onChangeText,
+                  inputRef: refTextInput,
                 }}
                 disabled={loading}
               />
@@ -698,6 +698,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
               componentInputProps={{
                 value: content,
                 onChangeText,
+                inputRef: refTextInput,
               }}
               autocompleteProps={{
                 modalPosition: 'bottom',
