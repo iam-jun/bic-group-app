@@ -685,14 +685,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 disabled={loading}
               />
               <View style={{minHeight: 34}}>{renderToastAutoSave()}</View>
-              <PostPhotoPreview
-                data={images || []}
-                style={{alignSelf: 'center'}}
-                uploadType={uploadTypes.postImage}
-                onPress={() =>
-                  rootNavigation.navigate(homeStack.postSelectImage)
-                }
-              />
             </Animated.View>
           ) : (
             <>
@@ -719,6 +711,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
               {renderToastAutoSave()}
             </>
           )}
+          <PostPhotoPreview
+            data={images || []}
+            style={{alignSelf: 'center'}}
+            uploadType={uploadTypes.postImage}
+            onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
+          />
         </View>
       </ScrollView>
     );
