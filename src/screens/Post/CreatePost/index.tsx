@@ -66,7 +66,7 @@ export interface CreatePostProps {
 }
 
 const webContentMinHeight = 46;
-const webContentInsetHeight = 0;
+const webContentInsetHeight = 24;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -903,9 +903,9 @@ const themeStyles = (theme: ITheme) => {
     textContentClone: {
       position: 'absolute',
       top: 1,
-      left: 1,
+      left: 12,
+      right: 12,
       opacity: 0,
-      padding: spacing?.padding.base,
       fontSize: dimension?.sizes.body,
       fontFamily: fontFamilies.OpenSans,
       color: colors.success,
