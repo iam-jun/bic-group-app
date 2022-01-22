@@ -681,7 +681,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   style={styles.textContentClone}
                   //   onLayout={onLayoutCloneText}
                   ref={refRNText}>
-                  {content + 'W'}
+                  {content + '.'}
                 </RNText>
               </View>
               <Animated.View style={{height: webInputHeightAnimated}}>
