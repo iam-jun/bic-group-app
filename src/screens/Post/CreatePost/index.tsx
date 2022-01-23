@@ -183,6 +183,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refToastAutoSave = useRef<any>();
   const refTextInput = useRef<any>();
   const refRNText = useRef<any>();
+  const currentWebInputHeight = useRef<number>(webContentMinHeight);
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -651,6 +652,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           height + webContentInsetHeight + webPhotosHeight + toastHeight,
           webContentMinHeight + webPhotosHeight + toastHeight,
         );
+        if (currentWebInputHeight.current === newHeight) {
+          return;
+        }
+        currentWebInputHeight.current = newHeight;
         Animated.timing(webInputHeightAnimated, {
           toValue: newHeight,
           duration: 10,
