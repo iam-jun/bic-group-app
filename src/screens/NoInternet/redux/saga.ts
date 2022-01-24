@@ -26,12 +26,9 @@ function timeOut(ms: number) {
 
 function* setIsInternetReachable(state: NetInfoState) {
   const {noInternet} = yield select();
-  const {isInternetReachable, systemIssue: isSystemIssueModalVisible} =
-    noInternet;
+  const {isInternetReachable} = noInternet;
 
   const result = state.isInternetReachable ? state.isConnected : false;
-
-  if (isSystemIssueModalVisible) yield put(actions.setSystemIssue(false));
 
   if (isInternetReachable !== result)
     yield put(actions.setIsInternetReachable(result));
