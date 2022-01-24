@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useImperativeHandle, useRef} from 'react';
 import {
   Keyboard,
   KeyboardType,
@@ -31,6 +31,7 @@ export interface PostInputProps extends TextInputProps {
     | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
     | undefined;
   value: string;
+  inputRef?: any;
 }
 
 const PostInput: React.FC<PostInputProps> = ({
@@ -45,6 +46,7 @@ const PostInput: React.FC<PostInputProps> = ({
   onSubmitEditing = () => Keyboard.dismiss,
   onSelectionChange,
   value,
+  inputRef,
   ...props
 }: PostInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -59,8 +61,33 @@ const PostInput: React.FC<PostInputProps> = ({
     style,
   ]);
 
+  const refInput = inputRef || useRef<any>();
+  const refTextinput = useRef<any>();
+
+  const setFocus = () => {
+    refTextinput.current?.focus();
+  };
+
+  const setBlur = () => {
+    refTextinput.current?.blur();
+  };
+
+  const setClear = () => {
+    refTextinput.current?.clear();
+  };
+
+  const getFocused = () => refInput.current?.isFocused();
+
+  useImperativeHandle(refInput, () => ({
+    setFocus,
+    setBlur,
+    setClear,
+    getFocused,
+  }));
+
   return (
     <TextInput
+      ref={refTextinput}
       testID="post_input"
       textAlignVertical={textAlignVertical}
       style={inputStyle}
