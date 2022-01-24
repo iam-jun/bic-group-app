@@ -185,7 +185,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refTextInput = useRef<any>();
   const refRNText = useRef<any>();
   const currentWebInputHeight = useRef<number>(webContentMinHeight);
-  const refIsDelay = useRef<boolean>(false);
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -470,6 +469,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (loading) {
       return;
     }
+
     if (!isEdit) {
       clearTimeout(refAutoSave?.current);
       clearTimeout(refStopsTyping?.current);
@@ -504,7 +504,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         replaceWithDetail: true,
         data: draftData,
         publishNow: !isEditDraft,
-        isDelay: refIsDelay?.current || false,
       };
       dispatch(postActions.putEditDraftPost(payload));
     } else if (isEditPost && initPostData?.id) {
@@ -595,7 +594,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       }
 
       if (!isEdit) {
-        refIsDelay.current = true;
+        dispatch(postActions.setSavingDraftPost(true));
       }
 
       if (isDraftPost && sPostId) {
@@ -622,7 +621,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         setLoading(false);
       }
       if (!isEdit) {
-        refIsDelay.current = false;
+        dispatch(postActions.setSavingDraftPost(false));
         setShowToastAutoSave(true);
         clearTimeout(refToastAutoSave?.current);
         refToastAutoSave.current = setTimeout(() => {

@@ -378,7 +378,6 @@ export interface IPayloadPutEditDraftPost {
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   publishNow: boolean;
-  isDelay?: boolean;
 }
 
 export interface IPayloadCreateAutoSave {

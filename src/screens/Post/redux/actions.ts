@@ -221,6 +221,10 @@ const postActions = {
     type: postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     payload,
   }),
+  setSavingDraftPost: (payload: boolean) => ({
+    type: postTypes.SET_SAVING_DRAFT_POST,
+    payload,
+  }),
 };
 
 export default postActions;
