@@ -169,6 +169,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     ...initPostData,
   });
   const [webPhotosHeight, setWebPhotosHeight] = React.useState<number>(0);
+  const [sIsLoading, setLoading] = React.useState<boolean>(false);
 
   const prevData = useRef<any>({
     selectingImages,
@@ -466,12 +467,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     isSaveAsDraft?: boolean,
     isEditDraft?: boolean,
   ) => {
+    if (loading) {
+      return;
+    }
     if (!isEdit) {
       clearTimeout(refAutoSave?.current);
       clearTimeout(refStopsTyping?.current);
     }
-
-    console.log('onPressPost');
 
     const {imageError, images} = validateImages(selectingImages, t);
 
@@ -547,6 +549,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     setPause(true);
 
     try {
+      if (sIsLoading && !sPostId) {
+        return;
+      }
       const {imageError, images} = validateImages(selectingImages, t);
 
       const newContent = mentionInputRef?.current?.getContent?.() || content;
@@ -606,6 +611,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       } else if (isEdit && sPostId) {
         if (__DEV__) console.log('payload: ', payload);
       } else {
+        setLoading(true);
         payload.is_draft = true;
         const resp = await postDataHelper.postCreateNewPost(payload);
         refIsRefresh.current = true;
@@ -613,6 +619,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           const newData = resp?.data || {};
           setPostData({...newData});
         }
+        setLoading(false);
       }
       if (!isEdit) {
         refIsDelay.current = false;
