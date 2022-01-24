@@ -290,8 +290,11 @@ const _PostDetailContent = (props: any) => {
         commentParent={section?.comment}
         groupIds={groupIds}
         onPressReply={() => {
-          commentInputRef.current?.focus?.();
           scrollTo(section?.index, index + 1);
+          // set time out to wait hide context menu on web
+          setTimeout(() => {
+            commentInputRef?.current?.focus?.();
+          }, 200);
         }}
       />
     );
