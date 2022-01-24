@@ -991,13 +991,23 @@ function* putEditDraftPost({
   type: string;
   payload: IPayloadPutEditDraftPost;
 }): any {
-  const {id, data, replaceWithDetail, publishNow} = payload || {};
+  const {
+    id,
+    data,
+    replaceWithDetail,
+    publishNow,
+    isDelay = false,
+  } = payload || {};
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
     return;
   }
+
   try {
     yield put(postActions.setLoadingCreatePost(true));
+    if (isDelay) {
+      yield timeOut(2000);
+    }
     const response = yield postDataHelper.putEditPost({postId: id, data});
     if (response?.data) {
       if (publishNow) {
