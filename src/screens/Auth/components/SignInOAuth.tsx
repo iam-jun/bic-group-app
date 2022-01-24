@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {Button, useTheme} from 'react-native-paper';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
@@ -7,10 +7,9 @@ import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth'
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
-import Text from '~/components/texts/Text';
 import actions from '~/screens/Auth/redux/actions';
 import authProviders from '~/constants/authProviders';
-import {Container} from '~/components';
+import Text from '~/beinComponents/Text';
 
 const SignInOAuth = () => {
   const dispatch = useDispatch();
@@ -24,14 +23,14 @@ const SignInOAuth = () => {
   };
 
   return (
-    <Container>
+    <View style={styles.container}>
       <Button
         testID="btnLoginFB"
         uppercase={false}
         style={[styles.button, styles.buttonFacebook]}
         onPress={() => onPress(authProviders.FACEBOOK)}
         disabled={loading}>
-        <Text reverseDarkMode>{t('auth:btn_sign_in_fb')}</Text>
+        <Text useI18n>{t('auth:btn_sign_in_fb')}</Text>
       </Button>
       <Button
         testID="btnLoginGG"
@@ -39,7 +38,7 @@ const SignInOAuth = () => {
         style={[styles.button, styles.buttonGoogle]}
         onPress={() => onPress(authProviders.GOOGLE)}
         disabled={loading}>
-        <Text reverseDarkMode>{t('auth:btn_sign_in_gg')}</Text>
+        <Text>{t('auth:btn_sign_in_gg')}</Text>
       </Button>
       {Platform.OS !== 'android' && (
         <Button
@@ -48,16 +47,19 @@ const SignInOAuth = () => {
           style={[styles.button, styles.buttonApple]}
           onPress={() => onPress(authProviders.APPLE)}
           disabled={loading}>
-          <Text reverseDarkMode>{t('auth:btn_sign_in_apple')}</Text>
+          <Text>{t('auth:btn_sign_in_apple')}</Text>
         </Button>
       )}
-    </Container>
+    </View>
   );
 };
 
 const themeStyles = (theme: IObject<any>) => {
   const {spacing, colors} = theme;
   return StyleSheet.create({
+    container: {
+      padding: spacing.padding.large,
+    },
     button: {
       height: 44,
       justifyContent: 'center',
