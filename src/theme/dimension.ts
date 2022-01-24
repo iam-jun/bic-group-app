@@ -48,6 +48,7 @@ export const sizes = {
   subtitle: 12,
   error: 16,
   code: 16,
+  heading: 11,
 };
 
 /* Line Height used for Text */
@@ -69,6 +70,7 @@ export const lineHeights = {
   subtitle: 16,
   error: 24,
   code: 24,
+  heading: 16,
 };
 
 export const letterSpacing = {
