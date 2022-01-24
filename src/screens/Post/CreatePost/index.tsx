@@ -629,6 +629,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         }, 2000);
       }
     } catch (error) {
+      if (!isEdit) {
+        dispatch(postActions.setSavingDraftPost(false));
+      }
       if (__DEV__) console.log('error: ', error);
     }
   };
