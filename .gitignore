@@ -74,3 +74,8 @@ android/app/production/
 .bundle/
 GoogleService-Info-Production.plist
 GoogleService-Info-Staging.plist
+
+# Testing
+.nyc_output
+coverage
+.tmp
