@@ -58,7 +58,10 @@
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
     },
-    "message_remove_member_success": "Đã xóa {n} khỏi nhóm"
+    "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
+    "label_discard_changes": "Huỷ thay đổi",
+    "text_discard_warning": "Nếu bạn hủy thay đổi, bạn sẽ mất những thay đổi mà bạn đã thực hiện",
+    "btn_continue_editing": "Tiếp tục chỉnh sửa"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -286,7 +289,7 @@
     "add_file": "Thêm File",
     "placeholder_write_post": "Bạn đang nghĩ gì...",
     "placeholder_write_comment": "Viết bình luận của bạn...",
-    "create_post": "Tạo bài viết",
+    "title_create_post": "Tạo bài viết",
     "create_new_post": "Viết về ngày hôm nay của bạn...",
     "post_button": "Tạo",
     "send_to": "Tới",
@@ -345,12 +348,22 @@
     "text_discard_comment": "Nếu huỷ, bạn sẽ mất những nội dung đã nhập.",
     "btn_continue_comment": "Tiếp tục",
     "btn_discard_comment": "Bỏ",
+    "text_edit_post_success": "Đăng bài viết thành công",
+    "text_edit_post_failed": "Đăng bài viết thất bại",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
       "title_empty_cant_load_more": "Bạn đã xem hết rồi",
       "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi",
       "text_empty_search_post": "Xin lỗi, chúng tôi không tìm thấy\nnội dung bạn tìm kiếm"
+    },
+    "create_post": {
+      "title_discard_changes": "Huỷ thay đổi",
+      "title_audience_changed": "Đối tượng đã thay đổi",
+      "text_discard_change": "Bạn có chắc muốn huỷ những thay đổi?",
+      "text_discard_change_audience": "Bạn có chắc muốn đổi đối tượng? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
+      "btn_save_change": "Lưu thay đổi",
+      "btn_keep_edit": "Tiếp tục sửa"
     },
     "draft": {
       "btn_post_now": "Đăng ngay",
@@ -368,7 +381,9 @@
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
-    "people_can_react": "Mọi người có thể tương tác trên bài viết"
+    "people_can_react": "Mọi người có thể tương tác trên bài viết",
+    "auto_saved": "Bài viết đã lưu tự động",
+    "saved_to_draft": "Bài viết đã lưu vào nháp."
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",

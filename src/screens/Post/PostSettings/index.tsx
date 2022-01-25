@@ -21,6 +21,7 @@ import * as modalActions from '~/store/modal/actions';
 import {useBaseHook} from '~/hooks';
 import {useCreatePost} from '~/hooks/post';
 import {formatDate} from '~/utils/formatData';
+import {isEqual} from 'lodash';
 
 import {IActivityImportant} from '~/interfaces/IPost';
 
@@ -35,7 +36,7 @@ const PostSettings = () => {
 
   const styles = createStyle(theme);
   const createPostData = useCreatePost();
-  const {important} = createPostData || {};
+  const {important, currentSettings} = createPostData || {};
 
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
@@ -46,14 +47,13 @@ const PostSettings = () => {
     expires_time: '',
     ...important,
   });
-  //   const [comments, setComments] = useState<boolean>(true);
+  //   const [comments, setComments] = useState<boolean>(false);
   //   const [shares, setShares] = useState<boolean>(true);
   //   const [reacts, setReacts] = useState<boolean>(true);
-  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     checkDisableButtonSave();
-  }, [sImportant?.active]);
+  }, [sImportant]);
 
   const onPressBack = () => {
     if (disableButtonSave) {
@@ -77,27 +77,45 @@ const PostSettings = () => {
   };
 
   const onPressSave = () => {
-    dispatch(postActions.setCreatePostSettings({important: sImportant, count}));
+    const dataDefault = [
+      sImportant.active === currentSettings?.important?.active,
+      sImportant.expires_time === currentSettings?.important?.expires_time,
+    ];
+    const newCount = dataDefault.filter(i => !i);
+    dispatch(
+      postActions.setCreatePostSettings({
+        important: sImportant,
+        count: newCount?.length || 0,
+      }),
+    );
     rootNavigation.goBack();
   };
 
   const checkDisableButtonSave = () => {
     const dataCount = [
-      sImportant.active === important?.active,
+      isEqual(sImportant, important),
       //   comments,
       //   shares,
       //   reacts,
     ];
     const newCount = dataCount.filter(i => !i);
-    setCount(newCount.length);
     setDisableButtonSave(newCount.length === 0);
   };
 
   const onToggleImportant = () => {
     const newImportant = {...sImportant};
     newImportant.active = !sImportant.active;
-    if (!sImportant.expires_time) {
-      newImportant.expires_time = getDefaultExpire();
+    if (!newImportant.expires_time) {
+      newImportant.expires_time = getMinDate().toDateString();
+    }
+    if (newImportant.active && newImportant.expires_time) {
+      const date = new Date(newImportant.expires_time);
+      if (date.getTime() < getMinDate().getTime()) {
+        newImportant.expires_time = getMinDate().toISOString();
+      }
+    }
+    if (!newImportant.active) {
+      newImportant.expires_time = currentSettings?.important?.expires_time;
     }
     setImportant(newImportant);
   };
@@ -114,6 +132,9 @@ const PostSettings = () => {
           : new Date();
         date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
         expiresTime = date.toISOString();
+        if (date.getTime() < getMinDate().getTime()) {
+          expiresTime = getMinDate().toISOString();
+        }
       }
       newImportant.expires_time = expiresTime;
       setImportant(newImportant);
@@ -128,8 +149,13 @@ const PostSettings = () => {
       const date = sImportant.expires_time
         ? new Date(sImportant.expires_time)
         : new Date();
+
       date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      const expiresTime = date.toISOString();
+      let expiresTime = date.toISOString();
+
+      if (date.getTime() < getMinDate().getTime()) {
+        expiresTime = getMinDate().toISOString();
+      }
       newImportant.expires_time = expiresTime;
       setImportant(newImportant);
     }
@@ -243,7 +269,7 @@ const PostSettings = () => {
                   ? new Date(sImportant.expires_time)
                   : new Date()
               }
-              minDate={new Date()}
+              minDate={getMinDate()}
               maxDate={getMaxDate()}
               mode={Platform.OS === 'web' ? 'time' : 'date'}
               onConfirm={onChangeDatePicker}
@@ -258,7 +284,7 @@ const PostSettings = () => {
                   ? new Date(sImportant.expires_time)
                   : new Date()
               }
-              minDate={new Date()}
+              minDate={getMinDate()}
               maxDate={getMaxDate()}
               mode={'time'}
               onConfirm={onChangeTimePicker}
@@ -271,17 +297,23 @@ const PostSettings = () => {
   );
 };
 
+const getMinDate = () => {
+  const currentData = new Date();
+  const minDate = currentData.setHours(currentData.getHours() + 1);
+  return new Date(minDate);
+};
+
 const getMaxDate = () => {
   const now = new Date();
   const max = now.setDate(now.getDate() + MAX_DAYS);
   return new Date(max);
 };
 
-const getDefaultExpire = () => {
-  const max = getMaxDate();
-  const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
-  return new Date(maxWithTime).toISOString();
-};
+// const getDefaultExpire = () => {
+//   const max = getMaxDate();
+//   const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
+//   return new Date(maxWithTime).toISOString();
+// };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;

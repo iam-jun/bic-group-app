@@ -99,7 +99,7 @@ const StackNavigator = (): React.ReactElement => {
     checkAuthKickout();
     handleDeepLink();
     // Linking.addEventListener('url', handleOpenURL);
-    dispatch(noInternetActions.hideSystemIssue());
+    dispatch(noInternetActions.setSystemIssue(false));
   }, []);
 
   /*Handle when app killed*/

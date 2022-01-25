@@ -63,9 +63,11 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const prevOffsetYRef = useRef(0);
 
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
+  const {spacing, dimension} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
+
+  const refreshControlOffset = insets.top + dimension.headerHeight;
 
   const itemStyle = useRef({
     width: screenWidth,
@@ -98,6 +100,13 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     },
     [listView?.current],
   );
+
+  useEffect(() => {
+    if (data?.length === 0) {
+      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit('showBottomBar', true);
+    }
+  }, [data?.length]);
 
   useEffect(() => {
     if (!canLoadMore && !refreshing) {
@@ -137,6 +146,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       //on iOS, when add more item, callback scroll fired as scroll up
       //so need lock 1 second to avoid header and bottom bar blink when load more
       if (lockHeaderRef.current) {
+        return;
+      }
+      // on iOS, pull to refresh will fire onScroll with negative offsetY, ignore to avoid hide header
+      if (offsetY < 0) {
         return;
       }
 
@@ -265,7 +278,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           layoutProvider={layoutProvider}
           dataProvider={dataProvider}
           rowRenderer={rowRenderer}
-          bounces={false}
+          // bounces={false}
           forceNonDeterministicRendering={true}
           onScroll={onScroll}
           onEndReached={_onEndReached}
@@ -278,6 +291,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           scrollViewProps={{
             refreshControl: (
               <RefreshControl
+                progressViewOffset={refreshControlOffset}
                 refreshing={refreshing}
                 onRefresh={() => onRefresh?.()}
               />

@@ -51,7 +51,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   if (type === 'draftPost') {
     const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
     badgeNumber = draftPost?.length || 0;
-    badgeColor = colors.textSecondary;
+    badgeColor = colors.borderCard;
     if (badgeNumber > 9) {
       badgeNumber = '9+';
     }

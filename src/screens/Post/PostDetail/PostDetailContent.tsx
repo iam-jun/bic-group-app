@@ -64,7 +64,6 @@ const _PostDetailContent = (props: any) => {
   const params = props?.route?.params;
   const {post_id, focus_comment} = params || {};
 
-  const textInputRef = useRef<any>();
   const listRef = useRef<any>();
   const layoutSet = useRef(false);
 
@@ -230,8 +229,8 @@ const _PostDetailContent = (props: any) => {
 
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
-    textInputRef.current?.focus?.();
-  }, [textInputRef.current, sectionData.length]);
+    commentInputRef.current?.focus?.();
+  }, [commentInputRef.current, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -272,8 +271,11 @@ const _PostDetailContent = (props: any) => {
         commentData={comment}
         groupIds={groupIds}
         onPressReply={() => {
-          textInputRef.current?.focus?.();
           scrollTo(index, 0);
+          // set time out to wait hide context menu on web
+          setTimeout(() => {
+            commentInputRef?.current?.focus?.();
+          }, 200);
         }}
       />
     );
@@ -288,8 +290,11 @@ const _PostDetailContent = (props: any) => {
         commentParent={section?.comment}
         groupIds={groupIds}
         onPressReply={() => {
-          textInputRef.current?.focus?.();
           scrollTo(section?.index, index + 1);
+          // set time out to wait hide context menu on web
+          setTimeout(() => {
+            commentInputRef?.current?.focus?.();
+          }, 200);
         }}
       />
     );
@@ -308,7 +313,7 @@ const _PostDetailContent = (props: any) => {
         scrollTo(sectionIndex, -1);
       }
       if (focus_comment && Platform.OS === 'web') {
-        textInputRef.current?.focus?.();
+        commentInputRef.current?.focus?.();
       }
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
@@ -355,7 +360,6 @@ const _PostDetailContent = (props: any) => {
               postId={id}
               groupIds={groupIds}
               autoFocus={!!focus_comment}
-              textInputRef={textInputRef}
               onCommentSuccess={onCommentSuccess}
             />
           </View>

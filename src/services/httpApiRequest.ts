@@ -74,14 +74,9 @@ const dispatchStoreAuthTokens = (
   );
 };
 
-const _dispatchHideSystemIssue = () => {
-  Store.store.dispatch(noInternetActions.hideSystemIssue());
-};
-
 const refreshFailKickOut = () => {
   _dispatchLogout();
   _dispatchSessionExpire();
-  _dispatchHideSystemIssue;
   isRefreshingToken = false;
   // count retry limit
   countLimitRetry = 0;
@@ -104,13 +99,7 @@ const handleSystemIssue = () => {
 
   if (isInternetReachable === false) return;
 
-  Store.store.dispatch(noInternetActions.showSystemIssue());
-
-  const modalVisibleDuration = 2000;
-  setTimeout(() => {
-    _dispatchLogout();
-    _dispatchHideSystemIssue();
-  }, modalVisibleDuration);
+  Store.store.dispatch(noInternetActions.showSystemIssueThenLogout());
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
@@ -168,7 +157,7 @@ const handleRetry = async (error: AxiosError) => {
   // @ts-ignore
   switch (error.config?.provider?.name) {
     case apiConfig.providers.bein.name:
-      if (!error.config.headers.Authorization) {
+      if (!error.config.headers?.Authorization) {
         return Promise.reject(error);
       }
       break;
@@ -179,7 +168,7 @@ const handleRetry = async (error: AxiosError) => {
   // create new promise
   const newReqPromise = new Promise((resolve, reject) => {
     const newOrgConfig = {...error.config};
-    delete newOrgConfig.headers.Authorization;
+    delete newOrgConfig.headers?.Authorization;
 
     const callback: UnauthorizedReq = async (success: boolean) => {
       if (!success) {
@@ -200,7 +189,9 @@ const handleRetry = async (error: AxiosError) => {
   });
 
   // create request to refresh token
-  await getTokenAndCallBackBein(error.config.headers.Authorization);
+  if (error.config.headers) {
+    await getTokenAndCallBackBein(error.config.headers.Authorization);
+  }
 
   // next
   return newReqPromise;

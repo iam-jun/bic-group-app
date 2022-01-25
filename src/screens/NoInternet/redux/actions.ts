@@ -15,12 +15,12 @@ const noInternetActions = {
     payload,
   }),
 
-  showSystemIssue: () => ({
-    type: types.SHOW_SYSTEM_ISSUE,
+  showSystemIssueThenLogout: () => ({
+    type: types.SHOW_SYSTEM_ISSUE_THEN_LOGOUT,
   }),
 
-  hideSystemIssue: () => ({
-    type: types.HIDE_SYSTEM_ISSUE,
+  hideSystemIssueAndLogout: () => ({
+    type: types.HIDE_SYSTEM_ISSUE_AND_LOGOUT,
   }),
 };
 

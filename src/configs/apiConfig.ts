@@ -103,6 +103,9 @@ const App = {
       provider: providers.bein,
       useRetry: false,
       timeout: 5000,
+      headers: {
+        Authorization: authToken,
+      },
       data: {
         device_os: deviceOS,
         app_name: appBundleId,

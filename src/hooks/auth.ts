@@ -2,19 +2,27 @@ import {useSelector} from 'react-redux';
 import {IObject} from '~/interfaces/common';
 
 const useAuth = () => {
-  const auth = useSelector((state: IObject<any>) => state.auth);
-  return auth;
+  return useSelector((state: IObject<any>) => state.auth);
 };
 
 export const useUserIdAuth = () => {
-  const userId =
+  return (
     useSelector(
       (state: IObject<any>) =>
         state.auth?.user?.signInUserSession?.idToken?.payload?.[
           'custom:bein_user_id'
         ],
-    ) || '';
-  return userId;
+    ) || ''
+  );
+};
+
+export const useAuthToken = () => {
+  return (
+    useSelector(
+      (state: IObject<any>) =>
+        state.auth?.user?.signInUserSession?.idToken?.jwtToken,
+    ) || ''
+  );
 };
 
 export default useAuth;

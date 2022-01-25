@@ -3,6 +3,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
   IParamGetDraftPosts,
+  IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutEditPost,
@@ -78,11 +79,12 @@ export const postApiConfig = {
     useRetry: true,
     data: {data},
   }),
-  deletePost: (id: string): HttpApiRequestConfig => ({
+  deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
     url: `${provider.url}api/posts/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
+    ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
@@ -157,13 +159,20 @@ export const postApiConfig = {
     },
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/search/audiences`,
+    url: `${ApiConfig.providers.bein.url}posts/audiences`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
       key,
     },
+  }),
+  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/audiences`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
   }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
@@ -287,9 +296,11 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deletePost: async (id: string) => {
+  deletePost: async (id: string, isDraftPost?: boolean) => {
     try {
-      const response: any = await makeHttpRequest(postApiConfig.deletePost(id));
+      const response: any = await makeHttpRequest(
+        postApiConfig.deletePost(id, isDraftPost),
+      );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
@@ -538,6 +549,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postPublishDraftPost(draftPostId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getPostAudience: async (params: IParamGetPostAudiences) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getPostAudiences(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

@@ -92,6 +92,7 @@ const _PostView: FC<PostViewProps> = ({
     deleted: boolean,
     own_reactions: any,
     reaction_counts: IObject<number>,
+    is_draft: boolean,
     postObjectData: any;
 
   if (isUseReduxState) {
@@ -104,6 +105,7 @@ const _PostView: FC<PostViewProps> = ({
     reaction_counts = useKeySelector(
       postKeySelector.postReactionCountsById(postId),
     );
+    is_draft = useKeySelector(postKeySelector.postIsDraftById(postId));
     postObjectData = useKeySelector(postKeySelector.postObjectDataById(postId));
   } else {
     actor = postData?.actor;
@@ -162,6 +164,7 @@ const _PostView: FC<PostViewProps> = ({
             postId={postId}
             isPostDetail={isPostDetail}
             isActor={actor?.id == userId}
+            isDraftPost={is_draft}
           />
         ),
         props: {
@@ -307,6 +310,7 @@ const _PostView: FC<PostViewProps> = ({
             onPressComment={_onPressComment}
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
+            reactionCounts={reaction_counts}
           />
         )}
       </View>

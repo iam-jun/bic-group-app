@@ -1,11 +1,14 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get, isEmpty} from 'lodash';
+import i18n from 'i18next';
 
 import {
   IOwnReaction,
+  IParamGetPostAudiences,
   IParamGetPostDetail,
   IPayloadAddToAllPost,
   IPayloadCreateComment,
+  IPayloadDeletePost,
   IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
@@ -16,10 +19,13 @@ import {
   IPayloadReactToComment,
   IPayloadReactToPost,
   IPayloadUpdateCommentsById,
+  IPayloadUpdateReaction,
   IPostActivity,
+  IPostAudience,
   IPostCreatePost,
   IReaction,
   IReactionCounts,
+  ISocketReaction,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -71,6 +77,15 @@ export default function* postSaga() {
   yield takeEvery(postTypes.GET_DRAFT_POSTS, getDraftPosts);
   yield takeEvery(postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost);
   yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
+  yield takeLatest(postTypes.UPDATE_REACTION_BY_SOCKET, updateReactionBySocket);
+  yield takeLatest(
+    postTypes.UPDATE_UN_REACTION_BY_SOCKET,
+    updateUnReactionBySocket,
+  );
+  yield takeEvery(
+    postTypes.GET_CREATE_POST_INIT_AUDIENCES,
+    getCreatePostInitAudiences,
+  );
 }
 
 function* postCreateNewPost({
@@ -221,7 +236,7 @@ function* putEditPost({
   type: string;
   payload: IPayloadPutEditPost;
 }): any {
-  const {id, data, replaceWithDetail = true} = payload;
+  const {id, data, replaceWithDetail = true, onRetry} = payload;
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
     return;
@@ -231,14 +246,14 @@ function* putEditPost({
     const response = yield postDataHelper.putEditPost({postId: id, data});
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
-      const post = yield select(state =>
-        get(state, postKeySelector.postById(id)),
-      );
-      if (post?.object) {
-        post.object.data = data?.data || {};
-      }
-      //todo waiting for backend update response, replace whole object from response instead of local change
+      const post = response?.data;
       yield put(postActions.addToAllPosts({data: post}));
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_edit_post_success',
+          props: {textProps: {useI18n: true}, type: 'success'},
+        }),
+      );
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: post?.id});
       } else {
@@ -246,7 +261,19 @@ function* putEditPost({
       }
     }
   } catch (e) {
-    yield showError(e);
+    yield put(postActions.setLoadingCreatePost(false));
+    yield put(
+      modalActions.showHideToastMessage({
+        content: i18n.t('post:text_edit_post_failed'),
+        toastType: 'normal',
+        props: {
+          textProps: {useI18n: true},
+          type: 'error',
+          rightText: i18n.t('common:text_retry'),
+          onPressRight: onRetry,
+        },
+      }),
+    );
   }
 }
 
@@ -284,16 +311,22 @@ function* putEditComment({
   }
 }
 
-function* deletePost({payload}: {type: string; payload: string}): any {
-  if (!payload) {
+function* deletePost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadDeletePost;
+}): any {
+  const {id, isDraftPost} = payload || {};
+  if (!id) {
     console.log(`\x1b[31m🐣️ saga deletePost: id not found\x1b[0m`);
     return;
   }
   try {
-    const response = yield call(postDataHelper.deletePost, payload);
+    const response = yield postDataHelper.deletePost(id, isDraftPost);
     if (response?.data) {
       const post = yield select(state =>
-        get(state, postKeySelector.postById(payload)),
+        get(state, postKeySelector.postById(id)),
       );
       post.deleted = true;
       yield put(postActions.addToAllPosts({data: post}));
@@ -441,29 +474,28 @@ function* putReactionToPost({
         (newReactionCounts?.[reactionId] || 0) + 1;
       yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
-      const response = yield postDataHelper.putReactionToPost({
-        postId: id,
-        data,
-      });
-      if (response?.data?.[0]) {
-        const post2 = yield select(s => get(s, postKeySelector.postById(id)));
-        const cReactionCounts2 = post2.reaction_counts || {};
-        const cOwnReaction2 = post2.own_reactions || {};
-        const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
-
-        const reactionArr2: IReaction[] = [];
-        reactionArr2.push({id: response?.data?.[0]?.id});
-        newOwnReaction2[reactionId] = reactionArr2;
-
-        yield onUpdateReactionOfPostById(
-          id,
-          {...newOwnReaction2},
-          {...cReactionCounts2},
-        );
-      }
+      yield postDataHelper.putReactionToPost({postId: id, data});
+      // Disable update data base on response because of calculate wrong value when receive socket msg
+      // if (response?.data?.[0]) {
+      //   const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+      //   const cReactionCounts2 = post2.reaction_counts || {};
+      //   const cOwnReaction2 = post2.own_reactions || {};
+      //   const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
+      //
+      //   const reactionArr2: IReaction[] = [];
+      //   reactionArr2.push({id: response?.data?.[0]?.id});
+      //   newOwnReaction2[reactionId] = reactionArr2;
+      //
+      //   yield onUpdateReactionOfPostById(
+      //     id,
+      //     {...newOwnReaction2},
+      //     {...cReactionCounts2},
+      //   );
+      // }
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    // disable rollback in case error limit 21 reaction
+    // yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts);
     yield showError(e);
   }
 }
@@ -514,7 +546,7 @@ function* onUpdateReactionOfCommentById(
   commentId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
-  defaultComment: IReaction,
+  defaultComment?: IReaction,
 ): any {
   try {
     const allComments = yield select(state =>
@@ -528,6 +560,88 @@ function* onUpdateReactionOfCommentById(
     yield put(postActions.setAllComments(allComments));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
+  }
+}
+
+function* updateReactionBySocket({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadUpdateReaction;
+}): any {
+  const {userId, data} = payload || {};
+  const {actor, reaction, post, comment} = data as ISocketReaction;
+
+  const isCurrentUser = userId == actor?.id;
+
+  if (comment?.comment_id) {
+    const {comment_id = '', reaction_counts = {}} = comment || {};
+    // handle reaction to comment
+    // merge own children if reaction's actor is current user
+    const c =
+      (yield select(s => get(s, postKeySelector.commentById(comment_id)))) ||
+      {};
+    const ownReactions = {...c.own_children};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [reaction];
+    }
+    yield onUpdateReactionOfCommentById(
+      comment_id,
+      ownReactions,
+      reaction_counts,
+    );
+  } else if (post?.post_id) {
+    const {post_id = '', reaction_counts = {}} = post || {};
+    // handle reaction to post
+    // merge own reaction if reaction's actor is current user
+    const p =
+      (yield select(state => get(state, postKeySelector.postById(post_id)))) ||
+      {};
+    const ownReactions = {...p.own_reactions};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [reaction];
+    }
+    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+  }
+}
+
+function* updateUnReactionBySocket({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadUpdateReaction;
+}): any {
+  const {userId, data} = payload || {};
+  const {actor, post, comment, reaction} = (data as ISocketReaction) || {};
+
+  const isCurrentUser = userId == actor?.id;
+
+  if (comment?.comment_id) {
+    // handle un-react comment
+    const {comment_id, reaction_counts = {}} = comment || {};
+    const c =
+      (yield select(s => get(s, postKeySelector.commentById(comment_id)))) ||
+      {};
+    const ownReactions = {...c.own_children};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [];
+    }
+    yield onUpdateReactionOfCommentById(
+      comment?.comment_id,
+      ownReactions,
+      reaction_counts,
+    );
+  } else if (post?.post_id) {
+    const {post_id, reaction_counts = {}} = post;
+    // handle un-react post
+    const p =
+      (yield select(state => get(state, postKeySelector.postById(post_id)))) ||
+      {};
+    const ownReactions = {...p.own_reactions};
+    if (isCurrentUser && reaction?.kind) {
+      ownReactions[reaction.kind] = [];
+    }
+    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
   }
 }
 
@@ -577,35 +691,34 @@ function* putReactionToComment({
         comment,
       );
 
-      const response = yield postDataHelper.putReactionToComment({
-        commentId: id,
-        data,
-      });
-      if (response?.data?.[0]) {
-        const cComment2 =
-          (yield select(s => get(s, postKeySelector.commentById(id)))) ||
-          comment;
-        const cReactionCount2 = cComment2.children_counts || {};
-        const cOwnReactions2 = cComment2.own_children || {};
-        const newOwnChildren2 = {...cOwnReactions2};
-        const reactionArr2: IReaction[] = [];
-        reactionArr2.push({id: response?.data?.[0]?.id});
-        newOwnChildren2[reactionId] = reactionArr2;
-        yield onUpdateReactionOfCommentById(
-          id,
-          newOwnChildren2,
-          {...cReactionCount2},
-          comment,
-        );
-      }
+      yield postDataHelper.putReactionToComment({commentId: id, data});
+      // Disable update data base on response because of calculate wrong value when receive socket msg
+      // if (response?.data?.[0]) {
+      //   const cComment2 =
+      //     (yield select(s => get(s, postKeySelector.commentById(id)))) ||
+      //     comment;
+      //   const cReactionCount2 = cComment2.children_counts || {};
+      //   const cOwnReactions2 = cComment2.own_children || {};
+      //   const newOwnChildren2 = {...cOwnReactions2};
+      //   const reactionArr2: IReaction[] = [];
+      //   reactionArr2.push({id: response?.data?.[0]?.id});
+      //   newOwnChildren2[reactionId] = reactionArr2;
+      //   yield onUpdateReactionOfCommentById(
+      //     id,
+      //     newOwnChildren2,
+      //     {...cReactionCount2},
+      //     comment,
+      //   );
+      // }
     }
   } catch (e) {
-    yield onUpdateReactionOfCommentById(
-      id,
-      ownReaction,
-      reactionCounts,
-      comment,
-    );
+    // disable rollback in case limit 21 reaction
+    // yield onUpdateReactionOfCommentById(
+    //   id,
+    //   ownReaction,
+    //   reactionCounts,
+    //   comment,
+    // );
     yield showError(e);
   }
 }
@@ -866,6 +979,7 @@ function* postPublishDraftPost({
       const payloadGetDraftPosts: IPayloadGetDraftPosts = {
         isRefresh: true,
       };
+      yield put(homeActions.getHomePosts({isRefresh: true}));
       yield put(postActions.getDraftPosts(payloadGetDraftPosts));
     } else {
       onError?.();
@@ -889,8 +1003,17 @@ function* putEditDraftPost({
     console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
     return;
   }
+
   try {
     yield put(postActions.setLoadingCreatePost(true));
+    const isSavingDraftPost = yield select(
+      state => state?.post?.createPost?.isSavingDraftPost,
+    );
+    if (isSavingDraftPost) {
+      yield timeOut(300);
+      yield put(postActions.putEditDraftPost(payload));
+      return;
+    }
     const response = yield postDataHelper.putEditPost({postId: id, data});
     if (response?.data) {
       if (publishNow) {
@@ -918,7 +1041,7 @@ function* putEditDraftPost({
       yield put(postActions.setLoadingCreatePost(false));
     }
   } catch (e) {
-    yield put(postActions.setLoadingCreatePost(true));
+    yield put(postActions.setLoadingCreatePost(false));
     yield showError(e);
   }
 }
@@ -995,6 +1118,24 @@ function* getPostDetail({
       yield put(postActions.addToAllPosts({data: post}));
     }
     showError(e);
+  }
+}
+
+function* getCreatePostInitAudiences({
+  payload,
+}: {
+  type: string;
+  payload: IParamGetPostAudiences;
+}): any {
+  try {
+    const response = yield postDataHelper.getPostAudience(payload);
+    if (response?.data) {
+      yield put(
+        postActions.setCreatePostInitAudiences(response.data as IPostAudience),
+      );
+    }
+  } catch (e: any) {
+    console.log(`\x1b[31m🐣️ saga getCreatePostInitAudiences e:`, e, `\x1b[0m`);
   }
 }
 
