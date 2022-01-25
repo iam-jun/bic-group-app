@@ -28,6 +28,7 @@ import {
   IPostAudience,
   IParamGetPostAudiences,
   IPayloadUpdateReaction,
+  IPayloadDeletePost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -137,7 +138,7 @@ const postActions = {
     type: postTypes.PUT_EDIT_COMMENT,
     payload,
   }),
-  deletePost: (payload: string) => ({
+  deletePost: (payload: IPayloadDeletePost) => ({
     type: postTypes.DELETE_POST,
     payload,
   }),
@@ -219,6 +220,10 @@ const postActions = {
   }),
   updateUnReactionBySocket: (payload: IPayloadUpdateReaction) => ({
     type: postTypes.UPDATE_UN_REACTION_BY_SOCKET,
+    payload,
+  }),
+  setSavingDraftPost: (payload: boolean) => ({
+    type: postTypes.SET_SAVING_DRAFT_POST,
     payload,
   }),
 };

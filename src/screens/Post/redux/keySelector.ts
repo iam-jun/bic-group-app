@@ -29,6 +29,7 @@ const postKeySelector = {
   postImportantById: (id: string) => `post.allPosts.${id}.important`,
   postOwnReactionById: (id: string) => `post.allPosts.${id}.own_reactions`,
   postReactionCountsById: (id: string) => `post.allPosts.${id}.reaction_counts`,
+  postIsDraftById: (id: string) => `post.allPosts.${id}.is_draft`,
   postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
   postLatestReactionsComments: (id: string) =>
     `post.allPosts.${id}.latest_reactions.comment`,

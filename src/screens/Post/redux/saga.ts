@@ -8,6 +8,7 @@ import {
   IParamGetPostDetail,
   IPayloadAddToAllPost,
   IPayloadCreateComment,
+  IPayloadDeletePost,
   IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
@@ -310,16 +311,22 @@ function* putEditComment({
   }
 }
 
-function* deletePost({payload}: {type: string; payload: string}): any {
-  if (!payload) {
+function* deletePost({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadDeletePost;
+}): any {
+  const {id, isDraftPost} = payload || {};
+  if (!id) {
     console.log(`\x1b[31m🐣️ saga deletePost: id not found\x1b[0m`);
     return;
   }
   try {
-    const response = yield call(postDataHelper.deletePost, payload);
+    const response = yield postDataHelper.deletePost(id, isDraftPost);
     if (response?.data) {
       const post = yield select(state =>
-        get(state, postKeySelector.postById(payload)),
+        get(state, postKeySelector.postById(id)),
       );
       post.deleted = true;
       yield put(postActions.addToAllPosts({data: post}));
@@ -996,8 +1003,17 @@ function* putEditDraftPost({
     console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
     return;
   }
+
   try {
     yield put(postActions.setLoadingCreatePost(true));
+    const isSavingDraftPost = yield select(
+      state => state?.post?.createPost?.isSavingDraftPost,
+    );
+    if (isSavingDraftPost) {
+      yield timeOut(300);
+      yield put(postActions.putEditDraftPost(payload));
+      return;
+    }
     const response = yield postDataHelper.putEditPost({postId: id, data});
     if (response?.data) {
       if (publishNow) {
