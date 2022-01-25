@@ -32,6 +32,7 @@ import {IGroup} from '~/interfaces/IGroup';
 import useAuth from '~/hooks/auth';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import Icon from '~/beinComponents/Icon';
 
 export interface GroupHeaderMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -189,12 +190,47 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
     dispatch(modalActions.showAlertNewFeature());
   };
 
+  const onPressNewFeature = () => {
+    dispatch(modalActions.hideModal());
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const navigateToGroupAdmin = () => {
+    dispatch(modalActions.hideModal());
+    rootNavigation.navigate(groupStack.groupAdmin, {groupId});
+  };
+
   return (
     <View style={[styles.container, style]}>
+      {can_setting && (
+        <PrimaryItem
+          testID="group_header_menu.admin_tools"
+          height={48}
+          leftIconProps={{
+            icon: 'iconShieldStar',
+            size: 24,
+            tintColor: theme.colors.primary6,
+          }}
+          leftIcon={'iconShieldStar'}
+          title={t('groups:group_menu:label_admin_tools')}
+          onPress={navigateToGroupAdmin}
+          RightComponent={
+            <Icon
+              icon={'RightArrow'}
+              size={12}
+              tintColor={theme.colors.textSecondary}
+            />
+          }
+        />
+      )}
       <PrimaryItem
         testID="group_header_menu.copy_link"
         height={48}
-        leftIconProps={{icon: 'Link', size: 24}}
+        leftIconProps={{
+          icon: 'Copy',
+          size: 24,
+          tintColor: theme.colors.primary6,
+        }}
         leftIcon={'Link'}
         title={t('groups:group_menu:label_copy_group_link')}
         onPress={onPressCopyLink}
@@ -203,7 +239,11 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
         <PrimaryItem
           testID="group_header_menu.share_group"
           height={48}
-          leftIconProps={{icon: 'ShareAlt', size: 24}}
+          leftIconProps={{
+            icon: 'ShareAlt',
+            size: 24,
+            tintColor: theme.colors.primary6,
+          }}
           leftIcon={'ShareAlt'}
           title={t('groups:group_menu:label_share_group')}
           onPress={onPressShare}
@@ -213,17 +253,61 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
         <PrimaryItem
           testID="group_header_menu.share_chat"
           height={48}
-          leftIconProps={{icon: 'iconSend', size: 24}}
+          leftIconProps={{
+            icon: 'iconSend',
+            size: 24,
+            tintColor: theme.colors.primary6,
+          }}
           leftIcon={'iconSend'}
           title={t('groups:group_menu:label_share_to_chat')}
           onPress={onPressShareChat}
         />
       )}
+      <PrimaryItem
+        testID="group_header_menu.following"
+        height={48}
+        leftIconProps={{
+          icon: 'iconAddSquareDone',
+          size: 24,
+          tintColor: theme.colors.primary6,
+        }}
+        leftIcon={'iconAddSquareDone'}
+        title={t('groups:group_menu:label_following')}
+        onPress={onPressNewFeature}
+      />
+      <PrimaryItem
+        testID="group_header_menu.pin_group"
+        height={48}
+        leftIconProps={{
+          icon: 'iconMapPin',
+          size: 24,
+          tintColor: theme.colors.primary6,
+        }}
+        leftIcon={'iconMapPin'}
+        title={t('groups:group_menu:label_pin_group')}
+        onPress={onPressNewFeature}
+      />
+      <PrimaryItem
+        testID="group_header_menu.notifications"
+        height={48}
+        leftIconProps={{
+          icon: 'Bell',
+          size: 24,
+          tintColor: theme.colors.primary6,
+        }}
+        leftIcon={'Bell'}
+        title={t('groups:group_menu:label_notifications')}
+        onPress={onPressNewFeature}
+      />
       {isMember && (
         <PrimaryItem
           testID="group_header_menu.leave_group"
           height={48}
-          leftIconProps={{icon: 'SignOutAlt', size: 24}}
+          leftIconProps={{
+            icon: 'SignOutAlt',
+            size: 24,
+            tintColor: theme.colors.error,
+          }}
           leftIcon={'SignOutAlt'}
           title={t('groups:group_menu:label_leave_group')}
           onPress={onPressLeave}

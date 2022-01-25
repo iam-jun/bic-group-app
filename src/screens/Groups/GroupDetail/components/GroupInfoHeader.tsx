@@ -10,6 +10,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
 import groupsActions from '../../redux/actions';
+import {useBaseHook} from '~/hooks';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
@@ -24,6 +25,7 @@ const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
@@ -59,24 +61,19 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <Text.H5 style={styles.nameHeader}>{groupName}</Text.H5>
-
-        <View style={styles.groupInfo}>
+        <View style={[styles.groupInfo, {backgroundColor: 'white'}]}>
           <Icon
             style={styles.iconSmall}
             icon={'iconPrivate'}
-            size={16}
+            size={20}
             tintColor={theme.colors.iconTint}
           />
-          <Text.BodySM useI18n>{titleCase(privacy)}</Text.BodySM>
-          <Text.BodySM>{`  ⬩  `}</Text.BodySM>
-          <Icon
-            style={styles.iconSmall}
-            icon={'UsersAlt'}
-            size={17}
-            tintColor={theme.colors.iconTint}
-          />
-          <Text.BodySM>{user_count}</Text.BodySM>
+          <Text.H4 style={styles.nameHeader}>{groupName}</Text.H4>
+        </View>
+        <View style={styles.groupInfo}>
+          <Text.Subtitle>{`${user_count} ${t(
+            'groups:text_members',
+          )}`}</Text.Subtitle>
         </View>
       </View>
     );

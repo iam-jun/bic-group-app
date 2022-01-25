@@ -72,6 +72,7 @@ const GroupAdministration = (props: any) => {
           testID={testID}
           title={title}
           icon={icon}
+          iconProps={{icon: icon, tintColor: theme.colors.primary6}}
           notificationsBadgeNumber={notificationsBadgeNumber}
           notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
           rightSubIcon="AngleRightB"
@@ -84,7 +85,7 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textSecondary}
+        color={theme.colors.textPrimary}
         useI18n>
         settings:title_group_moderating
       </Text.H5>
@@ -116,7 +117,7 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textSecondary}
+        color={theme.colors.textPrimary}
         useI18n>
         settings:title_group_settings
       </Text.H5>
@@ -138,12 +139,14 @@ const GroupAdministration = (props: any) => {
         title={name}
         titleTextProps={{color: theme.colors.textPrimary}}
         avatar={icon}
+        style={{
+          paddingBottom: theme.spacing.padding.tiny,
+        }}
       />
+      <Divider style={styles.divider} />
       <View style={styles.container}>
         {renderGroupModerating()}
-        <Divider style={styles.divider} />
         {renderGroupSettings()}
-        <Divider />
       </View>
     </ScreenWrapper>
   );
@@ -168,10 +171,11 @@ const themeStyles = (theme: ITheme) => {
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.base,
+      fontWeight: '400',
     },
     divider: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
+      height: 5,
     },
   });
 };
