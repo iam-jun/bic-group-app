@@ -27,7 +27,7 @@ import {
   IPayloadAddToAllPost,
   IPostAudience,
   IParamGetPostAudiences,
-  IPayloadUpdateReaction,
+  IPayloadUpdateReaction, IPayloadDeletePost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -137,7 +137,7 @@ const postActions = {
     type: postTypes.PUT_EDIT_COMMENT,
     payload,
   }),
-  deletePost: (payload: string) => ({
+  deletePost: (payload: IPayloadDeletePost) => ({
     type: postTypes.DELETE_POST,
     payload,
   }),
