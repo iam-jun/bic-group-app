@@ -27,7 +27,8 @@ import {
   IPayloadAddToAllPost,
   IPostAudience,
   IParamGetPostAudiences,
-  IPayloadUpdateReaction, IPayloadDeletePost,
+  IPayloadUpdateReaction,
+  IPayloadDeletePost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
