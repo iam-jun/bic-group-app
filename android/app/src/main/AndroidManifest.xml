@@ -6,6 +6,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+
+    <permission
+        android:name="com.evol.bein.group.development.WRITE_DATABASE"
+        android:label="Write Database"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="com.evol.bein.group.development.READ_DATABASE"
+        android:label="Read Database"
+        android:protectionLevel="signature" />
 
     <application
         android:name=".MainApplication"
@@ -37,6 +48,14 @@
                 <data android:scheme="bein" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="com.poppop.RNReactNativeSharedGroupPreferences.SharedProvider"
+            android:authorities="com.evol.bein.group.development.SharedProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.evol.bein.group.development.READ_DATABASE"
+            android:writePermission="com.evol.bein.group.development.WRITE_DATABASE"
+            />
     </application>
     <queries>
         <intent>
@@ -45,3 +64,4 @@
         </intent>
     </queries>
 </manifest>
+
