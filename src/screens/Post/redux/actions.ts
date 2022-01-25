@@ -144,6 +144,15 @@ const postActions = {
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
+  postRetryAddComment: (payload: IReaction) => ({
+    type: postTypes.POST_RETRY_ADD_COMMENT,
+    payload,
+  }),
+  postCancelFailedComment: (payload: IReaction) => ({
+    type: postTypes.POST_CANCEL_FAILED_COMMENT,
+    payload,
+  }),
+
   putEditPost: (payload: IPayloadPutEditPost) => ({
     type: postTypes.PUT_EDIT_POST,
     payload,

@@ -269,6 +269,38 @@ function postReducer(state = initState, action: any = {}) {
         allCommentsByParentIds: allCommentsByPost,
       };
     }
+    case postTypes.POST_CANCEL_FAILED_COMMENT: {
+      // find and remove target reply comment
+      const {localId, parentCommentId, activity_id: postId} = payload;
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const postComments = [...allCommentsByPost[postId]];
+
+      if (parentCommentId) {
+        // find parent comment
+        const parentCommentPosition = postComments.findIndex(
+          (item: IReaction) => item.id === parentCommentId,
+        );
+
+        const latestChildren =
+          postComments[parentCommentPosition].latest_children || {};
+        const childrenComments = latestChildren.comment || [];
+        const targetPosition = childrenComments.findIndex(
+          (item: IReaction) => item?.localId === localId,
+        );
+        childrenComments.splice(targetPosition, 1);
+      } else {
+        const position = postComments.findIndex(
+          (item: IReaction) => item?.localId === localId,
+        );
+        postComments.splice(position, 1);
+      }
+
+      allCommentsByPost[postId] = postComments;
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
+      };
+    }
     case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
       return {
         ...state,

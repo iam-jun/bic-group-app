@@ -284,6 +284,14 @@ const _CommentView: React.FC<CommentViewProps> = ({
     );
   };
 
+  const onPressRetry = () => {
+    dispatch(postActions.postRetryAddComment(commentData));
+  };
+
+  const onPressCancel = () => {
+    dispatch(postActions.postCancelFailedComment(commentData));
+  };
+
   const renderErrorState = () => {
     return (
       commentStatus === 'failed' && (
@@ -292,11 +300,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
             common:text_failed_to_upload
           </Text.BodySM>
           <Text.BodySM>{`  • `}</Text.BodySM>
-          <Button>
+          <Button onPress={onPressRetry}>
             <Text.BodySM useI18n>common:text_retry</Text.BodySM>
           </Button>
           <Text.BodySM>{`  • `}</Text.BodySM>
-          <Button>
+          <Button onPress={onPressCancel}>
             <Text.BodySM useI18n>common:btn_cancel</Text.BodySM>
           </Button>
         </View>

@@ -126,6 +126,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           own_children: {},
           latest_children: {},
           created_at: new Date().toISOString(),
+          parentCommentId: replyTargetId,
         },
       };
       dispatch(postActions.postCreateNewComment(payload));
