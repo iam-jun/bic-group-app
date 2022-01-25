@@ -170,6 +170,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.background,
+          borderTopWidth: isFocused ? 2 : 0,
+          borderTopColor: colors.primary6,
         }}>
         <Icon icon={iconName} size={20} tintColor="none" />
         {isPhone && (

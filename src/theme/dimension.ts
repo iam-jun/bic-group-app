@@ -132,12 +132,12 @@ export const avatarSizes = {
   ultraSuperLarge: 96,
 };
 
-export const headerHeight = 48;
+export const headerHeight = 60;
 export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
 export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
-export const bottomBarHeight = 66;
+export const bottomBarHeight = 60;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;

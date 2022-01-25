@@ -754,6 +754,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           disabled: disableButtonPost,
           useI18n: true,
           highEmphasis: true,
+          style: {borderWidth: 0},
         }}
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
