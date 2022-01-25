@@ -27,6 +27,7 @@ const initState = {
       },
     },
     initAudiences: null,
+    isSavingDraftPost: false,
   },
   createComment: {
     loading: false,
@@ -192,6 +193,14 @@ function postReducer(state = initState, action: any = {}) {
         createPost: {
           ...state.createPost,
           searchResultAudienceUsers: payload,
+        },
+      };
+    case postTypes.SET_SAVING_DRAFT_POST:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          isSavingDraftPost: payload,
         },
       };
     case postTypes.SET_POST_DETAIL_REPLYING_COMMENT:
