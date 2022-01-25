@@ -79,11 +79,12 @@ export const postApiConfig = {
     useRetry: true,
     data: {data},
   }),
-  deletePost: (id: string): HttpApiRequestConfig => ({
+  deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
     url: `${provider.url}api/posts/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
+    ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
@@ -295,9 +296,11 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deletePost: async (id: string) => {
+  deletePost: async (id: string, isDraftPost?: boolean) => {
     try {
-      const response: any = await makeHttpRequest(postApiConfig.deletePost(id));
+      const response: any = await makeHttpRequest(
+        postApiConfig.deletePost(id, isDraftPost),
+      );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {

@@ -153,6 +153,11 @@ export interface IPayloadPutEditComment {
   data: IActivityData;
 }
 
+export interface IPayloadDeletePost {
+  id: string;
+  isDraftPost?: boolean;
+}
+
 export interface IParamGetPostDetail {
   postId: string;
 
