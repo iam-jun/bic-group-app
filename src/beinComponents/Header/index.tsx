@@ -228,8 +228,8 @@ const Header: React.FC<HeaderProps> = ({
             backgroundColor: colors.background,
             overflow: 'hidden',
             alignItems: 'center',
-            marginRight: spacing.margin.base,
-            marginLeft: spacing.margin.small,
+            paddingRight: spacing.padding.base,
+            paddingLeft: spacing.padding.small,
           }}>
           {/* <ViewSpacing width={spacing.margin.large} /> */}
           {!hideBack && !(hideBackOnLaptop && isLaptop) && (
@@ -393,6 +393,7 @@ const createStyle = (theme: ITheme) => {
       width: 48,
       justifyContent: 'center',
       alignItems: 'center',
+      padding: spacing.padding.base,
     },
     icon: {
       //marginLeft: spacing.margin.tiny,
@@ -401,6 +402,7 @@ const createStyle = (theme: ITheme) => {
       width: 48,
       justifyContent: 'center',
       alignItems: 'center',
+      padding: spacing.padding.base,
     },
     avatar: {
       marginLeft: 6,

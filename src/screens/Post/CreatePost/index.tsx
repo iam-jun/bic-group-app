@@ -548,7 +548,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     setPause(true);
 
     try {
-      if (sIsLoading && !sPostId) {
+      if ((sIsLoading && !sPostId) || loading) {
         return;
       }
       const {imageError, images} = validateImages(selectingImages, t);
