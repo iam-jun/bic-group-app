@@ -51,6 +51,7 @@ function timeOut(ms: number) {
 export default function* postSaga() {
   yield takeEvery(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
   yield takeEvery(postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment);
+  yield takeLatest(postTypes.POST_RETRY_ADD_COMMENT, postRetryAddComment);
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeEvery(postTypes.DELETE_POST, deletePost);
@@ -149,8 +150,15 @@ function* postCreateNewComment({
   type: string;
   payload: IPayloadCreateComment;
 }): any {
-  const {postId, parentCommentId, commentData, userId, onSuccess} =
-    payload || {};
+  const {
+    localId,
+    postId,
+    parentCommentId,
+    commentData,
+    userId,
+    preComment,
+    onSuccess,
+  } = payload || {};
   if (
     !postId ||
     !commentData ||
@@ -174,6 +182,32 @@ function* postCreateNewComment({
 
     yield put(postActions.setCreateComment({loading: true}));
 
+    // update comments or child comments
+    // retrying doesn't need this step
+    if (preComment) {
+      if (!parentCommentId) {
+        yield put(
+          postActions.updateAllCommentsByParentIdsWithComments({
+            id: postId,
+            comments: new Array(preComment),
+            isMerge: true,
+          }),
+        );
+      } else {
+        yield addChildCommentToCommentsOfPost({
+          postId: postId,
+          commentId: parentCommentId,
+          childComments: new Array(preComment),
+        });
+      }
+    }
+
+    yield put(postActions.setScrollToLatestItem({parentCommentId}));
+
+    onSuccess?.(); // clear content in text input
+
+    yield put(postActions.setPostDetailReplyingComment());
+
     let resComment;
     if (parentCommentId) {
       resComment = yield postDataHelper.postReplyComment({
@@ -187,9 +221,6 @@ function* postCreateNewComment({
       });
     }
 
-    //callback success first time for delete content in text input
-    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
-
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
     const newAllPosts = {...allPosts};
@@ -200,34 +231,65 @@ function* postCreateNewComment({
     newAllPosts[postId] = post;
     yield put(postActions.setAllPosts(newAllPosts));
 
-    //update comments or child comments
+    // update comments or child comments again when receiving from API
     yield put(postActions.addToAllComments(resComment));
-    if (!parentCommentId) {
+    yield put(
+      postActions.updateCommentAPI({
+        status: 'success',
+        // @ts-ignore
+        localId: localId || preComment?.localId,
+        postId,
+        resultComment: resComment,
+        parentCommentId: parentCommentId,
+      }),
+    );
+
+    yield put(postActions.setCreateComment({loading: false, content: ''}));
+  } catch (e) {
+    console.log('err:', e);
+    if (preComment) {
+      // retrying doesn't need to update status because status = 'failed' already
       yield put(
-        postActions.updateAllCommentsByParentIdsWithComments({
-          id: postId,
-          comments: new Array(resComment),
-          isMerge: true,
+        postActions.updateCommentAPI({
+          status: 'failed',
+          localId: preComment.localId,
+          postId,
+          resultComment: {},
+          parentCommentId: parentCommentId,
         }),
       );
-    } else {
-      yield addChildCommentToCommentsOfPost({
-        postId: postId,
-        commentId: parentCommentId,
-        childComments: new Array(resComment),
-      });
     }
-
-    yield put(postActions.setPostDetailReplyingComment());
-    yield put(postActions.setCreateComment({loading: false, content: ''}));
-
-    yield timeOut(800);
-    //callback success second time for scroll to item
-    onSuccess?.({newCommentId: resComment?.id, parentCommentId});
-  } catch (e) {
     yield put(postActions.setCreateComment({loading: false}));
     yield showError(e);
   }
+}
+
+function* postRetryAddComment({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: IReaction;
+}) {
+  const {activity_id, user_id, data, parentCommentId, localId} = payload;
+  const currentComment: IPayloadCreateComment = {
+    localId,
+    // @ts-ignore
+    postId: activity_id,
+    parentCommentId,
+    commentData: {
+      content: data?.content,
+      images: data?.images,
+    },
+    // @ts-ignore
+    userId: user_id,
+  };
+  /**
+   * preComment exists only when creating new comment from text input
+   * when retrying, the preComment already exists in the data store
+   * only need to update the data from API
+   */
+  yield postCreateNewComment({type, payload: currentComment});
 }
 
 function* putEditPost({

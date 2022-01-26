@@ -130,6 +130,29 @@ const postActions = {
     type: postTypes.POST_CREATE_NEW_COMMENT,
     payload,
   }),
+  updateCommentAPI: (payload: {
+    localId: string | number[];
+    status: 'pending' | 'success' | 'failed';
+    postId: string;
+    resultComment: IReaction;
+    parentCommentId?: string;
+  }) => ({
+    type: postTypes.UPDATE_COMMENT_API,
+    payload,
+  }),
+  setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
+    type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
+    payload,
+  }),
+  postRetryAddComment: (payload: IReaction) => ({
+    type: postTypes.POST_RETRY_ADD_COMMENT,
+    payload,
+  }),
+  postCancelFailedComment: (payload: IReaction) => ({
+    type: postTypes.POST_CANCEL_FAILED_COMMENT,
+    payload,
+  }),
+
   putEditPost: (payload: IPayloadPutEditPost) => ({
     type: postTypes.PUT_EDIT_POST,
     payload,
