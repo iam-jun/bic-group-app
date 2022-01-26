@@ -50,7 +50,6 @@ import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
-import {getUserFromSharedPreferences} from '~/services/sharePreferences';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -95,7 +94,6 @@ const StackNavigator = (): React.ReactElement => {
   };
 
   useEffect(() => {
-    test();
     //@ts-ignore
     isNavigationRefReady.current = false;
     checkAuthKickout();
@@ -103,11 +101,6 @@ const StackNavigator = (): React.ReactElement => {
     // Linking.addEventListener('url', handleOpenURL);
     dispatch(noInternetActions.setSystemIssue(false));
   }, []);
-
-  const test = async () => {
-    const data = await getUserFromSharedPreferences();
-    console.log('getUserProfile', data);
-  };
 
   /*Handle when app killed*/
   const handleDeepLink = async () => {

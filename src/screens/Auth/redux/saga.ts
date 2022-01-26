@@ -155,7 +155,7 @@ function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
   yield saveUserToSharedPreferences({
     username: userResponse.username,
     name,
-    token: userResponse.signInUserSession.idToken.jwtToken,
+    token: userResponse.signInUserSession.idToken?.jwtToken,
   });
 
   yield put(actions.setUser(userResponse));

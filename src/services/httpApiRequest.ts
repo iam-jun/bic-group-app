@@ -18,10 +18,7 @@ import * as modalActions from '~/store/modal/actions';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
-import {
-  saveDataToSharedStorage,
-  updateUserFromSharedPreferences,
-} from './sharePreferences';
+import {updateUserFromSharedPreferences} from './sharePreferences';
 
 const defaultTimeout = 10000;
 const commonHeaders = {

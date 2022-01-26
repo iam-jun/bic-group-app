@@ -9,12 +9,7 @@
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
 
     <permission
-        android:name="com.evol.bein.group.development.WRITE_DATABASE"
-        android:label="Write Database"
-        android:protectionLevel="signature" />
-
-    <permission
-        android:name="com.evol.bein.group.development.READ_DATABASE"
+        android:name="@string/provider_read_permission"
         android:label="Read Database"
         android:protectionLevel="signature" />
 
@@ -50,11 +45,10 @@
         </activity>
         <provider
             android:name="com.poppop.RNReactNativeSharedGroupPreferences.SharedProvider"
-            android:authorities="com.evol.bein.group.development.SharedProvider"
+            android:authorities="@string/provider_authorities"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="com.evol.bein.group.development.READ_DATABASE"
-            android:writePermission="com.evol.bein.group.development.WRITE_DATABASE"
+            android:readPermission="@string/provider_read_permission"
             />
     </application>
     <queries>
