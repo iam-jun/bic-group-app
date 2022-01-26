@@ -175,6 +175,8 @@ const Newsfeed = () => {
           onSearchText={onSearchText}
           onFocusSearch={onFocusSearch}
           onSubmitSearch={onSubmitSearch}
+          title={'post:news_feed'}
+          titleTextProps={{useI18n: true}}
         />
       </View>
     );

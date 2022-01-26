@@ -30,7 +30,7 @@ import Icon, {IconProps} from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import {ImageProps} from '../Image';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
+// import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 
@@ -231,7 +231,6 @@ const Header: React.FC<HeaderProps> = ({
             paddingRight: spacing.padding.base,
             paddingLeft: spacing.padding.small,
           }}>
-          {/* <ViewSpacing width={spacing.margin.large} /> */}
           {!hideBack && !(hideBackOnLaptop && isLaptop) && (
             <Icon
               testID="header.back"
@@ -239,7 +238,7 @@ const Header: React.FC<HeaderProps> = ({
               onPress={_onPressBack}
               size={24}
               hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-              style={styles.backButton}
+              style={styles.icon}
             />
           )}
           {!!avatar && (
@@ -386,31 +385,15 @@ const createStyle = (theme: ITheme) => {
       shadowRadius: 1,
       elevation: 2,
     },
-    backButton: {
-      //marginLeft: spacing.margin.tiny,
-      //marginRight: spacing.margin.large,
-      height: 48,
-      width: 48,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: spacing.padding.base,
-    },
     icon: {
-      //marginLeft: spacing.margin.tiny,
-      //marginRight: spacing.margin.large,
       height: 48,
       width: 48,
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.padding.base,
     },
-    avatar: {
-      marginLeft: 6,
-      marginRight: spacing.margin.large,
-    },
-    leftIcon: {
-      //   marginRight: spacing.margin.large,
-    },
+    avatar: {height: 40, width: 40},
+    leftIcon: {},
     titleContainer: {
       flex: 1,
       height: '100%',
@@ -421,7 +404,6 @@ const createStyle = (theme: ITheme) => {
     title: {
       height: 24,
       lineHeight: 24,
-      marginRight: spacing.margin.large,
     },
     subtitle: {
       height: 16,

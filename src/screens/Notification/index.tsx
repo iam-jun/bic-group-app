@@ -27,6 +27,7 @@ import {ITheme} from '~/theme/interfaces';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
+import images from '~/resources/images';
 
 const Notification = () => {
   const listRef = useRef<any>();
@@ -46,6 +47,8 @@ const Notification = () => {
 
   const showNoNotification = notificationList.length === 0;
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
+  const isWeb = Platform.OS === 'web';
 
   const [currentPath, setCurrentPath] = useState('');
 
@@ -215,6 +218,7 @@ const Notification = () => {
         removeBorderAndShadow={isLaptop}
         hideBack
         onPressMenu={onPressMenu}
+        avatar={isWeb ? undefined : images.logo_bein}
       />
       {showNoNotification && <NoNotificationFound />}
       {!showNoNotification && (
