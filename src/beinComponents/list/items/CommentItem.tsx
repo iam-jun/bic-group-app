@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
-import {IReaction} from '~/interfaces/IPost';
+import {StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {useTheme} from 'react-native-paper';
+
+import {ITheme} from '~/theme/interfaces';
+import {IReaction} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';

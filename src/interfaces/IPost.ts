@@ -137,7 +137,12 @@ export interface IPayloadCreateComment {
   parentCommentId?: string;
   commentData: IActivityData;
   userId: string | number;
-  onSuccess?: (data: {newCommentId: string; parentCommentId?: string}) => void;
+  localId?: string | number[]; // used when retry adding new comment
+  preComment?: IReaction & {
+    localId: string | number[]; // used when creating new comment
+    parentCommentId?: string;
+  };
+  onSuccess?: () => void;
 }
 
 export interface IPayloadPutEditPost {
@@ -188,6 +193,7 @@ export interface IGetStreamUser {
   data?: {
     avatar?: string;
     fullname?: string;
+    username?: string;
   };
 }
 
@@ -229,6 +235,9 @@ export interface IReaction {
   children_counts?: any;
   own_children?: any;
   loading?: boolean;
+  status?: 'pending' | 'success' | 'failed';
+  localId?: string | number[]; // from uuid-v4
+  parentCommentId?: string; // used when retry/cancel adding new comment
 }
 
 export interface IGetStreamAudienceUser {

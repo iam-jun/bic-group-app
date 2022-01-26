@@ -38,6 +38,7 @@ const postKeySelector = {
   allCommentsByParentIds: 'post.allCommentsByParentIds',
   commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
   commentById: (id?: string) => `post.allComments.${id}`,
+  scrollToLatestItem: 'post.scrollToLatestItem',
 };
 
 export default postKeySelector;
