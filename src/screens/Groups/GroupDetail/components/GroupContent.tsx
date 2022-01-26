@@ -88,6 +88,7 @@ const GroupContent = ({
                   onPress={onPressChat}
                   color={colors.bgHover}
                   textColor={colors.textPrimary}
+                  borderRadius={spacing.borderRadius.small}
                   testID="group_content.post">
                   groups:group_content:btn_post
                 </Button.Secondary>
@@ -99,6 +100,7 @@ const GroupContent = ({
               onPress={onPressAbout}
               color={colors.bgHover}
               textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
               testID="group_content.about">
               groups:group_content:btn_about
             </Button.Secondary>
@@ -109,6 +111,7 @@ const GroupContent = ({
                 onPress={onPressMembers}
                 color={colors.bgHover}
                 textColor={colors.textPrimary}
+                borderRadius={spacing.borderRadius.small}
                 testID="group_content.members">
                 groups:group_content:btn_members
               </Button.Secondary>
@@ -119,6 +122,7 @@ const GroupContent = ({
               onPress={onPressFiles}
               color={colors.bgHover}
               textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
               testID="group_content.files">
               groups:group_content:btn_files
             </Button.Secondary>

@@ -139,9 +139,6 @@ const GroupAdministration = (props: any) => {
         title={name}
         titleTextProps={{color: theme.colors.textPrimary}}
         avatar={icon}
-        style={{
-          paddingBottom: theme.spacing.padding.tiny,
-        }}
       />
       <Divider style={styles.divider} />
       <View style={styles.container}>
