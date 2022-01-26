@@ -61,7 +61,7 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <View style={[styles.groupInfo, {backgroundColor: 'white'}]}>
+        <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
             icon={'iconPrivate'}

@@ -59,6 +59,22 @@ const GroupAdministration = (props: any) => {
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
   };
 
+  const renderGroupSettingItem = ({item}: any) => {
+    if (!item) return null;
+    const {title = '', icon = '', rightSubIcon = ''} = item;
+    return (
+      <MenuItem
+        title={title}
+        icon={icon}
+        iconProps={{icon: icon, tintColor: theme.colors.primary6}}
+        rightSubIcon={rightSubIcon}
+        onPress={() => {
+          onGroupAdminPress(item);
+        }}
+      />
+    );
+  };
+
   const renderItem = (
     icon: IconType,
     title: string,
@@ -86,6 +102,7 @@ const GroupAdministration = (props: any) => {
       <Text.H5
         style={styles.headerTitle}
         color={theme.colors.textPrimary}
+        variant="body"
         useI18n>
         settings:title_group_moderating
       </Text.H5>
@@ -118,6 +135,7 @@ const GroupAdministration = (props: any) => {
       <Text.H5
         style={styles.headerTitle}
         color={theme.colors.textPrimary}
+        variant="body"
         useI18n>
         settings:title_group_settings
       </Text.H5>
@@ -125,8 +143,8 @@ const GroupAdministration = (props: any) => {
         type="menu"
         itemTestID="group_administration.settings"
         data={groupSettings}
+        renderItem={renderGroupSettingItem}
         scrollEnabled={false}
-        onItemPress={onGroupAdminPress}
         style={styles.settingsContainer}
         showItemSeparator={false}
       />
@@ -169,7 +187,6 @@ const themeStyles = (theme: ITheme) => {
     headerTitle: {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.base,
-      fontWeight: '400',
     },
     divider: {
       height: 5,
