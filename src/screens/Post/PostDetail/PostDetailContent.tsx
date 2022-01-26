@@ -92,6 +92,7 @@ const _PostDetailContent = (props: any) => {
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
+  const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
@@ -152,6 +153,13 @@ const _PostDetailContent = (props: any) => {
       rootNavigation.goBack();
     }
   }, [deleted]);
+
+  useEffect(() => {
+    if (scrollToLatestItem) {
+      onCommentSuccess(scrollToLatestItem);
+      dispatch(postActions.setScrollToLatestItem(null));
+    }
+  }, [scrollToLatestItem]);
 
   const getPostDetail = (
     callbackLoading?: (loading: boolean, success: boolean) => void,
@@ -290,8 +298,11 @@ const _PostDetailContent = (props: any) => {
         commentParent={section?.comment}
         groupIds={groupIds}
         onPressReply={() => {
-          commentInputRef.current?.focus?.();
           scrollTo(section?.index, index + 1);
+          // set time out to wait hide context menu on web
+          setTimeout(() => {
+            commentInputRef?.current?.focus?.();
+          }, 200);
         }}
       />
     );

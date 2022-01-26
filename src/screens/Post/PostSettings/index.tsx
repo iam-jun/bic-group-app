@@ -106,7 +106,7 @@ const PostSettings = () => {
     const newImportant = {...sImportant};
     newImportant.active = !sImportant.active;
     if (!newImportant.expires_time) {
-      newImportant.expires_time = getDefaultExpire();
+      newImportant.expires_time = getMinDate().toDateString();
     }
     if (newImportant.active && newImportant.expires_time) {
       const date = new Date(newImportant.expires_time);
@@ -309,11 +309,11 @@ const getMaxDate = () => {
   return new Date(max);
 };
 
-const getDefaultExpire = () => {
-  const max = getMaxDate();
-  const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
-  return new Date(maxWithTime).toISOString();
-};
+// const getDefaultExpire = () => {
+//   const max = getMaxDate();
+//   const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
+//   return new Date(maxWithTime).toISOString();
+// };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;

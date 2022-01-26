@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   Text as RNText,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -64,8 +65,8 @@ export interface CreatePostProps {
   };
 }
 
-const webContentMinHeight = 45;
-const webContentInsetHeight = 0;
+const webContentMinHeight = 46;
+const webContentInsetHeight = 24;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -167,6 +168,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const [sPostData, setPostData] = React.useState<IPostActivity>({
     ...initPostData,
   });
+  const [webPhotosHeight, setWebPhotosHeight] = React.useState<number>(0);
+  const [sIsLoading, setLoading] = React.useState<boolean>(false);
 
   const prevData = useRef<any>({
     selectingImages,
@@ -179,6 +182,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refIsFocus = useRef<boolean>(false);
   const refIsRefresh = useRef<boolean>(false);
   const refToastAutoSave = useRef<any>();
+  const refTextInput = useRef<any>();
+  const refRNText = useRef<any>();
+  const currentWebInputHeight = useRef<number>(webContentMinHeight);
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -238,6 +244,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     JSON.stringify(chosenAudiences),
     important,
   ]);
+
+  useEffect(() => {
+    if (isWeb) {
+      onLayoutAnimated();
+    }
+  }, [webPhotosHeight, isShowToastAutoSave, content]);
 
   useEffect(() => {
     setPostData({...initPostData});
@@ -454,6 +466,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     isSaveAsDraft?: boolean,
     isEditDraft?: boolean,
   ) => {
+    if (loading) {
+      return;
+    }
+
+    if (!isEdit) {
+      clearTimeout(refAutoSave?.current);
+      clearTimeout(refStopsTyping?.current);
+    }
+
     const {imageError, images} = validateImages(selectingImages, t);
 
     if (imageError) {
@@ -527,6 +548,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     setPause(true);
 
     try {
+      if (sIsLoading && !sPostId) {
+        return;
+      }
       const {imageError, images} = validateImages(selectingImages, t);
 
       const newContent = mentionInputRef?.current?.getContent?.() || content;
@@ -569,6 +593,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         };
       }
 
+      if (!isEdit) {
+        dispatch(postActions.setSavingDraftPost(true));
+      }
+
       if (isDraftPost && sPostId) {
         const newPayload: IPayloadPutEditAutoSave = {
           id: sPostId,
@@ -582,6 +610,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       } else if (isEdit && sPostId) {
         if (__DEV__) console.log('payload: ', payload);
       } else {
+        setLoading(true);
         payload.is_draft = true;
         const resp = await postDataHelper.postCreateNewPost(payload);
         refIsRefresh.current = true;
@@ -589,8 +618,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           const newData = resp?.data || {};
           setPostData({...newData});
         }
+        setLoading(false);
       }
       if (!isEdit) {
+        dispatch(postActions.setSavingDraftPost(false));
         setShowToastAutoSave(true);
         clearTimeout(refToastAutoSave?.current);
         refToastAutoSave.current = setTimeout(() => {
@@ -598,6 +629,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         }, 2000);
       }
     } catch (error) {
+      if (!isEdit) {
+        dispatch(postActions.setSavingDraftPost(false));
+      }
       if (__DEV__) console.log('error: ', error);
     }
   };
@@ -629,20 +663,37 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
-  const onLayoutCloneText = (e: any) => {
-    const newHeight = Math.max(
-      e.nativeEvent.layout.height + webContentInsetHeight,
-      webContentMinHeight,
+  const onLayoutPhotoPreview = (e: any) => {
+    setWebPhotosHeight(e.nativeEvent.layout.height);
+  };
+
+  const onLayoutAnimated = () => {
+    refRNText.current.measure(
+      (ox: any, oy: any, width: number, height: number) => {
+        const toastHeight = isShowToastAutoSave ? 34 : 0;
+        const newHeight = Math.max(
+          height + webContentInsetHeight + webPhotosHeight + toastHeight,
+          webContentMinHeight + webPhotosHeight + toastHeight,
+        );
+        if (currentWebInputHeight.current === newHeight) {
+          return;
+        }
+        currentWebInputHeight.current = newHeight;
+        Animated.timing(webInputHeightAnimated, {
+          toValue: newHeight,
+          duration: 10,
+          useNativeDriver: false,
+        }).start();
+      },
     );
-    Animated.timing(webInputHeightAnimated, {
-      toValue: newHeight,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
   };
 
   const onPressSettings = () => {
     rootNavigation.navigate(homeStack.postSettings);
+  };
+
+  const onPressInput = () => {
+    refTextInput.current?.setFocus();
   };
 
   const renderContent = () => {
@@ -652,64 +703,84 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       <ScrollView>
         <View style={styles.flex1}>
           {isWeb ? (
-            <Animated.View style={{height: webInputHeightAnimated}}>
+            <>
               <View style={styles.textCloneContainer}>
                 <RNText
-                  onLayout={onLayoutCloneText}
-                  style={styles.textContentClone}>
-                  {content}
+                  style={styles.textContentClone}
+                  //   onLayout={onLayoutCloneText}
+                  ref={refRNText}>
+                  {content + '.'}
                 </RNText>
               </View>
+              <Animated.View style={{height: webInputHeightAnimated}}>
+                <_MentionInput
+                  groupIds={strGroupIds}
+                  mentionInputRef={mentionInputRef}
+                  style={styles.flex1}
+                  textInputStyle={styles.flex1}
+                  autocompleteProps={{
+                    modalPosition: 'bottom',
+                    title: i18n.t('post:mention_title'),
+                    emptyContent: i18n.t('post:mention_empty_content'),
+                    showShadow: true,
+                    modalStyle: {maxHeight: 350},
+                  }}
+                  // onPress={onPressMentionAudience}
+                  ComponentInput={PostInput}
+                  componentInputProps={{
+                    value: content,
+                    onChangeText,
+                    inputRef: refTextInput,
+                  }}
+                  disabled={loading}
+                />
+                {renderToastAutoSave()}
+                <View onLayout={onLayoutPhotoPreview}>
+                  <PostPhotoPreview
+                    data={images || []}
+                    style={{alignSelf: 'center'}}
+                    uploadType={uploadTypes.postImage}
+                    onPress={() =>
+                      rootNavigation.navigate(homeStack.postSelectImage)
+                    }
+                  />
+                </View>
+              </Animated.View>
+            </>
+          ) : (
+            <>
               <_MentionInput
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
-                style={styles.flex1}
-                textInputStyle={styles.flex1}
-                autocompleteProps={{
-                  modalPosition: 'bottom',
-                  title: i18n.t('post:mention_title'),
-                  emptyContent: i18n.t('post:mention_empty_content'),
-                  showShadow: true,
-                  modalStyle: {maxHeight: 350},
-                }}
-                // onPress={onPressMentionAudience}
+                style={{minHeight: 55}}
+                //   textInputStyle={shouldScroll ? {} : styles.flex1}
                 ComponentInput={PostInput}
                 componentInputProps={{
                   value: content,
                   onChangeText,
+                  inputRef: refTextInput,
                 }}
+                autocompleteProps={{
+                  modalPosition: 'bottom',
+                  emptyContent: i18n.t('post:mention_empty_content'),
+                  showShadow: true,
+                  modalStyle: {maxHeight: 350},
+                  fullWidth: true,
+                }}
+                // title={i18n.t('post:mention_title')}
                 disabled={loading}
               />
-            </Animated.View>
-          ) : (
-            <_MentionInput
-              groupIds={strGroupIds}
-              mentionInputRef={mentionInputRef}
-              style={{minHeight: 55}}
-              //   textInputStyle={shouldScroll ? {} : styles.flex1}
-              ComponentInput={PostInput}
-              componentInputProps={{
-                value: content,
-                onChangeText,
-              }}
-              autocompleteProps={{
-                modalPosition: 'bottom',
-                emptyContent: i18n.t('post:mention_empty_content'),
-                showShadow: true,
-                modalStyle: {maxHeight: 350},
-                fullWidth: true,
-              }}
-              // title={i18n.t('post:mention_title')}
-              disabled={loading}
-            />
+              {renderToastAutoSave()}
+              <PostPhotoPreview
+                data={images || []}
+                style={{alignSelf: 'center'}}
+                uploadType={uploadTypes.postImage}
+                onPress={() =>
+                  rootNavigation.navigate(homeStack.postSelectImage)
+                }
+              />
+            </>
           )}
-          {renderToastAutoSave()}
-          <PostPhotoPreview
-            data={images || []}
-            style={{alignSelf: 'center'}}
-            uploadType={uploadTypes.postImage}
-            onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
-          />
         </View>
       </ScrollView>
     );
@@ -752,27 +823,32 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}
       />
-      <View>
-        {!!important?.active && <ImportantStatus notExpired />}
-        <CreatePostChosenAudiences disabled={loading} />
-        <Divider />
-      </View>
-      {renderContent()}
-      {(!sPostId || isDraftPost) && (
-        <View style={styles.setting}>
-          <Button.Secondary
-            color={colors.bgHover}
-            leftIcon="SlidersVAlt"
-            style={styles.buttonSettings}
-            onPress={onPressSettings}
-            textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
-            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
-          </Button.Secondary>
+      <TouchableOpacity
+        style={styles.flex1}
+        onPress={onPressInput}
+        activeOpacity={1}>
+        <View>
+          {!!important?.active && <ImportantStatus notExpired />}
+          <CreatePostChosenAudiences disabled={loading} />
+          <Divider />
         </View>
-      )}
-      <Div className="post-toolbar-container">
-        <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-      </Div>
+        {renderContent()}
+        {(!sPostId || isDraftPost) && (
+          <View style={styles.setting}>
+            <Button.Secondary
+              color={colors.bgHover}
+              leftIcon="SlidersVAlt"
+              style={styles.buttonSettings}
+              onPress={onPressSettings}
+              textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
+              {t('post:settings') + (count > 0 ? ` (${count})` : '')}
+            </Button.Secondary>
+          </View>
+        )}
+        <Div className="post-toolbar-container">
+          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+        </Div>
+      </TouchableOpacity>
     </ScreenWrapper>
   );
 };
@@ -855,9 +931,9 @@ const themeStyles = (theme: ITheme) => {
     textContentClone: {
       position: 'absolute',
       top: 1,
-      left: 1,
+      left: 12,
+      right: 12,
       opacity: 0,
-      padding: spacing?.padding.base,
       fontSize: dimension?.sizes.body,
       fontFamily: fontFamilies.OpenSans,
       color: colors.success,

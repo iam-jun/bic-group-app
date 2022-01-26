@@ -113,7 +113,8 @@
     "btn_decline_all": "Decline All",
     "text_request": "Request",
     "text_request_other": "Requests",
-    "text_admin": "Admin"
+    "text_admin": "Admin",
+    "text_failed_to_upload": "Failed to upload"
   },
   "auth": {
     "text_kickout_title": "Notice",
