@@ -227,7 +227,7 @@ const Header: React.FC<HeaderProps> = ({
             backgroundColor: colors.background,
             overflow: 'hidden',
             alignItems: 'center',
-            paddingRight: spacing.padding.base,
+            paddingRight: spacing.padding.small,
             paddingLeft: spacing.padding.small,
           }}>
           {!hideBack && !(hideBackOnLaptop && isLaptop) && (
@@ -237,7 +237,7 @@ const Header: React.FC<HeaderProps> = ({
               onPress={_onPressBack}
               size={24}
               hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-              style={styles.icon}
+              style={styles.iconBack}
             />
           )}
           {!!avatar && (
@@ -252,8 +252,8 @@ const Header: React.FC<HeaderProps> = ({
           )}
           {!!leftIcon && (
             <Icon
-              size={14}
-              style={styles.leftIcon}
+              size={24}
+              style={styles.icon}
               icon={leftIcon}
               onPress={onPressHeader}
               {...leftIconProps}
@@ -289,6 +289,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={onPressIcon}
+              backgroundColor={colors.bgSecondary}
             />
           )}
           {onSearchText && (
@@ -297,6 +298,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={_onPressSearch}
+              backgroundColor={colors.bgSecondary}
             />
           )}
           {onPressChat && (
@@ -305,6 +307,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={onPressChat}
+              backgroundColor={colors.bgSecondary}
             />
           )}
           {onPressMenu && (
@@ -313,6 +316,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={onPressMenu}
+              backgroundColor={colors.bgSecondary}
             />
           )}
           {buttonText && onPressButton && (
@@ -322,6 +326,7 @@ const Header: React.FC<HeaderProps> = ({
                 borderWidth: buttonProps?.disabled ? 0 : 1,
                 borderColor: colors.primary6,
                 height: 40,
+                marginRight: spacing.margin.tiny,
               }}
               textColor={colors.primary6}
               onPress={onPressButton}
@@ -335,6 +340,7 @@ const Header: React.FC<HeaderProps> = ({
               icon={rightIcon}
               style={styles.icon}
               onPress={onRightPress}
+              backgroundColor={colors.bgSecondary}
               {...rightIconProps}
             />
           )}
@@ -378,15 +384,23 @@ const createStyle = (theme: ITheme) => {
       shadowRadius: 1,
       elevation: 2,
     },
-    icon: {
+    iconBack: {
       height: 48,
       width: 48,
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.padding.base,
     },
+    icon: {
+      height: 40,
+      width: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.small,
+      borderRadius: 20,
+      marginRight: spacing.margin.tiny,
+    },
     avatar: {height: 40, width: 40},
-    leftIcon: {},
     titleContainer: {
       flex: 1,
       height: '100%',
