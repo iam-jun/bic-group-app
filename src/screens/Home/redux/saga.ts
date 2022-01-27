@@ -223,7 +223,7 @@ function* getRecentSearchKeywords({
     const response = yield call(homeDataHelper.getRecentSearchKeywords, param);
     yield put(
       homeActions.setNewsfeedSearchRecentKeywords({
-        data: response?.recentSearches || [],
+        data: response?.recent_searches || [],
         loading: false,
       }),
     );

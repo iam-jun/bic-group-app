@@ -239,7 +239,7 @@ const _PostDetailContent = (props: any) => {
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     commentInputRef.current?.focus?.();
-  }, [commentInputRef.current, sectionData.length]);
+  }, [commentInputRef, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
