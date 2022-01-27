@@ -13,6 +13,11 @@
         android:label="Read Database"
         android:protectionLevel="signature" />
 
+    <permission
+        android:name="@string/provider_write_permission"
+        android:label="Write Database"
+        android:protectionLevel="signature" />
+
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
@@ -49,6 +54,7 @@
             android:enabled="true"
             android:exported="true"
             android:readPermission="@string/provider_read_permission"
+            android:writePermission="@string/provider_write_permission"
             />
     </application>
     <queries>
