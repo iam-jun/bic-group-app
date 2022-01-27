@@ -30,7 +30,6 @@ import Icon, {IconProps} from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import {ImageProps} from '../Image';
-// import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 
