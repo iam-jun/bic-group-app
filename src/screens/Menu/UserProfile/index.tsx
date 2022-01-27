@@ -24,12 +24,13 @@ import menuKeySelector from '../redux/keySelector';
 import {useUserIdAuth} from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Icon from '~/beinComponents/Icon';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, background_img_url} =
+  const {fullname, description, avatar, background_img_url, email} =
     userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
@@ -65,6 +66,14 @@ const UserProfile = (props: any) => {
     setCoverHeight(coverHeight);
   };
 
+  const renderEditButton = (style: any) => {
+    return userId == currentUserId || userId == currentUsername ? (
+      <View style={[styles.editButton, style]}>
+        <Icon size={16} tintColor={theme.colors.primary7} icon={'Camera'} />
+      </View>
+    ) : null;
+  };
+
   const renderCoverImage = () => {
     return (
       <View onLayout={onCoverLayout}>
@@ -72,6 +81,7 @@ const UserProfile = (props: any) => {
           style={styles.cover}
           source={background_img_url || images.img_cover_default}
         />
+        {renderEditButton(styles.editCoverPhoto)}
       </View>
     );
   };
@@ -79,10 +89,14 @@ const UserProfile = (props: any) => {
   const renderAvatar = () => {
     return (
       <View style={styles.imageButton}>
-        <Avatar.UltraSuperLarge
-          style={styles.avatar}
-          source={avatar || images.img_user_avatar_default}
-        />
+        <View>
+          <Avatar.UltraSuperLarge
+            style={styles.avatar}
+            source={avatar || images.img_user_avatar_default}
+            isRounded={true}
+          />
+          {renderEditButton(styles.editAvatar)}
+        </View>
       </View>
     );
   };
@@ -90,7 +104,8 @@ const UserProfile = (props: any) => {
   const renderUserHeader = () => {
     return (
       <View style={styles.headerName}>
-        <Text.H5>{fullname}</Text.H5>
+        <Text.H5 style={{fontSize: scaleSize(18)}}>{fullname}</Text.H5>
+        <Text.Subtitle>{email}</Text.Subtitle>
         <Text.Body style={styles.subtitleText}>{description}</Text.Body>
       </View>
     );
@@ -100,8 +115,9 @@ const UserProfile = (props: any) => {
     return userId == currentUserId || userId == currentUsername ? (
       <Button.Secondary
         testID="user_profile.edit"
-        style={styles.button}
-        rightIcon={'EditAlt'}
+        textColor={theme.colors.primary6}
+        style={styles.buttonEdit}
+        leftIcon={'EditAlt'}
         onPress={onEditProfileButton}>
         {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
@@ -173,18 +189,20 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     imageButton: {
       alignItems: 'center',
-      marginTop: -30,
+      marginTop: -44,
     },
     avatar: {
-      width: scaleSize(96),
-      height: scaleSize(96),
+      width: scaleSize(100),
+      height: scaleSize(100),
       maxHeight: 125,
       maxWidth: 125,
-      borderRadius: 8,
+      borderWidth: 4,
+      borderColor: colors.background,
+      borderRadius: scaleSize(100) / 2,
     },
     headerName: {
       alignItems: 'center',
-      marginVertical: spacing.margin.small,
+      marginVertical: spacing.margin.base,
     },
     subtitleText: {
       marginVertical: spacing.margin.tiny,
@@ -194,6 +212,30 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
+    },
+    editButton: {
+      backgroundColor: colors.primary1,
+      width: 24,
+      height: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: spacing?.borderRadius.small,
+      marginLeft: spacing?.padding.small,
+    },
+    editCoverPhoto: {
+      position: 'absolute',
+      top: spacing?.margin.small,
+      right: spacing?.margin.small,
+    },
+    editAvatar: {
+      position: 'absolute',
+      bottom: 0,
+      right: spacing?.margin.small,
+    },
+    buttonEdit: {
+      marginHorizontal: spacing.margin.large,
+      borderWidth: 1,
+      borderColor: colors.primary6,
     },
   });
 };
