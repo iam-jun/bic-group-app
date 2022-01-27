@@ -59,6 +59,22 @@ const GroupAdministration = (props: any) => {
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
   };
 
+  const renderGroupSettingItem = ({item}: any) => {
+    if (!item) return null;
+    const {title = '', icon = '', rightSubIcon = ''} = item;
+    return (
+      <MenuItem
+        title={title}
+        icon={icon}
+        iconProps={{icon: icon, tintColor: theme.colors.primary6}}
+        rightSubIcon={rightSubIcon}
+        onPress={() => {
+          onGroupAdminPress(item);
+        }}
+      />
+    );
+  };
+
   const renderItem = (
     icon: IconType,
     title: string,
@@ -72,6 +88,7 @@ const GroupAdministration = (props: any) => {
           testID={testID}
           title={title}
           icon={icon}
+          iconProps={{icon: icon, tintColor: theme.colors.primary6}}
           notificationsBadgeNumber={notificationsBadgeNumber}
           notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
           rightSubIcon="AngleRightB"
@@ -84,7 +101,8 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textSecondary}
+        color={theme.colors.textPrimary}
+        variant="body"
         useI18n>
         settings:title_group_moderating
       </Text.H5>
@@ -116,7 +134,8 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textSecondary}
+        color={theme.colors.textPrimary}
+        variant="body"
         useI18n>
         settings:title_group_settings
       </Text.H5>
@@ -124,8 +143,8 @@ const GroupAdministration = (props: any) => {
         type="menu"
         itemTestID="group_administration.settings"
         data={groupSettings}
+        renderItem={renderGroupSettingItem}
         scrollEnabled={false}
-        onItemPress={onGroupAdminPress}
         style={styles.settingsContainer}
         showItemSeparator={false}
       />
@@ -139,11 +158,10 @@ const GroupAdministration = (props: any) => {
         titleTextProps={{color: theme.colors.textPrimary}}
         avatar={icon}
       />
+      <Divider style={styles.divider} />
       <View style={styles.container}>
         {renderGroupModerating()}
-        <Divider style={styles.divider} />
         {renderGroupSettings()}
-        <Divider />
       </View>
     </ScreenWrapper>
   );
@@ -168,10 +186,10 @@ const themeStyles = (theme: ITheme) => {
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.base,
     },
     divider: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
+      height: 5,
     },
   });
 };

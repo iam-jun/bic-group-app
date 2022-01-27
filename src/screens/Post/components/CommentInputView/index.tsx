@@ -2,6 +2,8 @@ import React, {FC, useEffect, useRef} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import uuid from 'react-native-uuid';
+
 import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
@@ -16,6 +18,7 @@ import {
   IPayloadCreateComment,
   IPayloadReplying,
 } from '~/interfaces/IPost';
+import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
@@ -51,6 +54,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
+  const myProfile = useKeySelector(menuKeySelector.myProfile);
+  const {fullname, avatar, username} = myProfile;
 
   const replying: IPayloadReplying = useKeySelector(
     postKeySelector.replyingComment,
@@ -88,8 +93,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     }
   }, [replyTargetName, replyTargetUserId]);
 
-  const _onCommentSuccess = (data?: any) => {
-    onCommentSuccess?.(data);
+  const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
   };
 
@@ -105,6 +109,25 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         commentData: {content: content?.trim(), images},
         userId: userId,
         onSuccess: _onCommentSuccess,
+        preComment: {
+          status: 'pending',
+          // localId is used for finding and updating comment data from API later
+          localId: uuid.v4(),
+          user_id: userId,
+          user: {
+            data: {avatar, fullname, username},
+          },
+          data: {
+            content: content?.trim(),
+            images,
+          },
+          activity_id: postId,
+          children_counts: {},
+          own_children: {},
+          latest_children: {},
+          created_at: new Date().toISOString(),
+          parentCommentId: replyTargetId,
+        },
       };
       dispatch(postActions.postCreateNewComment(payload));
     }

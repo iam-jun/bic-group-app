@@ -58,7 +58,10 @@
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
     },
-    "message_remove_member_success": "Đã xóa {n} khỏi nhóm"
+    "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
+    "label_discard_changes": "Huỷ thay đổi",
+    "text_discard_warning": "Nếu bạn hủy thay đổi, bạn sẽ mất những thay đổi mà bạn đã thực hiện",
+    "btn_continue_editing": "Tiếp tục chỉnh sửa"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -415,6 +418,13 @@
     "search_post": "Tìm kiếm bài viết..."
   },
   "groups": {
+    "group_content": {
+      "btn_post": "Bài đăng",
+      "btn_about": "Về nhóm",
+      "btn_members": "Thành viên",
+      "btn_files": "Files"
+    },
+    "text_members": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
     "group_menu": {

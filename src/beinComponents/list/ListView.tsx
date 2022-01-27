@@ -21,7 +21,7 @@ import {useKeySelector} from '~/hooks/selector';
 
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
-import loadings from '../../components/list/loadings';
+import loadings from '~/beinComponents/list/loadings';
 
 export interface ListViewProps {
   data?: Array<any>;

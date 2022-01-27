@@ -17,12 +17,14 @@ export interface PostViewMenuProps {
   postId: string;
   isPostDetail: boolean;
   isActor: boolean;
+  isDraftPost?: boolean;
 }
 
 const PostViewMenu: FC<PostViewMenuProps> = ({
   postId,
   isPostDetail,
   isActor,
+  isDraftPost,
 }: PostViewMenuProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -44,7 +46,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         iconName: 'Trash',
         cancelBtn: true,
         confirmLabel: t('common:btn_delete'),
-        onConfirm: () => dispatch(postActions.deletePost(postId)),
+        onConfirm: () =>
+          dispatch(postActions.deletePost({id: postId, isDraftPost})),
       }),
     );
   };

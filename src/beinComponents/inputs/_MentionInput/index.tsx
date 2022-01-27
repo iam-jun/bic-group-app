@@ -63,6 +63,7 @@ const _MentionInput = ({
 
   const _setContent = (c: string) => {
     componentInputProps.onChangeText?.(c);
+    componentInputProps?.commentInputRef?.current?.focus?.();
   };
 
   useImperativeHandle(_mentionInputRef, () => ({
@@ -159,7 +160,7 @@ const _MentionInput = ({
         Make sure this and the below ComponentInput share the same styling
         */
           <ComponentInput
-            testID={null}
+            useTestID={false}
             nativeID="component-input--hidden"
             multiline
             editable={!disabled}

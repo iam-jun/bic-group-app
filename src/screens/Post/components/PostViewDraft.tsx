@@ -47,7 +47,8 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
-  const {id, actor, audience, object, important, own_reactions} = data || {};
+  const {id, actor, audience, object, important, own_reactions, is_draft} =
+    data || {};
 
   const {content, images} = object?.data || {};
 
@@ -121,7 +122,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     dispatch(modalActions.hideModal());
     if (id) {
       postDataHelper
-        .deletePost(id)
+        .deletePost(id, is_draft)
         .then(response => {
           if (response?.data) {
             dispatch(
