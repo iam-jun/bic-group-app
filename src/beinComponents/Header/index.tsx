@@ -287,7 +287,6 @@ const Header: React.FC<HeaderProps> = ({
             <Icon
               icon={icon}
               size={24}
-              //   style={{marginRight: spacing?.margin.large}}
               style={styles.icon}
               onPress={onPressIcon}
             />
@@ -296,16 +295,14 @@ const Header: React.FC<HeaderProps> = ({
             <Icon
               icon={'iconSearch'}
               size={24}
-              //   style={{marginRight: spacing?.margin.large}}
               style={styles.icon}
               onPress={_onPressSearch}
             />
           )}
           {onPressChat && (
             <Icon
-              icon="CommentsAlt"
+              icon="iconChat"
               size={24}
-              //   style={{marginRight: spacing?.margin.large}}
               style={styles.icon}
               onPress={onPressChat}
             />
@@ -314,7 +311,6 @@ const Header: React.FC<HeaderProps> = ({
             <Icon
               icon={menuIcon || 'menu'}
               size={24}
-              //   style={{marginRight: spacing?.margin.large}}
               style={styles.icon}
               onPress={onPressMenu}
             />
@@ -322,7 +318,6 @@ const Header: React.FC<HeaderProps> = ({
           {buttonText && onPressButton && (
             <Button.Secondary
               testID="header.button"
-              //   style={{marginRight: spacing?.margin.large}}
               style={{
                 borderWidth: buttonProps?.disabled ? 0 : 1,
                 borderColor: colors.primary6,
@@ -338,7 +333,6 @@ const Header: React.FC<HeaderProps> = ({
             <Icon
               size={24}
               icon={rightIcon}
-              //   style={{marginRight: spacing?.margin.large}}
               style={styles.icon}
               onPress={onRightPress}
               {...rightIconProps}

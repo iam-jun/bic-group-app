@@ -112,7 +112,6 @@ export const createTextStyle = (theme: ITheme) => {
     heading: {
       fontFamily: fontFamilies.OpenSans,
       fontSize: sizes.heading,
-      // lineHeight: lineHeights.subtitle,
       color: colors.textPrimary,
     },
   };
