@@ -1,6 +1,6 @@
 import * as actions from './constants';
 
-export const initState = {
+export const modalInitState = {
   loaded: false,
   modal: {
     isOpen: false,
@@ -56,7 +56,7 @@ export const initState = {
   },
 };
 
-function commonReducer(state = initState, action: any = {}) {
+function commonReducer(state = modalInitState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case actions.SET_MODAL:
@@ -67,7 +67,7 @@ function commonReducer(state = initState, action: any = {}) {
     case actions.HIDE_MODAL:
       return {
         ...state,
-        modal: initState.modal,
+        modal: modalInitState.modal,
       };
     case actions.SHOW_ALERT:
       return {
@@ -80,7 +80,7 @@ function commonReducer(state = initState, action: any = {}) {
       };
 
     case actions.HIDE_ALERT:
-      return initState;
+      return modalInitState;
 
     case actions.SHOW_ALERT_NEW_FEATURE:
       return {
@@ -122,7 +122,7 @@ function commonReducer(state = initState, action: any = {}) {
     case actions.CLEAR_TOAST_MESSAGE:
       return {
         ...state,
-        toastMessage: initState.toastMessage,
+        toastMessage: modalInitState.toastMessage,
       };
     case actions.FOCUS_SEARCH_INPUT:
       return {
@@ -137,18 +137,18 @@ function commonReducer(state = initState, action: any = {}) {
     case actions.CLEAR_REACTION_DETAIL_BOTTOM_SHEET:
       return {
         ...state,
-        reactionDetailBottomSheet: initState.reactionDetailBottomSheet,
+        reactionDetailBottomSheet: modalInitState.reactionDetailBottomSheet,
       };
 
     case actions.SET_SHOW_REACTION_BOTTOM_SHEET:
       return {
         ...state,
-        reactionBottomSheet: payload || initState.reactionBottomSheet,
+        reactionBottomSheet: payload || modalInitState.reactionBottomSheet,
       };
     case actions.SET_USER_PROFILE_PREVIEW_BOTTOM_SHEET:
       return {
         ...state,
-        userProfilePreview: payload || initState.userProfilePreview,
+        userProfilePreview: payload || modalInitState.userProfilePreview,
       };
     default:
       return state;
