@@ -81,7 +81,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <Icon
           style={styles.searchIcon}
           icon="search"
-          size={16}
+          size={20}
           tintColor={theme.colors.textSecondary}
         />
         <TextInput
@@ -102,7 +102,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         {!!text && (
           <Icon
             icon="iconClose"
-            size={16}
+            size={20}
             tintColor={theme.colors.iconTint}
             onPress={() => _onChangeText('')}
           />

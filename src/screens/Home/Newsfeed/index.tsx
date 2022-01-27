@@ -168,14 +168,15 @@ const Newsfeed = () => {
           headerRef={headerRef}
           avatar={images.logo_bein}
           hideBack
-          rightIcon="CommentsAlt"
           searchPlaceholder={t('input:search_post')}
           autoFocusSearch
-          onRightPress={navigateToChat}
+          onPressChat={navigateToChat}
           onShowSearch={onShowSearch}
           onSearchText={onSearchText}
           onFocusSearch={onFocusSearch}
           onSubmitSearch={onSubmitSearch}
+          title={'post:news_feed'}
+          titleTextProps={{useI18n: true}}
         />
       </View>
     );

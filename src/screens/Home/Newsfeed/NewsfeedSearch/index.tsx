@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Keyboard} from 'react-native';
+import {View, StyleSheet, Keyboard, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -10,6 +10,7 @@ import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion'
 import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface NewsfeedSearchProps {
   headerRef?: any;
@@ -21,7 +22,8 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const insets = useSafeAreaInsets();
+  const styles = createStyle(theme, insets);
 
   const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
   const isSuggestion = useKeySelector(
@@ -55,12 +57,12 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ITheme, insets: any) => {
+  const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',
-      top: 0,
+      top: Platform.OS === 'web' ? 0 : insets.top + dimension.headerHeight,
       bottom: 0,
       left: 0,
       right: 0,

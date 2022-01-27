@@ -48,6 +48,7 @@ export const sizes = {
   subtitle: 12,
   error: 16,
   code: 16,
+  heading: 11,
 };
 
 /* Line Height used for Text */
@@ -69,6 +70,7 @@ export const lineHeights = {
   subtitle: 16,
   error: 24,
   code: 24,
+  heading: 16,
 };
 
 export const letterSpacing = {
@@ -130,12 +132,12 @@ export const avatarSizes = {
   ultraSuperLarge: 96,
 };
 
-export const headerHeight = 48;
+export const headerHeight = 60;
 export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
 export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
-export const bottomBarHeight = 66;
+export const bottomBarHeight = 60;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
