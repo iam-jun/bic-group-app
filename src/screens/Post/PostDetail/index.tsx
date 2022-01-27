@@ -6,6 +6,8 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import {Platform} from 'react-native';
+import images from '~/resources/images';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
@@ -35,6 +37,7 @@ const PostDetail = (props: any) => {
           <Header
             titleTextProps={{useI18n: true}}
             title={'post:title_post_detail'}
+            avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
           />
           <PostViewPlaceholder />
         </View>
