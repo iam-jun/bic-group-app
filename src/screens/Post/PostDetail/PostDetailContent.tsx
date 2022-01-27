@@ -51,6 +51,7 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
+import images from '~/resources/images';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -238,7 +239,7 @@ const _PostDetailContent = (props: any) => {
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     commentInputRef.current?.focus?.();
-  }, [commentInputRef.current, sectionData.length]);
+  }, [commentInputRef, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -328,7 +329,11 @@ const _PostDetailContent = (props: any) => {
 
   return (
     <View style={styles.flex1}>
-      <Header title={headerTitle} onPressBack={onPressBack} />
+      <Header
+        title={headerTitle}
+        onPressBack={onPressBack}
+        avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
+      />
       {!postTime ? (
         <PostViewPlaceholder />
       ) : (
