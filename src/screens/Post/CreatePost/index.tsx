@@ -51,7 +51,6 @@ import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
-import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
@@ -119,8 +118,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
 
-  const shouldScroll = selectingImages?.length > 0;
-
   const users: number[] = [];
   const groups: number[] = [];
   const audience = {group_ids: groups, user_ids: users};
@@ -170,6 +167,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   });
   const [webPhotosHeight, setWebPhotosHeight] = React.useState<number>(0);
   const [sIsLoading, setLoading] = React.useState<boolean>(false);
+  const [currentInputHeight, setCurrentInputHeight] =
+    React.useState<number>(webContentMinHeight);
 
   const prevData = useRef<any>({
     selectingImages,
@@ -246,10 +245,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   ]);
 
   useEffect(() => {
-    if (isWeb) {
-      onLayoutAnimated();
-    }
-  }, [webPhotosHeight, isShowToastAutoSave, content]);
+    onLayoutAnimated();
+  }, [webPhotosHeight, isShowToastAutoSave, currentInputHeight]);
 
   useEffect(() => {
     setPostData({...initPostData});
@@ -445,14 +442,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       );
     }
     rootNavigation.goBack();
-  };
-
-  const onPressSaveDraft = async () => {
-    if (isEditDraftPost && initPostData?.id) {
-      await onPressPost(true, true);
-    } else {
-      await onPressPost(true);
-    }
   };
 
   const onPressDraftPost = () => {
@@ -668,24 +657,23 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onLayoutAnimated = () => {
-    refRNText.current.measure(
-      (ox: any, oy: any, width: number, height: number) => {
-        const toastHeight = isShowToastAutoSave ? 34 : 0;
-        const newHeight = Math.max(
-          height + webContentInsetHeight + webPhotosHeight + toastHeight,
-          webContentMinHeight + webPhotosHeight + toastHeight,
-        );
-        if (currentWebInputHeight.current === newHeight) {
-          return;
-        }
-        currentWebInputHeight.current = newHeight;
-        Animated.timing(webInputHeightAnimated, {
-          toValue: newHeight,
-          duration: 10,
-          useNativeDriver: false,
-        }).start();
-      },
+    const toastHeight = isShowToastAutoSave ? 34 : 0;
+    const newHeight = Math.max(
+      currentInputHeight +
+        webContentInsetHeight +
+        webPhotosHeight +
+        toastHeight,
+      webContentMinHeight + webPhotosHeight + toastHeight,
     );
+    if (currentWebInputHeight.current === newHeight) {
+      return;
+    }
+    currentWebInputHeight.current = newHeight;
+    Animated.timing(webInputHeightAnimated, {
+      toValue: newHeight,
+      duration: 10,
+      useNativeDriver: false,
+    }).start();
   };
 
   const onPressSettings = () => {
@@ -696,9 +684,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     refTextInput.current?.setFocus();
   };
 
-  const renderContent = () => {
-    // const Container = shouldScroll ? ScrollView : View;
+  const onLayoutCloneText = ({nativeEvent}: any) => {
+    console.log('onLayoutCloneText: ', nativeEvent.layout.height);
+    const newHeight = nativeEvent.layout.height || webContentMinHeight;
+    if (newHeight !== currentInputHeight) {
+      setCurrentInputHeight(newHeight.toFixed());
+    }
+  };
 
+  const renderContent = () => {
+    console.log('currentInputHeight: ', currentInputHeight);
     return (
       <ScrollView>
         <View style={styles.flex1}>
@@ -707,7 +702,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
               <View style={styles.textCloneContainer}>
                 <RNText
                   style={styles.textContentClone}
-                  //   onLayout={onLayoutCloneText}
+                  onLayout={onLayoutCloneText}
                   ref={refRNText}>
                   {content + '.'}
                 </RNText>
@@ -749,16 +744,25 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </>
           ) : (
             <>
+              <View style={styles.textCloneContainer}>
+                <RNText
+                  style={styles.textContentClone}
+                  onLayout={onLayoutCloneText}
+                  ref={refRNText}>
+                  {content + '.'}
+                </RNText>
+              </View>
               <_MentionInput
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
-                style={{minHeight: 55}}
+                style={{height: 400}}
                 //   textInputStyle={shouldScroll ? {} : styles.flex1}
                 ComponentInput={PostInput}
                 componentInputProps={{
                   value: content,
                   onChangeText,
                   inputRef: refTextInput,
+                  style: {height: 400},
                 }}
                 autocompleteProps={{
                   modalPosition: 'bottom',
@@ -771,14 +775,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 disabled={loading}
               />
               {renderToastAutoSave()}
-              <PostPhotoPreview
-                data={images || []}
-                style={{alignSelf: 'center'}}
-                uploadType={uploadTypes.postImage}
-                onPress={() =>
-                  rootNavigation.navigate(homeStack.postSelectImage)
-                }
-              />
+              <View onLayout={onLayoutPhotoPreview}>
+                <PostPhotoPreview
+                  data={images || []}
+                  style={{alignSelf: 'center'}}
+                  uploadType={uploadTypes.postImage}
+                  onPress={() =>
+                    rootNavigation.navigate(homeStack.postSelectImage)
+                  }
+                />
+              </View>
             </>
           )}
         </View>
