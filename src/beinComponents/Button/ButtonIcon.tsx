@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Text, ViewSpacing} from '~/components';
 import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import ButtonWrapper, {ButtonWrapperProps} from './ButtonWrapper';
+import Text from '~/beinComponents/Text';
 
 export interface ButtonIconProps extends ButtonWrapperProps {
   style?: StyleProp<ViewStyle>;
@@ -35,7 +35,9 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
         {...props}
       />
       {label && (
-        <Text.ButtonSmall style={styles.label}>{label}</Text.ButtonSmall>
+        <Text variant="buttonSmall" style={styles.label}>
+          {label}
+        </Text>
       )}
     </View>
   );

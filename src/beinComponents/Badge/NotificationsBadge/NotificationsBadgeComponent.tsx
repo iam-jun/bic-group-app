@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Text} from '~/components';
 import {ITheme} from '~/theme/interfaces';
+import Text from '~/beinComponents/Text';
 
 export type NotificationsBadgeType = 'default' | 'info' | 'warning' | 'alert';
 
@@ -30,9 +30,11 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
 
     return (
       <View style={[styles.dot, style]}>
-        <Text.Subtitle style={StyleSheet.flatten([styles.text, textStyle])}>
+        <Text
+          variant="subtitle"
+          style={StyleSheet.flatten([styles.text, textStyle])}>
           {numberInText}
-        </Text.Subtitle>
+        </Text>
       </View>
     );
   };
