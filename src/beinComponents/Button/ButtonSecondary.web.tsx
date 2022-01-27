@@ -18,6 +18,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   style,
   disabled,
   highEmphasis = false,
+  borderRadius,
   ...props
 }: ButtonSecondaryProps) => {
   const {colors, spacing}: ITheme = useTheme() as ITheme;
@@ -37,11 +38,18 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
     className = 'button--disable';
   }
 
+  const _borderRadiusStyle = !!borderRadius ? {borderRadius} : {};
+
   return (
     <Div style={style}>
       <Div
         className={className}
-        style={{backgroundColor: disabled ? colorDisabled : color}}>
+        style={[
+          {
+            backgroundColor: disabled ? colorDisabled : color,
+          },
+          _borderRadiusStyle,
+        ]}>
         <ButtonWrapper
           disabled={disabled}
           textProps={{color: _textColor, useI18n}}
