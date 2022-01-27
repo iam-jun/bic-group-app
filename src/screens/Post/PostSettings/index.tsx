@@ -246,14 +246,8 @@ const PostSettings = () => {
         onPressButton={onPressSave}
         buttonVariant="Secondary"
         buttonProps={{
-          textColor: colors.primary6,
           disabled: disableButtonSave,
           useI18n: true,
-          style: {
-            borderWidth: disableButtonSave ? 0 : 1,
-            borderColor: colors.primary6,
-            marginRight: spacing?.margin.base,
-          },
         }}
       />
       <View style={styles.container}>

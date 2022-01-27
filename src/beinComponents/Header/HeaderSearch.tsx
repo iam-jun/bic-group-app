@@ -13,7 +13,6 @@ import {ITheme} from '~/theme/interfaces';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -57,14 +56,13 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   const styles = createStyle(theme);
 
   const iconStyle = useAnimatedStyle(() => ({
-    marginLeft: spacing.margin.large,
     opacity: Platform.OS === 'web' ? 1 : showValue.value,
   }));
   const searchContainerStyle = useAnimatedStyle(() => ({
     width: `${interpolate(
       showValue.value,
       [0, 1],
-      [Platform.OS === 'web' ? 96 : 0, 96],
+      [Platform.OS === 'web' ? 96 : 0, 100],
     )}%`,
   }));
 
@@ -116,8 +114,9 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
         <Icon
           icon="iconBack"
           onPress={_onPressBack}
-          size={28}
+          size={24}
           hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+          style={styles.icon}
         />
       </Animated.View>
       <View style={styles.searchWrapper}>
@@ -134,7 +133,6 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
           />
         </Animated.View>
       </View>
-      <ViewSpacing width={spacing.margin.large} />
     </Animated.View>
   );
 };
@@ -151,6 +149,8 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: colors.background,
+      paddingLeft: spacing.padding.small,
+      paddingRight: spacing.padding.base,
     },
     searchWrapper: {
       flex: 1,
@@ -158,10 +158,17 @@ const createStyle = (theme: ITheme) => {
     },
     searchInput: {flex: 1, backgroundColor: undefined},
     searchContainer: {
-      height: 36,
+      height: 40,
       overflow: 'hidden',
       backgroundColor: colors.placeholder,
       borderRadius: spacing.borderRadius.large,
+    },
+    icon: {
+      height: 48,
+      width: 48,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.base,
     },
   });
 };

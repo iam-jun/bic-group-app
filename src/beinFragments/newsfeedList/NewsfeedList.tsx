@@ -332,7 +332,7 @@ const createStyle = (theme: ITheme, insets: any) => {
     placeholder: {
       opacity: 1,
       position: 'absolute',
-      top: 0,
+      top: insets.top + dimension.headerHeight,
       bottom: 0,
       left: 0,
       right: 0,

@@ -25,6 +25,7 @@ export type TextVariant =
   | 'bodySM'
   | 'bodyS'
   | 'subtitle'
+  | 'heading'
   | undefined;
 
 export interface TextProps extends RNTextProps {
@@ -99,6 +100,10 @@ const Subtitle = ({...props}: TextProps) => (
   <TextComponent variant={'subtitle'} {...props} />
 );
 
+const Heading = ({...props}: TextProps) => (
+  <TextComponent variant={'heading'} {...props} />
+);
+
 const Text = Object.assign(TextComponent, {
   H1,
   H2,
@@ -114,6 +119,7 @@ const Text = Object.assign(TextComponent, {
   BodySM,
   BodyS,
   Subtitle,
+  Heading,
 });
 
 export default Text;

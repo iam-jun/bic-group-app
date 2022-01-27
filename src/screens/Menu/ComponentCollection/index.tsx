@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {ScreenWrapper} from '~/components';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Section1 from '~/screens/Menu/ComponentCollection/Section1';
 import Section2 from '~/screens/Menu/ComponentCollection/Section2';
 import Section3 from '~/screens/Menu/ComponentCollection/Section3';

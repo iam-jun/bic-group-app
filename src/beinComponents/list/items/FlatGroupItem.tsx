@@ -3,7 +3,6 @@ import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {IGroup} from '~/interfaces/IGroup';
-import {Text} from '~/components';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
@@ -11,6 +10,7 @@ import GroupTree, {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import Button from '~/beinComponents/Button';
+import Text from '~/beinComponents/Text';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
