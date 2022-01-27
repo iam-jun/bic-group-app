@@ -1,6 +1,7 @@
 import {debounce, isEmpty} from 'lodash';
 import React, {useCallback, useImperativeHandle, useRef, useState} from 'react';
 import {
+  Animated,
   DeviceEventEmitter,
   KeyboardTypeOptions,
   Platform,
@@ -150,7 +151,7 @@ const _MentionInput = ({
 
   return (
     <>
-      <View
+      <Animated.View
         style={[styles.containerWrapper, style]}
         onLayout={_onLayoutContainer}>
         {Platform.OS === 'web' && (
@@ -187,7 +188,7 @@ const _MentionInput = ({
           onKeyPress={_onKeyPress}
           onChangeText={onChangeText}
         />
-      </View>
+      </Animated.View>
       <Autocomplete
         {...autocompleteProps}
         type="mentionInput"

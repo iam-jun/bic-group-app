@@ -672,7 +672,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     Animated.timing(webInputHeightAnimated, {
       toValue: newHeight,
       duration: 10,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -685,10 +685,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onLayoutCloneText = ({nativeEvent}: any) => {
-    console.log('onLayoutCloneText: ', nativeEvent.layout.height);
+    // console.log('onLayoutCloneText: ', nativeEvent.layout.height);
     const newHeight = nativeEvent.layout.height || webContentMinHeight;
     if (newHeight !== currentInputHeight) {
-      setCurrentInputHeight(newHeight.toFixed());
+      setCurrentInputHeight(newHeight);
     }
   };
 
@@ -752,39 +752,40 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   {content + '.'}
                 </RNText>
               </View>
-              <_MentionInput
-                groupIds={strGroupIds}
-                mentionInputRef={mentionInputRef}
-                style={{height: 400}}
-                //   textInputStyle={shouldScroll ? {} : styles.flex1}
-                ComponentInput={PostInput}
-                componentInputProps={{
-                  value: content,
-                  onChangeText,
-                  inputRef: refTextInput,
-                  style: {height: 400},
-                }}
-                autocompleteProps={{
-                  modalPosition: 'bottom',
-                  emptyContent: i18n.t('post:mention_empty_content'),
-                  showShadow: true,
-                  modalStyle: {maxHeight: 350},
-                  fullWidth: true,
-                }}
-                // title={i18n.t('post:mention_title')}
-                disabled={loading}
-              />
-              {renderToastAutoSave()}
-              <View onLayout={onLayoutPhotoPreview}>
-                <PostPhotoPreview
-                  data={images || []}
-                  style={{alignSelf: 'center'}}
-                  uploadType={uploadTypes.postImage}
-                  onPress={() =>
-                    rootNavigation.navigate(homeStack.postSelectImage)
-                  }
+              <Animated.View style={{height: webInputHeightAnimated}}>
+                <_MentionInput
+                  groupIds={strGroupIds}
+                  mentionInputRef={mentionInputRef}
+                  //   style={{height: inputHeightAnimated}}
+                  //   style={styles.flex1}
+                  ComponentInput={PostInput}
+                  componentInputProps={{
+                    value: content,
+                    onChangeText,
+                    inputRef: refTextInput,
+                  }}
+                  autocompleteProps={{
+                    modalPosition: 'bottom',
+                    emptyContent: i18n.t('post:mention_empty_content'),
+                    showShadow: true,
+                    modalStyle: {maxHeight: 350},
+                    fullWidth: true,
+                  }}
+                  // title={i18n.t('post:mention_title')}
+                  disabled={loading}
                 />
-              </View>
+                {renderToastAutoSave()}
+                <View onLayout={onLayoutPhotoPreview}>
+                  <PostPhotoPreview
+                    data={images || []}
+                    style={{alignSelf: 'center'}}
+                    uploadType={uploadTypes.postImage}
+                    onPress={() =>
+                      rootNavigation.navigate(homeStack.postSelectImage)
+                    }
+                  />
+                </View>
+              </Animated.View>
             </>
           )}
         </View>
