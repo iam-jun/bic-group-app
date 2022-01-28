@@ -104,7 +104,7 @@ const UserProfile = (props: any) => {
   const renderUserHeader = () => {
     return (
       <View style={styles.headerName}>
-        <Text.H5 style={{fontSize: scaleSize(18)}}>{fullname}</Text.H5>
+        <Text.H5>{fullname}</Text.H5>
         <Text.Subtitle>{email}</Text.Subtitle>
         <Text.Body style={styles.subtitleText}>{description}</Text.Body>
       </View>
@@ -125,7 +125,9 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         testID="user_profile.message"
         style={styles.button}
-        highEmphasis
+        textColor={theme.colors.bgSecondary}
+        color={theme.colors.primary6}
+        colorHover={theme.colors.primary5}
         rightIcon={'Message'}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>

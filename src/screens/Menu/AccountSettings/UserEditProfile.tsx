@@ -37,6 +37,7 @@ import menuKeySelector from '../redux/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
+import Avatar from '~/beinComponents/Avatar';
 
 const UserEditProfile = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -138,7 +139,7 @@ const UserEditProfile = () => {
     return (
       <View>
         <View style={styles.avatarHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={theme.colors.iconTint} variant="body" useI18n>
             settings:title_avatar
           </Text.H5>
           <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
@@ -152,9 +153,10 @@ const UserEditProfile = () => {
         </View>
         <View style={styles.imageButton}>
           {!loadingAvatar ? (
-            <Image
+            <Avatar.UltraSuperLarge
               style={styles.avatar}
               source={avatar || images.img_user_avatar_default}
+              isRounded={true}
             />
           ) : (
             <View style={[styles.avatar, styles.imageLoading]}>
@@ -171,7 +173,7 @@ const UserEditProfile = () => {
     return (
       <View>
         <View style={styles.coverHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={theme.colors.iconTint} variant="body" useI18n>
             settings:title_cover
           </Text.H5>
           <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
@@ -183,7 +185,9 @@ const UserEditProfile = () => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <View onLayout={onCoverLayout}>
+        <View
+          style={{paddingHorizontal: theme.spacing.padding.large}}
+          onLayout={onCoverLayout}>
           {!loadingCover ? (
             <Image
               style={styles.cover}
@@ -439,6 +443,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     cover: {
       width: '100%',
       height: coverHeight,
+      borderRadius: spacing.borderRadius.small,
     },
     infoItem: {
       marginHorizontal: spacing.margin.tiny,
