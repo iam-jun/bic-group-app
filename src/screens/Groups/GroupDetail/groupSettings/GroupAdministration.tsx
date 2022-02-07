@@ -59,11 +59,12 @@ const GroupAdministration = (props: any) => {
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
   };
 
-  const renderGroupSettingItem = ({item}: any) => {
+  const renderGroupSettingItem = ({item, index}: any) => {
     if (!item) return null;
     const {title = '', icon = '', rightSubIcon = ''} = item;
     return (
       <MenuItem
+        testID={`group_administration.settings.item.${index}`}
         title={title}
         icon={icon}
         iconProps={{icon: icon, tintColor: theme.colors.primary6}}
@@ -140,8 +141,6 @@ const GroupAdministration = (props: any) => {
         settings:title_group_settings
       </Text.H5>
       <ListView
-        type="menu"
-        itemTestID="group_administration.settings"
         data={groupSettings}
         renderItem={renderGroupSettingItem}
         scrollEnabled={false}
