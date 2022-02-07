@@ -108,7 +108,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
       })}`,
       props: {
         textProps: {useI18n: true},
-        type: 'success',
+        type: 'informative',
         rightText: 'Undo',
         onPressRight: onPressUndo,
       },
