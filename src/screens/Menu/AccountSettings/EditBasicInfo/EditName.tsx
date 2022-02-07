@@ -50,8 +50,8 @@ const EditName = ({onChangeName}: EditNameProps) => {
           <TextInput
             label={i18next.t('settings:title_edit_name')}
             value={name}
+            testID="edit_name.text_input"
             style={styles.textinput}
-            testID="edit_basic_info.name"
             onChangeText={_onChangeName}
             error={error}
             helperContent={
@@ -60,12 +60,16 @@ const EditName = ({onChangeName}: EditNameProps) => {
                 : undefined
             }
           />
-          <Button.Secondary onPress={onDoneEditName} useI18n>
+          <Button.Secondary
+            onPress={onDoneEditName}
+            testID="edit_name.btn_done"
+            useI18n>
             common:text_done
           </Button.Secondary>
         </View>
       ) : (
         <SettingItem
+          testID="edit_name"
           title={'settings:title_name'}
           subtitle={name || i18next.t('common:text_not_set')}
           leftIcon={'TextFields'}
