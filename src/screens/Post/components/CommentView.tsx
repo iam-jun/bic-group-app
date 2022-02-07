@@ -249,6 +249,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       <RNAnimated.View style={[styles.webMenuButton, {opacity: animated}]}>
         <Button>
           <Icon
+            testID={'comment_view.menu'}
             style={{}}
             onPress={onLongPress}
             icon={'EllipsisH'}

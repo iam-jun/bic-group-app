@@ -152,7 +152,7 @@ const PostSelectImage = () => {
         titleTextProps={{useI18n: true}}
         title={'post:title_edit_images'}
         buttonText={'common:btn_done'}
-        buttonProps={{useI18n: true}}
+        buttonProps={{useI18n: true, testID: 'post_select_image.btn_done'}}
         onPressBack={onPressBack}
         onPressButton={onPressSave}
       />

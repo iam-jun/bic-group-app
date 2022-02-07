@@ -65,7 +65,12 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
         tintColor={iconColor}
       />
       <View style={styles.textContainer}>
-        <Text.H6 {...textProps} color={textColor}>
+        <Text.H6
+          testID={
+            notExpired ? 'important_status_active' : 'important_status_expire'
+          }
+          {...textProps}
+          color={textColor}>
           {i18next.t('common:text_important')}
         </Text.H6>
       </View>
