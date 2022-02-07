@@ -199,6 +199,7 @@ android {
             applicationIdSuffix ".staging"
             versionNameSuffix "-stag"
             resValue "string", "app_name", "Bein Staging"
+            resValue "string", "facebook_app_id", "362084341568821"
             resValue "string", "provider_authorities", "com.evol.bein.group.staging.SharedProvider"
             resValue "string", "provider_read_permission", "com.evol.bein.group.staging.READ_DATABASE"
             resValue "string", "provider_write_permission", "com.evol.bein.group.staging.WRITE_DATABASE"
@@ -206,6 +207,7 @@ android {
         production {
             dimension "version"
             resValue "string", "app_name", "Bein"
+            resValue "string", "facebook_app_id", "362084341568821"
             resValue "string", "provider_authorities", "com.evol.bein.group.SharedProvider"
             resValue "string", "provider_read_permission", "com.evol.bein.group.READ_DATABASE"
             resValue "string", "provider_write_permission", "com.evol.bein.group.WRITE_DATABASE"
