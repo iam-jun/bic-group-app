@@ -11,6 +11,7 @@ import groupsKeySelector from '../../redux/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
 import groupsActions from '../../redux/actions';
 import {useBaseHook} from '~/hooks';
+import privacyTypes from '~/constants/privacyTypes';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
@@ -40,6 +41,9 @@ const GroupInfoHeader = () => {
     privacy,
   } = groupDetail;
 
+  const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
+  const {icon: iconPrivacy}: any = privacyData || {};
+
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
     const coverWidth = e.nativeEvent.layout.width;
@@ -64,7 +68,7 @@ const GroupInfoHeader = () => {
         <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
-            icon={'iconPrivate'}
+            icon={iconPrivacy}
             size={20}
             tintColor={theme.colors.iconTint}
           />

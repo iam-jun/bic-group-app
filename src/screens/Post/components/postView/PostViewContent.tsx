@@ -68,8 +68,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdown
               useMarkdownIt
               limitMarkdownTypes
-              selector={postKeySelector.allPosts}
-              parentId={postId}
+              selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
               onPressAudience={onPressMentionAudience}
             />
           </View>
@@ -83,8 +82,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
       return (
         <Markdown
           value={content}
-          selector={postKeySelector.allPosts}
-          parentId={postId}
+          selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
           onPressAudience={onPressMentionAudience}
         />
       );
@@ -97,8 +95,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         shortLength={400}
         useMarkdown
         toggleOnPress
-        selector={postKeySelector.allPosts}
-        parentId={postId}
+        selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
         onPressAudience={onPressMentionAudience}
       />
     );

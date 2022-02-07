@@ -81,8 +81,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   }, []);
 
   useEffect(() => {
-    if (replyTargetUserId && replyTargetUserId) {
-      let content = `@[u:${replyTargetUserId}:${replyTargetName}] `;
+    if (replyTargetUserId && replyTargetUser?.data?.username) {
+      let content = `@${replyTargetUser?.data?.username} `;
       if (replyTargetUserId === userId) {
         content = '';
       }
@@ -143,6 +143,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       <_MentionInput
         groupIds={groupIds}
         ComponentInput={CommentInput}
+        mentionInputRef={mentionInputRef}
         componentInputProps={{
           commentInputRef: _commentInputRef,
           value: content,
