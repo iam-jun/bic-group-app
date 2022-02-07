@@ -17,7 +17,7 @@ import {ITheme} from '~/theme/interfaces';
 import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
-import AboutProfile from './components/AboutProfile';
+import ProfileBlock from './components/ProfileBlock';
 import menuActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
@@ -94,6 +94,7 @@ const UserProfile = (props: any) => {
             style={styles.avatar}
             source={avatar || images.img_user_avatar_default}
             isRounded={true}
+            showBorder={true}
           />
           {renderEditButton(styles.editAvatar)}
         </View>
@@ -104,9 +105,9 @@ const UserProfile = (props: any) => {
   const renderUserHeader = () => {
     return (
       <View style={styles.headerName}>
-        <Text.H5>{fullname}</Text.H5>
+        <Text.H4>{fullname}</Text.H4>
         <Text.Subtitle>{email}</Text.Subtitle>
-        <Text.Body style={styles.subtitleText}>{description}</Text.Body>
+        <Text style={styles.subtitleText}>{'description'}</Text>
       </View>
     );
   };
@@ -158,9 +159,7 @@ const UserProfile = (props: any) => {
           {renderAvatar()}
           {renderUserHeader()}
           {renderButton()}
-
-          <Divider style={styles.divider} />
-          <AboutProfile {...userProfileData} />
+          <ProfileBlock {...userProfileData} />
         </ScrollView>
       )}
     </ScreenWrapper>
@@ -194,20 +193,17 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginTop: -44,
     },
     avatar: {
-      width: scaleSize(100),
-      height: scaleSize(100),
-      maxHeight: 125,
-      maxWidth: 125,
-      borderWidth: 4,
-      borderColor: colors.background,
-      borderRadius: scaleSize(100) / 2,
+      // width: scaleSize(100),
+      // height: scaleSize(100),
+      // maxHeight: 125,
+      // maxWidth: 125,
     },
     headerName: {
       alignItems: 'center',
-      marginVertical: spacing.margin.base,
+      paddingVertical: spacing.margin.base,
     },
     subtitleText: {
-      marginVertical: spacing.margin.tiny,
+      marginTop: spacing.margin.small,
     },
     button: {
       marginHorizontal: spacing.margin.large,

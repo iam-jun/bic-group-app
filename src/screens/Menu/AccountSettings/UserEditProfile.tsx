@@ -199,6 +199,29 @@ const UserEditProfile = () => {
             </View>
           )}
         </View>
+      </View>
+    );
+  };
+
+  const renderDescription = () => {
+    return (
+      <View style={{paddingTop: theme.spacing.padding.base}}>
+        <View style={styles.infoHeader}>
+          <Text.H5 color={theme.colors.iconTint} variant="body" useI18n>
+            settings:text_description
+          </Text.H5>
+          <ButtonWrapper onPress={goToEditInfo}>
+            <Text.H6
+              testID="user_edit_profile.basic_info.edit"
+              color={theme.colors.primary7}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
+        </View>
+        <Text.BodyS style={{marginLeft: theme.spacing.margin.small}}>
+          Description
+        </Text.BodyS>
         <Divider style={styles.divider} />
       </View>
     );
@@ -208,7 +231,7 @@ const UserEditProfile = () => {
     return (
       <View>
         <View style={styles.infoHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+          <Text.H5 color={theme.colors.iconTint} variant="body" useI18n>
             settings:title_basic_info
           </Text.H5>
           <ButtonWrapper onPress={goToEditInfo}>
@@ -391,6 +414,7 @@ const UserEditProfile = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}
         {renderCover()}
+        {renderDescription()}
         {renderBasicInfo()}
         {renderContact()}
         {renderWorkExperience()}

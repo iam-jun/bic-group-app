@@ -13,7 +13,7 @@ import {formatDate} from '~/utils/formatData';
 import genders from '~/constants/genders';
 import relationshipStatus from '~/constants/relationshipStatus';
 
-const AboutProfile = (props: IUserProfile) => {
+const ProfileBlock = (props: IUserProfile) => {
   const {
     email,
     city,
@@ -26,6 +26,7 @@ const AboutProfile = (props: IUserProfile) => {
     birthday,
     latest_work,
   } = props;
+  console.log('..........props..........', props);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -48,10 +49,10 @@ const AboutProfile = (props: IUserProfile) => {
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
-          <Text.Body style={styles.text} useI18n>
+          <Icon icon={icon} tintColor={theme.colors.iconTintLight} size={20} />
+          <Text style={styles.text} useI18n>
             {title}
-          </Text.Body>
+          </Text>
           {TitleComponent}
         </View>
       )
@@ -60,9 +61,51 @@ const AboutProfile = (props: IUserProfile) => {
 
   return (
     <View style={styles.container}>
-      <Text.ButtonBase style={styles.about}>
+      <Text.Subtitle color={theme.colors.textSecondary}>
         {i18next.t('settings:title_about')}
-      </Text.ButtonBase>
+      </Text.Subtitle>
+      {/* @ts-ignore */}
+      {gender && renderItem({icon: 'UserSquare', title: genders[gender]})}
+      {birthday &&
+        renderItem({
+          icon: 'Calender',
+          title: formatDate(birthday, 'MMM Do, YYYY'),
+        })}
+      {renderItem({icon: 'CommentsAlt', title: userLanguages})}
+
+      {relationship_status &&
+        renderItem({
+          icon: 'Heart',
+          // @ts-ignore
+          title: relationshipStatus[relationship_status],
+        })}
+
+      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
+        {i18next.t('settings:title_contact')}
+      </Text.Subtitle>
+
+      {renderItem({icon: 'Envelope', title: email})}
+      {renderItem({
+        icon: 'Phone',
+        TitleComponent:
+          country_code && phone ? (
+            <Text.BodyM> {`(+${country_code}) ${phone}`} </Text.BodyM>
+          ) : (
+            {}
+          ),
+      })}
+      {renderItem({
+        icon: 'LocationPoint',
+        title: city && country ? `${city}, ${country}` : undefined,
+      })}
+
+      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
+        {i18next.t('settings:text_social')}
+      </Text.Subtitle>
+
+      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
+        {i18next.t('settings:text_work')}
+      </Text.Subtitle>
       {renderItem({
         icon: 'iconSuitcase',
         TitleComponent: latest_work && (
@@ -73,35 +116,15 @@ const AboutProfile = (props: IUserProfile) => {
           </Text.BodyM>
         ),
       })}
-      {renderItem({
-        icon: 'LocationPoint',
-        title: city && country ? `${city}, ${country}` : undefined,
-      })}
-      {renderItem({icon: 'CommentsAlt', title: userLanguages})}
-      {birthday &&
-        renderItem({
-          icon: 'Calender',
-          title: formatDate(birthday, 'MMM Do, YYYY'),
-        })}
-      {renderItem({
-        icon: 'Phone',
-        title:
-          country_code && phone ? `(+${country_code}) ${phone}` : undefined,
-      })}
-      {renderItem({icon: 'Envelope', title: email})}
-      {/* @ts-ignore */}
-      {gender && renderItem({icon: 'UserSquare', title: genders[gender]})}
-      {relationship_status &&
-        renderItem({
-          icon: 'Heart',
-          // @ts-ignore
-          title: relationshipStatus[relationship_status],
-        })}
+
+      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
+        {i18next.t('settings:text_education')}
+      </Text.Subtitle>
     </View>
   );
 };
 
-export default AboutProfile;
+export default ProfileBlock;
 
 const themeStyles = (theme: ITheme) => {
   const {spacing} = theme;
@@ -114,13 +137,13 @@ const themeStyles = (theme: ITheme) => {
     itemComponent: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: spacing.margin.small,
+      marginVertical: spacing.margin.small,
       marginRight: spacing.margin.base,
     },
-    about: {
-      marginBottom: spacing.margin.base,
-    },
     icon: {},
-    text: {marginLeft: spacing.margin.large},
+    text: {marginLeft: spacing.margin.base},
+    title: {
+      marginTop: spacing.margin.base,
+    },
   });
 };

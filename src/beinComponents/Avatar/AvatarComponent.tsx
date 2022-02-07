@@ -26,6 +26,7 @@ export interface AvatarProps extends ImageProps {
   badgeBottom?: boolean;
   isRounded?: boolean;
   cache?: boolean;
+  showBorder?: boolean;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -38,6 +39,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badge,
   badgeBottom,
   isRounded,
+  showBorder,
   ...props
 }: AvatarProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -47,6 +49,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   const avatarSize = dimension?.avatarSizes[variant] || 24;
   const avatarContainerStyle: StyleProp<ViewStyle> = styles[variant];
   let avatarStyle: StyleProp<ImageStyle> = styles[variant];
+  const borderStyle = showBorder ? styles.borderStyle : {};
 
   if (isRounded) {
     avatarStyle = StyleSheet.flatten([
@@ -157,7 +160,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           avatarStyle,
           source ? {} : {backgroundColor: colors.borderCard},
         ])}>
-        <Image style={avatarStyle} source={source} {...props} />
+        <Image style={[avatarStyle, borderStyle]} source={source} {...props} />
         {renderStatus()}
         {renderAction()}
         {renderBadge()}
@@ -167,7 +170,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 };
 
 const creatStyle = (theme: ITheme) => {
-  const {spacing, dimension} = theme;
+  const {spacing, dimension, colors} = theme;
   return StyleSheet.create({
     container: {},
     tiny: {
@@ -200,6 +203,7 @@ const creatStyle = (theme: ITheme) => {
       height: dimension?.avatarSizes?.ultraSuperLarge,
       borderRadius: (spacing?.borderRadius.small || 6) + 2,
     },
+    borderStyle: {borderWidth: 4, borderColor: colors.background},
   });
 };
 
