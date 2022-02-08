@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import Text from '~/beinComponents/Text';
+import Text, {TextProps} from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -18,6 +18,7 @@ import {fontFamilies} from '~/theme/fonts';
 interface HeaderAvatarProps {
   firstLabel: string;
   secondLabel: string;
+  secondLabelProps?: TextProps;
   avatar: string;
   containerStyle?: StyleProp<ViewStyle>;
   onPress?: (...params: any) => void;
@@ -26,6 +27,7 @@ interface HeaderAvatarProps {
 const HeaderAvatar = ({
   firstLabel,
   secondLabel,
+  secondLabelProps,
   avatar,
   containerStyle,
   onPress,
@@ -57,8 +59,8 @@ const HeaderAvatar = ({
           </View>
         </Text>
         {secondLabel && (
-          <Text variant="heading" style={styles.heading}>
-            {`@${secondLabel}`}
+          <Text variant="heading" style={styles.heading} {...secondLabelProps}>
+            {secondLabel}
           </Text>
         )}
       </View>

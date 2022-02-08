@@ -5,7 +5,7 @@ const menuStack = {
   securityLogin: 'security-and-login',
   changePassword: 'change-password',
   userProfile: 'user-profile',
-
+  drawerMenu: 'drawer-menu',
   //use for draft posts
   createPost: 'create-post',
   createComment: 'create-comment',

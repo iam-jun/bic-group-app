@@ -39,12 +39,9 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import appActions from '~/store/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 
-import {useNavigation, DrawerActions} from '@react-navigation/native';
-
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const navigation = useNavigation();
 
   /**
    * TODO: Update path in ~/src/constants/settings
@@ -121,8 +118,7 @@ const Menu = (): React.ReactElement => {
   };
 
   const goToMyProfile = () => {
-    navigation.dispatch(DrawerActions.openDrawer());
-    // rootNavigation.navigate(mainStack.userProfile, {userId: id});
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
   const renderDivider = () => <Divider style={styles.divider} />;

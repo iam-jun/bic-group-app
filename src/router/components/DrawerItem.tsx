@@ -78,7 +78,7 @@ const DrawerItem: React.FC<DrawerItemProps> = ({
           <Icon
             icon={icon}
             size={24}
-            tintColor={tintColor || colors.textSecondary}
+            tintColor={tintColor || colors.primary6}
             {...iconProps}
           />
         )}
