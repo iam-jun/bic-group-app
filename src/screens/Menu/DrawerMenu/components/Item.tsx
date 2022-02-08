@@ -13,7 +13,7 @@ import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import {useKeySelector} from '~/hooks/selector';
 
-interface DrawerItemProps {
+interface ItemProps {
   disabled?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -38,7 +38,7 @@ interface DrawerItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;
 }
 
-const DrawerItem: React.FC<DrawerItemProps> = ({
+const Item: React.FC<ItemProps> = ({
   disabled,
   onPress,
   style,
@@ -61,7 +61,7 @@ const DrawerItem: React.FC<DrawerItemProps> = ({
   rightTintColor,
   rightIconProps,
   RightComponent,
-}: DrawerItemProps) => {
+}: ItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme = useTheme() as ITheme;
@@ -151,4 +151,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default DrawerItem;
+export default Item;

@@ -134,3 +134,39 @@ export const securityLoginMenu = {
     },
   ],
 };
+
+export const settingsMenu = [
+  {
+    type: 'accountSettings',
+    title: 'settings:title_account_settings',
+    icon: 'UilCog',
+    rightIcon: 'UilAngleRightB',
+  },
+];
+
+export const infoMenu = [
+  {
+    type: 'aboutBein',
+    title: 'settings:title_about_bein',
+    icon: 'UilInfoCircle',
+    rightTitle: getEnv('APP_VERSION')
+      ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
+      : undefined,
+    disabled: true,
+  },
+  {
+    type: 'appPolicies',
+    title: 'settings:title_app_policies',
+    icon: 'UilBookOpen',
+  },
+  {
+    type: 'help_and_support',
+    title: 'settings:title_help_and_support',
+    icon: 'UilQuestionCircle',
+  },
+  {
+    type: 'feedback',
+    title: 'settings:title_feedback',
+    icon: 'UilCommentHeart',
+  },
+];
