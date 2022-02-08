@@ -7,6 +7,7 @@ import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
 import EditPhoneNumber from '~/screens/Menu/AccountSettings/EditContact/EditPhoneNumber';
 import EditLocation from '~/screens/Menu/AccountSettings/EditContact/EditLocation';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
+import AccoutSettings from '~/screens/Menu/AccountSettings';
 
 export default {
   main: MainTabs,
@@ -18,4 +19,5 @@ export default {
   'edit-phone-number': EditPhoneNumber,
   'edit-location': EditLocation,
   'add-work': AddWork,
+  'account-settings': AccoutSettings,
 };

@@ -25,12 +25,17 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import settings, {settingsMenu, infoMenu} from '~/constants/settings';
-import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {DrawerActions} from '@react-navigation/native';
 
-const CustomDrawerContent = () => {
+interface CustomDrawerContentProps {
+  navigation: any;
+}
+
+const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({
+  navigation,
+}: CustomDrawerContentProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const navigation = useNavigation();
 
   const {t} = useBaseHook();
 

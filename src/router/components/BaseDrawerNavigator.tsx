@@ -30,8 +30,8 @@ const BaseDrawerNavigator = ({
     <Drawer.Navigator
       initialRouteName={initialRouteName}
       drawerPosition="right"
-      drawerContent={() => <CustomDrawerContent />}
-      screenOptions={{swipeEnabled: false}}
+      drawerContent={props => <CustomDrawerContent {...props} />}
+      edgeWidth={0}
       drawerStyle={{
         width: width,
         backgroundColor: colors.transparent,

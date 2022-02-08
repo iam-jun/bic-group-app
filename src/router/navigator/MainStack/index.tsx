@@ -9,7 +9,6 @@ import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePr
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
-import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
 import {deviceDimensions} from '~/theme/dimension';
