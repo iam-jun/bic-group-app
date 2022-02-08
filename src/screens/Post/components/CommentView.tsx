@@ -249,6 +249,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       <RNAnimated.View style={[styles.webMenuButton, {opacity: animated}]}>
         <Button>
           <Icon
+            testID={'comment_view.menu'}
             style={{}}
             onPress={onLongPress}
             icon={'EllipsisH'}
@@ -352,8 +353,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
-                  selector={postKeySelector.allCommentsByParentIds}
-                  parentId={id}
+                  selector={`${postKeySelector.allComments}.${id}.data.mentions.users`}
                   onPressAudience={onPressAudience}
                 />
               </View>

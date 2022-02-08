@@ -227,6 +227,7 @@ const PostSettings = () => {
             ) : null}
           </View>
           <Toggle
+            testID={'post_settings.toggle_important'}
             isChecked={sImportant?.active}
             onActionPress={onToggleImportant}
           />
@@ -248,6 +249,7 @@ const PostSettings = () => {
         buttonProps={{
           disabled: disableButtonSave,
           useI18n: true,
+          testID: 'post_settings.btn_save',
         }}
       />
       <View style={styles.container}>

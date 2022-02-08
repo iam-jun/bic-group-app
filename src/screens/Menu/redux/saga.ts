@@ -15,6 +15,7 @@ import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import FileUploader from '~/services/fileUploader';
 import errorCode from '~/constants/errorCode';
+import {updateUserFromSharedPreferences} from '~/services/sharePreferences';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
@@ -52,6 +53,10 @@ function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
       userId,
       params,
     );
+    yield updateUserFromSharedPreferences({
+      name: response?.data?.fullname,
+      avatar: response?.data?.avatar,
+    });
     yield put(menuActions.setMyProfile(mapProfile(response.data)));
   } catch (err) {
     yield put(menuActions.setMyProfile(myProfile));
