@@ -24,7 +24,7 @@ exports[`PostViewFooter component should render correctly 1`] = `
     <View
       accessibilityState={
         Object {
-          "disabled": true,
+          "disabled": false,
         }
       }
       accessible={true}
