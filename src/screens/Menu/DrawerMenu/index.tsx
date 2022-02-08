@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Newsfeed from '~/screens/Home';
+
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {
@@ -39,11 +39,7 @@ const DrawerMenu = () => {
     }, 100);
   };
 
-  return (
-    <View style={styles.container}>
-      <Newsfeed />
-    </View>
-  );
+  return <View style={styles.container} />;
 };
 
 const themeStyles = (theme: ITheme) => {
