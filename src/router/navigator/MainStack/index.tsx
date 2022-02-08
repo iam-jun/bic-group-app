@@ -19,6 +19,8 @@ import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
 
+import BaseDrawerNavigator from '~/router/components/BaseDrawerNavigator';
+
 const Stack = createStackNavigator();
 
 const MainStack = (): React.ReactElement => {
@@ -62,7 +64,7 @@ const MainStack = (): React.ReactElement => {
         {showLeftCol && renderLeftCol()}
         <View style={styles.centerAndRightCol}>
           <View style={styles.centerCol}>
-            <BaseStackNavigator stack={stack} screens={screens} />
+            <BaseDrawerNavigator stack={stack} screens={screens} />
           </View>
           {showRightCol && renderRightCol()}
         </View>

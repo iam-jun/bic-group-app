@@ -11,7 +11,6 @@ import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/Post/PostSettings';
-import DrawerMenu from '~/screens/Menu/DrawerMenu';
 
 export default {
   menu: Menu,
@@ -20,7 +19,6 @@ export default {
   'security-and-login': SecurityLogin,
   'change-password': ChangePassword,
   'user-profile': UserProfile,
-  'drawer-menu': DrawerMenu,
   //use for draft post
   'create-post': CreatePost,
   'create-comment': CreateComment,

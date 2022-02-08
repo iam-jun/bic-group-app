@@ -1,10 +1,14 @@
 import React from 'react';
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+} from 'react-native';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
-import Item from './components/Item';
+import DrawerItem from './DrawerItem';
 import Divider from '~/beinComponents/Divider';
-
-import settings, {settingsMenu, infoMenu} from '~/constants/settings';
 
 import {useKeySelector} from '~/hooks/selector';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -20,21 +24,24 @@ import * as modalActions from '~/store/modal/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import settings, {settingsMenu, infoMenu} from '~/constants/settings';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 
-const DrawerMenu = () => {
+const CustomDrawerContent = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+  const navigation = useNavigation();
 
   const {t} = useBaseHook();
 
   const insets = useSafeAreaInsets();
+  const {width} = useWindowDimensions();
 
   const theme = useTheme() as ITheme;
   const {colors} = theme || {};
+  const styles = themeStyles(theme, insets, width);
 
-  const styles = themeStyles(theme, insets);
-
-  const {id, fullname, avatar} =
+  const {id, fullname, avatar, username} =
     useKeySelector(menuKeySelector.myProfile) || {};
 
   const onPressItem = (type: string) => () => {
@@ -64,6 +71,10 @@ const DrawerMenu = () => {
     }
   };
 
+  const onPressHideDrawer = () => {
+    navigation.dispatch(DrawerActions.closeDrawer());
+  };
+
   const renderDivider = () => <Divider style={styles.divider} />;
 
   const renderData = ({
@@ -77,7 +88,7 @@ const DrawerMenu = () => {
       <>
         {data.map((item, index) => {
           return (
-            <Item
+            <DrawerItem
               key={`${index}_menu_${item?.type}`}
               icon={item?.icon}
               testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
@@ -94,50 +105,58 @@ const DrawerMenu = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.statusbar} />
-      <ScrollView>
-        <HeaderAvatar
-          firstLabel={fullname}
-          secondLabel="profile:title_view_profile"
-          secondLabelProps={{useI18n: true}}
-          avatar={avatar || images.img_user_avatar_default}
-          onPress={onPressItem('myProfile')}
+      <View style={styles.container}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.left}
+          onPress={onPressHideDrawer}
         />
-
-        {renderData({
-          data: settingsMenu,
-          itemTestID: 'menu.account_settings',
-        })}
-        {renderDivider()}
-        {renderData({
-          data: infoMenu,
-        })}
-        {renderDivider()}
-        <Item
-          icon="UilSignOutAlt"
-          tintColor={colors.error}
-          title="auth:text_sign_out"
-          titleProps={{style: {color: colors.error}}}
-          onPress={onPressItem('logOut')}
-        />
-        {__DEV__ &&
-          renderData({
-            data: settings,
-          })}
-      </ScrollView>
-    </View>
+        <View style={styles.right}>
+          <ScrollView>
+            <HeaderAvatar
+              firstLabel={fullname}
+              secondLabel={username}
+              avatar={avatar || images.img_user_avatar_default}
+              onPress={onPressItem('myProfile')}
+            />
+            {renderData({
+              data: settingsMenu,
+              itemTestID: 'menu.account_settings',
+            })}
+            {renderDivider()}
+            {renderData({
+              data: infoMenu,
+            })}
+            {renderDivider()}
+            <DrawerItem
+              icon="UilSignOutAlt"
+              tintColor={colors.error}
+              title="auth:text_sign_out"
+              titleProps={{style: {color: colors.error}}}
+              onPress={onPressItem('logOut')}
+            />
+            {__DEV__ &&
+              renderData({
+                data: settings,
+              })}
+          </ScrollView>
+        </View>
+      </View>
+    </>
   );
 };
 
-const themeStyles = (theme: ITheme, insets: any) => {
+const themeStyles = (theme: ITheme, insets: any, width: number) => {
   const {spacing, colors} = theme;
   const topHeight = insets.top;
+  const MAX_WIDTH = width * 0.869;
+
   return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
+    container: {flex: 1, flexDirection: 'row'},
+    left: {width: width - MAX_WIDTH},
+    right: {width: MAX_WIDTH, backgroundColor: colors.background},
     divider: {
       marginVertical: spacing.margin.small,
       backgroundColor: colors.bgFocus,
@@ -149,4 +168,4 @@ const themeStyles = (theme: ITheme, insets: any) => {
   });
 };
 
-export default DrawerMenu;
+export default CustomDrawerContent;
