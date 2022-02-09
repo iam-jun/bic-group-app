@@ -6,7 +6,6 @@ import i18next from 'i18next';
 import {useIsFocused} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -14,27 +13,36 @@ import Header from '~/beinComponents/Header';
 import Avatar from '~/beinComponents/Avatar';
 
 import {ITheme} from '~/theme/interfaces';
-import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
+import {
+  scaleSize,
+  scaleCoverHeight,
+  userProfileImageCropRatio,
+} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
-import AboutProfile from './components/AboutProfile';
+import ProfileBlock from './components/ProfileBlock';
 import menuActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
 import {useUserIdAuth} from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Icon from '~/beinComponents/Icon';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import ImagePicker from '~/beinComponents/ImagePicker';
+import {IFilePicked} from '~/interfaces/common';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, background_img_url} =
+  const {fullname, description, avatar, background_img_url, email} =
     userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
-  const {username: currentUsername} = myProfileData || {};
+  const {username: currentUsername, id} = myProfileData || {};
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -56,13 +64,68 @@ const UserProfile = (props: any) => {
     isFocused && getUserProfile();
   }, [isFocused, userId]);
 
-  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit);
+  const onEditProfileButton = () =>
+    rootNavigation.navigate(mainStack.userEdit, {userId, params});
+
+  const uploadFile = (
+    file: IFilePicked,
+    fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    dispatch(
+      menuActions.uploadImage({
+        id,
+        file,
+        fieldName,
+        uploadType,
+      }),
+    );
+  };
+
+  const _openImagePicker = (
+    fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
+      ...userProfileImageCropRatio[fieldName],
+      cropping: true,
+      mediaType: 'photo',
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
+    });
+  };
+
+  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
     const coverWidth = e.nativeEvent.layout.width;
     const coverHeight = scaleCoverHeight(coverWidth);
     setCoverHeight(coverHeight);
+  };
+
+  const onSeeMore = () => {
+    rootNavigation.navigate(mainStack.userEdit, {
+      userId,
+      params:
+        userId == currentUserId || userId == currentUsername
+          ? {}
+          : {...userProfileData},
+    });
+  };
+
+  const renderEditButton = (style: any, onPress: any) => {
+    return userId == currentUserId || userId == currentUsername ? (
+      <ButtonWrapper
+        style={[styles.editButton, style]}
+        activeOpacity={0.9}
+        onPress={onPress}>
+        <Icon size={16} tintColor={theme.colors.primary7} icon={'Camera'} />
+      </ButtonWrapper>
+    ) : null;
   };
 
   const renderCoverImage = () => {
@@ -72,6 +135,7 @@ const UserProfile = (props: any) => {
           style={styles.cover}
           source={background_img_url || images.img_cover_default}
         />
+        {renderEditButton(styles.editCoverPhoto, onEditCover)}
       </View>
     );
   };
@@ -79,10 +143,15 @@ const UserProfile = (props: any) => {
   const renderAvatar = () => {
     return (
       <View style={styles.imageButton}>
-        <Avatar.UltraSuperLarge
-          style={styles.avatar}
-          source={avatar || images.img_user_avatar_default}
-        />
+        <View>
+          <Avatar.UltraSuperLarge
+            style={styles.avatar}
+            source={avatar || images.img_user_avatar_default}
+            isRounded={true}
+            showBorder={true}
+          />
+          {renderEditButton(styles.editAvatar, onEditAvatar)}
+        </View>
       </View>
     );
   };
@@ -90,8 +159,11 @@ const UserProfile = (props: any) => {
   const renderUserHeader = () => {
     return (
       <View style={styles.headerName}>
-        <Text.H5>{fullname}</Text.H5>
-        <Text.Body style={styles.subtitleText}>{description}</Text.Body>
+        <Text.H4>{fullname}</Text.H4>
+        <Text.Subtitle>{email}</Text.Subtitle>
+        {!!description && (
+          <Text style={styles.subtitleText}>{description}</Text>
+        )}
       </View>
     );
   };
@@ -100,8 +172,9 @@ const UserProfile = (props: any) => {
     return userId == currentUserId || userId == currentUsername ? (
       <Button.Secondary
         testID="user_profile.edit"
-        style={styles.button}
-        rightIcon={'EditAlt'}
+        textColor={theme.colors.primary6}
+        style={styles.buttonEdit}
+        leftIcon={'EditAlt'}
         onPress={onEditProfileButton}>
         {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
@@ -109,7 +182,9 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         testID="user_profile.message"
         style={styles.button}
-        highEmphasis
+        textColor={theme.colors.bgSecondary}
+        color={theme.colors.primary6}
+        colorHover={theme.colors.primary5}
         rightIcon={'Message'}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
@@ -140,9 +215,11 @@ const UserProfile = (props: any) => {
           {renderAvatar()}
           {renderUserHeader()}
           {renderButton()}
-
-          <Divider style={styles.divider} />
-          <AboutProfile {...userProfileData} />
+          <ProfileBlock
+            profileData={userProfileData}
+            onSeeMore={onSeeMore}
+            hideSeeMore={userId == currentUserId || userId == currentUsername}
+          />
         </ScrollView>
       )}
     </ScreenWrapper>
@@ -173,27 +250,50 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     imageButton: {
       alignItems: 'center',
-      marginTop: -30,
+      marginTop: -44,
     },
     avatar: {
-      width: scaleSize(96),
-      height: scaleSize(96),
-      maxHeight: 125,
-      maxWidth: 125,
-      borderRadius: 8,
+      // width: scaleSize(100),
+      // height: scaleSize(100),
+      // maxHeight: 125,
+      // maxWidth: 125,
     },
     headerName: {
       alignItems: 'center',
-      marginVertical: spacing.margin.small,
+      paddingVertical: spacing.margin.base,
     },
     subtitleText: {
-      marginVertical: spacing.margin.tiny,
+      marginTop: spacing.margin.small,
     },
     button: {
       marginHorizontal: spacing.margin.large,
     },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
+    },
+    editButton: {
+      backgroundColor: colors.primary1,
+      width: 24,
+      height: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: spacing?.borderRadius.small,
+      marginLeft: spacing?.padding.small,
+    },
+    editCoverPhoto: {
+      position: 'absolute',
+      top: spacing?.margin.small,
+      right: spacing?.margin.small,
+    },
+    editAvatar: {
+      position: 'absolute',
+      bottom: 0,
+      right: spacing?.margin.small,
+    },
+    buttonEdit: {
+      marginHorizontal: spacing.margin.large,
+      borderWidth: 1,
+      borderColor: colors.primary6,
     },
   });
 };

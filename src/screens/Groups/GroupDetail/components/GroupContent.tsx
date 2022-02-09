@@ -61,6 +61,10 @@ const GroupContent = ({
     rootNavigation.navigate(groupStack.groupFiles);
   };
 
+  const onPressChannel = () => {
+    rootNavigation.navigate(groupStack.groupFiles);
+  };
+
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
       dispatch(groupsActions.mergeExtraGroupPosts(groupId));
@@ -100,6 +104,16 @@ const GroupContent = ({
                 <ViewSpacing width={spacing.margin.base} />
               </>
             )}
+            <Button.Secondary
+              useI18n
+              onPress={onPressChannel}
+              color={colors.bgHover}
+              textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
+              testID="group_content.channel">
+              groups:group_content:btn_channel
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.base} />
             <Button.Secondary
               useI18n
               onPress={onPressAbout}

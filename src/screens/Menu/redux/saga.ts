@@ -66,12 +66,12 @@ function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
 
 function* editMyProfile({
   payload,
-  editFieldName,
+  editFieldToastMessage,
   callback,
 }: {
   type: string;
   payload: IUserEdit;
-  editFieldName?: string;
+  editFieldToastMessage?: string;
   callback?: () => void;
 }) {
   try {
@@ -89,10 +89,8 @@ function* editMyProfile({
     } else {
       // this field is used to indicate which parts of
       // user profile have been updated
-      if (editFieldName) {
-        toastContent = `${editFieldName} ${i18next.t(
-          'common:text_updated_successfully',
-        )}`;
+      if (editFieldToastMessage) {
+        toastContent = editFieldToastMessage;
       } else {
         toastContent = 'common:text_edit_success';
       }

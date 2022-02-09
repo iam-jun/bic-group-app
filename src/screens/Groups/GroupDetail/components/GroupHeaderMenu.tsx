@@ -210,6 +210,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
             icon: 'iconShieldStar',
             size: 24,
             tintColor: theme.colors.primary6,
+            style: styles.iconLeftStyle,
           }}
           leftIcon={'iconShieldStar'}
           title={t('groups:group_menu:label_admin_tools')}
@@ -230,6 +231,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           icon: 'Copy',
           size: 24,
           tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
         }}
         leftIcon={'Link'}
         title={t('groups:group_menu:label_copy_group_link')}
@@ -243,6 +245,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
             icon: 'ShareAlt',
             size: 24,
             tintColor: theme.colors.primary6,
+            style: styles.iconLeftStyle,
           }}
           leftIcon={'ShareAlt'}
           title={t('groups:group_menu:label_share_group')}
@@ -257,6 +260,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
             icon: 'iconSend',
             size: 24,
             tintColor: theme.colors.primary6,
+            style: styles.iconLeftStyle,
           }}
           leftIcon={'iconSend'}
           title={t('groups:group_menu:label_share_to_chat')}
@@ -270,6 +274,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           icon: 'iconAddSquareDone',
           size: 24,
           tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
         }}
         leftIcon={'iconAddSquareDone'}
         title={t('groups:group_menu:label_following')}
@@ -282,6 +287,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           icon: 'iconMapPin',
           size: 24,
           tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
         }}
         leftIcon={'iconMapPin'}
         title={t('groups:group_menu:label_pin_group')}
@@ -294,6 +300,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
           icon: 'Bell',
           size: 24,
           tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
         }}
         leftIcon={'Bell'}
         title={t('groups:group_menu:label_notifications')}
@@ -307,9 +314,11 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
             icon: 'SignOutAlt',
             size: 24,
             tintColor: theme.colors.error,
+            style: styles.iconLeftStyle,
           }}
           leftIcon={'SignOutAlt'}
           title={t('groups:group_menu:label_leave_group')}
+          titleProps={{color: theme.colors.error}}
           onPress={onPressLeave}
         />
       )}
@@ -325,6 +334,7 @@ const createStyle = (theme: ITheme) => {
       height: 44,
       paddingHorizontal: spacing.padding.large,
     },
+    iconLeftStyle: {marginRight: spacing.margin.base},
   });
 };
 

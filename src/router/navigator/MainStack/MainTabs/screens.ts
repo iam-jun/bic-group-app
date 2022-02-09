@@ -10,8 +10,6 @@ import AccoutSettings from '~/screens/Menu/AccountSettings';
 import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasicInfo';
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
-import EditPhoneNumber from '~/screens/Menu/AccountSettings/EditContact/EditPhoneNumber';
-import EditLocation from '~/screens/Menu/AccountSettings/EditContact/EditLocation';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
 import UserEdit from '~/screens/Menu/AccountSettings/UserEditProfile';
@@ -32,6 +30,7 @@ import NotiStack from '../NotiStack';
 import DraftPost from '~/screens/Post/DraftPost';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
+import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
 
 export const screens = {
   home: HomeStack,
@@ -74,9 +73,8 @@ export const screensWebLaptop = {
   'edit-basic-info': EditBasicInfo,
   'edit-contact': EditContact,
   'edit-email': EditEmail,
-  'edit-phone-number': EditPhoneNumber,
-  'edit-location': EditLocation,
   'add-work': AddWork,
+  'edit-description': EditDescription,
 
   //NOTIFICATION STACK
   // notification: Notification,
