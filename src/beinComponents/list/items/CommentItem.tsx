@@ -98,15 +98,3 @@ const createStyle = (theme: ITheme) => {
 };
 
 export default CommentItem;
-// const CommentItem = React.memo(_CommentItem, (prevProps, nextProps) => {
-//   const diff = isEqual(prevProps.commentData, nextProps.commentData);
-//   if (prevProps.commentData.data?.content == 'test') {
-//     console.log('prev', JSON.stringify(prevProps));
-
-//     console.log('diffffffffffffffff', diff);
-//     console.log('next', JSON.stringify(nextProps));
-//   }
-//   return diff;
-// });
-// CommentItem.whyDidYouRender = true;
-// export default CommentItem;

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -42,7 +42,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle(theme, commentId);
 
   const progress = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => {
@@ -53,7 +53,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
 
   useEffect(() => {
     if (loadingMore) {
-      progress.value = withTiming(120, {
+      progress.value = withTiming(150, {
         duration: 400,
         easing: Easing.bezier(0.25, 0.1, 0.25, 1),
       });
@@ -67,16 +67,19 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
 
   const onPressLoadMore = () => {
     if (idLessThan) {
-      dispatch(
-        postActions.getCommentsByPostId({
-          postId: postId,
-          idLt: idLessThan,
-          commentId: commentId,
-          recentReactionsLimit: commentId ? 3 : 10,
-          isMerge: true,
-          callbackLoading: loading => setLoadingMore(loading),
-        }),
-      );
+      setLoadingMore(true);
+      setTimeout(() => {
+        dispatch(
+          postActions.getCommentsByPostId({
+            postId: postId,
+            idLt: idLessThan,
+            commentId: commentId,
+            recentReactionsLimit: commentId ? 3 : 10,
+            isMerge: true,
+            callbackLoading: loading => setLoadingMore(loading),
+          }),
+        );
+      }, 150);
     }
   };
 
@@ -90,7 +93,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         </Button>
         <ActivityIndicator color={colors.disabled} animating={loadingMore} />
       </View>
-      <Animated.View style={animatedStyle}>
+      <Animated.View style={[styles.placeholder, animatedStyle]}>
         <CommentPlaceholder />
         <CommentPlaceholder />
       </Animated.View>
@@ -98,7 +101,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, commentId?: string) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
@@ -109,6 +112,9 @@ const createStyle = (theme: ITheme) => {
     textLoadMoreComment: {
       margin: spacing.margin.small,
       color: colors.textPrimary,
+    },
+    placeholder: {
+      marginLeft: commentId ? 36 : 0,
     },
   });
 };
