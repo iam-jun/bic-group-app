@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  useWindowDimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
 import DrawerItem from './DrawerItem';
 import Divider from '~/beinComponents/Divider';
+import {DrawerContentScrollView} from '@react-navigation/drawer';
 
 import {useKeySelector} from '~/hooks/selector';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -23,30 +18,20 @@ import authActions from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 import settings, {settingsMenu, infoMenu} from '~/constants/settings';
-import {DrawerActions} from '@react-navigation/native';
 
-interface CustomDrawerContentProps {
-  navigation: any;
-}
-
-const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({
-  navigation,
-}: CustomDrawerContentProps) => {
+const CustomDrawerContent = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
   const {t} = useBaseHook();
 
-  const insets = useSafeAreaInsets();
-  const {width} = useWindowDimensions();
-
   const theme = useTheme() as ITheme;
   const {colors} = theme || {};
-  const styles = themeStyles(theme, insets, width);
+  const styles = themeStyles(theme);
 
-  const {id, fullname, avatar, username} =
+  const {id, fullname, avatar} =
     useKeySelector(menuKeySelector.myProfile) || {};
 
   const onPressItem = (type: string) => () => {
@@ -74,10 +59,6 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({
       default:
         dispatch(modalActions.showAlertNewFeature());
     }
-  };
-
-  const onPressHideDrawer = () => {
-    navigation.dispatch(DrawerActions.closeDrawer());
   };
 
   const renderDivider = () => <Divider style={styles.divider} />;
@@ -110,65 +91,45 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({
   };
 
   return (
-    <>
-      <View style={styles.statusbar} />
-      <View style={styles.container}>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.left}
-          onPress={onPressHideDrawer}
-        />
-        <View style={styles.right}>
-          <ScrollView>
-            <HeaderAvatar
-              firstLabel={fullname}
-              secondLabel={username}
-              avatar={avatar || images.img_user_avatar_default}
-              onPress={onPressItem('myProfile')}
-            />
-            {renderData({
-              data: settingsMenu,
-              itemTestID: 'menu.account_settings',
-            })}
-            {renderDivider()}
-            {renderData({
-              data: infoMenu,
-            })}
-            {renderDivider()}
-            <DrawerItem
-              icon="UilSignOutAlt"
-              tintColor={colors.error}
-              title="auth:text_sign_out"
-              titleProps={{style: {color: colors.error}}}
-              onPress={onPressItem('logOut')}
-            />
-            {__DEV__ &&
-              renderData({
-                data: settings,
-              })}
-          </ScrollView>
-        </View>
-      </View>
-    </>
+    <DrawerContentScrollView {...props}>
+      <HeaderAvatar
+        firstLabel={fullname}
+        secondLabel="profile:title_view_profile"
+        secondLabelProps={{useI18n: true}}
+        avatar={avatar || images.img_user_avatar_default}
+        onPress={onPressItem('myProfile')}
+      />
+      {renderData({
+        data: settingsMenu,
+        itemTestID: 'menu.account_settings',
+      })}
+      {renderDivider()}
+      {renderData({
+        data: infoMenu,
+      })}
+      {renderDivider()}
+      <DrawerItem
+        icon="UilSignOutAlt"
+        tintColor={colors.error}
+        title="auth:text_sign_out"
+        titleProps={{style: {color: colors.error}}}
+        onPress={onPressItem('logOut')}
+      />
+      {__DEV__ &&
+        renderData({
+          data: settings,
+        })}
+    </DrawerContentScrollView>
   );
 };
 
-const themeStyles = (theme: ITheme, insets: any, width: number) => {
+const themeStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
-  const topHeight = insets.top;
-  const MAX_WIDTH = width * 0.869;
 
   return StyleSheet.create({
-    container: {flex: 1, flexDirection: 'row'},
-    left: {width: width - MAX_WIDTH},
-    right: {width: MAX_WIDTH, backgroundColor: colors.background},
     divider: {
       marginVertical: spacing.margin.small,
       backgroundColor: colors.bgFocus,
-    },
-    statusbar: {
-      height: topHeight,
-      backgroundColor: colors.background,
     },
   });
 };

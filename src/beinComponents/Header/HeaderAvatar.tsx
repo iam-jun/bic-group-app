@@ -10,25 +10,33 @@ import {useTheme} from 'react-native-paper';
 
 import Text, {TextProps} from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
-import Icon from '~/beinComponents/Icon';
+import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
+import Icon, {IconProps} from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
-import {fontFamilies} from '~/theme/fonts';
 
 interface HeaderAvatarProps {
   firstLabel: string;
+  iconCheckCircle?: boolean;
+  iconFirstLabel?: any;
+  iconFirstLabelProps?: IconProps;
   secondLabel: string;
   secondLabelProps?: TextProps;
   avatar: string;
+  avatarProps?: AvatarProps;
   containerStyle?: StyleProp<ViewStyle>;
   onPress?: (...params: any) => void;
 }
 
 const HeaderAvatar = ({
   firstLabel,
+  iconCheckCircle,
+  iconFirstLabel,
+  iconFirstLabelProps,
   secondLabel,
   secondLabelProps,
   avatar,
+  avatarProps,
   containerStyle,
   onPress,
 }: HeaderAvatarProps) => {
@@ -44,22 +52,27 @@ const HeaderAvatar = ({
       disabled={!isInternetReachable}
       style={StyleSheet.flatten([styles.container, containerStyle])}
       onPress={onPress}>
-      <Avatar.Large source={avatar} isRounded badgeCheck />
+      <Avatar.Large source={avatar} isRounded {...avatarProps} />
       <View style={styles.content}>
         <Text variant="h5">
           {firstLabel}
           <View>
-            <View style={styles.circle}>
-              <Icon
-                icon="iconCheckCircle"
-                size={12}
-                tintColor={colors.transparent}
-              />
-            </View>
+            {iconCheckCircle && (
+              <View style={styles.circle}>
+                <Icon
+                  icon="iconCheckCircle"
+                  size={12}
+                  tintColor={colors.transparent}
+                />
+              </View>
+            )}
+            {iconFirstLabel && (
+              <Icon icon={iconFirstLabel} size={12} {...iconFirstLabelProps} />
+            )}
           </View>
         </Text>
         {secondLabel && (
-          <Text variant="heading" style={styles.heading} {...secondLabelProps}>
+          <Text variant="headingSB" {...secondLabelProps}>
             {secondLabel}
           </Text>
         )}
@@ -96,6 +109,5 @@ const createStyle = (theme: ITheme) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    heading: {fontFamily: fontFamilies.OpenSansSemiBold},
   });
 };

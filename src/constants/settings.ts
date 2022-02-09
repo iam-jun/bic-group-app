@@ -152,7 +152,6 @@ export const infoMenu = [
     rightTitle: getEnv('APP_VERSION')
       ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
       : undefined,
-    disabled: true,
   },
   {
     type: 'appPolicies',
