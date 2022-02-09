@@ -8,6 +8,8 @@ const mainStack = {
   editPhoneNumber: 'edit-phone-number',
   editLocation: 'edit-location',
   addWork: 'add-work',
+  accountSettings: 'account-settings',
+  componentCollection: 'component-collection',
 };
 
 export default mainStack;
