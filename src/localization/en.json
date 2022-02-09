@@ -301,7 +301,10 @@
     "text_location_optional": "Location (optional)",
     "text_description_optional": "Description (optional)",
     "text_since": "Since",
-    "text_enddate_after_startdate": "The End Date must come after the Start Date"
+    "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "title_set_a_custom_status": "Set a custom status",
+    "title_about_bein_app": "About Bein App",
+    "title_help_and_support": "Help & Support"
   },
   "languages": {
     "title_en": "English",
