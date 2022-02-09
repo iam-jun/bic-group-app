@@ -6,7 +6,6 @@ import i18next from 'i18next';
 import {useIsFocused} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import Divider from '~/beinComponents/Divider';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -14,7 +13,11 @@ import Header from '~/beinComponents/Header';
 import Avatar from '~/beinComponents/Avatar';
 
 import {ITheme} from '~/theme/interfaces';
-import {scaleSize, scaleCoverHeight} from '~/theme/dimension';
+import {
+  scaleSize,
+  scaleCoverHeight,
+  userProfileImageCropRatio,
+} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
 import ProfileBlock from './components/ProfileBlock';
@@ -25,6 +28,10 @@ import {useUserIdAuth} from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Icon from '~/beinComponents/Icon';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import ImagePicker from '~/beinComponents/ImagePicker';
+import {IFilePicked} from '~/interfaces/common';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -35,7 +42,7 @@ const UserProfile = (props: any) => {
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
-  const {username: currentUsername} = myProfileData || {};
+  const {username: currentUsername, id} = myProfileData || {};
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -57,7 +64,41 @@ const UserProfile = (props: any) => {
     isFocused && getUserProfile();
   }, [isFocused, userId]);
 
-  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit);
+  const onEditProfileButton = () =>
+    rootNavigation.navigate(mainStack.userEdit, {userId, params});
+
+  const uploadFile = (
+    file: IFilePicked,
+    fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    dispatch(
+      menuActions.uploadImage({
+        id,
+        file,
+        fieldName,
+        uploadType,
+      }),
+    );
+  };
+
+  const _openImagePicker = (
+    fieldName: 'avatar' | 'background_img_url',
+    uploadType: IUploadType,
+  ) => {
+    ImagePicker.openPickerSingle({
+      ...userProfileImageCropRatio[fieldName],
+      cropping: true,
+      mediaType: 'photo',
+    }).then(file => {
+      uploadFile(file, fieldName, uploadType);
+    });
+  };
+
+  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+
+  const onEditCover = () =>
+    _openImagePicker('background_img_url', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -66,11 +107,18 @@ const UserProfile = (props: any) => {
     setCoverHeight(coverHeight);
   };
 
-  const renderEditButton = (style: any) => {
+  const onSeeMore = () => {
+    rootNavigation.navigate(mainStack.userEdit, {userId, params});
+  };
+
+  const renderEditButton = (style: any, onPress: any) => {
     return userId == currentUserId || userId == currentUsername ? (
-      <View style={[styles.editButton, style]}>
+      <ButtonWrapper
+        style={[styles.editButton, style]}
+        activeOpacity={0.9}
+        onPress={onPress}>
         <Icon size={16} tintColor={theme.colors.primary7} icon={'Camera'} />
-      </View>
+      </ButtonWrapper>
     ) : null;
   };
 
@@ -81,7 +129,7 @@ const UserProfile = (props: any) => {
           style={styles.cover}
           source={background_img_url || images.img_cover_default}
         />
-        {renderEditButton(styles.editCoverPhoto)}
+        {renderEditButton(styles.editCoverPhoto, onEditCover)}
       </View>
     );
   };
@@ -96,7 +144,7 @@ const UserProfile = (props: any) => {
             isRounded={true}
             showBorder={true}
           />
-          {renderEditButton(styles.editAvatar)}
+          {renderEditButton(styles.editAvatar, onEditAvatar)}
         </View>
       </View>
     );
@@ -107,7 +155,9 @@ const UserProfile = (props: any) => {
       <View style={styles.headerName}>
         <Text.H4>{fullname}</Text.H4>
         <Text.Subtitle>{email}</Text.Subtitle>
-        <Text style={styles.subtitleText}>{'description'}</Text>
+        {!!description && (
+          <Text style={styles.subtitleText}>{description}</Text>
+        )}
       </View>
     );
   };
@@ -159,7 +209,11 @@ const UserProfile = (props: any) => {
           {renderAvatar()}
           {renderUserHeader()}
           {renderButton()}
-          <ProfileBlock {...userProfileData} />
+          <ProfileBlock
+            profileData={userProfileData}
+            onSeeMore={onSeeMore}
+            hideSeeMore={userId == currentUserId || userId == currentUsername}
+          />
         </ScrollView>
       )}
     </ScreenWrapper>

@@ -1,10 +1,11 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
-  Modal,
   Platform,
+  useWindowDimensions,
+  ScrollView,
+  Keyboard,
 } from 'react-native';
 import i18next from 'i18next';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
@@ -12,46 +13,50 @@ import {Controller, useForm} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Button from '~/beinComponents/Button';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import ListView from '~/beinComponents/list/ListView';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
-import menuKeySelector from '../../redux/keySelector';
+import menuKeySelector from '../../../redux/keySelector';
 import * as validation from '~/constants/commonRegex';
-import menuActions from '../../redux/actions';
-import {useRootNavigation} from '~/hooks/navigation';
+import menuActions from '../../../redux/actions';
 import {formatTextRemoveSpace} from '~/utils/formatData';
 import {ICountryCodeList} from '~/interfaces/common';
 import appConfig from '~/configs/appConfig';
-import {dimension} from '~/theme';
-import Icon from '~/beinComponents/Icon';
-import {IconType} from '~/resources/icons';
-import mainStack from '~/router/navigator/MainStack/stack';
+import TitleComponent from '../../fragments/TitleComponent';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import Divider from '~/beinComponents/Divider';
 
-const EditPhoneNumber = () => {
+interface EditPhoneNumberProps {
+  onChangeCountryCode: (value: string) => void;
+  onChangePhoneNumber: (value: string) => void;
+  countryCode: string;
+  phoneNumber: string;
+}
+
+const EditPhoneNumber = ({
+  onChangeCountryCode,
+  onChangePhoneNumber,
+  countryCode,
+  phoneNumber,
+}: EditPhoneNumberProps) => {
+  const windowDimension = useWindowDimensions();
+  const screenHeight = windowDimension.height;
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
-  const {rootNavigation} = useRootNavigation();
+  const styles = createStyles(theme, screenHeight);
   const dispatch = useDispatch();
 
-  const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {id, phone, country_code} = myProfile || {};
   const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
   const {data, searchResult} = countryCodeList || {};
   const phoneNumberEditError = useKeySelector(
     menuKeySelector.phoneNumberEditError,
   );
-  const [showSaveButton, setShowSaveButton] = useState<boolean>(false);
-  const [codeValue, setCodeValue] = useState<string>(country_code);
-  const [flagValue, setFlagValue] = useState<IconType>('');
+  const [codeValue, setCodeValue] = useState<string>(countryCode);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const countryCodeSheetRef = useRef<any>();
 
   useEffect(() => {
     clearAllErrors();
@@ -60,13 +65,6 @@ const EditPhoneNumber = () => {
   useEffect(() => {
     phoneNumberEditError && showErrors();
   }, [phoneNumberEditError]);
-
-  useEffect(() => {
-    const currentCode = data?.find(
-      (item: ICountryCodeList) => item.code === country_code,
-    );
-    currentCode?.flag && setFlagValue(currentCode.flag);
-  }, []);
 
   const {
     control,
@@ -77,31 +75,13 @@ const EditPhoneNumber = () => {
     clearErrors,
   } = useForm();
 
-  const navigateBack = () => {
-    if (rootNavigation.canGoBack) {
-      rootNavigation.goBack();
-    } else {
-      rootNavigation.replace(mainStack.editContact);
-    }
-    clearAllErrors();
-  };
-
-  const onSave = async () => {
+  const onEndEditing = async () => {
     const validInputs = await validateInputs();
-
     if (!validInputs) {
-      setShowSaveButton(false);
       return;
     }
-
     const phoneNumber = getValues('phoneNumber');
-    dispatch(
-      menuActions.editMyProfile(
-        {id, phone: phoneNumber, country_code: codeValue},
-        i18next.t('settings:title_phone_number'),
-        navigateBack,
-      ),
-    );
+    onChangePhoneNumber(phoneNumber);
   };
 
   const validateInputs = async () => {
@@ -109,7 +89,6 @@ const EditPhoneNumber = () => {
   };
 
   const showErrors = () => {
-    setShowSaveButton(false);
     setError('phoneNumber', {
       type: 'validate',
       message: phoneNumberEditError,
@@ -136,16 +115,15 @@ const EditPhoneNumber = () => {
   };
 
   const onCloseModal = () => {
-    setIsOpen(false);
     setSearchQuery('');
   };
 
   const onSelectCountryCode = (item: ICountryCodeList) => {
+    countryCodeSheetRef.current?.close();
     setCodeValue(item.code);
-    setFlagValue(item.flag);
-    !showSaveButton && setShowSaveButton(true);
-    setIsOpen(false);
     setSearchQuery('');
+    Keyboard.dismiss();
+    onChangeCountryCode(item.code);
   };
 
   const renderItem = ({item}: {item: ICountryCodeList}) => {
@@ -155,6 +133,7 @@ const EditPhoneNumber = () => {
         height={34}
         title={`${item.name} (+${item.code})`}
         leftIcon={item.flag}
+        titleProps={{variant: 'body'}}
         onPress={() => onSelectCountryCode(item)}
       />
     );
@@ -162,56 +141,47 @@ const EditPhoneNumber = () => {
 
   const renderCountryCodeList = () => {
     return (
-      <Modal visible={isOpen} transparent={true}>
-        <View style={styles.modalView}>
-          <TouchableOpacity
-            style={styles.appModalContainer}
-            onPress={onCloseModal}>
-            <View />
-          </TouchableOpacity>
-          <View style={styles.countryCodeModalList}>
+      <BottomSheet
+        modalizeRef={countryCodeSheetRef}
+        modalStyle={styles.modalStyle}
+        onClose={onCloseModal}
+        ContentComponent={
+          <View style={styles.contentComponent}>
             <SearchInput
               testID="edit_phone_number.country_code.search"
               onChangeText={onQueryChanged}
               placeholder={i18next.t('input:search_country')}
+              style={styles.searchInput}
             />
-            <ListView
-              listStyle={styles.listView}
-              data={searchQuery ? searchResult : data}
-              renderItem={renderItem}
-            />
+            <Divider style={styles.divider} />
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.listView}>
+              {(searchQuery ? searchResult : data || []).map(
+                (item: ICountryCodeList) => renderItem({item}),
+              )}
+            </ScrollView>
           </View>
-        </View>
-      </Modal>
+        }
+      />
     );
   };
 
-  const onOpenCountryCode = () => {
-    setIsOpen(true);
-  };
+  const onOpenCountryCode = (e: any) =>
+    countryCodeSheetRef?.current?.open?.(e?.pageX, e?.pageY);
 
   const renderCountryCodeInput = () => {
     return (
-      <ButtonWrapper
+      <Button
         testID="edit_phone_number.country_code"
-        onPress={onOpenCountryCode}>
-        <View pointerEvents="none">
-          <TextInput
-            value={`+${codeValue}`}
-            style={styles.countryExtension}
-            left={
-              // @ts-ignore
-              <TextInputPaper.Icon
-                name={() => (
-                  <View style={styles.iconStyle}>
-                    <Icon icon={flagValue} size={16} />
-                  </View>
-                )}
-              />
-            }
-          />
-        </View>
-      </ButtonWrapper>
+        textProps={{color: theme.colors.textInput, variant: 'body'}}
+        style={styles.buttonDropDown}
+        contentStyle={styles.buttonDropDownContent}
+        rightIcon={'AngleDown'}
+        onPress={e => onOpenCountryCode(e)}>
+        {`+${codeValue}`}
+      </Button>
     );
   };
 
@@ -220,22 +190,23 @@ const EditPhoneNumber = () => {
       <View style={styles.phoneNumberView}>
         <Controller
           name="phoneNumber"
-          defaultValue={phone}
+          defaultValue={phoneNumber}
           control={control}
           render={({field: {onChange, value}}) => (
             <TextInput
-              label={i18next.t('settings:title_phone_number')}
               value={value}
               testID="edit_phone_number.phone"
               onChangeText={(text: string) => {
                 onChange(formatTextRemoveSpace(text));
-                !showSaveButton && setShowSaveButton(true);
                 clearAllErrors();
               }}
               error={errors.phoneNumber}
               helperContent={errors?.phoneNumber?.message}
               keyboardType="numeric"
               autoCapitalize="none"
+              onEndEditing={onEndEditing}
+              activeOutlineColor={theme.colors.primary6}
+              outlineColor={theme.colors.borderCard}
             />
           )}
           rules={{
@@ -259,71 +230,68 @@ const EditPhoneNumber = () => {
   };
 
   return (
-    <ScreenWrapper testID="EditPhoneNumber" isFullView>
-      <Header
-        title={'settings:title_edit_phone_number'}
-        titleTextProps={{useI18n: true}}
-        buttonText={'common:text_save'}
-        buttonProps={{
-          useI18n: true,
-          highEmphasis: true,
-        }}
-        onPressButton={showSaveButton ? onSave : undefined}
-        onPressBack={navigateBack}
-      />
+    <>
+      <TitleComponent icon="Phone" title="settings:title_phone_number" />
       <View style={styles.inputsView}>
         {renderCountryCodeInput()}
         {renderPhoneNumberInput()}
       </View>
       {renderCountryCodeList()}
-    </ScreenWrapper>
+    </>
   );
 };
 
 export default EditPhoneNumber;
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ITheme, screenHeight: number) => {
   const {spacing, colors} = theme;
 
   return StyleSheet.create({
     inputsView: {
       flexDirection: 'row',
-      marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.large,
-    },
-    countryExtension: {
-      marginRight: spacing.margin.small,
-      justifyContent: 'center',
+      alignItems: 'flex-start',
+      // justifyContent: 'center',
     },
     phoneNumberView: {
       flex: 1,
     },
-    countryCodeModalList: {
-      position: 'absolute',
-      zIndex: 3,
-      backgroundColor: colors.background,
-      borderRadius: 6,
-      paddingVertical: spacing.padding.large,
-      paddingHorizontal: spacing.padding.extraLarge,
-      maxWidth: dimension.deviceWidth / (Platform.OS === 'web' ? 2 : 1),
-      minWidth: dimension.deviceWidth / (Platform.OS === 'web' ? 2 : 1),
-    },
-    appModalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(12, 13, 14, 0.5)',
-      width: '100%',
-    },
-    modalView: {
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     listView: {
-      marginVertical: spacing.margin.large,
+      paddingHorizontal: spacing.padding.small,
     },
-    iconStyle: {
-      marginTop: spacing.margin.tiny,
+    buttonDropDown: {
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      minHeight: 40,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      paddingLeft: spacing.padding.base,
+      marginVertical: spacing.margin.small,
+      marginRight: spacing.margin.small,
+      marginTop: spacing.margin.base,
+      minWidth: 80,
+    },
+    buttonDropDownContent: {
+      justifyContent: 'space-between',
+    },
+    contentComponent: {
+      maxHeight: 0.8 * screenHeight,
+      ...Platform.select({
+        web: {
+          maxHeight: 0.55 * screenHeight,
+        },
+      }),
+      minHeight: 0.5 * screenHeight,
+    },
+    modalStyle: {
+      borderTopRightRadius: spacing.borderRadius.small,
+      borderTopLeftRadius: spacing.borderRadius.small,
+    },
+    searchInput: {
+      marginHorizontal: spacing.margin.base,
+    },
+    divider: {
+      marginTop: spacing.margin.small,
     },
   });
 };

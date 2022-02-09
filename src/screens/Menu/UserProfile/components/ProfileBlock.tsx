@@ -12,8 +12,19 @@ import speakingLanguages from '~/constants/speakingLanguages';
 import {formatDate} from '~/utils/formatData';
 import genders from '~/constants/genders';
 import relationshipStatus from '~/constants/relationshipStatus';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
-const ProfileBlock = (props: IUserProfile) => {
+interface ProfileBlockProps {
+  profileData: IUserProfile;
+  onSeeMore: (item: any) => void;
+  hideSeeMore: boolean;
+}
+
+const ProfileBlock = ({
+  profileData,
+  onSeeMore,
+  hideSeeMore,
+}: ProfileBlockProps) => {
   const {
     email,
     city,
@@ -25,8 +36,7 @@ const ProfileBlock = (props: IUserProfile) => {
     gender,
     birthday,
     latest_work,
-  } = props;
-  console.log('..........props..........', props);
+  } = profileData;
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -61,65 +71,82 @@ const ProfileBlock = (props: IUserProfile) => {
 
   return (
     <View style={styles.container}>
-      <Text.Subtitle color={theme.colors.textSecondary}>
-        {i18next.t('settings:title_about')}
-      </Text.Subtitle>
-      {/* @ts-ignore */}
-      {gender && renderItem({icon: 'UserSquare', title: genders[gender]})}
-      {birthday &&
-        renderItem({
-          icon: 'Calender',
-          title: formatDate(birthday, 'MMM Do, YYYY'),
-        })}
-      {renderItem({icon: 'CommentsAlt', title: userLanguages})}
+      {!!gender || !!birthday || !!relationship_status ? (
+        <>
+          <Text.Subtitle color={theme.colors.textSecondary}>
+            {i18next.t('settings:title_about')}
+          </Text.Subtitle>
+          {/* @ts-ignore */}
+          {gender && renderItem({icon: 'UserSquare', title: genders[gender]})}
+          {birthday &&
+            renderItem({
+              icon: 'Calender',
+              title: formatDate(birthday, 'MMM Do, YYYY'),
+            })}
+          {renderItem({icon: 'CommentsAlt', title: userLanguages})}
+          {relationship_status &&
+            renderItem({
+              icon: 'Heart',
+              // @ts-ignore
+              title: relationshipStatus[relationship_status],
+            })}
+          {!hideSeeMore ? (
+            <ButtonWrapper
+              onPress={onSeeMore}
+              activeOpacity={1}
+              style={styles.buttonWrapper}>
+              <Text.H6
+                testID="add_work.start_date"
+                color={theme.colors.primary6}>
+                {i18next.t('settings:text_view_more_info')}
+              </Text.H6>
+            </ButtonWrapper>
+          ) : null}
+        </>
+      ) : null}
 
-      {relationship_status &&
-        renderItem({
-          icon: 'Heart',
-          // @ts-ignore
-          title: relationshipStatus[relationship_status],
-        })}
+      {!!email || !!phone || !!city ? (
+        <>
+          <Text.Subtitle
+            style={styles.title}
+            color={theme.colors.textSecondary}>
+            {i18next.t('settings:title_contact')}
+          </Text.Subtitle>
 
-      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
-        {i18next.t('settings:title_contact')}
-      </Text.Subtitle>
+          {renderItem({icon: 'Envelope', title: email})}
+          {renderItem({
+            icon: 'Phone',
+            TitleComponent:
+              country_code && phone ? (
+                <Text.BodyM> {`(+${country_code}) ${phone}`} </Text.BodyM>
+              ) : null,
+          })}
+          {renderItem({
+            icon: 'LocationPoint',
+            title: city && country ? `${city}, ${country}` : undefined,
+          })}
+        </>
+      ) : null}
 
-      {renderItem({icon: 'Envelope', title: email})}
-      {renderItem({
-        icon: 'Phone',
-        TitleComponent:
-          country_code && phone ? (
-            <Text.BodyM> {`(+${country_code}) ${phone}`} </Text.BodyM>
-          ) : (
-            {}
-          ),
-      })}
-      {renderItem({
-        icon: 'LocationPoint',
-        title: city && country ? `${city}, ${country}` : undefined,
-      })}
-
-      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
-        {i18next.t('settings:text_social')}
-      </Text.Subtitle>
-
-      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
-        {i18next.t('settings:text_work')}
-      </Text.Subtitle>
-      {renderItem({
-        icon: 'iconSuitcase',
-        TitleComponent: latest_work && (
-          <Text.BodyM>
-            {`${latest_work?.title_position} `}
-            <Text useI18n>common:text_at</Text>
-            <Text.BodyM>{` ${latest_work?.company}`}</Text.BodyM>
-          </Text.BodyM>
-        ),
-      })}
-
-      <Text.Subtitle style={styles.title} color={theme.colors.textSecondary}>
-        {i18next.t('settings:text_education')}
-      </Text.Subtitle>
+      {!!latest_work ? (
+        <>
+          <Text.Subtitle
+            style={styles.title}
+            color={theme.colors.textSecondary}>
+            {i18next.t('settings:text_work')}
+          </Text.Subtitle>
+          {renderItem({
+            icon: 'iconSuitcase',
+            TitleComponent: (
+              <Text.BodyM>
+                {`${latest_work?.title_position} `}
+                <Text useI18n>common:text_at</Text>
+                <Text.BodyM>{` ${latest_work?.company}`}</Text.BodyM>
+              </Text.BodyM>
+            ),
+          })}
+        </>
+      ) : null}
     </View>
   );
 };
@@ -144,6 +171,10 @@ const themeStyles = (theme: ITheme) => {
     text: {marginLeft: spacing.margin.base},
     title: {
       marginTop: spacing.margin.base,
+    },
+    buttonWrapper: {
+      alignItems: 'flex-start',
+      paddingVertical: spacing.padding.small,
     },
   });
 };

@@ -24,6 +24,8 @@ import * as modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import appActions from '~/store/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../redux/keySelector';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
@@ -36,6 +38,8 @@ const GeneralSettings = () => {
 
   const isFocused = useIsFocused();
 
+  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+
   useEffect(() => {
     if (isFocused) dispatch(appActions.setRootScreenName('settings'));
   }, [isFocused]);
@@ -47,7 +51,10 @@ const GeneralSettings = () => {
   const onAccountSettingsPress = (item: ISetting, e: any) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(mainStack.userEdit);
+        return rootNavigation.navigate(mainStack.userEdit, {
+          userId: myProfileData?.id,
+          params: {},
+        });
 
       case 'securityLogin':
         return rootNavigation.navigate(menuStack.securityLogin);

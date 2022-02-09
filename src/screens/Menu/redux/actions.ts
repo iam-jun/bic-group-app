@@ -110,13 +110,13 @@ const menuActions = {
 
   editMyProfile: function (
     payload: IUserEdit,
-    editFieldName?: string,
+    editFieldToastMessage?: string,
     callback?: () => void,
   ) {
     return {
       type: menuTypes.EDIT_MY_PROFILE,
       payload,
-      editFieldName,
+      editFieldToastMessage,
       callback,
     };
   },

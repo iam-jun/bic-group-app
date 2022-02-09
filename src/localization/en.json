@@ -304,7 +304,12 @@
     "text_enddate_after_startdate": "The End Date must come after the Start Date",
     "text_education": "Education",
     "text_social": "Social",
-    "text_description": "Description"
+    "text_social_link":"Social Link",
+    "text_description": "Description",
+    "text_add_school":"Add School",
+    "text_add_link": "Add Social Link",
+    "text_contact_info_update_success": "Contact Info Update Successfully",
+    "text_view_more_info":"View more about info..."
   },
   "languages": {
     "title_en": "English",
