@@ -210,7 +210,10 @@
     "text_engaged": "Engaged",
     "text_married": "Married",
     "title_choose_languages": "Choose Speaking Languages",
-    "title_choose_relationship": "Choose Relationship Status"
+    "title_choose_relationship": "Choose Relationship Status",
+    "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
+    "title_about_bein_app": "Giới thiệu",
+    "title_help_and_support": "Trợ giúp & hỗ trợ"
   },
   "languages": {
     "title_en": "English",

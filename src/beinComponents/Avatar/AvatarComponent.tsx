@@ -26,6 +26,9 @@ export interface AvatarProps extends ImageProps {
   badgeBottom?: boolean;
   isRounded?: boolean;
   cache?: boolean;
+  badgeCheck?: boolean;
+  badgeCheckSize?: number;
+  iconCheckSize?: number;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -38,6 +41,9 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badge,
   badgeBottom,
   isRounded,
+  badgeCheck,
+  badgeCheckSize = 16,
+  iconCheckSize = 12,
   ...props
 }: AvatarProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -150,6 +156,39 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     );
   };
 
+  const renderBadgeCheck = () => {
+    if (!badgeCheck) {
+      return null;
+    }
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: badgeCheckSize,
+          height: badgeCheckSize,
+          borderRadius: badgeCheckSize / 2,
+          backgroundColor: colors.success,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderWidth: 1,
+          borderColor: colors.background,
+          shadowOffset: {width: 0, height: 1},
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowRadius: 1,
+          elevation: 2,
+        }}>
+        <Icon
+          size={iconCheckSize}
+          icon="UilCheck"
+          tintColor={colors.iconTintReversed}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={StyleSheet.flatten([avatarContainerStyle, style])}>
       <View
@@ -161,6 +200,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
         {renderStatus()}
         {renderAction()}
         {renderBadge()}
+        {renderBadgeCheck()}
       </View>
     </View>
   );

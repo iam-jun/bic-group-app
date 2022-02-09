@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -32,6 +33,7 @@ import useTabBadge from '~/hooks/tabBadge';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import {fontFamilies} from '~/theme/fonts';
+import {DrawerActions} from '@react-navigation/native';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -136,14 +138,18 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const styles = tabBarIconStyles(theme, isFocused, isPhone, textColor);
 
     const onPress = () => {
-      DeviceEventEmitter.emit('onTabPress', name);
-      const event: any = navigation.emit({
-        type: 'tabPress',
-        target: route.key,
-      } as any);
+      if (name === 'menus') {
+        navigation.dispatch(DrawerActions.openDrawer());
+      } else {
+        DeviceEventEmitter.emit('onTabPress', name);
+        const event: any = navigation.emit({
+          type: 'tabPress',
+          target: route.key,
+        } as any);
 
-      if (!isFocused && !event.defaultPrevented) {
-        navigation.navigate(route.name);
+        if (!isFocused && !event.defaultPrevented) {
+          navigation.navigate(route.name);
+        }
       }
     };
 

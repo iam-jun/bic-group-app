@@ -114,6 +114,11 @@ export const createTextStyle = (theme: ITheme) => {
       fontSize: sizes.heading,
       color: colors.textPrimary,
     },
+    headingSB: {
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.heading,
+      color: colors.textPrimary,
+    },
   };
 
   if (Platform.OS === 'web') {
