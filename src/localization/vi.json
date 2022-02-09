@@ -248,7 +248,10 @@
     "text_view_more_info":"View more about info...",
     "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
     "title_about_bein_app": "Giới thiệu",
-    "title_help_and_support": "Trợ giúp & hỗ trợ"
+    "title_help_and_support": "Trợ giúp & hỗ trợ",
+    "group_title_public": "Nhóm công khai",
+    "group_title_private": "Nhóm kín",
+    "group_title_secret": "Nhóm kín"
   },
   "languages": {
     "title_en": "English",
@@ -458,6 +461,7 @@
   "groups": {
     "group_content": {
       "btn_post": "Bài đăng",
+      "btn_channel":"Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
       "btn_files": "Files"
