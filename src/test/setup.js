@@ -1,8 +1,10 @@
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
-import MockAsyncStorage from 'mock-async-storage';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
 
@@ -38,8 +40,7 @@ jest.doMock('react-native-paper', () => ({
   },
 }));
 
-const mockImpl = new MockAsyncStorage();
-jest.mock('@react-native-async-storage/async-storage', () => mockImpl);
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 

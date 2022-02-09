@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderWithRedux, configureStore} from '../../../../../test/testUtils';
+import {renderWithRedux, configureStore} from '../../../../test/testUtils';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch/index';
 import initialState from '~/store/initialState';
 

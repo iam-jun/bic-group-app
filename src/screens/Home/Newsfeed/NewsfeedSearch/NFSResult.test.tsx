@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  renderWithRedux,
-  configureStore,
-  cleanup,
-  store,
-} from '../../../../../test/testUtils';
+import {renderWithRedux, configureStore} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
 

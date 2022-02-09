@@ -1,6 +1,6 @@
 import React from 'react';
 import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
-import {cleanup, renderWithRedux, store} from '../../../../../test/testUtils';
+import {cleanup, renderWithRedux, store} from '~/test/testUtils';
 
 afterEach(() => {
   cleanup();
