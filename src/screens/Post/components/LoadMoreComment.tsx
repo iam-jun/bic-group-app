@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   StyleProp,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Animated, {
@@ -52,23 +53,38 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   });
 
   useEffect(() => {
-    if (loadingMore) {
-      progress.value = withTiming(150, {
-        duration: 400,
-        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-      });
-    } else {
-      progress.value = withTiming(0, {
-        duration: 1000,
-        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-      });
+    if (Platform.OS !== 'web') {
+      if (loadingMore) {
+        progress.value = withTiming(150, {
+          duration: 400,
+          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+        });
+      } else {
+        progress.value = withTiming(0, {
+          duration: 1000,
+          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+        });
+      }
     }
   }, [loadingMore]);
 
   const onPressLoadMore = () => {
     if (idLessThan) {
-      setLoadingMore(true);
-      setTimeout(() => {
+      if (Platform.OS !== 'web') {
+        setLoadingMore(true);
+        setTimeout(() => {
+          dispatch(
+            postActions.getCommentsByPostId({
+              postId: postId,
+              idLt: idLessThan,
+              commentId: commentId,
+              recentReactionsLimit: commentId ? 3 : 10,
+              isMerge: true,
+              callbackLoading: loading => setLoadingMore(loading),
+            }),
+          );
+        }, 150);
+      } else {
         dispatch(
           postActions.getCommentsByPostId({
             postId: postId,
@@ -79,7 +95,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
             callbackLoading: loading => setLoadingMore(loading),
           }),
         );
-      }, 150);
+      }
     }
   };
 
@@ -93,10 +109,12 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         </Button>
         <ActivityIndicator color={colors.disabled} animating={loadingMore} />
       </View>
-      <Animated.View style={[styles.placeholder, animatedStyle]}>
-        <CommentPlaceholder />
-        <CommentPlaceholder />
-      </Animated.View>
+      {Platform.OS !== 'web' && (
+        <Animated.View style={[styles.placeholder, animatedStyle]}>
+          <CommentPlaceholder />
+          <CommentPlaceholder />
+        </Animated.View>
+      )}
     </View>
   );
 };
