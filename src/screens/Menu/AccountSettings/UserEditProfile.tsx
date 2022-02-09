@@ -38,11 +38,13 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
+import {isEmpty} from 'lodash';
 
 const UserEditProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
+  const [userData, setUserData] = useState<any>({});
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -53,7 +55,6 @@ const UserEditProfile = (props: any) => {
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
   const {username: currentUsername, id} = myProfile || {};
 
-  const userProfileData = useKeySelector(menuKeySelector.userProfile);
   const {
     fullname,
     gender,
@@ -68,9 +69,7 @@ const UserEditProfile = (props: any) => {
     country,
     city,
     description,
-  } = userProfileData || {};
-
-  console.log('>>>>>>>>>>>>>', userProfileData);
+  } = userData || {};
 
   const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
   const loadingCover = useKeySelector(menuKeySelector.loadingCover);
@@ -82,6 +81,17 @@ const UserEditProfile = (props: any) => {
     dispatch(menuActions.clearUserProfile());
     if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
   };
+
+  useEffect(() => {
+    if (
+      (userId == currentUserId || userId == currentUsername) &&
+      isEmpty(params)
+    ) {
+      setUserData(myProfile);
+    } else {
+      setUserData(params);
+    }
+  }, [myProfile, params]);
 
   useEffect(() => {
     getUserProfile();

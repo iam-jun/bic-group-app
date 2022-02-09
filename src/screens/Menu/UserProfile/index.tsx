@@ -108,7 +108,13 @@ const UserProfile = (props: any) => {
   };
 
   const onSeeMore = () => {
-    rootNavigation.navigate(mainStack.userEdit, {userId, params});
+    rootNavigation.navigate(mainStack.userEdit, {
+      userId,
+      params:
+        userId == currentUserId || userId == currentUsername
+          ? {}
+          : {...userProfileData},
+    });
   };
 
   const renderEditButton = (style: any, onPress: any) => {
