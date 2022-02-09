@@ -2,6 +2,8 @@ import React from 'react';
 import {useWindowDimensions} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawerContent from './CustomDrawerContent';
+import {useTheme} from 'react-native-paper';
+import {ITheme} from '~/theme/interfaces';
 
 const Drawer = createDrawerNavigator();
 
@@ -17,8 +19,9 @@ const BaseDrawerNavigator = ({
   initialRouteName,
 }: Props): React.ReactElement => {
   const {width} = useWindowDimensions();
-
   const MAX_WIDTH = width * 0.869;
+  const theme = useTheme() as ITheme;
+  const {colors} = theme || {};
 
   return (
     <Drawer.Navigator
@@ -26,7 +29,7 @@ const BaseDrawerNavigator = ({
       drawerPosition="right"
       drawerContent={props => <CustomDrawerContent {...props} />}
       edgeWidth={0}
-      drawerStyle={{width: MAX_WIDTH}}>
+      drawerStyle={{width: MAX_WIDTH, backgroundColor: colors.background}}>
       {Object.entries(stack).map(([name, component]) => {
         return (
           <Drawer.Screen
