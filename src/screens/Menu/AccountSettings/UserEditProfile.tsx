@@ -431,8 +431,8 @@ const UserEditProfile = (props: any) => {
           </View>
         }
         onPress={() => {
-          userId == currentUserId ||
-            (userId == currentUsername && selectWorkItem(item));
+          (userId == currentUserId || userId == currentUsername) &&
+            selectWorkItem(item);
         }}
       />
     );

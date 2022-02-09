@@ -31,6 +31,8 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
+import {isEqual} from 'lodash';
+import Button from '~/beinComponents/Button';
 
 const AddWork = () => {
   const theme = useTheme() as ITheme;
@@ -41,6 +43,7 @@ const AddWork = () => {
   const {rootNavigation} = useRootNavigation();
 
   const selectedWorkItem = useKeySelector(menuKeySelector.selectedWorkItem);
+
   const {
     id,
     company,
@@ -75,6 +78,22 @@ const AddWork = () => {
   const [selectingEndDate, setSelectingEndDate] = useState<boolean>(false);
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  const [privateSelectedWorkItem, setPrivateSelectedWorkItem] =
+    useState<any>(selectedWorkItem);
+
+  useEffect(() => {
+    if (!isEqual(selectedWorkItem, privateSelectedWorkItem)) {
+      setCompanyValue(selectedWorkItem.company);
+      setPositionValue(selectedWorkItem.titlePosition);
+      setLocationValue(selectedWorkItem.location);
+      setDescriptionValue(selectedWorkItem.description);
+      setIsWorkHere(selectedWorkItem.currentlyWorkHere);
+      setStartDateValue(selectedWorkItem.startDate);
+      setEndDateValue(selectedWorkItem.endDate);
+      setPrivateSelectedWorkItem(selectedWorkItem);
+    }
+  }, [selectedWorkItem]);
 
   useEffect(() => {
     isWorkHere && setEndDateValue(null);
@@ -294,15 +313,9 @@ const AddWork = () => {
   const renderDeleteButton = () => {
     return (
       selectedWorkItem && (
-        <View>
-          <View style={styles.deleteWork}>
-            <TouchableOpacity onPress={onDelete}>
-              <Text.H6 testID="add_work.delete" color={colors.error} useI18n>
-                settings:text_delete_work
-              </Text.H6>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Button.Danger testID="add_work.delete" onPress={onDelete} useI18n>
+          settings:text_delete_work
+        </Button.Danger>
       )
     );
   };
