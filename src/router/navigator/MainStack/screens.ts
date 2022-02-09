@@ -6,6 +6,8 @@ import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
+import AccoutSettings from '~/screens/Menu/AccountSettings';
+import ComponentCollection from '~/screens/Menu/ComponentCollection';
 
 export default {
   main: MainTabs,
@@ -16,4 +18,6 @@ export default {
   'edit-email': EditEmail,
   'add-work': AddWork,
   'edit-description': EditDescription,
+  'account-settings': AccoutSettings,
+  'component-collection': ComponentCollection,
 };

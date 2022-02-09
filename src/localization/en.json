@@ -309,7 +309,10 @@
     "text_add_school":"Add School",
     "text_add_link": "Add Social Link",
     "text_contact_info_update_success": "Contact Info Update Successfully",
-    "text_view_more_info":"View more about info..."
+    "text_view_more_info":"View more about info...",
+    "title_set_a_custom_status": "Set a custom status",
+    "title_about_bein_app": "About Bein App",
+    "title_help_and_support": "Help & Support"
   },
   "languages": {
     "title_en": "English",

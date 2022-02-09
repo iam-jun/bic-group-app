@@ -13,7 +13,7 @@ export interface IShowAlert {
   cancelLabel?: string;
   onCancel?: () => void;
   onDismiss?: () => void;
-  confirmLabel: string;
+  confirmLabel?: string;
   isDismissible?: boolean;
   showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;

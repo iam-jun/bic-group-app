@@ -363,7 +363,11 @@ const PostSelectAudience = () => {
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}
         buttonText={'common:btn_done'}
-        buttonProps={{useI18n: true, disabled: disableButtonSave}}
+        buttonProps={{
+          useI18n: true,
+          disabled: disableButtonSave,
+          testID: 'select_audience.btn_done',
+        }}
         onPressButton={onPressSave}
         onPressBack={onPressBack}
         hideBackOnLaptop

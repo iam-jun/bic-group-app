@@ -7,6 +7,8 @@ const mainStack = {
   editEmail: 'edit-email',
   addWork: 'add-work',
   editDescription: 'edit-description',
+  accountSettings: 'account-settings',
+  componentCollection: 'component-collection',
 };
 
 export default mainStack;

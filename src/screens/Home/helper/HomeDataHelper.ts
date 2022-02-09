@@ -30,9 +30,9 @@ const homeApiConfig = {
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts`,
+    url: `${ApiConfig.providers.beinFeed.url}api/posts`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
       content: param?.content,
@@ -46,9 +46,9 @@ const homeApiConfig = {
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
       limit: param?.limit,
@@ -59,24 +59,24 @@ const homeApiConfig = {
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     data,
   }),
   deleteClearRecentSearch: (
     target: IRecentSearchTarget,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches/${target}/clean`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${target}/clean`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
   deleteRecentSearchById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches/${id}/delete`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${id}/delete`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
 };

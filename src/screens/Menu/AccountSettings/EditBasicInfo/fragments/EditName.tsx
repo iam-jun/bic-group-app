@@ -44,7 +44,7 @@ const EditName = ({onChangeName}: EditNameProps) => {
       <TextInput
         value={name}
         style={styles.textinput}
-        testID="edit_basic_info.name"
+        testID="edit_name.text_input"
         onChangeText={_onChangeName}
         error={error}
         helperContent={

@@ -18,6 +18,7 @@ import GroupSearch from '~/screens/Groups/components/GroupSearch';
 import appActions from '~/store/app/actions';
 import {debounce} from 'lodash';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
+import images from '~/resources/images';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();
@@ -35,6 +36,8 @@ const Groups: React.FC = () => {
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const isFocused = useIsFocused();
+
+  const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
     if (Platform.OS === 'web') {
@@ -116,6 +119,7 @@ const Groups: React.FC = () => {
         removeBorderAndShadow={isLaptop}
         onShowSearch={onShowSearch}
         onSearchText={onSearchText}
+        avatar={isWeb ? undefined : images.logo_bein}
       />
       <View style={{flex: 1}}>
         {renderDataList()}

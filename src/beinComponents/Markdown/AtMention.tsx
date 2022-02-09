@@ -4,23 +4,14 @@ import {useKeySelector} from '~/hooks/selector';
 import {IMarkdownAudience} from '~/interfaces/IPost';
 
 interface Props {
-  parentId: string;
   selector: string;
   mentionName: string;
   style?: StyleProp<TextStyle>;
   onPress?: (audience: IMarkdownAudience, e: any) => void;
 }
 
-const AtMention = ({
-  mentionName,
-  parentId,
-  selector,
-  style,
-  onPress,
-}: Props) => {
-  const audience = useKeySelector(
-    `${selector}.${parentId}.mentions.users.${mentionName}`,
-  );
+const AtMention = ({mentionName, selector, style, onPress}: Props) => {
+  const audience = useKeySelector(`${selector}.${mentionName}`);
   const name = audience?.data?.fullname;
 
   const _onPress = (e: any) => {

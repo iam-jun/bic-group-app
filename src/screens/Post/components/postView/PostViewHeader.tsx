@@ -116,6 +116,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
         <Icon
           style={{alignSelf: 'auto'}}
           icon={'EllipsisH'}
+          testID={'post_view_header.menu'}
           onPress={onPressMenu}
         />
       </View>

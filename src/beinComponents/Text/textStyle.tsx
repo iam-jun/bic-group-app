@@ -109,6 +109,16 @@ export const createTextStyle = (theme: ITheme) => {
       // lineHeight: lineHeights.code,
       color: colors.textPrimary,
     },
+    heading: {
+      fontFamily: fontFamilies.OpenSans,
+      fontSize: sizes.heading,
+      color: colors.textPrimary,
+    },
+    headingSB: {
+      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontSize: sizes.heading,
+      color: colors.textPrimary,
+    },
   };
 
   if (Platform.OS === 'web') {

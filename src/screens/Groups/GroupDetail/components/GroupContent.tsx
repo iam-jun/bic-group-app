@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet, View, Text} from 'react-native';
+import {Platform, StyleSheet, View, Text, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -80,7 +80,12 @@ const GroupContent = ({
       <>
         <View style={styles.groupInfo}>
           <GroupInfoHeader />
-          <View style={styles.buttonContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            style={{backgroundColor: colors.background}}
+            contentContainerStyle={styles.buttonContainer}>
             {isMember && (
               <>
                 <Button.Secondary
@@ -126,7 +131,7 @@ const GroupContent = ({
               testID="group_content.files">
               groups:group_content:btn_files
             </Button.Secondary>
-          </View>
+          </ScrollView>
         </View>
         {isMember && (
           <HeaderCreatePost
