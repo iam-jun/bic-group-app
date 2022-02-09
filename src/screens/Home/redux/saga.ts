@@ -209,7 +209,7 @@ function* getSearchPostUsers({payload}: {payload: string; type: string}): any {
   }
 }
 
-function* getRecentSearchKeywords({
+export function* getRecentSearchKeywords({
   payload,
 }: {
   payload: IParamGetRecentSearchKeywords;
