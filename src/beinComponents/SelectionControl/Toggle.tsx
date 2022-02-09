@@ -57,21 +57,19 @@ const createStyles = (theme: ITheme, isChecked: boolean) => {
 
   return StyleSheet.create({
     outsideRectangle: {
-      width: 32,
+      width: 40,
       height: 16,
       borderRadius: 12,
-      borderWidth: 1,
-      borderColor: isChecked ? colors.primary7 : colors.borderDisable,
       alignItems: isChecked ? 'flex-end' : 'flex-start',
       justifyContent: 'center',
-      backgroundColor: isChecked ? colors.primary7 : colors.placeholder,
+      backgroundColor: isChecked ? colors.success : colors.borderCard,
     },
     insideCircle: {
-      width: 16,
-      height: 16,
+      width: 24,
+      height: 24,
       right: 0,
       borderRadius: 12,
-      backgroundColor: isChecked ? colors.background : colors.bgFocus,
+      backgroundColor: colors.bgHover,
     },
   });
 };
