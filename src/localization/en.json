@@ -304,7 +304,10 @@
     "text_enddate_after_startdate": "The End Date must come after the Start Date",
     "title_set_a_custom_status": "Set a custom status",
     "title_about_bein_app": "About Bein App",
-    "title_help_and_support": "Help & Support"
+    "title_help_and_support": "Help & Support",
+    "group_title_public": "Public Group",
+    "group_title_private": "Private Group",
+    "group_title_secret": "Secret Group"
   },
   "languages": {
     "title_en": "English",
@@ -515,6 +518,7 @@
   "groups": {
     "group_content": {
       "btn_post": "Post",
+      "btn_channel":"Channel",
       "btn_about": "About",
       "btn_members": "Members",
       "btn_files": "Files"
