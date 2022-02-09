@@ -19,6 +19,7 @@ export default {
   'security-and-login': SecurityLogin,
   'change-password': ChangePassword,
   'user-profile': UserProfile,
+
   //use for draft post
   'create-post': CreatePost,
   'create-comment': CreateComment,
