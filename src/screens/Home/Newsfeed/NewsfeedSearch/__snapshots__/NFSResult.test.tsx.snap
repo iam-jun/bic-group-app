@@ -1226,6 +1226,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     >
                       <View
                         className="icon-wrapper"
+                        testID="post_view_header.menu"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"

@@ -1,9 +1,9 @@
 import {expectSaga} from 'redux-saga-test-plan';
-import {getRecentSearchKeywords} from '~/screens/Home/redux/saga';
 import {throwError} from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
+import getRecentSearchKeywords from './getRecentSearchKeywords';
 
 describe('Search Post Saga', () => {
   it('call server get recent search keywords success', async () => {
