@@ -2,47 +2,50 @@ export default {
   dark: {
     colors: {
       transparent: 'rgba(255,255,255,0)',
-      primary: '#3F2885',
-      primary1: '#F9F7FD',
-      primary2: '#ECE7F8',
-      primary3: '#CBC0EC',
-      primary4: '#AB99E0',
-      primary5: '#917AD7',
-      primary6: '#7052CB',
-      primary7: '#5234AD',
+      primary: '#5D2C9A', //primary is brand color
+      primary1: '#F8F5FF',
+      primary2: '#EADFFE',
+      primary3: '#DBCAFD',
+      primary4: '#BC9FF8',
+      primary5: '#A17AF2',
+      primary6: '#7843DD', //Main Brand
+      primary7: '#421187', //Primary90
 
-      background: '#FFFFFF',
-      bgSecondary: '#F5F5F5',
-      bgFocus: '#BDBDBD',
-      bgHover: '#BDBDBD',
-      bgDisable: '#E0E0E0',
-      bgButtonPrimary: '#0C0D0E',
-      bgButtonSecondary: '#F9F7FD',
-      borderFocus: '#29272A',
-      borderDisable: '#BDBDBD',
-      borderCard: '#E0E0E0',
-      borderDivider: '#F0F0F0',
-      textInput: '#524F55',
-      placeholder: '#F0F0F0',
-      surface: '#FAFAFA', //background color for elements containing content, such as cards.
-      iconTint: '#0C0D0E',
-      iconTintReversed: '#FFFFFF',
+      background: '#FFFFFF', //Neutral0
+      bgSecondary: '#F9FAFB', //Neutral1
+      bgFocus: '#D5DCE5', //Neutral10
+      bgHover: '#EAEDF2', //Neutral5
+      bgDisable: '#D5DCE5', //Neutral10
+      bgButtonPrimary: '#7843DD', //Primary50
+      bgButtonSecondary: '#FFFFFF', //Neutral0'
+      borderButtonSecondary: '#7843DD',
+      borderFocus: '#B2BDCD', //Neutral20
+      borderDisable: '#B2BDCD', //Neutral20
+      borderCard: '#B2BDCD', //Neutral20
+      borderDivider: '#EAEDF2', //`Neutral5
+      textInput: '#2F3945', // Neutral80
+      placeholder: '#EAEDF2', //Neutral5
+      surface: '#F9FAFB', //Neutral1 background color for elements containing content, such as cards.
+      iconTint: '#2F3945', //Neutral80
+      iconTintLight: '#627286', //Neutral50
+      iconTintReversed: '#FFFFFF', //Neutral0
 
-      link: '#174BE2',
-      activeLink: '#3F2885',
-      success: '#3BB774',
-      error: '#E25050',
-      warning: '#FFE351',
-      statusOrange: '#E98A32',
+      link: '#007AFF', //Blue50
+      activeLink: '#421187', //Primary90
+      success: '#00A64D', //Green50
+      error: '#DD2C3E', //Red50
+      warning: '#FFBC1F', //Yellow40
+      statusOrange: '#E98A32', //Orange40
 
-      textPrimary: '#29272A',
-      textSecondary: '#828085',
-      textSuccess: '#29272A',
-      textDanger: '#ffffff',
-      textWarning: '#29272A',
-      textInfo: '#174BE2',
-      textDisabled: '#BDBDBD',
-      textReversed: '#FFFFFF',
+      textPrimary: '#2F3945', //Neutral80
+      textSecondary: '#627286', //Neutral50
+      textSuccess: '#FFFFFF', //Neutral0
+      textDanger: '#FFFFFF', //Neutral0
+      textWarning: '#2F3945', //Neutral80
+      textInfo: '#007AFF', //Blue50
+      textDisabled: '#B2BDCD', //Neutral20
+      textReversed: '#FFFFFF', //Neutral0
+      textTertiary: '#627286',
 
       facebook: '#2D88FF',
       google: '#FF2828',
@@ -57,9 +60,9 @@ export default {
       notification: '#f50057', //background color for badges
 
       //TabBar
-      tabBarBackground: '#FFFFFF',
-      activeColor: '#3F2885',
-      inactiveColor: '#adb5bd',
+      tabBarBackground: '#FFFFFF', //Neutral0
+      activeColor: '#7843DD', //Primary50
+      inactiveColor: '#627286', //Neutral50
 
       // ViewLabel
       ViewLabel: {
@@ -71,47 +74,50 @@ export default {
   light: {
     colors: {
       transparent: 'rgba(255,255,255,0)',
-      primary: '#3F2885',
-      primary1: '#F9F7FD',
-      primary2: '#ECE7F8',
-      primary3: '#CBC0EC',
-      primary4: '#AB99E0',
-      primary5: '#917AD7',
-      primary6: '#7052CB',
-      primary7: '#5234AD',
+      primary: '#5D2C9A', //primary is brand color
+      primary1: '#F8F5FF',
+      primary2: '#EADFFE',
+      primary3: '#DBCAFD',
+      primary4: '#BC9FF8',
+      primary5: '#A17AF2',
+      primary6: '#7843DD', //Main Brand
+      primary7: '#421187', //Primary90
 
-      background: '#FFFFFF',
-      bgSecondary: '#F5F5F5',
-      bgFocus: '#BDBDBD',
-      bgHover: '#BDBDBD',
-      bgDisable: '#E0E0E0',
-      bgButtonPrimary: '#0C0D0E',
-      bgButtonSecondary: '#F9F7FD',
-      borderFocus: '#29272A',
-      borderDisable: '#BDBDBD',
-      borderCard: '#E0E0E0',
-      borderDivider: '#F0F0F0',
-      textInput: '#524F55',
-      placeholder: '#F0F0F0',
-      surface: '#FAFAFA', //background color for elements containing content, such as cards.
-      iconTint: '#0C0D0E',
-      iconTintReversed: '#FFFFFF',
+      background: '#FFFFFF', //Neutral0
+      bgSecondary: '#F9FAFB', //Neutral1
+      bgFocus: '#D5DCE5', //Neutral10
+      bgHover: '#EAEDF2', //Neutral5
+      bgDisable: '#D5DCE5', //Neutral10
+      bgButtonPrimary: '#7843DD', //Primary50
+      bgButtonSecondary: '#FFFFFF', //Neutral0'
+      borderButtonSecondary: '#7843DD',
+      borderFocus: '#B2BDCD', //Neutral20
+      borderDisable: '#B2BDCD', //Neutral20
+      borderCard: '#B2BDCD', //Neutral20
+      borderDivider: '#EAEDF2', //`Neutral5
+      textInput: '#2F3945', // Neutral80
+      placeholder: '#EAEDF2', //Neutral5
+      surface: '#F9FAFB', //Neutral1 background color for elements containing content, such as cards.
+      iconTint: '#2F3945', //Neutral80
+      iconTintLight: '#627286', //Neutral50
+      iconTintReversed: '#FFFFFF', //Neutral0
 
-      link: '#174BE2',
-      activeLink: '#3F2885',
-      success: '#3BB774',
-      error: '#E25050',
-      warning: '#FFE351',
-      statusOrange: '#E98A32',
+      link: '#007AFF', //Blue50
+      activeLink: '#421187', //Primary90
+      success: '#00A64D', //Green50
+      error: '#DD2C3E', //Red50
+      warning: '#FFBC1F', //Yellow40
+      statusOrange: '#E98A32', //Orange40
 
-      textPrimary: '#29272A',
-      textSecondary: '#828085',
-      textSuccess: '#29272A',
-      textDanger: '#ffffff',
-      textWarning: '#29272A',
-      textInfo: '#174BE2',
-      textDisabled: '#BDBDBD',
-      textReversed: '#FFFFFF',
+      textPrimary: '#2F3945', //Neutral80
+      textSecondary: '#627286', //Neutral50
+      textSuccess: '#FFFFFF', //Neutral0
+      textDanger: '#FFFFFF', //Neutral0
+      textWarning: '#2F3945', //Neutral80
+      textInfo: '#007AFF', //Blue50
+      textDisabled: '#B2BDCD', //Neutral20
+      textReversed: '#FFFFFF', //Neutral0
+      textTertiary: '#627286',
 
       facebook: '#2D88FF',
       google: '#FF2828',
@@ -126,9 +132,9 @@ export default {
       notification: '#f50057', //background color for badges
 
       //TabBar
-      tabBarBackground: '#FFFFFF',
-      activeColor: '#3F2885',
-      inactiveColor: '#adb5bd',
+      tabBarBackground: '#FFFFFF', //Neutral0
+      activeColor: '#7843DD', //Primary50
+      inactiveColor: '#627286', //Neutral50
 
       // ViewLabel
       ViewLabel: {

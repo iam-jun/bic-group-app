@@ -1,0 +1,88 @@
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {useKeySelector} from '~/hooks/selector';
+import {IPayloadReplying} from '~/interfaces/IPost';
+import {ITheme} from '~/theme/interfaces';
+import postKeySelector from '../../redux/keySelector';
+
+import Text from '~/beinComponents/Text';
+import i18next from 'i18next';
+import postActions from '../../redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
+
+const ReplyingView = () => {
+  const dispatch = useDispatch();
+  const replying: IPayloadReplying = useKeySelector(
+    postKeySelector.replyingComment,
+  );
+
+  const userId = useUserIdAuth();
+
+  const theme = useTheme() as ITheme;
+  const {colors} = theme;
+  const styles = createStyle(theme);
+
+  const replyTargetUser =
+    replying?.comment?.user || replying?.parentComment?.user;
+  const replyTargetUserId = replyTargetUser?.id;
+  let replyTargetName = replyTargetUser?.data?.fullname;
+  if (replyTargetUserId === userId) {
+    replyTargetName = i18next.t('post:label_yourself');
+  }
+
+  const loading = useKeySelector(postKeySelector.createComment.loading);
+
+  if (!replying) {
+    return null;
+  }
+
+  const onPress = () => {
+    !loading && dispatch(postActions.setPostDetailReplyingComment());
+  };
+
+  return (
+    <View style={styles.commentInputHeader}>
+      <View style={styles.headerContent}>
+        <Text color={colors.textSecondary}>
+          {i18next.t('post:label_replying_to')}
+          <Text.BodyM>
+            {replyTargetName || i18next.t('post:someone')}
+          </Text.BodyM>
+          <Text.BodyS color={colors.textSecondary}>
+            {'  • '}
+            <Text.BodyM useI18n color={colors.textSecondary} onPress={onPress}>
+              common:btn_cancel
+            </Text.BodyM>
+          </Text.BodyS>
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const createStyle = (theme: ITheme) => {
+  const {spacing, colors} = theme;
+
+  return StyleSheet.create({
+    container: {},
+    flex1: {flex: 1},
+    row: {flexDirection: 'row'},
+    commentInputHeader: {
+      flexDirection: 'row',
+      paddingHorizontal: spacing.padding.small,
+      paddingBottom: spacing.padding.small,
+      marginHorizontal: spacing?.margin.small,
+      marginTop: spacing?.margin.small,
+      borderBottomWidth: 1,
+      borderColor: colors.borderDivider,
+    },
+    headerContent: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+  });
+};
+
+export default React.memo(ReplyingView);

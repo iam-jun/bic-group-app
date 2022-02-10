@@ -106,7 +106,15 @@
     "text_updated_successfully": "updated successfully",
     "text_avatar": "Avatar",
     "text_cover": "Cover",
-    "text_privacy": "Privacy"
+    "text_privacy": "Privacy",
+    "btn_approve": "Approve",
+    "btn_decline": "Decline",
+    "btn_approve_all": "Approve All",
+    "btn_decline_all": "Decline All",
+    "text_request": "Request",
+    "text_request_other": "Requests",
+    "text_admin": "Admin",
+    "text_failed_to_upload": "Failed to upload"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -188,7 +196,6 @@
   "tabs": {
     "home": "News feed",
     "groups": "Groups",
-    "chat": "Chat",
     "notification": "Notifications",
     "menus": "Menu"
   },
@@ -294,7 +301,21 @@
     "text_location_optional": "Location (optional)",
     "text_description_optional": "Description (optional)",
     "text_since": "Since",
-    "text_enddate_after_startdate": "The End Date must come after the Start Date"
+    "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "text_education": "Education",
+    "text_social": "Social",
+    "text_social_link":"Social Link",
+    "text_description": "Description",
+    "text_add_school":"Add School",
+    "text_add_link": "Add Social Link",
+    "text_contact_info_update_success": "Contact Info Update Successfully",
+    "text_view_more_info":"View more about info...",
+    "title_set_a_custom_status": "Set a custom status",
+    "title_about_bein_app": "About Bein App",
+    "title_help_and_support": "Help & Support",
+    "group_title_public": "Public Group",
+    "group_title_private": "Private Group",
+    "group_title_secret": "Secret Group"
   },
   "languages": {
     "title_en": "English",
@@ -334,6 +355,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
+    "title_post_detail_of": "%NAME%'s Post",
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
@@ -343,6 +365,8 @@
     "button_reply": "Reply",
     "button_react": "React",
     "button_comment": "Comment",
+    "button_image": "Image",
+    "button_draft": "Draft",
     "button_comment_not_verify_user": "Verify your account to comment",
     "label_view_more_replies": "View more {0} replies",
     "label_likes_with_me": "You and {0} others",
@@ -368,8 +392,9 @@
     "add_photo": "Add Photo",
     "add_file": "Add Files",
     "placeholder_write_post": "Writing your post...",
-    "create_post": "Create Post",
-    "create_new_post": "Create new post",
+    "placeholder_write_comment": "Write your comment...",
+    "title_create_post": "Create Post",
+    "create_new_post": "Write your today discoveries...",
     "post_button": "Post",
     "send_to": "Send to",
     "save": "Save",
@@ -379,17 +404,17 @@
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
     "someone": "someone",
-    "other_places": "more",
+    "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
-    "mark_as_important": "Mark as Important",
+    "mark_as_important": "Mark this post as Important",
     "expire_on": "Expire on:",
     "choose_group_people": "Choose group",
     "placeholder_audience_search": "Search for groups",
     "audience_selected": "Selected audiences",
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
-    "expire_time_desc": "This post stay on top of feed until expire time.",
+    "expire_time_desc": "This post will stay on top of feed until",
     "delete_post_complete": "Your post has been deleted",
     "search_results": "Search results",
     "search_audiences_placeholder": "Search for groups or people",
@@ -427,12 +452,22 @@
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
     "btn_continue_comment": "Continue Comment",
     "btn_discard_comment": "Discard",
+    "text_edit_post_success": "Post has been published successfully",
+    "text_edit_post_failed": "Post was failed to publish",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
       "title_empty_cant_load_more": "You have seen it all",
       "text_empty_cant_load_more": "Take a break time & chill",
       "text_empty_search_post": "Sorry, we couldn’t find anything related\nto your search."
+    },
+    "create_post": {
+      "title_discard_changes": "Discard Changes",
+      "title_audience_changed": "Audience has changed",
+      "text_discard_change": "Are you sure to want to discard changes?",
+      "text_discard_change_audience": "Are you sure to change the audience? This change will also effect on post's permission",
+      "btn_save_change": "Save Changes",
+      "btn_keep_edit": "Keep Editing"
     },
     "draft": {
       "btn_post_now": "Post Now",
@@ -446,159 +481,13 @@
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted"
-    }
-  },
-  "chat": {
-    "title": "Chat",
-    "title_chat_detail": "Group chat info",
-    "title_room_members": "Group Chat Members",
-    "title_invite_members": "Invite members",
-    "placeholder_search": "Search...",
-    "title_admin": "Admin",
-    "title_members": "Members",
-    "title_add_participants": "Add participants",
-    "title_create_group_chat": "Create group chat",
-    "title_create_quick_chat": "Create Quick Chat",
-    "text_create_quick_chat_name_note": "Note: If you leave the Quick Chat name empty, the system will use names of members by default",
-    "text_me": "me",
-    "title_group_add_member": {
-      "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
-      "many": "These people will be added to this group chat and group {0} also. Do you want to continue?"
     },
-    "button_add_member": "Add member",
-    "button_remove_member": "Remove member",
-    "title_modal_confirm_add_member": "Add members",
-    "placeholder_input_group_chat_name": "Name your group chat (Optional)",
-    "label_invite": "Invite",
-    "label_notification": "Notifications",
-    "label_mute": "Mute",
-    "label_unmute": "Unmute",
-    "label_pin_chat": "Pin Chat",
-    "label_attachments": "Files",
-    "label_gallery": "Gallery",
-    "label_leaves_group": "Leaves Group Chat",
-    "label_create_group_chat_with": "Create group chat with",
-    "placeholder_users_search": "Search for someone to chat...",
-    "placeholder_members_search": "Search members",
-    "system_message": {
-      "au": "{1} joined the group",
-      "ru": "{1} was removed from the group",
-      "ul": "{1} left the group",
-      "room_changed_description": "{0} has changed the chat description",
-      "room_changed_announcement": "{0} has changed the chat announcement",
-      "room_changed_topic": "{0} has changed the group chat topic to {1}",
-      "room_changed_avatar": "{0} has changed the group avatar",
-      "r": "{0} has changed the group chat name to {1}",
-      "rm": {
-        "me": "You deleted this message.",
-        "other": "This message has been deleted",
-        "list": "deleted a message"
-      }
-    },
-    "message_status": {
-      "sending": "Sending",
-      "sent": "Sent",
-      "received": "Received",
-      "failed": "Failed"
-    },
-    "upload_status": {
-      "sending": "Uploading"
-    },
-    "title_privacy": "Privacy",
-    "title_more_actions": "More actions",
-    "title_files_images_links": "Files & Images & Links",
-    "title_admin_tool": "Admin Tool",
-    "text_block": "Block",
-    "text_feedback": "Feedback this chat",
-    "label_pin_messages": "Pin Messages",
-    "label_permission_management": "Permissions Management",
-    "detail_menu": {
-      "change_avatar": "Change Group Avatar",
-      "change_cover": "Change Cover",
-      "edit_description": "Edit Description",
-      "edit_name": "Edit Group Chat Name"
-    },
-    "label_init_group_message": {
-      "short": "Say hello to your group",
-      "full": "🤗 Say hello to your group!"
-    },
-    "label_init_direct_message": {
-      "short": "Say hello to your friend",
-      "full": "🤗 Say hello to your friend!"
-    },
-    "label_last_message": {
-      "my_attachment": "You sent an attachment",
-      "other_attachment": "{0} sent an attachment",
-      "my_photo": "You sent a photo",
-      "other_photo": "{0} sent a photo"
-    },
-    "label_confirm_send_file": "Send this file?",
-    "label_confirm_send_image": "Send this photo?",
-    "label_confirm_send_video": "Send this video?",
-    "error": {
-      "file": {
-        "over_file_size": "Your file must be less than 10MB"
-      },
-      "existing_direct_chat": "You already have a conversation with this person. Do you want to go to this conversation?"
-    },
-    "text_search_empty": "No people here to chat",
-    "member_menu": {
-      "label_view_profile": "View profile",
-      "label_set_as_admin": "Set as admin",
-      "label_direct_message": "Send message",
-      "label_remove_from_group_chat": "Remove from group chat",
-      "label_leave_group": "Leave Group"
-    },
-    "text_mention_all": "All",
-    "modal_confirm_remove_member": {
-      "title": "Remove Member",
-      "description": "This member will be removed from this chat conversation. Do you want to continue?",
-      "description_group_chat": "This member will be removed from groups: {0}. Do you want to continue?"
-    },
-    "message_option": {
-      "pin": "Pin this message",
-      "edit_message": "Edit message",
-      "create_thread": "Create Thread",
-      "copy": "Copy Text",
-      "reply": "Reply",
-      "get_link": "Copy Message Link",
-      "delete": "Delete Message",
-      "reactions": "View Reactions"
-    },
-    "label_my_message": "You",
-    "label_deleted_message": {
-      "me": "You deleted this message.",
-      "other": "This message has been deleted",
-      "list": "deleted a message"
-    },
-    "label_no_description": "No Description",
-    "label_unread_messages_banner": "Unread messages since",
-    "label_unread_messages": "Unread messages",
-    "text_editing_message": "Editing message",
-    "text_edited": "edited",
-    "label_replied_messsage_attachment": "Tap to view attachment",
-    "title_msg_not_found": "No message found",
-    "description_msg_not_found": "We couldn’t find the message you are looking for or you do not have the permission to access",
-    "title_invalid_msg_link": "Invalid message link",
-    "button_go_back_to_chat": "Go back to Chat",
-    "search_result": {
-      "job_title": " at ",
-      "member_count": " & {0} others"
-    },
-    "text_chat_description": "Chat Description",
-    "conversation_options": {
-      "notifications": "Notifications",
-      "pin": "Pin",
-      "mark_as_read": "Mark as Read",
-      "delete_chat": "Delete Chat"
-    },
-    "modal_confirm_leave_chat": {
-      "title": "Leave Group",
-      "description": "Are you sure you want to leave this group chat?",
-      "leave_inner_groups": "You will also leave: {0}.",
-      "button_leave": "Leave Chat",
-      "success_message": "You have left the group chat"
-    }
+    "settings": "Post Settings",
+    "people_can_comment": "People can comment on this post",
+    "people_can_share": "People can share on this post",
+    "people_can_react": "People can react on this post",
+    "auto_saved": "Post auto-saved",
+    "saved_to_draft": "Post Saved to Draft."
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -635,16 +524,28 @@
     "search_location": "Search for City/Province/Country"
   },
   "groups": {
+    "group_content": {
+      "btn_post": "Post",
+      "btn_channel":"Channel",
+      "btn_about": "About",
+      "btn_members": "Members",
+      "btn_files": "Files"
+    },
+    "text_members": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
     "text_search_member": "Search group member",
     "text_search": "Search people",
     "group_menu": {
-      "label_copy_group_link": "Copy Group Link",
+      "label_admin_tools": "Admin Tools",
+      "label_copy_group_link": "Copy Link",
       "label_leave_group": "Leave Group",
-      "label_share_group": "Share to...",
-      "label_share_to_chat": "Share to Bein Chat"
+      "label_share_group": "Share to Chat",
+      "label_share_to_chat": "Share to Bein Chat",
+      "label_following": "Following",
+      "label_pin_group": "Pin this group",
+      "label_notifications": "Notifications"
     },
     "member_menu": {
       "label_view_profile": "View profile",
@@ -688,9 +589,42 @@
       "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
     },
     "text_successfully_join_group": "Successfully join group",
+    "text_no_pending_members_notice": "There's no pending members",
+    "text_pending_request_notice": "People who request to join your group will show here.",
+    "text_respond_all_member_requests": {
+      "title": {
+        "approve": "Approve all member requests?",
+        "decline": "Decline all member requests?"
+      },
+      "content": {
+        "approve_one": "You're about to add {{count}} person to {0}",
+        "approve_other": "You're about to add {{count}} people to {0}",
+        "decline_one": "You're about to decline {{count}} member request",
+        "decline_other": "You're about to decline {{count}} member requests"
+      }
+    },
+    "text_requested_at": "Requested at",
+    "text_declined_user": "Declined user",
+    "text_approved_user": "Approved user",
+    "text_approved_all_one": "Approved {{count}} user",
+    "text_approved_all_other": "Approved {{count}} users",
+    "text_declined_all_one": "Declined {{count}} user",
+    "text_declined_all_other": "Declined {{count}} users",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
-    "text_approved_member_group": "You have been approved to be a member of this group"
+    "text_approved_member_group": "You have been approved to be a member of this group",
+    "title_members": "Members",
+    "text_cannot_approve_all": "Cannot approve all because there are changes in the pending member list. Please review again",
+    "text_cannot_decline_all": "Cannot decline all because there are changes in the pending member list. Please review again",
+    "text_this_place_looks_lonely": "This place looks lonely",
+    "text_join_community_get_updated": "Join in a community to get updated",
+    "update_privacy_modal": {
+      "title": "Cannot update privacy due to pending member requests!",
+      "content": {
+        "approve": "Do you want to accept **All pending member requests** in order to change the group privacy to Public now?",
+        "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
+      }
+    }
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

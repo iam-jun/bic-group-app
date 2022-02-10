@@ -112,7 +112,11 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const renderMore = () => {
     return (
       <View style={styles.moreContainer}>
-        <Text.H4 color={colors.background}>+ {data.length - 4}</Text.H4>
+        <Text.H4
+          color={colors.background}
+          testID="post_photo_preview.more_photos">
+          + {data.length - 4}
+        </Text.H4>
       </View>
     );
   };
@@ -146,6 +150,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
   return (
     <Button
+      testID="post_photo_preview"
       disabled={disabled}
       activeOpacity={0.8}
       onPress={_onPress}
@@ -167,10 +172,17 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             <ViewSpacing width={4} height={4} />
             <View
               style={{flex: 1, flexDirection: isVertical ? 'column' : 'row'}}>
-              {renderSmallImage(data?.[1]?.origin_name, data?.[1]?.name)}
-              {renderSmallImage(data?.[2]?.origin_name, data?.[2]?.name, true)}
               {renderSmallImage(
-                data?.[3]?.origin_name,
+                data?.[1]?.origin_name || data?.[1]?.name,
+                data?.[1]?.name,
+              )}
+              {renderSmallImage(
+                data?.[2]?.origin_name || data?.[2]?.name,
+                data?.[2]?.name,
+                true,
+              )}
+              {renderSmallImage(
+                data?.[3]?.origin_name || data?.[3]?.name,
                 data?.[3]?.name,
                 true,
                 data?.length > 4,

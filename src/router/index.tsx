@@ -99,7 +99,7 @@ const StackNavigator = (): React.ReactElement => {
     checkAuthKickout();
     handleDeepLink();
     // Linking.addEventListener('url', handleOpenURL);
-    dispatch(noInternetActions.hideSystemIssue());
+    dispatch(noInternetActions.setSystemIssue(false));
   }, []);
 
   /*Handle when app killed*/
@@ -115,7 +115,6 @@ const StackNavigator = (): React.ReactElement => {
     const route = paths.length > 0 ? paths[1] : '';
     let navigateRoute = '';
     switch (route) {
-      case 'chat':
       case 'groups':
       case 'menus':
         navigateRoute = route;

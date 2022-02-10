@@ -7,14 +7,14 @@ import {useTheme} from 'react-native-paper';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
 import speakingLanguages from '~/constants/speakingLanguages';
 import useMenu from '~/hooks/menu';
 import {ILanguageItem} from '~/interfaces/IEditUser';
 
 import {ITheme} from '~/theme/interfaces';
-import SettingItem from './SettingItem';
+import TitleComponent from '../../fragments/TitleComponent';
+import Button from '~/beinComponents/Button';
 
 interface LanguageOptionMenuProps {
   title: string;
@@ -28,6 +28,8 @@ const LanguageOptionMenu = ({
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
+
   const styles = themeStyles(theme, screenHeight);
   const {myProfile} = useMenu();
   const {language: userLanguages} = myProfile;
@@ -93,18 +95,24 @@ const LanguageOptionMenu = ({
 
   return (
     <View>
-      <SettingItem
-        title={'settings:title_language'}
-        subtitle={
-          selectedLanguages
-            // @ts-ignore
-            ?.map(language => speakingLanguages[language]?.name)
-            .join(', ') || i18next.t('common:text_not_set')
-        }
-        leftIcon={'CommentsAlt'}
-        rightIcon={'EditAlt'}
-        onPress={e => onLanguageEditOpen(e)}
-      />
+      <TitleComponent icon="CommentsAlt" title="settings:title_language" />
+      <Button
+        testID="edit_basic_info.language"
+        textProps={{
+          color: colors.textInput,
+          variant: 'body',
+          numberOfLines: 1,
+          style: {flex: 1},
+        }}
+        style={styles.buttonDropDown}
+        contentStyle={styles.buttonDropDownContent}
+        rightIcon={'AngleDown'}
+        onPress={e => onLanguageEditOpen(e)}>
+        {selectedLanguages
+          // @ts-ignore
+          ?.map(language => speakingLanguages[language]?.name)
+          .join(', ') || i18next.t('common:text_not_set')}
+      </Button>
 
       <BottomSheet
         modalizeRef={languageSheetRef}
@@ -118,7 +126,9 @@ const LanguageOptionMenu = ({
             </Text.ButtonSmall>
             <Divider />
             <ScrollView>
-              <ListView data={languages} renderItem={renderItem} />
+              {(languages || []).map((item: ILanguageItem) =>
+                renderItem({item}),
+              )}
             </ScrollView>
           </View>
         }
@@ -130,7 +140,7 @@ const LanguageOptionMenu = ({
 export default LanguageOptionMenu;
 
 const themeStyles = (theme: ITheme, screenHeight: number) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     contentComponent: {
@@ -143,6 +153,19 @@ const themeStyles = (theme: ITheme, screenHeight: number) => {
     },
     chooseText: {
       margin: spacing.margin.base,
+    },
+    buttonDropDown: {
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      minHeight: 44,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      marginVertical: spacing.margin.small,
+      paddingLeft: spacing.padding.base,
+    },
+    buttonDropDownContent: {
+      justifyContent: 'space-between',
     },
   });
 };

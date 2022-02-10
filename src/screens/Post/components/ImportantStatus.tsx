@@ -24,10 +24,10 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
 
   const ImportantStatusStyle = {
     active: {
-      iconColor: colors.primary7,
-      iconBackgroundColor: colors.background,
-      textColor: colors.textReversed,
-      backgroundColor: colors.primary6,
+      iconColor: colors.background,
+      iconBackgroundColor: colors.primary6,
+      textColor: colors.primary6,
+      backgroundColor: colors.primary2,
     },
     inactive: {
       iconColor: colors.iconTintReversed,
@@ -55,7 +55,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   ]);
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} testID="important_status">
       <Icon
         isButton
         iconStyle={[styles.iconStyle, {backgroundColor: iconBackgroundColor}]}
@@ -65,7 +65,12 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
         tintColor={iconColor}
       />
       <View style={styles.textContainer}>
-        <Text.H6 {...textProps} color={textColor}>
+        <Text.H6
+          testID={
+            notExpired ? 'important_status_active' : 'important_status_expire'
+          }
+          {...textProps}
+          color={textColor}>
           {i18next.t('common:text_important')}
         </Text.H6>
       </View>
@@ -84,7 +89,7 @@ const createStyle = (theme: ITheme) => {
     leftIcon: {
       marginRight: spacing.margin.small,
     },
-    iconStyle: {padding: 3, borderRadius: 100},
+    iconStyle: {padding: 3, borderRadius: 6},
   });
 };
 

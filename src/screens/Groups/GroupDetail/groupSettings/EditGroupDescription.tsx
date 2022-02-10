@@ -81,6 +81,7 @@ const EditGroupDescription = (props: any) => {
             onChangeText={_onChangeText}
             maxLength={500}
             multiline
+            testID="edit_group_description.text"
           />
         </View>
         <Text.BodyS color={theme.colors.textSecondary} useI18n>
@@ -106,7 +107,7 @@ const themeStyles = (theme: ITheme) => {
     },
     textEdit: {
       minHeight: 224,
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
       color: colors.textPrimary,
     },

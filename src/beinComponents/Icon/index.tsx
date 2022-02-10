@@ -25,6 +25,7 @@ import {useNetInfo} from '@react-native-community/netinfo';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;
+  testID?: string;
   size?: number;
   tintColor?: string;
   backgroundColor?: string;
@@ -39,6 +40,7 @@ export interface IconProps extends SVGIconProps, UniconsProps {
 
 const Icon: React.FC<IconProps> = ({
   style,
+  testID,
   iconStyle,
   labelStyle,
   icon,
@@ -110,7 +112,7 @@ const Icon: React.FC<IconProps> = ({
             disabled && isButton && styles.disabled,
             iconStyle,
           ]}>
-          <Div className="icon-wrapper">
+          <Div className="icon-wrapper" testID={testID}>
             <IconComponent
               style={_style}
               tintColor={_tintColor}

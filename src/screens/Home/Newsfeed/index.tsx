@@ -19,12 +19,10 @@ import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import {appScreens} from '~/configs/navigator';
 import {AppContext} from '~/contexts/AppContext';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
+import {useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {ITabTypes} from '~/interfaces/IRouter';
 import images from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
@@ -36,13 +34,15 @@ import {ITheme} from '~/theme/interfaces';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import {useBaseHook} from '~/hooks';
 import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
+import {openLink} from '~/utils/common';
+import {chatSchemes} from '~/constants/chat';
+import {useAuthToken} from '~/hooks/auth';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
-  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
@@ -50,16 +50,14 @@ const Newsfeed = () => {
   const styles = createStyle(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const {streamClient} = useContext(AppContext);
-  const streamRef = useRef<any>({}).current;
-  streamRef.value = streamClient;
+
+  const token = useAuthToken();
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const userId = useUserIdAuth();
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
@@ -74,16 +72,7 @@ const Newsfeed = () => {
   }, [isFocused]);
 
   const getData = (isRefresh?: boolean) => {
-    const streamClient = streamRef.value;
-    if (streamClient) {
-      dispatch(
-        homeActions.getHomePosts({
-          streamClient,
-          userId: `${userId}`,
-          isRefresh,
-        }),
-      );
-    }
+    dispatch(homeActions.getHomePosts({isRefresh}));
   };
 
   useTabPressListener(
@@ -99,13 +88,13 @@ const Newsfeed = () => {
   useEffect(() => {
     if (
       isInternetReachable &&
-      streamClient &&
+      token &&
       (!homePosts || homePosts?.length === 0) &&
       !refreshing
     ) {
       getData(true);
     }
-  }, [streamClient, isInternetReachable, homePosts, refreshing]);
+  }, [token, isInternetReachable, homePosts]);
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
@@ -174,24 +163,27 @@ const Newsfeed = () => {
       );
 
     return (
-      <Header
-        headerRef={headerRef}
-        avatar={images.logo_bein}
-        hideBack
-        menuIcon={'Edit'}
-        onPressMenu={navigateToCreatePost}
-        onShowSearch={onShowSearch}
-        onSearchText={onSearchText}
-        searchPlaceholder={t('input:search_post')}
-        autoFocusSearch
-        onFocusSearch={onFocusSearch}
-        onSubmitSearch={onSubmitSearch}
-      />
+      <View style={styles.headerMobile}>
+        <Header
+          headerRef={headerRef}
+          avatar={images.logo_bein}
+          hideBack
+          searchPlaceholder={t('input:search_post')}
+          autoFocusSearch
+          onPressChat={navigateToChat}
+          onShowSearch={onShowSearch}
+          onSearchText={onSearchText}
+          onFocusSearch={onFocusSearch}
+          onSubmitSearch={onSubmitSearch}
+          title={'post:news_feed'}
+          titleTextProps={{useI18n: true}}
+        />
+      </View>
     );
   };
 
-  const navigateToCreatePost = () => {
-    rootNavigation.navigate(homeStack.createPost);
+  const navigateToChat = () => {
+    openLink(chatSchemes.CHANNELS);
   };
 
   const onEndReach = useCallback(() => getData(), []);
@@ -264,6 +256,10 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.small,
     },
+    headerMobile:
+      Platform.OS !== 'web'
+        ? {position: 'absolute', top: 0, width: '100%', zIndex: 1}
+        : {},
   });
 };
 

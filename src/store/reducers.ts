@@ -12,9 +12,10 @@ import {initPushTokenMessage} from '~/services/helper';
 import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 import {ActionTypes} from '~/utils';
+import {setChatAuthenticationInfo} from '~/utils/common';
 import auth from '../screens/Auth/redux/reducer';
-import chat from '../screens/Chat/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
+import mentionInputReducer from '~/beinComponents/inputs/_MentionInput/redux/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';
@@ -35,13 +36,13 @@ const appReducer = combineReducers({
   app,
   modal,
   auth: persistReducer(authPersistConfig, auth),
-  chat,
   post: postReducer,
   groups: groupsReducer,
   home: homeReducer,
   notifications: persistReducer(notiPersistConfig, notificationsReducer),
   menu: menuReducer,
   noInternet: noInternetReducer,
+  mentionInput: mentionInputReducer,
 });
 
 // @ts-ignore
@@ -54,8 +55,6 @@ const rootReducers = (state, action) => {
       if (state?.auth?.user) {
         makeRemovePushTokenRequest(
           state?.auth?.user?.signInUserSession.idToken.jwtToken,
-          state?.auth?.chat?.accessToken,
-          state?.auth?.chat?.userId,
         ).catch(e => console.log('error when call api logout', e));
       }
       initPushTokenMessage()
@@ -63,6 +62,8 @@ const rootReducers = (state, action) => {
           return messaging().deleteToken();
         })
         .catch(e => console.log('error when delete token', e));
+    } else {
+      setChatAuthenticationInfo('', 0);
     }
     AsyncStorage.multiRemove([
       'persist:root',

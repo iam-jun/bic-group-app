@@ -3,7 +3,6 @@ import {
   IGroup,
   IGroupDetail,
   IGroupDetailEdit,
-  IPayloadGetGroupPost,
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -11,8 +10,10 @@ import {
   IGroupSearchPayload,
   IGroupSetAdmin,
   IGroupRemoveAdmin,
+  IJoiningMember,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
+import {IObject} from '~/interfaces/common';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -63,7 +64,7 @@ const groupsActions = {
     };
   },
 
-  getGroupPosts: (payload: IPayloadGetGroupPost) => {
+  getGroupPosts: (payload: string | number) => {
     return {
       type: groupsTypes.GET_GROUP_POSTS,
       payload,
@@ -79,7 +80,7 @@ const groupsActions = {
     type: groupsTypes.SET_EXTRA_GROUP_POSTS,
     payload,
   }),
-  mergeExtraGroupPosts: (payload: IPayloadGetGroupPost) => ({
+  mergeExtraGroupPosts: (payload: string) => ({
     type: groupsTypes.MERGE_EXTRA_GROUP_POSTS,
     payload,
   }),
@@ -205,6 +206,66 @@ const groupsActions = {
   }) => ({
     type: groupsTypes.REMOVE_MEMBER,
     payload,
+  }),
+
+  getMemberRequests: (payload: {groupId: number; params?: any}) => ({
+    type: groupsTypes.GET_MEMBER_REQUESTS,
+    payload,
+  }),
+  setMemberRequests: (payload: {
+    requestIds: number[];
+    requestItems: IObject<IJoiningMember>;
+  }) => ({
+    type: groupsTypes.SET_MEMBER_REQUESTS,
+    payload,
+  }),
+  resetMemberRequests: () => ({
+    type: groupsTypes.RESET_MEMBER_REQUESTS,
+  }),
+  removeSingleMemberRequest: (payload: {requestId: number}) => ({
+    type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
+    payload,
+  }),
+  undoDeclineMemberRequests: () => ({
+    type: groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS,
+  }),
+  removeAllMemberRequests: () => ({
+    type: groupsTypes.REMOVE_ALL_MEMBER_REQUESTS,
+  }),
+  approveSingleMemberRequest: (payload: {
+    groupId: number;
+    requestId: number;
+    fullName: string;
+    callback: () => void;
+  }) => ({
+    type: groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    payload,
+  }),
+  approveAllMemberRequests: (payload: {
+    groupId: number;
+    total: number;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    payload,
+  }),
+  declineSingleMemberRequest: (payload: {
+    groupId: number;
+    requestId: number;
+  }) => ({
+    type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    payload,
+  }),
+  declineAllMemberRequests: (payload: {
+    groupId: number;
+    total: number;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    payload,
+  }),
+  storeUndoData: () => ({
+    type: groupsTypes.STORE_UNDO_DATA,
   }),
 };
 

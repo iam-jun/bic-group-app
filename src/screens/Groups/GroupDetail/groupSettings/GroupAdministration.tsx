@@ -8,7 +8,6 @@ import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IconType} from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '../../redux/actions';
@@ -23,13 +22,16 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
-  const {groupId, roomId} = params || {};
+  const {groupId} = params || {};
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
+  const totalPendingMembers = useKeySelector(
+    groupsKeySelector.groupDetail.total_pending_members,
+  );
 
   useEffect(() => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -49,14 +51,29 @@ const GroupAdministration = (props: any) => {
     }
   };
 
+  const goToPendingMembers = () => {
+    rootNavigation.navigate(groupStack.pendingMembers, {groupId});
+  };
+
   const goToGeneralInfo = () => {
-    if (roomId) {
-      return rootNavigation.navigate(chatStack.generalInfo, {
-        groupId,
-        roomId,
-      });
-    }
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
+  };
+
+  const renderGroupSettingItem = ({item, index}: any) => {
+    if (!item) return null;
+    const {title = '', icon = '', rightSubIcon = ''} = item;
+    return (
+      <MenuItem
+        testID={`group_administration.settings.item.${index}`}
+        title={title}
+        icon={icon}
+        iconProps={{icon: icon, tintColor: theme.colors.primary6}}
+        rightSubIcon={rightSubIcon}
+        onPress={() => {
+          onGroupAdminPress(item);
+        }}
+      />
+    );
   };
 
   const renderItem = (
@@ -64,12 +81,15 @@ const GroupAdministration = (props: any) => {
     title: string,
     onPress?: () => void,
     notificationsBadgeNumber?: number,
+    testID?: string,
   ) => {
     return (
       <TouchableOpacity onPress={onPress}>
         <MenuItem
+          testID={testID}
           title={title}
           icon={icon}
+          iconProps={{icon: icon, tintColor: theme.colors.primary6}}
           notificationsBadgeNumber={notificationsBadgeNumber}
           notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
           rightSubIcon="AngleRightB"
@@ -82,33 +102,31 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textSecondary}
+        color={theme.colors.textPrimary}
+        variant="body"
         useI18n>
         settings:title_group_moderating
       </Text.H5>
       {renderItem(
         'UserExclamation',
         'settings:title_pending_members',
-        displayNewFeature,
-        1,
+        goToPendingMembers,
+        totalPendingMembers,
+        'group_administration.pending_members',
       )}
       {renderItem(
         'FileExclamationAlt',
         'settings:title_pending_posts',
         displayNewFeature,
         23,
+        'group_administration.pending_posts',
       )}
       {renderItem(
         'ExclamationTriangle',
         'settings:title_reported_posts',
         displayNewFeature,
         1,
-      )}
-      {renderItem(
-        'ChatInfo',
-        'settings:title_reported_chats',
-        displayNewFeature,
-        1,
+        'group_administration.reported_post',
       )}
     </>
   );
@@ -117,15 +135,15 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textSecondary}
+        color={theme.colors.textPrimary}
+        variant="body"
         useI18n>
         settings:title_group_settings
       </Text.H5>
       <ListView
-        type="menu"
         data={groupSettings}
+        renderItem={renderGroupSettingItem}
         scrollEnabled={false}
-        onItemPress={onGroupAdminPress}
         style={styles.settingsContainer}
         showItemSeparator={false}
       />
@@ -139,11 +157,10 @@ const GroupAdministration = (props: any) => {
         titleTextProps={{color: theme.colors.textPrimary}}
         avatar={icon}
       />
+      <Divider style={styles.divider} />
       <View style={styles.container}>
         {renderGroupModerating()}
-        <Divider style={styles.divider} />
         {renderGroupSettings()}
-        <Divider />
       </View>
     </ScreenWrapper>
   );
@@ -168,10 +185,10 @@ const themeStyles = (theme: ITheme) => {
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.base,
     },
     divider: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
+      height: 5,
     },
   });
 };

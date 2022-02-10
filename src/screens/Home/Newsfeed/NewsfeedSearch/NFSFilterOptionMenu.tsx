@@ -58,9 +58,8 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
       : `${createdBy?.name}`
     : t('home:newsfeed_search:label_anyone');
   const textDate = date
-    ? `${formatDateTime(startDate, t, language)} - ${formatDateTime(
+    ? `${formatDateTime(startDate, language)} - ${formatDateTime(
         endDate,
-        t,
         language,
       )}`
     : t('home:newsfeed_search:label_anytime');

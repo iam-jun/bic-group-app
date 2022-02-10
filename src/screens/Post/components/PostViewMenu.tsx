@@ -17,12 +17,14 @@ export interface PostViewMenuProps {
   postId: string;
   isPostDetail: boolean;
   isActor: boolean;
+  isDraftPost?: boolean;
 }
 
 const PostViewMenu: FC<PostViewMenuProps> = ({
   postId,
   isPostDetail,
   isActor,
+  isDraftPost,
 }: PostViewMenuProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -44,7 +46,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         iconName: 'Trash',
         cancelBtn: true,
         confirmLabel: t('common:btn_delete'),
-        onConfirm: () => dispatch(postActions.deletePost(postId)),
+        onConfirm: () =>
+          dispatch(postActions.deletePost({id: postId, isDraftPost})),
       }),
     );
   };
@@ -75,6 +78,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
     <View style={styles.container}>
       {isActor && (
         <PrimaryItem
+          testID={'post_view_menu.edit'}
           style={styles.item}
           leftIcon={'Edit'}
           leftIconProps={{icon: 'Edit', size: 24}}
@@ -83,6 +87,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         />
       )}
       <PrimaryItem
+        testID={'post_view_menu.copy'}
         style={styles.item}
         leftIcon={'Copy'}
         leftIconProps={{icon: 'Copy', size: 24}}
@@ -90,6 +95,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         onPress={onPressCopyLink}
       />
       <PrimaryItem
+        testID={'post_view_menu.bookmark'}
         style={styles.item}
         leftIcon={'Bookmark'}
         leftIconProps={{icon: 'Bookmark', size: 24}}
@@ -97,6 +103,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         onPress={onPress}
       />
       <PrimaryItem
+        testID={'post_view_menu.insights'}
         style={styles.item}
         leftIcon={'TachometerFastAlt'}
         leftIconProps={{icon: 'TachometerFastAlt', size: 24}}
@@ -104,6 +111,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         onPress={onPress}
       />
       <PrimaryItem
+        testID={'post_view_menu.noti'}
         style={styles.item}
         leftIcon={'Bell'}
         leftIconProps={{icon: 'Bell', size: 24}}
@@ -111,6 +119,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         onPress={onPress}
       />
       <PrimaryItem
+        testID={'post_view_menu.history'}
         style={styles.item}
         leftIcon={'Redo'}
         leftIconProps={{icon: 'Redo', size: 24}}
@@ -119,6 +128,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       />
       {isActor && (
         <PrimaryItem
+          testID={'post_view_menu.delete'}
           style={styles.item}
           leftIcon={'TrashAlt'}
           leftIconProps={{icon: 'TrashAlt', size: 24}}
@@ -128,6 +138,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       )}
       {!isActor && (
         <PrimaryItem
+          testID={'post_view_menu.report'}
           style={styles.item}
           leftIcon={'InfoCircle'}
           leftIconProps={{icon: 'InfoCircle', size: 24}}

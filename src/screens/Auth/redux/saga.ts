@@ -2,12 +2,12 @@ import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth'
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {Platform} from 'react-native';
-import {delay, put, select, takeLatest} from 'redux-saga/effects';
+import {delay, put, takeLatest} from 'redux-saga/effects';
 
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
 import errorCode from '~/constants/errorCode';
-import {IToastMessage} from '~/interfaces/common';
+import {IObject, IToastMessage} from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
@@ -16,6 +16,7 @@ import {rootSwitch} from '~/router/stack';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import {initPushTokenMessage} from '~/services/helper';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
+import {saveUserToSharedPreferences} from '~/services/sharePreferences';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
@@ -35,7 +36,7 @@ export default function* authSaga() {
   yield takeLatest(types.CHANGE_PASSWORD, changePassword);
 }
 
-function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
+function* signIn({payload}: {type: string; payload: IAuth.ISignIn}): any {
   try {
     yield put(actions.setLoading(true));
     yield put(actions.setSigningInError(''));
@@ -44,7 +45,7 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
       const messaging = yield initPushTokenMessage();
       yield messaging()
         .deleteToken()
-        .catch(e => {
+        .catch((e: any) => {
           console.log('error when delete push token before log in', e);
           return true;
         });
@@ -52,7 +53,7 @@ function* signIn({payload}: {type: string; payload: IAuth.ISignIn}) {
     }
     const {email, password} = payload;
     yield Auth.signIn(email, password); //handle result in useAuthHub
-  } catch (error) {
+  } catch (error: any) {
     let errorMessage;
     switch (error?.code) {
       case authErrors.NOT_AUTHORIZED_EXCEPTION:
@@ -76,8 +77,12 @@ function* changePassword({
     yield put(actions.setChangePasswordLoading(true));
 
     const {oldPassword, newPassword, global} = payload;
-    const user = yield Auth.currentAuthenticatedUser();
-    const data = yield Auth.changePassword(user, oldPassword, newPassword);
+    const user: IObject<any> = yield Auth.currentAuthenticatedUser();
+    const data: string = yield Auth.changePassword(
+      user,
+      oldPassword,
+      newPassword,
+    );
     if (data === 'SUCCESS' && global) {
       yield Auth.signOut({global});
     }
@@ -92,7 +97,7 @@ function* changePassword({
       },
     };
     yield put(actionsCommon.showHideToastMessage(toastMessage));
-  } catch (error) {
+  } catch (error: any) {
     console.log('changePassword error:', error);
     let errCurrentPassword = '',
       errBox = '';
@@ -128,28 +133,30 @@ function* signInOAuth({
 }
 
 function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
-  yield onSignInSuccess(payload);
-}
-
-function* onSignInSuccess(user: IUserResponse) {
   yield put(modalActions.showLoading());
 
   const name =
-    user?.attributes?.name?.length < 50
-      ? user?.attributes?.name
-      : user?.attributes?.email?.match?.(/^([^@]*)@/)[1];
+    payload?.attributes?.name?.length < 50
+      ? payload?.attributes?.name
+      : payload?.attributes?.email?.match?.(/^([^@]*)@/)[1];
 
   const userResponse: IUserResponse = {
-    username: user?.username || '',
-    signInUserSession: user?.signInUserSession || {},
-    attributes: user?.attributes || {},
+    username: payload?.username || '',
+    signInUserSession: payload?.signInUserSession || {},
+    attributes: payload?.attributes || {},
     name: name || '',
-    email: user?.attributes?.email || '',
+    email: payload?.attributes?.email || '',
 
-    _id: user?.username,
-    id: user?.username,
-    role: user?.username,
+    id: payload?.username,
+    role: payload?.username,
   };
+
+  //For sharing data between Group and Chat
+  yield saveUserToSharedPreferences({
+    username: userResponse.username,
+    name,
+    token: userResponse.signInUserSession.idToken?.jwtToken,
+  });
 
   yield put(actions.setUser(userResponse));
 
@@ -163,7 +170,6 @@ function* onSignInSuccess(user: IUserResponse) {
 
   navigation.replace(rootSwitch.mainStack);
   yield put(actions.setLoading(false));
-
   yield delay(500); // Delay to avoid showing authStack
   yield put(modalActions.hideLoading());
 }
@@ -222,7 +228,7 @@ function* forgotPasswordRequest({payload}: {type: string; payload: string}) {
     yield put(
       actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW),
     );
-  } catch (error) {
+  } catch (error: any) {
     let errBox: string;
     const errRequest = '';
     switch (error.code) {
@@ -262,7 +268,7 @@ function* forgotPasswordConfirm({
 
     yield put(actions.setForgotPasswordLoading(false));
     yield put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE));
-  } catch (error) {
+  } catch (error: any) {
     let errBox = '',
       errConfirm = '';
     switch (error.code) {
@@ -293,6 +299,7 @@ function* signOut({payload}: any) {
       navigation.replace(rootSwitch.authStack);
     }
     yield Auth.signOut();
+    yield saveUserToSharedPreferences(null);
   } catch (err) {
     yield showError(err);
     if (!payload) {

@@ -53,7 +53,14 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const styles = createStyle(theme, newsfeedWidth);
 
   const renderItem = ({item}: any) => {
-    return <PostItem postData={item} />;
+    return (
+      <PostItem
+        postData={item}
+        testID="newsfeed_list.post.item"
+        btnReactTestID="newsfeed_list.post.btn_react"
+        btnCommentTestID="newsfeed_list.post.btn_comment"
+      />
+    );
   };
 
   useTabPressListener(

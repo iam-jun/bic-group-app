@@ -21,7 +21,7 @@ import {useKeySelector} from '~/hooks/selector';
 
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
-import loadings from '../../components/list/loadings';
+import loadings from '~/beinComponents/list/loadings';
 
 export interface ListViewProps {
   data?: Array<any>;
@@ -41,6 +41,7 @@ export interface ListViewProps {
   loadMoreColor?: string;
   onEndReachedThreshold?: number;
 
+  itemTestID?: string;
   renderItem?: ({
     item,
     index,
@@ -86,6 +87,7 @@ const ListView: React.FC<ListViewProps> = ({
   onEndReachedThreshold = 0.1,
 
   renderItem,
+  itemTestID,
   renderItemSeparator,
   showItemSeparator = true,
   renderLoading,
@@ -120,10 +122,6 @@ const ListView: React.FC<ListViewProps> = ({
     let isActive = false;
 
     switch (type) {
-      case 'conversation':
-        itemPath = item['_id'];
-        break;
-
       case 'menu':
         itemPath = item['path'];
         break;
@@ -141,6 +139,7 @@ const ListView: React.FC<ListViewProps> = ({
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
         onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
         <ItemComponent
+          testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
           {...item}
           disabled={!isInternetReachable}
           title={item[titleField || 'title']}
@@ -196,7 +195,7 @@ const ListView: React.FC<ListViewProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}>
+    <View style={[isFullView && {flex: 1}, containerStyle]}>
       {title && (
         <Text.ButtonBase
           style={{

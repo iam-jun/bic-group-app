@@ -16,6 +16,8 @@ import {RootStackParamList} from '~/interfaces/IRouter';
 import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import GroupHeaderMenu from '~/screens/Groups/GroupDetail/components/GroupHeaderMenu';
+import {openLink} from '~/utils/common';
+import {chatSchemes} from '~/constants/chat';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -38,9 +40,6 @@ const GroupTopBar = () => {
     else rootNavigation.goBack();
   };
 
-  const navigateToGroupAdmin = () =>
-    rootNavigation.navigate(groupStack.groupAdmin, {groupId});
-
   const onPressMenu = (event?: any) => {
     dispatch(
       modalActions.showModal({
@@ -51,24 +50,27 @@ const GroupTopBar = () => {
           isContextMenu: true,
           menuMinWidth: 280,
           position: {x: event?.pageX, y: event?.pageY},
+          modalStyle: {borderTopLeftRadius: 20, borderTopRightRadius: 20},
         },
       }),
     );
   };
 
+  const onPressChat = () => {
+    openLink(chatSchemes.CHANNELS);
+  };
+
   const renderAdminButton = () => {
     // only admin can see this button
     return (
-      can_setting && (
-        <ButtonWrapper onPress={navigateToGroupAdmin}>
-          <Icon
-            icon={'iconShieldStar'}
-            fill={theme.colors.iconTint}
-            size={24}
-            style={styles.iconShieldStar}
-          />
-        </ButtonWrapper>
-      )
+      <ButtonWrapper onPress={onPressMenu}>
+        <Icon
+          testID="group_top_bar.admin_button"
+          icon={'iconShieldStar'}
+          fill={theme.colors.iconTint}
+          size={24}
+        />
+      </ButtonWrapper>
     );
   };
 
@@ -78,6 +80,7 @@ const GroupTopBar = () => {
       join_status === groupJoinStatus.member && (
         <ButtonWrapper onPress={() => alert('Press search')}>
           <Icon
+            testID="group_top_bar.search"
             icon={'iconSearch'}
             size={22}
             style={styles.iconSearch}
@@ -91,7 +94,25 @@ const GroupTopBar = () => {
   const renderGroupOption = () => {
     return (
       <ButtonWrapper onPress={onPressMenu}>
-        <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
+        <Icon
+          testID="group_top_bar.option_menu"
+          icon={'EllipsisH'}
+          tintColor={theme.colors.iconTint}
+        />
+      </ButtonWrapper>
+    );
+  };
+
+  const renderChatIcon = () => {
+    return (
+      <ButtonWrapper onPress={onPressChat}>
+        <Icon
+          testID="group_top_bar.option_menu"
+          icon={'CommentsAlt'}
+          size={24}
+          tintColor={theme.colors.iconTint}
+          style={styles.iconShieldStar}
+        />
       </ButtonWrapper>
     );
   };
@@ -110,8 +131,8 @@ const GroupTopBar = () => {
       </View>
       <View style={styles.rightComponent}>
         {renderSearchIcon()}
-        {renderAdminButton()}
-        {renderGroupOption()}
+        {renderChatIcon()}
+        {can_setting ? renderAdminButton() : renderGroupOption()}
       </View>
     </View>
   );
@@ -137,10 +158,10 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
     },
     iconShieldStar: {
-      marginRight: spacing.margin.large,
+      marginRight: spacing.margin.extraLarge,
     },
     iconSearch: {
-      marginRight: spacing.margin.large,
+      marginRight: spacing.margin.extraLarge,
     },
   });
 };

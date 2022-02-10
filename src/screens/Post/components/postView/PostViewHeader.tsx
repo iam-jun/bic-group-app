@@ -82,34 +82,41 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
         disabled={!isInternetReachable}
         onPress={onPressActor}
         style={styles.avatar}>
-        <Avatar.LargeAlt source={avatar} />
+        <Avatar.Large isRounded source={avatar} />
       </TouchableOpacity>
       <View style={{flex: 1}}>
         <TouchableOpacity
           disabled={!isInternetReachable}
-          testID={'post_view_actor'}
           onPress={onPressActor}
           style={{alignSelf: 'flex-start'}}>
-          <Text.H6>{actorName}</Text.H6>
+          <Text.BodySM testID="post_view_header.actor">{actorName}</Text.BodySM>
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text.H6S useI18n color={colors.textSecondary} style={styles.textTo}>
+          <Text.BodySM
+            useI18n
+            color={colors.textSecondary}
+            style={styles.textTo}>
             post:to
-          </Text.H6S>
-          <Text.H6
-            testID={'post_view_audiences'}
+          </Text.BodySM>
+          <Text.BodySM
+            testID={'post_view_header.audiences'}
             onPress={!isInternetReachable ? undefined : onPressShowAudiences}>
             {textAudiences}
-          </Text.H6>
+          </Text.BodySM>
         </View>
         <View style={styles.rowCenter}>
-          <TimeView time={time} />
+          <TimeView
+            textProps={{variant: 'h6'}}
+            style={{fontSize: 11}}
+            time={time}
+          />
         </View>
       </View>
       <View style={{marginRight: spacing?.margin.small}}>
         <Icon
           style={{alignSelf: 'auto'}}
           icon={'EllipsisH'}
+          testID={'post_view_header.menu'}
           onPress={onPressMenu}
         />
       </View>
@@ -147,6 +154,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing?.margin.tiny,
     },
     avatar: {
+      marginTop: spacing?.margin.tiny,
       marginLeft: spacing?.margin.large,
       marginRight: spacing?.margin.base,
     },

@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react';
-import {DeviceEventEmitter, Platform, StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {DeviceEventEmitter, Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
@@ -8,8 +8,6 @@ import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
-import {AppContext} from '~/contexts/AppContext';
-import {useUserIdAuth} from '~/hooks/auth';
 import useTabBadge from '~/hooks/tabBadge';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
@@ -33,15 +31,8 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
 
   const dispatch = useDispatch();
 
-  const {streamClient} = useContext(AppContext);
-  const userId = useUserIdAuth();
   useEffect(() => {
-    dispatch(
-      notificationsActions.getNotifications({
-        streamClient,
-        userId: userId.toString(),
-      }),
-    );
+    dispatch(notificationsActions.getNotifications());
   }, []);
 
   const renderIcon = (name: string, focused: boolean) => {
@@ -96,6 +87,7 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
 
                 return (
                   <Div
+                    testID={`tab_${name}`}
                     className={className}
                     style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
                     {renderIcon(name, focused)}

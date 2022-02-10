@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import Markdown from '~/beinComponents/Markdown';
 
 export interface CollapsibleTextProps extends TextProps {
   style?: StyleProp<ViewStyle>;
@@ -15,7 +16,8 @@ export interface CollapsibleTextProps extends TextProps {
   onPress?: () => void;
   toggleOnPress?: boolean;
   useMarkdown?: boolean;
-  onPressAudience?: (audience: any) => any;
+  useMarkdownIt?: boolean;
+  onPressAudience?: (audience: any, e?: any) => any;
   limitMarkdownTypes?: boolean;
   testID?: string;
   [x: string]: any;
@@ -29,6 +31,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   onPress,
   toggleOnPress,
   useMarkdown,
+  useMarkdownIt,
   onPressAudience,
   limitMarkdownTypes,
   testID,
@@ -68,11 +71,23 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const renderContentWithMarkdown = () => {
     return (
       <View style={style}>
-        <MarkdownView
-          limitMarkdownTypes={limitMarkdownTypes}
-          onPressAudience={onPressAudience}>
-          {!shortContent ? content : contentShowAll ? content : shortContent}
-        </MarkdownView>
+        {useMarkdownIt ? (
+          <MarkdownView
+            {...textProps}
+            limitMarkdownTypes={limitMarkdownTypes}
+            onPressAudience={onPressAudience}>
+            {!shortContent ? content : contentShowAll ? content : shortContent}
+          </MarkdownView>
+        ) : (
+          <Markdown
+            {...textProps}
+            onPressAudience={onPressAudience}
+            value={
+              !shortContent ? content : contentShowAll ? content : shortContent
+            }
+          />
+        )}
+
         {!!shortContent && (
           <Text onPress={onToggleShowLess} color={colors.textInfo}>
             {contentShowAll

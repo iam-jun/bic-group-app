@@ -47,7 +47,8 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
-  const {id, actor, audience, object, important, own_reactions} = data || {};
+  const {id, actor, audience, object, important, own_reactions, is_draft} =
+    data || {};
 
   const {content, images} = object?.data || {};
 
@@ -85,11 +86,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const refreshDraftPosts = () => {
     if (userId && streamClient) {
-      const payload: IPayloadGetDraftPosts = {
-        userId: userId,
-        streamClient: streamClient,
-        isRefresh: true,
-      };
+      const payload: IPayloadGetDraftPosts = {isRefresh: true};
       dispatch(postActions.getDraftPosts(payload));
     }
   };
@@ -125,7 +122,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     dispatch(modalActions.hideModal());
     if (id) {
       postDataHelper
-        .deletePost(id)
+        .deletePost(id, is_draft)
         .then(response => {
           if (response?.data) {
             dispatch(
@@ -195,7 +192,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     <View>
       <PostViewImportant
         isImportant={isImportant}
-        expireTime={important?.expiresTime}
+        expireTime={important?.expires_time}
       />
       <View
         style={StyleSheet.flatten([
@@ -211,6 +208,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           // onPressShowAudiences={onPressShowAudiences}
         />
         <PostViewContent
+          postId={id || ''}
           content={content}
           images={images}
           isPostDetail={isPostDetail}

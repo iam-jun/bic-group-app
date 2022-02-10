@@ -1,7 +1,7 @@
-import {StreamClient} from 'getstream';
-import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
+import {makeHttpRequest} from '~/services/httpApiRequest';
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {
+  IParamGetFeed,
   IParamGetRecentSearchKeywords,
   IParamGetSearchPost,
   IParamPostNewRecentSearchKeyword,
@@ -11,10 +11,28 @@ import apiConfig from '~/configs/apiConfig';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 const homeApiConfig = {
-  getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts`,
+  getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}api/feeds/newsfeed`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
+    useRetry: true,
+    params: {
+      offset: param?.offset || 0,
+      limit: param?.limit || 10,
+      recent_reactions_limit: param.recent_reactions_limit,
+      enrich: param?.enrich,
+      own_reactions: param?.own_reactions,
+      with_own_reactions: param?.with_own_reactions,
+      with_own_children: param?.with_own_children,
+      with_recent_reactions: param?.with_recent_reactions,
+      with_reaction_counts: param?.with_reaction_counts,
+      ranking: param?.ranking,
+    },
+  }),
+  getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}api/posts`,
+    method: 'get',
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
       content: param?.content,
@@ -28,9 +46,9 @@ const homeApiConfig = {
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
       limit: param?.limit,
@@ -41,62 +59,50 @@ const homeApiConfig = {
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     data,
   }),
   deleteClearRecentSearch: (
     target: IRecentSearchTarget,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches/${target}/clean`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${target}/clean`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
   deleteRecentSearchById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}recent-searches/${id}/delete`,
+    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${id}/delete`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
 };
 
 const homeDataHelper = {
-  getHomePosts: async (
-    userId: string,
-    streamClient?: StreamClient,
-    offset?: number,
-  ) => {
-    if (streamClient && userId) {
-      const streamOptions = {
-        offset: offset || 0,
-        limit: 15,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        recentReactionsLimit: 10,
-        withOwnReactions: true,
-        withOwnChildren: true, //return own_children of reaction to comment
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-        ranking: 'important_first', //important posts will on top of results
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'newsfeed',
-          `u-${userId}`,
-          'get',
-          streamOptions,
-        );
-        return Promise.resolve(data?.results || []);
-      } catch (e) {
-        return Promise.reject(e);
+  getNewsfeed: async (param: IParamGetFeed) => {
+    try {
+      const response: any = await makeHttpRequest(
+        homeApiConfig.getNewsfeed({
+          enrich: true,
+          own_reactions: true,
+          with_own_reactions: true,
+          with_own_children: true,
+          with_recent_reactions: true,
+          with_reaction_counts: true,
+          ...param,
+        }),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data?.results);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient or UserId not found');
   },
   getSearchPost: async (param: IParamGetSearchPost) => {
     try {

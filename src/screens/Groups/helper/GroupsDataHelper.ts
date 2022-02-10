@@ -1,8 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IGroupDetailEdit} from '~/interfaces/IGroup';
+import {IGroupDetailEdit, IParamGetGroupPosts} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
-import {StreamClient} from 'getstream';
-import {makeGetStreamRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
@@ -10,6 +8,13 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}users/my-groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
+  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}api/feeds/timeline`,
+    method: 'get',
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params,
   }),
@@ -134,6 +139,55 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getMemberRequests: (groupId: number, params: any): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
+  approveSingleMemberRequest: (
+    groupId: number,
+    requestId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/${requestId}/approve`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  approveAllMemberRequests: (
+    groupId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/approve`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      totalJoiningRequests: total,
+    },
+  }),
+  declineSingleMemberRequest: (
+    groupId: number,
+    requestId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/${requestId}/decline`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  declineAllMemberRequests: (
+    groupId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/decline`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      totalJoiningRequests: total,
+    },
+  }),
 };
 
 const groupsDataHelper = {
@@ -179,39 +233,29 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getMyGroupPosts: async (
-    userId: number,
-    groupId: number,
-    streamClient?: StreamClient,
-    offset?: number,
-  ) => {
-    if (streamClient) {
-      const streamOptions = {
-        offset: offset || 0,
-        limit: appConfig.recordsPerPage,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        withOwnReactions: true,
-        withOwnChildren: true,
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-        ranking: 'important_first', //important posts will on top of results
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'timeline',
-          `g-${groupId}`,
-          'get',
-          streamOptions,
-        );
-        return Promise.resolve(data?.results || []);
-      } catch (e) {
-        return Promise.reject(e);
+  getGroupPosts: async (param: IParamGetGroupPosts) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getGroupPosts({
+          offset: param?.offset || 0,
+          limit: param?.limit || appConfig.recordsPerPage,
+          enrich: true,
+          own_reactions: true,
+          with_own_reactions: true,
+          with_own_children: true,
+          with_recent_reactions: true,
+          with_reaction_counts: true,
+          ...param,
+        }),
+      );
+      if (response && response?.data?.data?.results) {
+        return Promise.resolve(response?.data?.data?.results);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient not found');
   },
   getInfoGroups: async (ids: string) => {
     try {
@@ -375,6 +419,76 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.removeGroupAdmin(groupId, userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getMemberRequests: async (groupId: number, params: any) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getMemberRequests(groupId, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveSingleMemberRequest: async (groupId: number, requestId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveSingleMemberRequest(groupId, requestId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveAllMemberRequests: async (groupId: number, total: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveAllMemberRequests(groupId, total),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  declineSingleMemberRequest: async (groupId: number, requestId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.declineSingleMemberRequest(groupId, requestId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  declineAllMemberRequests: async (groupId: number, total: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.declineAllMemberRequests(groupId, total),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

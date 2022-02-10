@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import Reaction from '~/beinComponents/Badge/Reaction';
@@ -10,8 +10,10 @@ import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
+import appConfig from '~/configs/appConfig';
 
 export interface ReactionViewProps {
+  style?: StyleProp<ViewStyle>;
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
   showSelectReactionWhenEmpty?: boolean;
@@ -22,6 +24,7 @@ export interface ReactionViewProps {
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
+  style,
   ownReactions,
   reactionCounts,
   onAddReaction,
@@ -74,7 +77,10 @@ const ReactionView: FC<ReactionViewProps> = ({
     return (
       <View style={styles.containerButtonOnly}>
         {!!onPressSelectReaction && showSelectReactionWhenEmpty && (
-          <Button style={styles.buttonReact} onPress={onPressSelectReaction}>
+          <Button
+            style={styles.buttonReact}
+            onPress={onPressSelectReaction}
+            testID="reaction_view.react">
             <Icon size={16} icon={'iconReact'} />
           </Button>
         )}
@@ -82,15 +88,16 @@ const ReactionView: FC<ReactionViewProps> = ({
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         {renderReactions()}
-        {!!onPressSelectReaction && (
-          <Button
-            style={[styles.buttonReact, styles.marginHorizontal6]}
-            onPress={onPressSelectReaction}>
-            <Icon size={16} icon={'iconReact'} />
-          </Button>
-        )}
+        {!!onPressSelectReaction &&
+          renderedReactions.length < appConfig.limitReactionCount && (
+            <Button
+              style={[styles.buttonReact, styles.marginHorizontal6]}
+              onPress={onPressSelectReaction}>
+              <Icon size={16} icon={'iconReact'} testID="reaction_view.react" />
+            </Button>
+          )}
       </View>
     );
   }
@@ -102,7 +109,7 @@ const createStyle = (theme: ITheme) => {
     containerButtonOnly: {
       flex: 1,
       alignItems: 'flex-start',
-      marginLeft: spacing.margin.small,
+      paddingTop: spacing.padding.small,
     },
     container: {
       flex: 1,
@@ -110,14 +117,13 @@ const createStyle = (theme: ITheme) => {
       flexWrap: 'wrap',
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.base,
     },
     buttonReact: {
       marginVertical: 2,
       borderWidth: 1,
       borderColor: colors.borderCard,
       borderRadius: spacing?.borderRadius.small,
-      paddingHorizontal: spacing.padding.small,
+      paddingHorizontal: spacing.padding.tiny,
       paddingVertical: 4,
       justifyContent: 'center',
       alignItems: 'center',

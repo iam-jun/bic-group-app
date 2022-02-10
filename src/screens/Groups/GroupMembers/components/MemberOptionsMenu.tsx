@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
@@ -17,8 +17,6 @@ import useAuth from '~/hooks/auth';
 import modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
-import chatStack from '~/router/navigator/MainStack/ChatStack/stack';
-import chatActions from '~/screens/Chat/redux/actions';
 import groupsActions from '../../redux/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 
@@ -60,9 +58,6 @@ const MemberOptionsMenu = ({
       case 'view-profile':
         goToUserProfile(selectedMember);
         break;
-      case 'send-message':
-        goToDirectChat(selectedMember);
-        break;
       case 'set-admin':
         alertSettingAdmin(selectedMember);
         break;
@@ -89,34 +84,6 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const navigateToChatScreen = (roomId: string) => {
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(chatStack.conversation, {
-        roomId: roomId,
-      });
-      return;
-    }
-    rootNavigation.navigate('chat', {
-      screen: chatStack.conversation,
-      params: {roomId: roomId, initial: false},
-    });
-  };
-
-  const goToDirectChat = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
-      const {username, fullname} = selectedMember;
-      if (!!username)
-        dispatch(
-          chatActions.createConversation(
-            // @ts-ignore
-            [{username, name: fullname}],
-            true,
-            navigateToChatScreen,
-          ),
-        );
-    }
-  };
-
   const alertSettingAdmin = (selectedMember?: IGroupMembers) => {
     if (selectedMember) {
       const alertPayload = {
@@ -133,7 +100,9 @@ const MemberOptionsMenu = ({
           'groups:modal_confirm_set_admin:button_confirm',
         ),
         ConfirmBtnComponent: Button.Secondary,
-        confirmBtnProps: {highEmphasis: true},
+        confirmBtnProps: {
+          highEmphasis: true,
+        },
       };
       alertPayload.content = alertPayload.content.replace(
         '{0}',
@@ -413,6 +382,7 @@ const MemberOptionsMenu = ({
       ContentComponent={
         <View style={styles.bottomSheet}>
           <PrimaryItem
+            testID="member_options_menu.view_profile"
             style={styles.menuOption}
             leftIcon={'UsersAlt'}
             leftIconProps={{icon: 'UsersAlt', size: 24}}
@@ -421,6 +391,7 @@ const MemberOptionsMenu = ({
           />
           {selectedMember?.username !== user?.username && (
             <PrimaryItem
+              testID="member_options_menu.send_message"
               style={styles.menuOption}
               leftIcon={'iconSend'}
               leftIconProps={{icon: 'iconSend', size: 24}}
@@ -431,6 +402,7 @@ const MemberOptionsMenu = ({
           {can_setting &&
             (isGroupAdmin() ? (
               <PrimaryItem
+                testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
@@ -439,6 +411,7 @@ const MemberOptionsMenu = ({
               />
             ) : (
               <PrimaryItem
+                testID="member_options_menu.set_admin"
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
@@ -448,6 +421,7 @@ const MemberOptionsMenu = ({
             ))}
           {can_manage_member && selectedMember?.username !== user?.username && (
             <PrimaryItem
+              testID="member_options_menu.remove_member"
               style={styles.menuOption}
               leftIcon={'UserTimes'}
               leftIconProps={{

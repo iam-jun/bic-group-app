@@ -15,6 +15,7 @@ import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import FileUploader from '~/services/fileUploader';
 import errorCode from '~/constants/errorCode';
+import {updateUserFromSharedPreferences} from '~/services/sharePreferences';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
@@ -52,6 +53,10 @@ function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
       userId,
       params,
     );
+    yield updateUserFromSharedPreferences({
+      name: response?.data?.fullname,
+      avatar: response?.data?.avatar,
+    });
     yield put(menuActions.setMyProfile(mapProfile(response.data)));
   } catch (err) {
     yield put(menuActions.setMyProfile(myProfile));
@@ -61,12 +66,12 @@ function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
 
 function* editMyProfile({
   payload,
-  editFieldName,
+  editFieldToastMessage,
   callback,
 }: {
   type: string;
   payload: IUserEdit;
-  editFieldName?: string;
+  editFieldToastMessage?: string;
   callback?: () => void;
 }) {
   try {
@@ -84,10 +89,8 @@ function* editMyProfile({
     } else {
       // this field is used to indicate which parts of
       // user profile have been updated
-      if (editFieldName) {
-        toastContent = `${editFieldName} ${i18next.t(
-          'common:text_updated_successfully',
-        )}`;
+      if (editFieldToastMessage) {
+        toastContent = editFieldToastMessage;
       } else {
         toastContent = 'common:text_edit_success';
       }

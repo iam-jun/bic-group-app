@@ -27,6 +27,7 @@ export interface SearchInputProps extends TextInputProps {
   placeholder?: string;
   autoFocus?: boolean;
   value?: string;
+  testID?: string;
   onChangeText?: (value: string) => void;
   onFocus?: () => void;
   onSubmitEditing?: () => void;
@@ -39,6 +40,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   placeholder,
   autoFocus,
   value,
+  testID,
   onChangeText,
   onFocus,
   onSubmitEditing,
@@ -79,11 +81,12 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <Icon
           style={styles.searchIcon}
           icon="search"
-          size={16}
+          size={20}
           tintColor={theme.colors.textSecondary}
         />
         <TextInput
           ref={inputRef}
+          testID={testID}
           style={styles.textInput}
           value={text}
           autoFocus={autoFocus}
@@ -99,7 +102,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         {!!text && (
           <Icon
             icon="iconClose"
-            size={16}
+            size={20}
             tintColor={theme.colors.iconTint}
             onPress={() => _onChangeText('')}
           />
@@ -135,7 +138,7 @@ const createStyles = (theme: ITheme) => {
     textInput: {
       flex: 1,
       height: '100%',
-      fontFamily: fontFamilies.Segoe,
+      fontFamily: fontFamilies.OpenSans,
       fontSize: dimension?.sizes.body,
       color: colors.textPrimary,
     },

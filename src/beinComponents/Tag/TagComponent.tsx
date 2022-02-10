@@ -57,6 +57,7 @@ const TagComponent: React.FC<TagProps> = ({
 
   return (
     <TouchableOpacity
+      testID="tag.item"
       disabled={disabled}
       style={StyleSheet.flatten([styles.container, style])}
       onPress={_onChangeValue}>
@@ -64,6 +65,7 @@ const TagComponent: React.FC<TagProps> = ({
       <Text style={StyleSheet.flatten([styles.labelText])}>{label}</Text>
       {!disabled && onPressIcon && (
         <Icon
+          testID="tag.icon"
           style={styles.icon}
           icon={icon}
           size={12}
@@ -100,13 +102,15 @@ const createStyles = (
 
   let _textColor;
   let _backgroundColor = colors.primary1;
-  let _fontFamily = fontFamilies.Segoe;
+  let _fontFamily = fontFamilies.OpenSans;
   if (disabled) {
     _backgroundColor = colors.bgDisable;
     _textColor = colors.textDisabled;
   } else {
     _textColor = isSelected ? colors.primary : colors.primary7;
-    _fontFamily = isSelected ? fontFamilies.SegoeSemibold : fontFamilies.Segoe;
+    _fontFamily = isSelected
+      ? fontFamilies.OpenSansSemiBold
+      : fontFamilies.OpenSans;
   }
 
   return StyleSheet.create({

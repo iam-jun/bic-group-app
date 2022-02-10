@@ -7,13 +7,8 @@ import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
-import iconTabChat from '../../assets/icons/icon_chat.svg';
-import iconTabChatBein from '../../assets/icons/icon_chat_bein.svg';
-import iconMessages from '../../assets/icons/icon_chat_bein.svg';
-import iconChatPurple from '../../assets/icons/icon_chat_purple.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
-import iconCreateChat from '../../assets/icons/icon_create_chat.svg';
 import iconEyeSeen from '../../assets/icons/icon_eye.svg';
 import iconTabGroups from '../../assets/icons/icon_groups.svg';
 import iconTabGroupsBein from '../../assets/icons/icon_groups_bein.svg';
@@ -34,6 +29,7 @@ import iconMenuInfo from '../../assets/icons/icon_menu_info.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
+import iconSendComment from '../../assets/icons/icon_send_comment.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -65,14 +61,16 @@ import iconSticker from '../../assets/icons/icon_sticker.svg';
 import iconFlagVn from '../../assets/icons/icon_flag_vn.svg';
 import iconFlagSg from '../../assets/icons/icon_flag_sg.svg';
 import iconFlagUs from '../../assets/icons/icon_flag_us.svg';
+import addUsers from '../../assets/icons/add_users.svg';
+import iconMapPin from '../../assets/icons/ic_map_pin.svg';
+import iconChat from '../../assets/icons/icon_chat.svg';
+import iconCheckCircle from '../../assets/icons/icon_check_circle.svg';
 
 const icons = {
   iconTabHome,
   iconTabHomeBein,
   iconTabGroups,
   iconTabGroupsBein,
-  iconTabChat,
-  iconTabChatBein,
   iconTabNotification,
   iconTabNotificationBein,
   iconTabMenu,
@@ -139,10 +137,10 @@ const icons = {
   iconSticker,
   iconSmileSolid,
   iconSend: 'Message',
+  iconSendComment: iconSendComment,
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
-  iconCreateChat,
   users: 'UsersAlt',
   search: 'Search',
   addUser: 'UserPlus',
@@ -150,9 +148,9 @@ const icons = {
   iconPin,
   iconPinGroup,
   attachment: 'Paperclip',
+  Image: 'Image',
   images: 'Images',
-  iconMessages,
-  iconChatPurple,
+  leavesGroup: 'SignOutAlt',
   iconAddPost,
   iconAddSquareDone,
   iconAddSquareGroup,
@@ -189,9 +187,10 @@ const icons = {
   Calender: 'Calender',
   Globe: 'Globe',
   Lock: 'Lock',
-  ConversationInfo: 'CommentInfo',
   UserExclamation: 'UserExclamation',
   Cog: 'Cog',
+  At: 'At',
+  Camera: 'Camera',
   ChatBubbleUser: 'ChatBubbleUser',
   UserCircle: 'UserCircle',
   FileCopyAlt: 'FileCopyAlt',
@@ -202,8 +201,6 @@ const icons = {
   Heart: 'Heart',
   ...reactionIcons,
   Feedback: 'Feedback',
-  ChatBlock: 'CommentBlock',
-  ChatPermission: 'KeyholeSquareFull',
   Save: 'Save',
   File: 'File',
   PlayVideo: iconPlay,
@@ -225,10 +222,13 @@ const icons = {
   iconSuitcase: 'Suitcase',
   FileExclamationAlt: 'FileExclamationAlt',
   ExclamationTriangle: 'ExclamationTriangle',
-  ChatInfo: 'ChatInfo',
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
   SignOutAlt: 'SignOutAlt',
+  addUsers,
+  iconMapPin,
+  iconChat,
+  iconCheckCircle,
 };
 
 export default icons;

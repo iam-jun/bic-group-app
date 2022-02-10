@@ -51,6 +51,7 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
+import images from '~/resources/images';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -59,11 +60,11 @@ const _PostDetailContent = (props: any) => {
   const [refreshing, setRefreshing] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
+  const internetReachableRef = useRef(true);
 
   const params = props?.route?.params;
   const {post_id, focus_comment} = params || {};
 
-  const textInputRef = useRef<any>();
   const listRef = useRef<any>();
   const layoutSet = useRef(false);
 
@@ -82,6 +83,7 @@ const _PostDetailContent = (props: any) => {
   const {streamClient} = useContext(AppContext);
 
   const id = post_id;
+  const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const postTime = useKeySelector(postKeySelector.postTimeById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -91,6 +93,7 @@ const _PostDetailContent = (props: any) => {
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
+  const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
@@ -101,6 +104,10 @@ const _PostDetailContent = (props: any) => {
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
 
+  const headerTitle = actor?.data?.fullname
+    ? t('post:title_post_detail_of').replace('%NAME%', actor?.data?.fullname)
+    : t('post:title_post_detail');
+
   useEffect(() => {
     if (!user && Platform.OS === 'web') {
       rootNavigation.replace(rootSwitch.authStack);
@@ -108,9 +115,13 @@ const _PostDetailContent = (props: any) => {
   }, [isFocused, user]);
 
   useEffect(() => {
-    if (id && userId && streamClient && isInternetReachable) {
+    internetReachableRef.current = isInternetReachable;
+  }, [isInternetReachable]);
+
+  useEffect(() => {
+    if (id && userId && streamClient && internetReachableRef.current) {
       getPostDetail((loading, success) => {
-        if (!loading && !success && isInternetReachable) {
+        if (!loading && !success && internetReachableRef.current) {
           if (Platform.OS === 'web') {
             rootNavigation.replace(rootSwitch.notFound);
           } else {
@@ -128,7 +139,7 @@ const _PostDetailContent = (props: any) => {
         }
       });
     }
-  }, [id, userId, isInternetReachable]);
+  }, [id, userId, internetReachableRef]);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -144,14 +155,19 @@ const _PostDetailContent = (props: any) => {
     }
   }, [deleted]);
 
+  useEffect(() => {
+    if (scrollToLatestItem) {
+      onCommentSuccess(scrollToLatestItem);
+      dispatch(postActions.setScrollToLatestItem(null));
+    }
+  }, [scrollToLatestItem]);
+
   const getPostDetail = (
     callbackLoading?: (loading: boolean, success: boolean) => void,
   ) => {
     if (userId && id && streamClient) {
       const payload: IPayloadGetPostDetail = {
-        userId,
         postId: id,
-        streamClient,
         callbackLoading,
       };
       dispatch(postActions.getPostDetail(payload));
@@ -222,8 +238,8 @@ const _PostDetailContent = (props: any) => {
 
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
-    textInputRef.current?.focus?.();
-  }, [textInputRef.current, sectionData.length]);
+    commentInputRef.current?.focus?.();
+  }, [commentInputRef, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -250,6 +266,17 @@ const _PostDetailContent = (props: any) => {
     [sectionData],
   );
 
+  const onPressReplySectionHeader = useCallback(
+    (commentData, section, index) => {
+      scrollTo(index, 0);
+      // set time out to wait hide context menu on web
+      setTimeout(() => {
+        commentInputRef?.current?.focus?.();
+      }, 200);
+    },
+    [],
+  );
+
   const renderSectionHeader = (sectionData: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
@@ -263,13 +290,19 @@ const _PostDetailContent = (props: any) => {
         postId={id}
         commentData={comment}
         groupIds={groupIds}
-        onPressReply={() => {
-          textInputRef.current?.focus?.();
-          scrollTo(index, 0);
-        }}
+        index={index}
+        onPressReply={onPressReplySectionHeader}
       />
     );
   };
+
+  const onPressReplyCommentItem = useCallback((commentData, section, index) => {
+    scrollTo(section?.index, index + 1);
+    // set time out to wait hide context menu on web
+    setTimeout(() => {
+      commentInputRef?.current?.focus?.();
+    }, 200);
+  }, []);
 
   const renderCommentItem = (data: any) => {
     const {item, index, section} = data || {};
@@ -279,10 +312,9 @@ const _PostDetailContent = (props: any) => {
         commentData={item}
         commentParent={section?.comment}
         groupIds={groupIds}
-        onPressReply={() => {
-          textInputRef.current?.focus?.();
-          scrollTo(section?.index, index + 1);
-        }}
+        index={index}
+        section={section}
+        onPressReply={onPressReplyCommentItem}
       />
     );
   };
@@ -300,63 +332,66 @@ const _PostDetailContent = (props: any) => {
         scrollTo(sectionIndex, -1);
       }
       if (focus_comment && Platform.OS === 'web') {
-        textInputRef.current?.focus?.();
+        commentInputRef.current?.focus?.();
       }
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
+  const renderComments = () => {
+    if (!postTime) return <PostViewPlaceholder />;
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.postDetailContainer}>
+          <SectionList
+            ref={listRef}
+            sections={deleted ? defaultList : sectionData}
+            renderItem={renderCommentItem}
+            renderSectionHeader={renderSectionHeader}
+            ListHeaderComponent={
+              <PostDetailContentHeader
+                id={id}
+                commentLeft={commentLeft}
+                onPressComment={onPressComment}
+                onContentLayout={props?.onContentLayout}
+                idLessThan={listComment?.[0]?.id}
+              />
+            }
+            ListFooterComponent={commentCount && renderFooter}
+            stickySectionHeadersEnabled={false}
+            ItemSeparatorComponent={() => <View />}
+            keyboardShouldPersistTaps={'handled'}
+            onLayout={onLayout}
+            onContentSizeChange={onLayout}
+            onScrollToIndexFailed={onScrollToIndexFailed}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                tintColor={colors.borderDisable}
+              />
+            }
+          />
+          <CommentInputView
+            commentInputRef={commentInputRef}
+            postId={id}
+            groupIds={groupIds}
+            autoFocus={!!focus_comment}
+            onCommentSuccess={onCommentSuccess}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.flex1}>
       <Header
-        titleTextProps={{useI18n: true}}
-        title={'post:title_post_detail'}
+        title={headerTitle}
         onPressBack={onPressBack}
+        avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
       />
-      {!postTime ? (
-        <PostViewPlaceholder />
-      ) : (
-        <View style={styles.container}>
-          <View style={styles.postDetailContainer}>
-            <SectionList
-              ref={listRef}
-              sections={deleted ? defaultList : sectionData}
-              renderItem={renderCommentItem}
-              renderSectionHeader={renderSectionHeader}
-              ListHeaderComponent={
-                <PostDetailContentHeader
-                  id={id}
-                  commentLeft={commentLeft}
-                  onPressComment={onPressComment}
-                  onContentLayout={props?.onContentLayout}
-                  idLessThan={listComment?.[0]?.id}
-                />
-              }
-              ListFooterComponent={commentCount && renderFooter}
-              stickySectionHeadersEnabled={false}
-              ItemSeparatorComponent={() => <View />}
-              keyboardShouldPersistTaps={'handled'}
-              onLayout={onLayout}
-              onContentSizeChange={onLayout}
-              onScrollToIndexFailed={onScrollToIndexFailed}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                  tintColor={colors.borderDisable}
-                />
-              }
-            />
-            <CommentInputView
-              commentInputRef={commentInputRef}
-              postId={id}
-              groupIds={groupIds}
-              autoFocus={!!focus_comment}
-              textInputRef={textInputRef}
-              onCommentSuccess={onCommentSuccess}
-            />
-          </View>
-        </View>
-      )}
+      {renderComments()}
     </View>
   );
 };
@@ -378,6 +413,8 @@ const PostDetailContentHeader = ({
         onPressComment={onPressComment}
         onContentLayout={onContentLayout}
         isPostDetail
+        btnReactTestID="post_detail_content.btn_react"
+        btnCommentTestID="post_detail_content.btn_comment"
       />
       <Divider />
       {commentLeft > 0 && (

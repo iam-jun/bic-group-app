@@ -10,7 +10,8 @@ import {
   IGroupImageUpload,
   IGroupRemoveAdmin,
   IGroupSetAdmin,
-  IPayloadGetGroupPost,
+  IJoiningMember,
+  IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -18,16 +19,16 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData} from '../helper/mapper';
+import {mapData, mapRequestMembers} from '../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {groupPrivacy} from '~/constants/privacyTypes';
-import {isArray} from 'lodash';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import errorCode from '~/constants/errorCode';
+import memberRequestStatus from '~/constants/memberRequestStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -52,6 +53,24 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
+
+  yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getMemberRequests);
+  yield takeLatest(
+    groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    approveSingleMemberRequest,
+  );
+  yield takeLatest(
+    groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    approveAllMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    declineSingleMemberRequest,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    declineAllMemberRequests,
+  );
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -95,16 +114,15 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
     const params = {key: payload || '', discover: true};
     // @ts-ignore
     const response = yield groupsDataHelper.getSearchGroups(params);
-    if (isArray(response?.data)) {
-      yield put(
-        groupsActions.setGroupSearch({
-          result: response.data || [],
-          loading: false,
-        }),
-      );
-    } else {
-      yield put(groupsActions.setGroupSearch({loading: false}));
-      yield showError(response);
+
+    yield put(
+      groupsActions.setGroupSearch({
+        result: response.data || [],
+        loading: false,
+      }),
+    );
+    if (response.code !== 200) {
+      console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
     }
   } catch (err) {
     console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
@@ -210,24 +228,13 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   }
 }
 
-function* getGroupPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetGroupPost;
-}) {
+function* getGroupPosts({payload}: {type: string; payload: string}): any {
   try {
     const {groups} = yield select();
     const {offset, data} = groups.posts;
 
-    const {userId, groupId, streamClient} = payload;
-    // @ts-ignore
-    const result = yield groupsDataHelper.getMyGroupPosts(
-      userId,
-      groupId,
-      streamClient,
-      offset,
-    );
+    const param: IParamGetGroupPosts = {group_id: payload, offset};
+    const result = yield groupsDataHelper.getGroupPosts(param);
 
     if (data.length === 0) {
       yield put(postActions.addToAllPosts({data: result}));
@@ -252,17 +259,11 @@ function* getGroupPosts({
   }
 }
 
-function* mergeExtraGroupPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetGroupPost;
-}) {
+function* mergeExtraGroupPosts({payload}: {type: string; payload: string}) {
   const {groups} = yield select();
   const {canLoadMore, loading} = groups.posts;
   if (!loading && canLoadMore) {
-    const {userId, groupId, streamClient} = payload;
-    yield put(groupsActions.getGroupPosts({streamClient, groupId, userId}));
+    yield put(groupsActions.getGroupPosts(payload));
   }
 }
 
@@ -542,9 +543,7 @@ function* leaveGroup({payload}: {payload: number; type: string}) {
       });
     }
 
-    yield put(
-      groupsActions.setGroupDetail({...groups?.groupDetail, join_status: 1}),
-    );
+    yield put(groupsActions.setLoadingPage(true));
     yield put(groupsActions.getGroupDetail(payload));
 
     const toastMessage: IToastMessage = {
@@ -611,6 +610,185 @@ function* removeGroupAdmin({
   }
 }
 
+function* getMemberRequests({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; params?: any};
+}) {
+  try {
+    const {groups} = yield select();
+
+    const {groupId, params} = payload;
+    const {data, canLoadMore} = groups.pendingMemberRequests || {};
+
+    if (!canLoadMore) return;
+
+    // @ts-ignore
+    const response = yield groupsDataHelper.getMemberRequests(groupId, {
+      offset: data.length,
+      limit: appConfig.recordsPerPage,
+      key: memberRequestStatus.waiting,
+      ...params,
+    });
+
+    const requestIds = response?.data.map((item: IJoiningMember) => item.id);
+    const requestItems = mapRequestMembers(response?.data);
+
+    yield put(groupsActions.setMemberRequests({requestIds, requestItems}));
+  } catch (err) {
+    console.log('getMemberRequests: ', err);
+    yield showError(err);
+  }
+}
+
+function* approveSingleMemberRequest({
+  payload,
+}: {
+  type: string;
+  payload: {
+    groupId: number;
+    requestId: number;
+    fullName: string;
+    callback: () => void;
+  };
+}) {
+  try {
+    const {groupId, requestId, fullName, callback} = payload;
+    yield groupsDataHelper.approveSingleMemberRequest(groupId, requestId);
+
+    yield put(groupsActions.getGroupDetail(groupId));
+
+    const toastMessage: IToastMessage = {
+      content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
+      props: {
+        textProps: {useI18n: true},
+        type: 'success',
+        rightIcon: 'UsersAlt',
+        rightText: 'Members',
+        onPressRight: callback,
+      },
+      toastType: 'normal',
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
+    yield put(groupsActions.getGroupDetail(groupId));
+  } catch (err: any) {
+    console.log('approveSingleMemberRequest: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot approve all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'approve');
+
+      return;
+    }
+
+    yield showError(err);
+  }
+}
+
+function* approveAllMemberRequests({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; total: number; callback?: () => void};
+}) {
+  try {
+    const {groupId, total, callback} = payload;
+
+    yield groupsDataHelper.approveAllMemberRequests(groupId, total);
+
+    yield put(groupsActions.getGroupDetail(groupId));
+
+    if (callback) {
+      const toastMessage: IToastMessage = {
+        content: `${i18next.t('groups:text_approved_all', {count: total})}`,
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+          rightIcon: 'UsersAlt',
+          rightText: 'Members',
+          onPressRight: callback,
+        },
+        toastType: 'normal',
+      };
+      yield put(modalActions.showHideToastMessage(toastMessage));
+    }
+  } catch (err: any) {
+    console.log('approveAllMemberRequests: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot approve all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'approve');
+
+      return;
+    }
+
+    yield showError(err);
+  }
+}
+
+function* declineSingleMemberRequest({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; requestId: number};
+}) {
+  try {
+    const {groupId, requestId} = payload;
+    yield groupsDataHelper.declineSingleMemberRequest(groupId, requestId);
+    yield put(groupsActions.getGroupDetail(groupId));
+  } catch (err: any) {
+    console.log('declineSingleMemberRequest: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot decline all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'decline');
+
+      return;
+    }
+
+    yield showError(err);
+  }
+}
+
+function* declineAllMemberRequests({
+  payload,
+}: {
+  type: string;
+  payload: {groupId: number; total: number; callback?: () => void};
+}) {
+  try {
+    const {groupId, total, callback} = payload;
+    yield groupsDataHelper.declineAllMemberRequests(groupId, total);
+    yield put(groupsActions.getGroupDetail(groupId));
+
+    if (callback) callback();
+  } catch (err: any) {
+    console.log('declineAllMemberRequests: ', err);
+
+    if (
+      err?.meta?.message ===
+      'Cannot decline all because there are changes in the pending member list. Please review again'
+    ) {
+      const {groupId} = payload;
+      yield approvalError(groupId, 'decline');
+
+      return;
+    }
+
+    yield showError(err);
+  }
+}
+
 function* showError(err: any) {
   if (err.code === errorCode.systemIssue) return;
 
@@ -643,4 +821,24 @@ function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
   yield put(groupsActions.getJoinedGroups());
+}
+
+function* approvalError(groupId: number, type: 'approve' | 'decline') {
+  yield put(
+    modalActions.showHideToastMessage({
+      content:
+        type === 'approve'
+          ? 'groups:text_cannot_approve_all'
+          : 'groups:text_cannot_decline_all',
+      props: {
+        textProps: {useI18n: true},
+        type: 'error',
+      },
+    }),
+  );
+
+  // reload page
+  yield put(groupsActions.resetMemberRequests());
+  yield put(groupsActions.getMemberRequests({groupId}));
+  yield put(groupsActions.getGroupDetail(groupId));
 }

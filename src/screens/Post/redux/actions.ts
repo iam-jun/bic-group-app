@@ -1,7 +1,6 @@
 import postTypes from './types';
 import {
   IAudience,
-  IPostActivity,
   IPostCreatePost,
   IActivityData,
   IActivityImportant,
@@ -19,11 +18,17 @@ import {
   IPayloadReplying,
   IPayloadGetPostDetail,
   ICreatePostImage,
+  ICreatePostSettings,
+  ICreatePostCurrentSettings,
   IPayloadGetDraftPosts,
   IPayloadSetDraftPosts,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
   IPayloadAddToAllPost,
+  IPostAudience,
+  IParamGetPostAudiences,
+  IPayloadUpdateReaction,
+  IPayloadDeletePost,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -69,8 +74,16 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMAGES,
     payload,
   }),
+  setCreatePostSettings: (payload: ICreatePostSettings) => ({
+    type: postTypes.SET_CREATE_POST_SETTINGS,
+    payload,
+  }),
   setCreatePostImagesDraft: (payload: ICreatePostImage[]) => ({
     type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
+    payload,
+  }),
+  setCreatePostInitAudiences: (payload: IPostAudience) => ({
+    type: postTypes.SET_CREATE_POST_INIT_AUDIENCES,
     payload,
   }),
   setSearchResultAudienceGroups: (payload: IGroup[]) => ({
@@ -83,6 +96,10 @@ const postActions = {
   }),
   setDraftPosts: (payload?: IPayloadSetDraftPosts) => ({
     type: postTypes.SET_DRAFT_POSTS,
+    payload,
+  }),
+  setCreatePostCurrentSettings: (payload: ICreatePostCurrentSettings) => ({
+    type: postTypes.SET_CREATE_POST_CURRENT_SETTINGS,
     payload,
   }),
   //post detail
@@ -113,6 +130,29 @@ const postActions = {
     type: postTypes.POST_CREATE_NEW_COMMENT,
     payload,
   }),
+  updateCommentAPI: (payload: {
+    localId: string | number[];
+    status: 'pending' | 'success' | 'failed';
+    postId: string;
+    resultComment: IReaction;
+    parentCommentId?: string;
+  }) => ({
+    type: postTypes.UPDATE_COMMENT_API,
+    payload,
+  }),
+  setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
+    type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
+    payload,
+  }),
+  postRetryAddComment: (payload: IReaction) => ({
+    type: postTypes.POST_RETRY_ADD_COMMENT,
+    payload,
+  }),
+  postCancelFailedComment: (payload: IReaction) => ({
+    type: postTypes.POST_CANCEL_FAILED_COMMENT,
+    payload,
+  }),
+
   putEditPost: (payload: IPayloadPutEditPost) => ({
     type: postTypes.PUT_EDIT_POST,
     payload,
@@ -121,7 +161,7 @@ const postActions = {
     type: postTypes.PUT_EDIT_COMMENT,
     payload,
   }),
-  deletePost: (payload: string) => ({
+  deletePost: (payload: IPayloadDeletePost) => ({
     type: postTypes.DELETE_POST,
     payload,
   }),
@@ -191,6 +231,22 @@ const postActions = {
   }),
   putEditDraftPost: (payload: IPayloadPutEditDraftPost) => ({
     type: postTypes.PUT_EDIT_DRAFT_POST,
+    payload,
+  }),
+  getCreatePostInitAudience: (payload: IParamGetPostAudiences) => ({
+    type: postTypes.GET_CREATE_POST_INIT_AUDIENCES,
+    payload,
+  }),
+  updateReactionBySocket: (payload: IPayloadUpdateReaction) => ({
+    type: postTypes.UPDATE_REACTION_BY_SOCKET,
+    payload,
+  }),
+  updateUnReactionBySocket: (payload: IPayloadUpdateReaction) => ({
+    type: postTypes.UPDATE_UN_REACTION_BY_SOCKET,
+    payload,
+  }),
+  setSavingDraftPost: (payload: boolean) => ({
+    type: postTypes.SET_SAVING_DRAFT_POST,
     payload,
   }),
 };

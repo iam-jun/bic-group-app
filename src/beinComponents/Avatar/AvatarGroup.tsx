@@ -155,7 +155,7 @@ const AvatarGroup = ({
                 {totalMember ? (
                   <Text
                     style={{
-                      fontFamily: fontFamilies.Poppins,
+                      fontFamily: fontFamilies.OpenSans,
                       marginTop: 2,
                       fontSize: totalMemberFontSize,
                     }}>

@@ -51,10 +51,12 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   const {spacing} = theme;
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
+    const selected = selectedUsers.find((user: IUser) => user.id === item.id);
+
     return (
       <PrimaryItem
         title={item.name}
-        isChecked={item.selected}
+        isChecked={!!selected}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
         LeftComponent={
           <Avatar.Large
@@ -89,7 +91,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     <View>
       {roles && roles.data.length > 0 && (
         <ListView
-          title={i18next.t('chat:title_admin')}
+          title={i18next.t('common:text_admin')}
           {...roles}
           renderItem={renderItemUser}
         />
@@ -113,6 +115,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           title={i18next.t('common:text_chosen')}
           data={selectedUsers}
           horizontal
+          showsHorizontalScrollIndicator={false}
           renderItem={renderItemSelectedUser}
           renderItemSeparator={() => (
             <ViewSpacing width={spacing?.margin.base} />
@@ -153,7 +156,7 @@ const createStyles = (theme: ITheme) => {
       marginRight: spacing?.margin.base,
     },
     selectedUsers: {
-      paddingHorizontal: spacing?.margin.base,
+      marginHorizontal: spacing.margin.base,
     },
     itemSelectedUser: {
       width: dimension?.avatarSizes.large,

@@ -52,12 +52,17 @@
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
     "text_read_more": "Read more",
     "text_show_less": "Show less",
+    "text_send": "Gửi",
     "error": {
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
     },
-    "message_remove_member_success": "Đã xóa {n} khỏi nhóm"
+    "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
+    "label_discard_changes": "Huỷ thay đổi",
+    "text_discard_warning": "Nếu bạn hủy thay đổi, bạn sẽ mất những thay đổi mà bạn đã thực hiện",
+    "btn_continue_editing": "Tiếp tục chỉnh sửa",
+    "text_updated_successfully": "cập nhật thành công"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -138,7 +143,6 @@
   "tabs": {
     "home": "Bản tin",
     "groups": "Nhóm",
-    "chat": "Tin nhắn",
     "notification": "Thông báo",
     "menus": "Menu"
   },
@@ -207,7 +211,47 @@
     "text_engaged": "Engaged",
     "text_married": "Married",
     "title_choose_languages": "Choose Speaking Languages",
-    "title_choose_relationship": "Choose Relationship Status"
+    "title_choose_relationship": "Choose Relationship Status",
+    "title_contact": "Danh bạ",
+    "title_email": "Email",
+    "title_phone_number": "Số điện thoại",
+    "title_address": "Địa chỉ",
+    "title_edit_contact": "Chỉnh sửa danh bạ",
+    "title_edit_phone_number": "Chỉnh sửa số điện thoại",
+    "title_edit_email_address": "Chỉnh sửa địa chỉ Email",
+    "title_edit_address": "Chỉnh sửa địa chỉ",
+    "text_wrong_email_format": "Sai định dạng Email",
+    "text_email_is_used": "Email này đã được sử dụng",
+    "text_wrong_phone_number_format": "Wrong number format",
+    "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
+    "text_phone_number_is_used": "This number is already used",
+    "title_choose_location": "Choose Location",
+    "title_location": "Location",
+    "text_work": "Work",
+    "text_add_work": "Add Work",
+    "text_edit_work": "Edit Work",
+    "text_delete_work": "Delete Work",
+    "text_compamny": "Tên Công ty",
+    "text_title_position": "Title/Position",
+    "text_currently_work_here": "Currently work here",
+    "text_location_optional": "Location (optional)",
+    "text_description_optional": "Description (optional)",
+    "text_since": "Since",
+    "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "text_education": "Education",
+    "text_social": "Social",
+    "text_social_link":"Social Link",
+    "text_description": "Description",
+    "text_add_school":"Add School",
+    "text_add_link": "Add Social Link",
+    "text_contact_info_update_success": "Cập nhật thông tin liên hệ thành công!",
+    "text_view_more_info":"View more about info...",
+    "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
+    "title_about_bein_app": "Giới thiệu",
+    "title_help_and_support": "Trợ giúp & hỗ trợ",
+    "group_title_public": "Nhóm công khai",
+    "group_title_private": "Nhóm kín",
+    "group_title_secret": "Nhóm kín"
   },
   "languages": {
     "title_en": "English",
@@ -247,6 +291,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Chi tiết bài viết",
+    "title_post_detail_of": "Bài của %NAME%",
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
@@ -256,6 +301,8 @@
     "button_reply": "Trả lời",
     "button_react": "Tương tác",
     "button_comment": "Bình luận",
+    "button_image": "Ảnh",
+    "button_draft": "Nháp",
     "button_comment_not_verify_user": "Verify your account to comment",
     "label_view_more_replies": "Xem thêm {0} trả lời",
     "label_likes_with_me": "Bạn và {0} người khác",
@@ -282,8 +329,9 @@
     "add_photo": "Thêm Ảnh",
     "add_file": "Thêm File",
     "placeholder_write_post": "Bạn đang nghĩ gì...",
-    "create_post": "Tạo bài viết",
-    "create_new_post": "Tạo bài viết",
+    "placeholder_write_comment": "Viết bình luận của bạn...",
+    "title_create_post": "Tạo bài viết",
+    "create_new_post": "Viết về ngày hôm nay của bạn...",
     "post_button": "Tạo",
     "send_to": "Tới",
     "save": "Lưu",
@@ -303,7 +351,7 @@
     "audience_selected": "Đã chọn",
     "select_audience": "Chọn đối tượng",
     "expiring_time": "Thời gian kết thúc",
-    "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết hạn",
+    "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi",
     "delete_post_complete": "Bài viết đã được xoá",
     "search_results": "Kết quả tìm kiếm",
     "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
@@ -341,12 +389,22 @@
     "text_discard_comment": "Nếu huỷ, bạn sẽ mất những nội dung đã nhập.",
     "btn_continue_comment": "Tiếp tục",
     "btn_discard_comment": "Bỏ",
+    "text_edit_post_success": "Đăng bài viết thành công",
+    "text_edit_post_failed": "Đăng bài viết thất bại",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
       "title_empty_cant_load_more": "Bạn đã xem hết rồi",
       "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi",
       "text_empty_search_post": "Xin lỗi, chúng tôi không tìm thấy\nnội dung bạn tìm kiếm"
+    },
+    "create_post": {
+      "title_discard_changes": "Huỷ thay đổi",
+      "title_audience_changed": "Đối tượng đã thay đổi",
+      "text_discard_change": "Bạn có chắc muốn huỷ những thay đổi?",
+      "text_discard_change_audience": "Bạn có chắc muốn đổi đối tượng? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
+      "btn_save_change": "Lưu thay đổi",
+      "btn_keep_edit": "Tiếp tục sửa"
     },
     "draft": {
       "btn_post_now": "Đăng ngay",
@@ -360,27 +418,13 @@
       "text_draft_published": "Bài viết của bạn đã được đăng",
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
       "text_draft_deleted": "Bản nháp của bạn đã được xoá"
-    }
-  },
-  "chat": {
-    "placeholder_search": "Tìm kiếm ...",
-    "title_members": "Thành viên",
-    "label_mute": "Mute",
-    "label_unmute": "Unmute",
-    "label_init_group_message": {
-      "short": "Say hello to your group",
-      "full": "🤗 Say hello to your group!"
     },
-    "label_init_direct_message": {
-      "short": "Say hello to your friend",
-      "full": "🤗 Say hello to your friend!"
-    },
-    "conversation_options": {
-      "notifications": "Thông báo",
-      "pin": "Ghim",
-      "mark_as_read": "Đánh dấu đã xem",
-      "delete_chat": "Xóa tin nhắn"
-    }
+    "settings": "Thiết lập bài viết",
+    "people_can_comment": "Mọi người có thể bình luận trên bài viết",
+    "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
+    "people_can_react": "Mọi người có thể tương tác trên bài viết",
+    "auto_saved": "Bài viết đã lưu tự động",
+    "saved_to_draft": "Bài viết đã lưu vào nháp."
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -415,6 +459,14 @@
     "search_post": "Tìm kiếm bài viết..."
   },
   "groups": {
+    "group_content": {
+      "btn_post": "Bài đăng",
+      "btn_channel":"Kênh",
+      "btn_about": "Về nhóm",
+      "btn_members": "Thành viên",
+      "btn_files": "Files"
+    },
+    "text_members": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
     "group_menu": {

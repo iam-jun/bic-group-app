@@ -1,34 +1,42 @@
-import React, {useCallback, useRef} from 'react';
-import {Animated, View, StyleSheet, Keyboard, Platform} from 'react-native';
-import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
+import {Animated as RNAnimated, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {IPayloadReactToComment, IReaction} from '~/interfaces/IPost';
-import Avatar from '~/beinComponents/Avatar';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
+import Avatar from '~/beinComponents/Avatar';
+import Button from '~/beinComponents/Button';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Div from '~/beinComponents/Div';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
+import Icon from '~/beinComponents/Icon';
+import ReactionView from '~/beinComponents/ReactionView';
+import Text from '~/beinComponents/Text';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import TimeView from '~/beinComponents/TimeView';
 import {ReactionType} from '~/constants/reactions';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import Button from '~/beinComponents/Button';
-
 import {useRootNavigation} from '~/hooks/navigation';
-import Div from '~/beinComponents/Div';
-import Icon from '~/beinComponents/Icon';
-import mainStack from '~/router/navigator/MainStack/stack';
+import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {showReactionDetailBottomSheet} from '~/store/modal/actions';
-import * as modalActions from '~/store/modal/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {
+  IMarkdownAudience,
+  IPayloadReactToComment,
+  IReaction,
+} from '~/interfaces/IPost';
+import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
-import ReactionView from '~/beinComponents/ReactionView';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
-import TimeView from '~/beinComponents/TimeView';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
+import {showReactionDetailBottomSheet} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 export interface CommentViewProps {
   postId: string;
@@ -47,9 +55,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const animated = useRef(new Animated.Value(0)).current;
+  const animated = useRef(new RNAnimated.Value(0)).current;
 
-  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -61,9 +68,33 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
   const {id, user_id, data, created_at, user, children_counts, own_children} =
     comment || commentData || {};
-  const {content, images} = data || {};
+  const {content} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
+
+  const [commentStatus, setCommentStatus] = useState(
+    commentData?.status || null,
+  );
+  const isActive = commentStatus === 'success' || commentStatus === null;
+
+  const progress = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
+
+  useEffect(() => {
+    if (isActive) {
+      showComment(1);
+    } else if (commentStatus === 'pending') {
+      showComment(0.5);
+    }
+  }, [commentStatus]);
+
+  useEffect(() => {
+    setCommentStatus(commentData?.status || null);
+  }, [commentData?.status]);
+
+  const showComment = (value: number, duration = 300) => {
+    progress.value = withTiming(value, {duration});
+  };
 
   const onPressUser = (e?: any) => {
     const id = user?.id;
@@ -76,8 +107,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
-  const onPressAudience = useCallback((audience: any) => {
-    if (!audience || !audience?.id) return;
+  const onPressAudience = useCallback((audience: IMarkdownAudience) => {
+    if (!audience) return;
     rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
   }, []);
 
@@ -91,7 +122,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionId: reactionId,
         ownReaction: own_children,
         reactionCounts: children_counts,
-        userId: currentUserId,
       };
       dispatch(postActions.postReactToComment(payload));
     }
@@ -107,7 +137,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionId: reactionId,
         ownReaction: own_children,
         reactionCounts: children_counts,
-        userId: currentUserId,
       };
       dispatch(postActions.deleteReactToComment(payload));
     }
@@ -169,7 +198,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onMouseOver = () => {
-    Animated.timing(animated, {
+    RNAnimated.timing(animated, {
       toValue: 1,
       duration: 0,
       useNativeDriver: false,
@@ -177,7 +206,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onMouseLeave = () => {
-    Animated.timing(animated, {
+    RNAnimated.timing(animated, {
       toValue: 0,
       duration: 0,
       useNativeDriver: false,
@@ -217,27 +246,84 @@ const _CommentView: React.FC<CommentViewProps> = ({
     }
 
     return (
-      <Animated.View style={[styles.webMenuButton, {opacity: animated}]}>
+      <RNAnimated.View style={[styles.webMenuButton, {opacity: animated}]}>
         <Button>
           <Icon
+            testID={'comment_view.menu'}
             style={{}}
             onPress={onLongPress}
             icon={'EllipsisH'}
             tintColor={colors.textSecondary}
+            disabled={!isActive}
           />
         </Button>
-      </Animated.View>
+      </RNAnimated.View>
+    );
+  };
+
+  const renderReactionsReplyView = () => {
+    return (
+      isActive && (
+        <View style={styles.buttonContainer}>
+          <ReactionView
+            ownReactions={own_children}
+            reactionCounts={children_counts}
+            onAddReaction={onAddReaction}
+            onRemoveReaction={onRemoveReaction}
+            onPressSelectReaction={onPressReact}
+            onLongPressReaction={onLongPressReaction}
+          />
+          <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
+            <Text.ButtonSmall
+              style={styles.buttonReply}
+              color={colors.textSecondary}>
+              Reply
+            </Text.ButtonSmall>
+          </ButtonWrapper>
+        </View>
+      )
+    );
+  };
+
+  const onPressRetry = () => {
+    dispatch(postActions.postRetryAddComment(commentData));
+  };
+
+  const onPressCancel = () => {
+    dispatch(postActions.postCancelFailedComment(commentData));
+  };
+
+  const renderErrorState = () => {
+    return (
+      commentStatus === 'failed' && (
+        <View style={styles.errorLine}>
+          <Text.BodySM color={colors.error} useI18n>
+            common:text_failed_to_upload
+          </Text.BodySM>
+          <Text.BodySM>{`  • `}</Text.BodySM>
+          <Button onPress={onPressRetry}>
+            <Text.BodySM useI18n>common:text_retry</Text.BodySM>
+          </Button>
+          <Text.BodySM>{`  • `}</Text.BodySM>
+          <Button onPress={onPressCancel}>
+            <Text.BodySM useI18n>common:btn_cancel</Text.BodySM>
+          </Button>
+        </View>
+      )
     );
   };
 
   return (
     <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <View style={styles.container}>
-        <ButtonWrapper onPress={onPressUser}>
-          <Avatar source={avatar} />
+      <Animated.View style={[styles.container, animatedStyle]}>
+        <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
+          <Avatar isRounded source={avatar} />
         </ButtonWrapper>
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
-          <Button onLongPress={onLongPress}>
+          <Button
+            onLongPress={onLongPress}
+            disabled={!isActive}
+            testID="comment_view.comment_content">
             <View style={{flex: 1}}>
               <View
                 style={StyleSheet.flatten([
@@ -246,56 +332,52 @@ const _CommentView: React.FC<CommentViewProps> = ({
                     ? {backgroundColor: contentBackgroundColor}
                     : {},
                 ])}>
-                <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                  <ButtonWrapper onPress={onPressUser}>
-                    <Text.H6>{name}</Text.H6>
-                  </ButtonWrapper>
-                  <TimeView time={created_at} style={styles.textTime} />
+                <View style={styles.header}>
+                  <View style={styles.userName}>
+                    <ButtonWrapper onPress={onPressUser}>
+                      <Text.H6 numberOfLines={1}>{`${name}`}</Text.H6>
+                    </ButtonWrapper>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <TimeView
+                      time={created_at}
+                      style={styles.textTime}
+                      type="short"
+                    />
+                    {/* <Icon icon="EllipsisH" size={16} style={styles.options} /> */}
+                  </View>
                 </View>
                 <CollapsibleText
                   useMarkdown
                   limitMarkdownTypes
+                  shortLength={200}
+                  limitLength={200}
                   content={content || ''}
+                  selector={`${postKeySelector.allComments}.${id}.data.mentions.users`}
                   onPressAudience={onPressAudience}
                 />
               </View>
               <CommentMediaView data={data} onLongPress={onLongPress} />
             </View>
           </Button>
-          <View style={styles.buttonContainer}>
-            <ReactionView
-              ownReactions={own_children}
-              reactionCounts={children_counts}
-              onAddReaction={onAddReaction}
-              onRemoveReaction={onRemoveReaction}
-              onPressSelectReaction={onPressReact}
-              onLongPressReaction={onLongPressReaction}
-            />
-            <ButtonWrapper onPress={_onPressReply}>
-              <Text.ButtonSmall
-                style={styles.buttonReply}
-                color={colors.textSecondary}>
-                Reply
-              </Text.ButtonSmall>
-            </ButtonWrapper>
-          </View>
+          {renderReactionsReplyView()}
         </View>
         {renderWebMenuButton()}
-      </View>
+      </Animated.View>
+      {renderErrorState()}
     </Div>
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
     },
     contentContainer: {
       flex: 1,
-      paddingTop: spacing?.padding.tiny,
-      paddingBottom: spacing?.padding.small,
+      paddingVertical: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.small,
       backgroundColor: colors.placeholder,
       borderRadius: spacing?.borderRadius.small,
@@ -303,9 +385,15 @@ const createStyle = (theme: ITheme) => {
     buttonContainer: {
       flexDirection: 'row',
     },
+    errorLine: {
+      flexDirection: 'row',
+      paddingTop: spacing.padding.base,
+      // @ts-ignore
+      marginLeft: dimension.avatarSizes['medium'] + spacing.margin.small,
+    },
     buttonReply: {
       marginRight: spacing?.margin.tiny,
-      paddingTop: spacing?.margin.small,
+      paddingTop: spacing?.margin.base,
     },
     webMenuButton: {
       width: 32,
@@ -317,8 +405,19 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.base,
     },
     textTime: {
-      marginLeft: spacing.margin.small,
-      color: colors.textSecondary,
+      marginLeft: 2,
+    },
+    userName: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    header: {
+      flexDirection: 'row',
+      marginBottom: spacing.margin.tiny,
+    },
+    options: {
+      marginLeft: spacing.margin.tiny,
+      marginTop: 2,
     },
   });
 };

@@ -4,6 +4,19 @@
     package="com.evol.bein.group">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+
+    <permission
+        android:name="@string/provider_read_permission"
+        android:label="Read Database"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="@string/provider_write_permission"
+        android:label="Write Database"
+        android:protectionLevel="signature" />
 
     <application
         android:name=".MainApplication"
@@ -13,6 +26,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="n">
         <activity
             android:name=".MainActivity"
@@ -23,7 +37,6 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -35,6 +48,20 @@
                 <data android:scheme="bein" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="com.poppop.RNReactNativeSharedGroupPreferences.SharedProvider"
+            android:authorities="@string/provider_authorities"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="@string/provider_read_permission"
+            android:writePermission="@string/provider_write_permission"
+            />
     </application>
-
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="beinchat" />
+        </intent>
+    </queries>
 </manifest>
+

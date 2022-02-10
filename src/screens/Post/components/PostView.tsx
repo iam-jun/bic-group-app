@@ -46,6 +46,7 @@ import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFoote
 
 export interface PostViewProps {
   style?: any;
+  testID?: string;
   postId: string;
   isPostDetail?: boolean;
   onPressComment?: (postId: string) => void;
@@ -56,10 +57,13 @@ export interface PostViewProps {
   isLite?: boolean;
   postData?: IPostActivity;
   isUseReduxState?: boolean;
+  btnReactTestID?: string;
+  btnCommentTestID?: string;
 }
 
 const _PostView: FC<PostViewProps> = ({
   style,
+  testID,
   postId,
   isPostDetail = false,
   onPressComment,
@@ -70,6 +74,8 @@ const _PostView: FC<PostViewProps> = ({
   isLite,
   postData,
   isUseReduxState = true,
+  btnReactTestID,
+  btnCommentTestID,
 }: PostViewProps) => {
   const [isImportant, setIsImportant] = useState(false);
 
@@ -86,6 +92,7 @@ const _PostView: FC<PostViewProps> = ({
     deleted: boolean,
     own_reactions: any,
     reaction_counts: IObject<number>,
+    is_draft: boolean,
     postObjectData: any;
 
   if (isUseReduxState) {
@@ -98,6 +105,7 @@ const _PostView: FC<PostViewProps> = ({
     reaction_counts = useKeySelector(
       postKeySelector.postReactionCountsById(postId),
     );
+    is_draft = useKeySelector(postKeySelector.postIsDraftById(postId));
     postObjectData = useKeySelector(postKeySelector.postObjectDataById(postId));
   } else {
     actor = postData?.actor;
@@ -156,6 +164,7 @@ const _PostView: FC<PostViewProps> = ({
             postId={postId}
             isPostDetail={isPostDetail}
             isActor={actor?.id == userId}
+            isDraftPost={is_draft}
           />
         ),
         props: {
@@ -173,7 +182,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.postReactToPost(payload));
   };
@@ -184,7 +192,6 @@ const _PostView: FC<PostViewProps> = ({
       reactionId: reactionId,
       ownReaction: own_reactions,
       reactionCounts: reaction_counts,
-      userId: userId,
     };
     dispatch(postActions.deleteReactToPost(payload));
   };
@@ -254,6 +261,7 @@ const _PostView: FC<PostViewProps> = ({
 
   return (
     <TouchableOpacity
+      testID={testID}
       activeOpacity={0.8}
       disabled={!onPress && !pressNavigateToDetail}
       onPress={_onPress}
@@ -264,7 +272,7 @@ const _PostView: FC<PostViewProps> = ({
       <PostViewImportant
         isLite={isLite}
         isImportant={isImportant}
-        expireTime={important?.expiresTime}
+        expireTime={important?.expires_time}
       />
       <View style={[styles.container]}>
         <PostViewHeader
@@ -276,6 +284,7 @@ const _PostView: FC<PostViewProps> = ({
           onPressShowAudiences={onPressShowAudiences}
         />
         <PostViewContent
+          postId={postId}
           isLite={isLite}
           content={isLite && highlight ? highlight : content}
           images={images}
@@ -284,6 +293,7 @@ const _PostView: FC<PostViewProps> = ({
         />
         {!isLite && (
           <ReactionView
+            style={styles.reactions}
             ownReactions={own_reactions}
             reactionCounts={reaction_counts}
             onAddReaction={onAddReaction}
@@ -298,6 +308,9 @@ const _PostView: FC<PostViewProps> = ({
             labelButtonComment={labelButtonComment}
             onAddReaction={onAddReaction}
             onPressComment={_onPressComment}
+            btnReactTestID={btnReactTestID}
+            btnCommentTestID={btnCommentTestID}
+            reactionCounts={reaction_counts}
           />
         )}
       </View>
@@ -323,6 +336,9 @@ const createStyle = (theme: ITheme) => {
     },
     container: {
       backgroundColor: colors.background,
+    },
+    reactions: {
+      paddingHorizontal: spacing.padding.base,
     },
     deletedContainer: {
       flexDirection: 'row',

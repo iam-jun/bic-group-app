@@ -1,45 +1,90 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {makeGetStreamRequest, makeHttpRequest} from '~/services/httpApiRequest';
+import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamGetDraftPosts,
+  IParamGetPostAudiences,
+  IParamGetPostDetail,
   IParamGetReactionDetail,
+  IParamPutEditPost,
+  IParamPutReactionToComment,
+  IParamPutReactionToPost,
   IParamSearchMentionAudiences,
-  IPayloadGetDraftPosts,
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
+  IRequestReplyComment,
 } from '~/interfaces/IPost';
 import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
-import {StreamClient} from 'getstream';
+
+const provider = ApiConfig.providers.beinFeed;
 
 export const postApiConfig = {
+  getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
+    const {postId, ...restParams} = params;
+    return {
+      url: `${provider.url}api/posts/${postId}`,
+      method: 'get',
+      provider,
+      useRetry: true,
+      params: restParams,
+    };
+  },
+  getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => {
+    return {
+      url: `${provider.url}api/feeds/draft`,
+      method: 'get',
+      provider,
+      useRetry: true,
+      params: {
+        offset: params?.offset || 0,
+        limit: params?.limit || 10,
+      },
+    };
+  },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts`,
+    url: `${provider.url}api/posts`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
     data,
   }),
-  putPost: (id: string, data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/${id}`,
-    method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    data,
-  }),
+  putReactionToPost: (
+    params: IParamPutReactionToPost,
+  ): HttpApiRequestConfig => {
+    const {postId, ...restParams} = params;
+    return {
+      url: `${provider.url}api/posts/${postId}/react`,
+      method: 'put',
+      provider,
+      useRetry: true,
+      data: restParams,
+    };
+  },
+  putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
+    const {postId, data} = param || {};
+    return {
+      url: `${provider.url}api/posts/${postId}`,
+      method: 'put',
+      provider,
+      useRetry: true,
+      data,
+    };
+  },
   putEditComment: (id: string, data: IActivityData): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/comments/${id}`,
+    url: `${provider.url}api/comments/${id}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
-    data,
+    data: {data},
   }),
-  deletePost: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/${id}`,
+  deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
+    url: `${provider.url}api/posts/${id}`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
+    ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
@@ -56,31 +101,53 @@ export const postApiConfig = {
   getCommentsByPostId: (
     data: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions`,
+    url: `${provider.url}api/comments`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
     params: {
       post_id: data?.commentId ? undefined : data?.postId, //accept only one of post_id, reaction_id or user_id
       reaction_id: data?.commentId,
       kind: data?.kind || 'comment',
       id_lt: data?.idLt,
-      limit: data?.limit || 10,
-      recent_reactions_limit: data?.recentReactionsLimit || 1,
+      recent_reactions_limit: data?.recentReactionsLimit || 10,
+      recent_child_reactions_limit: data?.recentChildReactionsLimit || 1,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/comments`,
+    url: `${provider.url}api/comments`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
     data: {
-      userId: params.userId,
-      referenceId: params.referenceId,
-      referenceType: params.referenceType || 'post',
-      data: params.commentData,
+      post_id: params.postId,
+      data: params.data,
     },
   }),
+  postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
+    const {parentCommentId, data} = params;
+    return {
+      url: `${provider.url}api/comments/${parentCommentId}/reply`,
+      method: 'post',
+      provider,
+      useRetry: true,
+      data: {
+        data,
+      },
+    };
+  },
+  putReactionToComment: (
+    params: IParamPutReactionToComment,
+  ): HttpApiRequestConfig => {
+    const {commentId, ...restParams} = params;
+    return {
+      url: `${provider.url}api/comments/${commentId}/react`,
+      method: 'put',
+      provider,
+      useRetry: true,
+      data: restParams,
+    };
+  },
   postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
     method: 'post',
@@ -92,13 +159,20 @@ export const postApiConfig = {
     },
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/search/audiences`,
+    url: `${ApiConfig.providers.bein.url}posts/audiences`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
       key,
     },
+  }),
+  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}posts/audiences`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
   }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
@@ -133,9 +207,9 @@ export const postApiConfig = {
     },
   }),
   deleteReaction: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/${id}`,
+    url: `${provider.url}api/reactions/${id}`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
+    provider,
     useRetry: true,
   }),
   getReactionDetail: (
@@ -158,9 +232,9 @@ export const postApiConfig = {
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/public/${draftPostId}`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
+    url: `${provider.url}api/posts/${draftPostId}/publish`,
+    method: 'put',
+    provider: provider,
     useRetry: true,
   }),
 };
@@ -180,11 +254,24 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-
-  putEditPost: async (id: string, data: IPostCreatePost) => {
+  putReactionToPost: async (param: IParamPutReactionToPost) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.putPost(id, data),
+        postApiConfig.putReactionToPost(param),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putEditPost: async (param: IParamPutEditPost) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.putEditPost(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -209,9 +296,11 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deletePost: async (id: string) => {
+  deletePost: async (id: string, isDraftPost?: boolean) => {
     try {
-      const response: any = await makeHttpRequest(postApiConfig.deletePost(id));
+      const response: any = await makeHttpRequest(
+        postApiConfig.deletePost(id, isDraftPost),
+      );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
@@ -263,8 +352,10 @@ const postDataHelper = {
       const response: any = await makeHttpRequest(
         postApiConfig.getCommentsByPostId(data),
       );
-      if (response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
+      if (response?.data?.data?.comment) {
+        return Promise.resolve({
+          results: response?.data?.data?.comment,
+        });
       } else {
         return Promise.reject(response);
       }
@@ -279,6 +370,34 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postReplyComment: async (params: IRequestReplyComment) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postReplyComment(params),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putReactionToComment: async (param: IParamPutReactionToComment) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.putReactionToComment(param),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }
@@ -387,81 +506,63 @@ const postDataHelper = {
     }
   },
 
-  getPostDetail: async (
-    userId: string,
-    streamClient?: StreamClient,
-    postId?: string,
-  ) => {
-    if (streamClient && userId && postId) {
-      const streamOptions = {
-        limit: 1,
-        // id_lte: postId,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        recentReactionsLimit: 10,
-        withOwnReactions: true,
-        withOwnChildren: true, //return own_children of reaction to comment
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'newsfeed',
-          `u-${userId}`,
-          'getActivityDetail',
-          postId,
-          streamOptions,
-        );
-        if (data?.results?.[0]) {
-          return Promise.resolve(data?.results?.[0]);
-        } else {
-          return Promise.reject(data);
-        }
-      } catch (e) {
-        return Promise.reject(e);
+  getPostDetail: async (params: IParamGetPostDetail) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getPostDetail({
+          enrich: true,
+          own_reactions: true,
+          with_own_reactions: true,
+          with_own_children: true,
+          with_recent_reactions: true,
+          with_reaction_counts: true,
+          ...params,
+        }),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient or UserId not found');
   },
-  getDraftPosts: async (payload: IPayloadGetDraftPosts) => {
-    const {userId, streamClient, offset = 0} = payload || {};
-    if (streamClient && userId) {
-      const streamOptions = {
-        offset: offset || 0,
-        limit: 10,
-        user_id: `${userId}`, //required for CORRECT own_reactions data
-        ownReactions: true,
-        recentReactionsLimit: 10,
-        withOwnReactions: true,
-        withOwnChildren: true, //return own_children of reaction to comment
-        withRecentReactions: true,
-        withReactionCounts: true,
-        enrich: true, //extra data for user & group
-      };
-      try {
-        const data = await makeGetStreamRequest(
-          streamClient,
-          'draft',
-          `u-${userId}`,
-          'get',
-          streamOptions,
-        );
+  getDraftPosts: async (param: IParamGetDraftPosts) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getDraftPosts(param),
+      );
+      if (response && response?.data?.data) {
         return Promise.resolve({
-          data: data?.results || [],
-          canLoadMore: !!data?.next,
+          data: response?.data?.data?.results || [],
+          canLoadMore: !!response?.data?.data?.next?.offset,
         });
-      } catch (e) {
-        return Promise.reject(e);
+      } else {
+        return Promise.reject(response);
       }
+    } catch (e) {
+      return Promise.reject(e);
     }
-    return Promise.reject('StreamClient or UserId not found');
   },
   postPublishDraftPost: async (draftPostId: string) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postPublishDraftPost(draftPostId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getPostAudience: async (params: IParamGetPostAudiences) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getPostAudiences(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

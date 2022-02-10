@@ -10,6 +10,8 @@ const ToastMessage = () => {
 
   if (!toastMessage?.content) return null;
 
+  const {style = {}, ...restProps} = toastMessage?.props || {};
+
   let ToastMessageComponent;
 
   if (toastMessage?.toastType) {
@@ -18,7 +20,7 @@ const ToastMessage = () => {
     else ToastMessageComponent = SimpleToastMessage;
 
     return (
-      <ToastMessageComponent style={styles.toastStyle} {...toastMessage?.props}>
+      <ToastMessageComponent style={[styles.toastStyle, style]} {...restProps}>
         {toastMessage?.content}
       </ToastMessageComponent>
     );
@@ -28,7 +30,7 @@ const ToastMessage = () => {
   else ToastMessageComponent = SimpleToastMessage;
 
   return (
-    <ToastMessageComponent style={styles.toastStyle} {...toastMessage?.props}>
+    <ToastMessageComponent style={[styles.toastStyle, style]} {...restProps}>
       {toastMessage?.content}
     </ToastMessageComponent>
   );

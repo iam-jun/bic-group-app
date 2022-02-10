@@ -5,9 +5,10 @@ const mainStack = {
   editBasicInfo: 'edit-basic-info',
   editContact: 'edit-contact',
   editEmail: 'edit-email',
-  editPhoneNumber: 'edit-phone-number',
-  editLocation: 'edit-location',
   addWork: 'add-work',
+  editDescription: 'edit-description',
+  accountSettings: 'account-settings',
+  componentCollection: 'component-collection',
 };
 
 export default mainStack;

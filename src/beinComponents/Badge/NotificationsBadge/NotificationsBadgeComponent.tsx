@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Text} from '~/components';
 import {ITheme} from '~/theme/interfaces';
+import Text from '~/beinComponents/Text';
 
 export type NotificationsBadgeType = 'default' | 'info' | 'warning' | 'alert';
 
@@ -11,6 +11,7 @@ export interface NotificationsBadgeComponentProps {
   variant?: NotificationsBadgeType;
   number?: number;
   maxNumber?: number;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
@@ -19,6 +20,7 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
     variant = 'default',
     number,
     maxNumber = 9,
+    textStyle = {},
   }: NotificationsBadgeComponentProps) => {
     if (!number) return null;
 
@@ -28,7 +30,11 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
 
     return (
       <View style={[styles.dot, style]}>
-        <Text.Subtitle style={styles.text}>{numberInText}</Text.Subtitle>
+        <Text
+          variant="subtitle"
+          style={StyleSheet.flatten([styles.text, textStyle])}>
+          {numberInText}
+        </Text>
       </View>
     );
   };

@@ -8,8 +8,9 @@ import {
   Platform,
   ActivityIndicator,
   RefreshControl,
+  DeviceEventEmitter,
 } from 'react-native';
-import {debounce} from 'lodash';
+import {debounce, throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
 import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
 
@@ -24,6 +25,8 @@ import {useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -53,13 +56,18 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
   const listView = useRef<any>();
+  const lockHeaderRef = useRef(true);
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
   );
+  const prevOffsetYRef = useRef(0);
 
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
-  const styles = createStyle(theme);
+  const {spacing, dimension} = theme;
+  const insets = useSafeAreaInsets();
+  const styles = createStyle(theme, insets);
+
+  const refreshControlOffset = insets.top + dimension.headerHeight;
 
   const itemStyle = useRef({
     width: screenWidth,
@@ -94,6 +102,13 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 
   useEffect(() => {
+    if (data?.length === 0) {
+      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit('showBottomBar', true);
+    }
+  }, [data?.length]);
+
+  useEffect(() => {
     if (!canLoadMore && !refreshing) {
       setInitializing(false);
     }
@@ -109,6 +124,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (!initializing) {
       onEndReach?.();
     }
+    lockHeaderRef.current = true;
+    setTimeout(() => {
+      if (lockHeaderRef?.current) {
+        lockHeaderRef.current = false;
+      }
+    }, 1000);
   };
 
   const onVisibleIndicesChanged = debounce((indexes: any) => {
@@ -120,11 +141,65 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
   }, 1000);
 
+  const onScroll = throttle(
+    (rawEvent: any, offsetX: number, offsetY: number) => {
+      //on iOS, when add more item, callback scroll fired as scroll up
+      //so need lock 1 second to avoid header and bottom bar blink when load more
+      if (lockHeaderRef.current) {
+        return;
+      }
+      // on iOS, pull to refresh will fire onScroll with negative offsetY, ignore to avoid hide header
+      if (offsetY < 0) {
+        return;
+      }
+
+      const isDown = offsetY - prevOffsetYRef.current > 2;
+      const isDown5Percent =
+        ((offsetY - prevOffsetYRef.current) * 100) / screenHeight >= 5;
+      const isUp = prevOffsetYRef.current - offsetY > 2;
+      const isUp5Percent =
+        ((prevOffsetYRef.current - offsetY) * 100) / screenHeight >= 5;
+
+      const createPostHeaderHeight = 50;
+      const showFloating = offsetY > createPostHeaderHeight;
+
+      if (isDown5Percent) {
+        DeviceEventEmitter.emit('showHeader', false);
+        DeviceEventEmitter.emit('showBottomBar', false);
+        DeviceEventEmitter.emit('showFloatingCreatePost', false);
+      } else if (isDown && offsetY > 20) {
+        DeviceEventEmitter.emit('showHeader', false);
+      }
+      if (isUp5Percent) {
+        DeviceEventEmitter.emit('showHeader', true);
+        DeviceEventEmitter.emit('showBottomBar', true);
+        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
+      } else if (isUp) {
+        DeviceEventEmitter.emit('showBottomBar', true);
+        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
+        if (offsetY < 50) {
+          DeviceEventEmitter.emit('showHeader', true);
+        }
+      }
+
+      prevOffsetYRef.current = offsetY;
+    },
+    300,
+  );
+
   const rowRenderer = (type: any, data: any, index: number) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
-      return HeaderComponent;
+      return <View style={styles.headerContainer}>{HeaderComponent}</View>;
     }
-    return <PostView style={itemStyle} postId={data.id} />;
+    return (
+      <PostView
+        style={itemStyle}
+        postId={data.id}
+        testID="newsfeed_list.post.item"
+        btnReactTestID="newsfeed_list.post.btn_react"
+        btnCommentTestID="newsfeed_list.post.btn_comment"
+      />
+    );
   };
 
   const renderPlaceholder = () => {
@@ -148,7 +223,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (data?.length === 0 && !canLoadMore) {
       //todo waiting for design
       return (
-        <View>
+        <View style={styles.emptyContainer}>
           {!!HeaderComponent && HeaderComponent}
           <View style={styles.listFooter}>
             <Image
@@ -203,7 +278,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           layoutProvider={layoutProvider}
           dataProvider={dataProvider}
           rowRenderer={rowRenderer}
+          // bounces={false}
           forceNonDeterministicRendering={true}
+          onScroll={onScroll}
           onEndReached={_onEndReached}
           onEndReachedThreshold={2 * screenHeight}
           onVisibleIndicesChanged={onVisibleIndicesChanged}
@@ -214,6 +291,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           scrollViewProps={{
             refreshControl: (
               <RefreshControl
+                progressViewOffset={refreshControlOffset}
                 refreshing={refreshing}
                 onRefresh={() => onRefresh?.()}
               />
@@ -223,11 +301,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       )}
       {renderEmpty()}
       {renderPlaceholder()}
+      <FloatingCreatePost />
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ITheme, insets: any) => {
   const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     container: {
@@ -253,7 +332,7 @@ const createStyle = (theme: ITheme) => {
     placeholder: {
       opacity: 1,
       position: 'absolute',
-      top: 0,
+      top: insets.top + dimension.headerHeight,
       bottom: 0,
       left: 0,
       right: 0,
@@ -265,6 +344,13 @@ const createStyle = (theme: ITheme) => {
       maxWidth: 240,
       maxHeight: 160,
       marginBottom: spacing.margin.large,
+    },
+    headerContainer: {
+      marginTop: insets.top + dimension.headerHeight,
+      width: '100%',
+    },
+    emptyContainer: {
+      marginTop: insets.top + dimension.headerHeight,
     },
   });
 };

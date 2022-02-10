@@ -40,7 +40,7 @@ function* getHomePosts({
   type: string;
 }): any {
   try {
-    const {userId, streamClient, isRefresh} = payload;
+    const {isRefresh} = payload;
     let homePosts, offset;
     const {noMoreHomePosts, loadingHomePosts, refreshingHomePosts} =
       yield select(state => get(state, 'home'));
@@ -62,11 +62,8 @@ function* getHomePosts({
       offset = homePosts?.length || 0;
     }
 
-    const result = yield homeDataHelper.getHomePosts(
-      userId,
-      streamClient,
-      offset,
-    );
+    const result = yield homeDataHelper.getNewsfeed({offset});
+
     const newHomePosts = homePosts.concat?.(result) || result;
     yield put(homeActions.setHomePosts(newHomePosts));
 
@@ -226,7 +223,7 @@ function* getRecentSearchKeywords({
     const response = yield call(homeDataHelper.getRecentSearchKeywords, param);
     yield put(
       homeActions.setNewsfeedSearchRecentKeywords({
-        data: response?.recentSearches || [],
+        data: response?.recent_searches || [],
         loading: false,
       }),
     );

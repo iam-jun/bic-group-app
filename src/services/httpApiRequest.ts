@@ -18,11 +18,16 @@ import * as modalActions from '~/store/modal/actions';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
+import {updateUserFromSharedPreferences} from './sharePreferences';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
+};
+
+const beinFeedHeaders = {
+  'X-Version': getEnv('BEIN_FEED_VERSION'),
 };
 
 const _dispatchLogout = () => {
@@ -55,29 +60,20 @@ const _dispatchRefreshTokenSuccess = (
 };
 
 const dispatchStoreAuthTokens = (
-  chatUserId: string,
-  chatAccessToken: string,
   feedAccessToken: string,
   notiSubscribeToken: string,
 ) => {
   Store.store.dispatch(
     createAction(ActionTypes.SaveAuthTokens, {
-      chatUserId,
-      chatAccessToken,
       feedAccessToken,
       notiSubscribeToken,
     }),
   );
 };
 
-const _dispatchHideSystemIssue = () => {
-  Store.store.dispatch(noInternetActions.hideSystemIssue());
-};
-
 const refreshFailKickOut = () => {
   _dispatchLogout();
   _dispatchSessionExpire();
-  _dispatchHideSystemIssue;
   isRefreshingToken = false;
   // count retry limit
   countLimitRetry = 0;
@@ -100,13 +96,7 @@ const handleSystemIssue = () => {
 
   if (isInternetReachable === false) return;
 
-  Store.store.dispatch(noInternetActions.showSystemIssue());
-
-  const modalVisibleDuration = 2000;
-  setTimeout(() => {
-    _dispatchLogout();
-    _dispatchHideSystemIssue();
-  }, modalVisibleDuration);
+  Store.store.dispatch(noInternetActions.showSystemIssueThenLogout());
 };
 
 const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
@@ -148,10 +138,6 @@ const getBeinIdToken = (): string => {
   );
 };
 
-const getChatAuthInfo = () => {
-  return _.get(Store.getCurrentAuth(), 'chat', {});
-};
-
 const getFeedAccessToken = (): string => {
   return _.get(Store.getCurrentAuth(), 'feed.accessToken', '');
 };
@@ -168,15 +154,7 @@ const handleRetry = async (error: AxiosError) => {
   // @ts-ignore
   switch (error.config?.provider?.name) {
     case apiConfig.providers.bein.name:
-      if (!error.config.headers.Authorization) {
-        return Promise.reject(error);
-      }
-      break;
-    case apiConfig.providers.chat.name:
-      if (
-        !error.config.headers['X-Auth-Token'] ||
-        !error.config.headers['X-User-Id']
-      ) {
+      if (!error.config.headers?.Authorization) {
         return Promise.reject(error);
       }
       break;
@@ -187,7 +165,7 @@ const handleRetry = async (error: AxiosError) => {
   // create new promise
   const newReqPromise = new Promise((resolve, reject) => {
     const newOrgConfig = {...error.config};
-    delete newOrgConfig.headers.Authorization;
+    delete newOrgConfig.headers?.Authorization;
 
     const callback: UnauthorizedReq = async (success: boolean) => {
       if (!success) {
@@ -208,7 +186,9 @@ const handleRetry = async (error: AxiosError) => {
   });
 
   // create request to refresh token
-  await getTokenAndCallBackBein(error.config.headers.Authorization);
+  if (error.config.headers) {
+    await getTokenAndCallBackBein(error.config.headers.Authorization);
+  }
 
   // next
   return newReqPromise;
@@ -249,6 +229,9 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         return;
       } else {
         _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+
+        //For sharing data between Group and Chat
+        await updateUserFromSharedPreferences({token: idToken});
       }
       const isRefreshSuccess = await refreshAuthTokens();
       if (!isRefreshSuccess) {
@@ -282,8 +265,6 @@ const handleResponseError = async (
     switch (error.config?.provider?.name) {
       case apiConfig.providers.bein.name:
         return mapResponseSuccessBein(error.response);
-      case apiConfig.providers.chat.name:
-        return Promise.reject(error.response.data?.error);
       default:
         return mapResponseSuccessBein(error.response);
     }
@@ -419,14 +400,8 @@ const refreshAuthTokens = async () => {
     return false;
   }
 
-  const {chatUserId, chatAccessToken, feedAccessToken, notiSubscribeToken} =
-    dataTokens;
-  dispatchStoreAuthTokens(
-    chatUserId,
-    chatAccessToken,
-    feedAccessToken,
-    notiSubscribeToken,
-  );
+  const {feedAccessToken, notiSubscribeToken} = dataTokens;
+  dispatchStoreAuthTokens(feedAccessToken, notiSubscribeToken);
 
   return true;
 };
@@ -440,13 +415,10 @@ const getAuthTokens = async () => {
       return false;
     }
 
-    const {userId: chatUserId, authToken: chatAccessToken} = data.data?.chat;
     const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
       data.data?.stream;
 
     return {
-      chatUserId,
-      chatAccessToken,
       feedAccessToken,
       notiSubscribeToken,
     };
@@ -461,24 +433,9 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     interceptorResponseSuccess,
     interceptorResponseError;
 
-  let tokenHeaders: any = {
+  const tokenHeaders: any = {
     Authorization: getBeinIdToken(),
   };
-
-  // For cases request to Bein with Chat tokens
-  if (
-    requestConfig.headers &&
-    (requestConfig.headers['X-Auth-Token'] ||
-      requestConfig.headers['X-User-Id'])
-  ) {
-    const auth = getChatAuthInfo();
-    tokenHeaders = {
-      ...tokenHeaders,
-      'X-Auth-Token': auth.accessToken,
-      'X-User-Id': auth.userId,
-    };
-  }
-  //
 
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
@@ -491,23 +448,22 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...tokenHeaders,
       };
       break;
-    case apiConfig.providers.chat.name:
+    case apiConfig.providers.beinFeed.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
       requestConfig.headers = {
         ...commonHeaders,
         ...requestConfig.headers,
-        ...{
-          'X-Auth-Token': getChatAuthInfo().accessToken,
-          'X-User-Id': getChatAuthInfo().userId,
-        },
+        ...tokenHeaders,
+        ...beinFeedHeaders,
       };
       break;
     case apiConfig.providers.getStream.name:
       // TODO: refactor
       break;
     default:
+      console.log(`\x1b[31m🐣️ httpApiRequest unknown provider name\x1b[0m`);
       return Promise.resolve(false);
   }
 
@@ -523,18 +479,12 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   return axiosInstance(requestConfig);
 };
 
-const makePushTokenRequest = async (
-  deviceToken: string,
-  chatToken?: string,
-  chatUserId?: string,
-) => {
+const makePushTokenRequest = async (deviceToken: string) => {
   const deviceName = await DeviceInfo.getDeviceName();
   return makeHttpRequest(
     apiConfig.App.pushToken(
       deviceToken,
       Platform.OS,
-      chatToken || getChatAuthInfo().accessToken,
-      chatUserId || getChatAuthInfo().userId,
       DeviceInfo.getBundleId(),
       DeviceInfo.getDeviceType(),
       deviceName,
@@ -542,17 +492,11 @@ const makePushTokenRequest = async (
   );
 };
 
-const makeRemovePushTokenRequest = async (
-  authToken: string,
-  chatToken: string,
-  chatUserId: string,
-) => {
+const makeRemovePushTokenRequest = async (authToken: string) => {
   const deviceName = await DeviceInfo.getDeviceName();
   const requestConfig = apiConfig.App.removePushToken(
     authToken,
     Platform.OS,
-    chatToken,
-    chatUserId,
     DeviceInfo.getBundleId(),
     DeviceInfo.getDeviceType(),
     deviceName,
@@ -592,7 +536,6 @@ export {
   makeHttpRequest,
   makePushTokenRequest,
   makeRemovePushTokenRequest,
-  getChatAuthInfo,
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,

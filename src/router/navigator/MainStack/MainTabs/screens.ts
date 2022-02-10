@@ -1,13 +1,3 @@
-import {
-  AddMembersToGroup as AddMembersToGroupChat,
-  Conversation,
-  ConversationDetail,
-  CreateConversation,
-  EditConversationDescription,
-  GroupMembers as GroupChatMembers,
-  ReviewConversation,
-  SearchConversation,
-} from '~/screens/Chat';
 import GroupAbout from '~/screens/Groups/GroupAbout';
 import GroupMembers from '~/screens/Groups/GroupMembers';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
@@ -20,8 +10,6 @@ import AccoutSettings from '~/screens/Menu/AccountSettings';
 import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasicInfo';
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
-import EditPhoneNumber from '~/screens/Menu/AccountSettings/EditContact/EditPhoneNumber';
-import EditLocation from '~/screens/Menu/AccountSettings/EditContact/EditLocation';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
 import UserEdit from '~/screens/Menu/AccountSettings/UserEditProfile';
@@ -34,18 +22,19 @@ import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
 import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import PostSelectImage from '~/screens/Post/PostSelectImage';
-import ChatStack from '../ChatStack';
+import PostSettings from '~/screens/Post/PostSettings';
 import GroupStack from '../GroupStack';
 import HomeStack from '../HomeStack';
 import MenuStack from '../MenuStack';
 import NotiStack from '../NotiStack';
 import DraftPost from '~/screens/Post/DraftPost';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
+import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
+import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
 
 export const screens = {
   home: HomeStack,
   groups: GroupStack,
-  chat: ChatStack,
   notification: NotiStack,
   menus: MenuStack,
 };
@@ -59,20 +48,7 @@ export const screensWebLaptop = {
   'post-select-image': PostSelectImage,
   'post-detail': PostDetail,
   'draft-post': DraftPost,
-
-  //CHAT STACK
-  // 'conversation-list': ConversationsList,
-  conversation: Conversation,
-  'conversation-detail': ConversationDetail,
-  'create-conversation': CreateConversation,
-  'review-conversation': ReviewConversation,
-  'chat-group-members': GroupChatMembers,
-  'add-members': AddMembersToGroupChat,
-  'search-conversation': SearchConversation,
-  'edit-chat-description': EditConversationDescription,
-  'chat-group-admin': GroupAdministration,
-  'chat-general-info': GeneralInformation,
-  'chat-edit-group-description': EditGroupDescription,
+  'post-settings': PostSettings,
 
   //GROUP STACK
   // 'group-list': Groups,
@@ -84,6 +60,7 @@ export const screensWebLaptop = {
   'general-info': GeneralInformation,
   'edit-group-description': EditGroupDescription,
   'invite-members': AddMembersToGroup,
+  'pending-members': PendingMembers,
 
   //MENU STACK
   // menu: Menu,
@@ -96,9 +73,8 @@ export const screensWebLaptop = {
   'edit-basic-info': EditBasicInfo,
   'edit-contact': EditContact,
   'edit-email': EditEmail,
-  'edit-phone-number': EditPhoneNumber,
-  'edit-location': EditLocation,
   'add-work': AddWork,
+  'edit-description': EditDescription,
 
   //NOTIFICATION STACK
   // notification: Notification,

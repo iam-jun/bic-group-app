@@ -1,14 +1,21 @@
 import React, {FC, useEffect, useRef} from 'react';
 import {
-  Animated,
   DeviceEventEmitter,
   Keyboard,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
   View,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  interpolate,
+  withTiming,
+} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -25,6 +32,8 @@ import {deviceDimensions, sizes} from '~/theme/dimension';
 import useTabBadge from '~/hooks/tabBadge';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import {fontFamilies} from '~/theme/fonts';
+import {DrawerActions} from '@react-navigation/native';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -32,7 +41,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   navigation,
 }: BottomTabBarProps) => {
   let tabBarVisible = useRef(true).current;
-  const visibleAnim = useRef(new Animated.Value(1)).current;
+
+  const showValue = useSharedValue(1);
 
   const theme = useTheme() as ITheme;
   const insets = useSafeAreaInsets();
@@ -46,28 +56,20 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   const bottomBarHeight = theme.dimension.bottomBarHeight + insets.bottom;
 
-  const height = visibleAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, bottomBarHeight],
-  });
+  const heightStyle = useAnimatedStyle(() => ({
+    height: interpolate(showValue.value, [0, 1], [0, bottomBarHeight]),
+    overflow: 'hidden',
+  }));
 
   const show = (duration = 150) => {
     if (!tabBarVisible) {
       return;
     }
-    Animated.timing(visibleAnim, {
-      toValue: 1,
-      duration,
-      useNativeDriver: false,
-    }).start();
+    showValue.value = withTiming(1, {duration});
   };
 
   const hide = (duration = 150) => {
-    Animated.timing(visibleAnim, {
-      toValue: 0,
-      duration,
-      useNativeDriver: false,
-    }).start();
+    showValue.value = withTiming(0, {duration});
   };
 
   const getActiveRouteName = (state: any): any => {
@@ -104,11 +106,22 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const showListener = Keyboard.addListener('keyboardDidShow', onShow);
     const willHideListener = Keyboard.addListener('keyboardWillHide', onHide);
     const hideListener = Keyboard.addListener('keyboardDidHide', onHide);
+    const showBottomBarListener = DeviceEventEmitter.addListener(
+      'showBottomBar',
+      isShow => {
+        if (isShow) {
+          show();
+        } else {
+          hide();
+        }
+      },
+    );
     return () => {
       showListener.remove();
       hideListener.remove();
       willShowListener.remove();
       willHideListener.remove();
+      showBottomBarListener?.remove();
     };
   }, []);
 
@@ -121,18 +134,22 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const icon = isFocused ? bottomTabIconsFocused : bottomTabIcons;
     // @ts-ignore
     const iconName = icon[name];
-    const textColor = isFocused ? colors.primary7 : colors.textSecondary;
+    const textColor = isFocused ? colors.primary6 : colors.textSecondary;
     const styles = tabBarIconStyles(theme, isFocused, isPhone, textColor);
 
     const onPress = () => {
-      DeviceEventEmitter.emit('onTabPress', name);
-      const event: any = navigation.emit({
-        type: 'tabPress',
-        target: route.key,
-      } as any);
+      if (name === 'menus') {
+        navigation.dispatch(DrawerActions.openDrawer());
+      } else {
+        DeviceEventEmitter.emit('onTabPress', name);
+        const event: any = navigation.emit({
+          type: 'tabPress',
+          target: route.key,
+        } as any);
 
-      if (!isFocused && !event.defaultPrevented) {
-        navigation.navigate(route.name);
+        if (!isFocused && !event.defaultPrevented) {
+          navigation.navigate(route.name);
+        }
       }
     };
 
@@ -151,30 +168,36 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
         accessibilityRole="button"
         accessibilityStates={isFocused ? ['selected'] : []}
         accessibilityLabel={options.tabBarAccessibilityLabel}
-        testID={options.tabBarTestID}
+        testID={`tab_${name}`}
         onPress={onPress}
         onLongPress={onLongPress}
         style={{
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: isFocused ? colors.primary2 : colors.background,
+          backgroundColor: colors.background,
+          borderTopWidth: isFocused ? 2 : 0,
+          borderTopColor: colors.primary6,
         }}>
         <Icon icon={iconName} size={20} tintColor="none" />
         {isPhone && (
-          <Text variant={isFocused ? 'bodySM' : 'bodyS'} style={styles.label}>
+          <Text variant="heading" style={styles.label}>
             {t(`tabs:${name}`)}
           </Text>
         )}
         {!!unreadCount && (
-          <NotificationsBadge.Alert style={styles.badge} number={unreadCount} />
+          <NotificationsBadge.Alert
+            style={styles.badge}
+            textStyle={styles.textBadge}
+            number={unreadCount}
+          />
         )}
       </TouchableOpacity>
     );
   };
 
   return (
-    <Animated.View style={{height, overflow: 'hidden'}}>
+    <Animated.View style={heightStyle}>
       <View style={styles.container}>{state.routes.map(renderItem)}</View>
     </Animated.View>
   );
@@ -197,6 +220,7 @@ const tabBarIconStyles = (
       top: isPhone ? '6%' : '18%',
       left: '54%',
     },
+    textBadge: {fontFamily: fontFamilies.Segoe},
   });
 };
 

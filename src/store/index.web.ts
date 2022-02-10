@@ -11,7 +11,7 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['modal', 'groups', 'chat', 'post', 'home', 'noInternet'], // temporary block chat until it's stable
+  blacklist: ['modal', 'groups', 'post', 'home', 'noInternet', 'mentionInput'],
 };
 
 // @ts-ignore
