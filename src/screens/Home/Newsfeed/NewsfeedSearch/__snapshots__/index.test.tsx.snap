@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsfeedSearch component should render null 1`] = `null`;
+
+exports[`NewsfeedSearch component should render search 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "bottom": 0,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 60,
+    }
+  }
+>
+  <RCTScrollView
+    keyboardShouldPersistTaps="always"
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "height": 60,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#2F3945",
+                  "flex": 1,
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                }
+              }
+            >
+              home:newsfeed_search:label_recent_search
+            </Text>
+          </View>
+          <ActivityIndicator
+            color="#B2BDCD"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 44,
+                "justifyContent": "center",
+              }
+            }
+          />
+        </View>
+      </View>
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "height": 0,
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`NewsfeedSearch component should render suggestion 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "bottom": 0,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 60,
+    }
+  }
+>
+  <RCTScrollView
+    keyboardShouldPersistTaps="always"
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "height": 60,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#2F3945",
+                  "flex": 1,
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                }
+              }
+            >
+              home:newsfeed_search:label_recent_search
+            </Text>
+          </View>
+          <ActivityIndicator
+            color="#B2BDCD"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": 44,
+                "justifyContent": "center",
+              }
+            }
+          />
+        </View>
+      </View>
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "height": 0,
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;

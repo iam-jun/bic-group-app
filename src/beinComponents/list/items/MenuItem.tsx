@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -9,7 +9,6 @@ import Text from '~/beinComponents/Text';
 import Div from '~/beinComponents/Div';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import {NotificationsBadgeComponentProps} from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
 

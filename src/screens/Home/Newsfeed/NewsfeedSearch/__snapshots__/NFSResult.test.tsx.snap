@@ -1,0 +1,1735 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NFSResult component should render empty search result 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F9FAFB",
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <RCTScrollView
+      horizontal={true}
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderBottomWidth": 1,
+              "borderColor": "#F9FAFB",
+              "flexDirection": "row",
+              "paddingBottom": 12,
+              "paddingHorizontal": 12,
+              "paddingTop": 8,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                focusable={false}
+                hitSlop={
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                    "right": 10,
+                    "top": 10,
+                  }
+                }
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      },
+                      Object {
+                        "marginLeft": 4,
+                        "marginRight": 8,
+                      },
+                      Object {
+                        "backgroundColor": undefined,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View
+                      className="icon-wrapper"
+                    >
+                      <RNSVGSvgView
+                        align="xMidYMid"
+                        bbHeight={20}
+                        bbWidth={20}
+                        fill="#7843DD"
+                        focusable={false}
+                        height={20}
+                        meetOrSlice={0}
+                        minX={0}
+                        minY={0}
+                        style={
+                          Array [
+                            Object {
+                              "backgroundColor": "transparent",
+                              "borderWidth": 0,
+                            },
+                            Object {},
+                            Object {
+                              "flex": 0,
+                              "height": 20,
+                              "width": 20,
+                            },
+                          ]
+                        }
+                        vbHeight={24}
+                        vbWidth={24}
+                        width={20}
+                      >
+                        <RNSVGGroup
+                          fill={4286071773}
+                          propList={
+                            Array [
+                              "fill",
+                            ]
+                          }
+                        >
+                          <RNSVGPath
+                            d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                          />
+                        </RNSVGGroup>
+                      </RNSVGSvgView>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "marginLeft": 4,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter_created_by
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "marginLeft": 4,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter_date
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <RCTScrollView
+    ListEmptyComponent={
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "marginTop": 24,
+          }
+        }
+      >
+        <Image
+          resizeMode="contain"
+          source={
+            Object {
+              "testUri": "../../../assets/images/img_empty_search_post.png",
+            }
+          }
+          style={
+            Object {
+              "height": 320,
+              "maxHeight": 160,
+              "maxWidth": 240,
+              "width": 480,
+            }
+          }
+        />
+        <TextComponent
+          style={
+            Object {
+              "color": "#627286",
+              "textAlign": "center",
+            }
+          }
+          useI18n={true}
+        >
+          post:newsfeed:text_empty_search_post
+        </TextComponent>
+      </View>
+    }
+    ListFooterComponent={
+      <View
+        style={
+          Object {
+            "marginBottom": 12,
+          }
+        }
+      />
+    }
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          Array [
+            "#7843DD",
+          ]
+        }
+        onRefresh={[Function]}
+        refreshing={false}
+        tintColor="#7843DD"
+      />
+    }
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <RCTRefreshControl />
+    <View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "marginTop": 24,
+          }
+        }
+      >
+        <View
+          onLayout={[Function]}
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "position": "relative",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            nativeID="animatedComponent"
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#f9f9f9",
+                  "height": 320,
+                  "justifyContent": "center",
+                  "maxHeight": 160,
+                  "maxWidth": 240,
+                  "width": 480,
+                }
+              }
+              testID="Image__placeholder"
+            />
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Object {
+                  "height": 320,
+                  "maxHeight": 160,
+                  "maxWidth": 240,
+                  "width": 480,
+                },
+              ]
+            }
+          >
+            <FastImageView
+              onFastImageError={[Function]}
+              onFastImageLoadEnd={[Function]}
+              resizeMode="contain"
+              source={
+                Object {
+                  "testUri": "../../../assets/images/img_empty_search_post.png",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            />
+          </View>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#627286",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+              "textAlign": "center",
+            }
+          }
+        >
+          post:newsfeed:text_empty_search_post
+        </Text>
+      </View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          style={
+            Object {
+              "marginBottom": 12,
+            }
+          }
+        />
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`NFSResult component should render list search result 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F9FAFB",
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <RCTScrollView
+      horizontal={true}
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderBottomWidth": 1,
+              "borderColor": "#F9FAFB",
+              "flexDirection": "row",
+              "paddingBottom": 12,
+              "paddingHorizontal": 12,
+              "paddingTop": 8,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                focusable={false}
+                hitSlop={
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                    "right": 10,
+                    "top": 10,
+                  }
+                }
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      },
+                      Object {
+                        "marginLeft": 4,
+                        "marginRight": 8,
+                      },
+                      Object {
+                        "backgroundColor": undefined,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View
+                      className="icon-wrapper"
+                    >
+                      <RNSVGSvgView
+                        align="xMidYMid"
+                        bbHeight={20}
+                        bbWidth={20}
+                        fill="#7843DD"
+                        focusable={false}
+                        height={20}
+                        meetOrSlice={0}
+                        minX={0}
+                        minY={0}
+                        style={
+                          Array [
+                            Object {
+                              "backgroundColor": "transparent",
+                              "borderWidth": 0,
+                            },
+                            Object {},
+                            Object {
+                              "flex": 0,
+                              "height": 20,
+                              "width": 20,
+                            },
+                          ]
+                        }
+                        vbHeight={24}
+                        vbWidth={24}
+                        width={20}
+                      >
+                        <RNSVGGroup
+                          fill={4286071773}
+                          propList={
+                            Array [
+                              "fill",
+                            ]
+                          }
+                        >
+                          <RNSVGPath
+                            d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                          />
+                        </RNSVGGroup>
+                      </RNSVGSvgView>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "marginLeft": 4,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter_created_by
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "marginLeft": 4,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter_date
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <RCTScrollView
+    ListEmptyComponent={
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "marginTop": 24,
+          }
+        }
+      >
+        <Image
+          resizeMode="contain"
+          source={
+            Object {
+              "testUri": "../../../assets/images/img_empty_search_post.png",
+            }
+          }
+          style={
+            Object {
+              "height": 320,
+              "maxHeight": 160,
+              "maxWidth": 240,
+              "width": 480,
+            }
+          }
+        />
+        <TextComponent
+          style={
+            Object {
+              "color": "#627286",
+              "textAlign": "center",
+            }
+          }
+          useI18n={true}
+        >
+          post:newsfeed:text_empty_search_post
+        </TextComponent>
+      </View>
+    }
+    ListFooterComponent={
+      <View
+        style={
+          Object {
+            "marginBottom": 12,
+          }
+        }
+      />
+    }
+    data={
+      Array [
+        Object {
+          "actor": Object {
+            "created_at": "2022-01-14T04:58:45.776555Z",
+            "data": Object {
+              "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "fullname": "Trần Nam Anh",
+              "username": "trannamanh",
+            },
+            "id": "20",
+            "updated_at": "2022-02-08T08:23:26.447557Z",
+          },
+          "audience": Object {
+            "groups": Array [
+              Object {
+                "collection": "groups",
+                "created_at": "2022-01-14T07:42:18.184353Z",
+                "data": Object {
+                  "icon": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png",
+                  "name": "EVOL Community",
+                },
+                "foreign_id": "groups:6",
+                "id": "6",
+                "updated_at": "2022-01-14T07:42:18.184353Z",
+              },
+            ],
+            "users": Array [],
+          },
+          "foreign_id": "84a2f2c0-ef0f-41eb-861e-42c61f8416ce",
+          "id": "846d2200-7ccc-11ec-8080-800048691d62",
+          "important": Object {
+            "active": 0,
+            "expires_time": "",
+          },
+          "mentions": Object {
+            "groups": Array [],
+            "users": Array [],
+          },
+          "object": Object {
+            "collection": "post",
+            "created_at": "2022-01-24T04:17:16.585495Z",
+            "data": Object {
+              "content": "hello",
+              "files": Array [],
+              "highlight": "==hello==",
+              "images": Array [],
+              "videos": Array [],
+            },
+            "foreign_id": "post:97b30674-5de3-4696-8867-55022f9f81db",
+            "id": "97b30674-5de3-4696-8867-55022f9f81db",
+            "updated_at": "2022-01-24T04:17:17.216444Z",
+          },
+          "origin": null,
+          "reaction_counts": Object {
+            "grinning_face_with_one_large_and_one_small_eye": 1,
+          },
+          "settings": Object {
+            "can_comment": true,
+            "can_react": true,
+            "can_share": true,
+          },
+          "target": "",
+          "time": "2022-01-24T04:17:17.856000",
+          "type": "post",
+          "verb": "post",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          Array [
+            "#7843DD",
+          ]
+        }
+        onRefresh={[Function]}
+        refreshing={false}
+        tintColor="#7843DD"
+      />
+    }
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <RCTRefreshControl />
+    <View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "marginTop": 8,
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "opacity": 1,
+                  "paddingTop": 8,
+                }
+              }
+              testID="post_view_header"
+            >
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                nativeID="animatedComponent"
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "marginLeft": 16,
+                    "marginRight": 12,
+                    "marginTop": 4,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "borderRadius": 6,
+                      "height": 48,
+                      "width": 48,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "borderRadius": 24,
+                        "height": 48,
+                        "width": 48,
+                      }
+                    }
+                  >
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "position": "relative",
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "opacity": 1,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderRadius": 24,
+                              "height": 48,
+                              "justifyContent": "center",
+                              "width": 48,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderRadius": 24,
+                              "height": 48,
+                              "width": 48,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={
+                            Object {
+                              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                            }
+                          }
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": false,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  nativeID="animatedComponent"
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "alignSelf": "flex-start",
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 14,
+                      }
+                    }
+                    testID="post_view_header.actor"
+                  >
+                    Trần Nam Anh
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#627286",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 14,
+                        "marginRight": 4,
+                      }
+                    }
+                  >
+                    post:to
+                  </Text>
+                  <Text
+                    onPress={[Function]}
+                    style={
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 14,
+                      }
+                    }
+                    testID="post_view_header.audiences"
+                  >
+                    EVOL Community
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#627286",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 11,
+                      }
+                    }
+                    testID="time_view"
+                  >
+                    Jan 24 undefined 11:17 AM
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginRight": 8,
+                  }
+                }
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": false,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        Object {
+                          "alignSelf": "auto",
+                        },
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View
+                        className="icon-wrapper"
+                        testID="post_view_header.menu"
+                      >
+                        <RNSVGSvgView
+                          align="xMidYMid"
+                          bbHeight={20}
+                          bbWidth={20}
+                          fill="#2F3945"
+                          focusable={false}
+                          height={20}
+                          meetOrSlice={0}
+                          minX={0}
+                          minY={0}
+                          style={
+                            Array [
+                              Object {
+                                "backgroundColor": "transparent",
+                                "borderWidth": 0,
+                              },
+                              Object {},
+                              Object {
+                                "flex": 0,
+                                "height": 20,
+                                "width": 20,
+                              },
+                            ]
+                          }
+                          vbHeight={24}
+                          vbWidth={24}
+                          width={20}
+                        >
+                          <RNSVGGroup
+                            fill={4281284933}
+                            propList={
+                              Array [
+                                "fill",
+                              ]
+                            }
+                          >
+                            <RNSVGPath
+                              d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"
+                            />
+                          </RNSVGGroup>
+                        </RNSVGSvgView>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              onLayout={[Function]}
+            >
+              <View
+                style={
+                  Object {
+                    "marginHorizontal": 16,
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityState={
+                        Object {
+                          "disabled": true,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      nativeID="animatedComponent"
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "opacity": 1,
+                        }
+                      }
+                      testID="post_view_content"
+                    >
+                      <View>
+                        <View>
+                          <View
+                            style={Object {}}
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "flex-start",
+                                  "flexDirection": "row",
+                                  "flexWrap": "wrap",
+                                  "justifyContent": "flex-start",
+                                  "marginBottom": 2,
+                                  "marginTop": 2,
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <Text
+                                style={Object {}}
+                              >
+                                <Text
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#F6EF79",
+                                      "borderRadius": 6,
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-Regular",
+                                      "fontSize": 16,
+                                      "overflow": "hidden",
+                                    }
+                                  }
+                                >
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-Regular",
+                                          "fontSize": 16,
+                                        },
+                                        Object {},
+                                      ]
+                                    }
+                                  >
+                                    hello
+                                  </Text>
+                                </Text>
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          style={
+            Object {
+              "marginBottom": 12,
+            }
+          }
+        />
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`NFSResult component should render loading search result 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F9FAFB",
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <RCTScrollView
+      horizontal={true}
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderBottomWidth": 1,
+              "borderColor": "#F9FAFB",
+              "flexDirection": "row",
+              "paddingBottom": 12,
+              "paddingHorizontal": 12,
+              "paddingTop": 8,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={false}
+                hitSlop={
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                    "right": 10,
+                    "top": 10,
+                  }
+                }
+                nativeID="animatedComponent"
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      },
+                      Object {
+                        "marginLeft": 4,
+                        "marginRight": 8,
+                      },
+                      Object {
+                        "backgroundColor": undefined,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View
+                      className="icon-wrapper"
+                    >
+                      <RNSVGSvgView
+                        align="xMidYMid"
+                        bbHeight={20}
+                        bbWidth={20}
+                        fill="#7843DD"
+                        focusable={false}
+                        height={20}
+                        meetOrSlice={0}
+                        minX={0}
+                        minY={0}
+                        style={
+                          Array [
+                            Object {
+                              "backgroundColor": "transparent",
+                              "borderWidth": 0,
+                            },
+                            Object {},
+                            Object {
+                              "flex": 0,
+                              "height": 20,
+                              "width": 20,
+                            },
+                          ]
+                        }
+                        vbHeight={24}
+                        vbWidth={24}
+                        width={20}
+                      >
+                        <RNSVGGroup
+                          fill={4286071773}
+                          propList={
+                            Array [
+                              "fill",
+                            ]
+                          }
+                        >
+                          <RNSVGPath
+                            d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                          />
+                        </RNSVGGroup>
+                      </RNSVGSvgView>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "marginLeft": 4,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter_created_by
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F8F5FF",
+                "borderRadius": 6,
+                "marginLeft": 4,
+                "padding": 8,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#7843DD",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                home:newsfeed_search:filter_date
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <RCTScrollView
+    ListEmptyComponent={null}
+    ListFooterComponent={
+      <View
+        style={
+          Object {
+            "marginBottom": 12,
+          }
+        }
+      />
+    }
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          Array [
+            "#7843DD",
+          ]
+        }
+        onRefresh={[Function]}
+        refreshing={true}
+        tintColor="#7843DD"
+      />
+    }
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <RCTRefreshControl />
+    <View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          style={
+            Object {
+              "marginBottom": 12,
+            }
+          }
+        />
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
