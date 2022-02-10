@@ -8,6 +8,7 @@ import {ITheme} from '~/theme/interfaces';
 
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 interface SettingItemProps {
   title: string;
@@ -23,7 +24,6 @@ interface SettingItemProps {
 const SettingItem = ({
   title,
   subtitle,
-  rightIcon,
   leftIcon,
   privacyIcon,
   isTouchDisabled,
@@ -39,24 +39,28 @@ const SettingItem = ({
         testID={testID}
         title={i18next.t(title)}
         subTitle={subtitle}
-        subTitleProps={
-          subtitle === i18next.t('common:text_not_set')
-            ? {variant: 'bodyI'}
-            : undefined
-        }
+        subTitleProps={{variant: 'subtitle'}}
         LeftComponent={
           leftIcon ? (
             <Icon
-              style={styles.leftIcon}
               icon={leftIcon}
-              tintColor={theme.colors.primary7}
+              size={24}
+              tintColor={theme.colors.primary6}
+              style={styles.leftIcon}
             />
           ) : null
         }
         RightComponent={
           <>
-            {!!privacyIcon && <Icon icon={privacyIcon} />}
-            {!!rightIcon && <Icon icon={rightIcon} style={styles.rightIcon} />}
+            {!!privacyIcon && (
+              <ButtonWrapper
+                onPress={() => {
+                  //do something next sprint
+                }}>
+                <Icon icon={privacyIcon} />
+                <Icon icon={'AngleDown'} style={styles.rightIcon} />
+              </ButtonWrapper>
+            )}
           </>
         }
       />
@@ -71,10 +75,10 @@ const themeStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     rightIcon: {
-      marginLeft: spacing.margin.extraLarge,
+      marginLeft: spacing.margin.small,
     },
     leftIcon: {
-      marginRight: spacing.margin.extraLarge,
+      marginRight: spacing.margin.base,
     },
   });
 };

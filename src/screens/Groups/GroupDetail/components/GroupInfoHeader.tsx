@@ -42,7 +42,7 @@ const GroupInfoHeader = () => {
   } = groupDetail;
 
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
-  const {icon: iconPrivacy}: any = privacyData || {};
+  const {icon: iconPrivacy, groupTitle}: any = privacyData || {};
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -65,19 +65,18 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
+        <Text.H4 style={styles.nameHeader}>{groupName}</Text.H4>
         <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
             icon={iconPrivacy}
-            size={20}
+            size={16}
             tintColor={theme.colors.iconTint}
           />
-          <Text.H4 style={styles.nameHeader}>{groupName}</Text.H4>
-        </View>
-        <View style={styles.groupInfo}>
-          <Text.Subtitle>{`${user_count} ${t(
-            'groups:text_members',
-          )}`}</Text.Subtitle>
+          <Text.Subtitle useI18n>{groupTitle}</Text.Subtitle>
+          <Text.Subtitle> • </Text.Subtitle>
+          <Text.BodySM>{user_count}</Text.BodySM>
+          <Text.Subtitle>{` ${t('groups:text_members')}`}</Text.Subtitle>
         </View>
       </View>
     );
@@ -155,7 +154,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       alignItems: 'center',
     },
     avatar: {
-      marginRight: spacing?.margin.base,
+      marginRight: spacing?.margin.large,
     },
     groupInfoHeaderContainer: {
       flex: 1,

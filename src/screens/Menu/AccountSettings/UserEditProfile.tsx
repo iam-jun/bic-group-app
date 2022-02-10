@@ -12,7 +12,6 @@ import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import ListView from '~/beinComponents/list/ListView';
 import Button from '~/beinComponents/Button';
 
 import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
@@ -28,6 +27,7 @@ import {
   scaleSize,
   userProfileImageCropRatio,
 } from '~/theme/dimension';
+import {useUserIdAuth} from '~/hooks/auth';
 
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
@@ -37,9 +37,14 @@ import menuKeySelector from '../redux/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
+import Avatar from '~/beinComponents/Avatar';
+import {isEmpty} from 'lodash';
 
-const UserEditProfile = () => {
+const UserEditProfile = (props: any) => {
+  const {userId, params} = props?.route?.params || {};
+
   const [coverHeight, setCoverHeight] = useState<number>(210);
+  const [userData, setUserData] = useState<any>({});
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -48,8 +53,9 @@ const UserEditProfile = () => {
   const navigation = useNavigation();
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
+  const {username: currentUsername, id} = myProfile || {};
+
   const {
-    id,
     fullname,
     gender,
     avatar,
@@ -62,11 +68,34 @@ const UserEditProfile = () => {
     country_code,
     country,
     city,
-  } = myProfile || {};
+    description,
+  } = userData || {};
 
   const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
   const loadingCover = useKeySelector(menuKeySelector.loadingCover);
   const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
+
+  const currentUserId = useUserIdAuth();
+
+  const getUserProfile = () => {
+    dispatch(menuActions.clearUserProfile());
+    if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
+  };
+
+  useEffect(() => {
+    if (
+      (userId == currentUserId || userId == currentUsername) &&
+      isEmpty(params)
+    ) {
+      setUserData(myProfile);
+    } else {
+      setUserData(params);
+    }
+  }, [myProfile, params]);
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   useEffect(() => {
     dispatch(menuActions.getMyWorkExperience());
@@ -134,27 +163,37 @@ const UserEditProfile = () => {
     setCoverHeight(coverHeight);
   };
 
+  const goToEditDescription = () => {
+    navigation.navigate(mainStack.editDescription);
+  };
+
   const renderAvatar = () => {
     return (
       <View>
-        <View style={styles.avatarHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+        <View style={styles.headerItem}>
+          <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_avatar
           </Text.H5>
-          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
-            <Text.H6
-              testID="user_edit_profile.avatar.edit"
-              color={!loadingAvatar ? colors.primary7 : colors.textDisabled}
-              useI18n>
-              settings:title_edit
-            </Text.H6>
-          </ButtonWrapper>
+          {userId == currentUserId || userId == currentUsername ? (
+            <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+              <Text.H6
+                testID="user_edit_profile.avatar.edit"
+                color={
+                  !loadingAvatar ? colors.textPrimary : colors.textDisabled
+                }
+                style={styles.editBtn}
+                useI18n>
+                settings:title_edit
+              </Text.H6>
+            </ButtonWrapper>
+          ) : null}
         </View>
         <View style={styles.imageButton}>
           {!loadingAvatar ? (
-            <Image
+            <Avatar.UltraSuperLarge
               style={styles.avatar}
               source={avatar || images.img_user_avatar_default}
+              isRounded={true}
             />
           ) : (
             <View style={[styles.avatar, styles.imageLoading]}>
@@ -170,20 +209,25 @@ const UserEditProfile = () => {
   const renderCover = () => {
     return (
       <View>
-        <View style={styles.coverHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+        <View style={styles.headerItem}>
+          <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_cover
           </Text.H5>
-          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
-            <Text.H6
-              testID="user_edit_profile.cover.edit"
-              color={!loadingCover ? colors.primary7 : colors.textDisabled}
-              useI18n>
-              settings:title_edit
-            </Text.H6>
-          </ButtonWrapper>
+          {userId == currentUserId || userId == currentUsername ? (
+            <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+              <Text.H6
+                testID="user_edit_profile.cover.edit"
+                color={!loadingCover ? colors.textPrimary : colors.textDisabled}
+                style={styles.editBtn}
+                useI18n>
+                settings:title_edit
+              </Text.H6>
+            </ButtonWrapper>
+          ) : null}
         </View>
-        <View onLayout={onCoverLayout}>
+        <View
+          style={{paddingHorizontal: theme.spacing.padding.large}}
+          onLayout={onCoverLayout}>
           {!loadingCover ? (
             <Image
               style={styles.cover}
@@ -195,6 +239,32 @@ const UserEditProfile = () => {
             </View>
           )}
         </View>
+      </View>
+    );
+  };
+
+  const renderDescription = () => {
+    return (
+      <View style={{paddingTop: theme.spacing.padding.base}}>
+        <View style={styles.headerItem}>
+          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+            settings:text_description
+          </Text.H5>
+          {userId == currentUserId || userId == currentUsername ? (
+            <ButtonWrapper onPress={goToEditDescription}>
+              <Text.H6
+                testID="user_edit_profile.basic_info.edit"
+                color={colors.textPrimary}
+                style={styles.editBtn}
+                useI18n>
+                settings:title_edit
+              </Text.H6>
+            </ButtonWrapper>
+          ) : null}
+        </View>
+        <Text.BodyS style={styles.descriptionText}>
+          {description || i18next.t('common:text_not_set')}
+        </Text.BodyS>
         <Divider style={styles.divider} />
       </View>
     );
@@ -203,18 +273,20 @@ const UserEditProfile = () => {
   const renderBasicInfo = () => {
     return (
       <View>
-        <View style={styles.infoHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+        <View style={styles.headerItem}>
+          <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_basic_info
           </Text.H5>
-          <ButtonWrapper onPress={goToEditInfo}>
-            <Text.H6
-              testID="user_edit_profile.basic_info.edit"
-              color={theme.colors.primary7}
-              useI18n>
-              settings:title_edit
-            </Text.H6>
-          </ButtonWrapper>
+          {userId == currentUserId || userId == currentUsername ? (
+            <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
+              <Text.H6
+                testID="user_edit_profile.basic_info.edit"
+                color={colors.textPrimary}
+                useI18n>
+                settings:title_edit
+              </Text.H6>
+            </ButtonWrapper>
+          ) : null}
         </View>
         <View style={styles.infoItem}>
           <SettingItem
@@ -266,18 +338,21 @@ const UserEditProfile = () => {
   const renderContact = () => {
     return (
       <View>
-        <View style={styles.infoHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+        <View style={styles.headerItem}>
+          <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_contact
           </Text.H5>
-          <ButtonWrapper onPress={goToEditContact}>
-            <Text.H6
-              testID="user_edit_profile.contact.edit"
-              color={theme.colors.primary7}
-              useI18n>
-              settings:title_edit
-            </Text.H6>
-          </ButtonWrapper>
+          {userId == currentUserId || userId == currentUsername ? (
+            <ButtonWrapper onPress={goToEditContact}>
+              <Text.H6
+                testID="user_edit_profile.contact.edit"
+                color={colors.textPrimary}
+                style={styles.editBtn}
+                useI18n>
+                settings:title_edit
+              </Text.H6>
+            </ButtonWrapper>
+          ) : null}
         </View>
         <View style={styles.infoItem}>
           <SettingItem
@@ -320,9 +395,13 @@ const UserEditProfile = () => {
         leftIcon={'iconSuitcase'}
         leftIconProps={{
           icon: 'iconSuitcase',
-          size: 20,
+          size: 24,
         }}
-        RightComponent={<Icon icon={'EditAlt'} />}
+        RightComponent={
+          userId == currentUserId || userId == currentUsername ? (
+            <Icon icon={'EditAlt'} size={20} />
+          ) : null
+        }
         ContentComponent={
           <View>
             <Text.ButtonBase>{`${item?.titlePosition} ${i18next.t(
@@ -351,31 +430,39 @@ const UserEditProfile = () => {
             )}
           </View>
         }
-        onPress={() => selectWorkItem(item)}
+        onPress={() => {
+          (userId == currentUserId || userId == currentUsername) &&
+            selectWorkItem(item);
+        }}
       />
     );
   };
 
   const renderWorkExperience = () => {
-    return (
+    return userId == currentUserId || userId == currentUsername ? (
       <View>
-        <View style={styles.infoHeader}>
-          <Text.H5 color={theme.colors.iconTint} useI18n>
+        <View style={styles.headerItem}>
+          <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:text_work
           </Text.H5>
         </View>
         <View style={styles.infoItem}>
-          <ListView data={myWorkExperience} renderItem={renderWorkItem} />
+          {myWorkExperience?.map((item: IUserWorkExperience) =>
+            renderWorkItem({item}),
+          )}
         </View>
-        <Button.Secondary
-          onPress={goToAddWork}
-          style={styles.buttonAddWork}
-          testID="user_edit_profile.work.add_work">
-          {i18next.t('settings:text_add_work')}
-        </Button.Secondary>
-        <Divider style={styles.divider} />
+        {userId == currentUserId || userId == currentUsername ? (
+          <Button.Secondary
+            color={colors.primary1}
+            textColor={colors.primary6}
+            onPress={goToAddWork}
+            style={styles.buttonAddWork}
+            testID="user_edit_profile.work.add_work">
+            {i18next.t('settings:text_add_work')}
+          </Button.Secondary>
+        ) : null}
       </View>
-    );
+    ) : null;
   };
 
   return (
@@ -387,6 +474,7 @@ const UserEditProfile = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}
         {renderCover()}
+        {renderDescription()}
         {renderBasicInfo()}
         {renderContact()}
         {renderWorkExperience()}
@@ -407,24 +495,15 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     list: {
       marginTop: spacing.margin.base,
     },
-    avatarHeader: {
+    headerItem: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
+      paddingRight: spacing.padding.base,
+      paddingVertical: spacing.padding.small,
+      paddingLeft: spacing.padding.large,
+      alignItems: 'center',
     },
-    coverHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-    infoHeader: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
+    editBtn: {padding: spacing.padding.small},
     avatar: {
       width: scaleSize(96),
       height: scaleSize(96),
@@ -439,6 +518,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     cover: {
       width: '100%',
       height: coverHeight,
+      borderRadius: spacing.borderRadius.small,
     },
     infoItem: {
       marginHorizontal: spacing.margin.tiny,
@@ -451,7 +531,18 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     buttonAddWork: {
       marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.base,
+      marginVertical: spacing.margin.base,
+    },
+    descriptionText: {
+      marginLeft: spacing.margin.large,
+      marginTop: spacing.margin.small,
+    },
+    rightIcon: {
+      marginLeft: spacing.margin.small,
+    },
+    editBtnIcon: {
+      padding: spacing.padding.small,
+      marginLeft: spacing.padding.base,
     },
   });
 };

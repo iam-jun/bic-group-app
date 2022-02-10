@@ -108,10 +108,9 @@ export const appScreens = {
   settingEditBasicInfo: 'edit-basic-info',
   settingEditContact: 'edit-contact',
   settingEditEmail: 'edit-email',
-  settingEditPhoneNumber: 'edit-phone-number',
-  settingEditLocation: 'edit-location',
   userProfile: 'user-profile',
   settingCreateWork: 'add-work',
+  settingEditDescription: 'edit-description',
 
   // Notification
   notificationEmpty: 'not-select-notification',
@@ -404,9 +403,6 @@ export const linkingConfigFullLaptop = {
               'edit-email': {
                 path: 'settings/account/edit-email',
               },
-              'edit-phone-number': {
-                path: 'settings/account/edit-phone-number',
-              },
               'edit-location': {
                 path: 'settings/account/edit-location',
               },
@@ -418,6 +414,9 @@ export const linkingConfigFullLaptop = {
               },
               'add-work': {
                 path: 'settings/add-work',
+              },
+              'edit-description': {
+                padth: 'settings/edit-description',
               },
             },
           },

@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {StyleSheet, View, Platform} from 'react-native';
+import {StyleSheet, View, Platform, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
@@ -22,16 +22,19 @@ import {
 } from '~/interfaces/IEditUser';
 import OptionMenu from './fragments/OptionMenu';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
-import SettingItem from './fragments/SettingItem';
 import * as modalActions from '~/store/modal/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import EditName from './EditName';
+import EditName from './fragments/EditName';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
+import TitleComponent from '../fragments/TitleComponent';
+import Button from '~/beinComponents/Button';
 
 const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
+
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -133,14 +136,21 @@ const EditBasicInfo = () => {
     }
   };
 
-  const onGenderEditOpen = (e: any) =>
+  const onGenderEditOpen = (e: any) => {
+    Keyboard.dismiss();
     genderSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
 
-  const onDateEditOpen = () => setSelectingDate(true);
+  const onDateEditOpen = () => {
+    Keyboard.dismiss();
+    setSelectingDate(true);
+  };
   const onDateEditClose = () => setSelectingDate(false);
 
-  const onRelationshipEditOpen = (e: any) =>
+  const onRelationshipEditOpen = (e: any) => {
+    Keyboard.dismiss();
     relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
 
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
@@ -150,7 +160,8 @@ const EditBasicInfo = () => {
         buttonText={'common:text_save'}
         buttonProps={{
           useI18n: true,
-          highEmphasis: true,
+          color: theme.colors.primary6,
+          textColor: theme.colors.background,
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
@@ -158,41 +169,46 @@ const EditBasicInfo = () => {
 
       <View style={styles.content}>
         <EditName onChangeName={setNameState} />
-
-        <SettingItem
-          title={'settings:title_gender'}
-          subtitle={titleCase(genderState) || i18next.t('common:text_not_set')}
-          leftIcon={'UserSquare'}
-          rightIcon={'EditAlt'}
+        <TitleComponent icon="UserSquare" title="settings:title_gender" />
+        <Button
           testID="edit_basic_info.gender"
-          onPress={e => onGenderEditOpen(e)}
-        />
-        <SettingItem
-          title={'settings:title_birthday'}
-          subtitle={
-            formatDate(birthdayState, 'MMM Do, YYYY') ||
-            i18next.t('common:text_not_set')
-          }
-          leftIcon={'Calender'}
-          rightIcon={'EditAlt'}
+          textProps={{color: colors.textInput, variant: 'body'}}
+          style={styles.buttonDropDown}
+          contentStyle={styles.buttonDropDownContent}
+          rightIcon={'AngleDown'}
+          onPress={e => onGenderEditOpen(e)}>
+          {titleCase(genderState) || i18next.t('common:text_not_set')}
+        </Button>
+        <TitleComponent icon="Calender" title="settings:title_birthday" />
+        <Button
           testID="edit_basic_info.birthday"
-          onPress={onDateEditOpen}
-        />
+          textProps={{color: colors.textInput, variant: 'body'}}
+          style={styles.buttonDropDown}
+          contentStyle={styles.buttonDropDownContent}
+          onPress={() => onDateEditOpen()}>
+          {formatDate(birthdayState, 'MMM Do, YYYY') ||
+            i18next.t('common:text_not_set')}
+        </Button>
+
         <LanguageOptionMenu
           title={'settings:title_choose_languages'}
           onChangeLanguages={_onChangeLanguages}
         />
-        <SettingItem
-          title={'settings:title_relationship_status'}
-          subtitle={
-            i18next.t(relationshipStatus[relationshipState]) ||
-            i18next.t('common:text_not_set')
-          }
-          leftIcon={'Heart'}
-          rightIcon={'EditAlt'}
-          testID="edit_basic_info.relationship"
-          onPress={e => onRelationshipEditOpen(e)}
+
+        <TitleComponent
+          icon="Heart"
+          title="settings:title_relationship_status"
         />
+        <Button
+          testID="edit_basic_info.relationship"
+          textProps={{color: colors.textInput, variant: 'body'}}
+          style={styles.buttonDropDown}
+          contentStyle={styles.buttonDropDownContent}
+          rightIcon={'AngleDown'}
+          onPress={e => onRelationshipEditOpen(e)}>
+          {i18next.t(relationshipStatus[relationshipState]) ||
+            i18next.t('common:text_not_set')}
+        </Button>
       </View>
 
       <OptionMenu
@@ -227,14 +243,14 @@ const EditBasicInfo = () => {
 export default EditBasicInfo;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
     },
     content: {
-      marginHorizontal: spacing.margin.base,
+      marginHorizontal: spacing.margin.large,
     },
     textEdit: {
       marginBottom: spacing.margin.small,
@@ -242,6 +258,20 @@ const themeStyles = (theme: ITheme) => {
     contentComponent: {marginHorizontal: spacing.margin.base},
     chooseGenderText: {
       margin: spacing.margin.base,
+    },
+    textinput: {},
+    buttonDropDown: {
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      minHeight: 44,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      paddingLeft: spacing.padding.base,
+      marginVertical: spacing.margin.small,
+    },
+    buttonDropDownContent: {
+      justifyContent: 'space-between',
     },
   });
 };

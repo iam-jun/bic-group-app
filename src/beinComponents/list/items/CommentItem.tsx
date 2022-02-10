@@ -17,7 +17,9 @@ export interface CommentItemProps {
   commentData: IReaction;
   commentParent?: IReaction;
   contentBackgroundColor?: string;
-  onPressReply?: (data: IReaction, isChild?: boolean) => void;
+  section?: any;
+  index?: number;
+  onPressReply?: (data: IReaction, section?: any, index?: number) => void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -26,12 +28,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
   commentData,
   commentParent,
   contentBackgroundColor,
+  section,
+  index,
   onPressReply,
 }: CommentItemProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const styles = React.useMemo(() => createStyle(theme), [theme]);
 
   const _onPressReply = useCallback(() => {
     dispatch(
@@ -40,7 +44,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
         parentComment: commentParent,
       }),
     );
-    onPressReply?.(commentData);
+    onPressReply?.(commentData, section, index);
   }, [commentData, commentParent]);
 
   const childCommentCount = commentData?.children_counts?.comment || 0;
