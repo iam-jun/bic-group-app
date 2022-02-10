@@ -72,7 +72,7 @@ const contentMinHeight = 46;
 const contentInsetHeight = 24;
 const inputMinHeight = 22;
 const toastMinHeight = 36;
-// const maxInputHeight = 500;
+const contentMaxHeight = 900;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -95,9 +95,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isAnimated = isAndroidAnimated || isWeb;
 
   const {height} = useWindowDimensions();
-  const minInputHeight = height * 0.3;
-  const contentHeight = height * 0.65;
-  const maxInputHeight = contentHeight < 600 ? contentHeight : 600;
+  const inputMaxHeight = height * 0.3;
 
   const {isOpen: isKeyboardOpen} = useKeyboardStatus();
   const heightAnimated = useRef(new Animated.Value(contentMinHeight)).current;
@@ -683,23 +681,24 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onLayoutAnimated = () => {
     let newInputHeight = inputHeight;
-    if (isAndroidAnimated && inputHeight > maxInputHeight) {
-      newInputHeight = maxInputHeight;
-    }
     if (isAndroidAnimated) {
       newInputHeight =
-        isKeyboardOpen && newInputHeight > minInputHeight
-          ? minInputHeight
+        isKeyboardOpen && newInputHeight > inputMaxHeight
+          ? inputMaxHeight
           : newInputHeight;
     }
     const toastHeight = isShowToastAutoSave ? toastMinHeight : 0;
-    const newHeight = Math.max(
+    let newHeight = Math.max(
       newInputHeight + contentInsetHeight + photosHeight + toastHeight,
       contentMinHeight + photosHeight + toastHeight,
     );
+    if (isAndroidAnimated && newHeight > contentMaxHeight) {
+      newHeight = contentMaxHeight;
+    }
     if (currentWebInputHeight.current === newHeight) {
       return;
     }
+
     currentWebInputHeight.current = newHeight;
     animatedTiming(newHeight, toastHeight);
   };
