@@ -28,7 +28,7 @@
     "android-deploy-production": "cd android && fastlane deploy_production",
     "test": "detox",
     "jest": "jest",
-    "jest-coverage": "jest --coverage --silent"
+    "jest:cov": "jest --coverage --silent"
   },
   "dependencies": {
     "@iconscout/react-native-unicons": "1.0.3",
@@ -95,7 +95,7 @@
     "react-native-paper": "4.11.2",
     "react-native-parsed-text": "0.0.22",
     "react-native-reanimated": "2.2.3",
-    "react-native-safe-area-context": "3.2.0",
+    "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "3.2.0",
     "react-native-shared-group-preferences": "https://github.com/minhthu-evol/react-native-shared-group-preferences.git",
     "react-native-svg": "12.1.1",

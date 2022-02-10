@@ -13,10 +13,13 @@ require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 import colors from '~/theme/colors';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 
 configure({adapter: new Adapter()});
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
+jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 
 jest.doMock('react-i18next', () => ({
   useTranslation: () => {
