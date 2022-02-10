@@ -1,6 +1,6 @@
 import homeTypes from './types';
 
-const initialHomeState = {
+export const homeInitState = {
   loadingHomePosts: false,
   refreshingHomePosts: false,
   noMoreHomePosts: false,
@@ -34,7 +34,7 @@ const initialHomeState = {
   },
 };
 
-const homeReducer = (state = initialHomeState, action: any = {}) => {
+const homeReducer = (state = homeInitState, action: any = {}) => {
   const {type, payload} = action;
 
   switch (type) {
@@ -77,7 +77,7 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
     case homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER:
       return {
         ...state,
-        newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
+        newsfeedSearchFilter: homeInitState.newsfeedSearchFilter,
       };
     case homeTypes.SET_NEWSFEED_SEARCH_USERS:
       return {
@@ -98,11 +98,10 @@ const homeReducer = (state = initialHomeState, action: any = {}) => {
     case homeTypes.CLEAR_ALL_NEWSFEED_SEARCH:
       return {
         ...state,
-        newsfeedSearch: initialHomeState.newsfeedSearch,
-        newsfeedSearchFilter: initialHomeState.newsfeedSearchFilter,
-        newsfeedSearchUsers: initialHomeState.newsfeedSearchUsers,
-        newsfeedSearchRecentKeyword:
-          initialHomeState.newsfeedSearchRecentKeyword,
+        newsfeedSearch: homeInitState.newsfeedSearch,
+        newsfeedSearchFilter: homeInitState.newsfeedSearchFilter,
+        newsfeedSearchUsers: homeInitState.newsfeedSearchUsers,
+        newsfeedSearchRecentKeyword: homeInitState.newsfeedSearchRecentKeyword,
       };
 
     default:

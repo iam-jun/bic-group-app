@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
-const initNotificationsState = {
+export const notiInitState = {
   loadingNotifications: false,
   notificationList: [],
   unseenNumber: 0,
@@ -11,10 +11,7 @@ const initNotificationsState = {
   pushToken: '',
 };
 
-function notificationsReducer(
-  state = initNotificationsState,
-  action: any = {},
-) {
+function notificationsReducer(state = notiInitState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case notificationsTypes.SET_LOADING_NOTIFICATIONS:
