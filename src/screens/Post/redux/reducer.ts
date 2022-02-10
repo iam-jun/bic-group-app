@@ -1,3 +1,4 @@
+import {IReaction} from '~/interfaces/IPost';
 import postTypes from './types';
 
 export const postInitState = {
@@ -59,6 +60,7 @@ export const postInitState = {
     data: undefined,
     fromStack: '',
   },
+  scrollToLatestItem: null,
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -223,6 +225,82 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         allCommentsByParentIds: payload,
       };
+    case postTypes.SET_SCROLL_TO_LATEST_ITEM:
+      return {
+        ...state,
+        scrollToLatestItem: payload,
+      };
+    case postTypes.UPDATE_COMMENT_API: {
+      // update pre-comment with data receiving from API
+      const {status, localId, postId, resultComment, parentCommentId} = payload;
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const postComments = [...allCommentsByPost[postId]];
+      let comment;
+
+      if (parentCommentId) {
+        // find parent comment
+        const parentCommentPosition = postComments.findIndex(
+          (item: IReaction) => item.id === parentCommentId,
+        );
+        // find and update target reply comment
+        const latestChildren =
+          postComments[parentCommentPosition].latest_children || {};
+        const childrenComments = latestChildren.comment || [];
+        const targetPosition = childrenComments.findIndex(
+          (item: IReaction) => item?.localId === localId,
+        );
+        comment = {
+          ...childrenComments[targetPosition],
+          ...resultComment,
+          status,
+        };
+        childrenComments[targetPosition] = comment;
+      } else {
+        const position = postComments.findIndex(
+          (item: IReaction) => item?.localId === localId,
+        );
+        comment = {...postComments[position], ...resultComment, status};
+        postComments[position] = comment;
+      }
+
+      allCommentsByPost[postId] = postComments;
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
+      };
+    }
+    case postTypes.POST_CANCEL_FAILED_COMMENT: {
+      // find and remove target reply comment
+      const {localId, parentCommentId, activity_id: postId} = payload;
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const postComments = [...allCommentsByPost[postId]];
+
+      if (parentCommentId) {
+        // find parent comment
+        const parentCommentPosition = postComments.findIndex(
+          (item: IReaction) => item.id === parentCommentId,
+        );
+
+        const latestChildren =
+          postComments[parentCommentPosition].latest_children || {};
+        const childrenComments = latestChildren.comment || [];
+        const targetPosition = childrenComments.findIndex(
+          (item: IReaction) => item?.localId === localId,
+        );
+        childrenComments.splice(targetPosition, 1);
+      } else {
+        const position = postComments.findIndex(
+          (item: IReaction) => item?.localId === localId,
+        );
+        postComments.splice(position, 1);
+      }
+
+      allCommentsByPost[postId] = postComments;
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
+      };
+    }
     case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
       return {
         ...state,

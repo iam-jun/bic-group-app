@@ -1,7 +1,13 @@
-import React, {useCallback, useRef} from 'react';
-import {Animated, Platform, StyleSheet, View} from 'react-native';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
+import {Animated as RNAnimated, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -49,7 +55,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const animated = useRef(new Animated.Value(0)).current;
+  const animated = useRef(new RNAnimated.Value(0)).current;
 
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
@@ -65,6 +71,30 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const {content} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
+
+  const [commentStatus, setCommentStatus] = useState(
+    commentData?.status || null,
+  );
+  const isActive = commentStatus === 'success' || commentStatus === null;
+
+  const progress = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
+
+  useEffect(() => {
+    if (isActive) {
+      showComment(1);
+    } else if (commentStatus === 'pending') {
+      showComment(0.5);
+    }
+  }, [commentStatus]);
+
+  useEffect(() => {
+    setCommentStatus(commentData?.status || null);
+  }, [commentData?.status]);
+
+  const showComment = (value: number, duration = 300) => {
+    progress.value = withTiming(value, {duration});
+  };
 
   const onPressUser = (e?: any) => {
     const id = user?.id;
@@ -168,7 +198,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onMouseOver = () => {
-    Animated.timing(animated, {
+    RNAnimated.timing(animated, {
       toValue: 1,
       duration: 0,
       useNativeDriver: false,
@@ -176,7 +206,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onMouseLeave = () => {
-    Animated.timing(animated, {
+    RNAnimated.timing(animated, {
       toValue: 0,
       duration: 0,
       useNativeDriver: false,
@@ -216,28 +246,83 @@ const _CommentView: React.FC<CommentViewProps> = ({
     }
 
     return (
-      <Animated.View style={[styles.webMenuButton, {opacity: animated}]}>
+      <RNAnimated.View style={[styles.webMenuButton, {opacity: animated}]}>
         <Button>
           <Icon
+            testID={'comment_view.menu'}
             style={{}}
             onPress={onLongPress}
             icon={'EllipsisH'}
             tintColor={colors.textSecondary}
+            disabled={!isActive}
           />
         </Button>
-      </Animated.View>
+      </RNAnimated.View>
+    );
+  };
+
+  const renderReactionsReplyView = () => {
+    return (
+      isActive && (
+        <View style={styles.buttonContainer}>
+          <ReactionView
+            ownReactions={own_children}
+            reactionCounts={children_counts}
+            onAddReaction={onAddReaction}
+            onRemoveReaction={onRemoveReaction}
+            onPressSelectReaction={onPressReact}
+            onLongPressReaction={onLongPressReaction}
+          />
+          <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
+            <Text.ButtonSmall
+              style={styles.buttonReply}
+              color={colors.textSecondary}>
+              Reply
+            </Text.ButtonSmall>
+          </ButtonWrapper>
+        </View>
+      )
+    );
+  };
+
+  const onPressRetry = () => {
+    dispatch(postActions.postRetryAddComment(commentData));
+  };
+
+  const onPressCancel = () => {
+    dispatch(postActions.postCancelFailedComment(commentData));
+  };
+
+  const renderErrorState = () => {
+    return (
+      commentStatus === 'failed' && (
+        <View style={styles.errorLine}>
+          <Text.BodySM color={colors.error} useI18n>
+            common:text_failed_to_upload
+          </Text.BodySM>
+          <Text.BodySM>{`  • `}</Text.BodySM>
+          <Button onPress={onPressRetry}>
+            <Text.BodySM useI18n>common:text_retry</Text.BodySM>
+          </Button>
+          <Text.BodySM>{`  • `}</Text.BodySM>
+          <Button onPress={onPressCancel}>
+            <Text.BodySM useI18n>common:btn_cancel</Text.BodySM>
+          </Button>
+        </View>
+      )
     );
   };
 
   return (
     <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, animatedStyle]}>
         <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
           <Avatar isRounded source={avatar} />
         </ButtonWrapper>
         <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
           <Button
             onLongPress={onLongPress}
+            disabled={!isActive}
             testID="comment_view.comment_content">
             <View style={{flex: 1}}>
               <View
@@ -268,40 +353,24 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
-                  selector={postKeySelector.allCommentsByParentIds}
-                  parentId={id}
+                  selector={`${postKeySelector.allComments}.${id}.data.mentions.users`}
                   onPressAudience={onPressAudience}
                 />
               </View>
               <CommentMediaView data={data} onLongPress={onLongPress} />
             </View>
           </Button>
-          <View style={styles.buttonContainer}>
-            <ReactionView
-              ownReactions={own_children}
-              reactionCounts={children_counts}
-              onAddReaction={onAddReaction}
-              onRemoveReaction={onRemoveReaction}
-              onPressSelectReaction={onPressReact}
-              onLongPressReaction={onLongPressReaction}
-            />
-            <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-              <Text.ButtonSmall
-                style={styles.buttonReply}
-                color={colors.textSecondary}>
-                Reply
-              </Text.ButtonSmall>
-            </ButtonWrapper>
-          </View>
+          {renderReactionsReplyView()}
         </View>
         {renderWebMenuButton()}
-      </View>
+      </Animated.View>
+      {renderErrorState()}
     </Div>
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors, spacing, dimension} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -315,6 +384,12 @@ const createStyle = (theme: ITheme) => {
     },
     buttonContainer: {
       flexDirection: 'row',
+    },
+    errorLine: {
+      flexDirection: 'row',
+      paddingTop: spacing.padding.base,
+      // @ts-ignore
+      marginLeft: dimension.avatarSizes['medium'] + spacing.margin.small,
     },
     buttonReply: {
       marginRight: spacing?.margin.tiny,

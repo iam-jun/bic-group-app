@@ -123,6 +123,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
       </View>
       <View style={styles.buttonRow}>
         <Button
+          testID={'header_create_post.image'}
           style={styles.buttonSmall}
           textProps={{color: colors.textTertiary}}
           leftIcon={'Image'}
@@ -133,6 +134,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
           </Text.BodySM>
         </Button>
         <Button
+          testID={'header_create_post.draft'}
           style={styles.buttonSmall}
           textProps={{color: colors.textTertiary}}
           leftIcon={'edit'}

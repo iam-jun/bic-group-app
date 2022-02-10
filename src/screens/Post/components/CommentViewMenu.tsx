@@ -91,6 +91,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const renderReactItem = (item: any, index: number) => {
     return (
       <Button
+        testID={`comment_view_menu.react_${index}`}
         key={`reaction_${index}_${item.id}`}
         onPress={() => _onPressReaction(item)}>
         <Text style={{fontSize: 24, lineHeight: 30}}>{item}</Text>
@@ -102,7 +103,10 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     return (
       <View style={styles.reactContainer}>
         {quickReactions.map(renderReactItem)}
-        <Button style={styles.btnReact} onPress={_onPressMoreReaction}>
+        <Button
+          testID={'comment_view_menu.more_react'}
+          style={styles.btnReact}
+          onPress={_onPressMoreReaction}>
           <Icon icon={'iconReact'} size={22} />
         </Button>
       </View>
@@ -113,6 +117,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     <View style={styles.container}>
       {renderReact()}
       <PrimaryItem
+        testID={'comment_view_menu.reply'}
         style={styles.item}
         leftIcon={'CornerDownRight'}
         leftIconProps={{icon: 'CornerDownRight', size: 24}}
@@ -120,6 +125,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         onPress={_onPressReply}
       />
       <PrimaryItem
+        testID={'comment_view_menu.copy'}
         style={styles.item}
         leftIcon={'Copy'}
         leftIconProps={{icon: 'Copy', size: 24}}
@@ -128,6 +134,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       />
       {isActor && (
         <PrimaryItem
+          testID={'comment_view_menu.edit'}
           style={styles.item}
           leftIcon={'Edit'}
           leftIconProps={{icon: 'Edit', size: 24}}
@@ -136,6 +143,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         />
       )}
       <PrimaryItem
+        testID={'comment_view_menu.history'}
         style={styles.item}
         leftIcon={'Redo'}
         leftIconProps={{icon: 'Redo', size: 24}}
@@ -144,6 +152,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       />
       {isActor && (
         <PrimaryItem
+          testID={'comment_view_menu.delete'}
           style={styles.item}
           leftIcon={'Trash'}
           leftIconProps={{icon: 'Trash', size: 24}}

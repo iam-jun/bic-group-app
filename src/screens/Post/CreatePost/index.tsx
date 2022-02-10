@@ -548,7 +548,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     setPause(true);
 
     try {
-      if (sIsLoading && !sPostId) {
+      if ((sIsLoading && !sPostId) || loading) {
         return;
       }
       const {imageError, images} = validateImages(selectingImages, t);
@@ -819,6 +819,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           disabled: disableButtonPost,
           useI18n: true,
           highEmphasis: true,
+          style: {borderWidth: 0},
+          testID: 'create_post.btn_post',
         }}
         onPressBack={onPressBack}
         onPressButton={() => onPressPost(false)}

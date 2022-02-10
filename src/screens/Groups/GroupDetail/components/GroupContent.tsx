@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View, Text, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -31,7 +31,7 @@ const GroupContent = ({
 }) => {
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
-  const {spacing} = theme || {};
+  const {spacing, colors} = theme || {};
   const styles = themeStyles(theme, parentWidth);
   const dispatch = useDispatch();
 
@@ -61,6 +61,10 @@ const GroupContent = ({
     rootNavigation.navigate(groupStack.groupFiles);
   };
 
+  const onPressChannel = () => {
+    rootNavigation.navigate(groupStack.groupFiles);
+  };
+
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
       dispatch(groupsActions.mergeExtraGroupPosts(groupId));
@@ -80,21 +84,42 @@ const GroupContent = ({
       <>
         <View style={styles.groupInfo}>
           <GroupInfoHeader />
-          <View style={styles.buttonContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            style={{backgroundColor: colors.background}}
+            contentContainerStyle={styles.buttonContainer}>
             {isMember && (
               <>
                 <Button.Secondary
                   useI18n
                   onPress={onPressChat}
-                  testID="group_content.chat">
-                  groups:group_content:btn_chat
+                  color={colors.bgHover}
+                  textColor={colors.textPrimary}
+                  borderRadius={spacing.borderRadius.small}
+                  testID="group_content.post">
+                  groups:group_content:btn_post
                 </Button.Secondary>
                 <ViewSpacing width={spacing.margin.base} />
               </>
             )}
             <Button.Secondary
               useI18n
+              onPress={onPressChannel}
+              color={colors.bgHover}
+              textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
+              testID="group_content.channel">
+              groups:group_content:btn_channel
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.base} />
+            <Button.Secondary
+              useI18n
               onPress={onPressAbout}
+              color={colors.bgHover}
+              textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
               testID="group_content.about">
               groups:group_content:btn_about
             </Button.Secondary>
@@ -103,6 +128,9 @@ const GroupContent = ({
               <Button.Secondary
                 useI18n
                 onPress={onPressMembers}
+                color={colors.bgHover}
+                textColor={colors.textPrimary}
+                borderRadius={spacing.borderRadius.small}
                 testID="group_content.members">
                 groups:group_content:btn_members
               </Button.Secondary>
@@ -111,10 +139,13 @@ const GroupContent = ({
             <Button.Secondary
               useI18n
               onPress={onPressFiles}
+              color={colors.bgHover}
+              textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
               testID="group_content.files">
               groups:group_content:btn_files
             </Button.Secondary>
-          </View>
+          </ScrollView>
         </View>
         {isMember && (
           <HeaderCreatePost

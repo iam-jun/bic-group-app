@@ -113,7 +113,8 @@
     "btn_decline_all": "Decline All",
     "text_request": "Request",
     "text_request_other": "Requests",
-    "text_admin": "Admin"
+    "text_admin": "Admin",
+    "text_failed_to_upload": "Failed to upload"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -300,7 +301,21 @@
     "text_location_optional": "Location (optional)",
     "text_description_optional": "Description (optional)",
     "text_since": "Since",
-    "text_enddate_after_startdate": "The End Date must come after the Start Date"
+    "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "text_education": "Education",
+    "text_social": "Social",
+    "text_social_link":"Social Link",
+    "text_description": "Description",
+    "text_add_school":"Add School",
+    "text_add_link": "Add Social Link",
+    "text_contact_info_update_success": "Contact Info Update Successfully",
+    "text_view_more_info":"View more about info...",
+    "title_set_a_custom_status": "Set a custom status",
+    "title_about_bein_app": "About Bein App",
+    "title_help_and_support": "Help & Support",
+    "group_title_public": "Public Group",
+    "group_title_private": "Private Group",
+    "group_title_secret": "Secret Group"
   },
   "languages": {
     "title_en": "English",
@@ -510,21 +525,27 @@
   },
   "groups": {
     "group_content": {
-      "btn_chat": "Chat",
+      "btn_post": "Post",
+      "btn_channel":"Channel",
       "btn_about": "About",
       "btn_members": "Members",
       "btn_files": "Files"
     },
+    "text_members": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
     "text_search_member": "Search group member",
     "text_search": "Search people",
     "group_menu": {
-      "label_copy_group_link": "Copy Group Link",
+      "label_admin_tools": "Admin Tools",
+      "label_copy_group_link": "Copy Link",
       "label_leave_group": "Leave Group",
-      "label_share_group": "Share to...",
-      "label_share_to_chat": "Share to Bein Chat"
+      "label_share_group": "Share to Chat",
+      "label_share_to_chat": "Share to Bein Chat",
+      "label_following": "Following",
+      "label_pin_group": "Pin this group",
+      "label_notifications": "Notifications"
     },
     "member_menu": {
       "label_view_profile": "View profile",

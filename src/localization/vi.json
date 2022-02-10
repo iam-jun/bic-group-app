@@ -61,7 +61,8 @@
     "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
     "label_discard_changes": "Huỷ thay đổi",
     "text_discard_warning": "Nếu bạn hủy thay đổi, bạn sẽ mất những thay đổi mà bạn đã thực hiện",
-    "btn_continue_editing": "Tiếp tục chỉnh sửa"
+    "btn_continue_editing": "Tiếp tục chỉnh sửa",
+    "text_updated_successfully": "cập nhật thành công"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -210,7 +211,47 @@
     "text_engaged": "Engaged",
     "text_married": "Married",
     "title_choose_languages": "Choose Speaking Languages",
-    "title_choose_relationship": "Choose Relationship Status"
+    "title_choose_relationship": "Choose Relationship Status",
+    "title_contact": "Danh bạ",
+    "title_email": "Email",
+    "title_phone_number": "Số điện thoại",
+    "title_address": "Địa chỉ",
+    "title_edit_contact": "Chỉnh sửa danh bạ",
+    "title_edit_phone_number": "Chỉnh sửa số điện thoại",
+    "title_edit_email_address": "Chỉnh sửa địa chỉ Email",
+    "title_edit_address": "Chỉnh sửa địa chỉ",
+    "text_wrong_email_format": "Sai định dạng Email",
+    "text_email_is_used": "Email này đã được sử dụng",
+    "text_wrong_phone_number_format": "Wrong number format",
+    "text_invalid_phone_length": "Invalid length. Valid length is 7-12 numbers",
+    "text_phone_number_is_used": "This number is already used",
+    "title_choose_location": "Choose Location",
+    "title_location": "Location",
+    "text_work": "Work",
+    "text_add_work": "Add Work",
+    "text_edit_work": "Edit Work",
+    "text_delete_work": "Delete Work",
+    "text_compamny": "Tên Công ty",
+    "text_title_position": "Title/Position",
+    "text_currently_work_here": "Currently work here",
+    "text_location_optional": "Location (optional)",
+    "text_description_optional": "Description (optional)",
+    "text_since": "Since",
+    "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "text_education": "Education",
+    "text_social": "Social",
+    "text_social_link":"Social Link",
+    "text_description": "Description",
+    "text_add_school":"Add School",
+    "text_add_link": "Add Social Link",
+    "text_contact_info_update_success": "Cập nhật thông tin liên hệ thành công!",
+    "text_view_more_info":"View more about info...",
+    "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
+    "title_about_bein_app": "Giới thiệu",
+    "title_help_and_support": "Trợ giúp & hỗ trợ",
+    "group_title_public": "Nhóm công khai",
+    "group_title_private": "Nhóm kín",
+    "group_title_secret": "Nhóm kín"
   },
   "languages": {
     "title_en": "English",
@@ -418,6 +459,14 @@
     "search_post": "Tìm kiếm bài viết..."
   },
   "groups": {
+    "group_content": {
+      "btn_post": "Bài đăng",
+      "btn_channel":"Kênh",
+      "btn_about": "Về nhóm",
+      "btn_members": "Thành viên",
+      "btn_files": "Files"
+    },
+    "text_members": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
     "group_menu": {

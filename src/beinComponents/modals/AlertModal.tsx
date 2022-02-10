@@ -136,17 +136,17 @@ const AlertModal: React.FC<AlertModalProps> = ({
               </_CancelBtnComponent>
             )}
 
-            {!!confirmLabel && (
+            {onConfirm && (
               <_ConfirmBtnComponent
                 highEmphasis
                 testID="alert_modal.confirm"
                 disabled={input && !text}
                 onPress={() => {
                   dispatch(actions.hideAlert());
-                  onConfirm && onConfirm(text);
+                  onConfirm(text);
                 }}
                 {...confirmBtnProps}>
-                {confirmLabel}
+                {confirmLabel || i18next.t('common:btn_confirm')}
               </_ConfirmBtnComponent>
             )}
           </View>

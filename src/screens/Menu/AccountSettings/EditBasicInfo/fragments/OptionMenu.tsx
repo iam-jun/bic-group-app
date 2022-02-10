@@ -7,7 +7,6 @@ import {IOptionItem} from '~/interfaces/IEditUser';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
-import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import i18next from 'i18next';
@@ -64,7 +63,7 @@ const OptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            <ListView data={data} renderItem={renderItem} />
+            {(data || []).map((item: IOptionItem) => renderItem({item}))}
           </View>
         }
       />

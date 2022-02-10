@@ -10,6 +10,8 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
 import groupsActions from '../../redux/actions';
+import {useBaseHook} from '~/hooks';
+import privacyTypes from '~/constants/privacyTypes';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
@@ -24,6 +26,7 @@ const GroupInfoHeader = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
@@ -37,6 +40,9 @@ const GroupInfoHeader = () => {
     background_img_url,
     privacy,
   } = groupDetail;
+
+  const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
+  const {icon: iconPrivacy, groupTitle}: any = privacyData || {};
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -59,24 +65,18 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <Text.H5 style={styles.nameHeader}>{groupName}</Text.H5>
-
+        <Text.H4 style={styles.nameHeader}>{groupName}</Text.H4>
         <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
-            icon={'iconPrivate'}
+            icon={iconPrivacy}
             size={16}
             tintColor={theme.colors.iconTint}
           />
-          <Text.BodySM useI18n>{titleCase(privacy)}</Text.BodySM>
-          <Text.BodySM>{`  ⬩  `}</Text.BodySM>
-          <Icon
-            style={styles.iconSmall}
-            icon={'UsersAlt'}
-            size={17}
-            tintColor={theme.colors.iconTint}
-          />
+          <Text.Subtitle useI18n>{groupTitle}</Text.Subtitle>
+          <Text.Subtitle> • </Text.Subtitle>
           <Text.BodySM>{user_count}</Text.BodySM>
+          <Text.Subtitle>{` ${t('groups:text_members')}`}</Text.Subtitle>
         </View>
       </View>
     );
@@ -154,7 +154,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       alignItems: 'center',
     },
     avatar: {
-      marginRight: spacing?.margin.base,
+      marginRight: spacing?.margin.large,
     },
     groupInfoHeaderContainer: {
       flex: 1,

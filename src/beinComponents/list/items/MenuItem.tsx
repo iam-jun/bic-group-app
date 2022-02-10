@@ -3,7 +3,7 @@ import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import Icon from '~/beinComponents/Icon';
+import Icon, {IconProps} from '~/beinComponents/Icon';
 import {IOption} from '~/interfaces/IOption';
 import Text from '~/beinComponents/Text';
 import Div from '~/beinComponents/Div';
@@ -22,6 +22,7 @@ interface MenuItemProps extends IOption {
   notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
   testID?: string;
+  iconProps?: IconProps;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -40,6 +41,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   notificationsBadgeProps,
   badgeColor,
   testID,
+  iconProps,
 }: MenuItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -77,7 +79,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           <View style={styles.itemActiveIndicator} />
         )}
         <View style={[styles.container, style]}>
-          {icon && <Icon icon={icon} size={24} />}
+          {icon && <Icon icon={icon} size={24} {...iconProps} />}
           <View style={styles.titleContainer}>
             <Text.ButtonBase useI18n>{title}</Text.ButtonBase>
             {!!subTitle && (

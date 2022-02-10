@@ -26,6 +26,10 @@ export interface AvatarProps extends ImageProps {
   badgeBottom?: boolean;
   isRounded?: boolean;
   cache?: boolean;
+  showBorder?: boolean;
+  badgeCheck?: boolean;
+  badgeCheckSize?: number;
+  iconCheckSize?: number;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -38,6 +42,10 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badge,
   badgeBottom,
   isRounded,
+  showBorder,
+  badgeCheck,
+  badgeCheckSize = 16,
+  iconCheckSize = 12,
   ...props
 }: AvatarProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -47,6 +55,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   const avatarSize = dimension?.avatarSizes[variant] || 24;
   const avatarContainerStyle: StyleProp<ViewStyle> = styles[variant];
   let avatarStyle: StyleProp<ImageStyle> = styles[variant];
+  const borderStyle = showBorder ? styles.borderStyle : {};
 
   if (isRounded) {
     avatarStyle = StyleSheet.flatten([
@@ -150,6 +159,39 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     );
   };
 
+  const renderBadgeCheck = () => {
+    if (!badgeCheck) {
+      return null;
+    }
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: badgeCheckSize,
+          height: badgeCheckSize,
+          borderRadius: badgeCheckSize / 2,
+          backgroundColor: colors.success,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderWidth: 1,
+          borderColor: colors.background,
+          shadowOffset: {width: 0, height: 1},
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowRadius: 1,
+          elevation: 2,
+        }}>
+        <Icon
+          size={iconCheckSize}
+          icon="UilCheck"
+          tintColor={colors.iconTintReversed}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={StyleSheet.flatten([avatarContainerStyle, style])}>
       <View
@@ -157,17 +199,18 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           avatarStyle,
           source ? {} : {backgroundColor: colors.borderCard},
         ])}>
-        <Image style={avatarStyle} source={source} {...props} />
+        <Image style={[avatarStyle, borderStyle]} source={source} {...props} />
         {renderStatus()}
         {renderAction()}
         {renderBadge()}
+        {renderBadgeCheck()}
       </View>
     </View>
   );
 };
 
 const creatStyle = (theme: ITheme) => {
-  const {spacing, dimension} = theme;
+  const {spacing, dimension, colors} = theme;
   return StyleSheet.create({
     container: {},
     tiny: {
@@ -200,6 +243,7 @@ const creatStyle = (theme: ITheme) => {
       height: dimension?.avatarSizes?.ultraSuperLarge,
       borderRadius: (spacing?.borderRadius.small || 6) + 2,
     },
+    borderStyle: {borderWidth: 4, borderColor: colors.background},
   });
 };
 

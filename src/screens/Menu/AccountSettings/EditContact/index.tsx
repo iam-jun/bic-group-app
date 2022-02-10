@@ -1,38 +1,41 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
+import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import Divider from '~/beinComponents/Divider';
 
-import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import Button from '~/beinComponents/Button';
+import TitleComponent from '../fragments/TitleComponent';
+import EditPhoneNumber from './fragments/EditPhoneNumber';
+import EditLocation from './fragments/EditLocation';
+import {ILocation} from '~/interfaces/common';
+import menuActions from '../../redux/actions';
 
 const EditContact = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
+  const locationRef = useRef<any>();
+
+  const dispatch = useDispatch();
+
   const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {email, phone, country_code, country, city} = myProfile || {};
+  const {email, phone, country_code, country, city, id} = myProfile || {};
 
-  const goToEditEmail = () => {
-    rootNavigation.navigate(mainStack.editEmail);
-  };
-
-  const goToEditPhoneNumber = () => {
-    rootNavigation.navigate(mainStack.editPhoneNumber);
-  };
-
-  const goToEditLocation = () => {
-    rootNavigation.navigate(mainStack.editLocation);
-  };
+  const [phoneState, setPhoneState] = useState<string>(phone);
+  const [countryCodeState, setCountryCountryCodeState] =
+    useState<string>(country_code);
+  const [countryState, setCountryState] = useState<string>(country);
+  const [cityState, setCityState] = useState<string>(city);
 
   const navigateBack = () => {
     if (rootNavigation.canGoBack) {
@@ -42,49 +45,93 @@ const EditContact = () => {
     }
   };
 
+  const onSave = () => {
+    dispatch(
+      menuActions.editMyProfile(
+        {
+          id,
+          phone: phoneState,
+          country_code: countryCodeState,
+          country: countryState,
+          city: cityState,
+        },
+        i18next.t('settings:text_contact_info_update_success'),
+      ),
+    );
+    navigateBack();
+  };
+
+  const onEditLocationOpen = (e: any) => {
+    locationRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
+
+  const onLocationItemPress = (item: ILocation) => {
+    setCountryState(item.country);
+    setCityState(item.name);
+    locationRef?.current?.close();
+    Keyboard.dismiss();
+  };
+
+  const onChangePhoneNumber = (_phone: string) => {
+    setPhoneState(_phone);
+  };
+
+  const onChangeCountryCode = (_countryCode: string) => {
+    setCountryCountryCodeState(_countryCode);
+  };
+
   return (
     <ScreenWrapper testID="EditContact" isFullView>
       <Header
         titleTextProps={{useI18n: true}}
         title={'settings:title_edit_contact'}
         onPressBack={navigateBack}
+        buttonText={'common:text_save'}
+        buttonProps={{
+          useI18n: true,
+          color: theme.colors.primary6,
+          textColor: theme.colors.background,
+        }}
+        onPressButton={onSave}
       />
+      <ScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
+        <View style={styles.infoItem}>
+          <EditPhoneNumber
+            countryCode={country_code}
+            phoneNumber={phone}
+            onChangeCountryCode={onChangeCountryCode}
+            onChangePhoneNumber={onChangePhoneNumber}
+          />
+          <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
+          <Button
+            testID="edit_contact.phone"
+            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            style={[
+              styles.buttonDropDown,
+              {backgroundColor: theme.colors.placeholder},
+            ]}
+            contentStyle={styles.buttonDropDownContent}
+            activeOpacity={1}>
+            {email || i18next.t('common:text_not_set')}
+          </Button>
 
-      <View style={styles.infoItem}>
-        <SettingItem
-          title={'settings:title_email'}
-          subtitle={email || i18next.t('common:text_not_set')}
-          leftIcon={'EnvelopeAlt'}
-          // rightIcon={'EditAlt'}
-          onPress={goToEditEmail}
-          isTouchDisabled
+          <TitleComponent icon="LocationPoint" title="settings:title_address" />
+          <Button
+            testID="edit_contact.location"
+            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            style={styles.buttonDropDown}
+            contentStyle={styles.buttonDropDownContent}
+            onPress={e => onEditLocationOpen(e)}>
+            {cityState && countryState
+              ? `${cityState}, ${countryState}`
+              : i18next.t('common:text_not_set')}
+          </Button>
+        </View>
+        <EditLocation
+          modalizeRef={locationRef}
+          onItemPress={onLocationItemPress}
         />
-        <SettingItem
-          title={'settings:title_phone_number'}
-          subtitle={
-            country_code && phone
-              ? `(+${country_code}) ${phone}`
-              : i18next.t('common:text_not_set')
-          }
-          leftIcon={'Phone'}
-          rightIcon={'EditAlt'}
-          testID="edit_contact.phone"
-          onPress={goToEditPhoneNumber}
-        />
-        <SettingItem
-          title={'settings:title_location'}
-          subtitle={
-            city && country
-              ? `${city}, ${country}`
-              : i18next.t('common:text_not_set')
-          }
-          leftIcon={'LocationPoint'}
-          rightIcon={'EditAlt'}
-          testID="edit_contact.location"
-          onPress={goToEditLocation}
-        />
-      </View>
-      <Divider style={styles.divider} />
+      </ScrollView>
     </ScreenWrapper>
   );
 };
@@ -92,14 +139,24 @@ const EditContact = () => {
 export default EditContact;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     infoItem: {
-      marginHorizontal: spacing.margin.tiny,
+      paddingHorizontal: spacing.margin.large,
     },
-    divider: {
+    buttonDropDown: {
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.borderCard,
+      minHeight: 44,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      paddingLeft: spacing.padding.base,
       marginVertical: spacing.margin.small,
+    },
+    buttonDropDownContent: {
+      justifyContent: 'space-between',
     },
   });
 };

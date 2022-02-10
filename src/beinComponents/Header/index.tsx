@@ -30,7 +30,6 @@ import Icon, {IconProps} from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import {ImageProps} from '../Image';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 
@@ -69,6 +68,7 @@ export interface HeaderProps {
   searchPlaceholder?: string;
   onPressHeader?: () => void;
   onRightPress?: () => void;
+  onPressChat?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -105,6 +105,7 @@ const Header: React.FC<HeaderProps> = ({
   searchPlaceholder,
   onPressHeader,
   onRightPress,
+  onPressChat,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
@@ -226,16 +227,17 @@ const Header: React.FC<HeaderProps> = ({
             backgroundColor: colors.background,
             overflow: 'hidden',
             alignItems: 'center',
+            paddingRight: spacing.padding.small,
+            paddingLeft: spacing.padding.small,
           }}>
-          <ViewSpacing width={spacing.margin.large} />
           {!hideBack && !(hideBackOnLaptop && isLaptop) && (
             <Icon
               testID="header.back"
               icon="iconBack"
               onPress={_onPressBack}
-              size={28}
+              size={24}
               hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-              style={styles.backButton}
+              style={styles.iconBack}
             />
           )}
           {!!avatar && (
@@ -250,8 +252,8 @@ const Header: React.FC<HeaderProps> = ({
           )}
           {!!leftIcon && (
             <Icon
-              size={14}
-              style={styles.leftIcon}
+              size={24}
+              style={styles.icon}
               icon={leftIcon}
               onPress={onPressHeader}
               {...leftIconProps}
@@ -284,42 +286,61 @@ const Header: React.FC<HeaderProps> = ({
           {!!icon && onPressIcon && (
             <Icon
               icon={icon}
-              size={20}
-              style={{marginRight: spacing?.margin.large}}
+              size={24}
+              style={styles.icon}
               onPress={onPressIcon}
+              backgroundColor={colors.bgSecondary}
+            />
+          )}
+          {onSearchText && (
+            <Icon
+              icon={'iconSearch'}
+              size={24}
+              style={styles.icon}
+              onPress={_onPressSearch}
+              backgroundColor={colors.bgSecondary}
+            />
+          )}
+          {onPressChat && (
+            <Icon
+              icon="iconChat"
+              size={24}
+              style={styles.icon}
+              onPress={onPressChat}
+              backgroundColor={colors.bgSecondary}
             />
           )}
           {onPressMenu && (
             <Icon
               icon={menuIcon || 'menu'}
-              size={20}
-              style={{marginRight: spacing?.margin.large}}
+              size={24}
+              style={styles.icon}
               onPress={onPressMenu}
+              backgroundColor={colors.bgSecondary}
             />
           )}
           {buttonText && onPressButton && (
             <Button.Secondary
               testID="header.button"
-              style={{marginRight: spacing?.margin.large}}
+              style={{
+                borderWidth: buttonProps?.disabled ? 0 : 1,
+                borderColor: colors.primary6,
+                height: 40,
+                marginRight: spacing.margin.tiny,
+              }}
+              textColor={colors.primary6}
               onPress={onPressButton}
               {...buttonProps}>
               {buttonText}
             </Button.Secondary>
           )}
-          {onSearchText && (
-            <Icon
-              icon={'iconSearch'}
-              size={20}
-              style={{marginRight: spacing?.margin.large}}
-              onPress={_onPressSearch}
-            />
-          )}
           {!!rightIcon && (
             <Icon
-              size={20}
+              size={24}
               icon={rightIcon}
-              style={{marginRight: spacing?.margin.large}}
+              style={styles.icon}
               onPress={onRightPress}
+              backgroundColor={colors.bgSecondary}
               {...rightIconProps}
             />
           )}
@@ -363,27 +384,33 @@ const createStyle = (theme: ITheme) => {
       shadowRadius: 1,
       elevation: 2,
     },
-    backButton: {
-      marginLeft: spacing.margin.tiny,
-      marginRight: spacing.margin.large,
+    iconBack: {
+      height: 48,
+      width: 48,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.base,
     },
-    avatar: {
-      marginLeft: 6,
-      marginRight: spacing.margin.large,
+    icon: {
+      height: 40,
+      width: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.small,
+      borderRadius: 20,
+      marginRight: spacing.margin.tiny,
     },
-    leftIcon: {
-      marginRight: spacing.margin.large,
-    },
+    avatar: {height: 40, width: 40},
     titleContainer: {
       flex: 1,
       height: '100%',
       justifyContent: 'center',
       paddingTop: 1.5,
+      marginLeft: spacing.padding.large,
     },
     title: {
       height: 24,
       lineHeight: 24,
-      marginRight: spacing.margin.large,
     },
     subtitle: {
       height: 16,

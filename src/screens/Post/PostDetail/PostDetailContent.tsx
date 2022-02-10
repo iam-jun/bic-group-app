@@ -51,6 +51,7 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
+import images from '~/resources/images';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -92,6 +93,7 @@ const _PostDetailContent = (props: any) => {
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
+  const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
@@ -152,6 +154,13 @@ const _PostDetailContent = (props: any) => {
       rootNavigation.goBack();
     }
   }, [deleted]);
+
+  useEffect(() => {
+    if (scrollToLatestItem) {
+      onCommentSuccess(scrollToLatestItem);
+      dispatch(postActions.setScrollToLatestItem(null));
+    }
+  }, [scrollToLatestItem]);
 
   const getPostDetail = (
     callbackLoading?: (loading: boolean, success: boolean) => void,
@@ -230,7 +239,7 @@ const _PostDetailContent = (props: any) => {
   const onPressComment = useCallback(() => {
     scrollTo(-1, -1);
     commentInputRef.current?.focus?.();
-  }, [commentInputRef.current, sectionData.length]);
+  }, [commentInputRef, sectionData.length]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -257,6 +266,17 @@ const _PostDetailContent = (props: any) => {
     [sectionData],
   );
 
+  const onPressReplySectionHeader = useCallback(
+    (commentData, section, index) => {
+      scrollTo(index, 0);
+      // set time out to wait hide context menu on web
+      setTimeout(() => {
+        commentInputRef?.current?.focus?.();
+      }, 200);
+    },
+    [],
+  );
+
   const renderSectionHeader = (sectionData: any) => {
     const {section} = sectionData || {};
     const {comment, index} = section || {};
@@ -270,16 +290,19 @@ const _PostDetailContent = (props: any) => {
         postId={id}
         commentData={comment}
         groupIds={groupIds}
-        onPressReply={() => {
-          scrollTo(index, 0);
-          // set time out to wait hide context menu on web
-          setTimeout(() => {
-            commentInputRef?.current?.focus?.();
-          }, 200);
-        }}
+        index={index}
+        onPressReply={onPressReplySectionHeader}
       />
     );
   };
+
+  const onPressReplyCommentItem = useCallback((commentData, section, index) => {
+    scrollTo(section?.index, index + 1);
+    // set time out to wait hide context menu on web
+    setTimeout(() => {
+      commentInputRef?.current?.focus?.();
+    }, 200);
+  }, []);
 
   const renderCommentItem = (data: any) => {
     const {item, index, section} = data || {};
@@ -289,13 +312,9 @@ const _PostDetailContent = (props: any) => {
         commentData={item}
         commentParent={section?.comment}
         groupIds={groupIds}
-        onPressReply={() => {
-          scrollTo(section?.index, index + 1);
-          // set time out to wait hide context menu on web
-          setTimeout(() => {
-            commentInputRef?.current?.focus?.();
-          }, 200);
-        }}
+        index={index}
+        section={section}
+        onPressReply={onPressReplyCommentItem}
       />
     );
   };
@@ -318,53 +337,61 @@ const _PostDetailContent = (props: any) => {
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
+  const renderComments = () => {
+    if (!postTime) return <PostViewPlaceholder />;
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.postDetailContainer}>
+          <SectionList
+            ref={listRef}
+            sections={deleted ? defaultList : sectionData}
+            renderItem={renderCommentItem}
+            renderSectionHeader={renderSectionHeader}
+            ListHeaderComponent={
+              <PostDetailContentHeader
+                id={id}
+                commentLeft={commentLeft}
+                onPressComment={onPressComment}
+                onContentLayout={props?.onContentLayout}
+                idLessThan={listComment?.[0]?.id}
+              />
+            }
+            ListFooterComponent={commentCount && renderFooter}
+            stickySectionHeadersEnabled={false}
+            ItemSeparatorComponent={() => <View />}
+            keyboardShouldPersistTaps={'handled'}
+            onLayout={onLayout}
+            onContentSizeChange={onLayout}
+            onScrollToIndexFailed={onScrollToIndexFailed}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                tintColor={colors.borderDisable}
+              />
+            }
+          />
+          <CommentInputView
+            commentInputRef={commentInputRef}
+            postId={id}
+            groupIds={groupIds}
+            autoFocus={!!focus_comment}
+            onCommentSuccess={onCommentSuccess}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.flex1}>
-      <Header title={headerTitle} onPressBack={onPressBack} />
-      {!postTime ? (
-        <PostViewPlaceholder />
-      ) : (
-        <View style={styles.container}>
-          <View style={styles.postDetailContainer}>
-            <SectionList
-              ref={listRef}
-              sections={deleted ? defaultList : sectionData}
-              renderItem={renderCommentItem}
-              renderSectionHeader={renderSectionHeader}
-              ListHeaderComponent={
-                <PostDetailContentHeader
-                  id={id}
-                  commentLeft={commentLeft}
-                  onPressComment={onPressComment}
-                  onContentLayout={props?.onContentLayout}
-                  idLessThan={listComment?.[0]?.id}
-                />
-              }
-              ListFooterComponent={commentCount && renderFooter}
-              stickySectionHeadersEnabled={false}
-              ItemSeparatorComponent={() => <View />}
-              keyboardShouldPersistTaps={'handled'}
-              onLayout={onLayout}
-              onContentSizeChange={onLayout}
-              onScrollToIndexFailed={onScrollToIndexFailed}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                  tintColor={colors.borderDisable}
-                />
-              }
-            />
-            <CommentInputView
-              commentInputRef={commentInputRef}
-              postId={id}
-              groupIds={groupIds}
-              autoFocus={!!focus_comment}
-              onCommentSuccess={onCommentSuccess}
-            />
-          </View>
-        </View>
-      )}
+      <Header
+        title={headerTitle}
+        onPressBack={onPressBack}
+        avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
+      />
+      {renderComments()}
     </View>
   );
 };

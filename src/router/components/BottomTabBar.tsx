@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
+  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -31,6 +32,8 @@ import {deviceDimensions, sizes} from '~/theme/dimension';
 import useTabBadge from '~/hooks/tabBadge';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import {fontFamilies} from '~/theme/fonts';
+import {DrawerActions} from '@react-navigation/native';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -131,18 +134,22 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const icon = isFocused ? bottomTabIconsFocused : bottomTabIcons;
     // @ts-ignore
     const iconName = icon[name];
-    const textColor = isFocused ? colors.primary7 : colors.textSecondary;
+    const textColor = isFocused ? colors.primary6 : colors.textSecondary;
     const styles = tabBarIconStyles(theme, isFocused, isPhone, textColor);
 
     const onPress = () => {
-      DeviceEventEmitter.emit('onTabPress', name);
-      const event: any = navigation.emit({
-        type: 'tabPress',
-        target: route.key,
-      } as any);
+      if (name === 'menus') {
+        navigation.dispatch(DrawerActions.openDrawer());
+      } else {
+        DeviceEventEmitter.emit('onTabPress', name);
+        const event: any = navigation.emit({
+          type: 'tabPress',
+          target: route.key,
+        } as any);
 
-      if (!isFocused && !event.defaultPrevented) {
-        navigation.navigate(route.name);
+        if (!isFocused && !event.defaultPrevented) {
+          navigation.navigate(route.name);
+        }
       }
     };
 
@@ -168,16 +175,22 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: isFocused ? colors.primary2 : colors.background,
+          backgroundColor: colors.background,
+          borderTopWidth: isFocused ? 2 : 0,
+          borderTopColor: colors.primary6,
         }}>
         <Icon icon={iconName} size={20} tintColor="none" />
         {isPhone && (
-          <Text variant={isFocused ? 'bodySM' : 'bodyS'} style={styles.label}>
+          <Text variant="heading" style={styles.label}>
             {t(`tabs:${name}`)}
           </Text>
         )}
         {!!unreadCount && (
-          <NotificationsBadge.Alert style={styles.badge} number={unreadCount} />
+          <NotificationsBadge.Alert
+            style={styles.badge}
+            textStyle={styles.textBadge}
+            number={unreadCount}
+          />
         )}
       </TouchableOpacity>
     );
@@ -207,6 +220,7 @@ const tabBarIconStyles = (
       top: isPhone ? '6%' : '18%',
       left: '54%',
     },
+    textBadge: {fontFamily: fontFamilies.Segoe},
   });
 };
 
