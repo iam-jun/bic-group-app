@@ -51,13 +51,15 @@ import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
-import CreatePostExitOptions from '~/screens/Post/components/CreatePostExitOptions';
 import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import {useKeyboardStatus} from '~/hooks/keyboard';
+
+import DeviceInfo from 'react-native-device-info';
 
 export interface CreatePostProps {
   route?: {
@@ -65,8 +67,10 @@ export interface CreatePostProps {
   };
 }
 
-const webContentMinHeight = 46;
-const webContentInsetHeight = 24;
+const contentMinHeight = 46;
+const contentInsetHeight = 24;
+const inputMinHeight = 22;
+const toastMinHeight = 36;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -78,10 +82,18 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     initAudience,
     createFromGroupId,
   } = route?.params || {};
+  let deviceVersion = 0;
+  const isAndroid = Platform.OS === 'android';
+  if (isAndroid) {
+    const systemVersion = DeviceInfo.getSystemVersion();
+    deviceVersion = parseInt(systemVersion);
+  }
+  const isAndroidAnimated = isAndroid && deviceVersion === 8;
+  const isAnimated = isAndroidAnimated || Platform.OS === 'web';
 
-  const webInputHeightAnimated = useRef(
-    new Animated.Value(webContentMinHeight),
-  ).current;
+  const {height: keyboardHeight} = useKeyboardStatus();
+  const heightAnimated = useRef(new Animated.Value(contentMinHeight)).current;
+  const toastHeightAnimated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -89,8 +101,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = themeStyles(theme);
-
-  const isWeb = Platform.OS === 'web';
 
   let initPostData: IPostActivity = {};
   if (postId) {
@@ -118,8 +128,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
-
-  const shouldScroll = selectingImages?.length > 0;
 
   const users: number[] = [];
   const groups: number[] = [];
@@ -168,7 +176,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const [sPostData, setPostData] = React.useState<IPostActivity>({
     ...initPostData,
   });
-  const [webPhotosHeight, setWebPhotosHeight] = React.useState<number>(0);
+  const [photosHeight, setPhotosHeight] = React.useState<number>(0);
+  const [inputHeight, setInputHeight] = React.useState<number>(0);
   const [sIsLoading, setLoading] = React.useState<boolean>(false);
 
   const prevData = useRef<any>({
@@ -184,7 +193,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refToastAutoSave = useRef<any>();
   const refTextInput = useRef<any>();
   const refRNText = useRef<any>();
-  const currentWebInputHeight = useRef<number>(webContentMinHeight);
+  const currentWebInputHeight = useRef<number>(contentMinHeight);
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -246,10 +255,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   ]);
 
   useEffect(() => {
-    if (isWeb) {
+    if (isAnimated) {
       onLayoutAnimated();
     }
-  }, [webPhotosHeight, isShowToastAutoSave, content]);
+  }, [photosHeight, isShowToastAutoSave, inputHeight, keyboardHeight]);
 
   useEffect(() => {
     setPostData({...initPostData});
@@ -447,14 +456,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     rootNavigation.goBack();
   };
 
-  const onPressSaveDraft = async () => {
-    if (isEditDraftPost && initPostData?.id) {
-      await onPressPost(true, true);
-    } else {
-      await onPressPost(true);
-    }
-  };
-
   const onPressDraftPost = () => {
     if (isNewsfeed) {
       dispatch(postActions.getDraftPosts({isRefresh: true}));
@@ -626,7 +627,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         clearTimeout(refToastAutoSave?.current);
         refToastAutoSave.current = setTimeout(() => {
           setShowToastAutoSave(false);
-        }, 2000);
+        }, 3000);
       }
     } catch (error) {
       if (!isEdit) {
@@ -664,28 +665,48 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const onLayoutPhotoPreview = (e: any) => {
-    setWebPhotosHeight(e.nativeEvent.layout.height);
+    setPhotosHeight(e?.nativeEvent?.layout?.height || 0);
+  };
+
+  const onLayoutCloneText = (e: any) => {
+    const height = e?.nativeEvent?.layout?.height || inputMinHeight;
+    setInputHeight(height);
   };
 
   const onLayoutAnimated = () => {
-    refRNText.current.measure(
-      (ox: any, oy: any, width: number, height: number) => {
-        const toastHeight = isShowToastAutoSave ? 34 : 0;
-        const newHeight = Math.max(
-          height + webContentInsetHeight + webPhotosHeight + toastHeight,
-          webContentMinHeight + webPhotosHeight + toastHeight,
-        );
-        if (currentWebInputHeight.current === newHeight) {
-          return;
-        }
-        currentWebInputHeight.current = newHeight;
-        Animated.timing(webInputHeightAnimated, {
-          toValue: newHeight,
-          duration: 10,
-          useNativeDriver: false,
-        }).start();
-      },
+    let newInputHeight = inputHeight;
+    if (isAndroidAnimated && inputHeight > 500) {
+      newInputHeight = 500;
+    }
+    if (isAndroidAnimated) {
+      console.log('isAndroidAnimated: ', newInputHeight);
+      newInputHeight = newInputHeight + keyboardHeight;
+    }
+    console.log('height: ', newInputHeight);
+    const toastHeight = isShowToastAutoSave ? toastMinHeight : 0;
+    const newHeight = Math.max(
+      newInputHeight + contentInsetHeight + photosHeight + toastHeight,
+      contentMinHeight + photosHeight + toastHeight,
     );
+    if (currentWebInputHeight.current === newHeight) {
+      return;
+    }
+    currentWebInputHeight.current = newHeight;
+    animatedTiming(newHeight, toastHeight);
+  };
+
+  const animatedTiming = (height: number, toastHeight: number) => {
+    Animated.timing(heightAnimated, {
+      toValue: height,
+      duration: 50,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.timing(toastHeightAnimated, {
+      toValue: toastHeight,
+      duration: toastHeight === 0 ? 0 : 50,
+      useNativeDriver: false,
+    }).start();
   };
 
   const onPressSettings = () => {
@@ -697,115 +718,79 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const renderContent = () => {
-    // const Container = shouldScroll ? ScrollView : View;
-
     return (
-      <ScrollView>
-        <View style={styles.flex1}>
-          {isWeb ? (
-            <>
-              <View style={styles.textCloneContainer}>
-                <RNText
-                  style={styles.textContentClone}
-                  //   onLayout={onLayoutCloneText}
-                  ref={refRNText}>
-                  {content + '.'}
-                </RNText>
-              </View>
-              <Animated.View style={{height: webInputHeightAnimated}}>
-                <_MentionInput
-                  groupIds={strGroupIds}
-                  mentionInputRef={mentionInputRef}
-                  style={styles.flex1}
-                  textInputStyle={styles.flex1}
-                  autocompleteProps={{
-                    modalPosition: 'bottom',
-                    title: i18n.t('post:mention_title'),
-                    emptyContent: i18n.t('post:mention_empty_content'),
-                    showShadow: true,
-                    modalStyle: {maxHeight: 350},
-                  }}
-                  // onPress={onPressMentionAudience}
-                  ComponentInput={PostInput}
-                  componentInputProps={{
-                    value: content,
-                    onChangeText,
-                    inputRef: refTextInput,
-                  }}
-                  disabled={loading}
-                />
-                {renderToastAutoSave()}
-                <View onLayout={onLayoutPhotoPreview}>
-                  <PostPhotoPreview
-                    data={images || []}
-                    style={{alignSelf: 'center'}}
-                    uploadType={uploadTypes.postImage}
-                    onPress={() =>
-                      rootNavigation.navigate(homeStack.postSelectImage)
-                    }
-                  />
-                </View>
-              </Animated.View>
-            </>
-          ) : (
-            <>
+      <>
+        <View style={styles.textCloneContainer}>
+          <RNText
+            style={styles.textContentClone}
+            onLayout={onLayoutCloneText}
+            ref={refRNText}>
+            {content + '.'}
+          </RNText>
+        </View>
+        <ScrollView>
+          <View style={styles.flex1}>
+            <Animated.View
+              style={isAnimated ? {height: heightAnimated} : styles.flex1}>
               <_MentionInput
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
-                style={{minHeight: 55}}
-                //   textInputStyle={shouldScroll ? {} : styles.flex1}
+                style={styles.flex1}
+                textInputStyle={styles.flex1}
+                autocompleteProps={{
+                  modalPosition: 'bottom',
+                  title: t('post:mention_title'),
+                  emptyContent: t('post:mention_empty_content'),
+                  showShadow: true,
+                  modalStyle: {maxHeight: 350},
+                }}
+                // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
                 componentInputProps={{
                   value: content,
                   onChangeText,
                   inputRef: refTextInput,
                 }}
-                autocompleteProps={{
-                  modalPosition: 'bottom',
-                  emptyContent: i18n.t('post:mention_empty_content'),
-                  showShadow: true,
-                  modalStyle: {maxHeight: 350},
-                  fullWidth: true,
-                }}
-                // title={i18n.t('post:mention_title')}
                 disabled={loading}
               />
               {renderToastAutoSave()}
-              <PostPhotoPreview
-                data={images || []}
-                style={{alignSelf: 'center'}}
-                uploadType={uploadTypes.postImage}
-                onPress={() =>
-                  rootNavigation.navigate(homeStack.postSelectImage)
-                }
-              />
-            </>
-          )}
-        </View>
-      </ScrollView>
+              <View onLayout={onLayoutPhotoPreview}>
+                <PostPhotoPreview
+                  data={images || []}
+                  style={{alignSelf: 'center'}}
+                  uploadType={uploadTypes.postImage}
+                  onPress={() =>
+                    rootNavigation.navigate(homeStack.postSelectImage)
+                  }
+                />
+              </View>
+            </Animated.View>
+          </View>
+        </ScrollView>
+      </>
     );
   };
 
   const renderToastAutoSave = () => {
-    if (isShowToastAutoSave) {
-      return (
-        <View style={styles.toastAutoSave}>
-          <Icon
-            isButton
-            iconStyle={styles.iconToastAutoSave}
-            style={styles.iconToastAutoSaveContainer}
-            size={18}
-            icon="Save"
-            tintColor={colors.textSecondary}
-          />
-          <Text variant="bodyS" useI18n style={styles.textToastAutoSave}>
-            post:auto_saved
-          </Text>
-        </View>
-      );
-    }
-
-    return null;
+    return (
+      <Animated.View style={isAnimated ? {height: toastHeightAnimated} : {}}>
+        {isShowToastAutoSave && (
+          <View style={styles.toastAutoSave}>
+            <Icon
+              isButton
+              iconStyle={styles.iconToastAutoSave}
+              style={styles.iconToastAutoSaveContainer}
+              size={18}
+              icon="Save"
+              tintColor={colors.textSecondary}
+            />
+            <Text variant="bodyS" useI18n style={styles.textToastAutoSave}>
+              post:auto_saved
+            </Text>
+          </View>
+        )}
+      </Animated.View>
+    );
   };
 
   return (
@@ -958,6 +943,7 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       marginBottom: spacing.margin.base,
+      overflow: 'hidden',
     },
     iconToastAutoSaveContainer: {marginRight: spacing.margin.tiny},
     iconToastAutoSave: {
