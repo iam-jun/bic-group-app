@@ -76,6 +76,7 @@ const GroupSearch = () => {
     return (
       <FlatGroupItem
         {...item}
+        groupItemTestID="group_search.item"
         initShowTree={false}
         hidePath={false}
         showSmallestChild

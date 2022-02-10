@@ -13,12 +13,14 @@ import commonActions, {IAction} from '~/constants/commonActions';
 import {ITheme} from '~/theme/interfaces';
 
 export interface CheckboxProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   isChecked?: boolean;
   onActionPress?: (action: IAction) => void;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
+  testID,
   style,
   isChecked = false,
   onActionPress,
@@ -43,7 +45,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <TouchableOpacity style={style} onPress={_onChangeValue}>
-      <View style={styles.checkbox}>
+      <View style={styles.checkbox} testID={testID}>
         <Icon
           icon="iconCheckbox"
           size={18}

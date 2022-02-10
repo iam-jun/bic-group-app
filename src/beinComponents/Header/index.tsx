@@ -61,6 +61,8 @@ export interface HeaderProps {
   style?: StyleProp<ViewStyle>;
   removeBorderAndShadow?: boolean;
   autoFocusSearch?: boolean;
+  searchInputTestID?: string;
+  searchIconTestID?: string;
   onFocusSearch?: () => void;
   onSubmitSearch?: () => void;
   onShowSearch?: (isShow: boolean, inputRef?: any) => void;
@@ -98,6 +100,8 @@ const Header: React.FC<HeaderProps> = ({
   style,
   removeBorderAndShadow = false,
   autoFocusSearch = false,
+  searchInputTestID,
+  searchIconTestID,
   onFocusSearch,
   onSubmitSearch,
   onShowSearch,
@@ -294,6 +298,7 @@ const Header: React.FC<HeaderProps> = ({
           )}
           {onSearchText && (
             <Icon
+              testID={searchIconTestID}
               icon={'iconSearch'}
               size={24}
               style={styles.icon}
@@ -345,6 +350,7 @@ const Header: React.FC<HeaderProps> = ({
             />
           )}
           <HeaderSearch
+            testID={searchInputTestID}
             headerSearchRef={headerSearchRef}
             inputRef={inputRef}
             isShowSearch={isShowSearch}
