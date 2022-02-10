@@ -332,7 +332,8 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          disabled: companyValue.trim() && positionValue.trim() ? false : true,
+          disabled:
+            companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}
