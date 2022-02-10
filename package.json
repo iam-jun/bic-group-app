@@ -27,7 +27,7 @@
     "android-deploy-staging": "cd android && fastlane deploy_staging",
     "android-deploy-production": "cd android && fastlane deploy_production",
     "test": "detox",
-    "jest": "jest",
+    "jest": "jest --silent",
     "jest:cov": "jest --coverage --silent"
   },
   "dependencies": {
