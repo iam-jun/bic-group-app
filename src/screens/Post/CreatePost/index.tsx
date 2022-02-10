@@ -8,6 +8,8 @@ import {
   View,
   Text as RNText,
   TouchableOpacity,
+  Easing,
+  useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -58,7 +60,6 @@ import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
-
 import DeviceInfo from 'react-native-device-info';
 
 export interface CreatePostProps {
@@ -71,6 +72,7 @@ const contentMinHeight = 46;
 const contentInsetHeight = 24;
 const inputMinHeight = 22;
 const toastMinHeight = 36;
+// const maxInputHeight = 500;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const toolbarModalizeRef = useRef();
@@ -89,9 +91,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     deviceVersion = parseInt(systemVersion);
   }
   const isAndroidAnimated = isAndroid && deviceVersion === 8;
-  const isAnimated = isAndroidAnimated || Platform.OS === 'web';
+  const isWeb = Platform.OS === 'web';
+  const isAnimated = isAndroidAnimated || isWeb;
 
-  const {height: keyboardHeight} = useKeyboardStatus();
+  const {height} = useWindowDimensions();
+  const minInputHeight = height * 0.3;
+  const contentHeight = height * 0.65;
+  const maxInputHeight = contentHeight < 600 ? contentHeight : 600;
+
+  const {isOpen: isKeyboardOpen} = useKeyboardStatus();
   const heightAnimated = useRef(new Animated.Value(contentMinHeight)).current;
   const toastHeightAnimated = useRef(new Animated.Value(0)).current;
 
@@ -258,7 +266,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (isAnimated) {
       onLayoutAnimated();
     }
-  }, [photosHeight, isShowToastAutoSave, inputHeight, keyboardHeight]);
+  }, [photosHeight, isShowToastAutoSave, inputHeight, isKeyboardOpen]);
 
   useEffect(() => {
     setPostData({...initPostData});
@@ -675,14 +683,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onLayoutAnimated = () => {
     let newInputHeight = inputHeight;
-    if (isAndroidAnimated && inputHeight > 500) {
-      newInputHeight = 500;
+    if (isAndroidAnimated && inputHeight > maxInputHeight) {
+      newInputHeight = maxInputHeight;
     }
     if (isAndroidAnimated) {
-      console.log('isAndroidAnimated: ', newInputHeight);
-      newInputHeight = newInputHeight + keyboardHeight;
+      newInputHeight =
+        isKeyboardOpen && newInputHeight > minInputHeight
+          ? minInputHeight
+          : newInputHeight;
     }
-    console.log('height: ', newInputHeight);
     const toastHeight = isShowToastAutoSave ? toastMinHeight : 0;
     const newHeight = Math.max(
       newInputHeight + contentInsetHeight + photosHeight + toastHeight,
@@ -698,14 +707,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const animatedTiming = (height: number, toastHeight: number) => {
     Animated.timing(heightAnimated, {
       toValue: height,
-      duration: 50,
+      duration: 0,
       useNativeDriver: false,
+      easing: Easing.ease,
     }).start();
 
     Animated.timing(toastHeightAnimated, {
       toValue: toastHeight,
       duration: toastHeight === 0 ? 0 : 50,
       useNativeDriver: false,
+      easing: Easing.ease,
     }).start();
   };
 
@@ -773,7 +784,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const renderToastAutoSave = () => {
     return (
-      <Animated.View style={isAnimated ? {height: toastHeightAnimated} : {}}>
+      <Animated.View
+        style={
+          isAnimated ? {overflow: 'hidden', height: toastHeightAnimated} : {}
+        }>
         {isShowToastAutoSave && (
           <View style={styles.toastAutoSave}>
             <Icon
@@ -943,7 +957,6 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       marginBottom: spacing.margin.base,
-      overflow: 'hidden',
     },
     iconToastAutoSaveContainer: {marginRight: spacing.margin.tiny},
     iconToastAutoSave: {
