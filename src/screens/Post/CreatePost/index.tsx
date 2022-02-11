@@ -650,7 +650,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onLayoutCloneText = (e: any) => {
     const height = e?.nativeEvent?.layout?.height || inputMinHeight;
-    console.log('height: ', height);
     setInputHeight(height);
   };
 
