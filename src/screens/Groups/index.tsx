@@ -116,6 +116,8 @@ const Groups: React.FC = () => {
         hideBack
         title="tabs:groups"
         titleTextProps={{useI18n: true}}
+        searchInputTestID="groups.search_input"
+        searchIconTestID="groups.search_icon"
         removeBorderAndShadow={isLaptop}
         onShowSearch={onShowSearch}
         onSearchText={onSearchText}
