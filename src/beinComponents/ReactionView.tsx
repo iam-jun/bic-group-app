@@ -16,6 +16,7 @@ export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
+  reactionsOrder: string[];
   showSelectReactionWhenEmpty?: boolean;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
@@ -27,6 +28,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   style,
   ownReactions,
   reactionCounts,
+  reactionsOrder,
   onAddReaction,
   onRemoveReaction,
   onPressSelectReaction,
@@ -49,15 +51,24 @@ const ReactionView: FC<ReactionViewProps> = ({
   };
 
   const renderReactions = () => {
+    //When return reactionCounts, backend auto sort by alphabet
+    //so we need use reactionsOrder to sort
+    let _reactionCounts: IReactionCounts = reactionCounts;
+    if (reactionsOrder?.length > 0) {
+      const ordered: IReactionCounts = {};
+      reactionsOrder.map(rKey => (ordered[rKey] = reactionCounts[rKey]));
+      _reactionCounts = Object.assign(ordered, reactionCounts);
+    }
+
     const rendered: React.ReactNode[] = [];
-    Object.keys(reactionCounts || {})?.map?.((key, index) => {
+    Object.keys(_reactionCounts || {})?.map?.((key, index) => {
       const react = key as ReactionType;
-      if (!blacklistReactions?.[react] && reactionCounts?.[key]) {
+      if (!blacklistReactions?.[react] && _reactionCounts?.[key]) {
         rendered.push(
           <Reaction
             key={`${index}_${key}`}
             style={{margin: 2}}
-            value={reactionCounts[key]}
+            value={_reactionCounts[key]}
             icon={key}
             disableUpdateState
             onLongPress={() => _onLongPressItem(react)}

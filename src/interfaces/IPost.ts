@@ -101,6 +101,7 @@ export interface IPostActivity {
   latest_reactions?: any;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
+  reactions_order?: string[];
   deleted?: boolean;
   is_draft?: boolean;
 }
