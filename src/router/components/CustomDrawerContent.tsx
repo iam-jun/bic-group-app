@@ -114,6 +114,7 @@ const CustomDrawerContent = (props: any) => {
         title="auth:text_sign_out"
         titleProps={{style: {color: colors.error}}}
         onPress={onPressItem('logOut')}
+        testID="menu.logout"
       />
       {__DEV__ &&
         renderData({
