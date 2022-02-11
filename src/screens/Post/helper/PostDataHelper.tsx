@@ -159,7 +159,7 @@ export const postApiConfig = {
     },
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/audiences`,
+    url: `${ApiConfig.providers.bein.url}post-audiences`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -168,7 +168,7 @@ export const postApiConfig = {
     },
   }),
   getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}posts/audiences`,
+    url: `${ApiConfig.providers.bein.url}post-audiences`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
