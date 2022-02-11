@@ -678,13 +678,14 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   const animatedTiming = (height: number, toastHeight: number) => {
+    heightAnimated.stopAnimation();
     Animated.timing(heightAnimated, {
       toValue: height,
       duration: 0,
       useNativeDriver: false,
       easing: Easing.ease,
     }).start();
-
+    toastHeightAnimated.stopAnimation();
     Animated.timing(toastHeightAnimated, {
       toValue: toastHeight,
       duration: toastHeight === 0 ? 0 : 50,
@@ -760,7 +761,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const renderToastAutoSave = () => {
     return (
       <Animated.View
-        style={isWeb ? {overflow: 'hidden', height: toastHeightAnimated} : {}}>
+        style={
+          isAnimated ? {overflow: 'hidden', height: toastHeightAnimated} : {}
+        }>
         {isShowToastAutoSave && (
           <View style={styles.toastAutoSave}>
             <Icon
