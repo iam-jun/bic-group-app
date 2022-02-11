@@ -75,12 +75,19 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const [commentStatus, setCommentStatus] = useState(
     commentData?.status || null,
   );
-  const isActive = commentStatus === 'success' || commentStatus === null;
+  const isActive =
+    Platform.OS === 'web'
+      ? true
+      : commentStatus === 'success' || commentStatus === null;
 
   const progress = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
 
+  const ViewComponent: any = Platform.OS === 'web' ? View : Animated.View;
+
   useEffect(() => {
+    if (Platform.OS === 'web') return;
+
     if (isActive) {
       showComment(1);
     } else if (commentStatus === 'pending') {
@@ -315,7 +322,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   return (
     <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <Animated.View style={[styles.container, animatedStyle]}>
+      <ViewComponent
+        style={[styles.container, Platform.OS !== 'web' && animatedStyle]}>
         <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
           <Avatar isRounded source={avatar} />
         </ButtonWrapper>
@@ -363,7 +371,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
           {renderReactionsReplyView()}
         </View>
         {renderWebMenuButton()}
-      </Animated.View>
+      </ViewComponent>
       {renderErrorState()}
     </Div>
   );
