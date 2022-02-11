@@ -5,7 +5,7 @@ import {ICountryCodeList, ILocation} from '~/interfaces/common';
 import locations from '~/constants/locations';
 import {searchText} from '~/utils/common';
 
-const initMenuState = {
+export const menuInitState = {
   loadingMyProfile: false,
   isLanguageModalOpen: false,
 
@@ -32,7 +32,7 @@ const initMenuState = {
   loadingCover: false,
 };
 
-const menuReducer = (state = initMenuState, action: any = {}) => {
+const menuReducer = (state = menuInitState, action: any = {}) => {
   const {type, payload} = action;
   const {countryCodeList, locationList} = state;
 
@@ -61,8 +61,8 @@ const menuReducer = (state = initMenuState, action: any = {}) => {
     case menuTypes.CLEAR_USER_PROFILE:
       return {
         ...state,
-        userProfile: initMenuState.userProfile,
-        showUserNotFound: initMenuState.showUserNotFound,
+        userProfile: menuInitState.userProfile,
+        showUserNotFound: menuInitState.showUserNotFound,
       };
 
     case menuTypes.GET_MY_PROFILE:

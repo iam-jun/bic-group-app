@@ -1,6 +1,6 @@
 import types from './constants';
 
-export const initState = {
+export const appInitState = {
   configs: {},
   linkPreviews: {},
   rootScreenName: '',
@@ -12,7 +12,7 @@ export const initState = {
  * @param action
  * @returns {*}
  */
-function reducer(state = initState, action: any = {}) {
+function reducer(state = appInitState, action: any = {}) {
   const {type, payload} = action;
   const {configs} = state;
 

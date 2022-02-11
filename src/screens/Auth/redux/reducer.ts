@@ -5,7 +5,7 @@ import {ActionTypes} from '~/utils';
 import {setChatAuthenticationInfo} from '~/utils/common';
 import types from './types';
 
-export const initAuthState = {
+export const authInitState = {
   user: undefined,
   feed: undefined,
   loading: false,
@@ -16,7 +16,7 @@ export const initAuthState = {
   changePasswordLoading: false,
 };
 
-function authReducer(state = initAuthState, action: any = {}) {
+function authReducer(state = authInitState, action: any = {}) {
   const {type} = action;
   switch (type) {
     case types.SET_USER:

@@ -4,7 +4,7 @@ import {IUser} from '~/interfaces/IAuth';
 import {IGroupDetail, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 
-const initGroupsState = {
+export const groupInitState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
@@ -62,7 +62,7 @@ const initGroupsState = {
   },
 };
 
-function groupsReducer(state = initGroupsState, action: any = {}) {
+function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
   const {selectedUsers, pendingMemberRequests} = state;
 
@@ -77,7 +77,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
       return {
         ...state,
         loadingJoinedGroups: true,
-        joinedGroups: initGroupsState.joinedGroups,
+        joinedGroups: groupInitState.joinedGroups,
       };
     case groupsTypes.SET_JOINED_GROUPS:
       return {
@@ -111,7 +111,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {
         ...state,
-        groupMember: initGroupsState.groupMember,
+        groupMember: groupInitState.groupMember,
       };
     case groupsTypes.SET_GROUP_MEMBER:
       return {
@@ -164,7 +164,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.CLEAR_GROUP_POSTS:
       return {
         ...state,
-        posts: initGroupsState.posts,
+        posts: groupInitState.posts,
       };
 
     case groupsTypes.EDIT_GROUP_DETAIL:
@@ -238,7 +238,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.RESET_JOINABLE_USERS:
       return {
         ...state,
-        users: initGroupsState.users,
+        users: groupInitState.users,
       };
 
     case groupsTypes.SET_LOADING_AVATAR:
@@ -292,7 +292,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
     case groupsTypes.RESET_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: initGroupsState.pendingMemberRequests,
+        pendingMemberRequests: groupInitState.pendingMemberRequests,
       };
     case groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST:
     case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST: {
@@ -321,13 +321,13 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           ...state.groupDetail,
           total_pending_members: 0,
         },
-        pendingMemberRequests: initGroupsState.pendingMemberRequests,
+        pendingMemberRequests: groupInitState.pendingMemberRequests,
       };
     case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST:
     case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
       return {
         ...state,
-        undoData: initGroupsState.undoData,
+        undoData: groupInitState.undoData,
       };
     case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
       return {
@@ -341,7 +341,7 @@ function groupsReducer(state = initGroupsState, action: any = {}) {
           data: [...state.undoData.data],
           items: {...state.undoData.items},
         },
-        undoData: initGroupsState.undoData,
+        undoData: groupInitState.undoData,
       };
     case groupsTypes.STORE_UNDO_DATA:
       return {
