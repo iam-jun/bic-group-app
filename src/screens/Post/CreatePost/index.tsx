@@ -38,7 +38,6 @@ import {
   IPayloadCreateAutoSave,
   IPayloadPutEditAutoSave,
 } from '~/interfaces/IPost';
-import i18n from '~/localization';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
@@ -186,6 +185,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
   const [sIsLoading, setLoading] = React.useState<boolean>(false);
+  const [contentInput, setContentInput] = React.useState<string>(content);
 
   const prevData = useRef<any>({
     selectingImages,
@@ -200,7 +200,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const refToastAutoSave = useRef<any>();
   const refTextInput = useRef<any>();
   const refRNText = useRef<any>();
-  const currentWebInputHeight = useRef<number>(contentMinHeight);
+  const currentInputHeight = useRef<number>(contentMinHeight);
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
@@ -224,6 +224,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [isPause]);
 
   useEffect(() => {
+    if (content !== contentInput && isAnimated) {
+      setContentInput(content);
+    }
     debouncedStopsTyping();
   }, [content]);
 
@@ -368,49 +371,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const onPressBack = () => {
     Keyboard.dismiss();
 
-    // if (isEditPost && !isEditDraftPost) {
-    //   if (isEditPostHasChange) {
-    //     dispatch(
-    //       modalActions.showAlert({
-    //         title: i18n.t('common:label_discard_changes'),
-    //         content: i18n.t('post:alert_content_back_edit_post'),
-    //         showCloseButton: true,
-    //         cancelBtn: true,
-    //         cancelLabel: i18n.t('common:btn_continue_editing'),
-    //         confirmLabel: i18n.t('common:btn_discard'),
-    //         onConfirm: () => rootNavigation.goBack(),
-    //         stretchOnWeb: true,
-    //       }),
-    //     );
-    //     return;
-    //   }
-    // } else {
-    //   if (content || chosenAudiences?.length > 0) {
-    //     dispatch(
-    //       modalActions.showModal({
-    //         isOpen: true,
-    //         ContentComponent: (
-    //           <CreatePostExitOptions onPressSaveDraft={onPressSaveDraft} />
-    //         ),
-    //         props: {webModalStyle: {minHeight: undefined}},
-    //       }),
-    //     );
-    //     return;
-    //   }
-    // }
-
-    // rootNavigation.goBack();
-
     if (isEditPost && !isEditDraftPost) {
       if (isEditPostHasChange) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_discard_changes'),
-            content: i18n.t('post:alert_content_back_edit_post'),
+            title: t('post:create_post:title_discard_changes'),
+            content: t('post:alert_content_back_edit_post'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_keep_edit'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_keep_edit'),
             onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
@@ -668,6 +638,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (isAutoSave && isPause) {
       setPause(false);
     }
+    setContentInput(text);
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
@@ -677,6 +648,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onLayoutCloneText = (e: any) => {
     const height = e?.nativeEvent?.layout?.height || inputMinHeight;
+    console.log('height: ', height);
     setInputHeight(height);
   };
 
@@ -696,10 +668,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       newInputHeight + contentInsetHeight + photosHeight + toastHeight,
       contentMinHeight + photosHeight + toastHeight,
     );
-    if (currentWebInputHeight.current === newHeight) {
+    if (currentInputHeight.current === newHeight) {
       return;
     }
-    currentWebInputHeight.current = newHeight;
+    currentInputHeight.current = newHeight;
     animatedTiming(newHeight, toastHeight);
   };
 
@@ -730,14 +702,16 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const renderContent = () => {
     return (
       <>
-        <View style={styles.textCloneContainer}>
-          <RNText
-            style={styles.textContentClone}
-            onLayout={onLayoutCloneText}
-            ref={refRNText}>
-            {content + '.'}
-          </RNText>
-        </View>
+        {isAnimated && (
+          <View style={styles.textCloneContainer}>
+            <RNText
+              style={styles.textContentClone}
+              onLayout={onLayoutCloneText}
+              ref={refRNText}>
+              {contentInput + '.'}
+            </RNText>
+          </View>
+        )}
         <ScrollView>
           <View style={styles.flex1}>
             <Animated.View
@@ -784,9 +758,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const renderToastAutoSave = () => {
     return (
       <Animated.View
-        style={
-          isAnimated ? {overflow: 'hidden', height: toastHeightAnimated} : {}
-        }>
+        style={isWeb ? {overflow: 'hidden', height: toastHeightAnimated} : {}}>
         {isShowToastAutoSave && (
           <View style={styles.toastAutoSave}>
             <Icon
