@@ -638,7 +638,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     if (isAutoSave && isPause) {
       setPause(false);
     }
-    setContentInput(text);
+    if (isAnimated) {
+      setContentInput(text);
+    }
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
