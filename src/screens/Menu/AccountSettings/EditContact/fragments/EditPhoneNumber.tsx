@@ -66,6 +66,16 @@ const EditPhoneNumber = ({
     phoneNumberEditError && showErrors();
   }, [phoneNumberEditError]);
 
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      console.log('>>>>>keyboardDidHide>>>>>>');
+    });
+
+    return () => {
+      hideSubscription.remove();
+    };
+  }, []);
+
   const {
     control,
     formState: {errors},
@@ -81,7 +91,7 @@ const EditPhoneNumber = ({
       return;
     }
     const phoneNumber = getValues('phoneNumber');
-    onChangePhoneNumber(phoneNumber);
+    // onChangePhoneNumber(phoneNumber);
   };
 
   const validateInputs = async () => {

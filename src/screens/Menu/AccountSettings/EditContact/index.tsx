@@ -105,10 +105,10 @@ const EditContact = () => {
           <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
           <Button
             testID="edit_contact.phone"
-            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            textProps={{color: theme.colors.borderCard, variant: 'body'}}
             style={[
               styles.buttonDropDown,
-              {backgroundColor: theme.colors.placeholder},
+              {backgroundColor: theme.colors.bgHover},
             ]}
             contentStyle={styles.buttonDropDownContent}
             activeOpacity={1}>

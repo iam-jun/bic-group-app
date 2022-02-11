@@ -168,25 +168,21 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderAvatar = () => {
-    return (
+    return userId == currentUserId || userId == currentUsername ? (
       <View>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_avatar
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
-            <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
-              <Text.H6
-                testID="user_edit_profile.avatar.edit"
-                color={
-                  !loadingAvatar ? colors.textPrimary : colors.textDisabled
-                }
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+            <Text.H6
+              testID="user_edit_profile.avatar.edit"
+              color={!loadingAvatar ? colors.textPrimary : colors.textDisabled}
+              style={styles.editBtn}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
         </View>
         <View style={styles.imageButton}>
           {!loadingAvatar ? (
@@ -203,27 +199,25 @@ const UserEditProfile = (props: any) => {
         </View>
         <Divider style={styles.divider} />
       </View>
-    );
+    ) : null;
   };
 
   const renderCover = () => {
-    return (
+    return userId == currentUserId || userId == currentUsername ? (
       <View>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_cover
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
-            <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
-              <Text.H6
-                testID="user_edit_profile.cover.edit"
-                color={!loadingCover ? colors.textPrimary : colors.textDisabled}
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+            <Text.H6
+              testID="user_edit_profile.cover.edit"
+              color={!loadingCover ? colors.textPrimary : colors.textDisabled}
+              style={styles.editBtn}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
         </View>
         <View
           style={{paddingHorizontal: theme.spacing.padding.large}}
@@ -240,34 +234,32 @@ const UserEditProfile = (props: any) => {
           )}
         </View>
       </View>
-    );
+    ) : null;
   };
 
   const renderDescription = () => {
-    return (
+    return userId == currentUserId || userId == currentUsername ? (
       <View style={{paddingTop: theme.spacing.padding.base}}>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:text_description
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
-            <ButtonWrapper onPress={goToEditDescription}>
-              <Text.H6
-                testID="user_edit_profile.basic_info.edit"
-                color={colors.textPrimary}
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
+          <ButtonWrapper onPress={goToEditDescription}>
+            <Text.H6
+              testID="user_edit_profile.basic_info.edit"
+              color={colors.textPrimary}
+              style={styles.editBtn}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
         </View>
         <Text.BodyS style={styles.descriptionText}>
           {description || i18next.t('common:text_not_set')}
         </Text.BodyS>
         <Divider style={styles.divider} />
       </View>
-    );
+    ) : null;
   };
 
   const renderBasicInfo = () => {
@@ -307,7 +299,7 @@ const UserEditProfile = (props: any) => {
           <SettingItem
             title={'settings:title_birthday'}
             subtitle={
-              formatDate(birthday, 'MMM Do, YYYY') ||
+              formatDate(birthday, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')
             }
             leftIcon={'Calender'}
@@ -329,7 +321,6 @@ const UserEditProfile = (props: any) => {
             leftIcon={'Heart'}
             isTouchDisabled
           />
-          <Divider style={styles.divider} />
         </View>
       </View>
     );
@@ -338,6 +329,7 @@ const UserEditProfile = (props: any) => {
   const renderContact = () => {
     return (
       <View>
+        <Divider style={styles.divider} />
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_contact
@@ -382,7 +374,6 @@ const UserEditProfile = (props: any) => {
             isTouchDisabled
           />
         </View>
-        <Divider style={styles.divider} />
       </View>
     );
   };
@@ -441,6 +432,7 @@ const UserEditProfile = (props: any) => {
   const renderWorkExperience = () => {
     return userId == currentUserId || userId == currentUsername ? (
       <View>
+        <Divider style={styles.divider} />
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:text_work

@@ -186,7 +186,7 @@ const EditBasicInfo = () => {
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           onPress={() => onDateEditOpen()}>
-          {formatDate(birthdayState, 'MMM Do, YYYY') ||
+          {formatDate(birthdayState, 'DD/MM/YYYY') ||
             i18next.t('common:text_not_set')}
         </Button>
 

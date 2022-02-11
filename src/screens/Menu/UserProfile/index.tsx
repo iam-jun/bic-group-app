@@ -37,7 +37,7 @@ const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, background_img_url, email} =
+  const {fullname, description, avatar, background_img_url, username} =
     userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
@@ -160,7 +160,7 @@ const UserProfile = (props: any) => {
     return (
       <View style={styles.headerName}>
         <Text.H4>{fullname}</Text.H4>
-        <Text.Subtitle>{email}</Text.Subtitle>
+        {!!username && <Text.Subtitle>{username}</Text.Subtitle>}
         {!!description && (
           <Text style={styles.subtitleText}>{description}</Text>
         )}

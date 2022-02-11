@@ -313,7 +313,11 @@ const AddWork = () => {
   const renderDeleteButton = () => {
     return (
       selectedWorkItem && (
-        <Button.Danger testID="add_work.delete" onPress={onDelete} useI18n>
+        <Button.Danger
+          testID="add_work.delete"
+          onPress={onDelete}
+          useI18n
+          style={{backgroundColor: colors.bgError}}>
           settings:text_delete_work
         </Button.Danger>
       )
@@ -332,6 +336,8 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
+          color: theme.colors.primary6,
+          textColor: theme.colors.background,
           disabled:
             companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
         }}
@@ -397,12 +403,13 @@ const createStyles = (theme: ITheme) => {
       borderWidth: 1,
       padding: spacing.margin.base,
       marginTop: spacing.margin.small,
+      height: 88,
     },
     textInput: {
       fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
       color: colors.textPrimary,
-      height: 64,
+      flex: 1,
     },
     textInputFocus: {
       borderColor: colors.primary6,
