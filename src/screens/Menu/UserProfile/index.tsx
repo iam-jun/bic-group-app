@@ -46,6 +46,8 @@ const UserProfile = (props: any) => {
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
+  const [avatarState, setAvatarState] = useState<string>(avatar);
+  const [bgImgState, setBgImgState] = useState<string>(background_img_url);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
@@ -63,6 +65,18 @@ const UserProfile = (props: any) => {
   useEffect(() => {
     isFocused && getUserProfile();
   }, [isFocused, userId]);
+
+  useEffect(() => {
+    const {avatar: _avatar, background_img_url: _bgIm} = myProfileData;
+    if (userId == currentUserId || userId == currentUsername) {
+      if (avatarState !== _avatar) {
+        setAvatarState(_avatar);
+      }
+      if (_bgIm !== bgImgState) {
+        setBgImgState(_bgIm);
+      }
+    }
+  }, [myProfileData]);
 
   const onEditProfileButton = () =>
     rootNavigation.navigate(mainStack.userEdit, {userId, params});
@@ -133,7 +147,7 @@ const UserProfile = (props: any) => {
       <View onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
-          source={background_img_url || images.img_cover_default}
+          source={bgImgState || images.img_cover_default}
         />
         {renderEditButton(styles.editCoverPhoto, onEditCover)}
       </View>
@@ -146,7 +160,7 @@ const UserProfile = (props: any) => {
         <View>
           <Avatar.UltraSuperLarge
             style={styles.avatar}
-            source={avatar || images.img_user_avatar_default}
+            source={avatarState || images.img_user_avatar_default}
             isRounded={true}
             showBorder={true}
           />

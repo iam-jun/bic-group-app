@@ -16,9 +16,9 @@ export const hideBottomTabRoutes = [
   'add-members',
   //Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
+  'user-profile',
   'security-and-login',
   // groups
-  'group-admin',
   'general-info',
   'edit-group-description',
   'pending-members',

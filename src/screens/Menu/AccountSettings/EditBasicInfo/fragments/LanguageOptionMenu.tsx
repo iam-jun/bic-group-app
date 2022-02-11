@@ -82,6 +82,7 @@ const LanguageOptionMenu = ({
   const renderItem = ({item}: {item: ILanguageItem}) => {
     return (
       <PrimaryItem
+        testID="language_option_menu.checkbox"
         title={i18next.t(item.fullName)}
         height={36}
         isChecked={item.selected}

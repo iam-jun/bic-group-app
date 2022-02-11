@@ -31,7 +31,7 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
-import {isEqual} from 'lodash';
+import {isEmpty, isEqual} from 'lodash';
 import Button from '~/beinComponents/Button';
 
 const AddWork = () => {
@@ -83,7 +83,10 @@ const AddWork = () => {
     useState<any>(selectedWorkItem);
 
   useEffect(() => {
-    if (!isEqual(selectedWorkItem, privateSelectedWorkItem)) {
+    if (
+      !isEmpty(selectedWorkItem) &&
+      !isEqual(selectedWorkItem, privateSelectedWorkItem)
+    ) {
       setCompanyValue(selectedWorkItem.company);
       setPositionValue(selectedWorkItem.titlePosition);
       setLocationValue(selectedWorkItem.location);
