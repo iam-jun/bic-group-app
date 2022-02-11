@@ -428,6 +428,7 @@ export interface ISocketReaction {
   post: {
     post_id?: string;
     reaction_counts?: IReactionCounts;
+    reactions_order?: string[];
   };
   comment: {
     comment_id?: string;

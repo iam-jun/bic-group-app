@@ -498,6 +498,7 @@ function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
+  reactionsOrder: string[],
 ): any {
   try {
     const post = yield select(state =>
@@ -505,6 +506,7 @@ function* onUpdateReactionOfPostById(
     );
     post.reaction_counts = reactionCounts;
     post.own_reactions = ownReaction;
+    post.reactions_order = reactionsOrder || [];
     yield put(postActions.addToAllPosts({data: post}));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
@@ -653,7 +655,11 @@ function* updateReactionBySocket({
       reaction_counts,
     );
   } else if (post?.post_id) {
-    const {post_id = '', reaction_counts = {}} = post || {};
+    const {
+      post_id = '',
+      reaction_counts = {},
+      reactions_order = [],
+    } = post || {};
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
     const p =
@@ -663,7 +669,12 @@ function* updateReactionBySocket({
     if (isCurrentUser && reaction?.kind) {
       ownReactions[reaction.kind] = [reaction];
     }
-    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+    yield onUpdateReactionOfPostById(
+      post_id,
+      ownReactions,
+      reaction_counts,
+      reactions_order,
+    );
   }
 }
 
