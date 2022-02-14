@@ -246,7 +246,7 @@ const UserEditProfile = (props: any) => {
           </Text.H5>
           <ButtonWrapper onPress={goToEditDescription}>
             <Text.H6
-              testID="user_edit_profile.basic_info.edit"
+              testID="user_edit_profile.description.edit"
               color={colors.textPrimary}
               style={styles.editBtn}
               useI18n>
@@ -272,7 +272,7 @@ const UserEditProfile = (props: any) => {
           {userId == currentUserId || userId == currentUsername ? (
             <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
               <Text.H6
-                testID="user_edit_profile.basic_info.edit"
+                testID="user_edit_profile.description.edit"
                 color={colors.textPrimary}
                 useI18n>
                 settings:title_edit
