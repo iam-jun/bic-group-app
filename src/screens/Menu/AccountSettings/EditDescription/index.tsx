@@ -41,7 +41,7 @@ const EditDescription = () => {
       dispatch(
         menuActions.editMyProfile({
           id,
-          description,
+          description: descriptionText,
         }),
       );
     }
