@@ -1,6 +1,6 @@
 import types from './types';
 
-const initDataState = {
+export const noInternetInitState = {
   /**
    * User our isInternetReachable instead of NetInfo because:
    *  - NetInfo.isInternetReachable may be null when first defined
@@ -16,7 +16,7 @@ const initDataState = {
   systemIssue: false,
 };
 
-function noInternetReducer(state = initDataState, action: any = {}) {
+function noInternetReducer(state = noInternetInitState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case types.SET_IS_INTERNET_REACHABLE:

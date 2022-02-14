@@ -43,16 +43,19 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
     onSelectKeyword?.(item?.keyword);
   };
 
-  const renderItem = (item: any) => {
+  const renderItem = (item: any, index: number) => {
     return (
       <PrimaryItem
+        testID={`recent_search_keyword.item_${index}`}
         key={`recent_item_${item.id}`}
         subTitle={item?.keyword}
         style={styles.item}
         onPress={() => onPressItem(item)}
         height={null}
         RightComponent={
-          <TouchableOpacity onPress={() => onPressDeleteItem(item)}>
+          <TouchableOpacity
+            testID={`recent_search_keyword.btn_delete_item_${index}`}
+            onPress={() => onPressDeleteItem(item)}>
             <Icon icon={'iconCloseSmall'} size={16} />
           </TouchableOpacity>
         }
@@ -68,6 +71,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
         </Text.H6>
         {data?.length > 0 && (
           <Button
+            testID={'recent_search_keyword.btn_clear'}
             onPress={onPressClear}
             style={{justifyContent: 'center', alignSelf: 'center'}}>
             <Text.ButtonSmall style={styles.btnClear}>

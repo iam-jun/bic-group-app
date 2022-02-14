@@ -21,6 +21,7 @@ const Divider: React.FC<DividerProps> = ({
   const {colors}: ITheme = useTheme() as ITheme;
   return (
     <View
+      testID={'divider'}
       style={[
         {
           height: horizontal ? undefined : size,

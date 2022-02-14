@@ -1,7 +1,7 @@
 import {IReaction} from '~/interfaces/IPost';
 import postTypes from './types';
 
-const initState = {
+export const postInitState = {
   createPost: {
     loading: false,
     isOpenModal: false,
@@ -63,7 +63,7 @@ const initState = {
   scrollToLatestItem: null,
 };
 
-function postReducer(state = initState, action: any = {}) {
+function postReducer(state = postInitState, action: any = {}) {
   const {type, payload} = action;
 
   switch (type) {
@@ -80,7 +80,7 @@ function postReducer(state = initState, action: any = {}) {
     case postTypes.SET_DRAFT_POSTS:
       return {
         ...state,
-        draftPosts: payload || initState.draftPosts,
+        draftPosts: payload || postInitState.draftPosts,
       };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
@@ -93,7 +93,7 @@ function postReducer(state = initState, action: any = {}) {
     case postTypes.CLEAR_CREATE_POST:
       return {
         ...state,
-        createPost: initState.createPost,
+        createPost: postInitState.createPost,
       };
     case postTypes.SET_CREATE_POST_DATA:
       return {
@@ -162,7 +162,7 @@ function postReducer(state = initState, action: any = {}) {
         ...state,
         createPost: {
           ...state.createPost,
-          important: payload || initState.createPost.important,
+          important: payload || postInitState.createPost.important,
         },
       };
     case postTypes.SET_CREATE_POST_IMAGES:
@@ -218,7 +218,7 @@ function postReducer(state = initState, action: any = {}) {
     case postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET:
       return {
         ...state,
-        postAudienceSheet: initState.postAudienceSheet,
+        postAudienceSheet: postInitState.postAudienceSheet,
       };
     case postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS:
       return {
@@ -304,7 +304,7 @@ function postReducer(state = initState, action: any = {}) {
     case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
       return {
         ...state,
-        reactionBottomSheet: payload || initState.reactionBottomSheet,
+        reactionBottomSheet: payload || postInitState.reactionBottomSheet,
       };
     default:
       return state;

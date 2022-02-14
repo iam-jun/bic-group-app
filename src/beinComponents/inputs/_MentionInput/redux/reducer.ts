@@ -1,6 +1,6 @@
 import types from './types';
 
-const initMenuState = {
+export const mentionInputInitState = {
   text: '',
   key: null,
   cursorPosition: -2, // follow MatterMost
@@ -11,7 +11,7 @@ const initMenuState = {
   highlightItem: null,
 };
 
-const reducer = (state = initMenuState, action: any = {}) => {
+const reducer = (state = mentionInputInitState, action: any = {}) => {
   const {type, payload} = action;
 
   switch (type) {
