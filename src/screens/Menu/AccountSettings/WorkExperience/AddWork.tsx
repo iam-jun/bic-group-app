@@ -437,7 +437,6 @@ const createStyles = (theme: ITheme) => {
       marginRight: spacing.margin.small,
     },
     buttonDelete: {
-      backgroundColor: colors.bgError,
       borderRadius: spacing.borderRadius.small,
     },
   });
