@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {ITheme} from '~/theme/interfaces';
 import Icon, {IconProps} from '~/beinComponents/Icon';
