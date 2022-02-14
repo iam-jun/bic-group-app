@@ -23,6 +23,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export interface HeaderSearchProps {
+  testID?: string;
   headerSearchRef?: any;
   inputRef?: any;
   isShowSearch: boolean;
@@ -35,6 +36,7 @@ export interface HeaderSearchProps {
 }
 
 const HeaderSearch: FC<HeaderSearchProps> = ({
+  testID,
   headerSearchRef,
   inputRef,
   isShowSearch,
@@ -122,6 +124,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
       <View style={styles.searchWrapper}>
         <Animated.View style={[searchContainerStyle, styles.searchContainer]}>
           <SearchInput
+            testID={testID}
             searchInputRef={searchInputRef}
             inputRef={_inputRef}
             autoFocus={autoFocus}

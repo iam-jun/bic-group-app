@@ -57,6 +57,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
       <PrimaryItem
         title={item.name}
         isChecked={!!selected}
+        checkboxProps={{testID: 'members_selection.checkbox'}}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
         LeftComponent={
           <Avatar.Large
