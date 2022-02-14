@@ -208,14 +208,14 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
           )
         end
 
-          lane :deploy_production_ci do
+    lane :deploy_production_ci do
               Dotenv.overload('../../.env.sample', '../../.env.production')
 
               app_store_connect_api_key
 
               match(
                 type: "appstore",
-                app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
+                app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
                 git_url: "git@bitbucket.org:nhamchanvi/certificates.git",
 
                 storage_mode: "git",
