@@ -375,7 +375,7 @@ const Header: React.FC<HeaderProps> = ({
     );
   };
 
-  return <View>{children ? children : renderContent()}</View>;
+  return <View testID="header">{children ? children : renderContent()}</View>;
 };
 
 const createStyle = (theme: ITheme) => {
