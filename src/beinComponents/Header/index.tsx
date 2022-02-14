@@ -281,7 +281,10 @@ const Header: React.FC<HeaderProps> = ({
               <TouchableOpacity
                 onPress={onPressHeader}
                 disabled={!onPressHeader}>
-                <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
+                <Text.Subtitle
+                  style={styles.subtitle}
+                  {...subTitleTextProps}
+                  testID="header.subTitle">
                   {subTitle}
                 </Text.Subtitle>
               </TouchableOpacity>

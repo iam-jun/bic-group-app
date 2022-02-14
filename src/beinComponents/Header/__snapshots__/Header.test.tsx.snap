@@ -183,3 +183,13 @@ exports[`Header component renders correctly 1`] = `
   </View>
 </View>
 `;
+
+exports[`Header component renders correctly children 1`] = `
+<View
+  testID="header"
+>
+  <View
+    testID="header.children"
+  />
+</View>
+`;

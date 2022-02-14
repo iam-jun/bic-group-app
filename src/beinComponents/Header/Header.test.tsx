@@ -2,6 +2,7 @@ import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
 import {View} from 'react-native';
 import Header from '~/beinComponents/Header';
+import images from '~/resources/images';
 
 afterEach(cleanup);
 
@@ -12,13 +13,23 @@ describe('Header component', () => {
   });
 
   it(`renders correctly children`, () => {
+    const rendered = render(
+      <Header>
+        <View testID="header.children" />
+      </Header>,
+    ).toJSON();
+    expect(rendered).toMatchSnapshot();
+  });
+
+  it(`renders correctly children`, () => {
     const {getByTestId} = render(
       <Header>
         <View testID="header.children" />
       </Header>,
     );
-    // expect(getByTestId('header.children').type).toEqual('View');
-    expect(getByTestId('header.children')).toBeTruthy();
+    const childrenComponent = getByTestId('header.children');
+    expect(childrenComponent).toBeDefined();
+    expect(getByTestId('header.children').type).toEqual('View');
   });
 
   /*
@@ -32,32 +43,41 @@ describe('Header component', () => {
   */
 
   it(`renders correctly title`, () => {
-    const {getByTestId} = render(<Header title="Home.Test" />);
-    expect(getByTestId('header.text')).toBeTruthy();
+    const {getByTestId} = render(<Header title={'Title'} />);
+    const titleComponent = getByTestId('header.text');
+    expect(titleComponent.props.children).toBe('Title');
   });
 
   it(`renders correctly title props`, () => {
-    const {getByTestId} = render(<Header />);
-    const headerComponet = getByTestId('header');
-    // expect().toBeTruthy();
+    const {getByTestId} = render(
+      <Header title={'Title'} titleTextProps={{color: '#421187'}} />,
+    );
+    const titleComponent = getByTestId('header.text');
+    expect(titleComponent.props.children).toBe('Title');
+    expect(titleComponent.props.style.color).toBe('#421187');
   });
 
-  /*
   it(`renders correctly sub title`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(<Header subTitle="Sub Title" />);
+    const subTitleComponent = getByTestId('header.subTitle');
+    expect(subTitleComponent.props.children).toBe('Sub Title');
   });
 
   it(`renders correctly sub title props`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(
+      <Header subTitle={'Sub Title'} subTitleTextProps={{color: '#421187'}} />,
+    );
+    const subTitleComponent = getByTestId('header.subTitle');
+    expect(subTitleComponent.props.children).toBe('Sub Title');
+    expect(subTitleComponent.props.style.color).toBe('#421187');
   });
 
   it(`renders correctly avatar`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(<Header avatar={images.logo_bein} />);
+    const headerComponent = getByTestId('header');
+    // expect(headerComponent.props.avatar).toBe(images.logo_bein);
   });
-
+  /*
   it(`renders correctly avatar props`, () => {
     const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');
