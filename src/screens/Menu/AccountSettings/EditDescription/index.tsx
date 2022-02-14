@@ -62,6 +62,7 @@ const EditDescription = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
+          borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
       />

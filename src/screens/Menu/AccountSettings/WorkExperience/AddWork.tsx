@@ -83,19 +83,17 @@ const AddWork = () => {
     useState<any>(selectedWorkItem);
 
   useEffect(() => {
-    if (
-      !isEmpty(selectedWorkItem) &&
-      !isEqual(selectedWorkItem, privateSelectedWorkItem)
-    ) {
-      setCompanyValue(selectedWorkItem.company);
-      setPositionValue(selectedWorkItem.titlePosition);
-      setLocationValue(selectedWorkItem.location);
-      setDescriptionValue(selectedWorkItem.description);
-      setIsWorkHere(selectedWorkItem.currentlyWorkHere);
-      setStartDateValue(selectedWorkItem.startDate);
-      setEndDateValue(selectedWorkItem.endDate);
-      setPrivateSelectedWorkItem(selectedWorkItem);
-    }
+    setCompanyValue(selectedWorkItem?.company || '');
+    setPositionValue(selectedWorkItem?.titlePosition || '');
+    setLocationValue(selectedWorkItem?.location || '');
+    setDescriptionValue(selectedWorkItem?.description || '');
+    setIsWorkHere(value => {
+      if (isEmpty(selectedWorkItem)) return true;
+      return selectedWorkItem?.currently_work_here;
+    });
+    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
+    setEndDateValue(selectedWorkItem?.endDate || null);
+    setPrivateSelectedWorkItem(!!selectedWorkItem ? selectedWorkItem : {});
   }, [selectedWorkItem]);
 
   useEffect(() => {
@@ -283,7 +281,7 @@ const AddWork = () => {
             style={styles.calendarIcon}
           />
           <Text.BodyS testID="add_work.start_date" color={colors.textSecondary}>
-            {formatDate(startDateValue, 'MMM Do, YYYY') ||
+            {formatDate(startDateValue, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')}
           </Text.BodyS>
         </ButtonWrapper>
@@ -320,7 +318,7 @@ const AddWork = () => {
           testID="add_work.delete"
           onPress={onDelete}
           useI18n
-          style={{backgroundColor: colors.bgError}}>
+          style={styles.buttonDelete}>
           settings:text_delete_work
         </Button.Danger>
       )
@@ -343,6 +341,7 @@ const AddWork = () => {
           textColor: theme.colors.background,
           disabled:
             companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
+          borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}
@@ -436,6 +435,10 @@ const createStyles = (theme: ITheme) => {
     },
     calendarIcon: {
       marginRight: spacing.margin.small,
+    },
+    buttonDelete: {
+      backgroundColor: colors.bgError,
+      borderRadius: spacing.borderRadius.small,
     },
   });
 };

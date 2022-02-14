@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -187,9 +193,13 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         testID="user_profile.edit"
         textColor={theme.colors.primary6}
-        style={styles.buttonEdit}
+        style={Platform.OS === 'web' ? styles.buttonEditWeb : styles.buttonEdit}
         leftIcon={'EditAlt'}
-        onPress={onEditProfileButton}>
+        onPress={onEditProfileButton}
+        borderRadius={theme.spacing.borderRadius.small}
+        contentStyle={
+          Platform.OS === 'web' ? styles.buttonEditWebContainer : {}
+        }>
         {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
     ) : (
@@ -199,7 +209,8 @@ const UserProfile = (props: any) => {
         textColor={theme.colors.bgSecondary}
         color={theme.colors.primary6}
         colorHover={theme.colors.primary5}
-        rightIcon={'Message'}>
+        rightIcon={'Message'}
+        borderRadius={theme.spacing.borderRadius.small}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
     );
@@ -306,6 +317,14 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     buttonEdit: {
       marginHorizontal: spacing.margin.large,
+      borderWidth: 1,
+      borderColor: colors.primary6,
+    },
+    buttonEditWeb: {
+      marginHorizontal: spacing.margin.large,
+    },
+    buttonEditWebContainer: {
+      marginHorizontal: 0,
       borderWidth: 1,
       borderColor: colors.primary6,
     },
