@@ -29,6 +29,7 @@ import {
   IParamGetPostAudiences,
   IPayloadUpdateReaction,
   IPayloadDeletePost,
+  IPayloadDeleteComment,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -247,6 +248,10 @@ const postActions = {
   }),
   setSavingDraftPost: (payload: boolean) => ({
     type: postTypes.SET_SAVING_DRAFT_POST,
+    payload,
+  }),
+  deleteComment: (payload: IPayloadDeleteComment) => ({
+    type: postTypes.DELETE_COMMENT,
     payload,
   }),
 };

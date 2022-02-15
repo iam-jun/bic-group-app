@@ -441,3 +441,9 @@ export interface ISocketReaction {
 export interface ICreatePostCurrentSettings {
   important: IActivityImportant;
 }
+
+export interface IPayloadDeleteComment {
+  commentId: string;
+  parentCommentId?: string;
+  postId: string;
+}

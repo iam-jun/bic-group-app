@@ -482,6 +482,12 @@
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted"
     },
+    "comment": {
+      "title_delete_comment": "Delete this comment",
+      "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
+      "text_delete_comment_error": "Delete comment failed!",
+      "text_delete_comment_success": "Comment deleted"
+    },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
     "people_can_share": "People can share on this post",

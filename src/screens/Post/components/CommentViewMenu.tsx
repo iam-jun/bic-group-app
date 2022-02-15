@@ -26,6 +26,7 @@ export interface CommentViewMenuProps {
   onPressMoreReaction: (e: any) => void;
   onAddReaction: (reactionId: ReactionType) => void;
   onPressReply: () => void;
+  onPressDelete: () => void;
 }
 
 const CommentViewMenu: FC<CommentViewMenuProps> = ({
@@ -36,6 +37,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   onPressMoreReaction,
   onAddReaction,
   onPressReply,
+  onPressDelete,
 }: CommentViewMenuProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -65,6 +67,11 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const _onPress = () => {
     dispatch(modalActions.hideModal());
     dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const _onPressDelete = () => {
+    dispatch(modalActions.hideModal());
+    onPressDelete?.();
   };
 
   const _onPressReply = () => {
@@ -157,7 +164,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
           leftIcon={'Trash'}
           leftIconProps={{icon: 'Trash', size: 24}}
           title={t('post:comment_menu_delete')}
-          onPress={_onPress}
+          onPress={_onPressDelete}
         />
       )}
     </View>
