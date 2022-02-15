@@ -29,7 +29,6 @@ exports[`Avatar component renders correctly 1`] = `
           "position": "relative",
         }
       }
-      testID="image"
     >
       <View
         collapsable={false}
@@ -77,7 +76,11 @@ exports[`Avatar component renders correctly 1`] = `
           onFastImageError={[Function]}
           onFastImageLoadEnd={[Function]}
           resizeMode="cover"
-          source={null}
+          source={
+            Object {
+              "testUri": "../../../assets/images/bein_logo.png",
+            }
+          }
           style={
             Object {
               "bottom": 0,

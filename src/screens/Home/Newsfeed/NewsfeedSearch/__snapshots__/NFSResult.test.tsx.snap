@@ -981,6 +981,7 @@ exports[`NFSResult component should render list search result 1`] = `
                       "width": 48,
                     }
                   }
+                  testID="avatar"
                 >
                   <View
                     style={
@@ -990,6 +991,7 @@ exports[`NFSResult component should render list search result 1`] = `
                         "width": 48,
                       }
                     }
+                    testID="avatarContainer"
                   >
                     <View
                       onLayout={[Function]}

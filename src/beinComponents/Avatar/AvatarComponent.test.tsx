@@ -12,8 +12,7 @@ const theme: ITheme = useTheme() as ITheme;
 const {spacing, dimension, colors} = theme;
 
 describe('Avatar component', () => {
-  const avatarLink =
-    '	https://bein-entity-attribute-sandbox.s3.ap-southe…riginal/f3f4639e-6b1c-478f-ba6b-be1559197199.jpeg';
+  const avatarLink = images.logo_bein;
   it(`renders correctly`, () => {
     const rendered = render(<Avatar.Large source={avatarLink} />).toJSON();
     expect(rendered).toMatchSnapshot();
