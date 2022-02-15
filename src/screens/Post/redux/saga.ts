@@ -498,7 +498,7 @@ function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
-  reactionsOrder: string[],
+  reactionsOrder?: string[],
 ): any {
   try {
     const post = yield select(state =>
@@ -524,6 +524,7 @@ function* putReactionToPost({
     const post1 = yield select(s => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reaction_counts || {};
     const cOwnReaction1 = post1.own_reactions || {};
+    const cReactionsOrder = post1.reactions_order || [];
 
     const data: ReactionType[] = [];
     data.push(reactionId);
@@ -536,7 +537,12 @@ function* putReactionToPost({
       const newReactionCounts = {...cReactionCounts1};
       newReactionCounts[reactionId] =
         (newReactionCounts?.[reactionId] || 0) + 1;
-      yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
+      yield onUpdateReactionOfPostById(
+        id,
+        newOwnReaction1,
+        newReactionCounts,
+        cReactionsOrder,
+      );
 
       yield postDataHelper.putReactionToPost({postId: id, data});
       // Disable update data base on response because of calculate wrong value when receive socket msg
@@ -571,20 +577,23 @@ function* deleteReactToPost({
   payload: IPayloadReactToPost;
 }): any {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
+  const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+  const cReactionsOrder = post1?.reactions_order || [];
   try {
-    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reaction_counts || {};
     const cOwnReaction1 = post1.own_reactions || {};
-
     const rId = cOwnReaction1?.[reactionId]?.[0]?.id;
     if (rId) {
       const newOwnReaction1: IOwnReaction = {...cOwnReaction1};
       const reactionArr: IReaction[] = [];
       reactionArr.push({loading: true});
       newOwnReaction1[reactionId] = reactionArr;
-      yield onUpdateReactionOfPostById(id, newOwnReaction1, {
-        ...cReactionCounts1,
-      });
+      yield onUpdateReactionOfPostById(
+        id,
+        newOwnReaction1,
+        {...cReactionCounts1},
+        cReactionsOrder,
+      );
 
       yield call(postDataHelper.deleteReaction, rId);
 
@@ -598,10 +607,20 @@ function* deleteReactToPost({
         0,
         (newReactionCounts2[reactionId] || 0) - 1,
       );
-      yield onUpdateReactionOfPostById(id, newOwnReaction2, newReactionCounts2);
+      yield onUpdateReactionOfPostById(
+        id,
+        newOwnReaction2,
+        newReactionCounts2,
+        cReactionsOrder,
+      );
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(
+      id,
+      ownReaction,
+      reactionCounts,
+      cReactionsOrder,
+    ); //rollback
     yield showError(e);
   }
 }
@@ -705,7 +724,7 @@ function* updateUnReactionBySocket({
       reaction_counts,
     );
   } else if (post?.post_id) {
-    const {post_id, reaction_counts = {}} = post;
+    const {post_id, reaction_counts = {}, reactions_order = []} = post;
     // handle un-react post
     const p =
       (yield select(state => get(state, postKeySelector.postById(post_id)))) ||
@@ -714,7 +733,12 @@ function* updateUnReactionBySocket({
     if (isCurrentUser && reaction?.kind) {
       ownReactions[reaction.kind] = [];
     }
-    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+    yield onUpdateReactionOfPostById(
+      post_id,
+      ownReactions,
+      reaction_counts,
+      reactions_order,
+    );
   }
 }
 
