@@ -36,6 +36,7 @@ export interface IconProps extends SVGIconProps, UniconsProps {
   labelStyle?: StyleProp<TextStyle>;
   onPress?: (e: any) => void;
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
+  buttonTestID?: string;
 }
 
 const Icon: React.FC<IconProps> = ({
@@ -54,6 +55,7 @@ const Icon: React.FC<IconProps> = ({
   isLoading,
   disabled,
   hitSlop = {top: 10, left: 10, bottom: 10, right: 10},
+  buttonTestID,
 }: IconProps) => {
   const NetInfo = useNetInfo();
   const noInternet = NetInfo.isInternetReachable === false;
@@ -104,7 +106,8 @@ const Icon: React.FC<IconProps> = ({
     <TouchableOpacity
       disabled={noInternet || disabled || !onPress}
       onPress={onPress}
-      hitSlop={hitSlop}>
+      hitSlop={hitSlop}
+      testID={buttonTestID}>
       <Wrapper style={[styles.container, style, {backgroundColor}]}>
         <Div
           style={[

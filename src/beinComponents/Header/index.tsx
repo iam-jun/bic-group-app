@@ -261,6 +261,7 @@ const Header: React.FC<HeaderProps> = ({
               icon={leftIcon}
               onPress={onPressHeader}
               {...leftIconProps}
+              testID="header.leftIcon"
             />
           )}
           <View style={styles.titleContainer}>
@@ -297,6 +298,8 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={onPressIcon}
               backgroundColor={colors.bgSecondary}
+              testID="header.icon"
+              buttonTestID="header.icon.button"
             />
           )}
           {onSearchText && (
@@ -350,6 +353,7 @@ const Header: React.FC<HeaderProps> = ({
               onPress={onRightPress}
               backgroundColor={colors.bgSecondary}
               {...rightIconProps}
+              testID="header.rightIcon"
             />
           )}
           <HeaderSearch

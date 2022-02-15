@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
+import {fireEvent} from '~/test/testUtils';
 import {View} from 'react-native';
 import Header from '~/beinComponents/Header';
 import images from '~/resources/images';
@@ -71,53 +72,77 @@ describe('Header component', () => {
     expect(subTitleComponent.props.children).toBe('Sub Title');
     expect(subTitleComponent.props.style.color).toBe('#421187');
   });
-
+  /*
   it(`renders correctly avatar`, () => {
     const {getByTestId} = render(<Header avatar={images.logo_bein} />);
     const headerComponent = getByTestId('header');
     // expect(headerComponent.props.avatar).toBe(images.logo_bein);
   });
-  /*
+  
   it(`renders correctly avatar props`, () => {
     const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');
   });
-
-  it(`renders correctly `, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
-  });
+  */
 
   it(`renders correctly left icon`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(<Header leftIcon="UilBug" />);
+    const leftIconComponent = getByTestId('header.leftIcon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly left icon props`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(
+      <Header leftIcon="UilBug" leftIconProps={{tintColor: '#421187'}} />,
+    );
+    const leftIconComponent = getByTestId('header.leftIcon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
+      '#421187',
+    );
   });
 
   it(`renders correctly icon`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressIcon = jest.fn();
+    const {getByTestId} = render(
+      <Header icon="UilBug" onPressIcon={onPressIcon} />,
+    );
+    const leftIconComponent = getByTestId('header.icon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly right icon`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(<Header rightIcon="UilBug" />);
+    const leftIconComponent = getByTestId('header.rightIcon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly right icon props`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const {getByTestId} = render(
+      <Header rightIcon="UilBug" rightIconProps={{tintColor: '#421187'}} />,
+    );
+    const leftIconComponent = getByTestId('header.rightIcon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
+      '#421187',
+    );
   });
 
   it(`renders correctly on press icon`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressIcon = jest.fn();
+    const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
+    const iconComponent = rendered.getByTestId('header.icon');
+    expect(iconComponent).toBeDefined();
+    expect(iconComponent.findByType('RNSVGSvgView')).toBeDefined();
+    const btnIcon = rendered.getByTestId('header.icon.button');
+    expect(btnIcon).toBeDefined();
+    fireEvent.press(btnIcon);
+    expect(onPressIcon).toBeCalled();
   });
-
+  /*
   it(`renders correctly button variant`, () => {
     const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');
