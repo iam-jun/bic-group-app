@@ -168,7 +168,10 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderAvatar = () => {
-    return userId == currentUserId || userId == currentUsername ? (
+    if (userId !== currentUserId && userId !== currentUsername) {
+      return null;
+    }
+    return (
       <View>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
@@ -199,11 +202,14 @@ const UserEditProfile = (props: any) => {
         </View>
         <Divider style={styles.divider} />
       </View>
-    ) : null;
+    );
   };
 
   const renderCover = () => {
-    return userId == currentUserId || userId == currentUsername ? (
+    if (userId !== currentUserId && userId !== currentUsername) {
+      return null;
+    }
+    return (
       <View>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
@@ -234,11 +240,14 @@ const UserEditProfile = (props: any) => {
           )}
         </View>
       </View>
-    ) : null;
+    );
   };
 
   const renderDescription = () => {
-    return userId == currentUserId || userId == currentUsername ? (
+    if (userId !== currentUserId && userId !== currentUsername) {
+      return null;
+    }
+    return (
       <View style={{paddingTop: theme.spacing.padding.base}}>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
@@ -259,7 +268,7 @@ const UserEditProfile = (props: any) => {
         </Text.BodyS>
         <Divider style={styles.divider} />
       </View>
-    ) : null;
+    );
   };
 
   const renderBasicInfo = () => {
