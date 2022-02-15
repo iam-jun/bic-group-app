@@ -87,6 +87,7 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
             <ScrollView
               removeClippedSubviews={true}
               keyboardShouldPersistTaps="always"
+              showsVerticalScrollIndicator={false}
               style={styles.listView}>
               {(searchQuery ? searchResult : data || []).map(
                 (item: ILocation) => renderItem({item}),
@@ -113,7 +114,7 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
       marginBottom: spacing.margin.large,
     },
     contentComponent: {
-      minHeight: 0.6 * screenHeight,
+      maxHeight: 0.8 * screenHeight,
       ...Platform.select({
         web: {
           maxHeight: 0.55 * screenHeight,

@@ -71,7 +71,7 @@ const ProfileBlock = ({
 
   return (
     <View style={styles.container}>
-      {!!gender || !!birthday || !!relationship_status ? (
+      {!!gender || !!birthday || !!relationship_status || !!userLanguages ? (
         <>
           <Text.Subtitle color={theme.colors.textSecondary}>
             {i18next.t('settings:title_about')}
@@ -90,22 +90,19 @@ const ProfileBlock = ({
               // @ts-ignore
               title: relationshipStatus[relationship_status],
             })}
-          {!hideSeeMore ? (
-            <ButtonWrapper
-              onPress={onSeeMore}
-              activeOpacity={1}
-              style={styles.buttonWrapper}>
-              <Text.H6
-                testID="add_work.start_date"
-                color={theme.colors.primary6}>
-                {i18next.t('settings:text_view_more_info')}
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
         </>
       ) : null}
-
-      {!!email || !!phone || !!city ? (
+      {!hideSeeMore ? (
+        <ButtonWrapper
+          onPress={onSeeMore}
+          activeOpacity={1}
+          style={styles.buttonWrapper}>
+          <Text.H6 testID="add_work.start_date" color={theme.colors.primary6}>
+            {i18next.t('settings:text_view_more_info')}
+          </Text.H6>
+        </ButtonWrapper>
+      ) : null}
+      {(!!email || !!phone || !!city) && hideSeeMore ? (
         <>
           <Text.Subtitle
             style={styles.title}
@@ -128,7 +125,7 @@ const ProfileBlock = ({
         </>
       ) : null}
 
-      {!!latest_work ? (
+      {!!latest_work && hideSeeMore ? (
         <>
           <Text.Subtitle
             style={styles.title}

@@ -84,17 +84,16 @@ const GroupAdministration = (props: any) => {
     testID?: string,
   ) => {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <MenuItem
-          testID={testID}
-          title={title}
-          icon={icon}
-          iconProps={{icon: icon, tintColor: theme.colors.primary6}}
-          notificationsBadgeNumber={notificationsBadgeNumber}
-          notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-          rightSubIcon="AngleRightB"
-        />
-      </TouchableOpacity>
+      <MenuItem
+        testID={testID}
+        title={title}
+        icon={icon}
+        iconProps={{icon: icon, tintColor: theme.colors.primary6}}
+        notificationsBadgeNumber={notificationsBadgeNumber}
+        notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
+        rightSubIcon="AngleRightB"
+        onPress={onPress}
+      />
     );
   };
 
