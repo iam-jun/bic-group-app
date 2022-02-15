@@ -151,6 +151,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
 
       <View style={styles.buttons}>
         <Button.Secondary
+          testID="pending_user_item.btn_decline"
           style={styles.buttonDecline}
           onPress={onPressDecline}
           useI18n>
@@ -158,6 +159,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
         </Button.Secondary>
         <Button.Secondary
           highEmphasis
+          testID="pending_user_item.btn_approve"
           style={styles.buttonApprove}
           color={theme.colors.primary6}
           onPress={onPressApprove}

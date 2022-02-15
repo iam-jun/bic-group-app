@@ -132,6 +132,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
       <Divider />
       <View style={styles.buttons}>
         <Button.Secondary
+          testID="pending_action_all.btn_decline_all"
           style={styles.buttonDecline}
           onPress={onPressDeclineAll}
           useI18n>
@@ -139,6 +140,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
         </Button.Secondary>
         <Button.Secondary
           highEmphasis
+          testID="pending_action_all.btn_approve_all"
           style={styles.buttonApprove}
           color={theme.colors.primary6}
           onPress={onPressApproveAll}

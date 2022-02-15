@@ -50,7 +50,10 @@ const CustomDrawerContent = (props: any) => {
           content: 'Do you want to Log Out?',
           iconName: 'SignOutAlt',
           cancelBtn: true,
-          onConfirm: () => dispatch(authActions.signOut()),
+          onConfirm: () => {
+            //waiting for close alert success before clear data
+            setTimeout(() => dispatch(authActions.signOut()), 100);
+          },
           confirmLabel: t('auth:text_sign_out'),
         };
         dispatch(modalActions.showAlert(alertPayload));
@@ -114,6 +117,7 @@ const CustomDrawerContent = (props: any) => {
         title="auth:text_sign_out"
         titleProps={{style: {color: colors.error}}}
         onPress={onPressItem('logOut')}
+        testID="menu.logout.item.0"
       />
       {__DEV__ &&
         renderData({

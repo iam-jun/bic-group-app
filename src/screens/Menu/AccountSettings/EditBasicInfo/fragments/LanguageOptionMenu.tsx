@@ -85,6 +85,7 @@ const LanguageOptionMenu = ({
         title={i18next.t(item.fullName)}
         height={36}
         isChecked={item.selected}
+        checkboxProps={{testID: 'language_option_menu.checkbox'}}
         onPressCheckbox={() => onSelectItem(item)}
       />
     );

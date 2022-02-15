@@ -370,7 +370,6 @@ const PostSelectAudience = () => {
         }}
         onPressButton={onPressSave}
         onPressBack={onPressBack}
-        hideBackOnLaptop
       />
       <SearchInput
         autoFocus
