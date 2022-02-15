@@ -53,20 +53,29 @@ const ReactionView: FC<ReactionViewProps> = ({
   const renderReactions = () => {
     //When return reactionCounts, backend auto sort by alphabet
     //so we need use reactionsOrder to sort
-    let _reactionCounts: IReactionCounts = reactionCounts;
+    const reactionMap = new Map();
+    const _reactionCounts: IReactionCounts = reactionCounts;
     if (reactionsOrder?.length > 0) {
-      const ordered: IReactionCounts = {};
-      reactionsOrder.map(rKey => (ordered[rKey] = reactionCounts[rKey]));
-      _reactionCounts = Object.assign(ordered, reactionCounts);
+      reactionsOrder.map(rKey => {
+        if (reactionCounts?.[rKey]) {
+          reactionMap.set(rKey, reactionCounts?.[rKey]);
+        }
+      });
+      //add reaction in reaction counts but not in order, such as loading
+      Object.keys(reactionCounts)?.map?.(rKey => {
+        if (reactionCounts?.[rKey]) {
+          reactionMap.set(rKey, reactionCounts?.[rKey]);
+        }
+      });
     }
 
     const rendered: React.ReactNode[] = [];
-    Object.keys(_reactionCounts || {})?.map?.((key, index) => {
+    for (const [key] of reactionMap) {
       const react = key as ReactionType;
       if (!blacklistReactions?.[react] && _reactionCounts?.[key]) {
         rendered.push(
           <Reaction
-            key={`${index}_${key}`}
+            key={`${key}`}
             style={{margin: 2}}
             value={_reactionCounts[key]}
             icon={key}
@@ -78,7 +87,7 @@ const ReactionView: FC<ReactionViewProps> = ({
           />,
         );
       }
-    });
+    }
     return rendered;
   };
 
