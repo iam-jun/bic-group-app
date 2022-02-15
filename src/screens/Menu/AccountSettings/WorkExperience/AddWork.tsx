@@ -31,7 +31,7 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
-import {isEqual} from 'lodash';
+import {isEmpty, isEqual} from 'lodash';
 import Button from '~/beinComponents/Button';
 
 const AddWork = () => {
@@ -83,16 +83,17 @@ const AddWork = () => {
     useState<any>(selectedWorkItem);
 
   useEffect(() => {
-    if (!isEqual(selectedWorkItem, privateSelectedWorkItem)) {
-      setCompanyValue(selectedWorkItem.company);
-      setPositionValue(selectedWorkItem.titlePosition);
-      setLocationValue(selectedWorkItem.location);
-      setDescriptionValue(selectedWorkItem.description);
-      setIsWorkHere(selectedWorkItem.currentlyWorkHere);
-      setStartDateValue(selectedWorkItem.startDate);
-      setEndDateValue(selectedWorkItem.endDate);
-      setPrivateSelectedWorkItem(selectedWorkItem);
-    }
+    setCompanyValue(selectedWorkItem?.company || '');
+    setPositionValue(selectedWorkItem?.titlePosition || '');
+    setLocationValue(selectedWorkItem?.location || '');
+    setDescriptionValue(selectedWorkItem?.description || '');
+    setIsWorkHere(value => {
+      if (isEmpty(selectedWorkItem)) return true;
+      return selectedWorkItem?.currently_work_here;
+    });
+    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
+    setEndDateValue(selectedWorkItem?.endDate || null);
+    setPrivateSelectedWorkItem(!!selectedWorkItem ? selectedWorkItem : {});
   }, [selectedWorkItem]);
 
   useEffect(() => {
@@ -280,7 +281,7 @@ const AddWork = () => {
             style={styles.calendarIcon}
           />
           <Text.BodyS testID="add_work.start_date" color={colors.textSecondary}>
-            {formatDate(startDateValue, 'MMM Do, YYYY') ||
+            {formatDate(startDateValue, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')}
           </Text.BodyS>
         </ButtonWrapper>
@@ -313,7 +314,11 @@ const AddWork = () => {
   const renderDeleteButton = () => {
     return (
       selectedWorkItem && (
-        <Button.Danger testID="add_work.delete" onPress={onDelete} useI18n>
+        <Button.Danger
+          testID="add_work.delete"
+          onPress={onDelete}
+          useI18n
+          style={styles.buttonDelete}>
           settings:text_delete_work
         </Button.Danger>
       )
@@ -332,7 +337,11 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          disabled: companyValue.trim() && positionValue.trim() ? false : true,
+          color: theme.colors.primary6,
+          textColor: theme.colors.background,
+          disabled:
+            companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
+          borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}
@@ -396,12 +405,13 @@ const createStyles = (theme: ITheme) => {
       borderWidth: 1,
       padding: spacing.margin.base,
       marginTop: spacing.margin.small,
+      height: 88,
     },
     textInput: {
       fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
       color: colors.textPrimary,
-      height: 64,
+      flex: 1,
     },
     textInputFocus: {
       borderColor: colors.primary6,
@@ -425,6 +435,9 @@ const createStyles = (theme: ITheme) => {
     },
     calendarIcon: {
       marginRight: spacing.margin.small,
+    },
+    buttonDelete: {
+      borderRadius: spacing.borderRadius.small,
     },
   });
 };

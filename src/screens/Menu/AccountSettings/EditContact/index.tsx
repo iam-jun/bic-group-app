@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
@@ -18,6 +18,7 @@ import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
 import {ILocation} from '~/interfaces/common';
 import menuActions from '../../redux/actions';
+import {useForm} from 'react-hook-form';
 
 const EditContact = () => {
   const theme = useTheme() as ITheme;
@@ -31,11 +32,22 @@ const EditContact = () => {
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const {email, phone, country_code, country, city, id} = myProfile || {};
 
-  const [phoneState, setPhoneState] = useState<string>(phone);
   const [countryCodeState, setCountryCountryCodeState] =
     useState<string>(country_code);
   const [countryState, setCountryState] = useState<string>(country);
   const [cityState, setCityState] = useState<string>(city);
+  const phoneNumberEditError = useKeySelector(
+    menuKeySelector.phoneNumberEditError,
+  );
+
+  const {
+    control,
+    formState: {errors},
+    trigger,
+    getValues,
+    setError,
+    clearErrors,
+  } = useForm();
 
   const navigateBack = () => {
     if (rootNavigation.canGoBack) {
@@ -45,12 +57,22 @@ const EditContact = () => {
     }
   };
 
-  const onSave = () => {
+  useEffect(() => {
+    phoneNumberEditError && showErrors();
+  }, [phoneNumberEditError]);
+
+  const onSave = async () => {
+    const validInputs = await validateInputs();
+    if (!validInputs) {
+      return;
+    }
+    const phoneNumber = getValues('phoneNumber');
+
     dispatch(
       menuActions.editMyProfile(
         {
           id,
-          phone: phoneState,
+          phone: phoneNumber,
           country_code: countryCodeState,
           country: countryState,
           city: cityState,
@@ -59,6 +81,22 @@ const EditContact = () => {
       ),
     );
     navigateBack();
+  };
+
+  const validateInputs = async () => {
+    return await trigger('phoneNumber');
+  };
+
+  const showErrors = () => {
+    setError('phoneNumber', {
+      type: 'validate',
+      message: phoneNumberEditError,
+    });
+  };
+
+  const clearAllErrors = () => {
+    clearErrors('phoneNumber');
+    dispatch(menuActions.setPhoneNumberEditError(''));
   };
 
   const onEditLocationOpen = (e: any) => {
@@ -70,10 +108,6 @@ const EditContact = () => {
     setCityState(item.name);
     locationRef?.current?.close();
     Keyboard.dismiss();
-  };
-
-  const onChangePhoneNumber = (_phone: string) => {
-    setPhoneState(_phone);
   };
 
   const onChangeCountryCode = (_countryCode: string) => {
@@ -91,6 +125,7 @@ const EditContact = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
+          borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
       />
@@ -100,15 +135,17 @@ const EditContact = () => {
             countryCode={country_code}
             phoneNumber={phone}
             onChangeCountryCode={onChangeCountryCode}
-            onChangePhoneNumber={onChangePhoneNumber}
+            control={control}
+            errorsState={errors}
+            clearAllErrors={clearAllErrors}
           />
           <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
           <Button
             testID="edit_contact.phone"
-            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            textProps={{color: theme.colors.borderCard, variant: 'body'}}
             style={[
               styles.buttonDropDown,
-              {backgroundColor: theme.colors.placeholder},
+              {backgroundColor: theme.colors.bgHover},
             ]}
             contentStyle={styles.buttonDropDownContent}
             activeOpacity={1}>
