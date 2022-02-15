@@ -234,6 +234,7 @@ export interface IReaction {
   parent?: string;
   latest_children?: any;
   children_counts?: any;
+  reactions_order?: string[];
   own_children?: any;
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
@@ -433,6 +434,7 @@ export interface ISocketReaction {
   comment: {
     comment_id?: string;
     reaction_counts?: IReactionCounts;
+    reactions_order?: string[];
   };
 }
 

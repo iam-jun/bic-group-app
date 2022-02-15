@@ -66,8 +66,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const currentUserId = useUserIdAuth();
 
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
-  const {id, user_id, data, created_at, user, children_counts, own_children} =
-    comment || commentData || {};
+  const {
+    id,
+    user_id,
+    data,
+    created_at,
+    user,
+    children_counts,
+    own_children,
+    reactions_order,
+  } = comment || commentData || {};
   const {content} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
@@ -268,6 +276,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
           <ReactionView
             ownReactions={own_children}
             reactionCounts={children_counts}
+            reactionsOrder={reactions_order}
             onAddReaction={onAddReaction}
             onRemoveReaction={onRemoveReaction}
             onPressSelectReaction={onPressReact}
