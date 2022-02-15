@@ -74,6 +74,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
     return (
       <View
+        testID="avatar.action"
         style={{
           position: 'absolute',
           top: -(spacing?.margin.tiny || 4),
@@ -107,6 +108,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
     return (
       <View
+        testID="avatar.status"
         style={{
           position: 'absolute',
           bottom: 0,
@@ -137,6 +139,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
     return (
       <View
+        testID="avatar.badge"
         style={{
           position: 'absolute',
           top: badgeBottom ? undefined : absTop,
@@ -165,6 +168,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     }
     return (
       <View
+        testID="avatar.badgeCheck"
         style={{
           position: 'absolute',
           bottom: 0,
@@ -193,8 +197,11 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([avatarContainerStyle, style])}>
+    <View
+      testID="avatar"
+      style={StyleSheet.flatten([avatarContainerStyle, style])}>
       <View
+        testID="avatarContainer"
         style={StyleSheet.flatten([
           avatarStyle,
           source ? {} : {backgroundColor: colors.borderCard},

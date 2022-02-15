@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Divider component renders correctly 1`] = `
+exports[`Avatar component renders correctly 1`] = `
 <View
   style={
     Object {
@@ -9,6 +9,7 @@ exports[`Divider component renders correctly 1`] = `
       "width": 48,
     }
   }
+  testID="avatar"
 >
   <View
     style={
@@ -18,6 +19,7 @@ exports[`Divider component renders correctly 1`] = `
         "width": 48,
       }
     }
+    testID="avatarContainer"
   >
     <View
       onLayout={[Function]}
@@ -27,6 +29,7 @@ exports[`Divider component renders correctly 1`] = `
           "position": "relative",
         }
       }
+      testID="image"
     >
       <View
         collapsable={false}
