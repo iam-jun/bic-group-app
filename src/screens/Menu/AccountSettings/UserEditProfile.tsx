@@ -168,7 +168,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderAvatar = () => {
-    if (userId !== currentUserId && userId !== currentUsername) {
+    if (userId != currentUserId && userId != currentUsername) {
       return null;
     }
     return (
@@ -206,7 +206,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderCover = () => {
-    if (userId !== currentUserId && userId !== currentUsername) {
+    if (userId != currentUserId && userId != currentUsername) {
       return null;
     }
     return (
@@ -244,7 +244,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderDescription = () => {
-    if (userId !== currentUserId && userId !== currentUsername) {
+    if (userId != currentUserId && userId != currentUsername) {
       return null;
     }
     return (
