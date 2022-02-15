@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "borderRadius": 6,
+      "height": 48,
+      "width": 48,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "borderRadius": 6,
+        "height": 48,
+        "width": 48,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "position": "relative",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        nativeID="animatedComponent"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#f9f9f9",
+              "borderRadius": 6,
+              "height": 48,
+              "justifyContent": "center",
+              "width": 48,
+            }
+          }
+          testID="Image__placeholder"
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "borderRadius": 6,
+              "height": 48,
+              "width": 48,
+            },
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          onFastImageLoadEnd={[Function]}
+          resizeMode="cover"
+          source={null}
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
