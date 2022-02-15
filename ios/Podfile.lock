@@ -346,7 +346,7 @@ PODS:
     - React-Core
   - react-native-pager-view (5.4.8):
     - React-Core
-  - react-native-safe-area-context (3.2.0):
+  - react-native-safe-area-context (3.3.2):
     - React-Core
   - react-native-unicons (1.0.3):
     - React
@@ -767,7 +767,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: 73ae67717ba14756a5dd291116fb7d35506b1200
   react-native-netinfo: 1c7676413ab265759c7b3da205efab163f5366ef
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
-  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-unicons: 3f98688cbfc9f47e3ae45dd1560b7a2ab65075f4
   react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
   React-perflogger: fcac6090a80e3d967791b4c7f1b1a017f9d4a398
