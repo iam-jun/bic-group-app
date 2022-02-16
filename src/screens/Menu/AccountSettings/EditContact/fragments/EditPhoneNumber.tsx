@@ -32,14 +32,18 @@ import Divider from '~/beinComponents/Divider';
 
 interface EditPhoneNumberProps {
   onChangeCountryCode: (value: string) => void;
-  onChangePhoneNumber: (value: string) => void;
   countryCode: string;
   phoneNumber: string;
+  control: any;
+  errorsState: any;
+  clearAllErrors: () => void;
 }
 
 const EditPhoneNumber = ({
   onChangeCountryCode,
-  onChangePhoneNumber,
+  control,
+  errorsState,
+  clearAllErrors,
   countryCode,
   phoneNumber,
 }: EditPhoneNumberProps) => {
@@ -51,9 +55,7 @@ const EditPhoneNumber = ({
 
   const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
   const {data, searchResult} = countryCodeList || {};
-  const phoneNumberEditError = useKeySelector(
-    menuKeySelector.phoneNumberEditError,
-  );
+
   const [codeValue, setCodeValue] = useState<string>(countryCode);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const countryCodeSheetRef = useRef<any>();
@@ -61,44 +63,6 @@ const EditPhoneNumber = ({
   useEffect(() => {
     clearAllErrors();
   }, []);
-
-  useEffect(() => {
-    phoneNumberEditError && showErrors();
-  }, [phoneNumberEditError]);
-
-  const {
-    control,
-    formState: {errors},
-    trigger,
-    getValues,
-    setError,
-    clearErrors,
-  } = useForm();
-
-  const onEndEditing = async () => {
-    const validInputs = await validateInputs();
-    if (!validInputs) {
-      return;
-    }
-    const phoneNumber = getValues('phoneNumber');
-    onChangePhoneNumber(phoneNumber);
-  };
-
-  const validateInputs = async () => {
-    return await trigger('phoneNumber');
-  };
-
-  const showErrors = () => {
-    setError('phoneNumber', {
-      type: 'validate',
-      message: phoneNumberEditError,
-    });
-  };
-
-  const clearAllErrors = () => {
-    clearErrors('phoneNumber');
-    dispatch(menuActions.setPhoneNumberEditError(''));
-  };
 
   const doSearch = (searchQuery: string) => {
     searchQuery && dispatch(menuActions.searchCountryCode(searchQuery));
@@ -168,8 +132,10 @@ const EditPhoneNumber = ({
     );
   };
 
-  const onOpenCountryCode = (e: any) =>
+  const onOpenCountryCode = (e: any) => {
+    Keyboard.dismiss();
     countryCodeSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
 
   const renderCountryCodeInput = () => {
     return (
@@ -200,11 +166,10 @@ const EditPhoneNumber = ({
                 onChange(formatTextRemoveSpace(text));
                 clearAllErrors();
               }}
-              error={errors.phoneNumber}
-              helperContent={errors?.phoneNumber?.message}
+              error={errorsState?.phoneNumber}
+              helperContent={errorsState?.phoneNumber?.message}
               keyboardType="numeric"
               autoCapitalize="none"
-              onEndEditing={onEndEditing}
               activeOutlineColor={theme.colors.primary6}
               outlineColor={theme.colors.borderCard}
             />
@@ -275,13 +240,12 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
       justifyContent: 'space-between',
     },
     contentComponent: {
-      maxHeight: 0.8 * screenHeight,
+      minHeight: 0.8 * screenHeight,
       ...Platform.select({
         web: {
           maxHeight: 0.55 * screenHeight,
         },
       }),
-      minHeight: 0.5 * screenHeight,
     },
     modalStyle: {
       borderTopRightRadius: spacing.borderRadius.small,
