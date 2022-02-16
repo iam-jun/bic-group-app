@@ -45,6 +45,7 @@ const UserEditProfile = (props: any) => {
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [userData, setUserData] = useState<any>({});
+  const [showEditButton, setShowEditButton] = useState<boolean>(false);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -83,8 +84,13 @@ const UserEditProfile = (props: any) => {
   };
 
   useEffect(() => {
+    setShowEditButton(
+      userId?.toString?.() === currentUserId?.toString?.() ||
+        userId?.toString?.() === currentUsername?.toString?.(),
+    );
     if (
-      (userId == currentUserId || userId == currentUsername) &&
+      (userId?.toString?.() === currentUserId?.toString?.() ||
+        userId?.toString?.() === currentUsername?.toString?.()) &&
       isEmpty(params)
     ) {
       setUserData(myProfile);
@@ -168,7 +174,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderAvatar = () => {
-    if (userId != currentUserId && userId != currentUsername) {
+    if (!showEditButton) {
       return null;
     }
     return (
@@ -206,7 +212,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderCover = () => {
-    if (userId != currentUserId && userId != currentUsername) {
+    if (!showEditButton) {
       return null;
     }
     return (
@@ -244,7 +250,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderDescription = () => {
-    if (userId != currentUserId && userId != currentUsername) {
+    if (!showEditButton) {
       return null;
     }
     return (
@@ -278,7 +284,7 @@ const UserEditProfile = (props: any) => {
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_basic_info
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
+          {showEditButton ? (
             <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
               <Text.H6
                 testID="user_edit_profile.basic_info.edit"
@@ -343,7 +349,7 @@ const UserEditProfile = (props: any) => {
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_contact
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
+          {showEditButton ? (
             <ButtonWrapper onPress={goToEditContact}>
               <Text.H6
                 testID="user_edit_profile.contact.edit"
@@ -398,9 +404,7 @@ const UserEditProfile = (props: any) => {
           size: 24,
         }}
         RightComponent={
-          userId == currentUserId || userId == currentUsername ? (
-            <Icon icon={'EditAlt'} size={20} />
-          ) : null
+          showEditButton ? <Icon icon={'EditAlt'} size={20} /> : null
         }
         ContentComponent={
           <View>
@@ -431,15 +435,14 @@ const UserEditProfile = (props: any) => {
           </View>
         }
         onPress={() => {
-          (userId == currentUserId || userId == currentUsername) &&
-            selectWorkItem(item);
+          showEditButton && selectWorkItem(item);
         }}
       />
     );
   };
 
   const renderWorkExperience = () => {
-    return userId == currentUserId || userId == currentUsername ? (
+    return showEditButton ? (
       <View>
         <Divider style={styles.divider} />
         <View style={styles.headerItem}>
@@ -452,7 +455,7 @@ const UserEditProfile = (props: any) => {
             renderWorkItem({item}),
           )}
         </View>
-        {userId == currentUserId || userId == currentUsername ? (
+        {showEditButton ? (
           <Button.Secondary
             color={colors.primary1}
             textColor={colors.primary6}
