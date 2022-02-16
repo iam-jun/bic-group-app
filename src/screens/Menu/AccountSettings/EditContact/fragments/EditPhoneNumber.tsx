@@ -163,8 +163,10 @@ const EditPhoneNumber = ({
               value={value}
               testID="edit_phone_number.phone"
               onChangeText={(text: string) => {
-                onChange(formatTextRemoveSpace(text));
-                clearAllErrors();
+                if (!!text && text?.trim?.()?.length > 0) {
+                  onChange(formatTextRemoveSpace(text));
+                  clearAllErrors();
+                }
               }}
               error={errorsState?.phoneNumber}
               helperContent={errorsState?.phoneNumber?.message}
