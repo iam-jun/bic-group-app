@@ -57,6 +57,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       <CommentView
         postId={postId}
         groupIds={groupIds}
+        parentCommentId={commentParent?.id}
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}

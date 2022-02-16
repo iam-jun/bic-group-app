@@ -419,6 +419,12 @@
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
       "text_draft_deleted": "Bản nháp của bạn đã được xoá"
     },
+    "comment": {
+      "title_delete_comment": "Xoá bình luận",
+      "text_delete_comment": "Nếu xoá, toàn bộ trả lời của bình luận này cũng sẽ bị xoá. Bạn có muốn tiếp tục?",
+      "text_delete_comment_error": "Xoá bình luận thất bại!",
+      "text_delete_comment_success": "Bình luận đã được xoá"
+    },
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
