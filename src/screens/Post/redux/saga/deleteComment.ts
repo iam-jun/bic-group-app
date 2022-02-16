@@ -1,7 +1,11 @@
-import {IPayloadDeleteComment} from '~/interfaces/IPost';
-import {put} from 'redux-saga/effects';
+import {IPayloadDeleteComment, IReaction} from '~/interfaces/IPost';
+import {put, select} from 'redux-saga/effects';
 import * as modalActions from '~/store/modal/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import {IToastMessage} from '~/interfaces/common';
+import postActions from '~/screens/Post/redux/actions';
+import {get} from 'lodash';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export default function* deleteComment({
   payload,
@@ -9,36 +13,88 @@ export default function* deleteComment({
   type: string;
   payload: IPayloadDeleteComment;
 }): any {
-  console.log(
-    `\x1b[34m🐣️ deleteComment deleteComment`,
-    `${JSON.stringify(payload, undefined, 2)}\x1b[0m`,
-  );
   const {commentId, parentCommentId, postId} = payload;
   if (!commentId) {
     console.log(`\x1b[31m🐣️ deleteComment commentId not found\x1b[0m`);
     return;
   }
+  const allComments = yield select(state =>
+    get(state, postKeySelector.allComments),
+  ) || {};
+  const comment: IReaction = allComments?.[commentId] || {};
   try {
-    //show loading status comment
-    //call api delete
-    const response = yield postDataHelper.deleteComment(commentId);
-    console.log(
-      `\x1b[34m🐣️ deleteComment deleteComment`,
-      `${JSON.stringify(response, undefined, 2)}\x1b[0m`,
+    yield postDataHelper.deleteComment(commentId);
+
+    //update allCommentsByParentId
+    const allCommentsByParentIds = yield select(
+      state => state?.post?.allCommentsByParentIds,
+    ) || {};
+    let commentsOfPost = allCommentsByParentIds[postId] || [];
+    if (parentCommentId) {
+      //find comment index
+      const pIndex = commentsOfPost?.findIndex?.(
+        (cmt: IReaction) => cmt?.id === parentCommentId,
+      );
+      //remove reply
+      if (commentsOfPost?.[pIndex]?.latest_children?.comment) {
+        commentsOfPost[pIndex].latest_children.comment = commentsOfPost[
+          pIndex
+        ].latest_children.comment?.filter?.(
+          (cmt: IReaction) => cmt?.id !== commentId,
+        );
+      }
+      //update comment count
+      if (commentsOfPost?.[pIndex]?.children_counts?.comment) {
+        commentsOfPost[pIndex].children_counts.comment = Math.max(
+          (commentsOfPost?.[pIndex]?.children_counts?.comment || 0) - 1,
+          0,
+        );
+      }
+    } else {
+      //remove comment
+      commentsOfPost = commentsOfPost?.filter?.(
+        (cmt: IReaction) => cmt?.id !== commentId,
+      );
+    }
+    yield put(
+      postActions.updateAllCommentsByParentIdsWithComments({
+        id: postId,
+        comments: [...commentsOfPost],
+        isMerge: false,
+      }),
     );
 
-    //handle delete comment
-    //update reaction counts
+    //update reaction counts, should minus comment and all reply counts
+    const childrenCommentCount = comment?.children_counts?.comment || 0;
+    const allPosts = yield select(state => state?.post?.allPosts) || {};
+    const newAllPosts = {...allPosts};
+    const post = newAllPosts[postId] || {};
+    const newReactionCount = post.reaction_counts || {};
+    newReactionCount.comment_count = Math.max(
+      (newReactionCount.comment_count || 0) - 1 - childrenCommentCount,
+      0,
+    );
+    post.reaction_counts = {...newReactionCount};
+    newAllPosts[postId] = post;
+    yield put(postActions.setAllPosts(newAllPosts));
 
-    //handle delete reply
-
-    //remove comment from redux state
+    //show toast success
+    const toastMessage: IToastMessage = {
+      content: 'post:comment:text_delete_comment_success',
+      props: {
+        textProps: {useI18n: true},
+        type: 'informative',
+        leftIcon: 'TrashAlt',
+      },
+      toastType: 'normal',
+    };
+    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (e) {
-    //rollback comment status then show error
     yield put(
       modalActions.showHideToastMessage({
         content: 'post:comment:text_delete_comment_error',
         props: {textProps: {useI18n: true}, type: 'error'},
+        toastType: 'normal',
       }),
     );
   }
