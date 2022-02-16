@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimpleToastMessage component renders correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+  testID="simple_toast_message.button"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "alignSelf": "baseline",
+          "backgroundColor": "rgba(255, 255, 255, 0.92)",
+          "borderColor": "#DBCAFD",
+          "borderRadius": 22,
+          "borderWidth": 1,
+          "elevation": 16,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingHorizontal": 12,
+          "paddingVertical": 4,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 12,
+            "width": 0,
+          },
+          "shadowOpacity": 0.12,
+          "shadowRadius": 10.32,
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 14,
+        }
+      }
+      testID="simple_toast_message.children"
+    >
+      Simple Toast Message
+    </Text>
+  </View>
+</View>
+`;

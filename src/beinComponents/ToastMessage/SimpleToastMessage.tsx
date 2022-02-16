@@ -42,13 +42,24 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   };
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={_onPress}>
+    <TouchableOpacity
+      disabled={disabled}
+      onPress={_onPress}
+      testID="simple_toast_message.button">
       <View style={[styles.container, style]}>
-        <Text.BodyS {...textProps} color={theme.colors.primary7}>
+        <Text.BodyS
+          {...textProps}
+          color={theme.colors.primary7}
+          testID="simple_toast_message.children">
           {children}
         </Text.BodyS>
         {!!icon && (
-          <Icon icon={icon} size={24} tintColor={theme.colors.primary7} />
+          <Icon
+            icon={icon}
+            size={24}
+            tintColor={theme.colors.primary7}
+            testID="simple_toast_message.icon"
+          />
         )}
       </View>
     </TouchableOpacity>
