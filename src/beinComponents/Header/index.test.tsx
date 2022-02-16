@@ -1,13 +1,17 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
-import {fireEvent} from '~/test/testUtils';
+import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import {shallow, mount} from 'enzyme';
 import {View} from 'react-native';
 import Header from '~/beinComponents/Header';
 import images from '~/resources/images';
+import initialState from '~/store/initialState';
 
 afterEach(cleanup);
 
 describe('Header component', () => {
+  const mockStore = configureStore([]);
+
   it(`renders correctly`, () => {
     const rendered = render(<Header />).toJSON();
     expect(rendered).toMatchSnapshot();
@@ -23,14 +27,15 @@ describe('Header component', () => {
   });
 
   it(`renders correctly children`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Header>
         <View testID="header.children" />
       </Header>,
     );
-    const childrenComponent = getByTestId('header.children');
+    expect(rendered).toMatchSnapshot();
+    const childrenComponent = rendered.getByTestId('header.children');
     expect(childrenComponent).toBeDefined();
-    expect(getByTestId('header.children').type).toEqual('View');
+    expect(rendered.getByTestId('header.children').type).toEqual('View');
   });
 
   /*
@@ -44,31 +49,35 @@ describe('Header component', () => {
   */
 
   it(`renders correctly title`, () => {
-    const {getByTestId} = render(<Header title={'Title'} />);
-    const titleComponent = getByTestId('header.text');
+    const rendered = render(<Header title={'Title'} />);
+    expect(rendered).toMatchSnapshot();
+    const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
   });
 
   it(`renders correctly title props`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Header title={'Title'} titleTextProps={{color: '#421187'}} />,
     );
-    const titleComponent = getByTestId('header.text');
+    expect(rendered).toMatchSnapshot();
+    const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
     expect(titleComponent.props.style.color).toBe('#421187');
   });
 
   it(`renders correctly sub title`, () => {
-    const {getByTestId} = render(<Header subTitle="Sub Title" />);
-    const subTitleComponent = getByTestId('header.subTitle');
+    const rendered = render(<Header subTitle="Sub Title" />);
+    expect(rendered).toMatchSnapshot();
+    const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
   });
 
   it(`renders correctly sub title props`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Header subTitle={'Sub Title'} subTitleTextProps={{color: '#421187'}} />,
     );
-    const subTitleComponent = getByTestId('header.subTitle');
+    expect(rendered).toMatchSnapshot();
+    const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
     expect(subTitleComponent.props.style.color).toBe('#421187');
   });
@@ -86,17 +95,19 @@ describe('Header component', () => {
   */
 
   it(`renders correctly left icon`, () => {
-    const {getByTestId} = render(<Header leftIcon="UilBug" />);
-    const leftIconComponent = getByTestId('header.leftIcon');
+    const rendered = render(<Header leftIcon="UilBug" />);
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly left icon props`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Header leftIcon="UilBug" leftIconProps={{tintColor: '#421187'}} />,
     );
-    const leftIconComponent = getByTestId('header.leftIcon');
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
       '#421187',
@@ -105,26 +116,27 @@ describe('Header component', () => {
 
   it(`renders correctly icon`, () => {
     const onPressIcon = jest.fn();
-    const {getByTestId} = render(
-      <Header icon="UilBug" onPressIcon={onPressIcon} />,
-    );
-    const leftIconComponent = getByTestId('header.icon');
+    const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.icon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly right icon`, () => {
-    const {getByTestId} = render(<Header rightIcon="UilBug" />);
-    const leftIconComponent = getByTestId('header.rightIcon');
+    const rendered = render(<Header rightIcon="UilBug" />);
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly right icon props`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Header rightIcon="UilBug" rightIconProps={{tintColor: '#421187'}} />,
     );
-    const leftIconComponent = getByTestId('header.rightIcon');
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
       '#421187',
@@ -134,6 +146,7 @@ describe('Header component', () => {
   it(`renders correctly on press icon`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
+    expect(rendered).toMatchSnapshot();
     const iconComponent = rendered.getByTestId('header.icon');
     expect(iconComponent).toBeDefined();
     expect(iconComponent.findByType('RNSVGSvgView')).toBeDefined();
@@ -142,52 +155,102 @@ describe('Header component', () => {
     fireEvent.press(btnIcon);
     expect(onPressIcon).toBeCalled();
   });
-  /*
-  it(`renders correctly button variant`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
-  });
 
   it(`renders correctly button text`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const storeData = {...initialState};
+    storeData.noInternet.isInternetReachable = true;
+    const store = mockStore(storeData);
+    const onPressButton = jest.fn();
+    const rendered = renderWithRedux(
+      <Header buttonText="Text Button" onPressButton={onPressButton} />,
+      store,
+    );
+    expect(rendered).toMatchSnapshot();
+    const buttonComponent = rendered.getAllByTestId('header.button');
+    expect(buttonComponent).toBeDefined();
+    const textButtonComponent = rendered.getByTestId('header.button.text');
+    expect(textButtonComponent).toBeDefined();
+    expect(textButtonComponent.props.children).toBe('Text Button');
   });
 
   it(`renders correctly button props`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const storeData = {...initialState};
+    storeData.noInternet.isInternetReachable = true;
+    const store = mockStore(storeData);
+    const onPressButton = jest.fn();
+    const rendered = renderWithRedux(
+      <Header
+        buttonText="Text Button"
+        onPressButton={onPressButton}
+        buttonProps={{disabled: true, style: {backgroundColor: '#F2F2F2'}}}
+      />,
+      store,
+    );
+    expect(rendered).toMatchSnapshot();
+    const buttonComponent = rendered.getAllByTestId('header.button');
+    expect(buttonComponent).toBeDefined();
+    expect(
+      rendered.getByTestId('header.button').props.style.backgroundColor,
+    ).toBe('#F2F2F2');
   });
 
   it(`renders correctly on press button`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressButton = jest.fn();
+    const storeData = {...initialState};
+    storeData.noInternet.isInternetReachable = true;
+    const store = mockStore(storeData);
+    const rendered = renderWithRedux(
+      <Header buttonText="Text Button" onPressButton={onPressButton} />,
+      store,
+    );
+    expect(rendered).toMatchSnapshot();
+    const buttonComponent = rendered.getAllByTestId('header.button');
+    expect(buttonComponent).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.button'));
+    expect(onPressButton).toBeCalled();
   });
 
   it(`renders correctly menu icon`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressMenu = jest.fn();
+    const rendered = render(
+      <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.menuIcon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly on press menu`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressMenu = jest.fn();
+    const rendered = render(
+      <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.menuIcon');
+    expect(leftIconComponent).toBeDefined();
+    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.menuIcon.button'));
+    expect(onPressMenu).toBeCalled();
   });
 
   it(`renders correctly hide back`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const rendered = render(<Header hideBack />);
+    expect(rendered).toMatchSnapshot();
+    const backIcon = rendered.queryByTestId('header.back');
+    expect(backIcon).toBeNull();
   });
-
+  /*
   it(`renders correctly hide bacck on laptop`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const rendered = render(<Header hideBackOnLaptop />);
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly on press back`, () => {
+    const onPressMenu = jest.fn();
     const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
   });
-
+  /*
   it(`renders correctly disable inset top`, () => {
     const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');

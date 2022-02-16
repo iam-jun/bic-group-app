@@ -328,9 +328,11 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={onPressMenu}
               backgroundColor={colors.bgSecondary}
+              testID="header.menuIcon"
+              buttonTestID="header.menuIcon.button"
             />
           )}
-          {buttonText && onPressButton && (
+          {!!buttonText && onPressButton && (
             <Button.Secondary
               testID="header.button"
               style={{
@@ -341,6 +343,7 @@ const Header: React.FC<HeaderProps> = ({
               }}
               textColor={colors.primary6}
               onPress={onPressButton}
+              textProps={{testID: 'header.button.text'}}
               {...buttonProps}>
               {buttonText}
             </Button.Secondary>
