@@ -19,7 +19,7 @@ exports[`Avatar component renders correctly 1`] = `
         "width": 48,
       }
     }
-    testID="avatarContainer"
+    testID="avatar_container"
   >
     <View
       onLayout={[Function]}
@@ -90,6 +90,7 @@ exports[`Avatar component renders correctly 1`] = `
               "top": 0,
             }
           }
+          testID="avatar.image"
         />
       </View>
     </View>

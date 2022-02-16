@@ -1,18 +1,15 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+import {fireEvent} from '~/test/testUtils';
 
 import Avatar from '~/beinComponents/Avatar';
 import images from '~/resources/images';
 
 afterEach(cleanup);
 
-const theme: ITheme = useTheme() as ITheme;
-const {spacing, dimension, colors} = theme;
-
 describe('Avatar component', () => {
   const avatarLink = images.logo_bein;
+
   it(`renders correctly`, () => {
     const rendered = render(<Avatar.Large source={avatarLink} />).toJSON();
     expect(rendered).toMatchSnapshot();
@@ -51,38 +48,34 @@ describe('Avatar component', () => {
     const {getByTestId} = render(
       <Avatar.Large source={avatarLink} isRounded />,
     );
-    const avatarComponent = getByTestId('avatarContainer');
+    const avatarComponent = getByTestId('avatar_container');
     expect(avatarComponent.props.style.borderRadius).not.toBe(undefined);
   });
 
-  //   it(`renders correctly placeholder Image`, () => {
-  //     const {getByTestId} = render(
-  //       <Avatar.Large
-  //         source={avatarLink}
-  //         placeholderSource={images.img_user_avatar_default}
-  //       />,
-  //     );
-  //     const imageComponent = getByTestId('Image__placeholder');
-  //     expect(imageComponent.props.style[0].borderWidth).not.toBe(undefined);
-  //   });
-  //placeholderSource
-  /**<Avatar.Large
-            style={styles.marginRight}
-            source={item.avatar}
-            placeholderSource={images.img_user_avatar_default}
-          />
-          
-           <Avatar.Large
-          source={item.avatar}
-          actionIcon="iconClose"
-          placeholderSource={images.img_user_avatar_default}
-          onPressAction={() => onSelectUser(item)}
-        />
-        
-         <Avatar.Group
-                source={avatar}
-                style={styles.avatar}
-                variant="small"
-                {...avatarProps}
-              />*/
+  it(`renders correctly on press icon`, () => {
+    const onPressIcon = jest.fn();
+    const rendered = render(
+      <Avatar.Large
+        source={avatarLink}
+        onPressAction={onPressIcon}
+        actionIcon="iconClose"
+      />,
+    );
+    const actionIconComponent = rendered.getByTestId('avatar.action_icon');
+    expect(actionIconComponent).toBeDefined();
+    expect(actionIconComponent.findByType('RNSVGSvgView')).toBeDefined();
+
+    const btnIcon = rendered.getByTestId('avatar.action_icon.button');
+    expect(btnIcon).toBeDefined();
+    fireEvent.press(btnIcon);
+    expect(onPressIcon).toBeCalled();
+  });
+
+  it(`renders correctly status`, () => {
+    const {getByTestId} = render(
+      <Avatar.Large source={avatarLink} status="online" />,
+    );
+    const statusComponent = getByTestId('avatar.status');
+    expect(statusComponent).toBeDefined();
+  });
 });
