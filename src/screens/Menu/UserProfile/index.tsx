@@ -180,7 +180,7 @@ const UserProfile = (props: any) => {
     return (
       <View style={styles.headerName}>
         <Text.H4>{fullname}</Text.H4>
-        {!!username && <Text.Subtitle>{username}</Text.Subtitle>}
+        {!!username && <Text.Subtitle>{`@${username}`}</Text.Subtitle>}
         {!!description && (
           <Text style={styles.subtitleText}>{description}</Text>
         )}
@@ -289,6 +289,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     },
     subtitleText: {
       marginTop: spacing.margin.small,
+      marginHorizontal: spacing.margin.large,
     },
     button: {
       marginHorizontal: spacing.margin.large,
