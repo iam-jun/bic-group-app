@@ -41,6 +41,7 @@ import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
 import errorCode from '~/constants/errorCode';
+import deleteComment from './deleteComment';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -55,6 +56,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeEvery(postTypes.DELETE_POST, deletePost);
+  yield takeEvery(postTypes.DELETE_COMMENT, deleteComment);
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeEvery(postTypes.POST_REACT_TO_POST, putReactionToPost);
