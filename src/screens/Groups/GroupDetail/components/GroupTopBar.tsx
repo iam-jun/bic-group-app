@@ -57,7 +57,7 @@ const GroupTopBar = () => {
   };
 
   const onPressChat = () => {
-    openLink(chatSchemes.CHANNELS);
+    openLink(`${chatSchemes.CHANNELS}/${groupInfo.slug}`);
   };
 
   const renderAdminButton = () => {
