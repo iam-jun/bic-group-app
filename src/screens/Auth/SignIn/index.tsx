@@ -33,6 +33,7 @@ import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
+import {getUserFromSharedPreferences} from '~/services/sharePreferences';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -41,6 +42,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const {loading, signingInError} = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
+  const [authSessions, setAuthSessions] = useState<any>(null);
 
   const inputPasswordRef = useRef<any>();
 
@@ -56,9 +58,11 @@ const SignIn = () => {
     setError,
     clearErrors,
     getValues,
+    setValue,
   } = useForm();
 
   useEffect(() => {
+    checkAuthSessions();
     // avoid taking old loading state from store
     dispatch(actions.setLoading(false));
     dispatch(actions.setSigningInError(''));
@@ -85,6 +89,12 @@ const SignIn = () => {
     }
     checkDisableSignIn();
   }, [signingInError]);
+
+  const checkAuthSessions = async () => {
+    const user = await getUserFromSharedPreferences();
+    setValue('email', user?.email);
+    setAuthSessions(user);
+  };
 
   const clearAllErrors = () => {
     clearErrors('email');
@@ -168,7 +178,7 @@ const SignIn = () => {
                   }
                   keyboardType="email-address"
                   autoCapitalize="none"
-                  disabled={loading}
+                  disabled={loading || authSessions?.email}
                   value={value}
                   error={errors.email}
                   onChangeText={text => {

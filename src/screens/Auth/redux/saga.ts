@@ -3,7 +3,6 @@ import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {Platform} from 'react-native';
 import {delay, put, takeLatest} from 'redux-saga/effects';
-
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
 import errorCode from '~/constants/errorCode';
@@ -16,7 +15,10 @@ import {rootSwitch} from '~/router/stack';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import {initPushTokenMessage} from '~/services/helper';
 import {refreshAuthTokens} from '~/services/httpApiRequest';
-import {saveUserToSharedPreferences} from '~/services/sharePreferences';
+import {
+  getUserFromSharedPreferences,
+  saveUserToSharedPreferences,
+} from '~/services/sharePreferences';
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
@@ -150,12 +152,16 @@ function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
     id: payload?.username,
     role: payload?.username,
   };
-
+  const sessionData: IObject<any> = yield getUserFromSharedPreferences();
+  const activeSessions = sessionData?.activeSessions || [];
   //For sharing data between Group and Chat
   yield saveUserToSharedPreferences({
     username: userResponse.username,
+    email: userResponse.email,
     name,
     token: userResponse.signInUserSession.idToken?.jwtToken,
+    exp: userResponse.signInUserSession.idToken?.payload?.exp,
+    activeSessions: [...activeSessions, 'community'],
   });
 
   yield put(actions.setUser(userResponse));
@@ -298,8 +304,20 @@ function* signOut({payload}: any) {
     if (payload) {
       navigation.replace(rootSwitch.authStack);
     }
-    yield Auth.signOut();
-    yield saveUserToSharedPreferences(null);
+    // yield Auth.signOut();
+    // Check if chat auth session is still active
+    const sessionData: IObject<any> = yield getUserFromSharedPreferences();
+    if ((sessionData?.activeSessions || []).length < 2) {
+      yield saveUserToSharedPreferences(null);
+    } else {
+      const data = {
+        ...sessionData,
+        activeSessions: sessionData.activeSessions.filter(
+          (item: string) => item !== 'community',
+        ),
+      };
+      yield saveUserToSharedPreferences(data);
+    }
   } catch (err) {
     yield showError(err);
     if (!payload) {
