@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
-import {shallow, mount} from 'enzyme';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import Header from '~/beinComponents/Header';
-import images from '~/resources/images';
 import initialState from '~/store/initialState';
 
 afterEach(cleanup);
@@ -62,7 +60,7 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
-    expect(titleComponent.props.style.color).toBe('#421187');
+    expect(titleComponent.props.style).toMatchObject({color: '#421187'});
   });
 
   it(`renders correctly sub title`, () => {
@@ -79,7 +77,7 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
-    expect(subTitleComponent.props.style.color).toBe('#421187');
+    expect(subTitleComponent.props.style).toMatchObject({color: '#421187'});
   });
   /*
   it(`renders correctly avatar`, () => {
@@ -182,16 +180,16 @@ describe('Header component', () => {
       <Header
         buttonText="Text Button"
         onPressButton={onPressButton}
-        buttonProps={{disabled: true, style: {backgroundColor: '#F2F2F2'}}}
+        buttonProps={{style: {backgroundColor: '#F2F2F2'}}}
       />,
       store,
     );
     expect(rendered).toMatchSnapshot();
     const buttonComponent = rendered.getAllByTestId('header.button');
     expect(buttonComponent).toBeDefined();
-    expect(
-      rendered.getByTestId('header.button').props.style.backgroundColor,
-    ).toBe('#F2F2F2');
+    expect(rendered.getByTestId('header.button').props.style).toMatchObject({
+      backgroundColor: '#F2F2F2',
+    });
   });
 
   it(`renders correctly on press button`, () => {
@@ -229,7 +227,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.menuIcon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.menuIcon.button'));
     expect(onPressMenu).toBeCalled();
   });
@@ -240,85 +237,243 @@ describe('Header component', () => {
     const backIcon = rendered.queryByTestId('header.back');
     expect(backIcon).toBeNull();
   });
+
   /*
   it(`renders correctly hide bacck on laptop`, () => {
     const rendered = render(<Header hideBackOnLaptop />);
     expect(rendered).toMatchSnapshot();
   });
+  */
 
   it(`renders correctly on press back`, () => {
-    const onPressMenu = jest.fn();
-    const {getByTestId} = render(<Header />);
+    const onPressBack = jest.fn();
+    const rendered = render(<Header onPressBack={onPressBack} />);
+    fireEvent.press(rendered.getByTestId('header.back.button'));
+    expect(onPressBack).toBeCalled();
   });
-  /*
+
   it(`renders correctly disable inset top`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const rendered = render(<Header disableInsetTop />);
+    expect(rendered).toMatchSnapshot();
+    expect(
+      rendered.getByTestId('header.content').props.style.paddingTop,
+    ).toBeUndefined();
   });
 
   it(`renders correctly style`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const rendered = render(<Header style={{backgroundColor: '#F2F2F2'}} />);
+    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('header.content').props.style).toMatchObject({
+      backgroundColor: '#F2F2F2',
+    });
   });
 
   it(`renders correctly remove border and shadow`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const rendered = render(<Header removeBorderAndShadow />);
+    expect(rendered).toMatchSnapshot();
+    expect(
+      rendered.getByTestId('header.content').props.style,
+    ).not.toMatchObject({
+      borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
+      shadowOffset: {width: 0, height: 1},
+      shadowColor: '#000',
+      shadowOpacity: 0.1,
+      shadowRadius: 1,
+      elevation: 2,
+    });
   });
 
   it(`renders correctly auto focus search`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+        autoFocusSearch
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
+    expect(rendered.getByTestId('header.search.input').props.autoFocus).toBe(
+      true,
+    );
   });
 
-  it(`renders correctly search input test ID`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+  it(`renders correctly search input test ID`, async () => {
+    const onSearchText = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
   it(`renders correctly search icon test ID`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const rendered = render(
+      <Header
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(searchIconCopmponent.findByType('FastImageView')).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
   });
 
   it(`renders correctly on focus search`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const onFocusSearch = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+        onFocusSearch={onFocusSearch}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
+    rendered.getByTestId('header.search.input').props.onFocus();
+    expect(onFocusSearch).toBeCalled();
   });
 
   it(`renders correctly on submit search`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const onFocusSearch = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+        onFocusSearch={onFocusSearch}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
+    rendered.getByTestId('header.search.input').props.onFocus();
+    expect(onFocusSearch).toBeCalled();
   });
 
   it(`renders correctly on show search`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const onShowSearch = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+        onShowSearch={onShowSearch}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    //Re-Search
+    // expect(onShowSearch).toBeCalled();
+    expect(onSearchText).toHaveBeenCalledWith(true);
+    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
   it(`renders correctly on text search`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
+    fireEvent.changeText(
+      rendered.getByTestId('header.search.input'),
+      'Text Search',
+    );
+    //Re-search
+    expect(onSearchText).toHaveBeenCalledWith('Text Search');
   });
 
   it(`renders correctly search placeholder`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onSearchText = jest.fn();
+    const rendered = render(
+      <Header
+        searchInputTestID="header.search.input"
+        searchIconTestID="header.searchIcon"
+        onSearchText={onSearchText}
+        searchPlaceholder="Search Placeholder"
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
+    expect(searchIconCopmponent).toBeDefined();
+    expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
+    expect(rendered.getByTestId('header.search.input').props.placeholder).toBe(
+      'Search Placeholder',
+    );
   });
 
+  /*
   it(`renders correctly on press header`, () => {
     const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');
   });
-
+  */
   it(`renders correctly on right press`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onRightPress = jest.fn();
+    const rendered = render(
+      <Header rightIcon="UilBug" onRightPress={onRightPress} />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const leftIconComponent = rendered.getByTestId('header.rightIcon');
+    expect(leftIconComponent).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.rightIcon.button'));
+    expect(onRightPress).toBeCalled();
   });
 
   it(`renders correctly on right chat`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressChat = jest.fn();
+    const rendered = render(<Header onPressChat={onPressChat} />);
+    expect(rendered).toMatchSnapshot();
+    const chatIconCopmponent = rendered.getByTestId('header.iconChat');
+    expect(chatIconCopmponent).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.iconChat.button'));
+    expect(onPressChat).toBeCalled();
   });
-  */
 });

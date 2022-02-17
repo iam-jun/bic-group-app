@@ -222,7 +222,8 @@ const Header: React.FC<HeaderProps> = ({
           },
           removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
           style,
-        ]}>
+        ]}
+        testID="header.content">
         <View
           style={{
             height: contentHeight,
@@ -242,6 +243,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               style={styles.iconBack}
+              buttonTestID="header.back.button"
             />
           )}
           {!!avatar && (
@@ -310,6 +312,7 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={_onPressSearch}
               backgroundColor={colors.bgSecondary}
+              buttonTestID="header.searchIcon.button"
             />
           )}
           {onPressChat && (
@@ -319,6 +322,8 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={onPressChat}
               backgroundColor={colors.bgSecondary}
+              buttonTestID="header.iconChat.button"
+              testID="header.iconChat"
             />
           )}
           {onPressMenu && (
@@ -357,6 +362,7 @@ const Header: React.FC<HeaderProps> = ({
               backgroundColor={colors.bgSecondary}
               {...rightIconProps}
               testID="header.rightIcon"
+              buttonTestID="header.rightIcon.button"
             />
           )}
           <HeaderSearch
