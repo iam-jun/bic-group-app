@@ -127,6 +127,18 @@ const AddWork = () => {
       return;
     }
 
+    if (!isWorkHere && !endDateValue) {
+      const toastMessage: IToastMessage = {
+        content: 'settings:text_enddate_must_choose',
+        props: {
+          textProps: {useI18n: true},
+          type: 'error',
+        },
+      };
+      dispatch(showHideToastMessage(toastMessage));
+      return;
+    }
+
     const data = {
       company: companyValue.trim(),
       titlePosition: positionValue.trim(),
