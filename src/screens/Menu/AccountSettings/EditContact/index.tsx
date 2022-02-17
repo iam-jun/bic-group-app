@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, memo} from 'react';
 import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
@@ -51,6 +51,7 @@ const EditContact = () => {
   } = useForm();
 
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -109,6 +110,7 @@ const EditContact = () => {
   };
 
   const onEditLocationOpen = (e: any) => {
+    Keyboard.dismiss();
     locationRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
@@ -122,6 +124,27 @@ const EditContact = () => {
   const onChangeCountryCode = (_countryCode: string) => {
     setCountryCountryCodeState(_countryCode);
   };
+
+  const checkIsValid = (
+    countryCodeState: string,
+    countryState: string,
+    cityState: string,
+    phoneNumber: string,
+  ) => {
+    return (
+      country_code !== countryCodeState ||
+      country !== countryState ||
+      city !== cityState ||
+      phone !== phoneNumber
+    );
+  };
+
+  const isValid = checkIsValid(
+    countryCodeState,
+    countryState,
+    cityState,
+    getValues('phoneNumber'),
+  );
 
   return (
     <ScreenWrapper testID="EditContact" isFullView>
@@ -138,6 +161,7 @@ const EditContact = () => {
           color: theme.colors.primary6,
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
       />
@@ -185,6 +209,8 @@ const EditContact = () => {
   );
 };
 
+const EditContactMemo = memo(EditContact);
+EditContactMemo.whyDidYouRender = true;
 export default EditContact;
 
 const themeStyles = (theme: ITheme) => {

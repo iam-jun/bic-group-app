@@ -1,6 +1,12 @@
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
-import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  Keyboard,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 
@@ -46,8 +52,6 @@ const LanguageOptionMenu = ({
   const languageSheetRef = useRef<any>();
 
   useEffect(() => {
-    console.log('selectedLanguages', selectedLanguages);
-
     setLanguages(
       languages.map(lang => ({
         ...lang,
@@ -105,8 +109,10 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const onLanguageEditOpen = (e: any) =>
+  const onLanguageEditOpen = (e: any) => {
+    Keyboard.dismiss();
     languageSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
 
   return (
     <View>

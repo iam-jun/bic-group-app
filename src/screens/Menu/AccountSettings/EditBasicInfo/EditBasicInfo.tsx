@@ -1,13 +1,12 @@
-import React, {useState, useRef, useMemo} from 'react';
+import React, {useState, useRef, memo} from 'react';
 import {StyleSheet, View, Platform, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 import {isEqual} from 'lodash';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useBaseHook} from '~/hooks';
 
 import {ITheme} from '~/theme/interfaces';
-import useMenu from '~/hooks/menu';
 import genders from '~/constants/genders';
 import {titleCase} from '~/utils/common';
 import {formatDate} from '~/utils/formatData';
@@ -39,7 +38,7 @@ const EditBasicInfo = () => {
 
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const {navigation} = useBaseHook();
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {id, fullname, gender, birthday, relationship_status, language} =
@@ -69,7 +68,33 @@ const EditBasicInfo = () => {
   const relationshipStatusList = dataMapping(relationshipStatus);
   const gendersList = dataMapping(genders);
 
+  const checkIsValid = (
+    nameState: string,
+    genderState: string,
+    birthdayState: string,
+    languageState: string[],
+    relationshipState: string,
+  ) => {
+    return (
+      (fullname !== nameState ||
+        gender !== genderState ||
+        birthday !== birthdayState ||
+        !isEqual(language, languageState) ||
+        relationship_status !== relationshipState) &&
+      nameState?.trim?.()?.length > 0
+    );
+  };
+
+  const isValid = checkIsValid(
+    nameState,
+    genderState,
+    birthdayState,
+    languageState,
+    relationshipState,
+  );
+
   const onSave = () => {
+    Keyboard.dismiss();
     dispatch(
       menuActions.editMyProfile({
         id,
@@ -80,10 +105,11 @@ const EditBasicInfo = () => {
         relationship_status: relationshipState,
       }),
     );
-    rootNavigation.goBack();
+    navigation.goBack();
   };
 
   const resetData = () => {
+    Keyboard.dismiss();
     setNameState(fullname);
     setGenderState(gender);
     setBirthdayState(birthday);
@@ -125,6 +151,14 @@ const EditBasicInfo = () => {
   };
 
   const _onPressBack = () => {
+    const a = checkIsValid(
+      nameState,
+      genderState,
+      birthdayState,
+      languageState,
+      relationshipState,
+    );
+
     if (isValid) {
       Keyboard.dismiss();
       dispatch(
@@ -135,7 +169,7 @@ const EditBasicInfo = () => {
           isDismissible: false,
           onConfirm: () => {
             resetData();
-            rootNavigation.goBack();
+            navigation.goBack();
           },
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
@@ -144,7 +178,7 @@ const EditBasicInfo = () => {
       );
     } else {
       resetData();
-      rootNavigation.goBack();
+      navigation.goBack();
     }
   };
 
@@ -173,35 +207,6 @@ const EditBasicInfo = () => {
       setError(true);
     }
   };
-
-  const checkIsValid = (
-    nameState: string,
-    genderState: string,
-    birthdayState: string,
-    languageState: string[],
-    relationshipState: string,
-  ) => {
-    return (
-      (fullname !== nameState ||
-        gender !== genderState ||
-        birthday !== birthdayState ||
-        !isEqual(language, languageState) ||
-        relationship_status !== relationshipState) &&
-      nameState?.trim?.()?.length > 0
-    );
-  };
-
-  const isValid = useMemo(
-    () =>
-      checkIsValid(
-        nameState,
-        genderState,
-        birthdayState,
-        languageState,
-        relationshipState,
-      ),
-    [nameState, genderState, birthdayState, languageState, relationshipState],
-  );
 
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
@@ -300,6 +305,8 @@ const EditBasicInfo = () => {
   );
 };
 
+const EditBasicInfoMemo = memo(EditBasicInfo);
+EditBasicInfoMemo.whyDidYouRender = true;
 export default EditBasicInfo;
 
 const themeStyles = (theme: ITheme) => {
