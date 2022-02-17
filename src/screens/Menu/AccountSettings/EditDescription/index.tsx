@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useMemo} from 'react';
 import i18next from 'i18next';
-import {View, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -13,7 +13,8 @@ import {ITheme} from '~/theme/interfaces';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../redux/actions';
-import useMenu from '~/hooks/menu';
+import menuKeySelector from '../../redux/keySelector';
+import {useKeySelector} from '~/hooks/selector';
 
 const EditDescription = () => {
   const theme = useTheme() as ITheme;
@@ -23,12 +24,17 @@ const EditDescription = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const {myProfile} = useMenu();
-  const {id, description} = myProfile;
+  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const {id, description} = myProfileData;
 
   const [descriptionText, setDescription] = useState<string>(description);
 
+  const resetData = () => {
+    setDescription(description);
+  };
+
   const navigateBack = () => {
+    resetData();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -37,7 +43,7 @@ const EditDescription = () => {
   };
 
   const onSave = () => {
-    if (descriptionText.trim()?.length > 0) {
+    if (descriptionText?.trim?.()?.length > 0) {
       dispatch(
         menuActions.editMyProfile({
           id,
@@ -52,6 +58,15 @@ const EditDescription = () => {
     setDescription(text);
   };
 
+  const checkIsValid = (descriptionText: string) => {
+    return description !== descriptionText;
+  };
+
+  const isValid = useMemo(
+    () => checkIsValid(descriptionText),
+    [descriptionText],
+  );
+
   return (
     <ScreenWrapper isFullView>
       <Header
@@ -63,25 +78,27 @@ const EditDescription = () => {
           color: theme.colors.primary6,
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
+        onPressBack={navigateBack}
       />
-      <View style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
         <Text.H5 color={colors.iconTint} variant="body" useI18n>
           settings:text_description
         </Text.H5>
         <TextInputBein
-          value={description || i18next.t('common:text_not_set')}
+          value={descriptionText || i18next.t('common:text_not_set')}
           maxLength={200}
           testID="add_work.description"
           placeholder={i18next.t('settings:text_description_optional')}
           onChangeText={onChangeDescription}
-          multiline={true}
           textAlignVertical="top"
           outlineColor={colors.borderCard}
           activeOutlineColor={colors.primary6}
+          multiline={true}
         />
-      </View>
+      </ScrollView>
     </ScreenWrapper>
   );
 };

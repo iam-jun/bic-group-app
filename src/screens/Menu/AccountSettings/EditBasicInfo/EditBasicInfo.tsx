@@ -1,10 +1,10 @@
-import React, {useState, useRef} from 'react';
-import {StyleSheet, View, Platform, Keyboard} from 'react-native';
+import React, {useState, useRef, useMemo} from 'react';
+import {StyleSheet, View, Platform, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/core';
 import i18next from 'i18next';
 import {isEqual} from 'lodash';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import {ITheme} from '~/theme/interfaces';
 import useMenu from '~/hooks/menu';
@@ -23,6 +23,8 @@ import {
 import OptionMenu from './fragments/OptionMenu';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 import * as modalActions from '~/store/modal/actions';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../../redux/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -37,10 +39,11 @@ const EditBasicInfo = () => {
 
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const {myProfile} = useMenu();
+  const {rootNavigation} = useRootNavigation();
+
+  const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {id, fullname, gender, birthday, relationship_status, language} =
-    myProfile;
+    myProfileData;
 
   const genderSheetRef = useRef<any>();
   const relationshipSheetRef = useRef<any>();
@@ -52,6 +55,8 @@ const EditBasicInfo = () => {
   const [languageState, setLanguageState] = useState<string[]>(language);
   const [relationshipState, setRelationshipState] =
     useState<RELATIONSHIP_TYPE>(relationship_status);
+
+  const [error, setError] = useState<boolean>(false);
 
   const dataMapping = (dataObject: any): IOptionItem[] => {
     const dataList = Object.keys(dataObject).map(type => ({
@@ -75,7 +80,16 @@ const EditBasicInfo = () => {
         relationship_status: relationshipState,
       }),
     );
-    navigation.goBack();
+    rootNavigation.goBack();
+  };
+
+  const resetData = () => {
+    setNameState(fullname);
+    setGenderState(gender);
+    setBirthdayState(birthday);
+    setLanguageState(language);
+    setRelationshipState(relationship_status);
+    setError(false);
   };
 
   const onGenderItemPress = (item: IGenderItem) => {
@@ -111,28 +125,26 @@ const EditBasicInfo = () => {
   };
 
   const _onPressBack = () => {
-    const isChanged =
-      fullname !== nameState ||
-      gender !== genderState ||
-      birthday !== birthdayState ||
-      !isEqual(language, languageState) ||
-      relationship_status !== relationshipState;
-
-    if (isChanged) {
+    if (isValid) {
+      Keyboard.dismiss();
       dispatch(
         modalActions.showAlert({
           title: i18next.t('common:label_discard_changes'),
           showCloseButton: true,
           cancelBtn: true,
           isDismissible: false,
-          onConfirm: () => navigation.goBack(),
+          onConfirm: () => {
+            resetData();
+            rootNavigation.goBack();
+          },
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
           stretchOnWeb: true,
         }),
       );
     } else {
-      navigation.goBack();
+      resetData();
+      rootNavigation.goBack();
     }
   };
 
@@ -152,6 +164,45 @@ const EditBasicInfo = () => {
     relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
+  const onChangeName = (text: string) => {
+    const newName = text?.trim?.();
+    setNameState(newName);
+    if (!!newName) {
+      error && setError(false);
+    } else {
+      setError(true);
+    }
+  };
+
+  const checkIsValid = (
+    nameState: string,
+    genderState: string,
+    birthdayState: string,
+    languageState: string[],
+    relationshipState: string,
+  ) => {
+    return (
+      (fullname !== nameState ||
+        gender !== genderState ||
+        birthday !== birthdayState ||
+        !isEqual(language, languageState) ||
+        relationship_status !== relationshipState) &&
+      nameState?.trim?.()?.length > 0
+    );
+  };
+
+  const isValid = useMemo(
+    () =>
+      checkIsValid(
+        nameState,
+        genderState,
+        birthdayState,
+        languageState,
+        relationshipState,
+      ),
+    [nameState, genderState, birthdayState, languageState, relationshipState],
+  );
+
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
       <Header
@@ -163,13 +214,20 @@ const EditBasicInfo = () => {
           color: theme.colors.primary6,
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
       />
 
-      <View style={styles.content}>
-        <EditName onChangeName={setNameState} />
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={styles.content}>
+        <EditName
+          error={error}
+          fullname={nameState}
+          onChangeName={onChangeName}
+        />
         <TitleComponent icon="UserSquare" title="settings:title_gender" />
         <Button
           testID="edit_basic_info.gender"
@@ -210,7 +268,7 @@ const EditBasicInfo = () => {
           {i18next.t(relationshipStatus[relationshipState]) ||
             i18next.t('common:text_not_set')}
         </Button>
-      </View>
+      </ScrollView>
 
       <OptionMenu
         data={gendersList}

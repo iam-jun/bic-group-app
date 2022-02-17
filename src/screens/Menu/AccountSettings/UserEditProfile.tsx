@@ -28,6 +28,7 @@ import {
   userProfileImageCropRatio,
 } from '~/theme/dimension';
 import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
@@ -55,6 +56,7 @@ const UserEditProfile = (props: any) => {
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
   const {username: currentUsername, id} = myProfile || {};
+  const {rootNavigation} = useRootNavigation();
 
   const {
     fullname,
@@ -170,7 +172,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const goToEditDescription = () => {
-    navigation.navigate(mainStack.editDescription);
+    rootNavigation.navigate(mainStack.editDescription);
   };
 
   const renderAvatar = () => {
@@ -396,6 +398,7 @@ const UserEditProfile = (props: any) => {
   const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
     return (
       <PrimaryItem
+        key={JSON.stringify(item)}
         testID={'user_edit_profile.work.item'}
         height={null}
         leftIcon={'iconSuitcase'}
@@ -538,15 +541,8 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginVertical: spacing.margin.base,
     },
     descriptionText: {
-      marginLeft: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
-    },
-    rightIcon: {
-      marginLeft: spacing.margin.small,
-    },
-    editBtnIcon: {
-      padding: spacing.padding.small,
-      marginLeft: spacing.padding.base,
     },
   });
 };
