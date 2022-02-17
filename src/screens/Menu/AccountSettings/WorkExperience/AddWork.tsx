@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import i18next from 'i18next';
-import {View, StyleSheet, ScrollView, TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, TextInput, Keyboard} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -90,6 +90,7 @@ const AddWork = () => {
   }, [isWorkHere]);
 
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -137,7 +138,12 @@ const AddWork = () => {
     };
     selectedWorkItem
       ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
-      : dispatch(menuActions.addWorkExperience(data, navigateBack));
+      : dispatch(
+          menuActions.addWorkExperience(data, () => {
+            navigateBack();
+            resetData();
+          }),
+        );
   };
 
   const onDelete = () => {
