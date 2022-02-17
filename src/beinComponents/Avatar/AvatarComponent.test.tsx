@@ -40,7 +40,7 @@ describe('Avatar component', () => {
     const {getByTestId} = render(
       <Avatar.Large source={avatarLink} badgeCheck />,
     );
-    const badgeComponent = getByTestId('avatar.badgeCheck');
+    const badgeComponent = getByTestId('avatar.badge_check');
     expect(badgeComponent).toBeDefined();
   });
 

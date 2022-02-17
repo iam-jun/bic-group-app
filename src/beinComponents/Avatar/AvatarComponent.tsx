@@ -169,7 +169,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     }
     return (
       <View
-        testID="avatar.badgeCheck"
+        testID="avatar.badge_check"
         style={{
           position: 'absolute',
           bottom: 0,
