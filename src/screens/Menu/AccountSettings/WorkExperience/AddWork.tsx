@@ -1,12 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import i18next from 'i18next';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {View, StyleSheet, ScrollView, TextInput} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -14,7 +8,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TextInputBein from '~/beinComponents/inputs/TextInput';
 import Icon from '~/beinComponents/Icon';
-import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
@@ -79,9 +72,6 @@ const AddWork = () => {
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  const [privateSelectedWorkItem, setPrivateSelectedWorkItem] =
-    useState<any>(selectedWorkItem);
-
   useEffect(() => {
     setCompanyValue(selectedWorkItem?.company || '');
     setPositionValue(selectedWorkItem?.titlePosition || '');
@@ -93,7 +83,6 @@ const AddWork = () => {
     });
     setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
     setEndDateValue(selectedWorkItem?.endDate || null);
-    setPrivateSelectedWorkItem(!!selectedWorkItem ? selectedWorkItem : {});
   }, [selectedWorkItem]);
 
   useEffect(() => {
@@ -106,6 +95,19 @@ const AddWork = () => {
     } else {
       rootNavigation.replace(mainStack.userEdit);
     }
+  };
+
+  const resetData = () => {
+    setCompanyValue(selectedWorkItem?.company || '');
+    setPositionValue(selectedWorkItem?.titlePosition || '');
+    setLocationValue(selectedWorkItem?.location || '');
+    setDescriptionValue(selectedWorkItem?.description || '');
+    setIsWorkHere(value => {
+      if (isEmpty(selectedWorkItem)) return true;
+      return selectedWorkItem?.currently_work_here;
+    });
+    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
+    setEndDateValue(selectedWorkItem?.endDate || null);
   };
 
   const onSave = () => {
@@ -344,7 +346,10 @@ const AddWork = () => {
           borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
-        onPressBack={navigateBack}
+        onPressBack={() => {
+          resetData();
+          navigateBack();
+        }}
       />
 
       <ScrollView

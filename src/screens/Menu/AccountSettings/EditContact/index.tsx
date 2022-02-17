@@ -47,6 +47,7 @@ const EditContact = () => {
     getValues,
     setError,
     clearErrors,
+    setValue,
   } = useForm();
 
   const navigateBack = () => {
@@ -55,6 +56,14 @@ const EditContact = () => {
     } else {
       rootNavigation.replace(mainStack.userEdit);
     }
+  };
+
+  const resetData = () => {
+    setCountryCountryCodeState(country_code);
+    setCountryState(country);
+    setCityState(city);
+    setValue('phoneNumber', phone);
+    clearErrors('phoneNumber');
   };
 
   useEffect(() => {
@@ -119,7 +128,10 @@ const EditContact = () => {
       <Header
         titleTextProps={{useI18n: true}}
         title={'settings:title_edit_contact'}
-        onPressBack={navigateBack}
+        onPressBack={() => {
+          resetData();
+          navigateBack();
+        }}
         buttonText={'common:text_save'}
         buttonProps={{
           useI18n: true,

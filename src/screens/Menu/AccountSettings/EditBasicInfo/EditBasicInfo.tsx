@@ -252,6 +252,7 @@ const EditBasicInfo = () => {
         <LanguageOptionMenu
           title={'settings:title_choose_languages'}
           onChangeLanguages={_onChangeLanguages}
+          selectedLanguages={languageState}
         />
 
         <TitleComponent

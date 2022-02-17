@@ -34,7 +34,6 @@ const EditDescription = () => {
   };
 
   const navigateBack = () => {
-    resetData();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -81,7 +80,10 @@ const EditDescription = () => {
           disabled: !isValid,
         }}
         onPressButton={onSave}
-        onPressBack={navigateBack}
+        onPressBack={() => {
+          resetData();
+          navigateBack();
+        }}
       />
       <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
         <Text.H5 color={colors.iconTint} variant="body" useI18n>
