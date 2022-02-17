@@ -41,6 +41,7 @@ import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
 import errorCode from '~/constants/errorCode';
+import deleteComment from './deleteComment';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -55,6 +56,7 @@ export default function* postSaga() {
   yield takeLatest(postTypes.PUT_EDIT_POST, putEditPost);
   yield takeLatest(postTypes.PUT_EDIT_COMMENT, putEditComment);
   yield takeEvery(postTypes.DELETE_POST, deletePost);
+  yield takeEvery(postTypes.DELETE_COMMENT, deleteComment);
   yield takeLatest(postTypes.ADD_TO_ALL_POSTS, addToAllPosts);
   yield takeLatest(postTypes.ADD_TO_ALL_COMMENTS, addToAllComments);
   yield takeEvery(postTypes.POST_REACT_TO_POST, putReactionToPost);
@@ -498,6 +500,7 @@ function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
+  reactionsOrder?: string[],
 ): any {
   try {
     const post = yield select(state =>
@@ -505,6 +508,7 @@ function* onUpdateReactionOfPostById(
     );
     post.reaction_counts = reactionCounts;
     post.own_reactions = ownReaction;
+    post.reactions_order = reactionsOrder || [];
     yield put(postActions.addToAllPosts({data: post}));
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
@@ -522,6 +526,7 @@ function* putReactionToPost({
     const post1 = yield select(s => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reaction_counts || {};
     const cOwnReaction1 = post1.own_reactions || {};
+    const cReactionsOrder = post1.reactions_order || [];
 
     const data: ReactionType[] = [];
     data.push(reactionId);
@@ -534,7 +539,12 @@ function* putReactionToPost({
       const newReactionCounts = {...cReactionCounts1};
       newReactionCounts[reactionId] =
         (newReactionCounts?.[reactionId] || 0) + 1;
-      yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
+      yield onUpdateReactionOfPostById(
+        id,
+        newOwnReaction1,
+        newReactionCounts,
+        cReactionsOrder,
+      );
 
       yield postDataHelper.putReactionToPost({postId: id, data});
       // Disable update data base on response because of calculate wrong value when receive socket msg
@@ -569,20 +579,23 @@ function* deleteReactToPost({
   payload: IPayloadReactToPost;
 }): any {
   const {id, reactionId, reactionCounts, ownReaction} = payload;
+  const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+  const cReactionsOrder = post1?.reactions_order || [];
   try {
-    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reaction_counts || {};
     const cOwnReaction1 = post1.own_reactions || {};
-
     const rId = cOwnReaction1?.[reactionId]?.[0]?.id;
     if (rId) {
       const newOwnReaction1: IOwnReaction = {...cOwnReaction1};
       const reactionArr: IReaction[] = [];
       reactionArr.push({loading: true});
       newOwnReaction1[reactionId] = reactionArr;
-      yield onUpdateReactionOfPostById(id, newOwnReaction1, {
-        ...cReactionCounts1,
-      });
+      yield onUpdateReactionOfPostById(
+        id,
+        newOwnReaction1,
+        {...cReactionCounts1},
+        cReactionsOrder,
+      );
 
       yield call(postDataHelper.deleteReaction, rId);
 
@@ -596,10 +609,20 @@ function* deleteReactToPost({
         0,
         (newReactionCounts2[reactionId] || 0) - 1,
       );
-      yield onUpdateReactionOfPostById(id, newOwnReaction2, newReactionCounts2);
+      yield onUpdateReactionOfPostById(
+        id,
+        newOwnReaction2,
+        newReactionCounts2,
+        cReactionsOrder,
+      );
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(
+      id,
+      ownReaction,
+      reactionCounts,
+      cReactionsOrder,
+    ); //rollback
     yield showError(e);
   }
 }
@@ -609,6 +632,7 @@ function* onUpdateReactionOfCommentById(
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
   defaultComment?: IReaction,
+  reactionsOrder?: string[],
 ): any {
   try {
     const allComments = yield select(state =>
@@ -618,6 +642,7 @@ function* onUpdateReactionOfCommentById(
     const newComment = {...comment};
     newComment.children_counts = reactionCounts;
     newComment.own_children = ownReaction;
+    newComment.reactions_order = reactionsOrder;
     allComments[commentId] = newComment;
     yield put(postActions.setAllComments(allComments));
   } catch (e) {
@@ -637,7 +662,11 @@ function* updateReactionBySocket({
   const isCurrentUser = userId == actor?.id;
 
   if (comment?.comment_id) {
-    const {comment_id = '', reaction_counts = {}} = comment || {};
+    const {
+      comment_id = '',
+      reaction_counts = {},
+      reactions_order = [],
+    } = comment || {};
     // handle reaction to comment
     // merge own children if reaction's actor is current user
     const c =
@@ -651,9 +680,15 @@ function* updateReactionBySocket({
       comment_id,
       ownReactions,
       reaction_counts,
+      undefined,
+      reactions_order,
     );
   } else if (post?.post_id) {
-    const {post_id = '', reaction_counts = {}} = post || {};
+    const {
+      post_id = '',
+      reaction_counts = {},
+      reactions_order = [],
+    } = post || {};
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
     const p =
@@ -663,7 +698,12 @@ function* updateReactionBySocket({
     if (isCurrentUser && reaction?.kind) {
       ownReactions[reaction.kind] = [reaction];
     }
-    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+    yield onUpdateReactionOfPostById(
+      post_id,
+      ownReactions,
+      reaction_counts,
+      reactions_order,
+    );
   }
 }
 
@@ -680,7 +720,11 @@ function* updateUnReactionBySocket({
 
   if (comment?.comment_id) {
     // handle un-react comment
-    const {comment_id, reaction_counts = {}} = comment || {};
+    const {
+      comment_id,
+      reaction_counts = {},
+      reactions_order = [],
+    } = comment || {};
     const c =
       (yield select(s => get(s, postKeySelector.commentById(comment_id)))) ||
       {};
@@ -692,9 +736,11 @@ function* updateUnReactionBySocket({
       comment?.comment_id,
       ownReactions,
       reaction_counts,
+      undefined,
+      reactions_order,
     );
   } else if (post?.post_id) {
-    const {post_id, reaction_counts = {}} = post;
+    const {post_id, reaction_counts = {}, reactions_order = []} = post;
     // handle un-react post
     const p =
       (yield select(state => get(state, postKeySelector.postById(post_id)))) ||
@@ -703,7 +749,12 @@ function* updateUnReactionBySocket({
     if (isCurrentUser && reaction?.kind) {
       ownReactions[reaction.kind] = [];
     }
-    yield onUpdateReactionOfPostById(post_id, ownReactions, reaction_counts);
+    yield onUpdateReactionOfPostById(
+      post_id,
+      ownReactions,
+      reaction_counts,
+      reactions_order,
+    );
   }
 }
 
@@ -734,6 +785,7 @@ function* putReactionToComment({
       (yield select(s => get(s, postKeySelector.commentById(id)))) || comment;
     const cReactionCount1 = cComment1.children_counts || {};
     const cOwnReactions1 = cComment1.own_children || {};
+    const cReactionsOrder1 = cComment1.reactions_order || [];
 
     const data: ReactionType[] = [];
     data.push(reactionId);
@@ -751,6 +803,7 @@ function* putReactionToComment({
         newOwnChildren1,
         newChildrenCounts1,
         comment,
+        cReactionsOrder1,
       );
 
       yield postDataHelper.putReactionToComment({commentId: id, data});
@@ -800,6 +853,7 @@ function* deleteReactToComment({
       ) || {};
       const cReactionCount1 = cComment1.children_counts || {};
       const cOwnReactions1 = cComment1.own_children || {};
+      const cReactionsOrder1 = cComment1.reactions_order || {};
 
       const newOwnChildren1 = {...cOwnReactions1};
       const reactionArr: IReaction[] = [];
@@ -810,6 +864,7 @@ function* deleteReactToComment({
         newOwnChildren1,
         {...cReactionCount1},
         comment,
+        cReactionsOrder1,
       );
 
       yield call(postDataHelper.deleteReaction, rId);
@@ -819,6 +874,7 @@ function* deleteReactToComment({
       ) || {};
       const cReactionCount2 = cComment2.children_counts || {};
       const cOwnReactions2 = cComment2.own_children || {};
+      const cReactionsOrder2 = cComment2.reactions_order || {};
 
       const newChildrenCounts2 = {...cReactionCount2};
       newChildrenCounts2[reactionId] = Math.max(
@@ -832,6 +888,7 @@ function* deleteReactToComment({
         newOwnChildren2,
         newChildrenCounts2,
         comment,
+        cReactionsOrder2,
       );
     }
   } catch (e) {

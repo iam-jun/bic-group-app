@@ -92,6 +92,7 @@ const _PostView: FC<PostViewProps> = ({
     deleted: boolean,
     own_reactions: any,
     reaction_counts: IObject<number>,
+    reactions_order: string[],
     is_draft: boolean,
     postObjectData: any;
 
@@ -105,6 +106,9 @@ const _PostView: FC<PostViewProps> = ({
     reaction_counts = useKeySelector(
       postKeySelector.postReactionCountsById(postId),
     );
+    reactions_order = useKeySelector(
+      postKeySelector.postReactionsOrderById(postId),
+    );
     is_draft = useKeySelector(postKeySelector.postIsDraftById(postId));
     postObjectData = useKeySelector(postKeySelector.postObjectDataById(postId));
   } else {
@@ -115,6 +119,7 @@ const _PostView: FC<PostViewProps> = ({
     deleted = false;
     own_reactions = postData?.own_reactions;
     reaction_counts = postData?.reaction_counts || {};
+    reactions_order = postData?.reactions_order || [];
     postObjectData = postData?.object?.data;
   }
 
@@ -296,6 +301,7 @@ const _PostView: FC<PostViewProps> = ({
             style={styles.reactions}
             ownReactions={own_reactions}
             reactionCounts={reaction_counts}
+            reactionsOrder={reactions_order}
             onAddReaction={onAddReaction}
             onRemoveReaction={onRemoveReaction}
             onLongPressReaction={onLongPressReaction}

@@ -26,7 +26,7 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
   const {colors, spacing}: ITheme = useTheme() as ITheme;
 
   const underlayColor = colors.placeholder;
-  let backgroundColor = colors.primary1;
+  let backgroundColor = colors.bgError;
   let textColor = colors.error;
 
   if (disabled) {
