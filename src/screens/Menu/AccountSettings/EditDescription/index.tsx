@@ -1,6 +1,6 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, memo} from 'react';
 import i18next from 'i18next';
-import {ScrollView, StyleSheet} from 'react-native';
+import {Keyboard, Platform, ScrollView, StyleSheet} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -34,6 +34,7 @@ const EditDescription = () => {
   };
 
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -61,10 +62,7 @@ const EditDescription = () => {
     return description !== descriptionText;
   };
 
-  const isValid = useMemo(
-    () => checkIsValid(descriptionText),
-    [descriptionText],
-  );
+  const isValid = checkIsValid(descriptionText);
 
   return (
     <ScreenWrapper isFullView>
@@ -105,6 +103,8 @@ const EditDescription = () => {
   );
 };
 
+const EditDescriptionMemo = memo(EditDescription);
+EditDescriptionMemo.whyDidYouRender = true;
 export default EditDescription;
 
 const createStyles = (theme: ITheme) => {
