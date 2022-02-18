@@ -18,7 +18,7 @@ exports[`SimpleToastMessage component renders correctly 1`] = `
       "opacity": 1,
     }
   }
-  testID="simple_toast_message.button"
+  testID="simple_toast_message"
 >
   <View
     style={

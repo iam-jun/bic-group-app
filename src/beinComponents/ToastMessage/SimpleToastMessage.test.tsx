@@ -52,7 +52,7 @@ describe('SimpleToastMessage component', () => {
       </SimpleToastMessage>,
     );
 
-    const buttonComponent = getByTestId('simple_toast_message.button');
+    const buttonComponent = getByTestId('simple_toast_message');
     expect(buttonComponent).toBeDefined();
     fireEvent.press(buttonComponent);
     expect(onActionPress).toBeCalled();
@@ -67,7 +67,7 @@ describe('SimpleToastMessage component', () => {
       </SimpleToastMessage>,
     );
 
-    const buttonComponent = getByTestId('simple_toast_message.button');
+    const buttonComponent = getByTestId('simple_toast_message');
     expect(buttonComponent).toBeDefined();
     fireEvent.press(buttonComponent);
     expect(onActionPress).not.toBeCalled();

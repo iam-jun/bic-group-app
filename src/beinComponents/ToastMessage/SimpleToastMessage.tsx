@@ -45,7 +45,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
     <TouchableOpacity
       disabled={disabled}
       onPress={_onPress}
-      testID="simple_toast_message.button">
+      testID="simple_toast_message">
       <View style={[styles.container, style]}>
         <Text.BodyS
           {...textProps}
