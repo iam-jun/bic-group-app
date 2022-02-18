@@ -398,7 +398,6 @@ const UserEditProfile = (props: any) => {
   const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
     return (
       <PrimaryItem
-        key={JSON.stringify(item)}
         testID={'user_edit_profile.work.item'}
         height={null}
         leftIcon={'iconSuitcase'}
@@ -454,9 +453,11 @@ const UserEditProfile = (props: any) => {
           </Text.H5>
         </View>
         <View style={styles.infoItem}>
-          {myWorkExperience?.map((item: IUserWorkExperience) =>
-            renderWorkItem({item}),
-          )}
+          {myWorkExperience?.map((item: IUserWorkExperience) => (
+            <View key={item?.company + item?.titlePosition}>
+              {renderWorkItem({item})}
+            </View>
+          ))}
         </View>
         {showEditButton ? (
           <Button.Secondary

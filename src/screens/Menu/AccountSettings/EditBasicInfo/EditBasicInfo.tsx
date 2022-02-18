@@ -4,7 +4,6 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 import {isEqual} from 'lodash';
-import {useBaseHook} from '~/hooks';
 
 import {ITheme} from '~/theme/interfaces';
 import genders from '~/constants/genders';
@@ -24,6 +23,7 @@ import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 import * as modalActions from '~/store/modal/actions';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -32,13 +32,13 @@ import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
 
-const EditBasicInfo = () => {
+const _EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
 
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {navigation} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {id, fullname, gender, birthday, relationship_status, language} =
@@ -105,7 +105,7 @@ const EditBasicInfo = () => {
         relationship_status: relationshipState,
       }),
     );
-    navigation.goBack();
+    rootNavigation.goBack();
   };
 
   const resetData = () => {
@@ -151,14 +151,6 @@ const EditBasicInfo = () => {
   };
 
   const _onPressBack = () => {
-    const a = checkIsValid(
-      nameState,
-      genderState,
-      birthdayState,
-      languageState,
-      relationshipState,
-    );
-
     if (isValid) {
       Keyboard.dismiss();
       dispatch(
@@ -169,7 +161,7 @@ const EditBasicInfo = () => {
           isDismissible: false,
           onConfirm: () => {
             resetData();
-            navigation.goBack();
+            rootNavigation.goBack();
           },
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
@@ -178,7 +170,7 @@ const EditBasicInfo = () => {
       );
     } else {
       resetData();
-      navigation.goBack();
+      rootNavigation.goBack();
     }
   };
 
@@ -305,8 +297,12 @@ const EditBasicInfo = () => {
   );
 };
 
-const EditBasicInfoMemo = memo(EditBasicInfo);
-EditBasicInfoMemo.whyDidYouRender = true;
+function propsAreEqual(prev: any, next: any) {
+  return isEqual(prev, next);
+}
+
+const EditBasicInfo = memo(_EditBasicInfo, propsAreEqual);
+EditBasicInfo.whyDidYouRender = true;
 export default EditBasicInfo;
 
 const themeStyles = (theme: ITheme) => {
