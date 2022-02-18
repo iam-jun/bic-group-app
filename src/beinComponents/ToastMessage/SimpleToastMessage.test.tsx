@@ -43,6 +43,24 @@ describe('SimpleToastMessage component', () => {
     expect(iconComponent).toBeDefined();
   });
 
+  it(`renders view style correctly`, () => {
+    const {getByTestId} = renderWithRedux(
+      <SimpleToastMessage
+        style={{
+          shadowOffset: {
+            width: 5,
+            height: 10,
+          },
+        }}>
+        {children}
+      </SimpleToastMessage>,
+    );
+    const buttonComponent = getByTestId('simple_toast_message');
+    expect(
+      buttonComponent.props.children[0].props.style.shadowOffset,
+    ).toMatchObject({width: 5, height: 10});
+  });
+
   it(`renders onActionPress correctly`, () => {
     const onActionPress = jest.fn();
 

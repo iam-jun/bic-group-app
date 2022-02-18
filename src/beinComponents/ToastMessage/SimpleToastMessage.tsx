@@ -46,7 +46,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
       disabled={disabled}
       onPress={_onPress}
       testID="simple_toast_message">
-      <View style={[styles.container, style]}>
+      <View style={StyleSheet.flatten([styles.container, style])}>
         <Text.BodyS
           {...textProps}
           color={theme.colors.primary7}

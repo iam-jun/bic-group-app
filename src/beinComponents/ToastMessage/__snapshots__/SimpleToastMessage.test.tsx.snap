@@ -22,29 +22,26 @@ exports[`SimpleToastMessage component renders correctly 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "alignSelf": "baseline",
-          "backgroundColor": "rgba(255, 255, 255, 0.92)",
-          "borderColor": "#DBCAFD",
-          "borderRadius": 22,
-          "borderWidth": 1,
-          "elevation": 16,
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "paddingHorizontal": 12,
-          "paddingVertical": 4,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 12,
-            "width": 0,
-          },
-          "shadowOpacity": 0.12,
-          "shadowRadius": 10.32,
+      Object {
+        "alignItems": "center",
+        "alignSelf": "baseline",
+        "backgroundColor": "rgba(255, 255, 255, 0.92)",
+        "borderColor": "#DBCAFD",
+        "borderRadius": 22,
+        "borderWidth": 1,
+        "elevation": 16,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "paddingHorizontal": 12,
+        "paddingVertical": 4,
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 12,
+          "width": 0,
         },
-        undefined,
-      ]
+        "shadowOpacity": 0.12,
+        "shadowRadius": 10.32,
+      }
     }
   >
     <Text
