@@ -99,10 +99,12 @@ const ToastMessage: FC<ToastMessageProps> = ({
     <TouchableOpacity
       activeOpacity={1}
       style={containerStyle}
-      onPress={_onPress}>
+      onPress={_onPress}
+      testID="normal_toast_message">
       {leftIcon && (
         <Icon
           isButton
+          testID="normal_toast_message.left_icon"
           iconStyle={[
             styles.leftIconStyle,
             {backgroundColor: colors.iconTintReversed},
@@ -117,14 +119,21 @@ const ToastMessage: FC<ToastMessageProps> = ({
 
       <View style={styles.textContainer}>
         <View style={styles.childrenStyle}>
-          <Text.Body {...textProps} color={textColor}>
+          <Text.Body
+            {...textProps}
+            color={textColor}
+            testID="normal_toast_message.children">
             {children}
           </Text.Body>
         </View>
         {!!rightText && (
-          <ButtonWrapper style={styles.button} onPress={onPressRight}>
+          <ButtonWrapper
+            style={styles.button}
+            onPress={onPressRight}
+            testID="normal_toast_message.right_button">
             {!!rightIcon && (
               <Icon
+                testID="normal_toast_message.right_icon"
                 icon={rightIcon}
                 tintColor={theme.colors.background}
                 style={styles.marginRightIcon}
@@ -132,6 +141,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
             )}
             <Text.ButtonBase
               {...rightTextProps}
+              testID="normal_toast_message.right_text"
               style={[styles.rightText, rightTextStyle]}
               color={rightTextColor || theme.colors.background}>
               {rightText}
