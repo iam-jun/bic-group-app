@@ -1,8 +1,9 @@
 import React, {useState, memo} from 'react';
 import i18next from 'i18next';
-import {Keyboard, Platform, ScrollView, StyleSheet} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {isEqual} from 'lodash';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -16,7 +17,7 @@ import menuActions from '../../redux/actions';
 import menuKeySelector from '../../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
 
-const EditDescription = () => {
+const _EditDescription = () => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
 
@@ -103,8 +104,12 @@ const EditDescription = () => {
   );
 };
 
-const EditDescriptionMemo = memo(EditDescription);
-EditDescriptionMemo.whyDidYouRender = true;
+function propsAreEqual(prev: any, next: any) {
+  return isEqual(prev, next);
+}
+
+const EditDescription = memo(_EditDescription, propsAreEqual);
+EditDescription.whyDidYouRender = true;
 export default EditDescription;
 
 const createStyles = (theme: ITheme) => {

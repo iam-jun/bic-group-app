@@ -3,6 +3,8 @@ import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
+import {isEqual} from 'lodash';
+import {useForm} from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -18,9 +20,8 @@ import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
 import {ILocation} from '~/interfaces/common';
 import menuActions from '../../redux/actions';
-import {useForm} from 'react-hook-form';
 
-const EditContact = () => {
+const _EditContact = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -209,8 +210,11 @@ const EditContact = () => {
   );
 };
 
-const EditContactMemo = memo(EditContact);
-EditContactMemo.whyDidYouRender = true;
+function propsAreEqual(prev: any, next: any) {
+  return isEqual(prev, next);
+}
+const EditContact = memo(_EditContact, propsAreEqual);
+EditContact.whyDidYouRender = true;
 export default EditContact;
 
 const themeStyles = (theme: ITheme) => {

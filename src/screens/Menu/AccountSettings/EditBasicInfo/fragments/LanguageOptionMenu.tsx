@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
+import {isEqual} from 'lodash';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
@@ -20,7 +21,6 @@ import {ILanguageItem} from '~/interfaces/IEditUser';
 import {ITheme} from '~/theme/interfaces';
 import TitleComponent from '../../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import {isEqual} from 'lodash';
 
 interface LanguageOptionMenuProps {
   title: string;
