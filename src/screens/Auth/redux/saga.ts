@@ -304,7 +304,7 @@ function* signOut({payload}: any) {
     if (payload) {
       navigation.replace(rootSwitch.authStack);
     }
-    // yield Auth.signOut();
+    yield Auth.signOut();
     // Check if chat auth session is still active
     const sessionData: IObject<any> = yield getUserFromSharedPreferences();
     if ((sessionData?.activeSessions || []).length < 2) {
