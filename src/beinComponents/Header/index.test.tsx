@@ -41,6 +41,7 @@ describe('Header component', () => {
     const rendered = render(<Header />).toJSON();
     expect(rendered).toMatchSnapshot();
     // Should call props headerRef
+    https://gist.github.com/Jyrno42/78d65f5e98a1cb925957249a450de2f3
     // const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');
   });
@@ -242,6 +243,7 @@ describe('Header component', () => {
   it(`renders correctly hide bacck on laptop`, () => {
     const rendered = render(<Header hideBackOnLaptop />);
     expect(rendered).toMatchSnapshot();
+    https://alexboffey.co.uk/blog/jest-window-mock/
   });
   */
 
@@ -398,7 +400,7 @@ describe('Header component', () => {
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
     //Re-Search
     // expect(onShowSearch).toBeCalled();
-    expect(onSearchText).toHaveBeenCalledWith(true);
+    expect(onSearchText).toBeCalledWith(true);
     expect(rendered).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
@@ -424,7 +426,7 @@ describe('Header component', () => {
       'Text Search',
     );
     //Re-search
-    expect(onSearchText).toHaveBeenCalledWith('Text Search');
+    expect(onSearchText).toBeCalledWith('Text Search');
   });
 
   it(`renders correctly search placeholder`, () => {
