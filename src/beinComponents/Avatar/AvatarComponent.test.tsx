@@ -52,7 +52,7 @@ describe('Avatar component', () => {
     expect(avatarComponent.props.style.borderRadius).not.toBe(undefined);
   });
 
-  it(`renders correctly on press icon`, () => {
+  it(`should call props onPressAction`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(
       <Avatar.Large
