@@ -238,6 +238,7 @@
     "text_description_optional": "Description (optional)",
     "text_since": "Since",
     "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "text_enddate_must_choose": "Please select End Date",
     "text_education": "Education",
     "text_social": "Social",
     "text_social_link":"Social Link",

@@ -1,15 +1,21 @@
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
-import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  Keyboard,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
+import {isEqual} from 'lodash';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import speakingLanguages from '~/constants/speakingLanguages';
-import useMenu from '~/hooks/menu';
 import {ILanguageItem} from '~/interfaces/IEditUser';
 
 import {ITheme} from '~/theme/interfaces';
@@ -19,11 +25,13 @@ import Button from '~/beinComponents/Button';
 interface LanguageOptionMenuProps {
   title: string;
   onChangeLanguages: (languages: string[]) => void;
+  selectedLanguages: string[];
 }
 
 const LanguageOptionMenu = ({
   title,
   onChangeLanguages,
+  selectedLanguages,
 }: LanguageOptionMenuProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
@@ -31,8 +39,6 @@ const LanguageOptionMenu = ({
   const {colors} = theme;
 
   const styles = themeStyles(theme, screenHeight);
-  const {myProfile} = useMenu();
-  const {language: userLanguages} = myProfile;
 
   const speakingLanguagesList = Object.keys(speakingLanguages).map(
     (code: string) => ({
@@ -42,8 +48,6 @@ const LanguageOptionMenu = ({
     }),
   );
   const [languages, setLanguages] = useState(speakingLanguagesList);
-  const [selectedLanguages, setSelectedLanguages] =
-    useState<string[]>(userLanguages);
 
   const languageSheetRef = useRef<any>();
 
@@ -51,22 +55,35 @@ const LanguageOptionMenu = ({
     setLanguages(
       languages.map(lang => ({
         ...lang,
-        selected: userLanguages?.includes(lang.code),
+        selected: selectedLanguages?.includes(lang.code),
       })),
     );
-  }, [userLanguages]);
-
-  useEffect(() => {
-    onChangeLanguages(selectedLanguages);
   }, [selectedLanguages]);
 
-  const onSelectItem = (language: ILanguageItem) => {
-    setSelectedLanguages(
-      !language.selected
-        ? [...selectedLanguages, language.code]
-        : selectedLanguages.filter((item: string) => item !== language.code),
-    );
+  const onConfirmLanguage = () => {
+    const newSelectedLanguages = languages
+      ?.filter(lang1 => lang1?.selected)
+      ?.map(lang2 => lang2?.code || '');
+    onChangeLanguages(newSelectedLanguages);
+    languageSheetRef.current?.close();
+  };
 
+  const resetData = () => {
+    const newSelectedLanguages = languages
+      ?.filter(lang1 => lang1?.selected)
+      ?.map(lang2 => lang2?.code || '');
+
+    if (!isEqual(selectedLanguages, newSelectedLanguages)) {
+      setLanguages(
+        languages.map(lang => ({
+          ...lang,
+          selected: selectedLanguages?.includes(lang.code),
+        })),
+      );
+    }
+  };
+
+  const onSelectItem = (language: ILanguageItem) => {
     setLanguages(
       languages.map((item: ILanguageItem) =>
         item.code === language.code
@@ -92,8 +109,10 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const onLanguageEditOpen = (e: any) =>
+  const onLanguageEditOpen = (e: any) => {
+    Keyboard.dismiss();
     languageSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
 
   return (
     <View>
@@ -118,6 +137,7 @@ const LanguageOptionMenu = ({
 
       <BottomSheet
         modalizeRef={languageSheetRef}
+        onClose={resetData}
         ContentComponent={
           <View style={styles.contentComponent}>
             <Text.ButtonSmall
@@ -128,10 +148,18 @@ const LanguageOptionMenu = ({
             </Text.ButtonSmall>
             <Divider />
             <ScrollView>
-              {(languages || []).map((item: ILanguageItem) =>
-                renderItem({item}),
-              )}
+              {(languages || []).map((item: ILanguageItem) => (
+                <View key={item?.code + item?.fullName}>
+                  {renderItem({item})}
+                </View>
+              ))}
             </ScrollView>
+            <Button.Primary
+              testID="edit_basic_info.save_language"
+              onPress={onConfirmLanguage}
+              style={styles.btnConfirmLanguage}>
+              {i18next.t('btn_save')}
+            </Button.Primary>
           </View>
         }
       />
@@ -168,6 +196,10 @@ const themeStyles = (theme: ITheme, screenHeight: number) => {
     },
     buttonDropDownContent: {
       justifyContent: 'space-between',
+    },
+    btnConfirmLanguage: {
+      marginHorizontal: spacing.margin.large,
+      marginTop: spacing.margin.large,
     },
   });
 };
