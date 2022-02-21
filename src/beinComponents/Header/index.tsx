@@ -5,7 +5,6 @@ import {
   StyleProp,
   ViewStyle,
   Platform,
-  useWindowDimensions,
   TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native';
@@ -32,6 +31,7 @@ import Button from '~/beinComponents/Button';
 import {ImageProps} from '../Image';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
+import useWindowDimensions from '~/hooks/windowSize';
 
 export interface HeaderProps {
   headerRef?: any;

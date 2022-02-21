@@ -1260,6 +1260,82 @@ exports[`Header component renders correctly hide back 1`] = `
 </View>
 `;
 
+exports[`Header component renders correctly hide back on laptop 1`] = `
+<View
+  testID="header"
+>
+  <View
+    animatedStyle={
+      Object {
+        "value": Object {
+          "height": 60,
+        },
+      }
+    }
+    collapsable={false}
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#FFFFFF",
+        "borderBottomWidth": 0.5,
+        "borderColor": "#EAEDF2",
+        "elevation": 2,
+        "flexDirection": "row",
+        "height": 60,
+        "overflow": "hidden",
+        "paddingTop": 0,
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.1,
+        "shadowRadius": 1,
+      }
+    }
+    testID="header.content"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "height": "100%",
+            "justifyContent": "center",
+            "marginLeft": 16,
+            "paddingTop": 1.5,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "height": 0,
+          "position": "absolute",
+          "top": 0,
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
 exports[`Header component renders correctly icon 1`] = `
 <View
   testID="header"
