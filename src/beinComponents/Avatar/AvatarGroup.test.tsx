@@ -38,15 +38,19 @@ describe('Avatar Group component', () => {
   });
 
   it(`renders correctly group with no member`, () => {
-    const {getByTestId} = render(<Avatar.Group />);
+    const rendered = render(<Avatar.Group />);
+    const {getByTestId} = rendered;
     const avatarComponent = getByTestId('avatar_container');
     expect(avatarComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly avatar when call Avatar.Group`, () => {
-    const {getByTestId} = render(<Avatar.Group source={avatarLink} />);
+    const rendered = render(<Avatar.Group source={avatarLink} />);
+    const {getByTestId} = rendered;
     const avatarComponent = getByTestId('avatar.image');
     expect(avatarComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly group with 1 member`, () => {
@@ -56,38 +60,48 @@ describe('Avatar Group component', () => {
   });
 
   it(`renders correctly group with 2 member`, () => {
-    const {getByTestId} = render(<Avatar.Group source={listAvatar2} />);
+    const rendered = render(<Avatar.Group source={listAvatar2} />);
+    const {getByTestId} = rendered;
     const groupComponent = getByTestId('avatar_group.group_2');
     expect(groupComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly group with 3 member`, () => {
-    const {getByTestId} = render(<Avatar.Group source={listAvatar3} />);
+    const rendered = render(<Avatar.Group source={listAvatar3} />);
+    const {getByTestId} = rendered;
     const groupComponent = getByTestId('avatar_group.group_3');
     expect(groupComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly group with 4 member`, () => {
-    const {getByTestId} = render(<Avatar.Group source={listAvatar4} />);
+    const rendered = render(<Avatar.Group source={listAvatar4} />);
+    const {getByTestId} = rendered;
     const groupComponent = getByTestId('avatar_group.group_4');
     expect(groupComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly group with 4+ member with totalMember`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Avatar.Group source={listAvatar5} totalMember={100} />,
     );
+    const {getByTestId} = rendered;
     const groupComponent = getByTestId('avatar_group.group_4_plus');
     expect(groupComponent).toBeDefined();
     const totalMemberComponent = getByTestId('avatar_group.total_member');
     expect(totalMemberComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly group with 4+ member without totalMember`, () => {
-    const {getByTestId} = render(<Avatar.Group source={listAvatar5} />);
+    const rendered = render(<Avatar.Group source={listAvatar5} />);
+    const {getByTestId} = rendered;
     const groupComponent = getByTestId('avatar_group.group_4_plus');
     expect(groupComponent).toBeDefined();
     const fourthItemComponent = getByTestId('avatar_group.item_3');
     expect(fourthItemComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 });

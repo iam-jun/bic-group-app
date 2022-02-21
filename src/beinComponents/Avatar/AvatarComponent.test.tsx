@@ -16,32 +16,36 @@ describe('Avatar component', () => {
   });
 
   it(`renders correctly badge`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Avatar.Large source={avatarLink} badge={'iconReactionLove'} />,
     );
+    const {getByTestId} = rendered;
     const badgeComponent = getByTestId('avatar.badge');
     expect(badgeComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly badge bottom`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Avatar.Large
         source={avatarLink}
         badge={'iconReactionLove'}
         badgeBottom
       />,
     );
+    const {getByTestId} = rendered;
     const badgeComponent = getByTestId('avatar.badge');
     expect(badgeComponent).toBeDefined();
     expect(badgeComponent.props.style.top).toBe(undefined);
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly badge check`, () => {
-    const {getByTestId} = render(
-      <Avatar.Large source={avatarLink} badgeCheck />,
-    );
+    const rendered = render(<Avatar.Large source={avatarLink} badgeCheck />);
+    const {getByTestId} = rendered;
     const badgeComponent = getByTestId('avatar.badge_check');
     expect(badgeComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly round`, () => {
@@ -69,13 +73,16 @@ describe('Avatar component', () => {
     expect(btnIcon).toBeDefined();
     fireEvent.press(btnIcon);
     expect(onPressIcon).toBeCalled();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`renders correctly status`, () => {
-    const {getByTestId} = render(
+    const rendered = render(
       <Avatar.Large source={avatarLink} status="online" />,
     );
+    const {getByTestId} = rendered;
     const statusComponent = getByTestId('avatar.status');
     expect(statusComponent).toBeDefined();
+    expect(rendered).toMatchSnapshot();
   });
 });
