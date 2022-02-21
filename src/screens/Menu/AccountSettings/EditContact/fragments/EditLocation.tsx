@@ -118,6 +118,7 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
       ...Platform.select({
         web: {
           maxHeight: 0.55 * screenHeight,
+          paddingTop: spacing.padding.large,
         },
       }),
     },

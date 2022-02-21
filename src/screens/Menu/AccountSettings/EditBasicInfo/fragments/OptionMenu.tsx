@@ -63,7 +63,9 @@ const OptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            {(data || []).map((item: IOptionItem) => renderItem({item}))}
+            {(data || []).map((item: IOptionItem) => (
+              <View key={item?.title + item?.type}>{renderItem({item})}</View>
+            ))}
           </View>
         }
       />
