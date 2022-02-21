@@ -74,6 +74,12 @@ export default function* deleteComment({
       (newReactionCount.comment_count || 0) - 1 - childrenCommentCount,
       0,
     );
+    if (!parentCommentId) {
+      newReactionCount.comment = Math.max(
+        (newReactionCount.comment || 0) - 1 - childrenCommentCount,
+        0,
+      );
+    }
     post.reaction_counts = {...newReactionCount};
     newAllPosts[postId] = post;
     yield put(postActions.setAllPosts(newAllPosts));

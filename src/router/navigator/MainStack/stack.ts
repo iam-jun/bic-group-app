@@ -9,6 +9,8 @@ const mainStack = {
   editDescription: 'edit-description',
   accountSettings: 'account-settings',
   componentCollection: 'component-collection',
+  securityLogin: 'security-and-login',
+  changePassword: 'change-password',
 };
 
 export default mainStack;
