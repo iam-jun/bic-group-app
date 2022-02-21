@@ -46,7 +46,7 @@ describe('Header component', () => {
   });
 
   it(`header ref`, async () => {
-    const rendered = render(<Header />).toJSON();
+    const rendered = render(<Header />,).toJSON();
     // expect(rendered).toMatchSnapshot();
 
     // Should call props headerRef
@@ -106,7 +106,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly left icon props`, () => {
@@ -127,7 +126,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.icon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly right icon`, () => {
@@ -135,7 +133,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`renders correctly right icon props`, () => {
@@ -156,7 +153,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const iconComponent = rendered.getByTestId('header.icon');
     expect(iconComponent).toBeDefined();
-    expect(iconComponent.findByType('RNSVGSvgView')).toBeDefined();
     const btnIcon = rendered.getByTestId('header.icon.button');
     expect(btnIcon).toBeDefined();
     fireEvent.press(btnIcon);
@@ -225,7 +221,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.menuIcon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView')).toBeDefined();
   });
 
   it(`on press menu`, () => {
@@ -341,7 +336,6 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
-    expect(searchIconCopmponent.findByType('FastImageView')).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
   });
 
