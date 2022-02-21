@@ -46,19 +46,59 @@ describe('Text component', () => {
     expect(renderedComponent.props.style.fontSize).toBe(styles.h5.fontSize);
   });
 
-  //    variant?: TextVariant;
-  //   children?: React.ReactNode;
-  //   color?: string;
-  //   useI18n?: boolean;
-  //   it(`renders correctly color`, () => {
-  //     const {getByTestId} = render(<Divider color={'#B2BDCD'} />);
-  //     const dividerComponent = getByTestId('divider');
-  //     expect(dividerComponent.props.style[0].backgroundColor).toBe('#B2BDCD');
-  //   });
+  it(`renders correctly variant H1`, () => {
+    const {getByTestId} = render(
+      <Text.H1 testID="text.h1">renders correctly children</Text.H1>,
+    );
+    const renderedComponent = getByTestId('text.h1');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h1.fontSize);
+  });
 
-  //   it(`renders correctly horizontal`, () => {
-  //     const {getByTestId} = render(<Divider horizontal={true} />);
-  //     const dividerComponent = getByTestId('divider');
-  //     expect(dividerComponent.props.style[0].height).toBe(undefined);
-  //   });
+  it(`renders correctly variant H2`, () => {
+    const {getByTestId} = render(
+      <Text.H2 testID="text.h2">renders correctly children</Text.H2>,
+    );
+    const renderedComponent = getByTestId('text.h2');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h2.fontSize);
+  });
+
+  it(`renders correctly variant H3`, () => {
+    const {getByTestId} = render(
+      <Text.H3 testID="text.h3">renders correctly children</Text.H3>,
+    );
+    const renderedComponent = getByTestId('text.h3');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h3.fontSize);
+  });
+
+  it(`renders correctly variant H4`, () => {
+    const {getByTestId} = render(
+      <Text.H4 testID="text.h4">renders correctly children</Text.H4>,
+    );
+    const renderedComponent = getByTestId('text.h4');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h4.fontSize);
+  });
+
+  it(`renders correctly variant H5`, () => {
+    const {getByTestId} = render(
+      <Text.H5 testID="text.h5">renders correctly children</Text.H5>,
+    );
+    const renderedComponent = getByTestId('text.h5');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h5.fontSize);
+  });
+
+  it(`renders correctly variant H6`, () => {
+    const {getByTestId} = render(
+      <Text.H6 testID="text.h6">renders correctly children</Text.H6>,
+    );
+    const renderedComponent = getByTestId('text.h6');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h6.fontSize);
+  });
+
+  it(`renders correctly variant H6`, () => {
+    const {getByTestId} = render(
+      <Text.H6S testID="text.h6s">renders correctly children</Text.H6S>,
+    );
+    const renderedComponent = getByTestId('text.h6s');
+    expect(renderedComponent.props.style.fontSize).toBe(styles.h6s.fontSize);
+  });
 });
