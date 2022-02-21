@@ -1,11 +1,5 @@
 import {useIsFocused} from '@react-navigation/core';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   InteractionManager,
   Platform,
@@ -95,12 +89,6 @@ const Newsfeed = () => {
       getData(true);
     }
   }, [token, isInternetReachable, homePosts]);
-
-  useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      dispatch(postActions.addToAllPosts({data: homePosts}));
-    });
-  }, [homePosts]);
 
   useEffect(() => {
     if (isInternetReachable) {
