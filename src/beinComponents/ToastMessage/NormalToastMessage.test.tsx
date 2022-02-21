@@ -3,6 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import NormalToastMessage from './NormalToastMessage';
+import {colors} from '~/theme';
 
 afterEach(cleanup);
 
@@ -22,7 +23,9 @@ describe('NormalToastMessage component', () => {
       <NormalToastMessage type={'success'}>{children}</NormalToastMessage>,
     );
     const buttonComponent = getByTestId('normal_toast_message');
-    expect(buttonComponent.props.style.backgroundColor).toBe('#00A64D');
+    expect(buttonComponent.props.style.backgroundColor).toBe(
+      colors.light.colors.success,
+    );
   });
 
   it(`renders toast type error with red color correctly`, () => {
@@ -30,7 +33,9 @@ describe('NormalToastMessage component', () => {
       <NormalToastMessage type={'error'}>{children}</NormalToastMessage>,
     );
     const buttonComponent = getByTestId('normal_toast_message');
-    expect(buttonComponent.props.style.backgroundColor).toBe('#DD2C3E');
+    expect(buttonComponent.props.style.backgroundColor).toBe(
+      colors.light.colors.error,
+    );
   });
 
   it(`renders children content correctly`, () => {
