@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeView component renders correctly 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#627286",
+      "fontFamily": "OpenSans-Regular",
+      "fontSize": 14,
+    }
+  }
+  testID="time_view"
+>
+  28undefined
+</Text>
+`;
