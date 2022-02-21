@@ -1,9 +1,8 @@
-import React, {useRef, useState, useEffect, memo} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
-import {isEqual} from 'lodash';
 import {useForm} from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -21,7 +20,7 @@ import EditLocation from './fragments/EditLocation';
 import {ILocation} from '~/interfaces/common';
 import menuActions from '../../redux/actions';
 
-const _EditContact = () => {
+const EditContact = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -49,7 +48,12 @@ const _EditContact = () => {
     setError,
     clearErrors,
     setValue,
+    watch,
   } = useForm();
+
+  useEffect(() => {
+    setValue('phoneNumber', phone);
+  }, []);
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -58,14 +62,6 @@ const _EditContact = () => {
     } else {
       rootNavigation.replace(mainStack.userEdit);
     }
-  };
-
-  const resetData = () => {
-    setCountryCountryCodeState(country_code);
-    setCountryState(country);
-    setCityState(city);
-    setValue('phoneNumber', phone);
-    clearErrors('phoneNumber');
   };
 
   useEffect(() => {
@@ -144,7 +140,7 @@ const _EditContact = () => {
     countryCodeState,
     countryState,
     cityState,
-    getValues('phoneNumber'),
+    watch('phoneNumber'),
   );
 
   return (
@@ -152,10 +148,7 @@ const _EditContact = () => {
       <Header
         titleTextProps={{useI18n: true}}
         title={'settings:title_edit_contact'}
-        onPressBack={() => {
-          resetData();
-          navigateBack();
-        }}
+        onPressBack={navigateBack}
         buttonText={'common:text_save'}
         buttonProps={{
           useI18n: true,
@@ -210,11 +203,6 @@ const _EditContact = () => {
   );
 };
 
-function propsAreEqual(prev: any, next: any) {
-  return isEqual(prev, next);
-}
-const EditContact = memo(_EditContact, propsAreEqual);
-EditContact.whyDidYouRender = true;
 export default EditContact;
 
 const themeStyles = (theme: ITheme) => {

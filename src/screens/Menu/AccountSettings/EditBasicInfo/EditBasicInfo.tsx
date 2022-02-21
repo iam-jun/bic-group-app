@@ -1,5 +1,5 @@
-import React, {useState, useRef, memo} from 'react';
-import {StyleSheet, View, Platform, Keyboard, ScrollView} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {StyleSheet, Platform, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -32,7 +32,7 @@ import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
 
-const _EditBasicInfo = () => {
+const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
 
@@ -108,16 +108,6 @@ const _EditBasicInfo = () => {
     rootNavigation.goBack();
   };
 
-  const resetData = () => {
-    Keyboard.dismiss();
-    setNameState(fullname);
-    setGenderState(gender);
-    setBirthdayState(birthday);
-    setLanguageState(language);
-    setRelationshipState(relationship_status);
-    setError(false);
-  };
-
   const onGenderItemPress = (item: IGenderItem) => {
     setGenderState(item.type);
     genderSheetRef.current?.close();
@@ -160,7 +150,6 @@ const _EditBasicInfo = () => {
           cancelBtn: true,
           isDismissible: false,
           onConfirm: () => {
-            resetData();
             rootNavigation.goBack();
           },
           confirmLabel: i18next.t('common:btn_discard'),
@@ -169,7 +158,6 @@ const _EditBasicInfo = () => {
         }),
       );
     } else {
-      resetData();
       rootNavigation.goBack();
     }
   };
@@ -297,12 +285,6 @@ const _EditBasicInfo = () => {
   );
 };
 
-function propsAreEqual(prev: any, next: any) {
-  return isEqual(prev, next);
-}
-
-const EditBasicInfo = memo(_EditBasicInfo, propsAreEqual);
-EditBasicInfo.whyDidYouRender = true;
 export default EditBasicInfo;
 
 const themeStyles = (theme: ITheme) => {

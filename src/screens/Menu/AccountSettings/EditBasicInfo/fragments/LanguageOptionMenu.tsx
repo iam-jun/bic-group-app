@@ -148,9 +148,11 @@ const LanguageOptionMenu = ({
             </Text.ButtonSmall>
             <Divider />
             <ScrollView>
-              {(languages || []).map((item: ILanguageItem) =>
-                renderItem({item}),
-              )}
+              {(languages || []).map((item: ILanguageItem) => (
+                <View key={item?.code + item?.fullName}>
+                  {renderItem({item})}
+                </View>
+              ))}
             </ScrollView>
             <Button.Primary
               testID="edit_basic_info.save_language"
