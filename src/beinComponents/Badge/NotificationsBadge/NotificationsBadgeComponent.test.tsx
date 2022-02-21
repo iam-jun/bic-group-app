@@ -2,6 +2,7 @@ import React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
 
 import NotificationsBadgeComponent from './NotificationsBadgeComponent';
+import {colors} from '~/theme';
 
 afterEach(cleanup);
 
@@ -25,9 +26,13 @@ describe('NotificationsBadgeComponent', () => {
       />,
     );
     const viewComponent = getByTestId('notifications_badge_component');
-    expect(viewComponent.props.style.backgroundColor).toBe('#DD2C3E');
+    expect(viewComponent.props.style.backgroundColor).toBe(
+      colors.light.colors.error,
+    );
     //@ts-ignore
-    expect(viewComponent.children[0].props.style.color).toBe('#FFFFFF');
+    expect(viewComponent.children[0].props.style.color).toBe(
+      colors.light.colors.textReversed,
+    );
   });
 
   it(`renders view style correctly`, () => {
