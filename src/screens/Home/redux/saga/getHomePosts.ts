@@ -4,6 +4,7 @@ import {get} from 'lodash';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
+import postActions from '~/screens/Post/redux/actions';
 
 export default function* getHomePosts({
   payload,
@@ -35,6 +36,8 @@ export default function* getHomePosts({
     }
 
     const result = yield homeDataHelper.getNewsfeed({offset});
+
+    yield put(postActions.addToAllPosts({data: result || []}));
 
     const newHomePosts = homePosts.concat?.(result) || result;
     yield put(homeActions.setHomePosts(newHomePosts));
