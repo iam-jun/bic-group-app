@@ -19,7 +19,9 @@ const AtMention = ({mentionName, selector, style, onPress}: Props) => {
   };
 
   return (
-    <Text style={style} onPress={_onPress}>{`@${name || mentionName}`}</Text>
+    <Text testID="text_mention" style={style} onPress={_onPress}>{`@${
+      name || mentionName
+    }`}</Text>
   );
 };
 
