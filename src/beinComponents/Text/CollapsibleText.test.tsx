@@ -15,6 +15,23 @@ describe('Collapsible Text component', () => {
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s. When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. Remaining essentially unchanged. It was popularised in the 1960s simply dummy text printing standard dummy text.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.';
 
   const mentionName = '@vantest1';
+  const commentData = {
+    data: {
+      mentions: {
+        users: {
+          vantest1: {
+            data: {
+              avatar:
+                'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+              fullname: 'vantest1',
+              username: 'vantest1',
+            },
+          },
+        },
+      },
+    },
+  };
+
   it(`renders correctly`, () => {
     const rendered = render(<CollapsibleText content={description} />).toJSON();
     expect(rendered).toMatchSnapshot();
@@ -61,22 +78,6 @@ describe('Collapsible Text component', () => {
 
   it(`renders correctly with markdown`, () => {
     const storeData = {...initialState};
-    const commentData = {
-      data: {
-        mentions: {
-          users: {
-            vantest1: {
-              data: {
-                avatar:
-                  'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
-                fullname: 'vantest1',
-                username: 'vantest1',
-              },
-            },
-          },
-        },
-      },
-    };
 
     // @ts-ignore
     storeData.post.allComments.abc = commentData;
@@ -97,22 +98,6 @@ describe('Collapsible Text component', () => {
     const onPressAudience = jest.fn();
 
     const storeData = {...initialState};
-    const commentData = {
-      data: {
-        mentions: {
-          users: {
-            vantest1: {
-              data: {
-                avatar:
-                  'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
-                fullname: 'vantest1',
-                username: 'vantest1',
-              },
-            },
-          },
-        },
-      },
-    };
 
     // @ts-ignore
     storeData.post.allComments.abc = commentData;
@@ -132,7 +117,6 @@ describe('Collapsible Text component', () => {
     expect(btnAudience).toBeDefined();
     fireEvent.press(btnAudience);
     expect(onPressAudience).toBeCalled();
-    expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it(`should call props onPress`, () => {
@@ -150,7 +134,5 @@ describe('Collapsible Text component', () => {
     expect(collapsibleTextBtn).toBeDefined();
     fireEvent.press(collapsibleTextBtn);
     expect(onPress).toBeCalled();
-
-    expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

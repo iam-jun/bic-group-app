@@ -11,3 +11,166 @@ exports[`Text component renders correctly 1`] = `
   }
 />
 `;
+
+exports[`Text component renders correctly children 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-Regular",
+      "fontSize": 16,
+    }
+  }
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly children with useI18n 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-Regular",
+      "fontSize": 16,
+    }
+  }
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 16,
+    }
+  }
+  testID="text.h5"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H1 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 36,
+    }
+  }
+  testID="text.h1"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H2 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 28,
+    }
+  }
+  testID="text.h2"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H3 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 24,
+    }
+  }
+  testID="text.h3"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H4 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 20,
+    }
+  }
+  testID="text.h4"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H5 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 16,
+    }
+  }
+  testID="text.h5"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H6 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 14,
+    }
+  }
+  testID="text.h6"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H6 2`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 14,
+    }
+  }
+  testID="text.h6s"
+>
+  renders correctly children
+</Text>
+`;
+
+exports[`Text component renders correctly variant H6s 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#2F3945",
+      "fontFamily": "OpenSans-SemiBold",
+      "fontSize": 14,
+    }
+  }
+  testID="text.h6s"
+>
+  renders correctly children
+</Text>
+`;
