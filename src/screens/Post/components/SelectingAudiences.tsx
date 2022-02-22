@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
@@ -18,6 +18,28 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   onRemoveItem,
 }: SelectingAudiencesProps) => {
   const [showAll, setShowAll] = useState(false);
+  const [showBtnShowAll, setShowBtnShowAll] = useState(false);
+  const [containerWidth, setContainerWidth] = useState();
+  const [audiencesWidth, setAudiencesWidth] = useState();
+
+  useEffect(() => {
+    if (audiencesWidth && containerWidth) {
+      if (audiencesWidth > containerWidth) {
+        setShowBtnShowAll(true);
+      } else {
+        if (!showAll) {
+          setShowBtnShowAll(false);
+        }
+      }
+    }
+  }, [audiencesWidth, containerWidth]);
+
+  useEffect(() => {
+    if (!list || list?.length === 0) {
+      setShowAll(false);
+      setShowBtnShowAll(false);
+    }
+  }, [list]);
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -29,6 +51,16 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
 
   const onPressRemoveItem = (item: IAudience) => {
     onRemoveItem?.(item);
+  };
+
+  const onLayoutContainer = (e: any) => {
+    const {width} = e?.nativeEvent?.layout || {};
+    setContainerWidth(width);
+  };
+
+  const onLayoutAudiences = (e: any) => {
+    const {width} = e?.nativeEvent?.layout || {};
+    setAudiencesWidth(width);
   };
 
   const renderItem = (item: any, index: number) => {
@@ -48,25 +80,37 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     return null;
   }
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
-        <ButtonWrapper
-          textProps={{color: colors.primary7, variant: 'buttonSmall'}}
-          onPress={onPressShowAll}
-          testID="selecting_audiences.show">
-          {showAll ? 'Show less' : `Show all(${list?.length})`}
-        </ButtonWrapper>
-      </View>
+  const renderContent = () => {
+    return (
       <View
+        onLayout={onLayoutAudiences}
         testID="selecting_audiences"
-        style={{
-          flexDirection: 'row',
-          flexWrap: showAll ? 'wrap' : 'nowrap',
-        }}>
+        style={styles.contentContainer}>
         {list?.map?.(renderItem)}
       </View>
+    );
+  };
+
+  return (
+    <View style={styles.container} onLayout={onLayoutContainer}>
+      <View style={styles.headerContainer}>
+        <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
+        {showBtnShowAll && (
+          <ButtonWrapper
+            textProps={{color: colors.primary7, variant: 'buttonSmall'}}
+            onPress={onPressShowAll}
+            testID="selecting_audiences.show">
+            {showAll ? 'Show less' : `Show all(${list?.length})`}
+          </ButtonWrapper>
+        )}
+      </View>
+      {showAll ? (
+        renderContent()
+      ) : (
+        <ScrollView horizontal scrollEnabled={false}>
+          {renderContent()}
+        </ScrollView>
+      )}
       <Divider style={styles.divider} />
     </View>
   );
@@ -88,6 +132,10 @@ const createStyle = (theme: ITheme) => {
     },
     divider: {
       marginTop: spacing.margin.tiny,
+    },
+    contentContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
     },
   });
 };

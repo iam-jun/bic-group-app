@@ -73,10 +73,10 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
     dispatch(groupsActions.removeSingleMemberRequest({requestId}));
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
+      content: `${i18next.t('groups:text_declining_user')} ${fullName}`,
       props: {
         textProps: {useI18n: true},
-        type: 'success',
+        type: 'informative',
         rightText: 'Undo',
         onPressRight: onPressUndo,
       },
@@ -90,6 +90,7 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
         groupsActions.declineSingleMemberRequest({
           groupId,
           requestId,
+          fullName,
         }),
       );
     }, 4500);
