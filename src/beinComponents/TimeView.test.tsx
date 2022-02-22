@@ -5,7 +5,8 @@ import TimeView from '~/beinComponents/TimeView';
 afterEach(cleanup);
 
 describe('TimeView component', () => {
-  const date = new Date().toISOString();
+  const currentData = new Date();
+  const date = new Date(currentData.setHours(0, 0, 0, 0)).toISOString();
   it(`renders correctly`, () => {
     const rendered = render(<TimeView time={date} />).toJSON();
     expect(rendered).toMatchSnapshot();
@@ -60,8 +61,11 @@ describe('TimeView component', () => {
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="short" />,
     );
+    expect(
+      render(<TimeView time={date} type="short" />).toJSON(),
+    ).toMatchSnapshot();
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
-    expect(getByText(/common:time:now/)).toBeDefined();
+    expect(getByText(/common:time:short_hour/)).toBeDefined();
   });
 });

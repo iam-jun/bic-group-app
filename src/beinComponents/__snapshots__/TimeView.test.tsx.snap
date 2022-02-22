@@ -11,7 +11,7 @@ exports[`TimeView component renders correctly 1`] = `
   }
   testID="time_view"
 >
-  common:time:today common:time:at 04:05 PM
+  common:time:today common:time:at 12:00 AM
 </Text>
 `;
 
@@ -26,7 +26,7 @@ exports[`TimeView component style 1`] = `
   }
   testID="time_view"
 >
-  common:time:today common:time:at 04:05 PM
+  common:time:today common:time:at 12:00 AM
 </Text>
 `;
 
@@ -42,6 +42,21 @@ exports[`TimeView component textProps 1`] = `
   }
   testID="time_view"
 >
-  common:time:today common:time:at 04:05 PM
+  common:time:today common:time:at 12:00 AM
+</Text>
+`;
+
+exports[`TimeView component type short 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#627286",
+      "fontFamily": "OpenSans-Regular",
+      "fontSize": 14,
+    }
+  }
+  testID="time_view"
+>
+  18common:time:short_hour
 </Text>
 `;
