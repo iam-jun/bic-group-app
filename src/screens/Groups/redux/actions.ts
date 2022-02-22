@@ -252,6 +252,7 @@ const groupsActions = {
   declineSingleMemberRequest: (payload: {
     groupId: number;
     requestId: number;
+    fullName: string;
   }) => ({
     type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
     payload,

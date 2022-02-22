@@ -9,7 +9,6 @@ import {ITheme} from '~/theme/interfaces';
 import {IAction} from '~/constants/commonActions';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Divider from '~/beinComponents/Divider';
-import UserBadge from '~/beinComponents/Badge/UserBadge';
 import Reaction from '~/beinComponents/Badge/Reaction';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import * as modalActions from '~/store/modal/actions';
@@ -36,11 +35,6 @@ const Section2 = () => {
         </Text.H3>
         <Divider style={{margin: spacing?.margin.base}} />
 
-        <UserBadge
-          icon={'iconReactionAngry'}
-          label="Coach"
-          style={{margin: spacing?.margin.base}}
-        />
         <View style={{flexDirection: 'row', margin: spacing?.margin.base}}>
           <Reaction
             value={1}

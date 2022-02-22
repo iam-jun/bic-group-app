@@ -3,6 +3,7 @@ import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
+import {useForm} from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -18,7 +19,6 @@ import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
 import {ILocation} from '~/interfaces/common';
 import menuActions from '../../redux/actions';
-import {useForm} from 'react-hook-form';
 
 const EditContact = () => {
   const theme = useTheme() as ITheme;
@@ -47,9 +47,16 @@ const EditContact = () => {
     getValues,
     setError,
     clearErrors,
+    setValue,
+    watch,
   } = useForm();
 
+  useEffect(() => {
+    setValue('phoneNumber', phone);
+  }, []);
+
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -100,6 +107,7 @@ const EditContact = () => {
   };
 
   const onEditLocationOpen = (e: any) => {
+    Keyboard.dismiss();
     locationRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
@@ -114,6 +122,27 @@ const EditContact = () => {
     setCountryCountryCodeState(_countryCode);
   };
 
+  const checkIsValid = (
+    countryCodeState: string,
+    countryState: string,
+    cityState: string,
+    phoneNumber: string,
+  ) => {
+    return (
+      country_code !== countryCodeState ||
+      country !== countryState ||
+      city !== cityState ||
+      phone !== phoneNumber
+    );
+  };
+
+  const isValid = checkIsValid(
+    countryCodeState,
+    countryState,
+    cityState,
+    watch('phoneNumber'),
+  );
+
   return (
     <ScreenWrapper testID="EditContact" isFullView>
       <Header
@@ -126,6 +155,7 @@ const EditContact = () => {
           color: theme.colors.primary6,
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
       />

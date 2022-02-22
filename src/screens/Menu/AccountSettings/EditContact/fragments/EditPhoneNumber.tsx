@@ -163,8 +163,10 @@ const EditPhoneNumber = ({
               value={value}
               testID="edit_phone_number.phone"
               onChangeText={(text: string) => {
-                onChange(formatTextRemoveSpace(text));
-                clearAllErrors();
+                if (!!text && text?.trim?.()?.length > 0) {
+                  onChange(formatTextRemoveSpace(text));
+                  clearAllErrors();
+                }
               }}
               error={errorsState?.phoneNumber}
               helperContent={errorsState?.phoneNumber?.message}
@@ -244,6 +246,7 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
       ...Platform.select({
         web: {
           maxHeight: 0.55 * screenHeight,
+          paddingTop: spacing.padding.large,
         },
       }),
     },
