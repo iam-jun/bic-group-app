@@ -79,7 +79,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     own_children,
     reactions_order,
   } = comment || commentData || {};
-  const {content} = data || {};
+  const {content, edited, images} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
@@ -383,10 +383,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
                     </ButtonWrapper>
                   </View>
                   <View style={{flexDirection: 'row'}}>
+                    {edited && (
+                      <Text.H6 color={colors.textSecondary}>
+                        {t('post:comment:text_edited')} •{' '}
+                      </Text.H6>
+                    )}
                     <TimeView
                       time={created_at}
                       style={styles.textTime}
                       type="short"
+                      textProps={{variant: 'h6'}}
                     />
                     {/* <Icon icon="EllipsisH" size={16} style={styles.options} /> */}
                   </View>
@@ -450,6 +456,7 @@ const createStyle = (theme: ITheme) => {
     },
     textTime: {
       marginLeft: 2,
+      color: colors.textSecondary,
     },
     userName: {
       flex: 1,

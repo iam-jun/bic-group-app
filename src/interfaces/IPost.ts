@@ -56,6 +56,7 @@ export interface IActivityData {
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
+  edited?: boolean;
 }
 
 export interface IActivityImportant {
