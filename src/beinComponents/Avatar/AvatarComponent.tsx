@@ -82,6 +82,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
     return (
       <View
+        testID="avatar.action_icon"
         style={{
           position: 'absolute',
           top: -(spacing?.margin.tiny || 4),
@@ -95,6 +96,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
         }}>
         {actionIcon && (
           <Icon
+            testID="avatar.action_icon.button"
             size={actionIconSize}
             icon={actionIcon}
             onPress={onPressAction}
@@ -115,6 +117,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
     return (
       <View
+        testID="avatar.status"
         style={{
           position: 'absolute',
           bottom: 0,
@@ -145,6 +148,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
     return (
       <View
+        testID="avatar.badge"
         style={{
           position: 'absolute',
           top: badgeBottom ? undefined : absTop,
@@ -173,6 +177,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     }
     return (
       <View
+        testID="avatar.badge_check"
         style={{
           position: 'absolute',
           bottom: 0,
@@ -201,13 +206,17 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([avatarContainerStyle, style])}>
+    <View
+      testID="avatar"
+      style={StyleSheet.flatten([avatarContainerStyle, style])}>
       <View
+        testID="avatar_container"
         style={StyleSheet.flatten([
           avatarStyle,
           source ? {} : {backgroundColor: colors.borderCard},
         ])}>
         <Image
+          testID="avatar.image"
           style={[avatarStyle, borderStyle]}
           containerStyle={
             Platform.OS === 'web'
