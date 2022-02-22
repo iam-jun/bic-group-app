@@ -4,6 +4,7 @@ import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
 import {Platform, View} from 'react-native';
 import Header from '~/beinComponents/Header';
 import initialState from '~/store/initialState';
+import images from '~/resources/images';
 
 jest.mock('~/hooks/windowSize', () => {
   return jest.fn(() => ({
@@ -45,8 +46,9 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.children').type).toEqual('View');
   });
 
+  /*
   it(`header ref`, async () => {
-    const rendered = render(<Header />,).toJSON();
+    const rendered = render(<Header />).toJSON();
     // expect(rendered).toMatchSnapshot();
 
     // Should call props headerRef
@@ -54,6 +56,7 @@ describe('Header component', () => {
     // const {getByTestId} = render(<Header />);
     // expect(getByTestId('header').props.headerRef).toEqual('View');
   });
+  */
 
   it(`renders correctly title`, () => {
     const rendered = render(<Header title={'Title'} />);
@@ -88,18 +91,35 @@ describe('Header component', () => {
     expect(subTitleComponent.props.children).toBe('Sub Title');
     expect(subTitleComponent.props.style).toMatchObject({color: '#421187'});
   });
-  /*
+
   it(`renders correctly avatar`, () => {
-    const {getByTestId} = render(<Header avatar={images.logo_bein} />);
-    const headerComponent = getByTestId('header');
-    // expect(headerComponent.props.avatar).toBe(images.logo_bein);
+    const rendered = render(<Header avatar={images.logo_bein} />);
+    expect(rendered).toMatchSnapshot();
+    const avatarComponent = rendered.getByTestId('avatar');
+    expect(avatarComponent).toBeDefined();
+    const imageComponent = rendered.getByTestId('avatar.image');
+    expect(imageComponent).toBeDefined();
   });
-  
+
   it(`renders correctly avatar props`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const rendered = render(
+      <Header
+        avatar={images.logo_bein}
+        avatarProps={{style: {borderWidth: 1, borderColor: '#FF9800'}}}
+      />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const avatarComponent = rendered.getByTestId('avatar');
+    expect(avatarComponent).toBeDefined();
+    const imageComponent = rendered.getByTestId('avatar.image');
+    expect(imageComponent).toBeDefined();
+    const avatarGroup = rendered.getByTestId('avatar_group');
+    expect(avatarGroup).toBeDefined();
+    expect(avatarGroup.props.style).toMatchObject({
+      borderWidth: 1,
+      borderColor: '#FF9800',
+    });
   });
-  */
 
   it(`renders correctly left icon`, () => {
     const rendered = render(<Header leftIcon="UilBug" />);
@@ -459,12 +479,18 @@ describe('Header component', () => {
     );
   });
 
-  /*
   it(`on press header`, () => {
-    const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onPressHeader = jest.fn();
+    const rendered = render(
+      <Header avatar={images.logo_bein} onPressHeader={onPressHeader} />,
+    );
+    expect(rendered).toMatchSnapshot();
+    const headerAvatar = rendered.getByTestId('header.avatar');
+    expect(headerAvatar).toBeDefined();
+    fireEvent.press(headerAvatar);
+    expect(onPressHeader).toBeCalled();
   });
-  */
+
   it(`on right press`, () => {
     const onRightPress = jest.fn();
     const rendered = render(

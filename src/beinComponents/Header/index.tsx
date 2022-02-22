@@ -247,7 +247,10 @@ const Header: React.FC<HeaderProps> = ({
             />
           )}
           {!!avatar && (
-            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
+            <TouchableOpacity
+              onPress={onPressHeader}
+              disabled={!onPressHeader}
+              testID="header.avatar">
               <Avatar.Group
                 source={avatar}
                 style={styles.avatar}
