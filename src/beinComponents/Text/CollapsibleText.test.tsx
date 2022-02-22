@@ -42,8 +42,8 @@ describe('Collapsible Text component', () => {
     const shortTextComponent = getByTestId('collapsible_text.content');
     expect(shortTextComponent.props.children.length).toBe(50 + 3);
     const shortTextButtonComponent = getByTestId('collapsible_text.show_text');
-    expect(shortTextButtonComponent.props.children.values).toBe(
-      i18next.t('common:text_read_more'),
+    expect(shortTextButtonComponent.props.children).toBe(
+      'common:text_read_more',
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -53,9 +53,7 @@ describe('Collapsible Text component', () => {
     const {getByTestId} = rendered;
     const btnSeeMore = getByTestId('collapsible_text.show_text');
     fireEvent.press(btnSeeMore);
-    expect(btnSeeMore.props.children.values).toBe(
-      i18next.t('common:text_show_less'),
-    );
+    expect(btnSeeMore.props.children).toBe('common:text_show_less');
     const fullTextComponent = getByTestId('collapsible_text.content');
     expect(fullTextComponent.props.children.length).toBe(description.length);
     expect(rendered.toJSON()).toMatchSnapshot();

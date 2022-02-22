@@ -56,7 +56,7 @@ exports[`Collapsible Text component renders correctly 1`] = `
       }
       testID="collapsible_text.show_text"
     >
-       undefined
+      common:text_read_more
     </Text>
   </Text>
 </View>
@@ -119,7 +119,7 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
       }
       testID="collapsible_text.show_text"
     >
-       undefined
+      common:text_read_more
     </Text>
   </Text>
 </View>
@@ -239,7 +239,7 @@ exports[`Collapsible Text component should call props onPress 1`] = `
       }
       testID="collapsible_text.show_text"
     >
-       undefined
+      common:text_read_more
     </Text>
   </Text>
 </View>
@@ -357,7 +357,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
       }
       testID="collapsible_text.show_text"
     >
-       undefined
+      common:text_show_less
     </Text>
   </Text>
 </View>
@@ -419,7 +419,7 @@ exports[`Collapsible Text component should render short text with a short length
       }
       testID="collapsible_text.show_text"
     >
-       undefined
+      common:text_read_more
     </Text>
   </Text>
 </View>
