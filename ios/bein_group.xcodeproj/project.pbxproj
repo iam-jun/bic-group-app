@@ -657,7 +657,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group;
 				PRODUCT_NAME = bein_group;
-				PROVISIONING_PROFILE_SPECIFIER = BeinProduction;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.evol.bein.group";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -231,7 +231,8 @@ const _PostDetailContent = (props: any) => {
     countRetryScrollToBottom = countRetryScrollToBottom + 1;
     if (countRetryScrollToBottom < 20) {
       setTimeout(() => {
-        scrollTo(Math.min(9, sectionData.length - 1), -1);
+        scrollTo(-1, -1);
+        // scrollTo(Math.min(9, sectionData.length - 1), -1);
       }, 100);
     }
   };
@@ -274,7 +275,7 @@ const _PostDetailContent = (props: any) => {
         commentInputRef?.current?.focus?.();
       }, 200);
     },
-    [],
+    [sectionData],
   );
 
   const renderSectionHeader = (sectionData: any) => {
@@ -296,13 +297,16 @@ const _PostDetailContent = (props: any) => {
     );
   };
 
-  const onPressReplyCommentItem = useCallback((commentData, section, index) => {
-    scrollTo(section?.index, index + 1);
-    // set time out to wait hide context menu on web
-    setTimeout(() => {
-      commentInputRef?.current?.focus?.();
-    }, 200);
-  }, []);
+  const onPressReplyCommentItem = useCallback(
+    (commentData, section, index) => {
+      scrollTo(section?.index, index + 1);
+      // set time out to wait hide context menu on web
+      setTimeout(() => {
+        commentInputRef?.current?.focus?.();
+      }, 200);
+    },
+    [sectionData],
+  );
 
   const renderCommentItem = (data: any) => {
     const {item, index, section} = data || {};
