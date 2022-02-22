@@ -59,6 +59,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <View
                 accessibilityState={
@@ -117,6 +118,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   >
                     <View
                       className="icon-wrapper"
+                      testID="button_wrapper.icon"
                     >
                       <RNSVGSvgView
                         align="xMidYMid"
@@ -205,6 +207,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <Text
                 style={
@@ -248,6 +251,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <Text
                 style={
@@ -523,6 +527,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <View
                 accessibilityState={
@@ -581,6 +586,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   >
                     <View
                       className="icon-wrapper"
+                      testID="button_wrapper.icon"
                     >
                       <RNSVGSvgView
                         align="xMidYMid"
@@ -669,6 +675,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <Text
                 style={
@@ -712,6 +719,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <Text
                 style={
@@ -1162,7 +1170,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Jan 24 undefined 11:17 AM
+                    Jan 24 common:time:at 11:17 AM
                   </Text>
                 </View>
               </View>
@@ -1463,6 +1471,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <View
                 accessibilityState={
@@ -1523,6 +1532,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   >
                     <View
                       className="icon-wrapper"
+                      testID="button_wrapper.icon"
                     >
                       <RNSVGSvgView
                         align="xMidYMid"
@@ -1611,6 +1621,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <Text
                 style={
@@ -1654,6 +1665,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   "justifyContent": "center",
                 }
               }
+              testID="button_wrapper.content"
             >
               <Text
                 style={
