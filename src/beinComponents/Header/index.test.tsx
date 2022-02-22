@@ -1,10 +1,62 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
-import {Platform, View} from 'react-native';
+import {Platform, View, TouchableOpacity} from 'react-native';
 import Header from '~/beinComponents/Header';
 import initialState from '~/store/initialState';
 import images from '~/resources/images';
+
+const TestComponent = ({
+  onShowSearch,
+  onSearchText,
+}: {
+  onShowSearch?: (isShow: boolean, inputRef?: any) => void;
+  onSearchText?: (searchText: string, inputRef?: any) => void;
+}) => {
+  const headerRefs = React.useRef<any>();
+
+  const onPressShowSearch = () => {
+    headerRefs.current?.showSearch();
+  };
+
+  const onPressSetSearchText = () => {
+    headerRefs.current?.setSearchText('Search Text');
+  };
+
+  const onPressHideSearch = () => {
+    headerRefs.current?.hideSearch();
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        <Header
+          headerRef={headerRefs}
+          searchInputTestID="header.search.input"
+          onShowSearch={onShowSearch}
+          onSearchText={onSearchText}
+        />
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <TouchableOpacity
+            style={{height: 40, backgroundColor: '#FF9800'}}
+            testID="header.ref.showSearch"
+            onPress={onPressShowSearch}
+          />
+        </View>
+      </View>
+      <TouchableOpacity
+        style={{height: 40, backgroundColor: '#FF9800', marginVertical: 8}}
+        testID="header.ref.setSearchText"
+        onPress={onPressSetSearchText}
+      />
+      <TouchableOpacity
+        style={{height: 40, backgroundColor: '#FF9800'}}
+        testID="header.ref.hideSearch"
+        onPress={onPressHideSearch}
+      />
+    </View>
+  );
+};
 
 jest.mock('~/hooks/windowSize', () => {
   return jest.fn(() => ({
@@ -40,27 +92,36 @@ describe('Header component', () => {
         <View testID="header.children" />
       </Header>,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const childrenComponent = rendered.getByTestId('header.children');
     expect(childrenComponent).toBeDefined();
     expect(rendered.getByTestId('header.children').type).toEqual('View');
   });
 
-  /*
   it(`header ref`, async () => {
-    const rendered = render(<Header />).toJSON();
-    // expect(rendered).toMatchSnapshot();
-
-    // Should call props headerRef
-    //https://gist.github.com/Jyrno42/78d65f5e98a1cb925957249a450de2f3
-    // const {getByTestId} = render(<Header />);
-    // expect(getByTestId('header').props.headerRef).toEqual('View');
+    const onShowSearch = jest.fn();
+    const onSearchText = jest.fn();
+    const rendered = render(
+      <TestComponent onShowSearch={onShowSearch} onSearchText={onSearchText} />,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+    fireEvent.press(rendered.getByTestId('header.ref.showSearch'));
+    expect(onShowSearch).toBeCalledWith(
+      true,
+      expect.objectContaining({
+        current: expect.anything(),
+      }),
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+    expect(rendered.getByTestId('header.search.input')).toBeDefined();
+    fireEvent.press(rendered.getByTestId('header.ref.hideSearch'));
+    expect(onShowSearch).toBeCalledWith(false);
+    // expect(rendered.queryByTestId('header.search.input')).toBeNull();
   });
-  */
 
   it(`renders correctly title`, () => {
     const rendered = render(<Header title={'Title'} />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
   });
@@ -69,7 +130,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header title={'Title'} titleTextProps={{color: '#421187'}} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
     expect(titleComponent.props.style).toMatchObject({color: '#421187'});
@@ -77,7 +138,7 @@ describe('Header component', () => {
 
   it(`renders correctly sub title`, () => {
     const rendered = render(<Header subTitle="Sub Title" />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
   });
@@ -86,7 +147,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header subTitle={'Sub Title'} subTitleTextProps={{color: '#421187'}} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
     expect(subTitleComponent.props.style).toMatchObject({color: '#421187'});
@@ -94,7 +155,7 @@ describe('Header component', () => {
 
   it(`renders correctly avatar`, () => {
     const rendered = render(<Header avatar={images.logo_bein} />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const avatarComponent = rendered.getByTestId('avatar');
     expect(avatarComponent).toBeDefined();
     const imageComponent = rendered.getByTestId('avatar.image');
@@ -108,7 +169,7 @@ describe('Header component', () => {
         avatarProps={{style: {borderWidth: 1, borderColor: '#FF9800'}}}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const avatarComponent = rendered.getByTestId('avatar');
     expect(avatarComponent).toBeDefined();
     const imageComponent = rendered.getByTestId('avatar.image');
@@ -123,7 +184,7 @@ describe('Header component', () => {
 
   it(`renders correctly left icon`, () => {
     const rendered = render(<Header leftIcon="UilBug" />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
   });
@@ -132,7 +193,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header leftIcon="UilBug" leftIconProps={{tintColor: '#421187'}} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
@@ -143,14 +204,14 @@ describe('Header component', () => {
   it(`renders correctly icon`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.icon');
     expect(leftIconComponent).toBeDefined();
   });
 
   it(`renders correctly right icon`, () => {
     const rendered = render(<Header rightIcon="UilBug" />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
   });
@@ -159,7 +220,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header rightIcon="UilBug" rightIconProps={{tintColor: '#421187'}} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
     expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
@@ -170,7 +231,7 @@ describe('Header component', () => {
   it(`on press icon`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const iconComponent = rendered.getByTestId('header.icon');
     expect(iconComponent).toBeDefined();
     const btnIcon = rendered.getByTestId('header.icon.button');
@@ -188,7 +249,7 @@ describe('Header component', () => {
       <Header buttonText="Text Button" onPressButton={onPressButton} />,
       store,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const buttonComponent = rendered.getAllByTestId('header.button');
     expect(buttonComponent).toBeDefined();
     const textButtonComponent = rendered.getByTestId('header.button.text');
@@ -209,7 +270,7 @@ describe('Header component', () => {
       />,
       store,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const buttonComponent = rendered.getAllByTestId('header.button');
     expect(buttonComponent).toBeDefined();
     expect(rendered.getByTestId('header.button').props.style).toMatchObject({
@@ -226,7 +287,7 @@ describe('Header component', () => {
       <Header buttonText="Text Button" onPressButton={onPressButton} />,
       store,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const buttonComponent = rendered.getAllByTestId('header.button');
     expect(buttonComponent).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.button'));
@@ -238,7 +299,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.menuIcon');
     expect(leftIconComponent).toBeDefined();
   });
@@ -248,7 +309,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.menuIcon');
     expect(leftIconComponent).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.menuIcon.button'));
@@ -257,14 +318,14 @@ describe('Header component', () => {
 
   it(`renders correctly hide back`, () => {
     const rendered = render(<Header hideBack />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const backIcon = rendered.queryByTestId('header.back');
     expect(backIcon).toBeNull();
   });
 
   it(`renders correctly hide back on laptop`, () => {
     const rendered = render(<Header hideBackOnLaptop />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const backIcon = rendered.queryByTestId('header.back');
     expect(backIcon).toBeNull();
   });
@@ -278,7 +339,7 @@ describe('Header component', () => {
 
   it(`disable inset top`, () => {
     const rendered = render(<Header disableInsetTop />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(
       rendered.getByTestId('header.content').props.style.paddingTop,
     ).toBeUndefined();
@@ -286,7 +347,7 @@ describe('Header component', () => {
 
   it(`style`, () => {
     const rendered = render(<Header style={{backgroundColor: '#F2F2F2'}} />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.content').props.style).toMatchObject({
       backgroundColor: '#F2F2F2',
     });
@@ -294,7 +355,7 @@ describe('Header component', () => {
 
   it(`remove border and shadow`, () => {
     const rendered = render(<Header removeBorderAndShadow />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(
       rendered.getByTestId('header.content').props.style,
     ).not.toMatchObject({
@@ -317,11 +378,12 @@ describe('Header component', () => {
         autoFocusSearch
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     expect(rendered.getByTestId('header.search.input').props.autoFocus).toBe(
       true,
@@ -337,11 +399,12 @@ describe('Header component', () => {
         onSearchText={onSearchText}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
@@ -353,7 +416,7 @@ describe('Header component', () => {
         onSearchText={onSearchText}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
@@ -370,12 +433,12 @@ describe('Header component', () => {
         onFocusSearch={onFocusSearch}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     rendered.getByTestId('header.search.input').props.onFocus();
     expect(onFocusSearch).toBeCalled();
@@ -392,12 +455,12 @@ describe('Header component', () => {
         onFocusSearch={onFocusSearch}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     rendered.getByTestId('header.search.input').props.onFocus();
     expect(onFocusSearch).toBeCalled();
@@ -414,7 +477,7 @@ describe('Header component', () => {
         onShowSearch={onShowSearch}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
@@ -425,7 +488,7 @@ describe('Header component', () => {
         current: expect.anything(),
       }),
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
@@ -438,12 +501,12 @@ describe('Header component', () => {
         onSearchText={onSearchText}
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     fireEvent.changeText(
       rendered.getByTestId('header.search.input'),
@@ -467,12 +530,12 @@ describe('Header component', () => {
         searchPlaceholder="Search Placeholder"
       />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     expect(rendered.getByTestId('header.search.input').props.placeholder).toBe(
       'Search Placeholder',
@@ -484,7 +547,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header avatar={images.logo_bein} onPressHeader={onPressHeader} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const headerAvatar = rendered.getByTestId('header.avatar');
     expect(headerAvatar).toBeDefined();
     fireEvent.press(headerAvatar);
@@ -496,7 +559,7 @@ describe('Header component', () => {
     const rendered = render(
       <Header rightIcon="UilBug" onRightPress={onRightPress} />,
     );
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.rightIcon.button'));
@@ -506,7 +569,7 @@ describe('Header component', () => {
   it(`on press chat`, () => {
     const onPressChat = jest.fn();
     const rendered = render(<Header onPressChat={onPressChat} />);
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.toJSON()).toMatchSnapshot();
     const chatIconCopmponent = rendered.getByTestId('header.iconChat');
     expect(chatIconCopmponent).toBeDefined();
     fireEvent.press(rendered.getByTestId('header.iconChat.button'));
