@@ -11,6 +11,37 @@ exports[`TimeView component renders correctly 1`] = `
   }
   testID="time_view"
 >
-  28undefined
+  common:time:today common:time:at 04:05 PM
+</Text>
+`;
+
+exports[`TimeView component style 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#FF9800",
+      "fontFamily": "OpenSans-Regular",
+      "fontSize": 14,
+    }
+  }
+  testID="time_view"
+>
+  common:time:today common:time:at 04:05 PM
+</Text>
+`;
+
+exports[`TimeView component textProps 1`] = `
+<Text
+  numberOfLines={2}
+  style={
+    Object {
+      "color": "#627286",
+      "fontFamily": "OpenSans-Regular",
+      "fontSize": 14,
+    }
+  }
+  testID="time_view"
+>
+  common:time:today common:time:at 04:05 PM
 </Text>
 `;

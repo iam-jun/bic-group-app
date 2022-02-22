@@ -5,10 +5,63 @@ import TimeView from '~/beinComponents/TimeView';
 afterEach(cleanup);
 
 describe('TimeView component', () => {
+  const date = new Date().toISOString();
   it(`renders correctly`, () => {
-    const rendered = render(
-      <TimeView time="2022-02-21T02:15:39.594061" type="short" />,
-    ).toJSON();
+    const rendered = render(<TimeView time={date} />).toJSON();
     expect(rendered).toMatchSnapshot();
+  });
+
+  it(`style`, () => {
+    const rendered = render(
+      <TimeView time={date} style={{color: '#FF9800'}} />,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+    const timeComponent = rendered.getByTestId('time_view');
+    expect(timeComponent).toBeDefined();
+    expect(timeComponent.props.style).toMatchObject({color: '#FF9800'});
+  });
+
+  it(`textProps`, () => {
+    const rendered = render(
+      <TimeView time={date} textProps={{numberOfLines: 2}} />,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+    const timeComponent = rendered.getByTestId('time_view');
+    expect(timeComponent).toBeDefined();
+    expect(timeComponent.props.numberOfLines).toEqual(2);
+  });
+
+  it(`time`, () => {
+    const {getByTestId, getByText} = render(<TimeView time={date} />);
+    const timeComponent = getByTestId('time_view');
+    expect(timeComponent.children).toBeDefined();
+    expect(getByText(/common:time:today common:time:at/)).toBeDefined();
+  });
+
+  it(`type fullDateTime`, () => {
+    const {getByTestId, getByText} = render(
+      <TimeView time={date} type="fullDateTime" />,
+    );
+    const timeComponent = getByTestId('time_view');
+    expect(timeComponent.children).toBeDefined();
+    expect(getByText(/common:time:today common:time:at/)).toBeDefined();
+  });
+
+  it(`type dateTime`, () => {
+    const {getByTestId, getByText} = render(
+      <TimeView time={date} type="dateTime" />,
+    );
+    const timeComponent = getByTestId('time_view');
+    expect(timeComponent.children).toBeDefined();
+    expect(getByText(/common:time:today/)).toBeDefined();
+  });
+
+  it(`type short`, () => {
+    const {getByTestId, getByText} = render(
+      <TimeView time={date} type="short" />,
+    );
+    const timeComponent = getByTestId('time_view');
+    expect(timeComponent.children).toBeDefined();
+    expect(getByText(/common:time:now/)).toBeDefined();
   });
 });
