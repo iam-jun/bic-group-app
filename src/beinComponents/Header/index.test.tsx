@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, cleanup} from '@testing-library/react-native';
+import {render, cleanup, act} from '@testing-library/react-native';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
 import {Platform, View, TouchableOpacity} from 'react-native';
 import Header from '~/beinComponents/Header';
@@ -105,7 +105,9 @@ describe('Header component', () => {
       <TestComponent onShowSearch={onShowSearch} onSearchText={onSearchText} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
-    fireEvent.press(rendered.getByTestId('header.ref.showSearch'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.ref.showSearch'));
+    });
     expect(onShowSearch).toBeCalledWith(
       true,
       expect.objectContaining({
@@ -114,7 +116,9 @@ describe('Header component', () => {
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.ref.hideSearch'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.ref.hideSearch'));
+    });
     expect(onShowSearch).toBeCalledWith(false);
     // expect(rendered.queryByTestId('header.search.input')).toBeNull();
   });
@@ -368,7 +372,7 @@ describe('Header component', () => {
     });
   });
 
-  it(`auto focus search`, () => {
+  it(`auto focus search`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -382,7 +386,9 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     expect(rendered.getByTestId('header.search.input').props.autoFocus).toBe(
@@ -403,7 +409,9 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
@@ -422,7 +430,7 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
   });
 
-  it(`on focus search`, () => {
+  it(`on focus search`, async () => {
     const onSearchText = jest.fn();
     const onFocusSearch = jest.fn();
     const rendered = render(
@@ -437,14 +445,16 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     rendered.getByTestId('header.search.input').props.onFocus();
     expect(onFocusSearch).toBeCalled();
   });
 
-  it(`on submit search`, () => {
+  it(`on submit search`, async () => {
     const onSearchText = jest.fn();
     const onFocusSearch = jest.fn();
     const rendered = render(
@@ -459,14 +469,16 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     rendered.getByTestId('header.search.input').props.onFocus();
     expect(onFocusSearch).toBeCalled();
   });
 
-  it(`on show search`, () => {
+  it(`on show search`, async () => {
     const onSearchText = jest.fn();
     const onShowSearch = jest.fn();
     const rendered = render(
@@ -481,7 +493,9 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(onShowSearch).toBeCalledWith(
       true,
       expect.objectContaining({
@@ -492,7 +506,7 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
-  it(`on text search`, () => {
+  it(`on text search`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -505,7 +519,9 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     fireEvent.changeText(
@@ -520,7 +536,7 @@ describe('Header component', () => {
     );
   });
 
-  it(`search placeholder`, () => {
+  it(`search placeholder`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -534,7 +550,9 @@ describe('Header component', () => {
     const searchIconCopmponent = rendered.getByTestId('header.searchIcon');
     expect(searchIconCopmponent).toBeDefined();
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    act(() => {
+      fireEvent.press(rendered.getByTestId('header.searchIcon.button'));
+    });
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
     expect(rendered.getByTestId('header.search.input').props.placeholder).toBe(
