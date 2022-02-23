@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reaction component renders correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#EAEDF2",
+      "borderColor": "#EAEDF2",
+      "borderRadius": 6,
+      "borderWidth": 1,
+      "flexDirection": "row",
+      "height": 28,
+      "justifyContent": "center",
+      "opacity": 1,
+      "paddingHorizontal": 6,
+    }
+  }
+  testID="reaction"
+>
+  <Text
+    style={
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-SemiBold",
+        "fontSize": 14,
+        "marginBottom": 2,
+      }
+    }
+    testID="reaction.children"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 13,
+        }
+      }
+      testID="reaction.kissing_closed_eyes"
+    >
+      😚
+    </Text>
+     10
+  </Text>
+</View>
+`;

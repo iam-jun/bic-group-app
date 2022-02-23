@@ -39,13 +39,13 @@ const Section2 = () => {
           <Reaction
             value={1}
             selected={false}
-            icon={'iconReactionAngry'}
+            icon={'grinning'}
             onActionPress={_onActionPress}
           />
           <Reaction
             value={1}
             selected={true}
-            icon={'iconReactionAngry'}
+            icon={'kissing_closed_eyes'}
             onActionPress={_onActionPress}
             style={{marginStart: spacing?.margin.small}}
           />
