@@ -100,11 +100,26 @@ describe('Reaction component', () => {
     );
   });
 
-  it(`should call prop onActionPress correctly`, () => {
+  it(`should call prop onActionPress to select Emoji correctly`, () => {
     const {getByTestId} = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
+        icon={icon}
+        onActionPress={onActionPress}
+      />,
+    );
+
+    const reactionComponent = getByTestId('reaction');
+    fireEvent.press(reactionComponent);
+    expect(onActionPress).toBeCalled();
+  });
+
+  it(`should call prop onActionPress to unselect Emoji correctly`, () => {
+    const {getByTestId} = renderWithRedux(
+      <Reaction
+        value={value}
+        selected={true}
         icon={icon}
         onActionPress={onActionPress}
       />,
