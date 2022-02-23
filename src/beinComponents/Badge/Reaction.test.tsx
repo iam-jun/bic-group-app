@@ -100,7 +100,7 @@ describe('Reaction component', () => {
     );
   });
 
-  it(`renders onActionPress correctly`, () => {
+  it(`should call prop onActionPress correctly`, () => {
     const {getByTestId} = renderWithRedux(
       <Reaction
         value={value}
@@ -115,7 +115,7 @@ describe('Reaction component', () => {
     expect(onActionPress).toBeCalled();
   });
 
-  it(`renders onLongPress correctly`, () => {
+  it(`should call prop onLongPress correctly`, () => {
     const onLongPress = jest.fn();
 
     const {getByTestId} = renderWithRedux(
