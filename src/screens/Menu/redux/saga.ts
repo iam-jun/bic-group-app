@@ -26,6 +26,7 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.ADD_WORK_EXPERIENCE, addWorkExperience);
   yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
   yield takeLatest(menuTypes.DELETE_WORK_EXPERIENCE, deleteWorkExperience);
+  yield takeLatest(menuTypes.GET_USER_WORK_EXPERIENCE, getWorkExperience);
 }
 
 function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
@@ -182,7 +183,7 @@ function* updateLoadingImageState(
 
 function* getMyWorkExperience() {
   try {
-    const response: IResponseData = yield menuDataHelper.getWorkExperience();
+    const response: IResponseData = yield menuDataHelper.getMyWorkExperience();
 
     yield put(
       menuActions.setMyWorkExperience(mapWorkExperience(response?.data)),
@@ -304,4 +305,15 @@ function* showError(err: any) {
     },
   };
   yield put(modalActions.showHideToastMessage(toastMessage));
+}
+
+function* getWorkExperience({id}: {id: number}) {
+  try {
+    const response: IResponseData = yield menuDataHelper.getWorkExperience(id);
+    yield put(
+      menuActions.setUserWorkExperience(mapWorkExperience(response?.data)),
+    );
+  } catch (err) {
+    console.log('getWorkExperience error:', err);
+  }
 }
