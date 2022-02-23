@@ -310,9 +310,11 @@ function* showError(err: any) {
 function* getWorkExperience({id}: {id: number}) {
   try {
     const response: IResponseData = yield menuDataHelper.getWorkExperience(id);
-    yield put(
-      menuActions.setUserWorkExperience(mapWorkExperience(response?.data)),
-    );
+    if (response?.data) {
+      yield put(
+        menuActions.setUserWorkExperience(mapWorkExperience(response.data)),
+      );
+    }
   } catch (err) {
     console.log('getWorkExperience error:', err);
   }

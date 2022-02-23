@@ -446,12 +446,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderWorkExperience = () => {
-    if (
-      !showEditButton &&
-      userWorkExperience &&
-      Array.isArray(userWorkExperience) &&
-      userWorkExperience.length > 0
-    ) {
+    if (!showEditButton && userWorkExperience?.length > 0) {
       return (
         <View style={styles.paddingBottom}>
           <Divider style={styles.divider} />
@@ -461,7 +456,7 @@ const UserEditProfile = (props: any) => {
             </Text.H5>
           </View>
           <View style={styles.infoItem}>
-            {userWorkExperience?.map((item: IUserWorkExperience) => (
+            {userWorkExperience.map((item: IUserWorkExperience) => (
               <View key={item?.company + item?.titlePosition}>
                 {renderWorkItem({item})}
               </View>
@@ -479,7 +474,7 @@ const UserEditProfile = (props: any) => {
           </Text.H5>
         </View>
         <View style={styles.infoItem}>
-          {myWorkExperience?.map((item: IUserWorkExperience) => (
+          {(myWorkExperience || [])?.map((item: IUserWorkExperience) => (
             <View key={item?.company + item?.titlePosition}>
               {renderWorkItem({item})}
             </View>
