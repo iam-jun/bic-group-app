@@ -48,7 +48,7 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly children`, () => {
+  it(`renders correctly with children`, () => {
     const rendered = render(
       <Header>
         <View testID="header.children" />
@@ -57,7 +57,7 @@ describe('Header component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly children`, () => {
+  it(`renders correctly with children`, () => {
     const rendered = render(
       <Header>
         <View testID="header.children" />
@@ -69,7 +69,7 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.children').type).toEqual('View');
   });
 
-  it(`header ref`, async () => {
+  it(`renders correctly with props header ref`, async () => {
     const headerRef = jest.fn();
     const rendered = render(<TestComponent onChange={headerRef} />);
     expect(rendered.toJSON()).toMatchSnapshot();
@@ -84,14 +84,14 @@ describe('Header component', () => {
     });
   });
 
-  it(`renders correctly title`, () => {
+  it(`renders correctly with props title`, () => {
     const rendered = render(<Header title={'Title'} />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
   });
 
-  it(`renders correctly title props`, () => {
+  it(`renders correctly with props title props`, () => {
     const rendered = render(
       <Header title={'Title'} titleTextProps={{color: '#421187'}} />,
     );
@@ -101,14 +101,14 @@ describe('Header component', () => {
     expect(titleComponent.props.style).toMatchObject({color: '#421187'});
   });
 
-  it(`renders correctly sub title`, () => {
+  it(`renders correctly with props sub title`, () => {
     const rendered = render(<Header subTitle="Sub Title" />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
   });
 
-  it(`renders correctly sub title props`, () => {
+  it(`renders correctly with props sub title props`, () => {
     const rendered = render(
       <Header subTitle={'Sub Title'} subTitleTextProps={{color: '#421187'}} />,
     );
@@ -118,7 +118,7 @@ describe('Header component', () => {
     expect(subTitleComponent.props.style).toMatchObject({color: '#421187'});
   });
 
-  it(`renders correctly avatar`, () => {
+  it(`renders correctly with props avatar`, () => {
     const rendered = render(<Header avatar={images.logo_bein} />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const avatarComponent = rendered.getByTestId('avatar');
@@ -127,7 +127,7 @@ describe('Header component', () => {
     expect(imageComponent).toBeDefined();
   });
 
-  it(`renders correctly avatar props`, () => {
+  it(`renders correctly with props avatar props`, () => {
     const rendered = render(
       <Header
         avatar={images.logo_bein}
@@ -147,14 +147,14 @@ describe('Header component', () => {
     });
   });
 
-  it(`renders correctly left icon`, () => {
+  it(`renders correctly with props left icon`, () => {
     const rendered = render(<Header leftIcon="UilBug" />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
   });
 
-  it(`renders correctly left icon props`, () => {
+  it(`renders correctly with props left icon props`, () => {
     const rendered = render(
       <Header leftIcon="UilBug" leftIconProps={{tintColor: '#421187'}} />,
     );
@@ -166,7 +166,7 @@ describe('Header component', () => {
     );
   });
 
-  it(`renders correctly icon`, () => {
+  it(`renders correctly with props icon`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
     expect(rendered.toJSON()).toMatchSnapshot();
@@ -174,14 +174,14 @@ describe('Header component', () => {
     expect(leftIconComponent).toBeDefined();
   });
 
-  it(`renders correctly right icon`, () => {
+  it(`renders correctly with props right icon`, () => {
     const rendered = render(<Header rightIcon="UilBug" />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
   });
 
-  it(`renders correctly right icon props`, () => {
+  it(`renders correctly with props right icon props`, () => {
     const rendered = render(
       <Header rightIcon="UilBug" rightIconProps={{tintColor: '#421187'}} />,
     );
@@ -193,7 +193,7 @@ describe('Header component', () => {
     );
   });
 
-  it(`on press icon`, () => {
+  it(`renders correctly with props on press icon`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
     expect(rendered.toJSON()).toMatchSnapshot();
@@ -205,7 +205,7 @@ describe('Header component', () => {
     expect(onPressIcon).toBeCalled();
   });
 
-  it(`renders correctly button text`, () => {
+  it(`renders correctly with props button text`, () => {
     const storeData = {...initialState};
     storeData.noInternet.isInternetReachable = true;
     const store = mockStore(storeData);
@@ -222,7 +222,7 @@ describe('Header component', () => {
     expect(textButtonComponent.props.children).toBe('Text Button');
   });
 
-  it(`renders correctly button props`, () => {
+  it(`renders correctly with props button props`, () => {
     const storeData = {...initialState};
     storeData.noInternet.isInternetReachable = true;
     const store = mockStore(storeData);
@@ -243,7 +243,7 @@ describe('Header component', () => {
     });
   });
 
-  it(`on press button`, () => {
+  it(`renders correctly with props on press button`, () => {
     const onPressButton = jest.fn();
     const storeData = {...initialState};
     storeData.noInternet.isInternetReachable = true;
@@ -259,7 +259,7 @@ describe('Header component', () => {
     expect(onPressButton).toBeCalled();
   });
 
-  it(`renders correctly menu icon`, () => {
+  it(`renders correctly with props menu icon`, () => {
     const onPressMenu = jest.fn();
     const rendered = render(
       <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
@@ -269,7 +269,7 @@ describe('Header component', () => {
     expect(leftIconComponent).toBeDefined();
   });
 
-  it(`on press menu`, () => {
+  it(`renders correctly with props on press menu`, () => {
     const onPressMenu = jest.fn();
     const rendered = render(
       <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
@@ -281,28 +281,28 @@ describe('Header component', () => {
     expect(onPressMenu).toBeCalled();
   });
 
-  it(`renders correctly hide back`, () => {
+  it(`renders correctly with props hide back`, () => {
     const rendered = render(<Header hideBack />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const backIcon = rendered.queryByTestId('header.back');
     expect(backIcon).toBeNull();
   });
 
-  it(`renders correctly hide back on laptop`, () => {
+  it(`renders correctly with props hide back on laptop`, () => {
     const rendered = render(<Header hideBackOnLaptop />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const backIcon = rendered.queryByTestId('header.back');
     expect(backIcon).toBeNull();
   });
 
-  it(`on press back`, () => {
+  it(`renders correctly with props on press back`, () => {
     const onPressBack = jest.fn();
     const rendered = render(<Header onPressBack={onPressBack} />);
     fireEvent.press(rendered.getByTestId('header.back.button'));
     expect(onPressBack).toBeCalled();
   });
 
-  it(`disable inset top`, () => {
+  it(`renders correctly with props disable inset top`, () => {
     const rendered = render(<Header disableInsetTop />);
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(
@@ -310,7 +310,7 @@ describe('Header component', () => {
     ).toBeUndefined();
   });
 
-  it(`style`, () => {
+  it(`renders correctly with props style`, () => {
     const rendered = render(<Header style={{backgroundColor: '#F2F2F2'}} />);
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(rendered.getByTestId('header.content').props.style).toMatchObject({
@@ -318,7 +318,7 @@ describe('Header component', () => {
     });
   });
 
-  it(`remove border and shadow`, () => {
+  it(`renders correctly with props remove border and shadow`, () => {
     const rendered = render(<Header removeBorderAndShadow />);
     expect(rendered.toJSON()).toMatchSnapshot();
     expect(
@@ -333,7 +333,7 @@ describe('Header component', () => {
     });
   });
 
-  it(`auto focus search`, async () => {
+  it(`renders correctly with props auto focus search`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -357,7 +357,7 @@ describe('Header component', () => {
     );
   });
 
-  it(`search input test ID`, async () => {
+  it(`renders correctly with props search input test ID`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -377,7 +377,7 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
-  it(`search icon test ID`, () => {
+  it(`renders correctly with props search icon test ID`, () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -391,7 +391,7 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.searchIcon.button')).toBeDefined();
   });
 
-  it(`on focus search`, async () => {
+  it(`renders correctly with props on focus search`, async () => {
     const onSearchText = jest.fn();
     const onFocusSearch = jest.fn();
     const rendered = render(
@@ -415,7 +415,7 @@ describe('Header component', () => {
     expect(onFocusSearch).toBeCalled();
   });
 
-  it(`on submit search`, async () => {
+  it(`renders correctly with props on submit search`, async () => {
     const onSearchText = jest.fn();
     const onFocusSearch = jest.fn();
     const rendered = render(
@@ -439,7 +439,7 @@ describe('Header component', () => {
     expect(onFocusSearch).toBeCalled();
   });
 
-  it(`on show search`, async () => {
+  it(`renders correctly with props on show search`, async () => {
     const onSearchText = jest.fn();
     const onShowSearch = jest.fn();
     const rendered = render(
@@ -467,7 +467,7 @@ describe('Header component', () => {
     expect(rendered.getByTestId('header.search.input')).toBeDefined();
   });
 
-  it(`on text search`, async () => {
+  it(`renders correctly with props on text search`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -497,7 +497,7 @@ describe('Header component', () => {
     );
   });
 
-  it(`search placeholder`, async () => {
+  it(`renders correctly with props search placeholder`, async () => {
     const onSearchText = jest.fn();
     const rendered = render(
       <Header
@@ -521,7 +521,7 @@ describe('Header component', () => {
     );
   });
 
-  it(`on press header`, () => {
+  it(`renders correctly with props on press header`, () => {
     const onPressHeader = jest.fn();
     const rendered = render(
       <Header avatar={images.logo_bein} onPressHeader={onPressHeader} />,
@@ -533,7 +533,7 @@ describe('Header component', () => {
     expect(onPressHeader).toBeCalled();
   });
 
-  it(`on right press`, () => {
+  it(`renders correctly with props on right press`, () => {
     const onRightPress = jest.fn();
     const rendered = render(
       <Header rightIcon="UilBug" onRightPress={onRightPress} />,
@@ -545,7 +545,7 @@ describe('Header component', () => {
     expect(onRightPress).toBeCalled();
   });
 
-  it(`on press chat`, () => {
+  it(`renders correctly with props on press chat`, () => {
     const onPressChat = jest.fn();
     const rendered = render(<Header onPressChat={onPressChat} />);
     expect(rendered.toJSON()).toMatchSnapshot();
