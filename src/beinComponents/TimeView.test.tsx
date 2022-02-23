@@ -1,6 +1,10 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
-import TimeView from '~/beinComponents/TimeView';
+import TimeView, {
+  formatShortTime,
+  formatFullTime,
+  formatDateTime,
+} from '~/beinComponents/TimeView';
 
 afterEach(cleanup);
 
@@ -12,7 +16,7 @@ describe('TimeView component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`style`, () => {
+  it(`renders correctly with props style`, () => {
     const rendered = render(
       <TimeView time={date} style={{color: '#FF9800'}} />,
     );
@@ -22,7 +26,7 @@ describe('TimeView component', () => {
     expect(timeComponent.props.style).toMatchObject({color: '#FF9800'});
   });
 
-  it(`textProps`, () => {
+  it(`renders correctly with props textProps`, () => {
     const rendered = render(
       <TimeView time={date} textProps={{numberOfLines: 2}} />,
     );
@@ -32,14 +36,14 @@ describe('TimeView component', () => {
     expect(timeComponent.props.numberOfLines).toEqual(2);
   });
 
-  it(`time`, () => {
+  it(`renders correctly with propstime`, () => {
     const {getByTestId, getByText} = render(<TimeView time={date} />);
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
     expect(getByText(/common:time:today common:time:at/)).toBeDefined();
   });
 
-  it(`type fullDateTime`, () => {
+  it(`renders correctly with props type fullDateTime`, () => {
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="fullDateTime" />,
     );
@@ -48,7 +52,7 @@ describe('TimeView component', () => {
     expect(getByText(/common:time:today common:time:at/)).toBeDefined();
   });
 
-  it(`type dateTime`, () => {
+  it(`renders correctly with props type dateTime`, () => {
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="dateTime" />,
     );
@@ -57,7 +61,7 @@ describe('TimeView component', () => {
     expect(getByText(/common:time:today/)).toBeDefined();
   });
 
-  it(`type short`, () => {
+  it(`renders correctly with props type short`, () => {
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="short" />,
     );
@@ -67,5 +71,16 @@ describe('TimeView component', () => {
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
     expect(getByText(/common:time:short_hour/)).toBeDefined();
+  });
+  it(`function formatShortTime`, () => {
+    expect(formatShortTime(date, 'vi')).toMatch(/common:time:short_hour/);
+  });
+  it(`function formatFullTime`, () => {
+    expect(formatFullTime(date, 'vi')).toMatch(
+      /common:time:today common:time:at/,
+    );
+  });
+  it(`funtion formatDateTime`, () => {
+    expect(formatDateTime(date, 'vi')).toMatch(/common:time:today/);
   });
 });

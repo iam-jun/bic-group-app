@@ -15,7 +15,7 @@ exports[`TimeView component renders correctly 1`] = `
 </Text>
 `;
 
-exports[`TimeView component style 1`] = `
+exports[`TimeView component renders correctly with props style 1`] = `
 <Text
   style={
     Object {
@@ -30,7 +30,7 @@ exports[`TimeView component style 1`] = `
 </Text>
 `;
 
-exports[`TimeView component textProps 1`] = `
+exports[`TimeView component renders correctly with props textProps 1`] = `
 <Text
   numberOfLines={2}
   style={
@@ -46,7 +46,7 @@ exports[`TimeView component textProps 1`] = `
 </Text>
 `;
 
-exports[`TimeView component type short 1`] = `
+exports[`TimeView component renders correctly with props type short 1`] = `
 <Text
   style={
     Object {
@@ -57,6 +57,6 @@ exports[`TimeView component type short 1`] = `
   }
   testID="time_view"
 >
-  18common:time:short_hour
+  12common:time:short_hour
 </Text>
 `;
