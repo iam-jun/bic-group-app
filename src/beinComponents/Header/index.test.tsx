@@ -53,15 +53,6 @@ describe('Header component', () => {
       <Header>
         <View testID="header.children" />
       </Header>,
-    ).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it(`renders correctly with children`, () => {
-    const rendered = render(
-      <Header>
-        <View testID="header.children" />
-      </Header>,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const childrenComponent = rendered.getByTestId('header.children');
@@ -77,9 +68,9 @@ describe('Header component', () => {
     expect(headerRef).toBeCalledWith({
       // current: expect.anything(),
       current: {
-        hideSearch: expect.anything(),
-        setSearchText: expect.anything(),
-        showSearch: expect.anything(),
+        hideSearch: expect.any(Function),
+        setSearchText: expect.any(Function),
+        showSearch: expect.any(Function),
       },
     });
   });
