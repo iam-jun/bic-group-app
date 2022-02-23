@@ -6,54 +6,25 @@ import Header from '~/beinComponents/Header';
 import initialState from '~/store/initialState';
 import images from '~/resources/images';
 
-const TestComponent = ({
-  onShowSearch,
-  onSearchText,
-}: {
-  onShowSearch?: (isShow: boolean, inputRef?: any) => void;
-  onSearchText?: (searchText: string, inputRef?: any) => void;
-}) => {
+const TestComponent = ({onChange}: {onChange?: (refs?: any) => void}) => {
   const headerRefs = React.useRef<any>();
 
   const onPressShowSearch = () => {
-    headerRefs.current?.showSearch();
-  };
-
-  const onPressSetSearchText = () => {
-    headerRefs.current?.setSearchText('Search Text');
-  };
-
-  const onPressHideSearch = () => {
-    headerRefs.current?.hideSearch();
+    if (typeof onChange === 'function') {
+      onChange(headerRefs);
+    }
   };
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <Header
-          headerRef={headerRefs}
-          searchInputTestID="header.search.input"
-          onShowSearch={onShowSearch}
-          onSearchText={onSearchText}
+      <Header headerRef={headerRefs} />
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <TouchableOpacity
+          style={{height: 40, backgroundColor: '#FF9800'}}
+          testID="header.ref"
+          onPress={onPressShowSearch}
         />
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <TouchableOpacity
-            style={{height: 40, backgroundColor: '#FF9800'}}
-            testID="header.ref.showSearch"
-            onPress={onPressShowSearch}
-          />
-        </View>
       </View>
-      <TouchableOpacity
-        style={{height: 40, backgroundColor: '#FF9800', marginVertical: 8}}
-        testID="header.ref.setSearchText"
-        onPress={onPressSetSearchText}
-      />
-      <TouchableOpacity
-        style={{height: 40, backgroundColor: '#FF9800'}}
-        testID="header.ref.hideSearch"
-        onPress={onPressHideSearch}
-      />
     </View>
   );
 };
@@ -99,28 +70,18 @@ describe('Header component', () => {
   });
 
   it(`header ref`, async () => {
-    const onShowSearch = jest.fn();
-    const onSearchText = jest.fn();
-    const rendered = render(
-      <TestComponent onShowSearch={onShowSearch} onSearchText={onSearchText} />,
-    );
+    const headerRef = jest.fn();
+    const rendered = render(<TestComponent onChange={headerRef} />);
     expect(rendered.toJSON()).toMatchSnapshot();
-    act(() => {
-      fireEvent.press(rendered.getByTestId('header.ref.showSearch'));
+    fireEvent.press(rendered.getByTestId('header.ref'));
+    expect(headerRef).toBeCalledWith({
+      // current: expect.anything(),
+      current: {
+        hideSearch: expect.anything(),
+        setSearchText: expect.anything(),
+        showSearch: expect.anything(),
+      },
     });
-    expect(onShowSearch).toBeCalledWith(
-      true,
-      expect.objectContaining({
-        current: expect.anything(),
-      }),
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-    expect(rendered.getByTestId('header.search.input')).toBeDefined();
-    act(() => {
-      fireEvent.press(rendered.getByTestId('header.ref.hideSearch'));
-    });
-    expect(onShowSearch).toBeCalledWith(false);
-    // expect(rendered.queryByTestId('header.search.input')).toBeNull();
   });
 
   it(`renders correctly title`, () => {

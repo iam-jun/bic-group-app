@@ -1168,1052 +1168,159 @@ exports[`Header component header ref 1`] = `
   }
 >
   <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
+    testID="header"
   >
     <View
-      testID="header"
-    >
-      <View
-        animatedStyle={
-          Object {
-            "value": Object {
-              "height": 60,
-            },
-          }
-        }
-        collapsable={false}
-        style={
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#FFFFFF",
-            "borderBottomWidth": 0.5,
-            "borderColor": "#EAEDF2",
-            "elevation": 2,
-            "flexDirection": "row",
+      animatedStyle={
+        Object {
+          "value": Object {
             "height": 60,
-            "overflow": "hidden",
-            "paddingTop": 0,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 1,
-              "width": 0,
-            },
-            "shadowOpacity": 0.1,
-            "shadowRadius": 1,
-          }
+          },
         }
-        testID="header.content"
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FFFFFF",
-              "flex": 1,
-              "flexDirection": "row",
-              "height": 60,
-              "overflow": "hidden",
-              "paddingLeft": 8,
-              "paddingRight": 8,
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 20,
-                "left": 20,
-                "right": 20,
-                "top": 20,
-              }
-            }
-            nativeID="animatedComponent"
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-            testID="header.back.button"
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "alignItems": "center",
-                    "height": 48,
-                    "justifyContent": "center",
-                    "padding": 12,
-                    "width": 48,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View
-                  className="icon-wrapper"
-                  testID="header.back"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={24}
-                    bbWidth={24}
-                    fill="#2F3945"
-                    focusable={false}
-                    height={24}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={24}
-                  >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
-                      <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Object {
-                "flex": 1,
-                "height": "100%",
-                "justifyContent": "center",
-                "marginLeft": 16,
-                "paddingTop": 1.5,
-              }
-            }
-          />
-          <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            nativeID="animatedComponent"
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-            testID="header.searchIcon.button"
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "alignItems": "center",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "justifyContent": "center",
-                    "marginRight": 4,
-                    "padding": 8,
-                    "width": 40,
-                  },
-                  Object {
-                    "backgroundColor": "#F9FAFB",
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View
-                  className="icon-wrapper"
-                >
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
-                    }
-                  >
-                    <View
-                      collapsable={false}
-                      nativeID="animatedComponent"
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "height": 24,
-                            "justifyContent": "center",
-                            "width": 24,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 24,
-                            "width": 24,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        size={24}
-                        source={
-                          Object {
-                            "testUri": "../../../assets/icons/icon_search.svg",
-                          }
-                        }
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "height": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": "100%",
-            }
-          }
-        />
-      </View>
-    </View>
-    <View
+      }
+      collapsable={false}
       style={
         Object {
-          "flex": 1,
-          "justifyContent": "center",
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+          "paddingTop": 0,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
         }
       }
+      testID="header.content"
     >
       <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeID="animatedComponent"
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": "#FF9800",
-            "height": 40,
-            "opacity": 1,
-          }
-        }
-        testID="header.ref.showSearch"
-      />
-    </View>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#FF9800",
-        "height": 40,
-        "marginVertical": 8,
-        "opacity": 1,
-      }
-    }
-    testID="header.ref.setSearchText"
-  />
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#FF9800",
-        "height": 40,
-        "opacity": 1,
-      }
-    }
-    testID="header.ref.hideSearch"
-  />
-</View>
-`;
-
-exports[`Header component header ref 2`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      testID="header"
-    >
-      <View
-        animatedStyle={
-          Object {
-            "value": Object {
-              "height": 60,
-            },
-          }
-        }
-        collapsable={false}
-        style={
-          Object {
-            "alignItems": "flex-end",
+            "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "borderBottomWidth": 0.5,
-            "borderColor": "#EAEDF2",
-            "elevation": 2,
+            "flex": 1,
             "flexDirection": "row",
             "height": 60,
             "overflow": "hidden",
-            "paddingTop": 0,
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 1,
-              "width": 0,
-            },
-            "shadowOpacity": 0.1,
-            "shadowRadius": 1,
+            "paddingLeft": 8,
+            "paddingRight": 8,
           }
         }
-        testID="header.content"
       >
         <View
-          style={
+          accessibilityState={
             Object {
-              "alignItems": "center",
-              "backgroundColor": "#FFFFFF",
-              "flex": 1,
-              "flexDirection": "row",
-              "height": 60,
-              "overflow": "hidden",
-              "paddingLeft": 8,
-              "paddingRight": 8,
+              "disabled": false,
             }
           }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 20,
+              "left": 20,
+              "right": 20,
+              "top": 20,
+            }
+          }
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="header.back.button"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 20,
-                "left": 20,
-                "right": 20,
-                "top": 20,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "alignItems": "center",
+                  "height": 48,
+                  "justifyContent": "center",
+                  "padding": 12,
+                  "width": 48,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
             }
-            testID="header.back.button"
           >
             <View
               style={
                 Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "alignItems": "center",
-                    "height": 48,
-                    "justifyContent": "center",
-                    "padding": 12,
-                    "width": 48,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
+                  undefined,
+                  undefined,
+                  undefined,
                 ]
               }
             >
               <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
+                className="icon-wrapper"
+                testID="header.back"
               >
-                <View
-                  className="icon-wrapper"
-                  testID="header.back"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={24}
-                    bbWidth={24}
-                    fill="#2F3945"
-                    focusable={false}
-                    height={24}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={24}
-                  >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
-                      <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Object {
-                "flex": 1,
-                "height": "100%",
-                "justifyContent": "center",
-                "marginLeft": 16,
-                "paddingTop": 1.5,
-              }
-            }
-          />
-          <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-            testID="header.searchIcon.button"
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "alignItems": "center",
-                    "borderRadius": 20,
-                    "height": 40,
-                    "justifyContent": "center",
-                    "marginRight": 4,
-                    "padding": 8,
-                    "width": 40,
-                  },
-                  Object {
-                    "backgroundColor": "#F9FAFB",
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View
-                  className="icon-wrapper"
-                >
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "height": 24,
-                            "justifyContent": "center",
-                            "width": 24,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 24,
-                            "width": 24,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        size={24}
-                        source={
-                          Object {
-                            "testUri": "../../../assets/icons/icon_search.svg",
-                          }
-                        }
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            animatedStyle={
-              Object {
-                "value": Object {},
-              }
-            }
-            collapsable={false}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FFFFFF",
-                "bottom": 0,
-                "flexDirection": "row",
-                "height": 60,
-                "left": 0,
-                "paddingLeft": 8,
-                "paddingRight": 12,
-                "position": "absolute",
-                "right": 0,
-              }
-            }
-          >
-            <View
-              animatedStyle={
-                Object {
-                  "value": Object {
-                    "opacity": 0,
-                  },
-                }
-              }
-              collapsable={false}
-              style={
-                Object {
-                  "opacity": 0,
-                }
-              }
-            >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                hitSlop={
-                  Object {
-                    "bottom": 20,
-                    "left": 20,
-                    "right": 20,
-                    "top": 20,
-                  }
-                }
-                nativeID="animatedComponent"
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
+                <RNSVGSvgView
+                  align="xMidYMid"
+                  bbHeight={24}
+                  bbWidth={24}
+                  fill="#2F3945"
+                  focusable={false}
+                  height={24}
+                  meetOrSlice={0}
+                  minX={0}
+                  minY={0}
                   style={
                     Array [
                       Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
+                        "backgroundColor": "transparent",
+                        "borderWidth": 0,
                       },
+                      Object {},
                       Object {
-                        "alignItems": "center",
-                        "height": 48,
-                        "justifyContent": "center",
-                        "padding": 12,
-                        "width": 48,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
+                        "flex": 0,
+                        "height": 24,
+                        "width": 24,
                       },
                     ]
                   }
+                  vbHeight={24}
+                  vbWidth={24}
+                  width={24}
                 >
-                  <View
-                    style={
+                  <RNSVGGroup
+                    fill={4281284933}
+                    propList={
                       Array [
-                        undefined,
-                        undefined,
-                        undefined,
+                        "fill",
                       ]
                     }
                   >
-                    <View
-                      className="icon-wrapper"
-                    >
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={24}
-                        bbWidth={24}
-                        fill="#2F3945"
-                        focusable={false}
-                        height={24}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 24,
-                              "width": 24,
-                            },
-                          ]
-                        }
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={24}
-                      >
-                        <RNSVGGroup
-                          fill={4281284933}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        >
-                          <RNSVGPath
-                            d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "alignItems": "flex-end",
-                  "flex": 1,
-                }
-              }
-            >
-              <View
-                animatedStyle={
-                  Object {
-                    "value": Object {
-                      "width": "0%",
-                    },
-                  }
-                }
-                collapsable={false}
-                style={
-                  Object {
-                    "backgroundColor": "#EAEDF2",
-                    "borderRadius": 24,
-                    "height": 40,
-                    "overflow": "hidden",
-                    "width": "0%",
-                  }
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": undefined,
-                      "borderRadius": 20,
-                      "flex": 1,
-                      "height": 40,
-                      "justifyContent": "center",
-                      "paddingHorizontal": 16,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      }
-                    }
-                  >
-                    <View
-                      accessibilityState={
-                        Object {
-                          "disabled": true,
-                        }
-                      }
-                      accessible={true}
-                      collapsable={false}
-                      focusable={false}
-                      hitSlop={
-                        Object {
-                          "bottom": 10,
-                          "left": 10,
-                          "right": 10,
-                          "top": 10,
-                        }
-                      }
-                      nativeID="animatedComponent"
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "opacity": 1,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                            },
-                            Object {
-                              "marginRight": 8,
-                            },
-                            Object {
-                              "backgroundColor": undefined,
-                            },
-                          ]
-                        }
-                      >
-                        <View
-                          style={
-                            Array [
-                              undefined,
-                              undefined,
-                              undefined,
-                            ]
-                          }
-                        >
-                          <View
-                            className="icon-wrapper"
-                          >
-                            <RNSVGSvgView
-                              align="xMidYMid"
-                              bbHeight={20}
-                              bbWidth={20}
-                              fill="#627286"
-                              focusable={false}
-                              height={20}
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                Array [
-                                  Object {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  Object {},
-                                  Object {
-                                    "flex": 0,
-                                    "height": 20,
-                                    "width": 20,
-                                  },
-                                ]
-                              }
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={20}
-                            >
-                              <RNSVGGroup
-                                fill={4284641926}
-                                propList={
-                                  Array [
-                                    "fill",
-                                  ]
-                                }
-                              >
-                                <RNSVGPath
-                                  d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                    <TextInput
-                      autoComplete="off"
-                      autoFocus={false}
-                      onChangeText={[Function]}
-                      onFocus={[Function]}
-                      onSubmitEditing={[Function]}
-                      placeholderTextColor="#627286"
-                      returnKeyType="search"
-                      selectionColor="#627286"
-                      style={
-                        Object {
-                          "color": "#2F3945",
-                          "flex": 1,
-                          "fontFamily": "OpenSans-Regular",
-                          "fontSize": 16,
-                          "height": "100%",
-                        }
-                      }
-                      testID="header.search.input"
-                      value=""
+                    <RNSVGPath
+                      d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
                     />
-                  </View>
-                </View>
+                  </RNSVGGroup>
+                </RNSVGSvgView>
               </View>
             </View>
           </View>
@@ -2221,90 +1328,58 @@ exports[`Header component header ref 2`] = `
         <View
           style={
             Object {
-              "backgroundColor": "#FFFFFF",
-              "height": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": "100%",
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
             }
           }
         />
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-          "justifyContent": "center",
-        }
-      }
-    >
       <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeID="animatedComponent"
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": "#FF9800",
-            "height": 40,
-            "opacity": 1,
+            "backgroundColor": "#FFFFFF",
+            "height": 0,
+            "position": "absolute",
+            "top": 0,
+            "width": "100%",
           }
         }
-        testID="header.ref.showSearch"
       />
     </View>
   </View>
   <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "backgroundColor": "#FF9800",
-        "height": 40,
-        "marginVertical": 8,
-        "opacity": 1,
+        "flex": 1,
+        "justifyContent": "center",
       }
     }
-    testID="header.ref.setSearchText"
-  />
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#FF9800",
-        "height": 40,
-        "opacity": 1,
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeID="animatedComponent"
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#FF9800",
+          "height": 40,
+          "opacity": 1,
+        }
       }
-    }
-    testID="header.ref.hideSearch"
-  />
+      testID="header.ref"
+    />
+  </View>
 </View>
 `;
 
