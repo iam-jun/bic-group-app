@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {renderWithRedux, cleanup, fireEvent} from '~/test/testUtils';
+import {colors} from '~/theme';
 
 import ButtonDanger from './ButtonDanger';
 
@@ -53,5 +54,13 @@ describe('ButtonDanger conponent', () => {
     const component = getByTestId(testID);
     fireEvent.press(component);
     expect(onPress).not.toBeCalled();
+
+    expect(component.props.style.backgroundColor).toBe(
+      colors.light.colors.bgDisable,
+    );
+
+    expect(component.props.children[0].props.children[2].props.color).toBe(
+      colors.light.colors.textDisabled,
+    );
   });
 });
