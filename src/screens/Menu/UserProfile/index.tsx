@@ -19,11 +19,7 @@ import Header from '~/beinComponents/Header';
 import Avatar from '~/beinComponents/Avatar';
 
 import {ITheme} from '~/theme/interfaces';
-import {
-  scaleSize,
-  scaleCoverHeight,
-  userProfileImageCropRatio,
-} from '~/theme/dimension';
+import {scaleCoverHeight, userProfileImageCropRatio} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
 import ProfileBlock from './components/ProfileBlock';
@@ -38,6 +34,8 @@ import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import {IFilePicked} from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import {openLink} from '~/utils/common';
+import {chatSchemes} from '~/constants/chat';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -210,7 +208,12 @@ const UserProfile = (props: any) => {
         color={theme.colors.primary6}
         colorHover={theme.colors.primary5}
         rightIcon={'Message'}
-        borderRadius={theme.spacing.borderRadius.small}>
+        borderRadius={theme.spacing.borderRadius.small}
+        onPress={() => {
+          openLink(
+            `${chatSchemes.DIRECT_MESSAGE}/@${userProfileData.username}`,
+          );
+        }}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
     );
