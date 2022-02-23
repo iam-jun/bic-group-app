@@ -1,4 +1,5 @@
 import {Linking, Platform} from 'react-native';
+import {chatSchemes} from '~/constants/chat';
 import {linkRegex} from '~/constants/commonRegex';
 import {getEnv} from '~/utils/env';
 
@@ -14,9 +15,11 @@ export const openLink = async (link: string) => {
     let _link = link;
 
     // If on web browser => replace 'beinchat://' in deeplink with 'https://'
-    const deeplinkPrefixBeinChat = 'beinchat://';
-    if (Platform.OS === 'web' && link.includes(deeplinkPrefixBeinChat)) {
-      _link = _link.replace(deeplinkPrefixBeinChat, 'https://');
+    if (Platform.OS === 'web' && link.includes(chatSchemes.PREFIX_DEEPLINK)) {
+      _link = _link.replace(
+        chatSchemes.PREFIX_DEEPLINK,
+        chatSchemes.PREFIX_HTTPS,
+      );
     }
 
     await Linking.openURL(_link);
