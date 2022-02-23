@@ -70,11 +70,11 @@ const UserProfile = (props: any) => {
 
   useEffect(() => {
     isFocused && getUserProfile();
-  }, [isFocused, userId]);
-
-  useEffect(() => {
     const {avatar: _avatar, background_img_url: _bgIm} = myProfileData;
-    if (userId == currentUserId || userId == currentUsername) {
+    if (
+      userId?.toString?.() === currentUserId?.toString?.() ||
+      userId?.toString?.() === currentUsername?.toString?.()
+    ) {
       if (avatarState !== _avatar) {
         setAvatarState(_avatar);
       }
@@ -82,7 +82,7 @@ const UserProfile = (props: any) => {
         setBgImgState(_bgIm);
       }
     }
-  }, [myProfileData]);
+  }, [isFocused, userId]);
 
   const onEditProfileButton = () =>
     rootNavigation.navigate(mainStack.userEdit, {userId, params});

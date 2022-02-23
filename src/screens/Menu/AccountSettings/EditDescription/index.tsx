@@ -99,10 +99,10 @@ const EditDescription = () => {
         <View
           style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}>
           <TextInput
-            value={descriptionText || i18next.t('common:text_not_set')}
+            value={descriptionText || ''}
             maxLength={250}
             testID="edit_description"
-            placeholder={i18next.t('settings:text_description_optional')}
+            placeholder={i18next.t('common:text_not_set')}
             onChangeText={onChangeDescription}
             style={styles.textInput}
             multiline={true}
