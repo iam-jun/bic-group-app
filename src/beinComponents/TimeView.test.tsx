@@ -5,6 +5,7 @@ import TimeView, {
   formatFullTime,
   formatDateTime,
 } from '~/beinComponents/TimeView';
+import moment from 'moment';
 
 afterEach(cleanup);
 
@@ -72,15 +73,99 @@ describe('TimeView component', () => {
     expect(timeComponent.children).toBeDefined();
     expect(getByText(/common:time:short_hour/)).toBeDefined();
   });
+
   it(`function formatShortTime`, () => {
     expect(formatShortTime(date, 'vi')).toMatch(/common:time:short_hour/);
   });
+
+  it(`function formatShortTime with now`, () => {
+    const now = moment.utc();
+    expect(formatShortTime(now, 'vi')).toMatch(/common:time:now/);
+  });
+
+  it(`function formatShortTime with 5 minutes ago`, () => {
+    const dateTime = new Date();
+    const time = new Date(dateTime.setMinutes(5, 0, 0)).toISOString();
+    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_min/);
+  });
+
+  it(`function formatShortTime with 5 hour ago`, () => {
+    const dateTime = new Date();
+    const time = new Date(dateTime.setHours(5, 0, 0, 0)).toISOString();
+    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_hour/);
+  });
+
+  it(`function formatShortTime with 5 days ago`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setDate(dateTime.getDate() - 5),
+    ).toISOString();
+    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_day/);
+  });
+
+  it(`function formatShortTime with 1 weeks ago`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setDate(dateTime.getDate() - 10),
+    ).toISOString();
+    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_week/);
+  });
+
+  it(`function formatShortTime with date display`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setMonth(dateTime.getMonth() - 13),
+    ).toISOString();
+    expect(formatShortTime(time, 'vi')).toMatch(
+      moment(time).format('DD/MM/YYYY'),
+    );
+  });
+
   it(`function formatFullTime`, () => {
     expect(formatFullTime(date, 'vi')).toMatch(
       /common:time:today common:time:at/,
     );
   });
+
+  it(`function formatFullTime with yesterday`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setDate(dateTime.getDate() - 1),
+    ).toISOString();
+    expect(formatFullTime(time, 'vi')).toMatch(
+      /common:time:yesterday common:time:at/,
+    );
+  });
+
+  it(`function formatFullTime with date display`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setDate(dateTime.getDate() - 5),
+    ).toISOString();
+    expect(formatFullTime(time, 'vi')).toMatch(
+      moment(time).format('DD/MM, hh:mm A'),
+    );
+  });
+
   it(`funtion formatDateTime`, () => {
     expect(formatDateTime(date, 'vi')).toMatch(/common:time:today/);
+  });
+
+  it(`funtion formatDateTime with yesterday`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setDate(dateTime.getDate() - 1),
+    ).toISOString();
+    expect(formatDateTime(time, 'vi')).toMatch(/common:time:yesterday/);
+  });
+
+  it(`funtion formatDateTime with date display`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setDate(dateTime.getDate() - 13),
+    ).toISOString();
+    expect(formatDateTime(time, 'vi')).toMatch(
+      moment(time).format('DD/MM/yyyy'),
+    );
   });
 });
