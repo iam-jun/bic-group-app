@@ -31,7 +31,8 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
 
   if (disabled) {
     backgroundColor = colors.bgDisable;
-    textColor = colors.textDisabled ? colors.textDisabled : '#BDBDBD';
+    // @ts-ignore
+    textColor = colors.textDisabled;
   }
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([

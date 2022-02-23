@@ -27,9 +27,8 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
       if (audiencesWidth > containerWidth) {
         setShowBtnShowAll(true);
       } else {
-        if (!showAll) {
-          setShowBtnShowAll(false);
-        }
+        setShowAll(false);
+        setShowBtnShowAll(false);
       }
     }
   }, [audiencesWidth, containerWidth]);
@@ -80,17 +79,6 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     return null;
   }
 
-  const renderContent = () => {
-    return (
-      <View
-        onLayout={onLayoutAudiences}
-        testID="selecting_audiences"
-        style={styles.contentContainer}>
-        {list?.map?.(renderItem)}
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container} onLayout={onLayoutContainer}>
       <View style={styles.headerContainer}>
@@ -104,20 +92,33 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
           </ButtonWrapper>
         )}
       </View>
-      {showAll ? (
-        renderContent()
-      ) : (
-        <ScrollView horizontal scrollEnabled={false}>
-          {renderContent()}
+      <View>
+        <ScrollView
+          style={showAll ? {position: 'absolute'} : {}}
+          horizontal
+          scrollEnabled={false}>
+          <View
+            onLayout={onLayoutAudiences}
+            testID="selecting_audiences"
+            style={styles.contentContainer}>
+            {list?.map?.(renderItem)}
+          </View>
         </ScrollView>
-      )}
+        {showAll && (
+          <View
+            testID="selecting_audiences_all"
+            style={styles.contentContainer}>
+            {list?.map?.(renderItem)}
+          </View>
+        )}
+      </View>
       <Divider style={styles.divider} />
     </View>
   );
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing?.padding.large,
@@ -136,6 +137,7 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
+      backgroundColor: colors.background,
     },
   });
 };

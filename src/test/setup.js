@@ -33,6 +33,10 @@ jest.doMock('react-i18next', () => ({
   initReactI18next,
 }));
 
+jest.doMock('i18next', () => ({
+  t: str => str,
+}));
+
 jest.doMock('react-native-paper', () => ({
   useTheme: () => {
     return {
