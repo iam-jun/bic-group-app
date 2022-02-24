@@ -140,7 +140,13 @@ const AtMention = ({
   };
 
   const renderItem = ({item}: {item: any; index: number}) => {
-    return <AtMentionItem item={item} onPress={completeMention} />;
+    return (
+      <AtMentionItem
+        item={item}
+        testID="at_mention.item"
+        onPress={completeMention}
+      />
+    );
   };
 
   if (isEmpty(data)) return null;
