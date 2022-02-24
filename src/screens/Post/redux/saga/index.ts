@@ -1015,7 +1015,10 @@ function* addChildCommentToCommentsOfPost({
       const oldChildComments = latestChildren.comment || [];
       const newChildComments = oldChildComments.concat(childComments) || [];
       latestChildren.comment = sortComments(newChildComments);
+      const childrenCounts = postComments[i].children_counts || {};
+      childrenCounts.comment = (childrenCounts.comment || 0) + 1;
       postComments[i].latest_children = latestChildren;
+      postComments[i].children_counts = childrenCounts;
       yield put(
         postActions.updateAllCommentsByParentIdsWithComments({
           id: postId,

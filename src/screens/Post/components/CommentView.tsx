@@ -379,7 +379,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
                 <View style={styles.header}>
                   <View style={styles.userName}>
                     <ButtonWrapper onPress={onPressUser}>
-                      <Text.H6 numberOfLines={1}>{`${name}`}</Text.H6>
+                      <Text.H6
+                        numberOfLines={1}
+                        testID={
+                          parentCommentId
+                            ? 'comment_view.level_2.user_name'
+                            : 'comment_view.level_1.user_name'
+                        }>{`${name}`}</Text.H6>
                     </ButtonWrapper>
                   </View>
                   <View style={{flexDirection: 'row'}}>
@@ -394,6 +400,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                 <CollapsibleText
                   useMarkdown
                   limitMarkdownTypes
+                  parentCommentId={parentCommentId}
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
