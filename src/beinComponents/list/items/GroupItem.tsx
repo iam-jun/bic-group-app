@@ -81,7 +81,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   const renderLine = (uiLevel: number) => {
-    return <View key={generateUniqueId()} style={styles.line} />;
+    return (
+      <View
+        testID="group_item.ui_level"
+        key={generateUniqueId()}
+        style={styles.line}
+      />
+    );
   };
 
   const renderToggle = () => {
@@ -92,6 +98,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
     return (
       <ButtonWrapper
+        testID="group_item.button_wrapper"
         onPress={_onToggleItem}
         disabled={!hasChild}
         activeOpacity={1}
@@ -116,6 +123,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   return (
     <TouchableOpacity
+      testID="group_item"
       disabled={!isInternetReachable || disableOnPressItem}
       onPress={_onPressItem}>
       <View style={{flexDirection: 'row'}} testID={testID}>
