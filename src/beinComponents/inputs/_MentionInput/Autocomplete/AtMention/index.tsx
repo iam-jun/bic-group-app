@@ -161,7 +161,7 @@ const AtMention = ({
       testID="at_mention"
       ref={listRef}
       data={_data}
-      keyExtractor={item => `list-mention-${item.id}`}
+      keyExtractor={item => `list-mention-${item.username}`}
       renderItem={renderItem}
       ListEmptyComponent={renderEmpty}
     />
@@ -206,3 +206,4 @@ const createStyles = (theme: ITheme) => {
 };
 
 export default AtMention;
+``;

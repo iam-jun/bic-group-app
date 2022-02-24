@@ -4,7 +4,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import {configureStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import initialState from '~/store/initialState';
-import AtMentionItem from '.';
+import AtMentionItem from './AtMentionItem';
 import {colors} from '~/theme';
 
 afterEach(cleanup);
@@ -37,15 +37,20 @@ describe('AtMentionItem component', () => {
     };
     storeData.mentionInput.data = [
       {
-        username: '1',
-        name: '1',
+        username: 'abc',
+        name: 'abc',
       },
       highlightItem,
     ] as any;
     storeData.mentionInput.highlightItem = highlightItem;
     const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<AtMentionItem {...baseProps} />, store);
-    const component = wrapper.getByTestId('at_mention.item_1');
+    const props = {
+      ...baseProps,
+      item: highlightItem,
+    };
+    const wrapper = renderWithRedux(<AtMentionItem {...props} />, store);
+    const component = wrapper.getByTestId('at_mention_item');
+    expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
     expect(flattenedStyle.backgroundColor).toBe(
       colors.light.colors.placeholder,
@@ -53,33 +58,35 @@ describe('AtMentionItem component', () => {
   });
 
   it(`should show "AtMentionItem" with item all`, async () => {
-    const storeData = {...initialState};
-    storeData.mentionInput.data = [
-      {
-        username: 'all',
-        name: 'all',
-      },
-    ] as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<AtMentionItem {...baseProps} />, store);
-    const component = wrapper.getByTestId('at_mention_item.item_all');
+    const store = mockStore(initialState);
+    const props = {
+      ...baseProps,
+      showSpectialItems: true,
+    };
+    const wrapper = renderWithRedux(<AtMentionItem {...props} />, store);
+    const component = wrapper.getByTestId('at_mention_item');
 
     expect(component).not.toBeNull();
   });
 
   it(`should call "_onPressItem"`, async () => {
-    const _onPressItem = jest.fn();
+    const onPress = jest.fn();
     const storeData = {...initialState};
     storeData.mentionInput.data = [
       {
-        username: 'all',
-        name: 'all',
+        username: 'test',
+        name: 'test',
       },
     ] as any;
     const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<AtMentionItem {...baseProps} />, store);
-    const component = wrapper.getByTestId('at_mention_item.item_all');
+    const props = {
+      ...baseProps,
+      onPress,
+    };
+    const wrapper = renderWithRedux(<AtMentionItem {...props} />, store);
+    const component = wrapper.getByTestId('at_mention_item.touchable');
+    expect(component).not.toBeNull();
     fireEvent.press(component);
-    expect(_onPressItem).toBeCalled();
+    expect(onPress).toBeCalled();
   });
 });

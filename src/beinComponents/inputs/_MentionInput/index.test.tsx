@@ -3,7 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import _MentionInput from '.';
 import CommentInput from '../CommentInput';
-import {configureStore, renderWithRedux} from '~/test/testUtils';
+import {configureStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import PostInput from '../PostInput';
 import {StyleSheet} from 'react-native';
@@ -93,5 +93,21 @@ describe('_MentionInput component', () => {
     const commentInput = wrapper.getByTestId('_mention_input.input');
     const flattenedStyle = StyleSheet.flatten(commentInput.props.style);
     expect(flattenedStyle.color).toBe(colors.light.colors.textSecondary);
+  });
+
+  it(`should call onChangeText`, async () => {
+    const onChangeText = jest.fn();
+    const props = {
+      ...baseProps,
+      disabled: true,
+      componentInputProps: {
+        onChangeText,
+      },
+    };
+    const wrapper = renderWithRedux(<_MentionInput {...props} />, store);
+
+    const commentInput = wrapper.getByTestId('_mention_input.input');
+    fireEvent.changeText(commentInput);
+    expect(onChangeText).toHaveBeenCalled();
   });
 });

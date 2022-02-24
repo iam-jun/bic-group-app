@@ -16,7 +16,7 @@ interface Props {
   onPress: (item: any) => void;
 }
 
-const AtMentionItem = ({testID, item, onPress}: Props) => {
+const AtMentionItem = ({item, onPress}: Props) => {
   const dispatch = useDispatch();
   const {highlightItem} = useKeySelector('mentionInput');
 
@@ -67,14 +67,14 @@ const AtMentionItem = ({testID, item, onPress}: Props) => {
 
   return (
     <Div
-      testID={testID}
+      testID={'at_mention_item'}
       style={{backgroundColor}}
       onMouseOver={onHoverItem}
       onMouseLeave={onLeaveItem}>
       <TouchableOpacity
         style={styles.container}
         onPress={_onPressItem}
-        testID={testID}>
+        testID={'at_mention_item.touchable'}>
         <Avatar.Medium
           style={styles.avatar}
           source={item.avatar || item.icon}

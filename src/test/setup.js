@@ -17,11 +17,13 @@ import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 
 configure({adapter: new Adapter()});
 
-jest.mock('react-native-image-crop-picker', ()=> ({
-  openPicker: jest.fn().mockImplementation(() =>  Promise.resolve({
-    mime: 'test',
-    data: 'test',
-  }))
+jest.mock('react-native-image-crop-picker', () => ({
+  openPicker: jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      mime: 'test',
+      data: 'test',
+    }),
+  ),
 }));
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');

@@ -34,6 +34,7 @@ describe('Autocomplete component', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<Autocomplete {...baseProps} />, store);
     const component = wrapper.getByTestId('autocomplete');
+    expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
 
     expect(flattenedStyle.height).toEqual(0);
@@ -47,6 +48,7 @@ describe('Autocomplete component', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<Autocomplete {...baseProps} />, store);
     const component = wrapper.getByTestId('autocomplete');
+    expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
 
     expect(flattenedStyle.height).not.toEqual(1);
@@ -65,6 +67,7 @@ describe('Autocomplete component', () => {
     };
     const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
     const component = wrapper.getByTestId('autocomplete');
+    expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
 
     expect(flattenedStyle.bottom).toEqual(measuredHeight);
@@ -82,6 +85,7 @@ describe('Autocomplete component', () => {
     };
     const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
     const component = wrapper.getByTestId('autocomplete');
+    expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
 
     expect(flattenedStyle.width).toEqual('100%');
@@ -99,6 +103,7 @@ describe('Autocomplete component', () => {
     };
     const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
     const component = wrapper.getByTestId('autocomplete');
+    expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
 
     expect(flattenedStyle.shadowOffset).not.toBeNull();

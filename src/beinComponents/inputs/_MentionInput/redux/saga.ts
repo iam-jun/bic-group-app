@@ -10,7 +10,7 @@ export default function* menuSaga() {
   yield takeLatest(types.RUN_SEARCH, runSearch);
 }
 
-function* runSearch({
+export function* runSearch({
   payload,
 }: {
   type: string;

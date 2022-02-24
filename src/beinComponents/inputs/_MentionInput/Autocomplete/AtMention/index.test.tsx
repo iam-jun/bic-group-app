@@ -46,13 +46,23 @@ describe('AtMention component', () => {
     expect(component).not.toBeNull();
   });
 
+  it(`should show "AtMention" with item all`, async () => {
+    const storeData = {...initialState};
+    const store = mockStore(storeData);
+    const props = {...baseProps, showSpectialItems: true};
+    const wrapper = renderWithRedux(<AtMention {...props} />, store);
+    const component = wrapper.getByTestId('at_mention');
+
+    expect(component.props.data[0].username).toBe('all');
+  });
+
   it(`should show "AtMention" with item`, async () => {
     const storeData = {...initialState};
     const item = {username: 'test', name: 'test'};
     storeData.mentionInput.data = [item] as any;
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<AtMention {...baseProps} />, store);
-    const component = wrapper.getByTestId('at_mention.item_0');
+    const component = wrapper.getByTestId('at_mention_item');
 
     expect(component).not.toBeNull();
   });
