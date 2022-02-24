@@ -1133,6 +1133,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
+                  placeholder="input:search_group"
                   placeholderTextColor="#627286"
                   returnKeyType="search"
                   selectionColor="#627286"
@@ -2011,6 +2012,7 @@ exports[`Header component renders correctly with props button props 1`] = `
               "justifyContent": "center",
             }
           }
+          testID="button_wrapper.content"
         >
           <Text
             style={
@@ -2245,6 +2247,7 @@ exports[`Header component renders correctly with props button text 1`] = `
               "justifyContent": "center",
             }
           }
+          testID="button_wrapper.content"
         >
           <Text
             style={
@@ -4966,6 +4969,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
+                  placeholder="input:search_group"
                   placeholderTextColor="#627286"
                   returnKeyType="search"
                   selectionColor="#627286"
@@ -5204,6 +5208,7 @@ exports[`Header component renders correctly with props on press button 1`] = `
               "justifyContent": "center",
             }
           }
+          testID="button_wrapper.content"
         >
           <Text
             style={
@@ -7716,6 +7721,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
+                  placeholder="input:search_group"
                   placeholderTextColor="#627286"
                   returnKeyType="search"
                   selectionColor="#627286"
@@ -8689,6 +8695,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
+                  placeholder="input:search_group"
                   placeholderTextColor="#627286"
                   returnKeyType="search"
                   selectionColor="#627286"
@@ -9662,6 +9669,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
+                  placeholder="input:search_group"
                   placeholderTextColor="#627286"
                   returnKeyType="search"
                   selectionColor="#627286"
@@ -11735,6 +11743,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
+                  placeholder="input:search_group"
                   placeholderTextColor="#627286"
                   returnKeyType="search"
                   selectionColor="#627286"
