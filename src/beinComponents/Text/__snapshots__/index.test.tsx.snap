@@ -145,21 +145,6 @@ exports[`Text component renders correctly variant H6 1`] = `
 </Text>
 `;
 
-exports[`Text component renders correctly variant H6 2`] = `
-<Text
-  style={
-    Object {
-      "color": "#2F3945",
-      "fontFamily": "OpenSans-SemiBold",
-      "fontSize": 14,
-    }
-  }
-  testID="text.h6s"
->
-  renders correctly children
-</Text>
-`;
-
 exports[`Text component renders correctly variant H6s 1`] = `
 <Text
   style={

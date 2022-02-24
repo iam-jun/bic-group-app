@@ -27,7 +27,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   const styles = createStyle(theme);
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="button_icon" style={[styles.container, style]}>
       <ButtonWrapper
         style={[styles.icon, iconWrapperStyle]}
         leftIcon={icon}
@@ -35,7 +35,10 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
         {...props}
       />
       {label && (
-        <Text variant="buttonSmall" style={styles.label}>
+        <Text
+          testID="button_icon.label"
+          variant="buttonSmall"
+          style={styles.label}>
           {label}
         </Text>
       )}
