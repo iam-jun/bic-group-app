@@ -495,7 +495,7 @@ const UserEditProfile = (props: any) => {
   return (
     <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header
-        title={i18next.t('settings:title_user_profile')}
+        title={i18next.t('settings:title_about')}
         hideBackOnLaptop={navigation.canGoBack() ? false : true}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
