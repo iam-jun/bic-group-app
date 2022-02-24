@@ -15,9 +15,11 @@ import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
 import {isEmpty} from 'lodash';
 
+export type IModalPosition = 'top' | 'bottom' | 'above-keyboard';
+
 export interface AutocompleteProps {
   type: string;
-  modalPosition: 'top' | 'bottom' | 'above-keyboard';
+  modalPosition: IModalPosition;
   title?: string;
   topPosition: number;
   measuredHeight: number;
@@ -58,6 +60,7 @@ const Autocomplete = ({
 
   return (
     <View
+      testID="autocomplete"
       style={[
         styles.containerModal,
         fullWidth && styles.containerModalFullWidth,
@@ -66,7 +69,9 @@ const Autocomplete = ({
         isEmpty(data) ? styles.hidden : {},
       ]}>
       {!!title && key === '' && data?.length === 0 && (
-        <Text.Subtitle style={styles.textTitle}>{title}</Text.Subtitle>
+        <Text.Subtitle testID="autocomplete.title" style={styles.textTitle}>
+          {title}
+        </Text.Subtitle>
       )}
       <AtMention {...props} />
     </View>

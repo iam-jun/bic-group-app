@@ -151,6 +151,7 @@ const _MentionInput = ({
   return (
     <>
       <View
+        testID="_mention_input"
         style={[styles.containerWrapper, style]}
         onLayout={_onLayoutContainer}>
         {Platform.OS === 'web' && (
@@ -172,6 +173,7 @@ const _MentionInput = ({
           />
         )}
         <ComponentInput
+          testID="_mention_input.input"
           {...componentInputProps}
           keyboardType={keyboardType}
           textInputRef={inputRef}
@@ -190,6 +192,7 @@ const _MentionInput = ({
       </View>
       <Autocomplete
         {...autocompleteProps}
+        testID="_mention_input.autocomplete"
         type="mentionInput"
         topPosition={topPosition}
         measuredHeight={measuredHeight}

@@ -21,7 +21,7 @@ import AtMentionItem from './AtMentionItem';
 
 const DEFAULT_INDEX = -1;
 
-interface Props extends Partial<AutocompleteProps> {}
+type Props = Partial<AutocompleteProps>;
 
 const AtMention = ({
   showSpectialItems,
@@ -31,7 +31,7 @@ const AtMention = ({
 }: Props) => {
   const dispatch = useDispatch();
 
-  const {data, isLoading, highlightIndex} = useKeySelector('mentionInput');
+  const {data, loading, highlightIndex} = useKeySelector('mentionInput');
 
   const text = useRef('');
 
@@ -83,13 +83,13 @@ const AtMention = ({
   };
 
   const completeMention = (item: any) => {
-    const mention = item.username;
+    const mention = item?.username;
     const mentionPart = text.current.substring(0, cursorPosition);
 
     let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
 
-    if (text.current.length > cursorPosition) {
-      completedDraft += text.current.substring(cursorPosition);
+    if (text.current.length > (cursorPosition || 0)) {
+      completedDraft += text.current.substring(cursorPosition || 0);
     }
     onCompletePress?.(completedDraft);
     dispatch(actions.setData([]));
@@ -130,25 +130,35 @@ const AtMention = ({
   const renderEmpty = () => {
     return (
       <View style={styles.emptyContainer}>
-        {isLoading ? (
-          <ActivityIndicator color={colors.disabled} />
+        {loading ? (
+          <ActivityIndicator
+            testID="at_mention.loading"
+            color={colors.disabled}
+          />
         ) : (
-          <Text.H6 style={styles.textEmpty}>{emptyContent}</Text.H6>
+          <Text.H6 testID="at_mention.empty_content" style={styles.textEmpty}>
+            {emptyContent}
+          </Text.H6>
         )}
       </View>
     );
   };
 
-  const renderItem = ({item}: {item: any; index: number}) => {
-    return <AtMentionItem item={item} onPress={completeMention} />;
+  const renderItem = ({item, index}: {item: any; index: number}) => {
+    return (
+      <AtMentionItem
+        testID={`at_mention.item_${index}`}
+        item={item}
+        onPress={completeMention}
+      />
+    );
   };
-
-  if (isEmpty(data)) return null;
 
   const _data = showSpectialItems ? [{username: 'all'}, ...data] : data;
 
   return (
     <FlatList
+      testID="at_mention"
       ref={listRef}
       data={_data}
       keyExtractor={item => `list-mention-${item.id}`}

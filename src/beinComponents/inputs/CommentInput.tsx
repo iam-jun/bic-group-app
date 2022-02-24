@@ -495,9 +495,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <View style={styles.container}>
           <Animated.View style={{flex: 1, zIndex: 1, height: heightAnimated}}>
             <TextInput
-              testID={useTestID ? 'comment_input' : undefined}
               selection={inputSelection}
               {...props}
+              testID={useTestID ? 'comment_input' : undefined}
               onContentSizeChange={_onContentSizeChange}
               ref={_textInputRef}
               style={inputStyle}

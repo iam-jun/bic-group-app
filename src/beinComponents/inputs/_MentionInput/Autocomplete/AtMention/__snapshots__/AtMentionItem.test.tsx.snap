@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AtMentionItem component renders correctly 1`] = `
+<RCTScrollView
+  ListEmptyComponent={[Function]}
+  data={Array []}
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  stickyHeaderIndices={Array []}
+  testID="at_mention"
+  viewabilityConfigCallbackPairs={Array []}
+>
+  <View>
+    <View
+      style={
+        Object {
+          "justifyContent": "center",
+          "minHeight": 40,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#B2BDCD",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+            "margin": 8,
+            "padding": 4,
+          }
+        }
+        testID="at_mention.empty_content"
+      />
+    </View>
+  </View>
+</RCTScrollView>
+`;
