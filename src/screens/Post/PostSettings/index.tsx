@@ -220,6 +220,7 @@ const PostSettings = () => {
             {sImportant?.active ? (
               <Text.Subtitle
                 useI18n
+                testID="post_settings.expire_time_desc"
                 color={colors.textSecondary}
                 style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
                 post:expire_time_desc

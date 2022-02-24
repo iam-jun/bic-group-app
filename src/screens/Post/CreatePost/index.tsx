@@ -812,6 +812,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         {(!sPostId || isDraftPost) && (
           <View style={styles.setting}>
             <Button.Secondary
+              testID="create_post.btn_post_settings"
               color={colors.bgHover}
               leftIcon="SlidersVAlt"
               style={styles.buttonSettings}
