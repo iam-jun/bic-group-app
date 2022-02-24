@@ -134,6 +134,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             <Avatar.Medium source={icon} />
             {onCheckedItem && (
               <Checkbox
+                testID="group_item.check_box"
                 style={styles.checkbox}
                 isChecked={isChecked}
                 onActionPress={_onCheckedItem}
