@@ -120,7 +120,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
                 styles.badgeNumberContainer,
                 badgeColor ? {backgroundColor: badgeColor} : {},
               ]}>
-              <Text.Subtitle style={styles.badgeNumber}>
+              <Text.Subtitle
+                testID="menu_item.badge_number.number"
+                style={styles.badgeNumber}>
                 {badgeNumber}
               </Text.Subtitle>
             </View>

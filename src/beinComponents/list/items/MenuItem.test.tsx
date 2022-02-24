@@ -134,19 +134,20 @@ describe('Menu Item component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  // it(`should render badge Number with badgeColor when type= draftPost`, () => {
-  //   const storeData = {...initialState};
-  //   //@ts-ignore
-  //   storeData.post.draftPosts.posts = [{}];
-  //   const store = mockStore(storeData);
+  it(`should render badge Number when type= draftPost and draftPost.length > 9`, () => {
+    const storeData = {...initialState};
+    //@ts-ignore
+    storeData.post.draftPosts.posts = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+    const store = mockStore(storeData);
 
-  //   const rendered = renderWithRedux(
-  //     <MenuItem title={title} type="draftPost" badgeColor={'red'} />,
-  //     store,
-  //   );
+    const rendered = renderWithRedux(
+      <MenuItem title={title} type="draftPost" badgeColor={'red'} />,
+      store,
+    );
 
-  //   const btnComponent = rendered.getByTestId('menu_item.badge_number');
-  //   expect(btnComponent.props?.style?.[1]?.backgroundColor).toBe('red');
-  //   expect(rendered.toJSON()).toMatchSnapshot();
-  // });
+    const btnComponent = rendered.getByTestId('menu_item.badge_number.number');
+
+    expect(btnComponent.children?.[0]).toBe('9+');
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
 });

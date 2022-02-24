@@ -945,8 +945,114 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
               "marginTop": -2,
             }
           }
+          testID="menu_item.badge_number.number"
         >
           1
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Menu Item component should render badge Number when type= draftPost and draftPost.length > 9 1`] = `
+<View
+  className="menu-item"
+>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": true,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "borderRadius": 0,
+            "flexDirection": "row",
+            "paddingHorizontal": 16,
+            "paddingVertical": 12,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "marginLeft": 16,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 16,
+            }
+          }
+        >
+          Menu Item Title
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#00A64D",
+              "borderRadius": 20,
+              "justifyContent": "center",
+              "minHeight": 20,
+              "minWidth": 20,
+            },
+            Object {
+              "backgroundColor": "#B2BDCD",
+            },
+          ]
+        }
+        testID="menu_item.badge_number"
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 12,
+              "marginTop": -2,
+            }
+          }
+          testID="menu_item.badge_number.number"
+        >
+          9+
         </Text>
       </View>
     </View>
