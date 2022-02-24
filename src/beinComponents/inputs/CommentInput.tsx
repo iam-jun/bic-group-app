@@ -263,7 +263,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onChangeText = (value: string) => {
-    if (!disableInputRef.current) {
+    if (!disableInputRef.current || Platform.OS === 'web') {
       setText(value);
       onChangeText?.(value);
     }
