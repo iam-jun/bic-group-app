@@ -82,7 +82,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
           <View style={styles.titleContainer}>
             <Text.ButtonBase useI18n>{title}</Text.ButtonBase>
             {!!subTitle && (
-              <Text.Subtitle numberOfLines={2} useI18n>
+              <Text.Subtitle
+                testID="menu_item.sub_title"
+                numberOfLines={2}
+                useI18n>
                 {subTitle}
               </Text.Subtitle>
             )}
@@ -95,16 +98,24 @@ const MenuItem: React.FC<MenuItemProps> = ({
           )}
           <View style={styles.rightComponent}>
             {!!rightSubTitle && (
-              <Text.BodyS color={theme.colors.iconTint} useI18n>
+              <Text.BodyS
+                testID="menu_item.right_sub_title"
+                color={theme.colors.iconTint}
+                useI18n>
                 {rightSubTitle}
               </Text.BodyS>
             )}
             {!!rightSubIcon && (
-              <Icon icon={rightSubIcon} style={styles.rightSubIcon} />
+              <Icon
+                testID="menu_item.right_sub_icon"
+                icon={rightSubIcon}
+                style={styles.rightSubIcon}
+              />
             )}
           </View>
           {!!badgeNumber && (
             <View
+              testID="menu_item.badge_number"
               style={[
                 styles.badgeNumberContainer,
                 badgeColor ? {backgroundColor: badgeColor} : {},
