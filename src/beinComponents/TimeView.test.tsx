@@ -12,9 +12,19 @@ afterEach(cleanup);
 describe('TimeView component', () => {
   const currentData = new Date();
   const date = new Date(currentData.setHours(0, 0, 0, 0)).toISOString();
+
   it(`renders correctly`, () => {
-    const rendered = render(<TimeView time={date} />).toJSON();
+    const time = moment('20/10/2020', 'DD/MM/YYYY').toISOString();
+    const rendered = render(<TimeView time={time} />).toJSON();
     expect(rendered).toMatchSnapshot();
+  });
+
+  it(`renders correctly with time empty`, () => {
+    const rendered = render(<TimeView time="" />);
+    expect(rendered.toJSON()).toMatchSnapshot();
+    const timeComponent = rendered.getByTestId('time_view');
+    expect(timeComponent).toBeDefined();
+    expect(timeComponent.children).toBeDefined();
   });
 
   it(`renders correctly with props style`, () => {
@@ -66,9 +76,6 @@ describe('TimeView component', () => {
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="short" />,
     );
-    expect(
-      render(<TimeView time={date} type="short" />).toJSON(),
-    ).toMatchSnapshot();
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
     expect(getByText(/common:time:short_hour/)).toBeDefined();
