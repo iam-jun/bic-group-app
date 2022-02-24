@@ -556,7 +556,7 @@ const postDataHelper = {
       if (response && response?.data?.data) {
         return Promise.resolve({
           data: response?.data?.data?.results || [],
-          canLoadMore: !!response?.data?.data?.next?.offset,
+          canLoadMore: !!response?.data?.data?.next,
         });
       } else {
         return Promise.reject(response);
