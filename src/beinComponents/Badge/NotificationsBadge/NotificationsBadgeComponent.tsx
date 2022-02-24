@@ -12,6 +12,7 @@ export interface NotificationsBadgeComponentProps {
   number?: number;
   maxNumber?: number;
   textStyle?: StyleProp<TextStyle>;
+  testID?: string;
 }
 
 const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
@@ -21,6 +22,7 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
     number,
     maxNumber = 9,
     textStyle = {},
+    testID,
   }: NotificationsBadgeComponentProps) => {
     if (!number) return null;
 
@@ -29,7 +31,7 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
     const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
 
     return (
-      <View style={[styles.dot, style]}>
+      <View style={StyleSheet.flatten([styles.dot, style])} testID={testID}>
         <Text
           variant="subtitle"
           style={StyleSheet.flatten([styles.text, textStyle])}>

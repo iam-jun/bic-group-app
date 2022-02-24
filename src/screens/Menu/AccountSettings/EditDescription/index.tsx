@@ -1,19 +1,27 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import i18next from 'i18next';
-import {View, StyleSheet} from 'react-native';
-import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+  Platform,
+} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import TextInputBein from '~/beinComponents/inputs/TextInput';
 import Text from '~/beinComponents/Text';
 
 import {ITheme} from '~/theme/interfaces';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../redux/actions';
-import useMenu from '~/hooks/menu';
+import menuKeySelector from '../../redux/keySelector';
+import {useKeySelector} from '~/hooks/selector';
+import {fontFamilies} from '~/theme/fonts';
 
 const EditDescription = () => {
   const theme = useTheme() as ITheme;
@@ -23,12 +31,14 @@ const EditDescription = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const {myProfile} = useMenu();
-  const {id, description} = myProfile;
+  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const {id, description} = myProfileData;
 
   const [descriptionText, setDescription] = useState<string>(description);
+  const [isFocus, setIsFocus] = useState<boolean>(false);
 
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -37,7 +47,7 @@ const EditDescription = () => {
   };
 
   const onSave = () => {
-    if (descriptionText.trim()?.length > 0) {
+    if (descriptionText?.trim?.()?.length > 0) {
       dispatch(
         menuActions.editMyProfile({
           id,
@@ -48,9 +58,23 @@ const EditDescription = () => {
     navigateBack();
   };
 
+  const onFocusDescription = () => {
+    setIsFocus(true);
+  };
+
+  const onBlurDescription = () => {
+    setIsFocus(false);
+  };
+
   const onChangeDescription = (text: string) => {
     setDescription(text);
   };
+
+  const checkIsValid = (descriptionText: string) => {
+    return description !== descriptionText;
+  };
+
+  const isValid = checkIsValid(descriptionText);
 
   return (
     <ScreenWrapper isFullView>
@@ -63,25 +87,32 @@ const EditDescription = () => {
           color: theme.colors.primary6,
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
+        onPressBack={navigateBack}
       />
-      <View style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
         <Text.H5 color={colors.iconTint} variant="body" useI18n>
           settings:text_description
         </Text.H5>
-        <TextInputBein
-          value={description || i18next.t('common:text_not_set')}
-          maxLength={200}
-          testID="add_work.description"
-          placeholder={i18next.t('settings:text_description_optional')}
-          onChangeText={onChangeDescription}
-          multiline={true}
-          textAlignVertical="top"
-          outlineColor={colors.borderCard}
-          activeOutlineColor={colors.primary6}
-        />
-      </View>
+        <View
+          style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}>
+          <TextInput
+            value={descriptionText || ''}
+            maxLength={250}
+            testID="edit_description"
+            placeholder={i18next.t('common:text_not_set')}
+            onChangeText={onChangeDescription}
+            style={styles.textInput}
+            multiline={true}
+            textAlignVertical="top"
+            onFocus={onFocusDescription}
+            onBlur={onBlurDescription}
+            placeholderTextColor={colors.textSecondary}
+          />
+        </View>
+      </ScrollView>
     </ScreenWrapper>
   );
 };
@@ -94,6 +125,28 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       padding: spacing.margin.large,
+    },
+    textInput: {
+      fontFamily: fontFamilies.OpenSans,
+      fontSize: dimension.sizes.body,
+      color: colors.textPrimary,
+      flex: 1,
+    },
+    textInputView: {
+      borderRadius: spacing.borderRadius.small,
+      borderColor: colors.borderCard,
+      borderWidth: 1,
+      padding: spacing.margin.base,
+      marginTop: spacing.margin.small,
+      height: 88,
+      ...Platform.select({
+        web: {
+          height: 150,
+        },
+      }),
+    },
+    textInputFocus: {
+      borderColor: colors.primary6,
     },
   });
 };

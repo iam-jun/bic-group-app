@@ -69,20 +69,22 @@ const Reaction: React.FC<ReactionProps> = ({
 
   return (
     <TouchableOpacity
-      testID="reaction.item"
+      testID="reaction"
       disabled={!isInternetReachable || loading}
-      style={[styles.container, style]}
+      style={StyleSheet.flatten([styles.container, style])}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}>
       {loading ? (
         <ActivityIndicator
+          testID="reaction.indicator"
           color={colors.borderDisable}
           style={styles.indicator}
         />
       ) : (
         <Text.BodySM
           color={isSelected ? colors.primary7 : colors.textPrimary}
-          style={styles.text}>
+          style={styles.text}
+          testID="reaction.children">
           <Text.BodySM style={styles.emoji} testID={`reaction.${icon}`}>
             {emoji}
           </Text.BodySM>

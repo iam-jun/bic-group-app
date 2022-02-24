@@ -119,10 +119,9 @@ const CustomDrawerContent = (props: any) => {
         onPress={onPressItem('logOut')}
         testID="menu.logout.item.0"
       />
-      {__DEV__ &&
-        renderData({
-          data: settings,
-        })}
+      {renderData({
+        data: settings,
+      })}
     </DrawerContentScrollView>
   );
 };

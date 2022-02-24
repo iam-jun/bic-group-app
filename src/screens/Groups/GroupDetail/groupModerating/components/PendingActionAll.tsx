@@ -103,12 +103,12 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(groupsActions.removeAllMemberRequests());
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declined_all', {
+      content: `${i18next.t('groups:text_declining_all', {
         count: totalPendingMembers,
       })}`,
       props: {
         textProps: {useI18n: true},
-        type: 'success',
+        type: 'informative',
         rightText: 'Undo',
         onPressRight: onPressUndo,
       },

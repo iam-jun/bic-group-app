@@ -71,7 +71,10 @@ const AtMentionItem = ({testID, item, onPress}: Props) => {
       style={{backgroundColor}}
       onMouseOver={onHoverItem}
       onMouseLeave={onLeaveItem}>
-      <TouchableOpacity style={styles.container} onPress={_onPressItem}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={_onPressItem}
+        testID={testID}>
         <Avatar.Medium
           style={styles.avatar}
           source={item.avatar || item.icon}

@@ -17,6 +17,8 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import Autocomplete from './Autocomplete';
 import {switchKeyboardForCodeBlocks} from './helper';
+import {useDispatch} from 'react-redux';
+import actionsMention from '~/beinComponents/inputs/_MentionInput/redux/actions';
 
 interface Props {
   textInputRef?: any;
@@ -58,6 +60,14 @@ const _MentionInput = ({
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(actionsMention.setData([]));
+    };
+  }, []);
 
   const getContent = () => componentInputProps?.value;
 

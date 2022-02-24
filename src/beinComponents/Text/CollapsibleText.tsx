@@ -3,6 +3,7 @@ import {View, StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
+import {useBaseHook} from '~/hooks';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import MarkdownView from '~/beinComponents/MarkdownView';
@@ -19,6 +20,7 @@ export interface CollapsibleTextProps extends TextProps {
   useMarkdownIt?: boolean;
   onPressAudience?: (audience: any, e?: any) => any;
   limitMarkdownTypes?: boolean;
+  parentCommentId?: string;
   testID?: string;
   [x: string]: any;
 }
@@ -34,6 +36,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   useMarkdownIt,
   onPressAudience,
   limitMarkdownTypes,
+  parentCommentId,
   testID,
   ...textProps
 }: CollapsibleTextProps) => {
@@ -50,6 +53,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
 
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
+
+  const {t} = useBaseHook();
 
   useEffect(() => {
     const newShort = getShortContent(content);
@@ -81,6 +86,11 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         ) : (
           <Markdown
             {...textProps}
+            textTestID={
+              parentCommentId
+                ? 'collapsible_text.level_2.content'
+                : 'collapsible_text.level_1.content'
+            }
             onPressAudience={onPressAudience}
             value={
               !shortContent ? content : contentShowAll ? content : shortContent
@@ -89,10 +99,13 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         )}
 
         {!!shortContent && (
-          <Text onPress={onToggleShowLess} color={colors.textInfo}>
+          <Text
+            testID="collapsible_text.markdown.short_content"
+            onPress={onToggleShowLess}
+            color={colors.textInfo}>
             {contentShowAll
-              ? i18next.t('common:text_show_less')
-              : i18next.t('common:text_read_more')}
+              ? t('common:text_show_less')
+              : t('common:text_read_more')}
           </Text>
         )}
       </View>
@@ -102,16 +115,17 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const renderContent = () => {
     return (
       <Text style={style}>
-        <Text {...textProps}>
+        <Text testID="collapsible_text.content" {...textProps}>
           {!shortContent ? content : contentShowAll ? content : shortContent}
         </Text>
         {!!shortContent && (
-          <Text onPress={onToggleShowLess} color={colors.textInfo}>
-            {` ${
-              contentShowAll
-                ? i18next.t('common:text_show_less')
-                : i18next.t('common:text_read_more')
-            }`}
+          <Text
+            testID="collapsible_text.show_text"
+            onPress={onToggleShowLess}
+            color={colors.textInfo}>
+            {contentShowAll
+              ? t('common:text_show_less')
+              : t('common:text_read_more')}
           </Text>
         )}
       </Text>
