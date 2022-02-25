@@ -3,10 +3,6 @@ import {cleanup} from '@testing-library/react-native';
 
 import {fireEvent, renderWithRedux} from '~/test/testUtils';
 import GroupItem from './GroupItem';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-
-const {rootNavigation} = useRootNavigation();
 
 afterEach(cleanup);
 
@@ -151,21 +147,24 @@ describe('Group Item component', () => {
     expect(onCheckedItem).toBeCalled();
   });
 
-  //   it(`should navigate to groupDetail screen when press Group Item`, () => {
-  //     // const navigate = jest.fn();
+  // it(`should navigate to groupDetail screen when press Group Item`, () => {
+  //   const mockNavigate = jest.fn();
 
-  //     // jest.doMock('~/hooks/navigation', () => ({
-  //     //   rootNavigation: () => ({navigate: navigate}),
-  //     // }));
+  //   jest.mock('~/hooks/navigation', () => {
+  //     // const {useRootNavigation} = jest.requireActual('~/hooks/navigation');
+  //     // console.log('useRootNavigation>>>>>', JSON.stringify(...useRootNavigation()));
 
-  //     //@ts-ignore
-  //     const rendered = renderWithRedux(<GroupItem {...groupItemData} />);
-  // const spy = jest.spyOn(rootNavigation, 'navigate');
-  //     const btnComponent = rendered.getByTestId('group_item');
-  //     expect(btnComponent).toBeDefined();
-  //     fireEvent.press(btnComponent);
-
-  //     expect(navigate).toBeCalled();
-  //     spy.mockRestore();
+  //     return {
+  //       rootNavigation: {
+  //         navigate: mockNavigate,
+  //       },
+  //     };
   //   });
+  //   //@ts-ignore
+  //   const rendered = renderWithRedux(<GroupItem {...groupItemData} />);
+  //   const btnComponent = rendered.getByTestId('group_item');
+  //   expect(btnComponent).toBeDefined();
+  //   fireEvent.press(btnComponent);
+  //   expect(mockNavigate).toHaveBeenCalledTimes(1);
+  // });
 });
