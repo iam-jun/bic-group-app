@@ -17,6 +17,7 @@ import {useKeySelector} from '~/hooks/selector';
 
 interface HeaderAvatarProps {
   firstLabel: string;
+  firstLabelProps?: TextProps;
   iconCheckCircle?: boolean;
   iconFirstLabel?: any;
   iconFirstLabelProps?: IconProps;
@@ -30,6 +31,7 @@ interface HeaderAvatarProps {
 
 const HeaderAvatar = ({
   firstLabel,
+  firstLabelProps,
   iconCheckCircle,
   iconFirstLabel,
   iconFirstLabelProps,
@@ -54,11 +56,14 @@ const HeaderAvatar = ({
       onPress={onPress}>
       <Avatar.Large source={avatar} isRounded {...avatarProps} />
       <View style={styles.content}>
-        <Text variant="h5">
+        <Text
+          variant="h5"
+          testID="header_avatar.first_label"
+          {...firstLabelProps}>
           {firstLabel}
           <View>
             {iconCheckCircle && (
-              <View style={styles.circle}>
+              <View style={styles.circle} testID="header_avatar.icon_check">
                 <Icon
                   icon="iconCheckCircle"
                   size={12}
@@ -67,12 +72,20 @@ const HeaderAvatar = ({
               </View>
             )}
             {iconFirstLabel && (
-              <Icon icon={iconFirstLabel} size={12} {...iconFirstLabelProps} />
+              <Icon
+                icon={iconFirstLabel}
+                size={12}
+                testID="header_avatar.icon_first_label"
+                {...iconFirstLabelProps}
+              />
             )}
           </View>
         </Text>
         {secondLabel && (
-          <Text variant="headingSB" {...secondLabelProps}>
+          <Text
+            variant="headingSB"
+            testID="header_avatar.second_label"
+            {...secondLabelProps}>
             {secondLabel}
           </Text>
         )}
