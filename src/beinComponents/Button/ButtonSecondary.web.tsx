@@ -47,7 +47,6 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
       <Div className={className}>
         <ButtonWrapper
           disabled={disabled}
-          textProps={{color: _textColor, useI18n}}
           underlayColor={_colorHover}
           TouchableComponent={TouchableWithoutFeedback}
           contentStyle={[
@@ -58,7 +57,8 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
             contentStyle,
             _borderRadiusStyle,
           ]}
-          {...props}>
+          {...props}
+          textProps={{color: _textColor, useI18n, ...props?.textProps}}>
           {children}
         </ButtonWrapper>
       </Div>
