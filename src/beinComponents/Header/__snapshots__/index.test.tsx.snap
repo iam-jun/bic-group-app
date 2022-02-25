@@ -2017,7 +2017,7 @@ exports[`Header component renders correctly with props button props 1`] = `
           <Text
             style={
               Object {
-                "color": "#2F3945",
+                "color": "#7843DD",
                 "fontFamily": "OpenSans-SemiBold",
                 "fontSize": 16,
                 "textAlign": "center",
@@ -2252,7 +2252,7 @@ exports[`Header component renders correctly with props button text 1`] = `
           <Text
             style={
               Object {
-                "color": "#2F3945",
+                "color": "#7843DD",
                 "fontFamily": "OpenSans-SemiBold",
                 "fontSize": 16,
                 "textAlign": "center",
@@ -5213,7 +5213,7 @@ exports[`Header component renders correctly with props on press button 1`] = `
           <Text
             style={
               Object {
-                "color": "#2F3945",
+                "color": "#7843DD",
                 "fontFamily": "OpenSans-SemiBold",
                 "fontSize": 16,
                 "textAlign": "center",

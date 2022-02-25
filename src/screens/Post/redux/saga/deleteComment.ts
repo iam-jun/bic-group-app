@@ -76,7 +76,7 @@ export default function* deleteComment({
     );
     if (!parentCommentId) {
       newReactionCount.comment = Math.max(
-        (newReactionCount.comment || 0) - 1 - childrenCommentCount,
+        (newReactionCount.comment || 0) - 1,
         0,
       );
     }

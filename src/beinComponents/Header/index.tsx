@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   DeviceEventEmitter,
+  //   useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -351,7 +352,7 @@ const Header: React.FC<HeaderProps> = ({
               }}
               textColor={colors.primary6}
               onPress={onPressButton}
-              textProps={{testID: 'header.button.text', useI18n: true}}
+              textProps={{testID: 'header.button.text'}}
               {...buttonProps}>
               {buttonText}
             </Button.Secondary>
