@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   DeviceEventEmitter,
+  useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -31,7 +32,7 @@ import Button from '~/beinComponents/Button';
 import {ImageProps} from '../Image';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
-import useWindowDimensions from '~/hooks/windowSize';
+// import useWindowDimensions from '~/hooks/windowSize';
 
 export interface HeaderProps {
   headerRef?: any;
