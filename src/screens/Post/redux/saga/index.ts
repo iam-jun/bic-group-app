@@ -200,6 +200,7 @@ function* postCreateNewComment({
           postId: postId,
           commentId: parentCommentId,
           childComments: new Array(preComment),
+          shouldAddChildrenCount: true,
         });
       }
     }
@@ -1001,10 +1002,12 @@ function* addChildCommentToCommentsOfPost({
   postId,
   commentId,
   childComments,
+  shouldAddChildrenCount,
 }: {
   postId: string;
   commentId: string;
   childComments: IReaction[];
+  shouldAddChildrenCount?: boolean;
 }) {
   const postComments: IReaction[] = yield select(state =>
     get(state, postKeySelector.commentsByParentId(postId)),
@@ -1015,10 +1018,14 @@ function* addChildCommentToCommentsOfPost({
       const oldChildComments = latestChildren.comment || [];
       const newChildComments = oldChildComments.concat(childComments) || [];
       latestChildren.comment = sortComments(newChildComments);
-      const childrenCounts = postComments[i].children_counts || {};
-      childrenCounts.comment = (childrenCounts.comment || 0) + 1;
+      // If manual add comment by create comment, should update children counts
+      // Load more children comment do not add children counts
+      if (shouldAddChildrenCount) {
+        const childrenCounts = postComments[i].children_counts || {};
+        childrenCounts.comment = (childrenCounts.comment || 0) + 1;
+        postComments[i].children_counts = childrenCounts;
+      }
       postComments[i].latest_children = latestChildren;
-      postComments[i].children_counts = childrenCounts;
       yield put(
         postActions.updateAllCommentsByParentIdsWithComments({
           id: postId,
